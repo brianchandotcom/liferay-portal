@@ -180,13 +180,13 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	}
 
 	@Override
-	public CommerceCurrency toEscapedModel() {
-		return new CommerceCurrencyWrapper(_commerceCurrency.toEscapedModel());
+	public java.lang.Object clone() {
+		return new CommerceCurrencyWrapper((CommerceCurrency)_commerceCurrency.clone());
 	}
 
 	@Override
-	public CommerceCurrency toUnescapedModel() {
-		return new CommerceCurrencyWrapper(_commerceCurrency.toUnescapedModel());
+	public int compareTo(CommerceCurrency commerceCurrency) {
+		return _commerceCurrency.compareTo(commerceCurrency);
 	}
 
 	/**
@@ -199,6 +199,235 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 		return _commerceCurrency.getActive();
 	}
 
+	@Override
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _commerceCurrency.getAvailableLanguageIds();
+	}
+
+	/**
+	* Returns the code of this commerce currency.
+	*
+	* @return the code of this commerce currency
+	*/
+	@Override
+	public java.lang.String getCode() {
+		return _commerceCurrency.getCode();
+	}
+
+	/**
+	* Returns the localized code of this commerce currency in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized code of this commerce currency
+	*/
+	@Override
+	public java.lang.String getCode(java.util.Locale locale) {
+		return _commerceCurrency.getCode(locale);
+	}
+
+	/**
+	* Returns the localized code of this commerce currency in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized code of this commerce currency. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getCode(java.util.Locale locale, boolean useDefault) {
+		return _commerceCurrency.getCode(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized code of this commerce currency in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized code of this commerce currency
+	*/
+	@Override
+	public java.lang.String getCode(java.lang.String languageId) {
+		return _commerceCurrency.getCode(languageId);
+	}
+
+	/**
+	* Returns the localized code of this commerce currency in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized code of this commerce currency
+	*/
+	@Override
+	public java.lang.String getCode(java.lang.String languageId,
+		boolean useDefault) {
+		return _commerceCurrency.getCode(languageId, useDefault);
+	}
+
+	@Override
+	public java.lang.String getCodeCurrentLanguageId() {
+		return _commerceCurrency.getCodeCurrentLanguageId();
+	}
+
+	@Override
+	public java.lang.String getCodeCurrentValue() {
+		return _commerceCurrency.getCodeCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized codes of this commerce currency.
+	*
+	* @return the locales and localized codes of this commerce currency
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getCodeMap() {
+		return _commerceCurrency.getCodeMap();
+	}
+
+	/**
+	* Returns the commerce currency ID of this commerce currency.
+	*
+	* @return the commerce currency ID of this commerce currency
+	*/
+	@Override
+	public long getCommerceCurrencyId() {
+		return _commerceCurrency.getCommerceCurrencyId();
+	}
+
+	/**
+	* Returns the company ID of this commerce currency.
+	*
+	* @return the company ID of this commerce currency
+	*/
+	@Override
+	public long getCompanyId() {
+		return _commerceCurrency.getCompanyId();
+	}
+
+	/**
+	* Returns the create date of this commerce currency.
+	*
+	* @return the create date of this commerce currency
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _commerceCurrency.getCreateDate();
+	}
+
+	@Override
+	public java.lang.String getDefaultLanguageId() {
+		return _commerceCurrency.getDefaultLanguageId();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _commerceCurrency.getExpandoBridge();
+	}
+
+	/**
+	* Returns the group ID of this commerce currency.
+	*
+	* @return the group ID of this commerce currency
+	*/
+	@Override
+	public long getGroupId() {
+		return _commerceCurrency.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this commerce currency.
+	*
+	* @return the last publish date of this commerce currency
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _commerceCurrency.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this commerce currency.
+	*
+	* @return the modified date of this commerce currency
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _commerceCurrency.getModifiedDate();
+	}
+
+	/**
+	* Returns the name of this commerce currency.
+	*
+	* @return the name of this commerce currency
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _commerceCurrency.getName();
+	}
+
+	/**
+	* Returns the localized name of this commerce currency in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized name of this commerce currency
+	*/
+	@Override
+	public java.lang.String getName(java.util.Locale locale) {
+		return _commerceCurrency.getName(locale);
+	}
+
+	/**
+	* Returns the localized name of this commerce currency in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this commerce currency. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+		return _commerceCurrency.getName(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized name of this commerce currency in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized name of this commerce currency
+	*/
+	@Override
+	public java.lang.String getName(java.lang.String languageId) {
+		return _commerceCurrency.getName(languageId);
+	}
+
+	/**
+	* Returns the localized name of this commerce currency in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this commerce currency
+	*/
+	@Override
+	public java.lang.String getName(java.lang.String languageId,
+		boolean useDefault) {
+		return _commerceCurrency.getName(languageId, useDefault);
+	}
+
+	@Override
+	public java.lang.String getNameCurrentLanguageId() {
+		return _commerceCurrency.getNameCurrentLanguageId();
+	}
+
+	@Override
+	public java.lang.String getNameCurrentValue() {
+		return _commerceCurrency.getNameCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized names of this commerce currency.
+	*
+	* @return the locales and localized names of this commerce currency
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getNameMap() {
+		return _commerceCurrency.getNameMap();
+	}
+
 	/**
 	* Returns the primary of this commerce currency.
 	*
@@ -207,6 +436,96 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	@Override
 	public boolean getPrimary() {
 		return _commerceCurrency.getPrimary();
+	}
+
+	/**
+	* Returns the primary key of this commerce currency.
+	*
+	* @return the primary key of this commerce currency
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _commerceCurrency.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _commerceCurrency.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the priority of this commerce currency.
+	*
+	* @return the priority of this commerce currency
+	*/
+	@Override
+	public double getPriority() {
+		return _commerceCurrency.getPriority();
+	}
+
+	/**
+	* Returns the rate of this commerce currency.
+	*
+	* @return the rate of this commerce currency
+	*/
+	@Override
+	public double getRate() {
+		return _commerceCurrency.getRate();
+	}
+
+	/**
+	* Returns the rounding type of this commerce currency.
+	*
+	* @return the rounding type of this commerce currency
+	*/
+	@Override
+	public java.lang.String getRoundingType() {
+		return _commerceCurrency.getRoundingType();
+	}
+
+	/**
+	* Returns the user ID of this commerce currency.
+	*
+	* @return the user ID of this commerce currency
+	*/
+	@Override
+	public long getUserId() {
+		return _commerceCurrency.getUserId();
+	}
+
+	/**
+	* Returns the user name of this commerce currency.
+	*
+	* @return the user name of this commerce currency
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _commerceCurrency.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this commerce currency.
+	*
+	* @return the user uuid of this commerce currency
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _commerceCurrency.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this commerce currency.
+	*
+	* @return the uuid of this commerce currency
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _commerceCurrency.getUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _commerceCurrency.hashCode();
 	}
 
 	/**
@@ -242,350 +561,6 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	@Override
 	public boolean isPrimary() {
 		return _commerceCurrency.isPrimary();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceCurrency.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommerceCurrency> toCacheModel() {
-		return _commerceCurrency.toCacheModel();
-	}
-
-	/**
-	* Returns the priority of this commerce currency.
-	*
-	* @return the priority of this commerce currency
-	*/
-	@Override
-	public double getPriority() {
-		return _commerceCurrency.getPriority();
-	}
-
-	/**
-	* Returns the rate of this commerce currency.
-	*
-	* @return the rate of this commerce currency
-	*/
-	@Override
-	public double getRate() {
-		return _commerceCurrency.getRate();
-	}
-
-	@Override
-	public int compareTo(CommerceCurrency commerceCurrency) {
-		return _commerceCurrency.compareTo(commerceCurrency);
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceCurrency.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceCurrency.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new CommerceCurrencyWrapper((CommerceCurrency)_commerceCurrency.clone());
-	}
-
-	/**
-	* Returns the code of this commerce currency.
-	*
-	* @return the code of this commerce currency
-	*/
-	@Override
-	public java.lang.String getCode() {
-		return _commerceCurrency.getCode();
-	}
-
-	/**
-	* Returns the localized code of this commerce currency in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @return the localized code of this commerce currency
-	*/
-	@Override
-	public java.lang.String getCode(java.lang.String languageId) {
-		return _commerceCurrency.getCode(languageId);
-	}
-
-	/**
-	* Returns the localized code of this commerce currency in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized code of this commerce currency
-	*/
-	@Override
-	public java.lang.String getCode(java.lang.String languageId,
-		boolean useDefault) {
-		return _commerceCurrency.getCode(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized code of this commerce currency in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized code of this commerce currency
-	*/
-	@Override
-	public java.lang.String getCode(java.util.Locale locale) {
-		return _commerceCurrency.getCode(locale);
-	}
-
-	/**
-	* Returns the localized code of this commerce currency in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized code of this commerce currency. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getCode(java.util.Locale locale, boolean useDefault) {
-		return _commerceCurrency.getCode(locale, useDefault);
-	}
-
-	@Override
-	public java.lang.String getCodeCurrentLanguageId() {
-		return _commerceCurrency.getCodeCurrentLanguageId();
-	}
-
-	@Override
-	public java.lang.String getCodeCurrentValue() {
-		return _commerceCurrency.getCodeCurrentValue();
-	}
-
-	@Override
-	public java.lang.String getDefaultLanguageId() {
-		return _commerceCurrency.getDefaultLanguageId();
-	}
-
-	/**
-	* Returns the name of this commerce currency.
-	*
-	* @return the name of this commerce currency
-	*/
-	@Override
-	public java.lang.String getName() {
-		return _commerceCurrency.getName();
-	}
-
-	/**
-	* Returns the localized name of this commerce currency in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @return the localized name of this commerce currency
-	*/
-	@Override
-	public java.lang.String getName(java.lang.String languageId) {
-		return _commerceCurrency.getName(languageId);
-	}
-
-	/**
-	* Returns the localized name of this commerce currency in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized name of this commerce currency
-	*/
-	@Override
-	public java.lang.String getName(java.lang.String languageId,
-		boolean useDefault) {
-		return _commerceCurrency.getName(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized name of this commerce currency in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized name of this commerce currency
-	*/
-	@Override
-	public java.lang.String getName(java.util.Locale locale) {
-		return _commerceCurrency.getName(locale);
-	}
-
-	/**
-	* Returns the localized name of this commerce currency in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized name of this commerce currency. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
-		return _commerceCurrency.getName(locale, useDefault);
-	}
-
-	@Override
-	public java.lang.String getNameCurrentLanguageId() {
-		return _commerceCurrency.getNameCurrentLanguageId();
-	}
-
-	@Override
-	public java.lang.String getNameCurrentValue() {
-		return _commerceCurrency.getNameCurrentValue();
-	}
-
-	/**
-	* Returns the rounding type of this commerce currency.
-	*
-	* @return the rounding type of this commerce currency
-	*/
-	@Override
-	public java.lang.String getRoundingType() {
-		return _commerceCurrency.getRoundingType();
-	}
-
-	/**
-	* Returns the user name of this commerce currency.
-	*
-	* @return the user name of this commerce currency
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _commerceCurrency.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this commerce currency.
-	*
-	* @return the user uuid of this commerce currency
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _commerceCurrency.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this commerce currency.
-	*
-	* @return the uuid of this commerce currency
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _commerceCurrency.getUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _commerceCurrency.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _commerceCurrency.toXmlString();
-	}
-
-	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
-		return _commerceCurrency.getAvailableLanguageIds();
-	}
-
-	/**
-	* Returns the create date of this commerce currency.
-	*
-	* @return the create date of this commerce currency
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _commerceCurrency.getCreateDate();
-	}
-
-	/**
-	* Returns the last publish date of this commerce currency.
-	*
-	* @return the last publish date of this commerce currency
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _commerceCurrency.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this commerce currency.
-	*
-	* @return the modified date of this commerce currency
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _commerceCurrency.getModifiedDate();
-	}
-
-	/**
-	* Returns a map of the locales and localized codes of this commerce currency.
-	*
-	* @return the locales and localized codes of this commerce currency
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getCodeMap() {
-		return _commerceCurrency.getCodeMap();
-	}
-
-	/**
-	* Returns a map of the locales and localized names of this commerce currency.
-	*
-	* @return the locales and localized names of this commerce currency
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getNameMap() {
-		return _commerceCurrency.getNameMap();
-	}
-
-	/**
-	* Returns the commerce currency ID of this commerce currency.
-	*
-	* @return the commerce currency ID of this commerce currency
-	*/
-	@Override
-	public long getCommerceCurrencyId() {
-		return _commerceCurrency.getCommerceCurrencyId();
-	}
-
-	/**
-	* Returns the company ID of this commerce currency.
-	*
-	* @return the company ID of this commerce currency
-	*/
-	@Override
-	public long getCompanyId() {
-		return _commerceCurrency.getCompanyId();
-	}
-
-	/**
-	* Returns the group ID of this commerce currency.
-	*
-	* @return the group ID of this commerce currency
-	*/
-	@Override
-	public long getGroupId() {
-		return _commerceCurrency.getGroupId();
-	}
-
-	/**
-	* Returns the primary key of this commerce currency.
-	*
-	* @return the primary key of this commerce currency
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _commerceCurrency.getPrimaryKey();
-	}
-
-	/**
-	* Returns the user ID of this commerce currency.
-	*
-	* @return the user ID of this commerce currency
-	*/
-	@Override
-	public long getUserId() {
-		return _commerceCurrency.getUserId();
 	}
 
 	@Override
@@ -713,14 +688,14 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceCurrency.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_commerceCurrency.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_commerceCurrency.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -917,6 +892,31 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_commerceCurrency.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<CommerceCurrency> toCacheModel() {
+		return _commerceCurrency.toCacheModel();
+	}
+
+	@Override
+	public CommerceCurrency toEscapedModel() {
+		return new CommerceCurrencyWrapper(_commerceCurrency.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _commerceCurrency.toString();
+	}
+
+	@Override
+	public CommerceCurrency toUnescapedModel() {
+		return new CommerceCurrencyWrapper(_commerceCurrency.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _commerceCurrency.toXmlString();
 	}
 
 	@Override

@@ -115,107 +115,6 @@ public class CPDefinitionVirtualSettingLocalServiceUtil {
 				   .deleteCPDefinitionVirtualSettingByCPDefinitionId(cpDefinitionId);
 	}
 
-	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting fetchCPDefinitionVirtualSetting(
-		long CPDefinitionVirtualSettingId) {
-		return getService()
-				   .fetchCPDefinitionVirtualSetting(CPDefinitionVirtualSettingId);
-	}
-
-	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting fetchCPDefinitionVirtualSettingByCPDefinitionId(
-		long cpDefinitionId) {
-		return getService()
-				   .fetchCPDefinitionVirtualSettingByCPDefinitionId(cpDefinitionId);
-	}
-
-	/**
-	* Returns the cp definition virtual setting matching the UUID and group.
-	*
-	* @param uuid the cp definition virtual setting's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp definition virtual setting, or <code>null</code> if a matching cp definition virtual setting could not be found
-	*/
-	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting fetchCPDefinitionVirtualSettingByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return getService()
-				   .fetchCPDefinitionVirtualSettingByUuidAndGroupId(uuid,
-			groupId);
-	}
-
-	/**
-	* Returns the cp definition virtual setting with the primary key.
-	*
-	* @param CPDefinitionVirtualSettingId the primary key of the cp definition virtual setting
-	* @return the cp definition virtual setting
-	* @throws PortalException if a cp definition virtual setting with the primary key could not be found
-	*/
-	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting getCPDefinitionVirtualSetting(
-		long CPDefinitionVirtualSettingId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getCPDefinitionVirtualSetting(CPDefinitionVirtualSettingId);
-	}
-
-	/**
-	* Returns the cp definition virtual setting matching the UUID and group.
-	*
-	* @param uuid the cp definition virtual setting's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp definition virtual setting
-	* @throws PortalException if a matching cp definition virtual setting could not be found
-	*/
-	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting getCPDefinitionVirtualSettingByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getCPDefinitionVirtualSettingByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Updates the cp definition virtual setting in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param cpDefinitionVirtualSetting the cp definition virtual setting
-	* @return the cp definition virtual setting that was updated
-	*/
-	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
-		com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
-		return getService()
-				   .updateCPDefinitionVirtualSetting(cpDefinitionVirtualSetting);
-	}
-
-	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
-		long cpDefinitionVirtualSettingId, long fileEntryId,
-		java.lang.String url, java.lang.String activationStatus, long duration,
-		int maxUsages, boolean useSample, long sampleFileEntryId,
-		java.lang.String sampleUrl, boolean termsOfUseRequired,
-		java.util.Map<java.util.Locale, java.lang.String> termsOfUseContentMap,
-		long termsOfUseJournalArticleResourcePrimKey,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateCPDefinitionVirtualSetting(cpDefinitionVirtualSettingId,
-			fileEntryId, url, activationStatus, duration, maxUsages, useSample,
-			sampleFileEntryId, sampleUrl, termsOfUseRequired,
-			termsOfUseContentMap, termsOfUseJournalArticleResourcePrimKey,
-			serviceContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
 	/**
 	* @throws PortalException
 	*/
@@ -225,28 +124,8 @@ public class CPDefinitionVirtualSettingLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the number of cp definition virtual settings.
-	*
-	* @return the number of cp definition virtual settings
-	*/
-	public static int getCPDefinitionVirtualSettingsCount() {
-		return getService().getCPDefinitionVirtualSettingsCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -300,6 +179,89 @@ public class CPDefinitionVirtualSettingLocalServiceUtil {
 	}
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting fetchCPDefinitionVirtualSetting(
+		long CPDefinitionVirtualSettingId) {
+		return getService()
+				   .fetchCPDefinitionVirtualSetting(CPDefinitionVirtualSettingId);
+	}
+
+	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting fetchCPDefinitionVirtualSettingByCPDefinitionId(
+		long cpDefinitionId) {
+		return getService()
+				   .fetchCPDefinitionVirtualSettingByCPDefinitionId(cpDefinitionId);
+	}
+
+	/**
+	* Returns the cp definition virtual setting matching the UUID and group.
+	*
+	* @param uuid the cp definition virtual setting's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp definition virtual setting, or <code>null</code> if a matching cp definition virtual setting could not be found
+	*/
+	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting fetchCPDefinitionVirtualSettingByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return getService()
+				   .fetchCPDefinitionVirtualSettingByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the cp definition virtual setting with the primary key.
+	*
+	* @param CPDefinitionVirtualSettingId the primary key of the cp definition virtual setting
+	* @return the cp definition virtual setting
+	* @throws PortalException if a cp definition virtual setting with the primary key could not be found
+	*/
+	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting getCPDefinitionVirtualSetting(
+		long CPDefinitionVirtualSettingId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCPDefinitionVirtualSetting(CPDefinitionVirtualSettingId);
+	}
+
+	/**
+	* Returns the cp definition virtual setting matching the UUID and group.
+	*
+	* @param uuid the cp definition virtual setting's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp definition virtual setting
+	* @throws PortalException if a matching cp definition virtual setting could not be found
+	*/
+	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting getCPDefinitionVirtualSettingByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCPDefinitionVirtualSettingByUuidAndGroupId(uuid, groupId);
+	}
+
+	/**
 	* Returns a range of all the cp definition virtual settings.
 	*
 	* <p>
@@ -348,27 +310,65 @@ public class CPDefinitionVirtualSettingLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of cp definition virtual settings.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of cp definition virtual settings
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
+	public static int getCPDefinitionVirtualSettingsCount() {
+		return getService().getCPDefinitionVirtualSettingsCount();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the cp definition virtual setting in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param cpDefinitionVirtualSetting the cp definition virtual setting
+	* @return the cp definition virtual setting that was updated
+	*/
+	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
+		com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
+		return getService()
+				   .updateCPDefinitionVirtualSetting(cpDefinitionVirtualSetting);
+	}
+
+	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
+		long cpDefinitionVirtualSettingId, long fileEntryId,
+		java.lang.String url, java.lang.String activationStatus, long duration,
+		int maxUsages, boolean useSample, long sampleFileEntryId,
+		java.lang.String sampleUrl, boolean termsOfUseRequired,
+		java.util.Map<java.util.Locale, java.lang.String> termsOfUseContentMap,
+		long termsOfUseJournalArticleResourcePrimKey,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCPDefinitionVirtualSetting(cpDefinitionVirtualSettingId,
+			fileEntryId, url, activationStatus, duration, maxUsages, useSample,
+			sampleFileEntryId, sampleUrl, termsOfUseRequired,
+			termsOfUseContentMap, termsOfUseJournalArticleResourcePrimKey,
+			serviceContext);
 	}
 
 	public static CPDefinitionVirtualSettingLocalService getService() {

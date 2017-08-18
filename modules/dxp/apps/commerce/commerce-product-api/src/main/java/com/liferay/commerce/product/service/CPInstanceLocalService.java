@@ -90,6 +90,11 @@ public interface CPInstanceLocalService extends BaseLocalService,
 		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
+	public void buildCPInstances(long cpDefinitionId,
+		ServiceContext serviceContext) throws PortalException;
+
+	public void checkCPInstances() throws PortalException;
+
 	/**
 	* Creates a new cp instance with the primary key. Does not add the cp instance to the database.
 	*
@@ -121,78 +126,8 @@ public interface CPInstanceLocalService extends BaseLocalService,
 	public CPInstance deleteCPInstance(long CPInstanceId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPInstance fetchCPInstance(long CPInstanceId);
-
-	/**
-	* Returns the cp instance matching the UUID and group.
-	*
-	* @param uuid the cp instance's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp instance, or <code>null</code> if a matching cp instance could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPInstance fetchCPInstanceByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
-
-	/**
-	* Returns the cp instance with the primary key.
-	*
-	* @param CPInstanceId the primary key of the cp instance
-	* @return the cp instance
-	* @throws PortalException if a cp instance with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPInstance getCPInstance(long CPInstanceId)
+	public void deleteCPInstances(long cpDefinitionId)
 		throws PortalException;
-
-	/**
-	* Returns the cp instance matching the UUID and group.
-	*
-	* @param uuid the cp instance's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp instance
-	* @throws PortalException if a matching cp instance could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPInstance getCPInstanceByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
-
-	/**
-	* Updates the cp instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param cpInstance the cp instance
-	* @return the cp instance that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public CPInstance updateCPInstance(CPInstance cpInstance);
-
-	@Indexable(type = IndexableType.REINDEX)
-	public CPInstance updateCPInstance(long cpInstanceId, java.lang.String sku,
-		java.lang.String gtin, java.lang.String manufacturerPartNumber,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
-		ServiceContext serviceContext) throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public CPInstance updateStatus(long userId, long cpInstanceId, int status,
-		ServiceContext serviceContext,
-		Map<java.lang.String, Serializable> workflowContext)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* @throws PortalException
@@ -201,39 +136,7 @@ public interface CPInstanceLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BaseModelSearchResult<CPInstance> searchCPInstances(long companyId,
-		long groupId, long cpDefinitionId, java.lang.String keywords,
-		int status, int start, int end, Sort sort) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(SearchContext searchContext);
-
-	/**
-	* Returns the number of cp instances.
-	*
-	* @return the number of cp instances
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPInstancesCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPInstancesCount(long cpDefinitionId, int status);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String[] getSKUs(long cpDefinitionId);
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -273,6 +176,64 @@ public interface CPInstanceLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPInstance fetchCPInstance(long CPInstanceId);
+
+	/**
+	* Returns the cp instance matching the UUID and group.
+	*
+	* @param uuid the cp instance's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp instance, or <code>null</code> if a matching cp instance could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPInstance fetchCPInstanceByUuidAndGroupId(java.lang.String uuid,
+		long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* Returns the cp instance with the primary key.
+	*
+	* @param CPInstanceId the primary key of the cp instance
+	* @return the cp instance
+	* @throws PortalException if a cp instance with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPInstance getCPInstance(long CPInstanceId)
+		throws PortalException;
+
+	/**
+	* Returns the cp instance matching the UUID and group.
+	*
+	* @param uuid the cp instance's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp instance
+	* @throws PortalException if a matching cp instance could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPInstance getCPInstanceByUuidAndGroupId(java.lang.String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the cp instances.
@@ -323,28 +284,67 @@ public interface CPInstanceLocalService extends BaseLocalService,
 		OrderByComparator<CPInstance> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of cp instances.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of cp instances
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPInstancesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPInstancesCount(long cpDefinitionId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public java.lang.String getOSGiServiceIdentifier();
 
-	public void buildCPInstances(long cpDefinitionId,
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String[] getSKUs(long cpDefinitionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Hits search(SearchContext searchContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CPInstance> searchCPInstances(long companyId,
+		long groupId, long cpDefinitionId, java.lang.String keywords,
+		int status, int start, int end, Sort sort) throws PortalException;
+
+	/**
+	* Updates the cp instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param cpInstance the cp instance
+	* @return the cp instance that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public CPInstance updateCPInstance(CPInstance cpInstance);
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CPInstance updateCPInstance(long cpInstanceId, java.lang.String sku,
+		java.lang.String gtin, java.lang.String manufacturerPartNumber,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
-	public void checkCPInstances() throws PortalException;
-
-	public void deleteCPInstances(long cpDefinitionId)
+	@Indexable(type = IndexableType.REINDEX)
+	public CPInstance updateStatus(long userId, long cpInstanceId, int status,
+		ServiceContext serviceContext,
+		Map<java.lang.String, Serializable> workflowContext)
 		throws PortalException;
 }

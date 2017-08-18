@@ -45,6 +45,12 @@ public class CPMeasurementUnitServiceWrapper implements CPMeasurementUnitService
 	}
 
 	@Override
+	public void deleteCPMeasurementUnit(long cpMeasurementUnitId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_cpMeasurementUnitService.deleteCPMeasurementUnit(cpMeasurementUnitId);
+	}
+
+	@Override
 	public com.liferay.commerce.product.model.CPMeasurementUnit fetchPrimaryCPMeasurementUnit(
 		long groupId, int type) {
 		return _cpMeasurementUnitService.fetchPrimaryCPMeasurementUnit(groupId,
@@ -59,15 +65,11 @@ public class CPMeasurementUnitServiceWrapper implements CPMeasurementUnitService
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPMeasurementUnit updateCPMeasurementUnit(
-		long cpMeasurementUnitId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String key, double rate, boolean primary, double priority,
-		int type,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpMeasurementUnitService.updateCPMeasurementUnit(cpMeasurementUnitId,
-			nameMap, key, rate, primary, priority, type, serviceContext);
+	public java.util.List<com.liferay.commerce.product.model.CPMeasurementUnit> getCPMeasurementUnits(
+		long groupId, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPMeasurementUnit> orderByComparator) {
+		return _cpMeasurementUnitService.getCPMeasurementUnits(groupId, type,
+			start, end, orderByComparator);
 	}
 
 	@Override
@@ -87,17 +89,15 @@ public class CPMeasurementUnitServiceWrapper implements CPMeasurementUnitService
 	}
 
 	@Override
-	public java.util.List<com.liferay.commerce.product.model.CPMeasurementUnit> getCPMeasurementUnits(
-		long groupId, int type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPMeasurementUnit> orderByComparator) {
-		return _cpMeasurementUnitService.getCPMeasurementUnits(groupId, type,
-			start, end, orderByComparator);
-	}
-
-	@Override
-	public void deleteCPMeasurementUnit(long cpMeasurementUnitId)
+	public com.liferay.commerce.product.model.CPMeasurementUnit updateCPMeasurementUnit(
+		long cpMeasurementUnitId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.lang.String key, double rate, boolean primary, double priority,
+		int type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_cpMeasurementUnitService.deleteCPMeasurementUnit(cpMeasurementUnitId);
+		return _cpMeasurementUnitService.updateCPMeasurementUnit(cpMeasurementUnitId,
+			nameMap, key, rate, primary, priority, type, serviceContext);
 	}
 
 	@Override

@@ -145,38 +145,8 @@ public class CPDefinitionLocalizationWrapper implements CPDefinitionLocalization
 	}
 
 	@Override
-	public CPDefinitionLocalization toEscapedModel() {
-		return new CPDefinitionLocalizationWrapper(_cpDefinitionLocalization.toEscapedModel());
-	}
-
-	@Override
-	public CPDefinitionLocalization toUnescapedModel() {
-		return new CPDefinitionLocalizationWrapper(_cpDefinitionLocalization.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _cpDefinitionLocalization.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _cpDefinitionLocalization.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _cpDefinitionLocalization.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _cpDefinitionLocalization.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CPDefinitionLocalization> toCacheModel() {
-		return _cpDefinitionLocalization.toCacheModel();
+	public java.lang.Object clone() {
+		return new CPDefinitionLocalizationWrapper((CPDefinitionLocalization)_cpDefinitionLocalization.clone());
 	}
 
 	@Override
@@ -184,19 +154,34 @@ public class CPDefinitionLocalizationWrapper implements CPDefinitionLocalization
 		return _cpDefinitionLocalization.compareTo(cpDefinitionLocalization);
 	}
 
+	/**
+	* Returns the company ID of this cp definition localization.
+	*
+	* @return the company ID of this cp definition localization
+	*/
 	@Override
-	public int hashCode() {
-		return _cpDefinitionLocalization.hashCode();
+	public long getCompanyId() {
+		return _cpDefinitionLocalization.getCompanyId();
 	}
 
+	/**
+	* Returns the cp definition ID of this cp definition localization.
+	*
+	* @return the cp definition ID of this cp definition localization
+	*/
 	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _cpDefinitionLocalization.getPrimaryKeyObj();
+	public long getCPDefinitionId() {
+		return _cpDefinitionLocalization.getCPDefinitionId();
 	}
 
+	/**
+	* Returns the cp definition localization ID of this cp definition localization.
+	*
+	* @return the cp definition localization ID of this cp definition localization
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new CPDefinitionLocalizationWrapper((CPDefinitionLocalization)_cpDefinitionLocalization.clone());
+	public long getCpDefinitionLocalizationId() {
+		return _cpDefinitionLocalization.getCpDefinitionLocalizationId();
 	}
 
 	/**
@@ -207,6 +192,11 @@ public class CPDefinitionLocalizationWrapper implements CPDefinitionLocalization
 	@Override
 	public java.lang.String getDescription() {
 		return _cpDefinitionLocalization.getDescription();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _cpDefinitionLocalization.getExpandoBridge();
 	}
 
 	/**
@@ -250,6 +240,31 @@ public class CPDefinitionLocalizationWrapper implements CPDefinitionLocalization
 	}
 
 	/**
+	* Returns the mvcc version of this cp definition localization.
+	*
+	* @return the mvcc version of this cp definition localization
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _cpDefinitionLocalization.getMvccVersion();
+	}
+
+	/**
+	* Returns the primary key of this cp definition localization.
+	*
+	* @return the primary key of this cp definition localization
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _cpDefinitionLocalization.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _cpDefinitionLocalization.getPrimaryKeyObj();
+	}
+
+	/**
 	* Returns the short description of this cp definition localization.
 	*
 	* @return the short description of this cp definition localization
@@ -270,73 +285,23 @@ public class CPDefinitionLocalizationWrapper implements CPDefinitionLocalization
 	}
 
 	@Override
-	public java.lang.String toString() {
-		return _cpDefinitionLocalization.toString();
+	public int hashCode() {
+		return _cpDefinitionLocalization.hashCode();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _cpDefinitionLocalization.toXmlString();
+	public boolean isCachedModel() {
+		return _cpDefinitionLocalization.isCachedModel();
 	}
 
-	/**
-	* Returns the cp definition ID of this cp definition localization.
-	*
-	* @return the cp definition ID of this cp definition localization
-	*/
 	@Override
-	public long getCPDefinitionId() {
-		return _cpDefinitionLocalization.getCPDefinitionId();
+	public boolean isEscapedModel() {
+		return _cpDefinitionLocalization.isEscapedModel();
 	}
 
-	/**
-	* Returns the company ID of this cp definition localization.
-	*
-	* @return the company ID of this cp definition localization
-	*/
 	@Override
-	public long getCompanyId() {
-		return _cpDefinitionLocalization.getCompanyId();
-	}
-
-	/**
-	* Returns the cp definition localization ID of this cp definition localization.
-	*
-	* @return the cp definition localization ID of this cp definition localization
-	*/
-	@Override
-	public long getCpDefinitionLocalizationId() {
-		return _cpDefinitionLocalization.getCpDefinitionLocalizationId();
-	}
-
-	/**
-	* Returns the mvcc version of this cp definition localization.
-	*
-	* @return the mvcc version of this cp definition localization
-	*/
-	@Override
-	public long getMvccVersion() {
-		return _cpDefinitionLocalization.getMvccVersion();
-	}
-
-	/**
-	* Returns the primary key of this cp definition localization.
-	*
-	* @return the primary key of this cp definition localization
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _cpDefinitionLocalization.getPrimaryKey();
-	}
-
-	/**
-	* Sets the cp definition ID of this cp definition localization.
-	*
-	* @param CPDefinitionId the cp definition ID of this cp definition localization
-	*/
-	@Override
-	public void setCPDefinitionId(long CPDefinitionId) {
-		_cpDefinitionLocalization.setCPDefinitionId(CPDefinitionId);
+	public boolean isNew() {
+		return _cpDefinitionLocalization.isNew();
 	}
 
 	@Override
@@ -352,6 +317,16 @@ public class CPDefinitionLocalizationWrapper implements CPDefinitionLocalization
 	@Override
 	public void setCompanyId(long companyId) {
 		_cpDefinitionLocalization.setCompanyId(companyId);
+	}
+
+	/**
+	* Sets the cp definition ID of this cp definition localization.
+	*
+	* @param CPDefinitionId the cp definition ID of this cp definition localization
+	*/
+	@Override
+	public void setCPDefinitionId(long CPDefinitionId) {
+		_cpDefinitionLocalization.setCPDefinitionId(CPDefinitionId);
 	}
 
 	/**
@@ -375,14 +350,14 @@ public class CPDefinitionLocalizationWrapper implements CPDefinitionLocalization
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_cpDefinitionLocalization.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_cpDefinitionLocalization.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_cpDefinitionLocalization.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -478,6 +453,31 @@ public class CPDefinitionLocalizationWrapper implements CPDefinitionLocalization
 	@Override
 	public void setTitle(java.lang.String title) {
 		_cpDefinitionLocalization.setTitle(title);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<CPDefinitionLocalization> toCacheModel() {
+		return _cpDefinitionLocalization.toCacheModel();
+	}
+
+	@Override
+	public CPDefinitionLocalization toEscapedModel() {
+		return new CPDefinitionLocalizationWrapper(_cpDefinitionLocalization.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _cpDefinitionLocalization.toString();
+	}
+
+	@Override
+	public CPDefinitionLocalization toUnescapedModel() {
+		return new CPDefinitionLocalizationWrapper(_cpDefinitionLocalization.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _cpDefinitionLocalization.toXmlString();
 	}
 
 	@Override

@@ -58,6 +58,16 @@ public class CPDefinitionVirtualSettingServiceWrapper
 		return _cpDefinitionVirtualSettingService.fetchCPDefinitionVirtualSettingByCPDefinitionId(cpDefinitionId);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _cpDefinitionVirtualSettingService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
 		long cpDefinitionVirtualSettingId, long fileEntryId,
@@ -73,16 +83,6 @@ public class CPDefinitionVirtualSettingServiceWrapper
 			sampleFileEntryId, sampleUrl, termsOfUseRequired,
 			termsOfUseContentMap, termsOfUseJournalArticleResourcePrimKey,
 			serviceContext);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _cpDefinitionVirtualSettingService.getOSGiServiceIdentifier();
 	}
 
 	@Override

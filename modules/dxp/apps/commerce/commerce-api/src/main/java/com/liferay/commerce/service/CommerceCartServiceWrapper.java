@@ -41,15 +41,21 @@ public class CommerceCartServiceWrapper implements CommerceCartService,
 	}
 
 	@Override
-	public com.liferay.commerce.model.CommerceCart fetchCommerceCart(
-		java.lang.String uuid, long groupId) {
-		return _commerceCartService.fetchCommerceCart(uuid, groupId);
+	public void deleteCommerceCart(long commerceCartId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commerceCartService.deleteCommerceCart(commerceCartId);
 	}
 
 	@Override
 	public com.liferay.commerce.model.CommerceCart fetchCommerceCart(
 		long commerceCartId) {
 		return _commerceCartService.fetchCommerceCart(commerceCartId);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceCart fetchCommerceCart(
+		java.lang.String uuid, long groupId) {
+		return _commerceCartService.fetchCommerceCart(uuid, groupId);
 	}
 
 	@Override
@@ -67,6 +73,14 @@ public class CommerceCartServiceWrapper implements CommerceCartService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceCart> getCommerceCarts(
+		long groupId, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceCart> orderByComparator) {
+		return _commerceCartService.getCommerceCarts(groupId, type, start, end,
+			orderByComparator);
+	}
+
+	@Override
 	public int getCommerceCartsCount(long groupId, int type) {
 		return _commerceCartService.getCommerceCartsCount(groupId, type);
 	}
@@ -79,20 +93,6 @@ public class CommerceCartServiceWrapper implements CommerceCartService,
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _commerceCartService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public java.util.List<com.liferay.commerce.model.CommerceCart> getCommerceCarts(
-		long groupId, int type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceCart> orderByComparator) {
-		return _commerceCartService.getCommerceCarts(groupId, type, start, end,
-			orderByComparator);
-	}
-
-	@Override
-	public void deleteCommerceCart(long commerceCartId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_commerceCartService.deleteCommerceCart(commerceCartId);
 	}
 
 	@Override

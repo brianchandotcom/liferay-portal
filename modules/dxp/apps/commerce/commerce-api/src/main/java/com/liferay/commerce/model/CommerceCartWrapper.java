@@ -138,28 +138,43 @@ public class CommerceCartWrapper implements CommerceCart,
 	}
 
 	@Override
-	public CommerceCart toEscapedModel() {
-		return new CommerceCartWrapper(_commerceCart.toEscapedModel());
+	public java.lang.Object clone() {
+		return new CommerceCartWrapper((CommerceCart)_commerceCart.clone());
 	}
 
 	@Override
-	public CommerceCart toUnescapedModel() {
-		return new CommerceCartWrapper(_commerceCart.toUnescapedModel());
+	public int compareTo(CommerceCart commerceCart) {
+		return _commerceCart.compareTo(commerceCart);
 	}
 
+	/**
+	* Returns the commerce cart ID of this commerce cart.
+	*
+	* @return the commerce cart ID of this commerce cart
+	*/
 	@Override
-	public boolean isCachedModel() {
-		return _commerceCart.isCachedModel();
+	public long getCommerceCartId() {
+		return _commerceCart.getCommerceCartId();
 	}
 
+	/**
+	* Returns the company ID of this commerce cart.
+	*
+	* @return the company ID of this commerce cart
+	*/
 	@Override
-	public boolean isEscapedModel() {
-		return _commerceCart.isEscapedModel();
+	public long getCompanyId() {
+		return _commerceCart.getCompanyId();
 	}
 
+	/**
+	* Returns the create date of this commerce cart.
+	*
+	* @return the create date of this commerce cart
+	*/
 	@Override
-	public boolean isNew() {
-		return _commerceCart.isNew();
+	public Date getCreateDate() {
+		return _commerceCart.getCreateDate();
 	}
 
 	@Override
@@ -167,14 +182,49 @@ public class CommerceCartWrapper implements CommerceCart,
 		return _commerceCart.getExpandoBridge();
 	}
 
+	/**
+	* Returns the group ID of this commerce cart.
+	*
+	* @return the group ID of this commerce cart
+	*/
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommerceCart> toCacheModel() {
-		return _commerceCart.toCacheModel();
+	public long getGroupId() {
+		return _commerceCart.getGroupId();
+	}
+
+	/**
+	* Returns the modified date of this commerce cart.
+	*
+	* @return the modified date of this commerce cart
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _commerceCart.getModifiedDate();
+	}
+
+	/**
+	* Returns the name of this commerce cart.
+	*
+	* @return the name of this commerce cart
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _commerceCart.getName();
+	}
+
+	/**
+	* Returns the primary key of this commerce cart.
+	*
+	* @return the primary key of this commerce cart
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _commerceCart.getPrimaryKey();
 	}
 
 	@Override
-	public int compareTo(CommerceCart commerceCart) {
-		return _commerceCart.compareTo(commerceCart);
+	public Serializable getPrimaryKeyObj() {
+		return _commerceCart.getPrimaryKeyObj();
 	}
 
 	/**
@@ -187,29 +237,14 @@ public class CommerceCartWrapper implements CommerceCart,
 		return _commerceCart.getType();
 	}
 
-	@Override
-	public int hashCode() {
-		return _commerceCart.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceCart.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new CommerceCartWrapper((CommerceCart)_commerceCart.clone());
-	}
-
 	/**
-	* Returns the name of this commerce cart.
+	* Returns the user ID of this commerce cart.
 	*
-	* @return the name of this commerce cart
+	* @return the user ID of this commerce cart
 	*/
 	@Override
-	public java.lang.String getName() {
-		return _commerceCart.getName();
+	public long getUserId() {
+		return _commerceCart.getUserId();
 	}
 
 	/**
@@ -243,83 +278,23 @@ public class CommerceCartWrapper implements CommerceCart,
 	}
 
 	@Override
-	public java.lang.String toString() {
-		return _commerceCart.toString();
+	public int hashCode() {
+		return _commerceCart.hashCode();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _commerceCart.toXmlString();
+	public boolean isCachedModel() {
+		return _commerceCart.isCachedModel();
 	}
 
-	/**
-	* Returns the create date of this commerce cart.
-	*
-	* @return the create date of this commerce cart
-	*/
 	@Override
-	public Date getCreateDate() {
-		return _commerceCart.getCreateDate();
+	public boolean isEscapedModel() {
+		return _commerceCart.isEscapedModel();
 	}
 
-	/**
-	* Returns the modified date of this commerce cart.
-	*
-	* @return the modified date of this commerce cart
-	*/
 	@Override
-	public Date getModifiedDate() {
-		return _commerceCart.getModifiedDate();
-	}
-
-	/**
-	* Returns the commerce cart ID of this commerce cart.
-	*
-	* @return the commerce cart ID of this commerce cart
-	*/
-	@Override
-	public long getCommerceCartId() {
-		return _commerceCart.getCommerceCartId();
-	}
-
-	/**
-	* Returns the company ID of this commerce cart.
-	*
-	* @return the company ID of this commerce cart
-	*/
-	@Override
-	public long getCompanyId() {
-		return _commerceCart.getCompanyId();
-	}
-
-	/**
-	* Returns the group ID of this commerce cart.
-	*
-	* @return the group ID of this commerce cart
-	*/
-	@Override
-	public long getGroupId() {
-		return _commerceCart.getGroupId();
-	}
-
-	/**
-	* Returns the primary key of this commerce cart.
-	*
-	* @return the primary key of this commerce cart
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _commerceCart.getPrimaryKey();
-	}
-
-	/**
-	* Returns the user ID of this commerce cart.
-	*
-	* @return the user ID of this commerce cart
-	*/
-	@Override
-	public long getUserId() {
-		return _commerceCart.getUserId();
+	public boolean isNew() {
+		return _commerceCart.isNew();
 	}
 
 	@Override
@@ -363,14 +338,14 @@ public class CommerceCartWrapper implements CommerceCart,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceCart.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_commerceCart.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_commerceCart.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -476,6 +451,31 @@ public class CommerceCartWrapper implements CommerceCart,
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_commerceCart.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<CommerceCart> toCacheModel() {
+		return _commerceCart.toCacheModel();
+	}
+
+	@Override
+	public CommerceCart toEscapedModel() {
+		return new CommerceCartWrapper(_commerceCart.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _commerceCart.toString();
+	}
+
+	@Override
+	public CommerceCart toUnescapedModel() {
+		return new CommerceCartWrapper(_commerceCart.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _commerceCart.toXmlString();
 	}
 
 	@Override

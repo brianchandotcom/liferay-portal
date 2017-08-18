@@ -93,6 +93,8 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 	*/
 	public CommerceCountry createCommerceCountry(long commerceCountryId);
 
+	public void deleteCommerceCountries(long groupId);
+
 	/**
 	* Deletes the commerce country from the database. Also notifies the appropriate model listeners.
 	*
@@ -115,72 +117,6 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 	public CommerceCountry deleteCommerceCountry(long commerceCountryId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCountry fetchCommerceCountry(long commerceCountryId);
-
-	/**
-	* Returns the commerce country matching the UUID and group.
-	*
-	* @param uuid the commerce country's UUID
-	* @param groupId the primary key of the group
-	* @return the matching commerce country, or <code>null</code> if a matching commerce country could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCountry fetchCommerceCountryByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	/**
-	* Returns the commerce country with the primary key.
-	*
-	* @param commerceCountryId the primary key of the commerce country
-	* @return the commerce country
-	* @throws PortalException if a commerce country with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCountry getCommerceCountry(long commerceCountryId)
-		throws PortalException;
-
-	/**
-	* Returns the commerce country matching the UUID and group.
-	*
-	* @param uuid the commerce country's UUID
-	* @param groupId the primary key of the group
-	* @return the matching commerce country
-	* @throws PortalException if a matching commerce country could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCountry getCommerceCountryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
-
-	/**
-	* Updates the commerce country in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param commerceCountry the commerce country
-	* @return the commerce country that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public CommerceCountry updateCommerceCountry(
-		CommerceCountry commerceCountry);
-
-	public CommerceCountry updateCommerceCountry(long commerceCountryId,
-		Map<Locale, java.lang.String> nameMap, boolean billingAllowed,
-		boolean shippingAllowed, java.lang.String twoLettersISOCode,
-		java.lang.String threeLettersISOCode, int numericISOCode,
-		boolean subjectToVAT, double priority, boolean active,
-		ServiceContext serviceContext) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
 	/**
 	* @throws PortalException
 	*/
@@ -188,31 +124,7 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Returns the number of commerce countries.
-	*
-	* @return the number of commerce countries
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceCountriesCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceCountriesCount(long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceCountriesCount(long groupId, boolean active);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -252,6 +164,41 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCountry fetchCommerceCountry(long commerceCountryId);
+
+	/**
+	* Returns the commerce country matching the UUID and group.
+	*
+	* @param uuid the commerce country's UUID
+	* @param groupId the primary key of the group
+	* @return the matching commerce country, or <code>null</code> if a matching commerce country could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCountry fetchCommerceCountryByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
 	* Returns a range of all the commerce countries.
@@ -303,22 +250,75 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 		OrderByComparator<CommerceCountry> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of commerce countries.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of commerce countries
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceCountriesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceCountriesCount(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceCountriesCount(long groupId, boolean active);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the commerce country with the primary key.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param commerceCountryId the primary key of the commerce country
+	* @return the commerce country
+	* @throws PortalException if a commerce country with the primary key could not be found
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCountry getCommerceCountry(long commerceCountryId)
+		throws PortalException;
 
-	public void deleteCommerceCountries(long groupId);
+	/**
+	* Returns the commerce country matching the UUID and group.
+	*
+	* @param uuid the commerce country's UUID
+	* @param groupId the primary key of the group
+	* @return the matching commerce country
+	* @throws PortalException if a matching commerce country could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCountry getCommerceCountryByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Updates the commerce country in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param commerceCountry the commerce country
+	* @return the commerce country that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceCountry updateCommerceCountry(
+		CommerceCountry commerceCountry);
+
+	public CommerceCountry updateCommerceCountry(long commerceCountryId,
+		Map<Locale, java.lang.String> nameMap, boolean billingAllowed,
+		boolean shippingAllowed, java.lang.String twoLettersISOCode,
+		java.lang.String threeLettersISOCode, int numericISOCode,
+		boolean subjectToVAT, double priority, boolean active,
+		ServiceContext serviceContext) throws PortalException;
 }

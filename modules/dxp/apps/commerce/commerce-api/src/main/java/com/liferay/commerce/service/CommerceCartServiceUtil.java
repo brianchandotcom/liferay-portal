@@ -48,14 +48,19 @@ public class CommerceCartServiceUtil {
 		return getService().addCommerceCart(name, type, serviceContext);
 	}
 
-	public static com.liferay.commerce.model.CommerceCart fetchCommerceCart(
-		java.lang.String uuid, long groupId) {
-		return getService().fetchCommerceCart(uuid, groupId);
+	public static void deleteCommerceCart(long commerceCartId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCommerceCart(commerceCartId);
 	}
 
 	public static com.liferay.commerce.model.CommerceCart fetchCommerceCart(
 		long commerceCartId) {
 		return getService().fetchCommerceCart(commerceCartId);
+	}
+
+	public static com.liferay.commerce.model.CommerceCart fetchCommerceCart(
+		java.lang.String uuid, long groupId) {
+		return getService().fetchCommerceCart(uuid, groupId);
 	}
 
 	public static com.liferay.commerce.model.CommerceCart fetchDefaultCommerceCart(
@@ -69,6 +74,14 @@ public class CommerceCartServiceUtil {
 		return getService().getCommerceCart(commerceCartId);
 	}
 
+	public static java.util.List<com.liferay.commerce.model.CommerceCart> getCommerceCarts(
+		long groupId, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceCart> orderByComparator) {
+		return getService()
+				   .getCommerceCarts(groupId, type, start, end,
+			orderByComparator);
+	}
+
 	public static int getCommerceCartsCount(long groupId, int type) {
 		return getService().getCommerceCartsCount(groupId, type);
 	}
@@ -80,19 +93,6 @@ public class CommerceCartServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static java.util.List<com.liferay.commerce.model.CommerceCart> getCommerceCarts(
-		long groupId, int type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceCart> orderByComparator) {
-		return getService()
-				   .getCommerceCarts(groupId, type, start, end,
-			orderByComparator);
-	}
-
-	public static void deleteCommerceCart(long commerceCartId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteCommerceCart(commerceCartId);
 	}
 
 	public static CommerceCartService getService() {

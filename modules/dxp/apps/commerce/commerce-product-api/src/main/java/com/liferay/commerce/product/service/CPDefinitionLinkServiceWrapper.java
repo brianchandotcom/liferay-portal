@@ -55,11 +55,20 @@ public class CPDefinitionLinkServiceWrapper implements CPDefinitionLinkService,
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPDefinitionLink updateCPDefinitionLink(
-		long cpDefinitionLinkId, double priority)
+	public java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getCPDefinitionLinks(
+		long cpDefinitionId1, int type)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDefinitionLinkService.updateCPDefinitionLink(cpDefinitionLinkId,
-			priority);
+		return _cpDefinitionLinkService.getCPDefinitionLinks(cpDefinitionId1,
+			type);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getCPDefinitionLinks(
+		long cpDefinitionId1, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinitionLink> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionLinkService.getCPDefinitionLinks(cpDefinitionId1,
+			type, start, end, orderByComparator);
 	}
 
 	@Override
@@ -80,20 +89,11 @@ public class CPDefinitionLinkServiceWrapper implements CPDefinitionLinkService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getCPDefinitionLinks(
-		long cpDefinitionId1, int type)
+	public com.liferay.commerce.product.model.CPDefinitionLink updateCPDefinitionLink(
+		long cpDefinitionLinkId, double priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDefinitionLinkService.getCPDefinitionLinks(cpDefinitionId1,
-			type);
-	}
-
-	@Override
-	public java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getCPDefinitionLinks(
-		long cpDefinitionId1, int type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinitionLink> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDefinitionLinkService.getCPDefinitionLinks(cpDefinitionId1,
-			type, start, end, orderByComparator);
+		return _cpDefinitionLinkService.updateCPDefinitionLink(cpDefinitionLinkId,
+			priority);
 	}
 
 	@Override

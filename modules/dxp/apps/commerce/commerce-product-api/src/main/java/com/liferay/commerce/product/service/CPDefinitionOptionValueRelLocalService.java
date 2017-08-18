@@ -127,72 +127,8 @@ public interface CPDefinitionOptionValueRelLocalService extends BaseLocalService
 	public CPDefinitionOptionValueRel deleteCPDefinitionOptionValueRel(
 		long CPDefinitionOptionValueRelId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDefinitionOptionValueRel fetchCPDefinitionOptionValueRel(
-		long CPDefinitionOptionValueRelId);
-
-	/**
-	* Returns the cp definition option value rel matching the UUID and group.
-	*
-	* @param uuid the cp definition option value rel's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDefinitionOptionValueRel fetchCPDefinitionOptionValueRelByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	/**
-	* Returns the cp definition option value rel with the primary key.
-	*
-	* @param CPDefinitionOptionValueRelId the primary key of the cp definition option value rel
-	* @return the cp definition option value rel
-	* @throws PortalException if a cp definition option value rel with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDefinitionOptionValueRel getCPDefinitionOptionValueRel(
-		long CPDefinitionOptionValueRelId) throws PortalException;
-
-	/**
-	* Returns the cp definition option value rel matching the UUID and group.
-	*
-	* @param uuid the cp definition option value rel's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp definition option value rel
-	* @throws PortalException if a matching cp definition option value rel could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDefinitionOptionValueRel getCPDefinitionOptionValueRelByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
-
-	/**
-	* Updates the cp definition option value rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param cpDefinitionOptionValueRel the cp definition option value rel
-	* @return the cp definition option value rel that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
-		CPDefinitionOptionValueRel cpDefinitionOptionValueRel);
-
-	@Indexable(type = IndexableType.REINDEX)
-	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
-		long cpDefinitionOptionValueRelId,
-		Map<Locale, java.lang.String> titleMap, double priority,
-		java.lang.String key, ServiceContext serviceContext)
+	public void deleteCPDefinitionOptionValueRels(long cpDefinitionOptionRelId)
 		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* @throws PortalException
@@ -201,37 +137,7 @@ public interface CPDefinitionOptionValueRelLocalService extends BaseLocalService
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BaseModelSearchResult<CPDefinitionOptionValueRel> searchCPDefinitionOptionValueRels(
-		long companyId, long groupId, long cpDefinitionOptionRelId,
-		java.lang.String keywords, int start, int end, Sort sort)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(SearchContext searchContext);
-
-	/**
-	* Returns the number of cp definition option value rels.
-	*
-	* @return the number of cp definition option value rels
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPDefinitionOptionValueRelsCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPDefinitionOptionValueRelsCount(long cpDefinitionOptionRelId);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -271,6 +177,65 @@ public interface CPDefinitionOptionValueRelLocalService extends BaseLocalService
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionOptionValueRel fetchCPDefinitionOptionValueRel(
+		long CPDefinitionOptionValueRelId);
+
+	/**
+	* Returns the cp definition option value rel matching the UUID and group.
+	*
+	* @param uuid the cp definition option value rel's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionOptionValueRel fetchCPDefinitionOptionValueRelByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* Returns the cp definition option value rel with the primary key.
+	*
+	* @param CPDefinitionOptionValueRelId the primary key of the cp definition option value rel
+	* @return the cp definition option value rel
+	* @throws PortalException if a cp definition option value rel with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionOptionValueRel getCPDefinitionOptionValueRel(
+		long CPDefinitionOptionValueRelId) throws PortalException;
+
+	/**
+	* Returns the cp definition option value rel matching the UUID and group.
+	*
+	* @param uuid the cp definition option value rel's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp definition option value rel
+	* @throws PortalException if a matching cp definition option value rel could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionOptionValueRel getCPDefinitionOptionValueRelByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the cp definition option value rels.
@@ -323,26 +288,61 @@ public interface CPDefinitionOptionValueRelLocalService extends BaseLocalService
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of cp definition option value rels.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of cp definition option value rels
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPDefinitionOptionValueRelsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPDefinitionOptionValueRelsCount(long cpDefinitionOptionRelId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public java.lang.String getOSGiServiceIdentifier();
 
-	public void deleteCPDefinitionOptionValueRels(long cpDefinitionOptionRelId)
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
 	public void importCPDefinitionOptionRels(long cpDefinitionOptionRelId,
 		ServiceContext serviceContext) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Hits search(SearchContext searchContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CPDefinitionOptionValueRel> searchCPDefinitionOptionValueRels(
+		long companyId, long groupId, long cpDefinitionOptionRelId,
+		java.lang.String keywords, int start, int end, Sort sort)
+		throws PortalException;
+
+	/**
+	* Updates the cp definition option value rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param cpDefinitionOptionValueRel the cp definition option value rel
+	* @return the cp definition option value rel that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
+		CPDefinitionOptionValueRel cpDefinitionOptionValueRel);
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
+		long cpDefinitionOptionValueRelId,
+		Map<Locale, java.lang.String> titleMap, double priority,
+		java.lang.String key, ServiceContext serviceContext)
+		throws PortalException;
 }

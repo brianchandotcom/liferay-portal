@@ -115,93 +115,10 @@ public class CPDefinitionOptionValueRelLocalServiceUtil {
 				   .deleteCPDefinitionOptionValueRel(CPDefinitionOptionValueRelId);
 	}
 
-	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel fetchCPDefinitionOptionValueRel(
-		long CPDefinitionOptionValueRelId) {
-		return getService()
-				   .fetchCPDefinitionOptionValueRel(CPDefinitionOptionValueRelId);
-	}
-
-	/**
-	* Returns the cp definition option value rel matching the UUID and group.
-	*
-	* @param uuid the cp definition option value rel's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
-	*/
-	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel fetchCPDefinitionOptionValueRelByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return getService()
-				   .fetchCPDefinitionOptionValueRelByUuidAndGroupId(uuid,
-			groupId);
-	}
-
-	/**
-	* Returns the cp definition option value rel with the primary key.
-	*
-	* @param CPDefinitionOptionValueRelId the primary key of the cp definition option value rel
-	* @return the cp definition option value rel
-	* @throws PortalException if a cp definition option value rel with the primary key could not be found
-	*/
-	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel getCPDefinitionOptionValueRel(
-		long CPDefinitionOptionValueRelId)
+	public static void deleteCPDefinitionOptionValueRels(
+		long cpDefinitionOptionRelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getCPDefinitionOptionValueRel(CPDefinitionOptionValueRelId);
-	}
-
-	/**
-	* Returns the cp definition option value rel matching the UUID and group.
-	*
-	* @param uuid the cp definition option value rel's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp definition option value rel
-	* @throws PortalException if a matching cp definition option value rel could not be found
-	*/
-	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel getCPDefinitionOptionValueRelByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getCPDefinitionOptionValueRelByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Updates the cp definition option value rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param cpDefinitionOptionValueRel the cp definition option value rel
-	* @return the cp definition option value rel that was updated
-	*/
-	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
-		com.liferay.commerce.product.model.CPDefinitionOptionValueRel cpDefinitionOptionValueRel) {
-		return getService()
-				   .updateCPDefinitionOptionValueRel(cpDefinitionOptionValueRel);
-	}
-
-	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
-		long cpDefinitionOptionValueRelId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		double priority, java.lang.String key,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateCPDefinitionOptionValueRel(cpDefinitionOptionValueRelId,
-			titleMap, priority, key, serviceContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
+		getService().deleteCPDefinitionOptionValueRels(cpDefinitionOptionRelId);
 	}
 
 	/**
@@ -213,49 +130,8 @@ public class CPDefinitionOptionValueRelLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPDefinitionOptionValueRel> searchCPDefinitionOptionValueRels(
-		long companyId, long groupId, long cpDefinitionOptionRelId,
-		java.lang.String keywords, int start, int end,
-		com.liferay.portal.kernel.search.Sort sort)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .searchCPDefinitionOptionValueRels(companyId, groupId,
-			cpDefinitionOptionRelId, keywords, start, end, sort);
-	}
-
-	public static com.liferay.portal.kernel.search.Hits search(
-		com.liferay.portal.kernel.search.SearchContext searchContext) {
-		return getService().search(searchContext);
-	}
-
-	/**
-	* Returns the number of cp definition option value rels.
-	*
-	* @return the number of cp definition option value rels
-	*/
-	public static int getCPDefinitionOptionValueRelsCount() {
-		return getService().getCPDefinitionOptionValueRelsCount();
-	}
-
-	public static int getCPDefinitionOptionValueRelsCount(
-		long cpDefinitionOptionRelId) {
-		return getService()
-				   .getCPDefinitionOptionValueRelsCount(cpDefinitionOptionRelId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -306,6 +182,83 @@ public class CPDefinitionOptionValueRelLocalServiceUtil {
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel fetchCPDefinitionOptionValueRel(
+		long CPDefinitionOptionValueRelId) {
+		return getService()
+				   .fetchCPDefinitionOptionValueRel(CPDefinitionOptionValueRelId);
+	}
+
+	/**
+	* Returns the cp definition option value rel matching the UUID and group.
+	*
+	* @param uuid the cp definition option value rel's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
+	*/
+	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel fetchCPDefinitionOptionValueRelByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return getService()
+				   .fetchCPDefinitionOptionValueRelByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the cp definition option value rel with the primary key.
+	*
+	* @param CPDefinitionOptionValueRelId the primary key of the cp definition option value rel
+	* @return the cp definition option value rel
+	* @throws PortalException if a cp definition option value rel with the primary key could not be found
+	*/
+	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel getCPDefinitionOptionValueRel(
+		long CPDefinitionOptionValueRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCPDefinitionOptionValueRel(CPDefinitionOptionValueRelId);
+	}
+
+	/**
+	* Returns the cp definition option value rel matching the UUID and group.
+	*
+	* @param uuid the cp definition option value rel's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp definition option value rel
+	* @throws PortalException if a matching cp definition option value rel could not be found
+	*/
+	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel getCPDefinitionOptionValueRelByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCPDefinitionOptionValueRelByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -372,33 +325,42 @@ public class CPDefinitionOptionValueRelLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of cp definition option value rels.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of cp definition option value rels
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
+	public static int getCPDefinitionOptionValueRelsCount() {
+		return getService().getCPDefinitionOptionValueRelsCount();
+	}
+
+	public static int getCPDefinitionOptionValueRelsCount(
+		long cpDefinitionOptionRelId) {
+		return getService()
+				   .getCPDefinitionOptionValueRelsCount(cpDefinitionOptionRelId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static void deleteCPDefinitionOptionValueRels(
-		long cpDefinitionOptionRelId)
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteCPDefinitionOptionValueRels(cpDefinitionOptionRelId);
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	public static void importCPDefinitionOptionRels(
@@ -408,6 +370,44 @@ public class CPDefinitionOptionValueRelLocalServiceUtil {
 		getService()
 			.importCPDefinitionOptionRels(cpDefinitionOptionRelId,
 			serviceContext);
+	}
+
+	public static com.liferay.portal.kernel.search.Hits search(
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return getService().search(searchContext);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPDefinitionOptionValueRel> searchCPDefinitionOptionValueRels(
+		long companyId, long groupId, long cpDefinitionOptionRelId,
+		java.lang.String keywords, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchCPDefinitionOptionValueRels(companyId, groupId,
+			cpDefinitionOptionRelId, keywords, start, end, sort);
+	}
+
+	/**
+	* Updates the cp definition option value rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param cpDefinitionOptionValueRel the cp definition option value rel
+	* @return the cp definition option value rel that was updated
+	*/
+	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
+		com.liferay.commerce.product.model.CPDefinitionOptionValueRel cpDefinitionOptionValueRel) {
+		return getService()
+				   .updateCPDefinitionOptionValueRel(cpDefinitionOptionValueRel);
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
+		long cpDefinitionOptionValueRelId,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		double priority, java.lang.String key,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCPDefinitionOptionValueRel(cpDefinitionOptionValueRelId,
+			titleMap, priority, key, serviceContext);
 	}
 
 	public static CPDefinitionOptionValueRelLocalService getService() {

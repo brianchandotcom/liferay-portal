@@ -44,33 +44,16 @@ public class CommerceCartItemServiceWrapper implements CommerceCartItemService,
 	}
 
 	@Override
+	public void deleteCommerceCartItem(long commerceCartItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commerceCartItemService.deleteCommerceCartItem(commerceCartItemId);
+	}
+
+	@Override
 	public com.liferay.commerce.model.CommerceCartItem getCommerceCartItem(
 		long commerceCartItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceCartItemService.getCommerceCartItem(commerceCartItemId);
-	}
-
-	@Override
-	public com.liferay.commerce.model.CommerceCartItem updateCommerceCartItem(
-		long commerceCartItemId, int quantity, java.lang.String json)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceCartItemService.updateCommerceCartItem(commerceCartItemId,
-			quantity, json);
-	}
-
-	@Override
-	public int getCommerceCartItemsCount(long commerceCartId) {
-		return _commerceCartItemService.getCommerceCartItemsCount(commerceCartId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _commerceCartItemService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -89,9 +72,26 @@ public class CommerceCartItemServiceWrapper implements CommerceCartItemService,
 	}
 
 	@Override
-	public void deleteCommerceCartItem(long commerceCartItemId)
+	public int getCommerceCartItemsCount(long commerceCartId) {
+		return _commerceCartItemService.getCommerceCartItemsCount(commerceCartId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _commerceCartItemService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceCartItem updateCommerceCartItem(
+		long commerceCartItemId, int quantity, java.lang.String json)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_commerceCartItemService.deleteCommerceCartItem(commerceCartItemId);
+		return _commerceCartItemService.updateCommerceCartItem(commerceCartItemId,
+			quantity, json);
 	}
 
 	@Override

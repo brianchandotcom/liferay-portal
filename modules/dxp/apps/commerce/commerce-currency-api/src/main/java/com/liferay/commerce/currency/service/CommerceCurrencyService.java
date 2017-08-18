@@ -65,32 +65,11 @@ public interface CommerceCurrencyService extends BaseService {
 		boolean active, ServiceContext serviceContext)
 		throws PortalException;
 
+	public void deleteCommerceCurrency(long commerceCurrencyId)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceCurrency fetchPrimaryCommerceCurrency(long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCurrency getCommerceCurrency(long commerceCurrencyId)
-		throws PortalException;
-
-	public CommerceCurrency updateCommerceCurrency(long commerceCurrencyId,
-		Map<Locale, java.lang.String> codeMap,
-		Map<Locale, java.lang.String> nameMap, double rate,
-		java.lang.String roundingType, boolean primary, double priority,
-		boolean active, ServiceContext serviceContext)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceCurrenciesCount(long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceCurrenciesCount(long groupId, boolean active);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceCurrency> getCommerceCurrencies(long groupId,
@@ -102,6 +81,27 @@ public interface CommerceCurrencyService extends BaseService {
 		int start, int end,
 		OrderByComparator<CommerceCurrency> orderByComparator);
 
-	public void deleteCommerceCurrency(long commerceCurrencyId)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceCurrenciesCount(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceCurrenciesCount(long groupId, boolean active);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCurrency getCommerceCurrency(long commerceCurrencyId)
+		throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	public CommerceCurrency updateCommerceCurrency(long commerceCurrencyId,
+		Map<Locale, java.lang.String> codeMap,
+		Map<Locale, java.lang.String> nameMap, double rate,
+		java.lang.String roundingType, boolean primary, double priority,
+		boolean active, ServiceContext serviceContext)
 		throws PortalException;
 }

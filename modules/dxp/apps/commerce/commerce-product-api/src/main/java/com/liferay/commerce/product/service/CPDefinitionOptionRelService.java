@@ -67,15 +67,15 @@ public interface CPDefinitionOptionRelService extends BaseService {
 		ServiceContext serviceContext) throws PortalException;
 
 	public CPDefinitionOptionRel addCPDefinitionOptionRel(long cpDefinitionId,
-		long cpOptionId, ServiceContext serviceContext)
-		throws PortalException;
-
-	public CPDefinitionOptionRel addCPDefinitionOptionRel(long cpDefinitionId,
 		long cpOptionId, Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> descriptionMap,
 		java.lang.String ddmFormFieldTypeName, double priority,
 		boolean facetable, boolean required, boolean skuContributor,
 		boolean importOptionValue, ServiceContext serviceContext)
+		throws PortalException;
+
+	public CPDefinitionOptionRel addCPDefinitionOptionRel(long cpDefinitionId,
+		long cpOptionId, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CPDefinitionOptionRel deleteCPDefinitionOptionRel(
@@ -91,6 +91,44 @@ public interface CPDefinitionOptionRelService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDefinitionOptionRel getCPDefinitionOptionRel(
 		long cpDefinitionOptionRelId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels(
+		long cpDefinitionId, int start, int end) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels(
+		long cpDefinitionId, int start, int end,
+		OrderByComparator<CPDefinitionOptionRel> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPDefinitionOptionRelsCount(long cpDefinitionId)
+		throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSkuContributorCPDefinitionOptionRelCount(long cpDefinitionId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionOptionRel> getSkuContributorCPDefinitionOptionRels(
+		long cpDefinitionId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Hits search(SearchContext searchContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CPDefinitionOptionRel> searchCPDefinitionOptionRels(
+		long companyId, long groupId, long cpDefinitionId,
+		java.lang.String keywords, int start, int end, Sort sort)
+		throws PortalException;
 
 	public CPDefinitionOptionRel setFacetable(long cpDefinitionOptionRelId,
 		boolean facetable) throws PortalException;
@@ -109,42 +147,4 @@ public interface CPDefinitionOptionRelService extends BaseService {
 		java.lang.String ddmFormFieldTypeName, double priority,
 		boolean facetable, boolean required, boolean skuContributor,
 		ServiceContext serviceContext) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BaseModelSearchResult<CPDefinitionOptionRel> searchCPDefinitionOptionRels(
-		long companyId, long groupId, long cpDefinitionId,
-		java.lang.String keywords, int start, int end, Sort sort)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(SearchContext searchContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPDefinitionOptionRelsCount(long cpDefinitionId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSkuContributorCPDefinitionOptionRelCount(long cpDefinitionId)
-		throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels(
-		long cpDefinitionId, int start, int end) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels(
-		long cpDefinitionId, int start, int end,
-		OrderByComparator<CPDefinitionOptionRel> orderByComparator)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPDefinitionOptionRel> getSkuContributorCPDefinitionOptionRels(
-		long cpDefinitionId) throws PortalException;
 }

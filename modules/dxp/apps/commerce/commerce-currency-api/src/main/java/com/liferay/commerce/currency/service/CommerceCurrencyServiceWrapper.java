@@ -46,51 +46,15 @@ public class CommerceCurrencyServiceWrapper implements CommerceCurrencyService,
 	}
 
 	@Override
+	public void deleteCommerceCurrency(long commerceCurrencyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commerceCurrencyService.deleteCommerceCurrency(commerceCurrencyId);
+	}
+
+	@Override
 	public com.liferay.commerce.currency.model.CommerceCurrency fetchPrimaryCommerceCurrency(
 		long groupId) {
 		return _commerceCurrencyService.fetchPrimaryCommerceCurrency(groupId);
-	}
-
-	@Override
-	public com.liferay.commerce.currency.model.CommerceCurrency getCommerceCurrency(
-		long commerceCurrencyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceCurrencyService.getCommerceCurrency(commerceCurrencyId);
-	}
-
-	@Override
-	public com.liferay.commerce.currency.model.CommerceCurrency updateCommerceCurrency(
-		long commerceCurrencyId,
-		java.util.Map<java.util.Locale, java.lang.String> codeMap,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap, double rate,
-		java.lang.String roundingType, boolean primary, double priority,
-		boolean active,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceCurrencyService.updateCommerceCurrency(commerceCurrencyId,
-			codeMap, nameMap, rate, roundingType, primary, priority, active,
-			serviceContext);
-	}
-
-	@Override
-	public int getCommerceCurrenciesCount(long groupId) {
-		return _commerceCurrencyService.getCommerceCurrenciesCount(groupId);
-	}
-
-	@Override
-	public int getCommerceCurrenciesCount(long groupId, boolean active) {
-		return _commerceCurrencyService.getCommerceCurrenciesCount(groupId,
-			active);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _commerceCurrencyService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -110,9 +74,45 @@ public class CommerceCurrencyServiceWrapper implements CommerceCurrencyService,
 	}
 
 	@Override
-	public void deleteCommerceCurrency(long commerceCurrencyId)
+	public int getCommerceCurrenciesCount(long groupId) {
+		return _commerceCurrencyService.getCommerceCurrenciesCount(groupId);
+	}
+
+	@Override
+	public int getCommerceCurrenciesCount(long groupId, boolean active) {
+		return _commerceCurrencyService.getCommerceCurrenciesCount(groupId,
+			active);
+	}
+
+	@Override
+	public com.liferay.commerce.currency.model.CommerceCurrency getCommerceCurrency(
+		long commerceCurrencyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_commerceCurrencyService.deleteCommerceCurrency(commerceCurrencyId);
+		return _commerceCurrencyService.getCommerceCurrency(commerceCurrencyId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _commerceCurrencyService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.commerce.currency.model.CommerceCurrency updateCommerceCurrency(
+		long commerceCurrencyId,
+		java.util.Map<java.util.Locale, java.lang.String> codeMap,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap, double rate,
+		java.lang.String roundingType, boolean primary, double priority,
+		boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCurrencyService.updateCommerceCurrency(commerceCurrencyId,
+			codeMap, nameMap, rate, roundingType, primary, priority, active,
+			serviceContext);
 	}
 
 	@Override

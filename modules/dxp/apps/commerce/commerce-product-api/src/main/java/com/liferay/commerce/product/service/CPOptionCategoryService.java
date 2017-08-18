@@ -75,17 +75,20 @@ public interface CPOptionCategoryService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPOptionCategory getCPOptionCategory(long cpOptionCategoryId)
-		throws PortalException;
+	public List<CPOptionCategory> getCPOptionCategories(long groupId,
+		int start, int end);
 
-	public CPOptionCategory updateCPOptionCategory(long cpOptionCategoryId,
-		Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> descriptionMap, double priority,
-		java.lang.String key, ServiceContext serviceContext)
-		throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPOptionCategory> getCPOptionCategories(long groupId,
+		int start, int end,
+		OrderByComparator<CPOptionCategory> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPOptionCategoriesCount(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPOptionCategory getCPOptionCategory(long cpOptionCategoryId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -94,12 +97,9 @@ public interface CPOptionCategoryService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPOptionCategory> getCPOptionCategories(long groupId,
-		int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPOptionCategory> getCPOptionCategories(long groupId,
-		int start, int end,
-		OrderByComparator<CPOptionCategory> orderByComparator);
+	public CPOptionCategory updateCPOptionCategory(long cpOptionCategoryId,
+		Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> descriptionMap, double priority,
+		java.lang.String key, ServiceContext serviceContext)
+		throws PortalException;
 }

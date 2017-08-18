@@ -59,10 +59,19 @@ public class CPDefinitionLinkServiceUtil {
 		return getService().getCPDefinitionLink(cpDefinitionLinkId);
 	}
 
-	public static com.liferay.commerce.product.model.CPDefinitionLink updateCPDefinitionLink(
-		long cpDefinitionLinkId, double priority)
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getCPDefinitionLinks(
+		long cpDefinitionId1, int type)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateCPDefinitionLink(cpDefinitionLinkId, priority);
+		return getService().getCPDefinitionLinks(cpDefinitionId1, type);
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getCPDefinitionLinks(
+		long cpDefinitionId1, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinitionLink> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCPDefinitionLinks(cpDefinitionId1, type, start, end,
+			orderByComparator);
 	}
 
 	public static int getCPDefinitionLinksCount(long cpDefinitionId1, int type)
@@ -79,19 +88,10 @@ public class CPDefinitionLinkServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getCPDefinitionLinks(
-		long cpDefinitionId1, int type)
+	public static com.liferay.commerce.product.model.CPDefinitionLink updateCPDefinitionLink(
+		long cpDefinitionLinkId, double priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCPDefinitionLinks(cpDefinitionId1, type);
-	}
-
-	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getCPDefinitionLinks(
-		long cpDefinitionId1, int type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinitionLink> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getCPDefinitionLinks(cpDefinitionId1, type, start, end,
-			orderByComparator);
+		return getService().updateCPDefinitionLink(cpDefinitionLinkId, priority);
 	}
 
 	public static void updateCPDefinitionLinks(long cpDefinitionId1,

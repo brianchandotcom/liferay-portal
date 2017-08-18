@@ -51,20 +51,31 @@ public class CommerceRegionServiceUtil {
 			active, serviceContext);
 	}
 
+	public static void deleteCommerceRegion(long commerceRegionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCommerceRegion(commerceRegionId);
+	}
+
 	public static com.liferay.commerce.model.CommerceRegion getCommerceRegion(
 		long commerceRegionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCommerceRegion(commerceRegionId);
 	}
 
-	public static com.liferay.commerce.model.CommerceRegion updateCommerceRegion(
-		long commerceRegionId, java.lang.String name, java.lang.String code,
-		double priority, boolean active,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static java.util.List<com.liferay.commerce.model.CommerceRegion> getCommerceRegions(
+		long commerceCountryId, boolean active, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceRegion> orderByComparator) {
 		return getService()
-				   .updateCommerceRegion(commerceRegionId, name, code,
-			priority, active, serviceContext);
+				   .getCommerceRegions(commerceCountryId, active, start, end,
+			orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.commerce.model.CommerceRegion> getCommerceRegions(
+		long commerceCountryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceRegion> orderByComparator) {
+		return getService()
+				   .getCommerceRegions(commerceCountryId, start, end,
+			orderByComparator);
 	}
 
 	public static int getCommerceRegionsCount(long commerceCountryId) {
@@ -85,25 +96,14 @@ public class CommerceRegionServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List<com.liferay.commerce.model.CommerceRegion> getCommerceRegions(
-		long commerceCountryId, boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceRegion> orderByComparator) {
-		return getService()
-				   .getCommerceRegions(commerceCountryId, active, start, end,
-			orderByComparator);
-	}
-
-	public static java.util.List<com.liferay.commerce.model.CommerceRegion> getCommerceRegions(
-		long commerceCountryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceRegion> orderByComparator) {
-		return getService()
-				   .getCommerceRegions(commerceCountryId, start, end,
-			orderByComparator);
-	}
-
-	public static void deleteCommerceRegion(long commerceRegionId)
+	public static com.liferay.commerce.model.CommerceRegion updateCommerceRegion(
+		long commerceRegionId, java.lang.String name, java.lang.String code,
+		double priority, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteCommerceRegion(commerceRegionId);
+		return getService()
+				   .updateCommerceRegion(commerceRegionId, name, code,
+			priority, active, serviceContext);
 	}
 
 	public static CommerceRegionService getService() {

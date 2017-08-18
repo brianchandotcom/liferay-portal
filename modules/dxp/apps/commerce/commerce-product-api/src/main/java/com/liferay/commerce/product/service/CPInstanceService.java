@@ -71,6 +71,9 @@ public interface CPInstanceService extends BaseService {
 		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
+	public void buildCPInstances(long cpDefinitionId,
+		ServiceContext serviceContext) throws PortalException;
+
 	public CPInstance deleteCPInstance(CPInstance cpInstance)
 		throws PortalException;
 
@@ -81,26 +84,14 @@ public interface CPInstanceService extends BaseService {
 	public CPInstance getCPInstance(long cpInstanceId)
 		throws PortalException;
 
-	public CPInstance updateCPInstance(long cpInstanceId, java.lang.String sku,
-		java.lang.String gtin, java.lang.String manufacturerPartNumber,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
-		ServiceContext serviceContext) throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPInstance> getCPInstances(long cpDefinitionId, int start,
+		int end) throws PortalException;
 
-	public CPInstance updateStatus(long userId, long cpInstanceId, int status,
-		ServiceContext serviceContext,
-		Map<java.lang.String, Serializable> workflowContext)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPInstance> getCPInstances(long cpDefinitionId, int status,
+		int start, int end, OrderByComparator<CPInstance> orderByComparator)
 		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BaseModelSearchResult<CPInstance> searchCPInstances(long companyId,
-		long groupId, long cpDefinitionId, java.lang.String keywords,
-		int status, int start, int end, Sort sort) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(SearchContext searchContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPInstancesCount(long cpDefinitionId, int status)
@@ -114,14 +105,23 @@ public interface CPInstanceService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPInstance> getCPInstances(long cpDefinitionId, int start,
-		int end) throws PortalException;
+	public Hits search(SearchContext searchContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPInstance> getCPInstances(long cpDefinitionId, int status,
-		int start, int end, OrderByComparator<CPInstance> orderByComparator)
-		throws PortalException;
+	public BaseModelSearchResult<CPInstance> searchCPInstances(long companyId,
+		long groupId, long cpDefinitionId, java.lang.String keywords,
+		int status, int start, int end, Sort sort) throws PortalException;
 
-	public void buildCPInstances(long cpDefinitionId,
+	public CPInstance updateCPInstance(long cpInstanceId, java.lang.String sku,
+		java.lang.String gtin, java.lang.String manufacturerPartNumber,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
+
+	public CPInstance updateStatus(long userId, long cpInstanceId, int status,
+		ServiceContext serviceContext,
+		Map<java.lang.String, Serializable> workflowContext)
+		throws PortalException;
 }

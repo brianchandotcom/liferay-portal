@@ -168,64 +168,8 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	}
 
 	@Override
-	public CPOptionCategory getCPOptionCategory()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpSpecificationOption.getCPOptionCategory();
-	}
-
-	@Override
-	public CPSpecificationOption toEscapedModel() {
-		return new CPSpecificationOptionWrapper(_cpSpecificationOption.toEscapedModel());
-	}
-
-	@Override
-	public CPSpecificationOption toUnescapedModel() {
-		return new CPSpecificationOptionWrapper(_cpSpecificationOption.toUnescapedModel());
-	}
-
-	/**
-	* Returns the facetable of this cp specification option.
-	*
-	* @return the facetable of this cp specification option
-	*/
-	@Override
-	public boolean getFacetable() {
-		return _cpSpecificationOption.getFacetable();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _cpSpecificationOption.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _cpSpecificationOption.isEscapedModel();
-	}
-
-	/**
-	* Returns <code>true</code> if this cp specification option is facetable.
-	*
-	* @return <code>true</code> if this cp specification option is facetable; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isFacetable() {
-		return _cpSpecificationOption.isFacetable();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _cpSpecificationOption.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _cpSpecificationOption.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CPSpecificationOption> toCacheModel() {
-		return _cpSpecificationOption.toCacheModel();
+	public java.lang.Object clone() {
+		return new CPSpecificationOptionWrapper((CPSpecificationOption)_cpSpecificationOption.clone());
 	}
 
 	@Override
@@ -234,18 +178,54 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	}
 
 	@Override
-	public int hashCode() {
-		return _cpSpecificationOption.hashCode();
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _cpSpecificationOption.getAvailableLanguageIds();
+	}
+
+	/**
+	* Returns the company ID of this cp specification option.
+	*
+	* @return the company ID of this cp specification option
+	*/
+	@Override
+	public long getCompanyId() {
+		return _cpSpecificationOption.getCompanyId();
 	}
 
 	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _cpSpecificationOption.getPrimaryKeyObj();
+	public CPOptionCategory getCPOptionCategory()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpSpecificationOption.getCPOptionCategory();
 	}
 
+	/**
+	* Returns the cp option category ID of this cp specification option.
+	*
+	* @return the cp option category ID of this cp specification option
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new CPSpecificationOptionWrapper((CPSpecificationOption)_cpSpecificationOption.clone());
+	public long getCPOptionCategoryId() {
+		return _cpSpecificationOption.getCPOptionCategoryId();
+	}
+
+	/**
+	* Returns the cp specification option ID of this cp specification option.
+	*
+	* @return the cp specification option ID of this cp specification option
+	*/
+	@Override
+	public long getCPSpecificationOptionId() {
+		return _cpSpecificationOption.getCPSpecificationOptionId();
+	}
+
+	/**
+	* Returns the create date of this cp specification option.
+	*
+	* @return the create date of this cp specification option
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _cpSpecificationOption.getCreateDate();
 	}
 
 	@Override
@@ -261,30 +241,6 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	@Override
 	public java.lang.String getDescription() {
 		return _cpSpecificationOption.getDescription();
-	}
-
-	/**
-	* Returns the localized description of this cp specification option in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @return the localized description of this cp specification option
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
-		return _cpSpecificationOption.getDescription(languageId);
-	}
-
-	/**
-	* Returns the localized description of this cp specification option in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this cp specification option
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
-		return _cpSpecificationOption.getDescription(languageId, useDefault);
 	}
 
 	/**
@@ -311,6 +267,30 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 		return _cpSpecificationOption.getDescription(locale, useDefault);
 	}
 
+	/**
+	* Returns the localized description of this cp specification option in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized description of this cp specification option
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId) {
+		return _cpSpecificationOption.getDescription(languageId);
+	}
+
+	/**
+	* Returns the localized description of this cp specification option in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this cp specification option
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId,
+		boolean useDefault) {
+		return _cpSpecificationOption.getDescription(languageId, useDefault);
+	}
+
 	@Override
 	public java.lang.String getDescriptionCurrentLanguageId() {
 		return _cpSpecificationOption.getDescriptionCurrentLanguageId();
@@ -319,6 +299,41 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	@Override
 	public java.lang.String getDescriptionCurrentValue() {
 		return _cpSpecificationOption.getDescriptionCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized descriptions of this cp specification option.
+	*
+	* @return the locales and localized descriptions of this cp specification option
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+		return _cpSpecificationOption.getDescriptionMap();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _cpSpecificationOption.getExpandoBridge();
+	}
+
+	/**
+	* Returns the facetable of this cp specification option.
+	*
+	* @return the facetable of this cp specification option
+	*/
+	@Override
+	public boolean getFacetable() {
+		return _cpSpecificationOption.getFacetable();
+	}
+
+	/**
+	* Returns the group ID of this cp specification option.
+	*
+	* @return the group ID of this cp specification option
+	*/
+	@Override
+	public long getGroupId() {
+		return _cpSpecificationOption.getGroupId();
 	}
 
 	/**
@@ -332,6 +347,41 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	}
 
 	/**
+	* Returns the last publish date of this cp specification option.
+	*
+	* @return the last publish date of this cp specification option
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _cpSpecificationOption.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this cp specification option.
+	*
+	* @return the modified date of this cp specification option
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _cpSpecificationOption.getModifiedDate();
+	}
+
+	/**
+	* Returns the primary key of this cp specification option.
+	*
+	* @return the primary key of this cp specification option
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _cpSpecificationOption.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _cpSpecificationOption.getPrimaryKeyObj();
+	}
+
+	/**
 	* Returns the title of this cp specification option.
 	*
 	* @return the title of this cp specification option
@@ -339,6 +389,29 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	@Override
 	public java.lang.String getTitle() {
 		return _cpSpecificationOption.getTitle();
+	}
+
+	/**
+	* Returns the localized title of this cp specification option in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized title of this cp specification option
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale) {
+		return _cpSpecificationOption.getTitle(locale);
+	}
+
+	/**
+	* Returns the localized title of this cp specification option in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized title of this cp specification option. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
+		return _cpSpecificationOption.getTitle(locale, useDefault);
 	}
 
 	/**
@@ -365,29 +438,6 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 		return _cpSpecificationOption.getTitle(languageId, useDefault);
 	}
 
-	/**
-	* Returns the localized title of this cp specification option in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized title of this cp specification option
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale) {
-		return _cpSpecificationOption.getTitle(locale);
-	}
-
-	/**
-	* Returns the localized title of this cp specification option in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized title of this cp specification option. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
-		return _cpSpecificationOption.getTitle(locale, useDefault);
-	}
-
 	@Override
 	public java.lang.String getTitleCurrentLanguageId() {
 		return _cpSpecificationOption.getTitleCurrentLanguageId();
@@ -396,6 +446,26 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	@Override
 	public java.lang.String getTitleCurrentValue() {
 		return _cpSpecificationOption.getTitleCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized titles of this cp specification option.
+	*
+	* @return the locales and localized titles of this cp specification option
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getTitleMap() {
+		return _cpSpecificationOption.getTitleMap();
+	}
+
+	/**
+	* Returns the user ID of this cp specification option.
+	*
+	* @return the user ID of this cp specification option
+	*/
+	@Override
+	public long getUserId() {
+		return _cpSpecificationOption.getUserId();
 	}
 
 	/**
@@ -429,128 +499,33 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	}
 
 	@Override
-	public java.lang.String toString() {
-		return _cpSpecificationOption.toString();
+	public int hashCode() {
+		return _cpSpecificationOption.hashCode();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _cpSpecificationOption.toXmlString();
+	public boolean isCachedModel() {
+		return _cpSpecificationOption.isCachedModel();
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
-		return _cpSpecificationOption.getAvailableLanguageIds();
-	}
-
-	/**
-	* Returns the create date of this cp specification option.
-	*
-	* @return the create date of this cp specification option
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _cpSpecificationOption.getCreateDate();
+	public boolean isEscapedModel() {
+		return _cpSpecificationOption.isEscapedModel();
 	}
 
 	/**
-	* Returns the last publish date of this cp specification option.
+	* Returns <code>true</code> if this cp specification option is facetable.
 	*
-	* @return the last publish date of this cp specification option
+	* @return <code>true</code> if this cp specification option is facetable; <code>false</code> otherwise
 	*/
 	@Override
-	public Date getLastPublishDate() {
-		return _cpSpecificationOption.getLastPublishDate();
+	public boolean isFacetable() {
+		return _cpSpecificationOption.isFacetable();
 	}
 
-	/**
-	* Returns the modified date of this cp specification option.
-	*
-	* @return the modified date of this cp specification option
-	*/
 	@Override
-	public Date getModifiedDate() {
-		return _cpSpecificationOption.getModifiedDate();
-	}
-
-	/**
-	* Returns a map of the locales and localized descriptions of this cp specification option.
-	*
-	* @return the locales and localized descriptions of this cp specification option
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
-		return _cpSpecificationOption.getDescriptionMap();
-	}
-
-	/**
-	* Returns a map of the locales and localized titles of this cp specification option.
-	*
-	* @return the locales and localized titles of this cp specification option
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getTitleMap() {
-		return _cpSpecificationOption.getTitleMap();
-	}
-
-	/**
-	* Returns the cp option category ID of this cp specification option.
-	*
-	* @return the cp option category ID of this cp specification option
-	*/
-	@Override
-	public long getCPOptionCategoryId() {
-		return _cpSpecificationOption.getCPOptionCategoryId();
-	}
-
-	/**
-	* Returns the cp specification option ID of this cp specification option.
-	*
-	* @return the cp specification option ID of this cp specification option
-	*/
-	@Override
-	public long getCPSpecificationOptionId() {
-		return _cpSpecificationOption.getCPSpecificationOptionId();
-	}
-
-	/**
-	* Returns the company ID of this cp specification option.
-	*
-	* @return the company ID of this cp specification option
-	*/
-	@Override
-	public long getCompanyId() {
-		return _cpSpecificationOption.getCompanyId();
-	}
-
-	/**
-	* Returns the group ID of this cp specification option.
-	*
-	* @return the group ID of this cp specification option
-	*/
-	@Override
-	public long getGroupId() {
-		return _cpSpecificationOption.getGroupId();
-	}
-
-	/**
-	* Returns the primary key of this cp specification option.
-	*
-	* @return the primary key of this cp specification option
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _cpSpecificationOption.getPrimaryKey();
-	}
-
-	/**
-	* Returns the user ID of this cp specification option.
-	*
-	* @return the user ID of this cp specification option
-	*/
-	@Override
-	public long getUserId() {
-		return _cpSpecificationOption.getUserId();
+	public boolean isNew() {
+		return _cpSpecificationOption.isNew();
 	}
 
 	@Override
@@ -571,6 +546,21 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 		_cpSpecificationOption.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
+	@Override
+	public void setCachedModel(boolean cachedModel) {
+		_cpSpecificationOption.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this cp specification option.
+	*
+	* @param companyId the company ID of this cp specification option
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_cpSpecificationOption.setCompanyId(companyId);
+	}
+
 	/**
 	* Sets the cp option category ID of this cp specification option.
 	*
@@ -589,21 +579,6 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	@Override
 	public void setCPSpecificationOptionId(long CPSpecificationOptionId) {
 		_cpSpecificationOption.setCPSpecificationOptionId(CPSpecificationOptionId);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_cpSpecificationOption.setCachedModel(cachedModel);
-	}
-
-	/**
-	* Sets the company ID of this cp specification option.
-	*
-	* @param companyId the company ID of this cp specification option
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_cpSpecificationOption.setCompanyId(companyId);
 	}
 
 	/**
@@ -681,14 +656,14 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_cpSpecificationOption.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_cpSpecificationOption.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_cpSpecificationOption.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -865,6 +840,31 @@ public class CPSpecificationOptionWrapper implements CPSpecificationOption,
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_cpSpecificationOption.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<CPSpecificationOption> toCacheModel() {
+		return _cpSpecificationOption.toCacheModel();
+	}
+
+	@Override
+	public CPSpecificationOption toEscapedModel() {
+		return new CPSpecificationOptionWrapper(_cpSpecificationOption.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _cpSpecificationOption.toString();
+	}
+
+	@Override
+	public CPSpecificationOption toUnescapedModel() {
+		return new CPSpecificationOptionWrapper(_cpSpecificationOption.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _cpSpecificationOption.toXmlString();
 	}
 
 	@Override

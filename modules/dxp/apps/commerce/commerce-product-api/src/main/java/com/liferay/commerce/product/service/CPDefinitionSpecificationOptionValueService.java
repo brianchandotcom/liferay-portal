@@ -63,6 +63,9 @@ public interface CPDefinitionSpecificationOptionValueService extends BaseService
 		double priority, ServiceContext serviceContext)
 		throws PortalException;
 
+	public void deleteCPDefinitionSpecificationOptionValue(
+		long cpDefinitionSpecificationOptionValueId) throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDefinitionSpecificationOptionValue fetchCPDefinitionSpecificationOptionValue(
 		long cpDefinitionSpecificationOptionValueId) throws PortalException;
@@ -71,10 +74,9 @@ public interface CPDefinitionSpecificationOptionValueService extends BaseService
 	public CPDefinitionSpecificationOptionValue getCPDefinitionSpecificationOptionValue(
 		long cpDefinitionSpecificationOptionValueId) throws PortalException;
 
-	public CPDefinitionSpecificationOptionValue updateCPDefinitionSpecificationOptionValue(
-		long cpDefinitionSpecificationOptionValueId, long cpOptionCategoryId,
-		Map<Locale, java.lang.String> valueMap, double priority,
-		ServiceContext serviceContext) throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionSpecificationOptionValue> getCPDefinitionSpecificationOptionValues(
+		long cpDefinitionId) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -83,10 +85,8 @@ public interface CPDefinitionSpecificationOptionValueService extends BaseService
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPDefinitionSpecificationOptionValue> getCPDefinitionSpecificationOptionValues(
-		long cpDefinitionId) throws PortalException;
-
-	public void deleteCPDefinitionSpecificationOptionValue(
-		long cpDefinitionSpecificationOptionValueId) throws PortalException;
+	public CPDefinitionSpecificationOptionValue updateCPDefinitionSpecificationOptionValue(
+		long cpDefinitionSpecificationOptionValueId, long cpOptionCategoryId,
+		Map<Locale, java.lang.String> valueMap, double priority,
+		ServiceContext serviceContext) throws PortalException;
 }

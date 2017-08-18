@@ -157,54 +157,8 @@ public class CPDefinitionOptionValueRelWrapper
 	}
 
 	@Override
-	public CPDefinitionOptionRel getCPDefinitionOptionRel()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDefinitionOptionValueRel.getCPDefinitionOptionRel();
-	}
-
-	@Override
-	public CPDefinitionOptionValueRel toEscapedModel() {
-		return new CPDefinitionOptionValueRelWrapper(_cpDefinitionOptionValueRel.toEscapedModel());
-	}
-
-	@Override
-	public CPDefinitionOptionValueRel toUnescapedModel() {
-		return new CPDefinitionOptionValueRelWrapper(_cpDefinitionOptionValueRel.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _cpDefinitionOptionValueRel.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _cpDefinitionOptionValueRel.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _cpDefinitionOptionValueRel.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _cpDefinitionOptionValueRel.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CPDefinitionOptionValueRel> toCacheModel() {
-		return _cpDefinitionOptionValueRel.toCacheModel();
-	}
-
-	/**
-	* Returns the priority of this cp definition option value rel.
-	*
-	* @return the priority of this cp definition option value rel
-	*/
-	@Override
-	public double getPriority() {
-		return _cpDefinitionOptionValueRel.getPriority();
+	public java.lang.Object clone() {
+		return new CPDefinitionOptionValueRelWrapper((CPDefinitionOptionValueRel)_cpDefinitionOptionValueRel.clone());
 	}
 
 	@Override
@@ -213,23 +167,74 @@ public class CPDefinitionOptionValueRelWrapper
 	}
 
 	@Override
-	public int hashCode() {
-		return _cpDefinitionOptionValueRel.hashCode();
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _cpDefinitionOptionValueRel.getAvailableLanguageIds();
+	}
+
+	/**
+	* Returns the company ID of this cp definition option value rel.
+	*
+	* @return the company ID of this cp definition option value rel
+	*/
+	@Override
+	public long getCompanyId() {
+		return _cpDefinitionOptionValueRel.getCompanyId();
 	}
 
 	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _cpDefinitionOptionValueRel.getPrimaryKeyObj();
+	public CPDefinitionOptionRel getCPDefinitionOptionRel()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionOptionValueRel.getCPDefinitionOptionRel();
 	}
 
+	/**
+	* Returns the cp definition option rel ID of this cp definition option value rel.
+	*
+	* @return the cp definition option rel ID of this cp definition option value rel
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new CPDefinitionOptionValueRelWrapper((CPDefinitionOptionValueRel)_cpDefinitionOptionValueRel.clone());
+	public long getCPDefinitionOptionRelId() {
+		return _cpDefinitionOptionValueRel.getCPDefinitionOptionRelId();
+	}
+
+	/**
+	* Returns the cp definition option value rel ID of this cp definition option value rel.
+	*
+	* @return the cp definition option value rel ID of this cp definition option value rel
+	*/
+	@Override
+	public long getCPDefinitionOptionValueRelId() {
+		return _cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId();
+	}
+
+	/**
+	* Returns the create date of this cp definition option value rel.
+	*
+	* @return the create date of this cp definition option value rel
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _cpDefinitionOptionValueRel.getCreateDate();
 	}
 
 	@Override
 	public java.lang.String getDefaultLanguageId() {
 		return _cpDefinitionOptionValueRel.getDefaultLanguageId();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _cpDefinitionOptionValueRel.getExpandoBridge();
+	}
+
+	/**
+	* Returns the group ID of this cp definition option value rel.
+	*
+	* @return the group ID of this cp definition option value rel
+	*/
+	@Override
+	public long getGroupId() {
+		return _cpDefinitionOptionValueRel.getGroupId();
 	}
 
 	/**
@@ -243,6 +248,41 @@ public class CPDefinitionOptionValueRelWrapper
 	}
 
 	/**
+	* Returns the modified date of this cp definition option value rel.
+	*
+	* @return the modified date of this cp definition option value rel
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _cpDefinitionOptionValueRel.getModifiedDate();
+	}
+
+	/**
+	* Returns the primary key of this cp definition option value rel.
+	*
+	* @return the primary key of this cp definition option value rel
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _cpDefinitionOptionValueRel.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _cpDefinitionOptionValueRel.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the priority of this cp definition option value rel.
+	*
+	* @return the priority of this cp definition option value rel
+	*/
+	@Override
+	public double getPriority() {
+		return _cpDefinitionOptionValueRel.getPriority();
+	}
+
+	/**
 	* Returns the title of this cp definition option value rel.
 	*
 	* @return the title of this cp definition option value rel
@@ -250,6 +290,29 @@ public class CPDefinitionOptionValueRelWrapper
 	@Override
 	public java.lang.String getTitle() {
 		return _cpDefinitionOptionValueRel.getTitle();
+	}
+
+	/**
+	* Returns the localized title of this cp definition option value rel in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized title of this cp definition option value rel
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale) {
+		return _cpDefinitionOptionValueRel.getTitle(locale);
+	}
+
+	/**
+	* Returns the localized title of this cp definition option value rel in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized title of this cp definition option value rel. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
+		return _cpDefinitionOptionValueRel.getTitle(locale, useDefault);
 	}
 
 	/**
@@ -276,29 +339,6 @@ public class CPDefinitionOptionValueRelWrapper
 		return _cpDefinitionOptionValueRel.getTitle(languageId, useDefault);
 	}
 
-	/**
-	* Returns the localized title of this cp definition option value rel in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized title of this cp definition option value rel
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale) {
-		return _cpDefinitionOptionValueRel.getTitle(locale);
-	}
-
-	/**
-	* Returns the localized title of this cp definition option value rel in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized title of this cp definition option value rel. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
-		return _cpDefinitionOptionValueRel.getTitle(locale, useDefault);
-	}
-
 	@Override
 	public java.lang.String getTitleCurrentLanguageId() {
 		return _cpDefinitionOptionValueRel.getTitleCurrentLanguageId();
@@ -307,6 +347,26 @@ public class CPDefinitionOptionValueRelWrapper
 	@Override
 	public java.lang.String getTitleCurrentValue() {
 		return _cpDefinitionOptionValueRel.getTitleCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized titles of this cp definition option value rel.
+	*
+	* @return the locales and localized titles of this cp definition option value rel
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getTitleMap() {
+		return _cpDefinitionOptionValueRel.getTitleMap();
+	}
+
+	/**
+	* Returns the user ID of this cp definition option value rel.
+	*
+	* @return the user ID of this cp definition option value rel
+	*/
+	@Override
+	public long getUserId() {
+		return _cpDefinitionOptionValueRel.getUserId();
 	}
 
 	/**
@@ -340,108 +400,23 @@ public class CPDefinitionOptionValueRelWrapper
 	}
 
 	@Override
-	public java.lang.String toString() {
-		return _cpDefinitionOptionValueRel.toString();
+	public int hashCode() {
+		return _cpDefinitionOptionValueRel.hashCode();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _cpDefinitionOptionValueRel.toXmlString();
+	public boolean isCachedModel() {
+		return _cpDefinitionOptionValueRel.isCachedModel();
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
-		return _cpDefinitionOptionValueRel.getAvailableLanguageIds();
+	public boolean isEscapedModel() {
+		return _cpDefinitionOptionValueRel.isEscapedModel();
 	}
 
-	/**
-	* Returns the create date of this cp definition option value rel.
-	*
-	* @return the create date of this cp definition option value rel
-	*/
 	@Override
-	public Date getCreateDate() {
-		return _cpDefinitionOptionValueRel.getCreateDate();
-	}
-
-	/**
-	* Returns the modified date of this cp definition option value rel.
-	*
-	* @return the modified date of this cp definition option value rel
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _cpDefinitionOptionValueRel.getModifiedDate();
-	}
-
-	/**
-	* Returns a map of the locales and localized titles of this cp definition option value rel.
-	*
-	* @return the locales and localized titles of this cp definition option value rel
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getTitleMap() {
-		return _cpDefinitionOptionValueRel.getTitleMap();
-	}
-
-	/**
-	* Returns the cp definition option rel ID of this cp definition option value rel.
-	*
-	* @return the cp definition option rel ID of this cp definition option value rel
-	*/
-	@Override
-	public long getCPDefinitionOptionRelId() {
-		return _cpDefinitionOptionValueRel.getCPDefinitionOptionRelId();
-	}
-
-	/**
-	* Returns the cp definition option value rel ID of this cp definition option value rel.
-	*
-	* @return the cp definition option value rel ID of this cp definition option value rel
-	*/
-	@Override
-	public long getCPDefinitionOptionValueRelId() {
-		return _cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId();
-	}
-
-	/**
-	* Returns the company ID of this cp definition option value rel.
-	*
-	* @return the company ID of this cp definition option value rel
-	*/
-	@Override
-	public long getCompanyId() {
-		return _cpDefinitionOptionValueRel.getCompanyId();
-	}
-
-	/**
-	* Returns the group ID of this cp definition option value rel.
-	*
-	* @return the group ID of this cp definition option value rel
-	*/
-	@Override
-	public long getGroupId() {
-		return _cpDefinitionOptionValueRel.getGroupId();
-	}
-
-	/**
-	* Returns the primary key of this cp definition option value rel.
-	*
-	* @return the primary key of this cp definition option value rel
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _cpDefinitionOptionValueRel.getPrimaryKey();
-	}
-
-	/**
-	* Returns the user ID of this cp definition option value rel.
-	*
-	* @return the user ID of this cp definition option value rel
-	*/
-	@Override
-	public long getUserId() {
-		return _cpDefinitionOptionValueRel.getUserId();
+	public boolean isNew() {
+		return _cpDefinitionOptionValueRel.isNew();
 	}
 
 	@Override
@@ -460,6 +435,21 @@ public class CPDefinitionOptionValueRelWrapper
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
 		_cpDefinitionOptionValueRel.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
+	@Override
+	public void setCachedModel(boolean cachedModel) {
+		_cpDefinitionOptionValueRel.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this cp definition option value rel.
+	*
+	* @param companyId the company ID of this cp definition option value rel
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_cpDefinitionOptionValueRel.setCompanyId(companyId);
 	}
 
 	/**
@@ -483,21 +473,6 @@ public class CPDefinitionOptionValueRelWrapper
 		_cpDefinitionOptionValueRel.setCPDefinitionOptionValueRelId(CPDefinitionOptionValueRelId);
 	}
 
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_cpDefinitionOptionValueRel.setCachedModel(cachedModel);
-	}
-
-	/**
-	* Sets the company ID of this cp definition option value rel.
-	*
-	* @param companyId the company ID of this cp definition option value rel
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_cpDefinitionOptionValueRel.setCompanyId(companyId);
-	}
-
 	/**
 	* Sets the create date of this cp definition option value rel.
 	*
@@ -509,14 +484,14 @@ public class CPDefinitionOptionValueRelWrapper
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_cpDefinitionOptionValueRel.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_cpDefinitionOptionValueRel.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_cpDefinitionOptionValueRel.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -683,6 +658,31 @@ public class CPDefinitionOptionValueRelWrapper
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_cpDefinitionOptionValueRel.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<CPDefinitionOptionValueRel> toCacheModel() {
+		return _cpDefinitionOptionValueRel.toCacheModel();
+	}
+
+	@Override
+	public CPDefinitionOptionValueRel toEscapedModel() {
+		return new CPDefinitionOptionValueRelWrapper(_cpDefinitionOptionValueRel.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _cpDefinitionOptionValueRel.toString();
+	}
+
+	@Override
+	public CPDefinitionOptionValueRel toUnescapedModel() {
+		return new CPDefinitionOptionValueRelWrapper(_cpDefinitionOptionValueRel.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _cpDefinitionOptionValueRel.toXmlString();
 	}
 
 	@Override

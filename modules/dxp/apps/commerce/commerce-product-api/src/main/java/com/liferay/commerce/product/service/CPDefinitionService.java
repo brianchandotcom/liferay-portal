@@ -65,10 +65,6 @@ public interface CPDefinitionService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionServiceUtil} to access the cp definition remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPDefinitionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPAttachmentFileEntry getDefaultImage(long cpDefinitionId)
-		throws PortalException;
-
 	public CPDefinition addCPDefinition(java.lang.String baseSKU,
 		Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> shortDescriptionMap,
@@ -108,6 +104,9 @@ public interface CPDefinitionService extends BaseService {
 		int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
+	public void deleteAssetCategoryCPDefinition(long cpDefinitionId,
+		long categoryId) throws PortalException;
+
 	public CPDefinition deleteCPDefinition(long cpDefinitionId)
 		throws PortalException;
 
@@ -119,8 +118,57 @@ public interface CPDefinitionService extends BaseService {
 	public CPDefinition getCPDefinition(long cpDefinitionId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinition> getCPDefinitions(long groupId,
+		java.lang.String productTypeName, java.lang.String languageId,
+		int status, int start, int end,
+		OrderByComparator<CPDefinition> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinition> getCPDefinitionsByCategoryId(long categoryId,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPDefinitionsCount(long groupId,
+		java.lang.String productTypeName, java.lang.String languageId,
+		int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPDefinitionsCountByCategoryId(long categoryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPAttachmentFileEntry getDefaultImage(long cpDefinitionId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getLayoutUuid(long cpDefinitionId)
+		throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getUrlTitleMapAsXML(long cpDefinitionId)
+		throws PortalException;
+
 	public CPDefinition moveCPDefinitionToTrash(long cpDefinitionId)
 		throws PortalException;
+
+	public void restoreCPDefinitionFromTrash(long cpDefinitionId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Hits search(SearchContext searchContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CPDefinition> searchCPDefinitions(
+		long companyId, long groupId, java.lang.String keywords, int status,
+		int start, int end, Sort sort) throws PortalException;
 
 	public CPDefinition updateCPDefinition(long cpDefinitionId,
 		java.lang.String baseSKU, Map<Locale, java.lang.String> titleMap,
@@ -165,53 +213,5 @@ public interface CPDefinitionService extends BaseService {
 	public CPDefinition updateStatus(long userId, long cpDefinitionId,
 		int status, ServiceContext serviceContext,
 		Map<java.lang.String, Serializable> workflowContext)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BaseModelSearchResult<CPDefinition> searchCPDefinitions(
-		long companyId, long groupId, java.lang.String keywords, int status,
-		int start, int end, Sort sort) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(SearchContext searchContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPDefinitionsCount(long groupId,
-		java.lang.String productTypeName, java.lang.String languageId,
-		int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPDefinitionsCountByCategoryId(long categoryId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getLayoutUuid(long cpDefinitionId)
-		throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getUrlTitleMapAsXML(long cpDefinitionId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPDefinition> getCPDefinitions(long groupId,
-		java.lang.String productTypeName, java.lang.String languageId,
-		int status, int start, int end,
-		OrderByComparator<CPDefinition> orderByComparator)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPDefinition> getCPDefinitionsByCategoryId(long categoryId,
-		int start, int end);
-
-	public void deleteAssetCategoryCPDefinition(long cpDefinitionId,
-		long categoryId) throws PortalException;
-
-	public void restoreCPDefinitionFromTrash(long cpDefinitionId)
 		throws PortalException;
 }

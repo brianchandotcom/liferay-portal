@@ -97,82 +97,8 @@ public class CPDefinitionLinkLocalServiceUtil {
 		return getService().deleteCPDefinitionLink(CPDefinitionLinkId);
 	}
 
-	public static com.liferay.commerce.product.model.CPDefinitionLink fetchCPDefinitionLink(
-		long CPDefinitionLinkId) {
-		return getService().fetchCPDefinitionLink(CPDefinitionLinkId);
-	}
-
-	/**
-	* Returns the cp definition link matching the UUID and group.
-	*
-	* @param uuid the cp definition link's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
-	*/
-	public static com.liferay.commerce.product.model.CPDefinitionLink fetchCPDefinitionLinkByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return getService().fetchCPDefinitionLinkByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Returns the cp definition link with the primary key.
-	*
-	* @param CPDefinitionLinkId the primary key of the cp definition link
-	* @return the cp definition link
-	* @throws PortalException if a cp definition link with the primary key could not be found
-	*/
-	public static com.liferay.commerce.product.model.CPDefinitionLink getCPDefinitionLink(
-		long CPDefinitionLinkId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCPDefinitionLink(CPDefinitionLinkId);
-	}
-
-	/**
-	* Returns the cp definition link matching the UUID and group.
-	*
-	* @param uuid the cp definition link's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp definition link
-	* @throws PortalException if a matching cp definition link could not be found
-	*/
-	public static com.liferay.commerce.product.model.CPDefinitionLink getCPDefinitionLinkByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCPDefinitionLinkByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Updates the cp definition link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param cpDefinitionLink the cp definition link
-	* @return the cp definition link that was updated
-	*/
-	public static com.liferay.commerce.product.model.CPDefinitionLink updateCPDefinitionLink(
-		com.liferay.commerce.product.model.CPDefinitionLink cpDefinitionLink) {
-		return getService().updateCPDefinitionLink(cpDefinitionLink);
-	}
-
-	public static com.liferay.commerce.product.model.CPDefinitionLink updateCPDefinitionLink(
-		long cpDefinitionLinkId, double priority)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateCPDefinitionLink(cpDefinitionLinkId, priority);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
+	public static void deleteCPDefinitionLinks(long cpDefinitionId) {
+		getService().deleteCPDefinitionLinks(cpDefinitionId);
 	}
 
 	/**
@@ -184,33 +110,8 @@ public class CPDefinitionLinkLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the number of cp definition links.
-	*
-	* @return the number of cp definition links
-	*/
-	public static int getCPDefinitionLinksCount() {
-		return getService().getCPDefinitionLinksCount();
-	}
-
-	public static int getCPDefinitionLinksCount(long cpDefinitionId1, int type)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCPDefinitionLinksCount(cpDefinitionId1, type);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -261,6 +162,78 @@ public class CPDefinitionLinkLocalServiceUtil {
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionLink fetchCPDefinitionLink(
+		long CPDefinitionLinkId) {
+		return getService().fetchCPDefinitionLink(CPDefinitionLinkId);
+	}
+
+	/**
+	* Returns the cp definition link matching the UUID and group.
+	*
+	* @param uuid the cp definition link's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
+	*/
+	public static com.liferay.commerce.product.model.CPDefinitionLink fetchCPDefinitionLinkByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return getService().fetchCPDefinitionLinkByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the cp definition link with the primary key.
+	*
+	* @param CPDefinitionLinkId the primary key of the cp definition link
+	* @return the cp definition link
+	* @throws PortalException if a cp definition link with the primary key could not be found
+	*/
+	public static com.liferay.commerce.product.model.CPDefinitionLink getCPDefinitionLink(
+		long CPDefinitionLinkId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCPDefinitionLink(CPDefinitionLinkId);
+	}
+
+	/**
+	* Returns the cp definition link matching the UUID and group.
+	*
+	* @param uuid the cp definition link's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp definition link
+	* @throws PortalException if a matching cp definition link could not be found
+	*/
+	public static com.liferay.commerce.product.model.CPDefinitionLink getCPDefinitionLinkByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCPDefinitionLinkByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -326,31 +299,58 @@ public class CPDefinitionLinkLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of cp definition links.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of cp definition links
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
+	public static int getCPDefinitionLinksCount() {
+		return getService().getCPDefinitionLinksCount();
+	}
+
+	public static int getCPDefinitionLinksCount(long cpDefinitionId1, int type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCPDefinitionLinksCount(cpDefinitionId1, type);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static void deleteCPDefinitionLinks(long cpDefinitionId) {
-		getService().deleteCPDefinitionLinks(cpDefinitionId);
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the cp definition link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param cpDefinitionLink the cp definition link
+	* @return the cp definition link that was updated
+	*/
+	public static com.liferay.commerce.product.model.CPDefinitionLink updateCPDefinitionLink(
+		com.liferay.commerce.product.model.CPDefinitionLink cpDefinitionLink) {
+		return getService().updateCPDefinitionLink(cpDefinitionLink);
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionLink updateCPDefinitionLink(
+		long cpDefinitionLinkId, double priority)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateCPDefinitionLink(cpDefinitionLinkId, priority);
 	}
 
 	public static void updateCPDefinitionLinks(long cpDefinitionId1,

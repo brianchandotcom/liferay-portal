@@ -159,78 +159,13 @@ public class CPFriendlyURLEntryWrapper implements CPFriendlyURLEntry,
 	}
 
 	@Override
-	public CPFriendlyURLEntry toEscapedModel() {
-		return new CPFriendlyURLEntryWrapper(_cpFriendlyURLEntry.toEscapedModel());
-	}
-
-	@Override
-	public CPFriendlyURLEntry toUnescapedModel() {
-		return new CPFriendlyURLEntryWrapper(_cpFriendlyURLEntry.toUnescapedModel());
-	}
-
-	/**
-	* Returns the main of this cp friendly url entry.
-	*
-	* @return the main of this cp friendly url entry
-	*/
-	@Override
-	public boolean getMain() {
-		return _cpFriendlyURLEntry.getMain();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _cpFriendlyURLEntry.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _cpFriendlyURLEntry.isEscapedModel();
-	}
-
-	/**
-	* Returns <code>true</code> if this cp friendly url entry is main.
-	*
-	* @return <code>true</code> if this cp friendly url entry is main; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isMain() {
-		return _cpFriendlyURLEntry.isMain();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _cpFriendlyURLEntry.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _cpFriendlyURLEntry.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CPFriendlyURLEntry> toCacheModel() {
-		return _cpFriendlyURLEntry.toCacheModel();
+	public java.lang.Object clone() {
+		return new CPFriendlyURLEntryWrapper((CPFriendlyURLEntry)_cpFriendlyURLEntry.clone());
 	}
 
 	@Override
 	public int compareTo(CPFriendlyURLEntry cpFriendlyURLEntry) {
 		return _cpFriendlyURLEntry.compareTo(cpFriendlyURLEntry);
-	}
-
-	@Override
-	public int hashCode() {
-		return _cpFriendlyURLEntry.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _cpFriendlyURLEntry.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new CPFriendlyURLEntryWrapper((CPFriendlyURLEntry)_cpFriendlyURLEntry.clone());
 	}
 
 	/**
@@ -241,101 +176,6 @@ public class CPFriendlyURLEntryWrapper implements CPFriendlyURLEntry,
 	@Override
 	public java.lang.String getClassName() {
 		return _cpFriendlyURLEntry.getClassName();
-	}
-
-	/**
-	* Returns the language ID of this cp friendly url entry.
-	*
-	* @return the language ID of this cp friendly url entry
-	*/
-	@Override
-	public java.lang.String getLanguageId() {
-		return _cpFriendlyURLEntry.getLanguageId();
-	}
-
-	/**
-	* Returns the url title of this cp friendly url entry.
-	*
-	* @return the url title of this cp friendly url entry
-	*/
-	@Override
-	public java.lang.String getUrlTitle() {
-		return _cpFriendlyURLEntry.getUrlTitle();
-	}
-
-	/**
-	* Returns the user name of this cp friendly url entry.
-	*
-	* @return the user name of this cp friendly url entry
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _cpFriendlyURLEntry.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this cp friendly url entry.
-	*
-	* @return the user uuid of this cp friendly url entry
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _cpFriendlyURLEntry.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this cp friendly url entry.
-	*
-	* @return the uuid of this cp friendly url entry
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _cpFriendlyURLEntry.getUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _cpFriendlyURLEntry.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _cpFriendlyURLEntry.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this cp friendly url entry.
-	*
-	* @return the create date of this cp friendly url entry
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _cpFriendlyURLEntry.getCreateDate();
-	}
-
-	/**
-	* Returns the modified date of this cp friendly url entry.
-	*
-	* @return the modified date of this cp friendly url entry
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _cpFriendlyURLEntry.getModifiedDate();
-	}
-
-	@Override
-	public java.util.Locale getLocale() {
-		return _cpFriendlyURLEntry.getLocale();
-	}
-
-	/**
-	* Returns the cp friendly url entry ID of this cp friendly url entry.
-	*
-	* @return the cp friendly url entry ID of this cp friendly url entry
-	*/
-	@Override
-	public long getCPFriendlyURLEntryId() {
-		return _cpFriendlyURLEntry.getCPFriendlyURLEntryId();
 	}
 
 	/**
@@ -369,6 +209,31 @@ public class CPFriendlyURLEntryWrapper implements CPFriendlyURLEntry,
 	}
 
 	/**
+	* Returns the cp friendly url entry ID of this cp friendly url entry.
+	*
+	* @return the cp friendly url entry ID of this cp friendly url entry
+	*/
+	@Override
+	public long getCPFriendlyURLEntryId() {
+		return _cpFriendlyURLEntry.getCPFriendlyURLEntryId();
+	}
+
+	/**
+	* Returns the create date of this cp friendly url entry.
+	*
+	* @return the create date of this cp friendly url entry
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _cpFriendlyURLEntry.getCreateDate();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _cpFriendlyURLEntry.getExpandoBridge();
+	}
+
+	/**
 	* Returns the group ID of this cp friendly url entry.
 	*
 	* @return the group ID of this cp friendly url entry
@@ -376,6 +241,41 @@ public class CPFriendlyURLEntryWrapper implements CPFriendlyURLEntry,
 	@Override
 	public long getGroupId() {
 		return _cpFriendlyURLEntry.getGroupId();
+	}
+
+	/**
+	* Returns the language ID of this cp friendly url entry.
+	*
+	* @return the language ID of this cp friendly url entry
+	*/
+	@Override
+	public java.lang.String getLanguageId() {
+		return _cpFriendlyURLEntry.getLanguageId();
+	}
+
+	@Override
+	public java.util.Locale getLocale() {
+		return _cpFriendlyURLEntry.getLocale();
+	}
+
+	/**
+	* Returns the main of this cp friendly url entry.
+	*
+	* @return the main of this cp friendly url entry
+	*/
+	@Override
+	public boolean getMain() {
+		return _cpFriendlyURLEntry.getMain();
+	}
+
+	/**
+	* Returns the modified date of this cp friendly url entry.
+	*
+	* @return the modified date of this cp friendly url entry
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _cpFriendlyURLEntry.getModifiedDate();
 	}
 
 	/**
@@ -388,6 +288,21 @@ public class CPFriendlyURLEntryWrapper implements CPFriendlyURLEntry,
 		return _cpFriendlyURLEntry.getPrimaryKey();
 	}
 
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _cpFriendlyURLEntry.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the url title of this cp friendly url entry.
+	*
+	* @return the url title of this cp friendly url entry
+	*/
+	@Override
+	public java.lang.String getUrlTitle() {
+		return _cpFriendlyURLEntry.getUrlTitle();
+	}
+
 	/**
 	* Returns the user ID of this cp friendly url entry.
 	*
@@ -398,19 +313,69 @@ public class CPFriendlyURLEntryWrapper implements CPFriendlyURLEntry,
 		return _cpFriendlyURLEntry.getUserId();
 	}
 
+	/**
+	* Returns the user name of this cp friendly url entry.
+	*
+	* @return the user name of this cp friendly url entry
+	*/
 	@Override
-	public void persist() {
-		_cpFriendlyURLEntry.persist();
+	public java.lang.String getUserName() {
+		return _cpFriendlyURLEntry.getUserName();
 	}
 
 	/**
-	* Sets the cp friendly url entry ID of this cp friendly url entry.
+	* Returns the user uuid of this cp friendly url entry.
 	*
-	* @param CPFriendlyURLEntryId the cp friendly url entry ID of this cp friendly url entry
+	* @return the user uuid of this cp friendly url entry
 	*/
 	@Override
-	public void setCPFriendlyURLEntryId(long CPFriendlyURLEntryId) {
-		_cpFriendlyURLEntry.setCPFriendlyURLEntryId(CPFriendlyURLEntryId);
+	public java.lang.String getUserUuid() {
+		return _cpFriendlyURLEntry.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this cp friendly url entry.
+	*
+	* @return the uuid of this cp friendly url entry
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _cpFriendlyURLEntry.getUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _cpFriendlyURLEntry.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _cpFriendlyURLEntry.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _cpFriendlyURLEntry.isEscapedModel();
+	}
+
+	/**
+	* Returns <code>true</code> if this cp friendly url entry is main.
+	*
+	* @return <code>true</code> if this cp friendly url entry is main; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isMain() {
+		return _cpFriendlyURLEntry.isMain();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _cpFriendlyURLEntry.isNew();
+	}
+
+	@Override
+	public void persist() {
+		_cpFriendlyURLEntry.persist();
 	}
 
 	@Override
@@ -454,6 +419,16 @@ public class CPFriendlyURLEntryWrapper implements CPFriendlyURLEntry,
 	}
 
 	/**
+	* Sets the cp friendly url entry ID of this cp friendly url entry.
+	*
+	* @param CPFriendlyURLEntryId the cp friendly url entry ID of this cp friendly url entry
+	*/
+	@Override
+	public void setCPFriendlyURLEntryId(long CPFriendlyURLEntryId) {
+		_cpFriendlyURLEntry.setCPFriendlyURLEntryId(CPFriendlyURLEntryId);
+	}
+
+	/**
 	* Sets the create date of this cp friendly url entry.
 	*
 	* @param createDate the create date of this cp friendly url entry
@@ -464,14 +439,14 @@ public class CPFriendlyURLEntryWrapper implements CPFriendlyURLEntry,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_cpFriendlyURLEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_cpFriendlyURLEntry.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_cpFriendlyURLEntry.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -587,6 +562,31 @@ public class CPFriendlyURLEntryWrapper implements CPFriendlyURLEntry,
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_cpFriendlyURLEntry.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<CPFriendlyURLEntry> toCacheModel() {
+		return _cpFriendlyURLEntry.toCacheModel();
+	}
+
+	@Override
+	public CPFriendlyURLEntry toEscapedModel() {
+		return new CPFriendlyURLEntryWrapper(_cpFriendlyURLEntry.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _cpFriendlyURLEntry.toString();
+	}
+
+	@Override
+	public CPFriendlyURLEntry toUnescapedModel() {
+		return new CPFriendlyURLEntryWrapper(_cpFriendlyURLEntry.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _cpFriendlyURLEntry.toXmlString();
 	}
 
 	@Override

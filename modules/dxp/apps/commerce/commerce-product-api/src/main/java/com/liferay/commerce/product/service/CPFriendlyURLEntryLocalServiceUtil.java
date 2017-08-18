@@ -41,6 +41,14 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPFriendlyURLEntryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static void addCPFriendlyURLEntries(long groupId, long companyId,
+		java.lang.Class<?> clazz, long classPK,
+		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addCPFriendlyURLEntries(groupId, companyId, clazz, classPK,
+			urlTitleMap);
+	}
 
 	/**
 	* Adds the cp friendly url entry to the database. Also notifies the appropriate model listeners.
@@ -53,6 +61,15 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 		return getService().addCPFriendlyURLEntry(cpFriendlyURLEntry);
 	}
 
+	public static java.lang.String buildUrlTitle(long groupId, long companyId,
+		long classNameId, long classPK, java.lang.String languageId,
+		java.lang.String title)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .buildUrlTitle(groupId, companyId, classNameId, classPK,
+			languageId, title);
+	}
+
 	/**
 	* Creates a new cp friendly url entry with the primary key. Does not add the cp friendly url entry to the database.
 	*
@@ -62,6 +79,12 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 	public static com.liferay.commerce.product.model.CPFriendlyURLEntry createCPFriendlyURLEntry(
 		long CPFriendlyURLEntryId) {
 		return getService().createCPFriendlyURLEntry(CPFriendlyURLEntryId);
+	}
+
+	public static void deleteCPFriendlyURLEntries(long groupId, long companyId,
+		java.lang.Class<?> clazz, long classPK) {
+		getService()
+			.deleteCPFriendlyURLEntries(groupId, companyId, clazz, classPK);
 	}
 
 	/**
@@ -88,97 +111,6 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 		return getService().deleteCPFriendlyURLEntry(CPFriendlyURLEntryId);
 	}
 
-	public static com.liferay.commerce.product.model.CPFriendlyURLEntry fetchCPFriendlyURLEntry(
-		long CPFriendlyURLEntryId) {
-		return getService().fetchCPFriendlyURLEntry(CPFriendlyURLEntryId);
-	}
-
-	public static com.liferay.commerce.product.model.CPFriendlyURLEntry fetchCPFriendlyURLEntry(
-		long groupId, long companyId, long classNameId, long classPK,
-		java.lang.String languageId, boolean main)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .fetchCPFriendlyURLEntry(groupId, companyId, classNameId,
-			classPK, languageId, main);
-	}
-
-	/**
-	* Returns the cp friendly url entry matching the UUID and group.
-	*
-	* @param uuid the cp friendly url entry's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
-	*/
-	public static com.liferay.commerce.product.model.CPFriendlyURLEntry fetchCPFriendlyURLEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return getService()
-				   .fetchCPFriendlyURLEntryByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Returns the cp friendly url entry with the primary key.
-	*
-	* @param CPFriendlyURLEntryId the primary key of the cp friendly url entry
-	* @return the cp friendly url entry
-	* @throws PortalException if a cp friendly url entry with the primary key could not be found
-	*/
-	public static com.liferay.commerce.product.model.CPFriendlyURLEntry getCPFriendlyURLEntry(
-		long CPFriendlyURLEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCPFriendlyURLEntry(CPFriendlyURLEntryId);
-	}
-
-	public static com.liferay.commerce.product.model.CPFriendlyURLEntry getCPFriendlyURLEntry(
-		long groupId, long companyId, long classNameId,
-		java.lang.String languageId, java.lang.String urlTitle)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getCPFriendlyURLEntry(groupId, companyId, classNameId,
-			languageId, urlTitle);
-	}
-
-	/**
-	* Returns the cp friendly url entry matching the UUID and group.
-	*
-	* @param uuid the cp friendly url entry's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp friendly url entry
-	* @throws PortalException if a matching cp friendly url entry could not be found
-	*/
-	public static com.liferay.commerce.product.model.CPFriendlyURLEntry getCPFriendlyURLEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCPFriendlyURLEntryByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Updates the cp friendly url entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param cpFriendlyURLEntry the cp friendly url entry
-	* @return the cp friendly url entry that was updated
-	*/
-	public static com.liferay.commerce.product.model.CPFriendlyURLEntry updateCPFriendlyURLEntry(
-		com.liferay.commerce.product.model.CPFriendlyURLEntry cpFriendlyURLEntry) {
-		return getService().updateCPFriendlyURLEntry(cpFriendlyURLEntry);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
 	/**
 	* @throws PortalException
 	*/
@@ -188,45 +120,8 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the number of cp friendly url entries.
-	*
-	* @return the number of cp friendly url entries
-	*/
-	public static int getCPFriendlyURLEntriesCount() {
-		return getService().getCPFriendlyURLEntriesCount();
-	}
-
-	public static java.lang.String buildUrlTitle(long groupId, long companyId,
-		long classNameId, long classPK, java.lang.String languageId,
-		java.lang.String title)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .buildUrlTitle(groupId, companyId, classNameId, classPK,
-			languageId, title);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static java.lang.String getUrlTitleMapAsXML(long groupId,
-		long companyId, long classNameId, long classPK,
-		java.lang.String defaultLanguageId) {
-		return getService()
-				   .getUrlTitleMapAsXML(groupId, companyId, classNameId,
-			classPK, defaultLanguageId);
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -277,6 +172,61 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static com.liferay.commerce.product.model.CPFriendlyURLEntry fetchCPFriendlyURLEntry(
+		long CPFriendlyURLEntryId) {
+		return getService().fetchCPFriendlyURLEntry(CPFriendlyURLEntryId);
+	}
+
+	public static com.liferay.commerce.product.model.CPFriendlyURLEntry fetchCPFriendlyURLEntry(
+		long groupId, long companyId, long classNameId, long classPK,
+		java.lang.String languageId, boolean main)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .fetchCPFriendlyURLEntry(groupId, companyId, classNameId,
+			classPK, languageId, main);
+	}
+
+	/**
+	* Returns the cp friendly url entry matching the UUID and group.
+	*
+	* @param uuid the cp friendly url entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
+	*/
+	public static com.liferay.commerce.product.model.CPFriendlyURLEntry fetchCPFriendlyURLEntryByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return getService()
+				   .fetchCPFriendlyURLEntryByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
 	}
 
 	/**
@@ -333,11 +283,80 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 			start, end, orderByComparator);
 	}
 
+	/**
+	* Returns the number of cp friendly url entries.
+	*
+	* @return the number of cp friendly url entries
+	*/
+	public static int getCPFriendlyURLEntriesCount() {
+		return getService().getCPFriendlyURLEntriesCount();
+	}
+
+	/**
+	* Returns the cp friendly url entry with the primary key.
+	*
+	* @param CPFriendlyURLEntryId the primary key of the cp friendly url entry
+	* @return the cp friendly url entry
+	* @throws PortalException if a cp friendly url entry with the primary key could not be found
+	*/
+	public static com.liferay.commerce.product.model.CPFriendlyURLEntry getCPFriendlyURLEntry(
+		long CPFriendlyURLEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCPFriendlyURLEntry(CPFriendlyURLEntryId);
+	}
+
+	public static com.liferay.commerce.product.model.CPFriendlyURLEntry getCPFriendlyURLEntry(
+		long groupId, long companyId, long classNameId,
+		java.lang.String languageId, java.lang.String urlTitle)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCPFriendlyURLEntry(groupId, companyId, classNameId,
+			languageId, urlTitle);
+	}
+
+	/**
+	* Returns the cp friendly url entry matching the UUID and group.
+	*
+	* @param uuid the cp friendly url entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp friendly url entry
+	* @throws PortalException if a matching cp friendly url entry could not be found
+	*/
+	public static com.liferay.commerce.product.model.CPFriendlyURLEntry getCPFriendlyURLEntryByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCPFriendlyURLEntryByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	public static java.util.Map<java.lang.String, java.lang.String> getLanguageIdToUrlTitleMap(
 		long groupId, long companyId, long classNameId, long classPK) {
 		return getService()
 				   .getLanguageIdToUrlTitleMap(groupId, companyId, classNameId,
 			classPK);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	public static java.util.Map<java.util.Locale, java.lang.String> getUrlTitleMap(
@@ -346,43 +365,23 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 				   .getUrlTitleMap(groupId, companyId, classNameId, classPK);
 	}
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
+	public static java.lang.String getUrlTitleMapAsXML(long groupId,
+		long companyId, long classNameId, long classPK,
+		java.lang.String defaultLanguageId) {
+		return getService()
+				   .getUrlTitleMapAsXML(groupId, companyId, classNameId,
+			classPK, defaultLanguageId);
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Updates the cp friendly url entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param cpFriendlyURLEntry the cp friendly url entry
+	* @return the cp friendly url entry that was updated
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	public static void addCPFriendlyURLEntries(long groupId, long companyId,
-		java.lang.Class<?> clazz, long classPK,
-		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addCPFriendlyURLEntries(groupId, companyId, clazz, classPK,
-			urlTitleMap);
-	}
-
-	public static void deleteCPFriendlyURLEntries(long groupId, long companyId,
-		java.lang.Class<?> clazz, long classPK) {
-		getService()
-			.deleteCPFriendlyURLEntries(groupId, companyId, clazz, classPK);
+	public static com.liferay.commerce.product.model.CPFriendlyURLEntry updateCPFriendlyURLEntry(
+		com.liferay.commerce.product.model.CPFriendlyURLEntry cpFriendlyURLEntry) {
+		return getService().updateCPFriendlyURLEntry(cpFriendlyURLEntry);
 	}
 
 	public static CPFriendlyURLEntryLocalService getService() {

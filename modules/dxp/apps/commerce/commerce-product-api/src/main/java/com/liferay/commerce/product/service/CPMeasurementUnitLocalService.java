@@ -114,73 +114,7 @@ public interface CPMeasurementUnitLocalService extends BaseLocalService,
 	public CPMeasurementUnit deleteCPMeasurementUnit(long CPMeasurementUnitId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPMeasurementUnit fetchCPMeasurementUnit(long CPMeasurementUnitId);
-
-	/**
-	* Returns the cp measurement unit matching the UUID and group.
-	*
-	* @param uuid the cp measurement unit's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPMeasurementUnit fetchCPMeasurementUnitByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPMeasurementUnit fetchPrimaryCPMeasurementUnit(long groupId,
-		int type);
-
-	/**
-	* Returns the cp measurement unit with the primary key.
-	*
-	* @param CPMeasurementUnitId the primary key of the cp measurement unit
-	* @return the cp measurement unit
-	* @throws PortalException if a cp measurement unit with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPMeasurementUnit getCPMeasurementUnit(long CPMeasurementUnitId)
-		throws PortalException;
-
-	/**
-	* Returns the cp measurement unit matching the UUID and group.
-	*
-	* @param uuid the cp measurement unit's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp measurement unit
-	* @throws PortalException if a matching cp measurement unit could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPMeasurementUnit getCPMeasurementUnitByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
-
-	/**
-	* Updates the cp measurement unit in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param cpMeasurementUnit the cp measurement unit
-	* @return the cp measurement unit that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public CPMeasurementUnit updateCPMeasurementUnit(
-		CPMeasurementUnit cpMeasurementUnit);
-
-	public CPMeasurementUnit updateCPMeasurementUnit(long cpMeasurementUnitId,
-		Map<Locale, java.lang.String> nameMap, java.lang.String key,
-		double rate, boolean primary, double priority, int type,
-		ServiceContext serviceContext) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public void deleteCPMeasurementUnits(long groupId);
 
 	/**
 	* @throws PortalException
@@ -189,28 +123,7 @@ public interface CPMeasurementUnitLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Returns the number of cp measurement units.
-	*
-	* @return the number of cp measurement units
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPMeasurementUnitsCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPMeasurementUnitsCount(long groupId, int type);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -250,6 +163,68 @@ public interface CPMeasurementUnitLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPMeasurementUnit fetchCPMeasurementUnit(long CPMeasurementUnitId);
+
+	/**
+	* Returns the cp measurement unit matching the UUID and group.
+	*
+	* @param uuid the cp measurement unit's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPMeasurementUnit fetchCPMeasurementUnitByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPMeasurementUnit fetchPrimaryCPMeasurementUnit(long groupId,
+		int type);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* Returns the cp measurement unit with the primary key.
+	*
+	* @param CPMeasurementUnitId the primary key of the cp measurement unit
+	* @return the cp measurement unit
+	* @throws PortalException if a cp measurement unit with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPMeasurementUnit getCPMeasurementUnit(long CPMeasurementUnitId)
+		throws PortalException;
+
+	/**
+	* Returns the cp measurement unit matching the UUID and group.
+	*
+	* @param uuid the cp measurement unit's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp measurement unit
+	* @throws PortalException if a matching cp measurement unit could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPMeasurementUnit getCPMeasurementUnitByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the cp measurement units.
@@ -297,22 +272,47 @@ public interface CPMeasurementUnitLocalService extends BaseLocalService,
 		OrderByComparator<CPMeasurementUnit> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of cp measurement units.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of cp measurement units
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPMeasurementUnitsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPMeasurementUnitsCount(long groupId, int type);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public java.lang.String getOSGiServiceIdentifier();
 
-	public void deleteCPMeasurementUnits(long groupId);
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Updates the cp measurement unit in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param cpMeasurementUnit the cp measurement unit
+	* @return the cp measurement unit that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public CPMeasurementUnit updateCPMeasurementUnit(
+		CPMeasurementUnit cpMeasurementUnit);
+
+	public CPMeasurementUnit updateCPMeasurementUnit(long cpMeasurementUnitId,
+		Map<Locale, java.lang.String> nameMap, java.lang.String key,
+		double rate, boolean primary, double priority, int type,
+		ServiceContext serviceContext) throws PortalException;
 }

@@ -145,58 +145,13 @@ public class CPDisplayLayoutWrapper implements CPDisplayLayout,
 	}
 
 	@Override
-	public CPDisplayLayout toEscapedModel() {
-		return new CPDisplayLayoutWrapper(_cpDisplayLayout.toEscapedModel());
-	}
-
-	@Override
-	public CPDisplayLayout toUnescapedModel() {
-		return new CPDisplayLayoutWrapper(_cpDisplayLayout.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _cpDisplayLayout.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _cpDisplayLayout.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _cpDisplayLayout.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _cpDisplayLayout.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CPDisplayLayout> toCacheModel() {
-		return _cpDisplayLayout.toCacheModel();
+	public java.lang.Object clone() {
+		return new CPDisplayLayoutWrapper((CPDisplayLayout)_cpDisplayLayout.clone());
 	}
 
 	@Override
 	public int compareTo(CPDisplayLayout cpDisplayLayout) {
 		return _cpDisplayLayout.compareTo(cpDisplayLayout);
-	}
-
-	@Override
-	public int hashCode() {
-		return _cpDisplayLayout.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _cpDisplayLayout.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new CPDisplayLayoutWrapper((CPDisplayLayout)_cpDisplayLayout.clone());
 	}
 
 	/**
@@ -207,86 +162,6 @@ public class CPDisplayLayoutWrapper implements CPDisplayLayout,
 	@Override
 	public java.lang.String getClassName() {
 		return _cpDisplayLayout.getClassName();
-	}
-
-	/**
-	* Returns the layout uuid of this cp display layout.
-	*
-	* @return the layout uuid of this cp display layout
-	*/
-	@Override
-	public java.lang.String getLayoutUuid() {
-		return _cpDisplayLayout.getLayoutUuid();
-	}
-
-	/**
-	* Returns the user name of this cp display layout.
-	*
-	* @return the user name of this cp display layout
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _cpDisplayLayout.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this cp display layout.
-	*
-	* @return the user uuid of this cp display layout
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _cpDisplayLayout.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this cp display layout.
-	*
-	* @return the uuid of this cp display layout
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _cpDisplayLayout.getUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _cpDisplayLayout.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _cpDisplayLayout.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this cp display layout.
-	*
-	* @return the create date of this cp display layout
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _cpDisplayLayout.getCreateDate();
-	}
-
-	/**
-	* Returns the modified date of this cp display layout.
-	*
-	* @return the modified date of this cp display layout
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _cpDisplayLayout.getModifiedDate();
-	}
-
-	/**
-	* Returns the cp friendly url entry ID of this cp display layout.
-	*
-	* @return the cp friendly url entry ID of this cp display layout
-	*/
-	@Override
-	public long getCPFriendlyURLEntryId() {
-		return _cpDisplayLayout.getCPFriendlyURLEntryId();
 	}
 
 	/**
@@ -320,6 +195,31 @@ public class CPDisplayLayoutWrapper implements CPDisplayLayout,
 	}
 
 	/**
+	* Returns the cp friendly url entry ID of this cp display layout.
+	*
+	* @return the cp friendly url entry ID of this cp display layout
+	*/
+	@Override
+	public long getCPFriendlyURLEntryId() {
+		return _cpDisplayLayout.getCPFriendlyURLEntryId();
+	}
+
+	/**
+	* Returns the create date of this cp display layout.
+	*
+	* @return the create date of this cp display layout
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _cpDisplayLayout.getCreateDate();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _cpDisplayLayout.getExpandoBridge();
+	}
+
+	/**
 	* Returns the group ID of this cp display layout.
 	*
 	* @return the group ID of this cp display layout
@@ -327,6 +227,26 @@ public class CPDisplayLayoutWrapper implements CPDisplayLayout,
 	@Override
 	public long getGroupId() {
 		return _cpDisplayLayout.getGroupId();
+	}
+
+	/**
+	* Returns the layout uuid of this cp display layout.
+	*
+	* @return the layout uuid of this cp display layout
+	*/
+	@Override
+	public java.lang.String getLayoutUuid() {
+		return _cpDisplayLayout.getLayoutUuid();
+	}
+
+	/**
+	* Returns the modified date of this cp display layout.
+	*
+	* @return the modified date of this cp display layout
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _cpDisplayLayout.getModifiedDate();
 	}
 
 	/**
@@ -339,6 +259,11 @@ public class CPDisplayLayoutWrapper implements CPDisplayLayout,
 		return _cpDisplayLayout.getPrimaryKey();
 	}
 
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _cpDisplayLayout.getPrimaryKeyObj();
+	}
+
 	/**
 	* Returns the user ID of this cp display layout.
 	*
@@ -349,19 +274,59 @@ public class CPDisplayLayoutWrapper implements CPDisplayLayout,
 		return _cpDisplayLayout.getUserId();
 	}
 
+	/**
+	* Returns the user name of this cp display layout.
+	*
+	* @return the user name of this cp display layout
+	*/
 	@Override
-	public void persist() {
-		_cpDisplayLayout.persist();
+	public java.lang.String getUserName() {
+		return _cpDisplayLayout.getUserName();
 	}
 
 	/**
-	* Sets the cp friendly url entry ID of this cp display layout.
+	* Returns the user uuid of this cp display layout.
 	*
-	* @param CPFriendlyURLEntryId the cp friendly url entry ID of this cp display layout
+	* @return the user uuid of this cp display layout
 	*/
 	@Override
-	public void setCPFriendlyURLEntryId(long CPFriendlyURLEntryId) {
-		_cpDisplayLayout.setCPFriendlyURLEntryId(CPFriendlyURLEntryId);
+	public java.lang.String getUserUuid() {
+		return _cpDisplayLayout.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this cp display layout.
+	*
+	* @return the uuid of this cp display layout
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _cpDisplayLayout.getUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _cpDisplayLayout.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _cpDisplayLayout.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _cpDisplayLayout.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _cpDisplayLayout.isNew();
+	}
+
+	@Override
+	public void persist() {
+		_cpDisplayLayout.persist();
 	}
 
 	@Override
@@ -405,6 +370,16 @@ public class CPDisplayLayoutWrapper implements CPDisplayLayout,
 	}
 
 	/**
+	* Sets the cp friendly url entry ID of this cp display layout.
+	*
+	* @param CPFriendlyURLEntryId the cp friendly url entry ID of this cp display layout
+	*/
+	@Override
+	public void setCPFriendlyURLEntryId(long CPFriendlyURLEntryId) {
+		_cpDisplayLayout.setCPFriendlyURLEntryId(CPFriendlyURLEntryId);
+	}
+
+	/**
 	* Sets the create date of this cp display layout.
 	*
 	* @param createDate the create date of this cp display layout
@@ -415,14 +390,14 @@ public class CPDisplayLayoutWrapper implements CPDisplayLayout,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_cpDisplayLayout.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_cpDisplayLayout.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_cpDisplayLayout.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -518,6 +493,31 @@ public class CPDisplayLayoutWrapper implements CPDisplayLayout,
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_cpDisplayLayout.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<CPDisplayLayout> toCacheModel() {
+		return _cpDisplayLayout.toCacheModel();
+	}
+
+	@Override
+	public CPDisplayLayout toEscapedModel() {
+		return new CPDisplayLayoutWrapper(_cpDisplayLayout.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _cpDisplayLayout.toString();
+	}
+
+	@Override
+	public CPDisplayLayout toUnescapedModel() {
+		return new CPDisplayLayoutWrapper(_cpDisplayLayout.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _cpDisplayLayout.toXmlString();
 	}
 
 	@Override

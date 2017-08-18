@@ -52,6 +52,11 @@ public class CPMeasurementUnitServiceUtil {
 			type, serviceContext);
 	}
 
+	public static void deleteCPMeasurementUnit(long cpMeasurementUnitId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCPMeasurementUnit(cpMeasurementUnitId);
+	}
+
 	public static com.liferay.commerce.product.model.CPMeasurementUnit fetchPrimaryCPMeasurementUnit(
 		long groupId, int type) {
 		return getService().fetchPrimaryCPMeasurementUnit(groupId, type);
@@ -63,16 +68,12 @@ public class CPMeasurementUnitServiceUtil {
 		return getService().getCPMeasurementUnit(cpMeasurementUnitId);
 	}
 
-	public static com.liferay.commerce.product.model.CPMeasurementUnit updateCPMeasurementUnit(
-		long cpMeasurementUnitId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String key, double rate, boolean primary, double priority,
-		int type,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static java.util.List<com.liferay.commerce.product.model.CPMeasurementUnit> getCPMeasurementUnits(
+		long groupId, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPMeasurementUnit> orderByComparator) {
 		return getService()
-				   .updateCPMeasurementUnit(cpMeasurementUnitId, nameMap, key,
-			rate, primary, priority, type, serviceContext);
+				   .getCPMeasurementUnits(groupId, type, start, end,
+			orderByComparator);
 	}
 
 	public static int getCPMeasurementUnitsCount(long groupId, int type) {
@@ -88,17 +89,16 @@ public class CPMeasurementUnitServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List<com.liferay.commerce.product.model.CPMeasurementUnit> getCPMeasurementUnits(
-		long groupId, int type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPMeasurementUnit> orderByComparator) {
-		return getService()
-				   .getCPMeasurementUnits(groupId, type, start, end,
-			orderByComparator);
-	}
-
-	public static void deleteCPMeasurementUnit(long cpMeasurementUnitId)
+	public static com.liferay.commerce.product.model.CPMeasurementUnit updateCPMeasurementUnit(
+		long cpMeasurementUnitId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.lang.String key, double rate, boolean primary, double priority,
+		int type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteCPMeasurementUnit(cpMeasurementUnitId);
+		return getService()
+				   .updateCPMeasurementUnit(cpMeasurementUnitId, nameMap, key,
+			rate, primary, priority, type, serviceContext);
 	}
 
 	public static CPMeasurementUnitService getService() {

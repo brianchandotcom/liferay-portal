@@ -61,14 +61,21 @@ public interface CommerceRegionService extends BaseService {
 		boolean active, ServiceContext serviceContext)
 		throws PortalException;
 
+	public void deleteCommerceRegion(long commerceRegionId)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceRegion getCommerceRegion(long commerceRegionId)
 		throws PortalException;
 
-	public CommerceRegion updateCommerceRegion(long commerceRegionId,
-		java.lang.String name, java.lang.String code, double priority,
-		boolean active, ServiceContext serviceContext)
-		throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceRegion> getCommerceRegions(long commerceCountryId,
+		boolean active, int start, int end,
+		OrderByComparator<CommerceRegion> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceRegion> getCommerceRegions(long commerceCountryId,
+		int start, int end, OrderByComparator<CommerceRegion> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceRegionsCount(long commerceCountryId);
@@ -83,15 +90,8 @@ public interface CommerceRegionService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceRegion> getCommerceRegions(long commerceCountryId,
-		boolean active, int start, int end,
-		OrderByComparator<CommerceRegion> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceRegion> getCommerceRegions(long commerceCountryId,
-		int start, int end, OrderByComparator<CommerceRegion> orderByComparator);
-
-	public void deleteCommerceRegion(long commerceRegionId)
+	public CommerceRegion updateCommerceRegion(long commerceRegionId,
+		java.lang.String name, java.lang.String code, double priority,
+		boolean active, ServiceContext serviceContext)
 		throws PortalException;
 }

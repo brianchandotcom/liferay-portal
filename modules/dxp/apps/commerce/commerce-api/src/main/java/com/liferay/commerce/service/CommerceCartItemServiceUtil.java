@@ -51,30 +51,15 @@ public class CommerceCartItemServiceUtil {
 			cpInstanceId, quantity, json, serviceContext);
 	}
 
+	public static void deleteCommerceCartItem(long commerceCartItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCommerceCartItem(commerceCartItemId);
+	}
+
 	public static com.liferay.commerce.model.CommerceCartItem getCommerceCartItem(
 		long commerceCartItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCommerceCartItem(commerceCartItemId);
-	}
-
-	public static com.liferay.commerce.model.CommerceCartItem updateCommerceCartItem(
-		long commerceCartItemId, int quantity, java.lang.String json)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateCommerceCartItem(commerceCartItemId, quantity, json);
-	}
-
-	public static int getCommerceCartItemsCount(long commerceCartId) {
-		return getService().getCommerceCartItemsCount(commerceCartId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceCartItem> getCommerceCartItems(
@@ -90,9 +75,24 @@ public class CommerceCartItemServiceUtil {
 			orderByComparator);
 	}
 
-	public static void deleteCommerceCartItem(long commerceCartItemId)
+	public static int getCommerceCartItemsCount(long commerceCartId) {
+		return getService().getCommerceCartItemsCount(commerceCartId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.commerce.model.CommerceCartItem updateCommerceCartItem(
+		long commerceCartItemId, int quantity, java.lang.String json)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteCommerceCartItem(commerceCartItemId);
+		return getService()
+				   .updateCommerceCartItem(commerceCartItemId, quantity, json);
 	}
 
 	public static CommerceCartItemService getService() {

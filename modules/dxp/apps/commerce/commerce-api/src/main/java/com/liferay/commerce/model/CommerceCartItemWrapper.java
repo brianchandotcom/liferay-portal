@@ -150,154 +150,13 @@ public class CommerceCartItemWrapper implements CommerceCartItem,
 	}
 
 	@Override
-	public CommerceCartItem toEscapedModel() {
-		return new CommerceCartItemWrapper(_commerceCartItem.toEscapedModel());
-	}
-
-	@Override
-	public CommerceCartItem toUnescapedModel() {
-		return new CommerceCartItemWrapper(_commerceCartItem.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceCartItem.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceCartItem.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceCartItem.isNew();
-	}
-
-	@Override
-	public com.liferay.commerce.product.model.CPDefinition getCPDefinition()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceCartItem.getCPDefinition();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceCartItem.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommerceCartItem> toCacheModel() {
-		return _commerceCartItem.toCacheModel();
+	public java.lang.Object clone() {
+		return new CommerceCartItemWrapper((CommerceCartItem)_commerceCartItem.clone());
 	}
 
 	@Override
 	public int compareTo(CommerceCartItem commerceCartItem) {
 		return _commerceCartItem.compareTo(commerceCartItem);
-	}
-
-	/**
-	* Returns the quantity of this commerce cart item.
-	*
-	* @return the quantity of this commerce cart item
-	*/
-	@Override
-	public int getQuantity() {
-		return _commerceCartItem.getQuantity();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceCartItem.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceCartItem.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new CommerceCartItemWrapper((CommerceCartItem)_commerceCartItem.clone());
-	}
-
-	/**
-	* Returns the json of this commerce cart item.
-	*
-	* @return the json of this commerce cart item
-	*/
-	@Override
-	public java.lang.String getJson() {
-		return _commerceCartItem.getJson();
-	}
-
-	/**
-	* Returns the user name of this commerce cart item.
-	*
-	* @return the user name of this commerce cart item
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _commerceCartItem.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this commerce cart item.
-	*
-	* @return the user uuid of this commerce cart item
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _commerceCartItem.getUserUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _commerceCartItem.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _commerceCartItem.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this commerce cart item.
-	*
-	* @return the create date of this commerce cart item
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _commerceCartItem.getCreateDate();
-	}
-
-	/**
-	* Returns the modified date of this commerce cart item.
-	*
-	* @return the modified date of this commerce cart item
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _commerceCartItem.getModifiedDate();
-	}
-
-	/**
-	* Returns the cp definition ID of this commerce cart item.
-	*
-	* @return the cp definition ID of this commerce cart item
-	*/
-	@Override
-	public long getCPDefinitionId() {
-		return _commerceCartItem.getCPDefinitionId();
-	}
-
-	/**
-	* Returns the cp instance ID of this commerce cart item.
-	*
-	* @return the cp instance ID of this commerce cart item
-	*/
-	@Override
-	public long getCPInstanceId() {
-		return _commerceCartItem.getCPInstanceId();
 	}
 
 	/**
@@ -330,6 +189,47 @@ public class CommerceCartItemWrapper implements CommerceCartItem,
 		return _commerceCartItem.getCompanyId();
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPDefinition getCPDefinition()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCartItem.getCPDefinition();
+	}
+
+	/**
+	* Returns the cp definition ID of this commerce cart item.
+	*
+	* @return the cp definition ID of this commerce cart item
+	*/
+	@Override
+	public long getCPDefinitionId() {
+		return _commerceCartItem.getCPDefinitionId();
+	}
+
+	/**
+	* Returns the cp instance ID of this commerce cart item.
+	*
+	* @return the cp instance ID of this commerce cart item
+	*/
+	@Override
+	public long getCPInstanceId() {
+		return _commerceCartItem.getCPInstanceId();
+	}
+
+	/**
+	* Returns the create date of this commerce cart item.
+	*
+	* @return the create date of this commerce cart item
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _commerceCartItem.getCreateDate();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _commerceCartItem.getExpandoBridge();
+	}
+
 	/**
 	* Returns the group ID of this commerce cart item.
 	*
@@ -338,6 +238,26 @@ public class CommerceCartItemWrapper implements CommerceCartItem,
 	@Override
 	public long getGroupId() {
 		return _commerceCartItem.getGroupId();
+	}
+
+	/**
+	* Returns the json of this commerce cart item.
+	*
+	* @return the json of this commerce cart item
+	*/
+	@Override
+	public java.lang.String getJson() {
+		return _commerceCartItem.getJson();
+	}
+
+	/**
+	* Returns the modified date of this commerce cart item.
+	*
+	* @return the modified date of this commerce cart item
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _commerceCartItem.getModifiedDate();
 	}
 
 	/**
@@ -350,6 +270,21 @@ public class CommerceCartItemWrapper implements CommerceCartItem,
 		return _commerceCartItem.getPrimaryKey();
 	}
 
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _commerceCartItem.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the quantity of this commerce cart item.
+	*
+	* @return the quantity of this commerce cart item
+	*/
+	@Override
+	public int getQuantity() {
+		return _commerceCartItem.getQuantity();
+	}
+
 	/**
 	* Returns the user ID of this commerce cart item.
 	*
@@ -360,29 +295,49 @@ public class CommerceCartItemWrapper implements CommerceCartItem,
 		return _commerceCartItem.getUserId();
 	}
 
+	/**
+	* Returns the user name of this commerce cart item.
+	*
+	* @return the user name of this commerce cart item
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _commerceCartItem.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this commerce cart item.
+	*
+	* @return the user uuid of this commerce cart item
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _commerceCartItem.getUserUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _commerceCartItem.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _commerceCartItem.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _commerceCartItem.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _commerceCartItem.isNew();
+	}
+
 	@Override
 	public void persist() {
 		_commerceCartItem.persist();
-	}
-
-	/**
-	* Sets the cp definition ID of this commerce cart item.
-	*
-	* @param CPDefinitionId the cp definition ID of this commerce cart item
-	*/
-	@Override
-	public void setCPDefinitionId(long CPDefinitionId) {
-		_commerceCartItem.setCPDefinitionId(CPDefinitionId);
-	}
-
-	/**
-	* Sets the cp instance ID of this commerce cart item.
-	*
-	* @param CPInstanceId the cp instance ID of this commerce cart item
-	*/
-	@Override
-	public void setCPInstanceId(long CPInstanceId) {
-		_commerceCartItem.setCPInstanceId(CPInstanceId);
 	}
 
 	@Override
@@ -421,6 +376,26 @@ public class CommerceCartItemWrapper implements CommerceCartItem,
 	}
 
 	/**
+	* Sets the cp definition ID of this commerce cart item.
+	*
+	* @param CPDefinitionId the cp definition ID of this commerce cart item
+	*/
+	@Override
+	public void setCPDefinitionId(long CPDefinitionId) {
+		_commerceCartItem.setCPDefinitionId(CPDefinitionId);
+	}
+
+	/**
+	* Sets the cp instance ID of this commerce cart item.
+	*
+	* @param CPInstanceId the cp instance ID of this commerce cart item
+	*/
+	@Override
+	public void setCPInstanceId(long CPInstanceId) {
+		_commerceCartItem.setCPInstanceId(CPInstanceId);
+	}
+
+	/**
 	* Sets the create date of this commerce cart item.
 	*
 	* @param createDate the create date of this commerce cart item
@@ -431,14 +406,14 @@ public class CommerceCartItemWrapper implements CommerceCartItem,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceCartItem.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_commerceCartItem.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_commerceCartItem.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -534,6 +509,31 @@ public class CommerceCartItemWrapper implements CommerceCartItem,
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_commerceCartItem.setUserUuid(userUuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<CommerceCartItem> toCacheModel() {
+		return _commerceCartItem.toCacheModel();
+	}
+
+	@Override
+	public CommerceCartItem toEscapedModel() {
+		return new CommerceCartItemWrapper(_commerceCartItem.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _commerceCartItem.toString();
+	}
+
+	@Override
+	public CommerceCartItem toUnescapedModel() {
+		return new CommerceCartItemWrapper(_commerceCartItem.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _commerceCartItem.toXmlString();
 	}
 
 	@Override

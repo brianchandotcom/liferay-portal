@@ -41,12 +41,6 @@ public class CPDefinitionServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPDefinitionServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.commerce.product.model.CPAttachmentFileEntry getDefaultImage(
-		long cpDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getDefaultImage(cpDefinitionId);
-	}
-
 	public static com.liferay.commerce.product.model.CPDefinition addCPDefinition(
 		java.lang.String baseSKU,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
@@ -113,6 +107,12 @@ public class CPDefinitionServiceUtil {
 			neverExpire, serviceContext);
 	}
 
+	public static void deleteAssetCategoryCPDefinition(long cpDefinitionId,
+		long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteAssetCategoryCPDefinition(cpDefinitionId, categoryId);
+	}
+
 	public static com.liferay.commerce.product.model.CPDefinition deleteCPDefinition(
 		long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -131,10 +131,81 @@ public class CPDefinitionServiceUtil {
 		return getService().getCPDefinition(cpDefinitionId);
 	}
 
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitions(
+		long groupId, java.lang.String productTypeName,
+		java.lang.String languageId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinition> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCPDefinitions(groupId, productTypeName, languageId,
+			status, start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitionsByCategoryId(
+		long categoryId, int start, int end) {
+		return getService().getCPDefinitionsByCategoryId(categoryId, start, end);
+	}
+
+	public static int getCPDefinitionsCount(long groupId,
+		java.lang.String productTypeName, java.lang.String languageId,
+		int status) {
+		return getService()
+				   .getCPDefinitionsCount(groupId, productTypeName, languageId,
+			status);
+	}
+
+	public static int getCPDefinitionsCountByCategoryId(long categoryId) {
+		return getService().getCPDefinitionsCountByCategoryId(categoryId);
+	}
+
+	public static com.liferay.commerce.product.model.CPAttachmentFileEntry getDefaultImage(
+		long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDefaultImage(cpDefinitionId);
+	}
+
+	public static java.lang.String getLayoutUuid(long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLayoutUuid(cpDefinitionId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.lang.String getUrlTitleMapAsXML(long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUrlTitleMapAsXML(cpDefinitionId);
+	}
+
 	public static com.liferay.commerce.product.model.CPDefinition moveCPDefinitionToTrash(
 		long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().moveCPDefinitionToTrash(cpDefinitionId);
+	}
+
+	public static void restoreCPDefinitionFromTrash(long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().restoreCPDefinitionFromTrash(cpDefinitionId);
+	}
+
+	public static com.liferay.portal.kernel.search.Hits search(
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return getService().search(searchContext);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPDefinition> searchCPDefinitions(
+		long companyId, long groupId, java.lang.String keywords, int status,
+		int start, int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchCPDefinitions(companyId, groupId, keywords, status,
+			start, end, sort);
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinition updateCPDefinition(
@@ -218,77 +289,6 @@ public class CPDefinitionServiceUtil {
 		return getService()
 				   .updateStatus(userId, cpDefinitionId, status,
 			serviceContext, workflowContext);
-	}
-
-	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPDefinition> searchCPDefinitions(
-		long companyId, long groupId, java.lang.String keywords, int status,
-		int start, int end, com.liferay.portal.kernel.search.Sort sort)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .searchCPDefinitions(companyId, groupId, keywords, status,
-			start, end, sort);
-	}
-
-	public static com.liferay.portal.kernel.search.Hits search(
-		com.liferay.portal.kernel.search.SearchContext searchContext) {
-		return getService().search(searchContext);
-	}
-
-	public static int getCPDefinitionsCount(long groupId,
-		java.lang.String productTypeName, java.lang.String languageId,
-		int status) {
-		return getService()
-				   .getCPDefinitionsCount(groupId, productTypeName, languageId,
-			status);
-	}
-
-	public static int getCPDefinitionsCountByCategoryId(long categoryId) {
-		return getService().getCPDefinitionsCountByCategoryId(categoryId);
-	}
-
-	public static java.lang.String getLayoutUuid(long cpDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getLayoutUuid(cpDefinitionId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static java.lang.String getUrlTitleMapAsXML(long cpDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getUrlTitleMapAsXML(cpDefinitionId);
-	}
-
-	public static java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitions(
-		long groupId, java.lang.String productTypeName,
-		java.lang.String languageId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinition> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getCPDefinitions(groupId, productTypeName, languageId,
-			status, start, end, orderByComparator);
-	}
-
-	public static java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitionsByCategoryId(
-		long categoryId, int start, int end) {
-		return getService().getCPDefinitionsByCategoryId(categoryId, start, end);
-	}
-
-	public static void deleteAssetCategoryCPDefinition(long cpDefinitionId,
-		long categoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteAssetCategoryCPDefinition(cpDefinitionId, categoryId);
-	}
-
-	public static void restoreCPDefinitionFromTrash(long cpDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().restoreCPDefinitionFromTrash(cpDefinitionId);
 	}
 
 	public static CPDefinitionService getService() {

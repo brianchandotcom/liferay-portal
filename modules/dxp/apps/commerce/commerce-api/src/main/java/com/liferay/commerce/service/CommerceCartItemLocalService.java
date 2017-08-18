@@ -107,40 +107,14 @@ public interface CommerceCartItemLocalService extends BaseLocalService,
 	public CommerceCartItem deleteCommerceCartItem(long commerceCartItemId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCartItem fetchCommerceCartItem(long commerceCartItemId);
-
-	/**
-	* Returns the commerce cart item with the primary key.
-	*
-	* @param commerceCartItemId the primary key of the commerce cart item
-	* @return the commerce cart item
-	* @throws PortalException if a commerce cart item with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCartItem getCommerceCartItem(long commerceCartItemId)
+	public void deleteCommerceCartItems(long commerceCartId)
 		throws PortalException;
 
-	/**
-	* Updates the commerce cart item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param commerceCartItem the commerce cart item
-	* @return the commerce cart item that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public CommerceCartItem updateCommerceCartItem(
-		CommerceCartItem commerceCartItem);
+	public void deleteCommerceCartItemsByCPDefinitionId(long cpDefinitionId)
+		throws PortalException;
 
-	public CommerceCartItem updateCommerceCartItem(long commerceCartItemId,
-		int quantity, java.lang.String json) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public void deleteCommerceCartItemsByCPInstanceId(long cpInstanceId)
+		throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -149,28 +123,7 @@ public interface CommerceCartItemLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Returns the number of commerce cart items.
-	*
-	* @return the number of commerce cart items
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceCartItemsCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceCartItemsCount(long commerceCartId);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -212,6 +165,41 @@ public interface CommerceCartItemLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCartItem fetchCommerceCartItem(long commerceCartItemId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* Returns the commerce cart item with the primary key.
+	*
+	* @param commerceCartItemId the primary key of the commerce cart item
+	* @return the commerce cart item
+	* @throws PortalException if a commerce cart item with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCartItem getCommerceCartItem(long commerceCartItemId)
+		throws PortalException;
+
+	/**
 	* Returns a range of all the commerce cart items.
 	*
 	* <p>
@@ -235,31 +223,43 @@ public interface CommerceCartItemLocalService extends BaseLocalService,
 		OrderByComparator<CommerceCartItem> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of commerce cart items.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of commerce cart items
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceCartItemsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceCartItemsCount(long commerceCartId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public java.lang.String getOSGiServiceIdentifier();
 
-	public void deleteCommerceCartItems(long commerceCartId)
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public void deleteCommerceCartItemsByCPDefinitionId(long cpDefinitionId)
-		throws PortalException;
+	/**
+	* Updates the commerce cart item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param commerceCartItem the commerce cart item
+	* @return the commerce cart item that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceCartItem updateCommerceCartItem(
+		CommerceCartItem commerceCartItem);
 
-	public void deleteCommerceCartItemsByCPInstanceId(long cpInstanceId)
-		throws PortalException;
+	public CommerceCartItem updateCommerceCartItem(long commerceCartItemId,
+		int quantity, java.lang.String json) throws PortalException;
 
 	public void validate(long cpDefinitionId, long cpInstanceId)
 		throws PortalException;

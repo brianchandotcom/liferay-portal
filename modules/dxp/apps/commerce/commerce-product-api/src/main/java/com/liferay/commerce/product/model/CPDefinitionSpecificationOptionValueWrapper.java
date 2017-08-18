@@ -171,19 +171,55 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	}
 
 	@Override
+	public java.lang.Object clone() {
+		return new CPDefinitionSpecificationOptionValueWrapper((CPDefinitionSpecificationOptionValue)_cpDefinitionSpecificationOptionValue.clone());
+	}
+
+	@Override
+	public int compareTo(
+		CPDefinitionSpecificationOptionValue cpDefinitionSpecificationOptionValue) {
+		return _cpDefinitionSpecificationOptionValue.compareTo(cpDefinitionSpecificationOptionValue);
+	}
+
+	@Override
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _cpDefinitionSpecificationOptionValue.getAvailableLanguageIds();
+	}
+
+	/**
+	* Returns the company ID of this cp definition specification option value.
+	*
+	* @return the company ID of this cp definition specification option value
+	*/
+	@Override
+	public long getCompanyId() {
+		return _cpDefinitionSpecificationOptionValue.getCompanyId();
+	}
+
+	@Override
 	public CPDefinition getCPDefinition()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionSpecificationOptionValue.getCPDefinition();
 	}
 
+	/**
+	* Returns the cp definition ID of this cp definition specification option value.
+	*
+	* @return the cp definition ID of this cp definition specification option value
+	*/
 	@Override
-	public CPDefinitionSpecificationOptionValue toEscapedModel() {
-		return new CPDefinitionSpecificationOptionValueWrapper(_cpDefinitionSpecificationOptionValue.toEscapedModel());
+	public long getCPDefinitionId() {
+		return _cpDefinitionSpecificationOptionValue.getCPDefinitionId();
 	}
 
+	/**
+	* Returns the cp definition specification option value ID of this cp definition specification option value.
+	*
+	* @return the cp definition specification option value ID of this cp definition specification option value
+	*/
 	@Override
-	public CPDefinitionSpecificationOptionValue toUnescapedModel() {
-		return new CPDefinitionSpecificationOptionValueWrapper(_cpDefinitionSpecificationOptionValue.toUnescapedModel());
+	public long getCPDefinitionSpecificationOptionValueId() {
+		return _cpDefinitionSpecificationOptionValue.getCPDefinitionSpecificationOptionValueId();
 	}
 
 	@Override
@@ -192,25 +228,45 @@ public class CPDefinitionSpecificationOptionValueWrapper
 		return _cpDefinitionSpecificationOptionValue.getCPOptionCategory();
 	}
 
+	/**
+	* Returns the cp option category ID of this cp definition specification option value.
+	*
+	* @return the cp option category ID of this cp definition specification option value
+	*/
+	@Override
+	public long getCPOptionCategoryId() {
+		return _cpDefinitionSpecificationOptionValue.getCPOptionCategoryId();
+	}
+
 	@Override
 	public CPSpecificationOption getCPSpecificationOption()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionSpecificationOptionValue.getCPSpecificationOption();
 	}
 
+	/**
+	* Returns the cp specification option ID of this cp definition specification option value.
+	*
+	* @return the cp specification option ID of this cp definition specification option value
+	*/
 	@Override
-	public boolean isCachedModel() {
-		return _cpDefinitionSpecificationOptionValue.isCachedModel();
+	public long getCPSpecificationOptionId() {
+		return _cpDefinitionSpecificationOptionValue.getCPSpecificationOptionId();
+	}
+
+	/**
+	* Returns the create date of this cp definition specification option value.
+	*
+	* @return the create date of this cp definition specification option value
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _cpDefinitionSpecificationOptionValue.getCreateDate();
 	}
 
 	@Override
-	public boolean isEscapedModel() {
-		return _cpDefinitionSpecificationOptionValue.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _cpDefinitionSpecificationOptionValue.isNew();
+	public java.lang.String getDefaultLanguageId() {
+		return _cpDefinitionSpecificationOptionValue.getDefaultLanguageId();
 	}
 
 	@Override
@@ -218,9 +274,49 @@ public class CPDefinitionSpecificationOptionValueWrapper
 		return _cpDefinitionSpecificationOptionValue.getExpandoBridge();
 	}
 
+	/**
+	* Returns the group ID of this cp definition specification option value.
+	*
+	* @return the group ID of this cp definition specification option value
+	*/
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CPDefinitionSpecificationOptionValue> toCacheModel() {
-		return _cpDefinitionSpecificationOptionValue.toCacheModel();
+	public long getGroupId() {
+		return _cpDefinitionSpecificationOptionValue.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this cp definition specification option value.
+	*
+	* @return the last publish date of this cp definition specification option value
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _cpDefinitionSpecificationOptionValue.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this cp definition specification option value.
+	*
+	* @return the modified date of this cp definition specification option value
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _cpDefinitionSpecificationOptionValue.getModifiedDate();
+	}
+
+	/**
+	* Returns the primary key of this cp definition specification option value.
+	*
+	* @return the primary key of this cp definition specification option value
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _cpDefinitionSpecificationOptionValue.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _cpDefinitionSpecificationOptionValue.getPrimaryKeyObj();
 	}
 
 	/**
@@ -233,30 +329,14 @@ public class CPDefinitionSpecificationOptionValueWrapper
 		return _cpDefinitionSpecificationOptionValue.getPriority();
 	}
 
+	/**
+	* Returns the user ID of this cp definition specification option value.
+	*
+	* @return the user ID of this cp definition specification option value
+	*/
 	@Override
-	public int compareTo(
-		CPDefinitionSpecificationOptionValue cpDefinitionSpecificationOptionValue) {
-		return _cpDefinitionSpecificationOptionValue.compareTo(cpDefinitionSpecificationOptionValue);
-	}
-
-	@Override
-	public int hashCode() {
-		return _cpDefinitionSpecificationOptionValue.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _cpDefinitionSpecificationOptionValue.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new CPDefinitionSpecificationOptionValueWrapper((CPDefinitionSpecificationOptionValue)_cpDefinitionSpecificationOptionValue.clone());
-	}
-
-	@Override
-	public java.lang.String getDefaultLanguageId() {
-		return _cpDefinitionSpecificationOptionValue.getDefaultLanguageId();
+	public long getUserId() {
+		return _cpDefinitionSpecificationOptionValue.getUserId();
 	}
 
 	/**
@@ -302,6 +382,29 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	/**
 	* Returns the localized value of this cp definition specification option value in the language. Uses the default language if no localization exists for the requested language.
 	*
+	* @param locale the locale of the language
+	* @return the localized value of this cp definition specification option value
+	*/
+	@Override
+	public java.lang.String getValue(java.util.Locale locale) {
+		return _cpDefinitionSpecificationOptionValue.getValue(locale);
+	}
+
+	/**
+	* Returns the localized value of this cp definition specification option value in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized value of this cp definition specification option value. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getValue(java.util.Locale locale, boolean useDefault) {
+		return _cpDefinitionSpecificationOptionValue.getValue(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized value of this cp definition specification option value in the language. Uses the default language if no localization exists for the requested language.
+	*
 	* @param languageId the ID of the language
 	* @return the localized value of this cp definition specification option value
 	*/
@@ -324,29 +427,6 @@ public class CPDefinitionSpecificationOptionValueWrapper
 			useDefault);
 	}
 
-	/**
-	* Returns the localized value of this cp definition specification option value in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized value of this cp definition specification option value
-	*/
-	@Override
-	public java.lang.String getValue(java.util.Locale locale) {
-		return _cpDefinitionSpecificationOptionValue.getValue(locale);
-	}
-
-	/**
-	* Returns the localized value of this cp definition specification option value in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized value of this cp definition specification option value. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getValue(java.util.Locale locale, boolean useDefault) {
-		return _cpDefinitionSpecificationOptionValue.getValue(locale, useDefault);
-	}
-
 	@Override
 	public java.lang.String getValueCurrentLanguageId() {
 		return _cpDefinitionSpecificationOptionValue.getValueCurrentLanguageId();
@@ -355,51 +435,6 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	@Override
 	public java.lang.String getValueCurrentValue() {
 		return _cpDefinitionSpecificationOptionValue.getValueCurrentValue();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _cpDefinitionSpecificationOptionValue.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _cpDefinitionSpecificationOptionValue.toXmlString();
-	}
-
-	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
-		return _cpDefinitionSpecificationOptionValue.getAvailableLanguageIds();
-	}
-
-	/**
-	* Returns the create date of this cp definition specification option value.
-	*
-	* @return the create date of this cp definition specification option value
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _cpDefinitionSpecificationOptionValue.getCreateDate();
-	}
-
-	/**
-	* Returns the last publish date of this cp definition specification option value.
-	*
-	* @return the last publish date of this cp definition specification option value
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _cpDefinitionSpecificationOptionValue.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this cp definition specification option value.
-	*
-	* @return the modified date of this cp definition specification option value
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _cpDefinitionSpecificationOptionValue.getModifiedDate();
 	}
 
 	/**
@@ -412,84 +447,24 @@ public class CPDefinitionSpecificationOptionValueWrapper
 		return _cpDefinitionSpecificationOptionValue.getValueMap();
 	}
 
-	/**
-	* Returns the cp definition ID of this cp definition specification option value.
-	*
-	* @return the cp definition ID of this cp definition specification option value
-	*/
 	@Override
-	public long getCPDefinitionId() {
-		return _cpDefinitionSpecificationOptionValue.getCPDefinitionId();
+	public int hashCode() {
+		return _cpDefinitionSpecificationOptionValue.hashCode();
 	}
 
-	/**
-	* Returns the cp definition specification option value ID of this cp definition specification option value.
-	*
-	* @return the cp definition specification option value ID of this cp definition specification option value
-	*/
 	@Override
-	public long getCPDefinitionSpecificationOptionValueId() {
-		return _cpDefinitionSpecificationOptionValue.getCPDefinitionSpecificationOptionValueId();
+	public boolean isCachedModel() {
+		return _cpDefinitionSpecificationOptionValue.isCachedModel();
 	}
 
-	/**
-	* Returns the cp option category ID of this cp definition specification option value.
-	*
-	* @return the cp option category ID of this cp definition specification option value
-	*/
 	@Override
-	public long getCPOptionCategoryId() {
-		return _cpDefinitionSpecificationOptionValue.getCPOptionCategoryId();
+	public boolean isEscapedModel() {
+		return _cpDefinitionSpecificationOptionValue.isEscapedModel();
 	}
 
-	/**
-	* Returns the cp specification option ID of this cp definition specification option value.
-	*
-	* @return the cp specification option ID of this cp definition specification option value
-	*/
 	@Override
-	public long getCPSpecificationOptionId() {
-		return _cpDefinitionSpecificationOptionValue.getCPSpecificationOptionId();
-	}
-
-	/**
-	* Returns the company ID of this cp definition specification option value.
-	*
-	* @return the company ID of this cp definition specification option value
-	*/
-	@Override
-	public long getCompanyId() {
-		return _cpDefinitionSpecificationOptionValue.getCompanyId();
-	}
-
-	/**
-	* Returns the group ID of this cp definition specification option value.
-	*
-	* @return the group ID of this cp definition specification option value
-	*/
-	@Override
-	public long getGroupId() {
-		return _cpDefinitionSpecificationOptionValue.getGroupId();
-	}
-
-	/**
-	* Returns the primary key of this cp definition specification option value.
-	*
-	* @return the primary key of this cp definition specification option value
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _cpDefinitionSpecificationOptionValue.getPrimaryKey();
-	}
-
-	/**
-	* Returns the user ID of this cp definition specification option value.
-	*
-	* @return the user ID of this cp definition specification option value
-	*/
-	@Override
-	public long getUserId() {
-		return _cpDefinitionSpecificationOptionValue.getUserId();
+	public boolean isNew() {
+		return _cpDefinitionSpecificationOptionValue.isNew();
 	}
 
 	@Override
@@ -508,6 +483,21 @@ public class CPDefinitionSpecificationOptionValueWrapper
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
 		_cpDefinitionSpecificationOptionValue.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
+	@Override
+	public void setCachedModel(boolean cachedModel) {
+		_cpDefinitionSpecificationOptionValue.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this cp definition specification option value.
+	*
+	* @param companyId the company ID of this cp definition specification option value
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_cpDefinitionSpecificationOptionValue.setCompanyId(companyId);
 	}
 
 	/**
@@ -551,21 +541,6 @@ public class CPDefinitionSpecificationOptionValueWrapper
 		_cpDefinitionSpecificationOptionValue.setCPSpecificationOptionId(CPSpecificationOptionId);
 	}
 
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_cpDefinitionSpecificationOptionValue.setCachedModel(cachedModel);
-	}
-
-	/**
-	* Sets the company ID of this cp definition specification option value.
-	*
-	* @param companyId the company ID of this cp definition specification option value
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_cpDefinitionSpecificationOptionValue.setCompanyId(companyId);
-	}
-
 	/**
 	* Sets the create date of this cp definition specification option value.
 	*
@@ -577,14 +552,14 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_cpDefinitionSpecificationOptionValue.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_cpDefinitionSpecificationOptionValue.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_cpDefinitionSpecificationOptionValue.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -753,6 +728,31 @@ public class CPDefinitionSpecificationOptionValueWrapper
 		java.util.Locale defaultLocale) {
 		_cpDefinitionSpecificationOptionValue.setValueMap(valueMap,
 			defaultLocale);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<CPDefinitionSpecificationOptionValue> toCacheModel() {
+		return _cpDefinitionSpecificationOptionValue.toCacheModel();
+	}
+
+	@Override
+	public CPDefinitionSpecificationOptionValue toEscapedModel() {
+		return new CPDefinitionSpecificationOptionValueWrapper(_cpDefinitionSpecificationOptionValue.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _cpDefinitionSpecificationOptionValue.toString();
+	}
+
+	@Override
+	public CPDefinitionSpecificationOptionValue toUnescapedModel() {
+		return new CPDefinitionSpecificationOptionValueWrapper(_cpDefinitionSpecificationOptionValue.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _cpDefinitionSpecificationOptionValue.toXmlString();
 	}
 
 	@Override

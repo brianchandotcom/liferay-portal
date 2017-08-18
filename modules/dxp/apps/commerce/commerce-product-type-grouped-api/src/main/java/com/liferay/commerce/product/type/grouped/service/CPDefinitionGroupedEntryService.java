@@ -56,20 +56,26 @@ public interface CPDefinitionGroupedEntryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionGroupedEntryServiceUtil} to access the cp definition grouped entry remote service. Add custom service methods to {@link com.liferay.commerce.product.type.grouped.service.impl.CPDefinitionGroupedEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public void addCPDefinitionGroupedEntries(long cpDefinitionId,
+		long[] entryCPDefinitionIds, ServiceContext serviceContext)
+		throws PortalException;
+
 	public CPDefinitionGroupedEntry deleteCPDefinitionGroupedEntry(
 		long cpDefinitionGroupedEntryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDefinitionGroupedEntry getCPDefinitionGroupedEntry(
-		long cpDefinitionGroupedEntryId) throws PortalException;
-
-	public CPDefinitionGroupedEntry updateCPDefinitionGroupedEntry(
-		long cpDefinitionGroupedEntryId, double priority, int quantity)
+	public List<CPDefinitionGroupedEntry> getCPDefinitionGroupedEntries(
+		long cpDefinitionId, int start, int end,
+		OrderByComparator<CPDefinitionGroupedEntry> orderByComparator)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPDefinitionGroupedEntriesCount(long cpDefinitionId)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionGroupedEntry getCPDefinitionGroupedEntry(
+		long cpDefinitionGroupedEntryId) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -78,13 +84,7 @@ public interface CPDefinitionGroupedEntryService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPDefinitionGroupedEntry> getCPDefinitionGroupedEntries(
-		long cpDefinitionId, int start, int end,
-		OrderByComparator<CPDefinitionGroupedEntry> orderByComparator)
-		throws PortalException;
-
-	public void addCPDefinitionGroupedEntries(long cpDefinitionId,
-		long[] entryCPDefinitionIds, ServiceContext serviceContext)
+	public CPDefinitionGroupedEntry updateCPDefinitionGroupedEntry(
+		long cpDefinitionGroupedEntryId, double priority, int quantity)
 		throws PortalException;
 }

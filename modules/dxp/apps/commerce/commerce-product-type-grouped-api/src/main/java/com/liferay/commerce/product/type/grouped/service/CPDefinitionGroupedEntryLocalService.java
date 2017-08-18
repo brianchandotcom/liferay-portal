@@ -64,6 +64,9 @@ public interface CPDefinitionGroupedEntryLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionGroupedEntryLocalServiceUtil} to access the cp definition grouped entry local service. Add custom service methods to {@link com.liferay.commerce.product.type.grouped.service.impl.CPDefinitionGroupedEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public void addCPDefinitionGroupedEntries(long cpDefinitionId,
+		long[] entryCPDefinitionIds, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Adds the cp definition grouped entry to the database. Also notifies the appropriate model listeners.
@@ -88,6 +91,8 @@ public interface CPDefinitionGroupedEntryLocalService extends BaseLocalService,
 	public CPDefinitionGroupedEntry createCPDefinitionGroupedEntry(
 		long CPDefinitionGroupedEntryId);
 
+	public void deleteCPDefinitionGroupedEntries(long cpDefinitionId);
+
 	/**
 	* Deletes the cp definition grouped entry from the database. Also notifies the appropriate model listeners.
 	*
@@ -109,74 +114,6 @@ public interface CPDefinitionGroupedEntryLocalService extends BaseLocalService,
 	public CPDefinitionGroupedEntry deleteCPDefinitionGroupedEntry(
 		long CPDefinitionGroupedEntryId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDefinitionGroupedEntry fetchCPDefinitionGroupedEntry(
-		long CPDefinitionGroupedEntryId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDefinitionGroupedEntry fetchCPDefinitionGroupedEntryByC_E(
-		long cpDefinitionId, long entryCPDefinitionId);
-
-	/**
-	* Returns the cp definition grouped entry matching the UUID and group.
-	*
-	* @param uuid the cp definition grouped entry's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp definition grouped entry, or <code>null</code> if a matching cp definition grouped entry could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDefinitionGroupedEntry fetchCPDefinitionGroupedEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	/**
-	* Returns the cp definition grouped entry with the primary key.
-	*
-	* @param CPDefinitionGroupedEntryId the primary key of the cp definition grouped entry
-	* @return the cp definition grouped entry
-	* @throws PortalException if a cp definition grouped entry with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDefinitionGroupedEntry getCPDefinitionGroupedEntry(
-		long CPDefinitionGroupedEntryId) throws PortalException;
-
-	/**
-	* Returns the cp definition grouped entry matching the UUID and group.
-	*
-	* @param uuid the cp definition grouped entry's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp definition grouped entry
-	* @throws PortalException if a matching cp definition grouped entry could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDefinitionGroupedEntry getCPDefinitionGroupedEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
-
-	/**
-	* Updates the cp definition grouped entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param cpDefinitionGroupedEntry the cp definition grouped entry
-	* @return the cp definition grouped entry that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public CPDefinitionGroupedEntry updateCPDefinitionGroupedEntry(
-		CPDefinitionGroupedEntry cpDefinitionGroupedEntry);
-
-	public CPDefinitionGroupedEntry updateCPDefinitionGroupedEntry(
-		long cpDefinitionGroupedEntryId, double priority, int quantity)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
 	/**
 	* @throws PortalException
 	*/
@@ -184,28 +121,7 @@ public interface CPDefinitionGroupedEntryLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Returns the number of cp definition grouped entries.
-	*
-	* @return the number of cp definition grouped entries
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPDefinitionGroupedEntriesCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPDefinitionGroupedEntriesCount(long cpDefinitionId);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -245,6 +161,46 @@ public interface CPDefinitionGroupedEntryLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionGroupedEntry fetchCPDefinitionGroupedEntry(
+		long CPDefinitionGroupedEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionGroupedEntry fetchCPDefinitionGroupedEntryByC_E(
+		long cpDefinitionId, long entryCPDefinitionId);
+
+	/**
+	* Returns the cp definition grouped entry matching the UUID and group.
+	*
+	* @param uuid the cp definition grouped entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp definition grouped entry, or <code>null</code> if a matching cp definition grouped entry could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionGroupedEntry fetchCPDefinitionGroupedEntryByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
 	* Returns a range of all the cp definition grouped entries.
@@ -301,26 +257,69 @@ public interface CPDefinitionGroupedEntryLocalService extends BaseLocalService,
 		OrderByComparator<CPDefinitionGroupedEntry> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of cp definition grouped entries.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of cp definition grouped entries
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPDefinitionGroupedEntriesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPDefinitionGroupedEntriesCount(long cpDefinitionId);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the cp definition grouped entry with the primary key.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param CPDefinitionGroupedEntryId the primary key of the cp definition grouped entry
+	* @return the cp definition grouped entry
+	* @throws PortalException if a cp definition grouped entry with the primary key could not be found
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionGroupedEntry getCPDefinitionGroupedEntry(
+		long CPDefinitionGroupedEntryId) throws PortalException;
 
-	public void addCPDefinitionGroupedEntries(long cpDefinitionId,
-		long[] entryCPDefinitionIds, ServiceContext serviceContext)
+	/**
+	* Returns the cp definition grouped entry matching the UUID and group.
+	*
+	* @param uuid the cp definition grouped entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp definition grouped entry
+	* @throws PortalException if a matching cp definition grouped entry could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionGroupedEntry getCPDefinitionGroupedEntryByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public void deleteCPDefinitionGroupedEntries(long cpDefinitionId);
+	/**
+	* Updates the cp definition grouped entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param cpDefinitionGroupedEntry the cp definition grouped entry
+	* @return the cp definition grouped entry that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public CPDefinitionGroupedEntry updateCPDefinitionGroupedEntry(
+		CPDefinitionGroupedEntry cpDefinitionGroupedEntry);
+
+	public CPDefinitionGroupedEntry updateCPDefinitionGroupedEntry(
+		long cpDefinitionGroupedEntryId, double priority, int quantity)
+		throws PortalException;
 }

@@ -195,13 +195,13 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	}
 
 	@Override
-	public CommerceCountry toEscapedModel() {
-		return new CommerceCountryWrapper(_commerceCountry.toEscapedModel());
+	public java.lang.Object clone() {
+		return new CommerceCountryWrapper((CommerceCountry)_commerceCountry.clone());
 	}
 
 	@Override
-	public CommerceCountry toUnescapedModel() {
-		return new CommerceCountryWrapper(_commerceCountry.toUnescapedModel());
+	public int compareTo(CommerceCountry commerceCountry) {
+		return _commerceCountry.compareTo(commerceCountry);
 	}
 
 	/**
@@ -214,6 +214,11 @@ public class CommerceCountryWrapper implements CommerceCountry,
 		return _commerceCountry.getActive();
 	}
 
+	@Override
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _commerceCountry.getAvailableLanguageIds();
+	}
+
 	/**
 	* Returns the billing allowed of this commerce country.
 	*
@@ -222,6 +227,188 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	@Override
 	public boolean getBillingAllowed() {
 		return _commerceCountry.getBillingAllowed();
+	}
+
+	/**
+	* Returns the commerce country ID of this commerce country.
+	*
+	* @return the commerce country ID of this commerce country
+	*/
+	@Override
+	public long getCommerceCountryId() {
+		return _commerceCountry.getCommerceCountryId();
+	}
+
+	/**
+	* Returns the company ID of this commerce country.
+	*
+	* @return the company ID of this commerce country
+	*/
+	@Override
+	public long getCompanyId() {
+		return _commerceCountry.getCompanyId();
+	}
+
+	/**
+	* Returns the create date of this commerce country.
+	*
+	* @return the create date of this commerce country
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _commerceCountry.getCreateDate();
+	}
+
+	@Override
+	public java.lang.String getDefaultLanguageId() {
+		return _commerceCountry.getDefaultLanguageId();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _commerceCountry.getExpandoBridge();
+	}
+
+	/**
+	* Returns the group ID of this commerce country.
+	*
+	* @return the group ID of this commerce country
+	*/
+	@Override
+	public long getGroupId() {
+		return _commerceCountry.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this commerce country.
+	*
+	* @return the last publish date of this commerce country
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _commerceCountry.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this commerce country.
+	*
+	* @return the modified date of this commerce country
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _commerceCountry.getModifiedDate();
+	}
+
+	/**
+	* Returns the name of this commerce country.
+	*
+	* @return the name of this commerce country
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _commerceCountry.getName();
+	}
+
+	/**
+	* Returns the localized name of this commerce country in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized name of this commerce country
+	*/
+	@Override
+	public java.lang.String getName(java.util.Locale locale) {
+		return _commerceCountry.getName(locale);
+	}
+
+	/**
+	* Returns the localized name of this commerce country in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this commerce country. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+		return _commerceCountry.getName(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized name of this commerce country in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized name of this commerce country
+	*/
+	@Override
+	public java.lang.String getName(java.lang.String languageId) {
+		return _commerceCountry.getName(languageId);
+	}
+
+	/**
+	* Returns the localized name of this commerce country in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this commerce country
+	*/
+	@Override
+	public java.lang.String getName(java.lang.String languageId,
+		boolean useDefault) {
+		return _commerceCountry.getName(languageId, useDefault);
+	}
+
+	@Override
+	public java.lang.String getNameCurrentLanguageId() {
+		return _commerceCountry.getNameCurrentLanguageId();
+	}
+
+	@Override
+	public java.lang.String getNameCurrentValue() {
+		return _commerceCountry.getNameCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized names of this commerce country.
+	*
+	* @return the locales and localized names of this commerce country
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getNameMap() {
+		return _commerceCountry.getNameMap();
+	}
+
+	/**
+	* Returns the numeric iso code of this commerce country.
+	*
+	* @return the numeric iso code of this commerce country
+	*/
+	@Override
+	public int getNumericISOCode() {
+		return _commerceCountry.getNumericISOCode();
+	}
+
+	/**
+	* Returns the primary key of this commerce country.
+	*
+	* @return the primary key of this commerce country
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _commerceCountry.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _commerceCountry.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the priority of this commerce country.
+	*
+	* @return the priority of this commerce country
+	*/
+	@Override
+	public double getPriority() {
+		return _commerceCountry.getPriority();
 	}
 
 	/**
@@ -242,6 +429,71 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	@Override
 	public boolean getSubjectToVAT() {
 		return _commerceCountry.getSubjectToVAT();
+	}
+
+	/**
+	* Returns the three letters iso code of this commerce country.
+	*
+	* @return the three letters iso code of this commerce country
+	*/
+	@Override
+	public java.lang.String getThreeLettersISOCode() {
+		return _commerceCountry.getThreeLettersISOCode();
+	}
+
+	/**
+	* Returns the two letters iso code of this commerce country.
+	*
+	* @return the two letters iso code of this commerce country
+	*/
+	@Override
+	public java.lang.String getTwoLettersISOCode() {
+		return _commerceCountry.getTwoLettersISOCode();
+	}
+
+	/**
+	* Returns the user ID of this commerce country.
+	*
+	* @return the user ID of this commerce country
+	*/
+	@Override
+	public long getUserId() {
+		return _commerceCountry.getUserId();
+	}
+
+	/**
+	* Returns the user name of this commerce country.
+	*
+	* @return the user name of this commerce country
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _commerceCountry.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this commerce country.
+	*
+	* @return the user uuid of this commerce country
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _commerceCountry.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this commerce country.
+	*
+	* @return the uuid of this commerce country
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _commerceCountry.getUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _commerceCountry.hashCode();
 	}
 
 	/**
@@ -297,283 +549,6 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	@Override
 	public boolean isSubjectToVAT() {
 		return _commerceCountry.isSubjectToVAT();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceCountry.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommerceCountry> toCacheModel() {
-		return _commerceCountry.toCacheModel();
-	}
-
-	/**
-	* Returns the priority of this commerce country.
-	*
-	* @return the priority of this commerce country
-	*/
-	@Override
-	public double getPriority() {
-		return _commerceCountry.getPriority();
-	}
-
-	@Override
-	public int compareTo(CommerceCountry commerceCountry) {
-		return _commerceCountry.compareTo(commerceCountry);
-	}
-
-	/**
-	* Returns the numeric iso code of this commerce country.
-	*
-	* @return the numeric iso code of this commerce country
-	*/
-	@Override
-	public int getNumericISOCode() {
-		return _commerceCountry.getNumericISOCode();
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceCountry.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceCountry.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new CommerceCountryWrapper((CommerceCountry)_commerceCountry.clone());
-	}
-
-	@Override
-	public java.lang.String getDefaultLanguageId() {
-		return _commerceCountry.getDefaultLanguageId();
-	}
-
-	/**
-	* Returns the name of this commerce country.
-	*
-	* @return the name of this commerce country
-	*/
-	@Override
-	public java.lang.String getName() {
-		return _commerceCountry.getName();
-	}
-
-	/**
-	* Returns the localized name of this commerce country in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @return the localized name of this commerce country
-	*/
-	@Override
-	public java.lang.String getName(java.lang.String languageId) {
-		return _commerceCountry.getName(languageId);
-	}
-
-	/**
-	* Returns the localized name of this commerce country in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized name of this commerce country
-	*/
-	@Override
-	public java.lang.String getName(java.lang.String languageId,
-		boolean useDefault) {
-		return _commerceCountry.getName(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized name of this commerce country in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized name of this commerce country
-	*/
-	@Override
-	public java.lang.String getName(java.util.Locale locale) {
-		return _commerceCountry.getName(locale);
-	}
-
-	/**
-	* Returns the localized name of this commerce country in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized name of this commerce country. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
-		return _commerceCountry.getName(locale, useDefault);
-	}
-
-	@Override
-	public java.lang.String getNameCurrentLanguageId() {
-		return _commerceCountry.getNameCurrentLanguageId();
-	}
-
-	@Override
-	public java.lang.String getNameCurrentValue() {
-		return _commerceCountry.getNameCurrentValue();
-	}
-
-	/**
-	* Returns the three letters iso code of this commerce country.
-	*
-	* @return the three letters iso code of this commerce country
-	*/
-	@Override
-	public java.lang.String getThreeLettersISOCode() {
-		return _commerceCountry.getThreeLettersISOCode();
-	}
-
-	/**
-	* Returns the two letters iso code of this commerce country.
-	*
-	* @return the two letters iso code of this commerce country
-	*/
-	@Override
-	public java.lang.String getTwoLettersISOCode() {
-		return _commerceCountry.getTwoLettersISOCode();
-	}
-
-	/**
-	* Returns the user name of this commerce country.
-	*
-	* @return the user name of this commerce country
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _commerceCountry.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this commerce country.
-	*
-	* @return the user uuid of this commerce country
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _commerceCountry.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this commerce country.
-	*
-	* @return the uuid of this commerce country
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _commerceCountry.getUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _commerceCountry.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _commerceCountry.toXmlString();
-	}
-
-	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
-		return _commerceCountry.getAvailableLanguageIds();
-	}
-
-	/**
-	* Returns the create date of this commerce country.
-	*
-	* @return the create date of this commerce country
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _commerceCountry.getCreateDate();
-	}
-
-	/**
-	* Returns the last publish date of this commerce country.
-	*
-	* @return the last publish date of this commerce country
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _commerceCountry.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this commerce country.
-	*
-	* @return the modified date of this commerce country
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _commerceCountry.getModifiedDate();
-	}
-
-	/**
-	* Returns a map of the locales and localized names of this commerce country.
-	*
-	* @return the locales and localized names of this commerce country
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getNameMap() {
-		return _commerceCountry.getNameMap();
-	}
-
-	/**
-	* Returns the commerce country ID of this commerce country.
-	*
-	* @return the commerce country ID of this commerce country
-	*/
-	@Override
-	public long getCommerceCountryId() {
-		return _commerceCountry.getCommerceCountryId();
-	}
-
-	/**
-	* Returns the company ID of this commerce country.
-	*
-	* @return the company ID of this commerce country
-	*/
-	@Override
-	public long getCompanyId() {
-		return _commerceCountry.getCompanyId();
-	}
-
-	/**
-	* Returns the group ID of this commerce country.
-	*
-	* @return the group ID of this commerce country
-	*/
-	@Override
-	public long getGroupId() {
-		return _commerceCountry.getGroupId();
-	}
-
-	/**
-	* Returns the primary key of this commerce country.
-	*
-	* @return the primary key of this commerce country
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _commerceCountry.getPrimaryKey();
-	}
-
-	/**
-	* Returns the user ID of this commerce country.
-	*
-	* @return the user ID of this commerce country
-	*/
-	@Override
-	public long getUserId() {
-		return _commerceCountry.getUserId();
 	}
 
 	@Override
@@ -650,14 +625,14 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceCountry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_commerceCountry.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_commerceCountry.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -874,6 +849,31 @@ public class CommerceCountryWrapper implements CommerceCountry,
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_commerceCountry.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<CommerceCountry> toCacheModel() {
+		return _commerceCountry.toCacheModel();
+	}
+
+	@Override
+	public CommerceCountry toEscapedModel() {
+		return new CommerceCountryWrapper(_commerceCountry.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _commerceCountry.toString();
+	}
+
+	@Override
+	public CommerceCountry toUnescapedModel() {
+		return new CommerceCountryWrapper(_commerceCountry.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _commerceCountry.toXmlString();
 	}
 
 	@Override

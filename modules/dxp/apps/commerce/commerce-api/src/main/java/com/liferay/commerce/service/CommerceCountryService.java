@@ -65,29 +65,8 @@ public interface CommerceCountryService extends BaseService {
 		boolean subjectToVAT, double priority, boolean active,
 		ServiceContext serviceContext) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCountry getCommerceCountry(long commerceCountryId)
+	public void deleteCommerceCountry(long commerceCountryId)
 		throws PortalException;
-
-	public CommerceCountry updateCommerceCountry(long commerceCountryId,
-		Map<Locale, java.lang.String> nameMap, boolean billingAllowed,
-		boolean shippingAllowed, java.lang.String twoLettersISOCode,
-		java.lang.String threeLettersISOCode, int numericISOCode,
-		boolean subjectToVAT, double priority, boolean active,
-		ServiceContext serviceContext) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceCountriesCount(long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceCountriesCount(long groupId, boolean active);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceCountry> getCommerceCountries(long groupId,
@@ -98,6 +77,27 @@ public interface CommerceCountryService extends BaseService {
 	public List<CommerceCountry> getCommerceCountries(long groupId, int start,
 		int end, OrderByComparator<CommerceCountry> orderByComparator);
 
-	public void deleteCommerceCountry(long commerceCountryId)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceCountriesCount(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceCountriesCount(long groupId, boolean active);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCountry getCommerceCountry(long commerceCountryId)
 		throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	public CommerceCountry updateCommerceCountry(long commerceCountryId,
+		Map<Locale, java.lang.String> nameMap, boolean billingAllowed,
+		boolean shippingAllowed, java.lang.String twoLettersISOCode,
+		java.lang.String threeLettersISOCode, int numericISOCode,
+		boolean subjectToVAT, double priority, boolean active,
+		ServiceContext serviceContext) throws PortalException;
 }

@@ -61,12 +61,21 @@ public interface CommerceCartItemService extends BaseService {
 		java.lang.String json, ServiceContext serviceContext)
 		throws PortalException;
 
+	public void deleteCommerceCartItem(long commerceCartItemId)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceCartItem getCommerceCartItem(long commerceCartItemId)
 		throws PortalException;
 
-	public CommerceCartItem updateCommerceCartItem(long commerceCartItemId,
-		int quantity, java.lang.String json) throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceCartItem> getCommerceCartItems(long commerceCartId,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceCartItem> getCommerceCartItems(long commerceCartId,
+		int start, int end,
+		OrderByComparator<CommerceCartItem> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceCartItemsCount(long commerceCartId);
@@ -78,15 +87,6 @@ public interface CommerceCartItemService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceCartItem> getCommerceCartItems(long commerceCartId,
-		int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceCartItem> getCommerceCartItems(long commerceCartId,
-		int start, int end,
-		OrderByComparator<CommerceCartItem> orderByComparator);
-
-	public void deleteCommerceCartItem(long commerceCartItemId)
-		throws PortalException;
+	public CommerceCartItem updateCommerceCartItem(long commerceCartItemId,
+		int quantity, java.lang.String json) throws PortalException;
 }

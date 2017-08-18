@@ -64,6 +64,9 @@ public interface CPDisplayLayoutLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDisplayLayoutLocalServiceUtil} to access the cp display layout local service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPDisplayLayoutLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public CPDisplayLayout addCPDisplayLayout(java.lang.Class<?> clazz,
+		long classPK, java.lang.String layoutUuid, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Adds the cp display layout to the database. Also notifies the appropriate model listeners.
@@ -74,10 +77,6 @@ public interface CPDisplayLayoutLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CPDisplayLayout addCPDisplayLayout(CPDisplayLayout cpDisplayLayout);
 
-	public CPDisplayLayout addCPDisplayLayout(java.lang.Class<?> clazz,
-		long classPK, java.lang.String layoutUuid, ServiceContext serviceContext)
-		throws PortalException;
-
 	/**
 	* Creates a new cp display layout with the primary key. Does not add the cp display layout to the database.
 	*
@@ -85,6 +84,9 @@ public interface CPDisplayLayoutLocalService extends BaseLocalService,
 	* @return the new cp display layout
 	*/
 	public CPDisplayLayout createCPDisplayLayout(long CPFriendlyURLEntryId);
+
+	public void deleteCPDisplayLayout(java.lang.Class<?> clazz, long classPK)
+		throws PortalException;
 
 	/**
 	* Deletes the cp display layout from the database. Also notifies the appropriate model listeners.
@@ -107,69 +109,6 @@ public interface CPDisplayLayoutLocalService extends BaseLocalService,
 	public CPDisplayLayout deleteCPDisplayLayout(long CPFriendlyURLEntryId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDisplayLayout fetchCPDisplayLayout(java.lang.Class<?> clazz,
-		long classPK);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDisplayLayout fetchCPDisplayLayout(long CPFriendlyURLEntryId);
-
-	/**
-	* Returns the cp display layout matching the UUID and group.
-	*
-	* @param uuid the cp display layout's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp display layout, or <code>null</code> if a matching cp display layout could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDisplayLayout fetchCPDisplayLayoutByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	/**
-	* Returns the cp display layout with the primary key.
-	*
-	* @param CPFriendlyURLEntryId the primary key of the cp display layout
-	* @return the cp display layout
-	* @throws PortalException if a cp display layout with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDisplayLayout getCPDisplayLayout(long CPFriendlyURLEntryId)
-		throws PortalException;
-
-	/**
-	* Returns the cp display layout matching the UUID and group.
-	*
-	* @param uuid the cp display layout's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp display layout
-	* @throws PortalException if a matching cp display layout could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDisplayLayout getCPDisplayLayoutByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
-
-	/**
-	* Updates the cp display layout in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param cpDisplayLayout the cp display layout
-	* @return the cp display layout that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public CPDisplayLayout updateCPDisplayLayout(
-		CPDisplayLayout cpDisplayLayout);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
 	/**
 	* @throws PortalException
 	*/
@@ -177,25 +116,7 @@ public interface CPDisplayLayoutLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Returns the number of cp display layouts.
-	*
-	* @return the number of cp display layouts
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPDisplayLayoutsCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -235,6 +156,68 @@ public interface CPDisplayLayoutLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDisplayLayout fetchCPDisplayLayout(java.lang.Class<?> clazz,
+		long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDisplayLayout fetchCPDisplayLayout(long CPFriendlyURLEntryId);
+
+	/**
+	* Returns the cp display layout matching the UUID and group.
+	*
+	* @param uuid the cp display layout's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp display layout, or <code>null</code> if a matching cp display layout could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDisplayLayout fetchCPDisplayLayoutByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* Returns the cp display layout with the primary key.
+	*
+	* @param CPFriendlyURLEntryId the primary key of the cp display layout
+	* @return the cp display layout
+	* @throws PortalException if a cp display layout with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDisplayLayout getCPDisplayLayout(long CPFriendlyURLEntryId)
+		throws PortalException;
+
+	/**
+	* Returns the cp display layout matching the UUID and group.
+	*
+	* @param uuid the cp display layout's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp display layout
+	* @throws PortalException if a matching cp display layout could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDisplayLayout getCPDisplayLayoutByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the cp display layouts.
@@ -277,23 +260,39 @@ public interface CPDisplayLayoutLocalService extends BaseLocalService,
 		OrderByComparator<CPDisplayLayout> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of cp display layouts.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of cp display layouts
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPDisplayLayoutsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public java.lang.String getOSGiServiceIdentifier();
 
-	public void deleteCPDisplayLayout(java.lang.Class<?> clazz, long classPK)
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	/**
+	* Updates the cp display layout in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param cpDisplayLayout the cp display layout
+	* @return the cp display layout that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public CPDisplayLayout updateCPDisplayLayout(
+		CPDisplayLayout cpDisplayLayout);
 }

@@ -173,78 +173,8 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 	}
 
 	@Override
-	public CPMeasurementUnit toEscapedModel() {
-		return new CPMeasurementUnitWrapper(_cpMeasurementUnit.toEscapedModel());
-	}
-
-	@Override
-	public CPMeasurementUnit toUnescapedModel() {
-		return new CPMeasurementUnitWrapper(_cpMeasurementUnit.toUnescapedModel());
-	}
-
-	/**
-	* Returns the primary of this cp measurement unit.
-	*
-	* @return the primary of this cp measurement unit
-	*/
-	@Override
-	public boolean getPrimary() {
-		return _cpMeasurementUnit.getPrimary();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _cpMeasurementUnit.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _cpMeasurementUnit.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _cpMeasurementUnit.isNew();
-	}
-
-	/**
-	* Returns <code>true</code> if this cp measurement unit is primary.
-	*
-	* @return <code>true</code> if this cp measurement unit is primary; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isPrimary() {
-		return _cpMeasurementUnit.isPrimary();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _cpMeasurementUnit.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CPMeasurementUnit> toCacheModel() {
-		return _cpMeasurementUnit.toCacheModel();
-	}
-
-	/**
-	* Returns the priority of this cp measurement unit.
-	*
-	* @return the priority of this cp measurement unit
-	*/
-	@Override
-	public double getPriority() {
-		return _cpMeasurementUnit.getPriority();
-	}
-
-	/**
-	* Returns the rate of this cp measurement unit.
-	*
-	* @return the rate of this cp measurement unit
-	*/
-	@Override
-	public double getRate() {
-		return _cpMeasurementUnit.getRate();
+	public java.lang.Object clone() {
+		return new CPMeasurementUnitWrapper((CPMeasurementUnit)_cpMeasurementUnit.clone());
 	}
 
 	@Override
@@ -252,34 +182,59 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 		return _cpMeasurementUnit.compareTo(cpMeasurementUnit);
 	}
 
+	@Override
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _cpMeasurementUnit.getAvailableLanguageIds();
+	}
+
 	/**
-	* Returns the type of this cp measurement unit.
+	* Returns the company ID of this cp measurement unit.
 	*
-	* @return the type of this cp measurement unit
+	* @return the company ID of this cp measurement unit
 	*/
 	@Override
-	public int getType() {
-		return _cpMeasurementUnit.getType();
+	public long getCompanyId() {
+		return _cpMeasurementUnit.getCompanyId();
 	}
 
+	/**
+	* Returns the cp measurement unit ID of this cp measurement unit.
+	*
+	* @return the cp measurement unit ID of this cp measurement unit
+	*/
 	@Override
-	public int hashCode() {
-		return _cpMeasurementUnit.hashCode();
+	public long getCPMeasurementUnitId() {
+		return _cpMeasurementUnit.getCPMeasurementUnitId();
 	}
 
+	/**
+	* Returns the create date of this cp measurement unit.
+	*
+	* @return the create date of this cp measurement unit
+	*/
 	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _cpMeasurementUnit.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new CPMeasurementUnitWrapper((CPMeasurementUnit)_cpMeasurementUnit.clone());
+	public Date getCreateDate() {
+		return _cpMeasurementUnit.getCreateDate();
 	}
 
 	@Override
 	public java.lang.String getDefaultLanguageId() {
 		return _cpMeasurementUnit.getDefaultLanguageId();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _cpMeasurementUnit.getExpandoBridge();
+	}
+
+	/**
+	* Returns the group ID of this cp measurement unit.
+	*
+	* @return the group ID of this cp measurement unit
+	*/
+	@Override
+	public long getGroupId() {
+		return _cpMeasurementUnit.getGroupId();
 	}
 
 	/**
@@ -293,6 +248,26 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 	}
 
 	/**
+	* Returns the last publish date of this cp measurement unit.
+	*
+	* @return the last publish date of this cp measurement unit
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _cpMeasurementUnit.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this cp measurement unit.
+	*
+	* @return the modified date of this cp measurement unit
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _cpMeasurementUnit.getModifiedDate();
+	}
+
+	/**
 	* Returns the name of this cp measurement unit.
 	*
 	* @return the name of this cp measurement unit
@@ -300,6 +275,29 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 	@Override
 	public java.lang.String getName() {
 		return _cpMeasurementUnit.getName();
+	}
+
+	/**
+	* Returns the localized name of this cp measurement unit in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized name of this cp measurement unit
+	*/
+	@Override
+	public java.lang.String getName(java.util.Locale locale) {
+		return _cpMeasurementUnit.getName(locale);
+	}
+
+	/**
+	* Returns the localized name of this cp measurement unit in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this cp measurement unit. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+		return _cpMeasurementUnit.getName(locale, useDefault);
 	}
 
 	/**
@@ -326,29 +324,6 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 		return _cpMeasurementUnit.getName(languageId, useDefault);
 	}
 
-	/**
-	* Returns the localized name of this cp measurement unit in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized name of this cp measurement unit
-	*/
-	@Override
-	public java.lang.String getName(java.util.Locale locale) {
-		return _cpMeasurementUnit.getName(locale);
-	}
-
-	/**
-	* Returns the localized name of this cp measurement unit in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized name of this cp measurement unit. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
-		return _cpMeasurementUnit.getName(locale, useDefault);
-	}
-
 	@Override
 	public java.lang.String getNameCurrentLanguageId() {
 		return _cpMeasurementUnit.getNameCurrentLanguageId();
@@ -357,6 +332,81 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 	@Override
 	public java.lang.String getNameCurrentValue() {
 		return _cpMeasurementUnit.getNameCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized names of this cp measurement unit.
+	*
+	* @return the locales and localized names of this cp measurement unit
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getNameMap() {
+		return _cpMeasurementUnit.getNameMap();
+	}
+
+	/**
+	* Returns the primary of this cp measurement unit.
+	*
+	* @return the primary of this cp measurement unit
+	*/
+	@Override
+	public boolean getPrimary() {
+		return _cpMeasurementUnit.getPrimary();
+	}
+
+	/**
+	* Returns the primary key of this cp measurement unit.
+	*
+	* @return the primary key of this cp measurement unit
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _cpMeasurementUnit.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _cpMeasurementUnit.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the priority of this cp measurement unit.
+	*
+	* @return the priority of this cp measurement unit
+	*/
+	@Override
+	public double getPriority() {
+		return _cpMeasurementUnit.getPriority();
+	}
+
+	/**
+	* Returns the rate of this cp measurement unit.
+	*
+	* @return the rate of this cp measurement unit
+	*/
+	@Override
+	public double getRate() {
+		return _cpMeasurementUnit.getRate();
+	}
+
+	/**
+	* Returns the type of this cp measurement unit.
+	*
+	* @return the type of this cp measurement unit
+	*/
+	@Override
+	public int getType() {
+		return _cpMeasurementUnit.getType();
+	}
+
+	/**
+	* Returns the user ID of this cp measurement unit.
+	*
+	* @return the user ID of this cp measurement unit
+	*/
+	@Override
+	public long getUserId() {
+		return _cpMeasurementUnit.getUserId();
 	}
 
 	/**
@@ -390,108 +440,33 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 	}
 
 	@Override
-	public java.lang.String toString() {
-		return _cpMeasurementUnit.toString();
+	public int hashCode() {
+		return _cpMeasurementUnit.hashCode();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _cpMeasurementUnit.toXmlString();
+	public boolean isCachedModel() {
+		return _cpMeasurementUnit.isCachedModel();
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
-		return _cpMeasurementUnit.getAvailableLanguageIds();
+	public boolean isEscapedModel() {
+		return _cpMeasurementUnit.isEscapedModel();
 	}
 
-	/**
-	* Returns the create date of this cp measurement unit.
-	*
-	* @return the create date of this cp measurement unit
-	*/
 	@Override
-	public Date getCreateDate() {
-		return _cpMeasurementUnit.getCreateDate();
+	public boolean isNew() {
+		return _cpMeasurementUnit.isNew();
 	}
 
 	/**
-	* Returns the last publish date of this cp measurement unit.
+	* Returns <code>true</code> if this cp measurement unit is primary.
 	*
-	* @return the last publish date of this cp measurement unit
+	* @return <code>true</code> if this cp measurement unit is primary; <code>false</code> otherwise
 	*/
 	@Override
-	public Date getLastPublishDate() {
-		return _cpMeasurementUnit.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this cp measurement unit.
-	*
-	* @return the modified date of this cp measurement unit
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _cpMeasurementUnit.getModifiedDate();
-	}
-
-	/**
-	* Returns a map of the locales and localized names of this cp measurement unit.
-	*
-	* @return the locales and localized names of this cp measurement unit
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getNameMap() {
-		return _cpMeasurementUnit.getNameMap();
-	}
-
-	/**
-	* Returns the cp measurement unit ID of this cp measurement unit.
-	*
-	* @return the cp measurement unit ID of this cp measurement unit
-	*/
-	@Override
-	public long getCPMeasurementUnitId() {
-		return _cpMeasurementUnit.getCPMeasurementUnitId();
-	}
-
-	/**
-	* Returns the company ID of this cp measurement unit.
-	*
-	* @return the company ID of this cp measurement unit
-	*/
-	@Override
-	public long getCompanyId() {
-		return _cpMeasurementUnit.getCompanyId();
-	}
-
-	/**
-	* Returns the group ID of this cp measurement unit.
-	*
-	* @return the group ID of this cp measurement unit
-	*/
-	@Override
-	public long getGroupId() {
-		return _cpMeasurementUnit.getGroupId();
-	}
-
-	/**
-	* Returns the primary key of this cp measurement unit.
-	*
-	* @return the primary key of this cp measurement unit
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _cpMeasurementUnit.getPrimaryKey();
-	}
-
-	/**
-	* Returns the user ID of this cp measurement unit.
-	*
-	* @return the user ID of this cp measurement unit
-	*/
-	@Override
-	public long getUserId() {
-		return _cpMeasurementUnit.getUserId();
+	public boolean isPrimary() {
+		return _cpMeasurementUnit.isPrimary();
 	}
 
 	@Override
@@ -512,16 +487,6 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 		_cpMeasurementUnit.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
-	/**
-	* Sets the cp measurement unit ID of this cp measurement unit.
-	*
-	* @param CPMeasurementUnitId the cp measurement unit ID of this cp measurement unit
-	*/
-	@Override
-	public void setCPMeasurementUnitId(long CPMeasurementUnitId) {
-		_cpMeasurementUnit.setCPMeasurementUnitId(CPMeasurementUnitId);
-	}
-
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_cpMeasurementUnit.setCachedModel(cachedModel);
@@ -538,6 +503,16 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 	}
 
 	/**
+	* Sets the cp measurement unit ID of this cp measurement unit.
+	*
+	* @param CPMeasurementUnitId the cp measurement unit ID of this cp measurement unit
+	*/
+	@Override
+	public void setCPMeasurementUnitId(long CPMeasurementUnitId) {
+		_cpMeasurementUnit.setCPMeasurementUnitId(CPMeasurementUnitId);
+	}
+
+	/**
 	* Sets the create date of this cp measurement unit.
 	*
 	* @param createDate the create date of this cp measurement unit
@@ -548,14 +523,14 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_cpMeasurementUnit.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_cpMeasurementUnit.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_cpMeasurementUnit.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -762,6 +737,31 @@ public class CPMeasurementUnitWrapper implements CPMeasurementUnit,
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_cpMeasurementUnit.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<CPMeasurementUnit> toCacheModel() {
+		return _cpMeasurementUnit.toCacheModel();
+	}
+
+	@Override
+	public CPMeasurementUnit toEscapedModel() {
+		return new CPMeasurementUnitWrapper(_cpMeasurementUnit.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _cpMeasurementUnit.toString();
+	}
+
+	@Override
+	public CPMeasurementUnit toUnescapedModel() {
+		return new CPMeasurementUnitWrapper(_cpMeasurementUnit.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _cpMeasurementUnit.toXmlString();
 	}
 
 	@Override

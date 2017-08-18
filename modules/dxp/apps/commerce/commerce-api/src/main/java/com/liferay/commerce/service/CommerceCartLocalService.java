@@ -107,68 +107,6 @@ public interface CommerceCartLocalService extends BaseLocalService,
 	public CommerceCart deleteCommerceCart(long commerceCartId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCart fetchCommerceCart(long commerceCartId);
-
-	/**
-	* Returns the commerce cart matching the UUID and group.
-	*
-	* @param uuid the commerce cart's UUID
-	* @param groupId the primary key of the group
-	* @return the matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCart fetchCommerceCartByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCart fetchDefaultCommerceCart(long groupId, long userId,
-		int type, java.lang.String name);
-
-	/**
-	* Returns the commerce cart with the primary key.
-	*
-	* @param commerceCartId the primary key of the commerce cart
-	* @return the commerce cart
-	* @throws PortalException if a commerce cart with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCart getCommerceCart(long commerceCartId)
-		throws PortalException;
-
-	/**
-	* Returns the commerce cart matching the UUID and group.
-	*
-	* @param uuid the commerce cart's UUID
-	* @param groupId the primary key of the group
-	* @return the matching commerce cart
-	* @throws PortalException if a matching commerce cart could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCart getCommerceCartByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
-
-	/**
-	* Updates the commerce cart in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param commerceCart the commerce cart
-	* @return the commerce cart that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public CommerceCart updateCommerceCart(CommerceCart commerceCart);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
 	/**
 	* @throws PortalException
 	*/
@@ -176,28 +114,7 @@ public interface CommerceCartLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Returns the number of commerce carts.
-	*
-	* @return the number of commerce carts
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceCartsCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceCartsCount(long groupId, int type);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -237,6 +154,68 @@ public interface CommerceCartLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCart fetchCommerceCart(long commerceCartId);
+
+	/**
+	* Returns the commerce cart matching the UUID and group.
+	*
+	* @param uuid the commerce cart's UUID
+	* @param groupId the primary key of the group
+	* @return the matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCart fetchCommerceCartByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCart fetchDefaultCommerceCart(long groupId, long userId,
+		int type, java.lang.String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* Returns the commerce cart with the primary key.
+	*
+	* @param commerceCartId the primary key of the commerce cart
+	* @return the commerce cart
+	* @throws PortalException if a commerce cart with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCart getCommerceCart(long commerceCartId)
+		throws PortalException;
+
+	/**
+	* Returns the commerce cart matching the UUID and group.
+	*
+	* @param uuid the commerce cart's UUID
+	* @param groupId the primary key of the group
+	* @return the matching commerce cart
+	* @throws PortalException if a matching commerce cart could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCart getCommerceCartByUuidAndGroupId(java.lang.String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the commerce carts.
@@ -283,20 +262,41 @@ public interface CommerceCartLocalService extends BaseLocalService,
 		OrderByComparator<CommerceCart> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of commerce carts.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of commerce carts
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceCartsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceCartsCount(long groupId, int type);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Updates the commerce cart in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param commerceCart the commerce cart
+	* @return the commerce cart that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceCart updateCommerceCart(CommerceCart commerceCart);
 }

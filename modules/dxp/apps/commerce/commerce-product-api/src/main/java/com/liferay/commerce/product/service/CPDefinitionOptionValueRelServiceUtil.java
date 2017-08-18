@@ -80,30 +80,21 @@ public class CPDefinitionOptionValueRelServiceUtil {
 				   .getCPDefinitionOptionValueRel(cpDefinitionOptionValueRelId);
 	}
 
-	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
-		long cpDefinitionOptionValueRelId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		double priority, java.lang.String key,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
+		long cpDefinitionOptionRelId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateCPDefinitionOptionValueRel(cpDefinitionOptionValueRelId,
-			titleMap, priority, key, serviceContext);
+				   .getCPDefinitionOptionValueRels(cpDefinitionOptionRelId,
+			start, end);
 	}
 
-	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPDefinitionOptionValueRel> searchCPDefinitionOptionValueRels(
-		long companyId, long groupId, long cpDefinitionOptionRelId,
-		java.lang.String keywords, int start, int end,
-		com.liferay.portal.kernel.search.Sort sort)
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
+		long cpDefinitionOptionRelId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinitionOptionValueRel> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .searchCPDefinitionOptionValueRels(companyId, groupId,
-			cpDefinitionOptionRelId, keywords, start, end, sort);
-	}
-
-	public static com.liferay.portal.kernel.search.Hits search(
-		com.liferay.portal.kernel.search.SearchContext searchContext) {
-		return getService().search(searchContext);
+				   .getCPDefinitionOptionValueRels(cpDefinitionOptionRelId,
+			start, end, orderByComparator);
 	}
 
 	public static int getCPDefinitionOptionValueRelsCount(
@@ -122,21 +113,30 @@ public class CPDefinitionOptionValueRelServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
-		long cpDefinitionOptionRelId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getCPDefinitionOptionValueRels(cpDefinitionOptionRelId,
-			start, end);
+	public static com.liferay.portal.kernel.search.Hits search(
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return getService().search(searchContext);
 	}
 
-	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
-		long cpDefinitionOptionRelId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinitionOptionValueRel> orderByComparator)
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPDefinitionOptionValueRel> searchCPDefinitionOptionValueRels(
+		long companyId, long groupId, long cpDefinitionOptionRelId,
+		java.lang.String keywords, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .getCPDefinitionOptionValueRels(cpDefinitionOptionRelId,
-			start, end, orderByComparator);
+				   .searchCPDefinitionOptionValueRels(companyId, groupId,
+			cpDefinitionOptionRelId, keywords, start, end, sort);
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
+		long cpDefinitionOptionValueRelId,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		double priority, java.lang.String key,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCPDefinitionOptionValueRel(cpDefinitionOptionValueRelId,
+			titleMap, priority, key, serviceContext);
 	}
 
 	public static CPDefinitionOptionValueRelService getService() {

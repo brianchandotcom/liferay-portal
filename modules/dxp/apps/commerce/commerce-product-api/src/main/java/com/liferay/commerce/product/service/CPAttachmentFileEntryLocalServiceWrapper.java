@@ -65,6 +65,12 @@ public class CPAttachmentFileEntryLocalServiceWrapper
 			json, priority, type, serviceContext);
 	}
 
+	@Override
+	public void checkCPAttachmentFileEntries()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_cpAttachmentFileEntryLocalService.checkCPAttachmentFileEntries();
+	}
+
 	/**
 	* Creates a new cp attachment file entry with the primary key. Does not add the cp attachment file entry to the database.
 	*
@@ -75,6 +81,14 @@ public class CPAttachmentFileEntryLocalServiceWrapper
 	public com.liferay.commerce.product.model.CPAttachmentFileEntry createCPAttachmentFileEntry(
 		long CPAttachmentFileEntryId) {
 		return _cpAttachmentFileEntryLocalService.createCPAttachmentFileEntry(CPAttachmentFileEntryId);
+	}
+
+	@Override
+	public void deleteCPAttachmentFileEntries(java.lang.String className,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_cpAttachmentFileEntryLocalService.deleteCPAttachmentFileEntries(className,
+			classPK);
 	}
 
 	/**
@@ -105,118 +119,6 @@ public class CPAttachmentFileEntryLocalServiceWrapper
 		return _cpAttachmentFileEntryLocalService.deleteCPAttachmentFileEntry(CPAttachmentFileEntryId);
 	}
 
-	@Override
-	public com.liferay.commerce.product.model.CPAttachmentFileEntry fetchCPAttachmentFileEntry(
-		long CPAttachmentFileEntryId) {
-		return _cpAttachmentFileEntryLocalService.fetchCPAttachmentFileEntry(CPAttachmentFileEntryId);
-	}
-
-	/**
-	* Returns the cp attachment file entry matching the UUID and group.
-	*
-	* @param uuid the cp attachment file entry's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp attachment file entry, or <code>null</code> if a matching cp attachment file entry could not be found
-	*/
-	@Override
-	public com.liferay.commerce.product.model.CPAttachmentFileEntry fetchCPAttachmentFileEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return _cpAttachmentFileEntryLocalService.fetchCPAttachmentFileEntryByUuidAndGroupId(uuid,
-			groupId);
-	}
-
-	/**
-	* Returns the cp attachment file entry with the primary key.
-	*
-	* @param CPAttachmentFileEntryId the primary key of the cp attachment file entry
-	* @return the cp attachment file entry
-	* @throws PortalException if a cp attachment file entry with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.commerce.product.model.CPAttachmentFileEntry getCPAttachmentFileEntry(
-		long CPAttachmentFileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpAttachmentFileEntryLocalService.getCPAttachmentFileEntry(CPAttachmentFileEntryId);
-	}
-
-	/**
-	* Returns the cp attachment file entry matching the UUID and group.
-	*
-	* @param uuid the cp attachment file entry's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp attachment file entry
-	* @throws PortalException if a matching cp attachment file entry could not be found
-	*/
-	@Override
-	public com.liferay.commerce.product.model.CPAttachmentFileEntry getCPAttachmentFileEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpAttachmentFileEntryLocalService.getCPAttachmentFileEntryByUuidAndGroupId(uuid,
-			groupId);
-	}
-
-	/**
-	* Updates the cp attachment file entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param cpAttachmentFileEntry the cp attachment file entry
-	* @return the cp attachment file entry that was updated
-	*/
-	@Override
-	public com.liferay.commerce.product.model.CPAttachmentFileEntry updateCPAttachmentFileEntry(
-		com.liferay.commerce.product.model.CPAttachmentFileEntry cpAttachmentFileEntry) {
-		return _cpAttachmentFileEntryLocalService.updateCPAttachmentFileEntry(cpAttachmentFileEntry);
-	}
-
-	@Override
-	public com.liferay.commerce.product.model.CPAttachmentFileEntry updateCPAttachmentFileEntry(
-		long cpAttachmentFileEntryId, long fileEntryId, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.lang.String json, double priority, int type,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpAttachmentFileEntryLocalService.updateCPAttachmentFileEntry(cpAttachmentFileEntryId,
-			fileEntryId, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, titleMap, json, priority, type,
-			serviceContext);
-	}
-
-	@Override
-	public com.liferay.commerce.product.model.CPAttachmentFileEntry updateStatus(
-		long userId, long cpAttachmentFileEntryId, int status,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext,
-		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpAttachmentFileEntryLocalService.updateStatus(userId,
-			cpAttachmentFileEntryId, status, serviceContext, workflowContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _cpAttachmentFileEntryLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _cpAttachmentFileEntryLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return _cpAttachmentFileEntryLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _cpAttachmentFileEntryLocalService.getIndexableActionableDynamicQuery();
-	}
-
 	/**
 	* @throws PortalException
 	*/
@@ -228,45 +130,8 @@ public class CPAttachmentFileEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpAttachmentFileEntryLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.repository.model.Folder getAttachmentsFolder(
-		long userId, long groupId, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpAttachmentFileEntryLocalService.getAttachmentsFolder(userId,
-			groupId, className, classPK);
-	}
-
-	/**
-	* Returns the number of cp attachment file entries.
-	*
-	* @return the number of cp attachment file entries
-	*/
-	@Override
-	public int getCPAttachmentFileEntriesCount() {
-		return _cpAttachmentFileEntryLocalService.getCPAttachmentFileEntriesCount();
-	}
-
-	@Override
-	public int getCPAttachmentFileEntriesCount(long classNameId, long classPK,
-		int type, int status) {
-		return _cpAttachmentFileEntryLocalService.getCPAttachmentFileEntriesCount(classNameId,
-			classPK, type, status);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _cpAttachmentFileEntryLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _cpAttachmentFileEntryLocalService.dynamicQuery();
 	}
 
 	/**
@@ -321,6 +186,66 @@ public class CPAttachmentFileEntryLocalServiceWrapper
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _cpAttachmentFileEntryLocalService.dynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _cpAttachmentFileEntryLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _cpAttachmentFileEntryLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPAttachmentFileEntry fetchCPAttachmentFileEntry(
+		long CPAttachmentFileEntryId) {
+		return _cpAttachmentFileEntryLocalService.fetchCPAttachmentFileEntry(CPAttachmentFileEntryId);
+	}
+
+	/**
+	* Returns the cp attachment file entry matching the UUID and group.
+	*
+	* @param uuid the cp attachment file entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp attachment file entry, or <code>null</code> if a matching cp attachment file entry could not be found
+	*/
+	@Override
+	public com.liferay.commerce.product.model.CPAttachmentFileEntry fetchCPAttachmentFileEntryByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return _cpAttachmentFileEntryLocalService.fetchCPAttachmentFileEntryByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _cpAttachmentFileEntryLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.repository.model.Folder getAttachmentsFolder(
+		long userId, long groupId, java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpAttachmentFileEntryLocalService.getAttachmentsFolder(userId,
+			groupId, className, classPK);
 	}
 
 	/**
@@ -392,44 +317,119 @@ public class CPAttachmentFileEntryLocalServiceWrapper
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of cp attachment file entries.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of cp attachment file entries
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _cpAttachmentFileEntryLocalService.dynamicQueryCount(dynamicQuery);
+	public int getCPAttachmentFileEntriesCount() {
+		return _cpAttachmentFileEntryLocalService.getCPAttachmentFileEntriesCount();
+	}
+
+	@Override
+	public int getCPAttachmentFileEntriesCount(long classNameId, long classPK,
+		int type, int status) {
+		return _cpAttachmentFileEntryLocalService.getCPAttachmentFileEntriesCount(classNameId,
+			classPK, type, status);
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the cp attachment file entry with the primary key.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param CPAttachmentFileEntryId the primary key of the cp attachment file entry
+	* @return the cp attachment file entry
+	* @throws PortalException if a cp attachment file entry with the primary key could not be found
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _cpAttachmentFileEntryLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
+	public com.liferay.commerce.product.model.CPAttachmentFileEntry getCPAttachmentFileEntry(
+		long CPAttachmentFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpAttachmentFileEntryLocalService.getCPAttachmentFileEntry(CPAttachmentFileEntryId);
+	}
+
+	/**
+	* Returns the cp attachment file entry matching the UUID and group.
+	*
+	* @param uuid the cp attachment file entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp attachment file entry
+	* @throws PortalException if a matching cp attachment file entry could not be found
+	*/
+	@Override
+	public com.liferay.commerce.product.model.CPAttachmentFileEntry getCPAttachmentFileEntryByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpAttachmentFileEntryLocalService.getCPAttachmentFileEntryByUuidAndGroupId(uuid,
+			groupId);
 	}
 
 	@Override
-	public void checkCPAttachmentFileEntries()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_cpAttachmentFileEntryLocalService.checkCPAttachmentFileEntries();
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _cpAttachmentFileEntryLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	@Override
-	public void deleteCPAttachmentFileEntries(java.lang.String className,
-		long classPK)
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _cpAttachmentFileEntryLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _cpAttachmentFileEntryLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_cpAttachmentFileEntryLocalService.deleteCPAttachmentFileEntries(className,
-			classPK);
+		return _cpAttachmentFileEntryLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the cp attachment file entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param cpAttachmentFileEntry the cp attachment file entry
+	* @return the cp attachment file entry that was updated
+	*/
+	@Override
+	public com.liferay.commerce.product.model.CPAttachmentFileEntry updateCPAttachmentFileEntry(
+		com.liferay.commerce.product.model.CPAttachmentFileEntry cpAttachmentFileEntry) {
+		return _cpAttachmentFileEntryLocalService.updateCPAttachmentFileEntry(cpAttachmentFileEntry);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPAttachmentFileEntry updateCPAttachmentFileEntry(
+		long cpAttachmentFileEntryId, long fileEntryId, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.lang.String json, double priority, int type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpAttachmentFileEntryLocalService.updateCPAttachmentFileEntry(cpAttachmentFileEntryId,
+			fileEntryId, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, titleMap, json, priority, type,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPAttachmentFileEntry updateStatus(
+		long userId, long cpAttachmentFileEntryId, int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext,
+		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpAttachmentFileEntryLocalService.updateStatus(userId,
+			cpAttachmentFileEntryId, status, serviceContext, workflowContext);
 	}
 
 	@Override

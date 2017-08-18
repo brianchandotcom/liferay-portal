@@ -93,6 +93,9 @@ public interface CPOptionCategoryLocalService extends BaseLocalService,
 	*/
 	public CPOptionCategory createCPOptionCategory(long CPOptionCategoryId);
 
+	public void deleteCPOptionCategories(long groupId)
+		throws PortalException;
+
 	/**
 	* Deletes the cp option category from the database. Also notifies the appropriate model listeners.
 	*
@@ -116,75 +119,6 @@ public interface CPOptionCategoryLocalService extends BaseLocalService,
 	public CPOptionCategory deleteCPOptionCategory(long CPOptionCategoryId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPOptionCategory fetchCPOptionCategory(long CPOptionCategoryId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPOptionCategory fetchCPOptionCategory(long groupId,
-		java.lang.String key);
-
-	/**
-	* Returns the cp option category matching the UUID and group.
-	*
-	* @param uuid the cp option category's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp option category, or <code>null</code> if a matching cp option category could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPOptionCategory fetchCPOptionCategoryByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	/**
-	* Returns the cp option category with the primary key.
-	*
-	* @param CPOptionCategoryId the primary key of the cp option category
-	* @return the cp option category
-	* @throws PortalException if a cp option category with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPOptionCategory getCPOptionCategory(long CPOptionCategoryId)
-		throws PortalException;
-
-	/**
-	* Returns the cp option category matching the UUID and group.
-	*
-	* @param uuid the cp option category's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp option category
-	* @throws PortalException if a matching cp option category could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPOptionCategory getCPOptionCategoryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
-
-	/**
-	* Updates the cp option category in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param cpOptionCategory the cp option category
-	* @return the cp option category that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public CPOptionCategory updateCPOptionCategory(
-		CPOptionCategory cpOptionCategory);
-
-	public CPOptionCategory updateCPOptionCategory(long cpOptionCategoryId,
-		Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> descriptionMap, double priority,
-		java.lang.String key, ServiceContext serviceContext)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
 	/**
 	* @throws PortalException
 	*/
@@ -192,28 +126,7 @@ public interface CPOptionCategoryLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Returns the number of cp option categories.
-	*
-	* @return the number of cp option categories
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPOptionCategoriesCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPOptionCategoriesCount(long groupId);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -253,6 +166,45 @@ public interface CPOptionCategoryLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPOptionCategory fetchCPOptionCategory(long CPOptionCategoryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPOptionCategory fetchCPOptionCategory(long groupId,
+		java.lang.String key);
+
+	/**
+	* Returns the cp option category matching the UUID and group.
+	*
+	* @param uuid the cp option category's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp option category, or <code>null</code> if a matching cp option category could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPOptionCategory fetchCPOptionCategoryByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
 	* Returns a range of all the cp option categories.
@@ -304,23 +256,71 @@ public interface CPOptionCategoryLocalService extends BaseLocalService,
 		OrderByComparator<CPOptionCategory> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of cp option categories.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of cp option categories
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPOptionCategoriesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPOptionCategoriesCount(long groupId);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the cp option category with the primary key.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param CPOptionCategoryId the primary key of the cp option category
+	* @return the cp option category
+	* @throws PortalException if a cp option category with the primary key could not be found
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPOptionCategory getCPOptionCategory(long CPOptionCategoryId)
+		throws PortalException;
 
-	public void deleteCPOptionCategories(long groupId)
+	/**
+	* Returns the cp option category matching the UUID and group.
+	*
+	* @param uuid the cp option category's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp option category
+	* @throws PortalException if a matching cp option category could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPOptionCategory getCPOptionCategoryByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Updates the cp option category in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param cpOptionCategory the cp option category
+	* @return the cp option category that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public CPOptionCategory updateCPOptionCategory(
+		CPOptionCategory cpOptionCategory);
+
+	public CPOptionCategory updateCPOptionCategory(long cpOptionCategoryId,
+		Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> descriptionMap, double priority,
+		java.lang.String key, ServiceContext serviceContext)
 		throws PortalException;
 }

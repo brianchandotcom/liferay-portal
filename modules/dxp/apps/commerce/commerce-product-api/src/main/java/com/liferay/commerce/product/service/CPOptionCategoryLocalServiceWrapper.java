@@ -69,6 +69,12 @@ public class CPOptionCategoryLocalServiceWrapper
 		return _cpOptionCategoryLocalService.createCPOptionCategory(CPOptionCategoryId);
 	}
 
+	@Override
+	public void deleteCPOptionCategories(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_cpOptionCategoryLocalService.deleteCPOptionCategories(groupId);
+	}
+
 	/**
 	* Deletes the cp option category from the database. Also notifies the appropriate model listeners.
 	*
@@ -97,107 +103,6 @@ public class CPOptionCategoryLocalServiceWrapper
 		return _cpOptionCategoryLocalService.deleteCPOptionCategory(CPOptionCategoryId);
 	}
 
-	@Override
-	public com.liferay.commerce.product.model.CPOptionCategory fetchCPOptionCategory(
-		long CPOptionCategoryId) {
-		return _cpOptionCategoryLocalService.fetchCPOptionCategory(CPOptionCategoryId);
-	}
-
-	@Override
-	public com.liferay.commerce.product.model.CPOptionCategory fetchCPOptionCategory(
-		long groupId, java.lang.String key) {
-		return _cpOptionCategoryLocalService.fetchCPOptionCategory(groupId, key);
-	}
-
-	/**
-	* Returns the cp option category matching the UUID and group.
-	*
-	* @param uuid the cp option category's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp option category, or <code>null</code> if a matching cp option category could not be found
-	*/
-	@Override
-	public com.liferay.commerce.product.model.CPOptionCategory fetchCPOptionCategoryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return _cpOptionCategoryLocalService.fetchCPOptionCategoryByUuidAndGroupId(uuid,
-			groupId);
-	}
-
-	/**
-	* Returns the cp option category with the primary key.
-	*
-	* @param CPOptionCategoryId the primary key of the cp option category
-	* @return the cp option category
-	* @throws PortalException if a cp option category with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.commerce.product.model.CPOptionCategory getCPOptionCategory(
-		long CPOptionCategoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpOptionCategoryLocalService.getCPOptionCategory(CPOptionCategoryId);
-	}
-
-	/**
-	* Returns the cp option category matching the UUID and group.
-	*
-	* @param uuid the cp option category's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp option category
-	* @throws PortalException if a matching cp option category could not be found
-	*/
-	@Override
-	public com.liferay.commerce.product.model.CPOptionCategory getCPOptionCategoryByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpOptionCategoryLocalService.getCPOptionCategoryByUuidAndGroupId(uuid,
-			groupId);
-	}
-
-	/**
-	* Updates the cp option category in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param cpOptionCategory the cp option category
-	* @return the cp option category that was updated
-	*/
-	@Override
-	public com.liferay.commerce.product.model.CPOptionCategory updateCPOptionCategory(
-		com.liferay.commerce.product.model.CPOptionCategory cpOptionCategory) {
-		return _cpOptionCategoryLocalService.updateCPOptionCategory(cpOptionCategory);
-	}
-
-	@Override
-	public com.liferay.commerce.product.model.CPOptionCategory updateCPOptionCategory(
-		long cpOptionCategoryId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		double priority, java.lang.String key,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpOptionCategoryLocalService.updateCPOptionCategory(cpOptionCategoryId,
-			titleMap, descriptionMap, priority, key, serviceContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _cpOptionCategoryLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _cpOptionCategoryLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return _cpOptionCategoryLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _cpOptionCategoryLocalService.getIndexableActionableDynamicQuery();
-	}
-
 	/**
 	* @throws PortalException
 	*/
@@ -209,35 +114,8 @@ public class CPOptionCategoryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpOptionCategoryLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the number of cp option categories.
-	*
-	* @return the number of cp option categories
-	*/
-	@Override
-	public int getCPOptionCategoriesCount() {
-		return _cpOptionCategoryLocalService.getCPOptionCategoriesCount();
-	}
-
-	@Override
-	public int getCPOptionCategoriesCount(long groupId) {
-		return _cpOptionCategoryLocalService.getCPOptionCategoriesCount(groupId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _cpOptionCategoryLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _cpOptionCategoryLocalService.dynamicQuery();
 	}
 
 	/**
@@ -292,6 +170,64 @@ public class CPOptionCategoryLocalServiceWrapper
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _cpOptionCategoryLocalService.dynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _cpOptionCategoryLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _cpOptionCategoryLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPOptionCategory fetchCPOptionCategory(
+		long CPOptionCategoryId) {
+		return _cpOptionCategoryLocalService.fetchCPOptionCategory(CPOptionCategoryId);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPOptionCategory fetchCPOptionCategory(
+		long groupId, java.lang.String key) {
+		return _cpOptionCategoryLocalService.fetchCPOptionCategory(groupId, key);
+	}
+
+	/**
+	* Returns the cp option category matching the UUID and group.
+	*
+	* @param uuid the cp option category's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp option category, or <code>null</code> if a matching cp option category could not be found
+	*/
+	@Override
+	public com.liferay.commerce.product.model.CPOptionCategory fetchCPOptionCategoryByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return _cpOptionCategoryLocalService.fetchCPOptionCategoryByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _cpOptionCategoryLocalService.getActionableDynamicQuery();
 	}
 
 	/**
@@ -359,36 +295,100 @@ public class CPOptionCategoryLocalServiceWrapper
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of cp option categories.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of cp option categories
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _cpOptionCategoryLocalService.dynamicQueryCount(dynamicQuery);
+	public int getCPOptionCategoriesCount() {
+		return _cpOptionCategoryLocalService.getCPOptionCategoriesCount();
+	}
+
+	@Override
+	public int getCPOptionCategoriesCount(long groupId) {
+		return _cpOptionCategoryLocalService.getCPOptionCategoriesCount(groupId);
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the cp option category with the primary key.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param CPOptionCategoryId the primary key of the cp option category
+	* @return the cp option category
+	* @throws PortalException if a cp option category with the primary key could not be found
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _cpOptionCategoryLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
+	public com.liferay.commerce.product.model.CPOptionCategory getCPOptionCategory(
+		long CPOptionCategoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpOptionCategoryLocalService.getCPOptionCategory(CPOptionCategoryId);
+	}
+
+	/**
+	* Returns the cp option category matching the UUID and group.
+	*
+	* @param uuid the cp option category's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp option category
+	* @throws PortalException if a matching cp option category could not be found
+	*/
+	@Override
+	public com.liferay.commerce.product.model.CPOptionCategory getCPOptionCategoryByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpOptionCategoryLocalService.getCPOptionCategoryByUuidAndGroupId(uuid,
+			groupId);
 	}
 
 	@Override
-	public void deleteCPOptionCategories(long groupId)
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _cpOptionCategoryLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _cpOptionCategoryLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _cpOptionCategoryLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_cpOptionCategoryLocalService.deleteCPOptionCategories(groupId);
+		return _cpOptionCategoryLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the cp option category in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param cpOptionCategory the cp option category
+	* @return the cp option category that was updated
+	*/
+	@Override
+	public com.liferay.commerce.product.model.CPOptionCategory updateCPOptionCategory(
+		com.liferay.commerce.product.model.CPOptionCategory cpOptionCategory) {
+		return _cpOptionCategoryLocalService.updateCPOptionCategory(cpOptionCategory);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPOptionCategory updateCPOptionCategory(
+		long cpOptionCategoryId,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		double priority, java.lang.String key,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpOptionCategoryLocalService.updateCPOptionCategory(cpOptionCategoryId,
+			titleMap, descriptionMap, priority, key, serviceContext);
 	}
 
 	@Override

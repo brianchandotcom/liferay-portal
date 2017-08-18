@@ -65,6 +65,15 @@ public class CPDefinitionVirtualSettingServiceUtil {
 				   .fetchCPDefinitionVirtualSettingByCPDefinitionId(cpDefinitionId);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
 	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
 		long cpDefinitionVirtualSettingId, long fileEntryId,
 		java.lang.String url, java.lang.String activationStatus, long duration,
@@ -80,15 +89,6 @@ public class CPDefinitionVirtualSettingServiceUtil {
 			sampleFileEntryId, sampleUrl, termsOfUseRequired,
 			termsOfUseContentMap, termsOfUseJournalArticleResourcePrimKey,
 			serviceContext);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static CPDefinitionVirtualSettingService getService() {

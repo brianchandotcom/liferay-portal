@@ -97,58 +97,21 @@ public class CommerceCartItemLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.model.CommerceCartItem fetchCommerceCartItem(
-		long commerceCartItemId) {
-		return _commerceCartItemLocalService.fetchCommerceCartItem(commerceCartItemId);
-	}
-
-	/**
-	* Returns the commerce cart item with the primary key.
-	*
-	* @param commerceCartItemId the primary key of the commerce cart item
-	* @return the commerce cart item
-	* @throws PortalException if a commerce cart item with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.commerce.model.CommerceCartItem getCommerceCartItem(
-		long commerceCartItemId)
+	public void deleteCommerceCartItems(long commerceCartId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceCartItemLocalService.getCommerceCartItem(commerceCartItemId);
-	}
-
-	/**
-	* Updates the commerce cart item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param commerceCartItem the commerce cart item
-	* @return the commerce cart item that was updated
-	*/
-	@Override
-	public com.liferay.commerce.model.CommerceCartItem updateCommerceCartItem(
-		com.liferay.commerce.model.CommerceCartItem commerceCartItem) {
-		return _commerceCartItemLocalService.updateCommerceCartItem(commerceCartItem);
+		_commerceCartItemLocalService.deleteCommerceCartItems(commerceCartId);
 	}
 
 	@Override
-	public com.liferay.commerce.model.CommerceCartItem updateCommerceCartItem(
-		long commerceCartItemId, int quantity, java.lang.String json)
+	public void deleteCommerceCartItemsByCPDefinitionId(long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceCartItemLocalService.updateCommerceCartItem(commerceCartItemId,
-			quantity, json);
+		_commerceCartItemLocalService.deleteCommerceCartItemsByCPDefinitionId(cpDefinitionId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _commerceCartItemLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _commerceCartItemLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _commerceCartItemLocalService.getIndexableActionableDynamicQuery();
+	public void deleteCommerceCartItemsByCPInstanceId(long cpInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commerceCartItemLocalService.deleteCommerceCartItemsByCPInstanceId(cpInstanceId);
 	}
 
 	/**
@@ -162,35 +125,8 @@ public class CommerceCartItemLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceCartItemLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the number of commerce cart items.
-	*
-	* @return the number of commerce cart items
-	*/
-	@Override
-	public int getCommerceCartItemsCount() {
-		return _commerceCartItemLocalService.getCommerceCartItemsCount();
-	}
-
-	@Override
-	public int getCommerceCartItemsCount(long commerceCartId) {
-		return _commerceCartItemLocalService.getCommerceCartItemsCount(commerceCartId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _commerceCartItemLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _commerceCartItemLocalService.dynamicQuery();
 	}
 
 	/**
@@ -248,6 +184,58 @@ public class CommerceCartItemLocalServiceWrapper
 	}
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _commerceCartItemLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _commerceCartItemLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceCartItem fetchCommerceCartItem(
+		long commerceCartItemId) {
+		return _commerceCartItemLocalService.fetchCommerceCartItem(commerceCartItemId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _commerceCartItemLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the commerce cart item with the primary key.
+	*
+	* @param commerceCartItemId the primary key of the commerce cart item
+	* @return the commerce cart item
+	* @throws PortalException if a commerce cart item with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.commerce.model.CommerceCartItem getCommerceCartItem(
+		long commerceCartItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCartItemLocalService.getCommerceCartItem(commerceCartItemId);
+	}
+
+	/**
 	* Returns a range of all the commerce cart items.
 	*
 	* <p>
@@ -280,48 +268,60 @@ public class CommerceCartItemLocalServiceWrapper
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of commerce cart items.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of commerce cart items
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _commerceCartItemLocalService.dynamicQueryCount(dynamicQuery);
+	public int getCommerceCartItemsCount() {
+		return _commerceCartItemLocalService.getCommerceCartItemsCount();
+	}
+
+	@Override
+	public int getCommerceCartItemsCount(long commerceCartId) {
+		return _commerceCartItemLocalService.getCommerceCartItemsCount(commerceCartId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _commerceCartItemLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _commerceCartItemLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _commerceCartItemLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
-	public void deleteCommerceCartItems(long commerceCartId)
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_commerceCartItemLocalService.deleteCommerceCartItems(commerceCartId);
+		return _commerceCartItemLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the commerce cart item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param commerceCartItem the commerce cart item
+	* @return the commerce cart item that was updated
+	*/
+	@Override
+	public com.liferay.commerce.model.CommerceCartItem updateCommerceCartItem(
+		com.liferay.commerce.model.CommerceCartItem commerceCartItem) {
+		return _commerceCartItemLocalService.updateCommerceCartItem(commerceCartItem);
 	}
 
 	@Override
-	public void deleteCommerceCartItemsByCPDefinitionId(long cpDefinitionId)
+	public com.liferay.commerce.model.CommerceCartItem updateCommerceCartItem(
+		long commerceCartItemId, int quantity, java.lang.String json)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_commerceCartItemLocalService.deleteCommerceCartItemsByCPDefinitionId(cpDefinitionId);
-	}
-
-	@Override
-	public void deleteCommerceCartItemsByCPInstanceId(long cpInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_commerceCartItemLocalService.deleteCommerceCartItemsByCPInstanceId(cpInstanceId);
+		return _commerceCartItemLocalService.updateCommerceCartItem(commerceCartItemId,
+			quantity, json);
 	}
 
 	@Override

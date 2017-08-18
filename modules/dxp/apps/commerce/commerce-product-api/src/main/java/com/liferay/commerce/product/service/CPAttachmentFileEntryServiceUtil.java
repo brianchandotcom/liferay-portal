@@ -77,10 +77,44 @@ public class CPAttachmentFileEntryServiceUtil {
 		return getService().fetchCPAttachmentFileEntry(cpAttachmentFileEntryId);
 	}
 
+	public static java.util.List<com.liferay.commerce.product.model.CPAttachmentFileEntry> getCPAttachmentFileEntries(
+		long classNameId, long classPK, int type, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCPAttachmentFileEntries(classNameId, classPK, type,
+			status, start, end);
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CPAttachmentFileEntry> getCPAttachmentFileEntries(
+		long classNameId, long classPK, int type, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPAttachmentFileEntry> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCPAttachmentFileEntries(classNameId, classPK, type,
+			status, start, end, orderByComparator);
+	}
+
+	public static int getCPAttachmentFileEntriesCount(long classNameId,
+		long classPK, int type, int status) {
+		return getService()
+				   .getCPAttachmentFileEntriesCount(classNameId, classPK, type,
+			status);
+	}
+
 	public static com.liferay.commerce.product.model.CPAttachmentFileEntry getCPAttachmentFileEntry(
 		long cpAttachmentFileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCPAttachmentFileEntry(cpAttachmentFileEntryId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.commerce.product.model.CPAttachmentFileEntry updateCPAttachmentFileEntry(
@@ -110,40 +144,6 @@ public class CPAttachmentFileEntryServiceUtil {
 		return getService()
 				   .updateStatus(userId, cpAttachmentFileEntryId, status,
 			serviceContext, workflowContext);
-	}
-
-	public static int getCPAttachmentFileEntriesCount(long classNameId,
-		long classPK, int type, int status) {
-		return getService()
-				   .getCPAttachmentFileEntriesCount(classNameId, classPK, type,
-			status);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static java.util.List<com.liferay.commerce.product.model.CPAttachmentFileEntry> getCPAttachmentFileEntries(
-		long classNameId, long classPK, int type, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getCPAttachmentFileEntries(classNameId, classPK, type,
-			status, start, end);
-	}
-
-	public static java.util.List<com.liferay.commerce.product.model.CPAttachmentFileEntry> getCPAttachmentFileEntries(
-		long classNameId, long classPK, int type, int status, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPAttachmentFileEntry> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getCPAttachmentFileEntries(classNameId, classPK, type,
-			status, start, end, orderByComparator);
 	}
 
 	public static CPAttachmentFileEntryService getService() {

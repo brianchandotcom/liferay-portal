@@ -70,10 +70,35 @@ public class CPOptionCategoryServiceUtil {
 		return getService().fetchCPOptionCategory(cpOptionCategoryId);
 	}
 
+	public static java.util.List<com.liferay.commerce.product.model.CPOptionCategory> getCPOptionCategories(
+		long groupId, int start, int end) {
+		return getService().getCPOptionCategories(groupId, start, end);
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CPOptionCategory> getCPOptionCategories(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPOptionCategory> orderByComparator) {
+		return getService()
+				   .getCPOptionCategories(groupId, start, end, orderByComparator);
+	}
+
+	public static int getCPOptionCategoriesCount(long groupId) {
+		return getService().getCPOptionCategoriesCount(groupId);
+	}
+
 	public static com.liferay.commerce.product.model.CPOptionCategory getCPOptionCategory(
 		long cpOptionCategoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCPOptionCategory(cpOptionCategoryId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.commerce.product.model.CPOptionCategory updateCPOptionCategory(
@@ -86,31 +111,6 @@ public class CPOptionCategoryServiceUtil {
 		return getService()
 				   .updateCPOptionCategory(cpOptionCategoryId, titleMap,
 			descriptionMap, priority, key, serviceContext);
-	}
-
-	public static int getCPOptionCategoriesCount(long groupId) {
-		return getService().getCPOptionCategoriesCount(groupId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static java.util.List<com.liferay.commerce.product.model.CPOptionCategory> getCPOptionCategories(
-		long groupId, int start, int end) {
-		return getService().getCPOptionCategories(groupId, start, end);
-	}
-
-	public static java.util.List<com.liferay.commerce.product.model.CPOptionCategory> getCPOptionCategories(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPOptionCategory> orderByComparator) {
-		return getService()
-				   .getCPOptionCategories(groupId, start, end, orderByComparator);
 	}
 
 	public static CPOptionCategoryService getService() {

@@ -82,20 +82,16 @@ public interface CPDefinitionOptionValueRelService extends BaseService {
 	public CPDefinitionOptionValueRel getCPDefinitionOptionValueRel(
 		long cpDefinitionOptionValueRelId) throws PortalException;
 
-	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
-		long cpDefinitionOptionValueRelId,
-		Map<Locale, java.lang.String> titleMap, double priority,
-		java.lang.String key, ServiceContext serviceContext)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
+		long cpDefinitionOptionRelId, int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BaseModelSearchResult<CPDefinitionOptionValueRel> searchCPDefinitionOptionValueRels(
-		long companyId, long groupId, long cpDefinitionOptionRelId,
-		java.lang.String keywords, int start, int end, Sort sort)
+	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
+		long cpDefinitionOptionRelId, int start, int end,
+		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
 		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(SearchContext searchContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPDefinitionOptionValueRelsCount(long cpDefinitionOptionRelId)
@@ -109,13 +105,17 @@ public interface CPDefinitionOptionValueRelService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
-		long cpDefinitionOptionRelId, int start, int end)
-		throws PortalException;
+	public Hits search(SearchContext searchContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
-		long cpDefinitionOptionRelId, int start, int end,
-		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
+	public BaseModelSearchResult<CPDefinitionOptionValueRel> searchCPDefinitionOptionValueRels(
+		long companyId, long groupId, long cpDefinitionOptionRelId,
+		java.lang.String keywords, int start, int end, Sort sort)
+		throws PortalException;
+
+	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
+		long cpDefinitionOptionValueRelId,
+		Map<Locale, java.lang.String> titleMap, double priority,
+		java.lang.String key, ServiceContext serviceContext)
 		throws PortalException;
 }

@@ -66,27 +66,30 @@ public class CPOptionCategoryServiceWrapper implements CPOptionCategoryService,
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPOptionCategory getCPOptionCategory(
-		long cpOptionCategoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpOptionCategoryService.getCPOptionCategory(cpOptionCategoryId);
+	public java.util.List<com.liferay.commerce.product.model.CPOptionCategory> getCPOptionCategories(
+		long groupId, int start, int end) {
+		return _cpOptionCategoryService.getCPOptionCategories(groupId, start,
+			end);
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPOptionCategory updateCPOptionCategory(
-		long cpOptionCategoryId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		double priority, java.lang.String key,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpOptionCategoryService.updateCPOptionCategory(cpOptionCategoryId,
-			titleMap, descriptionMap, priority, key, serviceContext);
+	public java.util.List<com.liferay.commerce.product.model.CPOptionCategory> getCPOptionCategories(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPOptionCategory> orderByComparator) {
+		return _cpOptionCategoryService.getCPOptionCategories(groupId, start,
+			end, orderByComparator);
 	}
 
 	@Override
 	public int getCPOptionCategoriesCount(long groupId) {
 		return _cpOptionCategoryService.getCPOptionCategoriesCount(groupId);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPOptionCategory getCPOptionCategory(
+		long cpOptionCategoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpOptionCategoryService.getCPOptionCategory(cpOptionCategoryId);
 	}
 
 	/**
@@ -100,18 +103,15 @@ public class CPOptionCategoryServiceWrapper implements CPOptionCategoryService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.commerce.product.model.CPOptionCategory> getCPOptionCategories(
-		long groupId, int start, int end) {
-		return _cpOptionCategoryService.getCPOptionCategories(groupId, start,
-			end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.commerce.product.model.CPOptionCategory> getCPOptionCategories(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPOptionCategory> orderByComparator) {
-		return _cpOptionCategoryService.getCPOptionCategories(groupId, start,
-			end, orderByComparator);
+	public com.liferay.commerce.product.model.CPOptionCategory updateCPOptionCategory(
+		long cpOptionCategoryId,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		double priority, java.lang.String key,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpOptionCategoryService.updateCPOptionCategory(cpOptionCategoryId,
+			titleMap, descriptionMap, priority, key, serviceContext);
 	}
 
 	@Override

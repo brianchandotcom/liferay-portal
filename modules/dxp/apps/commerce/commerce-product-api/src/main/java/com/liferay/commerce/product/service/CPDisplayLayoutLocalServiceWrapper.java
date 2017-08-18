@@ -34,6 +34,15 @@ public class CPDisplayLayoutLocalServiceWrapper
 		_cpDisplayLayoutLocalService = cpDisplayLayoutLocalService;
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPDisplayLayout addCPDisplayLayout(
+		java.lang.Class<?> clazz, long classPK, java.lang.String layoutUuid,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDisplayLayoutLocalService.addCPDisplayLayout(clazz, classPK,
+			layoutUuid, serviceContext);
+	}
+
 	/**
 	* Adds the cp display layout to the database. Also notifies the appropriate model listeners.
 	*
@@ -46,15 +55,6 @@ public class CPDisplayLayoutLocalServiceWrapper
 		return _cpDisplayLayoutLocalService.addCPDisplayLayout(cpDisplayLayout);
 	}
 
-	@Override
-	public com.liferay.commerce.product.model.CPDisplayLayout addCPDisplayLayout(
-		java.lang.Class<?> clazz, long classPK, java.lang.String layoutUuid,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDisplayLayoutLocalService.addCPDisplayLayout(clazz, classPK,
-			layoutUuid, serviceContext);
-	}
-
 	/**
 	* Creates a new cp display layout with the primary key. Does not add the cp display layout to the database.
 	*
@@ -65,6 +65,12 @@ public class CPDisplayLayoutLocalServiceWrapper
 	public com.liferay.commerce.product.model.CPDisplayLayout createCPDisplayLayout(
 		long CPFriendlyURLEntryId) {
 		return _cpDisplayLayoutLocalService.createCPDisplayLayout(CPFriendlyURLEntryId);
+	}
+
+	@Override
+	public void deleteCPDisplayLayout(java.lang.Class<?> clazz, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_cpDisplayLayoutLocalService.deleteCPDisplayLayout(clazz, classPK);
 	}
 
 	/**
@@ -93,95 +99,6 @@ public class CPDisplayLayoutLocalServiceWrapper
 		return _cpDisplayLayoutLocalService.deleteCPDisplayLayout(CPFriendlyURLEntryId);
 	}
 
-	@Override
-	public com.liferay.commerce.product.model.CPDisplayLayout fetchCPDisplayLayout(
-		java.lang.Class<?> clazz, long classPK) {
-		return _cpDisplayLayoutLocalService.fetchCPDisplayLayout(clazz, classPK);
-	}
-
-	@Override
-	public com.liferay.commerce.product.model.CPDisplayLayout fetchCPDisplayLayout(
-		long CPFriendlyURLEntryId) {
-		return _cpDisplayLayoutLocalService.fetchCPDisplayLayout(CPFriendlyURLEntryId);
-	}
-
-	/**
-	* Returns the cp display layout matching the UUID and group.
-	*
-	* @param uuid the cp display layout's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp display layout, or <code>null</code> if a matching cp display layout could not be found
-	*/
-	@Override
-	public com.liferay.commerce.product.model.CPDisplayLayout fetchCPDisplayLayoutByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return _cpDisplayLayoutLocalService.fetchCPDisplayLayoutByUuidAndGroupId(uuid,
-			groupId);
-	}
-
-	/**
-	* Returns the cp display layout with the primary key.
-	*
-	* @param CPFriendlyURLEntryId the primary key of the cp display layout
-	* @return the cp display layout
-	* @throws PortalException if a cp display layout with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.commerce.product.model.CPDisplayLayout getCPDisplayLayout(
-		long CPFriendlyURLEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDisplayLayoutLocalService.getCPDisplayLayout(CPFriendlyURLEntryId);
-	}
-
-	/**
-	* Returns the cp display layout matching the UUID and group.
-	*
-	* @param uuid the cp display layout's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp display layout
-	* @throws PortalException if a matching cp display layout could not be found
-	*/
-	@Override
-	public com.liferay.commerce.product.model.CPDisplayLayout getCPDisplayLayoutByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDisplayLayoutLocalService.getCPDisplayLayoutByUuidAndGroupId(uuid,
-			groupId);
-	}
-
-	/**
-	* Updates the cp display layout in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param cpDisplayLayout the cp display layout
-	* @return the cp display layout that was updated
-	*/
-	@Override
-	public com.liferay.commerce.product.model.CPDisplayLayout updateCPDisplayLayout(
-		com.liferay.commerce.product.model.CPDisplayLayout cpDisplayLayout) {
-		return _cpDisplayLayoutLocalService.updateCPDisplayLayout(cpDisplayLayout);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _cpDisplayLayoutLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _cpDisplayLayoutLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return _cpDisplayLayoutLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _cpDisplayLayoutLocalService.getIndexableActionableDynamicQuery();
-	}
-
 	/**
 	* @throws PortalException
 	*/
@@ -193,30 +110,8 @@ public class CPDisplayLayoutLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDisplayLayoutLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the number of cp display layouts.
-	*
-	* @return the number of cp display layouts
-	*/
-	@Override
-	public int getCPDisplayLayoutsCount() {
-		return _cpDisplayLayoutLocalService.getCPDisplayLayoutsCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _cpDisplayLayoutLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _cpDisplayLayoutLocalService.dynamicQuery();
 	}
 
 	/**
@@ -274,6 +169,94 @@ public class CPDisplayLayoutLocalServiceWrapper
 	}
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _cpDisplayLayoutLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _cpDisplayLayoutLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPDisplayLayout fetchCPDisplayLayout(
+		java.lang.Class<?> clazz, long classPK) {
+		return _cpDisplayLayoutLocalService.fetchCPDisplayLayout(clazz, classPK);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPDisplayLayout fetchCPDisplayLayout(
+		long CPFriendlyURLEntryId) {
+		return _cpDisplayLayoutLocalService.fetchCPDisplayLayout(CPFriendlyURLEntryId);
+	}
+
+	/**
+	* Returns the cp display layout matching the UUID and group.
+	*
+	* @param uuid the cp display layout's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp display layout, or <code>null</code> if a matching cp display layout could not be found
+	*/
+	@Override
+	public com.liferay.commerce.product.model.CPDisplayLayout fetchCPDisplayLayoutByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return _cpDisplayLayoutLocalService.fetchCPDisplayLayoutByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _cpDisplayLayoutLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the cp display layout with the primary key.
+	*
+	* @param CPFriendlyURLEntryId the primary key of the cp display layout
+	* @return the cp display layout
+	* @throws PortalException if a cp display layout with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.commerce.product.model.CPDisplayLayout getCPDisplayLayout(
+		long CPFriendlyURLEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDisplayLayoutLocalService.getCPDisplayLayout(CPFriendlyURLEntryId);
+	}
+
+	/**
+	* Returns the cp display layout matching the UUID and group.
+	*
+	* @param uuid the cp display layout's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp display layout
+	* @throws PortalException if a matching cp display layout could not be found
+	*/
+	@Override
+	public com.liferay.commerce.product.model.CPDisplayLayout getCPDisplayLayoutByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDisplayLayoutLocalService.getCPDisplayLayoutByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	/**
 	* Returns a range of all the cp display layouts.
 	*
 	* <p>
@@ -323,36 +306,53 @@ public class CPDisplayLayoutLocalServiceWrapper
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of cp display layouts.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of cp display layouts
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _cpDisplayLayoutLocalService.dynamicQueryCount(dynamicQuery);
+	public int getCPDisplayLayoutsCount() {
+		return _cpDisplayLayoutLocalService.getCPDisplayLayoutsCount();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _cpDisplayLayoutLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _cpDisplayLayoutLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _cpDisplayLayoutLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _cpDisplayLayoutLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
-	public void deleteCPDisplayLayout(java.lang.Class<?> clazz, long classPK)
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_cpDisplayLayoutLocalService.deleteCPDisplayLayout(clazz, classPK);
+		return _cpDisplayLayoutLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the cp display layout in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param cpDisplayLayout the cp display layout
+	* @return the cp display layout that was updated
+	*/
+	@Override
+	public com.liferay.commerce.product.model.CPDisplayLayout updateCPDisplayLayout(
+		com.liferay.commerce.product.model.CPDisplayLayout cpDisplayLayout) {
+		return _cpDisplayLayoutLocalService.updateCPDisplayLayout(cpDisplayLayout);
 	}
 
 	@Override

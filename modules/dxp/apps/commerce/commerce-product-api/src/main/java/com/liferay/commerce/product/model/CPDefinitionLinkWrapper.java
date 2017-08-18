@@ -152,58 +152,8 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 	}
 
 	@Override
-	public CPDefinition getCPDefinition1() {
-		return _cpDefinitionLink.getCPDefinition1();
-	}
-
-	@Override
-	public CPDefinition getCPDefinition2() {
-		return _cpDefinitionLink.getCPDefinition2();
-	}
-
-	@Override
-	public CPDefinitionLink toEscapedModel() {
-		return new CPDefinitionLinkWrapper(_cpDefinitionLink.toEscapedModel());
-	}
-
-	@Override
-	public CPDefinitionLink toUnescapedModel() {
-		return new CPDefinitionLinkWrapper(_cpDefinitionLink.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _cpDefinitionLink.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _cpDefinitionLink.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _cpDefinitionLink.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _cpDefinitionLink.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CPDefinitionLink> toCacheModel() {
-		return _cpDefinitionLink.toCacheModel();
-	}
-
-	/**
-	* Returns the priority of this cp definition link.
-	*
-	* @return the priority of this cp definition link
-	*/
-	@Override
-	public double getPriority() {
-		return _cpDefinitionLink.getPriority();
+	public java.lang.Object clone() {
+		return new CPDefinitionLinkWrapper((CPDefinitionLink)_cpDefinitionLink.clone());
 	}
 
 	@Override
@@ -212,88 +162,23 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 	}
 
 	/**
-	* Returns the type of this cp definition link.
+	* Returns the company ID of this cp definition link.
 	*
-	* @return the type of this cp definition link
+	* @return the company ID of this cp definition link
 	*/
 	@Override
-	public int getType() {
-		return _cpDefinitionLink.getType();
+	public long getCompanyId() {
+		return _cpDefinitionLink.getCompanyId();
 	}
 
 	@Override
-	public int hashCode() {
-		return _cpDefinitionLink.hashCode();
+	public CPDefinition getCPDefinition1() {
+		return _cpDefinitionLink.getCPDefinition1();
 	}
 
 	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _cpDefinitionLink.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new CPDefinitionLinkWrapper((CPDefinitionLink)_cpDefinitionLink.clone());
-	}
-
-	/**
-	* Returns the user name of this cp definition link.
-	*
-	* @return the user name of this cp definition link
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _cpDefinitionLink.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this cp definition link.
-	*
-	* @return the user uuid of this cp definition link
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _cpDefinitionLink.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this cp definition link.
-	*
-	* @return the uuid of this cp definition link
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _cpDefinitionLink.getUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _cpDefinitionLink.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _cpDefinitionLink.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this cp definition link.
-	*
-	* @return the create date of this cp definition link
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _cpDefinitionLink.getCreateDate();
-	}
-
-	/**
-	* Returns the modified date of this cp definition link.
-	*
-	* @return the modified date of this cp definition link
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _cpDefinitionLink.getModifiedDate();
+	public CPDefinition getCPDefinition2() {
+		return _cpDefinitionLink.getCPDefinition2();
 	}
 
 	/**
@@ -327,13 +212,18 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 	}
 
 	/**
-	* Returns the company ID of this cp definition link.
+	* Returns the create date of this cp definition link.
 	*
-	* @return the company ID of this cp definition link
+	* @return the create date of this cp definition link
 	*/
 	@Override
-	public long getCompanyId() {
-		return _cpDefinitionLink.getCompanyId();
+	public Date getCreateDate() {
+		return _cpDefinitionLink.getCreateDate();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _cpDefinitionLink.getExpandoBridge();
 	}
 
 	/**
@@ -347,6 +237,16 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 	}
 
 	/**
+	* Returns the modified date of this cp definition link.
+	*
+	* @return the modified date of this cp definition link
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _cpDefinitionLink.getModifiedDate();
+	}
+
+	/**
 	* Returns the primary key of this cp definition link.
 	*
 	* @return the primary key of this cp definition link
@@ -354,6 +254,31 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 	@Override
 	public long getPrimaryKey() {
 		return _cpDefinitionLink.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _cpDefinitionLink.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the priority of this cp definition link.
+	*
+	* @return the priority of this cp definition link
+	*/
+	@Override
+	public double getPriority() {
+		return _cpDefinitionLink.getPriority();
+	}
+
+	/**
+	* Returns the type of this cp definition link.
+	*
+	* @return the type of this cp definition link
+	*/
+	@Override
+	public int getType() {
+		return _cpDefinitionLink.getType();
 	}
 
 	/**
@@ -366,9 +291,74 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 		return _cpDefinitionLink.getUserId();
 	}
 
+	/**
+	* Returns the user name of this cp definition link.
+	*
+	* @return the user name of this cp definition link
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _cpDefinitionLink.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this cp definition link.
+	*
+	* @return the user uuid of this cp definition link
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _cpDefinitionLink.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this cp definition link.
+	*
+	* @return the uuid of this cp definition link
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _cpDefinitionLink.getUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _cpDefinitionLink.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _cpDefinitionLink.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _cpDefinitionLink.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _cpDefinitionLink.isNew();
+	}
+
 	@Override
 	public void persist() {
 		_cpDefinitionLink.persist();
+	}
+
+	@Override
+	public void setCachedModel(boolean cachedModel) {
+		_cpDefinitionLink.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this cp definition link.
+	*
+	* @param companyId the company ID of this cp definition link
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_cpDefinitionLink.setCompanyId(companyId);
 	}
 
 	/**
@@ -401,21 +391,6 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 		_cpDefinitionLink.setCPDefinitionLinkId(CPDefinitionLinkId);
 	}
 
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_cpDefinitionLink.setCachedModel(cachedModel);
-	}
-
-	/**
-	* Sets the company ID of this cp definition link.
-	*
-	* @param companyId the company ID of this cp definition link
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_cpDefinitionLink.setCompanyId(companyId);
-	}
-
 	/**
 	* Sets the create date of this cp definition link.
 	*
@@ -427,14 +402,14 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_cpDefinitionLink.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_cpDefinitionLink.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_cpDefinitionLink.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -540,6 +515,31 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_cpDefinitionLink.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<CPDefinitionLink> toCacheModel() {
+		return _cpDefinitionLink.toCacheModel();
+	}
+
+	@Override
+	public CPDefinitionLink toEscapedModel() {
+		return new CPDefinitionLinkWrapper(_cpDefinitionLink.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _cpDefinitionLink.toString();
+	}
+
+	@Override
+	public CPDefinitionLink toUnescapedModel() {
+		return new CPDefinitionLinkWrapper(_cpDefinitionLink.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _cpDefinitionLink.toXmlString();
 	}
 
 	@Override

@@ -73,6 +73,11 @@ public class CommerceCountryLocalServiceWrapper
 		return _commerceCountryLocalService.createCommerceCountry(commerceCountryId);
 	}
 
+	@Override
+	public void deleteCommerceCountries(long groupId) {
+		_commerceCountryLocalService.deleteCommerceCountries(groupId);
+	}
+
 	/**
 	* Deletes the commerce country from the database. Also notifies the appropriate model listeners.
 	*
@@ -99,105 +104,6 @@ public class CommerceCountryLocalServiceWrapper
 		return _commerceCountryLocalService.deleteCommerceCountry(commerceCountryId);
 	}
 
-	@Override
-	public com.liferay.commerce.model.CommerceCountry fetchCommerceCountry(
-		long commerceCountryId) {
-		return _commerceCountryLocalService.fetchCommerceCountry(commerceCountryId);
-	}
-
-	/**
-	* Returns the commerce country matching the UUID and group.
-	*
-	* @param uuid the commerce country's UUID
-	* @param groupId the primary key of the group
-	* @return the matching commerce country, or <code>null</code> if a matching commerce country could not be found
-	*/
-	@Override
-	public com.liferay.commerce.model.CommerceCountry fetchCommerceCountryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return _commerceCountryLocalService.fetchCommerceCountryByUuidAndGroupId(uuid,
-			groupId);
-	}
-
-	/**
-	* Returns the commerce country with the primary key.
-	*
-	* @param commerceCountryId the primary key of the commerce country
-	* @return the commerce country
-	* @throws PortalException if a commerce country with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.commerce.model.CommerceCountry getCommerceCountry(
-		long commerceCountryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceCountryLocalService.getCommerceCountry(commerceCountryId);
-	}
-
-	/**
-	* Returns the commerce country matching the UUID and group.
-	*
-	* @param uuid the commerce country's UUID
-	* @param groupId the primary key of the group
-	* @return the matching commerce country
-	* @throws PortalException if a matching commerce country could not be found
-	*/
-	@Override
-	public com.liferay.commerce.model.CommerceCountry getCommerceCountryByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceCountryLocalService.getCommerceCountryByUuidAndGroupId(uuid,
-			groupId);
-	}
-
-	/**
-	* Updates the commerce country in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param commerceCountry the commerce country
-	* @return the commerce country that was updated
-	*/
-	@Override
-	public com.liferay.commerce.model.CommerceCountry updateCommerceCountry(
-		com.liferay.commerce.model.CommerceCountry commerceCountry) {
-		return _commerceCountryLocalService.updateCommerceCountry(commerceCountry);
-	}
-
-	@Override
-	public com.liferay.commerce.model.CommerceCountry updateCommerceCountry(
-		long commerceCountryId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		boolean billingAllowed, boolean shippingAllowed,
-		java.lang.String twoLettersISOCode,
-		java.lang.String threeLettersISOCode, int numericISOCode,
-		boolean subjectToVAT, double priority, boolean active,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceCountryLocalService.updateCommerceCountry(commerceCountryId,
-			nameMap, billingAllowed, shippingAllowed, twoLettersISOCode,
-			threeLettersISOCode, numericISOCode, subjectToVAT, priority,
-			active, serviceContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _commerceCountryLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _commerceCountryLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return _commerceCountryLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _commerceCountryLocalService.getIndexableActionableDynamicQuery();
-	}
-
 	/**
 	* @throws PortalException
 	*/
@@ -209,41 +115,8 @@ public class CommerceCountryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceCountryLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the number of commerce countries.
-	*
-	* @return the number of commerce countries
-	*/
-	@Override
-	public int getCommerceCountriesCount() {
-		return _commerceCountryLocalService.getCommerceCountriesCount();
-	}
-
-	@Override
-	public int getCommerceCountriesCount(long groupId) {
-		return _commerceCountryLocalService.getCommerceCountriesCount(groupId);
-	}
-
-	@Override
-	public int getCommerceCountriesCount(long groupId, boolean active) {
-		return _commerceCountryLocalService.getCommerceCountriesCount(groupId,
-			active);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _commerceCountryLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _commerceCountryLocalService.dynamicQuery();
 	}
 
 	/**
@@ -298,6 +171,58 @@ public class CommerceCountryLocalServiceWrapper
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _commerceCountryLocalService.dynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _commerceCountryLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _commerceCountryLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceCountry fetchCommerceCountry(
+		long commerceCountryId) {
+		return _commerceCountryLocalService.fetchCommerceCountry(commerceCountryId);
+	}
+
+	/**
+	* Returns the commerce country matching the UUID and group.
+	*
+	* @param uuid the commerce country's UUID
+	* @param groupId the primary key of the group
+	* @return the matching commerce country, or <code>null</code> if a matching commerce country could not be found
+	*/
+	@Override
+	public com.liferay.commerce.model.CommerceCountry fetchCommerceCountryByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return _commerceCountryLocalService.fetchCommerceCountryByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _commerceCountryLocalService.getActionableDynamicQuery();
 	}
 
 	/**
@@ -366,35 +291,110 @@ public class CommerceCountryLocalServiceWrapper
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of commerce countries.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of commerce countries
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _commerceCountryLocalService.dynamicQueryCount(dynamicQuery);
+	public int getCommerceCountriesCount() {
+		return _commerceCountryLocalService.getCommerceCountriesCount();
+	}
+
+	@Override
+	public int getCommerceCountriesCount(long groupId) {
+		return _commerceCountryLocalService.getCommerceCountriesCount(groupId);
+	}
+
+	@Override
+	public int getCommerceCountriesCount(long groupId, boolean active) {
+		return _commerceCountryLocalService.getCommerceCountriesCount(groupId,
+			active);
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the commerce country with the primary key.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param commerceCountryId the primary key of the commerce country
+	* @return the commerce country
+	* @throws PortalException if a commerce country with the primary key could not be found
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _commerceCountryLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
+	public com.liferay.commerce.model.CommerceCountry getCommerceCountry(
+		long commerceCountryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCountryLocalService.getCommerceCountry(commerceCountryId);
+	}
+
+	/**
+	* Returns the commerce country matching the UUID and group.
+	*
+	* @param uuid the commerce country's UUID
+	* @param groupId the primary key of the group
+	* @return the matching commerce country
+	* @throws PortalException if a matching commerce country could not be found
+	*/
+	@Override
+	public com.liferay.commerce.model.CommerceCountry getCommerceCountryByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCountryLocalService.getCommerceCountryByUuidAndGroupId(uuid,
+			groupId);
 	}
 
 	@Override
-	public void deleteCommerceCountries(long groupId) {
-		_commerceCountryLocalService.deleteCommerceCountries(groupId);
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _commerceCountryLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _commerceCountryLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _commerceCountryLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCountryLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the commerce country in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param commerceCountry the commerce country
+	* @return the commerce country that was updated
+	*/
+	@Override
+	public com.liferay.commerce.model.CommerceCountry updateCommerceCountry(
+		com.liferay.commerce.model.CommerceCountry commerceCountry) {
+		return _commerceCountryLocalService.updateCommerceCountry(commerceCountry);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceCountry updateCommerceCountry(
+		long commerceCountryId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		boolean billingAllowed, boolean shippingAllowed,
+		java.lang.String twoLettersISOCode,
+		java.lang.String threeLettersISOCode, int numericISOCode,
+		boolean subjectToVAT, double priority, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCountryLocalService.updateCommerceCountry(commerceCountryId,
+			nameMap, billingAllowed, shippingAllowed, twoLettersISOCode,
+			threeLettersISOCode, numericISOCode, subjectToVAT, priority,
+			active, serviceContext);
 	}
 
 	@Override

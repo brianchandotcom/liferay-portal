@@ -91,6 +91,8 @@ public interface CPAttachmentFileEntryLocalService extends BaseLocalService,
 		double priority, int type, ServiceContext serviceContext)
 		throws PortalException;
 
+	public void checkCPAttachmentFileEntries() throws PortalException;
+
 	/**
 	* Creates a new cp attachment file entry with the primary key. Does not add the cp attachment file entry to the database.
 	*
@@ -99,6 +101,9 @@ public interface CPAttachmentFileEntryLocalService extends BaseLocalService,
 	*/
 	public CPAttachmentFileEntry createCPAttachmentFileEntry(
 		long CPAttachmentFileEntryId);
+
+	public void deleteCPAttachmentFileEntries(java.lang.String className,
+		long classPK) throws PortalException;
 
 	/**
 	* Deletes the cp attachment file entry from the database. Also notifies the appropriate model listeners.
@@ -123,84 +128,6 @@ public interface CPAttachmentFileEntryLocalService extends BaseLocalService,
 	public CPAttachmentFileEntry deleteCPAttachmentFileEntry(
 		long CPAttachmentFileEntryId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPAttachmentFileEntry fetchCPAttachmentFileEntry(
-		long CPAttachmentFileEntryId);
-
-	/**
-	* Returns the cp attachment file entry matching the UUID and group.
-	*
-	* @param uuid the cp attachment file entry's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp attachment file entry, or <code>null</code> if a matching cp attachment file entry could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPAttachmentFileEntry fetchCPAttachmentFileEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	/**
-	* Returns the cp attachment file entry with the primary key.
-	*
-	* @param CPAttachmentFileEntryId the primary key of the cp attachment file entry
-	* @return the cp attachment file entry
-	* @throws PortalException if a cp attachment file entry with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPAttachmentFileEntry getCPAttachmentFileEntry(
-		long CPAttachmentFileEntryId) throws PortalException;
-
-	/**
-	* Returns the cp attachment file entry matching the UUID and group.
-	*
-	* @param uuid the cp attachment file entry's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp attachment file entry
-	* @throws PortalException if a matching cp attachment file entry could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPAttachmentFileEntry getCPAttachmentFileEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
-
-	/**
-	* Updates the cp attachment file entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param cpAttachmentFileEntry the cp attachment file entry
-	* @return the cp attachment file entry that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public CPAttachmentFileEntry updateCPAttachmentFileEntry(
-		CPAttachmentFileEntry cpAttachmentFileEntry);
-
-	@Indexable(type = IndexableType.REINDEX)
-	public CPAttachmentFileEntry updateCPAttachmentFileEntry(
-		long cpAttachmentFileEntryId, long fileEntryId, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
-		Map<Locale, java.lang.String> titleMap, java.lang.String json,
-		double priority, int type, ServiceContext serviceContext)
-		throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public CPAttachmentFileEntry updateStatus(long userId,
-		long cpAttachmentFileEntryId, int status,
-		ServiceContext serviceContext,
-		Map<java.lang.String, Serializable> workflowContext)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
 	/**
 	* @throws PortalException
 	*/
@@ -208,33 +135,7 @@ public interface CPAttachmentFileEntryLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Folder getAttachmentsFolder(long userId, long groupId,
-		java.lang.String className, long classPK) throws PortalException;
-
-	/**
-	* Returns the number of cp attachment file entries.
-	*
-	* @return the number of cp attachment file entries
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPAttachmentFileEntriesCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPAttachmentFileEntriesCount(long classNameId, long classPK,
-		int type, int status);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -274,6 +175,46 @@ public interface CPAttachmentFileEntryLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPAttachmentFileEntry fetchCPAttachmentFileEntry(
+		long CPAttachmentFileEntryId);
+
+	/**
+	* Returns the cp attachment file entry matching the UUID and group.
+	*
+	* @param uuid the cp attachment file entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp attachment file entry, or <code>null</code> if a matching cp attachment file entry could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPAttachmentFileEntry fetchCPAttachmentFileEntryByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Folder getAttachmentsFolder(long userId, long groupId,
+		java.lang.String className, long classPK) throws PortalException;
 
 	/**
 	* Returns a range of all the cp attachment file entries.
@@ -328,25 +269,84 @@ public interface CPAttachmentFileEntryLocalService extends BaseLocalService,
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of cp attachment file entries.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of cp attachment file entries
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPAttachmentFileEntriesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPAttachmentFileEntriesCount(long classNameId, long classPK,
+		int type, int status);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the cp attachment file entry with the primary key.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param CPAttachmentFileEntryId the primary key of the cp attachment file entry
+	* @return the cp attachment file entry
+	* @throws PortalException if a cp attachment file entry with the primary key could not be found
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPAttachmentFileEntry getCPAttachmentFileEntry(
+		long CPAttachmentFileEntryId) throws PortalException;
 
-	public void checkCPAttachmentFileEntries() throws PortalException;
+	/**
+	* Returns the cp attachment file entry matching the UUID and group.
+	*
+	* @param uuid the cp attachment file entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp attachment file entry
+	* @throws PortalException if a matching cp attachment file entry could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPAttachmentFileEntry getCPAttachmentFileEntryByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
 
-	public void deleteCPAttachmentFileEntries(java.lang.String className,
-		long classPK) throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Updates the cp attachment file entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param cpAttachmentFileEntry the cp attachment file entry
+	* @return the cp attachment file entry that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public CPAttachmentFileEntry updateCPAttachmentFileEntry(
+		CPAttachmentFileEntry cpAttachmentFileEntry);
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CPAttachmentFileEntry updateCPAttachmentFileEntry(
+		long cpAttachmentFileEntryId, long fileEntryId, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		Map<Locale, java.lang.String> titleMap, java.lang.String json,
+		double priority, int type, ServiceContext serviceContext)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CPAttachmentFileEntry updateStatus(long userId,
+		long cpAttachmentFileEntryId, int status,
+		ServiceContext serviceContext,
+		Map<java.lang.String, Serializable> workflowContext)
+		throws PortalException;
 }

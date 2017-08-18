@@ -67,8 +67,15 @@ public interface CPDefinitionLinkService extends BaseService {
 	public CPDefinitionLink getCPDefinitionLink(long cpDefinitionLinkId)
 		throws PortalException;
 
-	public CPDefinitionLink updateCPDefinitionLink(long cpDefinitionLinkId,
-		double priority) throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId1,
+		int type) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId1,
+		int type, int start, int end,
+		OrderByComparator<CPDefinitionLink> orderByComparator)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPDefinitionLinksCount(long cpDefinitionId1, int type)
@@ -81,15 +88,8 @@ public interface CPDefinitionLinkService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId1,
-		int type) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId1,
-		int type, int start, int end,
-		OrderByComparator<CPDefinitionLink> orderByComparator)
-		throws PortalException;
+	public CPDefinitionLink updateCPDefinitionLink(long cpDefinitionLinkId,
+		double priority) throws PortalException;
 
 	public void updateCPDefinitionLinks(long cpDefinitionId1,
 		long[] cpDefinitionIds2, int type, ServiceContext serviceContext)

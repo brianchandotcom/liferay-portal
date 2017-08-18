@@ -83,8 +83,30 @@ public interface CPAttachmentFileEntryService extends BaseService {
 		long cpAttachmentFileEntryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
+		long classNameId, long classPK, int type, int status, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
+		long classNameId, long classPK, int type, int status, int start,
+		int end, OrderByComparator<CPAttachmentFileEntry> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPAttachmentFileEntriesCount(long classNameId, long classPK,
+		int type, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPAttachmentFileEntry getCPAttachmentFileEntry(
 		long cpAttachmentFileEntryId) throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CPAttachmentFileEntry updateCPAttachmentFileEntry(
@@ -101,27 +123,5 @@ public interface CPAttachmentFileEntryService extends BaseService {
 		long cpAttachmentFileEntryId, int status,
 		ServiceContext serviceContext,
 		Map<java.lang.String, Serializable> workflowContext)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPAttachmentFileEntriesCount(long classNameId, long classPK,
-		int type, int status);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
-		long classNameId, long classPK, int type, int status, int start, int end)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
-		long classNameId, long classPK, int type, int status, int start,
-		int end, OrderByComparator<CPAttachmentFileEntry> orderByComparator)
 		throws PortalException;
 }

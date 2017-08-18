@@ -49,46 +49,9 @@ public class CommerceCountryServiceWrapper implements CommerceCountryService,
 	}
 
 	@Override
-	public com.liferay.commerce.model.CommerceCountry getCommerceCountry(
-		long commerceCountryId)
+	public void deleteCommerceCountry(long commerceCountryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceCountryService.getCommerceCountry(commerceCountryId);
-	}
-
-	@Override
-	public com.liferay.commerce.model.CommerceCountry updateCommerceCountry(
-		long commerceCountryId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		boolean billingAllowed, boolean shippingAllowed,
-		java.lang.String twoLettersISOCode,
-		java.lang.String threeLettersISOCode, int numericISOCode,
-		boolean subjectToVAT, double priority, boolean active,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceCountryService.updateCommerceCountry(commerceCountryId,
-			nameMap, billingAllowed, shippingAllowed, twoLettersISOCode,
-			threeLettersISOCode, numericISOCode, subjectToVAT, priority,
-			active, serviceContext);
-	}
-
-	@Override
-	public int getCommerceCountriesCount(long groupId) {
-		return _commerceCountryService.getCommerceCountriesCount(groupId);
-	}
-
-	@Override
-	public int getCommerceCountriesCount(long groupId, boolean active) {
-		return _commerceCountryService.getCommerceCountriesCount(groupId, active);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _commerceCountryService.getOSGiServiceIdentifier();
+		_commerceCountryService.deleteCommerceCountry(commerceCountryId);
 	}
 
 	@Override
@@ -108,9 +71,46 @@ public class CommerceCountryServiceWrapper implements CommerceCountryService,
 	}
 
 	@Override
-	public void deleteCommerceCountry(long commerceCountryId)
+	public int getCommerceCountriesCount(long groupId) {
+		return _commerceCountryService.getCommerceCountriesCount(groupId);
+	}
+
+	@Override
+	public int getCommerceCountriesCount(long groupId, boolean active) {
+		return _commerceCountryService.getCommerceCountriesCount(groupId, active);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceCountry getCommerceCountry(
+		long commerceCountryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_commerceCountryService.deleteCommerceCountry(commerceCountryId);
+		return _commerceCountryService.getCommerceCountry(commerceCountryId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _commerceCountryService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceCountry updateCommerceCountry(
+		long commerceCountryId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		boolean billingAllowed, boolean shippingAllowed,
+		java.lang.String twoLettersISOCode,
+		java.lang.String threeLettersISOCode, int numericISOCode,
+		boolean subjectToVAT, double priority, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCountryService.updateCommerceCountry(commerceCountryId,
+			nameMap, billingAllowed, shippingAllowed, twoLettersISOCode,
+			threeLettersISOCode, numericISOCode, subjectToVAT, priority,
+			active, serviceContext);
 	}
 
 	@Override

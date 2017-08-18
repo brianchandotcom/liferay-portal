@@ -53,23 +53,24 @@ public class CPSpecificationOptionServiceUtil {
 			descriptionMap, facetable, key, serviceContext);
 	}
 
+	public static void deleteCPSpecificationOption(long cpSpecificationOptionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCPSpecificationOption(cpSpecificationOptionId);
+	}
+
 	public static com.liferay.commerce.product.model.CPSpecificationOption getCPSpecificationOption(
 		long cpSpecificationOptionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCPSpecificationOption(cpSpecificationOptionId);
 	}
 
-	public static com.liferay.commerce.product.model.CPSpecificationOption updateCPSpecificationOption(
-		long cpSpecificationOptionId, long cpOptionCategoryId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean facetable, java.lang.String key,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static java.util.List<com.liferay.commerce.product.model.CPSpecificationOption> getCPSpecificationOptions(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPSpecificationOption> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateCPSpecificationOption(cpSpecificationOptionId,
-			cpOptionCategoryId, titleMap, descriptionMap, facetable, key,
-			serviceContext);
+				   .getCPSpecificationOptions(groupId, start, end,
+			orderByComparator);
 	}
 
 	public static int getCPSpecificationOptionsCount(long groupId) {
@@ -85,18 +86,17 @@ public class CPSpecificationOptionServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List<com.liferay.commerce.product.model.CPSpecificationOption> getCPSpecificationOptions(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPSpecificationOption> orderByComparator)
+	public static com.liferay.commerce.product.model.CPSpecificationOption updateCPSpecificationOption(
+		long cpSpecificationOptionId, long cpOptionCategoryId,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		boolean facetable, java.lang.String key,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .getCPSpecificationOptions(groupId, start, end,
-			orderByComparator);
-	}
-
-	public static void deleteCPSpecificationOption(long cpSpecificationOptionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteCPSpecificationOption(cpSpecificationOptionId);
+				   .updateCPSpecificationOption(cpSpecificationOptionId,
+			cpOptionCategoryId, titleMap, descriptionMap, facetable, key,
+			serviceContext);
 	}
 
 	public static CPSpecificationOptionService getService() {

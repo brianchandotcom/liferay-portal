@@ -52,15 +52,6 @@ public class CPDefinitionOptionRelServiceUtil {
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionRel addCPDefinitionOptionRel(
 		long cpDefinitionId, long cpOptionId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addCPDefinitionOptionRel(cpDefinitionId, cpOptionId,
-			serviceContext);
-	}
-
-	public static com.liferay.commerce.product.model.CPDefinitionOptionRel addCPDefinitionOptionRel(
-		long cpDefinitionId, long cpOptionId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String ddmFormFieldTypeName, double priority,
@@ -72,6 +63,15 @@ public class CPDefinitionOptionRelServiceUtil {
 				   .addCPDefinitionOptionRel(cpDefinitionId, cpOptionId,
 			titleMap, descriptionMap, ddmFormFieldTypeName, priority,
 			facetable, required, skuContributor, importOptionValue,
+			serviceContext);
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionOptionRel addCPDefinitionOptionRel(
+		long cpDefinitionId, long cpOptionId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCPDefinitionOptionRel(cpDefinitionId, cpOptionId,
 			serviceContext);
 	}
 
@@ -97,6 +97,64 @@ public class CPDefinitionOptionRelServiceUtil {
 		long cpDefinitionOptionRelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCPDefinitionOptionRel(cpDefinitionOptionRelId);
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionRel> getCPDefinitionOptionRels(
+		long cpDefinitionId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCPDefinitionOptionRels(cpDefinitionId, start, end);
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionRel> getCPDefinitionOptionRels(
+		long cpDefinitionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinitionOptionRel> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCPDefinitionOptionRels(cpDefinitionId, start, end,
+			orderByComparator);
+	}
+
+	public static int getCPDefinitionOptionRelsCount(long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCPDefinitionOptionRelsCount(cpDefinitionId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static int getSkuContributorCPDefinitionOptionRelCount(
+		long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getSkuContributorCPDefinitionOptionRelCount(cpDefinitionId);
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionRel> getSkuContributorCPDefinitionOptionRels(
+		long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getSkuContributorCPDefinitionOptionRels(cpDefinitionId);
+	}
+
+	public static com.liferay.portal.kernel.search.Hits search(
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return getService().search(searchContext);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPDefinitionOptionRel> searchCPDefinitionOptionRels(
+		long companyId, long groupId, long cpDefinitionId,
+		java.lang.String keywords, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchCPDefinitionOptionRels(companyId, groupId,
+			cpDefinitionId, keywords, start, end, sort);
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionRel setFacetable(
@@ -130,64 +188,6 @@ public class CPDefinitionOptionRelServiceUtil {
 				   .updateCPDefinitionOptionRel(cpDefinitionOptionRelId,
 			cpOptionId, titleMap, descriptionMap, ddmFormFieldTypeName,
 			priority, facetable, required, skuContributor, serviceContext);
-	}
-
-	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPDefinitionOptionRel> searchCPDefinitionOptionRels(
-		long companyId, long groupId, long cpDefinitionId,
-		java.lang.String keywords, int start, int end,
-		com.liferay.portal.kernel.search.Sort sort)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .searchCPDefinitionOptionRels(companyId, groupId,
-			cpDefinitionId, keywords, start, end, sort);
-	}
-
-	public static com.liferay.portal.kernel.search.Hits search(
-		com.liferay.portal.kernel.search.SearchContext searchContext) {
-		return getService().search(searchContext);
-	}
-
-	public static int getCPDefinitionOptionRelsCount(long cpDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCPDefinitionOptionRelsCount(cpDefinitionId);
-	}
-
-	public static int getSkuContributorCPDefinitionOptionRelCount(
-		long cpDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getSkuContributorCPDefinitionOptionRelCount(cpDefinitionId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionRel> getCPDefinitionOptionRels(
-		long cpDefinitionId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCPDefinitionOptionRels(cpDefinitionId, start, end);
-	}
-
-	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionRel> getCPDefinitionOptionRels(
-		long cpDefinitionId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinitionOptionRel> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getCPDefinitionOptionRels(cpDefinitionId, start, end,
-			orderByComparator);
-	}
-
-	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionRel> getSkuContributorCPDefinitionOptionRels(
-		long cpDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getSkuContributorCPDefinitionOptionRels(cpDefinitionId);
 	}
 
 	public static CPDefinitionOptionRelService getService() {

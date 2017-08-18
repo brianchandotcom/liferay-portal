@@ -41,11 +41,6 @@ public class CPDefinitionLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPDefinitionLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.commerce.product.model.CPAttachmentFileEntry getDefaultImage(
-		long cpDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getDefaultImage(cpDefinitionId);
-	}
 
 	/**
 	* Adds the cp definition to the database. Also notifies the appropriate model listeners.
@@ -124,6 +119,11 @@ public class CPDefinitionLocalServiceUtil {
 			neverExpire, serviceContext);
 	}
 
+	public static void checkCPDefinitions()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().checkCPDefinitions();
+	}
+
 	/**
 	* Creates a new cp definition with the primary key. Does not add the cp definition to the database.
 	*
@@ -133,6 +133,12 @@ public class CPDefinitionLocalServiceUtil {
 	public static com.liferay.commerce.product.model.CPDefinition createCPDefinition(
 		long CPDefinitionId) {
 		return getService().createCPDefinition(CPDefinitionId);
+	}
+
+	public static void deleteAssetCategoryCPDefinition(long cpDefinitionId,
+		long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteAssetCategoryCPDefinition(cpDefinitionId, categoryId);
 	}
 
 	/**
@@ -161,6 +167,98 @@ public class CPDefinitionLocalServiceUtil {
 		return getService().deleteCPDefinition(CPDefinitionId);
 	}
 
+	public static void deleteCPDefinitions(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCPDefinitions(groupId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQuery(dynamicQuery);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.commerce.product.model.impl.CPDefinitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end) {
+		return getService().dynamicQuery(dynamicQuery, start, end);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.commerce.product.model.impl.CPDefinitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+		return getService()
+				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
 	public static com.liferay.commerce.product.model.CPDefinition fetchCPDefinition(
 		long CPDefinitionId) {
 		return getService().fetchCPDefinition(CPDefinitionId);
@@ -176,6 +274,16 @@ public class CPDefinitionLocalServiceUtil {
 	public static com.liferay.commerce.product.model.CPDefinition fetchCPDefinitionByUuidAndGroupId(
 		java.lang.String uuid, long groupId) {
 		return getService().fetchCPDefinitionByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionLocalization fetchCPDefinitionLocalization(
+		long CPDefinitionId, java.lang.String languageId) {
+		return getService()
+				   .fetchCPDefinitionLocalization(CPDefinitionId, languageId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
 	}
 
 	/**
@@ -203,6 +311,167 @@ public class CPDefinitionLocalServiceUtil {
 		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCPDefinitionByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static java.util.Map<java.util.Locale, java.lang.String> getCPDefinitionDescriptionMap(
+		long cpDefinitionId) {
+		return getService().getCPDefinitionDescriptionMap(cpDefinitionId);
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionLocalization getCPDefinitionLocalization(
+		long CPDefinitionId, java.lang.String languageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCPDefinitionLocalization(CPDefinitionId, languageId);
+	}
+
+	public static java.util.List<java.lang.String> getCPDefinitionLocalizationLanguageIds(
+		long cpDefinitionId) {
+		return getService()
+				   .getCPDefinitionLocalizationLanguageIds(cpDefinitionId);
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionLocalization> getCPDefinitionLocalizations(
+		long CPDefinitionId) {
+		return getService().getCPDefinitionLocalizations(CPDefinitionId);
+	}
+
+	public static java.util.Map<java.util.Locale, java.lang.String> getCPDefinitionMetaDescriptionMap(
+		long cpDefinitionId) {
+		return getService().getCPDefinitionMetaDescriptionMap(cpDefinitionId);
+	}
+
+	public static java.util.Map<java.util.Locale, java.lang.String> getCPDefinitionMetaKeywordsMap(
+		long cpDefinitionId) {
+		return getService().getCPDefinitionMetaKeywordsMap(cpDefinitionId);
+	}
+
+	public static java.util.Map<java.util.Locale, java.lang.String> getCPDefinitionMetaTitleMap(
+		long cpDefinitionId) {
+		return getService().getCPDefinitionMetaTitleMap(cpDefinitionId);
+	}
+
+	/**
+	* Returns a range of all the cp definitions.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.commerce.product.model.impl.CPDefinitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of cp definitions
+	* @param end the upper bound of the range of cp definitions (not inclusive)
+	* @return the range of cp definitions
+	*/
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitions(
+		int start, int end) {
+		return getService().getCPDefinitions(start, end);
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitionsByCategoryId(
+		long categoryId, int start, int end) {
+		return getService().getCPDefinitionsByCategoryId(categoryId, start, end);
+	}
+
+	/**
+	* Returns all the cp definitions matching the UUID and company.
+	*
+	* @param uuid the UUID of the cp definitions
+	* @param companyId the primary key of the company
+	* @return the matching cp definitions, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitionsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService().getCPDefinitionsByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of cp definitions matching the UUID and company.
+	*
+	* @param uuid the UUID of the cp definitions
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of cp definitions
+	* @param end the upper bound of the range of cp definitions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching cp definitions, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitionsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinition> orderByComparator) {
+		return getService()
+				   .getCPDefinitionsByUuidAndCompanyId(uuid, companyId, start,
+			end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of cp definitions.
+	*
+	* @return the number of cp definitions
+	*/
+	public static int getCPDefinitionsCount() {
+		return getService().getCPDefinitionsCount();
+	}
+
+	public static int getCPDefinitionsCountByCategoryId(long categoryId) {
+		return getService().getCPDefinitionsCountByCategoryId(categoryId);
+	}
+
+	public static java.util.Map<java.util.Locale, java.lang.String> getCPDefinitionShortDescriptionMap(
+		long cpDefinitionId) {
+		return getService().getCPDefinitionShortDescriptionMap(cpDefinitionId);
+	}
+
+	public static java.util.Map<java.util.Locale, java.lang.String> getCPDefinitionTitleMap(
+		long cpDefinitionId) {
+		return getService().getCPDefinitionTitleMap(cpDefinitionId);
+	}
+
+	public static com.liferay.commerce.product.model.CPAttachmentFileEntry getDefaultImage(
+		long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDefaultImage(cpDefinitionId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	public static java.lang.String getLayoutUuid(long cpDefinitionId) {
+		return getService().getLayoutUuid(cpDefinitionId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static java.util.Map<java.util.Locale, java.lang.String> getUrlTitleMap(
+		long cpDefinitionId) {
+		return getService().getUrlTitleMap(cpDefinitionId);
+	}
+
+	public static java.lang.String getUrlTitleMapAsXML(long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUrlTitleMapAsXML(cpDefinitionId);
+	}
+
+	public static void moveCPDefinitionsToTrash(long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().moveCPDefinitionsToTrash(groupId, userId);
 	}
 
 	/**
@@ -243,6 +512,30 @@ public class CPDefinitionLocalServiceUtil {
 		long userId, long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().restoreCPDefinitionFromTrash(userId, cpDefinitionId);
+	}
+
+	public static com.liferay.portal.kernel.search.Hits search(
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return getService().search(searchContext);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPDefinition> searchCPDefinitions(
+		long companyId, long groupId, java.lang.String keywords, int status,
+		int start, int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchCPDefinitions(companyId, groupId, keywords, status,
+			start, end, sort);
+	}
+
+	public static void updateAsset(long userId,
+		com.liferay.commerce.product.model.CPDefinition cpDefinition,
+		long[] assetCategoryIds, java.lang.String[] assetTagNames,
+		long[] assetLinkEntryIds, java.lang.Double priority)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.updateAsset(userId, cpDefinition, assetCategoryIds, assetTagNames,
+			assetLinkEntryIds, priority);
 	}
 
 	/**
@@ -337,298 +630,6 @@ public class CPDefinitionLocalServiceUtil {
 		return getService()
 				   .updateStatus(userId, cpDefinitionId, status,
 			serviceContext, workflowContext);
-	}
-
-	public static com.liferay.commerce.product.model.CPDefinitionLocalization fetchCPDefinitionLocalization(
-		long CPDefinitionId, java.lang.String languageId) {
-		return getService()
-				   .fetchCPDefinitionLocalization(CPDefinitionId, languageId);
-	}
-
-	public static com.liferay.commerce.product.model.CPDefinitionLocalization getCPDefinitionLocalization(
-		long CPDefinitionId, java.lang.String languageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getCPDefinitionLocalization(CPDefinitionId, languageId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPDefinition> searchCPDefinitions(
-		long companyId, long groupId, java.lang.String keywords, int status,
-		int start, int end, com.liferay.portal.kernel.search.Sort sort)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .searchCPDefinitions(companyId, groupId, keywords, status,
-			start, end, sort);
-	}
-
-	public static com.liferay.portal.kernel.search.Hits search(
-		com.liferay.portal.kernel.search.SearchContext searchContext) {
-		return getService().search(searchContext);
-	}
-
-	/**
-	* Returns the number of cp definitions.
-	*
-	* @return the number of cp definitions
-	*/
-	public static int getCPDefinitionsCount() {
-		return getService().getCPDefinitionsCount();
-	}
-
-	public static int getCPDefinitionsCountByCategoryId(long categoryId) {
-		return getService().getCPDefinitionsCountByCategoryId(categoryId);
-	}
-
-	public static java.lang.String getLayoutUuid(long cpDefinitionId) {
-		return getService().getLayoutUuid(cpDefinitionId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static java.lang.String getUrlTitleMapAsXML(long cpDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getUrlTitleMapAsXML(cpDefinitionId);
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQuery(dynamicQuery);
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.commerce.product.model.impl.CPDefinitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
-		return getService().dynamicQuery(dynamicQuery, start, end);
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.commerce.product.model.impl.CPDefinitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
-		return getService()
-				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
-	}
-
-	public static java.util.List<java.lang.String> getCPDefinitionLocalizationLanguageIds(
-		long cpDefinitionId) {
-		return getService()
-				   .getCPDefinitionLocalizationLanguageIds(cpDefinitionId);
-	}
-
-	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionLocalization> getCPDefinitionLocalizations(
-		long CPDefinitionId) {
-		return getService().getCPDefinitionLocalizations(CPDefinitionId);
-	}
-
-	/**
-	* Returns a range of all the cp definitions.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.commerce.product.model.impl.CPDefinitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of cp definitions
-	* @param end the upper bound of the range of cp definitions (not inclusive)
-	* @return the range of cp definitions
-	*/
-	public static java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitions(
-		int start, int end) {
-		return getService().getCPDefinitions(start, end);
-	}
-
-	public static java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitionsByCategoryId(
-		long categoryId, int start, int end) {
-		return getService().getCPDefinitionsByCategoryId(categoryId, start, end);
-	}
-
-	/**
-	* Returns all the cp definitions matching the UUID and company.
-	*
-	* @param uuid the UUID of the cp definitions
-	* @param companyId the primary key of the company
-	* @return the matching cp definitions, or an empty list if no matches were found
-	*/
-	public static java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return getService().getCPDefinitionsByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
-	* Returns a range of cp definitions matching the UUID and company.
-	*
-	* @param uuid the UUID of the cp definitions
-	* @param companyId the primary key of the company
-	* @param start the lower bound of the range of cp definitions
-	* @param end the upper bound of the range of cp definitions (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the range of matching cp definitions, or an empty list if no matches were found
-	*/
-	public static java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinition> orderByComparator) {
-		return getService()
-				   .getCPDefinitionsByUuidAndCompanyId(uuid, companyId, start,
-			end, orderByComparator);
-	}
-
-	public static java.util.Map<java.util.Locale, java.lang.String> getCPDefinitionDescriptionMap(
-		long cpDefinitionId) {
-		return getService().getCPDefinitionDescriptionMap(cpDefinitionId);
-	}
-
-	public static java.util.Map<java.util.Locale, java.lang.String> getCPDefinitionMetaDescriptionMap(
-		long cpDefinitionId) {
-		return getService().getCPDefinitionMetaDescriptionMap(cpDefinitionId);
-	}
-
-	public static java.util.Map<java.util.Locale, java.lang.String> getCPDefinitionMetaKeywordsMap(
-		long cpDefinitionId) {
-		return getService().getCPDefinitionMetaKeywordsMap(cpDefinitionId);
-	}
-
-	public static java.util.Map<java.util.Locale, java.lang.String> getCPDefinitionMetaTitleMap(
-		long cpDefinitionId) {
-		return getService().getCPDefinitionMetaTitleMap(cpDefinitionId);
-	}
-
-	public static java.util.Map<java.util.Locale, java.lang.String> getCPDefinitionShortDescriptionMap(
-		long cpDefinitionId) {
-		return getService().getCPDefinitionShortDescriptionMap(cpDefinitionId);
-	}
-
-	public static java.util.Map<java.util.Locale, java.lang.String> getCPDefinitionTitleMap(
-		long cpDefinitionId) {
-		return getService().getCPDefinitionTitleMap(cpDefinitionId);
-	}
-
-	public static java.util.Map<java.util.Locale, java.lang.String> getUrlTitleMap(
-		long cpDefinitionId) {
-		return getService().getUrlTitleMap(cpDefinitionId);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	public static void checkCPDefinitions()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().checkCPDefinitions();
-	}
-
-	public static void deleteAssetCategoryCPDefinition(long cpDefinitionId,
-		long categoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteAssetCategoryCPDefinition(cpDefinitionId, categoryId);
-	}
-
-	public static void deleteCPDefinitions(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteCPDefinitions(groupId);
-	}
-
-	public static void moveCPDefinitionsToTrash(long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().moveCPDefinitionsToTrash(groupId, userId);
-	}
-
-	public static void updateAsset(long userId,
-		com.liferay.commerce.product.model.CPDefinition cpDefinition,
-		long[] assetCategoryIds, java.lang.String[] assetTagNames,
-		long[] assetLinkEntryIds, java.lang.Double priority)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.updateAsset(userId, cpDefinition, assetCategoryIds, assetTagNames,
-			assetLinkEntryIds, priority);
 	}
 
 	public static CPDefinitionLocalService getService() {

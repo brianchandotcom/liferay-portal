@@ -99,93 +99,8 @@ public class CPMeasurementUnitLocalServiceUtil {
 		return getService().deleteCPMeasurementUnit(CPMeasurementUnitId);
 	}
 
-	public static com.liferay.commerce.product.model.CPMeasurementUnit fetchCPMeasurementUnit(
-		long CPMeasurementUnitId) {
-		return getService().fetchCPMeasurementUnit(CPMeasurementUnitId);
-	}
-
-	/**
-	* Returns the cp measurement unit matching the UUID and group.
-	*
-	* @param uuid the cp measurement unit's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
-	*/
-	public static com.liferay.commerce.product.model.CPMeasurementUnit fetchCPMeasurementUnitByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return getService().fetchCPMeasurementUnitByUuidAndGroupId(uuid, groupId);
-	}
-
-	public static com.liferay.commerce.product.model.CPMeasurementUnit fetchPrimaryCPMeasurementUnit(
-		long groupId, int type) {
-		return getService().fetchPrimaryCPMeasurementUnit(groupId, type);
-	}
-
-	/**
-	* Returns the cp measurement unit with the primary key.
-	*
-	* @param CPMeasurementUnitId the primary key of the cp measurement unit
-	* @return the cp measurement unit
-	* @throws PortalException if a cp measurement unit with the primary key could not be found
-	*/
-	public static com.liferay.commerce.product.model.CPMeasurementUnit getCPMeasurementUnit(
-		long CPMeasurementUnitId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCPMeasurementUnit(CPMeasurementUnitId);
-	}
-
-	/**
-	* Returns the cp measurement unit matching the UUID and group.
-	*
-	* @param uuid the cp measurement unit's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp measurement unit
-	* @throws PortalException if a matching cp measurement unit could not be found
-	*/
-	public static com.liferay.commerce.product.model.CPMeasurementUnit getCPMeasurementUnitByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCPMeasurementUnitByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Updates the cp measurement unit in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param cpMeasurementUnit the cp measurement unit
-	* @return the cp measurement unit that was updated
-	*/
-	public static com.liferay.commerce.product.model.CPMeasurementUnit updateCPMeasurementUnit(
-		com.liferay.commerce.product.model.CPMeasurementUnit cpMeasurementUnit) {
-		return getService().updateCPMeasurementUnit(cpMeasurementUnit);
-	}
-
-	public static com.liferay.commerce.product.model.CPMeasurementUnit updateCPMeasurementUnit(
-		long cpMeasurementUnitId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String key, double rate, boolean primary, double priority,
-		int type,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateCPMeasurementUnit(cpMeasurementUnitId, nameMap, key,
-			rate, primary, priority, type, serviceContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
+	public static void deleteCPMeasurementUnits(long groupId) {
+		getService().deleteCPMeasurementUnits(groupId);
 	}
 
 	/**
@@ -197,32 +112,8 @@ public class CPMeasurementUnitLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the number of cp measurement units.
-	*
-	* @return the number of cp measurement units
-	*/
-	public static int getCPMeasurementUnitsCount() {
-		return getService().getCPMeasurementUnitsCount();
-	}
-
-	public static int getCPMeasurementUnitsCount(long groupId, int type) {
-		return getService().getCPMeasurementUnitsCount(groupId, type);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -273,6 +164,83 @@ public class CPMeasurementUnitLocalServiceUtil {
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static com.liferay.commerce.product.model.CPMeasurementUnit fetchCPMeasurementUnit(
+		long CPMeasurementUnitId) {
+		return getService().fetchCPMeasurementUnit(CPMeasurementUnitId);
+	}
+
+	/**
+	* Returns the cp measurement unit matching the UUID and group.
+	*
+	* @param uuid the cp measurement unit's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
+	*/
+	public static com.liferay.commerce.product.model.CPMeasurementUnit fetchCPMeasurementUnitByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return getService().fetchCPMeasurementUnitByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static com.liferay.commerce.product.model.CPMeasurementUnit fetchPrimaryCPMeasurementUnit(
+		long groupId, int type) {
+		return getService().fetchPrimaryCPMeasurementUnit(groupId, type);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the cp measurement unit with the primary key.
+	*
+	* @param CPMeasurementUnitId the primary key of the cp measurement unit
+	* @return the cp measurement unit
+	* @throws PortalException if a cp measurement unit with the primary key could not be found
+	*/
+	public static com.liferay.commerce.product.model.CPMeasurementUnit getCPMeasurementUnit(
+		long CPMeasurementUnitId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCPMeasurementUnit(CPMeasurementUnitId);
+	}
+
+	/**
+	* Returns the cp measurement unit matching the UUID and group.
+	*
+	* @param uuid the cp measurement unit's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp measurement unit
+	* @throws PortalException if a matching cp measurement unit could not be found
+	*/
+	public static com.liferay.commerce.product.model.CPMeasurementUnit getCPMeasurementUnitByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCPMeasurementUnitByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -331,31 +299,63 @@ public class CPMeasurementUnitLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of cp measurement units.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of cp measurement units
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
+	public static int getCPMeasurementUnitsCount() {
+		return getService().getCPMeasurementUnitsCount();
+	}
+
+	public static int getCPMeasurementUnitsCount(long groupId, int type) {
+		return getService().getCPMeasurementUnitsCount(groupId, type);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static void deleteCPMeasurementUnits(long groupId) {
-		getService().deleteCPMeasurementUnits(groupId);
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the cp measurement unit in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param cpMeasurementUnit the cp measurement unit
+	* @return the cp measurement unit that was updated
+	*/
+	public static com.liferay.commerce.product.model.CPMeasurementUnit updateCPMeasurementUnit(
+		com.liferay.commerce.product.model.CPMeasurementUnit cpMeasurementUnit) {
+		return getService().updateCPMeasurementUnit(cpMeasurementUnit);
+	}
+
+	public static com.liferay.commerce.product.model.CPMeasurementUnit updateCPMeasurementUnit(
+		long cpMeasurementUnitId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.lang.String key, double rate, boolean primary, double priority,
+		int type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCPMeasurementUnit(cpMeasurementUnitId, nameMap, key,
+			rate, primary, priority, type, serviceContext);
 	}
 
 	public static CPMeasurementUnitLocalService getService() {

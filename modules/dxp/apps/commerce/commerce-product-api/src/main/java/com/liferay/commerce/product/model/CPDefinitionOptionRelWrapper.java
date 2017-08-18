@@ -190,25 +190,183 @@ public class CPDefinitionOptionRelWrapper implements CPDefinitionOptionRel,
 	}
 
 	@Override
+	public java.lang.Object clone() {
+		return new CPDefinitionOptionRelWrapper((CPDefinitionOptionRel)_cpDefinitionOptionRel.clone());
+	}
+
+	@Override
+	public int compareTo(CPDefinitionOptionRel cpDefinitionOptionRel) {
+		return _cpDefinitionOptionRel.compareTo(cpDefinitionOptionRel);
+	}
+
+	@Override
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _cpDefinitionOptionRel.getAvailableLanguageIds();
+	}
+
+	/**
+	* Returns the company ID of this cp definition option rel.
+	*
+	* @return the company ID of this cp definition option rel
+	*/
+	@Override
+	public long getCompanyId() {
+		return _cpDefinitionOptionRel.getCompanyId();
+	}
+
+	@Override
 	public CPDefinition getCPDefinition()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionOptionRel.getCPDefinition();
 	}
 
+	/**
+	* Returns the cp definition ID of this cp definition option rel.
+	*
+	* @return the cp definition ID of this cp definition option rel
+	*/
 	@Override
-	public CPDefinitionOptionRel toEscapedModel() {
-		return new CPDefinitionOptionRelWrapper(_cpDefinitionOptionRel.toEscapedModel());
+	public long getCPDefinitionId() {
+		return _cpDefinitionOptionRel.getCPDefinitionId();
+	}
+
+	/**
+	* Returns the cp definition option rel ID of this cp definition option rel.
+	*
+	* @return the cp definition option rel ID of this cp definition option rel
+	*/
+	@Override
+	public long getCPDefinitionOptionRelId() {
+		return _cpDefinitionOptionRel.getCPDefinitionOptionRelId();
 	}
 
 	@Override
-	public CPDefinitionOptionRel toUnescapedModel() {
-		return new CPDefinitionOptionRelWrapper(_cpDefinitionOptionRel.toUnescapedModel());
+	public java.util.List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels() {
+		return _cpDefinitionOptionRel.getCPDefinitionOptionValueRels();
 	}
 
 	@Override
 	public CPOption getCPOption()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionOptionRel.getCPOption();
+	}
+
+	/**
+	* Returns the cp option ID of this cp definition option rel.
+	*
+	* @return the cp option ID of this cp definition option rel
+	*/
+	@Override
+	public long getCPOptionId() {
+		return _cpDefinitionOptionRel.getCPOptionId();
+	}
+
+	/**
+	* Returns the create date of this cp definition option rel.
+	*
+	* @return the create date of this cp definition option rel
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _cpDefinitionOptionRel.getCreateDate();
+	}
+
+	/**
+	* Returns the ddm form field type name of this cp definition option rel.
+	*
+	* @return the ddm form field type name of this cp definition option rel
+	*/
+	@Override
+	public java.lang.String getDDMFormFieldTypeName() {
+		return _cpDefinitionOptionRel.getDDMFormFieldTypeName();
+	}
+
+	@Override
+	public java.lang.String getDefaultLanguageId() {
+		return _cpDefinitionOptionRel.getDefaultLanguageId();
+	}
+
+	/**
+	* Returns the description of this cp definition option rel.
+	*
+	* @return the description of this cp definition option rel
+	*/
+	@Override
+	public java.lang.String getDescription() {
+		return _cpDefinitionOptionRel.getDescription();
+	}
+
+	/**
+	* Returns the localized description of this cp definition option rel in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized description of this cp definition option rel
+	*/
+	@Override
+	public java.lang.String getDescription(java.util.Locale locale) {
+		return _cpDefinitionOptionRel.getDescription(locale);
+	}
+
+	/**
+	* Returns the localized description of this cp definition option rel in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this cp definition option rel. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getDescription(java.util.Locale locale,
+		boolean useDefault) {
+		return _cpDefinitionOptionRel.getDescription(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized description of this cp definition option rel in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized description of this cp definition option rel
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId) {
+		return _cpDefinitionOptionRel.getDescription(languageId);
+	}
+
+	/**
+	* Returns the localized description of this cp definition option rel in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this cp definition option rel
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId,
+		boolean useDefault) {
+		return _cpDefinitionOptionRel.getDescription(languageId, useDefault);
+	}
+
+	@Override
+	public java.lang.String getDescriptionCurrentLanguageId() {
+		return _cpDefinitionOptionRel.getDescriptionCurrentLanguageId();
+	}
+
+	@Override
+	public java.lang.String getDescriptionCurrentValue() {
+		return _cpDefinitionOptionRel.getDescriptionCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized descriptions of this cp definition option rel.
+	*
+	* @return the locales and localized descriptions of this cp definition option rel
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+		return _cpDefinitionOptionRel.getDescriptionMap();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _cpDefinitionOptionRel.getExpandoBridge();
 	}
 
 	/**
@@ -219,6 +377,51 @@ public class CPDefinitionOptionRelWrapper implements CPDefinitionOptionRel,
 	@Override
 	public boolean getFacetable() {
 		return _cpDefinitionOptionRel.getFacetable();
+	}
+
+	/**
+	* Returns the group ID of this cp definition option rel.
+	*
+	* @return the group ID of this cp definition option rel
+	*/
+	@Override
+	public long getGroupId() {
+		return _cpDefinitionOptionRel.getGroupId();
+	}
+
+	/**
+	* Returns the modified date of this cp definition option rel.
+	*
+	* @return the modified date of this cp definition option rel
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _cpDefinitionOptionRel.getModifiedDate();
+	}
+
+	/**
+	* Returns the primary key of this cp definition option rel.
+	*
+	* @return the primary key of this cp definition option rel
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _cpDefinitionOptionRel.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _cpDefinitionOptionRel.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the priority of this cp definition option rel.
+	*
+	* @return the priority of this cp definition option rel
+	*/
+	@Override
+	public double getPriority() {
+		return _cpDefinitionOptionRel.getPriority();
 	}
 
 	/**
@@ -239,6 +442,128 @@ public class CPDefinitionOptionRelWrapper implements CPDefinitionOptionRel,
 	@Override
 	public boolean getSkuContributor() {
 		return _cpDefinitionOptionRel.getSkuContributor();
+	}
+
+	/**
+	* Returns the title of this cp definition option rel.
+	*
+	* @return the title of this cp definition option rel
+	*/
+	@Override
+	public java.lang.String getTitle() {
+		return _cpDefinitionOptionRel.getTitle();
+	}
+
+	/**
+	* Returns the localized title of this cp definition option rel in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized title of this cp definition option rel
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale) {
+		return _cpDefinitionOptionRel.getTitle(locale);
+	}
+
+	/**
+	* Returns the localized title of this cp definition option rel in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized title of this cp definition option rel. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
+		return _cpDefinitionOptionRel.getTitle(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized title of this cp definition option rel in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized title of this cp definition option rel
+	*/
+	@Override
+	public java.lang.String getTitle(java.lang.String languageId) {
+		return _cpDefinitionOptionRel.getTitle(languageId);
+	}
+
+	/**
+	* Returns the localized title of this cp definition option rel in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized title of this cp definition option rel
+	*/
+	@Override
+	public java.lang.String getTitle(java.lang.String languageId,
+		boolean useDefault) {
+		return _cpDefinitionOptionRel.getTitle(languageId, useDefault);
+	}
+
+	@Override
+	public java.lang.String getTitleCurrentLanguageId() {
+		return _cpDefinitionOptionRel.getTitleCurrentLanguageId();
+	}
+
+	@Override
+	public java.lang.String getTitleCurrentValue() {
+		return _cpDefinitionOptionRel.getTitleCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized titles of this cp definition option rel.
+	*
+	* @return the locales and localized titles of this cp definition option rel
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getTitleMap() {
+		return _cpDefinitionOptionRel.getTitleMap();
+	}
+
+	/**
+	* Returns the user ID of this cp definition option rel.
+	*
+	* @return the user ID of this cp definition option rel
+	*/
+	@Override
+	public long getUserId() {
+		return _cpDefinitionOptionRel.getUserId();
+	}
+
+	/**
+	* Returns the user name of this cp definition option rel.
+	*
+	* @return the user name of this cp definition option rel
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _cpDefinitionOptionRel.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this cp definition option rel.
+	*
+	* @return the user uuid of this cp definition option rel
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _cpDefinitionOptionRel.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this cp definition option rel.
+	*
+	* @return the uuid of this cp definition option rel
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _cpDefinitionOptionRel.getUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _cpDefinitionOptionRel.hashCode();
 	}
 
 	@Override
@@ -287,356 +612,6 @@ public class CPDefinitionOptionRelWrapper implements CPDefinitionOptionRel,
 	}
 
 	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _cpDefinitionOptionRel.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CPDefinitionOptionRel> toCacheModel() {
-		return _cpDefinitionOptionRel.toCacheModel();
-	}
-
-	/**
-	* Returns the priority of this cp definition option rel.
-	*
-	* @return the priority of this cp definition option rel
-	*/
-	@Override
-	public double getPriority() {
-		return _cpDefinitionOptionRel.getPriority();
-	}
-
-	@Override
-	public int compareTo(CPDefinitionOptionRel cpDefinitionOptionRel) {
-		return _cpDefinitionOptionRel.compareTo(cpDefinitionOptionRel);
-	}
-
-	@Override
-	public int hashCode() {
-		return _cpDefinitionOptionRel.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _cpDefinitionOptionRel.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new CPDefinitionOptionRelWrapper((CPDefinitionOptionRel)_cpDefinitionOptionRel.clone());
-	}
-
-	/**
-	* Returns the ddm form field type name of this cp definition option rel.
-	*
-	* @return the ddm form field type name of this cp definition option rel
-	*/
-	@Override
-	public java.lang.String getDDMFormFieldTypeName() {
-		return _cpDefinitionOptionRel.getDDMFormFieldTypeName();
-	}
-
-	@Override
-	public java.lang.String getDefaultLanguageId() {
-		return _cpDefinitionOptionRel.getDefaultLanguageId();
-	}
-
-	/**
-	* Returns the description of this cp definition option rel.
-	*
-	* @return the description of this cp definition option rel
-	*/
-	@Override
-	public java.lang.String getDescription() {
-		return _cpDefinitionOptionRel.getDescription();
-	}
-
-	/**
-	* Returns the localized description of this cp definition option rel in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @return the localized description of this cp definition option rel
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
-		return _cpDefinitionOptionRel.getDescription(languageId);
-	}
-
-	/**
-	* Returns the localized description of this cp definition option rel in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this cp definition option rel
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
-		return _cpDefinitionOptionRel.getDescription(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized description of this cp definition option rel in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized description of this cp definition option rel
-	*/
-	@Override
-	public java.lang.String getDescription(java.util.Locale locale) {
-		return _cpDefinitionOptionRel.getDescription(locale);
-	}
-
-	/**
-	* Returns the localized description of this cp definition option rel in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this cp definition option rel. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getDescription(java.util.Locale locale,
-		boolean useDefault) {
-		return _cpDefinitionOptionRel.getDescription(locale, useDefault);
-	}
-
-	@Override
-	public java.lang.String getDescriptionCurrentLanguageId() {
-		return _cpDefinitionOptionRel.getDescriptionCurrentLanguageId();
-	}
-
-	@Override
-	public java.lang.String getDescriptionCurrentValue() {
-		return _cpDefinitionOptionRel.getDescriptionCurrentValue();
-	}
-
-	/**
-	* Returns the title of this cp definition option rel.
-	*
-	* @return the title of this cp definition option rel
-	*/
-	@Override
-	public java.lang.String getTitle() {
-		return _cpDefinitionOptionRel.getTitle();
-	}
-
-	/**
-	* Returns the localized title of this cp definition option rel in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @return the localized title of this cp definition option rel
-	*/
-	@Override
-	public java.lang.String getTitle(java.lang.String languageId) {
-		return _cpDefinitionOptionRel.getTitle(languageId);
-	}
-
-	/**
-	* Returns the localized title of this cp definition option rel in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized title of this cp definition option rel
-	*/
-	@Override
-	public java.lang.String getTitle(java.lang.String languageId,
-		boolean useDefault) {
-		return _cpDefinitionOptionRel.getTitle(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized title of this cp definition option rel in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized title of this cp definition option rel
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale) {
-		return _cpDefinitionOptionRel.getTitle(locale);
-	}
-
-	/**
-	* Returns the localized title of this cp definition option rel in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized title of this cp definition option rel. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
-		return _cpDefinitionOptionRel.getTitle(locale, useDefault);
-	}
-
-	@Override
-	public java.lang.String getTitleCurrentLanguageId() {
-		return _cpDefinitionOptionRel.getTitleCurrentLanguageId();
-	}
-
-	@Override
-	public java.lang.String getTitleCurrentValue() {
-		return _cpDefinitionOptionRel.getTitleCurrentValue();
-	}
-
-	/**
-	* Returns the user name of this cp definition option rel.
-	*
-	* @return the user name of this cp definition option rel
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _cpDefinitionOptionRel.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this cp definition option rel.
-	*
-	* @return the user uuid of this cp definition option rel
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _cpDefinitionOptionRel.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this cp definition option rel.
-	*
-	* @return the uuid of this cp definition option rel
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _cpDefinitionOptionRel.getUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _cpDefinitionOptionRel.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _cpDefinitionOptionRel.toXmlString();
-	}
-
-	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
-		return _cpDefinitionOptionRel.getAvailableLanguageIds();
-	}
-
-	/**
-	* Returns the create date of this cp definition option rel.
-	*
-	* @return the create date of this cp definition option rel
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _cpDefinitionOptionRel.getCreateDate();
-	}
-
-	/**
-	* Returns the modified date of this cp definition option rel.
-	*
-	* @return the modified date of this cp definition option rel
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _cpDefinitionOptionRel.getModifiedDate();
-	}
-
-	@Override
-	public java.util.List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels() {
-		return _cpDefinitionOptionRel.getCPDefinitionOptionValueRels();
-	}
-
-	/**
-	* Returns a map of the locales and localized descriptions of this cp definition option rel.
-	*
-	* @return the locales and localized descriptions of this cp definition option rel
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
-		return _cpDefinitionOptionRel.getDescriptionMap();
-	}
-
-	/**
-	* Returns a map of the locales and localized titles of this cp definition option rel.
-	*
-	* @return the locales and localized titles of this cp definition option rel
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getTitleMap() {
-		return _cpDefinitionOptionRel.getTitleMap();
-	}
-
-	/**
-	* Returns the cp definition ID of this cp definition option rel.
-	*
-	* @return the cp definition ID of this cp definition option rel
-	*/
-	@Override
-	public long getCPDefinitionId() {
-		return _cpDefinitionOptionRel.getCPDefinitionId();
-	}
-
-	/**
-	* Returns the cp definition option rel ID of this cp definition option rel.
-	*
-	* @return the cp definition option rel ID of this cp definition option rel
-	*/
-	@Override
-	public long getCPDefinitionOptionRelId() {
-		return _cpDefinitionOptionRel.getCPDefinitionOptionRelId();
-	}
-
-	/**
-	* Returns the cp option ID of this cp definition option rel.
-	*
-	* @return the cp option ID of this cp definition option rel
-	*/
-	@Override
-	public long getCPOptionId() {
-		return _cpDefinitionOptionRel.getCPOptionId();
-	}
-
-	/**
-	* Returns the company ID of this cp definition option rel.
-	*
-	* @return the company ID of this cp definition option rel
-	*/
-	@Override
-	public long getCompanyId() {
-		return _cpDefinitionOptionRel.getCompanyId();
-	}
-
-	/**
-	* Returns the group ID of this cp definition option rel.
-	*
-	* @return the group ID of this cp definition option rel
-	*/
-	@Override
-	public long getGroupId() {
-		return _cpDefinitionOptionRel.getGroupId();
-	}
-
-	/**
-	* Returns the primary key of this cp definition option rel.
-	*
-	* @return the primary key of this cp definition option rel
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _cpDefinitionOptionRel.getPrimaryKey();
-	}
-
-	/**
-	* Returns the user ID of this cp definition option rel.
-	*
-	* @return the user ID of this cp definition option rel
-	*/
-	@Override
-	public long getUserId() {
-		return _cpDefinitionOptionRel.getUserId();
-	}
-
-	@Override
 	public void persist() {
 		_cpDefinitionOptionRel.persist();
 	}
@@ -652,6 +627,21 @@ public class CPDefinitionOptionRelWrapper implements CPDefinitionOptionRel,
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
 		_cpDefinitionOptionRel.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
+	@Override
+	public void setCachedModel(boolean cachedModel) {
+		_cpDefinitionOptionRel.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this cp definition option rel.
+	*
+	* @param companyId the company ID of this cp definition option rel
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_cpDefinitionOptionRel.setCompanyId(companyId);
 	}
 
 	/**
@@ -682,21 +672,6 @@ public class CPDefinitionOptionRelWrapper implements CPDefinitionOptionRel,
 	@Override
 	public void setCPOptionId(long CPOptionId) {
 		_cpDefinitionOptionRel.setCPOptionId(CPOptionId);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_cpDefinitionOptionRel.setCachedModel(cachedModel);
-	}
-
-	/**
-	* Sets the company ID of this cp definition option rel.
-	*
-	* @param companyId the company ID of this cp definition option rel
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_cpDefinitionOptionRel.setCompanyId(companyId);
 	}
 
 	/**
@@ -784,14 +759,14 @@ public class CPDefinitionOptionRelWrapper implements CPDefinitionOptionRel,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_cpDefinitionOptionRel.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_cpDefinitionOptionRel.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_cpDefinitionOptionRel.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -978,6 +953,31 @@ public class CPDefinitionOptionRelWrapper implements CPDefinitionOptionRel,
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_cpDefinitionOptionRel.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<CPDefinitionOptionRel> toCacheModel() {
+		return _cpDefinitionOptionRel.toCacheModel();
+	}
+
+	@Override
+	public CPDefinitionOptionRel toEscapedModel() {
+		return new CPDefinitionOptionRelWrapper(_cpDefinitionOptionRel.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _cpDefinitionOptionRel.toString();
+	}
+
+	@Override
+	public CPDefinitionOptionRel toUnescapedModel() {
+		return new CPDefinitionOptionRelWrapper(_cpDefinitionOptionRel.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _cpDefinitionOptionRel.toXmlString();
 	}
 
 	@Override

@@ -59,11 +59,14 @@ public interface CommerceCartService extends BaseService {
 	public CommerceCart addCommerceCart(java.lang.String name, int type,
 		ServiceContext serviceContext) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCart fetchCommerceCart(java.lang.String uuid, long groupId);
+	public void deleteCommerceCart(long commerceCartId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceCart fetchCommerceCart(long commerceCartId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCart fetchCommerceCart(java.lang.String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceCart fetchDefaultCommerceCart(long groupId, long userId,
@@ -74,6 +77,10 @@ public interface CommerceCartService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceCart> getCommerceCarts(long groupId, int type,
+		int start, int end, OrderByComparator<CommerceCart> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceCartsCount(long groupId, int type);
 
 	/**
@@ -82,11 +89,4 @@ public interface CommerceCartService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceCart> getCommerceCarts(long groupId, int type,
-		int start, int end, OrderByComparator<CommerceCart> orderByComparator);
-
-	public void deleteCommerceCart(long commerceCartId)
-		throws PortalException;
 }

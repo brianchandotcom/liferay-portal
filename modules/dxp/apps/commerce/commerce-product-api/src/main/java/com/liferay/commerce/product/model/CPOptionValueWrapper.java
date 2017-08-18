@@ -159,54 +159,8 @@ public class CPOptionValueWrapper implements CPOptionValue,
 	}
 
 	@Override
-	public CPOption getCPOption()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpOptionValue.getCPOption();
-	}
-
-	@Override
-	public CPOptionValue toEscapedModel() {
-		return new CPOptionValueWrapper(_cpOptionValue.toEscapedModel());
-	}
-
-	@Override
-	public CPOptionValue toUnescapedModel() {
-		return new CPOptionValueWrapper(_cpOptionValue.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _cpOptionValue.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _cpOptionValue.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _cpOptionValue.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _cpOptionValue.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CPOptionValue> toCacheModel() {
-		return _cpOptionValue.toCacheModel();
-	}
-
-	/**
-	* Returns the priority of this cp option value.
-	*
-	* @return the priority of this cp option value
-	*/
-	@Override
-	public double getPriority() {
-		return _cpOptionValue.getPriority();
+	public java.lang.Object clone() {
+		return new CPOptionValueWrapper((CPOptionValue)_cpOptionValue.clone());
 	}
 
 	@Override
@@ -215,23 +169,74 @@ public class CPOptionValueWrapper implements CPOptionValue,
 	}
 
 	@Override
-	public int hashCode() {
-		return _cpOptionValue.hashCode();
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _cpOptionValue.getAvailableLanguageIds();
+	}
+
+	/**
+	* Returns the company ID of this cp option value.
+	*
+	* @return the company ID of this cp option value
+	*/
+	@Override
+	public long getCompanyId() {
+		return _cpOptionValue.getCompanyId();
 	}
 
 	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _cpOptionValue.getPrimaryKeyObj();
+	public CPOption getCPOption()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpOptionValue.getCPOption();
 	}
 
+	/**
+	* Returns the cp option ID of this cp option value.
+	*
+	* @return the cp option ID of this cp option value
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new CPOptionValueWrapper((CPOptionValue)_cpOptionValue.clone());
+	public long getCPOptionId() {
+		return _cpOptionValue.getCPOptionId();
+	}
+
+	/**
+	* Returns the cp option value ID of this cp option value.
+	*
+	* @return the cp option value ID of this cp option value
+	*/
+	@Override
+	public long getCPOptionValueId() {
+		return _cpOptionValue.getCPOptionValueId();
+	}
+
+	/**
+	* Returns the create date of this cp option value.
+	*
+	* @return the create date of this cp option value
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _cpOptionValue.getCreateDate();
 	}
 
 	@Override
 	public java.lang.String getDefaultLanguageId() {
 		return _cpOptionValue.getDefaultLanguageId();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _cpOptionValue.getExpandoBridge();
+	}
+
+	/**
+	* Returns the group ID of this cp option value.
+	*
+	* @return the group ID of this cp option value
+	*/
+	@Override
+	public long getGroupId() {
+		return _cpOptionValue.getGroupId();
 	}
 
 	/**
@@ -245,6 +250,51 @@ public class CPOptionValueWrapper implements CPOptionValue,
 	}
 
 	/**
+	* Returns the last publish date of this cp option value.
+	*
+	* @return the last publish date of this cp option value
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _cpOptionValue.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this cp option value.
+	*
+	* @return the modified date of this cp option value
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _cpOptionValue.getModifiedDate();
+	}
+
+	/**
+	* Returns the primary key of this cp option value.
+	*
+	* @return the primary key of this cp option value
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _cpOptionValue.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _cpOptionValue.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the priority of this cp option value.
+	*
+	* @return the priority of this cp option value
+	*/
+	@Override
+	public double getPriority() {
+		return _cpOptionValue.getPriority();
+	}
+
+	/**
 	* Returns the title of this cp option value.
 	*
 	* @return the title of this cp option value
@@ -252,6 +302,29 @@ public class CPOptionValueWrapper implements CPOptionValue,
 	@Override
 	public java.lang.String getTitle() {
 		return _cpOptionValue.getTitle();
+	}
+
+	/**
+	* Returns the localized title of this cp option value in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized title of this cp option value
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale) {
+		return _cpOptionValue.getTitle(locale);
+	}
+
+	/**
+	* Returns the localized title of this cp option value in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized title of this cp option value. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
+		return _cpOptionValue.getTitle(locale, useDefault);
 	}
 
 	/**
@@ -278,29 +351,6 @@ public class CPOptionValueWrapper implements CPOptionValue,
 		return _cpOptionValue.getTitle(languageId, useDefault);
 	}
 
-	/**
-	* Returns the localized title of this cp option value in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized title of this cp option value
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale) {
-		return _cpOptionValue.getTitle(locale);
-	}
-
-	/**
-	* Returns the localized title of this cp option value in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized title of this cp option value. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
-		return _cpOptionValue.getTitle(locale, useDefault);
-	}
-
 	@Override
 	public java.lang.String getTitleCurrentLanguageId() {
 		return _cpOptionValue.getTitleCurrentLanguageId();
@@ -309,6 +359,26 @@ public class CPOptionValueWrapper implements CPOptionValue,
 	@Override
 	public java.lang.String getTitleCurrentValue() {
 		return _cpOptionValue.getTitleCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized titles of this cp option value.
+	*
+	* @return the locales and localized titles of this cp option value
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getTitleMap() {
+		return _cpOptionValue.getTitleMap();
+	}
+
+	/**
+	* Returns the user ID of this cp option value.
+	*
+	* @return the user ID of this cp option value
+	*/
+	@Override
+	public long getUserId() {
+		return _cpOptionValue.getUserId();
 	}
 
 	/**
@@ -342,118 +412,23 @@ public class CPOptionValueWrapper implements CPOptionValue,
 	}
 
 	@Override
-	public java.lang.String toString() {
-		return _cpOptionValue.toString();
+	public int hashCode() {
+		return _cpOptionValue.hashCode();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _cpOptionValue.toXmlString();
+	public boolean isCachedModel() {
+		return _cpOptionValue.isCachedModel();
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
-		return _cpOptionValue.getAvailableLanguageIds();
+	public boolean isEscapedModel() {
+		return _cpOptionValue.isEscapedModel();
 	}
 
-	/**
-	* Returns the create date of this cp option value.
-	*
-	* @return the create date of this cp option value
-	*/
 	@Override
-	public Date getCreateDate() {
-		return _cpOptionValue.getCreateDate();
-	}
-
-	/**
-	* Returns the last publish date of this cp option value.
-	*
-	* @return the last publish date of this cp option value
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _cpOptionValue.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this cp option value.
-	*
-	* @return the modified date of this cp option value
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _cpOptionValue.getModifiedDate();
-	}
-
-	/**
-	* Returns a map of the locales and localized titles of this cp option value.
-	*
-	* @return the locales and localized titles of this cp option value
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getTitleMap() {
-		return _cpOptionValue.getTitleMap();
-	}
-
-	/**
-	* Returns the cp option ID of this cp option value.
-	*
-	* @return the cp option ID of this cp option value
-	*/
-	@Override
-	public long getCPOptionId() {
-		return _cpOptionValue.getCPOptionId();
-	}
-
-	/**
-	* Returns the cp option value ID of this cp option value.
-	*
-	* @return the cp option value ID of this cp option value
-	*/
-	@Override
-	public long getCPOptionValueId() {
-		return _cpOptionValue.getCPOptionValueId();
-	}
-
-	/**
-	* Returns the company ID of this cp option value.
-	*
-	* @return the company ID of this cp option value
-	*/
-	@Override
-	public long getCompanyId() {
-		return _cpOptionValue.getCompanyId();
-	}
-
-	/**
-	* Returns the group ID of this cp option value.
-	*
-	* @return the group ID of this cp option value
-	*/
-	@Override
-	public long getGroupId() {
-		return _cpOptionValue.getGroupId();
-	}
-
-	/**
-	* Returns the primary key of this cp option value.
-	*
-	* @return the primary key of this cp option value
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _cpOptionValue.getPrimaryKey();
-	}
-
-	/**
-	* Returns the user ID of this cp option value.
-	*
-	* @return the user ID of this cp option value
-	*/
-	@Override
-	public long getUserId() {
-		return _cpOptionValue.getUserId();
+	public boolean isNew() {
+		return _cpOptionValue.isNew();
 	}
 
 	@Override
@@ -472,6 +447,21 @@ public class CPOptionValueWrapper implements CPOptionValue,
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
 		_cpOptionValue.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
+	@Override
+	public void setCachedModel(boolean cachedModel) {
+		_cpOptionValue.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this cp option value.
+	*
+	* @param companyId the company ID of this cp option value
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_cpOptionValue.setCompanyId(companyId);
 	}
 
 	/**
@@ -494,21 +484,6 @@ public class CPOptionValueWrapper implements CPOptionValue,
 		_cpOptionValue.setCPOptionValueId(CPOptionValueId);
 	}
 
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_cpOptionValue.setCachedModel(cachedModel);
-	}
-
-	/**
-	* Sets the company ID of this cp option value.
-	*
-	* @param companyId the company ID of this cp option value
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_cpOptionValue.setCompanyId(companyId);
-	}
-
 	/**
 	* Sets the create date of this cp option value.
 	*
@@ -520,14 +495,14 @@ public class CPOptionValueWrapper implements CPOptionValue,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_cpOptionValue.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_cpOptionValue.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_cpOptionValue.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -704,6 +679,31 @@ public class CPOptionValueWrapper implements CPOptionValue,
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_cpOptionValue.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<CPOptionValue> toCacheModel() {
+		return _cpOptionValue.toCacheModel();
+	}
+
+	@Override
+	public CPOptionValue toEscapedModel() {
+		return new CPOptionValueWrapper(_cpOptionValue.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _cpOptionValue.toString();
+	}
+
+	@Override
+	public CPOptionValue toUnescapedModel() {
+		return new CPOptionValueWrapper(_cpOptionValue.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _cpOptionValue.toXmlString();
 	}
 
 	@Override

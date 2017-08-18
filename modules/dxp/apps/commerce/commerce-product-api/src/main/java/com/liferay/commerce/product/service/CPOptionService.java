@@ -68,6 +68,8 @@ public interface CPOptionService extends BaseService {
 		boolean required, boolean skuContributor, java.lang.String key,
 		ServiceContext serviceContext) throws PortalException;
 
+	public void deleteCPOption(long cpOptionId) throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPOption fetchCPOption(long cpOptionId) throws PortalException;
 
@@ -77,6 +79,31 @@ public interface CPOptionService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPOption getCPOption(long cpOptionId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPOption> getCPOptions(long groupId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPOption> getCPOptions(long groupId, int start, int end,
+		OrderByComparator<CPOption> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPOptionsCount(long groupId);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Hits search(SearchContext searchContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CPOption> searchCPOptions(long companyId,
+		long groupId, java.lang.String keywords, int start, int end, Sort sort)
+		throws PortalException;
 
 	public CPOption setFacetable(long cpOptionId, boolean facetable)
 		throws PortalException;
@@ -93,31 +120,4 @@ public interface CPOptionService extends BaseService {
 		java.lang.String ddmFormFieldTypeName, boolean facetable,
 		boolean required, boolean skuContributor, java.lang.String key,
 		ServiceContext serviceContext) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BaseModelSearchResult<CPOption> searchCPOptions(long companyId,
-		long groupId, java.lang.String keywords, int start, int end, Sort sort)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(SearchContext searchContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPOptionsCount(long groupId);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPOption> getCPOptions(long groupId, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPOption> getCPOptions(long groupId, int start, int end,
-		OrderByComparator<CPOption> orderByComparator);
-
-	public void deleteCPOption(long cpOptionId) throws PortalException;
 }

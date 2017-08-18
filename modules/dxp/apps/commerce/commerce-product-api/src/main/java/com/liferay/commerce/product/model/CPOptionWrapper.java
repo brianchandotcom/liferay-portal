@@ -180,13 +180,151 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	}
 
 	@Override
-	public CPOption toEscapedModel() {
-		return new CPOptionWrapper(_cpOption.toEscapedModel());
+	public java.lang.Object clone() {
+		return new CPOptionWrapper((CPOption)_cpOption.clone());
 	}
 
 	@Override
-	public CPOption toUnescapedModel() {
-		return new CPOptionWrapper(_cpOption.toUnescapedModel());
+	public int compareTo(CPOption cpOption) {
+		return _cpOption.compareTo(cpOption);
+	}
+
+	@Override
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _cpOption.getAvailableLanguageIds();
+	}
+
+	/**
+	* Returns the company ID of this cp option.
+	*
+	* @return the company ID of this cp option
+	*/
+	@Override
+	public long getCompanyId() {
+		return _cpOption.getCompanyId();
+	}
+
+	/**
+	* Returns the cp option ID of this cp option.
+	*
+	* @return the cp option ID of this cp option
+	*/
+	@Override
+	public long getCPOptionId() {
+		return _cpOption.getCPOptionId();
+	}
+
+	@Override
+	public java.util.List<CPOptionValue> getCPOptionValues() {
+		return _cpOption.getCPOptionValues();
+	}
+
+	/**
+	* Returns the create date of this cp option.
+	*
+	* @return the create date of this cp option
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _cpOption.getCreateDate();
+	}
+
+	/**
+	* Returns the ddm form field type name of this cp option.
+	*
+	* @return the ddm form field type name of this cp option
+	*/
+	@Override
+	public java.lang.String getDDMFormFieldTypeName() {
+		return _cpOption.getDDMFormFieldTypeName();
+	}
+
+	@Override
+	public java.lang.String getDefaultLanguageId() {
+		return _cpOption.getDefaultLanguageId();
+	}
+
+	/**
+	* Returns the description of this cp option.
+	*
+	* @return the description of this cp option
+	*/
+	@Override
+	public java.lang.String getDescription() {
+		return _cpOption.getDescription();
+	}
+
+	/**
+	* Returns the localized description of this cp option in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized description of this cp option
+	*/
+	@Override
+	public java.lang.String getDescription(java.util.Locale locale) {
+		return _cpOption.getDescription(locale);
+	}
+
+	/**
+	* Returns the localized description of this cp option in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this cp option. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getDescription(java.util.Locale locale,
+		boolean useDefault) {
+		return _cpOption.getDescription(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized description of this cp option in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized description of this cp option
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId) {
+		return _cpOption.getDescription(languageId);
+	}
+
+	/**
+	* Returns the localized description of this cp option in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this cp option
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId,
+		boolean useDefault) {
+		return _cpOption.getDescription(languageId, useDefault);
+	}
+
+	@Override
+	public java.lang.String getDescriptionCurrentLanguageId() {
+		return _cpOption.getDescriptionCurrentLanguageId();
+	}
+
+	@Override
+	public java.lang.String getDescriptionCurrentValue() {
+		return _cpOption.getDescriptionCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized descriptions of this cp option.
+	*
+	* @return the locales and localized descriptions of this cp option
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+		return _cpOption.getDescriptionMap();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _cpOption.getExpandoBridge();
 	}
 
 	/**
@@ -197,6 +335,61 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	@Override
 	public boolean getFacetable() {
 		return _cpOption.getFacetable();
+	}
+
+	/**
+	* Returns the group ID of this cp option.
+	*
+	* @return the group ID of this cp option
+	*/
+	@Override
+	public long getGroupId() {
+		return _cpOption.getGroupId();
+	}
+
+	/**
+	* Returns the key of this cp option.
+	*
+	* @return the key of this cp option
+	*/
+	@Override
+	public java.lang.String getKey() {
+		return _cpOption.getKey();
+	}
+
+	/**
+	* Returns the last publish date of this cp option.
+	*
+	* @return the last publish date of this cp option
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _cpOption.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this cp option.
+	*
+	* @return the modified date of this cp option
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _cpOption.getModifiedDate();
+	}
+
+	/**
+	* Returns the primary key of this cp option.
+	*
+	* @return the primary key of this cp option
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _cpOption.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _cpOption.getPrimaryKeyObj();
 	}
 
 	/**
@@ -217,6 +410,128 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	@Override
 	public boolean getSkuContributor() {
 		return _cpOption.getSkuContributor();
+	}
+
+	/**
+	* Returns the title of this cp option.
+	*
+	* @return the title of this cp option
+	*/
+	@Override
+	public java.lang.String getTitle() {
+		return _cpOption.getTitle();
+	}
+
+	/**
+	* Returns the localized title of this cp option in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized title of this cp option
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale) {
+		return _cpOption.getTitle(locale);
+	}
+
+	/**
+	* Returns the localized title of this cp option in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized title of this cp option. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
+		return _cpOption.getTitle(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized title of this cp option in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized title of this cp option
+	*/
+	@Override
+	public java.lang.String getTitle(java.lang.String languageId) {
+		return _cpOption.getTitle(languageId);
+	}
+
+	/**
+	* Returns the localized title of this cp option in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized title of this cp option
+	*/
+	@Override
+	public java.lang.String getTitle(java.lang.String languageId,
+		boolean useDefault) {
+		return _cpOption.getTitle(languageId, useDefault);
+	}
+
+	@Override
+	public java.lang.String getTitleCurrentLanguageId() {
+		return _cpOption.getTitleCurrentLanguageId();
+	}
+
+	@Override
+	public java.lang.String getTitleCurrentValue() {
+		return _cpOption.getTitleCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized titles of this cp option.
+	*
+	* @return the locales and localized titles of this cp option
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getTitleMap() {
+		return _cpOption.getTitleMap();
+	}
+
+	/**
+	* Returns the user ID of this cp option.
+	*
+	* @return the user ID of this cp option
+	*/
+	@Override
+	public long getUserId() {
+		return _cpOption.getUserId();
+	}
+
+	/**
+	* Returns the user name of this cp option.
+	*
+	* @return the user name of this cp option
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _cpOption.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this cp option.
+	*
+	* @return the user uuid of this cp option
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _cpOption.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this cp option.
+	*
+	* @return the uuid of this cp option
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _cpOption.getUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _cpOption.hashCode();
 	}
 
 	@Override
@@ -265,346 +580,6 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	}
 
 	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _cpOption.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CPOption> toCacheModel() {
-		return _cpOption.toCacheModel();
-	}
-
-	@Override
-	public int compareTo(CPOption cpOption) {
-		return _cpOption.compareTo(cpOption);
-	}
-
-	@Override
-	public int hashCode() {
-		return _cpOption.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _cpOption.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new CPOptionWrapper((CPOption)_cpOption.clone());
-	}
-
-	/**
-	* Returns the ddm form field type name of this cp option.
-	*
-	* @return the ddm form field type name of this cp option
-	*/
-	@Override
-	public java.lang.String getDDMFormFieldTypeName() {
-		return _cpOption.getDDMFormFieldTypeName();
-	}
-
-	@Override
-	public java.lang.String getDefaultLanguageId() {
-		return _cpOption.getDefaultLanguageId();
-	}
-
-	/**
-	* Returns the description of this cp option.
-	*
-	* @return the description of this cp option
-	*/
-	@Override
-	public java.lang.String getDescription() {
-		return _cpOption.getDescription();
-	}
-
-	/**
-	* Returns the localized description of this cp option in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @return the localized description of this cp option
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
-		return _cpOption.getDescription(languageId);
-	}
-
-	/**
-	* Returns the localized description of this cp option in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this cp option
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
-		return _cpOption.getDescription(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized description of this cp option in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized description of this cp option
-	*/
-	@Override
-	public java.lang.String getDescription(java.util.Locale locale) {
-		return _cpOption.getDescription(locale);
-	}
-
-	/**
-	* Returns the localized description of this cp option in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this cp option. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getDescription(java.util.Locale locale,
-		boolean useDefault) {
-		return _cpOption.getDescription(locale, useDefault);
-	}
-
-	@Override
-	public java.lang.String getDescriptionCurrentLanguageId() {
-		return _cpOption.getDescriptionCurrentLanguageId();
-	}
-
-	@Override
-	public java.lang.String getDescriptionCurrentValue() {
-		return _cpOption.getDescriptionCurrentValue();
-	}
-
-	/**
-	* Returns the key of this cp option.
-	*
-	* @return the key of this cp option
-	*/
-	@Override
-	public java.lang.String getKey() {
-		return _cpOption.getKey();
-	}
-
-	/**
-	* Returns the title of this cp option.
-	*
-	* @return the title of this cp option
-	*/
-	@Override
-	public java.lang.String getTitle() {
-		return _cpOption.getTitle();
-	}
-
-	/**
-	* Returns the localized title of this cp option in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @return the localized title of this cp option
-	*/
-	@Override
-	public java.lang.String getTitle(java.lang.String languageId) {
-		return _cpOption.getTitle(languageId);
-	}
-
-	/**
-	* Returns the localized title of this cp option in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized title of this cp option
-	*/
-	@Override
-	public java.lang.String getTitle(java.lang.String languageId,
-		boolean useDefault) {
-		return _cpOption.getTitle(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized title of this cp option in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized title of this cp option
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale) {
-		return _cpOption.getTitle(locale);
-	}
-
-	/**
-	* Returns the localized title of this cp option in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized title of this cp option. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
-		return _cpOption.getTitle(locale, useDefault);
-	}
-
-	@Override
-	public java.lang.String getTitleCurrentLanguageId() {
-		return _cpOption.getTitleCurrentLanguageId();
-	}
-
-	@Override
-	public java.lang.String getTitleCurrentValue() {
-		return _cpOption.getTitleCurrentValue();
-	}
-
-	/**
-	* Returns the user name of this cp option.
-	*
-	* @return the user name of this cp option
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _cpOption.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this cp option.
-	*
-	* @return the user uuid of this cp option
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _cpOption.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this cp option.
-	*
-	* @return the uuid of this cp option
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _cpOption.getUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _cpOption.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _cpOption.toXmlString();
-	}
-
-	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
-		return _cpOption.getAvailableLanguageIds();
-	}
-
-	/**
-	* Returns the create date of this cp option.
-	*
-	* @return the create date of this cp option
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _cpOption.getCreateDate();
-	}
-
-	/**
-	* Returns the last publish date of this cp option.
-	*
-	* @return the last publish date of this cp option
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _cpOption.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this cp option.
-	*
-	* @return the modified date of this cp option
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _cpOption.getModifiedDate();
-	}
-
-	@Override
-	public java.util.List<CPOptionValue> getCPOptionValues() {
-		return _cpOption.getCPOptionValues();
-	}
-
-	/**
-	* Returns a map of the locales and localized descriptions of this cp option.
-	*
-	* @return the locales and localized descriptions of this cp option
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
-		return _cpOption.getDescriptionMap();
-	}
-
-	/**
-	* Returns a map of the locales and localized titles of this cp option.
-	*
-	* @return the locales and localized titles of this cp option
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getTitleMap() {
-		return _cpOption.getTitleMap();
-	}
-
-	/**
-	* Returns the cp option ID of this cp option.
-	*
-	* @return the cp option ID of this cp option
-	*/
-	@Override
-	public long getCPOptionId() {
-		return _cpOption.getCPOptionId();
-	}
-
-	/**
-	* Returns the company ID of this cp option.
-	*
-	* @return the company ID of this cp option
-	*/
-	@Override
-	public long getCompanyId() {
-		return _cpOption.getCompanyId();
-	}
-
-	/**
-	* Returns the group ID of this cp option.
-	*
-	* @return the group ID of this cp option
-	*/
-	@Override
-	public long getGroupId() {
-		return _cpOption.getGroupId();
-	}
-
-	/**
-	* Returns the primary key of this cp option.
-	*
-	* @return the primary key of this cp option
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _cpOption.getPrimaryKey();
-	}
-
-	/**
-	* Returns the user ID of this cp option.
-	*
-	* @return the user ID of this cp option
-	*/
-	@Override
-	public long getUserId() {
-		return _cpOption.getUserId();
-	}
-
-	@Override
 	public void persist() {
 		_cpOption.persist();
 	}
@@ -622,16 +597,6 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 		_cpOption.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
-	/**
-	* Sets the cp option ID of this cp option.
-	*
-	* @param CPOptionId the cp option ID of this cp option
-	*/
-	@Override
-	public void setCPOptionId(long CPOptionId) {
-		_cpOption.setCPOptionId(CPOptionId);
-	}
-
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_cpOption.setCachedModel(cachedModel);
@@ -645,6 +610,16 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	@Override
 	public void setCompanyId(long companyId) {
 		_cpOption.setCompanyId(companyId);
+	}
+
+	/**
+	* Sets the cp option ID of this cp option.
+	*
+	* @param CPOptionId the cp option ID of this cp option
+	*/
+	@Override
+	public void setCPOptionId(long CPOptionId) {
+		_cpOption.setCPOptionId(CPOptionId);
 	}
 
 	/**
@@ -732,14 +707,14 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_cpOption.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_cpOption.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_cpOption.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -936,6 +911,31 @@ public class CPOptionWrapper implements CPOption, ModelWrapper<CPOption> {
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_cpOption.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<CPOption> toCacheModel() {
+		return _cpOption.toCacheModel();
+	}
+
+	@Override
+	public CPOption toEscapedModel() {
+		return new CPOptionWrapper(_cpOption.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _cpOption.toString();
+	}
+
+	@Override
+	public CPOption toUnescapedModel() {
+		return new CPOptionWrapper(_cpOption.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _cpOption.toXmlString();
 	}
 
 	@Override

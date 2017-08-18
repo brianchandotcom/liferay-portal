@@ -94,6 +94,8 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 	*/
 	public CommerceCurrency createCommerceCurrency(long commerceCurrencyId);
 
+	public void deleteCommerceCurrencies(long groupId);
+
 	/**
 	* Deletes the commerce currency from the database. Also notifies the appropriate model listeners.
 	*
@@ -116,75 +118,6 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 	public CommerceCurrency deleteCommerceCurrency(long commerceCurrencyId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCurrency fetchCommerceCurrency(long commerceCurrencyId);
-
-	/**
-	* Returns the commerce currency matching the UUID and group.
-	*
-	* @param uuid the commerce currency's UUID
-	* @param groupId the primary key of the group
-	* @return the matching commerce currency, or <code>null</code> if a matching commerce currency could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCurrency fetchCommerceCurrencyByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCurrency fetchPrimaryCommerceCurrency(long groupId);
-
-	/**
-	* Returns the commerce currency with the primary key.
-	*
-	* @param commerceCurrencyId the primary key of the commerce currency
-	* @return the commerce currency
-	* @throws PortalException if a commerce currency with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCurrency getCommerceCurrency(long commerceCurrencyId)
-		throws PortalException;
-
-	/**
-	* Returns the commerce currency matching the UUID and group.
-	*
-	* @param uuid the commerce currency's UUID
-	* @param groupId the primary key of the group
-	* @return the matching commerce currency
-	* @throws PortalException if a matching commerce currency could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceCurrency getCommerceCurrencyByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
-
-	/**
-	* Updates the commerce currency in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param commerceCurrency the commerce currency
-	* @return the commerce currency that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public CommerceCurrency updateCommerceCurrency(
-		CommerceCurrency commerceCurrency);
-
-	public CommerceCurrency updateCommerceCurrency(long commerceCurrencyId,
-		Map<Locale, java.lang.String> codeMap,
-		Map<Locale, java.lang.String> nameMap, double rate,
-		java.lang.String roundingType, boolean primary, double priority,
-		boolean active, ServiceContext serviceContext)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
 	/**
 	* @throws PortalException
 	*/
@@ -192,31 +125,7 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Returns the number of commerce currencies.
-	*
-	* @return the number of commerce currencies
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceCurrenciesCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceCurrenciesCount(long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceCurrenciesCount(long groupId, boolean active);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -256,6 +165,44 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCurrency fetchCommerceCurrency(long commerceCurrencyId);
+
+	/**
+	* Returns the commerce currency matching the UUID and group.
+	*
+	* @param uuid the commerce currency's UUID
+	* @param groupId the primary key of the group
+	* @return the matching commerce currency, or <code>null</code> if a matching commerce currency could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCurrency fetchCommerceCurrencyByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCurrency fetchPrimaryCommerceCurrency(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
 	* Returns a range of all the commerce currencies.
@@ -308,22 +255,75 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 		OrderByComparator<CommerceCurrency> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of commerce currencies.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of commerce currencies
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceCurrenciesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceCurrenciesCount(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceCurrenciesCount(long groupId, boolean active);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the commerce currency with the primary key.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param commerceCurrencyId the primary key of the commerce currency
+	* @return the commerce currency
+	* @throws PortalException if a commerce currency with the primary key could not be found
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCurrency getCommerceCurrency(long commerceCurrencyId)
+		throws PortalException;
 
-	public void deleteCommerceCurrencies(long groupId);
+	/**
+	* Returns the commerce currency matching the UUID and group.
+	*
+	* @param uuid the commerce currency's UUID
+	* @param groupId the primary key of the group
+	* @return the matching commerce currency
+	* @throws PortalException if a matching commerce currency could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCurrency getCommerceCurrencyByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Updates the commerce currency in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param commerceCurrency the commerce currency
+	* @return the commerce currency that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceCurrency updateCommerceCurrency(
+		CommerceCurrency commerceCurrency);
+
+	public CommerceCurrency updateCommerceCurrency(long commerceCurrencyId,
+		Map<Locale, java.lang.String> codeMap,
+		Map<Locale, java.lang.String> nameMap, double rate,
+		java.lang.String roundingType, boolean primary, double priority,
+		boolean active, ServiceContext serviceContext)
+		throws PortalException;
 }

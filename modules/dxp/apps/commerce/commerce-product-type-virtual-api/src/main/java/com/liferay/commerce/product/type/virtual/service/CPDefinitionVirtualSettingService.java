@@ -69,6 +69,13 @@ public interface CPDefinitionVirtualSettingService extends BaseService {
 	public CPDefinitionVirtualSetting fetchCPDefinitionVirtualSettingByCPDefinitionId(
 		long cpDefinitionId) throws PortalException;
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
 	public CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
 		long cpDefinitionVirtualSettingId, long fileEntryId,
 		java.lang.String url, java.lang.String activationStatus, long duration,
@@ -77,11 +84,4 @@ public interface CPDefinitionVirtualSettingService extends BaseService {
 		Map<Locale, java.lang.String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePrimKey,
 		ServiceContext serviceContext) throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
 }

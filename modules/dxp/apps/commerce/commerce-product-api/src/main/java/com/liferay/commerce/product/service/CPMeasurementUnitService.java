@@ -63,6 +63,9 @@ public interface CPMeasurementUnitService extends BaseService {
 		double rate, boolean primary, double priority, int type,
 		ServiceContext serviceContext) throws PortalException;
 
+	public void deleteCPMeasurementUnit(long cpMeasurementUnitId)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPMeasurementUnit fetchPrimaryCPMeasurementUnit(long groupId,
 		int type);
@@ -71,10 +74,10 @@ public interface CPMeasurementUnitService extends BaseService {
 	public CPMeasurementUnit getCPMeasurementUnit(long cpMeasurementUnitId)
 		throws PortalException;
 
-	public CPMeasurementUnit updateCPMeasurementUnit(long cpMeasurementUnitId,
-		Map<Locale, java.lang.String> nameMap, java.lang.String key,
-		double rate, boolean primary, double priority, int type,
-		ServiceContext serviceContext) throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPMeasurementUnit> getCPMeasurementUnits(long groupId,
+		int type, int start, int end,
+		OrderByComparator<CPMeasurementUnit> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPMeasurementUnitsCount(long groupId, int type);
@@ -86,11 +89,8 @@ public interface CPMeasurementUnitService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPMeasurementUnit> getCPMeasurementUnits(long groupId,
-		int type, int start, int end,
-		OrderByComparator<CPMeasurementUnit> orderByComparator);
-
-	public void deleteCPMeasurementUnit(long cpMeasurementUnitId)
-		throws PortalException;
+	public CPMeasurementUnit updateCPMeasurementUnit(long cpMeasurementUnitId,
+		Map<Locale, java.lang.String> nameMap, java.lang.String key,
+		double rate, boolean primary, double priority, int type,
+		ServiceContext serviceContext) throws PortalException;
 }

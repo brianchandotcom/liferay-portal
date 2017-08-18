@@ -166,19 +166,13 @@ public class CommerceRegionWrapper implements CommerceRegion,
 	}
 
 	@Override
-	public CommerceCountry getCommerceCountry()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceRegion.getCommerceCountry();
+	public java.lang.Object clone() {
+		return new CommerceRegionWrapper((CommerceRegion)_commerceRegion.clone());
 	}
 
 	@Override
-	public CommerceRegion toEscapedModel() {
-		return new CommerceRegionWrapper(_commerceRegion.toEscapedModel());
-	}
-
-	@Override
-	public CommerceRegion toUnescapedModel() {
-		return new CommerceRegionWrapper(_commerceRegion.toUnescapedModel());
+	public int compareTo(CommerceRegion commerceRegion) {
+		return _commerceRegion.compareTo(commerceRegion);
 	}
 
 	/**
@@ -192,71 +186,6 @@ public class CommerceRegionWrapper implements CommerceRegion,
 	}
 
 	/**
-	* Returns <code>true</code> if this commerce region is active.
-	*
-	* @return <code>true</code> if this commerce region is active; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isActive() {
-		return _commerceRegion.isActive();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _commerceRegion.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _commerceRegion.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _commerceRegion.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _commerceRegion.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CommerceRegion> toCacheModel() {
-		return _commerceRegion.toCacheModel();
-	}
-
-	/**
-	* Returns the priority of this commerce region.
-	*
-	* @return the priority of this commerce region
-	*/
-	@Override
-	public double getPriority() {
-		return _commerceRegion.getPriority();
-	}
-
-	@Override
-	public int compareTo(CommerceRegion commerceRegion) {
-		return _commerceRegion.compareTo(commerceRegion);
-	}
-
-	@Override
-	public int hashCode() {
-		return _commerceRegion.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _commerceRegion.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new CommerceRegionWrapper((CommerceRegion)_commerceRegion.clone());
-	}
-
-	/**
 	* Returns the code of this commerce region.
 	*
 	* @return the code of this commerce region
@@ -266,84 +195,10 @@ public class CommerceRegionWrapper implements CommerceRegion,
 		return _commerceRegion.getCode();
 	}
 
-	/**
-	* Returns the name of this commerce region.
-	*
-	* @return the name of this commerce region
-	*/
 	@Override
-	public java.lang.String getName() {
-		return _commerceRegion.getName();
-	}
-
-	/**
-	* Returns the user name of this commerce region.
-	*
-	* @return the user name of this commerce region
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _commerceRegion.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this commerce region.
-	*
-	* @return the user uuid of this commerce region
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _commerceRegion.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this commerce region.
-	*
-	* @return the uuid of this commerce region
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _commerceRegion.getUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _commerceRegion.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _commerceRegion.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this commerce region.
-	*
-	* @return the create date of this commerce region
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _commerceRegion.getCreateDate();
-	}
-
-	/**
-	* Returns the last publish date of this commerce region.
-	*
-	* @return the last publish date of this commerce region
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _commerceRegion.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this commerce region.
-	*
-	* @return the modified date of this commerce region
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _commerceRegion.getModifiedDate();
+	public CommerceCountry getCommerceCountry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceRegion.getCommerceCountry();
 	}
 
 	/**
@@ -377,6 +232,21 @@ public class CommerceRegionWrapper implements CommerceRegion,
 	}
 
 	/**
+	* Returns the create date of this commerce region.
+	*
+	* @return the create date of this commerce region
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _commerceRegion.getCreateDate();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _commerceRegion.getExpandoBridge();
+	}
+
+	/**
 	* Returns the group ID of this commerce region.
 	*
 	* @return the group ID of this commerce region
@@ -384,6 +254,36 @@ public class CommerceRegionWrapper implements CommerceRegion,
 	@Override
 	public long getGroupId() {
 		return _commerceRegion.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this commerce region.
+	*
+	* @return the last publish date of this commerce region
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _commerceRegion.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this commerce region.
+	*
+	* @return the modified date of this commerce region
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _commerceRegion.getModifiedDate();
+	}
+
+	/**
+	* Returns the name of this commerce region.
+	*
+	* @return the name of this commerce region
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _commerceRegion.getName();
 	}
 
 	/**
@@ -396,6 +296,21 @@ public class CommerceRegionWrapper implements CommerceRegion,
 		return _commerceRegion.getPrimaryKey();
 	}
 
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _commerceRegion.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the priority of this commerce region.
+	*
+	* @return the priority of this commerce region
+	*/
+	@Override
+	public double getPriority() {
+		return _commerceRegion.getPriority();
+	}
+
 	/**
 	* Returns the user ID of this commerce region.
 	*
@@ -404,6 +319,66 @@ public class CommerceRegionWrapper implements CommerceRegion,
 	@Override
 	public long getUserId() {
 		return _commerceRegion.getUserId();
+	}
+
+	/**
+	* Returns the user name of this commerce region.
+	*
+	* @return the user name of this commerce region
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _commerceRegion.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this commerce region.
+	*
+	* @return the user uuid of this commerce region
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _commerceRegion.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this commerce region.
+	*
+	* @return the uuid of this commerce region
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _commerceRegion.getUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _commerceRegion.hashCode();
+	}
+
+	/**
+	* Returns <code>true</code> if this commerce region is active.
+	*
+	* @return <code>true</code> if this commerce region is active; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isActive() {
+		return _commerceRegion.isActive();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _commerceRegion.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _commerceRegion.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _commerceRegion.isNew();
 	}
 
 	@Override
@@ -477,14 +452,14 @@ public class CommerceRegionWrapper implements CommerceRegion,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_commerceRegion.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_commerceRegion.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_commerceRegion.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -600,6 +575,31 @@ public class CommerceRegionWrapper implements CommerceRegion,
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_commerceRegion.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<CommerceRegion> toCacheModel() {
+		return _commerceRegion.toCacheModel();
+	}
+
+	@Override
+	public CommerceRegion toEscapedModel() {
+		return new CommerceRegionWrapper(_commerceRegion.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _commerceRegion.toString();
+	}
+
+	@Override
+	public CommerceRegion toUnescapedModel() {
+		return new CommerceRegionWrapper(_commerceRegion.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _commerceRegion.toXmlString();
 	}
 
 	@Override

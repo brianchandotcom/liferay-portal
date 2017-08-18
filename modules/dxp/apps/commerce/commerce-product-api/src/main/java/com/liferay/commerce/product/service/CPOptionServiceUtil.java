@@ -53,6 +53,11 @@ public class CPOptionServiceUtil {
 			facetable, required, skuContributor, key, serviceContext);
 	}
 
+	public static void deleteCPOption(long cpOptionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCPOption(cpOptionId);
+	}
+
 	public static com.liferay.commerce.product.model.CPOption fetchCPOption(
 		long cpOptionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -69,6 +74,44 @@ public class CPOptionServiceUtil {
 		long cpOptionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCPOption(cpOptionId);
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CPOption> getCPOptions(
+		long groupId, int start, int end) {
+		return getService().getCPOptions(groupId, start, end);
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CPOption> getCPOptions(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPOption> orderByComparator) {
+		return getService().getCPOptions(groupId, start, end, orderByComparator);
+	}
+
+	public static int getCPOptionsCount(long groupId) {
+		return getService().getCPOptionsCount(groupId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.search.Hits search(
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return getService().search(searchContext);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPOption> searchCPOptions(
+		long companyId, long groupId, java.lang.String keywords, int start,
+		int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchCPOptions(companyId, groupId, keywords, start, end,
+			sort);
 	}
 
 	public static com.liferay.commerce.product.model.CPOption setFacetable(
@@ -101,49 +144,6 @@ public class CPOptionServiceUtil {
 				   .updateCPOption(cpOptionId, titleMap, descriptionMap,
 			ddmFormFieldTypeName, facetable, required, skuContributor, key,
 			serviceContext);
-	}
-
-	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPOption> searchCPOptions(
-		long companyId, long groupId, java.lang.String keywords, int start,
-		int end, com.liferay.portal.kernel.search.Sort sort)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .searchCPOptions(companyId, groupId, keywords, start, end,
-			sort);
-	}
-
-	public static com.liferay.portal.kernel.search.Hits search(
-		com.liferay.portal.kernel.search.SearchContext searchContext) {
-		return getService().search(searchContext);
-	}
-
-	public static int getCPOptionsCount(long groupId) {
-		return getService().getCPOptionsCount(groupId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static java.util.List<com.liferay.commerce.product.model.CPOption> getCPOptions(
-		long groupId, int start, int end) {
-		return getService().getCPOptions(groupId, start, end);
-	}
-
-	public static java.util.List<com.liferay.commerce.product.model.CPOption> getCPOptions(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPOption> orderByComparator) {
-		return getService().getCPOptions(groupId, start, end, orderByComparator);
-	}
-
-	public static void deleteCPOption(long cpOptionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteCPOption(cpOptionId);
 	}
 
 	public static CPOptionService getService() {

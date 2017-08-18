@@ -108,67 +108,7 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 	public CPDefinitionLink deleteCPDefinitionLink(long CPDefinitionLinkId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDefinitionLink fetchCPDefinitionLink(long CPDefinitionLinkId);
-
-	/**
-	* Returns the cp definition link matching the UUID and group.
-	*
-	* @param uuid the cp definition link's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDefinitionLink fetchCPDefinitionLinkByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	/**
-	* Returns the cp definition link with the primary key.
-	*
-	* @param CPDefinitionLinkId the primary key of the cp definition link
-	* @return the cp definition link
-	* @throws PortalException if a cp definition link with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDefinitionLink getCPDefinitionLink(long CPDefinitionLinkId)
-		throws PortalException;
-
-	/**
-	* Returns the cp definition link matching the UUID and group.
-	*
-	* @param uuid the cp definition link's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp definition link
-	* @throws PortalException if a matching cp definition link could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDefinitionLink getCPDefinitionLinkByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
-
-	/**
-	* Updates the cp definition link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param cpDefinitionLink the cp definition link
-	* @return the cp definition link that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public CPDefinitionLink updateCPDefinitionLink(
-		CPDefinitionLink cpDefinitionLink);
-
-	public CPDefinitionLink updateCPDefinitionLink(long cpDefinitionLinkId,
-		double priority) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public void deleteCPDefinitionLinks(long cpDefinitionId);
 
 	/**
 	* @throws PortalException
@@ -177,29 +117,7 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Returns the number of cp definition links.
-	*
-	* @return the number of cp definition links
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPDefinitionLinksCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPDefinitionLinksCount(long cpDefinitionId1, int type)
-		throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -239,6 +157,64 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionLink fetchCPDefinitionLink(long CPDefinitionLinkId);
+
+	/**
+	* Returns the cp definition link matching the UUID and group.
+	*
+	* @param uuid the cp definition link's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionLink fetchCPDefinitionLinkByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* Returns the cp definition link with the primary key.
+	*
+	* @param CPDefinitionLinkId the primary key of the cp definition link
+	* @return the cp definition link
+	* @throws PortalException if a cp definition link with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionLink getCPDefinitionLink(long CPDefinitionLinkId)
+		throws PortalException;
+
+	/**
+	* Returns the cp definition link matching the UUID and group.
+	*
+	* @param uuid the cp definition link's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp definition link
+	* @throws PortalException if a matching cp definition link could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionLink getCPDefinitionLinkByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the cp definition links.
@@ -291,24 +267,48 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 		OrderByComparator<CPDefinitionLink> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of cp definition links.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of cp definition links
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPDefinitionLinksCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPDefinitionLinksCount(long cpDefinitionId1, int type)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public java.lang.String getOSGiServiceIdentifier();
 
-	public void deleteCPDefinitionLinks(long cpDefinitionId);
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Updates the cp definition link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param cpDefinitionLink the cp definition link
+	* @return the cp definition link that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public CPDefinitionLink updateCPDefinitionLink(
+		CPDefinitionLink cpDefinitionLink);
+
+	public CPDefinitionLink updateCPDefinitionLink(long cpDefinitionLinkId,
+		double priority) throws PortalException;
 
 	public void updateCPDefinitionLinks(long cpDefinitionId1,
 		long[] cpDefinitionIds2, int type, ServiceContext serviceContext)

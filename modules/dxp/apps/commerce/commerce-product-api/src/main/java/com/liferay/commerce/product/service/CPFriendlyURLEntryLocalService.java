@@ -65,6 +65,9 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPFriendlyURLEntryLocalServiceUtil} to access the cp friendly url entry local service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPFriendlyURLEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public void addCPFriendlyURLEntries(long groupId, long companyId,
+		java.lang.Class<?> clazz, long classPK,
+		Map<Locale, java.lang.String> urlTitleMap) throws PortalException;
 
 	/**
 	* Adds the cp friendly url entry to the database. Also notifies the appropriate model listeners.
@@ -76,6 +79,10 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	public CPFriendlyURLEntry addCPFriendlyURLEntry(
 		CPFriendlyURLEntry cpFriendlyURLEntry);
 
+	public java.lang.String buildUrlTitle(long groupId, long companyId,
+		long classNameId, long classPK, java.lang.String languageId,
+		java.lang.String title) throws PortalException;
+
 	/**
 	* Creates a new cp friendly url entry with the primary key. Does not add the cp friendly url entry to the database.
 	*
@@ -84,6 +91,9 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	*/
 	public CPFriendlyURLEntry createCPFriendlyURLEntry(
 		long CPFriendlyURLEntryId);
+
+	public void deleteCPFriendlyURLEntries(long groupId, long companyId,
+		java.lang.Class<?> clazz, long classPK);
 
 	/**
 	* Deletes the cp friendly url entry from the database. Also notifies the appropriate model listeners.
@@ -106,75 +116,6 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	public CPFriendlyURLEntry deleteCPFriendlyURLEntry(
 		long CPFriendlyURLEntryId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPFriendlyURLEntry fetchCPFriendlyURLEntry(long CPFriendlyURLEntryId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPFriendlyURLEntry fetchCPFriendlyURLEntry(long groupId,
-		long companyId, long classNameId, long classPK,
-		java.lang.String languageId, boolean main) throws PortalException;
-
-	/**
-	* Returns the cp friendly url entry matching the UUID and group.
-	*
-	* @param uuid the cp friendly url entry's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPFriendlyURLEntry fetchCPFriendlyURLEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	/**
-	* Returns the cp friendly url entry with the primary key.
-	*
-	* @param CPFriendlyURLEntryId the primary key of the cp friendly url entry
-	* @return the cp friendly url entry
-	* @throws PortalException if a cp friendly url entry with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPFriendlyURLEntry getCPFriendlyURLEntry(long CPFriendlyURLEntryId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPFriendlyURLEntry getCPFriendlyURLEntry(long groupId,
-		long companyId, long classNameId, java.lang.String languageId,
-		java.lang.String urlTitle) throws PortalException;
-
-	/**
-	* Returns the cp friendly url entry matching the UUID and group.
-	*
-	* @param uuid the cp friendly url entry's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp friendly url entry
-	* @throws PortalException if a matching cp friendly url entry could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPFriendlyURLEntry getCPFriendlyURLEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
-
-	/**
-	* Updates the cp friendly url entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param cpFriendlyURLEntry the cp friendly url entry
-	* @return the cp friendly url entry that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public CPFriendlyURLEntry updateCPFriendlyURLEntry(
-		CPFriendlyURLEntry cpFriendlyURLEntry);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
 	/**
 	* @throws PortalException
 	*/
@@ -182,33 +123,7 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Returns the number of cp friendly url entries.
-	*
-	* @return the number of cp friendly url entries
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPFriendlyURLEntriesCount();
-
-	public java.lang.String buildUrlTitle(long groupId, long companyId,
-		long classNameId, long classPK, java.lang.String languageId,
-		java.lang.String title) throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getUrlTitleMapAsXML(long groupId, long companyId,
-		long classNameId, long classPK, java.lang.String defaultLanguageId);
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -248,6 +163,46 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPFriendlyURLEntry fetchCPFriendlyURLEntry(long CPFriendlyURLEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPFriendlyURLEntry fetchCPFriendlyURLEntry(long groupId,
+		long companyId, long classNameId, long classPK,
+		java.lang.String languageId, boolean main) throws PortalException;
+
+	/**
+	* Returns the cp friendly url entry matching the UUID and group.
+	*
+	* @param uuid the cp friendly url entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPFriendlyURLEntry fetchCPFriendlyURLEntryByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
 	* Returns a range of all the cp friendly url entries.
@@ -293,36 +248,80 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 		java.lang.String uuid, long companyId, int start, int end,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator);
 
+	/**
+	* Returns the number of cp friendly url entries.
+	*
+	* @return the number of cp friendly url entries
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPFriendlyURLEntriesCount();
+
+	/**
+	* Returns the cp friendly url entry with the primary key.
+	*
+	* @param CPFriendlyURLEntryId the primary key of the cp friendly url entry
+	* @return the cp friendly url entry
+	* @throws PortalException if a cp friendly url entry with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPFriendlyURLEntry getCPFriendlyURLEntry(long CPFriendlyURLEntryId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPFriendlyURLEntry getCPFriendlyURLEntry(long groupId,
+		long companyId, long classNameId, java.lang.String languageId,
+		java.lang.String urlTitle) throws PortalException;
+
+	/**
+	* Returns the cp friendly url entry matching the UUID and group.
+	*
+	* @param uuid the cp friendly url entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp friendly url entry
+	* @throws PortalException if a matching cp friendly url entry could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPFriendlyURLEntry getCPFriendlyURLEntryByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Map<java.lang.String, java.lang.String> getLanguageIdToUrlTitleMap(
 		long groupId, long companyId, long classNameId, long classPK);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Map<Locale, java.lang.String> getUrlTitleMap(long groupId,
 		long companyId, long classNameId, long classPK);
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getUrlTitleMapAsXML(long groupId, long companyId,
+		long classNameId, long classPK, java.lang.String defaultLanguageId);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Updates the cp friendly url entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param cpFriendlyURLEntry the cp friendly url entry
+	* @return the cp friendly url entry that was updated
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	public void addCPFriendlyURLEntries(long groupId, long companyId,
-		java.lang.Class<?> clazz, long classPK,
-		Map<Locale, java.lang.String> urlTitleMap) throws PortalException;
-
-	public void deleteCPFriendlyURLEntries(long groupId, long companyId,
-		java.lang.Class<?> clazz, long classPK);
+	@Indexable(type = IndexableType.REINDEX)
+	public CPFriendlyURLEntry updateCPFriendlyURLEntry(
+		CPFriendlyURLEntry cpFriendlyURLEntry);
 }

@@ -64,15 +64,17 @@ public interface CPSpecificationOptionService extends BaseService {
 		java.lang.String key, ServiceContext serviceContext)
 		throws PortalException;
 
+	public void deleteCPSpecificationOption(long cpSpecificationOptionId)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPSpecificationOption getCPSpecificationOption(
 		long cpSpecificationOptionId) throws PortalException;
 
-	public CPSpecificationOption updateCPSpecificationOption(
-		long cpSpecificationOptionId, long cpOptionCategoryId,
-		Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> descriptionMap, boolean facetable,
-		java.lang.String key, ServiceContext serviceContext)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPSpecificationOption> getCPSpecificationOptions(long groupId,
+		int start, int end,
+		OrderByComparator<CPSpecificationOption> orderByComparator)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -85,12 +87,10 @@ public interface CPSpecificationOptionService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPSpecificationOption> getCPSpecificationOptions(long groupId,
-		int start, int end,
-		OrderByComparator<CPSpecificationOption> orderByComparator)
-		throws PortalException;
-
-	public void deleteCPSpecificationOption(long cpSpecificationOptionId)
+	public CPSpecificationOption updateCPSpecificationOption(
+		long cpSpecificationOptionId, long cpOptionCategoryId,
+		Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> descriptionMap, boolean facetable,
+		java.lang.String key, ServiceContext serviceContext)
 		throws PortalException;
 }

@@ -76,30 +76,18 @@ public class CPOptionValueServiceUtil {
 		return getService().getCPOptionValue(cpOptionValueId);
 	}
 
-	public static com.liferay.commerce.product.model.CPOptionValue updateCPOptionValue(
-		long cpOptionValueId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		double priority, java.lang.String key,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static java.util.List<com.liferay.commerce.product.model.CPOptionValue> getCPOptionValues(
+		long cpOptionId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateCPOptionValue(cpOptionValueId, titleMap, priority,
-			key, serviceContext);
+		return getService().getCPOptionValues(cpOptionId, start, end);
 	}
 
-	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPOptionValue> searchCPOptionValues(
-		long companyId, long groupId, long cpOptionId,
-		java.lang.String keywords, int start, int end,
-		com.liferay.portal.kernel.search.Sort sort)
+	public static java.util.List<com.liferay.commerce.product.model.CPOptionValue> getCPOptionValues(
+		long cpOptionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPOptionValue> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .searchCPOptionValues(companyId, groupId, cpOptionId,
-			keywords, start, end, sort);
-	}
-
-	public static com.liferay.portal.kernel.search.Hits search(
-		com.liferay.portal.kernel.search.SearchContext searchContext) {
-		return getService().search(searchContext);
+				   .getCPOptionValues(cpOptionId, start, end, orderByComparator);
 	}
 
 	public static int getCPOptionValuesCount(long cpOptionId)
@@ -116,18 +104,30 @@ public class CPOptionValueServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List<com.liferay.commerce.product.model.CPOptionValue> getCPOptionValues(
-		long cpOptionId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCPOptionValues(cpOptionId, start, end);
+	public static com.liferay.portal.kernel.search.Hits search(
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return getService().search(searchContext);
 	}
 
-	public static java.util.List<com.liferay.commerce.product.model.CPOptionValue> getCPOptionValues(
-		long cpOptionId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPOptionValue> orderByComparator)
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPOptionValue> searchCPOptionValues(
+		long companyId, long groupId, long cpOptionId,
+		java.lang.String keywords, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .getCPOptionValues(cpOptionId, start, end, orderByComparator);
+				   .searchCPOptionValues(companyId, groupId, cpOptionId,
+			keywords, start, end, sort);
+	}
+
+	public static com.liferay.commerce.product.model.CPOptionValue updateCPOptionValue(
+		long cpOptionValueId,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		double priority, java.lang.String key,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCPOptionValue(cpOptionValueId, titleMap, priority,
+			key, serviceContext);
 	}
 
 	public static CPOptionValueService getService() {

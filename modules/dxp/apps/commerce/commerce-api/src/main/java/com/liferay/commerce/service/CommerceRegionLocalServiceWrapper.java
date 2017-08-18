@@ -95,96 +95,8 @@ public class CommerceRegionLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.model.CommerceRegion fetchCommerceRegion(
-		long commerceRegionId) {
-		return _commerceRegionLocalService.fetchCommerceRegion(commerceRegionId);
-	}
-
-	/**
-	* Returns the commerce region matching the UUID and group.
-	*
-	* @param uuid the commerce region's UUID
-	* @param groupId the primary key of the group
-	* @return the matching commerce region, or <code>null</code> if a matching commerce region could not be found
-	*/
-	@Override
-	public com.liferay.commerce.model.CommerceRegion fetchCommerceRegionByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return _commerceRegionLocalService.fetchCommerceRegionByUuidAndGroupId(uuid,
-			groupId);
-	}
-
-	/**
-	* Returns the commerce region with the primary key.
-	*
-	* @param commerceRegionId the primary key of the commerce region
-	* @return the commerce region
-	* @throws PortalException if a commerce region with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.commerce.model.CommerceRegion getCommerceRegion(
-		long commerceRegionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceRegionLocalService.getCommerceRegion(commerceRegionId);
-	}
-
-	/**
-	* Returns the commerce region matching the UUID and group.
-	*
-	* @param uuid the commerce region's UUID
-	* @param groupId the primary key of the group
-	* @return the matching commerce region
-	* @throws PortalException if a matching commerce region could not be found
-	*/
-	@Override
-	public com.liferay.commerce.model.CommerceRegion getCommerceRegionByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceRegionLocalService.getCommerceRegionByUuidAndGroupId(uuid,
-			groupId);
-	}
-
-	/**
-	* Updates the commerce region in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param commerceRegion the commerce region
-	* @return the commerce region that was updated
-	*/
-	@Override
-	public com.liferay.commerce.model.CommerceRegion updateCommerceRegion(
-		com.liferay.commerce.model.CommerceRegion commerceRegion) {
-		return _commerceRegionLocalService.updateCommerceRegion(commerceRegion);
-	}
-
-	@Override
-	public com.liferay.commerce.model.CommerceRegion updateCommerceRegion(
-		long commerceRegionId, java.lang.String name, java.lang.String code,
-		double priority, boolean active,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceRegionLocalService.updateCommerceRegion(commerceRegionId,
-			name, code, priority, active, serviceContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _commerceRegionLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _commerceRegionLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return _commerceRegionLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _commerceRegionLocalService.getIndexableActionableDynamicQuery();
+	public void deleteCommerceRegions(long commerceCountryId) {
+		_commerceRegionLocalService.deleteCommerceRegions(commerceCountryId);
 	}
 
 	/**
@@ -198,41 +110,8 @@ public class CommerceRegionLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceRegionLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the number of commerce regions.
-	*
-	* @return the number of commerce regions
-	*/
-	@Override
-	public int getCommerceRegionsCount() {
-		return _commerceRegionLocalService.getCommerceRegionsCount();
-	}
-
-	@Override
-	public int getCommerceRegionsCount(long commerceCountryId) {
-		return _commerceRegionLocalService.getCommerceRegionsCount(commerceCountryId);
-	}
-
-	@Override
-	public int getCommerceRegionsCount(long commerceCountryId, boolean active) {
-		return _commerceRegionLocalService.getCommerceRegionsCount(commerceCountryId,
-			active);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _commerceRegionLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _commerceRegionLocalService.dynamicQuery();
 	}
 
 	/**
@@ -286,6 +165,88 @@ public class CommerceRegionLocalServiceWrapper
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _commerceRegionLocalService.dynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _commerceRegionLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _commerceRegionLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceRegion fetchCommerceRegion(
+		long commerceRegionId) {
+		return _commerceRegionLocalService.fetchCommerceRegion(commerceRegionId);
+	}
+
+	/**
+	* Returns the commerce region matching the UUID and group.
+	*
+	* @param uuid the commerce region's UUID
+	* @param groupId the primary key of the group
+	* @return the matching commerce region, or <code>null</code> if a matching commerce region could not be found
+	*/
+	@Override
+	public com.liferay.commerce.model.CommerceRegion fetchCommerceRegionByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return _commerceRegionLocalService.fetchCommerceRegionByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _commerceRegionLocalService.getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the commerce region with the primary key.
+	*
+	* @param commerceRegionId the primary key of the commerce region
+	* @return the commerce region
+	* @throws PortalException if a commerce region with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.commerce.model.CommerceRegion getCommerceRegion(
+		long commerceRegionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceRegionLocalService.getCommerceRegion(commerceRegionId);
+	}
+
+	/**
+	* Returns the commerce region matching the UUID and group.
+	*
+	* @param uuid the commerce region's UUID
+	* @param groupId the primary key of the group
+	* @return the matching commerce region
+	* @throws PortalException if a matching commerce region could not be found
+	*/
+	@Override
+	public com.liferay.commerce.model.CommerceRegion getCommerceRegionByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceRegionLocalService.getCommerceRegionByUuidAndGroupId(uuid,
+			groupId);
 	}
 
 	/**
@@ -354,35 +315,74 @@ public class CommerceRegionLocalServiceWrapper
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of commerce regions.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of commerce regions
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _commerceRegionLocalService.dynamicQueryCount(dynamicQuery);
+	public int getCommerceRegionsCount() {
+		return _commerceRegionLocalService.getCommerceRegionsCount();
+	}
+
+	@Override
+	public int getCommerceRegionsCount(long commerceCountryId) {
+		return _commerceRegionLocalService.getCommerceRegionsCount(commerceCountryId);
+	}
+
+	@Override
+	public int getCommerceRegionsCount(long commerceCountryId, boolean active) {
+		return _commerceRegionLocalService.getCommerceRegionsCount(commerceCountryId,
+			active);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _commerceRegionLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _commerceRegionLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _commerceRegionLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _commerceRegionLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
-	public void deleteCommerceRegions(long commerceCountryId) {
-		_commerceRegionLocalService.deleteCommerceRegions(commerceCountryId);
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceRegionLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the commerce region in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param commerceRegion the commerce region
+	* @return the commerce region that was updated
+	*/
+	@Override
+	public com.liferay.commerce.model.CommerceRegion updateCommerceRegion(
+		com.liferay.commerce.model.CommerceRegion commerceRegion) {
+		return _commerceRegionLocalService.updateCommerceRegion(commerceRegion);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceRegion updateCommerceRegion(
+		long commerceRegionId, java.lang.String name, java.lang.String code,
+		double priority, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceRegionLocalService.updateCommerceRegion(commerceRegionId,
+			name, code, priority, active, serviceContext);
 	}
 
 	@Override

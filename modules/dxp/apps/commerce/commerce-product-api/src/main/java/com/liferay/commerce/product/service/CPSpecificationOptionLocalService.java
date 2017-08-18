@@ -117,76 +117,8 @@ public interface CPSpecificationOptionLocalService extends BaseLocalService,
 	public CPSpecificationOption deleteCPSpecificationOption(
 		long CPSpecificationOptionId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPSpecificationOption fetchCPSpecificationOption(
-		long CPSpecificationOptionId);
-
-	/**
-	* Returns the cp specification option matching the UUID and group.
-	*
-	* @param uuid the cp specification option's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp specification option, or <code>null</code> if a matching cp specification option could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPSpecificationOption fetchCPSpecificationOptionByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	/**
-	* Returns the cp specification option with the primary key.
-	*
-	* @param CPSpecificationOptionId the primary key of the cp specification option
-	* @return the cp specification option
-	* @throws PortalException if a cp specification option with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPSpecificationOption getCPSpecificationOption(
-		long CPSpecificationOptionId) throws PortalException;
-
-	/**
-	* Returns the cp specification option matching the UUID and group.
-	*
-	* @param uuid the cp specification option's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp specification option
-	* @throws PortalException if a matching cp specification option could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPSpecificationOption getCPSpecificationOptionByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
-
-	public CPSpecificationOption updateCPOptionCategoryId(
-		long cpSpecificationOptionId, long cpOptionCategoryId)
+	public void deleteCPSpecificationOptions(long groupId)
 		throws PortalException;
-
-	/**
-	* Updates the cp specification option in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param cpSpecificationOption the cp specification option
-	* @return the cp specification option that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public CPSpecificationOption updateCPSpecificationOption(
-		CPSpecificationOption cpSpecificationOption);
-
-	public CPSpecificationOption updateCPSpecificationOption(
-		long cpSpecificationOptionId, long cpOptionCategoryId,
-		Map<Locale, java.lang.String> titleMap,
-		Map<Locale, java.lang.String> descriptionMap, boolean facetable,
-		java.lang.String key, ServiceContext serviceContext)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* @throws PortalException
@@ -195,25 +127,7 @@ public interface CPSpecificationOptionLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Returns the number of cp specification options.
-	*
-	* @return the number of cp specification options
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPSpecificationOptionsCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -253,6 +167,65 @@ public interface CPSpecificationOptionLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPSpecificationOption fetchCPSpecificationOption(
+		long CPSpecificationOptionId);
+
+	/**
+	* Returns the cp specification option matching the UUID and group.
+	*
+	* @param uuid the cp specification option's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp specification option, or <code>null</code> if a matching cp specification option could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPSpecificationOption fetchCPSpecificationOptionByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* Returns the cp specification option with the primary key.
+	*
+	* @param CPSpecificationOptionId the primary key of the cp specification option
+	* @return the cp specification option
+	* @throws PortalException if a cp specification option with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPSpecificationOption getCPSpecificationOption(
+		long CPSpecificationOptionId) throws PortalException;
+
+	/**
+	* Returns the cp specification option matching the UUID and group.
+	*
+	* @param uuid the cp specification option's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp specification option
+	* @throws PortalException if a matching cp specification option could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPSpecificationOption getCPSpecificationOptionByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the cp specification options.
@@ -296,23 +269,50 @@ public interface CPSpecificationOptionLocalService extends BaseLocalService,
 		OrderByComparator<CPSpecificationOption> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of cp specification options.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of cp specification options
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPSpecificationOptionsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public java.lang.String getOSGiServiceIdentifier();
 
-	public void deleteCPSpecificationOptions(long groupId)
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	public CPSpecificationOption updateCPOptionCategoryId(
+		long cpSpecificationOptionId, long cpOptionCategoryId)
+		throws PortalException;
+
+	/**
+	* Updates the cp specification option in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param cpSpecificationOption the cp specification option
+	* @return the cp specification option that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public CPSpecificationOption updateCPSpecificationOption(
+		CPSpecificationOption cpSpecificationOption);
+
+	public CPSpecificationOption updateCPSpecificationOption(
+		long cpSpecificationOptionId, long cpOptionCategoryId,
+		Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> descriptionMap, boolean facetable,
+		java.lang.String key, ServiceContext serviceContext)
 		throws PortalException;
 }

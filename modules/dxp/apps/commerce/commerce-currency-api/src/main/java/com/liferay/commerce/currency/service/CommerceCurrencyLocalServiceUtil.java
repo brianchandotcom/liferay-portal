@@ -76,6 +76,10 @@ public class CommerceCurrencyLocalServiceUtil {
 		return getService().createCommerceCurrency(commerceCurrencyId);
 	}
 
+	public static void deleteCommerceCurrencies(long groupId) {
+		getService().deleteCommerceCurrencies(groupId);
+	}
+
 	/**
 	* Deletes the commerce currency from the database. Also notifies the appropriate model listeners.
 	*
@@ -100,97 +104,6 @@ public class CommerceCurrencyLocalServiceUtil {
 		return getService().deleteCommerceCurrency(commerceCurrencyId);
 	}
 
-	public static com.liferay.commerce.currency.model.CommerceCurrency fetchCommerceCurrency(
-		long commerceCurrencyId) {
-		return getService().fetchCommerceCurrency(commerceCurrencyId);
-	}
-
-	/**
-	* Returns the commerce currency matching the UUID and group.
-	*
-	* @param uuid the commerce currency's UUID
-	* @param groupId the primary key of the group
-	* @return the matching commerce currency, or <code>null</code> if a matching commerce currency could not be found
-	*/
-	public static com.liferay.commerce.currency.model.CommerceCurrency fetchCommerceCurrencyByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return getService().fetchCommerceCurrencyByUuidAndGroupId(uuid, groupId);
-	}
-
-	public static com.liferay.commerce.currency.model.CommerceCurrency fetchPrimaryCommerceCurrency(
-		long groupId) {
-		return getService().fetchPrimaryCommerceCurrency(groupId);
-	}
-
-	/**
-	* Returns the commerce currency with the primary key.
-	*
-	* @param commerceCurrencyId the primary key of the commerce currency
-	* @return the commerce currency
-	* @throws PortalException if a commerce currency with the primary key could not be found
-	*/
-	public static com.liferay.commerce.currency.model.CommerceCurrency getCommerceCurrency(
-		long commerceCurrencyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCommerceCurrency(commerceCurrencyId);
-	}
-
-	/**
-	* Returns the commerce currency matching the UUID and group.
-	*
-	* @param uuid the commerce currency's UUID
-	* @param groupId the primary key of the group
-	* @return the matching commerce currency
-	* @throws PortalException if a matching commerce currency could not be found
-	*/
-	public static com.liferay.commerce.currency.model.CommerceCurrency getCommerceCurrencyByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCommerceCurrencyByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Updates the commerce currency in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param commerceCurrency the commerce currency
-	* @return the commerce currency that was updated
-	*/
-	public static com.liferay.commerce.currency.model.CommerceCurrency updateCommerceCurrency(
-		com.liferay.commerce.currency.model.CommerceCurrency commerceCurrency) {
-		return getService().updateCommerceCurrency(commerceCurrency);
-	}
-
-	public static com.liferay.commerce.currency.model.CommerceCurrency updateCommerceCurrency(
-		long commerceCurrencyId,
-		java.util.Map<java.util.Locale, java.lang.String> codeMap,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap, double rate,
-		java.lang.String roundingType, boolean primary, double priority,
-		boolean active,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateCommerceCurrency(commerceCurrencyId, codeMap,
-			nameMap, rate, roundingType, primary, priority, active,
-			serviceContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
 	/**
 	* @throws PortalException
 	*/
@@ -200,36 +113,8 @@ public class CommerceCurrencyLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the number of commerce currencies.
-	*
-	* @return the number of commerce currencies
-	*/
-	public static int getCommerceCurrenciesCount() {
-		return getService().getCommerceCurrenciesCount();
-	}
-
-	public static int getCommerceCurrenciesCount(long groupId) {
-		return getService().getCommerceCurrenciesCount(groupId);
-	}
-
-	public static int getCommerceCurrenciesCount(long groupId, boolean active) {
-		return getService().getCommerceCurrenciesCount(groupId, active);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -280,6 +165,56 @@ public class CommerceCurrencyLocalServiceUtil {
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static com.liferay.commerce.currency.model.CommerceCurrency fetchCommerceCurrency(
+		long commerceCurrencyId) {
+		return getService().fetchCommerceCurrency(commerceCurrencyId);
+	}
+
+	/**
+	* Returns the commerce currency matching the UUID and group.
+	*
+	* @param uuid the commerce currency's UUID
+	* @param groupId the primary key of the group
+	* @return the matching commerce currency, or <code>null</code> if a matching commerce currency could not be found
+	*/
+	public static com.liferay.commerce.currency.model.CommerceCurrency fetchCommerceCurrencyByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return getService().fetchCommerceCurrencyByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static com.liferay.commerce.currency.model.CommerceCurrency fetchPrimaryCommerceCurrency(
+		long groupId) {
+		return getService().fetchPrimaryCommerceCurrency(groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
 	}
 
 	/**
@@ -345,31 +280,96 @@ public class CommerceCurrencyLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of commerce currencies.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of commerce currencies
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
+	public static int getCommerceCurrenciesCount() {
+		return getService().getCommerceCurrenciesCount();
+	}
+
+	public static int getCommerceCurrenciesCount(long groupId) {
+		return getService().getCommerceCurrenciesCount(groupId);
+	}
+
+	public static int getCommerceCurrenciesCount(long groupId, boolean active) {
+		return getService().getCommerceCurrenciesCount(groupId, active);
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the commerce currency with the primary key.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param commerceCurrencyId the primary key of the commerce currency
+	* @return the commerce currency
+	* @throws PortalException if a commerce currency with the primary key could not be found
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
+	public static com.liferay.commerce.currency.model.CommerceCurrency getCommerceCurrency(
+		long commerceCurrencyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommerceCurrency(commerceCurrencyId);
 	}
 
-	public static void deleteCommerceCurrencies(long groupId) {
-		getService().deleteCommerceCurrencies(groupId);
+	/**
+	* Returns the commerce currency matching the UUID and group.
+	*
+	* @param uuid the commerce currency's UUID
+	* @param groupId the primary key of the group
+	* @return the matching commerce currency
+	* @throws PortalException if a matching commerce currency could not be found
+	*/
+	public static com.liferay.commerce.currency.model.CommerceCurrency getCommerceCurrencyByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommerceCurrencyByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the commerce currency in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param commerceCurrency the commerce currency
+	* @return the commerce currency that was updated
+	*/
+	public static com.liferay.commerce.currency.model.CommerceCurrency updateCommerceCurrency(
+		com.liferay.commerce.currency.model.CommerceCurrency commerceCurrency) {
+		return getService().updateCommerceCurrency(commerceCurrency);
+	}
+
+	public static com.liferay.commerce.currency.model.CommerceCurrency updateCommerceCurrency(
+		long commerceCurrencyId,
+		java.util.Map<java.util.Locale, java.lang.String> codeMap,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap, double rate,
+		java.lang.String roundingType, boolean primary, double priority,
+		boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCommerceCurrency(commerceCurrencyId, codeMap,
+			nameMap, rate, roundingType, primary, priority, active,
+			serviceContext);
 	}
 
 	public static CommerceCurrencyLocalService getService() {

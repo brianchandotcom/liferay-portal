@@ -119,69 +119,7 @@ public interface CPOptionValueLocalService extends BaseLocalService,
 	public CPOptionValue deleteCPOptionValue(long CPOptionValueId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPOptionValue fetchCPOptionValue(long CPOptionValueId);
-
-	/**
-	* Returns the cp option value matching the UUID and group.
-	*
-	* @param uuid the cp option value's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp option value, or <code>null</code> if a matching cp option value could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPOptionValue fetchCPOptionValueByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	/**
-	* Returns the cp option value with the primary key.
-	*
-	* @param CPOptionValueId the primary key of the cp option value
-	* @return the cp option value
-	* @throws PortalException if a cp option value with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPOptionValue getCPOptionValue(long CPOptionValueId)
-		throws PortalException;
-
-	/**
-	* Returns the cp option value matching the UUID and group.
-	*
-	* @param uuid the cp option value's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp option value
-	* @throws PortalException if a matching cp option value could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPOptionValue getCPOptionValueByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
-
-	/**
-	* Updates the cp option value in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param cpOptionValue the cp option value
-	* @return the cp option value that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public CPOptionValue updateCPOptionValue(CPOptionValue cpOptionValue);
-
-	@Indexable(type = IndexableType.REINDEX)
-	public CPOptionValue updateCPOptionValue(long cpOptionValueId,
-		Map<Locale, java.lang.String> titleMap, double priority,
-		java.lang.String key, ServiceContext serviceContext)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public void deleteCPOptionValues(long cpOptionId) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -190,37 +128,7 @@ public interface CPOptionValueLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BaseModelSearchResult<CPOptionValue> searchCPOptionValues(
-		long companyId, long groupId, long cpOptionId,
-		java.lang.String keywords, int start, int end, Sort sort)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(SearchContext searchContext);
-
-	/**
-	* Returns the number of cp option values.
-	*
-	* @return the number of cp option values
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPOptionValuesCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPOptionValuesCount(long cpOptionId);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -260,6 +168,64 @@ public interface CPOptionValueLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPOptionValue fetchCPOptionValue(long CPOptionValueId);
+
+	/**
+	* Returns the cp option value matching the UUID and group.
+	*
+	* @param uuid the cp option value's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp option value, or <code>null</code> if a matching cp option value could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPOptionValue fetchCPOptionValueByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* Returns the cp option value with the primary key.
+	*
+	* @param CPOptionValueId the primary key of the cp option value
+	* @return the cp option value
+	* @throws PortalException if a cp option value with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPOptionValue getCPOptionValue(long CPOptionValueId)
+		throws PortalException;
+
+	/**
+	* Returns the cp option value matching the UUID and group.
+	*
+	* @param uuid the cp option value's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp option value
+	* @throws PortalException if a matching cp option value could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPOptionValue getCPOptionValueByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the cp option values.
@@ -310,22 +276,56 @@ public interface CPOptionValueLocalService extends BaseLocalService,
 		OrderByComparator<CPOptionValue> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of cp option values.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of cp option values
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPOptionValuesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPOptionValuesCount(long cpOptionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public java.lang.String getOSGiServiceIdentifier();
 
-	public void deleteCPOptionValues(long cpOptionId) throws PortalException;
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Hits search(SearchContext searchContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CPOptionValue> searchCPOptionValues(
+		long companyId, long groupId, long cpOptionId,
+		java.lang.String keywords, int start, int end, Sort sort)
+		throws PortalException;
+
+	/**
+	* Updates the cp option value in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param cpOptionValue the cp option value
+	* @return the cp option value that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public CPOptionValue updateCPOptionValue(CPOptionValue cpOptionValue);
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CPOptionValue updateCPOptionValue(long cpOptionValueId,
+		Map<Locale, java.lang.String> titleMap, double priority,
+		java.lang.String key, ServiceContext serviceContext)
+		throws PortalException;
 }

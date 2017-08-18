@@ -282,13 +282,23 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	@Override
-	public CPDefinition toEscapedModel() {
-		return new CPDefinitionWrapper(_cpDefinition.toEscapedModel());
+	public java.lang.Object clone() {
+		return new CPDefinitionWrapper((CPDefinition)_cpDefinition.clone());
 	}
 
 	@Override
-	public CPDefinition toUnescapedModel() {
-		return new CPDefinitionWrapper(_cpDefinition.toUnescapedModel());
+	public int compareTo(CPDefinition cpDefinition) {
+		return _cpDefinition.compareTo(cpDefinition);
+	}
+
+	/**
+	* Returns the allowed cart quantities of this cp definition.
+	*
+	* @return the allowed cart quantities of this cp definition
+	*/
+	@Override
+	public java.lang.String getAllowedCartQuantities() {
+		return _cpDefinition.getAllowedCartQuantities();
 	}
 
 	/**
@@ -299,6 +309,587 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public boolean getAvailableIndividually() {
 		return _cpDefinition.getAvailableIndividually();
+	}
+
+	@Override
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _cpDefinition.getAvailableLanguageIds();
+	}
+
+	/**
+	* Returns the base sku of this cp definition.
+	*
+	* @return the base sku of this cp definition
+	*/
+	@Override
+	public java.lang.String getBaseSKU() {
+		return _cpDefinition.getBaseSKU();
+	}
+
+	/**
+	* Returns the company ID of this cp definition.
+	*
+	* @return the company ID of this cp definition
+	*/
+	@Override
+	public long getCompanyId() {
+		return _cpDefinition.getCompanyId();
+	}
+
+	/**
+	* Returns the cp definition ID of this cp definition.
+	*
+	* @return the cp definition ID of this cp definition
+	*/
+	@Override
+	public long getCPDefinitionId() {
+		return _cpDefinition.getCPDefinitionId();
+	}
+
+	@Override
+	public java.util.List<CPDefinitionOptionRel> getCPDefinitionOptionRels() {
+		return _cpDefinition.getCPDefinitionOptionRels();
+	}
+
+	@Override
+	public java.util.List<CPDefinitionSpecificationOptionValue> getCPDefinitionSpecificationOptionValues() {
+		return _cpDefinition.getCPDefinitionSpecificationOptionValues();
+	}
+
+	/**
+	* Returns the create date of this cp definition.
+	*
+	* @return the create date of this cp definition
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _cpDefinition.getCreateDate();
+	}
+
+	/**
+	* Returns the ddm structure key of this cp definition.
+	*
+	* @return the ddm structure key of this cp definition
+	*/
+	@Override
+	public java.lang.String getDDMStructureKey() {
+		return _cpDefinition.getDDMStructureKey();
+	}
+
+	@Override
+	public java.lang.String getDefaultImageThumbnailSrc(
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
+		throws java.lang.Exception {
+		return _cpDefinition.getDefaultImageThumbnailSrc(themeDisplay);
+	}
+
+	/**
+	* Returns the default language ID of this cp definition.
+	*
+	* @return the default language ID of this cp definition
+	*/
+	@Override
+	public java.lang.String getDefaultLanguageId() {
+		return _cpDefinition.getDefaultLanguageId();
+	}
+
+	/**
+	* Returns the depth of this cp definition.
+	*
+	* @return the depth of this cp definition
+	*/
+	@Override
+	public double getDepth() {
+		return _cpDefinition.getDepth();
+	}
+
+	@Override
+	public java.lang.String getDescription() {
+		return _cpDefinition.getDescription();
+	}
+
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId) {
+		return _cpDefinition.getDescription(languageId);
+	}
+
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId,
+		boolean useDefault) {
+		return _cpDefinition.getDescription(languageId, useDefault);
+	}
+
+	@Override
+	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+		return _cpDefinition.getDescriptionMap();
+	}
+
+	@Override
+	public java.lang.String getDescriptionMapAsXML() {
+		return _cpDefinition.getDescriptionMapAsXML();
+	}
+
+	/**
+	* Returns the display date of this cp definition.
+	*
+	* @return the display date of this cp definition
+	*/
+	@Override
+	public Date getDisplayDate() {
+		return _cpDefinition.getDisplayDate();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _cpDefinition.getExpandoBridge();
+	}
+
+	/**
+	* Returns the expiration date of this cp definition.
+	*
+	* @return the expiration date of this cp definition
+	*/
+	@Override
+	public Date getExpirationDate() {
+		return _cpDefinition.getExpirationDate();
+	}
+
+	/**
+	* Returns the group ID of this cp definition.
+	*
+	* @return the group ID of this cp definition
+	*/
+	@Override
+	public long getGroupId() {
+		return _cpDefinition.getGroupId();
+	}
+
+	/**
+	* Returns the gtin of this cp definition.
+	*
+	* @return the gtin of this cp definition
+	*/
+	@Override
+	public java.lang.String getGtin() {
+		return _cpDefinition.getGtin();
+	}
+
+	/**
+	* Returns the height of this cp definition.
+	*
+	* @return the height of this cp definition
+	*/
+	@Override
+	public double getHeight() {
+		return _cpDefinition.getHeight();
+	}
+
+	@Override
+	public Map<java.lang.String, java.lang.String> getLanguageIdToDescriptionMap() {
+		return _cpDefinition.getLanguageIdToDescriptionMap();
+	}
+
+	@Override
+	public Map<java.lang.String, java.lang.String> getLanguageIdToMetaDescriptionMap() {
+		return _cpDefinition.getLanguageIdToMetaDescriptionMap();
+	}
+
+	@Override
+	public Map<java.lang.String, java.lang.String> getLanguageIdToMetaKeywordsMap() {
+		return _cpDefinition.getLanguageIdToMetaKeywordsMap();
+	}
+
+	@Override
+	public Map<java.lang.String, java.lang.String> getLanguageIdToMetaTitleMap() {
+		return _cpDefinition.getLanguageIdToMetaTitleMap();
+	}
+
+	@Override
+	public Map<java.lang.String, java.lang.String> getLanguageIdToShortDescriptionMap() {
+		return _cpDefinition.getLanguageIdToShortDescriptionMap();
+	}
+
+	@Override
+	public Map<java.lang.String, java.lang.String> getLanguageIdToTitleMap() {
+		return _cpDefinition.getLanguageIdToTitleMap();
+	}
+
+	/**
+	* Returns the last publish date of this cp definition.
+	*
+	* @return the last publish date of this cp definition
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _cpDefinition.getLastPublishDate();
+	}
+
+	@Override
+	public java.lang.String getLayoutUuid() {
+		return _cpDefinition.getLayoutUuid();
+	}
+
+	/**
+	* Returns the manufacturer part number of this cp definition.
+	*
+	* @return the manufacturer part number of this cp definition
+	*/
+	@Override
+	public java.lang.String getManufacturerPartNumber() {
+		return _cpDefinition.getManufacturerPartNumber();
+	}
+
+	/**
+	* Returns the max cart quantity of this cp definition.
+	*
+	* @return the max cart quantity of this cp definition
+	*/
+	@Override
+	public int getMaxCartQuantity() {
+		return _cpDefinition.getMaxCartQuantity();
+	}
+
+	@Override
+	public java.lang.String getMetaDescription() {
+		return _cpDefinition.getMetaDescription();
+	}
+
+	@Override
+	public java.lang.String getMetaDescription(java.lang.String languageId) {
+		return _cpDefinition.getMetaDescription(languageId);
+	}
+
+	@Override
+	public java.lang.String getMetaDescription(java.lang.String languageId,
+		boolean useDefault) {
+		return _cpDefinition.getMetaDescription(languageId, useDefault);
+	}
+
+	@Override
+	public Map<java.util.Locale, java.lang.String> getMetaDescriptionMap() {
+		return _cpDefinition.getMetaDescriptionMap();
+	}
+
+	@Override
+	public java.lang.String getMetaDescriptionMapAsXML() {
+		return _cpDefinition.getMetaDescriptionMapAsXML();
+	}
+
+	@Override
+	public java.lang.String getMetaKeywords() {
+		return _cpDefinition.getMetaKeywords();
+	}
+
+	@Override
+	public java.lang.String getMetaKeywords(java.lang.String languageId) {
+		return _cpDefinition.getMetaKeywords(languageId);
+	}
+
+	@Override
+	public java.lang.String getMetaKeywords(java.lang.String languageId,
+		boolean useDefault) {
+		return _cpDefinition.getMetaKeywords(languageId, useDefault);
+	}
+
+	@Override
+	public Map<java.util.Locale, java.lang.String> getMetaKeywordsMap() {
+		return _cpDefinition.getMetaKeywordsMap();
+	}
+
+	@Override
+	public java.lang.String getMetaKeywordsMapAsXML() {
+		return _cpDefinition.getMetaKeywordsMapAsXML();
+	}
+
+	@Override
+	public java.lang.String getMetaTitle() {
+		return _cpDefinition.getMetaTitle();
+	}
+
+	@Override
+	public java.lang.String getMetaTitle(java.lang.String languageId) {
+		return _cpDefinition.getMetaTitle(languageId);
+	}
+
+	@Override
+	public java.lang.String getMetaTitle(java.lang.String languageId,
+		boolean useDefault) {
+		return _cpDefinition.getMetaTitle(languageId, useDefault);
+	}
+
+	@Override
+	public Map<java.util.Locale, java.lang.String> getMetaTitleMap() {
+		return _cpDefinition.getMetaTitleMap();
+	}
+
+	@Override
+	public java.lang.String getMetaTitleMapAsXML() {
+		return _cpDefinition.getMetaTitleMapAsXML();
+	}
+
+	/**
+	* Returns the min cart quantity of this cp definition.
+	*
+	* @return the min cart quantity of this cp definition
+	*/
+	@Override
+	public int getMinCartQuantity() {
+		return _cpDefinition.getMinCartQuantity();
+	}
+
+	/**
+	* Returns the modified date of this cp definition.
+	*
+	* @return the modified date of this cp definition
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _cpDefinition.getModifiedDate();
+	}
+
+	/**
+	* Returns the multiple cart quantity of this cp definition.
+	*
+	* @return the multiple cart quantity of this cp definition
+	*/
+	@Override
+	public int getMultipleCartQuantity() {
+		return _cpDefinition.getMultipleCartQuantity();
+	}
+
+	/**
+	* Returns the primary key of this cp definition.
+	*
+	* @return the primary key of this cp definition
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _cpDefinition.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _cpDefinition.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the product type name of this cp definition.
+	*
+	* @return the product type name of this cp definition
+	*/
+	@Override
+	public java.lang.String getProductTypeName() {
+		return _cpDefinition.getProductTypeName();
+	}
+
+	@Override
+	public java.lang.String getShortDescription() {
+		return _cpDefinition.getShortDescription();
+	}
+
+	@Override
+	public java.lang.String getShortDescription(java.lang.String languageId) {
+		return _cpDefinition.getShortDescription(languageId);
+	}
+
+	@Override
+	public java.lang.String getShortDescription(java.lang.String languageId,
+		boolean useDefault) {
+		return _cpDefinition.getShortDescription(languageId, useDefault);
+	}
+
+	@Override
+	public Map<java.util.Locale, java.lang.String> getShortDescriptionMap() {
+		return _cpDefinition.getShortDescriptionMap();
+	}
+
+	@Override
+	public java.lang.String getShortDescriptionMapAsXML() {
+		return _cpDefinition.getShortDescriptionMapAsXML();
+	}
+
+	/**
+	* Returns the status of this cp definition.
+	*
+	* @return the status of this cp definition
+	*/
+	@Override
+	public int getStatus() {
+		return _cpDefinition.getStatus();
+	}
+
+	/**
+	* Returns the status by user ID of this cp definition.
+	*
+	* @return the status by user ID of this cp definition
+	*/
+	@Override
+	public long getStatusByUserId() {
+		return _cpDefinition.getStatusByUserId();
+	}
+
+	/**
+	* Returns the status by user name of this cp definition.
+	*
+	* @return the status by user name of this cp definition
+	*/
+	@Override
+	public java.lang.String getStatusByUserName() {
+		return _cpDefinition.getStatusByUserName();
+	}
+
+	/**
+	* Returns the status by user uuid of this cp definition.
+	*
+	* @return the status by user uuid of this cp definition
+	*/
+	@Override
+	public java.lang.String getStatusByUserUuid() {
+		return _cpDefinition.getStatusByUserUuid();
+	}
+
+	/**
+	* Returns the status date of this cp definition.
+	*
+	* @return the status date of this cp definition
+	*/
+	@Override
+	public Date getStatusDate() {
+		return _cpDefinition.getStatusDate();
+	}
+
+	@Override
+	public java.lang.String getTitle() {
+		return _cpDefinition.getTitle();
+	}
+
+	@Override
+	public java.lang.String getTitle(java.lang.String languageId) {
+		return _cpDefinition.getTitle(languageId);
+	}
+
+	@Override
+	public java.lang.String getTitle(java.lang.String languageId,
+		boolean useDefault) {
+		return _cpDefinition.getTitle(languageId, useDefault);
+	}
+
+	@Override
+	public java.lang.String getTitleCurrentValue() {
+		return _cpDefinition.getTitleCurrentValue();
+	}
+
+	@Override
+	public Map<java.util.Locale, java.lang.String> getTitleMap() {
+		return _cpDefinition.getTitleMap();
+	}
+
+	@Override
+	public java.lang.String getTitleMapAsXML() {
+		return _cpDefinition.getTitleMapAsXML();
+	}
+
+	/**
+	* Returns the trash entry created when this cp definition was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this cp definition.
+	*
+	* @return the trash entry created when this cp definition was moved to the Recycle Bin
+	*/
+	@Override
+	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinition.getTrashEntry();
+	}
+
+	/**
+	* Returns the class primary key of the trash entry for this cp definition.
+	*
+	* @return the class primary key of the trash entry for this cp definition
+	*/
+	@Override
+	public long getTrashEntryClassPK() {
+		return _cpDefinition.getTrashEntryClassPK();
+	}
+
+	/**
+	* Returns the trash handler for this cp definition.
+	*
+	* @return the trash handler for this cp definition
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
+		return _cpDefinition.getTrashHandler();
+	}
+
+	@Override
+	public Map<java.util.Locale, java.lang.String> getUrlTitleMap() {
+		return _cpDefinition.getUrlTitleMap();
+	}
+
+	/**
+	* Returns the user ID of this cp definition.
+	*
+	* @return the user ID of this cp definition
+	*/
+	@Override
+	public long getUserId() {
+		return _cpDefinition.getUserId();
+	}
+
+	/**
+	* Returns the user name of this cp definition.
+	*
+	* @return the user name of this cp definition
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _cpDefinition.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this cp definition.
+	*
+	* @return the user uuid of this cp definition
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _cpDefinition.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this cp definition.
+	*
+	* @return the uuid of this cp definition
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _cpDefinition.getUuid();
+	}
+
+	/**
+	* Returns the weight of this cp definition.
+	*
+	* @return the weight of this cp definition
+	*/
+	@Override
+	public double getWeight() {
+		return _cpDefinition.getWeight();
+	}
+
+	/**
+	* Returns the width of this cp definition.
+	*
+	* @return the width of this cp definition
+	*/
+	@Override
+	public double getWidth() {
+		return _cpDefinition.getWidth();
+	}
+
+	@Override
+	public int hashCode() {
+		return _cpDefinition.hashCode();
 	}
 
 	/**
@@ -362,6 +953,26 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	/**
+	* Returns <code>true</code> if this cp definition is inactive.
+	*
+	* @return <code>true</code> if this cp definition is inactive; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInactive() {
+		return _cpDefinition.isInactive();
+	}
+
+	/**
+	* Returns <code>true</code> if this cp definition is incomplete.
+	*
+	* @return <code>true</code> if this cp definition is incomplete; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isIncomplete() {
+		return _cpDefinition.isIncomplete();
+	}
+
+	/**
 	* Returns <code>true</code> if this cp definition is in the Recycle Bin.
 	*
 	* @return <code>true</code> if this cp definition is in the Recycle Bin; <code>false</code> otherwise
@@ -391,26 +1002,6 @@ public class CPDefinitionWrapper implements CPDefinition,
 		return _cpDefinition.isInTrashImplicitly();
 	}
 
-	/**
-	* Returns <code>true</code> if this cp definition is inactive.
-	*
-	* @return <code>true</code> if this cp definition is inactive; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isInactive() {
-		return _cpDefinition.isInactive();
-	}
-
-	/**
-	* Returns <code>true</code> if this cp definition is incomplete.
-	*
-	* @return <code>true</code> if this cp definition is incomplete; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isIncomplete() {
-		return _cpDefinition.isIncomplete();
-	}
-
 	@Override
 	public boolean isNew() {
 		return _cpDefinition.isNew();
@@ -434,622 +1025,6 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public boolean isScheduled() {
 		return _cpDefinition.isScheduled();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _cpDefinition.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CPDefinition> toCacheModel() {
-		return _cpDefinition.toCacheModel();
-	}
-
-	/**
-	* Returns the trash handler for this cp definition.
-	*
-	* @return the trash handler for this cp definition
-	* @deprecated As of 7.0.0, with no direct replacement
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return _cpDefinition.getTrashHandler();
-	}
-
-	/**
-	* Returns the trash entry created when this cp definition was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this cp definition.
-	*
-	* @return the trash entry created when this cp definition was moved to the Recycle Bin
-	*/
-	@Override
-	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDefinition.getTrashEntry();
-	}
-
-	/**
-	* Returns the depth of this cp definition.
-	*
-	* @return the depth of this cp definition
-	*/
-	@Override
-	public double getDepth() {
-		return _cpDefinition.getDepth();
-	}
-
-	/**
-	* Returns the height of this cp definition.
-	*
-	* @return the height of this cp definition
-	*/
-	@Override
-	public double getHeight() {
-		return _cpDefinition.getHeight();
-	}
-
-	/**
-	* Returns the weight of this cp definition.
-	*
-	* @return the weight of this cp definition
-	*/
-	@Override
-	public double getWeight() {
-		return _cpDefinition.getWeight();
-	}
-
-	/**
-	* Returns the width of this cp definition.
-	*
-	* @return the width of this cp definition
-	*/
-	@Override
-	public double getWidth() {
-		return _cpDefinition.getWidth();
-	}
-
-	@Override
-	public int compareTo(CPDefinition cpDefinition) {
-		return _cpDefinition.compareTo(cpDefinition);
-	}
-
-	/**
-	* Returns the max cart quantity of this cp definition.
-	*
-	* @return the max cart quantity of this cp definition
-	*/
-	@Override
-	public int getMaxCartQuantity() {
-		return _cpDefinition.getMaxCartQuantity();
-	}
-
-	/**
-	* Returns the min cart quantity of this cp definition.
-	*
-	* @return the min cart quantity of this cp definition
-	*/
-	@Override
-	public int getMinCartQuantity() {
-		return _cpDefinition.getMinCartQuantity();
-	}
-
-	/**
-	* Returns the multiple cart quantity of this cp definition.
-	*
-	* @return the multiple cart quantity of this cp definition
-	*/
-	@Override
-	public int getMultipleCartQuantity() {
-		return _cpDefinition.getMultipleCartQuantity();
-	}
-
-	/**
-	* Returns the status of this cp definition.
-	*
-	* @return the status of this cp definition
-	*/
-	@Override
-	public int getStatus() {
-		return _cpDefinition.getStatus();
-	}
-
-	@Override
-	public int hashCode() {
-		return _cpDefinition.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _cpDefinition.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new CPDefinitionWrapper((CPDefinition)_cpDefinition.clone());
-	}
-
-	/**
-	* Returns the allowed cart quantities of this cp definition.
-	*
-	* @return the allowed cart quantities of this cp definition
-	*/
-	@Override
-	public java.lang.String getAllowedCartQuantities() {
-		return _cpDefinition.getAllowedCartQuantities();
-	}
-
-	/**
-	* Returns the base sku of this cp definition.
-	*
-	* @return the base sku of this cp definition
-	*/
-	@Override
-	public java.lang.String getBaseSKU() {
-		return _cpDefinition.getBaseSKU();
-	}
-
-	/**
-	* Returns the ddm structure key of this cp definition.
-	*
-	* @return the ddm structure key of this cp definition
-	*/
-	@Override
-	public java.lang.String getDDMStructureKey() {
-		return _cpDefinition.getDDMStructureKey();
-	}
-
-	@Override
-	public java.lang.String getDefaultImageThumbnailSrc(
-		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
-		throws java.lang.Exception {
-		return _cpDefinition.getDefaultImageThumbnailSrc(themeDisplay);
-	}
-
-	/**
-	* Returns the default language ID of this cp definition.
-	*
-	* @return the default language ID of this cp definition
-	*/
-	@Override
-	public java.lang.String getDefaultLanguageId() {
-		return _cpDefinition.getDefaultLanguageId();
-	}
-
-	@Override
-	public java.lang.String getDescription() {
-		return _cpDefinition.getDescription();
-	}
-
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
-		return _cpDefinition.getDescription(languageId);
-	}
-
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
-		return _cpDefinition.getDescription(languageId, useDefault);
-	}
-
-	@Override
-	public java.lang.String getDescriptionMapAsXML() {
-		return _cpDefinition.getDescriptionMapAsXML();
-	}
-
-	/**
-	* Returns the gtin of this cp definition.
-	*
-	* @return the gtin of this cp definition
-	*/
-	@Override
-	public java.lang.String getGtin() {
-		return _cpDefinition.getGtin();
-	}
-
-	@Override
-	public java.lang.String getLayoutUuid() {
-		return _cpDefinition.getLayoutUuid();
-	}
-
-	/**
-	* Returns the manufacturer part number of this cp definition.
-	*
-	* @return the manufacturer part number of this cp definition
-	*/
-	@Override
-	public java.lang.String getManufacturerPartNumber() {
-		return _cpDefinition.getManufacturerPartNumber();
-	}
-
-	@Override
-	public java.lang.String getMetaDescription() {
-		return _cpDefinition.getMetaDescription();
-	}
-
-	@Override
-	public java.lang.String getMetaDescription(java.lang.String languageId) {
-		return _cpDefinition.getMetaDescription(languageId);
-	}
-
-	@Override
-	public java.lang.String getMetaDescription(java.lang.String languageId,
-		boolean useDefault) {
-		return _cpDefinition.getMetaDescription(languageId, useDefault);
-	}
-
-	@Override
-	public java.lang.String getMetaDescriptionMapAsXML() {
-		return _cpDefinition.getMetaDescriptionMapAsXML();
-	}
-
-	@Override
-	public java.lang.String getMetaKeywords() {
-		return _cpDefinition.getMetaKeywords();
-	}
-
-	@Override
-	public java.lang.String getMetaKeywords(java.lang.String languageId) {
-		return _cpDefinition.getMetaKeywords(languageId);
-	}
-
-	@Override
-	public java.lang.String getMetaKeywords(java.lang.String languageId,
-		boolean useDefault) {
-		return _cpDefinition.getMetaKeywords(languageId, useDefault);
-	}
-
-	@Override
-	public java.lang.String getMetaKeywordsMapAsXML() {
-		return _cpDefinition.getMetaKeywordsMapAsXML();
-	}
-
-	@Override
-	public java.lang.String getMetaTitle() {
-		return _cpDefinition.getMetaTitle();
-	}
-
-	@Override
-	public java.lang.String getMetaTitle(java.lang.String languageId) {
-		return _cpDefinition.getMetaTitle(languageId);
-	}
-
-	@Override
-	public java.lang.String getMetaTitle(java.lang.String languageId,
-		boolean useDefault) {
-		return _cpDefinition.getMetaTitle(languageId, useDefault);
-	}
-
-	@Override
-	public java.lang.String getMetaTitleMapAsXML() {
-		return _cpDefinition.getMetaTitleMapAsXML();
-	}
-
-	/**
-	* Returns the product type name of this cp definition.
-	*
-	* @return the product type name of this cp definition
-	*/
-	@Override
-	public java.lang.String getProductTypeName() {
-		return _cpDefinition.getProductTypeName();
-	}
-
-	@Override
-	public java.lang.String getShortDescription() {
-		return _cpDefinition.getShortDescription();
-	}
-
-	@Override
-	public java.lang.String getShortDescription(java.lang.String languageId) {
-		return _cpDefinition.getShortDescription(languageId);
-	}
-
-	@Override
-	public java.lang.String getShortDescription(java.lang.String languageId,
-		boolean useDefault) {
-		return _cpDefinition.getShortDescription(languageId, useDefault);
-	}
-
-	@Override
-	public java.lang.String getShortDescriptionMapAsXML() {
-		return _cpDefinition.getShortDescriptionMapAsXML();
-	}
-
-	/**
-	* Returns the status by user name of this cp definition.
-	*
-	* @return the status by user name of this cp definition
-	*/
-	@Override
-	public java.lang.String getStatusByUserName() {
-		return _cpDefinition.getStatusByUserName();
-	}
-
-	/**
-	* Returns the status by user uuid of this cp definition.
-	*
-	* @return the status by user uuid of this cp definition
-	*/
-	@Override
-	public java.lang.String getStatusByUserUuid() {
-		return _cpDefinition.getStatusByUserUuid();
-	}
-
-	@Override
-	public java.lang.String getTitle() {
-		return _cpDefinition.getTitle();
-	}
-
-	@Override
-	public java.lang.String getTitle(java.lang.String languageId) {
-		return _cpDefinition.getTitle(languageId);
-	}
-
-	@Override
-	public java.lang.String getTitle(java.lang.String languageId,
-		boolean useDefault) {
-		return _cpDefinition.getTitle(languageId, useDefault);
-	}
-
-	@Override
-	public java.lang.String getTitleCurrentValue() {
-		return _cpDefinition.getTitleCurrentValue();
-	}
-
-	@Override
-	public java.lang.String getTitleMapAsXML() {
-		return _cpDefinition.getTitleMapAsXML();
-	}
-
-	/**
-	* Returns the user name of this cp definition.
-	*
-	* @return the user name of this cp definition
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _cpDefinition.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this cp definition.
-	*
-	* @return the user uuid of this cp definition
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _cpDefinition.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this cp definition.
-	*
-	* @return the uuid of this cp definition
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _cpDefinition.getUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _cpDefinition.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _cpDefinition.toXmlString();
-	}
-
-	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
-		return _cpDefinition.getAvailableLanguageIds();
-	}
-
-	/**
-	* Returns the create date of this cp definition.
-	*
-	* @return the create date of this cp definition
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _cpDefinition.getCreateDate();
-	}
-
-	/**
-	* Returns the display date of this cp definition.
-	*
-	* @return the display date of this cp definition
-	*/
-	@Override
-	public Date getDisplayDate() {
-		return _cpDefinition.getDisplayDate();
-	}
-
-	/**
-	* Returns the expiration date of this cp definition.
-	*
-	* @return the expiration date of this cp definition
-	*/
-	@Override
-	public Date getExpirationDate() {
-		return _cpDefinition.getExpirationDate();
-	}
-
-	/**
-	* Returns the last publish date of this cp definition.
-	*
-	* @return the last publish date of this cp definition
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _cpDefinition.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this cp definition.
-	*
-	* @return the modified date of this cp definition
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _cpDefinition.getModifiedDate();
-	}
-
-	/**
-	* Returns the status date of this cp definition.
-	*
-	* @return the status date of this cp definition
-	*/
-	@Override
-	public Date getStatusDate() {
-		return _cpDefinition.getStatusDate();
-	}
-
-	@Override
-	public java.util.List<CPDefinitionOptionRel> getCPDefinitionOptionRels() {
-		return _cpDefinition.getCPDefinitionOptionRels();
-	}
-
-	@Override
-	public java.util.List<CPDefinitionSpecificationOptionValue> getCPDefinitionSpecificationOptionValues() {
-		return _cpDefinition.getCPDefinitionSpecificationOptionValues();
-	}
-
-	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
-		return _cpDefinition.getDescriptionMap();
-	}
-
-	@Override
-	public Map<java.lang.String, java.lang.String> getLanguageIdToDescriptionMap() {
-		return _cpDefinition.getLanguageIdToDescriptionMap();
-	}
-
-	@Override
-	public Map<java.lang.String, java.lang.String> getLanguageIdToMetaDescriptionMap() {
-		return _cpDefinition.getLanguageIdToMetaDescriptionMap();
-	}
-
-	@Override
-	public Map<java.lang.String, java.lang.String> getLanguageIdToMetaKeywordsMap() {
-		return _cpDefinition.getLanguageIdToMetaKeywordsMap();
-	}
-
-	@Override
-	public Map<java.lang.String, java.lang.String> getLanguageIdToMetaTitleMap() {
-		return _cpDefinition.getLanguageIdToMetaTitleMap();
-	}
-
-	@Override
-	public Map<java.lang.String, java.lang.String> getLanguageIdToShortDescriptionMap() {
-		return _cpDefinition.getLanguageIdToShortDescriptionMap();
-	}
-
-	@Override
-	public Map<java.lang.String, java.lang.String> getLanguageIdToTitleMap() {
-		return _cpDefinition.getLanguageIdToTitleMap();
-	}
-
-	@Override
-	public Map<java.util.Locale, java.lang.String> getMetaDescriptionMap() {
-		return _cpDefinition.getMetaDescriptionMap();
-	}
-
-	@Override
-	public Map<java.util.Locale, java.lang.String> getMetaKeywordsMap() {
-		return _cpDefinition.getMetaKeywordsMap();
-	}
-
-	@Override
-	public Map<java.util.Locale, java.lang.String> getMetaTitleMap() {
-		return _cpDefinition.getMetaTitleMap();
-	}
-
-	@Override
-	public Map<java.util.Locale, java.lang.String> getShortDescriptionMap() {
-		return _cpDefinition.getShortDescriptionMap();
-	}
-
-	@Override
-	public Map<java.util.Locale, java.lang.String> getTitleMap() {
-		return _cpDefinition.getTitleMap();
-	}
-
-	@Override
-	public Map<java.util.Locale, java.lang.String> getUrlTitleMap() {
-		return _cpDefinition.getUrlTitleMap();
-	}
-
-	/**
-	* Returns the cp definition ID of this cp definition.
-	*
-	* @return the cp definition ID of this cp definition
-	*/
-	@Override
-	public long getCPDefinitionId() {
-		return _cpDefinition.getCPDefinitionId();
-	}
-
-	/**
-	* Returns the company ID of this cp definition.
-	*
-	* @return the company ID of this cp definition
-	*/
-	@Override
-	public long getCompanyId() {
-		return _cpDefinition.getCompanyId();
-	}
-
-	/**
-	* Returns the group ID of this cp definition.
-	*
-	* @return the group ID of this cp definition
-	*/
-	@Override
-	public long getGroupId() {
-		return _cpDefinition.getGroupId();
-	}
-
-	/**
-	* Returns the primary key of this cp definition.
-	*
-	* @return the primary key of this cp definition
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _cpDefinition.getPrimaryKey();
-	}
-
-	/**
-	* Returns the status by user ID of this cp definition.
-	*
-	* @return the status by user ID of this cp definition
-	*/
-	@Override
-	public long getStatusByUserId() {
-		return _cpDefinition.getStatusByUserId();
-	}
-
-	/**
-	* Returns the class primary key of the trash entry for this cp definition.
-	*
-	* @return the class primary key of the trash entry for this cp definition
-	*/
-	@Override
-	public long getTrashEntryClassPK() {
-		return _cpDefinition.getTrashEntryClassPK();
-	}
-
-	/**
-	* Returns the user ID of this cp definition.
-	*
-	* @return the user ID of this cp definition
-	*/
-	@Override
-	public long getUserId() {
-		return _cpDefinition.getUserId();
 	}
 
 	@Override
@@ -1087,16 +1062,6 @@ public class CPDefinitionWrapper implements CPDefinition,
 		_cpDefinition.setBaseSKU(baseSKU);
 	}
 
-	/**
-	* Sets the cp definition ID of this cp definition.
-	*
-	* @param CPDefinitionId the cp definition ID of this cp definition
-	*/
-	@Override
-	public void setCPDefinitionId(long CPDefinitionId) {
-		_cpDefinition.setCPDefinitionId(CPDefinitionId);
-	}
-
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_cpDefinition.setCachedModel(cachedModel);
@@ -1110,6 +1075,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public void setCompanyId(long companyId) {
 		_cpDefinition.setCompanyId(companyId);
+	}
+
+	/**
+	* Sets the cp definition ID of this cp definition.
+	*
+	* @param CPDefinitionId the cp definition ID of this cp definition
+	*/
+	@Override
+	public void setCPDefinitionId(long CPDefinitionId) {
+		_cpDefinition.setCPDefinitionId(CPDefinitionId);
 	}
 
 	/**
@@ -1169,14 +1144,14 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_cpDefinition.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_cpDefinition.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_cpDefinition.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -1445,6 +1420,31 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public void setWidth(double width) {
 		_cpDefinition.setWidth(width);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<CPDefinition> toCacheModel() {
+		return _cpDefinition.toCacheModel();
+	}
+
+	@Override
+	public CPDefinition toEscapedModel() {
+		return new CPDefinitionWrapper(_cpDefinition.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _cpDefinition.toString();
+	}
+
+	@Override
+	public CPDefinition toUnescapedModel() {
+		return new CPDefinitionWrapper(_cpDefinition.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _cpDefinition.toXmlString();
 	}
 
 	@Override

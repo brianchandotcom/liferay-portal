@@ -71,6 +71,17 @@ public class CPInstanceLocalServiceUtil {
 			neverExpire, serviceContext);
 	}
 
+	public static void buildCPInstances(long cpDefinitionId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().buildCPInstances(cpDefinitionId, serviceContext);
+	}
+
+	public static void checkCPInstances()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().checkCPInstances();
+	}
+
 	/**
 	* Creates a new cp instance with the primary key. Does not add the cp instance to the database.
 	*
@@ -108,104 +119,9 @@ public class CPInstanceLocalServiceUtil {
 		return getService().deleteCPInstance(CPInstanceId);
 	}
 
-	public static com.liferay.commerce.product.model.CPInstance fetchCPInstance(
-		long CPInstanceId) {
-		return getService().fetchCPInstance(CPInstanceId);
-	}
-
-	/**
-	* Returns the cp instance matching the UUID and group.
-	*
-	* @param uuid the cp instance's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp instance, or <code>null</code> if a matching cp instance could not be found
-	*/
-	public static com.liferay.commerce.product.model.CPInstance fetchCPInstanceByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return getService().fetchCPInstanceByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Returns the cp instance with the primary key.
-	*
-	* @param CPInstanceId the primary key of the cp instance
-	* @return the cp instance
-	* @throws PortalException if a cp instance with the primary key could not be found
-	*/
-	public static com.liferay.commerce.product.model.CPInstance getCPInstance(
-		long CPInstanceId)
+	public static void deleteCPInstances(long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCPInstance(CPInstanceId);
-	}
-
-	/**
-	* Returns the cp instance matching the UUID and group.
-	*
-	* @param uuid the cp instance's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp instance
-	* @throws PortalException if a matching cp instance could not be found
-	*/
-	public static com.liferay.commerce.product.model.CPInstance getCPInstanceByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCPInstanceByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Updates the cp instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param cpInstance the cp instance
-	* @return the cp instance that was updated
-	*/
-	public static com.liferay.commerce.product.model.CPInstance updateCPInstance(
-		com.liferay.commerce.product.model.CPInstance cpInstance) {
-		return getService().updateCPInstance(cpInstance);
-	}
-
-	public static com.liferay.commerce.product.model.CPInstance updateCPInstance(
-		long cpInstanceId, java.lang.String sku, java.lang.String gtin,
-		java.lang.String manufacturerPartNumber, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateCPInstance(cpInstanceId, sku, gtin,
-			manufacturerPartNumber, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
-	}
-
-	public static com.liferay.commerce.product.model.CPInstance updateStatus(
-		long userId, long cpInstanceId, int status,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext,
-		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateStatus(userId, cpInstanceId, status, serviceContext,
-			workflowContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
+		getService().deleteCPInstances(cpDefinitionId);
 	}
 
 	/**
@@ -217,51 +133,8 @@ public class CPInstanceLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPInstance> searchCPInstances(
-		long companyId, long groupId, long cpDefinitionId,
-		java.lang.String keywords, int status, int start, int end,
-		com.liferay.portal.kernel.search.Sort sort)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .searchCPInstances(companyId, groupId, cpDefinitionId,
-			keywords, status, start, end, sort);
-	}
-
-	public static com.liferay.portal.kernel.search.Hits search(
-		com.liferay.portal.kernel.search.SearchContext searchContext) {
-		return getService().search(searchContext);
-	}
-
-	/**
-	* Returns the number of cp instances.
-	*
-	* @return the number of cp instances
-	*/
-	public static int getCPInstancesCount() {
-		return getService().getCPInstancesCount();
-	}
-
-	public static int getCPInstancesCount(long cpDefinitionId, int status) {
-		return getService().getCPInstancesCount(cpDefinitionId, status);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static java.lang.String[] getSKUs(long cpDefinitionId) {
-		return getService().getSKUs(cpDefinitionId);
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -312,6 +185,78 @@ public class CPInstanceLocalServiceUtil {
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static com.liferay.commerce.product.model.CPInstance fetchCPInstance(
+		long CPInstanceId) {
+		return getService().fetchCPInstance(CPInstanceId);
+	}
+
+	/**
+	* Returns the cp instance matching the UUID and group.
+	*
+	* @param uuid the cp instance's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp instance, or <code>null</code> if a matching cp instance could not be found
+	*/
+	public static com.liferay.commerce.product.model.CPInstance fetchCPInstanceByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return getService().fetchCPInstanceByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the cp instance with the primary key.
+	*
+	* @param CPInstanceId the primary key of the cp instance
+	* @return the cp instance
+	* @throws PortalException if a cp instance with the primary key could not be found
+	*/
+	public static com.liferay.commerce.product.model.CPInstance getCPInstance(
+		long CPInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCPInstance(CPInstanceId);
+	}
+
+	/**
+	* Returns the cp instance matching the UUID and group.
+	*
+	* @param uuid the cp instance's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp instance
+	* @throws PortalException if a matching cp instance could not be found
+	*/
+	public static com.liferay.commerce.product.model.CPInstance getCPInstanceByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCPInstanceByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -374,43 +319,98 @@ public class CPInstanceLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of cp instances.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of cp instances
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
+	public static int getCPInstancesCount() {
+		return getService().getCPInstancesCount();
+	}
+
+	public static int getCPInstancesCount(long cpDefinitionId, int status) {
+		return getService().getCPInstancesCount(cpDefinitionId, status);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static void buildCPInstances(long cpDefinitionId,
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static java.lang.String[] getSKUs(long cpDefinitionId) {
+		return getService().getSKUs(cpDefinitionId);
+	}
+
+	public static com.liferay.portal.kernel.search.Hits search(
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return getService().search(searchContext);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPInstance> searchCPInstances(
+		long companyId, long groupId, long cpDefinitionId,
+		java.lang.String keywords, int status, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchCPInstances(companyId, groupId, cpDefinitionId,
+			keywords, status, start, end, sort);
+	}
+
+	/**
+	* Updates the cp instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param cpInstance the cp instance
+	* @return the cp instance that was updated
+	*/
+	public static com.liferay.commerce.product.model.CPInstance updateCPInstance(
+		com.liferay.commerce.product.model.CPInstance cpInstance) {
+		return getService().updateCPInstance(cpInstance);
+	}
+
+	public static com.liferay.commerce.product.model.CPInstance updateCPInstance(
+		long cpInstanceId, java.lang.String sku, java.lang.String gtin,
+		java.lang.String manufacturerPartNumber, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().buildCPInstances(cpDefinitionId, serviceContext);
+		return getService()
+				   .updateCPInstance(cpInstanceId, sku, gtin,
+			manufacturerPartNumber, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
 
-	public static void checkCPInstances()
+	public static com.liferay.commerce.product.model.CPInstance updateStatus(
+		long userId, long cpInstanceId, int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext,
+		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().checkCPInstances();
-	}
-
-	public static void deleteCPInstances(long cpDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteCPInstances(cpDefinitionId);
+		return getService()
+				   .updateStatus(userId, cpInstanceId, status, serviceContext,
+			workflowContext);
 	}
 
 	public static CPInstanceLocalService getService() {

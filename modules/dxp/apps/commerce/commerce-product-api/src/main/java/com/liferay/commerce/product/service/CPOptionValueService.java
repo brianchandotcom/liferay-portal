@@ -81,19 +81,14 @@ public interface CPOptionValueService extends BaseService {
 	public CPOptionValue getCPOptionValue(long cpOptionValueId)
 		throws PortalException;
 
-	public CPOptionValue updateCPOptionValue(long cpOptionValueId,
-		Map<Locale, java.lang.String> titleMap, double priority,
-		java.lang.String key, ServiceContext serviceContext)
-		throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPOptionValue> getCPOptionValues(long cpOptionId, int start,
+		int end) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BaseModelSearchResult<CPOptionValue> searchCPOptionValues(
-		long companyId, long groupId, long cpOptionId,
-		java.lang.String keywords, int start, int end, Sort sort)
+	public List<CPOptionValue> getCPOptionValues(long cpOptionId, int start,
+		int end, OrderByComparator<CPOptionValue> orderByComparator)
 		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(SearchContext searchContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPOptionValuesCount(long cpOptionId)
@@ -107,11 +102,16 @@ public interface CPOptionValueService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPOptionValue> getCPOptionValues(long cpOptionId, int start,
-		int end) throws PortalException;
+	public Hits search(SearchContext searchContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPOptionValue> getCPOptionValues(long cpOptionId, int start,
-		int end, OrderByComparator<CPOptionValue> orderByComparator)
+	public BaseModelSearchResult<CPOptionValue> searchCPOptionValues(
+		long companyId, long groupId, long cpOptionId,
+		java.lang.String keywords, int start, int end, Sort sort)
+		throws PortalException;
+
+	public CPOptionValue updateCPOptionValue(long cpOptionValueId,
+		Map<Locale, java.lang.String> titleMap, double priority,
+		java.lang.String key, ServiceContext serviceContext)
 		throws PortalException;
 }

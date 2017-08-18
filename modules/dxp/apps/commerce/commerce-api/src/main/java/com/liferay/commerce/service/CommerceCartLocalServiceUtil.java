@@ -97,83 +97,6 @@ public class CommerceCartLocalServiceUtil {
 		return getService().deleteCommerceCart(commerceCartId);
 	}
 
-	public static com.liferay.commerce.model.CommerceCart fetchCommerceCart(
-		long commerceCartId) {
-		return getService().fetchCommerceCart(commerceCartId);
-	}
-
-	/**
-	* Returns the commerce cart matching the UUID and group.
-	*
-	* @param uuid the commerce cart's UUID
-	* @param groupId the primary key of the group
-	* @return the matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
-	*/
-	public static com.liferay.commerce.model.CommerceCart fetchCommerceCartByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return getService().fetchCommerceCartByUuidAndGroupId(uuid, groupId);
-	}
-
-	public static com.liferay.commerce.model.CommerceCart fetchDefaultCommerceCart(
-		long groupId, long userId, int type, java.lang.String name) {
-		return getService().fetchDefaultCommerceCart(groupId, userId, type, name);
-	}
-
-	/**
-	* Returns the commerce cart with the primary key.
-	*
-	* @param commerceCartId the primary key of the commerce cart
-	* @return the commerce cart
-	* @throws PortalException if a commerce cart with the primary key could not be found
-	*/
-	public static com.liferay.commerce.model.CommerceCart getCommerceCart(
-		long commerceCartId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCommerceCart(commerceCartId);
-	}
-
-	/**
-	* Returns the commerce cart matching the UUID and group.
-	*
-	* @param uuid the commerce cart's UUID
-	* @param groupId the primary key of the group
-	* @return the matching commerce cart
-	* @throws PortalException if a matching commerce cart could not be found
-	*/
-	public static com.liferay.commerce.model.CommerceCart getCommerceCartByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCommerceCartByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Updates the commerce cart in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param commerceCart the commerce cart
-	* @return the commerce cart that was updated
-	*/
-	public static com.liferay.commerce.model.CommerceCart updateCommerceCart(
-		com.liferay.commerce.model.CommerceCart commerceCart) {
-		return getService().updateCommerceCart(commerceCart);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
 	/**
 	* @throws PortalException
 	*/
@@ -183,32 +106,8 @@ public class CommerceCartLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the number of commerce carts.
-	*
-	* @return the number of commerce carts
-	*/
-	public static int getCommerceCartsCount() {
-		return getService().getCommerceCartsCount();
-	}
-
-	public static int getCommerceCartsCount(long groupId, int type) {
-		return getService().getCommerceCartsCount(groupId, type);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -259,6 +158,83 @@ public class CommerceCartLocalServiceUtil {
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static com.liferay.commerce.model.CommerceCart fetchCommerceCart(
+		long commerceCartId) {
+		return getService().fetchCommerceCart(commerceCartId);
+	}
+
+	/**
+	* Returns the commerce cart matching the UUID and group.
+	*
+	* @param uuid the commerce cart's UUID
+	* @param groupId the primary key of the group
+	* @return the matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
+	*/
+	public static com.liferay.commerce.model.CommerceCart fetchCommerceCartByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return getService().fetchCommerceCartByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static com.liferay.commerce.model.CommerceCart fetchDefaultCommerceCart(
+		long groupId, long userId, int type, java.lang.String name) {
+		return getService().fetchDefaultCommerceCart(groupId, userId, type, name);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the commerce cart with the primary key.
+	*
+	* @param commerceCartId the primary key of the commerce cart
+	* @return the commerce cart
+	* @throws PortalException if a commerce cart with the primary key could not be found
+	*/
+	public static com.liferay.commerce.model.CommerceCart getCommerceCart(
+		long commerceCartId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommerceCart(commerceCartId);
+	}
+
+	/**
+	* Returns the commerce cart matching the UUID and group.
+	*
+	* @param uuid the commerce cart's UUID
+	* @param groupId the primary key of the group
+	* @return the matching commerce cart
+	* @throws PortalException if a matching commerce cart could not be found
+	*/
+	public static com.liferay.commerce.model.CommerceCart getCommerceCartByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommerceCartByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -316,27 +292,51 @@ public class CommerceCartLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of commerce carts.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of commerce carts
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
+	public static int getCommerceCartsCount() {
+		return getService().getCommerceCartsCount();
+	}
+
+	public static int getCommerceCartsCount(long groupId, int type) {
+		return getService().getCommerceCartsCount(groupId, type);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the commerce cart in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param commerceCart the commerce cart
+	* @return the commerce cart that was updated
+	*/
+	public static com.liferay.commerce.model.CommerceCart updateCommerceCart(
+		com.liferay.commerce.model.CommerceCart commerceCart) {
+		return getService().updateCommerceCart(commerceCart);
 	}
 
 	public static CommerceCartLocalService getService() {

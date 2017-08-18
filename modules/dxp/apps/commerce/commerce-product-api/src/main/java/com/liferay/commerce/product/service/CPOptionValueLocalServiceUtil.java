@@ -101,87 +101,9 @@ public class CPOptionValueLocalServiceUtil {
 		return getService().deleteCPOptionValue(CPOptionValueId);
 	}
 
-	public static com.liferay.commerce.product.model.CPOptionValue fetchCPOptionValue(
-		long CPOptionValueId) {
-		return getService().fetchCPOptionValue(CPOptionValueId);
-	}
-
-	/**
-	* Returns the cp option value matching the UUID and group.
-	*
-	* @param uuid the cp option value's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp option value, or <code>null</code> if a matching cp option value could not be found
-	*/
-	public static com.liferay.commerce.product.model.CPOptionValue fetchCPOptionValueByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return getService().fetchCPOptionValueByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Returns the cp option value with the primary key.
-	*
-	* @param CPOptionValueId the primary key of the cp option value
-	* @return the cp option value
-	* @throws PortalException if a cp option value with the primary key could not be found
-	*/
-	public static com.liferay.commerce.product.model.CPOptionValue getCPOptionValue(
-		long CPOptionValueId)
+	public static void deleteCPOptionValues(long cpOptionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCPOptionValue(CPOptionValueId);
-	}
-
-	/**
-	* Returns the cp option value matching the UUID and group.
-	*
-	* @param uuid the cp option value's UUID
-	* @param groupId the primary key of the group
-	* @return the matching cp option value
-	* @throws PortalException if a matching cp option value could not be found
-	*/
-	public static com.liferay.commerce.product.model.CPOptionValue getCPOptionValueByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCPOptionValueByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Updates the cp option value in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param cpOptionValue the cp option value
-	* @return the cp option value that was updated
-	*/
-	public static com.liferay.commerce.product.model.CPOptionValue updateCPOptionValue(
-		com.liferay.commerce.product.model.CPOptionValue cpOptionValue) {
-		return getService().updateCPOptionValue(cpOptionValue);
-	}
-
-	public static com.liferay.commerce.product.model.CPOptionValue updateCPOptionValue(
-		long cpOptionValueId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		double priority, java.lang.String key,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateCPOptionValue(cpOptionValueId, titleMap, priority,
-			key, serviceContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
+		getService().deleteCPOptionValues(cpOptionId);
 	}
 
 	/**
@@ -193,47 +115,8 @@ public class CPOptionValueLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPOptionValue> searchCPOptionValues(
-		long companyId, long groupId, long cpOptionId,
-		java.lang.String keywords, int start, int end,
-		com.liferay.portal.kernel.search.Sort sort)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .searchCPOptionValues(companyId, groupId, cpOptionId,
-			keywords, start, end, sort);
-	}
-
-	public static com.liferay.portal.kernel.search.Hits search(
-		com.liferay.portal.kernel.search.SearchContext searchContext) {
-		return getService().search(searchContext);
-	}
-
-	/**
-	* Returns the number of cp option values.
-	*
-	* @return the number of cp option values
-	*/
-	public static int getCPOptionValuesCount() {
-		return getService().getCPOptionValuesCount();
-	}
-
-	public static int getCPOptionValuesCount(long cpOptionId) {
-		return getService().getCPOptionValuesCount(cpOptionId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -284,6 +167,78 @@ public class CPOptionValueLocalServiceUtil {
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static com.liferay.commerce.product.model.CPOptionValue fetchCPOptionValue(
+		long CPOptionValueId) {
+		return getService().fetchCPOptionValue(CPOptionValueId);
+	}
+
+	/**
+	* Returns the cp option value matching the UUID and group.
+	*
+	* @param uuid the cp option value's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp option value, or <code>null</code> if a matching cp option value could not be found
+	*/
+	public static com.liferay.commerce.product.model.CPOptionValue fetchCPOptionValueByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return getService().fetchCPOptionValueByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the cp option value with the primary key.
+	*
+	* @param CPOptionValueId the primary key of the cp option value
+	* @return the cp option value
+	* @throws PortalException if a cp option value with the primary key could not be found
+	*/
+	public static com.liferay.commerce.product.model.CPOptionValue getCPOptionValue(
+		long CPOptionValueId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCPOptionValue(CPOptionValueId);
+	}
+
+	/**
+	* Returns the cp option value matching the UUID and group.
+	*
+	* @param uuid the cp option value's UUID
+	* @param groupId the primary key of the group
+	* @return the matching cp option value
+	* @throws PortalException if a matching cp option value could not be found
+	*/
+	public static com.liferay.commerce.product.model.CPOptionValue getCPOptionValueByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCPOptionValueByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -345,32 +300,77 @@ public class CPOptionValueLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of cp option values.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of cp option values
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
+	public static int getCPOptionValuesCount() {
+		return getService().getCPOptionValuesCount();
+	}
+
+	public static int getCPOptionValuesCount(long cpOptionId) {
+		return getService().getCPOptionValuesCount(cpOptionId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static void deleteCPOptionValues(long cpOptionId)
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteCPOptionValues(cpOptionId);
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static com.liferay.portal.kernel.search.Hits search(
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return getService().search(searchContext);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPOptionValue> searchCPOptionValues(
+		long companyId, long groupId, long cpOptionId,
+		java.lang.String keywords, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchCPOptionValues(companyId, groupId, cpOptionId,
+			keywords, start, end, sort);
+	}
+
+	/**
+	* Updates the cp option value in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param cpOptionValue the cp option value
+	* @return the cp option value that was updated
+	*/
+	public static com.liferay.commerce.product.model.CPOptionValue updateCPOptionValue(
+		com.liferay.commerce.product.model.CPOptionValue cpOptionValue) {
+		return getService().updateCPOptionValue(cpOptionValue);
+	}
+
+	public static com.liferay.commerce.product.model.CPOptionValue updateCPOptionValue(
+		long cpOptionValueId,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		double priority, java.lang.String key,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCPOptionValue(cpOptionValueId, titleMap, priority,
+			key, serviceContext);
 	}
 
 	public static CPOptionValueLocalService getService() {

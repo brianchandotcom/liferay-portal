@@ -155,28 +155,23 @@ public class CPDefinitionGroupedEntryWrapper implements CPDefinitionGroupedEntry
 	}
 
 	@Override
-	public CPDefinitionGroupedEntry toEscapedModel() {
-		return new CPDefinitionGroupedEntryWrapper(_cpDefinitionGroupedEntry.toEscapedModel());
+	public java.lang.Object clone() {
+		return new CPDefinitionGroupedEntryWrapper((CPDefinitionGroupedEntry)_cpDefinitionGroupedEntry.clone());
 	}
 
 	@Override
-	public CPDefinitionGroupedEntry toUnescapedModel() {
-		return new CPDefinitionGroupedEntryWrapper(_cpDefinitionGroupedEntry.toUnescapedModel());
+	public int compareTo(CPDefinitionGroupedEntry cpDefinitionGroupedEntry) {
+		return _cpDefinitionGroupedEntry.compareTo(cpDefinitionGroupedEntry);
 	}
 
+	/**
+	* Returns the company ID of this cp definition grouped entry.
+	*
+	* @return the company ID of this cp definition grouped entry
+	*/
 	@Override
-	public boolean isCachedModel() {
-		return _cpDefinitionGroupedEntry.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _cpDefinitionGroupedEntry.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _cpDefinitionGroupedEntry.isNew();
+	public long getCompanyId() {
+		return _cpDefinitionGroupedEntry.getCompanyId();
 	}
 
 	@Override
@@ -185,10 +180,50 @@ public class CPDefinitionGroupedEntryWrapper implements CPDefinitionGroupedEntry
 		return _cpDefinitionGroupedEntry.getCPDefinition();
 	}
 
+	/**
+	* Returns the cp definition grouped entry ID of this cp definition grouped entry.
+	*
+	* @return the cp definition grouped entry ID of this cp definition grouped entry
+	*/
+	@Override
+	public long getCPDefinitionGroupedEntryId() {
+		return _cpDefinitionGroupedEntry.getCPDefinitionGroupedEntryId();
+	}
+
+	/**
+	* Returns the cp definition ID of this cp definition grouped entry.
+	*
+	* @return the cp definition ID of this cp definition grouped entry
+	*/
+	@Override
+	public long getCPDefinitionId() {
+		return _cpDefinitionGroupedEntry.getCPDefinitionId();
+	}
+
+	/**
+	* Returns the create date of this cp definition grouped entry.
+	*
+	* @return the create date of this cp definition grouped entry
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _cpDefinitionGroupedEntry.getCreateDate();
+	}
+
 	@Override
 	public com.liferay.commerce.product.model.CPDefinition getEntryCPDefinition()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionGroupedEntry.getEntryCPDefinition();
+	}
+
+	/**
+	* Returns the entry cp definition ID of this cp definition grouped entry.
+	*
+	* @return the entry cp definition ID of this cp definition grouped entry
+	*/
+	@Override
+	public long getEntryCPDefinitionId() {
+		return _cpDefinitionGroupedEntry.getEntryCPDefinitionId();
 	}
 
 	@Override
@@ -196,9 +231,39 @@ public class CPDefinitionGroupedEntryWrapper implements CPDefinitionGroupedEntry
 		return _cpDefinitionGroupedEntry.getExpandoBridge();
 	}
 
+	/**
+	* Returns the group ID of this cp definition grouped entry.
+	*
+	* @return the group ID of this cp definition grouped entry
+	*/
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CPDefinitionGroupedEntry> toCacheModel() {
-		return _cpDefinitionGroupedEntry.toCacheModel();
+	public long getGroupId() {
+		return _cpDefinitionGroupedEntry.getGroupId();
+	}
+
+	/**
+	* Returns the modified date of this cp definition grouped entry.
+	*
+	* @return the modified date of this cp definition grouped entry
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _cpDefinitionGroupedEntry.getModifiedDate();
+	}
+
+	/**
+	* Returns the primary key of this cp definition grouped entry.
+	*
+	* @return the primary key of this cp definition grouped entry
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _cpDefinitionGroupedEntry.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _cpDefinitionGroupedEntry.getPrimaryKeyObj();
 	}
 
 	/**
@@ -211,11 +276,6 @@ public class CPDefinitionGroupedEntryWrapper implements CPDefinitionGroupedEntry
 		return _cpDefinitionGroupedEntry.getPriority();
 	}
 
-	@Override
-	public int compareTo(CPDefinitionGroupedEntry cpDefinitionGroupedEntry) {
-		return _cpDefinitionGroupedEntry.compareTo(cpDefinitionGroupedEntry);
-	}
-
 	/**
 	* Returns the quantity of this cp definition grouped entry.
 	*
@@ -226,19 +286,14 @@ public class CPDefinitionGroupedEntryWrapper implements CPDefinitionGroupedEntry
 		return _cpDefinitionGroupedEntry.getQuantity();
 	}
 
+	/**
+	* Returns the user ID of this cp definition grouped entry.
+	*
+	* @return the user ID of this cp definition grouped entry
+	*/
 	@Override
-	public int hashCode() {
-		return _cpDefinitionGroupedEntry.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _cpDefinitionGroupedEntry.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new CPDefinitionGroupedEntryWrapper((CPDefinitionGroupedEntry)_cpDefinitionGroupedEntry.clone());
+	public long getUserId() {
+		return _cpDefinitionGroupedEntry.getUserId();
 	}
 
 	/**
@@ -272,108 +327,43 @@ public class CPDefinitionGroupedEntryWrapper implements CPDefinitionGroupedEntry
 	}
 
 	@Override
-	public java.lang.String toString() {
-		return _cpDefinitionGroupedEntry.toString();
+	public int hashCode() {
+		return _cpDefinitionGroupedEntry.hashCode();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _cpDefinitionGroupedEntry.toXmlString();
+	public boolean isCachedModel() {
+		return _cpDefinitionGroupedEntry.isCachedModel();
 	}
 
-	/**
-	* Returns the create date of this cp definition grouped entry.
-	*
-	* @return the create date of this cp definition grouped entry
-	*/
 	@Override
-	public Date getCreateDate() {
-		return _cpDefinitionGroupedEntry.getCreateDate();
+	public boolean isEscapedModel() {
+		return _cpDefinitionGroupedEntry.isEscapedModel();
 	}
 
-	/**
-	* Returns the modified date of this cp definition grouped entry.
-	*
-	* @return the modified date of this cp definition grouped entry
-	*/
 	@Override
-	public Date getModifiedDate() {
-		return _cpDefinitionGroupedEntry.getModifiedDate();
-	}
-
-	/**
-	* Returns the cp definition grouped entry ID of this cp definition grouped entry.
-	*
-	* @return the cp definition grouped entry ID of this cp definition grouped entry
-	*/
-	@Override
-	public long getCPDefinitionGroupedEntryId() {
-		return _cpDefinitionGroupedEntry.getCPDefinitionGroupedEntryId();
-	}
-
-	/**
-	* Returns the cp definition ID of this cp definition grouped entry.
-	*
-	* @return the cp definition ID of this cp definition grouped entry
-	*/
-	@Override
-	public long getCPDefinitionId() {
-		return _cpDefinitionGroupedEntry.getCPDefinitionId();
-	}
-
-	/**
-	* Returns the company ID of this cp definition grouped entry.
-	*
-	* @return the company ID of this cp definition grouped entry
-	*/
-	@Override
-	public long getCompanyId() {
-		return _cpDefinitionGroupedEntry.getCompanyId();
-	}
-
-	/**
-	* Returns the entry cp definition ID of this cp definition grouped entry.
-	*
-	* @return the entry cp definition ID of this cp definition grouped entry
-	*/
-	@Override
-	public long getEntryCPDefinitionId() {
-		return _cpDefinitionGroupedEntry.getEntryCPDefinitionId();
-	}
-
-	/**
-	* Returns the group ID of this cp definition grouped entry.
-	*
-	* @return the group ID of this cp definition grouped entry
-	*/
-	@Override
-	public long getGroupId() {
-		return _cpDefinitionGroupedEntry.getGroupId();
-	}
-
-	/**
-	* Returns the primary key of this cp definition grouped entry.
-	*
-	* @return the primary key of this cp definition grouped entry
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _cpDefinitionGroupedEntry.getPrimaryKey();
-	}
-
-	/**
-	* Returns the user ID of this cp definition grouped entry.
-	*
-	* @return the user ID of this cp definition grouped entry
-	*/
-	@Override
-	public long getUserId() {
-		return _cpDefinitionGroupedEntry.getUserId();
+	public boolean isNew() {
+		return _cpDefinitionGroupedEntry.isNew();
 	}
 
 	@Override
 	public void persist() {
 		_cpDefinitionGroupedEntry.persist();
+	}
+
+	@Override
+	public void setCachedModel(boolean cachedModel) {
+		_cpDefinitionGroupedEntry.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this cp definition grouped entry.
+	*
+	* @param companyId the company ID of this cp definition grouped entry
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_cpDefinitionGroupedEntry.setCompanyId(companyId);
 	}
 
 	/**
@@ -394,21 +384,6 @@ public class CPDefinitionGroupedEntryWrapper implements CPDefinitionGroupedEntry
 	@Override
 	public void setCPDefinitionId(long CPDefinitionId) {
 		_cpDefinitionGroupedEntry.setCPDefinitionId(CPDefinitionId);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_cpDefinitionGroupedEntry.setCachedModel(cachedModel);
-	}
-
-	/**
-	* Sets the company ID of this cp definition grouped entry.
-	*
-	* @param companyId the company ID of this cp definition grouped entry
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_cpDefinitionGroupedEntry.setCompanyId(companyId);
 	}
 
 	/**
@@ -432,14 +407,14 @@ public class CPDefinitionGroupedEntryWrapper implements CPDefinitionGroupedEntry
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_cpDefinitionGroupedEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_cpDefinitionGroupedEntry.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_cpDefinitionGroupedEntry.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -545,6 +520,31 @@ public class CPDefinitionGroupedEntryWrapper implements CPDefinitionGroupedEntry
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_cpDefinitionGroupedEntry.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<CPDefinitionGroupedEntry> toCacheModel() {
+		return _cpDefinitionGroupedEntry.toCacheModel();
+	}
+
+	@Override
+	public CPDefinitionGroupedEntry toEscapedModel() {
+		return new CPDefinitionGroupedEntryWrapper(_cpDefinitionGroupedEntry.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _cpDefinitionGroupedEntry.toString();
+	}
+
+	@Override
+	public CPDefinitionGroupedEntry toUnescapedModel() {
+		return new CPDefinitionGroupedEntryWrapper(_cpDefinitionGroupedEntry.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _cpDefinitionGroupedEntry.toXmlString();
 	}
 
 	@Override

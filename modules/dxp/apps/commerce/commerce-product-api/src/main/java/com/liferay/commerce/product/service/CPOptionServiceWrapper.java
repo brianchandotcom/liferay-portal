@@ -46,6 +46,12 @@ public class CPOptionServiceWrapper implements CPOptionService,
 	}
 
 	@Override
+	public void deleteCPOption(long cpOptionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_cpOptionService.deleteCPOption(cpOptionId);
+	}
+
+	@Override
 	public com.liferay.commerce.product.model.CPOption fetchCPOption(
 		long cpOptionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -64,6 +70,50 @@ public class CPOptionServiceWrapper implements CPOptionService,
 		long cpOptionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpOptionService.getCPOption(cpOptionId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPOption> getCPOptions(
+		long groupId, int start, int end) {
+		return _cpOptionService.getCPOptions(groupId, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPOption> getCPOptions(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPOption> orderByComparator) {
+		return _cpOptionService.getCPOptions(groupId, start, end,
+			orderByComparator);
+	}
+
+	@Override
+	public int getCPOptionsCount(long groupId) {
+		return _cpOptionService.getCPOptionsCount(groupId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _cpOptionService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.Hits search(
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return _cpOptionService.search(searchContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPOption> searchCPOptions(
+		long companyId, long groupId, java.lang.String keywords, int start,
+		int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpOptionService.searchCPOptions(companyId, groupId, keywords,
+			start, end, sort);
 	}
 
 	@Override
@@ -99,56 +149,6 @@ public class CPOptionServiceWrapper implements CPOptionService,
 		return _cpOptionService.updateCPOption(cpOptionId, titleMap,
 			descriptionMap, ddmFormFieldTypeName, facetable, required,
 			skuContributor, key, serviceContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPOption> searchCPOptions(
-		long companyId, long groupId, java.lang.String keywords, int start,
-		int end, com.liferay.portal.kernel.search.Sort sort)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpOptionService.searchCPOptions(companyId, groupId, keywords,
-			start, end, sort);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.search.Hits search(
-		com.liferay.portal.kernel.search.SearchContext searchContext) {
-		return _cpOptionService.search(searchContext);
-	}
-
-	@Override
-	public int getCPOptionsCount(long groupId) {
-		return _cpOptionService.getCPOptionsCount(groupId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _cpOptionService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public java.util.List<com.liferay.commerce.product.model.CPOption> getCPOptions(
-		long groupId, int start, int end) {
-		return _cpOptionService.getCPOptions(groupId, start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.commerce.product.model.CPOption> getCPOptions(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPOption> orderByComparator) {
-		return _cpOptionService.getCPOptions(groupId, start, end,
-			orderByComparator);
-	}
-
-	@Override
-	public void deleteCPOption(long cpOptionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_cpOptionService.deleteCPOption(cpOptionId);
 	}
 
 	@Override

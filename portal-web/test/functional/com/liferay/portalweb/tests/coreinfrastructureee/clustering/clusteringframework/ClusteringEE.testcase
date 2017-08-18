@@ -33,6 +33,8 @@
 	<command name="AddAndDeleteBlogEntriesOnSeparateNodes" priority="4">
 		<property name="test.name.skip.portal.instance" value="ClusteringEE#AddAndDeleteBlogEntriesOnSeparateNodes" />
 
+		<execute macro="Clustering#viewClusterStatusInConsole" />
+
 		<execute macro="Page#assertNodePortPG">
 			<var name="nodePort" value="8080" />
 		</execute>
@@ -194,6 +196,8 @@
 	<command name="ValidateDocumentOnSeparateNodes" priority="4">
 		<property name="test.name.skip.portal.instance" value="ClusteringEE#ValidateDocumentOnSeparateNodes" />
 
+		<execute macro="Clustering#viewClusterStatusInConsole" />
+
 		<execute macro="Page#assertNodePortPG">
 			<var name="nodePort" value="8080" />
 		</execute>
@@ -265,6 +269,8 @@
 
 	<!--<command name="ValidateSchedulerOnSeparateNodes" priority="4">
 		<property name="test.name.skip.portal.instance" value="ClusteringEE#ValidateSchedulerOnSeparateNodes" />
+
+		<execute macro="Clustering#viewClusterStatusInConsole" />
 
 		<var name="pageName" value="Home" />
 

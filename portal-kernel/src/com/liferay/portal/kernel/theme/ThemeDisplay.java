@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.admin.kernel.util.PortalMyAccountApplicationType;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.mobile.device.rules.kernel.MDRRuleGroupInstance;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -47,11 +48,14 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.Mergeable;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TimeZoneThreadLocal;
@@ -1918,10 +1922,10 @@ public class ThemeDisplay
 			if (_layouts == null) {
 				_layoutFriendlyURLs = new HashMap<>();
 			}
-			else {
+			else if (_LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN != 0) {
 				_layoutFriendlyURLs =
 					LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
-						_siteGroup, _layouts, _languageId);
+						_siteGroup, _getFriendlyURLLayouts(), _languageId);
 			}
 		}
 
@@ -1935,6 +1939,20 @@ public class ThemeDisplay
 
 		return layoutFriendlyURL;
 	}
+
+	private List<Layout> _getFriendlyURLLayouts() {
+		if ((_LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN == QueryUtil.ALL_POS) ||
+			(_layouts.size() <= _LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN)) {
+
+			return _layouts;
+		}
+
+		return _layouts.subList(0, _LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN);
+	}
+
+	private static final int _LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN =
+		GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN));
 
 	private static final Log _log = LogFactoryUtil.getLog(ThemeDisplay.class);
 

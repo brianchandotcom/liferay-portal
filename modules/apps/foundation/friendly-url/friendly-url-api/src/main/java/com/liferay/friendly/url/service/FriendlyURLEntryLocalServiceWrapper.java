@@ -428,18 +428,18 @@ public class FriendlyURLEntryLocalServiceWrapper
 	}
 
 	@Override
-	public void validate(long groupId, long classNameId,
-		java.lang.String urlTitle)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_friendlyURLEntryLocalService.validate(groupId, classNameId, urlTitle);
-	}
-
-	@Override
 	public void validate(long groupId, long classNameId, long classPK,
 		java.lang.String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_friendlyURLEntryLocalService.validate(groupId, classNameId, classPK,
 			urlTitle);
+	}
+
+	@Override
+	public void validate(long groupId, long classNameId,
+		java.lang.String urlTitle)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_friendlyURLEntryLocalService.validate(groupId, classNameId, urlTitle);
 	}
 
 	@Override

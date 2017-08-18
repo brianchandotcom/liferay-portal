@@ -70,10 +70,10 @@ public interface EntryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public Entry addEntry(Entry entry);
 
-	public Entry addEntry(long fromUserId, long toUserId,
+	public Entry addEntry(long createDate, long fromUserId, long toUserId,
 		java.lang.String content);
 
-	public Entry addEntry(long createDate, long fromUserId, long toUserId,
+	public Entry addEntry(long fromUserId, long toUserId,
 		java.lang.String content);
 
 	/**
@@ -216,15 +216,15 @@ public interface EntryLocalService extends BaseLocalService,
 	public List<Entry> getNewEntries(long userId, long createDate, int start,
 		int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Entry> getOldEntries(long createDate, int start, int end);
+
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Entry> getOldEntries(long createDate, int start, int end);
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

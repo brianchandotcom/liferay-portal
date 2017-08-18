@@ -32,18 +32,6 @@ public class MessageLocalServiceWrapper implements MessageLocalService,
 		_messageLocalService = messageLocalService;
 	}
 
-	/**
-	* Adds the message to the database. Also notifies the appropriate model listeners.
-	*
-	* @param message the message
-	* @return the message that was added
-	*/
-	@Override
-	public com.liferay.mail.reader.model.Message addMessage(
-		com.liferay.mail.reader.model.Message message) {
-		return _messageLocalService.addMessage(message);
-	}
-
 	@Override
 	public com.liferay.mail.reader.model.Message addMessage(long userId,
 		long folderId, java.lang.String sender, java.lang.String to,
@@ -58,6 +46,18 @@ public class MessageLocalServiceWrapper implements MessageLocalService,
 	}
 
 	/**
+	* Adds the message to the database. Also notifies the appropriate model listeners.
+	*
+	* @param message the message
+	* @return the message that was added
+	*/
+	@Override
+	public com.liferay.mail.reader.model.Message addMessage(
+		com.liferay.mail.reader.model.Message message) {
+		return _messageLocalService.addMessage(message);
+	}
+
+	/**
 	* Creates a new message with the primary key. Does not add the message to the database.
 	*
 	* @param messageId the primary key for the new message
@@ -66,6 +66,19 @@ public class MessageLocalServiceWrapper implements MessageLocalService,
 	@Override
 	public com.liferay.mail.reader.model.Message createMessage(long messageId) {
 		return _messageLocalService.createMessage(messageId);
+	}
+
+	/**
+	* Deletes the message with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param messageId the primary key of the message
+	* @return the message that was removed
+	* @throws PortalException if a message with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.mail.reader.model.Message deleteMessage(long messageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _messageLocalService.deleteMessage(messageId);
 	}
 
 	/**
@@ -80,19 +93,6 @@ public class MessageLocalServiceWrapper implements MessageLocalService,
 		com.liferay.mail.reader.model.Message message)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _messageLocalService.deleteMessage(message);
-	}
-
-	/**
-	* Deletes the message with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param messageId the primary key of the message
-	* @return the message that was removed
-	* @throws PortalException if a message with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.mail.reader.model.Message deleteMessage(long messageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _messageLocalService.deleteMessage(messageId);
 	}
 
 	@Override
@@ -337,6 +337,17 @@ public class MessageLocalServiceWrapper implements MessageLocalService,
 		return _messageLocalService.updateFlag(messageId, flag, value);
 	}
 
+	@Override
+	public com.liferay.mail.reader.model.Message updateMessage(long messageId,
+		long folderId, java.lang.String sender, java.lang.String to,
+		java.lang.String cc, java.lang.String bcc, java.util.Date sentDate,
+		java.lang.String subject, java.lang.String body,
+		java.lang.String flags, long remoteMessageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _messageLocalService.updateMessage(messageId, folderId, sender,
+			to, cc, bcc, sentDate, subject, body, flags, remoteMessageId);
+	}
+
 	/**
 	* Updates the message in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -347,17 +358,6 @@ public class MessageLocalServiceWrapper implements MessageLocalService,
 	public com.liferay.mail.reader.model.Message updateMessage(
 		com.liferay.mail.reader.model.Message message) {
 		return _messageLocalService.updateMessage(message);
-	}
-
-	@Override
-	public com.liferay.mail.reader.model.Message updateMessage(long messageId,
-		long folderId, java.lang.String sender, java.lang.String to,
-		java.lang.String cc, java.lang.String bcc, java.util.Date sentDate,
-		java.lang.String subject, java.lang.String body,
-		java.lang.String flags, long remoteMessageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _messageLocalService.updateMessage(messageId, folderId, sender,
-			to, cc, bcc, sentDate, subject, body, flags, remoteMessageId);
 	}
 
 	@Override

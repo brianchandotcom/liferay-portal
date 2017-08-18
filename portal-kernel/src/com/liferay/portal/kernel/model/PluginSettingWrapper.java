@@ -230,6 +230,11 @@ public class PluginSettingWrapper implements PluginSetting,
 		return _pluginSetting.getRolesArray();
 	}
 
+	@Override
+	public int hashCode() {
+		return _pluginSetting.hashCode();
+	}
+
 	/**
 	* Returns <code>true</code> if the user has permission to use this plugin
 	*
@@ -252,11 +257,6 @@ public class PluginSettingWrapper implements PluginSetting,
 	@Override
 	public boolean hasRoleWithName(java.lang.String roleName) {
 		return _pluginSetting.hasRoleWithName(roleName);
-	}
-
-	@Override
-	public int hashCode() {
-		return _pluginSetting.hashCode();
 	}
 
 	/**
@@ -315,13 +315,13 @@ public class PluginSettingWrapper implements PluginSetting,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_pluginSetting.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_pluginSetting.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_pluginSetting.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_pluginSetting.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

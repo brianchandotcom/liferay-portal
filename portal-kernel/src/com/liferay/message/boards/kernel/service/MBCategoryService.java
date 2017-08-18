@@ -54,6 +54,10 @@ public interface MBCategoryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MBCategoryServiceUtil} to access the message boards category remote service. Add custom service methods to {@link com.liferay.portlet.messageboards.service.impl.MBCategoryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public MBCategory addCategory(long userId, long parentCategoryId,
+		java.lang.String name, java.lang.String description,
+		ServiceContext serviceContext) throws PortalException;
+
 	public MBCategory addCategory(long parentCategoryId, java.lang.String name,
 		java.lang.String description, java.lang.String displayStyle,
 		java.lang.String emailAddress, java.lang.String inProtocol,
@@ -65,10 +69,6 @@ public interface MBCategoryService extends BaseService {
 		java.lang.String outPassword, boolean mailingListActive,
 		boolean allowAnonymousEmail, ServiceContext serviceContext)
 		throws PortalException;
-
-	public MBCategory addCategory(long userId, long parentCategoryId,
-		java.lang.String name, java.lang.String description,
-		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteCategory(long categoryId, boolean includeTrashedEntries)
 		throws PortalException;
@@ -114,10 +114,6 @@ public interface MBCategoryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<java.lang.Object> getCategoriesAndThreads(long groupId,
-		long categoryId, QueryDefinition<?> queryDefinition);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getCategoriesAndThreads(long groupId,
 		long categoryId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -130,15 +126,19 @@ public interface MBCategoryService extends BaseService {
 		OrderByComparator<?> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<java.lang.Object> getCategoriesAndThreads(long groupId,
+		long categoryId, QueryDefinition<?> queryDefinition);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCategoriesAndThreadsCount(long groupId, long categoryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCategoriesAndThreadsCount(long groupId, long categoryId,
-		QueryDefinition<?> queryDefinition);
+		int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCategoriesAndThreadsCount(long groupId, long categoryId,
-		int status);
+		QueryDefinition<?> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCategoriesCount(long groupId, long[] parentCategoryIds);

@@ -87,16 +87,6 @@ public interface ShoppingItemFieldLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the shopping item field from the database. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingItemField the shopping item field
-	* @return the shopping item field that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public ShoppingItemField deleteShoppingItemField(
-		ShoppingItemField shoppingItemField);
-
-	/**
 	* Deletes the shopping item field with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param itemFieldId the primary key of the shopping item field
@@ -106,6 +96,16 @@ public interface ShoppingItemFieldLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public ShoppingItemField deleteShoppingItemField(long itemFieldId)
 		throws PortalException;
+
+	/**
+	* Deletes the shopping item field from the database. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingItemField the shopping item field
+	* @return the shopping item field that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public ShoppingItemField deleteShoppingItemField(
+		ShoppingItemField shoppingItemField);
 
 	public DynamicQuery dynamicQuery();
 

@@ -116,17 +116,17 @@ public interface DLFileEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileEntry> getFileEntries(long groupId, long folderId,
-		int start, int end, OrderByComparator<DLFileEntry> obc)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DLFileEntry> getFileEntries(long groupId, long folderId,
 		int status, int start, int end, OrderByComparator<DLFileEntry> obc)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileEntry> getFileEntries(long groupId, long folderId,
-		java.lang.String[] mimeTypes, int start, int end,
+		int start, int end, OrderByComparator<DLFileEntry> obc)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DLFileEntry> getFileEntries(long groupId, long folderId,
+		long fileEntryTypeId, int start, int end,
 		OrderByComparator<DLFileEntry> obc) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -136,7 +136,7 @@ public interface DLFileEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileEntry> getFileEntries(long groupId, long folderId,
-		long fileEntryTypeId, int start, int end,
+		java.lang.String[] mimeTypes, int start, int end,
 		OrderByComparator<DLFileEntry> obc) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -147,15 +147,15 @@ public interface DLFileEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFileEntriesCount(long groupId, long folderId,
+		long fileEntryTypeId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFileEntriesCount(long groupId, long folderId,
 		java.lang.String[] mimeTypes);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFileEntriesCount(long groupId, long folderId,
 		java.lang.String[] mimeTypes, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFileEntriesCount(long groupId, long folderId,
-		long fileEntryTypeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFileEntry getFileEntry(long fileEntryId) throws PortalException;
@@ -182,14 +182,14 @@ public interface DLFileEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileEntry> getGroupFileEntries(long groupId, long userId,
-		long rootFolderId, java.lang.String[] mimeTypes, int status, int start,
-		int end, OrderByComparator<DLFileEntry> obc) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DLFileEntry> getGroupFileEntries(long groupId, long userId,
 		long repositoryId, long rootFolderId, java.lang.String[] mimeTypes,
 		int status, int start, int end, OrderByComparator<DLFileEntry> obc)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DLFileEntry> getGroupFileEntries(long groupId, long userId,
+		long rootFolderId, java.lang.String[] mimeTypes, int status, int start,
+		int end, OrderByComparator<DLFileEntry> obc) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupFileEntriesCount(long groupId, long userId,
@@ -197,13 +197,13 @@ public interface DLFileEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupFileEntriesCount(long groupId, long userId,
-		long rootFolderId, java.lang.String[] mimeTypes, int status)
-		throws PortalException;
+		long repositoryId, long rootFolderId, java.lang.String[] mimeTypes,
+		int status) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupFileEntriesCount(long groupId, long userId,
-		long repositoryId, long rootFolderId, java.lang.String[] mimeTypes,
-		int status) throws PortalException;
+		long rootFolderId, java.lang.String[] mimeTypes, int status)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

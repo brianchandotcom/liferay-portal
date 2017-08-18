@@ -780,6 +780,26 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	/**
+	* Returns <code>true</code> if this wiki page is inactive.
+	*
+	* @return <code>true</code> if this wiki page is inactive; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInactive() {
+		return _wikiPage.isInactive();
+	}
+
+	/**
+	* Returns <code>true</code> if this wiki page is incomplete.
+	*
+	* @return <code>true</code> if this wiki page is incomplete; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isIncomplete() {
+		return _wikiPage.isIncomplete();
+	}
+
+	/**
 	* Returns <code>true</code> if this wiki page is in the Recycle Bin.
 	*
 	* @return <code>true</code> if this wiki page is in the Recycle Bin; <code>false</code> otherwise
@@ -807,26 +827,6 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	@Override
 	public boolean isInTrashImplicitly() {
 		return _wikiPage.isInTrashImplicitly();
-	}
-
-	/**
-	* Returns <code>true</code> if this wiki page is inactive.
-	*
-	* @return <code>true</code> if this wiki page is inactive; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isInactive() {
-		return _wikiPage.isInactive();
-	}
-
-	/**
-	* Returns <code>true</code> if this wiki page is incomplete.
-	*
-	* @return <code>true</code> if this wiki page is incomplete; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isIncomplete() {
-		return _wikiPage.isIncomplete();
 	}
 
 	/**
@@ -925,14 +925,14 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_wikiPage.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_wikiPage.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_wikiPage.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

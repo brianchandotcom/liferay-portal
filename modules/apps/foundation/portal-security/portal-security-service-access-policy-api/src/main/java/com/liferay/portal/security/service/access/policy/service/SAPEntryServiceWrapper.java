@@ -45,16 +45,16 @@ public class SAPEntryServiceWrapper implements SAPEntryService,
 
 	@Override
 	public com.liferay.portal.security.service.access.policy.model.SAPEntry deleteSAPEntry(
-		com.liferay.portal.security.service.access.policy.model.SAPEntry sapEntry)
+		long sapEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _sapEntryService.deleteSAPEntry(sapEntry);
+		return _sapEntryService.deleteSAPEntry(sapEntryId);
 	}
 
 	@Override
 	public com.liferay.portal.security.service.access.policy.model.SAPEntry deleteSAPEntry(
-		long sapEntryId)
+		com.liferay.portal.security.service.access.policy.model.SAPEntry sapEntry)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _sapEntryService.deleteSAPEntry(sapEntryId);
+		return _sapEntryService.deleteSAPEntry(sapEntry);
 	}
 
 	@Override

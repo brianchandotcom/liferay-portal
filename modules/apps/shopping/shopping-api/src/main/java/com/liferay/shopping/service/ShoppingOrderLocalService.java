@@ -88,9 +88,9 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	*/
 	public ShoppingOrder createShoppingOrder(long orderId);
 
-	public void deleteOrder(ShoppingOrder order) throws PortalException;
-
 	public void deleteOrder(long orderId) throws PortalException;
+
+	public void deleteOrder(ShoppingOrder order) throws PortalException;
 
 	public void deleteOrders(long groupId) throws PortalException;
 
@@ -102,15 +102,6 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the shopping order from the database. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingOrder the shopping order
-	* @return the shopping order that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public ShoppingOrder deleteShoppingOrder(ShoppingOrder shoppingOrder);
-
-	/**
 	* Deletes the shopping order with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param orderId the primary key of the shopping order
@@ -120,6 +111,15 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public ShoppingOrder deleteShoppingOrder(long orderId)
 		throws PortalException;
+
+	/**
+	* Deletes the shopping order from the database. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingOrder the shopping order
+	* @return the shopping order that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public ShoppingOrder deleteShoppingOrder(ShoppingOrder shoppingOrder);
 
 	public DynamicQuery dynamicQuery();
 
@@ -193,19 +193,19 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 	public ShoppingOrder getLatestOrder(long userId, long groupId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ShoppingOrder getOrder(long orderId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ShoppingOrder getOrder(java.lang.String number)
+		throws PortalException;
+
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ShoppingOrder getOrder(java.lang.String number)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ShoppingOrder getOrder(long orderId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ShoppingOrder getPayPalTxnIdOrder(java.lang.String ppTxnId)
@@ -270,10 +270,10 @@ public interface ShoppingOrderLocalService extends BaseLocalService,
 		java.lang.String shippingEmailAddress,
 		java.lang.String ppPaymentStatus, boolean andOperator);
 
-	public void sendEmail(ShoppingOrder order, java.lang.String emailType,
+	public void sendEmail(long orderId, java.lang.String emailType,
 		ServiceContext serviceContext) throws PortalException;
 
-	public void sendEmail(long orderId, java.lang.String emailType,
+	public void sendEmail(ShoppingOrder order, java.lang.String emailType,
 		ServiceContext serviceContext) throws PortalException;
 
 	public ShoppingOrder updateLatestOrder(long userId, long groupId,

@@ -131,21 +131,21 @@ public class ResourceBlockServiceUtil {
 	}
 
 	public static void setIndividualScopePermissions(long companyId,
-		long groupId, java.lang.String name, long primKey,
-		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.setIndividualScopePermissions(companyId, groupId, name, primKey,
-			roleIdsToActionIds);
-	}
-
-	public static void setIndividualScopePermissions(long companyId,
 		long groupId, java.lang.String name, long primKey, long roleId,
 		java.util.List<java.lang.String> actionIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.setIndividualScopePermissions(companyId, groupId, name, primKey,
 			roleId, actionIds);
+	}
+
+	public static void setIndividualScopePermissions(long companyId,
+		long groupId, java.lang.String name, long primKey,
+		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.setIndividualScopePermissions(companyId, groupId, name, primKey,
+			roleIdsToActionIds);
 	}
 
 	public static ResourceBlockService getService() {

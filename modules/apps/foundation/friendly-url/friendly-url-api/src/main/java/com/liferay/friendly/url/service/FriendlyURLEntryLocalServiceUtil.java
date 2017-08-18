@@ -391,16 +391,16 @@ public class FriendlyURLEntryLocalServiceUtil {
 		return getService().updateFriendlyURLEntry(friendlyURLEntry);
 	}
 
-	public static void validate(long groupId, long classNameId,
-		java.lang.String urlTitle)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().validate(groupId, classNameId, urlTitle);
-	}
-
 	public static void validate(long groupId, long classNameId, long classPK,
 		java.lang.String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().validate(groupId, classNameId, classPK, urlTitle);
+	}
+
+	public static void validate(long groupId, long classNameId,
+		java.lang.String urlTitle)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().validate(groupId, classNameId, urlTitle);
 	}
 
 	public static FriendlyURLEntryLocalService getService() {

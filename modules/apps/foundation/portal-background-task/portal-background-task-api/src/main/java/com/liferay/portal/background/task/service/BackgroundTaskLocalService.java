@@ -215,17 +215,17 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	public BackgroundTask fetchBackgroundTask(long backgroundTaskId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BackgroundTask fetchFirstBackgroundTask(long groupId,
+		java.lang.String taskExecutorClassName, boolean completed,
+		OrderByComparator<BackgroundTask> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BackgroundTask fetchFirstBackgroundTask(
 		java.lang.String taskExecutorClassName, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BackgroundTask fetchFirstBackgroundTask(
 		java.lang.String taskExecutorClassName, int status,
-		OrderByComparator<BackgroundTask> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BackgroundTask fetchFirstBackgroundTask(long groupId,
-		java.lang.String taskExecutorClassName, boolean completed,
 		OrderByComparator<BackgroundTask> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -242,10 +242,6 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	public BackgroundTask getBackgroundTask(long backgroundTaskId)
 		throws PortalException;
 
-	@Clusterable(onMaster = true)
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getBackgroundTaskStatusJSON(long backgroundTaskId);
-
 	/**
 	* Returns a range of all the background tasks.
 	*
@@ -259,24 +255,6 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BackgroundTask> getBackgroundTasks(int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BackgroundTask> getBackgroundTasks(
-		java.lang.String taskExecutorClassName, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BackgroundTask> getBackgroundTasks(
-		java.lang.String[] taskExecutorClassNames, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BackgroundTask> getBackgroundTasks(
-		java.lang.String taskExecutorClassName, int status, int start, int end,
-		OrderByComparator<BackgroundTask> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BackgroundTask> getBackgroundTasks(
-		java.lang.String[] taskExecutorClassNames, int status, int start,
-		int end, OrderByComparator<BackgroundTask> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BackgroundTask> getBackgroundTasks(long groupId, int status);
@@ -331,6 +309,24 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 		java.lang.String name, java.lang.String taskExecutorClassName,
 		int start, int end, OrderByComparator<BackgroundTask> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BackgroundTask> getBackgroundTasks(
+		java.lang.String taskExecutorClassName, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BackgroundTask> getBackgroundTasks(
+		java.lang.String[] taskExecutorClassNames, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BackgroundTask> getBackgroundTasks(
+		java.lang.String taskExecutorClassName, int status, int start, int end,
+		OrderByComparator<BackgroundTask> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BackgroundTask> getBackgroundTasks(
+		java.lang.String[] taskExecutorClassNames, int status, int start,
+		int end, OrderByComparator<BackgroundTask> orderByComparator);
+
 	/**
 	* Returns the number of background tasks.
 	*
@@ -370,6 +366,10 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getBackgroundTasksCount(long[] groupIds, java.lang.String name,
 		java.lang.String taskExecutorClassName, boolean completed);
+
+	@Clusterable(onMaster = true)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getBackgroundTaskStatusJSON(long backgroundTaskId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

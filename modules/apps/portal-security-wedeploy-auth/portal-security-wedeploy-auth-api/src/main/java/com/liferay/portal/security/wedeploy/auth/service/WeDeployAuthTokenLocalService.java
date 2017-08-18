@@ -69,6 +69,10 @@ public interface WeDeployAuthTokenLocalService extends BaseLocalService,
 		java.lang.String redirectURI, java.lang.String clientId,
 		ServiceContext serviceContext) throws PortalException;
 
+	public WeDeployAuthToken addWeDeployAuthToken(long userId,
+		java.lang.String clientId, java.lang.String token, int type,
+		ServiceContext serviceContext) throws PortalException;
+
 	/**
 	* Adds the we deploy auth token to the database. Also notifies the appropriate model listeners.
 	*
@@ -78,10 +82,6 @@ public interface WeDeployAuthTokenLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public WeDeployAuthToken addWeDeployAuthToken(
 		WeDeployAuthToken weDeployAuthToken);
-
-	public WeDeployAuthToken addWeDeployAuthToken(long userId,
-		java.lang.String clientId, java.lang.String token, int type,
-		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new we deploy auth token with the primary key. Does not add the we deploy auth token to the database.
@@ -99,16 +99,6 @@ public interface WeDeployAuthTokenLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the we deploy auth token from the database. Also notifies the appropriate model listeners.
-	*
-	* @param weDeployAuthToken the we deploy auth token
-	* @return the we deploy auth token that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public WeDeployAuthToken deleteWeDeployAuthToken(
-		WeDeployAuthToken weDeployAuthToken);
-
-	/**
 	* Deletes the we deploy auth token with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param weDeployAuthTokenId the primary key of the we deploy auth token
@@ -118,6 +108,16 @@ public interface WeDeployAuthTokenLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public WeDeployAuthToken deleteWeDeployAuthToken(long weDeployAuthTokenId)
 		throws PortalException;
+
+	/**
+	* Deletes the we deploy auth token from the database. Also notifies the appropriate model listeners.
+	*
+	* @param weDeployAuthToken the we deploy auth token
+	* @return the we deploy auth token that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public WeDeployAuthToken deleteWeDeployAuthToken(
+		WeDeployAuthToken weDeployAuthToken);
 
 	public DynamicQuery dynamicQuery();
 
@@ -199,10 +199,6 @@ public interface WeDeployAuthTokenLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WeDeployAuthToken getWeDeployAuthToken(java.lang.String token,
-		int type) throws PortalException;
-
 	/**
 	* Returns the we deploy auth token with the primary key.
 	*
@@ -213,6 +209,10 @@ public interface WeDeployAuthTokenLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WeDeployAuthToken getWeDeployAuthToken(long weDeployAuthTokenId)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WeDeployAuthToken getWeDeployAuthToken(java.lang.String token,
+		int type) throws PortalException;
 
 	/**
 	* Returns a range of all the we deploy auth tokens.

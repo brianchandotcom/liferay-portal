@@ -63,6 +63,9 @@ public interface SyncDeviceLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SyncDeviceLocalServiceUtil} to access the sync device local service. Add custom service methods to {@link com.liferay.sync.service.impl.SyncDeviceLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public SyncDevice addSyncDevice(long userId, java.lang.String type,
+		long buildNumber, java.lang.String hostname, int featureSet)
+		throws PortalException;
 
 	/**
 	* Adds the sync device to the database. Also notifies the appropriate model listeners.
@@ -72,10 +75,6 @@ public interface SyncDeviceLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public SyncDevice addSyncDevice(SyncDevice syncDevice);
-
-	public SyncDevice addSyncDevice(long userId, java.lang.String type,
-		long buildNumber, java.lang.String hostname, int featureSet)
-		throws PortalException;
 
 	/**
 	* Creates a new sync device with the primary key. Does not add the sync device to the database.
@@ -93,15 +92,6 @@ public interface SyncDeviceLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the sync device from the database. Also notifies the appropriate model listeners.
-	*
-	* @param syncDevice the sync device
-	* @return the sync device that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public SyncDevice deleteSyncDevice(SyncDevice syncDevice);
-
-	/**
 	* Deletes the sync device with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param syncDeviceId the primary key of the sync device
@@ -111,6 +101,15 @@ public interface SyncDeviceLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public SyncDevice deleteSyncDevice(long syncDeviceId)
 		throws PortalException;
+
+	/**
+	* Deletes the sync device from the database. Also notifies the appropriate model listeners.
+	*
+	* @param syncDevice the sync device
+	* @return the sync device that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public SyncDevice deleteSyncDevice(SyncDevice syncDevice);
 
 	public DynamicQuery dynamicQuery();
 
@@ -263,6 +262,10 @@ public interface SyncDeviceLocalService extends BaseLocalService,
 	public void updateStatus(long syncDeviceId, int status)
 		throws PortalException;
 
+	public SyncDevice updateSyncDevice(long syncDeviceId,
+		java.lang.String type, long buildNumber, int featureSet,
+		java.lang.String hostname, int status) throws PortalException;
+
 	/**
 	* Updates the sync device in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -271,8 +274,4 @@ public interface SyncDeviceLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public SyncDevice updateSyncDevice(SyncDevice syncDevice);
-
-	public SyncDevice updateSyncDevice(long syncDeviceId,
-		java.lang.String type, long buildNumber, int featureSet,
-		java.lang.String hostname, int status) throws PortalException;
 }

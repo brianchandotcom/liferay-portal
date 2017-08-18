@@ -111,12 +111,12 @@ public interface ExpandoRowLocalService extends BaseLocalService,
 
 	public void deleteRow(long rowId) throws PortalException;
 
-	public void deleteRow(long companyId, java.lang.String className,
-		java.lang.String tableName, long classPK) throws PortalException;
-
 	public void deleteRow(long tableId, long classPK) throws PortalException;
 
 	public void deleteRow(long companyId, long classNameId,
+		java.lang.String tableName, long classPK) throws PortalException;
+
+	public void deleteRow(long companyId, java.lang.String className,
 		java.lang.String tableName, long classPK) throws PortalException;
 
 	public void deleteRows(long classPK);
@@ -191,18 +191,18 @@ public interface ExpandoRowLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ExpandoRow> getDefaultTableRows(long companyId,
-		java.lang.String className, int start, int end);
+		long classNameId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ExpandoRow> getDefaultTableRows(long companyId,
-		long classNameId, int start, int end);
+		java.lang.String className, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getDefaultTableRowsCount(long companyId, long classNameId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDefaultTableRowsCount(long companyId,
 		java.lang.String className);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getDefaultTableRowsCount(long companyId, long classNameId);
 
 	/**
 	* Returns the expando row with the primary key.
@@ -255,10 +255,6 @@ public interface ExpandoRowLocalService extends BaseLocalService,
 	public ExpandoRow getRow(long rowId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExpandoRow getRow(long companyId, java.lang.String className,
-		java.lang.String tableName, long classPK);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExpandoRow getRow(long tableId, long classPK)
 		throws PortalException;
 
@@ -267,25 +263,29 @@ public interface ExpandoRowLocalService extends BaseLocalService,
 		java.lang.String tableName, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ExpandoRow> getRows(long tableId, int start, int end);
+	public ExpandoRow getRow(long companyId, java.lang.String className,
+		java.lang.String tableName, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ExpandoRow> getRows(long companyId, java.lang.String className,
-		java.lang.String tableName, int start, int end);
+	public List<ExpandoRow> getRows(long tableId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ExpandoRow> getRows(long companyId, long classNameId,
 		java.lang.String tableName, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ExpandoRow> getRows(long companyId, java.lang.String className,
+		java.lang.String tableName, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRowsCount(long tableId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getRowsCount(long companyId, java.lang.String className,
+	public int getRowsCount(long companyId, long classNameId,
 		java.lang.String tableName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getRowsCount(long companyId, long classNameId,
+	public int getRowsCount(long companyId, java.lang.String className,
 		java.lang.String tableName);
 
 	/**

@@ -41,18 +41,6 @@ public class TasksEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.tasks.service.impl.TasksEntryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	* Adds the tasks entry to the database. Also notifies the appropriate model listeners.
-	*
-	* @param tasksEntry the tasks entry
-	* @return the tasks entry that was added
-	*/
-	public static com.liferay.tasks.model.TasksEntry addTasksEntry(
-		com.liferay.tasks.model.TasksEntry tasksEntry) {
-		return getService().addTasksEntry(tasksEntry);
-	}
-
 	public static com.liferay.tasks.model.TasksEntry addTasksEntry(
 		long userId, java.lang.String title, int priority, long assigneeUserId,
 		int dueDateMonth, int dueDateDay, int dueDateYear, int dueDateHour,
@@ -63,6 +51,17 @@ public class TasksEntryLocalServiceUtil {
 				   .addTasksEntry(userId, title, priority, assigneeUserId,
 			dueDateMonth, dueDateDay, dueDateYear, dueDateHour, dueDateMinute,
 			addDueDate, serviceContext);
+	}
+
+	/**
+	* Adds the tasks entry to the database. Also notifies the appropriate model listeners.
+	*
+	* @param tasksEntry the tasks entry
+	* @return the tasks entry that was added
+	*/
+	public static com.liferay.tasks.model.TasksEntry addTasksEntry(
+		com.liferay.tasks.model.TasksEntry tasksEntry) {
+		return getService().addTasksEntry(tasksEntry);
 	}
 
 	/**
@@ -86,19 +85,6 @@ public class TasksEntryLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the tasks entry from the database. Also notifies the appropriate model listeners.
-	*
-	* @param tasksEntry the tasks entry
-	* @return the tasks entry that was removed
-	* @throws PortalException
-	*/
-	public static com.liferay.tasks.model.TasksEntry deleteTasksEntry(
-		com.liferay.tasks.model.TasksEntry tasksEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteTasksEntry(tasksEntry);
-	}
-
-	/**
 	* Deletes the tasks entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param tasksEntryId the primary key of the tasks entry
@@ -109,6 +95,19 @@ public class TasksEntryLocalServiceUtil {
 		long tasksEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteTasksEntry(tasksEntryId);
+	}
+
+	/**
+	* Deletes the tasks entry from the database. Also notifies the appropriate model listeners.
+	*
+	* @param tasksEntry the tasks entry
+	* @return the tasks entry that was removed
+	* @throws PortalException
+	*/
+	public static com.liferay.tasks.model.TasksEntry deleteTasksEntry(
+		com.liferay.tasks.model.TasksEntry tasksEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteTasksEntry(tasksEntry);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -357,17 +356,6 @@ public class TasksEntryLocalServiceUtil {
 			.updateAsset(userId, tasksEntry, assetCategoryIds, assetTagNames);
 	}
 
-	/**
-	* Updates the tasks entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param tasksEntry the tasks entry
-	* @return the tasks entry that was updated
-	*/
-	public static com.liferay.tasks.model.TasksEntry updateTasksEntry(
-		com.liferay.tasks.model.TasksEntry tasksEntry) {
-		return getService().updateTasksEntry(tasksEntry);
-	}
-
 	public static com.liferay.tasks.model.TasksEntry updateTasksEntry(
 		long tasksEntryId, java.lang.String title, int priority,
 		long assigneeUserId, long resolverUserId, int dueDateMonth,
@@ -380,6 +368,17 @@ public class TasksEntryLocalServiceUtil {
 			assigneeUserId, resolverUserId, dueDateMonth, dueDateDay,
 			dueDateYear, dueDateHour, dueDateMinute, addDueDate, status,
 			serviceContext);
+	}
+
+	/**
+	* Updates the tasks entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param tasksEntry the tasks entry
+	* @return the tasks entry that was updated
+	*/
+	public static com.liferay.tasks.model.TasksEntry updateTasksEntry(
+		com.liferay.tasks.model.TasksEntry tasksEntry) {
+		return getService().updateTasksEntry(tasksEntry);
 	}
 
 	public static com.liferay.tasks.model.TasksEntry updateTasksEntryStatus(

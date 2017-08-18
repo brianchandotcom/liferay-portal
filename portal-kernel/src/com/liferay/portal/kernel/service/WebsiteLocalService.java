@@ -62,6 +62,9 @@ public interface WebsiteLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WebsiteLocalServiceUtil} to access the website local service. Add custom service methods to {@link com.liferay.portal.service.impl.WebsiteLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public Website addWebsite(long userId, java.lang.String className,
+		long classPK, java.lang.String url, long typeId, boolean primary,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the website to the database. Also notifies the appropriate model listeners.
@@ -71,10 +74,6 @@ public interface WebsiteLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public Website addWebsite(Website website);
-
-	public Website addWebsite(long userId, java.lang.String className,
-		long classPK, java.lang.String url, long typeId, boolean primary,
-		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new website with the primary key. Does not add the website to the database.
@@ -92,16 +91,6 @@ public interface WebsiteLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the website from the database. Also notifies the appropriate model listeners.
-	*
-	* @param website the website
-	* @return the website that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
-	public Website deleteWebsite(Website website);
-
-	/**
 	* Deletes the website with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param websiteId the primary key of the website
@@ -110,6 +99,16 @@ public interface WebsiteLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public Website deleteWebsite(long websiteId) throws PortalException;
+
+	/**
+	* Deletes the website from the database. Also notifies the appropriate model listeners.
+	*
+	* @param website the website
+	* @return the website that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
+	public Website deleteWebsite(Website website);
 
 	public void deleteWebsites(long companyId, java.lang.String className,
 		long classPK);
@@ -260,6 +259,9 @@ public interface WebsiteLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getWebsitesCount();
 
+	public Website updateWebsite(long websiteId, java.lang.String url,
+		long typeId, boolean primary) throws PortalException;
+
 	/**
 	* Updates the website in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -268,7 +270,4 @@ public interface WebsiteLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public Website updateWebsite(Website website);
-
-	public Website updateWebsite(long websiteId, java.lang.String url,
-		long typeId, boolean primary) throws PortalException;
 }

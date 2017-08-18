@@ -129,6 +129,15 @@ public interface UserGroupService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
+	* Returns the user group with the primary key.
+	*
+	* @param userGroupId the primary key of the user group
+	* @return the user group with the primary key
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public UserGroup getUserGroup(long userGroupId) throws PortalException;
+
+	/**
 	* Returns the user group with the name.
 	*
 	* @param name the user group's name
@@ -137,15 +146,6 @@ public interface UserGroupService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public UserGroup getUserGroup(java.lang.String name)
 		throws PortalException;
-
-	/**
-	* Returns the user group with the primary key.
-	*
-	* @param userGroupId the primary key of the user group
-	* @return the user group with the primary key
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public UserGroup getUserGroup(long userGroupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<UserGroup> getUserGroups(long companyId)

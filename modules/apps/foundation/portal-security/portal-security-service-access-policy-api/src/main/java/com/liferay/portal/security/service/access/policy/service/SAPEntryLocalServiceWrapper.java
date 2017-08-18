@@ -33,18 +33,6 @@ public class SAPEntryLocalServiceWrapper implements SAPEntryLocalService,
 		_sapEntryLocalService = sapEntryLocalService;
 	}
 
-	/**
-	* Adds the sap entry to the database. Also notifies the appropriate model listeners.
-	*
-	* @param sapEntry the sap entry
-	* @return the sap entry that was added
-	*/
-	@Override
-	public com.liferay.portal.security.service.access.policy.model.SAPEntry addSAPEntry(
-		com.liferay.portal.security.service.access.policy.model.SAPEntry sapEntry) {
-		return _sapEntryLocalService.addSAPEntry(sapEntry);
-	}
-
 	@Override
 	public com.liferay.portal.security.service.access.policy.model.SAPEntry addSAPEntry(
 		long userId, java.lang.String allowedServiceSignatures,
@@ -55,6 +43,18 @@ public class SAPEntryLocalServiceWrapper implements SAPEntryLocalService,
 		return _sapEntryLocalService.addSAPEntry(userId,
 			allowedServiceSignatures, defaultSAPEntry, enabled, name, titleMap,
 			serviceContext);
+	}
+
+	/**
+	* Adds the sap entry to the database. Also notifies the appropriate model listeners.
+	*
+	* @param sapEntry the sap entry
+	* @return the sap entry that was added
+	*/
+	@Override
+	public com.liferay.portal.security.service.access.policy.model.SAPEntry addSAPEntry(
+		com.liferay.portal.security.service.access.policy.model.SAPEntry sapEntry) {
+		return _sapEntryLocalService.addSAPEntry(sapEntry);
 	}
 
 	@Override
@@ -86,20 +86,6 @@ public class SAPEntryLocalServiceWrapper implements SAPEntryLocalService,
 	}
 
 	/**
-	* Deletes the sap entry from the database. Also notifies the appropriate model listeners.
-	*
-	* @param sapEntry the sap entry
-	* @return the sap entry that was removed
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.security.service.access.policy.model.SAPEntry deleteSAPEntry(
-		com.liferay.portal.security.service.access.policy.model.SAPEntry sapEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _sapEntryLocalService.deleteSAPEntry(sapEntry);
-	}
-
-	/**
 	* Deletes the sap entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param sapEntryId the primary key of the sap entry
@@ -111,6 +97,20 @@ public class SAPEntryLocalServiceWrapper implements SAPEntryLocalService,
 		long sapEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sapEntryLocalService.deleteSAPEntry(sapEntryId);
+	}
+
+	/**
+	* Deletes the sap entry from the database. Also notifies the appropriate model listeners.
+	*
+	* @param sapEntry the sap entry
+	* @return the sap entry that was removed
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.security.service.access.policy.model.SAPEntry deleteSAPEntry(
+		com.liferay.portal.security.service.access.policy.model.SAPEntry sapEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _sapEntryLocalService.deleteSAPEntry(sapEntry);
 	}
 
 	@Override
@@ -347,18 +347,6 @@ public class SAPEntryLocalServiceWrapper implements SAPEntryLocalService,
 			companyId);
 	}
 
-	/**
-	* Updates the sap entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param sapEntry the sap entry
-	* @return the sap entry that was updated
-	*/
-	@Override
-	public com.liferay.portal.security.service.access.policy.model.SAPEntry updateSAPEntry(
-		com.liferay.portal.security.service.access.policy.model.SAPEntry sapEntry) {
-		return _sapEntryLocalService.updateSAPEntry(sapEntry);
-	}
-
 	@Override
 	public com.liferay.portal.security.service.access.policy.model.SAPEntry updateSAPEntry(
 		long sapEntryId, java.lang.String allowedServiceSignatures,
@@ -369,6 +357,18 @@ public class SAPEntryLocalServiceWrapper implements SAPEntryLocalService,
 		return _sapEntryLocalService.updateSAPEntry(sapEntryId,
 			allowedServiceSignatures, defaultSAPEntry, enabled, name, titleMap,
 			serviceContext);
+	}
+
+	/**
+	* Updates the sap entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param sapEntry the sap entry
+	* @return the sap entry that was updated
+	*/
+	@Override
+	public com.liferay.portal.security.service.access.policy.model.SAPEntry updateSAPEntry(
+		com.liferay.portal.security.service.access.policy.model.SAPEntry sapEntry) {
+		return _sapEntryLocalService.updateSAPEntry(sapEntry);
 	}
 
 	@Override

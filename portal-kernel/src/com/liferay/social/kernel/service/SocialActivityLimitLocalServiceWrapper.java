@@ -79,18 +79,6 @@ public class SocialActivityLimitLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the social activity limit from the database. Also notifies the appropriate model listeners.
-	*
-	* @param socialActivityLimit the social activity limit
-	* @return the social activity limit that was removed
-	*/
-	@Override
-	public com.liferay.social.kernel.model.SocialActivityLimit deleteSocialActivityLimit(
-		com.liferay.social.kernel.model.SocialActivityLimit socialActivityLimit) {
-		return _socialActivityLimitLocalService.deleteSocialActivityLimit(socialActivityLimit);
-	}
-
-	/**
 	* Deletes the social activity limit with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param activityLimitId the primary key of the social activity limit
@@ -102,6 +90,18 @@ public class SocialActivityLimitLocalServiceWrapper
 		long activityLimitId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _socialActivityLimitLocalService.deleteSocialActivityLimit(activityLimitId);
+	}
+
+	/**
+	* Deletes the social activity limit from the database. Also notifies the appropriate model listeners.
+	*
+	* @param socialActivityLimit the social activity limit
+	* @return the social activity limit that was removed
+	*/
+	@Override
+	public com.liferay.social.kernel.model.SocialActivityLimit deleteSocialActivityLimit(
+		com.liferay.social.kernel.model.SocialActivityLimit socialActivityLimit) {
+		return _socialActivityLimitLocalService.deleteSocialActivityLimit(socialActivityLimit);
 	}
 
 	@Override

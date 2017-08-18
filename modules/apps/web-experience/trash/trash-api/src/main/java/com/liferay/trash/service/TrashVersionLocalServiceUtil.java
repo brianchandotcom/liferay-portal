@@ -41,6 +41,14 @@ public class TrashVersionLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.trash.service.impl.TrashVersionLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.trash.model.TrashVersion addTrashVersion(
+		long trashEntryId, java.lang.String className, long classPK,
+		int status,
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties) {
+		return getService()
+				   .addTrashVersion(trashEntryId, className, classPK, status,
+			typeSettingsProperties);
+	}
 
 	/**
 	* Adds the trash version to the database. Also notifies the appropriate model listeners.
@@ -51,15 +59,6 @@ public class TrashVersionLocalServiceUtil {
 	public static com.liferay.trash.model.TrashVersion addTrashVersion(
 		com.liferay.trash.model.TrashVersion trashVersion) {
 		return getService().addTrashVersion(trashVersion);
-	}
-
-	public static com.liferay.trash.model.TrashVersion addTrashVersion(
-		long trashEntryId, java.lang.String className, long classPK,
-		int status,
-		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties) {
-		return getService()
-				   .addTrashVersion(trashEntryId, className, classPK, status,
-			typeSettingsProperties);
 	}
 
 	/**
@@ -83,22 +82,6 @@ public class TrashVersionLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the trash version from the database. Also notifies the appropriate model listeners.
-	*
-	* @param trashVersion the trash version
-	* @return the trash version that was removed
-	*/
-	public static com.liferay.trash.model.TrashVersion deleteTrashVersion(
-		com.liferay.trash.model.TrashVersion trashVersion) {
-		return getService().deleteTrashVersion(trashVersion);
-	}
-
-	public static com.liferay.trash.model.TrashVersion deleteTrashVersion(
-		java.lang.String className, long classPK) {
-		return getService().deleteTrashVersion(className, classPK);
-	}
-
-	/**
 	* Deletes the trash version with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param versionId the primary key of the trash version
@@ -109,6 +92,22 @@ public class TrashVersionLocalServiceUtil {
 		long versionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteTrashVersion(versionId);
+	}
+
+	public static com.liferay.trash.model.TrashVersion deleteTrashVersion(
+		java.lang.String className, long classPK) {
+		return getService().deleteTrashVersion(className, classPK);
+	}
+
+	/**
+	* Deletes the trash version from the database. Also notifies the appropriate model listeners.
+	*
+	* @param trashVersion the trash version
+	* @return the trash version that was removed
+	*/
+	public static com.liferay.trash.model.TrashVersion deleteTrashVersion(
+		com.liferay.trash.model.TrashVersion trashVersion) {
+		return getService().deleteTrashVersion(trashVersion);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -194,11 +193,6 @@ public class TrashVersionLocalServiceUtil {
 		return getService().fetchTrashVersion(versionId);
 	}
 
-	public static com.liferay.trash.model.TrashVersion fetchVersion(
-		java.lang.String className, long classPK) {
-		return getService().fetchVersion(className, classPK);
-	}
-
 	/**
 	* @deprecated As of 1.0.0, replaced by {@link #fetchVersion(String, long)}
 	*/
@@ -206,6 +200,11 @@ public class TrashVersionLocalServiceUtil {
 	public static com.liferay.trash.model.TrashVersion fetchVersion(
 		long entryId, java.lang.String className, long classPK) {
 		return getService().fetchVersion(entryId, className, classPK);
+	}
+
+	public static com.liferay.trash.model.TrashVersion fetchVersion(
+		java.lang.String className, long classPK) {
+		return getService().fetchVersion(className, classPK);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {

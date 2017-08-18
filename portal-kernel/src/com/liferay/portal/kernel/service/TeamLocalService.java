@@ -63,15 +63,6 @@ public interface TeamLocalService extends BaseLocalService,
 	 */
 
 	/**
-	* Adds the team to the database. Also notifies the appropriate model listeners.
-	*
-	* @param team the team
-	* @return the team that was added
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public Team addTeam(Team team);
-
-	/**
 	* @deprecated As of 7.0.0, replaced by {@link #addTeam(long, long, String,
 	String, ServiceContext)}
 	*/
@@ -83,17 +74,26 @@ public interface TeamLocalService extends BaseLocalService,
 		java.lang.String description, ServiceContext serviceContext)
 		throws PortalException;
 
-	public void addUserGroupTeam(long userGroupId, Team team);
+	/**
+	* Adds the team to the database. Also notifies the appropriate model listeners.
+	*
+	* @param team the team
+	* @return the team that was added
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public Team addTeam(Team team);
 
 	public void addUserGroupTeam(long userGroupId, long teamId);
+
+	public void addUserGroupTeam(long userGroupId, Team team);
 
 	public void addUserGroupTeams(long userGroupId, List<Team> teams);
 
 	public void addUserGroupTeams(long userGroupId, long[] teamIds);
 
-	public void addUserTeam(long userId, Team team);
-
 	public void addUserTeam(long userId, long teamId);
+
+	public void addUserTeam(long userId, Team team);
 
 	public void addUserTeams(long userId, List<Team> teams);
 
@@ -119,16 +119,6 @@ public interface TeamLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the team from the database. Also notifies the appropriate model listeners.
-	*
-	* @param team the team
-	* @return the team that was removed
-	* @throws PortalException
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public Team deleteTeam(Team team) throws PortalException;
-
-	/**
 	* Deletes the team with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param teamId the primary key of the team
@@ -138,19 +128,29 @@ public interface TeamLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public Team deleteTeam(long teamId) throws PortalException;
 
+	/**
+	* Deletes the team from the database. Also notifies the appropriate model listeners.
+	*
+	* @param team the team
+	* @return the team that was removed
+	* @throws PortalException
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public Team deleteTeam(Team team) throws PortalException;
+
 	public void deleteTeams(long groupId) throws PortalException;
 
-	public void deleteUserGroupTeam(long userGroupId, Team team);
-
 	public void deleteUserGroupTeam(long userGroupId, long teamId);
+
+	public void deleteUserGroupTeam(long userGroupId, Team team);
 
 	public void deleteUserGroupTeams(long userGroupId, List<Team> teams);
 
 	public void deleteUserGroupTeams(long userGroupId, long[] teamIds);
 
-	public void deleteUserTeam(long userId, Team team);
-
 	public void deleteUserTeam(long userId, long teamId);
+
+	public void deleteUserTeam(long userId, Team team);
 
 	public void deleteUserTeams(long userId, List<Team> teams);
 
@@ -407,6 +407,9 @@ public interface TeamLocalService extends BaseLocalService,
 
 	public void setUserTeams(long userId, long[] teamIds);
 
+	public Team updateTeam(long teamId, java.lang.String name,
+		java.lang.String description) throws PortalException;
+
 	/**
 	* Updates the team in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -415,7 +418,4 @@ public interface TeamLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public Team updateTeam(Team team);
-
-	public Team updateTeam(long teamId, java.lang.String name,
-		java.lang.String description) throws PortalException;
 }

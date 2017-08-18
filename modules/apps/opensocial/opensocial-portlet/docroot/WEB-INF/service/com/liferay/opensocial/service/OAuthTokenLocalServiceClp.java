@@ -31,15 +31,15 @@ public class OAuthTokenLocalServiceClp implements OAuthTokenLocalService {
 		_methodName0 = "addOAuthToken";
 
 		_methodParameterTypes0 = new String[] {
-				"com.liferay.opensocial.model.OAuthToken"
+				"long", "java.lang.String", "java.lang.String", "long",
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"java.lang.String", "long"
 			};
 
 		_methodName1 = "addOAuthToken";
 
 		_methodParameterTypes1 = new String[] {
-				"long", "java.lang.String", "java.lang.String", "long",
-				"java.lang.String", "java.lang.String", "java.lang.String",
-				"java.lang.String", "long"
+				"com.liferay.opensocial.model.OAuthToken"
 			};
 
 		_methodName2 = "createOAuthToken";
@@ -48,19 +48,19 @@ public class OAuthTokenLocalServiceClp implements OAuthTokenLocalService {
 
 		_methodName3 = "deleteOAuthToken";
 
-		_methodParameterTypes3 = new String[] {
-				"com.liferay.opensocial.model.OAuthToken"
-			};
+		_methodParameterTypes3 = new String[] { "long" };
 
 		_methodName4 = "deleteOAuthToken";
 
-		_methodParameterTypes4 = new String[] { "long" };
+		_methodParameterTypes4 = new String[] {
+				"long", "java.lang.String", "java.lang.String", "long",
+				"java.lang.String"
+			};
 
 		_methodName5 = "deleteOAuthToken";
 
 		_methodParameterTypes5 = new String[] {
-				"long", "java.lang.String", "java.lang.String", "long",
-				"java.lang.String"
+				"com.liferay.opensocial.model.OAuthToken"
 			};
 
 		_methodName6 = "deleteOAuthTokens";
@@ -171,31 +171,6 @@ public class OAuthTokenLocalServiceClp implements OAuthTokenLocalService {
 	}
 
 	@Override
-	public com.liferay.opensocial.model.OAuthToken addOAuthToken(
-		com.liferay.opensocial.model.OAuthToken oAuthToken) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName0,
-					_methodParameterTypes0,
-					new Object[] { ClpSerializer.translateInput(oAuthToken) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (com.liferay.opensocial.model.OAuthToken)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
 	public com.liferay.opensocial.model.OAuthToken addOAuthToken(long userId,
 		java.lang.String gadgetKey, java.lang.String serviceName,
 		long moduleId, java.lang.String accessToken,
@@ -205,8 +180,8 @@ public class OAuthTokenLocalServiceClp implements OAuthTokenLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName1,
-					_methodParameterTypes1,
+			returnObj = _invokableLocalService.invokeMethod(_methodName0,
+					_methodParameterTypes0,
 					new Object[] {
 						userId,
 						
@@ -247,6 +222,31 @@ public class OAuthTokenLocalServiceClp implements OAuthTokenLocalService {
 	}
 
 	@Override
+	public com.liferay.opensocial.model.OAuthToken addOAuthToken(
+		com.liferay.opensocial.model.OAuthToken oAuthToken) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName1,
+					_methodParameterTypes1,
+					new Object[] { ClpSerializer.translateInput(oAuthToken) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.opensocial.model.OAuthToken)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public com.liferay.opensocial.model.OAuthToken createOAuthToken(
 		long oAuthTokenId) {
 		Object returnObj = null;
@@ -272,38 +272,13 @@ public class OAuthTokenLocalServiceClp implements OAuthTokenLocalService {
 
 	@Override
 	public com.liferay.opensocial.model.OAuthToken deleteOAuthToken(
-		com.liferay.opensocial.model.OAuthToken oAuthToken) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName3,
-					_methodParameterTypes3,
-					new Object[] { ClpSerializer.translateInput(oAuthToken) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (com.liferay.opensocial.model.OAuthToken)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public com.liferay.opensocial.model.OAuthToken deleteOAuthToken(
 		long oAuthTokenId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName4,
-					_methodParameterTypes4, new Object[] { oAuthTokenId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName3,
+					_methodParameterTypes3, new Object[] { oAuthTokenId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -329,8 +304,8 @@ public class OAuthTokenLocalServiceClp implements OAuthTokenLocalService {
 		java.lang.String serviceName, long moduleId, java.lang.String tokenName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
-			_invokableLocalService.invokeMethod(_methodName5,
-				_methodParameterTypes5,
+			_invokableLocalService.invokeMethod(_methodName4,
+				_methodParameterTypes4,
 				new Object[] {
 					userId,
 					
@@ -358,6 +333,31 @@ public class OAuthTokenLocalServiceClp implements OAuthTokenLocalService {
 					" is not a valid exception");
 			}
 		}
+	}
+
+	@Override
+	public com.liferay.opensocial.model.OAuthToken deleteOAuthToken(
+		com.liferay.opensocial.model.OAuthToken oAuthToken) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName5,
+					_methodParameterTypes5,
+					new Object[] { ClpSerializer.translateInput(oAuthToken) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.opensocial.model.OAuthToken)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override

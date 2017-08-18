@@ -34,18 +34,6 @@ public class PowwowParticipantLocalServiceWrapper
 		_powwowParticipantLocalService = powwowParticipantLocalService;
 	}
 
-	/**
-	* Adds the powwow participant to the database. Also notifies the appropriate model listeners.
-	*
-	* @param powwowParticipant the powwow participant
-	* @return the powwow participant that was added
-	*/
-	@Override
-	public com.liferay.powwow.model.PowwowParticipant addPowwowParticipant(
-		com.liferay.powwow.model.PowwowParticipant powwowParticipant) {
-		return _powwowParticipantLocalService.addPowwowParticipant(powwowParticipant);
-	}
-
 	@Override
 	public com.liferay.powwow.model.PowwowParticipant addPowwowParticipant(
 		long userId, long groupId, long powwowMeetingId, java.lang.String name,
@@ -56,6 +44,18 @@ public class PowwowParticipantLocalServiceWrapper
 		return _powwowParticipantLocalService.addPowwowParticipant(userId,
 			groupId, powwowMeetingId, name, participantUserId, emailAddress,
 			type, status, serviceContext);
+	}
+
+	/**
+	* Adds the powwow participant to the database. Also notifies the appropriate model listeners.
+	*
+	* @param powwowParticipant the powwow participant
+	* @return the powwow participant that was added
+	*/
+	@Override
+	public com.liferay.powwow.model.PowwowParticipant addPowwowParticipant(
+		com.liferay.powwow.model.PowwowParticipant powwowParticipant) {
+		return _powwowParticipantLocalService.addPowwowParticipant(powwowParticipant);
 	}
 
 	/**
@@ -81,18 +81,6 @@ public class PowwowParticipantLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the powwow participant from the database. Also notifies the appropriate model listeners.
-	*
-	* @param powwowParticipant the powwow participant
-	* @return the powwow participant that was removed
-	*/
-	@Override
-	public com.liferay.powwow.model.PowwowParticipant deletePowwowParticipant(
-		com.liferay.powwow.model.PowwowParticipant powwowParticipant) {
-		return _powwowParticipantLocalService.deletePowwowParticipant(powwowParticipant);
-	}
-
-	/**
 	* Deletes the powwow participant with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param powwowParticipantId the primary key of the powwow participant
@@ -104,6 +92,18 @@ public class PowwowParticipantLocalServiceWrapper
 		long powwowParticipantId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _powwowParticipantLocalService.deletePowwowParticipant(powwowParticipantId);
+	}
+
+	/**
+	* Deletes the powwow participant from the database. Also notifies the appropriate model listeners.
+	*
+	* @param powwowParticipant the powwow participant
+	* @return the powwow participant that was removed
+	*/
+	@Override
+	public com.liferay.powwow.model.PowwowParticipant deletePowwowParticipant(
+		com.liferay.powwow.model.PowwowParticipant powwowParticipant) {
+		return _powwowParticipantLocalService.deletePowwowParticipant(powwowParticipant);
 	}
 
 	@Override
@@ -200,16 +200,16 @@ public class PowwowParticipantLocalServiceWrapper
 
 	@Override
 	public com.liferay.powwow.model.PowwowParticipant fetchPowwowParticipant(
-		long powwowMeetingId, java.lang.String emailAddress) {
+		long powwowMeetingId, long participantUserId) {
 		return _powwowParticipantLocalService.fetchPowwowParticipant(powwowMeetingId,
-			emailAddress);
+			participantUserId);
 	}
 
 	@Override
 	public com.liferay.powwow.model.PowwowParticipant fetchPowwowParticipant(
-		long powwowMeetingId, long participantUserId) {
+		long powwowMeetingId, java.lang.String emailAddress) {
 		return _powwowParticipantLocalService.fetchPowwowParticipant(powwowMeetingId,
-			participantUserId);
+			emailAddress);
 	}
 
 	@Override
@@ -312,18 +312,6 @@ public class PowwowParticipantLocalServiceWrapper
 			parameterTypes, arguments);
 	}
 
-	/**
-	* Updates the powwow participant in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param powwowParticipant the powwow participant
-	* @return the powwow participant that was updated
-	*/
-	@Override
-	public com.liferay.powwow.model.PowwowParticipant updatePowwowParticipant(
-		com.liferay.powwow.model.PowwowParticipant powwowParticipant) {
-		return _powwowParticipantLocalService.updatePowwowParticipant(powwowParticipant);
-	}
-
 	@Override
 	public com.liferay.powwow.model.PowwowParticipant updatePowwowParticipant(
 		long powwowParticipantId, long powwowMeetingId, java.lang.String name,
@@ -334,6 +322,18 @@ public class PowwowParticipantLocalServiceWrapper
 		return _powwowParticipantLocalService.updatePowwowParticipant(powwowParticipantId,
 			powwowMeetingId, name, participantUserId, emailAddress, type,
 			status, serviceContext);
+	}
+
+	/**
+	* Updates the powwow participant in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param powwowParticipant the powwow participant
+	* @return the powwow participant that was updated
+	*/
+	@Override
+	public com.liferay.powwow.model.PowwowParticipant updatePowwowParticipant(
+		com.liferay.powwow.model.PowwowParticipant powwowParticipant) {
+		return _powwowParticipantLocalService.updatePowwowParticipant(powwowParticipant);
 	}
 
 	@Override

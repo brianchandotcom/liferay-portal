@@ -194,25 +194,19 @@ public class ClassNameLocalServiceWrapper implements ClassNameLocalService,
 
 	@Override
 	public com.liferay.portal.kernel.model.ClassName fetchClassName(
-		java.lang.String value) {
-		return _classNameLocalService.fetchClassName(value);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.ClassName fetchClassName(
 		long classNameId) {
 		return _classNameLocalService.fetchClassName(classNameId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _classNameLocalService.getActionableDynamicQuery();
+	public com.liferay.portal.kernel.model.ClassName fetchClassName(
+		java.lang.String value) {
+		return _classNameLocalService.fetchClassName(value);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.ClassName getClassName(
-		java.lang.String value) {
-		return _classNameLocalService.getClassName(value);
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _classNameLocalService.getActionableDynamicQuery();
 	}
 
 	/**
@@ -227,6 +221,12 @@ public class ClassNameLocalServiceWrapper implements ClassNameLocalService,
 		long classNameId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _classNameLocalService.getClassName(classNameId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.ClassName getClassName(
+		java.lang.String value) {
+		return _classNameLocalService.getClassName(value);
 	}
 
 	@Override

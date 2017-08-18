@@ -33,15 +33,17 @@ public class ModuleLocalServiceWrapper implements ModuleLocalService,
 	}
 
 	/**
-	* Adds the module to the database. Also notifies the appropriate model listeners.
-	*
-	* @param module the module
-	* @return the module that was added
+	* @deprecated As of 1.1.0, replaced by {@link #addModule(long, String,
+	String, String)}
 	*/
+	@Deprecated
 	@Override
-	public com.liferay.marketplace.model.Module addModule(
-		com.liferay.marketplace.model.Module module) {
-		return _moduleLocalService.addModule(module);
+	public com.liferay.marketplace.model.Module addModule(long userId,
+		long appId, java.lang.String bundleSymbolicName,
+		java.lang.String bundleVersion, java.lang.String contextName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _moduleLocalService.addModule(userId, appId, bundleSymbolicName,
+			bundleVersion, contextName);
 	}
 
 	@Override
@@ -54,17 +56,15 @@ public class ModuleLocalServiceWrapper implements ModuleLocalService,
 	}
 
 	/**
-	* @deprecated As of 1.1.0, replaced by {@link #addModule(long, String,
-	String, String)}
+	* Adds the module to the database. Also notifies the appropriate model listeners.
+	*
+	* @param module the module
+	* @return the module that was added
 	*/
-	@Deprecated
 	@Override
-	public com.liferay.marketplace.model.Module addModule(long userId,
-		long appId, java.lang.String bundleSymbolicName,
-		java.lang.String bundleVersion, java.lang.String contextName)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _moduleLocalService.addModule(userId, appId, bundleSymbolicName,
-			bundleVersion, contextName);
+	public com.liferay.marketplace.model.Module addModule(
+		com.liferay.marketplace.model.Module module) {
+		return _moduleLocalService.addModule(module);
 	}
 
 	/**
@@ -79,18 +79,6 @@ public class ModuleLocalServiceWrapper implements ModuleLocalService,
 	}
 
 	/**
-	* Deletes the module from the database. Also notifies the appropriate model listeners.
-	*
-	* @param module the module
-	* @return the module that was removed
-	*/
-	@Override
-	public com.liferay.marketplace.model.Module deleteModule(
-		com.liferay.marketplace.model.Module module) {
-		return _moduleLocalService.deleteModule(module);
-	}
-
-	/**
 	* Deletes the module with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param moduleId the primary key of the module
@@ -101,6 +89,18 @@ public class ModuleLocalServiceWrapper implements ModuleLocalService,
 	public com.liferay.marketplace.model.Module deleteModule(long moduleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _moduleLocalService.deleteModule(moduleId);
+	}
+
+	/**
+	* Deletes the module from the database. Also notifies the appropriate model listeners.
+	*
+	* @param module the module
+	* @return the module that was removed
+	*/
+	@Override
+	public com.liferay.marketplace.model.Module deleteModule(
+		com.liferay.marketplace.model.Module module) {
+		return _moduleLocalService.deleteModule(module);
 	}
 
 	@Override

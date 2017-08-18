@@ -146,6 +146,10 @@ public interface WikiPageService extends BaseService {
 		java.lang.String feedURL, java.lang.String entryURL,
 		java.lang.String attachmentURLPrefix) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<WikiPage> getOrphans(long groupId, long nodeId)
+		throws PortalException;
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -154,18 +158,14 @@ public interface WikiPageService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<WikiPage> getOrphans(long groupId, long nodeId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiPage getPage(long pageId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPage getPage(long nodeId, java.lang.String title)
+	public WikiPage getPage(long groupId, long nodeId, java.lang.String title)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPage getPage(long nodeId, java.lang.String title, double version)
+	public WikiPage getPage(long nodeId, java.lang.String title)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -173,7 +173,7 @@ public interface WikiPageService extends BaseService {
 		java.lang.Boolean head) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPage getPage(long groupId, long nodeId, java.lang.String title)
+	public WikiPage getPage(long nodeId, java.lang.String title, double version)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

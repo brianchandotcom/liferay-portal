@@ -42,17 +42,6 @@ public class ResourcePermissionLocalServiceUtil {
 	 */
 
 	/**
-	* Adds the resource permission to the database. Also notifies the appropriate model listeners.
-	*
-	* @param resourcePermission the resource permission
-	* @return the resource permission that was added
-	*/
-	public static com.liferay.portal.kernel.model.ResourcePermission addResourcePermission(
-		com.liferay.portal.kernel.model.ResourcePermission resourcePermission) {
-		return getService().addResourcePermission(resourcePermission);
-	}
-
-	/**
 	* Grants the role permission at the scope to perform the action on
 	* resources of the type. Existing actions are retained.
 	*
@@ -94,6 +83,17 @@ public class ResourcePermissionLocalServiceUtil {
 		getService()
 			.addResourcePermission(companyId, name, scope, primKey, roleId,
 			actionId);
+	}
+
+	/**
+	* Adds the resource permission to the database. Also notifies the appropriate model listeners.
+	*
+	* @param resourcePermission the resource permission
+	* @return the resource permission that was added
+	*/
+	public static com.liferay.portal.kernel.model.ResourcePermission addResourcePermission(
+		com.liferay.portal.kernel.model.ResourcePermission resourcePermission) {
+		return getService().addResourcePermission(resourcePermission);
 	}
 
 	/**
@@ -141,17 +141,6 @@ public class ResourcePermissionLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the resource permission from the database. Also notifies the appropriate model listeners.
-	*
-	* @param resourcePermission the resource permission
-	* @return the resource permission that was removed
-	*/
-	public static com.liferay.portal.kernel.model.ResourcePermission deleteResourcePermission(
-		com.liferay.portal.kernel.model.ResourcePermission resourcePermission) {
-		return getService().deleteResourcePermission(resourcePermission);
-	}
-
-	/**
 	* Deletes the resource permission with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param resourcePermissionId the primary key of the resource permission
@@ -162,6 +151,17 @@ public class ResourcePermissionLocalServiceUtil {
 		long resourcePermissionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteResourcePermission(resourcePermissionId);
+	}
+
+	/**
+	* Deletes the resource permission from the database. Also notifies the appropriate model listeners.
+	*
+	* @param resourcePermission the resource permission
+	* @return the resource permission that was removed
+	*/
+	public static com.liferay.portal.kernel.model.ResourcePermission deleteResourcePermission(
+		com.liferay.portal.kernel.model.ResourcePermission resourcePermission) {
+		return getService().deleteResourcePermission(resourcePermission);
 	}
 
 	/**
@@ -186,7 +186,7 @@ public class ResourcePermissionLocalServiceUtil {
 	* @param primKey the primary key
 	*/
 	public static void deleteResourcePermissions(long companyId,
-		java.lang.String name, int scope, java.lang.String primKey)
+		java.lang.String name, int scope, long primKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteResourcePermissions(companyId, name, scope, primKey);
 	}
@@ -213,7 +213,7 @@ public class ResourcePermissionLocalServiceUtil {
 	* @param primKey the primary key
 	*/
 	public static void deleteResourcePermissions(long companyId,
-		java.lang.String name, int scope, long primKey)
+		java.lang.String name, int scope, java.lang.String primKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteResourcePermissions(companyId, name, scope, primKey);
 	}
@@ -828,15 +828,16 @@ public class ResourcePermissionLocalServiceUtil {
 	portlet ID
 	* @param scope the scope
 	* @param primKey the primary key
-	* @param roleIdsToActionIds a map of role IDs to action IDs of the actions
+	* @param roleId the primary key of the role
+	* @param actionIds the action IDs of the actions
 	*/
 	public static void setResourcePermissions(long companyId,
 		java.lang.String name, int scope, java.lang.String primKey,
-		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
+		long roleId, java.lang.String[] actionIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
-			.setResourcePermissions(companyId, name, scope, primKey,
-			roleIdsToActionIds);
+			.setResourcePermissions(companyId, name, scope, primKey, roleId,
+			actionIds);
 	}
 
 	/**
@@ -860,16 +861,15 @@ public class ResourcePermissionLocalServiceUtil {
 	portlet ID
 	* @param scope the scope
 	* @param primKey the primary key
-	* @param roleId the primary key of the role
-	* @param actionIds the action IDs of the actions
+	* @param roleIdsToActionIds a map of role IDs to action IDs of the actions
 	*/
 	public static void setResourcePermissions(long companyId,
 		java.lang.String name, int scope, java.lang.String primKey,
-		long roleId, java.lang.String[] actionIds)
+		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
-			.setResourcePermissions(companyId, name, scope, primKey, roleId,
-			actionIds);
+			.setResourcePermissions(companyId, name, scope, primKey,
+			roleIdsToActionIds);
 	}
 
 	/**

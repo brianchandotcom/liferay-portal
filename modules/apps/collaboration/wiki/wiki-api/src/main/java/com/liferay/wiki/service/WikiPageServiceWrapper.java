@@ -196,6 +196,13 @@ public class WikiPageServiceWrapper implements WikiPageService,
 			displayStyle, feedURL, entryURL, attachmentURLPrefix);
 	}
 
+	@Override
+	public java.util.List<com.liferay.wiki.model.WikiPage> getOrphans(
+		long groupId, long nodeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPageService.getOrphans(groupId, nodeId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -207,16 +214,16 @@ public class WikiPageServiceWrapper implements WikiPageService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.wiki.model.WikiPage> getOrphans(
-		long groupId, long nodeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPageService.getOrphans(groupId, nodeId);
-	}
-
-	@Override
 	public com.liferay.wiki.model.WikiPage getPage(long pageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPageService.getPage(pageId);
+	}
+
+	@Override
+	public com.liferay.wiki.model.WikiPage getPage(long groupId, long nodeId,
+		java.lang.String title)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPageService.getPage(groupId, nodeId, title);
 	}
 
 	@Override
@@ -228,23 +235,16 @@ public class WikiPageServiceWrapper implements WikiPageService,
 
 	@Override
 	public com.liferay.wiki.model.WikiPage getPage(long nodeId,
-		java.lang.String title, double version)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPageService.getPage(nodeId, title, version);
-	}
-
-	@Override
-	public com.liferay.wiki.model.WikiPage getPage(long nodeId,
 		java.lang.String title, java.lang.Boolean head)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPageService.getPage(nodeId, title, head);
 	}
 
 	@Override
-	public com.liferay.wiki.model.WikiPage getPage(long groupId, long nodeId,
-		java.lang.String title)
+	public com.liferay.wiki.model.WikiPage getPage(long nodeId,
+		java.lang.String title, double version)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPageService.getPage(groupId, nodeId, title);
+		return _wikiPageService.getPage(nodeId, title, version);
 	}
 
 	@Override

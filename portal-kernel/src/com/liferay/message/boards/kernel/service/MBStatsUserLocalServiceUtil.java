@@ -69,17 +69,6 @@ public class MBStatsUserLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the message boards stats user from the database. Also notifies the appropriate model listeners.
-	*
-	* @param mbStatsUser the message boards stats user
-	* @return the message boards stats user that was removed
-	*/
-	public static com.liferay.message.boards.kernel.model.MBStatsUser deleteMBStatsUser(
-		com.liferay.message.boards.kernel.model.MBStatsUser mbStatsUser) {
-		return getService().deleteMBStatsUser(mbStatsUser);
-	}
-
-	/**
 	* Deletes the message boards stats user with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param statsUserId the primary key of the message boards stats user
@@ -93,6 +82,17 @@ public class MBStatsUserLocalServiceUtil {
 	}
 
 	/**
+	* Deletes the message boards stats user from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mbStatsUser the message boards stats user
+	* @return the message boards stats user that was removed
+	*/
+	public static com.liferay.message.boards.kernel.model.MBStatsUser deleteMBStatsUser(
+		com.liferay.message.boards.kernel.model.MBStatsUser mbStatsUser) {
+		return getService().deleteMBStatsUser(mbStatsUser);
+	}
+
+	/**
 	* @throws PortalException
 	*/
 	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
@@ -101,14 +101,14 @@ public class MBStatsUserLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static void deleteStatsUser(
-		com.liferay.message.boards.kernel.model.MBStatsUser statsUser) {
-		getService().deleteStatsUser(statsUser);
-	}
-
 	public static void deleteStatsUser(long statsUserId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteStatsUser(statsUserId);
+	}
+
+	public static void deleteStatsUser(
+		com.liferay.message.boards.kernel.model.MBStatsUser statsUser) {
+		getService().deleteStatsUser(statsUser);
 	}
 
 	public static void deleteStatsUsersByGroupId(long groupId) {
@@ -314,14 +314,14 @@ public class MBStatsUserLocalServiceUtil {
 	}
 
 	public static com.liferay.message.boards.kernel.model.MBStatsUser updateStatsUser(
-		long groupId, long userId, int messageCount, java.util.Date lastPostDate) {
-		return getService()
-				   .updateStatsUser(groupId, userId, messageCount, lastPostDate);
+		long groupId, long userId, java.util.Date lastPostDate) {
+		return getService().updateStatsUser(groupId, userId, lastPostDate);
 	}
 
 	public static com.liferay.message.boards.kernel.model.MBStatsUser updateStatsUser(
-		long groupId, long userId, java.util.Date lastPostDate) {
-		return getService().updateStatsUser(groupId, userId, lastPostDate);
+		long groupId, long userId, int messageCount, java.util.Date lastPostDate) {
+		return getService()
+				   .updateStatsUser(groupId, userId, messageCount, lastPostDate);
 	}
 
 	public static MBStatsUserLocalService getService() {

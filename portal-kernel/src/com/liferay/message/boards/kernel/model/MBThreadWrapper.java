@@ -601,13 +601,13 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	}
 
 	@Override
-	public boolean hasLock(long userId) {
-		return _mbThread.hasLock(userId);
+	public int hashCode() {
+		return _mbThread.hashCode();
 	}
 
 	@Override
-	public int hashCode() {
-		return _mbThread.hashCode();
+	public boolean hasLock(long userId) {
+		return _mbThread.hasLock(userId);
 	}
 
 	/**
@@ -661,6 +661,26 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	}
 
 	/**
+	* Returns <code>true</code> if this message boards thread is inactive.
+	*
+	* @return <code>true</code> if this message boards thread is inactive; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInactive() {
+		return _mbThread.isInactive();
+	}
+
+	/**
+	* Returns <code>true</code> if this message boards thread is incomplete.
+	*
+	* @return <code>true</code> if this message boards thread is incomplete; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isIncomplete() {
+		return _mbThread.isIncomplete();
+	}
+
+	/**
 	* Returns <code>true</code> if this message boards thread is in the Recycle Bin.
 	*
 	* @return <code>true</code> if this message boards thread is in the Recycle Bin; <code>false</code> otherwise
@@ -688,26 +708,6 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	@Override
 	public boolean isInTrashImplicitly() {
 		return _mbThread.isInTrashImplicitly();
-	}
-
-	/**
-	* Returns <code>true</code> if this message boards thread is inactive.
-	*
-	* @return <code>true</code> if this message boards thread is inactive; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isInactive() {
-		return _mbThread.isInactive();
-	}
-
-	/**
-	* Returns <code>true</code> if this message boards thread is incomplete.
-	*
-	* @return <code>true</code> if this message boards thread is incomplete; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isIncomplete() {
-		return _mbThread.isIncomplete();
 	}
 
 	@Override
@@ -801,14 +801,14 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_mbThread.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_mbThread.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_mbThread.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

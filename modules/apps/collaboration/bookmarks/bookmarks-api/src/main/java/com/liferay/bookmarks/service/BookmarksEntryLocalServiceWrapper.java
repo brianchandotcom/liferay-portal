@@ -339,14 +339,6 @@ public class BookmarksEntryLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getEntries(
-		long groupId, long folderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
-		return _bookmarksEntryLocalService.getEntries(groupId, folderId, start,
-			end, orderByComparator);
-	}
-
-	@Override
-	public java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getEntries(
 		long groupId, long folderId, int status, int start, int end) {
 		return _bookmarksEntryLocalService.getEntries(groupId, folderId,
 			status, start, end);
@@ -358,6 +350,14 @@ public class BookmarksEntryLocalServiceWrapper
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
 		return _bookmarksEntryLocalService.getEntries(groupId, folderId,
 			status, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getEntries(
+		long groupId, long folderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
+		return _bookmarksEntryLocalService.getEntries(groupId, folderId, start,
+			end, orderByComparator);
 	}
 
 	@Override

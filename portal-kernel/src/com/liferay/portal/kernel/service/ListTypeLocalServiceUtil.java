@@ -261,15 +261,15 @@ public class ListTypeLocalServiceUtil {
 		return getService().updateListType(listType);
 	}
 
-	public static void validate(long listTypeId, java.lang.String type)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().validate(listTypeId, type);
-	}
-
 	public static void validate(long listTypeId, long classNameId,
 		java.lang.String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().validate(listTypeId, classNameId, type);
+	}
+
+	public static void validate(long listTypeId, java.lang.String type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().validate(listTypeId, type);
 	}
 
 	public static ListTypeLocalService getService() {

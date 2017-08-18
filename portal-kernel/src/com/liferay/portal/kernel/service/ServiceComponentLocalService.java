@@ -85,16 +85,6 @@ public interface ServiceComponentLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the service component from the database. Also notifies the appropriate model listeners.
-	*
-	* @param serviceComponent the service component
-	* @return the service component that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public ServiceComponent deleteServiceComponent(
-		ServiceComponent serviceComponent);
-
-	/**
 	* Deletes the service component with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param serviceComponentId the primary key of the service component
@@ -104,6 +94,16 @@ public interface ServiceComponentLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public ServiceComponent deleteServiceComponent(long serviceComponentId)
 		throws PortalException;
+
+	/**
+	* Deletes the service component from the database. Also notifies the appropriate model listeners.
+	*
+	* @param serviceComponent the service component
+	* @return the service component that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public ServiceComponent deleteServiceComponent(
+		ServiceComponent serviceComponent);
 
 	public void destroyServiceComponent(
 		ServiceComponentConfiguration serviceComponentConfiguration,

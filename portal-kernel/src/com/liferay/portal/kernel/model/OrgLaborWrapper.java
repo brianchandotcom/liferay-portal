@@ -271,16 +271,6 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	}
 
 	/**
-	* Returns the org labor ID of this org labor.
-	*
-	* @return the org labor ID of this org labor
-	*/
-	@Override
-	public long getOrgLaborId() {
-		return _orgLabor.getOrgLaborId();
-	}
-
-	/**
 	* Returns the organization ID of this org labor.
 	*
 	* @return the organization ID of this org labor
@@ -288,6 +278,16 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	@Override
 	public long getOrganizationId() {
 		return _orgLabor.getOrganizationId();
+	}
+
+	/**
+	* Returns the org labor ID of this org labor.
+	*
+	* @return the org labor ID of this org labor
+	*/
+	@Override
+	public long getOrgLaborId() {
+		return _orgLabor.getOrgLaborId();
 	}
 
 	/**
@@ -462,13 +462,13 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_orgLabor.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_orgLabor.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_orgLabor.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_orgLabor.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -532,16 +532,6 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	}
 
 	/**
-	* Sets the org labor ID of this org labor.
-	*
-	* @param orgLaborId the org labor ID of this org labor
-	*/
-	@Override
-	public void setOrgLaborId(long orgLaborId) {
-		_orgLabor.setOrgLaborId(orgLaborId);
-	}
-
-	/**
 	* Sets the organization ID of this org labor.
 	*
 	* @param organizationId the organization ID of this org labor
@@ -549,6 +539,16 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	@Override
 	public void setOrganizationId(long organizationId) {
 		_orgLabor.setOrganizationId(organizationId);
+	}
+
+	/**
+	* Sets the org labor ID of this org labor.
+	*
+	* @param orgLaborId the org labor ID of this org labor
+	*/
+	@Override
+	public void setOrgLaborId(long orgLaborId) {
+		_orgLabor.setOrgLaborId(orgLaborId);
 	}
 
 	/**

@@ -377,21 +377,15 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	@Override
+	public long getDataRepositoryId() {
+		return _dlFileEntry.getDataRepositoryId();
+	}
+
+	@Override
 	public Map<java.lang.String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues> getDDMFormValuesMap(
 		long fileVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntry.getDDMFormValuesMap(fileVersionId);
-	}
-
-	@Override
-	public DLFileEntryType getDLFileEntryType()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileEntry.getDLFileEntryType();
-	}
-
-	@Override
-	public long getDataRepositoryId() {
-		return _dlFileEntry.getDataRepositoryId();
 	}
 
 	/**
@@ -402,6 +396,12 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	@Override
 	public java.lang.String getDescription() {
 		return _dlFileEntry.getDescription();
+	}
+
+	@Override
+	public DLFileEntryType getDLFileEntryType()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntry.getDLFileEntryType();
 	}
 
 	@Override
@@ -772,13 +772,13 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	@Override
-	public boolean hasLock() {
-		return _dlFileEntry.hasLock();
+	public int hashCode() {
+		return _dlFileEntry.hashCode();
 	}
 
 	@Override
-	public int hashCode() {
-		return _dlFileEntry.hashCode();
+	public boolean hasLock() {
+		return _dlFileEntry.hasLock();
 	}
 
 	@Override
@@ -932,14 +932,14 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_dlFileEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_dlFileEntry.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_dlFileEntry.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

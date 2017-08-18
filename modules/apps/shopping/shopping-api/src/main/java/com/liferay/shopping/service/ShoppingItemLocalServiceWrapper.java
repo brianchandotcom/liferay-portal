@@ -57,21 +57,6 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 	}
 
 	@Override
-	public void addItemResources(com.liferay.shopping.model.ShoppingItem item,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_shoppingItemLocalService.addItemResources(item, addGroupPermissions,
-			addGuestPermissions);
-	}
-
-	@Override
-	public void addItemResources(com.liferay.shopping.model.ShoppingItem item,
-		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_shoppingItemLocalService.addItemResources(item, modelPermissions);
-	}
-
-	@Override
 	public void addItemResources(long itemId, boolean addGroupPermissions,
 		boolean addGuestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -84,6 +69,21 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_shoppingItemLocalService.addItemResources(itemId, modelPermissions);
+	}
+
+	@Override
+	public void addItemResources(com.liferay.shopping.model.ShoppingItem item,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_shoppingItemLocalService.addItemResources(item, addGroupPermissions,
+			addGuestPermissions);
+	}
+
+	@Override
+	public void addItemResources(com.liferay.shopping.model.ShoppingItem item,
+		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_shoppingItemLocalService.addItemResources(item, modelPermissions);
 	}
 
 	/**
@@ -111,15 +111,15 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 	}
 
 	@Override
-	public void deleteItem(com.liferay.shopping.model.ShoppingItem item)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_shoppingItemLocalService.deleteItem(item);
-	}
-
-	@Override
 	public void deleteItem(long itemId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_shoppingItemLocalService.deleteItem(itemId);
+	}
+
+	@Override
+	public void deleteItem(com.liferay.shopping.model.ShoppingItem item)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_shoppingItemLocalService.deleteItem(item);
 	}
 
 	@Override
@@ -139,18 +139,6 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 	}
 
 	/**
-	* Deletes the shopping item from the database. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingItem the shopping item
-	* @return the shopping item that was removed
-	*/
-	@Override
-	public com.liferay.shopping.model.ShoppingItem deleteShoppingItem(
-		com.liferay.shopping.model.ShoppingItem shoppingItem) {
-		return _shoppingItemLocalService.deleteShoppingItem(shoppingItem);
-	}
-
-	/**
 	* Deletes the shopping item with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param itemId the primary key of the shopping item
@@ -161,6 +149,18 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 	public com.liferay.shopping.model.ShoppingItem deleteShoppingItem(
 		long itemId) throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingItemLocalService.deleteShoppingItem(itemId);
+	}
+
+	/**
+	* Deletes the shopping item from the database. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingItem the shopping item
+	* @return the shopping item that was removed
+	*/
+	@Override
+	public com.liferay.shopping.model.ShoppingItem deleteShoppingItem(
+		com.liferay.shopping.model.ShoppingItem shoppingItem) {
+		return _shoppingItemLocalService.deleteShoppingItem(shoppingItem);
 	}
 
 	@Override

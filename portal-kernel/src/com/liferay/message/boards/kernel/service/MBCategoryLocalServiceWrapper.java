@@ -66,6 +66,22 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	}
 
 	@Override
+	public void addCategoryResources(long categoryId,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_mbCategoryLocalService.addCategoryResources(categoryId,
+			addGroupPermissions, addGuestPermissions);
+	}
+
+	@Override
+	public void addCategoryResources(long categoryId,
+		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_mbCategoryLocalService.addCategoryResources(categoryId,
+			modelPermissions);
+	}
+
+	@Override
 	public void addCategoryResources(
 		com.liferay.message.boards.kernel.model.MBCategory category,
 		boolean addGroupPermissions, boolean addGuestPermissions)
@@ -80,22 +96,6 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_mbCategoryLocalService.addCategoryResources(category, modelPermissions);
-	}
-
-	@Override
-	public void addCategoryResources(long categoryId,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_mbCategoryLocalService.addCategoryResources(categoryId,
-			addGroupPermissions, addGuestPermissions);
-	}
-
-	@Override
-	public void addCategoryResources(long categoryId,
-		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_mbCategoryLocalService.addCategoryResources(categoryId,
-			modelPermissions);
 	}
 
 	/**
@@ -129,6 +129,12 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	}
 
 	@Override
+	public void deleteCategory(long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_mbCategoryLocalService.deleteCategory(categoryId);
+	}
+
+	@Override
 	public void deleteCategory(
 		com.liferay.message.boards.kernel.model.MBCategory category)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -143,24 +149,6 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 		_mbCategoryLocalService.deleteCategory(category, includeTrashedEntries);
 	}
 
-	@Override
-	public void deleteCategory(long categoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_mbCategoryLocalService.deleteCategory(categoryId);
-	}
-
-	/**
-	* Deletes the message boards category from the database. Also notifies the appropriate model listeners.
-	*
-	* @param mbCategory the message boards category
-	* @return the message boards category that was removed
-	*/
-	@Override
-	public com.liferay.message.boards.kernel.model.MBCategory deleteMBCategory(
-		com.liferay.message.boards.kernel.model.MBCategory mbCategory) {
-		return _mbCategoryLocalService.deleteMBCategory(mbCategory);
-	}
-
 	/**
 	* Deletes the message boards category with the primary key from the database. Also notifies the appropriate model listeners.
 	*
@@ -173,6 +161,18 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 		long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbCategoryLocalService.deleteMBCategory(categoryId);
+	}
+
+	/**
+	* Deletes the message boards category from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mbCategory the message boards category
+	* @return the message boards category that was removed
+	*/
+	@Override
+	public com.liferay.message.boards.kernel.model.MBCategory deleteMBCategory(
+		com.liferay.message.boards.kernel.model.MBCategory mbCategory) {
+		return _mbCategoryLocalService.deleteMBCategory(mbCategory);
 	}
 
 	/**

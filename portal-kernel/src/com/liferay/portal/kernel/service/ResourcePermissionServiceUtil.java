@@ -167,15 +167,16 @@ public class ResourcePermissionServiceUtil {
 	* @param name the resource's name, which can be either a class name or a
 	portlet ID
 	* @param primKey the primary key
-	* @param roleIdsToActionIds a map of role IDs to action IDs of the actions
+	* @param roleId the primary key of the role
+	* @param actionIds the action IDs of the actions
 	*/
 	public static void setIndividualResourcePermissions(long groupId,
 		long companyId, java.lang.String name, java.lang.String primKey,
-		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
+		long roleId, java.lang.String[] actionIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.setIndividualResourcePermissions(groupId, companyId, name,
-			primKey, roleIdsToActionIds);
+			primKey, roleId, actionIds);
 	}
 
 	/**
@@ -199,16 +200,15 @@ public class ResourcePermissionServiceUtil {
 	* @param name the resource's name, which can be either a class name or a
 	portlet ID
 	* @param primKey the primary key
-	* @param roleId the primary key of the role
-	* @param actionIds the action IDs of the actions
+	* @param roleIdsToActionIds a map of role IDs to action IDs of the actions
 	*/
 	public static void setIndividualResourcePermissions(long groupId,
 		long companyId, java.lang.String name, java.lang.String primKey,
-		long roleId, java.lang.String[] actionIds)
+		java.util.Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.setIndividualResourcePermissions(groupId, companyId, name,
-			primKey, roleId, actionIds);
+			primKey, roleIdsToActionIds);
 	}
 
 	public static ResourcePermissionService getService() {

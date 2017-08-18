@@ -216,30 +216,6 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	/**
 	* Returns the localized description of this polls question in the language. Uses the default language if no localization exists for the requested language.
 	*
-	* @param languageId the ID of the language
-	* @return the localized description of this polls question
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
-		return _pollsQuestion.getDescription(languageId);
-	}
-
-	/**
-	* Returns the localized description of this polls question in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this polls question
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
-		return _pollsQuestion.getDescription(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized description of this polls question in the language. Uses the default language if no localization exists for the requested language.
-	*
 	* @param locale the locale of the language
 	* @return the localized description of this polls question
 	*/
@@ -259,6 +235,30 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	public java.lang.String getDescription(java.util.Locale locale,
 		boolean useDefault) {
 		return _pollsQuestion.getDescription(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized description of this polls question in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized description of this polls question
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId) {
+		return _pollsQuestion.getDescription(languageId);
+	}
+
+	/**
+	* Returns the localized description of this polls question in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this polls question
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId,
+		boolean useDefault) {
+		return _pollsQuestion.getDescription(languageId, useDefault);
 	}
 
 	@Override
@@ -374,6 +374,29 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	/**
 	* Returns the localized title of this polls question in the language. Uses the default language if no localization exists for the requested language.
 	*
+	* @param locale the locale of the language
+	* @return the localized title of this polls question
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale) {
+		return _pollsQuestion.getTitle(locale);
+	}
+
+	/**
+	* Returns the localized title of this polls question in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized title of this polls question. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
+		return _pollsQuestion.getTitle(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized title of this polls question in the language. Uses the default language if no localization exists for the requested language.
+	*
 	* @param languageId the ID of the language
 	* @return the localized title of this polls question
 	*/
@@ -393,29 +416,6 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	public java.lang.String getTitle(java.lang.String languageId,
 		boolean useDefault) {
 		return _pollsQuestion.getTitle(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized title of this polls question in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized title of this polls question
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale) {
-		return _pollsQuestion.getTitle(locale);
-	}
-
-	/**
-	* Returns the localized title of this polls question in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized title of this polls question. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
-		return _pollsQuestion.getTitle(locale, useDefault);
 	}
 
 	@Override
@@ -632,14 +632,14 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_pollsQuestion.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_pollsQuestion.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_pollsQuestion.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

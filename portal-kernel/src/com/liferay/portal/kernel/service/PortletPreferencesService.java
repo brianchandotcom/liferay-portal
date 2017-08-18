@@ -59,11 +59,11 @@ public interface PortletPreferencesService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	public void restoreArchivedPreferences(long groupId, Layout layout,
-		java.lang.String portletId, PortletItem portletItem,
+		java.lang.String portletId, long portletItemId,
 		javax.portlet.PortletPreferences preferences) throws PortalException;
 
 	public void restoreArchivedPreferences(long groupId, Layout layout,
-		java.lang.String portletId, long portletItemId,
+		java.lang.String portletId, PortletItem portletItem,
 		javax.portlet.PortletPreferences preferences) throws PortalException;
 
 	public void restoreArchivedPreferences(long groupId, java.lang.String name,

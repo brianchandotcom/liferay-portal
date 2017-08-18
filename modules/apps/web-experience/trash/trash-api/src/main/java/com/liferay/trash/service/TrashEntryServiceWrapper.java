@@ -56,6 +56,23 @@ public class TrashEntryServiceWrapper implements TrashEntryService,
 	}
 
 	/**
+	* Deletes the trash entry with the primary key.
+	*
+	* <p>
+	* This method throws a {@link TrashPermissionException} with type {@link
+	* TrashPermissionException#DELETE} if the user did not have permission to
+	* delete the trash entry.
+	* </p>
+	*
+	* @param entryId the primary key of the trash entry
+	*/
+	@Override
+	public void deleteEntry(long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_trashEntryService.deleteEntry(entryId);
+	}
+
+	/**
 	* Deletes the trash entry with the entity class name and class primary key.
 	*
 	* <p>
@@ -71,23 +88,6 @@ public class TrashEntryServiceWrapper implements TrashEntryService,
 	public void deleteEntry(java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_trashEntryService.deleteEntry(className, classPK);
-	}
-
-	/**
-	* Deletes the trash entry with the primary key.
-	*
-	* <p>
-	* This method throws a {@link TrashPermissionException} with type {@link
-	* TrashPermissionException#DELETE} if the user did not have permission to
-	* delete the trash entry.
-	* </p>
-	*
-	* @param entryId the primary key of the trash entry
-	*/
-	@Override
-	public void deleteEntry(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_trashEntryService.deleteEntry(entryId);
 	}
 
 	/**
@@ -199,22 +199,6 @@ public class TrashEntryServiceWrapper implements TrashEntryService,
 	}
 
 	@Override
-	public com.liferay.trash.model.TrashEntry restoreEntry(
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _trashEntryService.restoreEntry(className, classPK);
-	}
-
-	@Override
-	public com.liferay.trash.model.TrashEntry restoreEntry(
-		java.lang.String className, long classPK, long overrideClassPK,
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _trashEntryService.restoreEntry(className, classPK,
-			overrideClassPK, name);
-	}
-
-	@Override
 	public com.liferay.trash.model.TrashEntry restoreEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _trashEntryService.restoreEntry(entryId);
@@ -259,6 +243,22 @@ public class TrashEntryServiceWrapper implements TrashEntryService,
 		long overrideClassPK, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _trashEntryService.restoreEntry(entryId, overrideClassPK, name);
+	}
+
+	@Override
+	public com.liferay.trash.model.TrashEntry restoreEntry(
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _trashEntryService.restoreEntry(className, classPK);
+	}
+
+	@Override
+	public com.liferay.trash.model.TrashEntry restoreEntry(
+		java.lang.String className, long classPK, long overrideClassPK,
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _trashEntryService.restoreEntry(className, classPK,
+			overrideClassPK, name);
 	}
 
 	@Override

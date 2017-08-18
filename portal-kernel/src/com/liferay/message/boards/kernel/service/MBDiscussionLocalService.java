@@ -64,6 +64,9 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MBDiscussionLocalServiceUtil} to access the message boards discussion local service. Add custom service methods to {@link com.liferay.portlet.messageboards.service.impl.MBDiscussionLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public MBDiscussion addDiscussion(long userId, long groupId,
+		long classNameId, long classPK, long threadId,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #addDiscussion(long, long,
@@ -73,10 +76,6 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 	public MBDiscussion addDiscussion(long userId, long classNameId,
 		long classPK, long threadId, ServiceContext serviceContext)
 		throws PortalException;
-
-	public MBDiscussion addDiscussion(long userId, long groupId,
-		long classNameId, long classPK, long threadId,
-		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the message boards discussion to the database. Also notifies the appropriate model listeners.
@@ -96,15 +95,6 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 	public MBDiscussion createMBDiscussion(long discussionId);
 
 	/**
-	* Deletes the message boards discussion from the database. Also notifies the appropriate model listeners.
-	*
-	* @param mbDiscussion the message boards discussion
-	* @return the message boards discussion that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public MBDiscussion deleteMBDiscussion(MBDiscussion mbDiscussion);
-
-	/**
 	* Deletes the message boards discussion with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param discussionId the primary key of the message boards discussion
@@ -114,6 +104,15 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public MBDiscussion deleteMBDiscussion(long discussionId)
 		throws PortalException;
+
+	/**
+	* Deletes the message boards discussion from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mbDiscussion the message boards discussion
+	* @return the message boards discussion that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public MBDiscussion deleteMBDiscussion(MBDiscussion mbDiscussion);
 
 	/**
 	* @throws PortalException
@@ -182,10 +181,10 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBDiscussion fetchDiscussion(java.lang.String className, long classPK);
+	public MBDiscussion fetchDiscussion(long discussionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBDiscussion fetchDiscussion(long discussionId);
+	public MBDiscussion fetchDiscussion(java.lang.String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MBDiscussion fetchMBDiscussion(long discussionId);
@@ -208,11 +207,11 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBDiscussion getDiscussion(java.lang.String className, long classPK)
+	public MBDiscussion getDiscussion(long discussionId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBDiscussion getDiscussion(long discussionId)
+	public MBDiscussion getDiscussion(java.lang.String className, long classPK)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

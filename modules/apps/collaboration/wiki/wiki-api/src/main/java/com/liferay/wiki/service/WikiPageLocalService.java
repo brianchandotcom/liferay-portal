@@ -100,18 +100,18 @@ public interface WikiPageLocalService extends BaseLocalService,
 		List<ObjectValuePair<java.lang.String, InputStream>> inputStreamOVPs)
 		throws PortalException;
 
-	public void addPageResources(WikiPage page, boolean addGroupPermissions,
-		boolean addGuestPermissions) throws PortalException;
-
-	public void addPageResources(WikiPage page,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws PortalException;
-
 	public void addPageResources(long nodeId, java.lang.String title,
 		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws PortalException;
 
 	public void addPageResources(long nodeId, java.lang.String title,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws PortalException;
+
+	public void addPageResources(WikiPage page, boolean addGroupPermissions,
+		boolean addGuestPermissions) throws PortalException;
+
+	public void addPageResources(WikiPage page,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
 		throws PortalException;
 
@@ -155,11 +155,11 @@ public interface WikiPageLocalService extends BaseLocalService,
 	*/
 	public WikiPage createWikiPage(long pageId);
 
-	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, send = false, type = SystemEventConstants.TYPE_DELETE)
-	public void deletePage(WikiPage page) throws PortalException;
-
 	public void deletePage(long nodeId, java.lang.String title)
 		throws PortalException;
+
+	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, send = false, type = SystemEventConstants.TYPE_DELETE)
+	public void deletePage(WikiPage page) throws PortalException;
 
 	public void deletePageAttachment(long nodeId, java.lang.String title,
 		java.lang.String fileName) throws PortalException;
@@ -184,15 +184,6 @@ public interface WikiPageLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the wiki page from the database. Also notifies the appropriate model listeners.
-	*
-	* @param wikiPage the wiki page
-	* @return the wiki page that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public WikiPage deleteWikiPage(WikiPage wikiPage);
-
-	/**
 	* Deletes the wiki page with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param pageId the primary key of the wiki page
@@ -201,6 +192,15 @@ public interface WikiPageLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public WikiPage deleteWikiPage(long pageId) throws PortalException;
+
+	/**
+	* Deletes the wiki page from the database. Also notifies the appropriate model listeners.
+	*
+	* @param wikiPage the wiki page
+	* @return the wiki page that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public WikiPage deleteWikiPage(WikiPage wikiPage);
 
 	public void discardDraft(long nodeId, java.lang.String title, double version)
 		throws PortalException;
@@ -269,11 +269,11 @@ public interface WikiPageLocalService extends BaseLocalService,
 		boolean preferApproved);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPage fetchLatestPage(long nodeId, java.lang.String title,
+	public WikiPage fetchLatestPage(long resourcePrimKey, long nodeId,
 		int status, boolean preferApproved);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPage fetchLatestPage(long resourcePrimKey, long nodeId,
+	public WikiPage fetchLatestPage(long nodeId, java.lang.String title,
 		int status, boolean preferApproved);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -352,15 +352,18 @@ public interface WikiPageLocalService extends BaseLocalService,
 		boolean preferApproved) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPage getLatestPage(long nodeId, java.lang.String title,
-		int status, boolean preferApproved) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiPage getLatestPage(long resourcePrimKey, long nodeId,
 		int status, boolean preferApproved) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WikiPage getLatestPage(long nodeId, java.lang.String title,
+		int status, boolean preferApproved) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<WikiPage> getNoAssetPages();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<WikiPage> getOrphans(long nodeId) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -368,9 +371,6 @@ public interface WikiPageLocalService extends BaseLocalService,
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<WikiPage> getOrphans(long nodeId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<WikiPage> getOutgoingLinks(long nodeId, java.lang.String title)
@@ -388,15 +388,31 @@ public interface WikiPageLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPage getPage(long nodeId, java.lang.String title, double version)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiPage getPage(long nodeId, java.lang.String title,
 		java.lang.Boolean head) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WikiPage getPage(long nodeId, java.lang.String title, double version)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiPage getPageByPageId(long pageId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WikiPageDisplay getPageDisplay(long nodeId, java.lang.String title,
+		PortletURL viewPageURL, PortletURL editPageURL,
+		java.lang.String attachmentURLPrefix) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WikiPageDisplay getPageDisplay(WikiPage page,
+		PortletURL viewPageURL, PortletURL editPageURL,
+		java.lang.String attachmentURLPrefix) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WikiPageDisplay getPageDisplay(WikiPage page,
+		PortletURL viewPageURL, PortletURL editPageURL,
+		java.lang.String attachmentURLPrefix, ServiceContext serviceContext)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiPageDisplay getPageDisplay(WikiPage page,
@@ -405,30 +421,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPageDisplay getPageDisplay(WikiPage page,
-		PortletURL viewPageURL, PortletURL editPageURL,
-		java.lang.String attachmentURLPrefix) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPageDisplay getPageDisplay(WikiPage page,
-		PortletURL viewPageURL, PortletURL editPageURL,
-		java.lang.String attachmentURLPrefix, ServiceContext serviceContext)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPageDisplay getPageDisplay(long nodeId, java.lang.String title,
-		PortletURL viewPageURL, PortletURL editPageURL,
-		java.lang.String attachmentURLPrefix) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<WikiPage> getPages(java.lang.String format);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<WikiPage> getPages(long nodeId, boolean head, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<WikiPage> getPages(long nodeId, boolean head, int start,
-		int end, OrderByComparator<WikiPage> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<WikiPage> getPages(long nodeId, boolean head, int status,
@@ -439,11 +432,22 @@ public interface WikiPageLocalService extends BaseLocalService,
 		int start, int end, OrderByComparator<WikiPage> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<WikiPage> getPages(long nodeId, boolean head, int start,
+		int end, OrderByComparator<WikiPage> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<WikiPage> getPages(long nodeId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<WikiPage> getPages(long nodeId, int start, int end,
 		OrderByComparator<WikiPage> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<WikiPage> getPages(long resourcePrimKey, long nodeId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<WikiPage> getPages(long userId, long nodeId, int status,
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<WikiPage> getPages(long nodeId, java.lang.String title,
@@ -458,14 +462,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 		int start, int end, OrderByComparator<WikiPage> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<WikiPage> getPages(long resourcePrimKey, long nodeId, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<WikiPage> getPages(long userId, long nodeId, int status,
-		int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getPagesCount(java.lang.String format);
+	public List<WikiPage> getPages(java.lang.String format);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getPagesCount(long nodeId);
@@ -480,22 +477,25 @@ public interface WikiPageLocalService extends BaseLocalService,
 	public int getPagesCount(long nodeId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getPagesCount(long userId, long nodeId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getPagesCount(long nodeId, java.lang.String title);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getPagesCount(long nodeId, java.lang.String title, boolean head);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getPagesCount(long userId, long nodeId, int status);
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
+	public int getPagesCount(java.lang.String format);
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<?extends PersistedModel> getPersistedModel(long resourcePrimKey)
+		throws PortalException;
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -610,6 +610,10 @@ public interface WikiPageLocalService extends BaseLocalService,
 		java.lang.String title, java.lang.String fileName)
 		throws PortalException;
 
+	public WikiPage movePageFromTrash(long userId, long nodeId,
+		java.lang.String title, long newNodeId, java.lang.String newParentTitle)
+		throws PortalException;
+
 	/**
 	* @deprecated As of 1.2.0, replaced by {@link #movePageFromTrash(long,
 	long, String, long, String)} *
@@ -619,18 +623,14 @@ public interface WikiPageLocalService extends BaseLocalService,
 		java.lang.String title, java.lang.String newParentTitle,
 		ServiceContext serviceContext) throws PortalException;
 
-	public WikiPage movePageFromTrash(long userId, long nodeId,
-		java.lang.String title, long newNodeId, java.lang.String newParentTitle)
-		throws PortalException;
-
-	public WikiPage movePageToTrash(long userId, WikiPage page)
-		throws PortalException;
-
 	public WikiPage movePageToTrash(long userId, long nodeId,
 		java.lang.String title) throws PortalException;
 
 	public WikiPage movePageToTrash(long userId, long nodeId,
 		java.lang.String title, double version) throws PortalException;
+
+	public WikiPage movePageToTrash(long userId, WikiPage page)
+		throws PortalException;
 
 	public void renamePage(long userId, long nodeId, java.lang.String title,
 		java.lang.String newTitle, boolean strict, ServiceContext serviceContext)
@@ -668,6 +668,9 @@ public interface WikiPageLocalService extends BaseLocalService,
 		java.lang.String parentTitle, java.lang.String redirectTitle,
 		ServiceContext serviceContext) throws PortalException;
 
+	public WikiPage updateStatus(long userId, long resourcePrimKey, int status,
+		ServiceContext serviceContext) throws PortalException;
+
 	/**
 	* @deprecated As of 1.2.0, replaced by {@link #updateStatus(long, WikiPage,
 	int, ServiceContext, Map)}
@@ -680,9 +683,6 @@ public interface WikiPageLocalService extends BaseLocalService,
 		ServiceContext serviceContext,
 		Map<java.lang.String, Serializable> workflowContext)
 		throws PortalException;
-
-	public WikiPage updateStatus(long userId, long resourcePrimKey, int status,
-		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Updates the wiki page in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

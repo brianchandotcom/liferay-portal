@@ -74,17 +74,6 @@ public class ShoppingItemPriceLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the shopping item price from the database. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingItemPrice the shopping item price
-	* @return the shopping item price that was removed
-	*/
-	public static com.liferay.shopping.model.ShoppingItemPrice deleteShoppingItemPrice(
-		com.liferay.shopping.model.ShoppingItemPrice shoppingItemPrice) {
-		return getService().deleteShoppingItemPrice(shoppingItemPrice);
-	}
-
-	/**
 	* Deletes the shopping item price with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param itemPriceId the primary key of the shopping item price
@@ -95,6 +84,17 @@ public class ShoppingItemPriceLocalServiceUtil {
 		long itemPriceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteShoppingItemPrice(itemPriceId);
+	}
+
+	/**
+	* Deletes the shopping item price from the database. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingItemPrice the shopping item price
+	* @return the shopping item price that was removed
+	*/
+	public static com.liferay.shopping.model.ShoppingItemPrice deleteShoppingItemPrice(
+		com.liferay.shopping.model.ShoppingItemPrice shoppingItemPrice) {
+		return getService().deleteShoppingItemPrice(shoppingItemPrice);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {

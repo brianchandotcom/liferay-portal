@@ -61,6 +61,9 @@ public interface SyncDLFileVersionDiffLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SyncDLFileVersionDiffLocalServiceUtil} to access the sync dl file version diff local service. Add custom service methods to {@link com.liferay.sync.service.impl.SyncDLFileVersionDiffLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public SyncDLFileVersionDiff addSyncDLFileVersionDiff(long fileEntryId,
+		long sourceFileVersionId, long targetFileVersionId, File file)
+		throws PortalException;
 
 	/**
 	* Adds the sync dl file version diff to the database. Also notifies the appropriate model listeners.
@@ -71,10 +74,6 @@ public interface SyncDLFileVersionDiffLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public SyncDLFileVersionDiff addSyncDLFileVersionDiff(
 		SyncDLFileVersionDiff syncDLFileVersionDiff);
-
-	public SyncDLFileVersionDiff addSyncDLFileVersionDiff(long fileEntryId,
-		long sourceFileVersionId, long targetFileVersionId, File file)
-		throws PortalException;
 
 	/**
 	* Creates a new sync dl file version diff with the primary key. Does not add the sync dl file version diff to the database.
@@ -95,17 +94,6 @@ public interface SyncDLFileVersionDiffLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the sync dl file version diff from the database. Also notifies the appropriate model listeners.
-	*
-	* @param syncDLFileVersionDiff the sync dl file version diff
-	* @return the sync dl file version diff that was removed
-	* @throws PortalException
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public SyncDLFileVersionDiff deleteSyncDLFileVersionDiff(
-		SyncDLFileVersionDiff syncDLFileVersionDiff) throws PortalException;
-
-	/**
 	* Deletes the sync dl file version diff with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param syncDLFileVersionDiffId the primary key of the sync dl file version diff
@@ -115,6 +103,17 @@ public interface SyncDLFileVersionDiffLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public SyncDLFileVersionDiff deleteSyncDLFileVersionDiff(
 		long syncDLFileVersionDiffId) throws PortalException;
+
+	/**
+	* Deletes the sync dl file version diff from the database. Also notifies the appropriate model listeners.
+	*
+	* @param syncDLFileVersionDiff the sync dl file version diff
+	* @return the sync dl file version diff that was removed
+	* @throws PortalException
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public SyncDLFileVersionDiff deleteSyncDLFileVersionDiff(
+		SyncDLFileVersionDiff syncDLFileVersionDiff) throws PortalException;
 
 	public void deleteSyncDLFileVersionDiffs(long fileEntryId)
 		throws PortalException;

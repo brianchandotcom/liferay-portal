@@ -60,6 +60,9 @@ public interface WeDeployAuthAppLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WeDeployAuthAppLocalServiceUtil} to access the we deploy auth app local service. Add custom service methods to {@link com.liferay.portal.security.wedeploy.auth.service.impl.WeDeployAuthAppLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public WeDeployAuthApp addWeDeployAuthApp(long userId,
+		java.lang.String name, java.lang.String redirectURI,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the we deploy auth app to the database. Also notifies the appropriate model listeners.
@@ -69,10 +72,6 @@ public interface WeDeployAuthAppLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public WeDeployAuthApp addWeDeployAuthApp(WeDeployAuthApp weDeployAuthApp);
-
-	public WeDeployAuthApp addWeDeployAuthApp(long userId,
-		java.lang.String name, java.lang.String redirectURI,
-		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new we deploy auth app with the primary key. Does not add the we deploy auth app to the database.
@@ -90,16 +89,6 @@ public interface WeDeployAuthAppLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the we deploy auth app from the database. Also notifies the appropriate model listeners.
-	*
-	* @param weDeployAuthApp the we deploy auth app
-	* @return the we deploy auth app that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public WeDeployAuthApp deleteWeDeployAuthApp(
-		WeDeployAuthApp weDeployAuthApp);
-
-	/**
 	* Deletes the we deploy auth app with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param weDeployAuthAppId the primary key of the we deploy auth app
@@ -109,6 +98,16 @@ public interface WeDeployAuthAppLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public WeDeployAuthApp deleteWeDeployAuthApp(long weDeployAuthAppId)
 		throws PortalException;
+
+	/**
+	* Deletes the we deploy auth app from the database. Also notifies the appropriate model listeners.
+	*
+	* @param weDeployAuthApp the we deploy auth app
+	* @return the we deploy auth app that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public WeDeployAuthApp deleteWeDeployAuthApp(
+		WeDeployAuthApp weDeployAuthApp);
 
 	public DynamicQuery dynamicQuery();
 
@@ -170,11 +169,11 @@ public interface WeDeployAuthAppLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WeDeployAuthApp fetchWeDeployAuthApp(java.lang.String redirectURI,
-		java.lang.String clientId);
+	public WeDeployAuthApp fetchWeDeployAuthApp(long weDeployAuthAppId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WeDeployAuthApp fetchWeDeployAuthApp(long weDeployAuthAppId);
+	public WeDeployAuthApp fetchWeDeployAuthApp(java.lang.String redirectURI,
+		java.lang.String clientId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

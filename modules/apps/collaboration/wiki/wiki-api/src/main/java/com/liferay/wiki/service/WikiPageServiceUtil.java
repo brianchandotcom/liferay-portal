@@ -191,6 +191,12 @@ public class WikiPageServiceUtil {
 			feedURL, entryURL, attachmentURLPrefix);
 	}
 
+	public static java.util.List<com.liferay.wiki.model.WikiPage> getOrphans(
+		long groupId, long nodeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getOrphans(groupId, nodeId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -200,15 +206,15 @@ public class WikiPageServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List<com.liferay.wiki.model.WikiPage> getOrphans(
-		long groupId, long nodeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getOrphans(groupId, nodeId);
-	}
-
 	public static com.liferay.wiki.model.WikiPage getPage(long pageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPage(pageId);
+	}
+
+	public static com.liferay.wiki.model.WikiPage getPage(long groupId,
+		long nodeId, java.lang.String title)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPage(groupId, nodeId, title);
 	}
 
 	public static com.liferay.wiki.model.WikiPage getPage(long nodeId,
@@ -218,21 +224,15 @@ public class WikiPageServiceUtil {
 	}
 
 	public static com.liferay.wiki.model.WikiPage getPage(long nodeId,
-		java.lang.String title, double version)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPage(nodeId, title, version);
-	}
-
-	public static com.liferay.wiki.model.WikiPage getPage(long nodeId,
 		java.lang.String title, java.lang.Boolean head)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPage(nodeId, title, head);
 	}
 
-	public static com.liferay.wiki.model.WikiPage getPage(long groupId,
-		long nodeId, java.lang.String title)
+	public static com.liferay.wiki.model.WikiPage getPage(long nodeId,
+		java.lang.String title, double version)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPage(groupId, nodeId, title);
+		return getService().getPage(nodeId, title, version);
 	}
 
 	public static java.util.List<com.liferay.wiki.model.WikiPage> getPages(

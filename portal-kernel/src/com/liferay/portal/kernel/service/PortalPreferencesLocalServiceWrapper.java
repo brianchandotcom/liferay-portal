@@ -32,6 +32,13 @@ public class PortalPreferencesLocalServiceWrapper
 		_portalPreferencesLocalService = portalPreferencesLocalService;
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.PortalPreferences addPortalPreferences(
+		long ownerId, int ownerType, java.lang.String defaultPreferences) {
+		return _portalPreferencesLocalService.addPortalPreferences(ownerId,
+			ownerType, defaultPreferences);
+	}
+
 	/**
 	* Adds the portal preferences to the database. Also notifies the appropriate model listeners.
 	*
@@ -42,13 +49,6 @@ public class PortalPreferencesLocalServiceWrapper
 	public com.liferay.portal.kernel.model.PortalPreferences addPortalPreferences(
 		com.liferay.portal.kernel.model.PortalPreferences portalPreferences) {
 		return _portalPreferencesLocalService.addPortalPreferences(portalPreferences);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PortalPreferences addPortalPreferences(
-		long ownerId, int ownerType, java.lang.String defaultPreferences) {
-		return _portalPreferencesLocalService.addPortalPreferences(ownerId,
-			ownerType, defaultPreferences);
 	}
 
 	/**
@@ -74,18 +74,6 @@ public class PortalPreferencesLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the portal preferences from the database. Also notifies the appropriate model listeners.
-	*
-	* @param portalPreferences the portal preferences
-	* @return the portal preferences that was removed
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PortalPreferences deletePortalPreferences(
-		com.liferay.portal.kernel.model.PortalPreferences portalPreferences) {
-		return _portalPreferencesLocalService.deletePortalPreferences(portalPreferences);
-	}
-
-	/**
 	* Deletes the portal preferences with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param portalPreferencesId the primary key of the portal preferences
@@ -97,6 +85,18 @@ public class PortalPreferencesLocalServiceWrapper
 		long portalPreferencesId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _portalPreferencesLocalService.deletePortalPreferences(portalPreferencesId);
+	}
+
+	/**
+	* Deletes the portal preferences from the database. Also notifies the appropriate model listeners.
+	*
+	* @param portalPreferences the portal preferences
+	* @return the portal preferences that was removed
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PortalPreferences deletePortalPreferences(
+		com.liferay.portal.kernel.model.PortalPreferences portalPreferences) {
+		return _portalPreferencesLocalService.deletePortalPreferences(portalPreferences);
 	}
 
 	@Override

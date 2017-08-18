@@ -32,15 +32,15 @@ public class PowwowParticipantLocalServiceClp
 		_methodName0 = "addPowwowParticipant";
 
 		_methodParameterTypes0 = new String[] {
-				"com.liferay.powwow.model.PowwowParticipant"
+				"long", "long", "long", "java.lang.String", "long",
+				"java.lang.String", "int", "int",
+				"com.liferay.portal.kernel.service.ServiceContext"
 			};
 
 		_methodName1 = "addPowwowParticipant";
 
 		_methodParameterTypes1 = new String[] {
-				"long", "long", "long", "java.lang.String", "long",
-				"java.lang.String", "int", "int",
-				"com.liferay.portal.kernel.service.ServiceContext"
+				"com.liferay.powwow.model.PowwowParticipant"
 			};
 
 		_methodName2 = "createPowwowParticipant";
@@ -55,13 +55,13 @@ public class PowwowParticipantLocalServiceClp
 
 		_methodName4 = "deletePowwowParticipant";
 
-		_methodParameterTypes4 = new String[] {
-				"com.liferay.powwow.model.PowwowParticipant"
-			};
+		_methodParameterTypes4 = new String[] { "long" };
 
 		_methodName5 = "deletePowwowParticipant";
 
-		_methodParameterTypes5 = new String[] { "long" };
+		_methodParameterTypes5 = new String[] {
+				"com.liferay.powwow.model.PowwowParticipant"
+			};
 
 		_methodName6 = "dynamicQuery";
 
@@ -105,11 +105,11 @@ public class PowwowParticipantLocalServiceClp
 
 		_methodName13 = "fetchPowwowParticipant";
 
-		_methodParameterTypes13 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes13 = new String[] { "long", "long" };
 
 		_methodName14 = "fetchPowwowParticipant";
 
-		_methodParameterTypes14 = new String[] { "long", "long" };
+		_methodParameterTypes14 = new String[] { "long", "java.lang.String" };
 
 		_methodName15 = "getActionableDynamicQuery";
 
@@ -158,45 +158,19 @@ public class PowwowParticipantLocalServiceClp
 		_methodName27 = "updatePowwowParticipant";
 
 		_methodParameterTypes27 = new String[] {
-				"com.liferay.powwow.model.PowwowParticipant"
+				"long", "long", "java.lang.String", "long", "java.lang.String",
+				"int", "int", "com.liferay.portal.kernel.service.ServiceContext"
 			};
 
 		_methodName28 = "updatePowwowParticipant";
 
 		_methodParameterTypes28 = new String[] {
-				"long", "long", "java.lang.String", "long", "java.lang.String",
-				"int", "int", "com.liferay.portal.kernel.service.ServiceContext"
+				"com.liferay.powwow.model.PowwowParticipant"
 			};
 
 		_methodName29 = "updateStatus";
 
 		_methodParameterTypes29 = new String[] { "long", "int" };
-	}
-
-	@Override
-	public com.liferay.powwow.model.PowwowParticipant addPowwowParticipant(
-		com.liferay.powwow.model.PowwowParticipant powwowParticipant) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName0,
-					_methodParameterTypes0,
-					new Object[] { ClpSerializer.translateInput(
-							powwowParticipant) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (com.liferay.powwow.model.PowwowParticipant)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
@@ -209,8 +183,8 @@ public class PowwowParticipantLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName1,
-					_methodParameterTypes1,
+			returnObj = _invokableLocalService.invokeMethod(_methodName0,
+					_methodParameterTypes0,
 					new Object[] {
 						userId,
 						
@@ -237,6 +211,32 @@ public class PowwowParticipantLocalServiceClp
 			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
 				throw (com.liferay.portal.kernel.exception.PortalException)t;
 			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.powwow.model.PowwowParticipant)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.liferay.powwow.model.PowwowParticipant addPowwowParticipant(
+		com.liferay.powwow.model.PowwowParticipant powwowParticipant) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName1,
+					_methodParameterTypes1,
+					new Object[] { ClpSerializer.translateInput(
+							powwowParticipant) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
@@ -306,17 +306,20 @@ public class PowwowParticipantLocalServiceClp
 
 	@Override
 	public com.liferay.powwow.model.PowwowParticipant deletePowwowParticipant(
-		com.liferay.powwow.model.PowwowParticipant powwowParticipant) {
+		long powwowParticipantId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName4,
-					_methodParameterTypes4,
-					new Object[] { ClpSerializer.translateInput(
-							powwowParticipant) });
+					_methodParameterTypes4, new Object[] { powwowParticipantId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
@@ -332,20 +335,17 @@ public class PowwowParticipantLocalServiceClp
 
 	@Override
 	public com.liferay.powwow.model.PowwowParticipant deletePowwowParticipant(
-		long powwowParticipantId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		com.liferay.powwow.model.PowwowParticipant powwowParticipant) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName5,
-					_methodParameterTypes5, new Object[] { powwowParticipantId });
+					_methodParameterTypes5,
+					new Object[] { ClpSerializer.translateInput(
+							powwowParticipant) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
-				throw (com.liferay.portal.kernel.exception.PortalException)t;
-			}
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
@@ -556,17 +556,13 @@ public class PowwowParticipantLocalServiceClp
 
 	@Override
 	public com.liferay.powwow.model.PowwowParticipant fetchPowwowParticipant(
-		long powwowMeetingId, java.lang.String emailAddress) {
+		long powwowMeetingId, long participantUserId) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName13,
 					_methodParameterTypes13,
-					new Object[] {
-						powwowMeetingId,
-						
-					ClpSerializer.translateInput(emailAddress)
-					});
+					new Object[] { powwowMeetingId, participantUserId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -585,13 +581,17 @@ public class PowwowParticipantLocalServiceClp
 
 	@Override
 	public com.liferay.powwow.model.PowwowParticipant fetchPowwowParticipant(
-		long powwowMeetingId, long participantUserId) {
+		long powwowMeetingId, java.lang.String emailAddress) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName14,
 					_methodParameterTypes14,
-					new Object[] { powwowMeetingId, participantUserId });
+					new Object[] {
+						powwowMeetingId,
+						
+					ClpSerializer.translateInput(emailAddress)
+					});
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -889,32 +889,6 @@ public class PowwowParticipantLocalServiceClp
 
 	@Override
 	public com.liferay.powwow.model.PowwowParticipant updatePowwowParticipant(
-		com.liferay.powwow.model.PowwowParticipant powwowParticipant) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName27,
-					_methodParameterTypes27,
-					new Object[] { ClpSerializer.translateInput(
-							powwowParticipant) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (com.liferay.powwow.model.PowwowParticipant)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public com.liferay.powwow.model.PowwowParticipant updatePowwowParticipant(
 		long powwowParticipantId, long powwowMeetingId, java.lang.String name,
 		long participantUserId, java.lang.String emailAddress, int type,
 		int status,
@@ -923,8 +897,8 @@ public class PowwowParticipantLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName28,
-					_methodParameterTypes28,
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27,
 					new Object[] {
 						powwowParticipantId,
 						
@@ -949,6 +923,32 @@ public class PowwowParticipantLocalServiceClp
 			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
 				throw (com.liferay.portal.kernel.exception.PortalException)t;
 			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.powwow.model.PowwowParticipant)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.liferay.powwow.model.PowwowParticipant updatePowwowParticipant(
+		com.liferay.powwow.model.PowwowParticipant powwowParticipant) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28,
+					new Object[] { ClpSerializer.translateInput(
+							powwowParticipant) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;

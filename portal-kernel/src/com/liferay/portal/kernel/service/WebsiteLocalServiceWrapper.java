@@ -30,6 +30,15 @@ public class WebsiteLocalServiceWrapper implements WebsiteLocalService,
 		_websiteLocalService = websiteLocalService;
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Website addWebsite(long userId,
+		java.lang.String className, long classPK, java.lang.String url,
+		long typeId, boolean primary, ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _websiteLocalService.addWebsite(userId, className, classPK, url,
+			typeId, primary, serviceContext);
+	}
+
 	/**
 	* Adds the website to the database. Also notifies the appropriate model listeners.
 	*
@@ -40,15 +49,6 @@ public class WebsiteLocalServiceWrapper implements WebsiteLocalService,
 	public com.liferay.portal.kernel.model.Website addWebsite(
 		com.liferay.portal.kernel.model.Website website) {
 		return _websiteLocalService.addWebsite(website);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Website addWebsite(long userId,
-		java.lang.String className, long classPK, java.lang.String url,
-		long typeId, boolean primary, ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _websiteLocalService.addWebsite(userId, className, classPK, url,
-			typeId, primary, serviceContext);
 	}
 
 	/**
@@ -73,18 +73,6 @@ public class WebsiteLocalServiceWrapper implements WebsiteLocalService,
 	}
 
 	/**
-	* Deletes the website from the database. Also notifies the appropriate model listeners.
-	*
-	* @param website the website
-	* @return the website that was removed
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Website deleteWebsite(
-		com.liferay.portal.kernel.model.Website website) {
-		return _websiteLocalService.deleteWebsite(website);
-	}
-
-	/**
 	* Deletes the website with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param websiteId the primary key of the website
@@ -95,6 +83,18 @@ public class WebsiteLocalServiceWrapper implements WebsiteLocalService,
 	public com.liferay.portal.kernel.model.Website deleteWebsite(long websiteId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _websiteLocalService.deleteWebsite(websiteId);
+	}
+
+	/**
+	* Deletes the website from the database. Also notifies the appropriate model listeners.
+	*
+	* @param website the website
+	* @return the website that was removed
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.Website deleteWebsite(
+		com.liferay.portal.kernel.model.Website website) {
+		return _websiteLocalService.deleteWebsite(website);
 	}
 
 	@Override
@@ -305,6 +305,14 @@ public class WebsiteLocalServiceWrapper implements WebsiteLocalService,
 		return _websiteLocalService.getWebsitesCount();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Website updateWebsite(
+		long websiteId, java.lang.String url, long typeId, boolean primary)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _websiteLocalService.updateWebsite(websiteId, url, typeId,
+			primary);
+	}
+
 	/**
 	* Updates the website in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -315,14 +323,6 @@ public class WebsiteLocalServiceWrapper implements WebsiteLocalService,
 	public com.liferay.portal.kernel.model.Website updateWebsite(
 		com.liferay.portal.kernel.model.Website website) {
 		return _websiteLocalService.updateWebsite(website);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Website updateWebsite(
-		long websiteId, java.lang.String url, long typeId, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _websiteLocalService.updateWebsite(websiteId, url, typeId,
-			primary);
 	}
 
 	@Override

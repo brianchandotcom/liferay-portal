@@ -210,15 +210,15 @@ public class CalendarResourceLocalServiceWrapper
 
 	@Override
 	public com.liferay.calendar.model.CalendarResource fetchCalendarResource(
-		long groupId, java.lang.String code) {
-		return _calendarResourceLocalService.fetchCalendarResource(groupId, code);
+		long classNameId, long classPK) {
+		return _calendarResourceLocalService.fetchCalendarResource(classNameId,
+			classPK);
 	}
 
 	@Override
 	public com.liferay.calendar.model.CalendarResource fetchCalendarResource(
-		long classNameId, long classPK) {
-		return _calendarResourceLocalService.fetchCalendarResource(classNameId,
-			classPK);
+		long groupId, java.lang.String code) {
+		return _calendarResourceLocalService.fetchCalendarResource(groupId, code);
 	}
 
 	/**

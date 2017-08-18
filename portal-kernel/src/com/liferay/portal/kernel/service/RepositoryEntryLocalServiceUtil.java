@@ -40,6 +40,14 @@ public class RepositoryEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.RepositoryEntryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.kernel.model.RepositoryEntry addRepositoryEntry(
+		long userId, long groupId, long repositoryId,
+		java.lang.String mappedId, ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addRepositoryEntry(userId, groupId, repositoryId, mappedId,
+			serviceContext);
+	}
 
 	/**
 	* Adds the repository entry to the database. Also notifies the appropriate model listeners.
@@ -50,15 +58,6 @@ public class RepositoryEntryLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.RepositoryEntry addRepositoryEntry(
 		com.liferay.portal.kernel.model.RepositoryEntry repositoryEntry) {
 		return getService().addRepositoryEntry(repositoryEntry);
-	}
-
-	public static com.liferay.portal.kernel.model.RepositoryEntry addRepositoryEntry(
-		long userId, long groupId, long repositoryId,
-		java.lang.String mappedId, ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addRepositoryEntry(userId, groupId, repositoryId, mappedId,
-			serviceContext);
 	}
 
 	/**
@@ -88,17 +87,6 @@ public class RepositoryEntryLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the repository entry from the database. Also notifies the appropriate model listeners.
-	*
-	* @param repositoryEntry the repository entry
-	* @return the repository entry that was removed
-	*/
-	public static com.liferay.portal.kernel.model.RepositoryEntry deleteRepositoryEntry(
-		com.liferay.portal.kernel.model.RepositoryEntry repositoryEntry) {
-		return getService().deleteRepositoryEntry(repositoryEntry);
-	}
-
-	/**
 	* Deletes the repository entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param repositoryEntryId the primary key of the repository entry
@@ -115,6 +103,17 @@ public class RepositoryEntryLocalServiceUtil {
 		java.lang.String mappedId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteRepositoryEntry(repositoryId, mappedId);
+	}
+
+	/**
+	* Deletes the repository entry from the database. Also notifies the appropriate model listeners.
+	*
+	* @param repositoryEntry the repository entry
+	* @return the repository entry that was removed
+	*/
+	public static com.liferay.portal.kernel.model.RepositoryEntry deleteRepositoryEntry(
+		com.liferay.portal.kernel.model.RepositoryEntry repositoryEntry) {
+		return getService().deleteRepositoryEntry(repositoryEntry);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -301,12 +300,6 @@ public class RepositoryEntryLocalServiceUtil {
 		return getService().getRepositoryEntriesCount();
 	}
 
-	public static com.liferay.portal.kernel.model.RepositoryEntry getRepositoryEntry(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getRepositoryEntry(uuid, groupId);
-	}
-
 	/**
 	* Returns the repository entry with the primary key.
 	*
@@ -327,6 +320,12 @@ public class RepositoryEntryLocalServiceUtil {
 				   .getRepositoryEntry(userId, groupId, repositoryId, objectId);
 	}
 
+	public static com.liferay.portal.kernel.model.RepositoryEntry getRepositoryEntry(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getRepositoryEntry(uuid, groupId);
+	}
+
 	/**
 	* Returns the repository entry matching the UUID and group.
 	*
@@ -341,6 +340,12 @@ public class RepositoryEntryLocalServiceUtil {
 		return getService().getRepositoryEntryByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static com.liferay.portal.kernel.model.RepositoryEntry updateRepositoryEntry(
+		long repositoryEntryId, java.lang.String mappedId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateRepositoryEntry(repositoryEntryId, mappedId);
+	}
+
 	/**
 	* Updates the repository entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -350,12 +355,6 @@ public class RepositoryEntryLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.RepositoryEntry updateRepositoryEntry(
 		com.liferay.portal.kernel.model.RepositoryEntry repositoryEntry) {
 		return getService().updateRepositoryEntry(repositoryEntry);
-	}
-
-	public static com.liferay.portal.kernel.model.RepositoryEntry updateRepositoryEntry(
-		long repositoryEntryId, java.lang.String mappedId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateRepositoryEntry(repositoryEntryId, mappedId);
 	}
 
 	public static RepositoryEntryLocalService getService() {

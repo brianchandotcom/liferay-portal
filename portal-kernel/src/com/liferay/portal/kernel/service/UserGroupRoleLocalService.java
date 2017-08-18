@@ -265,19 +265,19 @@ public interface UserGroupRoleLocalService extends BaseLocalService,
 	public int getUserGroupRolesCount(long userId, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasUserGroupRole(long userId, long groupId, long roleId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasUserGroupRole(long userId, long groupId, long roleId,
+		boolean inherit);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasUserGroupRole(long userId, long groupId,
 		java.lang.String roleName) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasUserGroupRole(long userId, long groupId,
 		java.lang.String roleName, boolean inherit) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserGroupRole(long userId, long groupId, long roleId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserGroupRole(long userId, long groupId, long roleId,
-		boolean inherit);
 
 	/**
 	* Updates the user group role in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

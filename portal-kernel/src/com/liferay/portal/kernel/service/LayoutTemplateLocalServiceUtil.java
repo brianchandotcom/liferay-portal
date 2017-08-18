@@ -72,17 +72,17 @@ public class LayoutTemplateLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.LayoutTemplate> init(
+		javax.servlet.ServletContext servletContext, java.lang.String[] xmls,
+		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {
+		return getService().init(servletContext, xmls, pluginPackage);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.LayoutTemplate> init(
 		java.lang.String servletContextName,
 		javax.servlet.ServletContext servletContext, java.lang.String[] xmls,
 		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {
 		return getService()
 				   .init(servletContextName, servletContext, xmls, pluginPackage);
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.LayoutTemplate> init(
-		javax.servlet.ServletContext servletContext, java.lang.String[] xmls,
-		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {
-		return getService().init(servletContext, xmls, pluginPackage);
 	}
 
 	public static void readLayoutTemplate(java.lang.String servletContextName,

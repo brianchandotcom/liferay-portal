@@ -205,13 +205,13 @@ public class KBFolderLocalServiceUtil {
 	}
 
 	public static com.liferay.knowledge.base.model.KBFolder fetchKBFolder(
-		java.lang.String uuid, long groupId) {
-		return getService().fetchKBFolder(uuid, groupId);
+		long kbFolderId) {
+		return getService().fetchKBFolder(kbFolderId);
 	}
 
 	public static com.liferay.knowledge.base.model.KBFolder fetchKBFolder(
-		long kbFolderId) {
-		return getService().fetchKBFolder(kbFolderId);
+		java.lang.String uuid, long groupId) {
+		return getService().fetchKBFolder(uuid, groupId);
 	}
 
 	public static com.liferay.knowledge.base.model.KBFolder fetchKBFolderByUrlTitle(

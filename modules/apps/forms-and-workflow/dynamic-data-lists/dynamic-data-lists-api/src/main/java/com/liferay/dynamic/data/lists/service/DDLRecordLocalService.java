@@ -494,6 +494,79 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	public DDLRecord getRecord(long recordId) throws PortalException;
 
 	/**
+	* Returns all the records matching the record set ID
+	*
+	* @param recordSetId the record's record set ID
+	* @return the matching records
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDLRecord> getRecords(long recordSetId);
+
+	/**
+	* Returns an ordered range of all the records matching the record set ID
+	* and workflow status.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to <code>QueryUtil.ALL_POS</code> will return the
+	* full result set.
+	* </p>
+	*
+	* @param recordSetId the record's record set ID
+	* @param status the record's workflow status. For more information search
+	the portal kernel's WorkflowConstants class for constants
+	starting with the "STATUS_" prefix.
+	* @param start the lower bound of the range of records to return
+	* @param end the upper bound of the range of records to return (not
+	inclusive)
+	* @param orderByComparator the comparator to order the records
+	* @return the range of matching records ordered by the comparator
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDLRecord> getRecords(long recordSetId, int status, int start,
+		int end, OrderByComparator<DDLRecord> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDLRecord> getRecords(long recordSetId, int start, int end,
+		OrderByComparator<DDLRecord> obc);
+
+	/**
+	* Returns all the records matching the record set ID and user ID.
+	*
+	* @param recordSetId the record's record set ID
+	* @param userId the user ID the records belong to
+	* @return the list of matching records ordered by the comparator
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDLRecord> getRecords(long recordSetId, long userId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDLRecord> getRecords(long recordSetId, long userId, int start,
+		int end, OrderByComparator<DDLRecord> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRecordsCount(long recordSetId);
+
+	/**
+	* Returns the number of records matching the record set ID and workflow
+	* status.
+	*
+	* @param recordSetId the record's record set ID
+	* @param status the record's workflow status. For more information search
+	the portal kernel's WorkflowConstants class for constants
+	starting with the "STATUS_" prefix.
+	* @return the number of matching records
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRecordsCount(long recordSetId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRecordsCount(long recordSetId, long userId);
+
+	/**
 	* @deprecated As of 1.1.0, replaced by {@link
 	DDLRecordVersionLocalService#getRecordVersion(
 	long)}
@@ -531,79 +604,6 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRecordVersionsCount(long recordId);
-
-	/**
-	* Returns all the records matching the record set ID
-	*
-	* @param recordSetId the record's record set ID
-	* @return the matching records
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DDLRecord> getRecords(long recordSetId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DDLRecord> getRecords(long recordSetId, int start, int end,
-		OrderByComparator<DDLRecord> obc);
-
-	/**
-	* Returns an ordered range of all the records matching the record set ID
-	* and workflow status.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to <code>QueryUtil.ALL_POS</code> will return the
-	* full result set.
-	* </p>
-	*
-	* @param recordSetId the record's record set ID
-	* @param status the record's workflow status. For more information search
-	the portal kernel's WorkflowConstants class for constants
-	starting with the "STATUS_" prefix.
-	* @param start the lower bound of the range of records to return
-	* @param end the upper bound of the range of records to return (not
-	inclusive)
-	* @param orderByComparator the comparator to order the records
-	* @return the range of matching records ordered by the comparator
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DDLRecord> getRecords(long recordSetId, int status, int start,
-		int end, OrderByComparator<DDLRecord> orderByComparator);
-
-	/**
-	* Returns all the records matching the record set ID and user ID.
-	*
-	* @param recordSetId the record's record set ID
-	* @param userId the user ID the records belong to
-	* @return the list of matching records ordered by the comparator
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DDLRecord> getRecords(long recordSetId, long userId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DDLRecord> getRecords(long recordSetId, long userId, int start,
-		int end, OrderByComparator<DDLRecord> obc);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getRecordsCount(long recordSetId);
-
-	/**
-	* Returns the number of records matching the record set ID and workflow
-	* status.
-	*
-	* @param recordSetId the record's record set ID
-	* @param status the record's workflow status. For more information search
-	the portal kernel's WorkflowConstants class for constants
-	starting with the "STATUS_" prefix.
-	* @return the number of matching records
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getRecordsCount(long recordSetId, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getRecordsCount(long recordSetId, long userId);
 
 	/**
 	* Reverts the record to the given version.

@@ -274,6 +274,13 @@ public class BlogsStatsUserLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.blogs.model.BlogsStatsUser> getGroupsStatsUsers(
+		long companyId, long groupId, int start, int end) {
+		return _blogsStatsUserLocalService.getGroupsStatsUsers(companyId,
+			groupId, start, end);
+	}
+
+	@Override
 	public java.util.List<com.liferay.blogs.model.BlogsStatsUser> getGroupStatsUsers(
 		long groupId, int start, int end) {
 		return _blogsStatsUserLocalService.getGroupStatsUsers(groupId, start,
@@ -294,25 +301,8 @@ public class BlogsStatsUserLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.blogs.model.BlogsStatsUser> getGroupsStatsUsers(
-		long companyId, long groupId, int start, int end) {
-		return _blogsStatsUserLocalService.getGroupsStatsUsers(companyId,
-			groupId, start, end);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		return _blogsStatsUserLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _blogsStatsUserLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -333,6 +323,16 @@ public class BlogsStatsUserLocalServiceWrapper
 	@Override
 	public int getOrganizationStatsUsersCount(long organizationId) {
 		return _blogsStatsUserLocalService.getOrganizationStatsUsersCount(organizationId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _blogsStatsUserLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -367,19 +367,19 @@ public class BlogsStatsUserLocalServiceWrapper
 	}
 
 	@Override
+	public void updateStatsUser(long groupId, long userId,
+		java.util.Date displayDate)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_blogsStatsUserLocalService.updateStatsUser(groupId, userId, displayDate);
+	}
+
+	@Override
 	public com.liferay.blogs.model.BlogsStatsUser updateStatsUser(
 		long groupId, long userId, int ratingsTotalEntries,
 		double ratingsTotalScore, double ratingsAverageScore)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsStatsUserLocalService.updateStatsUser(groupId, userId,
 			ratingsTotalEntries, ratingsTotalScore, ratingsAverageScore);
-	}
-
-	@Override
-	public void updateStatsUser(long groupId, long userId,
-		java.util.Date displayDate)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_blogsStatsUserLocalService.updateStatsUser(groupId, userId, displayDate);
 	}
 
 	@Override

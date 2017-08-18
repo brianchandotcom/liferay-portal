@@ -242,6 +242,11 @@ public class DLContentLocalServiceUtil {
 				   .getContentsByDirectory(companyId, repositoryId, dirName);
 	}
 
+	public static com.liferay.document.library.kernel.model.DLContentDataBlobModel getDataBlobModel(
+		java.io.Serializable primaryKey) {
+		return getService().getDataBlobModel(primaryKey);
+	}
+
 	/**
 	* Returns the document library content with the primary key.
 	*
@@ -278,11 +283,6 @@ public class DLContentLocalServiceUtil {
 	*/
 	public static int getDLContentsCount() {
 		return getService().getDLContentsCount();
-	}
-
-	public static com.liferay.document.library.kernel.model.DLContentDataBlobModel getDataBlobModel(
-		java.io.Serializable primaryKey) {
-		return getService().getDataBlobModel(primaryKey);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {

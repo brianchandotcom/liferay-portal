@@ -751,6 +751,26 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	}
 
 	/**
+	* Returns <code>true</code> if this blogs entry is inactive.
+	*
+	* @return <code>true</code> if this blogs entry is inactive; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInactive() {
+		return _blogsEntry.isInactive();
+	}
+
+	/**
+	* Returns <code>true</code> if this blogs entry is incomplete.
+	*
+	* @return <code>true</code> if this blogs entry is incomplete; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isIncomplete() {
+		return _blogsEntry.isIncomplete();
+	}
+
+	/**
 	* Returns <code>true</code> if this blogs entry is in the Recycle Bin.
 	*
 	* @return <code>true</code> if this blogs entry is in the Recycle Bin; <code>false</code> otherwise
@@ -778,26 +798,6 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	@Override
 	public boolean isInTrashImplicitly() {
 		return _blogsEntry.isInTrashImplicitly();
-	}
-
-	/**
-	* Returns <code>true</code> if this blogs entry is inactive.
-	*
-	* @return <code>true</code> if this blogs entry is inactive; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isInactive() {
-		return _blogsEntry.isInactive();
-	}
-
-	/**
-	* Returns <code>true</code> if this blogs entry is incomplete.
-	*
-	* @return <code>true</code> if this blogs entry is incomplete; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isIncomplete() {
-		return _blogsEntry.isIncomplete();
 	}
 
 	@Override
@@ -961,14 +961,14 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_blogsEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_blogsEntry.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_blogsEntry.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

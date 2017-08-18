@@ -300,6 +300,27 @@ public interface DDLRecordSetService extends BaseService {
 
 	/**
 	* Updates the DDM structure, name, description, and minimum number of
+	* display rows for the record set matching the record set ID.
+	*
+	* @param recordSetId the primary key of the record set
+	* @param ddmStructureId the primary key of the record set's DDM structure
+	* @param nameMap the record set's locales and localized names
+	* @param descriptionMap the record set's locales and localized
+	descriptions
+	* @param minDisplayRows the record set's minimum number of rows to be
+	displayed in spreadsheet view.
+	* @param serviceContext the service context to be applied. Can set the
+	record set modified date.
+	* @return the record set
+	* @throws PortalException if a portal exception occurred
+	*/
+	public DDLRecordSet updateRecordSet(long recordSetId, long ddmStructureId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, int minDisplayRows,
+		ServiceContext serviceContext) throws PortalException;
+
+	/**
+	* Updates the DDM structure, name, description, and minimum number of
 	* display rows for the record set matching the group ID and record set key.
 	*
 	* @param groupId the primary key of the record set's group
@@ -317,27 +338,6 @@ public interface DDLRecordSetService extends BaseService {
 	*/
 	public DDLRecordSet updateRecordSet(long groupId, long ddmStructureId,
 		java.lang.String recordSetKey, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, int minDisplayRows,
-		ServiceContext serviceContext) throws PortalException;
-
-	/**
-	* Updates the DDM structure, name, description, and minimum number of
-	* display rows for the record set matching the record set ID.
-	*
-	* @param recordSetId the primary key of the record set
-	* @param ddmStructureId the primary key of the record set's DDM structure
-	* @param nameMap the record set's locales and localized names
-	* @param descriptionMap the record set's locales and localized
-	descriptions
-	* @param minDisplayRows the record set's minimum number of rows to be
-	displayed in spreadsheet view.
-	* @param serviceContext the service context to be applied. Can set the
-	record set modified date.
-	* @return the record set
-	* @throws PortalException if a portal exception occurred
-	*/
-	public DDLRecordSet updateRecordSet(long recordSetId, long ddmStructureId,
-		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, int minDisplayRows,
 		ServiceContext serviceContext) throws PortalException;
 }

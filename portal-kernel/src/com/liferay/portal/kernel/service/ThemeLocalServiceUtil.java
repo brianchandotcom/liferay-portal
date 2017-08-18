@@ -111,6 +111,16 @@ public class ThemeLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.Theme> init(
+		javax.servlet.ServletContext servletContext,
+		java.lang.String themesPath, boolean loadFromServletContext,
+		java.lang.String[] xmls,
+		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {
+		return getService()
+				   .init(servletContext, themesPath, loadFromServletContext,
+			xmls, pluginPackage);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.Theme> init(
 		java.lang.String servletContextName,
 		javax.servlet.ServletContext servletContext,
 		java.lang.String themesPath, boolean loadFromServletContext,
@@ -119,16 +129,6 @@ public class ThemeLocalServiceUtil {
 		return getService()
 				   .init(servletContextName, servletContext, themesPath,
 			loadFromServletContext, xmls, pluginPackage);
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.Theme> init(
-		javax.servlet.ServletContext servletContext,
-		java.lang.String themesPath, boolean loadFromServletContext,
-		java.lang.String[] xmls,
-		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {
-		return getService()
-				   .init(servletContext, themesPath, loadFromServletContext,
-			xmls, pluginPackage);
 	}
 
 	public static void uninstallThemes(

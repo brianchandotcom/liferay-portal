@@ -40,6 +40,15 @@ public class PhoneLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.PhoneLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.kernel.model.Phone addPhone(long userId,
+		java.lang.String className, long classPK, java.lang.String number,
+		java.lang.String extension, long typeId, boolean primary,
+		ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addPhone(userId, className, classPK, number, extension,
+			typeId, primary, serviceContext);
+	}
 
 	/**
 	* Adds the phone to the database. Also notifies the appropriate model listeners.
@@ -50,16 +59,6 @@ public class PhoneLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.Phone addPhone(
 		com.liferay.portal.kernel.model.Phone phone) {
 		return getService().addPhone(phone);
-	}
-
-	public static com.liferay.portal.kernel.model.Phone addPhone(long userId,
-		java.lang.String className, long classPK, java.lang.String number,
-		java.lang.String extension, long typeId, boolean primary,
-		ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addPhone(userId, className, classPK, number, extension,
-			typeId, primary, serviceContext);
 	}
 
 	/**
@@ -83,17 +82,6 @@ public class PhoneLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the phone from the database. Also notifies the appropriate model listeners.
-	*
-	* @param phone the phone
-	* @return the phone that was removed
-	*/
-	public static com.liferay.portal.kernel.model.Phone deletePhone(
-		com.liferay.portal.kernel.model.Phone phone) {
-		return getService().deletePhone(phone);
-	}
-
-	/**
 	* Deletes the phone with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param phoneId the primary key of the phone
@@ -104,6 +92,17 @@ public class PhoneLocalServiceUtil {
 		long phoneId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePhone(phoneId);
+	}
+
+	/**
+	* Deletes the phone from the database. Also notifies the appropriate model listeners.
+	*
+	* @param phone the phone
+	* @return the phone that was removed
+	*/
+	public static com.liferay.portal.kernel.model.Phone deletePhone(
+		com.liferay.portal.kernel.model.Phone phone) {
+		return getService().deletePhone(phone);
 	}
 
 	public static void deletePhones(long companyId, java.lang.String className,
@@ -293,6 +292,14 @@ public class PhoneLocalServiceUtil {
 		return getService().getPhonesCount();
 	}
 
+	public static com.liferay.portal.kernel.model.Phone updatePhone(
+		long phoneId, java.lang.String number, java.lang.String extension,
+		long typeId, boolean primary)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updatePhone(phoneId, number, extension, typeId, primary);
+	}
+
 	/**
 	* Updates the phone in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -302,14 +309,6 @@ public class PhoneLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.Phone updatePhone(
 		com.liferay.portal.kernel.model.Phone phone) {
 		return getService().updatePhone(phone);
-	}
-
-	public static com.liferay.portal.kernel.model.Phone updatePhone(
-		long phoneId, java.lang.String number, java.lang.String extension,
-		long typeId, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updatePhone(phoneId, number, extension, typeId, primary);
 	}
 
 	public static PhoneLocalService getService() {

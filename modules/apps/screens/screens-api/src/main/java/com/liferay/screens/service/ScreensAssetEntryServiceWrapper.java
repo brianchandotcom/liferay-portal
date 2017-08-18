@@ -52,17 +52,17 @@ public class ScreensAssetEntryServiceWrapper implements ScreensAssetEntryService
 
 	@Override
 	public com.liferay.portal.kernel.json.JSONObject getAssetEntry(
-		java.lang.String className, long classPK, java.util.Locale locale)
+		long entryId, java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _screensAssetEntryService.getAssetEntry(className, classPK,
-			locale);
+		return _screensAssetEntryService.getAssetEntry(entryId, locale);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.json.JSONObject getAssetEntry(
-		long entryId, java.util.Locale locale)
+		java.lang.String className, long classPK, java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _screensAssetEntryService.getAssetEntry(entryId, locale);
+		return _screensAssetEntryService.getAssetEntry(className, classPK,
+			locale);
 	}
 
 	/**

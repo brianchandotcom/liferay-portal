@@ -89,15 +89,6 @@ public interface RatingsStatsLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the ratings stats from the database. Also notifies the appropriate model listeners.
-	*
-	* @param ratingsStats the ratings stats
-	* @return the ratings stats that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public RatingsStats deleteRatingsStats(RatingsStats ratingsStats);
-
-	/**
 	* Deletes the ratings stats with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param statsId the primary key of the ratings stats
@@ -107,6 +98,15 @@ public interface RatingsStatsLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public RatingsStats deleteRatingsStats(long statsId)
 		throws PortalException;
+
+	/**
+	* Deletes the ratings stats from the database. Also notifies the appropriate model listeners.
+	*
+	* @param ratingsStats the ratings stats
+	* @return the ratings stats that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public RatingsStats deleteRatingsStats(RatingsStats ratingsStats);
 
 	public void deleteStats(java.lang.String className, long classPK);
 
@@ -225,6 +225,9 @@ public interface RatingsStatsLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRatingsStatsesCount();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public RatingsStats getStats(long statsId) throws PortalException;
+
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
@@ -240,9 +243,6 @@ public interface RatingsStatsLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Map<java.lang.Long, RatingsStats> getStats(
 		java.lang.String className, long[] classPKs);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public RatingsStats getStats(long statsId) throws PortalException;
 
 	/**
 	* Updates the ratings stats in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

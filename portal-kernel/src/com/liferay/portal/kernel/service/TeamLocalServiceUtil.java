@@ -42,17 +42,6 @@ public class TeamLocalServiceUtil {
 	 */
 
 	/**
-	* Adds the team to the database. Also notifies the appropriate model listeners.
-	*
-	* @param team the team
-	* @return the team that was added
-	*/
-	public static com.liferay.portal.kernel.model.Team addTeam(
-		com.liferay.portal.kernel.model.Team team) {
-		return getService().addTeam(team);
-	}
-
-	/**
 	* @deprecated As of 7.0.0, replaced by {@link #addTeam(long, long, String,
 	String, ServiceContext)}
 	*/
@@ -71,13 +60,24 @@ public class TeamLocalServiceUtil {
 				   .addTeam(userId, groupId, name, description, serviceContext);
 	}
 
-	public static void addUserGroupTeam(long userGroupId,
+	/**
+	* Adds the team to the database. Also notifies the appropriate model listeners.
+	*
+	* @param team the team
+	* @return the team that was added
+	*/
+	public static com.liferay.portal.kernel.model.Team addTeam(
 		com.liferay.portal.kernel.model.Team team) {
-		getService().addUserGroupTeam(userGroupId, team);
+		return getService().addTeam(team);
 	}
 
 	public static void addUserGroupTeam(long userGroupId, long teamId) {
 		getService().addUserGroupTeam(userGroupId, teamId);
+	}
+
+	public static void addUserGroupTeam(long userGroupId,
+		com.liferay.portal.kernel.model.Team team) {
+		getService().addUserGroupTeam(userGroupId, team);
 	}
 
 	public static void addUserGroupTeams(long userGroupId,
@@ -89,13 +89,13 @@ public class TeamLocalServiceUtil {
 		getService().addUserGroupTeams(userGroupId, teamIds);
 	}
 
+	public static void addUserTeam(long userId, long teamId) {
+		getService().addUserTeam(userId, teamId);
+	}
+
 	public static void addUserTeam(long userId,
 		com.liferay.portal.kernel.model.Team team) {
 		getService().addUserTeam(userId, team);
-	}
-
-	public static void addUserTeam(long userId, long teamId) {
-		getService().addUserTeam(userId, teamId);
 	}
 
 	public static void addUserTeams(long userId,
@@ -135,6 +135,18 @@ public class TeamLocalServiceUtil {
 	}
 
 	/**
+	* Deletes the team with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param teamId the primary key of the team
+	* @return the team that was removed
+	* @throws PortalException if a team with the primary key could not be found
+	*/
+	public static com.liferay.portal.kernel.model.Team deleteTeam(long teamId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteTeam(teamId);
+	}
+
+	/**
 	* Deletes the team from the database. Also notifies the appropriate model listeners.
 	*
 	* @param team the team
@@ -147,30 +159,18 @@ public class TeamLocalServiceUtil {
 		return getService().deleteTeam(team);
 	}
 
-	/**
-	* Deletes the team with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param teamId the primary key of the team
-	* @return the team that was removed
-	* @throws PortalException if a team with the primary key could not be found
-	*/
-	public static com.liferay.portal.kernel.model.Team deleteTeam(long teamId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteTeam(teamId);
-	}
-
 	public static void deleteTeams(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteTeams(groupId);
 	}
 
+	public static void deleteUserGroupTeam(long userGroupId, long teamId) {
+		getService().deleteUserGroupTeam(userGroupId, teamId);
+	}
+
 	public static void deleteUserGroupTeam(long userGroupId,
 		com.liferay.portal.kernel.model.Team team) {
 		getService().deleteUserGroupTeam(userGroupId, team);
-	}
-
-	public static void deleteUserGroupTeam(long userGroupId, long teamId) {
-		getService().deleteUserGroupTeam(userGroupId, teamId);
 	}
 
 	public static void deleteUserGroupTeams(long userGroupId,
@@ -182,13 +182,13 @@ public class TeamLocalServiceUtil {
 		getService().deleteUserGroupTeams(userGroupId, teamIds);
 	}
 
+	public static void deleteUserTeam(long userId, long teamId) {
+		getService().deleteUserTeam(userId, teamId);
+	}
+
 	public static void deleteUserTeam(long userId,
 		com.liferay.portal.kernel.model.Team team) {
 		getService().deleteUserTeam(userId, team);
-	}
-
-	public static void deleteUserTeam(long userId, long teamId) {
-		getService().deleteUserTeam(userId, teamId);
 	}
 
 	public static void deleteUserTeams(long userId,
@@ -529,6 +529,12 @@ public class TeamLocalServiceUtil {
 		getService().setUserTeams(userId, teamIds);
 	}
 
+	public static com.liferay.portal.kernel.model.Team updateTeam(long teamId,
+		java.lang.String name, java.lang.String description)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateTeam(teamId, name, description);
+	}
+
 	/**
 	* Updates the team in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -538,12 +544,6 @@ public class TeamLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.Team updateTeam(
 		com.liferay.portal.kernel.model.Team team) {
 		return getService().updateTeam(team);
-	}
-
-	public static com.liferay.portal.kernel.model.Team updateTeam(long teamId,
-		java.lang.String name, java.lang.String description)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateTeam(teamId, name, description);
 	}
 
 	public static TeamLocalService getService() {

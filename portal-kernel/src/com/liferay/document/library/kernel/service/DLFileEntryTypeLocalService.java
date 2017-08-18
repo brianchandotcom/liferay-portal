@@ -95,15 +95,15 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 		long[] fileEntryTypeIds);
 
 	public DLFileEntryType addFileEntryType(long userId, long groupId,
-		java.lang.String name, java.lang.String description,
-		long[] ddmStructureIds, ServiceContext serviceContext)
-		throws PortalException;
-
-	public DLFileEntryType addFileEntryType(long userId, long groupId,
 		java.lang.String fileEntryTypeKey,
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, long[] ddmStructureIds,
 		ServiceContext serviceContext) throws PortalException;
+
+	public DLFileEntryType addFileEntryType(long userId, long groupId,
+		java.lang.String name, java.lang.String description,
+		long[] ddmStructureIds, ServiceContext serviceContext)
+		throws PortalException;
 
 	public void cascadeFileEntryTypes(long userId, DLFolder dlFolder)
 		throws PortalException;
@@ -250,6 +250,10 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getDefaultFileEntryTypeId(long folderId)
+		throws PortalException;
+
 	/**
 	* Returns the document library file entry type with the primary key.
 	*
@@ -345,10 +349,6 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	public long[] getDLFolderPrimaryKeys(long fileEntryTypeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getDefaultFileEntryTypeId(long folderId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext);
 
@@ -424,14 +424,14 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 		ServiceContext serviceContext) throws PortalException;
 
 	public void updateFileEntryType(long userId, long fileEntryTypeId,
-		java.lang.String name, java.lang.String description,
-		long[] ddmStructureIds, ServiceContext serviceContext)
-		throws PortalException;
-
-	public void updateFileEntryType(long userId, long fileEntryTypeId,
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, long[] ddmStructureIds,
 		ServiceContext serviceContext) throws PortalException;
+
+	public void updateFileEntryType(long userId, long fileEntryTypeId,
+		java.lang.String name, java.lang.String description,
+		long[] ddmStructureIds, ServiceContext serviceContext)
+		throws PortalException;
 
 	public void updateFolderFileEntryTypes(DLFolder dlFolder,
 		List<java.lang.Long> fileEntryTypeIds, long defaultFileEntryTypeId,

@@ -174,7 +174,8 @@ public class LPKGBundleTrackerCustomizer
 						continue;
 					}
 
-					String location = _generateBundleLocation(bundle, url);
+					String location = LPKGUtil.generateBundleLocation(
+						bundle, url);
 
 					Bundle newBundle = _bundleContext.getBundle(location);
 
@@ -214,7 +215,7 @@ public class LPKGBundleTrackerCustomizer
 					continue;
 				}
 
-				String location = _generateBundleLocation(bundle, url);
+				String location = LPKGUtil.generateBundleLocation(bundle, url);
 
 				Bundle newBundle = _bundleContext.getBundle(location);
 
@@ -411,17 +412,6 @@ public class LPKGBundleTrackerCustomizer
 		return false;
 	}
 
-	private String _generateBundleLocation(Bundle bundle, URL url) {
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(url.getPath());
-		sb.append("?lpkgPath=");
-		sb.append(bundle.getLocation());
-
-		return sb.toString();
-	}
-
 	private boolean _isBundleInstalled(Bundle bundle, URL url)
 		throws IOException {
 
@@ -438,7 +428,7 @@ public class LPKGBundleTrackerCustomizer
 			Version version = new Version(
 				attributes.getValue(Constants.BUNDLE_VERSION));
 
-			String location = _generateBundleLocation(bundle, url);
+			String location = LPKGUtil.generateBundleLocation(bundle, url);
 
 			for (Bundle installedBundle : _bundleContext.getBundles()) {
 				if (symbolicName.equals(installedBundle.getSymbolicName()) &&

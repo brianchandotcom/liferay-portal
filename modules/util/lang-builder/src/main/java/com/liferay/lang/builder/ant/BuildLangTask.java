@@ -38,6 +38,10 @@ public class BuildLangTask extends Task {
 		}
 	}
 
+	public void setExcludedLanguageIds(String[] excludedLanguageIds) {
+		_langBuilderArgs.setExcludedLanguageIds(excludedLanguageIds);
+	}
+
 	public void setLangDirName(String langDirName) {
 		_langBuilderArgs.setLangDirName(langDirName);
 	}

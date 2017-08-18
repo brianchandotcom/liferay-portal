@@ -57,6 +57,12 @@
 		<execute function="AssertElementPresent" locator1="FormFields#GRID_OPTIONS_OPTION_NAME_FIELD" />
 	</command>
 
+	<command name="editHelpText">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="Type" locator1="FormFields#HELP_TEXT_INPUT_FIELD" value1="${fieldHelpText}" />
+	</command>
+
 	<command name="editOptionsRow">
 		<var name="key_rowNumber" value="${rowNumber}" />
 

@@ -263,11 +263,6 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 			DocumentTypes.LIFERAY, searchContext, documents, true);
 	}
 
-	@Activate
-	protected void activate() {
-		_searchHitsProcessor = new DeleteDocumentsSearchHitsProcessor(this);
-	}
-
 	@Reference(unbind = "-")
 	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
 
@@ -281,6 +276,7 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ElasticsearchIndexWriter.class);
 
-	private SearchHitsProcessor _searchHitsProcessor;
+	private SearchHitsProcessor _searchHitsProcessor=
+		new DeleteDocumentsSearchHitsProcessor(this);
 
 }

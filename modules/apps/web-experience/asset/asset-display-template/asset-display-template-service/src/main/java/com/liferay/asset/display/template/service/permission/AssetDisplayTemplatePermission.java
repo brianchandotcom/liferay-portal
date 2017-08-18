@@ -17,6 +17,8 @@ package com.liferay.asset.display.template.service.permission;
 import com.liferay.asset.display.template.model.AssetDisplayTemplate;
 import com.liferay.asset.display.template.service.AssetDisplayTemplateLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -88,26 +90,19 @@ public class AssetDisplayTemplatePermission
 			String actionId)
 		throws PortalException {
 
-		Map<Object, Object> permissionChecksMap =
-			permissionChecker.getPermissionChecksMap();
+		AssetDisplayTemplate assetDisplayTemplate =
+			AssetDisplayTemplateLocalServiceUtil.fetchAssetDisplayTemplate(
+				assetDisplayTemplateId);
 
-		PermissionCacheKey permissionCacheKey = new PermissionCacheKey(
-			assetDisplayTemplateId, actionId);
+		if (assetDisplayTemplate == null) {
+			_log.error(
+				"Unable to get asset display template with " +
+					"assetDisplayTemplateId " + assetDisplayTemplateId);
 
-		Boolean contains = (Boolean)permissionChecksMap.get(permissionCacheKey);
-
-		if (contains == null) {
-			AssetDisplayTemplate assetDisplayTemplate =
-				AssetDisplayTemplateLocalServiceUtil.getAssetDisplayTemplate(
-					assetDisplayTemplateId);
-
-			contains = _contains(
-				permissionChecker, assetDisplayTemplate, actionId);
-
-			permissionChecksMap.put(permissionCacheKey, contains);
+			return false;
 		}
 
-		return contains;
+		return contains(permissionChecker, assetDisplayTemplate, actionId);
 	}
 
 	@Override
@@ -138,6 +133,9 @@ public class AssetDisplayTemplatePermission
 
 		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetDisplayTemplatePermission.class);
 
 	private static class PermissionCacheKey {
 

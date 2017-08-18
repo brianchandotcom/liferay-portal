@@ -46,6 +46,18 @@ public class AssetDisplayTemplateLocalServiceWrapper
 		return _assetDisplayTemplateLocalService.addAssetDisplayTemplate(assetDisplayTemplate);
 	}
 
+	@Override
+	public com.liferay.asset.display.template.model.AssetDisplayTemplate addAssetDisplayTemplate(
+		long groupId, long userId, java.lang.String name, long classNameId,
+		java.lang.String language, java.lang.String scriptContent,
+		boolean main,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetDisplayTemplateLocalService.addAssetDisplayTemplate(groupId,
+			userId, name, classNameId, language, scriptContent, main,
+			serviceContext);
+	}
+
 	/**
 	* Creates a new asset display template with the primary key. Does not add the asset display template to the database.
 	*
@@ -63,10 +75,12 @@ public class AssetDisplayTemplateLocalServiceWrapper
 	*
 	* @param assetDisplayTemplate the asset display template
 	* @return the asset display template that was removed
+	* @throws PortalException
 	*/
 	@Override
 	public com.liferay.asset.display.template.model.AssetDisplayTemplate deleteAssetDisplayTemplate(
-		com.liferay.asset.display.template.model.AssetDisplayTemplate assetDisplayTemplate) {
+		com.liferay.asset.display.template.model.AssetDisplayTemplate assetDisplayTemplate)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetDisplayTemplateLocalService.deleteAssetDisplayTemplate(assetDisplayTemplate);
 	}
 
@@ -187,6 +201,13 @@ public class AssetDisplayTemplateLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.asset.display.template.model.AssetDisplayTemplate fetchAssetDisplayTemplate(
+		long groupId, long classNameId) {
+		return _assetDisplayTemplateLocalService.fetchAssetDisplayTemplate(groupId,
+			classNameId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _assetDisplayTemplateLocalService.getActionableDynamicQuery();
 	}
@@ -205,6 +226,11 @@ public class AssetDisplayTemplateLocalServiceWrapper
 		return _assetDisplayTemplateLocalService.getAssetDisplayTemplate(assetDisplayTemplateId);
 	}
 
+	@Override
+	public int getAssetDisplayTemplateCount(long groupId) {
+		return _assetDisplayTemplateLocalService.getAssetDisplayTemplateCount(groupId);
+	}
+
 	/**
 	* Returns a range of all the asset display templates.
 	*
@@ -221,6 +247,20 @@ public class AssetDisplayTemplateLocalServiceWrapper
 		int start, int end) {
 		return _assetDisplayTemplateLocalService.getAssetDisplayTemplates(start,
 			end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.asset.display.template.model.AssetDisplayTemplate> getAssetDisplayTemplates(
+		long groupId) {
+		return _assetDisplayTemplateLocalService.getAssetDisplayTemplates(groupId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.asset.display.template.model.AssetDisplayTemplate> getAssetDisplayTemplates(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.display.template.model.AssetDisplayTemplate> orderByComparator) {
+		return _assetDisplayTemplateLocalService.getAssetDisplayTemplates(groupId,
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -265,6 +305,17 @@ public class AssetDisplayTemplateLocalServiceWrapper
 	public com.liferay.asset.display.template.model.AssetDisplayTemplate updateAssetDisplayTemplate(
 		com.liferay.asset.display.template.model.AssetDisplayTemplate assetDisplayTemplate) {
 		return _assetDisplayTemplateLocalService.updateAssetDisplayTemplate(assetDisplayTemplate);
+	}
+
+	@Override
+	public com.liferay.asset.display.template.model.AssetDisplayTemplate updateAssetDisplayTemplate(
+		long assetDisplayTemplateId, java.lang.String name, long classNameId,
+		java.lang.String language, java.lang.String scriptContent,
+		boolean main,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetDisplayTemplateLocalService.updateAssetDisplayTemplate(assetDisplayTemplateId,
+			name, classNameId, language, scriptContent, main, serviceContext);
 	}
 
 	@Override

@@ -68,7 +68,6 @@ public class AssetDisplayTemplateWrapper implements AssetDisplayTemplate,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("classNameId", getClassNameId());
-		attributes.put("plid", getPlid());
 		attributes.put("templateId", getTemplateId());
 		attributes.put("main", getMain());
 
@@ -132,12 +131,6 @@ public class AssetDisplayTemplateWrapper implements AssetDisplayTemplate,
 			setClassNameId(classNameId);
 		}
 
-		Long plid = (Long)attributes.get("plid");
-
-		if (plid != null) {
-			setPlid(plid);
-		}
-
 		Long templateId = (Long)attributes.get("templateId");
 
 		if (templateId != null) {
@@ -169,6 +162,12 @@ public class AssetDisplayTemplateWrapper implements AssetDisplayTemplate,
 	@Override
 	public long getAssetDisplayTemplateId() {
 		return _assetDisplayTemplate.getAssetDisplayTemplateId();
+	}
+
+	@Override
+	public java.lang.String getAssetTypeName(java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetDisplayTemplate.getAssetTypeName(locale);
 	}
 
 	/**
@@ -254,16 +253,6 @@ public class AssetDisplayTemplateWrapper implements AssetDisplayTemplate,
 	@Override
 	public java.lang.String getName() {
 		return _assetDisplayTemplate.getName();
-	}
-
-	/**
-	* Returns the plid of this asset display template.
-	*
-	* @return the plid of this asset display template
-	*/
-	@Override
-	public long getPlid() {
-		return _assetDisplayTemplate.getPlid();
 	}
 
 	/**
@@ -407,14 +396,14 @@ public class AssetDisplayTemplateWrapper implements AssetDisplayTemplate,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_assetDisplayTemplate.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_assetDisplayTemplate.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_assetDisplayTemplate.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -465,16 +454,6 @@ public class AssetDisplayTemplateWrapper implements AssetDisplayTemplate,
 	@Override
 	public void setNew(boolean n) {
 		_assetDisplayTemplate.setNew(n);
-	}
-
-	/**
-	* Sets the plid of this asset display template.
-	*
-	* @param plid the plid of this asset display template
-	*/
-	@Override
-	public void setPlid(long plid) {
-		_assetDisplayTemplate.setPlid(plid);
 	}
 
 	/**

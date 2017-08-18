@@ -53,6 +53,17 @@ public class AssetDisplayTemplateLocalServiceUtil {
 		return getService().addAssetDisplayTemplate(assetDisplayTemplate);
 	}
 
+	public static com.liferay.asset.display.template.model.AssetDisplayTemplate addAssetDisplayTemplate(
+		long groupId, long userId, java.lang.String name, long classNameId,
+		java.lang.String language, java.lang.String scriptContent,
+		boolean main,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addAssetDisplayTemplate(groupId, userId, name, classNameId,
+			language, scriptContent, main, serviceContext);
+	}
+
 	/**
 	* Creates a new asset display template with the primary key. Does not add the asset display template to the database.
 	*
@@ -69,9 +80,11 @@ public class AssetDisplayTemplateLocalServiceUtil {
 	*
 	* @param assetDisplayTemplate the asset display template
 	* @return the asset display template that was removed
+	* @throws PortalException
 	*/
 	public static com.liferay.asset.display.template.model.AssetDisplayTemplate deleteAssetDisplayTemplate(
-		com.liferay.asset.display.template.model.AssetDisplayTemplate assetDisplayTemplate) {
+		com.liferay.asset.display.template.model.AssetDisplayTemplate assetDisplayTemplate)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteAssetDisplayTemplate(assetDisplayTemplate);
 	}
 
@@ -180,6 +193,11 @@ public class AssetDisplayTemplateLocalServiceUtil {
 		return getService().fetchAssetDisplayTemplate(assetDisplayTemplateId);
 	}
 
+	public static com.liferay.asset.display.template.model.AssetDisplayTemplate fetchAssetDisplayTemplate(
+		long groupId, long classNameId) {
+		return getService().fetchAssetDisplayTemplate(groupId, classNameId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -197,6 +215,10 @@ public class AssetDisplayTemplateLocalServiceUtil {
 		return getService().getAssetDisplayTemplate(assetDisplayTemplateId);
 	}
 
+	public static int getAssetDisplayTemplateCount(long groupId) {
+		return getService().getAssetDisplayTemplateCount(groupId);
+	}
+
 	/**
 	* Returns a range of all the asset display templates.
 	*
@@ -211,6 +233,19 @@ public class AssetDisplayTemplateLocalServiceUtil {
 	public static java.util.List<com.liferay.asset.display.template.model.AssetDisplayTemplate> getAssetDisplayTemplates(
 		int start, int end) {
 		return getService().getAssetDisplayTemplates(start, end);
+	}
+
+	public static java.util.List<com.liferay.asset.display.template.model.AssetDisplayTemplate> getAssetDisplayTemplates(
+		long groupId) {
+		return getService().getAssetDisplayTemplates(groupId);
+	}
+
+	public static java.util.List<com.liferay.asset.display.template.model.AssetDisplayTemplate> getAssetDisplayTemplates(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.display.template.model.AssetDisplayTemplate> orderByComparator) {
+		return getService()
+				   .getAssetDisplayTemplates(groupId, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -250,6 +285,17 @@ public class AssetDisplayTemplateLocalServiceUtil {
 	public static com.liferay.asset.display.template.model.AssetDisplayTemplate updateAssetDisplayTemplate(
 		com.liferay.asset.display.template.model.AssetDisplayTemplate assetDisplayTemplate) {
 		return getService().updateAssetDisplayTemplate(assetDisplayTemplate);
+	}
+
+	public static com.liferay.asset.display.template.model.AssetDisplayTemplate updateAssetDisplayTemplate(
+		long assetDisplayTemplateId, java.lang.String name, long classNameId,
+		java.lang.String language, java.lang.String scriptContent,
+		boolean main,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateAssetDisplayTemplate(assetDisplayTemplateId, name,
+			classNameId, language, scriptContent, main, serviceContext);
 	}
 
 	public static AssetDisplayTemplateLocalService getService() {

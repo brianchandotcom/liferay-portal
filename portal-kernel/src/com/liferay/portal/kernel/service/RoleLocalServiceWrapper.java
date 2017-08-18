@@ -31,14 +31,14 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	}
 
 	@Override
-	public void addGroupRole(long groupId,
-		com.liferay.portal.kernel.model.Role role) {
-		_roleLocalService.addGroupRole(groupId, role);
+	public void addGroupRole(long groupId, long roleId) {
+		_roleLocalService.addGroupRole(groupId, roleId);
 	}
 
 	@Override
-	public void addGroupRole(long groupId, long roleId) {
-		_roleLocalService.addGroupRole(groupId, roleId);
+	public void addGroupRole(long groupId,
+		com.liferay.portal.kernel.model.Role role) {
+		_roleLocalService.addGroupRole(groupId, role);
 	}
 
 	@Override
@@ -50,18 +50,6 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	@Override
 	public void addGroupRoles(long groupId, long[] roleIds) {
 		_roleLocalService.addGroupRoles(groupId, roleIds);
-	}
-
-	/**
-	* Adds the role to the database. Also notifies the appropriate model listeners.
-	*
-	* @param role the role
-	* @return the role that was added
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Role addRole(
-		com.liferay.portal.kernel.model.Role role) {
-		return _roleLocalService.addRole(role);
 	}
 
 	/**
@@ -97,13 +85,15 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	}
 
 	/**
-	* @throws PortalException
+	* Adds the role to the database. Also notifies the appropriate model listeners.
+	*
+	* @param role the role
+	* @return the role that was added
 	*/
 	@Override
-	public void addUserRole(long userId,
-		com.liferay.portal.kernel.model.Role role)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_roleLocalService.addUserRole(userId, role);
+	public com.liferay.portal.kernel.model.Role addRole(
+		com.liferay.portal.kernel.model.Role role) {
+		return _roleLocalService.addRole(role);
 	}
 
 	/**
@@ -113,6 +103,16 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	public void addUserRole(long userId, long roleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_roleLocalService.addUserRole(userId, roleId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public void addUserRole(long userId,
+		com.liferay.portal.kernel.model.Role role)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_roleLocalService.addUserRole(userId, role);
 	}
 
 	/**
@@ -182,14 +182,14 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	}
 
 	@Override
-	public void deleteGroupRole(long groupId,
-		com.liferay.portal.kernel.model.Role role) {
-		_roleLocalService.deleteGroupRole(groupId, role);
+	public void deleteGroupRole(long groupId, long roleId) {
+		_roleLocalService.deleteGroupRole(groupId, roleId);
 	}
 
 	@Override
-	public void deleteGroupRole(long groupId, long roleId) {
-		_roleLocalService.deleteGroupRole(groupId, roleId);
+	public void deleteGroupRole(long groupId,
+		com.liferay.portal.kernel.model.Role role) {
+		_roleLocalService.deleteGroupRole(groupId, role);
 	}
 
 	@Override
@@ -214,6 +214,19 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	}
 
 	/**
+	* Deletes the role with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param roleId the primary key of the role
+	* @return the role that was removed
+	* @throws PortalException if a role with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.Role deleteRole(long roleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _roleLocalService.deleteRole(roleId);
+	}
+
+	/**
 	* Deletes the role from the database. Also notifies the appropriate model listeners.
 	*
 	* @param role the role
@@ -228,16 +241,12 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	}
 
 	/**
-	* Deletes the role with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param roleId the primary key of the role
-	* @return the role that was removed
-	* @throws PortalException if a role with the primary key could not be found
+	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.kernel.model.Role deleteRole(long roleId)
+	public void deleteUserRole(long userId, long roleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _roleLocalService.deleteRole(roleId);
+		_roleLocalService.deleteUserRole(userId, roleId);
 	}
 
 	/**
@@ -248,15 +257,6 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 		com.liferay.portal.kernel.model.Role role)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_roleLocalService.deleteUserRole(userId, role);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public void deleteUserRole(long userId, long roleId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_roleLocalService.deleteUserRole(userId, roleId);
 	}
 
 	/**
@@ -648,19 +648,6 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	}
 
 	/**
-	* Returns all the roles with the primary keys.
-	*
-	* @param roleIds the primary keys of the roles
-	* @return the roles with the primary keys
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Role> getRoles(
-		long[] roleIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _roleLocalService.getRoles(roleIds);
-	}
-
-	/**
 	* Returns all the roles in the company.
 	*
 	* @param companyId the primary key of the company
@@ -683,6 +670,19 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	public java.util.List<com.liferay.portal.kernel.model.Role> getRoles(
 		long companyId, int[] types) {
 		return _roleLocalService.getRoles(companyId, types);
+	}
+
+	/**
+	* Returns all the roles with the primary keys.
+	*
+	* @param roleIds the primary keys of the roles
+	* @return the roles with the primary keys
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Role> getRoles(
+		long[] roleIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _roleLocalService.getRoles(roleIds);
 	}
 
 	/**
@@ -1291,18 +1291,6 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	}
 
 	/**
-	* Updates the role in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param role the role
-	* @return the role that was updated
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Role updateRole(
-		com.liferay.portal.kernel.model.Role role) {
-		return _roleLocalService.updateRole(role);
-	}
-
-	/**
 	* Updates the role with the primary key.
 	*
 	* @param roleId the primary key of the role
@@ -1326,6 +1314,18 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _roleLocalService.updateRole(roleId, name, titleMap,
 			descriptionMap, subtype, serviceContext);
+	}
+
+	/**
+	* Updates the role in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param role the role
+	* @return the role that was updated
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.Role updateRole(
+		com.liferay.portal.kernel.model.Role role) {
+		return _roleLocalService.updateRole(role);
 	}
 
 	@Override

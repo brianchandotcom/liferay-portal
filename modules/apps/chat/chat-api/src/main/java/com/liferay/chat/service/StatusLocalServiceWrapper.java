@@ -66,18 +66,6 @@ public class StatusLocalServiceWrapper implements StatusLocalService,
 	}
 
 	/**
-	* Deletes the status from the database. Also notifies the appropriate model listeners.
-	*
-	* @param status the status
-	* @return the status that was removed
-	*/
-	@Override
-	public com.liferay.chat.model.Status deleteStatus(
-		com.liferay.chat.model.Status status) {
-		return _statusLocalService.deleteStatus(status);
-	}
-
-	/**
 	* Deletes the status with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param statusId the primary key of the status
@@ -88,6 +76,18 @@ public class StatusLocalServiceWrapper implements StatusLocalService,
 	public com.liferay.chat.model.Status deleteStatus(long statusId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _statusLocalService.deleteStatus(statusId);
+	}
+
+	/**
+	* Deletes the status from the database. Also notifies the appropriate model listeners.
+	*
+	* @param status the status
+	* @return the status that was removed
+	*/
+	@Override
+	public com.liferay.chat.model.Status deleteStatus(
+		com.liferay.chat.model.Status status) {
+		return _statusLocalService.deleteStatus(status);
 	}
 
 	@Override
@@ -222,15 +222,15 @@ public class StatusLocalServiceWrapper implements StatusLocalService,
 
 	@Override
 	public java.util.List<java.lang.Object[]> getSocialStatuses(long userId,
-		int[] types, long modifiedDate, int start, int end) {
-		return _statusLocalService.getSocialStatuses(userId, types,
+		int type, long modifiedDate, int start, int end) {
+		return _statusLocalService.getSocialStatuses(userId, type,
 			modifiedDate, start, end);
 	}
 
 	@Override
 	public java.util.List<java.lang.Object[]> getSocialStatuses(long userId,
-		int type, long modifiedDate, int start, int end) {
-		return _statusLocalService.getSocialStatuses(userId, type,
+		int[] types, long modifiedDate, int start, int end) {
+		return _statusLocalService.getSocialStatuses(userId, types,
 			modifiedDate, start, end);
 	}
 
@@ -279,18 +279,6 @@ public class StatusLocalServiceWrapper implements StatusLocalService,
 		return _statusLocalService.getUserStatus(userId);
 	}
 
-	/**
-	* Updates the status in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param status the status
-	* @return the status that was updated
-	*/
-	@Override
-	public com.liferay.chat.model.Status updateStatus(
-		com.liferay.chat.model.Status status) {
-		return _statusLocalService.updateStatus(status);
-	}
-
 	@Override
 	public com.liferay.chat.model.Status updateStatus(long userId,
 		long modifiedDate) {
@@ -303,6 +291,18 @@ public class StatusLocalServiceWrapper implements StatusLocalService,
 		java.lang.String activePanelIds, java.lang.String message, int playSound) {
 		return _statusLocalService.updateStatus(userId, modifiedDate, online,
 			awake, activePanelIds, message, playSound);
+	}
+
+	/**
+	* Updates the status in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param status the status
+	* @return the status that was updated
+	*/
+	@Override
+	public com.liferay.chat.model.Status updateStatus(
+		com.liferay.chat.model.Status status) {
+		return _statusLocalService.updateStatus(status);
 	}
 
 	@Override

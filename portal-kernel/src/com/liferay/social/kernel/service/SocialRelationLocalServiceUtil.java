@@ -90,18 +90,6 @@ public class SocialRelationLocalServiceUtil {
 	* Removes the relation (and its inverse in case of a bidirectional
 	* relation) from the database.
 	*
-	* @param relation the relation to be removed
-	*/
-	public static void deleteRelation(
-		com.liferay.social.kernel.model.SocialRelation relation)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteRelation(relation);
-	}
-
-	/**
-	* Removes the relation (and its inverse in case of a bidirectional
-	* relation) from the database.
-	*
 	* @param relationId the primary key of the relation
 	*/
 	public static void deleteRelation(long relationId)
@@ -120,6 +108,18 @@ public class SocialRelationLocalServiceUtil {
 	public static void deleteRelation(long userId1, long userId2, int type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteRelation(userId1, userId2, type);
+	}
+
+	/**
+	* Removes the relation (and its inverse in case of a bidirectional
+	* relation) from the database.
+	*
+	* @param relation the relation to be removed
+	*/
+	public static void deleteRelation(
+		com.liferay.social.kernel.model.SocialRelation relation)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteRelation(relation);
 	}
 
 	/**
@@ -143,17 +143,6 @@ public class SocialRelationLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the social relation from the database. Also notifies the appropriate model listeners.
-	*
-	* @param socialRelation the social relation
-	* @return the social relation that was removed
-	*/
-	public static com.liferay.social.kernel.model.SocialRelation deleteSocialRelation(
-		com.liferay.social.kernel.model.SocialRelation socialRelation) {
-		return getService().deleteSocialRelation(socialRelation);
-	}
-
-	/**
 	* Deletes the social relation with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param relationId the primary key of the social relation
@@ -164,6 +153,17 @@ public class SocialRelationLocalServiceUtil {
 		long relationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteSocialRelation(relationId);
+	}
+
+	/**
+	* Deletes the social relation from the database. Also notifies the appropriate model listeners.
+	*
+	* @param socialRelation the social relation
+	* @return the social relation that was removed
+	*/
+	public static com.liferay.social.kernel.model.SocialRelation deleteSocialRelation(
+		com.liferay.social.kernel.model.SocialRelation socialRelation) {
+		return getService().deleteSocialRelation(socialRelation);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {

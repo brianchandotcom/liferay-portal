@@ -145,20 +145,6 @@ public class SocialActivityCounterLocalServiceWrapper
 	}
 
 	/**
-	* Deletes all activity counters for the entity identified by the class name
-	* and class primary key.
-	*
-	* @param className the entity's class name
-	* @param classPK the primary key of the entity
-	*/
-	@Override
-	public void deleteActivityCounters(java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_socialActivityCounterLocalService.deleteActivityCounters(className,
-			classPK);
-	}
-
-	/**
 	* Deletes all activity counters, limits, and settings related to the entity
 	* identified by the class name ID and class primary key.
 	*
@@ -173,6 +159,20 @@ public class SocialActivityCounterLocalServiceWrapper
 	}
 
 	/**
+	* Deletes all activity counters for the entity identified by the class name
+	* and class primary key.
+	*
+	* @param className the entity's class name
+	* @param classPK the primary key of the entity
+	*/
+	@Override
+	public void deleteActivityCounters(java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_socialActivityCounterLocalService.deleteActivityCounters(className,
+			classPK);
+	}
+
+	/**
 	* @throws PortalException
 	*/
 	@Override
@@ -180,18 +180,6 @@ public class SocialActivityCounterLocalServiceWrapper
 		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _socialActivityCounterLocalService.deletePersistedModel(persistedModel);
-	}
-
-	/**
-	* Deletes the social activity counter from the database. Also notifies the appropriate model listeners.
-	*
-	* @param socialActivityCounter the social activity counter
-	* @return the social activity counter that was removed
-	*/
-	@Override
-	public com.liferay.social.kernel.model.SocialActivityCounter deleteSocialActivityCounter(
-		com.liferay.social.kernel.model.SocialActivityCounter socialActivityCounter) {
-		return _socialActivityCounterLocalService.deleteSocialActivityCounter(socialActivityCounter);
 	}
 
 	/**
@@ -209,22 +197,15 @@ public class SocialActivityCounterLocalServiceWrapper
 	}
 
 	/**
-	* Disables all the counters of an asset identified by the class name and
-	* class primary key.
+	* Deletes the social activity counter from the database. Also notifies the appropriate model listeners.
 	*
-	* <p>
-	* This method is used by the recycle bin to disable all counters of assets
-	* put into the recycle bin. It adjusts the owner's contribution score.
-	* </p>
-	*
-	* @param className the asset's class name
-	* @param classPK the primary key of the asset
+	* @param socialActivityCounter the social activity counter
+	* @return the social activity counter that was removed
 	*/
 	@Override
-	public void disableActivityCounters(java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_socialActivityCounterLocalService.disableActivityCounters(className,
-			classPK);
+	public com.liferay.social.kernel.model.SocialActivityCounter deleteSocialActivityCounter(
+		com.liferay.social.kernel.model.SocialActivityCounter socialActivityCounter) {
+		return _socialActivityCounterLocalService.deleteSocialActivityCounter(socialActivityCounter);
 	}
 
 	/**
@@ -243,6 +224,25 @@ public class SocialActivityCounterLocalServiceWrapper
 	public void disableActivityCounters(long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_socialActivityCounterLocalService.disableActivityCounters(classNameId,
+			classPK);
+	}
+
+	/**
+	* Disables all the counters of an asset identified by the class name and
+	* class primary key.
+	*
+	* <p>
+	* This method is used by the recycle bin to disable all counters of assets
+	* put into the recycle bin. It adjusts the owner's contribution score.
+	* </p>
+	*
+	* @param className the asset's class name
+	* @param classPK the primary key of the asset
+	*/
+	@Override
+	public void disableActivityCounters(java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_socialActivityCounterLocalService.disableActivityCounters(className,
 			classPK);
 	}
 
@@ -333,25 +333,6 @@ public class SocialActivityCounterLocalServiceWrapper
 	}
 
 	/**
-	* Enables all the counters of an asset identified by the class name and
-	* class primary key.
-	*
-	* <p>
-	* This method is used by the recycle bin to enable all counters of assets
-	* restored from the recycle bin. It adjusts the owner's contribution score.
-	* </p>
-	*
-	* @param className the asset's class name
-	* @param classPK the primary key of the asset
-	*/
-	@Override
-	public void enableActivityCounters(java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_socialActivityCounterLocalService.enableActivityCounters(className,
-			classPK);
-	}
-
-	/**
 	* Enables all activity counters of an asset identified by the class name ID
 	* and class primary key.
 	*
@@ -367,6 +348,25 @@ public class SocialActivityCounterLocalServiceWrapper
 	public void enableActivityCounters(long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_socialActivityCounterLocalService.enableActivityCounters(classNameId,
+			classPK);
+	}
+
+	/**
+	* Enables all the counters of an asset identified by the class name and
+	* class primary key.
+	*
+	* <p>
+	* This method is used by the recycle bin to enable all counters of assets
+	* restored from the recycle bin. It adjusts the owner's contribution score.
+	* </p>
+	*
+	* @param className the asset's class name
+	* @param classPK the primary key of the asset
+	*/
+	@Override
+	public void enableActivityCounters(java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_socialActivityCounterLocalService.enableActivityCounters(className,
 			classPK);
 	}
 
@@ -446,16 +446,6 @@ public class SocialActivityCounterLocalServiceWrapper
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _socialActivityCounterLocalService.getOSGiServiceIdentifier();
-	}
-
-	/**
 	* Returns all the activity counters with the given name and period offsets.
 	*
 	* <p>
@@ -498,6 +488,16 @@ public class SocialActivityCounterLocalServiceWrapper
 		long groupId, java.lang.String name, int startOffset, int endOffset) {
 		return _socialActivityCounterLocalService.getOffsetDistributionActivityCounters(groupId,
 			name, startOffset, endOffset);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _socialActivityCounterLocalService.getOSGiServiceIdentifier();
 	}
 
 	/**

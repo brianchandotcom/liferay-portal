@@ -255,6 +255,11 @@ public class BlogsStatsUserLocalServiceUtil {
 		return getService().getCompanyStatsUsersCount(companyId);
 	}
 
+	public static java.util.List<com.liferay.blogs.model.BlogsStatsUser> getGroupsStatsUsers(
+		long companyId, long groupId, int start, int end) {
+		return getService().getGroupsStatsUsers(companyId, groupId, start, end);
+	}
+
 	public static java.util.List<com.liferay.blogs.model.BlogsStatsUser> getGroupStatsUsers(
 		long groupId, int start, int end) {
 		return getService().getGroupStatsUsers(groupId, start, end);
@@ -270,22 +275,8 @@ public class BlogsStatsUserLocalServiceUtil {
 		return getService().getGroupStatsUsersCount(groupId);
 	}
 
-	public static java.util.List<com.liferay.blogs.model.BlogsStatsUser> getGroupsStatsUsers(
-		long companyId, long groupId, int start, int end) {
-		return getService().getGroupsStatsUsers(companyId, groupId, start, end);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static java.util.List<com.liferay.blogs.model.BlogsStatsUser> getOrganizationStatsUsers(
@@ -302,6 +293,15 @@ public class BlogsStatsUserLocalServiceUtil {
 
 	public static int getOrganizationStatsUsersCount(long organizationId) {
 		return getService().getOrganizationStatsUsersCount(organizationId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
@@ -332,6 +332,12 @@ public class BlogsStatsUserLocalServiceUtil {
 		getService().updateStatsUser(groupId, userId);
 	}
 
+	public static void updateStatsUser(long groupId, long userId,
+		java.util.Date displayDate)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().updateStatsUser(groupId, userId, displayDate);
+	}
+
 	public static com.liferay.blogs.model.BlogsStatsUser updateStatsUser(
 		long groupId, long userId, int ratingsTotalEntries,
 		double ratingsTotalScore, double ratingsAverageScore)
@@ -339,12 +345,6 @@ public class BlogsStatsUserLocalServiceUtil {
 		return getService()
 				   .updateStatsUser(groupId, userId, ratingsTotalEntries,
 			ratingsTotalScore, ratingsAverageScore);
-	}
-
-	public static void updateStatsUser(long groupId, long userId,
-		java.util.Date displayDate)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().updateStatsUser(groupId, userId, displayDate);
 	}
 
 	public static BlogsStatsUserLocalService getService() {

@@ -40,13 +40,13 @@ public class RoleLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.RoleLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static void addGroupRole(long groupId, long roleId) {
+		getService().addGroupRole(groupId, roleId);
+	}
+
 	public static void addGroupRole(long groupId,
 		com.liferay.portal.kernel.model.Role role) {
 		getService().addGroupRole(groupId, role);
-	}
-
-	public static void addGroupRole(long groupId, long roleId) {
-		getService().addGroupRole(groupId, roleId);
 	}
 
 	public static void addGroupRoles(long groupId,
@@ -56,17 +56,6 @@ public class RoleLocalServiceUtil {
 
 	public static void addGroupRoles(long groupId, long[] roleIds) {
 		getService().addGroupRoles(groupId, roleIds);
-	}
-
-	/**
-	* Adds the role to the database. Also notifies the appropriate model listeners.
-	*
-	* @param role the role
-	* @return the role that was added
-	*/
-	public static com.liferay.portal.kernel.model.Role addRole(
-		com.liferay.portal.kernel.model.Role role) {
-		return getService().addRole(role);
 	}
 
 	/**
@@ -102,12 +91,14 @@ public class RoleLocalServiceUtil {
 	}
 
 	/**
-	* @throws PortalException
+	* Adds the role to the database. Also notifies the appropriate model listeners.
+	*
+	* @param role the role
+	* @return the role that was added
 	*/
-	public static void addUserRole(long userId,
-		com.liferay.portal.kernel.model.Role role)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addUserRole(userId, role);
+	public static com.liferay.portal.kernel.model.Role addRole(
+		com.liferay.portal.kernel.model.Role role) {
+		return getService().addRole(role);
 	}
 
 	/**
@@ -116,6 +107,15 @@ public class RoleLocalServiceUtil {
 	public static void addUserRole(long userId, long roleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().addUserRole(userId, roleId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static void addUserRole(long userId,
+		com.liferay.portal.kernel.model.Role role)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().addUserRole(userId, role);
 	}
 
 	/**
@@ -177,13 +177,13 @@ public class RoleLocalServiceUtil {
 		return getService().createRole(roleId);
 	}
 
+	public static void deleteGroupRole(long groupId, long roleId) {
+		getService().deleteGroupRole(groupId, roleId);
+	}
+
 	public static void deleteGroupRole(long groupId,
 		com.liferay.portal.kernel.model.Role role) {
 		getService().deleteGroupRole(groupId, role);
-	}
-
-	public static void deleteGroupRole(long groupId, long roleId) {
-		getService().deleteGroupRole(groupId, roleId);
 	}
 
 	public static void deleteGroupRoles(long groupId,
@@ -205,6 +205,18 @@ public class RoleLocalServiceUtil {
 	}
 
 	/**
+	* Deletes the role with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param roleId the primary key of the role
+	* @return the role that was removed
+	* @throws PortalException if a role with the primary key could not be found
+	*/
+	public static com.liferay.portal.kernel.model.Role deleteRole(long roleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteRole(roleId);
+	}
+
+	/**
 	* Deletes the role from the database. Also notifies the appropriate model listeners.
 	*
 	* @param role the role
@@ -218,15 +230,11 @@ public class RoleLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the role with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param roleId the primary key of the role
-	* @return the role that was removed
-	* @throws PortalException if a role with the primary key could not be found
+	* @throws PortalException
 	*/
-	public static com.liferay.portal.kernel.model.Role deleteRole(long roleId)
+	public static void deleteUserRole(long userId, long roleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteRole(roleId);
+		getService().deleteUserRole(userId, roleId);
 	}
 
 	/**
@@ -236,14 +244,6 @@ public class RoleLocalServiceUtil {
 		com.liferay.portal.kernel.model.Role role)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteUserRole(userId, role);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static void deleteUserRole(long userId, long roleId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteUserRole(userId, roleId);
 	}
 
 	/**
@@ -601,18 +601,6 @@ public class RoleLocalServiceUtil {
 	}
 
 	/**
-	* Returns all the roles with the primary keys.
-	*
-	* @param roleIds the primary keys of the roles
-	* @return the roles with the primary keys
-	*/
-	public static java.util.List<com.liferay.portal.kernel.model.Role> getRoles(
-		long[] roleIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getRoles(roleIds);
-	}
-
-	/**
 	* Returns all the roles in the company.
 	*
 	* @param companyId the primary key of the company
@@ -633,6 +621,18 @@ public class RoleLocalServiceUtil {
 	public static java.util.List<com.liferay.portal.kernel.model.Role> getRoles(
 		long companyId, int[] types) {
 		return getService().getRoles(companyId, types);
+	}
+
+	/**
+	* Returns all the roles with the primary keys.
+	*
+	* @param roleIds the primary keys of the roles
+	* @return the roles with the primary keys
+	*/
+	public static java.util.List<com.liferay.portal.kernel.model.Role> getRoles(
+		long[] roleIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getRoles(roleIds);
 	}
 
 	/**
@@ -1196,17 +1196,6 @@ public class RoleLocalServiceUtil {
 	}
 
 	/**
-	* Updates the role in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param role the role
-	* @return the role that was updated
-	*/
-	public static com.liferay.portal.kernel.model.Role updateRole(
-		com.liferay.portal.kernel.model.Role role) {
-		return getService().updateRole(role);
-	}
-
-	/**
 	* Updates the role with the primary key.
 	*
 	* @param roleId the primary key of the role
@@ -1230,6 +1219,17 @@ public class RoleLocalServiceUtil {
 		return getService()
 				   .updateRole(roleId, name, titleMap, descriptionMap, subtype,
 			serviceContext);
+	}
+
+	/**
+	* Updates the role in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param role the role
+	* @return the role that was updated
+	*/
+	public static com.liferay.portal.kernel.model.Role updateRole(
+		com.liferay.portal.kernel.model.Role role) {
+		return getService().updateRole(role);
 	}
 
 	public static RoleLocalService getService() {

@@ -477,6 +477,17 @@ public class AssetTagLocalServiceUtil {
 	}
 
 	/**
+	* Returns the asset tags in the groups.
+	*
+	* @param groupIds the primary keys of the groups
+	* @return the asset tags in the groups
+	*/
+	public static java.util.List<com.liferay.asset.kernel.model.AssetTag> getGroupsTags(
+		long[] groupIds) {
+		return getService().getGroupsTags(groupIds);
+	}
+
+	/**
 	* Returns the asset tags in the group.
 	*
 	* @param groupId the primary key of the group
@@ -508,17 +519,6 @@ public class AssetTagLocalServiceUtil {
 	*/
 	public static int getGroupTagsCount(long groupId) {
 		return getService().getGroupTagsCount(groupId);
-	}
-
-	/**
-	* Returns the asset tags in the groups.
-	*
-	* @param groupIds the primary keys of the groups
-	* @return the asset tags in the groups
-	*/
-	public static java.util.List<com.liferay.asset.kernel.model.AssetTag> getGroupsTags(
-		long[] groupIds) {
-		return getService().getGroupsTags(groupIds);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
@@ -592,17 +592,6 @@ public class AssetTagLocalServiceUtil {
 	}
 
 	/**
-	* Returns the primary keys of the asset tags with the names in the groups.
-	*
-	* @param groupIds the primary keys of the groups
-	* @param names the names of the asset tags
-	* @return the primary keys of the asset tags with the names in the groups
-	*/
-	public static long[] getTagIds(long[] groupIds, java.lang.String[] names) {
-		return getService().getTagIds(groupIds, names);
-	}
-
-	/**
 	* Returns the primary keys of the asset tags with the name in the groups.
 	*
 	* @param groupIds the primary keys of the groups
@@ -614,12 +603,34 @@ public class AssetTagLocalServiceUtil {
 	}
 
 	/**
+	* Returns the primary keys of the asset tags with the names in the groups.
+	*
+	* @param groupIds the primary keys of the groups
+	* @param names the names of the asset tags
+	* @return the primary keys of the asset tags with the names in the groups
+	*/
+	public static long[] getTagIds(long[] groupIds, java.lang.String[] names) {
+		return getService().getTagIds(groupIds, names);
+	}
+
+	/**
 	* Returns the names of all the asset tags.
 	*
 	* @return the names of all the asset tags
 	*/
 	public static java.lang.String[] getTagNames() {
 		return getService().getTagNames();
+	}
+
+	/**
+	* Returns the names of the asset tags of the entity.
+	*
+	* @param classNameId the class name ID of the entity
+	* @param classPK the primary key of the entity
+	* @return the names of the asset tags of the entity
+	*/
+	public static java.lang.String[] getTagNames(long classNameId, long classPK) {
+		return getService().getTagNames(classNameId, classPK);
 	}
 
 	/**
@@ -635,35 +646,12 @@ public class AssetTagLocalServiceUtil {
 	}
 
 	/**
-	* Returns the names of the asset tags of the entity.
-	*
-	* @param classNameId the class name ID of the entity
-	* @param classPK the primary key of the entity
-	* @return the names of the asset tags of the entity
-	*/
-	public static java.lang.String[] getTagNames(long classNameId, long classPK) {
-		return getService().getTagNames(classNameId, classPK);
-	}
-
-	/**
 	* Returns all the asset tags.
 	*
 	* @return the asset tags
 	*/
 	public static java.util.List<com.liferay.asset.kernel.model.AssetTag> getTags() {
 		return getService().getTags();
-	}
-
-	/**
-	* Returns the asset tags of the entity.
-	*
-	* @param className the class name of the entity
-	* @param classPK the primary key of the entity
-	* @return the asset tags of the entity
-	*/
-	public static java.util.List<com.liferay.asset.kernel.model.AssetTag> getTags(
-		java.lang.String className, long classPK) {
-		return getService().getTags(className, classPK);
 	}
 
 	/**
@@ -687,6 +675,18 @@ public class AssetTagLocalServiceUtil {
 		long groupId, long classNameId, java.lang.String name, int start,
 		int end) {
 		return getService().getTags(groupId, classNameId, name, start, end);
+	}
+
+	/**
+	* Returns the asset tags of the entity.
+	*
+	* @param className the class name of the entity
+	* @param classPK the primary key of the entity
+	* @return the asset tags of the entity
+	*/
+	public static java.util.List<com.liferay.asset.kernel.model.AssetTag> getTags(
+		java.lang.String className, long classPK) {
+		return getService().getTags(className, classPK);
 	}
 
 	public static int getTagsSize(long groupId, long classNameId,

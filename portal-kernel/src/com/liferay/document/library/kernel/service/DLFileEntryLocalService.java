@@ -108,18 +108,18 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public DLFileEntry checkOutFileEntry(long userId, long fileEntryId,
-		ServiceContext serviceContext) throws PortalException;
-
-	public DLFileEntry checkOutFileEntry(long userId, long fileEntryId,
-		java.lang.String owner, long expirationTime,
-		ServiceContext serviceContext) throws PortalException;
-
-	public DLFileEntry checkOutFileEntry(long userId, long fileEntryId,
 		long fileEntryTypeId, ServiceContext serviceContext)
 		throws PortalException;
 
 	public DLFileEntry checkOutFileEntry(long userId, long fileEntryId,
 		long fileEntryTypeId, java.lang.String owner, long expirationTime,
+		ServiceContext serviceContext) throws PortalException;
+
+	public DLFileEntry checkOutFileEntry(long userId, long fileEntryId,
+		ServiceContext serviceContext) throws PortalException;
+
+	public DLFileEntry checkOutFileEntry(long userId, long fileEntryId,
+		java.lang.String owner, long expirationTime,
 		ServiceContext serviceContext) throws PortalException;
 
 	public void convertExtraSettings(java.lang.String[] keys)
@@ -271,11 +271,11 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFileEntry fetchFileEntry(java.lang.String uuid, long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFileEntry fetchFileEntry(long groupId, long folderId,
 		java.lang.String title);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileEntry fetchFileEntry(java.lang.String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFileEntry fetchFileEntryByAnyImageId(long imageId);
@@ -292,11 +292,11 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DLFileEntry> getDDMStructureFileEntries(long[] ddmStructureIds);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileEntry> getDDMStructureFileEntries(long groupId,
 		long[] ddmStructureIds);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DLFileEntry> getDDMStructureFileEntries(long[] ddmStructureIds);
 
 	/**
 	* Returns a range of all the document library file entries.
@@ -379,14 +379,6 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getExtraSettingsFileEntriesCount();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public File getFile(long fileEntryId, java.lang.String version,
-		boolean incrementCounter) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public File getFile(long fileEntryId, java.lang.String version,
-		boolean incrementCounter, int increment) throws PortalException;
-
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #getFile(long, String,
 	boolean)}
@@ -408,18 +400,12 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public InputStream getFileAsStream(long fileEntryId,
-		java.lang.String version) throws PortalException;
+	public File getFile(long fileEntryId, java.lang.String version,
+		boolean incrementCounter) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public InputStream getFileAsStream(long fileEntryId,
-		java.lang.String version, boolean incrementCounter)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public InputStream getFileAsStream(long fileEntryId,
-		java.lang.String version, boolean incrementCounter, int increment)
-		throws PortalException;
+	public File getFile(long fileEntryId, java.lang.String version,
+		boolean incrementCounter, int increment) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #getFileAsStream(long,
@@ -451,21 +437,39 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DLFileEntry> getFileEntries(int start, int end);
+	public InputStream getFileAsStream(long fileEntryId,
+		java.lang.String version) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DLFileEntry> getFileEntries(long folderId, java.lang.String name);
+	public InputStream getFileAsStream(long fileEntryId,
+		java.lang.String version, boolean incrementCounter)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public InputStream getFileAsStream(long fileEntryId,
+		java.lang.String version, boolean incrementCounter, int increment)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DLFileEntry> getFileEntries(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileEntry> getFileEntries(long groupId, long folderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileEntry> getFileEntries(long groupId, long folderId,
-		int start, int end, OrderByComparator<DLFileEntry> obc);
+		int status, int start, int end, OrderByComparator<DLFileEntry> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileEntry> getFileEntries(long groupId, long folderId,
-		int status, int start, int end, OrderByComparator<DLFileEntry> obc);
+		int start, int end, OrderByComparator<DLFileEntry> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DLFileEntry> getFileEntries(long groupId, long userId,
+		List<java.lang.Long> repositoryIds, List<java.lang.Long> folderIds,
+		java.lang.String[] mimeTypes,
+		QueryDefinition<DLFileEntry> queryDefinition)
+		throws java.lang.Exception;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileEntry> getFileEntries(long groupId, long userId,
@@ -474,11 +478,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 		throws java.lang.Exception;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DLFileEntry> getFileEntries(long groupId, long userId,
-		List<java.lang.Long> repositoryIds, List<java.lang.Long> folderIds,
-		java.lang.String[] mimeTypes,
-		QueryDefinition<DLFileEntry> queryDefinition)
-		throws java.lang.Exception;
+	public List<DLFileEntry> getFileEntries(long folderId, java.lang.String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFileEntriesCount();
@@ -499,14 +499,14 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFileEntriesCount(long groupId, long userId,
-		List<java.lang.Long> folderIds, java.lang.String[] mimeTypes,
+		List<java.lang.Long> repositoryIds, List<java.lang.Long> folderIds,
+		java.lang.String[] mimeTypes,
 		QueryDefinition<DLFileEntry> queryDefinition)
 		throws java.lang.Exception;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFileEntriesCount(long groupId, long userId,
-		List<java.lang.Long> repositoryIds, List<java.lang.Long> folderIds,
-		java.lang.String[] mimeTypes,
+		List<java.lang.Long> folderIds, java.lang.String[] mimeTypes,
 		QueryDefinition<DLFileEntry> queryDefinition)
 		throws java.lang.Exception;
 
@@ -566,15 +566,15 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileEntry> getNoAssetFileEntries();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DLFileEntry> getOrphanedFileEntries();
+
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DLFileEntry> getOrphanedFileEntries();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

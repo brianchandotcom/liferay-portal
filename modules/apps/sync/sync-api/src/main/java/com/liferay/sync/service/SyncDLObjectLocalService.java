@@ -63,27 +63,6 @@ public interface SyncDLObjectLocalService extends BaseLocalService,
 	 */
 
 	/**
-	* Adds the sync dl object to the database. Also notifies the appropriate model listeners.
-	*
-	* @param syncDLObject the sync dl object
-	* @return the sync dl object that was added
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public SyncDLObject addSyncDLObject(SyncDLObject syncDLObject);
-
-	public SyncDLObject addSyncDLObject(long companyId, long userId,
-		java.lang.String userName, long modifiedTime, long repositoryId,
-		long parentFolderId, java.lang.String treePath, java.lang.String name,
-		java.lang.String extension, java.lang.String mimeType,
-		java.lang.String description, java.lang.String changeLog,
-		java.lang.String extraSettings, java.lang.String version,
-		long versionId, long size, java.lang.String checksum,
-		java.lang.String event, java.lang.String lanTokenKey,
-		Date lockExpirationDate, long lockUserId,
-		java.lang.String lockUserName, java.lang.String type, long typePK,
-		java.lang.String typeUuid) throws PortalException;
-
-	/**
 	* @deprecated As of 1.3.0, replaced by {@link #addSyncDLObject(long, long,
 	String, long, long, long, String, String, String, String,
 	String, String, String, String, long, long, String, String,
@@ -101,6 +80,27 @@ public interface SyncDLObjectLocalService extends BaseLocalService,
 		java.lang.String lockUserName, java.lang.String type, long typePK,
 		java.lang.String typeUuid) throws PortalException;
 
+	public SyncDLObject addSyncDLObject(long companyId, long userId,
+		java.lang.String userName, long modifiedTime, long repositoryId,
+		long parentFolderId, java.lang.String treePath, java.lang.String name,
+		java.lang.String extension, java.lang.String mimeType,
+		java.lang.String description, java.lang.String changeLog,
+		java.lang.String extraSettings, java.lang.String version,
+		long versionId, long size, java.lang.String checksum,
+		java.lang.String event, java.lang.String lanTokenKey,
+		Date lockExpirationDate, long lockUserId,
+		java.lang.String lockUserName, java.lang.String type, long typePK,
+		java.lang.String typeUuid) throws PortalException;
+
+	/**
+	* Adds the sync dl object to the database. Also notifies the appropriate model listeners.
+	*
+	* @param syncDLObject the sync dl object
+	* @return the sync dl object that was added
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public SyncDLObject addSyncDLObject(SyncDLObject syncDLObject);
+
 	/**
 	* Creates a new sync dl object with the primary key. Does not add the sync dl object to the database.
 	*
@@ -117,15 +117,6 @@ public interface SyncDLObjectLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the sync dl object from the database. Also notifies the appropriate model listeners.
-	*
-	* @param syncDLObject the sync dl object
-	* @return the sync dl object that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public SyncDLObject deleteSyncDLObject(SyncDLObject syncDLObject);
-
-	/**
 	* Deletes the sync dl object with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param syncDLObjectId the primary key of the sync dl object
@@ -135,6 +126,15 @@ public interface SyncDLObjectLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public SyncDLObject deleteSyncDLObject(long syncDLObjectId)
 		throws PortalException;
+
+	/**
+	* Deletes the sync dl object from the database. Also notifies the appropriate model listeners.
+	*
+	* @param syncDLObject the sync dl object
+	* @return the sync dl object that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public SyncDLObject deleteSyncDLObject(SyncDLObject syncDLObject);
 
 	public void deleteSyncDLObjects(java.lang.String version,
 		java.lang.String type);
@@ -199,10 +199,10 @@ public interface SyncDLObjectLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SyncDLObject fetchSyncDLObject(java.lang.String type, long typePK);
+	public SyncDLObject fetchSyncDLObject(long syncDLObjectId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SyncDLObject fetchSyncDLObject(long syncDLObjectId);
+	public SyncDLObject fetchSyncDLObject(java.lang.String type, long typePK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

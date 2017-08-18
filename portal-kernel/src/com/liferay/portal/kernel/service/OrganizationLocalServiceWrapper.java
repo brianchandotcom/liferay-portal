@@ -32,14 +32,14 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	}
 
 	@Override
-	public void addGroupOrganization(long groupId,
-		com.liferay.portal.kernel.model.Organization organization) {
-		_organizationLocalService.addGroupOrganization(groupId, organization);
+	public void addGroupOrganization(long groupId, long organizationId) {
+		_organizationLocalService.addGroupOrganization(groupId, organizationId);
 	}
 
 	@Override
-	public void addGroupOrganization(long groupId, long organizationId) {
-		_organizationLocalService.addGroupOrganization(groupId, organizationId);
+	public void addGroupOrganization(long groupId,
+		com.liferay.portal.kernel.model.Organization organization) {
+		_organizationLocalService.addGroupOrganization(groupId, organization);
 	}
 
 	@Override
@@ -51,18 +51,6 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	@Override
 	public void addGroupOrganizations(long groupId, long[] organizationIds) {
 		_organizationLocalService.addGroupOrganizations(groupId, organizationIds);
-	}
-
-	/**
-	* Adds the organization to the database. Also notifies the appropriate model listeners.
-	*
-	* @param organization the organization
-	* @return the organization that was added
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Organization addOrganization(
-		com.liferay.portal.kernel.model.Organization organization) {
-		return _organizationLocalService.addOrganization(organization);
 	}
 
 	/**
@@ -130,6 +118,18 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	}
 
 	/**
+	* Adds the organization to the database. Also notifies the appropriate model listeners.
+	*
+	* @param organization the organization
+	* @return the organization that was added
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.Organization addOrganization(
+		com.liferay.portal.kernel.model.Organization organization) {
+		return _organizationLocalService.addOrganization(organization);
+	}
+
+	/**
 	* Adds a resource for each type of permission available on the
 	* organization.
 	*
@@ -158,14 +158,14 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	}
 
 	@Override
-	public void addUserOrganization(long userId,
-		com.liferay.portal.kernel.model.Organization organization) {
-		_organizationLocalService.addUserOrganization(userId, organization);
+	public void addUserOrganization(long userId, long organizationId) {
+		_organizationLocalService.addUserOrganization(userId, organizationId);
 	}
 
 	@Override
-	public void addUserOrganization(long userId, long organizationId) {
-		_organizationLocalService.addUserOrganization(userId, organizationId);
+	public void addUserOrganization(long userId,
+		com.liferay.portal.kernel.model.Organization organization) {
+		_organizationLocalService.addUserOrganization(userId, organization);
 	}
 
 	@Override
@@ -202,15 +202,15 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	}
 
 	@Override
-	public void deleteGroupOrganization(long groupId,
-		com.liferay.portal.kernel.model.Organization organization) {
-		_organizationLocalService.deleteGroupOrganization(groupId, organization);
-	}
-
-	@Override
 	public void deleteGroupOrganization(long groupId, long organizationId) {
 		_organizationLocalService.deleteGroupOrganization(groupId,
 			organizationId);
+	}
+
+	@Override
+	public void deleteGroupOrganization(long groupId,
+		com.liferay.portal.kernel.model.Organization organization) {
+		_organizationLocalService.deleteGroupOrganization(groupId, organization);
 	}
 
 	@Override
@@ -238,20 +238,6 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	}
 
 	/**
-	* Deletes the organization from the database. Also notifies the appropriate model listeners.
-	*
-	* @param organization the organization
-	* @return the organization that was removed
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Organization deleteOrganization(
-		com.liferay.portal.kernel.model.Organization organization)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _organizationLocalService.deleteOrganization(organization);
-	}
-
-	/**
 	* Deletes the organization with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param organizationId the primary key of the organization
@@ -266,6 +252,20 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	}
 
 	/**
+	* Deletes the organization from the database. Also notifies the appropriate model listeners.
+	*
+	* @param organization the organization
+	* @return the organization that was removed
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.Organization deleteOrganization(
+		com.liferay.portal.kernel.model.Organization organization)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _organizationLocalService.deleteOrganization(organization);
+	}
+
+	/**
 	* @throws PortalException
 	*/
 	@Override
@@ -276,14 +276,14 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	}
 
 	@Override
-	public void deleteUserOrganization(long userId,
-		com.liferay.portal.kernel.model.Organization organization) {
-		_organizationLocalService.deleteUserOrganization(userId, organization);
+	public void deleteUserOrganization(long userId, long organizationId) {
+		_organizationLocalService.deleteUserOrganization(userId, organizationId);
 	}
 
 	@Override
-	public void deleteUserOrganization(long userId, long organizationId) {
-		_organizationLocalService.deleteUserOrganization(userId, organizationId);
+	public void deleteUserOrganization(long userId,
+		com.liferay.portal.kernel.model.Organization organization) {
+		_organizationLocalService.deleteUserOrganization(userId, organization);
 	}
 
 	@Override
@@ -484,16 +484,6 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _organizationLocalService.getOSGiServiceIdentifier();
-	}
-
-	/**
 	* Returns the organization with the primary key.
 	*
 	* @param organizationId the primary key of the organization
@@ -567,19 +557,6 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 		return _organizationLocalService.getOrganizations(start, end);
 	}
 
-	/**
-	* Returns the organizations with the primary keys.
-	*
-	* @param organizationIds the primary keys of the organizations
-	* @return the organizations with the primary keys
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Organization> getOrganizations(
-		long[] organizationIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _organizationLocalService.getOrganizations(organizationIds);
-	}
-
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Organization> getOrganizations(
 		long userId, int start, int end,
@@ -632,6 +609,19 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 		long companyId, long parentOrganizationId, int start, int end) {
 		return _organizationLocalService.getOrganizations(companyId,
 			parentOrganizationId, start, end);
+	}
+
+	/**
+	* Returns the organizations with the primary keys.
+	*
+	* @param organizationIds the primary keys of the organizations
+	* @return the organizations with the primary keys
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Organization> getOrganizations(
+		long[] organizationIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _organizationLocalService.getOrganizations(organizationIds);
 	}
 
 	/**
@@ -698,6 +688,16 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	public int getOrganizationsCount(long companyId, long parentOrganizationId) {
 		return _organizationLocalService.getOrganizationsCount(companyId,
 			parentOrganizationId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _organizationLocalService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -979,6 +979,46 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	}
 
 	/**
+	* Returns an ordered range of all the organizations that match the
+	* keywords, using the indexer. It is preferable to use this method instead
+	* of the non-indexed version whenever possible for performance reasons.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param companyId the primary key of the organization's company
+	* @param parentOrganizationId the primary key of the organization's parent
+	organization
+	* @param keywords the keywords (space separated), which may occur in the
+	organization's name, street, city, zipcode, type, region or
+	country (optionally <code>null</code>)
+	* @param params the finder parameters (optionally <code>null</code>). For
+	more information see {@link
+	com.liferay.portlet.usersadmin.util.OrganizationIndexer}
+	* @param start the lower bound of the range of organizations to return
+	* @param end the upper bound of the range of organizations to return (not
+	inclusive)
+	* @param sort the field and direction by which to sort (optionally
+	<code>null</code>)
+	* @return the matching organizations ordered by name
+	* @see com.liferay.portlet.usersadmin.util.OrganizationIndexer
+	*/
+	@Override
+	public com.liferay.portal.kernel.search.Hits search(long companyId,
+		long parentOrganizationId, java.lang.String keywords,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end, com.liferay.portal.kernel.search.Sort sort) {
+		return _organizationLocalService.search(companyId,
+			parentOrganizationId, keywords, params, start, end, sort);
+	}
+
+	/**
 	* Returns a name ordered range of all the organizations that match the
 	* keywords, type, region, and country, without using the indexer. It is
 	* preferable to use the indexed version {@link #search(long, long, String,
@@ -1244,46 +1284,6 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	}
 
 	/**
-	* Returns an ordered range of all the organizations that match the
-	* keywords, using the indexer. It is preferable to use this method instead
-	* of the non-indexed version whenever possible for performance reasons.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param companyId the primary key of the organization's company
-	* @param parentOrganizationId the primary key of the organization's parent
-	organization
-	* @param keywords the keywords (space separated), which may occur in the
-	organization's name, street, city, zipcode, type, region or
-	country (optionally <code>null</code>)
-	* @param params the finder parameters (optionally <code>null</code>). For
-	more information see {@link
-	com.liferay.portlet.usersadmin.util.OrganizationIndexer}
-	* @param start the lower bound of the range of organizations to return
-	* @param end the upper bound of the range of organizations to return (not
-	inclusive)
-	* @param sort the field and direction by which to sort (optionally
-	<code>null</code>)
-	* @return the matching organizations ordered by name
-	* @see com.liferay.portlet.usersadmin.util.OrganizationIndexer
-	*/
-	@Override
-	public com.liferay.portal.kernel.search.Hits search(long companyId,
-		long parentOrganizationId, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end, com.liferay.portal.kernel.search.Sort sort) {
-		return _organizationLocalService.search(companyId,
-			parentOrganizationId, keywords, params, start, end, sort);
-	}
-
-	/**
 	* Returns the number of organizations that match the keywords, type,
 	* region, and country.
 	*
@@ -1355,6 +1355,16 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portal.kernel.model.Organization> searchOrganizations(
+		long companyId, long parentOrganizationId, java.lang.String keywords,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _organizationLocalService.searchOrganizations(companyId,
+			parentOrganizationId, keywords, params, start, end, sort);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portal.kernel.model.Organization> searchOrganizations(
 		long companyId, long parentOrganizationId, java.lang.String name,
 		java.lang.String type, java.lang.String street, java.lang.String city,
 		java.lang.String zip, java.lang.String region,
@@ -1366,16 +1376,6 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 		return _organizationLocalService.searchOrganizations(companyId,
 			parentOrganizationId, name, type, street, city, zip, region,
 			country, params, andSearch, start, end, sort);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portal.kernel.model.Organization> searchOrganizations(
-		long companyId, long parentOrganizationId, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end, com.liferay.portal.kernel.search.Sort sort)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _organizationLocalService.searchOrganizations(companyId,
-			parentOrganizationId, keywords, params, start, end, sort);
 	}
 
 	/**
@@ -1486,18 +1486,6 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	}
 
 	/**
-	* Updates the organization in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param organization the organization
-	* @return the organization that was updated
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Organization updateOrganization(
-		com.liferay.portal.kernel.model.Organization organization) {
-		return _organizationLocalService.updateOrganization(organization);
-	}
-
-	/**
 	* Updates the organization.
 	*
 	* @param companyId the primary key of the organization's company
@@ -1567,6 +1555,18 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 		return _organizationLocalService.updateOrganization(companyId,
 			organizationId, parentOrganizationId, name, type, regionId,
 			countryId, statusId, comments, site, serviceContext);
+	}
+
+	/**
+	* Updates the organization in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param organization the organization
+	* @return the organization that was updated
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.Organization updateOrganization(
+		com.liferay.portal.kernel.model.Organization organization) {
+		return _organizationLocalService.updateOrganization(organization);
 	}
 
 	@Override

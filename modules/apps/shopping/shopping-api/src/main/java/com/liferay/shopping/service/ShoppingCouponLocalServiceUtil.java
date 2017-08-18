@@ -82,14 +82,14 @@ public class ShoppingCouponLocalServiceUtil {
 		return getService().createShoppingCoupon(couponId);
 	}
 
-	public static void deleteCoupon(
-		com.liferay.shopping.model.ShoppingCoupon coupon) {
-		getService().deleteCoupon(coupon);
-	}
-
 	public static void deleteCoupon(long couponId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteCoupon(couponId);
+	}
+
+	public static void deleteCoupon(
+		com.liferay.shopping.model.ShoppingCoupon coupon) {
+		getService().deleteCoupon(coupon);
 	}
 
 	public static void deleteCoupons(long groupId) {
@@ -106,17 +106,6 @@ public class ShoppingCouponLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the shopping coupon from the database. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingCoupon the shopping coupon
-	* @return the shopping coupon that was removed
-	*/
-	public static com.liferay.shopping.model.ShoppingCoupon deleteShoppingCoupon(
-		com.liferay.shopping.model.ShoppingCoupon shoppingCoupon) {
-		return getService().deleteShoppingCoupon(shoppingCoupon);
-	}
-
-	/**
 	* Deletes the shopping coupon with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param couponId the primary key of the shopping coupon
@@ -127,6 +116,17 @@ public class ShoppingCouponLocalServiceUtil {
 		long couponId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteShoppingCoupon(couponId);
+	}
+
+	/**
+	* Deletes the shopping coupon from the database. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingCoupon the shopping coupon
+	* @return the shopping coupon that was removed
+	*/
+	public static com.liferay.shopping.model.ShoppingCoupon deleteShoppingCoupon(
+		com.liferay.shopping.model.ShoppingCoupon shoppingCoupon) {
+		return getService().deleteShoppingCoupon(shoppingCoupon);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -217,15 +217,15 @@ public class ShoppingCouponLocalServiceUtil {
 	}
 
 	public static com.liferay.shopping.model.ShoppingCoupon getCoupon(
-		java.lang.String code)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCoupon(code);
-	}
-
-	public static com.liferay.shopping.model.ShoppingCoupon getCoupon(
 		long couponId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCoupon(couponId);
+	}
+
+	public static com.liferay.shopping.model.ShoppingCoupon getCoupon(
+		java.lang.String code)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCoupon(code);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {

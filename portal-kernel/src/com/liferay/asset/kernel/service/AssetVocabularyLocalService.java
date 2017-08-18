@@ -85,15 +85,15 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 	public AssetVocabulary addDefaultVocabulary(long groupId)
 		throws PortalException;
 
-	public AssetVocabulary addVocabulary(long userId, long groupId,
-		java.lang.String title, ServiceContext serviceContext)
-		throws PortalException;
-
 	@Indexable(type = IndexableType.REINDEX)
 	public AssetVocabulary addVocabulary(long userId, long groupId,
 		java.lang.String title, Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> descriptionMap,
 		java.lang.String settings, ServiceContext serviceContext)
+		throws PortalException;
+
+	public AssetVocabulary addVocabulary(long userId, long groupId,
+		java.lang.String title, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void addVocabularyResources(AssetVocabulary vocabulary,
@@ -307,7 +307,15 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetVocabulary> getGroupVocabularies(long[] groupIds);
+	public List<AssetVocabulary> getGroupsVocabularies(long[] groupIds);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetVocabulary> getGroupsVocabularies(long[] groupIds,
+		java.lang.String className);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetVocabulary> getGroupsVocabularies(long[] groupIds,
+		java.lang.String className, long classTypePK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetVocabulary> getGroupVocabularies(long groupId)
@@ -323,22 +331,14 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 		OrderByComparator<AssetVocabulary> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetVocabulary> getGroupVocabularies(long[] groupIds);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupVocabulariesCount(long[] groupIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetVocabulary getGroupVocabulary(long groupId,
 		java.lang.String name) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetVocabulary> getGroupsVocabularies(long[] groupIds);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetVocabulary> getGroupsVocabularies(long[] groupIds,
-		java.lang.String className);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetVocabulary> getGroupsVocabularies(long[] groupIds,
-		java.lang.String className, long classTypePK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

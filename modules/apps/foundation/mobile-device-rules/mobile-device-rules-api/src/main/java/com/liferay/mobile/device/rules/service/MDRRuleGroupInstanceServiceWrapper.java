@@ -37,21 +37,21 @@ public class MDRRuleGroupInstanceServiceWrapper
 	@Override
 	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance addRuleGroupInstance(
 		long groupId, java.lang.String className, long classPK,
-		long ruleGroupId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mdrRuleGroupInstanceService.addRuleGroupInstance(groupId,
-			className, classPK, ruleGroupId, serviceContext);
-	}
-
-	@Override
-	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance addRuleGroupInstance(
-		long groupId, java.lang.String className, long classPK,
 		long ruleGroupId, int priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleGroupInstanceService.addRuleGroupInstance(groupId,
 			className, classPK, ruleGroupId, priority, serviceContext);
+	}
+
+	@Override
+	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance addRuleGroupInstance(
+		long groupId, java.lang.String className, long classPK,
+		long ruleGroupId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mdrRuleGroupInstanceService.addRuleGroupInstance(groupId,
+			className, classPK, ruleGroupId, serviceContext);
 	}
 
 	@Override

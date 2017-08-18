@@ -31,6 +31,17 @@ public class UserTrackerLocalServiceWrapper implements UserTrackerLocalService,
 		_userTrackerLocalService = userTrackerLocalService;
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.UserTracker addUserTracker(
+		long companyId, long userId, java.util.Date modifiedDate,
+		java.lang.String sessionId, java.lang.String remoteAddr,
+		java.lang.String remoteHost, java.lang.String userAgent,
+		java.util.List<com.liferay.portal.kernel.model.UserTrackerPath> userTrackerPaths) {
+		return _userTrackerLocalService.addUserTracker(companyId, userId,
+			modifiedDate, sessionId, remoteAddr, remoteHost, userAgent,
+			userTrackerPaths);
+	}
+
 	/**
 	* Adds the user tracker to the database. Also notifies the appropriate model listeners.
 	*
@@ -41,17 +52,6 @@ public class UserTrackerLocalServiceWrapper implements UserTrackerLocalService,
 	public com.liferay.portal.kernel.model.UserTracker addUserTracker(
 		com.liferay.portal.kernel.model.UserTracker userTracker) {
 		return _userTrackerLocalService.addUserTracker(userTracker);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.UserTracker addUserTracker(
-		long companyId, long userId, java.util.Date modifiedDate,
-		java.lang.String sessionId, java.lang.String remoteAddr,
-		java.lang.String remoteHost, java.lang.String userAgent,
-		java.util.List<com.liferay.portal.kernel.model.UserTrackerPath> userTrackerPaths) {
-		return _userTrackerLocalService.addUserTracker(companyId, userId,
-			modifiedDate, sessionId, remoteAddr, remoteHost, userAgent,
-			userTrackerPaths);
 	}
 
 	/**
@@ -77,18 +77,6 @@ public class UserTrackerLocalServiceWrapper implements UserTrackerLocalService,
 	}
 
 	/**
-	* Deletes the user tracker from the database. Also notifies the appropriate model listeners.
-	*
-	* @param userTracker the user tracker
-	* @return the user tracker that was removed
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.UserTracker deleteUserTracker(
-		com.liferay.portal.kernel.model.UserTracker userTracker) {
-		return _userTrackerLocalService.deleteUserTracker(userTracker);
-	}
-
-	/**
 	* Deletes the user tracker with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param userTrackerId the primary key of the user tracker
@@ -100,6 +88,18 @@ public class UserTrackerLocalServiceWrapper implements UserTrackerLocalService,
 		long userTrackerId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userTrackerLocalService.deleteUserTracker(userTrackerId);
+	}
+
+	/**
+	* Deletes the user tracker from the database. Also notifies the appropriate model listeners.
+	*
+	* @param userTracker the user tracker
+	* @return the user tracker that was removed
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.UserTracker deleteUserTracker(
+		com.liferay.portal.kernel.model.UserTracker userTracker) {
+		return _userTrackerLocalService.deleteUserTracker(userTracker);
 	}
 
 	@Override

@@ -40,6 +40,15 @@ public class MBDiscussionLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.messageboards.service.impl.MBDiscussionLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.message.boards.kernel.model.MBDiscussion addDiscussion(
+		long userId, long groupId, long classNameId, long classPK,
+		long threadId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addDiscussion(userId, groupId, classNameId, classPK,
+			threadId, serviceContext);
+	}
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #addDiscussion(long, long,
@@ -53,16 +62,6 @@ public class MBDiscussionLocalServiceUtil {
 		return getService()
 				   .addDiscussion(userId, classNameId, classPK, threadId,
 			serviceContext);
-	}
-
-	public static com.liferay.message.boards.kernel.model.MBDiscussion addDiscussion(
-		long userId, long groupId, long classNameId, long classPK,
-		long threadId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addDiscussion(userId, groupId, classNameId, classPK,
-			threadId, serviceContext);
 	}
 
 	/**
@@ -88,17 +87,6 @@ public class MBDiscussionLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the message boards discussion from the database. Also notifies the appropriate model listeners.
-	*
-	* @param mbDiscussion the message boards discussion
-	* @return the message boards discussion that was removed
-	*/
-	public static com.liferay.message.boards.kernel.model.MBDiscussion deleteMBDiscussion(
-		com.liferay.message.boards.kernel.model.MBDiscussion mbDiscussion) {
-		return getService().deleteMBDiscussion(mbDiscussion);
-	}
-
-	/**
 	* Deletes the message boards discussion with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param discussionId the primary key of the message boards discussion
@@ -109,6 +97,17 @@ public class MBDiscussionLocalServiceUtil {
 		long discussionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteMBDiscussion(discussionId);
+	}
+
+	/**
+	* Deletes the message boards discussion from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mbDiscussion the message boards discussion
+	* @return the message boards discussion that was removed
+	*/
+	public static com.liferay.message.boards.kernel.model.MBDiscussion deleteMBDiscussion(
+		com.liferay.message.boards.kernel.model.MBDiscussion mbDiscussion) {
+		return getService().deleteMBDiscussion(mbDiscussion);
 	}
 
 	/**
@@ -199,13 +198,13 @@ public class MBDiscussionLocalServiceUtil {
 	}
 
 	public static com.liferay.message.boards.kernel.model.MBDiscussion fetchDiscussion(
-		java.lang.String className, long classPK) {
-		return getService().fetchDiscussion(className, classPK);
+		long discussionId) {
+		return getService().fetchDiscussion(discussionId);
 	}
 
 	public static com.liferay.message.boards.kernel.model.MBDiscussion fetchDiscussion(
-		long discussionId) {
-		return getService().fetchDiscussion(discussionId);
+		java.lang.String className, long classPK) {
+		return getService().fetchDiscussion(className, classPK);
 	}
 
 	public static com.liferay.message.boards.kernel.model.MBDiscussion fetchMBDiscussion(
@@ -235,15 +234,15 @@ public class MBDiscussionLocalServiceUtil {
 	}
 
 	public static com.liferay.message.boards.kernel.model.MBDiscussion getDiscussion(
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getDiscussion(className, classPK);
-	}
-
-	public static com.liferay.message.boards.kernel.model.MBDiscussion getDiscussion(
 		long discussionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDiscussion(discussionId);
+	}
+
+	public static com.liferay.message.boards.kernel.model.MBDiscussion getDiscussion(
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDiscussion(className, classPK);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(

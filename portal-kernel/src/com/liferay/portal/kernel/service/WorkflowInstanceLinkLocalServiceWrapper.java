@@ -32,6 +32,15 @@ public class WorkflowInstanceLinkLocalServiceWrapper
 		_workflowInstanceLinkLocalService = workflowInstanceLinkLocalService;
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.WorkflowInstanceLink addWorkflowInstanceLink(
+		long userId, long companyId, long groupId, java.lang.String className,
+		long classPK, long workflowInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _workflowInstanceLinkLocalService.addWorkflowInstanceLink(userId,
+			companyId, groupId, className, classPK, workflowInstanceId);
+	}
+
 	/**
 	* Adds the workflow instance link to the database. Also notifies the appropriate model listeners.
 	*
@@ -42,15 +51,6 @@ public class WorkflowInstanceLinkLocalServiceWrapper
 	public com.liferay.portal.kernel.model.WorkflowInstanceLink addWorkflowInstanceLink(
 		com.liferay.portal.kernel.model.WorkflowInstanceLink workflowInstanceLink) {
 		return _workflowInstanceLinkLocalService.addWorkflowInstanceLink(workflowInstanceLink);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.WorkflowInstanceLink addWorkflowInstanceLink(
-		long userId, long companyId, long groupId, java.lang.String className,
-		long classPK, long workflowInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _workflowInstanceLinkLocalService.addWorkflowInstanceLink(userId,
-			companyId, groupId, className, classPK, workflowInstanceId);
 	}
 
 	/**
@@ -76,20 +76,6 @@ public class WorkflowInstanceLinkLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the workflow instance link from the database. Also notifies the appropriate model listeners.
-	*
-	* @param workflowInstanceLink the workflow instance link
-	* @return the workflow instance link that was removed
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.WorkflowInstanceLink deleteWorkflowInstanceLink(
-		com.liferay.portal.kernel.model.WorkflowInstanceLink workflowInstanceLink)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(workflowInstanceLink);
-	}
-
-	/**
 	* Deletes the workflow instance link with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param workflowInstanceLinkId the primary key of the workflow instance link
@@ -109,6 +95,20 @@ public class WorkflowInstanceLinkLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(companyId,
 			groupId, className, classPK);
+	}
+
+	/**
+	* Deletes the workflow instance link from the database. Also notifies the appropriate model listeners.
+	*
+	* @param workflowInstanceLink the workflow instance link
+	* @return the workflow instance link that was removed
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.WorkflowInstanceLink deleteWorkflowInstanceLink(
+		com.liferay.portal.kernel.model.WorkflowInstanceLink workflowInstanceLink)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(workflowInstanceLink);
 	}
 
 	@Override

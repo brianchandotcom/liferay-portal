@@ -86,15 +86,6 @@ public interface StatusLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the status from the database. Also notifies the appropriate model listeners.
-	*
-	* @param status the status
-	* @return the status that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public Status deleteStatus(Status status);
-
-	/**
 	* Deletes the status with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param statusId the primary key of the status
@@ -103,6 +94,15 @@ public interface StatusLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public Status deleteStatus(long statusId) throws PortalException;
+
+	/**
+	* Deletes the status from the database. Also notifies the appropriate model listeners.
+	*
+	* @param status the status
+	* @return the status that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public Status deleteStatus(Status status);
 
 	public DynamicQuery dynamicQuery();
 
@@ -193,11 +193,11 @@ public interface StatusLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object[]> getSocialStatuses(long userId, int[] types,
+	public List<java.lang.Object[]> getSocialStatuses(long userId, int type,
 		long modifiedDate, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object[]> getSocialStatuses(long userId, int type,
+	public List<java.lang.Object[]> getSocialStatuses(long userId, int[] types,
 		long modifiedDate, int start, int end);
 
 	/**
@@ -235,6 +235,12 @@ public interface StatusLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Status getUserStatus(long userId);
 
+	public Status updateStatus(long userId, long modifiedDate);
+
+	public Status updateStatus(long userId, long modifiedDate, int online,
+		int awake, java.lang.String activePanelIds, java.lang.String message,
+		int playSound);
+
 	/**
 	* Updates the status in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -243,10 +249,4 @@ public interface StatusLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public Status updateStatus(Status status);
-
-	public Status updateStatus(long userId, long modifiedDate);
-
-	public Status updateStatus(long userId, long modifiedDate, int online,
-		int awake, java.lang.String activePanelIds, java.lang.String message,
-		int playSound);
 }

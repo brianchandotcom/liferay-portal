@@ -73,17 +73,6 @@ public class UserTrackerPathLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the user tracker path from the database. Also notifies the appropriate model listeners.
-	*
-	* @param userTrackerPath the user tracker path
-	* @return the user tracker path that was removed
-	*/
-	public static com.liferay.portal.kernel.model.UserTrackerPath deleteUserTrackerPath(
-		com.liferay.portal.kernel.model.UserTrackerPath userTrackerPath) {
-		return getService().deleteUserTrackerPath(userTrackerPath);
-	}
-
-	/**
 	* Deletes the user tracker path with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param userTrackerPathId the primary key of the user tracker path
@@ -94,6 +83,17 @@ public class UserTrackerPathLocalServiceUtil {
 		long userTrackerPathId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteUserTrackerPath(userTrackerPathId);
+	}
+
+	/**
+	* Deletes the user tracker path from the database. Also notifies the appropriate model listeners.
+	*
+	* @param userTrackerPath the user tracker path
+	* @return the user tracker path that was removed
+	*/
+	public static com.liferay.portal.kernel.model.UserTrackerPath deleteUserTrackerPath(
+		com.liferay.portal.kernel.model.UserTrackerPath userTrackerPath) {
+		return getService().deleteUserTrackerPath(userTrackerPath);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {

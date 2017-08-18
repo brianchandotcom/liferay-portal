@@ -31,15 +31,15 @@ public class TasksEntryLocalServiceClp implements TasksEntryLocalService {
 		_methodName0 = "addTasksEntry";
 
 		_methodParameterTypes0 = new String[] {
-				"com.liferay.tasks.model.TasksEntry"
+				"long", "java.lang.String", "int", "long", "int", "int", "int",
+				"int", "int", "boolean",
+				"com.liferay.portal.kernel.service.ServiceContext"
 			};
 
 		_methodName1 = "addTasksEntry";
 
 		_methodParameterTypes1 = new String[] {
-				"long", "java.lang.String", "int", "long", "int", "int", "int",
-				"int", "int", "boolean",
-				"com.liferay.portal.kernel.service.ServiceContext"
+				"com.liferay.tasks.model.TasksEntry"
 			};
 
 		_methodName2 = "createTasksEntry";
@@ -54,13 +54,13 @@ public class TasksEntryLocalServiceClp implements TasksEntryLocalService {
 
 		_methodName4 = "deleteTasksEntry";
 
-		_methodParameterTypes4 = new String[] {
-				"com.liferay.tasks.model.TasksEntry"
-			};
+		_methodParameterTypes4 = new String[] { "long" };
 
 		_methodName5 = "deleteTasksEntry";
 
-		_methodParameterTypes5 = new String[] { "long" };
+		_methodParameterTypes5 = new String[] {
+				"com.liferay.tasks.model.TasksEntry"
+			};
 
 		_methodName6 = "dynamicQuery";
 
@@ -209,15 +209,15 @@ public class TasksEntryLocalServiceClp implements TasksEntryLocalService {
 		_methodName38 = "updateTasksEntry";
 
 		_methodParameterTypes38 = new String[] {
-				"com.liferay.tasks.model.TasksEntry"
+				"long", "java.lang.String", "int", "long", "long", "int", "int",
+				"int", "int", "int", "boolean", "int",
+				"com.liferay.portal.kernel.service.ServiceContext"
 			};
 
 		_methodName39 = "updateTasksEntry";
 
 		_methodParameterTypes39 = new String[] {
-				"long", "java.lang.String", "int", "long", "long", "int", "int",
-				"int", "int", "int", "boolean", "int",
-				"com.liferay.portal.kernel.service.ServiceContext"
+				"com.liferay.tasks.model.TasksEntry"
 			};
 
 		_methodName40 = "updateTasksEntryStatus";
@@ -226,31 +226,6 @@ public class TasksEntryLocalServiceClp implements TasksEntryLocalService {
 				"long", "long", "int",
 				"com.liferay.portal.kernel.service.ServiceContext"
 			};
-	}
-
-	@Override
-	public com.liferay.tasks.model.TasksEntry addTasksEntry(
-		com.liferay.tasks.model.TasksEntry tasksEntry) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName0,
-					_methodParameterTypes0,
-					new Object[] { ClpSerializer.translateInput(tasksEntry) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (com.liferay.tasks.model.TasksEntry)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
@@ -263,8 +238,8 @@ public class TasksEntryLocalServiceClp implements TasksEntryLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName1,
-					_methodParameterTypes1,
+			returnObj = _invokableLocalService.invokeMethod(_methodName0,
+					_methodParameterTypes0,
 					new Object[] {
 						userId,
 						
@@ -295,6 +270,31 @@ public class TasksEntryLocalServiceClp implements TasksEntryLocalService {
 			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
 				throw (com.liferay.portal.kernel.exception.PortalException)t;
 			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.tasks.model.TasksEntry)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.liferay.tasks.model.TasksEntry addTasksEntry(
+		com.liferay.tasks.model.TasksEntry tasksEntry) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName1,
+					_methodParameterTypes1,
+					new Object[] { ClpSerializer.translateInput(tasksEntry) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
@@ -364,14 +364,13 @@ public class TasksEntryLocalServiceClp implements TasksEntryLocalService {
 
 	@Override
 	public com.liferay.tasks.model.TasksEntry deleteTasksEntry(
-		com.liferay.tasks.model.TasksEntry tasksEntry)
+		long tasksEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName4,
-					_methodParameterTypes4,
-					new Object[] { ClpSerializer.translateInput(tasksEntry) });
+					_methodParameterTypes4, new Object[] { tasksEntryId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -394,13 +393,14 @@ public class TasksEntryLocalServiceClp implements TasksEntryLocalService {
 
 	@Override
 	public com.liferay.tasks.model.TasksEntry deleteTasksEntry(
-		long tasksEntryId)
+		com.liferay.tasks.model.TasksEntry tasksEntry)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName5,
-					_methodParameterTypes5, new Object[] { tasksEntryId });
+					_methodParameterTypes5,
+					new Object[] { ClpSerializer.translateInput(tasksEntry) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1256,31 +1256,6 @@ public class TasksEntryLocalServiceClp implements TasksEntryLocalService {
 
 	@Override
 	public com.liferay.tasks.model.TasksEntry updateTasksEntry(
-		com.liferay.tasks.model.TasksEntry tasksEntry) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName38,
-					_methodParameterTypes38,
-					new Object[] { ClpSerializer.translateInput(tasksEntry) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (com.liferay.tasks.model.TasksEntry)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public com.liferay.tasks.model.TasksEntry updateTasksEntry(
 		long tasksEntryId, java.lang.String title, int priority,
 		long assigneeUserId, long resolverUserId, int dueDateMonth,
 		int dueDateDay, int dueDateYear, int dueDateHour, int dueDateMinute,
@@ -1290,8 +1265,8 @@ public class TasksEntryLocalServiceClp implements TasksEntryLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName39,
-					_methodParameterTypes39,
+			returnObj = _invokableLocalService.invokeMethod(_methodName38,
+					_methodParameterTypes38,
 					new Object[] {
 						tasksEntryId,
 						
@@ -1326,6 +1301,31 @@ public class TasksEntryLocalServiceClp implements TasksEntryLocalService {
 			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
 				throw (com.liferay.portal.kernel.exception.PortalException)t;
 			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.tasks.model.TasksEntry)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.liferay.tasks.model.TasksEntry updateTasksEntry(
+		com.liferay.tasks.model.TasksEntry tasksEntry) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName39,
+					_methodParameterTypes39,
+					new Object[] { ClpSerializer.translateInput(tasksEntry) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;

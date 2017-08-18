@@ -41,14 +41,6 @@ public class AssetCategoryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.asset.service.impl.AssetCategoryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.asset.kernel.model.AssetCategory addCategory(
-		long groupId, java.lang.String title, long vocabularyId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addCategory(groupId, title, vocabularyId, serviceContext);
-	}
-
-	public static com.liferay.asset.kernel.model.AssetCategory addCategory(
 		long groupId, long parentCategoryId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -58,6 +50,14 @@ public class AssetCategoryServiceUtil {
 		return getService()
 				   .addCategory(groupId, parentCategoryId, titleMap,
 			descriptionMap, vocabularyId, categoryProperties, serviceContext);
+	}
+
+	public static com.liferay.asset.kernel.model.AssetCategory addCategory(
+		long groupId, java.lang.String title, long vocabularyId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCategory(groupId, title, vocabularyId, serviceContext);
 	}
 
 	public static void deleteCategories(long[] categoryIds)
@@ -135,15 +135,6 @@ public class AssetCategoryServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.asset.kernel.model.AssetCategory> getVocabularyCategories(
-		long groupId, java.lang.String name, long vocabularyId, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.kernel.model.AssetCategory> obc) {
-		return getService()
-				   .getVocabularyCategories(groupId, name, vocabularyId, start,
-			end, obc);
-	}
-
-	public static java.util.List<com.liferay.asset.kernel.model.AssetCategory> getVocabularyCategories(
 		long parentCategoryId, long vocabularyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.kernel.model.AssetCategory> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -161,10 +152,13 @@ public class AssetCategoryServiceUtil {
 			vocabularyId, start, end, obc);
 	}
 
-	public static int getVocabularyCategoriesCount(long groupId,
-		java.lang.String name, long vocabularyId) {
+	public static java.util.List<com.liferay.asset.kernel.model.AssetCategory> getVocabularyCategories(
+		long groupId, java.lang.String name, long vocabularyId, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.kernel.model.AssetCategory> obc) {
 		return getService()
-				   .getVocabularyCategoriesCount(groupId, name, vocabularyId);
+				   .getVocabularyCategories(groupId, name, vocabularyId, start,
+			end, obc);
 	}
 
 	public static int getVocabularyCategoriesCount(long groupId,
@@ -177,6 +171,12 @@ public class AssetCategoryServiceUtil {
 		return getService()
 				   .getVocabularyCategoriesCount(groupId, parentCategory,
 			vocabularyId);
+	}
+
+	public static int getVocabularyCategoriesCount(long groupId,
+		java.lang.String name, long vocabularyId) {
+		return getService()
+				   .getVocabularyCategoriesCount(groupId, name, vocabularyId);
 	}
 
 	public static com.liferay.asset.kernel.model.AssetCategoryDisplay getVocabularyCategoriesDisplay(
@@ -220,6 +220,14 @@ public class AssetCategoryServiceUtil {
 			serviceContext);
 	}
 
+	public static java.util.List<com.liferay.asset.kernel.model.AssetCategory> search(
+		long groupId, java.lang.String keywords, long vocabularyId, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.kernel.model.AssetCategory> obc) {
+		return getService()
+				   .search(groupId, keywords, vocabularyId, start, end, obc);
+	}
+
 	public static com.liferay.portal.kernel.json.JSONArray search(
 		long groupId, java.lang.String name,
 		java.lang.String[] categoryProperties, int start, int end)
@@ -234,28 +242,11 @@ public class AssetCategoryServiceUtil {
 		return getService().search(groupIds, name, vocabularyIds, start, end);
 	}
 
-	public static java.util.List<com.liferay.asset.kernel.model.AssetCategory> search(
-		long groupId, java.lang.String keywords, long vocabularyId, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.kernel.model.AssetCategory> obc) {
-		return getService()
-				   .search(groupId, keywords, vocabularyId, start, end, obc);
-	}
-
 	public static com.liferay.asset.kernel.model.AssetCategoryDisplay searchCategoriesDisplay(
 		long groupId, java.lang.String title, long vocabularyId, int start,
 		int end) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .searchCategoriesDisplay(groupId, title, vocabularyId,
-			start, end);
-	}
-
-	public static com.liferay.asset.kernel.model.AssetCategoryDisplay searchCategoriesDisplay(
-		long[] groupIds, java.lang.String title, long[] vocabularyIds,
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .searchCategoriesDisplay(groupIds, title, vocabularyIds,
 			start, end);
 	}
 
@@ -269,15 +260,6 @@ public class AssetCategoryServiceUtil {
 	}
 
 	public static com.liferay.asset.kernel.model.AssetCategoryDisplay searchCategoriesDisplay(
-		long[] groupIds, java.lang.String title, long[] parentCategoryIds,
-		long[] vocabularyIds, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .searchCategoriesDisplay(groupIds, title, parentCategoryIds,
-			vocabularyIds, start, end);
-	}
-
-	public static com.liferay.asset.kernel.model.AssetCategoryDisplay searchCategoriesDisplay(
 		long groupId, java.lang.String title, long vocabularyId,
 		long parentCategoryId, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
@@ -285,6 +267,24 @@ public class AssetCategoryServiceUtil {
 		return getService()
 				   .searchCategoriesDisplay(groupId, title, vocabularyId,
 			parentCategoryId, start, end, sort);
+	}
+
+	public static com.liferay.asset.kernel.model.AssetCategoryDisplay searchCategoriesDisplay(
+		long[] groupIds, java.lang.String title, long[] vocabularyIds,
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchCategoriesDisplay(groupIds, title, vocabularyIds,
+			start, end);
+	}
+
+	public static com.liferay.asset.kernel.model.AssetCategoryDisplay searchCategoriesDisplay(
+		long[] groupIds, java.lang.String title, long[] parentCategoryIds,
+		long[] vocabularyIds, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchCategoriesDisplay(groupIds, title, parentCategoryIds,
+			vocabularyIds, start, end);
 	}
 
 	public static com.liferay.asset.kernel.model.AssetCategoryDisplay searchCategoriesDisplay(

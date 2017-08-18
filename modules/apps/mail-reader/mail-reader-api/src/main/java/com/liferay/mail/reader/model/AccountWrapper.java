@@ -512,16 +512,6 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	}
 
 	/**
-	* Returns the use signature of this account.
-	*
-	* @return the use signature of this account
-	*/
-	@Override
-	public boolean getUseSignature() {
-		return _account.getUseSignature();
-	}
-
-	/**
 	* Returns the user ID of this account.
 	*
 	* @return the user ID of this account
@@ -549,6 +539,16 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	@Override
 	public java.lang.String getUserUuid() {
 		return _account.getUserUuid();
+	}
+
+	/**
+	* Returns the use signature of this account.
+	*
+	* @return the use signature of this account
+	*/
+	@Override
+	public boolean getUseSignature() {
+		return _account.getUseSignature();
 	}
 
 	@Override
@@ -692,14 +692,14 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_account.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_account.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_account.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -903,16 +903,6 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	}
 
 	/**
-	* Sets whether this account is use signature.
-	*
-	* @param useSignature the use signature of this account
-	*/
-	@Override
-	public void setUseSignature(boolean useSignature) {
-		_account.setUseSignature(useSignature);
-	}
-
-	/**
 	* Sets the user ID of this account.
 	*
 	* @param userId the user ID of this account
@@ -940,6 +930,16 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_account.setUserUuid(userUuid);
+	}
+
+	/**
+	* Sets whether this account is use signature.
+	*
+	* @param useSignature the use signature of this account
+	*/
+	@Override
+	public void setUseSignature(boolean useSignature) {
+		_account.setUseSignature(useSignature);
 	}
 
 	@Override

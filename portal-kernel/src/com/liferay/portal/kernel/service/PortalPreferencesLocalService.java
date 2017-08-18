@@ -59,6 +59,8 @@ public interface PortalPreferencesLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PortalPreferencesLocalServiceUtil} to access the portal preferences local service. Add custom service methods to {@link com.liferay.portal.service.impl.PortalPreferencesLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public PortalPreferences addPortalPreferences(long ownerId, int ownerType,
+		java.lang.String defaultPreferences);
 
 	/**
 	* Adds the portal preferences to the database. Also notifies the appropriate model listeners.
@@ -69,9 +71,6 @@ public interface PortalPreferencesLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public PortalPreferences addPortalPreferences(
 		PortalPreferences portalPreferences);
-
-	public PortalPreferences addPortalPreferences(long ownerId, int ownerType,
-		java.lang.String defaultPreferences);
 
 	/**
 	* Creates a new portal preferences with the primary key. Does not add the portal preferences to the database.
@@ -89,16 +88,6 @@ public interface PortalPreferencesLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the portal preferences from the database. Also notifies the appropriate model listeners.
-	*
-	* @param portalPreferences the portal preferences
-	* @return the portal preferences that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public PortalPreferences deletePortalPreferences(
-		PortalPreferences portalPreferences);
-
-	/**
 	* Deletes the portal preferences with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param portalPreferencesId the primary key of the portal preferences
@@ -108,6 +97,16 @@ public interface PortalPreferencesLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public PortalPreferences deletePortalPreferences(long portalPreferencesId)
 		throws PortalException;
+
+	/**
+	* Deletes the portal preferences from the database. Also notifies the appropriate model listeners.
+	*
+	* @param portalPreferences the portal preferences
+	* @return the portal preferences that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public PortalPreferences deletePortalPreferences(
+		PortalPreferences portalPreferences);
 
 	public DynamicQuery dynamicQuery();
 

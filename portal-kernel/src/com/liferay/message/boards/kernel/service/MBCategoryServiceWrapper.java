@@ -34,6 +34,16 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 
 	@Override
 	public com.liferay.message.boards.kernel.model.MBCategory addCategory(
+		long userId, long parentCategoryId, java.lang.String name,
+		java.lang.String description,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbCategoryService.addCategory(userId, parentCategoryId, name,
+			description, serviceContext);
+	}
+
+	@Override
+	public com.liferay.message.boards.kernel.model.MBCategory addCategory(
 		long parentCategoryId, java.lang.String name,
 		java.lang.String description, java.lang.String displayStyle,
 		java.lang.String emailAddress, java.lang.String inProtocol,
@@ -52,16 +62,6 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 			outEmailAddress, outCustom, outServerName, outServerPort,
 			outUseSSL, outUserName, outPassword, mailingListActive,
 			allowAnonymousEmail, serviceContext);
-	}
-
-	@Override
-	public com.liferay.message.boards.kernel.model.MBCategory addCategory(
-		long userId, long parentCategoryId, java.lang.String name,
-		java.lang.String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbCategoryService.addCategory(userId, parentCategoryId, name,
-			description, serviceContext);
 	}
 
 	@Override
@@ -90,23 +90,9 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 
 	@Override
 	public java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
-		long groupId, long[] parentCategoryIds, int start, int end) {
-		return _mbCategoryService.getCategories(groupId, parentCategoryIds,
-			start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
 		long groupId, long parentCategoryId, int start, int end) {
 		return _mbCategoryService.getCategories(groupId, parentCategoryId,
 			start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
-		long groupId, long[] parentCategoryIds, int status, int start, int end) {
-		return _mbCategoryService.getCategories(groupId, parentCategoryIds,
-			status, start, end);
 	}
 
 	@Override
@@ -126,6 +112,20 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 
 	@Override
 	public java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+		long groupId, long[] parentCategoryIds, int start, int end) {
+		return _mbCategoryService.getCategories(groupId, parentCategoryIds,
+			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+		long groupId, long[] parentCategoryIds, int status, int start, int end) {
+		return _mbCategoryService.getCategories(groupId, parentCategoryIds,
+			status, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
 		long groupId, long[] excludedCategoryIds, long[] parentCategoryIds,
 		int status, int start, int end) {
 		return _mbCategoryService.getCategories(groupId, excludedCategoryIds,
@@ -136,14 +136,6 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 	public java.util.List<java.lang.Object> getCategoriesAndThreads(
 		long groupId, long categoryId) {
 		return _mbCategoryService.getCategoriesAndThreads(groupId, categoryId);
-	}
-
-	@Override
-	public java.util.List<java.lang.Object> getCategoriesAndThreads(
-		long groupId, long categoryId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
-		return _mbCategoryService.getCategoriesAndThreads(groupId, categoryId,
-			queryDefinition);
 	}
 
 	@Override
@@ -169,16 +161,17 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 	}
 
 	@Override
-	public int getCategoriesAndThreadsCount(long groupId, long categoryId) {
-		return _mbCategoryService.getCategoriesAndThreadsCount(groupId,
-			categoryId);
+	public java.util.List<java.lang.Object> getCategoriesAndThreads(
+		long groupId, long categoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
+		return _mbCategoryService.getCategoriesAndThreads(groupId, categoryId,
+			queryDefinition);
 	}
 
 	@Override
-	public int getCategoriesAndThreadsCount(long groupId, long categoryId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
+	public int getCategoriesAndThreadsCount(long groupId, long categoryId) {
 		return _mbCategoryService.getCategoriesAndThreadsCount(groupId,
-			categoryId, queryDefinition);
+			categoryId);
 	}
 
 	@Override
@@ -189,8 +182,10 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 	}
 
 	@Override
-	public int getCategoriesCount(long groupId, long[] parentCategoryIds) {
-		return _mbCategoryService.getCategoriesCount(groupId, parentCategoryIds);
+	public int getCategoriesAndThreadsCount(long groupId, long categoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
+		return _mbCategoryService.getCategoriesAndThreadsCount(groupId,
+			categoryId, queryDefinition);
 	}
 
 	@Override
@@ -206,6 +201,18 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 	}
 
 	@Override
+	public int getCategoriesCount(long groupId, long excludedCategoryId,
+		long parentCategoryId, int status) {
+		return _mbCategoryService.getCategoriesCount(groupId,
+			excludedCategoryId, parentCategoryId, status);
+	}
+
+	@Override
+	public int getCategoriesCount(long groupId, long[] parentCategoryIds) {
+		return _mbCategoryService.getCategoriesCount(groupId, parentCategoryIds);
+	}
+
+	@Override
 	public int getCategoriesCount(long groupId, long[] parentCategoryIds,
 		int status) {
 		return _mbCategoryService.getCategoriesCount(groupId,
@@ -217,13 +224,6 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 		long[] parentCategoryIds, int status) {
 		return _mbCategoryService.getCategoriesCount(groupId,
 			excludedCategoryIds, parentCategoryIds, status);
-	}
-
-	@Override
-	public int getCategoriesCount(long groupId, long excludedCategoryId,
-		long parentCategoryId, int status) {
-		return _mbCategoryService.getCategoriesCount(groupId,
-			excludedCategoryId, parentCategoryId, status);
 	}
 
 	@Override

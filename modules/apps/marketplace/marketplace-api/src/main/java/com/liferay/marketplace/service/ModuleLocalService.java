@@ -62,19 +62,6 @@ public interface ModuleLocalService extends BaseLocalService,
 	 */
 
 	/**
-	* Adds the module to the database. Also notifies the appropriate model listeners.
-	*
-	* @param module the module
-	* @return the module that was added
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public Module addModule(Module module);
-
-	public Module addModule(long appId, java.lang.String bundleSymbolicName,
-		java.lang.String bundleVersion, java.lang.String contextName)
-		throws PortalException;
-
-	/**
 	* @deprecated As of 1.1.0, replaced by {@link #addModule(long, String,
 	String, String)}
 	*/
@@ -82,6 +69,19 @@ public interface ModuleLocalService extends BaseLocalService,
 	public Module addModule(long userId, long appId,
 		java.lang.String bundleSymbolicName, java.lang.String bundleVersion,
 		java.lang.String contextName) throws PortalException;
+
+	public Module addModule(long appId, java.lang.String bundleSymbolicName,
+		java.lang.String bundleVersion, java.lang.String contextName)
+		throws PortalException;
+
+	/**
+	* Adds the module to the database. Also notifies the appropriate model listeners.
+	*
+	* @param module the module
+	* @return the module that was added
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public Module addModule(Module module);
 
 	/**
 	* Creates a new module with the primary key. Does not add the module to the database.
@@ -92,15 +92,6 @@ public interface ModuleLocalService extends BaseLocalService,
 	public Module createModule(long moduleId);
 
 	/**
-	* Deletes the module from the database. Also notifies the appropriate model listeners.
-	*
-	* @param module the module
-	* @return the module that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public Module deleteModule(Module module);
-
-	/**
 	* Deletes the module with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param moduleId the primary key of the module
@@ -109,6 +100,15 @@ public interface ModuleLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public Module deleteModule(long moduleId) throws PortalException;
+
+	/**
+	* Deletes the module from the database. Also notifies the appropriate model listeners.
+	*
+	* @param module the module
+	* @return the module that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public Module deleteModule(Module module);
 
 	public void deleteModules(long appId);
 

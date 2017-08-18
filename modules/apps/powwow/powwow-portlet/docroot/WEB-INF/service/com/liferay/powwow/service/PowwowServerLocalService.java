@@ -62,6 +62,10 @@ public interface PowwowServerLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PowwowServerLocalServiceUtil} to access the powwow server local service. Add custom service methods to {@link com.liferay.powwow.service.impl.PowwowServerLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public PowwowServer addPowwowServer(long userId, java.lang.String name,
+		java.lang.String providerType, java.lang.String url,
+		java.lang.String apiKey, java.lang.String secret,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the powwow server to the database. Also notifies the appropriate model listeners.
@@ -71,11 +75,6 @@ public interface PowwowServerLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public PowwowServer addPowwowServer(PowwowServer powwowServer);
-
-	public PowwowServer addPowwowServer(long userId, java.lang.String name,
-		java.lang.String providerType, java.lang.String url,
-		java.lang.String apiKey, java.lang.String secret,
-		ServiceContext serviceContext) throws PortalException;
 
 	public void checkPowwowServers();
 
@@ -95,15 +94,6 @@ public interface PowwowServerLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the powwow server from the database. Also notifies the appropriate model listeners.
-	*
-	* @param powwowServer the powwow server
-	* @return the powwow server that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public PowwowServer deletePowwowServer(PowwowServer powwowServer);
-
-	/**
 	* Deletes the powwow server with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param powwowServerId the primary key of the powwow server
@@ -113,6 +103,15 @@ public interface PowwowServerLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public PowwowServer deletePowwowServer(long powwowServerId)
 		throws PortalException;
+
+	/**
+	* Deletes the powwow server from the database. Also notifies the appropriate model listeners.
+	*
+	* @param powwowServer the powwow server
+	* @return the powwow server that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public PowwowServer deletePowwowServer(PowwowServer powwowServer);
 
 	public DynamicQuery dynamicQuery();
 
@@ -244,6 +243,11 @@ public interface PowwowServerLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
+	public PowwowServer updatePowwowServer(long powwowServerId,
+		java.lang.String name, java.lang.String providerType,
+		java.lang.String url, java.lang.String apiKey, java.lang.String secret,
+		ServiceContext serviceContext) throws PortalException;
+
 	/**
 	* Updates the powwow server in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -252,9 +256,4 @@ public interface PowwowServerLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public PowwowServer updatePowwowServer(PowwowServer powwowServer);
-
-	public PowwowServer updatePowwowServer(long powwowServerId,
-		java.lang.String name, java.lang.String providerType,
-		java.lang.String url, java.lang.String apiKey, java.lang.String secret,
-		ServiceContext serviceContext) throws PortalException;
 }

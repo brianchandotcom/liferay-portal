@@ -67,6 +67,14 @@ public interface WSRPConsumerPortletLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WSRPConsumerPortletLocalServiceUtil} to access the wsrp consumer portlet local service. Add custom service methods to {@link com.liferay.wsrp.service.impl.WSRPConsumerPortletLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public WSRPConsumerPortlet addWSRPConsumerPortlet(long wsrpConsumerId,
+		java.lang.String name, java.lang.String portletHandle,
+		ServiceContext serviceContext) throws PortalException;
+
+	public WSRPConsumerPortlet addWSRPConsumerPortlet(
+		java.lang.String wsrpConsumerUuid, java.lang.String name,
+		java.lang.String portletHandle, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Adds the wsrp consumer portlet to the database. Also notifies the appropriate model listeners.
@@ -77,15 +85,6 @@ public interface WSRPConsumerPortletLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public WSRPConsumerPortlet addWSRPConsumerPortlet(
 		WSRPConsumerPortlet wsrpConsumerPortlet);
-
-	public WSRPConsumerPortlet addWSRPConsumerPortlet(
-		java.lang.String wsrpConsumerUuid, java.lang.String name,
-		java.lang.String portletHandle, ServiceContext serviceContext)
-		throws PortalException;
-
-	public WSRPConsumerPortlet addWSRPConsumerPortlet(long wsrpConsumerId,
-		java.lang.String name, java.lang.String portletHandle,
-		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new wsrp consumer portlet with the primary key. Does not add the wsrp consumer portlet to the database.
@@ -104,6 +103,20 @@ public interface WSRPConsumerPortletLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
+	* Deletes the wsrp consumer portlet with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param wsrpConsumerPortletId the primary key of the wsrp consumer portlet
+	* @return the wsrp consumer portlet that was removed
+	* @throws PortalException if a wsrp consumer portlet with the primary key could not be found
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public WSRPConsumerPortlet deleteWSRPConsumerPortlet(
+		long wsrpConsumerPortletId) throws PortalException;
+
+	public void deleteWSRPConsumerPortlet(
+		java.lang.String wsrpConsumerPortletUuid) throws PortalException;
+
+	/**
 	* Deletes the wsrp consumer portlet from the database. Also notifies the appropriate model listeners.
 	*
 	* @param wsrpConsumerPortlet the wsrp consumer portlet
@@ -114,20 +127,6 @@ public interface WSRPConsumerPortletLocalService extends BaseLocalService,
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public WSRPConsumerPortlet deleteWSRPConsumerPortlet(
 		WSRPConsumerPortlet wsrpConsumerPortlet) throws PortalException;
-
-	public void deleteWSRPConsumerPortlet(
-		java.lang.String wsrpConsumerPortletUuid) throws PortalException;
-
-	/**
-	* Deletes the wsrp consumer portlet with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param wsrpConsumerPortletId the primary key of the wsrp consumer portlet
-	* @return the wsrp consumer portlet that was removed
-	* @throws PortalException if a wsrp consumer portlet with the primary key could not be found
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public WSRPConsumerPortlet deleteWSRPConsumerPortlet(
-		long wsrpConsumerPortletId) throws PortalException;
 
 	public void deleteWSRPConsumerPortlets(long wsrpConsumerId)
 		throws PortalException;
@@ -234,10 +233,6 @@ public interface WSRPConsumerPortletLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WSRPConsumerPortlet getWSRPConsumerPortlet(
-		java.lang.String wsrpConsumerPortletUuid) throws PortalException;
-
 	/**
 	* Returns the wsrp consumer portlet with the primary key.
 	*
@@ -252,6 +247,10 @@ public interface WSRPConsumerPortletLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WSRPConsumerPortlet getWSRPConsumerPortlet(long wsrpConsumerId,
 		java.lang.String portletHandle) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WSRPConsumerPortlet getWSRPConsumerPortlet(
+		java.lang.String wsrpConsumerPortletUuid) throws PortalException;
 
 	/**
 	* Returns the wsrp consumer portlet with the matching UUID and company.
@@ -308,6 +307,10 @@ public interface WSRPConsumerPortletLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void initWSRPConsumerPortlets();
 
+	public WSRPConsumerPortlet updateWSRPConsumerPortlet(
+		long wsrpConsumerPortletId, java.lang.String name)
+		throws PortalException;
+
 	/**
 	* Updates the wsrp consumer portlet in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -317,8 +320,4 @@ public interface WSRPConsumerPortletLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public WSRPConsumerPortlet updateWSRPConsumerPortlet(
 		WSRPConsumerPortlet wsrpConsumerPortlet);
-
-	public WSRPConsumerPortlet updateWSRPConsumerPortlet(
-		long wsrpConsumerPortletId, java.lang.String name)
-		throws PortalException;
 }

@@ -33,18 +33,6 @@ public class OAuthTokenLocalServiceWrapper implements OAuthTokenLocalService,
 		_oAuthTokenLocalService = oAuthTokenLocalService;
 	}
 
-	/**
-	* Adds the o auth token to the database. Also notifies the appropriate model listeners.
-	*
-	* @param oAuthToken the o auth token
-	* @return the o auth token that was added
-	*/
-	@Override
-	public com.liferay.opensocial.model.OAuthToken addOAuthToken(
-		com.liferay.opensocial.model.OAuthToken oAuthToken) {
-		return _oAuthTokenLocalService.addOAuthToken(oAuthToken);
-	}
-
 	@Override
 	public com.liferay.opensocial.model.OAuthToken addOAuthToken(long userId,
 		java.lang.String gadgetKey, java.lang.String serviceName,
@@ -58,6 +46,18 @@ public class OAuthTokenLocalServiceWrapper implements OAuthTokenLocalService,
 	}
 
 	/**
+	* Adds the o auth token to the database. Also notifies the appropriate model listeners.
+	*
+	* @param oAuthToken the o auth token
+	* @return the o auth token that was added
+	*/
+	@Override
+	public com.liferay.opensocial.model.OAuthToken addOAuthToken(
+		com.liferay.opensocial.model.OAuthToken oAuthToken) {
+		return _oAuthTokenLocalService.addOAuthToken(oAuthToken);
+	}
+
+	/**
 	* Creates a new o auth token with the primary key. Does not add the o auth token to the database.
 	*
 	* @param oAuthTokenId the primary key for the new o auth token
@@ -67,18 +67,6 @@ public class OAuthTokenLocalServiceWrapper implements OAuthTokenLocalService,
 	public com.liferay.opensocial.model.OAuthToken createOAuthToken(
 		long oAuthTokenId) {
 		return _oAuthTokenLocalService.createOAuthToken(oAuthTokenId);
-	}
-
-	/**
-	* Deletes the o auth token from the database. Also notifies the appropriate model listeners.
-	*
-	* @param oAuthToken the o auth token
-	* @return the o auth token that was removed
-	*/
-	@Override
-	public com.liferay.opensocial.model.OAuthToken deleteOAuthToken(
-		com.liferay.opensocial.model.OAuthToken oAuthToken) {
-		return _oAuthTokenLocalService.deleteOAuthToken(oAuthToken);
 	}
 
 	/**
@@ -101,6 +89,18 @@ public class OAuthTokenLocalServiceWrapper implements OAuthTokenLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_oAuthTokenLocalService.deleteOAuthToken(userId, gadgetKey,
 			serviceName, moduleId, tokenName);
+	}
+
+	/**
+	* Deletes the o auth token from the database. Also notifies the appropriate model listeners.
+	*
+	* @param oAuthToken the o auth token
+	* @return the o auth token that was removed
+	*/
+	@Override
+	public com.liferay.opensocial.model.OAuthToken deleteOAuthToken(
+		com.liferay.opensocial.model.OAuthToken oAuthToken) {
+		return _oAuthTokenLocalService.deleteOAuthToken(oAuthToken);
 	}
 
 	@Override

@@ -289,22 +289,22 @@ public class DLAppHelperLocalServiceUtil {
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		com.liferay.portal.kernel.repository.model.FileVersion sourceFileVersion,
 		com.liferay.portal.kernel.repository.model.FileVersion destinationFileVersion,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		long assetClassPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.updateFileEntry(userId, fileEntry, sourceFileVersion,
-			destinationFileVersion, serviceContext);
+			destinationFileVersion, assetClassPK);
 	}
 
 	public static void updateFileEntry(long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		com.liferay.portal.kernel.repository.model.FileVersion sourceFileVersion,
 		com.liferay.portal.kernel.repository.model.FileVersion destinationFileVersion,
-		long assetClassPK)
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.updateFileEntry(userId, fileEntry, sourceFileVersion,
-			destinationFileVersion, assetClassPK);
+			destinationFileVersion, serviceContext);
 	}
 
 	public static void updateFolder(long userId,

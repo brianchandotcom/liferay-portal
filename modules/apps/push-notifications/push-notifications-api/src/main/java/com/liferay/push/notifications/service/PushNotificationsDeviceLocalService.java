@@ -61,6 +61,9 @@ public interface PushNotificationsDeviceLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PushNotificationsDeviceLocalServiceUtil} to access the push notifications device local service. Add custom service methods to {@link com.liferay.push.notifications.service.impl.PushNotificationsDeviceLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public PushNotificationsDevice addPushNotificationsDevice(long userId,
+		java.lang.String platform, java.lang.String token)
+		throws PortalException;
 
 	/**
 	* Adds the push notifications device to the database. Also notifies the appropriate model listeners.
@@ -71,10 +74,6 @@ public interface PushNotificationsDeviceLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public PushNotificationsDevice addPushNotificationsDevice(
 		PushNotificationsDevice pushNotificationsDevice);
-
-	public PushNotificationsDevice addPushNotificationsDevice(long userId,
-		java.lang.String platform, java.lang.String token)
-		throws PortalException;
 
 	/**
 	* Creates a new push notifications device with the primary key. Does not add the push notifications device to the database.
@@ -93,6 +92,17 @@ public interface PushNotificationsDeviceLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
+	* Deletes the push notifications device with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param pushNotificationsDeviceId the primary key of the push notifications device
+	* @return the push notifications device that was removed
+	* @throws PortalException if a push notifications device with the primary key could not be found
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public PushNotificationsDevice deletePushNotificationsDevice(
+		long pushNotificationsDeviceId) throws PortalException;
+
+	/**
 	* Deletes the push notifications device from the database. Also notifies the appropriate model listeners.
 	*
 	* @param pushNotificationsDevice the push notifications device
@@ -104,17 +114,6 @@ public interface PushNotificationsDeviceLocalService extends BaseLocalService,
 
 	public PushNotificationsDevice deletePushNotificationsDevice(
 		java.lang.String token) throws PortalException;
-
-	/**
-	* Deletes the push notifications device with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param pushNotificationsDeviceId the primary key of the push notifications device
-	* @return the push notifications device that was removed
-	* @throws PortalException if a push notifications device with the primary key could not be found
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public PushNotificationsDevice deletePushNotificationsDevice(
-		long pushNotificationsDeviceId) throws PortalException;
 
 	public DynamicQuery dynamicQuery();
 
@@ -236,12 +235,12 @@ public interface PushNotificationsDeviceLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getPushNotificationsDevicesCount();
 
+	public void sendPushNotification(long[] toUserIds,
+		JSONObject payloadJSONObject) throws PortalException;
+
 	public void sendPushNotification(java.lang.String platform,
 		List<java.lang.String> tokens, JSONObject payloadJSONObject)
 		throws PortalException;
-
-	public void sendPushNotification(long[] toUserIds,
-		JSONObject payloadJSONObject) throws PortalException;
 
 	/**
 	* Updates the push notifications device in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

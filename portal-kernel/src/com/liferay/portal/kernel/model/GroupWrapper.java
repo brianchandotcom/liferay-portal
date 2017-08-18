@@ -381,30 +381,6 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	/**
 	* Returns the localized description of this group in the language. Uses the default language if no localization exists for the requested language.
 	*
-	* @param languageId the ID of the language
-	* @return the localized description of this group
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
-		return _group.getDescription(languageId);
-	}
-
-	/**
-	* Returns the localized description of this group in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this group
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
-		return _group.getDescription(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized description of this group in the language. Uses the default language if no localization exists for the requested language.
-	*
 	* @param locale the locale of the language
 	* @return the localized description of this group
 	*/
@@ -424,6 +400,30 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	public java.lang.String getDescription(java.util.Locale locale,
 		boolean useDefault) {
 		return _group.getDescription(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized description of this group in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized description of this group
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId) {
+		return _group.getDescription(languageId);
+	}
+
+	/**
+	* Returns the localized description of this group in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this group
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId,
+		boolean useDefault) {
+		return _group.getDescription(languageId, useDefault);
 	}
 
 	@Override
@@ -604,6 +604,29 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	/**
 	* Returns the localized name of this group in the language. Uses the default language if no localization exists for the requested language.
 	*
+	* @param locale the locale of the language
+	* @return the localized name of this group
+	*/
+	@Override
+	public java.lang.String getName(java.util.Locale locale) {
+		return _group.getName(locale);
+	}
+
+	/**
+	* Returns the localized name of this group in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this group. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+		return _group.getName(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized name of this group in the language. Uses the default language if no localization exists for the requested language.
+	*
 	* @param languageId the ID of the language
 	* @return the localized name of this group
 	*/
@@ -623,29 +646,6 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	public java.lang.String getName(java.lang.String languageId,
 		boolean useDefault) {
 		return _group.getName(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized name of this group in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized name of this group
-	*/
-	@Override
-	public java.lang.String getName(java.util.Locale locale) {
-		return _group.getName(locale);
-	}
-
-	/**
-	* Returns the localized name of this group in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized name of this group. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
-		return _group.getName(locale, useDefault);
 	}
 
 	@Override
@@ -844,6 +844,11 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	@Override
+	public int hashCode() {
+		return _group.hashCode();
+	}
+
+	@Override
 	public boolean hasLocalOrRemoteStagingGroup() {
 		return _group.hasLocalOrRemoteStagingGroup();
 	}
@@ -866,11 +871,6 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	@Override
 	public boolean hasStagingGroup() {
 		return _group.hasStagingGroup();
-	}
-
-	@Override
-	public int hashCode() {
-		return _group.hashCode();
 	}
 
 	/**
@@ -922,11 +922,6 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 		return _group.isGuest();
 	}
 
-	@Override
-	public boolean isInStagingPortlet(java.lang.String portletId) {
-		return _group.isInStagingPortlet(portletId);
-	}
-
 	/**
 	* Returns <code>true</code> if this group is inherit content.
 	*
@@ -935,6 +930,11 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	@Override
 	public boolean isInheritContent() {
 		return _group.isInheritContent();
+	}
+
+	@Override
+	public boolean isInStagingPortlet(java.lang.String portletId) {
+		return _group.isInStagingPortlet(portletId);
 	}
 
 	@Override
@@ -1193,13 +1193,13 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_group.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_group.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_group.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_group.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

@@ -67,18 +67,6 @@ public class ServiceComponentLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the service component from the database. Also notifies the appropriate model listeners.
-	*
-	* @param serviceComponent the service component
-	* @return the service component that was removed
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.ServiceComponent deleteServiceComponent(
-		com.liferay.portal.kernel.model.ServiceComponent serviceComponent) {
-		return _serviceComponentLocalService.deleteServiceComponent(serviceComponent);
-	}
-
-	/**
 	* Deletes the service component with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param serviceComponentId the primary key of the service component
@@ -90,6 +78,18 @@ public class ServiceComponentLocalServiceWrapper
 		long serviceComponentId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _serviceComponentLocalService.deleteServiceComponent(serviceComponentId);
+	}
+
+	/**
+	* Deletes the service component from the database. Also notifies the appropriate model listeners.
+	*
+	* @param serviceComponent the service component
+	* @return the service component that was removed
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.ServiceComponent deleteServiceComponent(
+		com.liferay.portal.kernel.model.ServiceComponent serviceComponent) {
+		return _serviceComponentLocalService.deleteServiceComponent(serviceComponent);
 	}
 
 	@Override

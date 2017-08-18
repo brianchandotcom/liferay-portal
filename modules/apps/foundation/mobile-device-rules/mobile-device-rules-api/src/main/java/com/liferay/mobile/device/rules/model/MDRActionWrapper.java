@@ -271,30 +271,6 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	/**
 	* Returns the localized description of this mdr action in the language. Uses the default language if no localization exists for the requested language.
 	*
-	* @param languageId the ID of the language
-	* @return the localized description of this mdr action
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
-		return _mdrAction.getDescription(languageId);
-	}
-
-	/**
-	* Returns the localized description of this mdr action in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this mdr action
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
-		return _mdrAction.getDescription(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized description of this mdr action in the language. Uses the default language if no localization exists for the requested language.
-	*
 	* @param locale the locale of the language
 	* @return the localized description of this mdr action
 	*/
@@ -314,6 +290,30 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	public java.lang.String getDescription(java.util.Locale locale,
 		boolean useDefault) {
 		return _mdrAction.getDescription(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized description of this mdr action in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized description of this mdr action
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId) {
+		return _mdrAction.getDescription(languageId);
+	}
+
+	/**
+	* Returns the localized description of this mdr action in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this mdr action
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId,
+		boolean useDefault) {
+		return _mdrAction.getDescription(languageId, useDefault);
 	}
 
 	@Override
@@ -384,6 +384,29 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	/**
 	* Returns the localized name of this mdr action in the language. Uses the default language if no localization exists for the requested language.
 	*
+	* @param locale the locale of the language
+	* @return the localized name of this mdr action
+	*/
+	@Override
+	public java.lang.String getName(java.util.Locale locale) {
+		return _mdrAction.getName(locale);
+	}
+
+	/**
+	* Returns the localized name of this mdr action in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this mdr action. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+		return _mdrAction.getName(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized name of this mdr action in the language. Uses the default language if no localization exists for the requested language.
+	*
 	* @param languageId the ID of the language
 	* @return the localized name of this mdr action
 	*/
@@ -403,29 +426,6 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	public java.lang.String getName(java.lang.String languageId,
 		boolean useDefault) {
 		return _mdrAction.getName(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized name of this mdr action in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized name of this mdr action
-	*/
-	@Override
-	public java.lang.String getName(java.util.Locale locale) {
-		return _mdrAction.getName(locale);
-	}
-
-	/**
-	* Returns the localized name of this mdr action in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized name of this mdr action. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
-		return _mdrAction.getName(locale, useDefault);
 	}
 
 	@Override
@@ -701,14 +701,14 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_mdrAction.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_mdrAction.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_mdrAction.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

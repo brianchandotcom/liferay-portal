@@ -575,6 +575,26 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	}
 
 	/**
+	* Returns <code>true</code> if this bookmarks entry is inactive.
+	*
+	* @return <code>true</code> if this bookmarks entry is inactive; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInactive() {
+		return _bookmarksEntry.isInactive();
+	}
+
+	/**
+	* Returns <code>true</code> if this bookmarks entry is incomplete.
+	*
+	* @return <code>true</code> if this bookmarks entry is incomplete; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isIncomplete() {
+		return _bookmarksEntry.isIncomplete();
+	}
+
+	/**
 	* Returns <code>true</code> if this bookmarks entry is in the Recycle Bin.
 	*
 	* @return <code>true</code> if this bookmarks entry is in the Recycle Bin; <code>false</code> otherwise
@@ -602,26 +622,6 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	@Override
 	public boolean isInTrashImplicitly() {
 		return _bookmarksEntry.isInTrashImplicitly();
-	}
-
-	/**
-	* Returns <code>true</code> if this bookmarks entry is inactive.
-	*
-	* @return <code>true</code> if this bookmarks entry is inactive; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isInactive() {
-		return _bookmarksEntry.isInactive();
-	}
-
-	/**
-	* Returns <code>true</code> if this bookmarks entry is incomplete.
-	*
-	* @return <code>true</code> if this bookmarks entry is incomplete; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isIncomplete() {
-		return _bookmarksEntry.isIncomplete();
 	}
 
 	@Override
@@ -700,14 +700,14 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_bookmarksEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_bookmarksEntry.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_bookmarksEntry.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

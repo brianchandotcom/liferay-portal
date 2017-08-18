@@ -82,19 +82,19 @@ public interface MDRRuleLocalService extends BaseLocalService,
 	public MDRRule addRule(long ruleGroupId,
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
+		java.lang.String typeSettings, ServiceContext serviceContext)
 		throws PortalException;
 
 	public MDRRule addRule(long ruleGroupId,
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		java.lang.String typeSettings, ServiceContext serviceContext)
+		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
 		throws PortalException;
 
-	public MDRRule copyRule(MDRRule rule, long ruleGroupId,
+	public MDRRule copyRule(long ruleId, long ruleGroupId,
 		ServiceContext serviceContext) throws PortalException;
 
-	public MDRRule copyRule(long ruleId, long ruleGroupId,
+	public MDRRule copyRule(MDRRule rule, long ruleGroupId,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -104,15 +104,6 @@ public interface MDRRuleLocalService extends BaseLocalService,
 	* @return the new mdr rule
 	*/
 	public MDRRule createMDRRule(long ruleId);
-
-	/**
-	* Deletes the mdr rule from the database. Also notifies the appropriate model listeners.
-	*
-	* @param mdrRule the mdr rule
-	* @return the mdr rule that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public MDRRule deleteMDRRule(MDRRule mdrRule);
 
 	/**
 	* Deletes the mdr rule with the primary key from the database. Also notifies the appropriate model listeners.
@@ -125,16 +116,25 @@ public interface MDRRuleLocalService extends BaseLocalService,
 	public MDRRule deleteMDRRule(long ruleId) throws PortalException;
 
 	/**
+	* Deletes the mdr rule from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mdrRule the mdr rule
+	* @return the mdr rule that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public MDRRule deleteMDRRule(MDRRule mdrRule);
+
+	/**
 	* @throws PortalException
 	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
+	public void deleteRule(long ruleId);
+
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public void deleteRule(MDRRule rule);
-
-	public void deleteRule(long ruleId);
 
 	public void deleteRules(long ruleGroupId);
 
@@ -334,12 +334,12 @@ public interface MDRRuleLocalService extends BaseLocalService,
 	public MDRRule updateRule(long ruleId,
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
+		java.lang.String typeSettings, ServiceContext serviceContext)
 		throws PortalException;
 
 	public MDRRule updateRule(long ruleId,
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		java.lang.String typeSettings, ServiceContext serviceContext)
+		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
 		throws PortalException;
 }

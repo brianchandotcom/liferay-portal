@@ -63,6 +63,9 @@ public interface AssetTagService extends BaseService {
 	public void deleteTags(long[] tagIds) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetTag> getGroupsTags(long[] groupIds);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetTag> getGroupTags(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -76,9 +79,6 @@ public interface AssetTagService extends BaseService {
 	public AssetTagDisplay getGroupTagsDisplay(long groupId,
 		java.lang.String name, int start, int end);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetTag> getGroupsTags(long[] groupIds);
-
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -90,25 +90,6 @@ public interface AssetTagService extends BaseService {
 	public AssetTag getTag(long tagId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetTag> getTags(java.lang.String className, long classPK);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetTag> getTags(long groupId, java.lang.String name,
-		int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetTag> getTags(long[] groupIds, java.lang.String name,
-		int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetTag> getTags(long[] groupIds, java.lang.String name,
-		int start, int end, OrderByComparator<AssetTag> obc);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetTag> getTags(long groupId, java.lang.String name,
-		int start, int end, OrderByComparator<AssetTag> obc);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetTag> getTags(long groupId, long classNameId,
 		java.lang.String name);
 
@@ -118,14 +99,33 @@ public interface AssetTagService extends BaseService {
 		OrderByComparator<AssetTag> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getTagsCount(long groupId, java.lang.String name);
+	public List<AssetTag> getTags(long groupId, java.lang.String name,
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getVisibleAssetsTagsCount(long groupId, java.lang.String name);
+	public List<AssetTag> getTags(long groupId, java.lang.String name,
+		int start, int end, OrderByComparator<AssetTag> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetTag> getTags(long[] groupIds, java.lang.String name,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetTag> getTags(long[] groupIds, java.lang.String name,
+		int start, int end, OrderByComparator<AssetTag> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetTag> getTags(java.lang.String className, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getTagsCount(long groupId, java.lang.String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getVisibleAssetsTagsCount(long groupId, long classNameId,
 		java.lang.String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getVisibleAssetsTagsCount(long groupId, java.lang.String name);
 
 	public void mergeTags(long fromTagId, long toTagId)
 		throws PortalException;
@@ -134,11 +134,11 @@ public interface AssetTagService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JSONArray search(long[] groupIds, java.lang.String name, int start,
+	public JSONArray search(long groupId, java.lang.String name, int start,
 		int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JSONArray search(long groupId, java.lang.String name, int start,
+	public JSONArray search(long[] groupIds, java.lang.String name, int start,
 		int end);
 
 	public AssetTag updateTag(long tagId, java.lang.String name,

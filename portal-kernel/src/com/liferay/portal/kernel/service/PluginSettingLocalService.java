@@ -86,15 +86,6 @@ public interface PluginSettingLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the plugin setting from the database. Also notifies the appropriate model listeners.
-	*
-	* @param pluginSetting the plugin setting
-	* @return the plugin setting that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public PluginSetting deletePluginSetting(PluginSetting pluginSetting);
-
-	/**
 	* Deletes the plugin setting with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param pluginSettingId the primary key of the plugin setting
@@ -104,6 +95,15 @@ public interface PluginSettingLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public PluginSetting deletePluginSetting(long pluginSettingId)
 		throws PortalException;
+
+	/**
+	* Deletes the plugin setting from the database. Also notifies the appropriate model listeners.
+	*
+	* @param pluginSetting the plugin setting
+	* @return the plugin setting that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public PluginSetting deletePluginSetting(PluginSetting pluginSetting);
 
 	public DynamicQuery dynamicQuery();
 
@@ -229,6 +229,10 @@ public interface PluginSettingLocalService extends BaseLocalService,
 	public boolean hasPermission(long userId, java.lang.String pluginId,
 		java.lang.String pluginType);
 
+	public PluginSetting updatePluginSetting(long companyId,
+		java.lang.String pluginId, java.lang.String pluginType,
+		java.lang.String roles, boolean active);
+
 	/**
 	* Updates the plugin setting in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -237,8 +241,4 @@ public interface PluginSettingLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public PluginSetting updatePluginSetting(PluginSetting pluginSetting);
-
-	public PluginSetting updatePluginSetting(long companyId,
-		java.lang.String pluginId, java.lang.String pluginType,
-		java.lang.String roles, boolean active);
 }

@@ -31,14 +31,14 @@ public class OAuthConsumerLocalServiceClp implements OAuthConsumerLocalService {
 		_methodName0 = "addOAuthConsumer";
 
 		_methodParameterTypes0 = new String[] {
-				"com.liferay.opensocial.model.OAuthConsumer"
+				"long", "java.lang.String", "java.lang.String",
+				"java.lang.String", "java.lang.String", "java.lang.String"
 			};
 
 		_methodName1 = "addOAuthConsumer";
 
 		_methodParameterTypes1 = new String[] {
-				"long", "java.lang.String", "java.lang.String",
-				"java.lang.String", "java.lang.String", "java.lang.String"
+				"com.liferay.opensocial.model.OAuthConsumer"
 			};
 
 		_methodName2 = "createOAuthConsumer";
@@ -47,13 +47,13 @@ public class OAuthConsumerLocalServiceClp implements OAuthConsumerLocalService {
 
 		_methodName3 = "deleteOAuthConsumer";
 
-		_methodParameterTypes3 = new String[] {
-				"com.liferay.opensocial.model.OAuthConsumer"
-			};
+		_methodParameterTypes3 = new String[] { "long" };
 
 		_methodName4 = "deleteOAuthConsumer";
 
-		_methodParameterTypes4 = new String[] { "long" };
+		_methodParameterTypes4 = new String[] {
+				"com.liferay.opensocial.model.OAuthConsumer"
+			};
 
 		_methodName5 = "deleteOAuthConsumers";
 
@@ -103,13 +103,13 @@ public class OAuthConsumerLocalServiceClp implements OAuthConsumerLocalService {
 
 		_methodName13 = "fetchOAuthConsumer";
 
-		_methodParameterTypes13 = new String[] {
-				"java.lang.String", "java.lang.String"
-			};
+		_methodParameterTypes13 = new String[] { "long" };
 
 		_methodName14 = "fetchOAuthConsumer";
 
-		_methodParameterTypes14 = new String[] { "long" };
+		_methodParameterTypes14 = new String[] {
+				"java.lang.String", "java.lang.String"
+			};
 
 		_methodName15 = "getActionableDynamicQuery";
 
@@ -121,13 +121,13 @@ public class OAuthConsumerLocalServiceClp implements OAuthConsumerLocalService {
 
 		_methodName17 = "getOAuthConsumer";
 
-		_methodParameterTypes17 = new String[] {
-				"java.lang.String", "java.lang.String"
-			};
+		_methodParameterTypes17 = new String[] { "long" };
 
 		_methodName18 = "getOAuthConsumer";
 
-		_methodParameterTypes18 = new String[] { "long" };
+		_methodParameterTypes18 = new String[] {
+				"java.lang.String", "java.lang.String"
+			};
 
 		_methodName19 = "getOAuthConsumers";
 
@@ -160,26 +160,40 @@ public class OAuthConsumerLocalServiceClp implements OAuthConsumerLocalService {
 		_methodName27 = "updateOAuthConsumer";
 
 		_methodParameterTypes27 = new String[] {
-				"com.liferay.opensocial.model.OAuthConsumer"
+				"long", "java.lang.String", "java.lang.String",
+				"java.lang.String", "java.lang.String", "java.lang.String"
 			};
 
 		_methodName28 = "updateOAuthConsumer";
 
 		_methodParameterTypes28 = new String[] {
-				"long", "java.lang.String", "java.lang.String",
-				"java.lang.String", "java.lang.String", "java.lang.String"
+				"com.liferay.opensocial.model.OAuthConsumer"
 			};
 	}
 
 	@Override
 	public com.liferay.opensocial.model.OAuthConsumer addOAuthConsumer(
-		com.liferay.opensocial.model.OAuthConsumer oAuthConsumer) {
+		long companyId, java.lang.String gadgetKey,
+		java.lang.String serviceName, java.lang.String consumerKey,
+		java.lang.String consumerSecret, java.lang.String keyType) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName0,
 					_methodParameterTypes0,
-					new Object[] { ClpSerializer.translateInput(oAuthConsumer) });
+					new Object[] {
+						companyId,
+						
+					ClpSerializer.translateInput(gadgetKey),
+						
+					ClpSerializer.translateInput(serviceName),
+						
+					ClpSerializer.translateInput(consumerKey),
+						
+					ClpSerializer.translateInput(consumerSecret),
+						
+					ClpSerializer.translateInput(keyType)
+					});
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -198,27 +212,13 @@ public class OAuthConsumerLocalServiceClp implements OAuthConsumerLocalService {
 
 	@Override
 	public com.liferay.opensocial.model.OAuthConsumer addOAuthConsumer(
-		long companyId, java.lang.String gadgetKey,
-		java.lang.String serviceName, java.lang.String consumerKey,
-		java.lang.String consumerSecret, java.lang.String keyType) {
+		com.liferay.opensocial.model.OAuthConsumer oAuthConsumer) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName1,
 					_methodParameterTypes1,
-					new Object[] {
-						companyId,
-						
-					ClpSerializer.translateInput(gadgetKey),
-						
-					ClpSerializer.translateInput(serviceName),
-						
-					ClpSerializer.translateInput(consumerKey),
-						
-					ClpSerializer.translateInput(consumerSecret),
-						
-					ClpSerializer.translateInput(keyType)
-					});
+					new Object[] { ClpSerializer.translateInput(oAuthConsumer) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -261,16 +261,20 @@ public class OAuthConsumerLocalServiceClp implements OAuthConsumerLocalService {
 
 	@Override
 	public com.liferay.opensocial.model.OAuthConsumer deleteOAuthConsumer(
-		com.liferay.opensocial.model.OAuthConsumer oAuthConsumer) {
+		long oAuthConsumerId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName3,
-					_methodParameterTypes3,
-					new Object[] { ClpSerializer.translateInput(oAuthConsumer) });
+					_methodParameterTypes3, new Object[] { oAuthConsumerId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
@@ -286,20 +290,16 @@ public class OAuthConsumerLocalServiceClp implements OAuthConsumerLocalService {
 
 	@Override
 	public com.liferay.opensocial.model.OAuthConsumer deleteOAuthConsumer(
-		long oAuthConsumerId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		com.liferay.opensocial.model.OAuthConsumer oAuthConsumer) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName4,
-					_methodParameterTypes4, new Object[] { oAuthConsumerId });
+					_methodParameterTypes4,
+					new Object[] { ClpSerializer.translateInput(oAuthConsumer) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
-				throw (com.liferay.portal.kernel.exception.PortalException)t;
-			}
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
@@ -535,17 +535,12 @@ public class OAuthConsumerLocalServiceClp implements OAuthConsumerLocalService {
 
 	@Override
 	public com.liferay.opensocial.model.OAuthConsumer fetchOAuthConsumer(
-		java.lang.String gadgetKey, java.lang.String serviceName) {
+		long oAuthConsumerId) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName13,
-					_methodParameterTypes13,
-					new Object[] {
-						ClpSerializer.translateInput(gadgetKey),
-						
-					ClpSerializer.translateInput(serviceName)
-					});
+					_methodParameterTypes13, new Object[] { oAuthConsumerId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -564,12 +559,17 @@ public class OAuthConsumerLocalServiceClp implements OAuthConsumerLocalService {
 
 	@Override
 	public com.liferay.opensocial.model.OAuthConsumer fetchOAuthConsumer(
-		long oAuthConsumerId) {
+		java.lang.String gadgetKey, java.lang.String serviceName) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName14,
-					_methodParameterTypes14, new Object[] { oAuthConsumerId });
+					_methodParameterTypes14,
+					new Object[] {
+						ClpSerializer.translateInput(gadgetKey),
+						
+					ClpSerializer.translateInput(serviceName)
+					});
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -634,18 +634,13 @@ public class OAuthConsumerLocalServiceClp implements OAuthConsumerLocalService {
 
 	@Override
 	public com.liferay.opensocial.model.OAuthConsumer getOAuthConsumer(
-		java.lang.String gadgetKey, java.lang.String serviceName)
+		long oAuthConsumerId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName17,
-					_methodParameterTypes17,
-					new Object[] {
-						ClpSerializer.translateInput(gadgetKey),
-						
-					ClpSerializer.translateInput(serviceName)
-					});
+					_methodParameterTypes17, new Object[] { oAuthConsumerId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -668,13 +663,18 @@ public class OAuthConsumerLocalServiceClp implements OAuthConsumerLocalService {
 
 	@Override
 	public com.liferay.opensocial.model.OAuthConsumer getOAuthConsumer(
-		long oAuthConsumerId)
+		java.lang.String gadgetKey, java.lang.String serviceName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName18,
-					_methodParameterTypes18, new Object[] { oAuthConsumerId });
+					_methodParameterTypes18,
+					new Object[] {
+						ClpSerializer.translateInput(gadgetKey),
+						
+					ClpSerializer.translateInput(serviceName)
+					});
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -884,31 +884,6 @@ public class OAuthConsumerLocalServiceClp implements OAuthConsumerLocalService {
 
 	@Override
 	public com.liferay.opensocial.model.OAuthConsumer updateOAuthConsumer(
-		com.liferay.opensocial.model.OAuthConsumer oAuthConsumer) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName27,
-					_methodParameterTypes27,
-					new Object[] { ClpSerializer.translateInput(oAuthConsumer) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (com.liferay.opensocial.model.OAuthConsumer)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public com.liferay.opensocial.model.OAuthConsumer updateOAuthConsumer(
 		long oAuthConsumerId, java.lang.String consumerKey,
 		java.lang.String consumerSecret, java.lang.String keyType,
 		java.lang.String keyName, java.lang.String callbackURL)
@@ -916,8 +891,8 @@ public class OAuthConsumerLocalServiceClp implements OAuthConsumerLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName28,
-					_methodParameterTypes28,
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27,
 					new Object[] {
 						oAuthConsumerId,
 						
@@ -938,6 +913,31 @@ public class OAuthConsumerLocalServiceClp implements OAuthConsumerLocalService {
 			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
 				throw (com.liferay.portal.kernel.exception.PortalException)t;
 			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.opensocial.model.OAuthConsumer)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.liferay.opensocial.model.OAuthConsumer updateOAuthConsumer(
+		com.liferay.opensocial.model.OAuthConsumer oAuthConsumer) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28,
+					new Object[] { ClpSerializer.translateInput(oAuthConsumer) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;

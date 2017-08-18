@@ -34,6 +34,13 @@ public class WikiPageResourceLocalServiceWrapper
 		_wikiPageResourceLocalService = wikiPageResourceLocalService;
 	}
 
+	@Override
+	public com.liferay.wiki.model.WikiPageResource addPageResource(
+		long groupId, long nodeId, java.lang.String title) {
+		return _wikiPageResourceLocalService.addPageResource(groupId, nodeId,
+			title);
+	}
+
 	/**
 	* @deprecated As of 1.2.0, replaced by {@link #addPageResource(long, long,
 	String)}
@@ -43,13 +50,6 @@ public class WikiPageResourceLocalServiceWrapper
 	public com.liferay.wiki.model.WikiPageResource addPageResource(
 		long nodeId, java.lang.String title) {
 		return _wikiPageResourceLocalService.addPageResource(nodeId, title);
-	}
-
-	@Override
-	public com.liferay.wiki.model.WikiPageResource addPageResource(
-		long groupId, long nodeId, java.lang.String title) {
-		return _wikiPageResourceLocalService.addPageResource(groupId, nodeId,
-			title);
 	}
 
 	/**
@@ -93,18 +93,6 @@ public class WikiPageResourceLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the wiki page resource from the database. Also notifies the appropriate model listeners.
-	*
-	* @param wikiPageResource the wiki page resource
-	* @return the wiki page resource that was removed
-	*/
-	@Override
-	public com.liferay.wiki.model.WikiPageResource deleteWikiPageResource(
-		com.liferay.wiki.model.WikiPageResource wikiPageResource) {
-		return _wikiPageResourceLocalService.deleteWikiPageResource(wikiPageResource);
-	}
-
-	/**
 	* Deletes the wiki page resource with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param resourcePrimKey the primary key of the wiki page resource
@@ -116,6 +104,18 @@ public class WikiPageResourceLocalServiceWrapper
 		long resourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPageResourceLocalService.deleteWikiPageResource(resourcePrimKey);
+	}
+
+	/**
+	* Deletes the wiki page resource from the database. Also notifies the appropriate model listeners.
+	*
+	* @param wikiPageResource the wiki page resource
+	* @return the wiki page resource that was removed
+	*/
+	@Override
+	public com.liferay.wiki.model.WikiPageResource deleteWikiPageResource(
+		com.liferay.wiki.model.WikiPageResource wikiPageResource) {
+		return _wikiPageResourceLocalService.deleteWikiPageResource(wikiPageResource);
 	}
 
 	@Override
@@ -206,14 +206,14 @@ public class WikiPageResourceLocalServiceWrapper
 
 	@Override
 	public com.liferay.wiki.model.WikiPageResource fetchPageResource(
-		java.lang.String uuid) {
-		return _wikiPageResourceLocalService.fetchPageResource(uuid);
+		long nodeId, java.lang.String title) {
+		return _wikiPageResourceLocalService.fetchPageResource(nodeId, title);
 	}
 
 	@Override
 	public com.liferay.wiki.model.WikiPageResource fetchPageResource(
-		long nodeId, java.lang.String title) {
-		return _wikiPageResourceLocalService.fetchPageResource(nodeId, title);
+		java.lang.String uuid) {
+		return _wikiPageResourceLocalService.fetchPageResource(uuid);
 	}
 
 	@Override
@@ -270,6 +270,13 @@ public class WikiPageResourceLocalServiceWrapper
 		return _wikiPageResourceLocalService.getPageResource(nodeId, title);
 	}
 
+	@Override
+	public long getPageResourcePrimKey(long groupId, long nodeId,
+		java.lang.String title) {
+		return _wikiPageResourceLocalService.getPageResourcePrimKey(groupId,
+			nodeId, title);
+	}
+
 	/**
 	* @deprecated As of 1.2.0, replaced by {@link #getPageResourcePrimKey(long,
 	long, String)}
@@ -279,13 +286,6 @@ public class WikiPageResourceLocalServiceWrapper
 	public long getPageResourcePrimKey(long nodeId, java.lang.String title) {
 		return _wikiPageResourceLocalService.getPageResourcePrimKey(nodeId,
 			title);
-	}
-
-	@Override
-	public long getPageResourcePrimKey(long groupId, long nodeId,
-		java.lang.String title) {
-		return _wikiPageResourceLocalService.getPageResourcePrimKey(groupId,
-			nodeId, title);
 	}
 
 	@Override

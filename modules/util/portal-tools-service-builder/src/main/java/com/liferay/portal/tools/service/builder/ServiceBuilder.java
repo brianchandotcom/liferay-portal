@@ -2180,7 +2180,7 @@ public class ServiceBuilder {
 
 		for (JavaMethod method : _getMethods(modelImplJavaClass)) {
 			String methodSignature = _getMethodSignature(
-				method, modelImplJavaClass.getPackageName());
+				method, modelImplJavaClass.getPackageName(), true);
 
 			methods.put(methodSignature, method);
 		}
@@ -2206,7 +2206,7 @@ public class ServiceBuilder {
 
 		for (JavaMethod method : _getMethods(modelJavaClass)) {
 			String methodSignature = _getMethodSignature(
-				method, modelJavaClass.getPackageName());
+				method, modelJavaClass.getPackageName(), true);
 
 			methods.remove(methodSignature);
 		}
@@ -4678,18 +4678,31 @@ public class ServiceBuilder {
 		return methods.toArray(new JavaMethod[methods.size()]);
 	}
 
-	private String _getMethodSignature(JavaMethod method, String packagePath) {
+	private String _getMethodSignature(
+		JavaMethod method, String packagePath, boolean includePackagePath) {
+
 		StringBundler sb = new StringBundler();
 
 		sb.append(method.getName());
 		sb.append(StringPool.OPEN_PARENTHESIS);
 
 		for (JavaParameter parameter : method.getParameters()) {
-			String parameterValue = parameter.getResolvedValue();
+			String parameterValue =
+				parameter.getResolvedValue() +
+					_getDimensions(parameter.getType());
 
-			if (parameterValue.matches("[A-Z]\\w+")) {
-				parameterValue =
-					packagePath + StringPool.PERIOD + parameterValue;
+			if (includePackagePath) {
+				if (parameterValue.matches("[A-Z]\\w+")) {
+					parameterValue =
+						packagePath + StringPool.PERIOD + parameterValue;
+				}
+			}
+			else {
+				int pos = parameterValue.lastIndexOf(CharPool.PERIOD);
+
+				if (pos != -1) {
+					parameterValue = parameterValue.substring(pos + 1);
+				}
 			}
 
 			sb.append(parameterValue);
@@ -5013,11 +5026,18 @@ public class ServiceBuilder {
 				JavaClass parentClass2 = javaMethod2.getParentClass();
 
 				String methodSignature1 = _getMethodSignature(
-					javaMethod1, parentClass1.getPackageName());
+					javaMethod1, parentClass1.getPackageName(), false);
 				String methodSignature2 = _getMethodSignature(
-					javaMethod2, parentClass2.getPackageName());
+					javaMethod2, parentClass2.getPackageName(), false);
 
-				return methodSignature1.compareTo(methodSignature2);
+				if (methodSignature1.equals(methodSignature2)) {
+					methodSignature1 = _getMethodSignature(
+						javaMethod1, parentClass1.getPackageName(), true);
+					methodSignature2 = _getMethodSignature(
+						javaMethod2, parentClass2.getPackageName(), true);
+				}
+
+				return methodSignature1.compareToIgnoreCase(methodSignature2);
 			}
 
 		};

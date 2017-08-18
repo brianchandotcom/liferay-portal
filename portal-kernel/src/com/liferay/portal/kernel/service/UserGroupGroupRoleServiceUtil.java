@@ -40,16 +40,16 @@ public class UserGroupGroupRoleServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.UserGroupGroupRoleServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static void addUserGroupGroupRoles(long[] userGroupIds,
-		long groupId, long roleId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addUserGroupGroupRoles(userGroupIds, groupId, roleId);
-	}
-
 	public static void addUserGroupGroupRoles(long userGroupId, long groupId,
 		long[] roleIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().addUserGroupGroupRoles(userGroupId, groupId, roleIds);
+	}
+
+	public static void addUserGroupGroupRoles(long[] userGroupIds,
+		long groupId, long roleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().addUserGroupGroupRoles(userGroupIds, groupId, roleId);
 	}
 
 	public static void deleteUserGroupGroupRoles(long userGroupId,

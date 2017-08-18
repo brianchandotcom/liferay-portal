@@ -169,14 +169,14 @@ public class KBArticleLocalServiceUtil {
 		return getService().deleteKBArticle(kbArticleId);
 	}
 
-	public static void deleteKBArticles(long[] resourcePrimKeys)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteKBArticles(resourcePrimKeys);
-	}
-
 	public static void deleteKBArticles(long groupId, long parentResourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteKBArticles(groupId, parentResourcePrimKey);
+	}
+
+	public static void deleteKBArticles(long[] resourcePrimKeys)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteKBArticles(resourcePrimKeys);
 	}
 
 	/**
@@ -290,17 +290,17 @@ public class KBArticleLocalServiceUtil {
 	}
 
 	public static com.liferay.knowledge.base.model.KBArticle fetchKBArticleByUrlTitle(
+		long groupId, long kbFolderId, java.lang.String urlTitle) {
+		return getService()
+				   .fetchKBArticleByUrlTitle(groupId, kbFolderId, urlTitle);
+	}
+
+	public static com.liferay.knowledge.base.model.KBArticle fetchKBArticleByUrlTitle(
 		long groupId, java.lang.String kbFolderUrlTitle,
 		java.lang.String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .fetchKBArticleByUrlTitle(groupId, kbFolderUrlTitle, urlTitle);
-	}
-
-	public static com.liferay.knowledge.base.model.KBArticle fetchKBArticleByUrlTitle(
-		long groupId, long kbFolderId, java.lang.String urlTitle) {
-		return getService()
-				   .fetchKBArticleByUrlTitle(groupId, kbFolderId, urlTitle);
 	}
 
 	/**
@@ -419,17 +419,17 @@ public class KBArticleLocalServiceUtil {
 	}
 
 	public static com.liferay.knowledge.base.model.KBArticle getKBArticleByUrlTitle(
+		long groupId, long kbFolderId, java.lang.String urlTitle)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getKBArticleByUrlTitle(groupId, kbFolderId, urlTitle);
+	}
+
+	public static com.liferay.knowledge.base.model.KBArticle getKBArticleByUrlTitle(
 		long groupId, java.lang.String kbFolderUrlTitle,
 		java.lang.String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getKBArticleByUrlTitle(groupId, kbFolderUrlTitle, urlTitle);
-	}
-
-	public static com.liferay.knowledge.base.model.KBArticle getKBArticleByUrlTitle(
-		long groupId, long kbFolderId, java.lang.String urlTitle)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getKBArticleByUrlTitle(groupId, kbFolderId, urlTitle);
 	}
 
 	/**
@@ -444,18 +444,6 @@ public class KBArticleLocalServiceUtil {
 		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getKBArticleByUuidAndGroupId(uuid, groupId);
-	}
-
-	public static java.util.List<com.liferay.knowledge.base.model.KBArticle> getKBArticleVersions(
-		long resourcePrimKey, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator) {
-		return getService()
-				   .getKBArticleVersions(resourcePrimKey, status, start, end,
-			orderByComparator);
-	}
-
-	public static int getKBArticleVersionsCount(long resourcePrimKey, int status) {
-		return getService().getKBArticleVersionsCount(resourcePrimKey, status);
 	}
 
 	/**
@@ -475,19 +463,19 @@ public class KBArticleLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.knowledge.base.model.KBArticle> getKBArticles(
-		long[] resourcePrimKeys, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator) {
-		return getService()
-				   .getKBArticles(resourcePrimKeys, status, orderByComparator);
-	}
-
-	public static java.util.List<com.liferay.knowledge.base.model.KBArticle> getKBArticles(
 		long groupId, long parentResourcePrimKey, int status, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator) {
 		return getService()
 				   .getKBArticles(groupId, parentResourcePrimKey, status,
 			start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.knowledge.base.model.KBArticle> getKBArticles(
+		long[] resourcePrimKeys, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator) {
+		return getService()
+				   .getKBArticles(resourcePrimKeys, status, orderByComparator);
 	}
 
 	/**
@@ -535,6 +523,18 @@ public class KBArticleLocalServiceUtil {
 				   .getKBArticlesCount(groupId, parentResourcePrimKey, status);
 	}
 
+	public static java.util.List<com.liferay.knowledge.base.model.KBArticle> getKBArticleVersions(
+		long resourcePrimKey, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator) {
+		return getService()
+				   .getKBArticleVersions(resourcePrimKey, status, start, end,
+			orderByComparator);
+	}
+
+	public static int getKBArticleVersionsCount(long resourcePrimKey, int status) {
+		return getService().getKBArticleVersionsCount(resourcePrimKey, status);
+	}
+
 	public static java.util.List<com.liferay.knowledge.base.model.KBArticle> getKBFolderKBArticles(
 		long groupId, long kbFolderId) {
 		return getService().getKBFolderKBArticles(groupId, kbFolderId);
@@ -569,16 +569,16 @@ public class KBArticleLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
 	public static java.util.List<?extends com.liferay.portal.kernel.model.PersistedModel> getPersistedModel(
 		long resourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(resourcePrimKey);
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	public static com.liferay.knowledge.base.model.KBArticle[] getPreviousAndNextKBArticles(

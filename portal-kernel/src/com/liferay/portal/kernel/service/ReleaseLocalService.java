@@ -94,15 +94,6 @@ public interface ReleaseLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the release from the database. Also notifies the appropriate model listeners.
-	*
-	* @param release the release
-	* @return the release that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public Release deleteRelease(Release release);
-
-	/**
 	* Deletes the release with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param releaseId the primary key of the release
@@ -111,6 +102,15 @@ public interface ReleaseLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public Release deleteRelease(long releaseId) throws PortalException;
+
+	/**
+	* Deletes the release from the database. Also notifies the appropriate model listeners.
+	*
+	* @param release the release
+	* @return the release that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public Release deleteRelease(Release release);
 
 	public DynamicQuery dynamicQuery();
 
@@ -172,10 +172,10 @@ public interface ReleaseLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Release fetchRelease(java.lang.String servletContextName);
+	public Release fetchRelease(long releaseId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Release fetchRelease(long releaseId);
+	public Release fetchRelease(java.lang.String servletContextName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -230,6 +230,10 @@ public interface ReleaseLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getReleasesCount();
 
+	public Release updateRelease(long releaseId,
+		java.lang.String schemaVersion, int buildNumber, Date buildDate,
+		boolean verified) throws PortalException;
+
 	/**
 	* Updates the release in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -240,9 +244,6 @@ public interface ReleaseLocalService extends BaseLocalService,
 	public Release updateRelease(Release release);
 
 	public void updateRelease(java.lang.String servletContextName,
-		java.lang.String schemaVersion, java.lang.String previousSchemaVersion);
-
-	public void updateRelease(java.lang.String servletContextName,
 		List<UpgradeProcess> upgradeProcesses, int buildNumber,
 		int previousBuildNumber, boolean indexOnUpgrade)
 		throws PortalException;
@@ -251,7 +252,6 @@ public interface ReleaseLocalService extends BaseLocalService,
 		List<UpgradeProcess> upgradeProcesses,
 		Properties unfilteredPortalProperties) throws java.lang.Exception;
 
-	public Release updateRelease(long releaseId,
-		java.lang.String schemaVersion, int buildNumber, Date buildDate,
-		boolean verified) throws PortalException;
+	public void updateRelease(java.lang.String servletContextName,
+		java.lang.String schemaVersion, java.lang.String previousSchemaVersion);
 }

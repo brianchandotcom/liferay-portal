@@ -212,6 +212,21 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	}
 
 	/**
+	* Returns the primary key of this resource permission.
+	*
+	* @return the primary key of this resource permission
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _resourcePermission.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _resourcePermission.getPrimaryKeyObj();
+	}
+
+	/**
 	* Returns the prim key of this resource permission.
 	*
 	* @return the prim key of this resource permission
@@ -229,21 +244,6 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	@Override
 	public long getPrimKeyId() {
 		return _resourcePermission.getPrimKeyId();
-	}
-
-	/**
-	* Returns the primary key of this resource permission.
-	*
-	* @return the primary key of this resource permission
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _resourcePermission.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _resourcePermission.getPrimaryKeyObj();
 	}
 
 	/**
@@ -363,13 +363,13 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_resourcePermission.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_resourcePermission.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_resourcePermission.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_resourcePermission.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -413,6 +413,21 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	}
 
 	/**
+	* Sets the primary key of this resource permission.
+	*
+	* @param primaryKey the primary key of this resource permission
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_resourcePermission.setPrimaryKey(primaryKey);
+	}
+
+	@Override
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
+		_resourcePermission.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
 	* Sets the prim key of this resource permission.
 	*
 	* @param primKey the prim key of this resource permission
@@ -430,21 +445,6 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	@Override
 	public void setPrimKeyId(long primKeyId) {
 		_resourcePermission.setPrimKeyId(primKeyId);
-	}
-
-	/**
-	* Sets the primary key of this resource permission.
-	*
-	* @param primaryKey the primary key of this resource permission
-	*/
-	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_resourcePermission.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_resourcePermission.setPrimaryKeyObj(primaryKeyObj);
 	}
 
 	/**

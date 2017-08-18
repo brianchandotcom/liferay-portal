@@ -83,15 +83,6 @@ public interface UserIdMapperLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the user ID mapper from the database. Also notifies the appropriate model listeners.
-	*
-	* @param userIdMapper the user ID mapper
-	* @return the user ID mapper that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public UserIdMapper deleteUserIdMapper(UserIdMapper userIdMapper);
-
-	/**
 	* Deletes the user ID mapper with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param userIdMapperId the primary key of the user ID mapper
@@ -101,6 +92,15 @@ public interface UserIdMapperLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public UserIdMapper deleteUserIdMapper(long userIdMapperId)
 		throws PortalException;
+
+	/**
+	* Deletes the user ID mapper from the database. Also notifies the appropriate model listeners.
+	*
+	* @param userIdMapper the user ID mapper
+	* @return the user ID mapper that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public UserIdMapper deleteUserIdMapper(UserIdMapper userIdMapper);
 
 	public void deleteUserIdMappers(long userId);
 
@@ -228,6 +228,9 @@ public interface UserIdMapperLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserIdMappersCount();
 
+	public UserIdMapper updateUserIdMapper(long userId, java.lang.String type,
+		java.lang.String description, java.lang.String externalUserId);
+
 	/**
 	* Updates the user ID mapper in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -236,7 +239,4 @@ public interface UserIdMapperLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public UserIdMapper updateUserIdMapper(UserIdMapper userIdMapper);
-
-	public UserIdMapper updateUserIdMapper(long userId, java.lang.String type,
-		java.lang.String description, java.lang.String externalUserId);
 }

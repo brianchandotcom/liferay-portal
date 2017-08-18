@@ -33,6 +33,15 @@ public class SyncDeviceLocalServiceWrapper implements SyncDeviceLocalService,
 		_syncDeviceLocalService = syncDeviceLocalService;
 	}
 
+	@Override
+	public com.liferay.sync.model.SyncDevice addSyncDevice(long userId,
+		java.lang.String type, long buildNumber, java.lang.String hostname,
+		int featureSet)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _syncDeviceLocalService.addSyncDevice(userId, type, buildNumber,
+			hostname, featureSet);
+	}
+
 	/**
 	* Adds the sync device to the database. Also notifies the appropriate model listeners.
 	*
@@ -43,15 +52,6 @@ public class SyncDeviceLocalServiceWrapper implements SyncDeviceLocalService,
 	public com.liferay.sync.model.SyncDevice addSyncDevice(
 		com.liferay.sync.model.SyncDevice syncDevice) {
 		return _syncDeviceLocalService.addSyncDevice(syncDevice);
-	}
-
-	@Override
-	public com.liferay.sync.model.SyncDevice addSyncDevice(long userId,
-		java.lang.String type, long buildNumber, java.lang.String hostname,
-		int featureSet)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _syncDeviceLocalService.addSyncDevice(userId, type, buildNumber,
-			hostname, featureSet);
 	}
 
 	/**
@@ -76,18 +76,6 @@ public class SyncDeviceLocalServiceWrapper implements SyncDeviceLocalService,
 	}
 
 	/**
-	* Deletes the sync device from the database. Also notifies the appropriate model listeners.
-	*
-	* @param syncDevice the sync device
-	* @return the sync device that was removed
-	*/
-	@Override
-	public com.liferay.sync.model.SyncDevice deleteSyncDevice(
-		com.liferay.sync.model.SyncDevice syncDevice) {
-		return _syncDeviceLocalService.deleteSyncDevice(syncDevice);
-	}
-
-	/**
 	* Deletes the sync device with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param syncDeviceId the primary key of the sync device
@@ -98,6 +86,18 @@ public class SyncDeviceLocalServiceWrapper implements SyncDeviceLocalService,
 	public com.liferay.sync.model.SyncDevice deleteSyncDevice(long syncDeviceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _syncDeviceLocalService.deleteSyncDevice(syncDeviceId);
+	}
+
+	/**
+	* Deletes the sync device from the database. Also notifies the appropriate model listeners.
+	*
+	* @param syncDevice the sync device
+	* @return the sync device that was removed
+	*/
+	@Override
+	public com.liferay.sync.model.SyncDevice deleteSyncDevice(
+		com.liferay.sync.model.SyncDevice syncDevice) {
+		return _syncDeviceLocalService.deleteSyncDevice(syncDevice);
 	}
 
 	@Override
@@ -316,6 +316,15 @@ public class SyncDeviceLocalServiceWrapper implements SyncDeviceLocalService,
 		_syncDeviceLocalService.updateStatus(syncDeviceId, status);
 	}
 
+	@Override
+	public com.liferay.sync.model.SyncDevice updateSyncDevice(
+		long syncDeviceId, java.lang.String type, long buildNumber,
+		int featureSet, java.lang.String hostname, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _syncDeviceLocalService.updateSyncDevice(syncDeviceId, type,
+			buildNumber, featureSet, hostname, status);
+	}
+
 	/**
 	* Updates the sync device in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -326,15 +335,6 @@ public class SyncDeviceLocalServiceWrapper implements SyncDeviceLocalService,
 	public com.liferay.sync.model.SyncDevice updateSyncDevice(
 		com.liferay.sync.model.SyncDevice syncDevice) {
 		return _syncDeviceLocalService.updateSyncDevice(syncDevice);
-	}
-
-	@Override
-	public com.liferay.sync.model.SyncDevice updateSyncDevice(
-		long syncDeviceId, java.lang.String type, long buildNumber,
-		int featureSet, java.lang.String hostname, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _syncDeviceLocalService.updateSyncDevice(syncDeviceId, type,
-			buildNumber, featureSet, hostname, status);
 	}
 
 	@Override

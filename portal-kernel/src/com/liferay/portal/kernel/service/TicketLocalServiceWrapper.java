@@ -39,6 +39,15 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 			classPK, type, extraInfo, expirationDate, serviceContext);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Ticket addTicket(long companyId,
+		java.lang.String className, long classPK, int type,
+		java.lang.String extraInfo, java.util.Date expirationDate,
+		ServiceContext serviceContext) {
+		return _ticketLocalService.addTicket(companyId, className, classPK,
+			type, extraInfo, expirationDate, serviceContext);
+	}
+
 	/**
 	* Adds the ticket to the database. Also notifies the appropriate model listeners.
 	*
@@ -49,15 +58,6 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 	public com.liferay.portal.kernel.model.Ticket addTicket(
 		com.liferay.portal.kernel.model.Ticket ticket) {
 		return _ticketLocalService.addTicket(ticket);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Ticket addTicket(long companyId,
-		java.lang.String className, long classPK, int type,
-		java.lang.String extraInfo, java.util.Date expirationDate,
-		ServiceContext serviceContext) {
-		return _ticketLocalService.addTicket(companyId, className, classPK,
-			type, extraInfo, expirationDate, serviceContext);
 	}
 
 	/**
@@ -82,18 +82,6 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 	}
 
 	/**
-	* Deletes the ticket from the database. Also notifies the appropriate model listeners.
-	*
-	* @param ticket the ticket
-	* @return the ticket that was removed
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Ticket deleteTicket(
-		com.liferay.portal.kernel.model.Ticket ticket) {
-		return _ticketLocalService.deleteTicket(ticket);
-	}
-
-	/**
 	* Deletes the ticket with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param ticketId the primary key of the ticket
@@ -104,6 +92,18 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 	public com.liferay.portal.kernel.model.Ticket deleteTicket(long ticketId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ticketLocalService.deleteTicket(ticketId);
+	}
+
+	/**
+	* Deletes the ticket from the database. Also notifies the appropriate model listeners.
+	*
+	* @param ticket the ticket
+	* @return the ticket that was removed
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.Ticket deleteTicket(
+		com.liferay.portal.kernel.model.Ticket ticket) {
+		return _ticketLocalService.deleteTicket(ticket);
 	}
 
 	@Override
@@ -191,14 +191,14 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Ticket fetchTicket(
-		java.lang.String key) {
-		return _ticketLocalService.fetchTicket(key);
+	public com.liferay.portal.kernel.model.Ticket fetchTicket(long ticketId) {
+		return _ticketLocalService.fetchTicket(ticketId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Ticket fetchTicket(long ticketId) {
-		return _ticketLocalService.fetchTicket(ticketId);
+	public com.liferay.portal.kernel.model.Ticket fetchTicket(
+		java.lang.String key) {
+		return _ticketLocalService.fetchTicket(key);
 	}
 
 	@Override
@@ -228,13 +228,6 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 		return _ticketLocalService.getPersistedModel(primaryKeyObj);
 	}
 
-	@Override
-	public com.liferay.portal.kernel.model.Ticket getTicket(
-		java.lang.String key)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ticketLocalService.getTicket(key);
-	}
-
 	/**
 	* Returns the ticket with the primary key.
 	*
@@ -246,6 +239,13 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 	public com.liferay.portal.kernel.model.Ticket getTicket(long ticketId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ticketLocalService.getTicket(ticketId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Ticket getTicket(
+		java.lang.String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ticketLocalService.getTicket(key);
 	}
 
 	/**
@@ -282,6 +282,15 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 		return _ticketLocalService.getTicketsCount();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Ticket updateTicket(long ticketId,
+		java.lang.String className, long classPK, int type,
+		java.lang.String extraInfo, java.util.Date expirationDate)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ticketLocalService.updateTicket(ticketId, className, classPK,
+			type, extraInfo, expirationDate);
+	}
+
 	/**
 	* Updates the ticket in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -292,15 +301,6 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 	public com.liferay.portal.kernel.model.Ticket updateTicket(
 		com.liferay.portal.kernel.model.Ticket ticket) {
 		return _ticketLocalService.updateTicket(ticket);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Ticket updateTicket(long ticketId,
-		java.lang.String className, long classPK, int type,
-		java.lang.String extraInfo, java.util.Date expirationDate)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ticketLocalService.updateTicket(ticketId, className, classPK,
-			type, extraInfo, expirationDate);
 	}
 
 	@Override

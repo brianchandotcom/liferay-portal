@@ -249,14 +249,14 @@ public interface DLFolderLocalService extends BaseLocalService,
 		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLFolder fetchFolder(java.lang.String uuid, long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFolder fetchFolder(long folderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFolder fetchFolder(long groupId, long parentFolderId,
 		java.lang.String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFolder fetchFolder(java.lang.String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -524,11 +524,11 @@ public interface DLFolderLocalService extends BaseLocalService,
 	public void setDLFileEntryTypeDLFolders(long fileEntryTypeId,
 		long[] folderIds);
 
-	public void unlockFolder(long folderId, java.lang.String lockUuid)
-		throws PortalException;
-
 	public void unlockFolder(long groupId, long parentFolderId,
 		java.lang.String name, java.lang.String lockUuid)
+		throws PortalException;
+
+	public void unlockFolder(long folderId, java.lang.String lockUuid)
 		throws PortalException;
 
 	/**
@@ -539,22 +539,6 @@ public interface DLFolderLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public DLFolder updateDLFolder(DLFolder dlFolder);
-
-	/**
-	* @deprecated As of 7.0.0, replaced {@link #updateFolder(long, long,
-	String, String, long, List, int, ServiceContext)}
-	*/
-	@java.lang.Deprecated
-	public DLFolder updateFolder(long folderId, java.lang.String name,
-		java.lang.String description, long defaultFileEntryTypeId,
-		List<java.lang.Long> fileEntryTypeIds, boolean overrideFileEntryTypes,
-		ServiceContext serviceContext) throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public DLFolder updateFolder(long folderId, java.lang.String name,
-		java.lang.String description, long defaultFileEntryTypeId,
-		List<java.lang.Long> fileEntryTypeIds, int restrictionType,
-		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateFolder(long, long,
@@ -573,6 +557,22 @@ public interface DLFolderLocalService extends BaseLocalService,
 		long defaultFileEntryTypeId, List<java.lang.Long> fileEntryTypeIds,
 		int restrictionType, ServiceContext serviceContext)
 		throws PortalException;
+
+	/**
+	* @deprecated As of 7.0.0, replaced {@link #updateFolder(long, long,
+	String, String, long, List, int, ServiceContext)}
+	*/
+	@java.lang.Deprecated
+	public DLFolder updateFolder(long folderId, java.lang.String name,
+		java.lang.String description, long defaultFileEntryTypeId,
+		List<java.lang.Long> fileEntryTypeIds, boolean overrideFileEntryTypes,
+		ServiceContext serviceContext) throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public DLFolder updateFolder(long folderId, java.lang.String name,
+		java.lang.String description, long defaultFileEntryTypeId,
+		List<java.lang.Long> fileEntryTypeIds, int restrictionType,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #

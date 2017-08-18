@@ -485,6 +485,26 @@ public class ExportImportConfigurationWrapper
 	}
 
 	/**
+	* Returns <code>true</code> if this export import configuration is inactive.
+	*
+	* @return <code>true</code> if this export import configuration is inactive; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInactive() {
+		return _exportImportConfiguration.isInactive();
+	}
+
+	/**
+	* Returns <code>true</code> if this export import configuration is incomplete.
+	*
+	* @return <code>true</code> if this export import configuration is incomplete; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isIncomplete() {
+		return _exportImportConfiguration.isIncomplete();
+	}
+
+	/**
 	* Returns <code>true</code> if this export import configuration is in the Recycle Bin.
 	*
 	* @return <code>true</code> if this export import configuration is in the Recycle Bin; <code>false</code> otherwise
@@ -512,26 +532,6 @@ public class ExportImportConfigurationWrapper
 	@Override
 	public boolean isInTrashImplicitly() {
 		return _exportImportConfiguration.isInTrashImplicitly();
-	}
-
-	/**
-	* Returns <code>true</code> if this export import configuration is inactive.
-	*
-	* @return <code>true</code> if this export import configuration is inactive; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isInactive() {
-		return _exportImportConfiguration.isInactive();
-	}
-
-	/**
-	* Returns <code>true</code> if this export import configuration is incomplete.
-	*
-	* @return <code>true</code> if this export import configuration is incomplete; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isIncomplete() {
-		return _exportImportConfiguration.isIncomplete();
 	}
 
 	@Override
@@ -600,14 +600,14 @@ public class ExportImportConfigurationWrapper
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_exportImportConfiguration.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_exportImportConfiguration.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_exportImportConfiguration.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

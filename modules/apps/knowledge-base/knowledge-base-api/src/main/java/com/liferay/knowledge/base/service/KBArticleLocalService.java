@@ -150,10 +150,10 @@ public interface KBArticleLocalService extends BaseLocalService,
 	public KBArticle deleteKBArticle(long kbArticleId)
 		throws PortalException;
 
-	public void deleteKBArticles(long[] resourcePrimKeys)
+	public void deleteKBArticles(long groupId, long parentResourcePrimKey)
 		throws PortalException;
 
-	public void deleteKBArticles(long groupId, long parentResourcePrimKey)
+	public void deleteKBArticles(long[] resourcePrimKeys)
 		throws PortalException;
 
 	/**
@@ -238,13 +238,13 @@ public interface KBArticleLocalService extends BaseLocalService,
 		int version);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KBArticle fetchKBArticleByUrlTitle(long groupId, long kbFolderId,
+		java.lang.String urlTitle);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBArticle fetchKBArticleByUrlTitle(long groupId,
 		java.lang.String kbFolderUrlTitle, java.lang.String urlTitle)
 		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KBArticle fetchKBArticleByUrlTitle(long groupId, long kbFolderId,
-		java.lang.String urlTitle);
 
 	/**
 	* Returns the kb article matching the UUID and group.
@@ -325,13 +325,13 @@ public interface KBArticleLocalService extends BaseLocalService,
 		int status, OrderByComparator<KBArticle> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KBArticle getKBArticleByUrlTitle(long groupId, long kbFolderId,
+		java.lang.String urlTitle) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBArticle getKBArticleByUrlTitle(long groupId,
 		java.lang.String kbFolderUrlTitle, java.lang.String urlTitle)
 		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KBArticle getKBArticleByUrlTitle(long groupId, long kbFolderId,
-		java.lang.String urlTitle) throws PortalException;
 
 	/**
 	* Returns the kb article matching the UUID and group.
@@ -344,14 +344,6 @@ public interface KBArticleLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBArticle getKBArticleByUuidAndGroupId(java.lang.String uuid,
 		long groupId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBArticle> getKBArticleVersions(long resourcePrimKey,
-		int status, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKBArticleVersionsCount(long resourcePrimKey, int status);
 
 	/**
 	* Returns a range of all the kb articles.
@@ -368,12 +360,12 @@ public interface KBArticleLocalService extends BaseLocalService,
 	public List<KBArticle> getKBArticles(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBArticle> getKBArticles(long[] resourcePrimKeys, int status,
+	public List<KBArticle> getKBArticles(long groupId,
+		long parentResourcePrimKey, int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBArticle> getKBArticles(long groupId,
-		long parentResourcePrimKey, int status, int start, int end,
+	public List<KBArticle> getKBArticles(long[] resourcePrimKeys, int status,
 		OrderByComparator<KBArticle> orderByComparator);
 
 	/**
@@ -415,6 +407,14 @@ public interface KBArticleLocalService extends BaseLocalService,
 		int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KBArticle> getKBArticleVersions(long resourcePrimKey,
+		int status, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getKBArticleVersionsCount(long resourcePrimKey, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KBArticle> getKBFolderKBArticles(long groupId, long kbFolderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -439,12 +439,12 @@ public interface KBArticleLocalService extends BaseLocalService,
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+	public List<?extends PersistedModel> getPersistedModel(long resourcePrimKey)
 		throws PortalException;
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<?extends PersistedModel> getPersistedModel(long resourcePrimKey)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

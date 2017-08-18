@@ -72,13 +72,13 @@ public interface MDRActionLocalService extends BaseLocalService,
 	public MDRAction addAction(long ruleGroupInstanceId,
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
+		java.lang.String typeSettings, ServiceContext serviceContext)
 		throws PortalException;
 
 	public MDRAction addAction(long ruleGroupInstanceId,
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		java.lang.String typeSettings, ServiceContext serviceContext)
+		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -98,21 +98,12 @@ public interface MDRActionLocalService extends BaseLocalService,
 	*/
 	public MDRAction createMDRAction(long actionId);
 
+	public void deleteAction(long actionId);
+
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public void deleteAction(MDRAction action);
 
-	public void deleteAction(long actionId);
-
 	public void deleteActions(long ruleGroupInstanceId);
-
-	/**
-	* Deletes the mdr action from the database. Also notifies the appropriate model listeners.
-	*
-	* @param mdrAction the mdr action
-	* @return the mdr action that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public MDRAction deleteMDRAction(MDRAction mdrAction);
 
 	/**
 	* Deletes the mdr action with the primary key from the database. Also notifies the appropriate model listeners.
@@ -123,6 +114,15 @@ public interface MDRActionLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public MDRAction deleteMDRAction(long actionId) throws PortalException;
+
+	/**
+	* Deletes the mdr action from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mdrAction the mdr action
+	* @return the mdr action that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public MDRAction deleteMDRAction(MDRAction mdrAction);
 
 	/**
 	* @throws PortalException
@@ -319,13 +319,13 @@ public interface MDRActionLocalService extends BaseLocalService,
 	public MDRAction updateAction(long actionId,
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
+		java.lang.String typeSettings, ServiceContext serviceContext)
 		throws PortalException;
 
 	public MDRAction updateAction(long actionId,
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, java.lang.String type,
-		java.lang.String typeSettings, ServiceContext serviceContext)
+		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

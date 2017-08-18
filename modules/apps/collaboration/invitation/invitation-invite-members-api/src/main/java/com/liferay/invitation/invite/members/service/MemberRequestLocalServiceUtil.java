@@ -41,6 +41,16 @@ public class MemberRequestLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.invitation.invite.members.service.impl.MemberRequestLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.invitation.invite.members.model.MemberRequest addMemberRequest(
+		long userId, long groupId, long receiverUserId,
+		java.lang.String receiverEmailAddress, long invitedRoleId,
+		long invitedTeamId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addMemberRequest(userId, groupId, receiverUserId,
+			receiverEmailAddress, invitedRoleId, invitedTeamId, serviceContext);
+	}
 
 	/**
 	* Adds the member request to the database. Also notifies the appropriate model listeners.
@@ -53,15 +63,13 @@ public class MemberRequestLocalServiceUtil {
 		return getService().addMemberRequest(memberRequest);
 	}
 
-	public static com.liferay.invitation.invite.members.model.MemberRequest addMemberRequest(
-		long userId, long groupId, long receiverUserId,
-		java.lang.String receiverEmailAddress, long invitedRoleId,
-		long invitedTeamId,
+	public static void addMemberRequests(long userId, long groupId,
+		long[] receiverUserIds, long invitedRoleId, long invitedTeamId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addMemberRequest(userId, groupId, receiverUserId,
-			receiverEmailAddress, invitedRoleId, invitedTeamId, serviceContext);
+		getService()
+			.addMemberRequests(userId, groupId, receiverUserIds, invitedRoleId,
+			invitedTeamId, serviceContext);
 	}
 
 	public static void addMemberRequests(long userId, long groupId,
@@ -71,15 +79,6 @@ public class MemberRequestLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.addMemberRequests(userId, groupId, emailAddresses, invitedRoleId,
-			invitedTeamId, serviceContext);
-	}
-
-	public static void addMemberRequests(long userId, long groupId,
-		long[] receiverUserIds, long invitedRoleId, long invitedTeamId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addMemberRequests(userId, groupId, receiverUserIds, invitedRoleId,
 			invitedTeamId, serviceContext);
 	}
 
@@ -95,17 +94,6 @@ public class MemberRequestLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the member request from the database. Also notifies the appropriate model listeners.
-	*
-	* @param memberRequest the member request
-	* @return the member request that was removed
-	*/
-	public static com.liferay.invitation.invite.members.model.MemberRequest deleteMemberRequest(
-		com.liferay.invitation.invite.members.model.MemberRequest memberRequest) {
-		return getService().deleteMemberRequest(memberRequest);
-	}
-
-	/**
 	* Deletes the member request with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param memberRequestId the primary key of the member request
@@ -116,6 +104,17 @@ public class MemberRequestLocalServiceUtil {
 		long memberRequestId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteMemberRequest(memberRequestId);
+	}
+
+	/**
+	* Deletes the member request from the database. Also notifies the appropriate model listeners.
+	*
+	* @param memberRequest the member request
+	* @return the member request that was removed
+	*/
+	public static com.liferay.invitation.invite.members.model.MemberRequest deleteMemberRequest(
+		com.liferay.invitation.invite.members.model.MemberRequest memberRequest) {
+		return getService().deleteMemberRequest(memberRequest);
 	}
 
 	/**
@@ -304,6 +303,12 @@ public class MemberRequestLocalServiceUtil {
 		return getService().hasPendingMemberRequest(groupId, receiverUserId);
 	}
 
+	public static com.liferay.invitation.invite.members.model.MemberRequest updateMemberRequest(
+		long userId, long memberRequestId, int status)
+		throws java.lang.Exception {
+		return getService().updateMemberRequest(userId, memberRequestId, status);
+	}
+
 	/**
 	* Updates the member request in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -319,12 +324,6 @@ public class MemberRequestLocalServiceUtil {
 		java.lang.String key, long receiverUserId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateMemberRequest(key, receiverUserId);
-	}
-
-	public static com.liferay.invitation.invite.members.model.MemberRequest updateMemberRequest(
-		long userId, long memberRequestId, int status)
-		throws java.lang.Exception {
-		return getService().updateMemberRequest(userId, memberRequestId, status);
 	}
 
 	public static MemberRequestLocalService getService() {

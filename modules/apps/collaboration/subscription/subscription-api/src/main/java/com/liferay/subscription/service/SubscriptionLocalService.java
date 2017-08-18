@@ -62,15 +62,6 @@ public interface SubscriptionLocalService extends BaseLocalService,
 	 */
 
 	/**
-	* Adds the subscription to the database. Also notifies the appropriate model listeners.
-	*
-	* @param subscription the subscription
-	* @return the subscription that was added
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public Subscription addSubscription(Subscription subscription);
-
-	/**
 	* Subscribes the user to the entity, notifying him the instant the entity
 	* is created, deleted, or modified.
 	*
@@ -120,6 +111,15 @@ public interface SubscriptionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
+	* Adds the subscription to the database. Also notifies the appropriate model listeners.
+	*
+	* @param subscription the subscription
+	* @return the subscription that was added
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public Subscription addSubscription(Subscription subscription);
+
+	/**
 	* Creates a new subscription with the primary key. Does not add the subscription to the database.
 	*
 	* @param subscriptionId the primary key for the new subscription
@@ -134,17 +134,6 @@ public interface SubscriptionLocalService extends BaseLocalService,
 	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	/**
-	* Deletes the subscription from the database. Also notifies the appropriate model listeners.
-	*
-	* @param subscription the subscription
-	* @return the subscription that was removed
-	* @throws PortalException
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public Subscription deleteSubscription(Subscription subscription)
 		throws PortalException;
 
 	/**
@@ -170,11 +159,25 @@ public interface SubscriptionLocalService extends BaseLocalService,
 		long classPK) throws PortalException;
 
 	/**
+	* Deletes the subscription from the database. Also notifies the appropriate model listeners.
+	*
+	* @param subscription the subscription
+	* @return the subscription that was removed
+	* @throws PortalException
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public Subscription deleteSubscription(Subscription subscription)
+		throws PortalException;
+
+	/**
 	* Deletes all the subscriptions of the user.
 	*
 	* @param userId the primary key of the user
 	*/
 	public void deleteSubscriptions(long userId) throws PortalException;
+
+	public void deleteSubscriptions(long userId, long groupId)
+		throws PortalException;
 
 	/**
 	* Deletes all the subscriptions to the entity.
@@ -185,9 +188,6 @@ public interface SubscriptionLocalService extends BaseLocalService,
 	*/
 	public void deleteSubscriptions(long companyId, java.lang.String className,
 		long classPK) throws PortalException;
-
-	public void deleteSubscriptions(long userId, long groupId)
-		throws PortalException;
 
 	public DynamicQuery dynamicQuery();
 
@@ -312,18 +312,6 @@ public interface SubscriptionLocalService extends BaseLocalService,
 	public List<Subscription> getSubscriptions(int start, int end);
 
 	/**
-	* Returns all the subscriptions to the entity.
-	*
-	* @param companyId the primary key of the company
-	* @param className the entity's class name
-	* @param classPK the primary key of the entity's instance
-	* @return the subscriptions to the entity
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Subscription> getSubscriptions(long companyId,
-		java.lang.String className, long classPK);
-
-	/**
 	* Returns all the subscriptions of the user to the entities.
 	*
 	* @param companyId the primary key of the company
@@ -335,6 +323,18 @@ public interface SubscriptionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Subscription> getSubscriptions(long companyId, long userId,
 		java.lang.String className, long[] classPKs);
+
+	/**
+	* Returns all the subscriptions to the entity.
+	*
+	* @param companyId the primary key of the company
+	* @param className the entity's class name
+	* @param classPK the primary key of the entity's instance
+	* @return the subscriptions to the entity
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Subscription> getSubscriptions(long companyId,
+		java.lang.String className, long classPK);
 
 	/**
 	* Returns the number of subscriptions.
@@ -379,6 +379,20 @@ public interface SubscriptionLocalService extends BaseLocalService,
 	public int getUserSubscriptionsCount(long userId);
 
 	/**
+	* Returns <code>true</code> if the user is subscribed to the entity.
+	*
+	* @param companyId the primary key of the company
+	* @param userId the primary key of the user
+	* @param className the entity's class name
+	* @param classPK the primary key of the entity's instance
+	* @return <code>true</code> if the user is subscribed to the entity;
+	<code>false</code> otherwise
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean isSubscribed(long companyId, long userId,
+		java.lang.String className, long classPK);
+
+	/**
 	* Returns <code>true</code> if the user is subscribed to any of the
 	* entities.
 	*
@@ -392,20 +406,6 @@ public interface SubscriptionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isSubscribed(long companyId, long userId,
 		java.lang.String className, long[] classPKs);
-
-	/**
-	* Returns <code>true</code> if the user is subscribed to the entity.
-	*
-	* @param companyId the primary key of the company
-	* @param userId the primary key of the user
-	* @param className the entity's class name
-	* @param classPK the primary key of the entity's instance
-	* @return <code>true</code> if the user is subscribed to the entity;
-	<code>false</code> otherwise
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean isSubscribed(long companyId, long userId,
-		java.lang.String className, long classPK);
 
 	/**
 	* Updates the subscription in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

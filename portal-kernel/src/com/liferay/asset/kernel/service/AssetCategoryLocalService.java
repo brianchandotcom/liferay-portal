@@ -93,15 +93,15 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 
 	public void addAssetEntryAssetCategory(long entryId, long categoryId);
 
-	public AssetCategory addCategory(long userId, long groupId,
-		java.lang.String title, long vocabularyId, ServiceContext serviceContext)
-		throws PortalException;
-
 	@Indexable(type = IndexableType.REINDEX)
 	public AssetCategory addCategory(long userId, long groupId,
 		long parentCategoryId, Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> descriptionMap, long vocabularyId,
 		java.lang.String[] categoryProperties, ServiceContext serviceContext)
+		throws PortalException;
+
+	public AssetCategory addCategory(long userId, long groupId,
+		java.lang.String title, long vocabularyId, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void addCategoryResources(AssetCategory category,
@@ -361,20 +361,20 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 	public List<AssetCategory> getCategories(Hits hits)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetCategory> getCategories(java.lang.String className,
-		long classPK);
-
 	@ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetCategory> getCategories(long classNameId, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public AssetCategory getCategory(java.lang.String uuid, long groupId)
-		throws PortalException;
+	public List<AssetCategory> getCategories(java.lang.String className,
+		long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetCategory getCategory(long categoryId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetCategory getCategory(java.lang.String uuid, long groupId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long[] getCategoryIds(java.lang.String className, long classPK);
@@ -383,11 +383,11 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 	public java.lang.String[] getCategoryNames();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String[] getCategoryNames(java.lang.String className,
-		long classPK);
+	public java.lang.String[] getCategoryNames(long classNameId, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String[] getCategoryNames(long classNameId, long classPK);
+	public java.lang.String[] getCategoryNames(java.lang.String className,
+		long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetCategory> getChildCategories(long parentCategoryId);

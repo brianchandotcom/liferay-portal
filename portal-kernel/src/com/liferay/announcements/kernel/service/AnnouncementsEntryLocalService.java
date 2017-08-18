@@ -76,6 +76,12 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 	public AnnouncementsEntry addAnnouncementsEntry(
 		AnnouncementsEntry announcementsEntry);
 
+	public AnnouncementsEntry addEntry(long userId, long classNameId,
+		long classPK, java.lang.String title, java.lang.String content,
+		java.lang.String url, java.lang.String type, Date displayDate,
+		Date expirationDate, int priority, boolean alert)
+		throws PortalException;
+
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #addEntry(long, long, long,
 	String, String, String, String, Date, Date, int, boolean)}
@@ -89,12 +95,6 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
 		int expirationDateHour, int expirationDateMinute, int priority,
 		boolean alert) throws PortalException;
-
-	public AnnouncementsEntry addEntry(long userId, long classNameId,
-		long classPK, java.lang.String title, java.lang.String content,
-		java.lang.String url, java.lang.String type, Date displayDate,
-		Date expirationDate, int priority, boolean alert)
-		throws PortalException;
 
 	public void checkEntries() throws PortalException;
 
@@ -354,11 +354,6 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 	public AnnouncementsEntry updateAnnouncementsEntry(
 		AnnouncementsEntry announcementsEntry);
 
-	public AnnouncementsEntry updateEntry(long entryId, java.lang.String title,
-		java.lang.String content, java.lang.String url, java.lang.String type,
-		Date displayDate, Date expirationDate, int priority)
-		throws PortalException;
-
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, String,
 	String, String, String, Date, Date, int)}
@@ -371,4 +366,9 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 		boolean displayImmediately, int expirationDateMonth,
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, int priority) throws PortalException;
+
+	public AnnouncementsEntry updateEntry(long entryId, java.lang.String title,
+		java.lang.String content, java.lang.String url, java.lang.String type,
+		Date displayDate, Date expirationDate, int priority)
+		throws PortalException;
 }

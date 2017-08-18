@@ -68,11 +68,11 @@ public interface UserGroupRoleLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public UserGroupRole addUserGroupRole(UserGroupRole userGroupRole);
 
-	public List<UserGroupRole> addUserGroupRoles(long[] userIds, long groupId,
-		long roleId);
-
 	public List<UserGroupRole> addUserGroupRoles(long userId, long groupId,
 		long[] roleIds);
+
+	public List<UserGroupRole> addUserGroupRoles(long[] userIds, long groupId,
+		long roleId);
 
 	/**
 	* Creates a new user group role with the primary key. Does not add the user group role to the database.
@@ -111,13 +111,13 @@ public interface UserGroupRoleLocalService extends BaseLocalService,
 
 	public void deleteUserGroupRoles(long groupId, int roleType);
 
-	public void deleteUserGroupRoles(long[] userIds, long groupId);
+	public void deleteUserGroupRoles(long userId, long groupId, long[] roleIds);
 
 	public void deleteUserGroupRoles(long userId, long[] groupIds);
 
-	public void deleteUserGroupRoles(long[] userIds, long groupId, int roleType);
+	public void deleteUserGroupRoles(long[] userIds, long groupId);
 
-	public void deleteUserGroupRoles(long userId, long groupId, long[] roleIds);
+	public void deleteUserGroupRoles(long[] userIds, long groupId, int roleType);
 
 	public void deleteUserGroupRoles(long[] userIds, long groupId, long roleId);
 
@@ -265,19 +265,19 @@ public interface UserGroupRoleLocalService extends BaseLocalService,
 	public int getUserGroupRolesCount(long userId, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasUserGroupRole(long userId, long groupId, long roleId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasUserGroupRole(long userId, long groupId, long roleId,
+		boolean inherit);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasUserGroupRole(long userId, long groupId,
 		java.lang.String roleName) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasUserGroupRole(long userId, long groupId,
 		java.lang.String roleName, boolean inherit) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserGroupRole(long userId, long groupId, long roleId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserGroupRole(long userId, long groupId, long roleId,
-		boolean inherit);
 
 	/**
 	* Updates the user group role in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

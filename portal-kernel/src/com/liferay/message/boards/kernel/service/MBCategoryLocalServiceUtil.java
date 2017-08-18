@@ -71,6 +71,20 @@ public class MBCategoryLocalServiceUtil {
 			outPassword, allowAnonymous, mailingListActive, serviceContext);
 	}
 
+	public static void addCategoryResources(long categoryId,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addCategoryResources(categoryId, addGroupPermissions,
+			addGuestPermissions);
+	}
+
+	public static void addCategoryResources(long categoryId,
+		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().addCategoryResources(categoryId, modelPermissions);
+	}
+
 	public static void addCategoryResources(
 		com.liferay.message.boards.kernel.model.MBCategory category,
 		boolean addGroupPermissions, boolean addGuestPermissions)
@@ -85,20 +99,6 @@ public class MBCategoryLocalServiceUtil {
 		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().addCategoryResources(category, modelPermissions);
-	}
-
-	public static void addCategoryResources(long categoryId,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addCategoryResources(categoryId, addGroupPermissions,
-			addGuestPermissions);
-	}
-
-	public static void addCategoryResources(long categoryId,
-		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addCategoryResources(categoryId, modelPermissions);
 	}
 
 	/**
@@ -128,6 +128,11 @@ public class MBCategoryLocalServiceUtil {
 		getService().deleteCategories(groupId);
 	}
 
+	public static void deleteCategory(long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCategory(categoryId);
+	}
+
 	public static void deleteCategory(
 		com.liferay.message.boards.kernel.model.MBCategory category)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -141,22 +146,6 @@ public class MBCategoryLocalServiceUtil {
 		getService().deleteCategory(category, includeTrashedEntries);
 	}
 
-	public static void deleteCategory(long categoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteCategory(categoryId);
-	}
-
-	/**
-	* Deletes the message boards category from the database. Also notifies the appropriate model listeners.
-	*
-	* @param mbCategory the message boards category
-	* @return the message boards category that was removed
-	*/
-	public static com.liferay.message.boards.kernel.model.MBCategory deleteMBCategory(
-		com.liferay.message.boards.kernel.model.MBCategory mbCategory) {
-		return getService().deleteMBCategory(mbCategory);
-	}
-
 	/**
 	* Deletes the message boards category with the primary key from the database. Also notifies the appropriate model listeners.
 	*
@@ -168,6 +157,17 @@ public class MBCategoryLocalServiceUtil {
 		long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteMBCategory(categoryId);
+	}
+
+	/**
+	* Deletes the message boards category from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mbCategory the message boards category
+	* @return the message boards category that was removed
+	*/
+	public static com.liferay.message.boards.kernel.model.MBCategory deleteMBCategory(
+		com.liferay.message.boards.kernel.model.MBCategory mbCategory) {
+		return getService().deleteMBCategory(mbCategory);
 	}
 
 	/**
@@ -289,19 +289,8 @@ public class MBCategoryLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
-		long groupId, long[] parentCategoryIds, int start, int end) {
-		return getService().getCategories(groupId, parentCategoryIds, start, end);
-	}
-
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
 		long groupId, long parentCategoryId, int start, int end) {
 		return getService().getCategories(groupId, parentCategoryId, start, end);
-	}
-
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
-		long groupId, long[] parentCategoryIds, int status, int start, int end) {
-		return getService()
-				   .getCategories(groupId, parentCategoryIds, status, start, end);
 	}
 
 	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
@@ -316,6 +305,17 @@ public class MBCategoryLocalServiceUtil {
 		return getService()
 				   .getCategories(groupId, excludedCategoryId,
 			parentCategoryId, status, start, end);
+	}
+
+	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+		long groupId, long[] parentCategoryIds, int start, int end) {
+		return getService().getCategories(groupId, parentCategoryIds, start, end);
+	}
+
+	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+		long groupId, long[] parentCategoryIds, int status, int start, int end) {
+		return getService()
+				   .getCategories(groupId, parentCategoryIds, status, start, end);
 	}
 
 	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
@@ -361,10 +361,6 @@ public class MBCategoryLocalServiceUtil {
 		return getService().getCategoriesCount(groupId, status);
 	}
 
-	public static int getCategoriesCount(long groupId, long[] parentCategoryIds) {
-		return getService().getCategoriesCount(groupId, parentCategoryIds);
-	}
-
 	public static int getCategoriesCount(long groupId, long parentCategoryId) {
 		return getService().getCategoriesCount(groupId, parentCategoryId);
 	}
@@ -372,6 +368,17 @@ public class MBCategoryLocalServiceUtil {
 	public static int getCategoriesCount(long groupId, long parentCategoryId,
 		int status) {
 		return getService().getCategoriesCount(groupId, parentCategoryId, status);
+	}
+
+	public static int getCategoriesCount(long groupId, long excludedCategoryId,
+		long parentCategoryId, int status) {
+		return getService()
+				   .getCategoriesCount(groupId, excludedCategoryId,
+			parentCategoryId, status);
+	}
+
+	public static int getCategoriesCount(long groupId, long[] parentCategoryIds) {
+		return getService().getCategoriesCount(groupId, parentCategoryIds);
 	}
 
 	public static int getCategoriesCount(long groupId,
@@ -385,13 +392,6 @@ public class MBCategoryLocalServiceUtil {
 		return getService()
 				   .getCategoriesCount(groupId, excludedCategoryIds,
 			parentCategoryIds, status);
-	}
-
-	public static int getCategoriesCount(long groupId, long excludedCategoryId,
-		long parentCategoryId, int status) {
-		return getService()
-				   .getCategoriesCount(groupId, excludedCategoryId,
-			parentCategoryId, status);
 	}
 
 	public static com.liferay.message.boards.kernel.model.MBCategory getCategory(

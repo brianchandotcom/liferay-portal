@@ -57,6 +57,9 @@ public interface RecentLayoutRevisionLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RecentLayoutRevisionLocalServiceUtil} to access the recent layout revision local service. Add custom service methods to {@link com.liferay.portal.service.impl.RecentLayoutRevisionLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public RecentLayoutRevision addRecentLayoutRevision(long userId,
+		long layoutRevisionId, long layoutSetBranchId, long plid)
+		throws PortalException;
 
 	/**
 	* Adds the recent layout revision to the database. Also notifies the appropriate model listeners.
@@ -67,10 +70,6 @@ public interface RecentLayoutRevisionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public RecentLayoutRevision addRecentLayoutRevision(
 		RecentLayoutRevision recentLayoutRevision);
-
-	public RecentLayoutRevision addRecentLayoutRevision(long userId,
-		long layoutRevisionId, long layoutSetBranchId, long plid)
-		throws PortalException;
 
 	/**
 	* Creates a new recent layout revision with the primary key. Does not add the recent layout revision to the database.
@@ -89,16 +88,6 @@ public interface RecentLayoutRevisionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the recent layout revision from the database. Also notifies the appropriate model listeners.
-	*
-	* @param recentLayoutRevision the recent layout revision
-	* @return the recent layout revision that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public RecentLayoutRevision deleteRecentLayoutRevision(
-		RecentLayoutRevision recentLayoutRevision);
-
-	/**
 	* Deletes the recent layout revision with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param recentLayoutRevisionId the primary key of the recent layout revision
@@ -108,6 +97,16 @@ public interface RecentLayoutRevisionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public RecentLayoutRevision deleteRecentLayoutRevision(
 		long recentLayoutRevisionId) throws PortalException;
+
+	/**
+	* Deletes the recent layout revision from the database. Also notifies the appropriate model listeners.
+	*
+	* @param recentLayoutRevision the recent layout revision
+	* @return the recent layout revision that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public RecentLayoutRevision deleteRecentLayoutRevision(
+		RecentLayoutRevision recentLayoutRevision);
 
 	public void deleteRecentLayoutRevisions(long layoutRevisionId);
 

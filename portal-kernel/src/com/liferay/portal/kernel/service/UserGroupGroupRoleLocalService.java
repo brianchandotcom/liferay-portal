@@ -69,11 +69,11 @@ public interface UserGroupGroupRoleLocalService extends BaseLocalService,
 	public UserGroupGroupRole addUserGroupGroupRole(
 		UserGroupGroupRole userGroupGroupRole);
 
-	public void addUserGroupGroupRoles(long[] userGroupIds, long groupId,
-		long roleId);
-
 	public void addUserGroupGroupRoles(long userGroupId, long groupId,
 		long[] roleIds);
+
+	public void addUserGroupGroupRoles(long[] userGroupIds, long groupId,
+		long roleId);
 
 	/**
 	* Creates a new user group group role with the primary key. Does not add the user group group role to the database.
@@ -114,12 +114,12 @@ public interface UserGroupGroupRoleLocalService extends BaseLocalService,
 
 	public void deleteUserGroupGroupRoles(long groupId, int roleType);
 
-	public void deleteUserGroupGroupRoles(long[] userGroupIds, long groupId);
+	public void deleteUserGroupGroupRoles(long userGroupId, long groupId,
+		long[] roleIds);
 
 	public void deleteUserGroupGroupRoles(long userGroupId, long[] groupIds);
 
-	public void deleteUserGroupGroupRoles(long userGroupId, long groupId,
-		long[] roleIds);
+	public void deleteUserGroupGroupRoles(long[] userGroupIds, long groupId);
 
 	public void deleteUserGroupGroupRoles(long[] userGroupIds, long groupId,
 		long roleId);
@@ -264,11 +264,11 @@ public interface UserGroupGroupRoleLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasUserGroupGroupRole(long userGroupId, long groupId,
-		java.lang.String roleName) throws PortalException;
+		long roleId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasUserGroupGroupRole(long userGroupId, long groupId,
-		long roleId);
+		java.lang.String roleName) throws PortalException;
 
 	/**
 	* Updates the user group group role in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

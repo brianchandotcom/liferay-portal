@@ -83,18 +83,18 @@ public interface MBCategoryLocalService extends BaseLocalService,
 		boolean allowAnonymous, boolean mailingListActive,
 		ServiceContext serviceContext) throws PortalException;
 
-	public void addCategoryResources(MBCategory category,
+	public void addCategoryResources(long categoryId,
 		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws PortalException;
 
-	public void addCategoryResources(MBCategory category,
+	public void addCategoryResources(long categoryId,
 		ModelPermissions modelPermissions) throws PortalException;
 
-	public void addCategoryResources(long categoryId,
+	public void addCategoryResources(MBCategory category,
 		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws PortalException;
 
-	public void addCategoryResources(long categoryId,
+	public void addCategoryResources(MBCategory category,
 		ModelPermissions modelPermissions) throws PortalException;
 
 	/**
@@ -116,22 +116,13 @@ public interface MBCategoryLocalService extends BaseLocalService,
 
 	public void deleteCategories(long groupId) throws PortalException;
 
+	public void deleteCategory(long categoryId) throws PortalException;
+
 	public void deleteCategory(MBCategory category) throws PortalException;
 
 	@SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
 	public void deleteCategory(MBCategory category,
 		boolean includeTrashedEntries) throws PortalException;
-
-	public void deleteCategory(long categoryId) throws PortalException;
-
-	/**
-	* Deletes the message boards category from the database. Also notifies the appropriate model listeners.
-	*
-	* @param mbCategory the message boards category
-	* @return the message boards category that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public MBCategory deleteMBCategory(MBCategory mbCategory);
 
 	/**
 	* Deletes the message boards category with the primary key from the database. Also notifies the appropriate model listeners.
@@ -143,6 +134,15 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public MBCategory deleteMBCategory(long categoryId)
 		throws PortalException;
+
+	/**
+	* Deletes the message boards category from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mbCategory the message boards category
+	* @return the message boards category that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public MBCategory deleteMBCategory(MBCategory mbCategory);
 
 	/**
 	* @throws PortalException
@@ -234,16 +234,8 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	public List<MBCategory> getCategories(long groupId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBCategory> getCategories(long groupId,
-		long[] parentCategoryIds, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBCategory> getCategories(long groupId, long parentCategoryId,
 		int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBCategory> getCategories(long groupId,
-		long[] parentCategoryIds, int status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBCategory> getCategories(long groupId, long parentCategoryId,
@@ -253,6 +245,14 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	public List<MBCategory> getCategories(long groupId,
 		long excludedCategoryId, long parentCategoryId, int status, int start,
 		int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBCategory> getCategories(long groupId,
+		long[] parentCategoryIds, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBCategory> getCategories(long groupId,
+		long[] parentCategoryIds, int status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBCategory> getCategories(long groupId,
@@ -285,14 +285,18 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	public int getCategoriesCount(long groupId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCategoriesCount(long groupId, long[] parentCategoryIds);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCategoriesCount(long groupId, long parentCategoryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCategoriesCount(long groupId, long parentCategoryId,
 		int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCategoriesCount(long groupId, long excludedCategoryId,
+		long parentCategoryId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCategoriesCount(long groupId, long[] parentCategoryIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCategoriesCount(long groupId, long[] parentCategoryIds,
@@ -301,10 +305,6 @@ public interface MBCategoryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCategoriesCount(long groupId, long[] excludedCategoryIds,
 		long[] parentCategoryIds, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCategoriesCount(long groupId, long excludedCategoryId,
-		long parentCategoryId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MBCategory getCategory(long categoryId) throws PortalException;

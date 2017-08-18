@@ -209,30 +209,6 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 	/**
 	* Returns the localized description of this document library file entry type in the language. Uses the default language if no localization exists for the requested language.
 	*
-	* @param languageId the ID of the language
-	* @return the localized description of this document library file entry type
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
-		return _dlFileEntryType.getDescription(languageId);
-	}
-
-	/**
-	* Returns the localized description of this document library file entry type in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this document library file entry type
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
-		return _dlFileEntryType.getDescription(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized description of this document library file entry type in the language. Uses the default language if no localization exists for the requested language.
-	*
 	* @param locale the locale of the language
 	* @return the localized description of this document library file entry type
 	*/
@@ -252,6 +228,30 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 	public java.lang.String getDescription(java.util.Locale locale,
 		boolean useDefault) {
 		return _dlFileEntryType.getDescription(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized description of this document library file entry type in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized description of this document library file entry type
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId) {
+		return _dlFileEntryType.getDescription(languageId);
+	}
+
+	/**
+	* Returns the localized description of this document library file entry type in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this document library file entry type
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId,
+		boolean useDefault) {
+		return _dlFileEntryType.getDescription(languageId, useDefault);
 	}
 
 	@Override
@@ -342,6 +342,29 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 	/**
 	* Returns the localized name of this document library file entry type in the language. Uses the default language if no localization exists for the requested language.
 	*
+	* @param locale the locale of the language
+	* @return the localized name of this document library file entry type
+	*/
+	@Override
+	public java.lang.String getName(java.util.Locale locale) {
+		return _dlFileEntryType.getName(locale);
+	}
+
+	/**
+	* Returns the localized name of this document library file entry type in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this document library file entry type. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+		return _dlFileEntryType.getName(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized name of this document library file entry type in the language. Uses the default language if no localization exists for the requested language.
+	*
 	* @param languageId the ID of the language
 	* @return the localized name of this document library file entry type
 	*/
@@ -361,29 +384,6 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 	public java.lang.String getName(java.lang.String languageId,
 		boolean useDefault) {
 		return _dlFileEntryType.getName(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized name of this document library file entry type in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized name of this document library file entry type
-	*/
-	@Override
-	public java.lang.String getName(java.util.Locale locale) {
-		return _dlFileEntryType.getName(locale);
-	}
-
-	/**
-	* Returns the localized name of this document library file entry type in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized name of this document library file entry type. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
-		return _dlFileEntryType.getName(locale, useDefault);
 	}
 
 	@Override
@@ -603,14 +603,14 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_dlFileEntryType.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_dlFileEntryType.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_dlFileEntryType.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

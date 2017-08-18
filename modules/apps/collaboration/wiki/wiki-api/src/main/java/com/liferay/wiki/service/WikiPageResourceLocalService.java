@@ -60,6 +60,8 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WikiPageResourceLocalServiceUtil} to access the wiki page resource local service. Add custom service methods to {@link com.liferay.wiki.service.impl.WikiPageResourceLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public WikiPageResource addPageResource(long groupId, long nodeId,
+		java.lang.String title);
 
 	/**
 	* @deprecated As of 1.2.0, replaced by {@link #addPageResource(long, long,
@@ -67,9 +69,6 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	*/
 	@java.lang.Deprecated
 	public WikiPageResource addPageResource(long nodeId, java.lang.String title);
-
-	public WikiPageResource addPageResource(long groupId, long nodeId,
-		java.lang.String title);
 
 	/**
 	* Adds the wiki page resource to the database. Also notifies the appropriate model listeners.
@@ -100,16 +99,6 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the wiki page resource from the database. Also notifies the appropriate model listeners.
-	*
-	* @param wikiPageResource the wiki page resource
-	* @return the wiki page resource that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public WikiPageResource deleteWikiPageResource(
-		WikiPageResource wikiPageResource);
-
-	/**
 	* Deletes the wiki page resource with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param resourcePrimKey the primary key of the wiki page resource
@@ -119,6 +108,16 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public WikiPageResource deleteWikiPageResource(long resourcePrimKey)
 		throws PortalException;
+
+	/**
+	* Deletes the wiki page resource from the database. Also notifies the appropriate model listeners.
+	*
+	* @param wikiPageResource the wiki page resource
+	* @return the wiki page resource that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public WikiPageResource deleteWikiPageResource(
+		WikiPageResource wikiPageResource);
 
 	public DynamicQuery dynamicQuery();
 
@@ -180,11 +179,11 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WikiPageResource fetchPageResource(java.lang.String uuid);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiPageResource fetchPageResource(long nodeId,
 		java.lang.String title);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WikiPageResource fetchPageResource(java.lang.String uuid);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiPageResource fetchWikiPageResource(long resourcePrimKey);
@@ -221,6 +220,10 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	public WikiPageResource getPageResource(long nodeId, java.lang.String title)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getPageResourcePrimKey(long groupId, long nodeId,
+		java.lang.String title);
+
 	/**
 	* @deprecated As of 1.2.0, replaced by {@link #getPageResourcePrimKey(long,
 	long, String)}
@@ -228,10 +231,6 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getPageResourcePrimKey(long nodeId, java.lang.String title);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getPageResourcePrimKey(long groupId, long nodeId,
-		java.lang.String title);
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

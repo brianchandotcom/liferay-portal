@@ -512,6 +512,18 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	}
 
 	/**
+	* Returns the asset tags in the groups.
+	*
+	* @param groupIds the primary keys of the groups
+	* @return the asset tags in the groups
+	*/
+	@Override
+	public java.util.List<com.liferay.asset.kernel.model.AssetTag> getGroupsTags(
+		long[] groupIds) {
+		return _assetTagLocalService.getGroupsTags(groupIds);
+	}
+
+	/**
 	* Returns the asset tags in the group.
 	*
 	* @param groupId the primary key of the group
@@ -546,18 +558,6 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	@Override
 	public int getGroupTagsCount(long groupId) {
 		return _assetTagLocalService.getGroupTagsCount(groupId);
-	}
-
-	/**
-	* Returns the asset tags in the groups.
-	*
-	* @param groupIds the primary keys of the groups
-	* @return the asset tags in the groups
-	*/
-	@Override
-	public java.util.List<com.liferay.asset.kernel.model.AssetTag> getGroupsTags(
-		long[] groupIds) {
-		return _assetTagLocalService.getGroupsTags(groupIds);
 	}
 
 	@Override
@@ -637,18 +637,6 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	}
 
 	/**
-	* Returns the primary keys of the asset tags with the names in the groups.
-	*
-	* @param groupIds the primary keys of the groups
-	* @param names the names of the asset tags
-	* @return the primary keys of the asset tags with the names in the groups
-	*/
-	@Override
-	public long[] getTagIds(long[] groupIds, java.lang.String[] names) {
-		return _assetTagLocalService.getTagIds(groupIds, names);
-	}
-
-	/**
 	* Returns the primary keys of the asset tags with the name in the groups.
 	*
 	* @param groupIds the primary keys of the groups
@@ -661,6 +649,18 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	}
 
 	/**
+	* Returns the primary keys of the asset tags with the names in the groups.
+	*
+	* @param groupIds the primary keys of the groups
+	* @param names the names of the asset tags
+	* @return the primary keys of the asset tags with the names in the groups
+	*/
+	@Override
+	public long[] getTagIds(long[] groupIds, java.lang.String[] names) {
+		return _assetTagLocalService.getTagIds(groupIds, names);
+	}
+
+	/**
 	* Returns the names of all the asset tags.
 	*
 	* @return the names of all the asset tags
@@ -668,6 +668,18 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	@Override
 	public java.lang.String[] getTagNames() {
 		return _assetTagLocalService.getTagNames();
+	}
+
+	/**
+	* Returns the names of the asset tags of the entity.
+	*
+	* @param classNameId the class name ID of the entity
+	* @param classPK the primary key of the entity
+	* @return the names of the asset tags of the entity
+	*/
+	@Override
+	public java.lang.String[] getTagNames(long classNameId, long classPK) {
+		return _assetTagLocalService.getTagNames(classNameId, classPK);
 	}
 
 	/**
@@ -684,18 +696,6 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	}
 
 	/**
-	* Returns the names of the asset tags of the entity.
-	*
-	* @param classNameId the class name ID of the entity
-	* @param classPK the primary key of the entity
-	* @return the names of the asset tags of the entity
-	*/
-	@Override
-	public java.lang.String[] getTagNames(long classNameId, long classPK) {
-		return _assetTagLocalService.getTagNames(classNameId, classPK);
-	}
-
-	/**
 	* Returns all the asset tags.
 	*
 	* @return the asset tags
@@ -703,19 +703,6 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	@Override
 	public java.util.List<com.liferay.asset.kernel.model.AssetTag> getTags() {
 		return _assetTagLocalService.getTags();
-	}
-
-	/**
-	* Returns the asset tags of the entity.
-	*
-	* @param className the class name of the entity
-	* @param classPK the primary key of the entity
-	* @return the asset tags of the entity
-	*/
-	@Override
-	public java.util.List<com.liferay.asset.kernel.model.AssetTag> getTags(
-		java.lang.String className, long classPK) {
-		return _assetTagLocalService.getTags(className, classPK);
 	}
 
 	/**
@@ -743,6 +730,19 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 		int end) {
 		return _assetTagLocalService.getTags(groupId, classNameId, name, start,
 			end);
+	}
+
+	/**
+	* Returns the asset tags of the entity.
+	*
+	* @param className the class name of the entity
+	* @param classPK the primary key of the entity
+	* @return the asset tags of the entity
+	*/
+	@Override
+	public java.util.List<com.liferay.asset.kernel.model.AssetTag> getTags(
+		java.lang.String className, long classPK) {
+		return _assetTagLocalService.getTags(className, classPK);
 	}
 
 	@Override

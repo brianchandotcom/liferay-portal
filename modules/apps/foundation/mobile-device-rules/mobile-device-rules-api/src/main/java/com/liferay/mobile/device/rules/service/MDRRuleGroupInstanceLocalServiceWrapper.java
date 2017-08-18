@@ -49,21 +49,21 @@ public class MDRRuleGroupInstanceLocalServiceWrapper
 	@Override
 	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance addRuleGroupInstance(
 		long groupId, java.lang.String className, long classPK,
-		long ruleGroupId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mdrRuleGroupInstanceLocalService.addRuleGroupInstance(groupId,
-			className, classPK, ruleGroupId, serviceContext);
-	}
-
-	@Override
-	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance addRuleGroupInstance(
-		long groupId, java.lang.String className, long classPK,
 		long ruleGroupId, int priority,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleGroupInstanceLocalService.addRuleGroupInstance(groupId,
 			className, classPK, ruleGroupId, priority, serviceContext);
+	}
+
+	@Override
+	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance addRuleGroupInstance(
+		long groupId, java.lang.String className, long classPK,
+		long ruleGroupId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mdrRuleGroupInstanceLocalService.addRuleGroupInstance(groupId,
+			className, classPK, ruleGroupId, serviceContext);
 	}
 
 	/**
@@ -84,18 +84,6 @@ public class MDRRuleGroupInstanceLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the mdr rule group instance from the database. Also notifies the appropriate model listeners.
-	*
-	* @param mdrRuleGroupInstance the mdr rule group instance
-	* @return the mdr rule group instance that was removed
-	*/
-	@Override
-	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance deleteMDRRuleGroupInstance(
-		com.liferay.mobile.device.rules.model.MDRRuleGroupInstance mdrRuleGroupInstance) {
-		return _mdrRuleGroupInstanceLocalService.deleteMDRRuleGroupInstance(mdrRuleGroupInstance);
-	}
-
-	/**
 	* Deletes the mdr rule group instance with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param ruleGroupInstanceId the primary key of the mdr rule group instance
@@ -110,6 +98,18 @@ public class MDRRuleGroupInstanceLocalServiceWrapper
 	}
 
 	/**
+	* Deletes the mdr rule group instance from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mdrRuleGroupInstance the mdr rule group instance
+	* @return the mdr rule group instance that was removed
+	*/
+	@Override
+	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance deleteMDRRuleGroupInstance(
+		com.liferay.mobile.device.rules.model.MDRRuleGroupInstance mdrRuleGroupInstance) {
+		return _mdrRuleGroupInstanceLocalService.deleteMDRRuleGroupInstance(mdrRuleGroupInstance);
+	}
+
+	/**
 	* @throws PortalException
 	*/
 	@Override
@@ -120,14 +120,14 @@ public class MDRRuleGroupInstanceLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteRuleGroupInstance(
-		com.liferay.mobile.device.rules.model.MDRRuleGroupInstance ruleGroupInstance) {
-		_mdrRuleGroupInstanceLocalService.deleteRuleGroupInstance(ruleGroupInstance);
+	public void deleteRuleGroupInstance(long ruleGroupInstanceId) {
+		_mdrRuleGroupInstanceLocalService.deleteRuleGroupInstance(ruleGroupInstanceId);
 	}
 
 	@Override
-	public void deleteRuleGroupInstance(long ruleGroupInstanceId) {
-		_mdrRuleGroupInstanceLocalService.deleteRuleGroupInstance(ruleGroupInstanceId);
+	public void deleteRuleGroupInstance(
+		com.liferay.mobile.device.rules.model.MDRRuleGroupInstance ruleGroupInstance) {
+		_mdrRuleGroupInstanceLocalService.deleteRuleGroupInstance(ruleGroupInstance);
 	}
 
 	@Override
@@ -243,15 +243,15 @@ public class MDRRuleGroupInstanceLocalServiceWrapper
 
 	@Override
 	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance fetchRuleGroupInstance(
-		java.lang.String className, long classPK, long ruleGroupId) {
-		return _mdrRuleGroupInstanceLocalService.fetchRuleGroupInstance(className,
-			classPK, ruleGroupId);
+		long ruleGroupInstanceId) {
+		return _mdrRuleGroupInstanceLocalService.fetchRuleGroupInstance(ruleGroupInstanceId);
 	}
 
 	@Override
 	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance fetchRuleGroupInstance(
-		long ruleGroupInstanceId) {
-		return _mdrRuleGroupInstanceLocalService.fetchRuleGroupInstance(ruleGroupInstanceId);
+		java.lang.String className, long classPK, long ruleGroupId) {
+		return _mdrRuleGroupInstanceLocalService.fetchRuleGroupInstance(className,
+			classPK, ruleGroupId);
 	}
 
 	@Override
@@ -379,6 +379,13 @@ public class MDRRuleGroupInstanceLocalServiceWrapper
 
 	@Override
 	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance getRuleGroupInstance(
+		long ruleGroupInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mdrRuleGroupInstanceLocalService.getRuleGroupInstance(ruleGroupInstanceId);
+	}
+
+	@Override
+	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance getRuleGroupInstance(
 		java.lang.String className, long classPK, long ruleGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mdrRuleGroupInstanceLocalService.getRuleGroupInstance(className,
@@ -386,10 +393,16 @@ public class MDRRuleGroupInstanceLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance getRuleGroupInstance(
-		long ruleGroupInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mdrRuleGroupInstanceLocalService.getRuleGroupInstance(ruleGroupInstanceId);
+	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroupInstance> getRuleGroupInstances(
+		long ruleGroupId) {
+		return _mdrRuleGroupInstanceLocalService.getRuleGroupInstances(ruleGroupId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroupInstance> getRuleGroupInstances(
+		long ruleGroupId, int start, int end) {
+		return _mdrRuleGroupInstanceLocalService.getRuleGroupInstances(ruleGroupId,
+			start, end);
 	}
 
 	@Override
@@ -408,16 +421,8 @@ public class MDRRuleGroupInstanceLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroupInstance> getRuleGroupInstances(
-		long ruleGroupId) {
-		return _mdrRuleGroupInstanceLocalService.getRuleGroupInstances(ruleGroupId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroupInstance> getRuleGroupInstances(
-		long ruleGroupId, int start, int end) {
-		return _mdrRuleGroupInstanceLocalService.getRuleGroupInstances(ruleGroupId,
-			start, end);
+	public int getRuleGroupInstancesCount(long ruleGroupId) {
+		return _mdrRuleGroupInstanceLocalService.getRuleGroupInstancesCount(ruleGroupId);
 	}
 
 	@Override
@@ -425,11 +430,6 @@ public class MDRRuleGroupInstanceLocalServiceWrapper
 		long classPK) {
 		return _mdrRuleGroupInstanceLocalService.getRuleGroupInstancesCount(className,
 			classPK);
-	}
-
-	@Override
-	public int getRuleGroupInstancesCount(long ruleGroupId) {
-		return _mdrRuleGroupInstanceLocalService.getRuleGroupInstancesCount(ruleGroupId);
 	}
 
 	/**

@@ -40,13 +40,13 @@ public class UserGroupLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.UserGroupLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static void addGroupUserGroup(long groupId, long userGroupId) {
+		getService().addGroupUserGroup(groupId, userGroupId);
+	}
+
 	public static void addGroupUserGroup(long groupId,
 		com.liferay.portal.kernel.model.UserGroup userGroup) {
 		getService().addGroupUserGroup(groupId, userGroup);
-	}
-
-	public static void addGroupUserGroup(long groupId, long userGroupId) {
-		getService().addGroupUserGroup(groupId, userGroupId);
 	}
 
 	public static void addGroupUserGroups(long groupId,
@@ -58,13 +58,13 @@ public class UserGroupLocalServiceUtil {
 		getService().addGroupUserGroups(groupId, userGroupIds);
 	}
 
+	public static void addTeamUserGroup(long teamId, long userGroupId) {
+		getService().addTeamUserGroup(teamId, userGroupId);
+	}
+
 	public static void addTeamUserGroup(long teamId,
 		com.liferay.portal.kernel.model.UserGroup userGroup) {
 		getService().addTeamUserGroup(teamId, userGroup);
-	}
-
-	public static void addTeamUserGroup(long teamId, long userGroupId) {
-		getService().addTeamUserGroup(teamId, userGroupId);
 	}
 
 	public static void addTeamUserGroups(long teamId,
@@ -74,17 +74,6 @@ public class UserGroupLocalServiceUtil {
 
 	public static void addTeamUserGroups(long teamId, long[] userGroupIds) {
 		getService().addTeamUserGroups(teamId, userGroupIds);
-	}
-
-	/**
-	* Adds the user group to the database. Also notifies the appropriate model listeners.
-	*
-	* @param userGroup the user group
-	* @return the user group that was added
-	*/
-	public static com.liferay.portal.kernel.model.UserGroup addUserGroup(
-		com.liferay.portal.kernel.model.UserGroup userGroup) {
-		return getService().addUserGroup(userGroup);
 	}
 
 	/**
@@ -141,13 +130,24 @@ public class UserGroupLocalServiceUtil {
 			serviceContext);
 	}
 
-	public static void addUserUserGroup(long userId,
+	/**
+	* Adds the user group to the database. Also notifies the appropriate model listeners.
+	*
+	* @param userGroup the user group
+	* @return the user group that was added
+	*/
+	public static com.liferay.portal.kernel.model.UserGroup addUserGroup(
 		com.liferay.portal.kernel.model.UserGroup userGroup) {
-		getService().addUserUserGroup(userId, userGroup);
+		return getService().addUserGroup(userGroup);
 	}
 
 	public static void addUserUserGroup(long userId, long userGroupId) {
 		getService().addUserUserGroup(userId, userGroupId);
+	}
+
+	public static void addUserUserGroup(long userId,
+		com.liferay.portal.kernel.model.UserGroup userGroup) {
+		getService().addUserUserGroup(userId, userGroup);
 	}
 
 	public static void addUserUserGroups(long userId,
@@ -172,16 +172,16 @@ public class UserGroupLocalServiceUtil {
 	}
 
 	/**
-	* Copies the user groups' layouts to the user.
+	* Copies the user group's layout to the user.
 	*
-	* @param userGroupIds the primary keys of the user groups
+	* @param userGroupId the primary key of the user group
 	* @param userId the primary key of the user
-	* @deprecated As of 6.1.0
+	* @deprecated As of 6.2.0
 	*/
 	@Deprecated
-	public static void copyUserGroupLayouts(long[] userGroupIds, long userId)
+	public static void copyUserGroupLayouts(long userGroupId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().copyUserGroupLayouts(userGroupIds, userId);
+		getService().copyUserGroupLayouts(userGroupId, userId);
 	}
 
 	/**
@@ -199,16 +199,16 @@ public class UserGroupLocalServiceUtil {
 	}
 
 	/**
-	* Copies the user group's layout to the user.
+	* Copies the user groups' layouts to the user.
 	*
-	* @param userGroupId the primary key of the user group
+	* @param userGroupIds the primary keys of the user groups
 	* @param userId the primary key of the user
-	* @deprecated As of 6.2.0
+	* @deprecated As of 6.1.0
 	*/
 	@Deprecated
-	public static void copyUserGroupLayouts(long userGroupId, long userId)
+	public static void copyUserGroupLayouts(long[] userGroupIds, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().copyUserGroupLayouts(userGroupId, userId);
+		getService().copyUserGroupLayouts(userGroupIds, userId);
 	}
 
 	/**
@@ -222,13 +222,13 @@ public class UserGroupLocalServiceUtil {
 		return getService().createUserGroup(userGroupId);
 	}
 
+	public static void deleteGroupUserGroup(long groupId, long userGroupId) {
+		getService().deleteGroupUserGroup(groupId, userGroupId);
+	}
+
 	public static void deleteGroupUserGroup(long groupId,
 		com.liferay.portal.kernel.model.UserGroup userGroup) {
 		getService().deleteGroupUserGroup(groupId, userGroup);
-	}
-
-	public static void deleteGroupUserGroup(long groupId, long userGroupId) {
-		getService().deleteGroupUserGroup(groupId, userGroupId);
 	}
 
 	public static void deleteGroupUserGroups(long groupId,
@@ -249,13 +249,13 @@ public class UserGroupLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
+	public static void deleteTeamUserGroup(long teamId, long userGroupId) {
+		getService().deleteTeamUserGroup(teamId, userGroupId);
+	}
+
 	public static void deleteTeamUserGroup(long teamId,
 		com.liferay.portal.kernel.model.UserGroup userGroup) {
 		getService().deleteTeamUserGroup(teamId, userGroup);
-	}
-
-	public static void deleteTeamUserGroup(long teamId, long userGroupId) {
-		getService().deleteTeamUserGroup(teamId, userGroupId);
 	}
 
 	public static void deleteTeamUserGroups(long teamId,
@@ -265,19 +265,6 @@ public class UserGroupLocalServiceUtil {
 
 	public static void deleteTeamUserGroups(long teamId, long[] userGroupIds) {
 		getService().deleteTeamUserGroups(teamId, userGroupIds);
-	}
-
-	/**
-	* Deletes the user group from the database. Also notifies the appropriate model listeners.
-	*
-	* @param userGroup the user group
-	* @return the user group that was removed
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.UserGroup deleteUserGroup(
-		com.liferay.portal.kernel.model.UserGroup userGroup)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteUserGroup(userGroup);
 	}
 
 	/**
@@ -293,18 +280,31 @@ public class UserGroupLocalServiceUtil {
 		return getService().deleteUserGroup(userGroupId);
 	}
 
+	/**
+	* Deletes the user group from the database. Also notifies the appropriate model listeners.
+	*
+	* @param userGroup the user group
+	* @return the user group that was removed
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.kernel.model.UserGroup deleteUserGroup(
+		com.liferay.portal.kernel.model.UserGroup userGroup)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteUserGroup(userGroup);
+	}
+
 	public static void deleteUserGroups(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteUserGroups(companyId);
 	}
 
+	public static void deleteUserUserGroup(long userId, long userGroupId) {
+		getService().deleteUserUserGroup(userId, userGroupId);
+	}
+
 	public static void deleteUserUserGroup(long userId,
 		com.liferay.portal.kernel.model.UserGroup userGroup) {
 		getService().deleteUserUserGroup(userId, userGroup);
-	}
-
-	public static void deleteUserUserGroup(long userId, long userGroupId) {
-		getService().deleteUserUserGroup(userId, userGroupId);
 	}
 
 	public static void deleteUserUserGroups(long userId,
@@ -656,8 +656,42 @@ public class UserGroupLocalServiceUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the user groups that match the name and
-	* description. It is preferable to use this method instead of the
+	* Returns an ordered range of all the user groups that match the keywords.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param companyId the primary key of the user group's company
+	* @param keywords the keywords (space separated), which may occur in the
+	user group's name or description (optionally <code>null</code>)
+	* @param params the finder params (optionally <code>null</code>). For more
+	information see {@link
+	com.liferay.portal.kernel.service.persistence.UserGroupFinder}
+	* @param start the lower bound of the range of user groups to return
+	* @param end the upper bound of the range of user groups to return (not
+	inclusive)
+	* @param obc the comparator to order the user groups (optionally
+	<code>null</code>)
+	* @return the matching user groups ordered by comparator <code>obc</code>
+	* @see com.liferay.portal.kernel.service.persistence.UserGroupFinder
+	*/
+	public static java.util.List<com.liferay.portal.kernel.model.UserGroup> search(
+		long companyId, java.lang.String keywords,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.UserGroup> obc) {
+		return getService().search(companyId, keywords, params, start, end, obc);
+	}
+
+	/**
+	* Returns an ordered range of all the user groups that match the keywords,
+	* using the indexer. It is preferable to use this method instead of the
 	* non-indexed version whenever possible for performance reasons.
 	*
 	* <p>
@@ -670,30 +704,24 @@ public class UserGroupLocalServiceUtil {
 	* </p>
 	*
 	* @param companyId the primary key of the user group's company
-	* @param name the user group's name (optionally <code>null</code>)
-	* @param description the user group's description (optionally
-	<code>null</code>)
+	* @param keywords the keywords (space separated), which may occur in the
+	user group's name or description (optionally <code>null</code>)
 	* @param params the finder params (optionally <code>null</code>). For more
 	information see {@link
 	com.liferay.user.groups.admin.web.search.UserGroupIndexer}
-	* @param andSearch whether every field must match its keywords or just one
-	field
 	* @param start the lower bound of the range of user groups to return
 	* @param end the upper bound of the range of user groups to return (not
 	inclusive)
 	* @param sort the field and direction by which to sort (optionally
 	<code>null</code>)
 	* @return the matching user groups ordered by sort
-	* @see com.liferay.portal.kernel.service.persistence.UserGroupFinder
+	* @see com.liferay.user.groups.admin.web.search.UserGroupIndexer
 	*/
 	public static com.liferay.portal.kernel.search.Hits search(long companyId,
-		java.lang.String name, java.lang.String description,
+		java.lang.String keywords,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andSearch, int start, int end,
-		com.liferay.portal.kernel.search.Sort sort) {
-		return getService()
-				   .search(companyId, name, description, params, andSearch,
-			start, end, sort);
+		int start, int end, com.liferay.portal.kernel.search.Sort sort) {
+		return getService().search(companyId, keywords, params, start, end, sort);
 	}
 
 	/**
@@ -737,8 +765,8 @@ public class UserGroupLocalServiceUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the user groups that match the keywords,
-	* using the indexer. It is preferable to use this method instead of the
+	* Returns an ordered range of all the user groups that match the name and
+	* description. It is preferable to use this method instead of the
 	* non-indexed version whenever possible for performance reasons.
 	*
 	* <p>
@@ -751,37 +779,34 @@ public class UserGroupLocalServiceUtil {
 	* </p>
 	*
 	* @param companyId the primary key of the user group's company
-	* @param keywords the keywords (space separated), which may occur in the
-	user group's name or description (optionally <code>null</code>)
+	* @param name the user group's name (optionally <code>null</code>)
+	* @param description the user group's description (optionally
+	<code>null</code>)
 	* @param params the finder params (optionally <code>null</code>). For more
 	information see {@link
 	com.liferay.user.groups.admin.web.search.UserGroupIndexer}
+	* @param andSearch whether every field must match its keywords or just one
+	field
 	* @param start the lower bound of the range of user groups to return
 	* @param end the upper bound of the range of user groups to return (not
 	inclusive)
 	* @param sort the field and direction by which to sort (optionally
 	<code>null</code>)
 	* @return the matching user groups ordered by sort
-	* @see com.liferay.user.groups.admin.web.search.UserGroupIndexer
+	* @see com.liferay.portal.kernel.service.persistence.UserGroupFinder
 	*/
 	public static com.liferay.portal.kernel.search.Hits search(long companyId,
-		java.lang.String keywords,
+		java.lang.String name, java.lang.String description,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end, com.liferay.portal.kernel.search.Sort sort) {
-		return getService().search(companyId, keywords, params, start, end, sort);
+		boolean andSearch, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort) {
+		return getService()
+				   .search(companyId, name, description, params, andSearch,
+			start, end, sort);
 	}
 
 	/**
-	* Returns an ordered range of all the user groups that match the keywords.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
+	* Returns the number of user groups that match the keywords
 	*
 	* @param companyId the primary key of the user group's company
 	* @param keywords the keywords (space separated), which may occur in the
@@ -789,20 +814,12 @@ public class UserGroupLocalServiceUtil {
 	* @param params the finder params (optionally <code>null</code>). For more
 	information see {@link
 	com.liferay.portal.kernel.service.persistence.UserGroupFinder}
-	* @param start the lower bound of the range of user groups to return
-	* @param end the upper bound of the range of user groups to return (not
-	inclusive)
-	* @param obc the comparator to order the user groups (optionally
-	<code>null</code>)
-	* @return the matching user groups ordered by comparator <code>obc</code>
+	* @return the number of matching user groups
 	* @see com.liferay.portal.kernel.service.persistence.UserGroupFinder
 	*/
-	public static java.util.List<com.liferay.portal.kernel.model.UserGroup> search(
-		long companyId, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.UserGroup> obc) {
-		return getService().search(companyId, keywords, params, start, end, obc);
+	public static int searchCount(long companyId, java.lang.String keywords,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params) {
+		return getService().searchCount(companyId, keywords, params);
 	}
 
 	/**
@@ -829,21 +846,14 @@ public class UserGroupLocalServiceUtil {
 			andOperator);
 	}
 
-	/**
-	* Returns the number of user groups that match the keywords
-	*
-	* @param companyId the primary key of the user group's company
-	* @param keywords the keywords (space separated), which may occur in the
-	user group's name or description (optionally <code>null</code>)
-	* @param params the finder params (optionally <code>null</code>). For more
-	information see {@link
-	com.liferay.portal.kernel.service.persistence.UserGroupFinder}
-	* @return the number of matching user groups
-	* @see com.liferay.portal.kernel.service.persistence.UserGroupFinder
-	*/
-	public static int searchCount(long companyId, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params) {
-		return getService().searchCount(companyId, keywords, params);
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portal.kernel.model.UserGroup> searchUserGroups(
+		long companyId, java.lang.String keywords,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchUserGroups(companyId, keywords, params, start, end,
+			sort);
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portal.kernel.model.UserGroup> searchUserGroups(
@@ -855,16 +865,6 @@ public class UserGroupLocalServiceUtil {
 		return getService()
 				   .searchUserGroups(companyId, name, description, params,
 			andSearch, start, end, sort);
-	}
-
-	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portal.kernel.model.UserGroup> searchUserGroups(
-		long companyId, java.lang.String keywords,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end, com.liferay.portal.kernel.search.Sort sort)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .searchUserGroups(companyId, keywords, params, start, end,
-			sort);
 	}
 
 	public static void setGroupUserGroups(long groupId, long[] userGroupIds) {
@@ -901,17 +901,6 @@ public class UserGroupLocalServiceUtil {
 	*/
 	public static void unsetTeamUserGroups(long teamId, long[] userGroupIds) {
 		getService().unsetTeamUserGroups(teamId, userGroupIds);
-	}
-
-	/**
-	* Updates the user group in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param userGroup the user group
-	* @return the user group that was updated
-	*/
-	public static com.liferay.portal.kernel.model.UserGroup updateUserGroup(
-		com.liferay.portal.kernel.model.UserGroup userGroup) {
-		return getService().updateUserGroup(userGroup);
 	}
 
 	/**
@@ -953,6 +942,17 @@ public class UserGroupLocalServiceUtil {
 		return getService()
 				   .updateUserGroup(companyId, userGroupId, name, description,
 			serviceContext);
+	}
+
+	/**
+	* Updates the user group in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param userGroup the user group
+	* @return the user group that was updated
+	*/
+	public static com.liferay.portal.kernel.model.UserGroup updateUserGroup(
+		com.liferay.portal.kernel.model.UserGroup userGroup) {
+		return getService().updateUserGroup(userGroup);
 	}
 
 	public static UserGroupLocalService getService() {

@@ -197,11 +197,11 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 
 	public void updateFileEntry(long userId, FileEntry fileEntry,
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion,
-		ServiceContext serviceContext) throws PortalException;
+		long assetClassPK) throws PortalException;
 
 	public void updateFileEntry(long userId, FileEntry fileEntry,
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion,
-		long assetClassPK) throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	public void updateFolder(long userId, Folder folder,
 		ServiceContext serviceContext) throws PortalException;

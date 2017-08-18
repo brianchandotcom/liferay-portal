@@ -88,22 +88,22 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 
 	public void deleteColumn(long columnId) throws PortalException;
 
+	public void deleteColumn(long companyId, long classNameId,
+		java.lang.String tableName, java.lang.String name)
+		throws PortalException;
+
 	public void deleteColumn(long tableId, java.lang.String name);
 
 	public void deleteColumn(long companyId, java.lang.String className,
 		java.lang.String tableName, java.lang.String name)
 		throws PortalException;
 
-	public void deleteColumn(long companyId, long classNameId,
-		java.lang.String tableName, java.lang.String name)
-		throws PortalException;
-
 	public void deleteColumns(long tableId);
 
-	public void deleteColumns(long companyId, java.lang.String className,
+	public void deleteColumns(long companyId, long classNameId,
 		java.lang.String tableName) throws PortalException;
 
-	public void deleteColumns(long companyId, long classNameId,
+	public void deleteColumns(long companyId, java.lang.String className,
 		java.lang.String tableName) throws PortalException;
 
 	/**
@@ -202,6 +202,10 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 	public ExpandoColumn getColumn(long columnId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExpandoColumn getColumn(long companyId, long classNameId,
+		java.lang.String tableName, java.lang.String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExpandoColumn getColumn(long tableId, java.lang.String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -209,20 +213,7 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 		java.lang.String tableName, java.lang.String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExpandoColumn getColumn(long companyId, long classNameId,
-		java.lang.String tableName, java.lang.String name);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ExpandoColumn> getColumns(long tableId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ExpandoColumn> getColumns(long companyId,
-		java.lang.String className, java.lang.String tableName);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ExpandoColumn> getColumns(long companyId,
-		java.lang.String className, java.lang.String tableName,
-		Collection<java.lang.String> columnNames);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ExpandoColumn> getColumns(long tableId,
@@ -237,38 +228,47 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 		java.lang.String tableName, Collection<java.lang.String> names);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getColumnsCount(long tableId);
+	public List<ExpandoColumn> getColumns(long companyId,
+		java.lang.String className, java.lang.String tableName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getColumnsCount(long companyId, java.lang.String className,
-		java.lang.String tableName);
+	public List<ExpandoColumn> getColumns(long companyId,
+		java.lang.String className, java.lang.String tableName,
+		Collection<java.lang.String> columnNames);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getColumnsCount(long tableId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getColumnsCount(long companyId, long classNameId,
 		java.lang.String tableName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExpandoColumn getDefaultTableColumn(long companyId,
-		java.lang.String className, java.lang.String name);
+	public int getColumnsCount(long companyId, java.lang.String className,
+		java.lang.String tableName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExpandoColumn getDefaultTableColumn(long companyId,
 		long classNameId, java.lang.String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ExpandoColumn> getDefaultTableColumns(long companyId,
-		java.lang.String className);
+	public ExpandoColumn getDefaultTableColumn(long companyId,
+		java.lang.String className, java.lang.String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ExpandoColumn> getDefaultTableColumns(long companyId,
 		long classNameId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getDefaultTableColumnsCount(long companyId,
+	public List<ExpandoColumn> getDefaultTableColumns(long companyId,
 		java.lang.String className);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDefaultTableColumnsCount(long companyId, long classNameId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getDefaultTableColumnsCount(long companyId,
+		java.lang.String className);
 
 	/**
 	* Returns the expando column with the primary key.

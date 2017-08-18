@@ -41,18 +41,6 @@ public class MessageLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.mail.reader.service.impl.MessageLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	* Adds the message to the database. Also notifies the appropriate model listeners.
-	*
-	* @param message the message
-	* @return the message that was added
-	*/
-	public static com.liferay.mail.reader.model.Message addMessage(
-		com.liferay.mail.reader.model.Message message) {
-		return getService().addMessage(message);
-	}
-
 	public static com.liferay.mail.reader.model.Message addMessage(
 		long userId, long folderId, java.lang.String sender,
 		java.lang.String to, java.lang.String cc, java.lang.String bcc,
@@ -63,6 +51,17 @@ public class MessageLocalServiceUtil {
 		return getService()
 				   .addMessage(userId, folderId, sender, to, cc, bcc, sentDate,
 			subject, body, flags, remoteMessageId, contentType);
+	}
+
+	/**
+	* Adds the message to the database. Also notifies the appropriate model listeners.
+	*
+	* @param message the message
+	* @return the message that was added
+	*/
+	public static com.liferay.mail.reader.model.Message addMessage(
+		com.liferay.mail.reader.model.Message message) {
+		return getService().addMessage(message);
 	}
 
 	/**
@@ -77,19 +76,6 @@ public class MessageLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the message from the database. Also notifies the appropriate model listeners.
-	*
-	* @param message the message
-	* @return the message that was removed
-	* @throws PortalException
-	*/
-	public static com.liferay.mail.reader.model.Message deleteMessage(
-		com.liferay.mail.reader.model.Message message)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteMessage(message);
-	}
-
-	/**
 	* Deletes the message with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param messageId the primary key of the message
@@ -100,6 +86,19 @@ public class MessageLocalServiceUtil {
 		long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteMessage(messageId);
+	}
+
+	/**
+	* Deletes the message from the database. Also notifies the appropriate model listeners.
+	*
+	* @param message the message
+	* @return the message that was removed
+	* @throws PortalException
+	*/
+	public static com.liferay.mail.reader.model.Message deleteMessage(
+		com.liferay.mail.reader.model.Message message)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteMessage(message);
 	}
 
 	public static void deleteMessages(long folderId)
@@ -320,17 +319,6 @@ public class MessageLocalServiceUtil {
 		return getService().updateFlag(messageId, flag, value);
 	}
 
-	/**
-	* Updates the message in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param message the message
-	* @return the message that was updated
-	*/
-	public static com.liferay.mail.reader.model.Message updateMessage(
-		com.liferay.mail.reader.model.Message message) {
-		return getService().updateMessage(message);
-	}
-
 	public static com.liferay.mail.reader.model.Message updateMessage(
 		long messageId, long folderId, java.lang.String sender,
 		java.lang.String to, java.lang.String cc, java.lang.String bcc,
@@ -340,6 +328,17 @@ public class MessageLocalServiceUtil {
 		return getService()
 				   .updateMessage(messageId, folderId, sender, to, cc, bcc,
 			sentDate, subject, body, flags, remoteMessageId);
+	}
+
+	/**
+	* Updates the message in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param message the message
+	* @return the message that was updated
+	*/
+	public static com.liferay.mail.reader.model.Message updateMessage(
+		com.liferay.mail.reader.model.Message message) {
+		return getService().updateMessage(message);
 	}
 
 	public static MessageLocalService getService() {

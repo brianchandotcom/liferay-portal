@@ -53,13 +53,13 @@ public class UserGroupRoleLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.UserGroupRole> addUserGroupRoles(
-		long[] userIds, long groupId, long roleId) {
-		return getService().addUserGroupRoles(userIds, groupId, roleId);
+		long userId, long groupId, long[] roleIds) {
+		return getService().addUserGroupRoles(userId, groupId, roleIds);
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.UserGroupRole> addUserGroupRoles(
-		long userId, long groupId, long[] roleIds) {
-		return getService().addUserGroupRoles(userId, groupId, roleIds);
+		long[] userIds, long groupId, long roleId) {
+		return getService().addUserGroupRoles(userIds, groupId, roleId);
 	}
 
 	/**
@@ -110,22 +110,22 @@ public class UserGroupRoleLocalServiceUtil {
 		getService().deleteUserGroupRoles(groupId, roleType);
 	}
 
-	public static void deleteUserGroupRoles(long[] userIds, long groupId) {
-		getService().deleteUserGroupRoles(userIds, groupId);
+	public static void deleteUserGroupRoles(long userId, long groupId,
+		long[] roleIds) {
+		getService().deleteUserGroupRoles(userId, groupId, roleIds);
 	}
 
 	public static void deleteUserGroupRoles(long userId, long[] groupIds) {
 		getService().deleteUserGroupRoles(userId, groupIds);
 	}
 
+	public static void deleteUserGroupRoles(long[] userIds, long groupId) {
+		getService().deleteUserGroupRoles(userIds, groupId);
+	}
+
 	public static void deleteUserGroupRoles(long[] userIds, long groupId,
 		int roleType) {
 		getService().deleteUserGroupRoles(userIds, groupId, roleType);
-	}
-
-	public static void deleteUserGroupRoles(long userId, long groupId,
-		long[] roleIds) {
-		getService().deleteUserGroupRoles(userId, groupId, roleIds);
 	}
 
 	public static void deleteUserGroupRoles(long[] userIds, long groupId,
@@ -325,6 +325,16 @@ public class UserGroupRoleLocalServiceUtil {
 	}
 
 	public static boolean hasUserGroupRole(long userId, long groupId,
+		long roleId) {
+		return getService().hasUserGroupRole(userId, groupId, roleId);
+	}
+
+	public static boolean hasUserGroupRole(long userId, long groupId,
+		long roleId, boolean inherit) {
+		return getService().hasUserGroupRole(userId, groupId, roleId, inherit);
+	}
+
+	public static boolean hasUserGroupRole(long userId, long groupId,
 		java.lang.String roleName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().hasUserGroupRole(userId, groupId, roleName);
@@ -334,16 +344,6 @@ public class UserGroupRoleLocalServiceUtil {
 		java.lang.String roleName, boolean inherit)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().hasUserGroupRole(userId, groupId, roleName, inherit);
-	}
-
-	public static boolean hasUserGroupRole(long userId, long groupId,
-		long roleId) {
-		return getService().hasUserGroupRole(userId, groupId, roleId);
-	}
-
-	public static boolean hasUserGroupRole(long userId, long groupId,
-		long roleId, boolean inherit) {
-		return getService().hasUserGroupRole(userId, groupId, roleId, inherit);
 	}
 
 	/**

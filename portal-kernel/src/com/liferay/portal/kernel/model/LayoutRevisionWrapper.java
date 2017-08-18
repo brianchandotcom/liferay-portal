@@ -358,30 +358,6 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	/**
 	* Returns the localized description of this layout revision in the language. Uses the default language if no localization exists for the requested language.
 	*
-	* @param languageId the ID of the language
-	* @return the localized description of this layout revision
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
-		return _layoutRevision.getDescription(languageId);
-	}
-
-	/**
-	* Returns the localized description of this layout revision in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this layout revision
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
-		return _layoutRevision.getDescription(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized description of this layout revision in the language. Uses the default language if no localization exists for the requested language.
-	*
 	* @param locale the locale of the language
 	* @return the localized description of this layout revision
 	*/
@@ -401,6 +377,30 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	public java.lang.String getDescription(java.util.Locale locale,
 		boolean useDefault) {
 		return _layoutRevision.getDescription(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized description of this layout revision in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized description of this layout revision
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId) {
+		return _layoutRevision.getDescription(languageId);
+	}
+
+	/**
+	* Returns the localized description of this layout revision in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this layout revision
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId,
+		boolean useDefault) {
+		return _layoutRevision.getDescription(languageId, useDefault);
 	}
 
 	@Override
@@ -438,16 +438,6 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 		return _layoutRevision.getGroupId();
 	}
 
-	@Override
-	public java.lang.String getHTMLTitle(java.lang.String localeLanguageId) {
-		return _layoutRevision.getHTMLTitle(localeLanguageId);
-	}
-
-	@Override
-	public java.lang.String getHTMLTitle(java.util.Locale locale) {
-		return _layoutRevision.getHTMLTitle(locale);
-	}
-
 	/**
 	* Returns the head of this layout revision.
 	*
@@ -456,6 +446,16 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	@Override
 	public boolean getHead() {
 		return _layoutRevision.getHead();
+	}
+
+	@Override
+	public java.lang.String getHTMLTitle(java.util.Locale locale) {
+		return _layoutRevision.getHTMLTitle(locale);
+	}
+
+	@Override
+	public java.lang.String getHTMLTitle(java.lang.String localeLanguageId) {
+		return _layoutRevision.getHTMLTitle(localeLanguageId);
 	}
 
 	@Override
@@ -486,30 +486,6 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	/**
 	* Returns the localized keywords of this layout revision in the language. Uses the default language if no localization exists for the requested language.
 	*
-	* @param languageId the ID of the language
-	* @return the localized keywords of this layout revision
-	*/
-	@Override
-	public java.lang.String getKeywords(java.lang.String languageId) {
-		return _layoutRevision.getKeywords(languageId);
-	}
-
-	/**
-	* Returns the localized keywords of this layout revision in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized keywords of this layout revision
-	*/
-	@Override
-	public java.lang.String getKeywords(java.lang.String languageId,
-		boolean useDefault) {
-		return _layoutRevision.getKeywords(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized keywords of this layout revision in the language. Uses the default language if no localization exists for the requested language.
-	*
 	* @param locale the locale of the language
 	* @return the localized keywords of this layout revision
 	*/
@@ -529,6 +505,30 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	public java.lang.String getKeywords(java.util.Locale locale,
 		boolean useDefault) {
 		return _layoutRevision.getKeywords(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized keywords of this layout revision in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized keywords of this layout revision
+	*/
+	@Override
+	public java.lang.String getKeywords(java.lang.String languageId) {
+		return _layoutRevision.getKeywords(languageId);
+	}
+
+	/**
+	* Returns the localized keywords of this layout revision in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized keywords of this layout revision
+	*/
+	@Override
+	public java.lang.String getKeywords(java.lang.String languageId,
+		boolean useDefault) {
+		return _layoutRevision.getKeywords(languageId, useDefault);
 	}
 
 	@Override
@@ -636,6 +636,29 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	/**
 	* Returns the localized name of this layout revision in the language. Uses the default language if no localization exists for the requested language.
 	*
+	* @param locale the locale of the language
+	* @return the localized name of this layout revision
+	*/
+	@Override
+	public java.lang.String getName(java.util.Locale locale) {
+		return _layoutRevision.getName(locale);
+	}
+
+	/**
+	* Returns the localized name of this layout revision in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this layout revision. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+		return _layoutRevision.getName(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized name of this layout revision in the language. Uses the default language if no localization exists for the requested language.
+	*
 	* @param languageId the ID of the language
 	* @return the localized name of this layout revision
 	*/
@@ -655,29 +678,6 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	public java.lang.String getName(java.lang.String languageId,
 		boolean useDefault) {
 		return _layoutRevision.getName(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized name of this layout revision in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized name of this layout revision
-	*/
-	@Override
-	public java.lang.String getName(java.util.Locale locale) {
-		return _layoutRevision.getName(locale);
-	}
-
-	/**
-	* Returns the localized name of this layout revision in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized name of this layout revision. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
-		return _layoutRevision.getName(locale, useDefault);
 	}
 
 	@Override
@@ -765,30 +765,6 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	/**
 	* Returns the localized robots of this layout revision in the language. Uses the default language if no localization exists for the requested language.
 	*
-	* @param languageId the ID of the language
-	* @return the localized robots of this layout revision
-	*/
-	@Override
-	public java.lang.String getRobots(java.lang.String languageId) {
-		return _layoutRevision.getRobots(languageId);
-	}
-
-	/**
-	* Returns the localized robots of this layout revision in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized robots of this layout revision
-	*/
-	@Override
-	public java.lang.String getRobots(java.lang.String languageId,
-		boolean useDefault) {
-		return _layoutRevision.getRobots(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized robots of this layout revision in the language. Uses the default language if no localization exists for the requested language.
-	*
 	* @param locale the locale of the language
 	* @return the localized robots of this layout revision
 	*/
@@ -808,6 +784,30 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	public java.lang.String getRobots(java.util.Locale locale,
 		boolean useDefault) {
 		return _layoutRevision.getRobots(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized robots of this layout revision in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized robots of this layout revision
+	*/
+	@Override
+	public java.lang.String getRobots(java.lang.String languageId) {
+		return _layoutRevision.getRobots(languageId);
+	}
+
+	/**
+	* Returns the localized robots of this layout revision in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized robots of this layout revision
+	*/
+	@Override
+	public java.lang.String getRobots(java.lang.String languageId,
+		boolean useDefault) {
+		return _layoutRevision.getRobots(languageId, useDefault);
 	}
 
 	@Override
@@ -915,6 +915,29 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	/**
 	* Returns the localized title of this layout revision in the language. Uses the default language if no localization exists for the requested language.
 	*
+	* @param locale the locale of the language
+	* @return the localized title of this layout revision
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale) {
+		return _layoutRevision.getTitle(locale);
+	}
+
+	/**
+	* Returns the localized title of this layout revision in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized title of this layout revision. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
+		return _layoutRevision.getTitle(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized title of this layout revision in the language. Uses the default language if no localization exists for the requested language.
+	*
 	* @param languageId the ID of the language
 	* @return the localized title of this layout revision
 	*/
@@ -934,29 +957,6 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	public java.lang.String getTitle(java.lang.String languageId,
 		boolean useDefault) {
 		return _layoutRevision.getTitle(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized title of this layout revision in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized title of this layout revision
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale) {
-		return _layoutRevision.getTitle(locale);
-	}
-
-	/**
-	* Returns the localized title of this layout revision in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized title of this layout revision. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
-		return _layoutRevision.getTitle(locale, useDefault);
 	}
 
 	@Override
@@ -1313,13 +1313,13 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_layoutRevision.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_layoutRevision.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_layoutRevision.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_layoutRevision.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

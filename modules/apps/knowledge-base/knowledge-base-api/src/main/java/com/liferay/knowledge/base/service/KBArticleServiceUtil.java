@@ -197,6 +197,42 @@ public class KBArticleServiceUtil {
 			rssDisplayStyle, rssFormat, themeDisplay);
 	}
 
+	public static java.util.List<com.liferay.knowledge.base.model.KBArticle> getKBArticles(
+		long groupId, long parentResourcePrimKey, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator) {
+		return getService()
+				   .getKBArticles(groupId, parentResourcePrimKey, status,
+			start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.knowledge.base.model.KBArticle> getKBArticles(
+		long groupId, long[] resourcePrimKeys, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator) {
+		return getService()
+				   .getKBArticles(groupId, resourcePrimKeys, status, start,
+			end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.knowledge.base.model.KBArticle> getKBArticles(
+		long groupId, long[] resourcePrimKeys, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator) {
+		return getService()
+				   .getKBArticles(groupId, resourcePrimKeys, status,
+			orderByComparator);
+	}
+
+	public static int getKBArticlesCount(long groupId,
+		long parentResourcePrimKey, int status) {
+		return getService()
+				   .getKBArticlesCount(groupId, parentResourcePrimKey, status);
+	}
+
+	public static int getKBArticlesCount(long groupId, long[] resourcePrimKeys,
+		int status) {
+		return getService().getKBArticlesCount(groupId, resourcePrimKeys, status);
+	}
+
 	public static com.liferay.knowledge.base.model.KBArticleSearchDisplay getKBArticleSearchDisplay(
 		long groupId, java.lang.String title, java.lang.String content,
 		int status, java.util.Date startDate, java.util.Date endDate,
@@ -221,42 +257,6 @@ public class KBArticleServiceUtil {
 		long resourcePrimKey, int status) {
 		return getService()
 				   .getKBArticleVersionsCount(groupId, resourcePrimKey, status);
-	}
-
-	public static java.util.List<com.liferay.knowledge.base.model.KBArticle> getKBArticles(
-		long groupId, long[] resourcePrimKeys, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator) {
-		return getService()
-				   .getKBArticles(groupId, resourcePrimKeys, status,
-			orderByComparator);
-	}
-
-	public static java.util.List<com.liferay.knowledge.base.model.KBArticle> getKBArticles(
-		long groupId, long parentResourcePrimKey, int status, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator) {
-		return getService()
-				   .getKBArticles(groupId, parentResourcePrimKey, status,
-			start, end, orderByComparator);
-	}
-
-	public static java.util.List<com.liferay.knowledge.base.model.KBArticle> getKBArticles(
-		long groupId, long[] resourcePrimKeys, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator) {
-		return getService()
-				   .getKBArticles(groupId, resourcePrimKeys, status, start,
-			end, orderByComparator);
-	}
-
-	public static int getKBArticlesCount(long groupId, long[] resourcePrimKeys,
-		int status) {
-		return getService().getKBArticlesCount(groupId, resourcePrimKeys, status);
-	}
-
-	public static int getKBArticlesCount(long groupId,
-		long parentResourcePrimKey, int status) {
-		return getService()
-				   .getKBArticlesCount(groupId, parentResourcePrimKey, status);
 	}
 
 	public static com.liferay.knowledge.base.model.KBArticle getLatestKBArticle(

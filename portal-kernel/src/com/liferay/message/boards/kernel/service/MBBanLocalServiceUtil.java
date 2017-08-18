@@ -74,11 +74,6 @@ public class MBBanLocalServiceUtil {
 		return getService().createMBBan(banId);
 	}
 
-	public static void deleteBan(
-		com.liferay.message.boards.kernel.model.MBBan ban) {
-		getService().deleteBan(ban);
-	}
-
 	public static void deleteBan(long banId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteBan(banId);
@@ -89,23 +84,17 @@ public class MBBanLocalServiceUtil {
 		getService().deleteBan(banUserId, serviceContext);
 	}
 
+	public static void deleteBan(
+		com.liferay.message.boards.kernel.model.MBBan ban) {
+		getService().deleteBan(ban);
+	}
+
 	public static void deleteBansByBanUserId(long banUserId) {
 		getService().deleteBansByBanUserId(banUserId);
 	}
 
 	public static void deleteBansByGroupId(long groupId) {
 		getService().deleteBansByGroupId(groupId);
-	}
-
-	/**
-	* Deletes the message boards ban from the database. Also notifies the appropriate model listeners.
-	*
-	* @param mbBan the message boards ban
-	* @return the message boards ban that was removed
-	*/
-	public static com.liferay.message.boards.kernel.model.MBBan deleteMBBan(
-		com.liferay.message.boards.kernel.model.MBBan mbBan) {
-		return getService().deleteMBBan(mbBan);
 	}
 
 	/**
@@ -118,6 +107,17 @@ public class MBBanLocalServiceUtil {
 	public static com.liferay.message.boards.kernel.model.MBBan deleteMBBan(
 		long banId) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteMBBan(banId);
+	}
+
+	/**
+	* Deletes the message boards ban from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mbBan the message boards ban
+	* @return the message boards ban that was removed
+	*/
+	public static com.liferay.message.boards.kernel.model.MBBan deleteMBBan(
+		com.liferay.message.boards.kernel.model.MBBan mbBan) {
+		return getService().deleteMBBan(mbBan);
 	}
 
 	/**

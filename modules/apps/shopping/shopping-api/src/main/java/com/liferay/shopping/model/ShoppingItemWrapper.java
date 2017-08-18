@@ -667,16 +667,6 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	}
 
 	/**
-	* Returns the use shipping formula of this shopping item.
-	*
-	* @return the use shipping formula of this shopping item
-	*/
-	@Override
-	public boolean getUseShippingFormula() {
-		return _shoppingItem.getUseShippingFormula();
-	}
-
-	/**
 	* Returns the user ID of this shopping item.
 	*
 	* @return the user ID of this shopping item
@@ -704,6 +694,16 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	@Override
 	public java.lang.String getUserUuid() {
 		return _shoppingItem.getUserUuid();
+	}
+
+	/**
+	* Returns the use shipping formula of this shopping item.
+	*
+	* @return the use shipping formula of this shopping item
+	*/
+	@Override
+	public boolean getUseShippingFormula() {
+		return _shoppingItem.getUseShippingFormula();
 	}
 
 	@Override
@@ -882,14 +882,14 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_shoppingItem.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_shoppingItem.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_shoppingItem.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -1184,16 +1184,6 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	}
 
 	/**
-	* Sets whether this shopping item is use shipping formula.
-	*
-	* @param useShippingFormula the use shipping formula of this shopping item
-	*/
-	@Override
-	public void setUseShippingFormula(boolean useShippingFormula) {
-		_shoppingItem.setUseShippingFormula(useShippingFormula);
-	}
-
-	/**
 	* Sets the user ID of this shopping item.
 	*
 	* @param userId the user ID of this shopping item
@@ -1221,6 +1211,16 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_shoppingItem.setUserUuid(userUuid);
+	}
+
+	/**
+	* Sets whether this shopping item is use shipping formula.
+	*
+	* @param useShippingFormula the use shipping formula of this shopping item
+	*/
+	@Override
+	public void setUseShippingFormula(boolean useShippingFormula) {
+		_shoppingItem.setUseShippingFormula(useShippingFormula);
 	}
 
 	@Override

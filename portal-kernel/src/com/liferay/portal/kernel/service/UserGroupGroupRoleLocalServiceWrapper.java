@@ -45,17 +45,17 @@ public class UserGroupGroupRoleLocalServiceWrapper
 	}
 
 	@Override
-	public void addUserGroupGroupRoles(long[] userGroupIds, long groupId,
-		long roleId) {
-		_userGroupGroupRoleLocalService.addUserGroupGroupRoles(userGroupIds,
-			groupId, roleId);
-	}
-
-	@Override
 	public void addUserGroupGroupRoles(long userGroupId, long groupId,
 		long[] roleIds) {
 		_userGroupGroupRoleLocalService.addUserGroupGroupRoles(userGroupId,
 			groupId, roleIds);
+	}
+
+	@Override
+	public void addUserGroupGroupRoles(long[] userGroupIds, long groupId,
+		long roleId) {
+		_userGroupGroupRoleLocalService.addUserGroupGroupRoles(userGroupIds,
+			groupId, roleId);
 	}
 
 	/**
@@ -113,9 +113,10 @@ public class UserGroupGroupRoleLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteUserGroupGroupRoles(long[] userGroupIds, long groupId) {
-		_userGroupGroupRoleLocalService.deleteUserGroupGroupRoles(userGroupIds,
-			groupId);
+	public void deleteUserGroupGroupRoles(long userGroupId, long groupId,
+		long[] roleIds) {
+		_userGroupGroupRoleLocalService.deleteUserGroupGroupRoles(userGroupId,
+			groupId, roleIds);
 	}
 
 	@Override
@@ -125,10 +126,9 @@ public class UserGroupGroupRoleLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteUserGroupGroupRoles(long userGroupId, long groupId,
-		long[] roleIds) {
-		_userGroupGroupRoleLocalService.deleteUserGroupGroupRoles(userGroupId,
-			groupId, roleIds);
+	public void deleteUserGroupGroupRoles(long[] userGroupIds, long groupId) {
+		_userGroupGroupRoleLocalService.deleteUserGroupGroupRoles(userGroupIds,
+			groupId);
 	}
 
 	@Override
@@ -348,17 +348,17 @@ public class UserGroupGroupRoleLocalServiceWrapper
 
 	@Override
 	public boolean hasUserGroupGroupRole(long userGroupId, long groupId,
-		java.lang.String roleName)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long roleId) {
 		return _userGroupGroupRoleLocalService.hasUserGroupGroupRole(userGroupId,
-			groupId, roleName);
+			groupId, roleId);
 	}
 
 	@Override
 	public boolean hasUserGroupGroupRole(long userGroupId, long groupId,
-		long roleId) {
+		java.lang.String roleName)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userGroupGroupRoleLocalService.hasUserGroupGroupRole(userGroupId,
-			groupId, roleId);
+			groupId, roleName);
 	}
 
 	/**

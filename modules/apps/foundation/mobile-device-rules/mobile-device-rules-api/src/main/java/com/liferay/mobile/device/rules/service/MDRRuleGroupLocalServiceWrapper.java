@@ -58,20 +58,20 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 
 	@Override
 	public com.liferay.mobile.device.rules.model.MDRRuleGroup copyRuleGroup(
-		com.liferay.mobile.device.rules.model.MDRRuleGroup ruleGroup,
-		long groupId,
+		long ruleGroupId, long groupId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mdrRuleGroupLocalService.copyRuleGroup(ruleGroup, groupId,
+		return _mdrRuleGroupLocalService.copyRuleGroup(ruleGroupId, groupId,
 			serviceContext);
 	}
 
 	@Override
 	public com.liferay.mobile.device.rules.model.MDRRuleGroup copyRuleGroup(
-		long ruleGroupId, long groupId,
+		com.liferay.mobile.device.rules.model.MDRRuleGroup ruleGroup,
+		long groupId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mdrRuleGroupLocalService.copyRuleGroup(ruleGroupId, groupId,
+		return _mdrRuleGroupLocalService.copyRuleGroup(ruleGroup, groupId,
 			serviceContext);
 	}
 
@@ -85,18 +85,6 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 	public com.liferay.mobile.device.rules.model.MDRRuleGroup createMDRRuleGroup(
 		long ruleGroupId) {
 		return _mdrRuleGroupLocalService.createMDRRuleGroup(ruleGroupId);
-	}
-
-	/**
-	* Deletes the mdr rule group from the database. Also notifies the appropriate model listeners.
-	*
-	* @param mdrRuleGroup the mdr rule group
-	* @return the mdr rule group that was removed
-	*/
-	@Override
-	public com.liferay.mobile.device.rules.model.MDRRuleGroup deleteMDRRuleGroup(
-		com.liferay.mobile.device.rules.model.MDRRuleGroup mdrRuleGroup) {
-		return _mdrRuleGroupLocalService.deleteMDRRuleGroup(mdrRuleGroup);
 	}
 
 	/**
@@ -114,6 +102,18 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 	}
 
 	/**
+	* Deletes the mdr rule group from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mdrRuleGroup the mdr rule group
+	* @return the mdr rule group that was removed
+	*/
+	@Override
+	public com.liferay.mobile.device.rules.model.MDRRuleGroup deleteMDRRuleGroup(
+		com.liferay.mobile.device.rules.model.MDRRuleGroup mdrRuleGroup) {
+		return _mdrRuleGroupLocalService.deleteMDRRuleGroup(mdrRuleGroup);
+	}
+
+	/**
 	* @throws PortalException
 	*/
 	@Override
@@ -124,14 +124,14 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 	}
 
 	@Override
-	public void deleteRuleGroup(
-		com.liferay.mobile.device.rules.model.MDRRuleGroup ruleGroup) {
-		_mdrRuleGroupLocalService.deleteRuleGroup(ruleGroup);
+	public void deleteRuleGroup(long ruleGroupId) {
+		_mdrRuleGroupLocalService.deleteRuleGroup(ruleGroupId);
 	}
 
 	@Override
-	public void deleteRuleGroup(long ruleGroupId) {
-		_mdrRuleGroupLocalService.deleteRuleGroup(ruleGroupId);
+	public void deleteRuleGroup(
+		com.liferay.mobile.device.rules.model.MDRRuleGroup ruleGroup) {
+		_mdrRuleGroupLocalService.deleteRuleGroup(ruleGroup);
 	}
 
 	@Override
@@ -387,24 +387,24 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 
 	@Override
 	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> getRuleGroups(
-		long[] groupIds, int start, int end) {
-		return _mdrRuleGroupLocalService.getRuleGroups(groupIds, start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> getRuleGroups(
 		long groupId, int start, int end) {
 		return _mdrRuleGroupLocalService.getRuleGroups(groupId, start, end);
 	}
 
 	@Override
-	public int getRuleGroupsCount(long[] groupIds) {
-		return _mdrRuleGroupLocalService.getRuleGroupsCount(groupIds);
+	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> getRuleGroups(
+		long[] groupIds, int start, int end) {
+		return _mdrRuleGroupLocalService.getRuleGroups(groupIds, start, end);
 	}
 
 	@Override
 	public int getRuleGroupsCount(long groupId) {
 		return _mdrRuleGroupLocalService.getRuleGroupsCount(groupId);
+	}
+
+	@Override
+	public int getRuleGroupsCount(long[] groupIds) {
+		return _mdrRuleGroupLocalService.getRuleGroupsCount(groupIds);
 	}
 
 	@Override

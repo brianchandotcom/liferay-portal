@@ -73,17 +73,6 @@ public class VirtualHostLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the virtual host from the database. Also notifies the appropriate model listeners.
-	*
-	* @param virtualHost the virtual host
-	* @return the virtual host that was removed
-	*/
-	public static com.liferay.portal.kernel.model.VirtualHost deleteVirtualHost(
-		com.liferay.portal.kernel.model.VirtualHost virtualHost) {
-		return getService().deleteVirtualHost(virtualHost);
-	}
-
-	/**
 	* Deletes the virtual host with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param virtualHostId the primary key of the virtual host
@@ -94,6 +83,17 @@ public class VirtualHostLocalServiceUtil {
 		long virtualHostId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteVirtualHost(virtualHostId);
+	}
+
+	/**
+	* Deletes the virtual host from the database. Also notifies the appropriate model listeners.
+	*
+	* @param virtualHost the virtual host
+	* @return the virtual host that was removed
+	*/
+	public static com.liferay.portal.kernel.model.VirtualHost deleteVirtualHost(
+		com.liferay.portal.kernel.model.VirtualHost virtualHost) {
+		return getService().deleteVirtualHost(virtualHost);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -175,11 +175,6 @@ public class VirtualHostLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.VirtualHost fetchVirtualHost(
-		java.lang.String hostname) {
-		return getService().fetchVirtualHost(hostname);
-	}
-
-	public static com.liferay.portal.kernel.model.VirtualHost fetchVirtualHost(
 		long virtualHostId) {
 		return getService().fetchVirtualHost(virtualHostId);
 	}
@@ -187,6 +182,11 @@ public class VirtualHostLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.VirtualHost fetchVirtualHost(
 		long companyId, long layoutSetId) {
 		return getService().fetchVirtualHost(companyId, layoutSetId);
+	}
+
+	public static com.liferay.portal.kernel.model.VirtualHost fetchVirtualHost(
+		java.lang.String hostname) {
+		return getService().fetchVirtualHost(hostname);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
@@ -212,12 +212,6 @@ public class VirtualHostLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static com.liferay.portal.kernel.model.VirtualHost getVirtualHost(
-		java.lang.String hostname)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getVirtualHost(hostname);
-	}
-
 	/**
 	* Returns the virtual host with the primary key.
 	*
@@ -235,6 +229,12 @@ public class VirtualHostLocalServiceUtil {
 		long companyId, long layoutSetId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getVirtualHost(companyId, layoutSetId);
+	}
+
+	public static com.liferay.portal.kernel.model.VirtualHost getVirtualHost(
+		java.lang.String hostname)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getVirtualHost(hostname);
 	}
 
 	/**
@@ -262,6 +262,11 @@ public class VirtualHostLocalServiceUtil {
 		return getService().getVirtualHostsCount();
 	}
 
+	public static com.liferay.portal.kernel.model.VirtualHost updateVirtualHost(
+		long companyId, long layoutSetId, java.lang.String hostname) {
+		return getService().updateVirtualHost(companyId, layoutSetId, hostname);
+	}
+
 	/**
 	* Updates the virtual host in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -271,11 +276,6 @@ public class VirtualHostLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.VirtualHost updateVirtualHost(
 		com.liferay.portal.kernel.model.VirtualHost virtualHost) {
 		return getService().updateVirtualHost(virtualHost);
-	}
-
-	public static com.liferay.portal.kernel.model.VirtualHost updateVirtualHost(
-		long companyId, long layoutSetId, java.lang.String hostname) {
-		return getService().updateVirtualHost(companyId, layoutSetId, hostname);
 	}
 
 	public static VirtualHostLocalService getService() {

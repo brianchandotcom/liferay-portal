@@ -103,13 +103,13 @@ public class UserLocalServiceUtil {
 		getService().addDefaultUserGroups(userId);
 	}
 
+	public static void addGroupUser(long groupId, long userId) {
+		getService().addGroupUser(groupId, userId);
+	}
+
 	public static void addGroupUser(long groupId,
 		com.liferay.portal.kernel.model.User user) {
 		getService().addGroupUser(groupId, user);
-	}
-
-	public static void addGroupUser(long groupId, long userId) {
-		getService().addGroupUser(groupId, userId);
 	}
 
 	/**
@@ -129,13 +129,13 @@ public class UserLocalServiceUtil {
 		getService().addGroupUsers(groupId, userIds);
 	}
 
+	public static void addOrganizationUser(long organizationId, long userId) {
+		getService().addOrganizationUser(organizationId, userId);
+	}
+
 	public static void addOrganizationUser(long organizationId,
 		com.liferay.portal.kernel.model.User user) {
 		getService().addOrganizationUser(organizationId, user);
-	}
-
-	public static void addOrganizationUser(long organizationId, long userId) {
-		getService().addOrganizationUser(organizationId, userId);
 	}
 
 	/**
@@ -167,13 +167,13 @@ public class UserLocalServiceUtil {
 		getService().addPasswordPolicyUsers(passwordPolicyId, userIds);
 	}
 
+	public static void addRoleUser(long roleId, long userId) {
+		getService().addRoleUser(roleId, userId);
+	}
+
 	public static void addRoleUser(long roleId,
 		com.liferay.portal.kernel.model.User user) {
 		getService().addRoleUser(roleId, user);
-	}
-
-	public static void addRoleUser(long roleId, long userId) {
-		getService().addRoleUser(roleId, userId);
 	}
 
 	/**
@@ -193,13 +193,13 @@ public class UserLocalServiceUtil {
 		getService().addRoleUsers(roleId, userIds);
 	}
 
+	public static void addTeamUser(long teamId, long userId) {
+		getService().addTeamUser(teamId, userId);
+	}
+
 	public static void addTeamUser(long teamId,
 		com.liferay.portal.kernel.model.User user) {
 		getService().addTeamUser(teamId, user);
-	}
-
-	public static void addTeamUser(long teamId, long userId) {
-		getService().addTeamUser(teamId, userId);
 	}
 
 	/**
@@ -217,17 +217,6 @@ public class UserLocalServiceUtil {
 	public static void addTeamUsers(long teamId, long[] userIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().addTeamUsers(teamId, userIds);
-	}
-
-	/**
-	* Adds the user to the database. Also notifies the appropriate model listeners.
-	*
-	* @param user the user
-	* @return the user that was added
-	*/
-	public static com.liferay.portal.kernel.model.User addUser(
-		com.liferay.portal.kernel.model.User user) {
-		return getService().addUser(user);
 	}
 
 	/**
@@ -298,13 +287,24 @@ public class UserLocalServiceUtil {
 			serviceContext);
 	}
 
-	public static void addUserGroupUser(long userGroupId,
+	/**
+	* Adds the user to the database. Also notifies the appropriate model listeners.
+	*
+	* @param user the user
+	* @return the user that was added
+	*/
+	public static com.liferay.portal.kernel.model.User addUser(
 		com.liferay.portal.kernel.model.User user) {
-		getService().addUserGroupUser(userGroupId, user);
+		return getService().addUser(user);
 	}
 
 	public static void addUserGroupUser(long userGroupId, long userId) {
 		getService().addUserGroupUser(userGroupId, userId);
+	}
+
+	public static void addUserGroupUser(long userGroupId,
+		com.liferay.portal.kernel.model.User user) {
+		getService().addUserGroupUser(userGroupId, user);
 	}
 
 	/**
@@ -700,13 +700,13 @@ public class UserLocalServiceUtil {
 		return getService().decryptUserId(companyId, name, password);
 	}
 
+	public static void deleteGroupUser(long groupId, long userId) {
+		getService().deleteGroupUser(groupId, userId);
+	}
+
 	public static void deleteGroupUser(long groupId,
 		com.liferay.portal.kernel.model.User user) {
 		getService().deleteGroupUser(groupId, user);
-	}
-
-	public static void deleteGroupUser(long groupId, long userId) {
-		getService().deleteGroupUser(groupId, userId);
 	}
 
 	public static void deleteGroupUsers(long groupId,
@@ -718,13 +718,13 @@ public class UserLocalServiceUtil {
 		getService().deleteGroupUsers(groupId, userIds);
 	}
 
+	public static void deleteOrganizationUser(long organizationId, long userId) {
+		getService().deleteOrganizationUser(organizationId, userId);
+	}
+
 	public static void deleteOrganizationUser(long organizationId,
 		com.liferay.portal.kernel.model.User user) {
 		getService().deleteOrganizationUser(organizationId, user);
-	}
-
-	public static void deleteOrganizationUser(long organizationId, long userId) {
-		getService().deleteOrganizationUser(organizationId, userId);
 	}
 
 	public static void deleteOrganizationUsers(long organizationId,
@@ -759,18 +759,18 @@ public class UserLocalServiceUtil {
 	/**
 	* @throws PortalException
 	*/
-	public static void deleteRoleUser(long roleId,
-		com.liferay.portal.kernel.model.User user)
+	public static void deleteRoleUser(long roleId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteRoleUser(roleId, user);
+		getService().deleteRoleUser(roleId, userId);
 	}
 
 	/**
 	* @throws PortalException
 	*/
-	public static void deleteRoleUser(long roleId, long userId)
+	public static void deleteRoleUser(long roleId,
+		com.liferay.portal.kernel.model.User user)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteRoleUser(roleId, userId);
+		getService().deleteRoleUser(roleId, user);
 	}
 
 	public static void deleteRoleUsers(long roleId,
@@ -782,13 +782,13 @@ public class UserLocalServiceUtil {
 		getService().deleteRoleUsers(roleId, userIds);
 	}
 
+	public static void deleteTeamUser(long teamId, long userId) {
+		getService().deleteTeamUser(teamId, userId);
+	}
+
 	public static void deleteTeamUser(long teamId,
 		com.liferay.portal.kernel.model.User user) {
 		getService().deleteTeamUser(teamId, user);
-	}
-
-	public static void deleteTeamUser(long teamId, long userId) {
-		getService().deleteTeamUser(teamId, userId);
 	}
 
 	public static void deleteTeamUsers(long teamId,
@@ -798,6 +798,18 @@ public class UserLocalServiceUtil {
 
 	public static void deleteTeamUsers(long teamId, long[] userIds) {
 		getService().deleteTeamUsers(teamId, userIds);
+	}
+
+	/**
+	* Deletes the user with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param userId the primary key of the user
+	* @return the user that was removed
+	* @throws PortalException if a user with the primary key could not be found
+	*/
+	public static com.liferay.portal.kernel.model.User deleteUser(long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteUser(userId);
 	}
 
 	/**
@@ -814,15 +826,11 @@ public class UserLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the user with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param userId the primary key of the user
-	* @return the user that was removed
-	* @throws PortalException if a user with the primary key could not be found
+	* @throws PortalException
 	*/
-	public static com.liferay.portal.kernel.model.User deleteUser(long userId)
+	public static void deleteUserGroupUser(long userGroupId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteUser(userId);
+		getService().deleteUserGroupUser(userGroupId, userId);
 	}
 
 	/**
@@ -832,14 +840,6 @@ public class UserLocalServiceUtil {
 		com.liferay.portal.kernel.model.User user)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteUserGroupUser(userGroupId, user);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static void deleteUserGroupUser(long userGroupId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteUserGroupUser(userGroupId, userId);
 	}
 
 	public static void deleteUserGroupUsers(long userGroupId,
@@ -1217,15 +1217,6 @@ public class UserLocalServiceUtil {
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	/**
 	* Returns the organizationIds of the organizations associated with the user.
 	*
 	* @param userId the userId of the user
@@ -1278,6 +1269,15 @@ public class UserLocalServiceUtil {
 	public static int getOrganizationUsersCount(long organizationId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getOrganizationUsersCount(organizationId, status);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
@@ -1339,37 +1339,6 @@ public class UserLocalServiceUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the users with a social relation with the
-	* user.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param userId the primary key of the user
-	* @param start the lower bound of the range of users
-	* @param end the upper bound of the range of users (not inclusive)
-	* @param obc the comparator to order the users by (optionally
-	<code>null</code>)
-	* @return the ordered range of users with a social relation with the
-	user
-	* @deprecated As of 7.0.0, replaced by {@link #getSocialUsers(long, int,
-	String, int, int, OrderByComparator)}
-	*/
-	@Deprecated
-	public static java.util.List<com.liferay.portal.kernel.model.User> getSocialUsers(
-		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.User> obc)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getSocialUsers(userId, start, end, obc);
-	}
-
-	/**
 	* Returns an ordered range of all the users with a social relation of the
 	* type with the user.
 	*
@@ -1403,19 +1372,9 @@ public class UserLocalServiceUtil {
 				   .getSocialUsers(userId, socialRelationType, start, end, obc);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.User> getSocialUsers(
-		long userId, int socialRelationType,
-		java.lang.String socialRelationTypeComparator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.User> obc)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getSocialUsers(userId, socialRelationType,
-			socialRelationTypeComparator, start, end, obc);
-	}
-
 	/**
-	* Returns an ordered range of all the users with a mutual social relation
-	* with both of the given users.
+	* Returns an ordered range of all the users with a social relation with the
+	* user.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end -
@@ -1426,20 +1385,32 @@ public class UserLocalServiceUtil {
 	* result set.
 	* </p>
 	*
-	* @param userId1 the primary key of the first user
-	* @param userId2 the primary key of the second user
+	* @param userId the primary key of the user
 	* @param start the lower bound of the range of users
 	* @param end the upper bound of the range of users (not inclusive)
 	* @param obc the comparator to order the users by (optionally
 	<code>null</code>)
-	* @return the ordered range of users with a mutual social relation with the
+	* @return the ordered range of users with a social relation with the
 	user
+	* @deprecated As of 7.0.0, replaced by {@link #getSocialUsers(long, int,
+	String, int, int, OrderByComparator)}
 	*/
+	@Deprecated
 	public static java.util.List<com.liferay.portal.kernel.model.User> getSocialUsers(
-		long userId1, long userId2, int start, int end,
+		long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.User> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getSocialUsers(userId1, userId2, start, end, obc);
+		return getService().getSocialUsers(userId, start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.User> getSocialUsers(
+		long userId, int socialRelationType,
+		java.lang.String socialRelationTypeComparator, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.User> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getSocialUsers(userId, socialRelationType,
+			socialRelationTypeComparator, start, end, obc);
 	}
 
 	/**
@@ -1473,6 +1444,35 @@ public class UserLocalServiceUtil {
 		return getService()
 				   .getSocialUsers(userId1, userId2, socialRelationType, start,
 			end, obc);
+	}
+
+	/**
+	* Returns an ordered range of all the users with a mutual social relation
+	* with both of the given users.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param userId1 the primary key of the first user
+	* @param userId2 the primary key of the second user
+	* @param start the lower bound of the range of users
+	* @param end the upper bound of the range of users (not inclusive)
+	* @param obc the comparator to order the users by (optionally
+	<code>null</code>)
+	* @return the ordered range of users with a mutual social relation with the
+	user
+	*/
+	public static java.util.List<com.liferay.portal.kernel.model.User> getSocialUsers(
+		long userId1, long userId2, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.User> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getSocialUsers(userId1, userId2, start, end, obc);
 	}
 
 	/**
@@ -1859,6 +1859,10 @@ public class UserLocalServiceUtil {
 		return getService().hasPasswordPolicyUser(passwordPolicyId, userId);
 	}
 
+	public static boolean hasRoleUser(long roleId, long userId) {
+		return getService().hasRoleUser(roleId, userId);
+	}
+
 	/**
 	* Returns <code>true</code> if the user has the role with the name,
 	* optionally through inheritance.
@@ -1876,10 +1880,6 @@ public class UserLocalServiceUtil {
 		long userId, boolean inherited)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().hasRoleUser(companyId, name, userId, inherited);
-	}
-
-	public static boolean hasRoleUser(long roleId, long userId) {
-		return getService().hasRoleUser(roleId, userId);
 	}
 
 	public static boolean hasRoleUsers(long roleId) {
@@ -1944,52 +1944,6 @@ public class UserLocalServiceUtil {
 		return getService().loadGetDefaultUser(companyId);
 	}
 
-	public static com.liferay.portal.kernel.search.Hits search(long companyId,
-		java.lang.String keywords, int status,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end, com.liferay.portal.kernel.search.Sort[] sorts) {
-		return getService()
-				   .search(companyId, keywords, status, params, start, end,
-			sorts);
-	}
-
-	/**
-	* Returns an ordered range of all the users who match the keywords and
-	* status, using the indexer. It is preferable to use this method instead of
-	* the non-indexed version whenever possible for performance reasons.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param companyId the primary key of the user's company
-	* @param keywords the keywords (space separated), which may occur in the
-	user's first name, middle name, last name, screen name, or email
-	address
-	* @param status the workflow status
-	* @param params the indexer parameters (optionally <code>null</code>). For
-	more information see {@link
-	com.liferay.portlet.usersadmin.util.UserIndexer}.
-	* @param start the lower bound of the range of users
-	* @param end the upper bound of the range of users (not inclusive)
-	* @param sort the field and direction to sort by (optionally
-	<code>null</code>)
-	* @return the matching users
-	* @see com.liferay.portlet.usersadmin.util.UserIndexer
-	*/
-	public static com.liferay.portal.kernel.search.Hits search(long companyId,
-		java.lang.String keywords, int status,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end, com.liferay.portal.kernel.search.Sort sort) {
-		return getService()
-				   .search(companyId, keywords, status, params, start, end, sort);
-	}
-
 	/**
 	* Returns an ordered range of all the users who match the keywords and
 	* status, without using the indexer. It is preferable to use the indexed
@@ -2029,17 +1983,100 @@ public class UserLocalServiceUtil {
 				   .search(companyId, keywords, status, params, start, end, obc);
 	}
 
+	/**
+	* Returns an ordered range of all the users who match the keywords and
+	* status, using the indexer. It is preferable to use this method instead of
+	* the non-indexed version whenever possible for performance reasons.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param companyId the primary key of the user's company
+	* @param keywords the keywords (space separated), which may occur in the
+	user's first name, middle name, last name, screen name, or email
+	address
+	* @param status the workflow status
+	* @param params the indexer parameters (optionally <code>null</code>). For
+	more information see {@link
+	com.liferay.portlet.usersadmin.util.UserIndexer}.
+	* @param start the lower bound of the range of users
+	* @param end the upper bound of the range of users (not inclusive)
+	* @param sort the field and direction to sort by (optionally
+	<code>null</code>)
+	* @return the matching users
+	* @see com.liferay.portlet.usersadmin.util.UserIndexer
+	*/
 	public static com.liferay.portal.kernel.search.Hits search(long companyId,
-		java.lang.String firstName, java.lang.String middleName,
-		java.lang.String lastName, java.lang.String screenName,
-		java.lang.String emailAddress, int status,
+		java.lang.String keywords, int status,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end, com.liferay.portal.kernel.search.Sort sort) {
+		return getService()
+				   .search(companyId, keywords, status, params, start, end, sort);
+	}
+
+	public static com.liferay.portal.kernel.search.Hits search(long companyId,
+		java.lang.String keywords, int status,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end, com.liferay.portal.kernel.search.Sort[] sorts) {
+		return getService()
+				   .search(companyId, keywords, status, params, start, end,
+			sorts);
+	}
+
+	/**
+	* Returns an ordered range of all the users with the status, and whose
+	* first name, middle name, last name, screen name, and email address match
+	* the keywords specified for them, without using the indexer. It is
+	* preferable to use the indexed version {@link #search(long, String,
+	* String, String, String, String, int, LinkedHashMap, boolean, int, int,
+	* Sort)} instead of this method wherever possible for performance reasons.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param companyId the primary key of the user's company
+	* @param firstName the first name keywords (space separated)
+	* @param middleName the middle name keywords
+	* @param lastName the last name keywords
+	* @param screenName the screen name keywords
+	* @param emailAddress the email address keywords
+	* @param status the workflow status
+	* @param params the finder parameters (optionally <code>null</code>). For
+	more information see {@link
+	com.liferay.portal.kernel.service.persistence.UserFinder}.
+	* @param andSearch whether every field must match its keywords, or just
+	one field. For example, &quot;users with the first name 'bob' and
+	last name 'smith'&quot; vs &quot;users with the first name 'bob'
+	or the last name 'smith'&quot;.
+	* @param start the lower bound of the range of users
+	* @param end the upper bound of the range of users (not inclusive)
+	* @param obc the comparator to order the users by (optionally
+	<code>null</code>)
+	* @return the matching users
+	* @see com.liferay.portal.kernel.service.persistence.UserFinder
+	*/
+	public static java.util.List<com.liferay.portal.kernel.model.User> search(
+		long companyId, java.lang.String firstName,
+		java.lang.String middleName, java.lang.String lastName,
+		java.lang.String screenName, java.lang.String emailAddress, int status,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andSearch, int start, int end,
-		com.liferay.portal.kernel.search.Sort[] sorts) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.User> obc) {
 		return getService()
 				   .search(companyId, firstName, middleName, lastName,
-			screenName, emailAddress, status, params, andSearch, start, end,
-			sorts);
+			screenName, emailAddress, status, params, andSearch, start, end, obc);
 	}
 
 	/**
@@ -2092,54 +2129,17 @@ public class UserLocalServiceUtil {
 			sort);
 	}
 
-	/**
-	* Returns an ordered range of all the users with the status, and whose
-	* first name, middle name, last name, screen name, and email address match
-	* the keywords specified for them, without using the indexer. It is
-	* preferable to use the indexed version {@link #search(long, String,
-	* String, String, String, String, int, LinkedHashMap, boolean, int, int,
-	* Sort)} instead of this method wherever possible for performance reasons.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param companyId the primary key of the user's company
-	* @param firstName the first name keywords (space separated)
-	* @param middleName the middle name keywords
-	* @param lastName the last name keywords
-	* @param screenName the screen name keywords
-	* @param emailAddress the email address keywords
-	* @param status the workflow status
-	* @param params the finder parameters (optionally <code>null</code>). For
-	more information see {@link
-	com.liferay.portal.kernel.service.persistence.UserFinder}.
-	* @param andSearch whether every field must match its keywords, or just
-	one field. For example, &quot;users with the first name 'bob' and
-	last name 'smith'&quot; vs &quot;users with the first name 'bob'
-	or the last name 'smith'&quot;.
-	* @param start the lower bound of the range of users
-	* @param end the upper bound of the range of users (not inclusive)
-	* @param obc the comparator to order the users by (optionally
-	<code>null</code>)
-	* @return the matching users
-	* @see com.liferay.portal.kernel.service.persistence.UserFinder
-	*/
-	public static java.util.List<com.liferay.portal.kernel.model.User> search(
-		long companyId, java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName,
-		java.lang.String screenName, java.lang.String emailAddress, int status,
+	public static com.liferay.portal.kernel.search.Hits search(long companyId,
+		java.lang.String firstName, java.lang.String middleName,
+		java.lang.String lastName, java.lang.String screenName,
+		java.lang.String emailAddress, int status,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andSearch, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.User> obc) {
+		com.liferay.portal.kernel.search.Sort[] sorts) {
 		return getService()
 				   .search(companyId, firstName, middleName, lastName,
-			screenName, emailAddress, status, params, andSearch, start, end, obc);
+			screenName, emailAddress, status, params, andSearch, start, end,
+			sorts);
 	}
 
 	/**
@@ -2207,29 +2207,19 @@ public class UserLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.User> searchSocial(
-		long[] groupIds, long userId, int[] socialRelationTypes,
-		java.lang.String keywords, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .searchSocial(groupIds, userId, socialRelationTypes,
-			keywords, start, end);
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.User> searchSocial(
 		long companyId, long[] groupIds, java.lang.String keywords, int start,
 		int end) {
 		return getService()
 				   .searchSocial(companyId, groupIds, keywords, start, end);
 	}
 
-	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portal.kernel.model.User> searchUsers(
-		long companyId, java.lang.String keywords, int status,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end, com.liferay.portal.kernel.search.Sort[] sorts)
+	public static java.util.List<com.liferay.portal.kernel.model.User> searchSocial(
+		long[] groupIds, long userId, int[] socialRelationTypes,
+		java.lang.String keywords, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .searchUsers(companyId, keywords, status, params, start,
-			end, sorts);
+				   .searchSocial(groupIds, userId, socialRelationTypes,
+			keywords, start, end);
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portal.kernel.model.User> searchUsers(
@@ -2243,17 +2233,13 @@ public class UserLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portal.kernel.model.User> searchUsers(
-		long companyId, java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName,
-		java.lang.String screenName, java.lang.String emailAddress, int status,
+		long companyId, java.lang.String keywords, int status,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andSearch, int start, int end,
-		com.liferay.portal.kernel.search.Sort[] sorts)
+		int start, int end, com.liferay.portal.kernel.search.Sort[] sorts)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .searchUsers(companyId, firstName, middleName, lastName,
-			screenName, emailAddress, status, params, andSearch, start, end,
-			sorts);
+				   .searchUsers(companyId, keywords, status, params, start,
+			end, sorts);
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portal.kernel.model.User> searchUsers(
@@ -2268,6 +2254,20 @@ public class UserLocalServiceUtil {
 				   .searchUsers(companyId, firstName, middleName, lastName,
 			screenName, emailAddress, status, params, andSearch, start, end,
 			sort);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portal.kernel.model.User> searchUsers(
+		long companyId, java.lang.String firstName,
+		java.lang.String middleName, java.lang.String lastName,
+		java.lang.String screenName, java.lang.String emailAddress, int status,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andSearch, int start, int end,
+		com.liferay.portal.kernel.search.Sort[] sorts)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchUsers(companyId, firstName, middleName, lastName,
+			screenName, emailAddress, status, params, andSearch, start, end,
+			sorts);
 	}
 
 	/**
@@ -2975,17 +2975,6 @@ public class UserLocalServiceUtil {
 	}
 
 	/**
-	* Updates the user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param user the user
-	* @return the user that was updated
-	*/
-	public static com.liferay.portal.kernel.model.User updateUser(
-		com.liferay.portal.kernel.model.User user) {
-		return getService().updateUser(user);
-	}
-
-	/**
 	* Updates the user.
 	*
 	* @param userId the primary key of the user
@@ -3147,6 +3136,17 @@ public class UserLocalServiceUtil {
 			smsSn, facebookSn, jabberSn, skypeSn, twitterSn, jobTitle,
 			groupIds, organizationIds, roleIds, userGroupRoles, userGroupIds,
 			serviceContext);
+	}
+
+	/**
+	* Updates the user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param user the user
+	* @return the user that was updated
+	*/
+	public static com.liferay.portal.kernel.model.User updateUser(
+		com.liferay.portal.kernel.model.User user) {
+		return getService().updateUser(user);
 	}
 
 	/**

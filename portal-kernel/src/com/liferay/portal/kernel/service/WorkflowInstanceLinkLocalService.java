@@ -58,6 +58,9 @@ public interface WorkflowInstanceLinkLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WorkflowInstanceLinkLocalServiceUtil} to access the workflow instance link local service. Add custom service methods to {@link com.liferay.portal.service.impl.WorkflowInstanceLinkLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public WorkflowInstanceLink addWorkflowInstanceLink(long userId,
+		long companyId, long groupId, java.lang.String className, long classPK,
+		long workflowInstanceId) throws PortalException;
 
 	/**
 	* Adds the workflow instance link to the database. Also notifies the appropriate model listeners.
@@ -68,10 +71,6 @@ public interface WorkflowInstanceLinkLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public WorkflowInstanceLink addWorkflowInstanceLink(
 		WorkflowInstanceLink workflowInstanceLink);
-
-	public WorkflowInstanceLink addWorkflowInstanceLink(long userId,
-		long companyId, long groupId, java.lang.String className, long classPK,
-		long workflowInstanceId) throws PortalException;
 
 	/**
 	* Creates a new workflow instance link with the primary key. Does not add the workflow instance link to the database.
@@ -90,17 +89,6 @@ public interface WorkflowInstanceLinkLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the workflow instance link from the database. Also notifies the appropriate model listeners.
-	*
-	* @param workflowInstanceLink the workflow instance link
-	* @return the workflow instance link that was removed
-	* @throws PortalException
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public WorkflowInstanceLink deleteWorkflowInstanceLink(
-		WorkflowInstanceLink workflowInstanceLink) throws PortalException;
-
-	/**
 	* Deletes the workflow instance link with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param workflowInstanceLinkId the primary key of the workflow instance link
@@ -114,6 +102,17 @@ public interface WorkflowInstanceLinkLocalService extends BaseLocalService,
 	public WorkflowInstanceLink deleteWorkflowInstanceLink(long companyId,
 		long groupId, java.lang.String className, long classPK)
 		throws PortalException;
+
+	/**
+	* Deletes the workflow instance link from the database. Also notifies the appropriate model listeners.
+	*
+	* @param workflowInstanceLink the workflow instance link
+	* @return the workflow instance link that was removed
+	* @throws PortalException
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public WorkflowInstanceLink deleteWorkflowInstanceLink(
+		WorkflowInstanceLink workflowInstanceLink) throws PortalException;
 
 	public void deleteWorkflowInstanceLinks(long companyId, long groupId,
 		java.lang.String className, long classPK) throws PortalException;

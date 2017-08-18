@@ -120,15 +120,6 @@ public interface PortletLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the portlet from the database. Also notifies the appropriate model listeners.
-	*
-	* @param portlet the portlet
-	* @return the portlet that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public Portlet deletePortlet(Portlet portlet);
-
-	/**
 	* Deletes the portlet with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param id the primary key of the portlet
@@ -140,6 +131,15 @@ public interface PortletLocalService extends BaseLocalService,
 
 	public void deletePortlet(long companyId, java.lang.String portletId,
 		long plid) throws PortalException;
+
+	/**
+	* Deletes the portlet from the database. Also notifies the appropriate model listeners.
+	*
+	* @param portlet the portlet
+	* @return the portlet that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public Portlet deletePortlet(Portlet portlet);
 
 	public void deletePortlets(long companyId, java.lang.String[] portletIds,
 		long plid) throws PortalException;
@@ -279,11 +279,11 @@ public interface PortletLocalService extends BaseLocalService,
 
 	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Portlet getPortletById(java.lang.String portletId);
+	public Portlet getPortletById(long companyId, java.lang.String portletId);
 
 	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Portlet getPortletById(long companyId, java.lang.String portletId);
+	public Portlet getPortletById(java.lang.String portletId);
 
 	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -361,6 +361,9 @@ public interface PortletLocalService extends BaseLocalService,
 	@Transactional(enabled = false)
 	public void removeCompanyPortletsPool(long companyId);
 
+	public Portlet updatePortlet(long companyId, java.lang.String portletId,
+		java.lang.String roles, boolean active);
+
 	/**
 	* Updates the portlet in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -369,9 +372,6 @@ public interface PortletLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public Portlet updatePortlet(Portlet portlet);
-
-	public Portlet updatePortlet(long companyId, java.lang.String portletId,
-		java.lang.String roles, boolean active);
 
 	@Skip
 	public void visitPortlets(long companyId, Consumer<Portlet> consumer);

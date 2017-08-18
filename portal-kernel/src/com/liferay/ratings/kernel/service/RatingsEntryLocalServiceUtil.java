@@ -63,17 +63,17 @@ public class RatingsEntryLocalServiceUtil {
 		return getService().createRatingsEntry(entryId);
 	}
 
+	public static void deleteEntry(long userId, java.lang.String className,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteEntry(userId, className, classPK);
+	}
+
 	public static void deleteEntry(
 		com.liferay.ratings.kernel.model.RatingsEntry entry, long userId,
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteEntry(entry, userId, className, classPK);
-	}
-
-	public static void deleteEntry(long userId, java.lang.String className,
-		long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteEntry(userId, className, classPK);
 	}
 
 	/**
@@ -83,17 +83,6 @@ public class RatingsEntryLocalServiceUtil {
 		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePersistedModel(persistedModel);
-	}
-
-	/**
-	* Deletes the ratings entry from the database. Also notifies the appropriate model listeners.
-	*
-	* @param ratingsEntry the ratings entry
-	* @return the ratings entry that was removed
-	*/
-	public static com.liferay.ratings.kernel.model.RatingsEntry deleteRatingsEntry(
-		com.liferay.ratings.kernel.model.RatingsEntry ratingsEntry) {
-		return getService().deleteRatingsEntry(ratingsEntry);
 	}
 
 	/**
@@ -107,6 +96,17 @@ public class RatingsEntryLocalServiceUtil {
 		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteRatingsEntry(entryId);
+	}
+
+	/**
+	* Deletes the ratings entry from the database. Also notifies the appropriate model listeners.
+	*
+	* @param ratingsEntry the ratings entry
+	* @return the ratings entry that was removed
+	*/
+	public static com.liferay.ratings.kernel.model.RatingsEntry deleteRatingsEntry(
+		com.liferay.ratings.kernel.model.RatingsEntry ratingsEntry) {
+		return getService().deleteRatingsEntry(ratingsEntry);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -213,16 +213,6 @@ public class RatingsEntryLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static java.util.List<com.liferay.ratings.kernel.model.RatingsEntry> getEntries(
-		java.lang.String className, long classPK) {
-		return getService().getEntries(className, classPK);
-	}
-
-	public static java.util.List<com.liferay.ratings.kernel.model.RatingsEntry> getEntries(
-		java.lang.String className, long classPK, double score) {
-		return getService().getEntries(className, classPK, score);
-	}
-
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
@@ -236,6 +226,16 @@ public class RatingsEntryLocalServiceUtil {
 	public static java.util.Map<java.lang.Long, com.liferay.ratings.kernel.model.RatingsEntry> getEntries(
 		long userId, java.lang.String className, long[] classPKs) {
 		return getService().getEntries(userId, className, classPKs);
+	}
+
+	public static java.util.List<com.liferay.ratings.kernel.model.RatingsEntry> getEntries(
+		java.lang.String className, long classPK) {
+		return getService().getEntries(className, classPK);
+	}
+
+	public static java.util.List<com.liferay.ratings.kernel.model.RatingsEntry> getEntries(
+		java.lang.String className, long classPK, double score) {
+		return getService().getEntries(className, classPK, score);
 	}
 
 	public static int getEntriesCount(java.lang.String className, long classPK,

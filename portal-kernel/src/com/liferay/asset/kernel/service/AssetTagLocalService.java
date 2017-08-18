@@ -406,6 +406,15 @@ public interface AssetTagLocalService extends BaseLocalService,
 		PortletDataContext portletDataContext);
 
 	/**
+	* Returns the asset tags in the groups.
+	*
+	* @param groupIds the primary keys of the groups
+	* @return the asset tags in the groups
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetTag> getGroupsTags(long[] groupIds);
+
+	/**
 	* Returns the asset tags in the group.
 	*
 	* @param groupId the primary key of the group
@@ -433,15 +442,6 @@ public interface AssetTagLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupTagsCount(long groupId);
-
-	/**
-	* Returns the asset tags in the groups.
-	*
-	* @param groupIds the primary keys of the groups
-	* @return the asset tags in the groups
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetTag> getGroupsTags(long[] groupIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -499,16 +499,6 @@ public interface AssetTagLocalService extends BaseLocalService,
 	public long[] getTagIds(long groupId, java.lang.String[] names);
 
 	/**
-	* Returns the primary keys of the asset tags with the names in the groups.
-	*
-	* @param groupIds the primary keys of the groups
-	* @param names the names of the asset tags
-	* @return the primary keys of the asset tags with the names in the groups
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getTagIds(long[] groupIds, java.lang.String[] names);
-
-	/**
 	* Returns the primary keys of the asset tags with the name in the groups.
 	*
 	* @param groupIds the primary keys of the groups
@@ -519,12 +509,32 @@ public interface AssetTagLocalService extends BaseLocalService,
 	public long[] getTagIds(long[] groupIds, java.lang.String name);
 
 	/**
+	* Returns the primary keys of the asset tags with the names in the groups.
+	*
+	* @param groupIds the primary keys of the groups
+	* @param names the names of the asset tags
+	* @return the primary keys of the asset tags with the names in the groups
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getTagIds(long[] groupIds, java.lang.String[] names);
+
+	/**
 	* Returns the names of all the asset tags.
 	*
 	* @return the names of all the asset tags
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String[] getTagNames();
+
+	/**
+	* Returns the names of the asset tags of the entity.
+	*
+	* @param classNameId the class name ID of the entity
+	* @param classPK the primary key of the entity
+	* @return the names of the asset tags of the entity
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String[] getTagNames(long classNameId, long classPK);
 
 	/**
 	* Returns the names of the asset tags of the entity
@@ -538,33 +548,12 @@ public interface AssetTagLocalService extends BaseLocalService,
 		long classPK);
 
 	/**
-	* Returns the names of the asset tags of the entity.
-	*
-	* @param classNameId the class name ID of the entity
-	* @param classPK the primary key of the entity
-	* @return the names of the asset tags of the entity
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String[] getTagNames(long classNameId, long classPK);
-
-	/**
 	* Returns all the asset tags.
 	*
 	* @return the asset tags
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetTag> getTags();
-
-	/**
-	* Returns the asset tags of the entity.
-	*
-	* @param className the class name of the entity
-	* @param classPK the primary key of the entity
-	* @return the asset tags of the entity
-	*/
-	@ThreadLocalCachable
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetTag> getTags(java.lang.String className, long classPK);
 
 	/**
 	* Returns the asset tags of the entity.
@@ -583,6 +572,17 @@ public interface AssetTagLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetTag> getTags(long groupId, long classNameId,
 		java.lang.String name, int start, int end);
+
+	/**
+	* Returns the asset tags of the entity.
+	*
+	* @param className the class name of the entity
+	* @param classPK the primary key of the entity
+	* @return the asset tags of the entity
+	*/
+	@ThreadLocalCachable
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetTag> getTags(java.lang.String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getTagsSize(long groupId, long classNameId, java.lang.String name);

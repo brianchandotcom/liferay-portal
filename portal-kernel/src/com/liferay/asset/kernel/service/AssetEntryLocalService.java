@@ -145,10 +145,10 @@ public interface AssetEntryLocalService extends BaseLocalService,
 
 	public void deleteEntry(AssetEntry entry) throws PortalException;
 
+	public void deleteEntry(long entryId) throws PortalException;
+
 	public void deleteEntry(java.lang.String className, long classPK)
 		throws PortalException;
-
-	public void deleteEntry(long entryId) throws PortalException;
 
 	public void deleteGroupEntries(long groupId) throws PortalException;
 
@@ -222,13 +222,13 @@ public interface AssetEntryLocalService extends BaseLocalService,
 	public AssetEntry fetchAssetEntry(long entryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public AssetEntry fetchEntry(java.lang.String className, long classPK);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetEntry fetchEntry(long entryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetEntry fetchEntry(long groupId, java.lang.String classUuid);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetEntry fetchEntry(java.lang.String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -347,14 +347,14 @@ public interface AssetEntryLocalService extends BaseLocalService,
 		java.lang.Boolean listable, boolean advancedSearch, boolean andOperator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public AssetEntry getEntry(java.lang.String className, long classPK)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetEntry getEntry(long entryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetEntry getEntry(long groupId, java.lang.String classUuid)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetEntry getEntry(java.lang.String className, long classPK)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -385,11 +385,11 @@ public interface AssetEntryLocalService extends BaseLocalService,
 	public AssetEntry getPreviousEntry(long entryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetEntry> getTopViewedEntries(java.lang.String[] className,
+	public List<AssetEntry> getTopViewedEntries(java.lang.String className,
 		boolean asc, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetEntry> getTopViewedEntries(java.lang.String className,
+	public List<AssetEntry> getTopViewedEntries(java.lang.String[] className,
 		boolean asc, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -420,26 +420,14 @@ public interface AssetEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Hits search(long companyId, long[] groupIds, long userId,
-		java.lang.String className, java.lang.String keywords, int status,
+		java.lang.String className, long classTypeId,
+		java.lang.String keywords, boolean showNonindexable, int status,
 		int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(long companyId, long[] groupIds, long userId,
-		java.lang.String className, java.lang.String userName,
-		java.lang.String title, java.lang.String description,
-		java.lang.String assetCategoryIds, java.lang.String assetTagNames,
-		int status, boolean andSearch, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Hits search(long companyId, long[] groupIds, long userId,
 		java.lang.String className, long classTypeId,
 		java.lang.String keywords, boolean showNonindexable, int[] statuses,
-		int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(long companyId, long[] groupIds, long userId,
-		java.lang.String className, long classTypeId,
-		java.lang.String keywords, boolean showNonindexable, int status,
 		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -478,6 +466,18 @@ public interface AssetEntryLocalService extends BaseLocalService,
 		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Hits search(long companyId, long[] groupIds, long userId,
+		java.lang.String className, java.lang.String keywords, int status,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Hits search(long companyId, long[] groupIds, long userId,
+		java.lang.String className, java.lang.String userName,
+		java.lang.String title, java.lang.String description,
+		java.lang.String assetCategoryIds, java.lang.String assetTagNames,
+		int status, boolean andSearch, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long searchCount(long companyId, long[] groupIds, long userId,
 		java.lang.String className, long classTypeId,
 		java.lang.String keywords, boolean showNonindexable, int[] statuses);
@@ -511,30 +511,15 @@ public interface AssetEntryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public AssetEntry updateAssetEntry(AssetEntry assetEntry);
 
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(String, long,
-	Date, Date, boolean, boolean)}
-	*/
-	@java.lang.Deprecated
-	public AssetEntry updateEntry(java.lang.String className, long classPK,
-		Date publishDate, boolean visible) throws PortalException;
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(String, long,
-	Date, Date, boolean, boolean)}
-	*/
-	@java.lang.Deprecated
-	public AssetEntry updateEntry(java.lang.String className, long classPK,
-		Date publishDate, Date expirationDate, boolean visible)
-		throws PortalException;
-
-	public AssetEntry updateEntry(java.lang.String className, long classPK,
-		Date publishDate, Date expirationDate, boolean listable, boolean visible)
-		throws PortalException;
-
-	public AssetEntry updateEntry(long userId, long groupId,
-		java.lang.String className, long classPK, long[] categoryIds,
-		java.lang.String[] tagNames) throws PortalException;
+	public AssetEntry updateEntry(long userId, long groupId, Date createDate,
+		Date modifiedDate, java.lang.String className, long classPK,
+		java.lang.String classUuid, long classTypeId, long[] categoryIds,
+		java.lang.String[] tagNames, boolean listable, boolean visible,
+		Date startDate, Date endDate, Date publishDate, Date expirationDate,
+		java.lang.String mimeType, java.lang.String title,
+		java.lang.String description, java.lang.String summary,
+		java.lang.String url, java.lang.String layoutUuid, int height,
+		int width, java.lang.Double priority) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, long,
@@ -548,16 +533,6 @@ public interface AssetEntryLocalService extends BaseLocalService,
 		java.lang.String classUuid, long classTypeId, long[] categoryIds,
 		java.lang.String[] tagNames, boolean listable, boolean visible,
 		Date startDate, Date endDate, Date expirationDate,
-		java.lang.String mimeType, java.lang.String title,
-		java.lang.String description, java.lang.String summary,
-		java.lang.String url, java.lang.String layoutUuid, int height,
-		int width, java.lang.Double priority) throws PortalException;
-
-	public AssetEntry updateEntry(long userId, long groupId, Date createDate,
-		Date modifiedDate, java.lang.String className, long classPK,
-		java.lang.String classUuid, long classTypeId, long[] categoryIds,
-		java.lang.String[] tagNames, boolean listable, boolean visible,
-		Date startDate, Date endDate, Date publishDate, Date expirationDate,
 		java.lang.String mimeType, java.lang.String title,
 		java.lang.String description, java.lang.String summary,
 		java.lang.String url, java.lang.String layoutUuid, int height,
@@ -580,11 +555,44 @@ public interface AssetEntryLocalService extends BaseLocalService,
 		java.lang.String layoutUuid, int height, int width,
 		java.lang.Integer priority, boolean sync) throws PortalException;
 
+	public AssetEntry updateEntry(long userId, long groupId,
+		java.lang.String className, long classPK, long[] categoryIds,
+		java.lang.String[] tagNames) throws PortalException;
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(String, long,
+	Date, Date, boolean, boolean)}
+	*/
+	@java.lang.Deprecated
+	public AssetEntry updateEntry(java.lang.String className, long classPK,
+		Date publishDate, boolean visible) throws PortalException;
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(String, long,
+	Date, Date, boolean, boolean)}
+	*/
+	@java.lang.Deprecated
+	public AssetEntry updateEntry(java.lang.String className, long classPK,
+		Date publishDate, Date expirationDate, boolean visible)
+		throws PortalException;
+
+	public AssetEntry updateEntry(java.lang.String className, long classPK,
+		Date publishDate, Date expirationDate, boolean listable, boolean visible)
+		throws PortalException;
+
 	public AssetEntry updateVisible(AssetEntry entry, boolean visible)
 		throws PortalException;
 
 	public AssetEntry updateVisible(java.lang.String className, long classPK,
 		boolean visible) throws PortalException;
+
+	public void validate(long groupId, java.lang.String className,
+		long classPK, long classTypePK, long[] categoryIds,
+		java.lang.String[] tagNames) throws PortalException;
+
+	public void validate(long groupId, java.lang.String className,
+		long classTypePK, long[] categoryIds, java.lang.String[] tagNames)
+		throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #validate(long, String, long,
@@ -594,12 +602,4 @@ public interface AssetEntryLocalService extends BaseLocalService,
 	public void validate(long groupId, java.lang.String className,
 		long[] categoryIds, java.lang.String[] tagNames)
 		throws PortalException;
-
-	public void validate(long groupId, java.lang.String className,
-		long classTypePK, long[] categoryIds, java.lang.String[] tagNames)
-		throws PortalException;
-
-	public void validate(long groupId, java.lang.String className,
-		long classPK, long classTypePK, long[] categoryIds,
-		java.lang.String[] tagNames) throws PortalException;
 }

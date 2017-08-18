@@ -83,17 +83,6 @@ public interface WebDAVPropsLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the web dav props from the database. Also notifies the appropriate model listeners.
-	*
-	* @param webDAVProps the web dav props
-	* @return the web dav props that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public WebDAVProps deleteWebDAVProps(WebDAVProps webDAVProps);
-
-	public void deleteWebDAVProps(java.lang.String className, long classPK);
-
-	/**
 	* Deletes the web dav props with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param webDavPropsId the primary key of the web dav props
@@ -103,6 +92,17 @@ public interface WebDAVPropsLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public WebDAVProps deleteWebDAVProps(long webDavPropsId)
 		throws PortalException;
+
+	public void deleteWebDAVProps(java.lang.String className, long classPK);
+
+	/**
+	* Deletes the web dav props from the database. Also notifies the appropriate model listeners.
+	*
+	* @param webDAVProps the web dav props
+	* @return the web dav props that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public WebDAVProps deleteWebDAVProps(WebDAVProps webDAVProps);
 
 	public DynamicQuery dynamicQuery();
 

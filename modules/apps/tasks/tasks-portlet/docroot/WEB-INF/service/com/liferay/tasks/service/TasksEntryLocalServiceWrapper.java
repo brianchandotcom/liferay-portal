@@ -33,18 +33,6 @@ public class TasksEntryLocalServiceWrapper implements TasksEntryLocalService,
 		_tasksEntryLocalService = tasksEntryLocalService;
 	}
 
-	/**
-	* Adds the tasks entry to the database. Also notifies the appropriate model listeners.
-	*
-	* @param tasksEntry the tasks entry
-	* @return the tasks entry that was added
-	*/
-	@Override
-	public com.liferay.tasks.model.TasksEntry addTasksEntry(
-		com.liferay.tasks.model.TasksEntry tasksEntry) {
-		return _tasksEntryLocalService.addTasksEntry(tasksEntry);
-	}
-
 	@Override
 	public com.liferay.tasks.model.TasksEntry addTasksEntry(long userId,
 		java.lang.String title, int priority, long assigneeUserId,
@@ -55,6 +43,18 @@ public class TasksEntryLocalServiceWrapper implements TasksEntryLocalService,
 		return _tasksEntryLocalService.addTasksEntry(userId, title, priority,
 			assigneeUserId, dueDateMonth, dueDateDay, dueDateYear, dueDateHour,
 			dueDateMinute, addDueDate, serviceContext);
+	}
+
+	/**
+	* Adds the tasks entry to the database. Also notifies the appropriate model listeners.
+	*
+	* @param tasksEntry the tasks entry
+	* @return the tasks entry that was added
+	*/
+	@Override
+	public com.liferay.tasks.model.TasksEntry addTasksEntry(
+		com.liferay.tasks.model.TasksEntry tasksEntry) {
+		return _tasksEntryLocalService.addTasksEntry(tasksEntry);
 	}
 
 	/**
@@ -80,20 +80,6 @@ public class TasksEntryLocalServiceWrapper implements TasksEntryLocalService,
 	}
 
 	/**
-	* Deletes the tasks entry from the database. Also notifies the appropriate model listeners.
-	*
-	* @param tasksEntry the tasks entry
-	* @return the tasks entry that was removed
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.tasks.model.TasksEntry deleteTasksEntry(
-		com.liferay.tasks.model.TasksEntry tasksEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _tasksEntryLocalService.deleteTasksEntry(tasksEntry);
-	}
-
-	/**
 	* Deletes the tasks entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param tasksEntryId the primary key of the tasks entry
@@ -105,6 +91,20 @@ public class TasksEntryLocalServiceWrapper implements TasksEntryLocalService,
 		long tasksEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _tasksEntryLocalService.deleteTasksEntry(tasksEntryId);
+	}
+
+	/**
+	* Deletes the tasks entry from the database. Also notifies the appropriate model listeners.
+	*
+	* @param tasksEntry the tasks entry
+	* @return the tasks entry that was removed
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.tasks.model.TasksEntry deleteTasksEntry(
+		com.liferay.tasks.model.TasksEntry tasksEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _tasksEntryLocalService.deleteTasksEntry(tasksEntry);
 	}
 
 	@Override
@@ -386,18 +386,6 @@ public class TasksEntryLocalServiceWrapper implements TasksEntryLocalService,
 			assetCategoryIds, assetTagNames);
 	}
 
-	/**
-	* Updates the tasks entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param tasksEntry the tasks entry
-	* @return the tasks entry that was updated
-	*/
-	@Override
-	public com.liferay.tasks.model.TasksEntry updateTasksEntry(
-		com.liferay.tasks.model.TasksEntry tasksEntry) {
-		return _tasksEntryLocalService.updateTasksEntry(tasksEntry);
-	}
-
 	@Override
 	public com.liferay.tasks.model.TasksEntry updateTasksEntry(
 		long tasksEntryId, java.lang.String title, int priority,
@@ -410,6 +398,18 @@ public class TasksEntryLocalServiceWrapper implements TasksEntryLocalService,
 			priority, assigneeUserId, resolverUserId, dueDateMonth, dueDateDay,
 			dueDateYear, dueDateHour, dueDateMinute, addDueDate, status,
 			serviceContext);
+	}
+
+	/**
+	* Updates the tasks entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param tasksEntry the tasks entry
+	* @return the tasks entry that was updated
+	*/
+	@Override
+	public com.liferay.tasks.model.TasksEntry updateTasksEntry(
+		com.liferay.tasks.model.TasksEntry tasksEntry) {
+		return _tasksEntryLocalService.updateTasksEntry(tasksEntry);
 	}
 
 	@Override

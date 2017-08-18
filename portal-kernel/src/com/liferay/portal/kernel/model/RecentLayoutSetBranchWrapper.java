@@ -265,13 +265,13 @@ public class RecentLayoutSetBranchWrapper implements RecentLayoutSetBranch,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_recentLayoutSetBranch.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+		_recentLayoutSetBranch.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_recentLayoutSetBranch.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_recentLayoutSetBranch.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

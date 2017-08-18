@@ -118,9 +118,9 @@ public interface UserLocalService extends BaseLocalService,
 	*/
 	public void addDefaultUserGroups(long userId) throws PortalException;
 
-	public void addGroupUser(long groupId, User user);
-
 	public void addGroupUser(long groupId, long userId);
+
+	public void addGroupUser(long groupId, User user);
 
 	/**
 	* @throws PortalException
@@ -134,9 +134,9 @@ public interface UserLocalService extends BaseLocalService,
 	public void addGroupUsers(long groupId, long[] userIds)
 		throws PortalException;
 
-	public void addOrganizationUser(long organizationId, User user);
-
 	public void addOrganizationUser(long organizationId, long userId);
+
+	public void addOrganizationUser(long organizationId, User user);
 
 	/**
 	* @throws PortalException
@@ -159,9 +159,9 @@ public interface UserLocalService extends BaseLocalService,
 	*/
 	public void addPasswordPolicyUsers(long passwordPolicyId, long[] userIds);
 
-	public void addRoleUser(long roleId, User user);
-
 	public void addRoleUser(long roleId, long userId);
+
+	public void addRoleUser(long roleId, User user);
 
 	/**
 	* @throws PortalException
@@ -175,9 +175,9 @@ public interface UserLocalService extends BaseLocalService,
 	public void addRoleUsers(long roleId, long[] userIds)
 		throws PortalException;
 
-	public void addTeamUser(long teamId, User user);
-
 	public void addTeamUser(long teamId, long userId);
+
+	public void addTeamUser(long teamId, User user);
 
 	/**
 	* @throws PortalException
@@ -190,15 +190,6 @@ public interface UserLocalService extends BaseLocalService,
 	*/
 	public void addTeamUsers(long teamId, long[] userIds)
 		throws PortalException;
-
-	/**
-	* Adds the user to the database. Also notifies the appropriate model listeners.
-	*
-	* @param user the user
-	* @return the user that was added
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public User addUser(User user);
 
 	/**
 	* Adds a user.
@@ -258,9 +249,18 @@ public interface UserLocalService extends BaseLocalService,
 		long[] roleIds, long[] userGroupIds, boolean sendEmail,
 		ServiceContext serviceContext) throws PortalException;
 
-	public void addUserGroupUser(long userGroupId, User user);
+	/**
+	* Adds the user to the database. Also notifies the appropriate model listeners.
+	*
+	* @param user the user
+	* @return the user that was added
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public User addUser(User user);
 
 	public void addUserGroupUser(long userGroupId, long userId);
+
+	public void addUserGroupUser(long userGroupId, User user);
 
 	/**
 	* @throws PortalException
@@ -585,17 +585,17 @@ public interface UserLocalService extends BaseLocalService,
 	public KeyValuePair decryptUserId(long companyId, java.lang.String name,
 		java.lang.String password) throws PortalException;
 
-	public void deleteGroupUser(long groupId, User user);
-
 	public void deleteGroupUser(long groupId, long userId);
+
+	public void deleteGroupUser(long groupId, User user);
 
 	public void deleteGroupUsers(long groupId, List<User> users);
 
 	public void deleteGroupUsers(long groupId, long[] userIds);
 
-	public void deleteOrganizationUser(long organizationId, User user);
-
 	public void deleteOrganizationUser(long organizationId, long userId);
+
+	public void deleteOrganizationUser(long organizationId, User user);
 
 	public void deleteOrganizationUsers(long organizationId, List<User> users);
 
@@ -618,36 +618,26 @@ public interface UserLocalService extends BaseLocalService,
 	/**
 	* @throws PortalException
 	*/
-	public void deleteRoleUser(long roleId, User user)
+	public void deleteRoleUser(long roleId, long userId)
 		throws PortalException;
 
 	/**
 	* @throws PortalException
 	*/
-	public void deleteRoleUser(long roleId, long userId)
+	public void deleteRoleUser(long roleId, User user)
 		throws PortalException;
 
 	public void deleteRoleUsers(long roleId, List<User> users);
 
 	public void deleteRoleUsers(long roleId, long[] userIds);
 
-	public void deleteTeamUser(long teamId, User user);
-
 	public void deleteTeamUser(long teamId, long userId);
+
+	public void deleteTeamUser(long teamId, User user);
 
 	public void deleteTeamUsers(long teamId, List<User> users);
 
 	public void deleteTeamUsers(long teamId, long[] userIds);
-
-	/**
-	* Deletes the user from the database. Also notifies the appropriate model listeners.
-	*
-	* @param user the user
-	* @return the user that was removed
-	* @throws PortalException
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public User deleteUser(User user) throws PortalException;
 
 	/**
 	* Deletes the user with the primary key from the database. Also notifies the appropriate model listeners.
@@ -660,15 +650,25 @@ public interface UserLocalService extends BaseLocalService,
 	public User deleteUser(long userId) throws PortalException;
 
 	/**
+	* Deletes the user from the database. Also notifies the appropriate model listeners.
+	*
+	* @param user the user
+	* @return the user that was removed
 	* @throws PortalException
 	*/
-	public void deleteUserGroupUser(long userGroupId, User user)
-		throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public User deleteUser(User user) throws PortalException;
 
 	/**
 	* @throws PortalException
 	*/
 	public void deleteUserGroupUser(long userGroupId, long userId)
+		throws PortalException;
+
+	/**
+	* @throws PortalException
+	*/
+	public void deleteUserGroupUser(long userGroupId, User user)
 		throws PortalException;
 
 	public void deleteUserGroupUsers(long userGroupId, List<User> users);
@@ -980,13 +980,6 @@ public interface UserLocalService extends BaseLocalService,
 	public List<User> getNoGroups();
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	/**
 	* Returns the organizationIds of the organizations associated with the user.
 	*
 	* @param userId the userId of the user
@@ -1029,6 +1022,13 @@ public interface UserLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getOrganizationUsersCount(long organizationId, int status)
 		throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -1078,34 +1078,6 @@ public interface UserLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Returns an ordered range of all the users with a social relation with the
-	* user.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param userId the primary key of the user
-	* @param start the lower bound of the range of users
-	* @param end the upper bound of the range of users (not inclusive)
-	* @param obc the comparator to order the users by (optionally
-	<code>null</code>)
-	* @return the ordered range of users with a social relation with the
-	user
-	* @deprecated As of 7.0.0, replaced by {@link #getSocialUsers(long, int,
-	String, int, int, OrderByComparator)}
-	*/
-	@java.lang.Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<User> getSocialUsers(long userId, int start, int end,
-		OrderByComparator<User> obc) throws PortalException;
-
-	/**
 	* Returns an ordered range of all the users with a social relation of the
 	* type with the user.
 	*
@@ -1136,14 +1108,9 @@ public interface UserLocalService extends BaseLocalService,
 		int start, int end, OrderByComparator<User> obc)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<User> getSocialUsers(long userId, int socialRelationType,
-		java.lang.String socialRelationTypeComparator, int start, int end,
-		OrderByComparator<User> obc) throws PortalException;
-
 	/**
-	* Returns an ordered range of all the users with a mutual social relation
-	* with both of the given users.
+	* Returns an ordered range of all the users with a social relation with the
+	* user.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end -
@@ -1154,18 +1121,25 @@ public interface UserLocalService extends BaseLocalService,
 	* result set.
 	* </p>
 	*
-	* @param userId1 the primary key of the first user
-	* @param userId2 the primary key of the second user
+	* @param userId the primary key of the user
 	* @param start the lower bound of the range of users
 	* @param end the upper bound of the range of users (not inclusive)
 	* @param obc the comparator to order the users by (optionally
 	<code>null</code>)
-	* @return the ordered range of users with a mutual social relation with the
+	* @return the ordered range of users with a social relation with the
 	user
+	* @deprecated As of 7.0.0, replaced by {@link #getSocialUsers(long, int,
+	String, int, int, OrderByComparator)}
 	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<User> getSocialUsers(long userId1, long userId2, int start,
-		int end, OrderByComparator<User> obc) throws PortalException;
+	public List<User> getSocialUsers(long userId, int start, int end,
+		OrderByComparator<User> obc) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<User> getSocialUsers(long userId, int socialRelationType,
+		java.lang.String socialRelationTypeComparator, int start, int end,
+		OrderByComparator<User> obc) throws PortalException;
 
 	/**
 	* Returns an ordered range of all the users with a mutual social relation
@@ -1195,6 +1169,32 @@ public interface UserLocalService extends BaseLocalService,
 	public List<User> getSocialUsers(long userId1, long userId2,
 		int socialRelationType, int start, int end, OrderByComparator<User> obc)
 		throws PortalException;
+
+	/**
+	* Returns an ordered range of all the users with a mutual social relation
+	* with both of the given users.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param userId1 the primary key of the first user
+	* @param userId2 the primary key of the second user
+	* @param start the lower bound of the range of users
+	* @param end the upper bound of the range of users (not inclusive)
+	* @param obc the comparator to order the users by (optionally
+	<code>null</code>)
+	* @return the ordered range of users with a mutual social relation with the
+	user
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<User> getSocialUsers(long userId1, long userId2, int start,
+		int end, OrderByComparator<User> obc) throws PortalException;
 
 	/**
 	* Returns the number of users with a social relation with the user.
@@ -1510,6 +1510,9 @@ public interface UserLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasPasswordPolicyUser(long passwordPolicyId, long userId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasRoleUser(long roleId, long userId);
+
 	/**
 	* Returns <code>true</code> if the user has the role with the name,
 	* optionally through inheritance.
@@ -1526,9 +1529,6 @@ public interface UserLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasRoleUser(long companyId, java.lang.String name,
 		long userId, boolean inherited) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasRoleUser(long roleId, long userId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasRoleUsers(long roleId);
@@ -1578,45 +1578,6 @@ public interface UserLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public User loadGetDefaultUser(long companyId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(long companyId, java.lang.String keywords, int status,
-		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
-		int end, Sort[] sorts);
-
-	/**
-	* Returns an ordered range of all the users who match the keywords and
-	* status, using the indexer. It is preferable to use this method instead of
-	* the non-indexed version whenever possible for performance reasons.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param companyId the primary key of the user's company
-	* @param keywords the keywords (space separated), which may occur in the
-	user's first name, middle name, last name, screen name, or email
-	address
-	* @param status the workflow status
-	* @param params the indexer parameters (optionally <code>null</code>). For
-	more information see {@link
-	com.liferay.portlet.usersadmin.util.UserIndexer}.
-	* @param start the lower bound of the range of users
-	* @param end the upper bound of the range of users (not inclusive)
-	* @param sort the field and direction to sort by (optionally
-	<code>null</code>)
-	* @return the matching users
-	* @see com.liferay.portlet.usersadmin.util.UserIndexer
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(long companyId, java.lang.String keywords, int status,
-		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
-		int end, Sort sort);
-
 	/**
 	* Returns an ordered range of all the users who match the keywords and
 	* status, without using the indexer. It is preferable to use the indexed
@@ -1652,19 +1613,10 @@ public interface UserLocalService extends BaseLocalService,
 		int status, LinkedHashMap<java.lang.String, java.lang.Object> params,
 		int start, int end, OrderByComparator<User> obc);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(long companyId, java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName,
-		java.lang.String screenName, java.lang.String emailAddress, int status,
-		LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andSearch, int start, int end, Sort[] sorts);
-
 	/**
-	* Returns an ordered range of all the users with the status, and whose
-	* first name, middle name, last name, screen name, and email address match
-	* the keywords specified for them, using the indexer. It is preferable to
-	* use this method instead of the non-indexed version whenever possible for
-	* performance reasons.
+	* Returns an ordered range of all the users who match the keywords and
+	* status, using the indexer. It is preferable to use this method instead of
+	* the non-indexed version whenever possible for performance reasons.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end -
@@ -1676,19 +1628,13 @@ public interface UserLocalService extends BaseLocalService,
 	* </p>
 	*
 	* @param companyId the primary key of the user's company
-	* @param firstName the first name keywords (space separated)
-	* @param middleName the middle name keywords
-	* @param lastName the last name keywords
-	* @param screenName the screen name keywords
-	* @param emailAddress the email address keywords
+	* @param keywords the keywords (space separated), which may occur in the
+	user's first name, middle name, last name, screen name, or email
+	address
 	* @param status the workflow status
 	* @param params the indexer parameters (optionally <code>null</code>). For
 	more information see {@link
 	com.liferay.portlet.usersadmin.util.UserIndexer}.
-	* @param andSearch whether every field must match its keywords, or just
-	one field. For example, &quot;users with the first name 'bob' and
-	last name 'smith'&quot; vs &quot;users with the first name 'bob'
-	or the last name 'smith'&quot;.
 	* @param start the lower bound of the range of users
 	* @param end the upper bound of the range of users (not inclusive)
 	* @param sort the field and direction to sort by (optionally
@@ -1697,11 +1643,14 @@ public interface UserLocalService extends BaseLocalService,
 	* @see com.liferay.portlet.usersadmin.util.UserIndexer
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(long companyId, java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName,
-		java.lang.String screenName, java.lang.String emailAddress, int status,
-		LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andSearch, int start, int end, Sort sort);
+	public Hits search(long companyId, java.lang.String keywords, int status,
+		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
+		int end, Sort sort);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Hits search(long companyId, java.lang.String keywords, int status,
+		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
+		int end, Sort[] sorts);
 
 	/**
 	* Returns an ordered range of all the users with the status, and whose
@@ -1747,6 +1696,57 @@ public interface UserLocalService extends BaseLocalService,
 		java.lang.String screenName, java.lang.String emailAddress, int status,
 		LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andSearch, int start, int end, OrderByComparator<User> obc);
+
+	/**
+	* Returns an ordered range of all the users with the status, and whose
+	* first name, middle name, last name, screen name, and email address match
+	* the keywords specified for them, using the indexer. It is preferable to
+	* use this method instead of the non-indexed version whenever possible for
+	* performance reasons.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param companyId the primary key of the user's company
+	* @param firstName the first name keywords (space separated)
+	* @param middleName the middle name keywords
+	* @param lastName the last name keywords
+	* @param screenName the screen name keywords
+	* @param emailAddress the email address keywords
+	* @param status the workflow status
+	* @param params the indexer parameters (optionally <code>null</code>). For
+	more information see {@link
+	com.liferay.portlet.usersadmin.util.UserIndexer}.
+	* @param andSearch whether every field must match its keywords, or just
+	one field. For example, &quot;users with the first name 'bob' and
+	last name 'smith'&quot; vs &quot;users with the first name 'bob'
+	or the last name 'smith'&quot;.
+	* @param start the lower bound of the range of users
+	* @param end the upper bound of the range of users (not inclusive)
+	* @param sort the field and direction to sort by (optionally
+	<code>null</code>)
+	* @return the matching users
+	* @see com.liferay.portlet.usersadmin.util.UserIndexer
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Hits search(long companyId, java.lang.String firstName,
+		java.lang.String middleName, java.lang.String lastName,
+		java.lang.String screenName, java.lang.String emailAddress, int status,
+		LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andSearch, int start, int end, Sort sort);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Hits search(long companyId, java.lang.String firstName,
+		java.lang.String middleName, java.lang.String lastName,
+		java.lang.String screenName, java.lang.String emailAddress, int status,
+		LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andSearch, int start, int end, Sort[] sorts);
 
 	/**
 	* Returns the number of users who match the keywords and status.
@@ -1803,19 +1803,13 @@ public interface UserLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<User> searchSocial(long[] groupIds, long userId,
-		int[] socialRelationTypes, java.lang.String keywords, int start, int end)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<User> searchSocial(long companyId, long[] groupIds,
 		java.lang.String keywords, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BaseModelSearchResult<User> searchUsers(long companyId,
-		java.lang.String keywords, int status,
-		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
-		int end, Sort[] sorts) throws PortalException;
+	public List<User> searchSocial(long[] groupIds, long userId,
+		int[] socialRelationTypes, java.lang.String keywords, int start, int end)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<User> searchUsers(long companyId,
@@ -1825,12 +1819,9 @@ public interface UserLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<User> searchUsers(long companyId,
-		java.lang.String firstName, java.lang.String middleName,
-		java.lang.String lastName, java.lang.String screenName,
-		java.lang.String emailAddress, int status,
-		LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andSearch, int start, int end, Sort[] sorts)
-		throws PortalException;
+		java.lang.String keywords, int status,
+		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
+		int end, Sort[] sorts) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<User> searchUsers(long companyId,
@@ -1839,6 +1830,15 @@ public interface UserLocalService extends BaseLocalService,
 		java.lang.String emailAddress, int status,
 		LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andSearch, int start, int end, Sort sort)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<User> searchUsers(long companyId,
+		java.lang.String firstName, java.lang.String middleName,
+		java.lang.String lastName, java.lang.String screenName,
+		java.lang.String emailAddress, int status,
+		LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andSearch, int start, int end, Sort[] sorts)
 		throws PortalException;
 
 	/**
@@ -2394,15 +2394,6 @@ public interface UserLocalService extends BaseLocalService,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	* Updates the user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param user the user
-	* @return the user that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public User updateUser(User user);
-
-	/**
 	* Updates the user.
 	*
 	* @param userId the primary key of the user
@@ -2541,6 +2532,15 @@ public interface UserLocalService extends BaseLocalService,
 		long[] organizationIds, long[] roleIds,
 		List<UserGroupRole> userGroupRoles, long[] userGroupIds,
 		ServiceContext serviceContext) throws PortalException;
+
+	/**
+	* Updates the user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param user the user
+	* @return the user that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public User updateUser(User user);
 
 	/**
 	* Verifies the email address of the ticket.

@@ -171,17 +171,13 @@ public interface ClassNameLocalService extends BaseLocalService,
 	public ClassName fetchByClassNameId(long classNameId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ClassName fetchClassName(java.lang.String value);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ClassName fetchClassName(long classNameId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
+	public ClassName fetchClassName(java.lang.String value);
 
-	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ClassName getClassName(java.lang.String value);
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
 	* Returns the class name with the primary key.
@@ -192,6 +188,10 @@ public interface ClassNameLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ClassName getClassName(long classNameId) throws PortalException;
+
+	@Skip
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ClassName getClassName(java.lang.String value);
 
 	@Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

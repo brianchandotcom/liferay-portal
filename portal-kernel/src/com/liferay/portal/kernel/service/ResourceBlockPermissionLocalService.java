@@ -91,16 +91,6 @@ public interface ResourceBlockPermissionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the resource block permission from the database. Also notifies the appropriate model listeners.
-	*
-	* @param resourceBlockPermission the resource block permission
-	* @return the resource block permission that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public ResourceBlockPermission deleteResourceBlockPermission(
-		ResourceBlockPermission resourceBlockPermission);
-
-	/**
 	* Deletes the resource block permission with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param resourceBlockPermissionId the primary key of the resource block permission
@@ -110,6 +100,16 @@ public interface ResourceBlockPermissionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public ResourceBlockPermission deleteResourceBlockPermission(
 		long resourceBlockPermissionId) throws PortalException;
+
+	/**
+	* Deletes the resource block permission from the database. Also notifies the appropriate model listeners.
+	*
+	* @param resourceBlockPermission the resource block permission
+	* @return the resource block permission that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public ResourceBlockPermission deleteResourceBlockPermission(
+		ResourceBlockPermission resourceBlockPermission);
 
 	public void deleteResourceBlockPermissions(long resourceBlockId);
 
@@ -179,11 +179,6 @@ public interface ResourceBlockPermissionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<java.lang.Long, Set<java.lang.String>> getAvailableResourceBlockPermissionActionIds(
-		java.lang.String name, long primKey, List<java.lang.String> actionIds)
-		throws PortalException;
-
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
 	#getAvailableResourceBlockPermissionActionIds(String, long,
@@ -194,6 +189,11 @@ public interface ResourceBlockPermissionLocalService extends BaseLocalService,
 	public Map<java.lang.Long, Set<java.lang.String>> getAvailableResourceBlockPermissionActionIds(
 		long[] roleIds, java.lang.String name, long primKey,
 		List<java.lang.String> actionIds) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<java.lang.Long, Set<java.lang.String>> getAvailableResourceBlockPermissionActionIds(
+		java.lang.String name, long primKey, List<java.lang.String> actionIds)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -252,6 +252,9 @@ public interface ResourceBlockPermissionLocalService extends BaseLocalService,
 	public int getResourceBlockPermissionsCount(long resourceBlockId,
 		long roleId);
 
+	public void updateResourceBlockPermission(long resourceBlockId,
+		long roleId, long actionIdsLong, int operator);
+
 	/**
 	* Updates the resource block permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -261,7 +264,4 @@ public interface ResourceBlockPermissionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public ResourceBlockPermission updateResourceBlockPermission(
 		ResourceBlockPermission resourceBlockPermission);
-
-	public void updateResourceBlockPermission(long resourceBlockId,
-		long roleId, long actionIdsLong, int operator);
 }

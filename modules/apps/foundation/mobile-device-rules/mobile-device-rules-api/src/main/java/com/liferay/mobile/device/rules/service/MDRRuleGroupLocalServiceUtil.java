@@ -65,18 +65,18 @@ public class MDRRuleGroupLocalServiceUtil {
 	}
 
 	public static com.liferay.mobile.device.rules.model.MDRRuleGroup copyRuleGroup(
+		long ruleGroupId, long groupId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().copyRuleGroup(ruleGroupId, groupId, serviceContext);
+	}
+
+	public static com.liferay.mobile.device.rules.model.MDRRuleGroup copyRuleGroup(
 		com.liferay.mobile.device.rules.model.MDRRuleGroup ruleGroup,
 		long groupId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().copyRuleGroup(ruleGroup, groupId, serviceContext);
-	}
-
-	public static com.liferay.mobile.device.rules.model.MDRRuleGroup copyRuleGroup(
-		long ruleGroupId, long groupId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().copyRuleGroup(ruleGroupId, groupId, serviceContext);
 	}
 
 	/**
@@ -88,17 +88,6 @@ public class MDRRuleGroupLocalServiceUtil {
 	public static com.liferay.mobile.device.rules.model.MDRRuleGroup createMDRRuleGroup(
 		long ruleGroupId) {
 		return getService().createMDRRuleGroup(ruleGroupId);
-	}
-
-	/**
-	* Deletes the mdr rule group from the database. Also notifies the appropriate model listeners.
-	*
-	* @param mdrRuleGroup the mdr rule group
-	* @return the mdr rule group that was removed
-	*/
-	public static com.liferay.mobile.device.rules.model.MDRRuleGroup deleteMDRRuleGroup(
-		com.liferay.mobile.device.rules.model.MDRRuleGroup mdrRuleGroup) {
-		return getService().deleteMDRRuleGroup(mdrRuleGroup);
 	}
 
 	/**
@@ -115,6 +104,17 @@ public class MDRRuleGroupLocalServiceUtil {
 	}
 
 	/**
+	* Deletes the mdr rule group from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mdrRuleGroup the mdr rule group
+	* @return the mdr rule group that was removed
+	*/
+	public static com.liferay.mobile.device.rules.model.MDRRuleGroup deleteMDRRuleGroup(
+		com.liferay.mobile.device.rules.model.MDRRuleGroup mdrRuleGroup) {
+		return getService().deleteMDRRuleGroup(mdrRuleGroup);
+	}
+
+	/**
 	* @throws PortalException
 	*/
 	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
@@ -123,13 +123,13 @@ public class MDRRuleGroupLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
+	public static void deleteRuleGroup(long ruleGroupId) {
+		getService().deleteRuleGroup(ruleGroupId);
+	}
+
 	public static void deleteRuleGroup(
 		com.liferay.mobile.device.rules.model.MDRRuleGroup ruleGroup) {
 		getService().deleteRuleGroup(ruleGroup);
-	}
-
-	public static void deleteRuleGroup(long ruleGroupId) {
-		getService().deleteRuleGroup(ruleGroupId);
 	}
 
 	public static void deleteRuleGroups(long groupId) {
@@ -358,21 +358,21 @@ public class MDRRuleGroupLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> getRuleGroups(
-		long[] groupIds, int start, int end) {
-		return getService().getRuleGroups(groupIds, start, end);
-	}
-
-	public static java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> getRuleGroups(
 		long groupId, int start, int end) {
 		return getService().getRuleGroups(groupId, start, end);
 	}
 
-	public static int getRuleGroupsCount(long[] groupIds) {
-		return getService().getRuleGroupsCount(groupIds);
+	public static java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> getRuleGroups(
+		long[] groupIds, int start, int end) {
+		return getService().getRuleGroups(groupIds, start, end);
 	}
 
 	public static int getRuleGroupsCount(long groupId) {
 		return getService().getRuleGroupsCount(groupId);
+	}
+
+	public static int getRuleGroupsCount(long[] groupIds) {
+		return getService().getRuleGroupsCount(groupIds);
 	}
 
 	public static java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> search(

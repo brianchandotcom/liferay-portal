@@ -34,18 +34,6 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 	}
 
 	/**
-	* Adds the subscription to the database. Also notifies the appropriate model listeners.
-	*
-	* @param subscription the subscription
-	* @return the subscription that was added
-	*/
-	@Override
-	public com.liferay.subscription.model.Subscription addSubscription(
-		com.liferay.subscription.model.Subscription subscription) {
-		return _subscriptionLocalService.addSubscription(subscription);
-	}
-
-	/**
 	* Subscribes the user to the entity, notifying him the instant the entity
 	* is created, deleted, or modified.
 	*
@@ -105,6 +93,18 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 	}
 
 	/**
+	* Adds the subscription to the database. Also notifies the appropriate model listeners.
+	*
+	* @param subscription the subscription
+	* @return the subscription that was added
+	*/
+	@Override
+	public com.liferay.subscription.model.Subscription addSubscription(
+		com.liferay.subscription.model.Subscription subscription) {
+		return _subscriptionLocalService.addSubscription(subscription);
+	}
+
+	/**
 	* Creates a new subscription with the primary key. Does not add the subscription to the database.
 	*
 	* @param subscriptionId the primary key for the new subscription
@@ -129,20 +129,6 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _subscriptionLocalService.deletePersistedModel(persistedModel);
-	}
-
-	/**
-	* Deletes the subscription from the database. Also notifies the appropriate model listeners.
-	*
-	* @param subscription the subscription
-	* @return the subscription that was removed
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.subscription.model.Subscription deleteSubscription(
-		com.liferay.subscription.model.Subscription subscription)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _subscriptionLocalService.deleteSubscription(subscription);
 	}
 
 	/**
@@ -175,6 +161,20 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 	}
 
 	/**
+	* Deletes the subscription from the database. Also notifies the appropriate model listeners.
+	*
+	* @param subscription the subscription
+	* @return the subscription that was removed
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.subscription.model.Subscription deleteSubscription(
+		com.liferay.subscription.model.Subscription subscription)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _subscriptionLocalService.deleteSubscription(subscription);
+	}
+
+	/**
 	* Deletes all the subscriptions of the user.
 	*
 	* @param userId the primary key of the user
@@ -183,6 +183,12 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 	public void deleteSubscriptions(long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_subscriptionLocalService.deleteSubscriptions(userId);
+	}
+
+	@Override
+	public void deleteSubscriptions(long userId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_subscriptionLocalService.deleteSubscriptions(userId, groupId);
 	}
 
 	/**
@@ -198,12 +204,6 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_subscriptionLocalService.deleteSubscriptions(companyId, className,
 			classPK);
-	}
-
-	@Override
-	public void deleteSubscriptions(long userId, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_subscriptionLocalService.deleteSubscriptions(userId, groupId);
 	}
 
 	@Override
@@ -380,21 +380,6 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 	}
 
 	/**
-	* Returns all the subscriptions to the entity.
-	*
-	* @param companyId the primary key of the company
-	* @param className the entity's class name
-	* @param classPK the primary key of the entity's instance
-	* @return the subscriptions to the entity
-	*/
-	@Override
-	public java.util.List<com.liferay.subscription.model.Subscription> getSubscriptions(
-		long companyId, java.lang.String className, long classPK) {
-		return _subscriptionLocalService.getSubscriptions(companyId, className,
-			classPK);
-	}
-
-	/**
 	* Returns all the subscriptions of the user to the entities.
 	*
 	* @param companyId the primary key of the company
@@ -408,6 +393,21 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 		long companyId, long userId, java.lang.String className, long[] classPKs) {
 		return _subscriptionLocalService.getSubscriptions(companyId, userId,
 			className, classPKs);
+	}
+
+	/**
+	* Returns all the subscriptions to the entity.
+	*
+	* @param companyId the primary key of the company
+	* @param className the entity's class name
+	* @param classPK the primary key of the entity's instance
+	* @return the subscriptions to the entity
+	*/
+	@Override
+	public java.util.List<com.liferay.subscription.model.Subscription> getSubscriptions(
+		long companyId, java.lang.String className, long classPK) {
+		return _subscriptionLocalService.getSubscriptions(companyId, className,
+			classPK);
 	}
 
 	/**
@@ -463,6 +463,23 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 	}
 
 	/**
+	* Returns <code>true</code> if the user is subscribed to the entity.
+	*
+	* @param companyId the primary key of the company
+	* @param userId the primary key of the user
+	* @param className the entity's class name
+	* @param classPK the primary key of the entity's instance
+	* @return <code>true</code> if the user is subscribed to the entity;
+	<code>false</code> otherwise
+	*/
+	@Override
+	public boolean isSubscribed(long companyId, long userId,
+		java.lang.String className, long classPK) {
+		return _subscriptionLocalService.isSubscribed(companyId, userId,
+			className, classPK);
+	}
+
+	/**
 	* Returns <code>true</code> if the user is subscribed to any of the
 	* entities.
 	*
@@ -478,23 +495,6 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 		java.lang.String className, long[] classPKs) {
 		return _subscriptionLocalService.isSubscribed(companyId, userId,
 			className, classPKs);
-	}
-
-	/**
-	* Returns <code>true</code> if the user is subscribed to the entity.
-	*
-	* @param companyId the primary key of the company
-	* @param userId the primary key of the user
-	* @param className the entity's class name
-	* @param classPK the primary key of the entity's instance
-	* @return <code>true</code> if the user is subscribed to the entity;
-	<code>false</code> otherwise
-	*/
-	@Override
-	public boolean isSubscribed(long companyId, long userId,
-		java.lang.String className, long classPK) {
-		return _subscriptionLocalService.isSubscribed(companyId, userId,
-			className, classPK);
 	}
 
 	/**

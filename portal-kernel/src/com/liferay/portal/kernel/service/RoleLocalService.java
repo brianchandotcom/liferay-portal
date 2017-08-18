@@ -69,22 +69,13 @@ public interface RoleLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link RoleLocalServiceUtil} to access the role local service. Add custom service methods to {@link com.liferay.portal.service.impl.RoleLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public void addGroupRole(long groupId, Role role);
-
 	public void addGroupRole(long groupId, long roleId);
+
+	public void addGroupRole(long groupId, Role role);
 
 	public void addGroupRoles(long groupId, List<Role> roles);
 
 	public void addGroupRoles(long groupId, long[] roleIds);
-
-	/**
-	* Adds the role to the database. Also notifies the appropriate model listeners.
-	*
-	* @param role the role
-	* @return the role that was added
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public Role addRole(Role role);
 
 	/**
 	* Adds a role with additional parameters. The user is reindexed after role
@@ -114,14 +105,23 @@ public interface RoleLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @throws PortalException
+	* Adds the role to the database. Also notifies the appropriate model listeners.
+	*
+	* @param role the role
+	* @return the role that was added
 	*/
-	public void addUserRole(long userId, Role role) throws PortalException;
+	@Indexable(type = IndexableType.REINDEX)
+	public Role addRole(Role role);
 
 	/**
 	* @throws PortalException
 	*/
 	public void addUserRole(long userId, long roleId) throws PortalException;
+
+	/**
+	* @throws PortalException
+	*/
+	public void addUserRole(long userId, Role role) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -165,9 +165,9 @@ public interface RoleLocalService extends BaseLocalService,
 	*/
 	public Role createRole(long roleId);
 
-	public void deleteGroupRole(long groupId, Role role);
-
 	public void deleteGroupRole(long groupId, long roleId);
+
+	public void deleteGroupRole(long groupId, Role role);
 
 	public void deleteGroupRoles(long groupId, List<Role> roles);
 
@@ -181,6 +181,16 @@ public interface RoleLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
+	* Deletes the role with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param roleId the primary key of the role
+	* @return the role that was removed
+	* @throws PortalException if a role with the primary key could not be found
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public Role deleteRole(long roleId) throws PortalException;
+
+	/**
 	* Deletes the role from the database. Also notifies the appropriate model listeners.
 	*
 	* @param role the role
@@ -192,25 +202,15 @@ public interface RoleLocalService extends BaseLocalService,
 	public Role deleteRole(Role role) throws PortalException;
 
 	/**
-	* Deletes the role with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param roleId the primary key of the role
-	* @return the role that was removed
-	* @throws PortalException if a role with the primary key could not be found
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public Role deleteRole(long roleId) throws PortalException;
-
-	/**
 	* @throws PortalException
 	*/
-	public void deleteUserRole(long userId, Role role)
+	public void deleteUserRole(long userId, long roleId)
 		throws PortalException;
 
 	/**
 	* @throws PortalException
 	*/
-	public void deleteUserRole(long userId, long roleId)
+	public void deleteUserRole(long userId, Role role)
 		throws PortalException;
 
 	/**
@@ -497,15 +497,6 @@ public interface RoleLocalService extends BaseLocalService,
 	public List<Role> getRoles(int type, java.lang.String subtype);
 
 	/**
-	* Returns all the roles with the primary keys.
-	*
-	* @param roleIds the primary keys of the roles
-	* @return the roles with the primary keys
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Role> getRoles(long[] roleIds) throws PortalException;
-
-	/**
 	* Returns all the roles in the company.
 	*
 	* @param companyId the primary key of the company
@@ -523,6 +514,15 @@ public interface RoleLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Role> getRoles(long companyId, int[] types);
+
+	/**
+	* Returns all the roles with the primary keys.
+	*
+	* @param roleIds the primary keys of the roles
+	* @return the roles with the primary keys
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Role> getRoles(long[] roleIds) throws PortalException;
 
 	/**
 	* Returns the number of roles.
@@ -1007,15 +1007,6 @@ public interface RoleLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Updates the role in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param role the role
-	* @return the role that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public Role updateRole(Role role);
-
-	/**
 	* Updates the role with the primary key.
 	*
 	* @param roleId the primary key of the role
@@ -1034,4 +1025,13 @@ public interface RoleLocalService extends BaseLocalService,
 		Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> descriptionMap, java.lang.String subtype,
 		ServiceContext serviceContext) throws PortalException;
+
+	/**
+	* Updates the role in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param role the role
+	* @return the role that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public Role updateRole(Role role);
 }

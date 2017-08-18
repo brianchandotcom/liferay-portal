@@ -217,30 +217,6 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	/**
 	* Returns the localized description of this mdr rule in the language. Uses the default language if no localization exists for the requested language.
 	*
-	* @param languageId the ID of the language
-	* @return the localized description of this mdr rule
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
-		return _mdrRule.getDescription(languageId);
-	}
-
-	/**
-	* Returns the localized description of this mdr rule in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this mdr rule
-	*/
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
-		return _mdrRule.getDescription(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized description of this mdr rule in the language. Uses the default language if no localization exists for the requested language.
-	*
 	* @param locale the locale of the language
 	* @return the localized description of this mdr rule
 	*/
@@ -260,6 +236,30 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	public java.lang.String getDescription(java.util.Locale locale,
 		boolean useDefault) {
 		return _mdrRule.getDescription(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized description of this mdr rule in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized description of this mdr rule
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId) {
+		return _mdrRule.getDescription(languageId);
+	}
+
+	/**
+	* Returns the localized description of this mdr rule in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this mdr rule
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId,
+		boolean useDefault) {
+		return _mdrRule.getDescription(languageId, useDefault);
 	}
 
 	@Override
@@ -330,6 +330,29 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	/**
 	* Returns the localized name of this mdr rule in the language. Uses the default language if no localization exists for the requested language.
 	*
+	* @param locale the locale of the language
+	* @return the localized name of this mdr rule
+	*/
+	@Override
+	public java.lang.String getName(java.util.Locale locale) {
+		return _mdrRule.getName(locale);
+	}
+
+	/**
+	* Returns the localized name of this mdr rule in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this mdr rule. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+		return _mdrRule.getName(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized name of this mdr rule in the language. Uses the default language if no localization exists for the requested language.
+	*
 	* @param languageId the ID of the language
 	* @return the localized name of this mdr rule
 	*/
@@ -349,29 +372,6 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	public java.lang.String getName(java.lang.String languageId,
 		boolean useDefault) {
 		return _mdrRule.getName(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized name of this mdr rule in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized name of this mdr rule
-	*/
-	@Override
-	public java.lang.String getName(java.util.Locale locale) {
-		return _mdrRule.getName(locale);
-	}
-
-	/**
-	* Returns the localized name of this mdr rule in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized name of this mdr rule. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
-		return _mdrRule.getName(locale, useDefault);
 	}
 
 	@Override
@@ -622,14 +622,14 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_mdrRule.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_mdrRule.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_mdrRule.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

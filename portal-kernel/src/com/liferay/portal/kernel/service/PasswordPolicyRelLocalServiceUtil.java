@@ -40,6 +40,11 @@ public class PasswordPolicyRelLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.PasswordPolicyRelLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.kernel.model.PasswordPolicyRel addPasswordPolicyRel(
+		long passwordPolicyId, java.lang.String className, long classPK) {
+		return getService()
+				   .addPasswordPolicyRel(passwordPolicyId, className, classPK);
+	}
 
 	/**
 	* Adds the password policy rel to the database. Also notifies the appropriate model listeners.
@@ -50,12 +55,6 @@ public class PasswordPolicyRelLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.PasswordPolicyRel addPasswordPolicyRel(
 		com.liferay.portal.kernel.model.PasswordPolicyRel passwordPolicyRel) {
 		return getService().addPasswordPolicyRel(passwordPolicyRel);
-	}
-
-	public static com.liferay.portal.kernel.model.PasswordPolicyRel addPasswordPolicyRel(
-		long passwordPolicyId, java.lang.String className, long classPK) {
-		return getService()
-				   .addPasswordPolicyRel(passwordPolicyId, className, classPK);
 	}
 
 	public static void addPasswordPolicyRels(long passwordPolicyId,
@@ -75,22 +74,6 @@ public class PasswordPolicyRelLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the password policy rel from the database. Also notifies the appropriate model listeners.
-	*
-	* @param passwordPolicyRel the password policy rel
-	* @return the password policy rel that was removed
-	*/
-	public static com.liferay.portal.kernel.model.PasswordPolicyRel deletePasswordPolicyRel(
-		com.liferay.portal.kernel.model.PasswordPolicyRel passwordPolicyRel) {
-		return getService().deletePasswordPolicyRel(passwordPolicyRel);
-	}
-
-	public static void deletePasswordPolicyRel(java.lang.String className,
-		long classPK) {
-		getService().deletePasswordPolicyRel(className, classPK);
-	}
-
-	/**
 	* Deletes the password policy rel with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param passwordPolicyRelId the primary key of the password policy rel
@@ -107,6 +90,22 @@ public class PasswordPolicyRelLocalServiceUtil {
 		java.lang.String className, long classPK) {
 		getService()
 			.deletePasswordPolicyRel(passwordPolicyId, className, classPK);
+	}
+
+	/**
+	* Deletes the password policy rel from the database. Also notifies the appropriate model listeners.
+	*
+	* @param passwordPolicyRel the password policy rel
+	* @return the password policy rel that was removed
+	*/
+	public static com.liferay.portal.kernel.model.PasswordPolicyRel deletePasswordPolicyRel(
+		com.liferay.portal.kernel.model.PasswordPolicyRel passwordPolicyRel) {
+		return getService().deletePasswordPolicyRel(passwordPolicyRel);
+	}
+
+	public static void deletePasswordPolicyRel(java.lang.String className,
+		long classPK) {
+		getService().deletePasswordPolicyRel(className, classPK);
 	}
 
 	public static void deletePasswordPolicyRels(long passwordPolicyId) {
@@ -207,13 +206,13 @@ public class PasswordPolicyRelLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.PasswordPolicyRel fetchPasswordPolicyRel(
-		java.lang.String className, long classPK) {
-		return getService().fetchPasswordPolicyRel(className, classPK);
+		long passwordPolicyRelId) {
+		return getService().fetchPasswordPolicyRel(passwordPolicyRelId);
 	}
 
 	public static com.liferay.portal.kernel.model.PasswordPolicyRel fetchPasswordPolicyRel(
-		long passwordPolicyRelId) {
-		return getService().fetchPasswordPolicyRel(passwordPolicyRelId);
+		java.lang.String className, long classPK) {
+		return getService().fetchPasswordPolicyRel(className, classPK);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
@@ -231,12 +230,6 @@ public class PasswordPolicyRelLocalServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.portal.kernel.model.PasswordPolicyRel getPasswordPolicyRel(
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPasswordPolicyRel(className, classPK);
 	}
 
 	/**
@@ -257,6 +250,12 @@ public class PasswordPolicyRelLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getPasswordPolicyRel(passwordPolicyId, className, classPK);
+	}
+
+	public static com.liferay.portal.kernel.model.PasswordPolicyRel getPasswordPolicyRel(
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPasswordPolicyRel(className, classPK);
 	}
 
 	/**

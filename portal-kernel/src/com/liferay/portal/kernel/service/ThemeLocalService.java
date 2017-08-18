@@ -100,14 +100,14 @@ public interface ThemeLocalService extends BaseLocalService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Theme> getWARThemes();
 
+	public List<Theme> init(ServletContext servletContext,
+		java.lang.String themesPath, boolean loadFromServletContext,
+		java.lang.String[] xmls, PluginPackage pluginPackage);
+
 	public List<Theme> init(java.lang.String servletContextName,
 		ServletContext servletContext, java.lang.String themesPath,
 		boolean loadFromServletContext, java.lang.String[] xmls,
 		PluginPackage pluginPackage);
-
-	public List<Theme> init(ServletContext servletContext,
-		java.lang.String themesPath, boolean loadFromServletContext,
-		java.lang.String[] xmls, PluginPackage pluginPackage);
 
 	public void uninstallThemes(List<Theme> themes);
 }

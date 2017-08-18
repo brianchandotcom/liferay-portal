@@ -45,22 +45,22 @@ public class LayoutBranchLocalServiceWrapper implements LayoutBranchLocalService
 
 	@Override
 	public com.liferay.portal.kernel.model.LayoutBranch addLayoutBranch(
-		long layoutRevisionId, java.lang.String name,
-		java.lang.String description, boolean master,
-		ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutBranchLocalService.addLayoutBranch(layoutRevisionId,
-			name, description, master, serviceContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.LayoutBranch addLayoutBranch(
 		long layoutSetBranchId, long plid, java.lang.String name,
 		java.lang.String description, boolean master,
 		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutBranchLocalService.addLayoutBranch(layoutSetBranchId,
 			plid, name, description, master, serviceContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.LayoutBranch addLayoutBranch(
+		long layoutRevisionId, java.lang.String name,
+		java.lang.String description, boolean master,
+		ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutBranchLocalService.addLayoutBranch(layoutRevisionId,
+			name, description, master, serviceContext);
 	}
 
 	/**

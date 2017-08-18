@@ -66,23 +66,14 @@ public interface OrganizationLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OrganizationLocalServiceUtil} to access the organization local service. Add custom service methods to {@link com.liferay.portal.service.impl.OrganizationLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public void addGroupOrganization(long groupId, Organization organization);
-
 	public void addGroupOrganization(long groupId, long organizationId);
+
+	public void addGroupOrganization(long groupId, Organization organization);
 
 	public void addGroupOrganizations(long groupId,
 		List<Organization> organizations);
 
 	public void addGroupOrganizations(long groupId, long[] organizationIds);
-
-	/**
-	* Adds the organization to the database. Also notifies the appropriate model listeners.
-	*
-	* @param organization the organization
-	* @return the organization that was added
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public Organization addOrganization(Organization organization);
 
 	/**
 	* Adds an organization.
@@ -137,6 +128,15 @@ public interface OrganizationLocalService extends BaseLocalService,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
+	* Adds the organization to the database. Also notifies the appropriate model listeners.
+	*
+	* @param organization the organization
+	* @return the organization that was added
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public Organization addOrganization(Organization organization);
+
+	/**
 	* Adds a resource for each type of permission available on the
 	* organization.
 	*
@@ -156,9 +156,9 @@ public interface OrganizationLocalService extends BaseLocalService,
 	public void addPasswordPolicyOrganizations(long passwordPolicyId,
 		long[] organizationIds);
 
-	public void addUserOrganization(long userId, Organization organization);
-
 	public void addUserOrganization(long userId, long organizationId);
+
+	public void addUserOrganization(long userId, Organization organization);
 
 	public void addUserOrganizations(long userId,
 		List<Organization> organizations);
@@ -177,9 +177,9 @@ public interface OrganizationLocalService extends BaseLocalService,
 	*/
 	public Organization createOrganization(long organizationId);
 
-	public void deleteGroupOrganization(long groupId, Organization organization);
-
 	public void deleteGroupOrganization(long groupId, long organizationId);
+
+	public void deleteGroupOrganization(long groupId, Organization organization);
 
 	public void deleteGroupOrganizations(long groupId,
 		List<Organization> organizations);
@@ -194,6 +194,17 @@ public interface OrganizationLocalService extends BaseLocalService,
 	public void deleteLogo(long organizationId) throws PortalException;
 
 	/**
+	* Deletes the organization with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param organizationId the primary key of the organization
+	* @return the organization that was removed
+	* @throws PortalException if a organization with the primary key could not be found
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public Organization deleteOrganization(long organizationId)
+		throws PortalException;
+
+	/**
 	* Deletes the organization from the database. Also notifies the appropriate model listeners.
 	*
 	* @param organization the organization
@@ -206,26 +217,15 @@ public interface OrganizationLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the organization with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param organizationId the primary key of the organization
-	* @return the organization that was removed
-	* @throws PortalException if a organization with the primary key could not be found
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public Organization deleteOrganization(long organizationId)
-		throws PortalException;
-
-	/**
 	* @throws PortalException
 	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public void deleteUserOrganization(long userId, Organization organization);
-
 	public void deleteUserOrganization(long userId, long organizationId);
+
+	public void deleteUserOrganization(long userId, Organization organization);
 
 	public void deleteUserOrganizations(long userId,
 		List<Organization> organizations);
@@ -357,13 +357,6 @@ public interface OrganizationLocalService extends BaseLocalService,
 	public List<Organization> getNoAssetOrganizations();
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	/**
 	* Returns the organization with the primary key.
 	*
 	* @param organizationId the primary key of the organization
@@ -422,16 +415,6 @@ public interface OrganizationLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Organization> getOrganizations(int start, int end);
 
-	/**
-	* Returns the organizations with the primary keys.
-	*
-	* @param organizationIds the primary keys of the organizations
-	* @return the organizations with the primary keys
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Organization> getOrganizations(long[] organizationIds)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Organization> getOrganizations(long userId, int start, int end,
 		OrderByComparator<Organization> obc) throws PortalException;
@@ -474,6 +457,16 @@ public interface OrganizationLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Organization> getOrganizations(long companyId,
 		long parentOrganizationId, int start, int end);
+
+	/**
+	* Returns the organizations with the primary keys.
+	*
+	* @param organizationIds the primary keys of the organizations
+	* @return the organizations with the primary keys
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Organization> getOrganizations(long[] organizationIds)
+		throws PortalException;
 
 	/**
 	* Returns all the organizations and users belonging to the parent
@@ -529,6 +522,13 @@ public interface OrganizationLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getOrganizationsCount(long companyId, long parentOrganizationId);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Returns the parent organizations in order by closest ancestor. The list
@@ -749,6 +749,43 @@ public interface OrganizationLocalService extends BaseLocalService,
 	* @param companyId the primary key of the organization's company
 	*/
 	public void rebuildTree(long companyId) throws PortalException;
+
+	/**
+	* Returns an ordered range of all the organizations that match the
+	* keywords, using the indexer. It is preferable to use this method instead
+	* of the non-indexed version whenever possible for performance reasons.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param companyId the primary key of the organization's company
+	* @param parentOrganizationId the primary key of the organization's parent
+	organization
+	* @param keywords the keywords (space separated), which may occur in the
+	organization's name, street, city, zipcode, type, region or
+	country (optionally <code>null</code>)
+	* @param params the finder parameters (optionally <code>null</code>). For
+	more information see {@link
+	com.liferay.portlet.usersadmin.util.OrganizationIndexer}
+	* @param start the lower bound of the range of organizations to return
+	* @param end the upper bound of the range of organizations to return (not
+	inclusive)
+	* @param sort the field and direction by which to sort (optionally
+	<code>null</code>)
+	* @return the matching organizations ordered by name
+	* @see com.liferay.portlet.usersadmin.util.OrganizationIndexer
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Hits search(long companyId, long parentOrganizationId,
+		java.lang.String keywords,
+		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
+		int end, Sort sort);
 
 	/**
 	* Returns a name ordered range of all the organizations that match the
@@ -989,43 +1026,6 @@ public interface OrganizationLocalService extends BaseLocalService,
 		boolean andSearch, int start, int end, Sort sort);
 
 	/**
-	* Returns an ordered range of all the organizations that match the
-	* keywords, using the indexer. It is preferable to use this method instead
-	* of the non-indexed version whenever possible for performance reasons.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end -
-	* start</code> instances. <code>start</code> and <code>end</code> are not
-	* primary keys, they are indexes in the result set. Thus, <code>0</code>
-	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
-	* result set.
-	* </p>
-	*
-	* @param companyId the primary key of the organization's company
-	* @param parentOrganizationId the primary key of the organization's parent
-	organization
-	* @param keywords the keywords (space separated), which may occur in the
-	organization's name, street, city, zipcode, type, region or
-	country (optionally <code>null</code>)
-	* @param params the finder parameters (optionally <code>null</code>). For
-	more information see {@link
-	com.liferay.portlet.usersadmin.util.OrganizationIndexer}
-	* @param start the lower bound of the range of organizations to return
-	* @param end the upper bound of the range of organizations to return (not
-	inclusive)
-	* @param sort the field and direction by which to sort (optionally
-	<code>null</code>)
-	* @return the matching organizations ordered by name
-	* @see com.liferay.portlet.usersadmin.util.OrganizationIndexer
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(long companyId, long parentOrganizationId,
-		java.lang.String keywords,
-		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
-		int end, Sort sort);
-
-	/**
 	* Returns the number of organizations that match the keywords, type,
 	* region, and country.
 	*
@@ -1090,6 +1090,12 @@ public interface OrganizationLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<Organization> searchOrganizations(
+		long companyId, long parentOrganizationId, java.lang.String keywords,
+		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
+		int end, Sort sort) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<Organization> searchOrganizations(
 		long companyId, long parentOrganizationId, java.lang.String name,
 		java.lang.String type, java.lang.String street, java.lang.String city,
 		java.lang.String zip, java.lang.String region,
@@ -1097,12 +1103,6 @@ public interface OrganizationLocalService extends BaseLocalService,
 		LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andSearch, int start, int end, Sort sort)
 		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BaseModelSearchResult<Organization> searchOrganizations(
-		long companyId, long parentOrganizationId, java.lang.String keywords,
-		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
-		int end, Sort sort) throws PortalException;
 
 	/**
 	* Returns the organizations and users that match the keywords specified for
@@ -1185,15 +1185,6 @@ public interface OrganizationLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Updates the organization in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param organization the organization
-	* @return the organization that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public Organization updateOrganization(Organization organization);
-
-	/**
 	* Updates the organization.
 	*
 	* @param companyId the primary key of the organization's company
@@ -1252,4 +1243,13 @@ public interface OrganizationLocalService extends BaseLocalService,
 		java.lang.String type, long regionId, long countryId, long statusId,
 		java.lang.String comments, boolean site, ServiceContext serviceContext)
 		throws PortalException;
+
+	/**
+	* Updates the organization in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param organization the organization
+	* @return the organization that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public Organization updateOrganization(Organization organization);
 }

@@ -57,6 +57,15 @@ public interface SystemEventLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SystemEventLocalServiceUtil} to access the system event local service. Add custom service methods to {@link com.liferay.portal.service.impl.SystemEventLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public SystemEvent addSystemEvent(long userId, long groupId,
+		java.lang.String className, long classPK, java.lang.String classUuid,
+		java.lang.String referrerClassName, int type, java.lang.String extraData)
+		throws PortalException;
+
+	public SystemEvent addSystemEvent(long companyId,
+		java.lang.String className, long classPK, java.lang.String classUuid,
+		java.lang.String referrerClassName, int type, java.lang.String extraData)
+		throws PortalException;
 
 	/**
 	* Adds the system event to the database. Also notifies the appropriate model listeners.
@@ -66,16 +75,6 @@ public interface SystemEventLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public SystemEvent addSystemEvent(SystemEvent systemEvent);
-
-	public SystemEvent addSystemEvent(long companyId,
-		java.lang.String className, long classPK, java.lang.String classUuid,
-		java.lang.String referrerClassName, int type, java.lang.String extraData)
-		throws PortalException;
-
-	public SystemEvent addSystemEvent(long userId, long groupId,
-		java.lang.String className, long classPK, java.lang.String classUuid,
-		java.lang.String referrerClassName, int type, java.lang.String extraData)
-		throws PortalException;
 
 	public void checkSystemEvents() throws PortalException;
 
@@ -95,15 +94,6 @@ public interface SystemEventLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the system event from the database. Also notifies the appropriate model listeners.
-	*
-	* @param systemEvent the system event
-	* @return the system event that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public SystemEvent deleteSystemEvent(SystemEvent systemEvent);
-
-	/**
 	* Deletes the system event with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param systemEventId the primary key of the system event
@@ -113,6 +103,15 @@ public interface SystemEventLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public SystemEvent deleteSystemEvent(long systemEventId)
 		throws PortalException;
+
+	/**
+	* Deletes the system event from the database. Also notifies the appropriate model listeners.
+	*
+	* @param systemEvent the system event
+	* @return the system event that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public SystemEvent deleteSystemEvent(SystemEvent systemEvent);
 
 	public void deleteSystemEvents(long groupId);
 

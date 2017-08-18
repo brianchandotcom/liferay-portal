@@ -62,6 +62,11 @@ public interface TasksEntryLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link TasksEntryLocalServiceUtil} to access the tasks entry local service. Add custom service methods to {@link com.liferay.tasks.service.impl.TasksEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public TasksEntry addTasksEntry(long userId, java.lang.String title,
+		int priority, long assigneeUserId, int dueDateMonth, int dueDateDay,
+		int dueDateYear, int dueDateHour, int dueDateMinute,
+		boolean addDueDate, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Adds the tasks entry to the database. Also notifies the appropriate model listeners.
@@ -71,12 +76,6 @@ public interface TasksEntryLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public TasksEntry addTasksEntry(TasksEntry tasksEntry);
-
-	public TasksEntry addTasksEntry(long userId, java.lang.String title,
-		int priority, long assigneeUserId, int dueDateMonth, int dueDateDay,
-		int dueDateYear, int dueDateHour, int dueDateMinute,
-		boolean addDueDate, ServiceContext serviceContext)
-		throws PortalException;
 
 	/**
 	* Creates a new tasks entry with the primary key. Does not add the tasks entry to the database.
@@ -94,17 +93,6 @@ public interface TasksEntryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the tasks entry from the database. Also notifies the appropriate model listeners.
-	*
-	* @param tasksEntry the tasks entry
-	* @return the tasks entry that was removed
-	* @throws PortalException
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public TasksEntry deleteTasksEntry(TasksEntry tasksEntry)
-		throws PortalException;
-
-	/**
 	* Deletes the tasks entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param tasksEntryId the primary key of the tasks entry
@@ -113,6 +101,17 @@ public interface TasksEntryLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public TasksEntry deleteTasksEntry(long tasksEntryId)
+		throws PortalException;
+
+	/**
+	* Deletes the tasks entry from the database. Also notifies the appropriate model listeners.
+	*
+	* @param tasksEntry the tasks entry
+	* @return the tasks entry that was removed
+	* @throws PortalException
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public TasksEntry deleteTasksEntry(TasksEntry tasksEntry)
 		throws PortalException;
 
 	public DynamicQuery dynamicQuery();
@@ -296,6 +295,12 @@ public interface TasksEntryLocalService extends BaseLocalService,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames)
 		throws PortalException;
 
+	public TasksEntry updateTasksEntry(long tasksEntryId,
+		java.lang.String title, int priority, long assigneeUserId,
+		long resolverUserId, int dueDateMonth, int dueDateDay, int dueDateYear,
+		int dueDateHour, int dueDateMinute, boolean addDueDate, int status,
+		ServiceContext serviceContext) throws PortalException;
+
 	/**
 	* Updates the tasks entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -304,12 +309,6 @@ public interface TasksEntryLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public TasksEntry updateTasksEntry(TasksEntry tasksEntry);
-
-	public TasksEntry updateTasksEntry(long tasksEntryId,
-		java.lang.String title, int priority, long assigneeUserId,
-		long resolverUserId, int dueDateMonth, int dueDateDay, int dueDateYear,
-		int dueDateHour, int dueDateMinute, boolean addDueDate, int status,
-		ServiceContext serviceContext) throws PortalException;
 
 	public TasksEntry updateTasksEntryStatus(long tasksEntryId,
 		long resolverUserId, int status, ServiceContext serviceContext)

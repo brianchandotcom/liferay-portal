@@ -16,9 +16,16 @@ package com.liferay.asset.display.template.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.asset.display.template.service.AssetDisplayTemplateServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.asset.display.template.service.AssetDisplayTemplateServiceUtil} service utility. The
+ * {@link AssetDisplayTemplateServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,67 @@ import aQute.bnd.annotation.ProviderType;
  * @author Brian Wing Shun Chan
  * @see AssetDisplayTemplateServiceHttp
  * @see com.liferay.asset.display.template.model.AssetDisplayTemplateSoap
- * @see com.liferay.asset.display.template.service.AssetDisplayTemplateServiceUtil
+ * @see AssetDisplayTemplateServiceUtil
  * @generated
  */
 @ProviderType
 public class AssetDisplayTemplateServiceSoap {
+	public static com.liferay.asset.display.template.model.AssetDisplayTemplateSoap addAssetDisplayTemplate(
+		long groupId, long userId, java.lang.String name, long classNameId,
+		java.lang.String language, java.lang.String scriptContent,
+		boolean main,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.asset.display.template.model.AssetDisplayTemplate returnValue =
+				AssetDisplayTemplateServiceUtil.addAssetDisplayTemplate(groupId,
+					userId, name, classNameId, language, scriptContent, main,
+					serviceContext);
+
+			return com.liferay.asset.display.template.model.AssetDisplayTemplateSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.asset.display.template.model.AssetDisplayTemplateSoap deleteAssetDisplayTemplate(
+		long assetDisplayTemplateId) throws RemoteException {
+		try {
+			com.liferay.asset.display.template.model.AssetDisplayTemplate returnValue =
+				AssetDisplayTemplateServiceUtil.deleteAssetDisplayTemplate(assetDisplayTemplateId);
+
+			return com.liferay.asset.display.template.model.AssetDisplayTemplateSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.asset.display.template.model.AssetDisplayTemplateSoap updateAssetDisplayTemplate(
+		long assetDisplayTemplateId, java.lang.String name, long classNameId,
+		java.lang.String language, java.lang.String scriptContent,
+		boolean main,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.asset.display.template.model.AssetDisplayTemplate returnValue =
+				AssetDisplayTemplateServiceUtil.updateAssetDisplayTemplate(assetDisplayTemplateId,
+					name, classNameId, language, scriptContent, main,
+					serviceContext);
+
+			return com.liferay.asset.display.template.model.AssetDisplayTemplateSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(AssetDisplayTemplateServiceSoap.class);
 }

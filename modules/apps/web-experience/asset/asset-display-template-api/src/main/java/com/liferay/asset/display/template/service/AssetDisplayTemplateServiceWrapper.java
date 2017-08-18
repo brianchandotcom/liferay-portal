@@ -34,6 +34,25 @@ public class AssetDisplayTemplateServiceWrapper
 		_assetDisplayTemplateService = assetDisplayTemplateService;
 	}
 
+	@Override
+	public com.liferay.asset.display.template.model.AssetDisplayTemplate addAssetDisplayTemplate(
+		long groupId, long userId, java.lang.String name, long classNameId,
+		java.lang.String language, java.lang.String scriptContent,
+		boolean main,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetDisplayTemplateService.addAssetDisplayTemplate(groupId,
+			userId, name, classNameId, language, scriptContent, main,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.asset.display.template.model.AssetDisplayTemplate deleteAssetDisplayTemplate(
+		long assetDisplayTemplateId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetDisplayTemplateService.deleteAssetDisplayTemplate(assetDisplayTemplateId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -42,6 +61,17 @@ public class AssetDisplayTemplateServiceWrapper
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _assetDisplayTemplateService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.asset.display.template.model.AssetDisplayTemplate updateAssetDisplayTemplate(
+		long assetDisplayTemplateId, java.lang.String name, long classNameId,
+		java.lang.String language, java.lang.String scriptContent,
+		boolean main,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetDisplayTemplateService.updateAssetDisplayTemplate(assetDisplayTemplateId,
+			name, classNameId, language, scriptContent, main, serviceContext);
 	}
 
 	@Override

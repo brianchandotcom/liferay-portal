@@ -4687,7 +4687,9 @@ public class ServiceBuilder {
 		sb.append(StringPool.OPEN_PARENTHESIS);
 
 		for (JavaParameter parameter : method.getParameters()) {
-			String parameterValue = parameter.getResolvedValue();
+			String parameterValue =
+				parameter.getResolvedValue() +
+					_getDimensions(parameter.getType());
 
 			if (includePackagePath) {
 				if (parameterValue.matches("[A-Z]\\w+")) {

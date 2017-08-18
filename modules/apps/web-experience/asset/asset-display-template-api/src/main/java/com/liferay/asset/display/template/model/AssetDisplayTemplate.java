@@ -55,4 +55,7 @@ public interface AssetDisplayTemplate extends AssetDisplayTemplateModel,
 				return AssetDisplayTemplate.class;
 			}
 		};
+
+	public java.lang.String getAssetTypeName(java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

@@ -16,11 +16,14 @@ package com.liferay.asset.display.template.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.asset.display.template.model.AssetDisplayTemplate;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -49,6 +52,13 @@ public interface AssetDisplayTemplateService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AssetDisplayTemplateServiceUtil} to access the asset display template remote service. Add custom service methods to {@link com.liferay.asset.display.template.service.impl.AssetDisplayTemplateServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public AssetDisplayTemplate addAssetDisplayTemplate(long groupId,
+		long userId, java.lang.String name, long classNameId,
+		java.lang.String language, java.lang.String scriptContent,
+		boolean main, ServiceContext serviceContext) throws PortalException;
+
+	public AssetDisplayTemplate deleteAssetDisplayTemplate(
+		long assetDisplayTemplateId) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -56,4 +66,9 @@ public interface AssetDisplayTemplateService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	public AssetDisplayTemplate updateAssetDisplayTemplate(
+		long assetDisplayTemplateId, java.lang.String name, long classNameId,
+		java.lang.String language, java.lang.String scriptContent,
+		boolean main, ServiceContext serviceContext) throws PortalException;
 }

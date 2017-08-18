@@ -11,7 +11,6 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="name" type="String" />
 		<field name="classNameId" type="long" />
-		<field name="plid" type="long" />
 		<field name="templateId" type="long" />
 		<field name="main" type="boolean" />
 	</model>

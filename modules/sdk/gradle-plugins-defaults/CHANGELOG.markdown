@@ -1947,6 +1947,11 @@ of the `JavaCompile` task to configure).
 ### Changed
 - [LPS-74222]: Update the [Liferay Gradle Plugins] dependency to version 3.4.32.
 
+## 5.0.20 - 2017-08-18
+
+### Changed
+- [LPS-74155]: Update the [Liferay Gradle Plugins] dependency to version 3.4.33.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public

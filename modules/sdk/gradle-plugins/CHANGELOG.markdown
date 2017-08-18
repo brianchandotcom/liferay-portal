@@ -2167,6 +2167,10 @@ to version 2.0.54.
 to version 2.0.55.
 - [LPS-74126]: Update the [Liferay Source Formatter] dependency to version
 1.0.444.
+- [LPS-74155]: Update the [Liferay Gradle Plugins Service Builder] dependency
+to version 1.0.47.
+- [LPS-74155]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.163.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs

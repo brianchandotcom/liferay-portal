@@ -15,6 +15,9 @@
 package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.model.CommerceCartItem;
+import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.service.base.CommerceCartItemLocalServiceBaseImpl;
@@ -172,10 +175,21 @@ public class CommerceCartItemLocalServiceImpl
 	public void validate(long cpDefinitionId, long cpInstanceId)
 		throws PortalException {
 
-		_cpDefinitionLocalService.getCPDefinition(cpDefinitionId);
+		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+			cpDefinitionId);
 
 		if (cpInstanceId > 0) {
-			_cpInstanceLocalService.getCPInstance(cpInstanceId);
+			CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
+				cpInstanceId);
+
+			if (cpInstance.getCPDefinitionId() !=
+					cpDefinition.getCPDefinitionId()) {
+
+				throw new NoSuchCPInstanceException(
+					"CPInstance " + cpInstance.getCPInstanceId() +
+						" belongs to a different CPDefinition than " +
+							cpDefinition.getCPDefinitionId());
+			}
 		}
 	}
 

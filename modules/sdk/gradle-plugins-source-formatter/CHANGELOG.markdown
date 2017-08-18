@@ -907,6 +907,12 @@ another task with the same name is being executed in a parent project.
 - [LPS-74139]: Update the [Liferay Source Formatter] dependency to version
 1.0.442.
 
+## 2.0.54 - 2017-08-17
+
+### Changed
+- [LPS-74222]: Update the [Liferay Source Formatter] dependency to version
+1.0.443.
+
 [Liferay Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/util/source-formatter
 [LPS-52675]: https://issues.liferay.com/browse/LPS-52675
 [LPS-62970]: https://issues.liferay.com/browse/LPS-62970
@@ -954,3 +960,4 @@ another task with the same name is being executed in a parent project.
 [LPS-74088]: https://issues.liferay.com/browse/LPS-74088
 [LPS-74104]: https://issues.liferay.com/browse/LPS-74104
 [LPS-74139]: https://issues.liferay.com/browse/LPS-74139
+[LPS-74222]: https://issues.liferay.com/browse/LPS-74222

@@ -68,11 +68,11 @@ public interface UserGroupRoleLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public UserGroupRole addUserGroupRole(UserGroupRole userGroupRole);
 
-	public List<UserGroupRole> addUserGroupRoles(long[] userIds, long groupId,
-		long roleId);
-
 	public List<UserGroupRole> addUserGroupRoles(long userId, long groupId,
 		long[] roleIds);
+
+	public List<UserGroupRole> addUserGroupRoles(long[] userIds, long groupId,
+		long roleId);
 
 	/**
 	* Creates a new user group role with the primary key. Does not add the user group role to the database.
@@ -111,13 +111,13 @@ public interface UserGroupRoleLocalService extends BaseLocalService,
 
 	public void deleteUserGroupRoles(long groupId, int roleType);
 
-	public void deleteUserGroupRoles(long[] userIds, long groupId);
+	public void deleteUserGroupRoles(long userId, long groupId, long[] roleIds);
 
 	public void deleteUserGroupRoles(long userId, long[] groupIds);
 
-	public void deleteUserGroupRoles(long[] userIds, long groupId, int roleType);
+	public void deleteUserGroupRoles(long[] userIds, long groupId);
 
-	public void deleteUserGroupRoles(long userId, long groupId, long[] roleIds);
+	public void deleteUserGroupRoles(long[] userIds, long groupId, int roleType);
 
 	public void deleteUserGroupRoles(long[] userIds, long groupId, long roleId);
 

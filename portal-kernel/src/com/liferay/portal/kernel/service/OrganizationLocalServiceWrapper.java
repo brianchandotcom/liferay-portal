@@ -557,19 +557,6 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 		return _organizationLocalService.getOrganizations(start, end);
 	}
 
-	/**
-	* Returns the organizations with the primary keys.
-	*
-	* @param organizationIds the primary keys of the organizations
-	* @return the organizations with the primary keys
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Organization> getOrganizations(
-		long[] organizationIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _organizationLocalService.getOrganizations(organizationIds);
-	}
-
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Organization> getOrganizations(
 		long userId, int start, int end,
@@ -622,6 +609,19 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 		long companyId, long parentOrganizationId, int start, int end) {
 		return _organizationLocalService.getOrganizations(companyId,
 			parentOrganizationId, start, end);
+	}
+
+	/**
+	* Returns the organizations with the primary keys.
+	*
+	* @param organizationIds the primary keys of the organizations
+	* @return the organizations with the primary keys
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Organization> getOrganizations(
+		long[] organizationIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _organizationLocalService.getOrganizations(organizationIds);
 	}
 
 	/**

@@ -379,6 +379,20 @@ public interface SubscriptionLocalService extends BaseLocalService,
 	public int getUserSubscriptionsCount(long userId);
 
 	/**
+	* Returns <code>true</code> if the user is subscribed to the entity.
+	*
+	* @param companyId the primary key of the company
+	* @param userId the primary key of the user
+	* @param className the entity's class name
+	* @param classPK the primary key of the entity's instance
+	* @return <code>true</code> if the user is subscribed to the entity;
+	<code>false</code> otherwise
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean isSubscribed(long companyId, long userId,
+		java.lang.String className, long classPK);
+
+	/**
 	* Returns <code>true</code> if the user is subscribed to any of the
 	* entities.
 	*
@@ -392,20 +406,6 @@ public interface SubscriptionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isSubscribed(long companyId, long userId,
 		java.lang.String className, long[] classPKs);
-
-	/**
-	* Returns <code>true</code> if the user is subscribed to the entity.
-	*
-	* @param companyId the primary key of the company
-	* @param userId the primary key of the user
-	* @param className the entity's class name
-	* @param classPK the primary key of the entity's instance
-	* @return <code>true</code> if the user is subscribed to the entity;
-	<code>false</code> otherwise
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean isSubscribed(long companyId, long userId,
-		java.lang.String className, long classPK);
 
 	/**
 	* Updates the subscription in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

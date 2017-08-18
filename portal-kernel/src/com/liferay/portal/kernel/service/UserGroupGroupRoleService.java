@@ -45,11 +45,11 @@ public interface UserGroupGroupRoleService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UserGroupGroupRoleServiceUtil} to access the user group group role remote service. Add custom service methods to {@link com.liferay.portal.service.impl.UserGroupGroupRoleServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public void addUserGroupGroupRoles(long[] userGroupIds, long groupId,
-		long roleId) throws PortalException;
-
 	public void addUserGroupGroupRoles(long userGroupId, long groupId,
 		long[] roleIds) throws PortalException;
+
+	public void addUserGroupGroupRoles(long[] userGroupIds, long groupId,
+		long roleId) throws PortalException;
 
 	public void deleteUserGroupGroupRoles(long userGroupId, long groupId,
 		long[] roleIds) throws PortalException;

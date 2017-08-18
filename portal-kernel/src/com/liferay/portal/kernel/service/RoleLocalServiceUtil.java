@@ -601,18 +601,6 @@ public class RoleLocalServiceUtil {
 	}
 
 	/**
-	* Returns all the roles with the primary keys.
-	*
-	* @param roleIds the primary keys of the roles
-	* @return the roles with the primary keys
-	*/
-	public static java.util.List<com.liferay.portal.kernel.model.Role> getRoles(
-		long[] roleIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getRoles(roleIds);
-	}
-
-	/**
 	* Returns all the roles in the company.
 	*
 	* @param companyId the primary key of the company
@@ -633,6 +621,18 @@ public class RoleLocalServiceUtil {
 	public static java.util.List<com.liferay.portal.kernel.model.Role> getRoles(
 		long companyId, int[] types) {
 		return getService().getRoles(companyId, types);
+	}
+
+	/**
+	* Returns all the roles with the primary keys.
+	*
+	* @param roleIds the primary keys of the roles
+	* @return the roles with the primary keys
+	*/
+	public static java.util.List<com.liferay.portal.kernel.model.Role> getRoles(
+		long[] roleIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getRoles(roleIds);
 	}
 
 	/**

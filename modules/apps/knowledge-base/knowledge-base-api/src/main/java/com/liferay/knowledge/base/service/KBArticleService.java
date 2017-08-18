@@ -173,11 +173,11 @@ public interface KBArticleService extends BaseService {
 		int status, OrderByComparator<KBArticle> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKBArticlesCount(long groupId, long[] resourcePrimKeys,
+	public int getKBArticlesCount(long groupId, long parentResourcePrimKey,
 		int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKBArticlesCount(long groupId, long parentResourcePrimKey,
+	public int getKBArticlesCount(long groupId, long[] resourcePrimKeys,
 		int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

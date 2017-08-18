@@ -579,14 +579,14 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 
 	@Override
 	public java.util.List<com.liferay.asset.kernel.model.AssetEntry> getTopViewedEntries(
-		java.lang.String[] className, boolean asc, int start, int end) {
+		java.lang.String className, boolean asc, int start, int end) {
 		return _assetEntryLocalService.getTopViewedEntries(className, asc,
 			start, end);
 	}
 
 	@Override
 	public java.util.List<com.liferay.asset.kernel.model.AssetEntry> getTopViewedEntries(
-		java.lang.String className, boolean asc, int start, int end) {
+		java.lang.String[] className, boolean asc, int start, int end) {
 		return _assetEntryLocalService.getTopViewedEntries(className, asc,
 			start, end);
 	}
@@ -645,20 +645,20 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	public com.liferay.portal.kernel.search.Hits search(long companyId,
 		long[] groupIds, long userId, java.lang.String className,
 		long classTypeId, java.lang.String keywords, boolean showNonindexable,
-		int[] statuses, int start, int end) {
+		int status, int start, int end) {
 		return _assetEntryLocalService.search(companyId, groupIds, userId,
-			className, classTypeId, keywords, showNonindexable, statuses,
-			start, end);
+			className, classTypeId, keywords, showNonindexable, status, start,
+			end);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.search.Hits search(long companyId,
 		long[] groupIds, long userId, java.lang.String className,
 		long classTypeId, java.lang.String keywords, boolean showNonindexable,
-		int status, int start, int end) {
+		int[] statuses, int start, int end) {
 		return _assetEntryLocalService.search(companyId, groupIds, userId,
-			className, classTypeId, keywords, showNonindexable, status, start,
-			end);
+			className, classTypeId, keywords, showNonindexable, statuses,
+			start, end);
 	}
 
 	@Override

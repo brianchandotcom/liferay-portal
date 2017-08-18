@@ -499,16 +499,6 @@ public interface AssetTagLocalService extends BaseLocalService,
 	public long[] getTagIds(long groupId, java.lang.String[] names);
 
 	/**
-	* Returns the primary keys of the asset tags with the names in the groups.
-	*
-	* @param groupIds the primary keys of the groups
-	* @param names the names of the asset tags
-	* @return the primary keys of the asset tags with the names in the groups
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getTagIds(long[] groupIds, java.lang.String[] names);
-
-	/**
 	* Returns the primary keys of the asset tags with the name in the groups.
 	*
 	* @param groupIds the primary keys of the groups
@@ -517,6 +507,16 @@ public interface AssetTagLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long[] getTagIds(long[] groupIds, java.lang.String name);
+
+	/**
+	* Returns the primary keys of the asset tags with the names in the groups.
+	*
+	* @param groupIds the primary keys of the groups
+	* @param names the names of the asset tags
+	* @return the primary keys of the asset tags with the names in the groups
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getTagIds(long[] groupIds, java.lang.String[] names);
 
 	/**
 	* Returns the names of all the asset tags.

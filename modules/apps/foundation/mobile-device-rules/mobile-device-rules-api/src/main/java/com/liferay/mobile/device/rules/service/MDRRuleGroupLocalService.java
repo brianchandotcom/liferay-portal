@@ -309,16 +309,16 @@ public interface MDRRuleGroupLocalService extends BaseLocalService,
 	public List<MDRRuleGroup> getRuleGroups(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MDRRuleGroup> getRuleGroups(long[] groupIds, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MDRRuleGroup> getRuleGroups(long groupId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getRuleGroupsCount(long[] groupIds);
+	public List<MDRRuleGroup> getRuleGroups(long[] groupIds, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRuleGroupsCount(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRuleGroupsCount(long[] groupIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MDRRuleGroup> search(long groupId, java.lang.String name,

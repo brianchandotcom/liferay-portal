@@ -763,19 +763,19 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 
 	@Override
 	public java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getUserDiscussionMessages(
-		long userId, long[] classNameIds, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.message.boards.kernel.model.MBMessage> obc) {
-		return _mbMessageLocalService.getUserDiscussionMessages(userId,
-			classNameIds, status, start, end, obc);
-	}
-
-	@Override
-	public java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getUserDiscussionMessages(
 		long userId, long classNameId, long classPK, int status, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.message.boards.kernel.model.MBMessage> obc) {
 		return _mbMessageLocalService.getUserDiscussionMessages(userId,
 			classNameId, classPK, status, start, end, obc);
+	}
+
+	@Override
+	public java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getUserDiscussionMessages(
+		long userId, long[] classNameIds, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.message.boards.kernel.model.MBMessage> obc) {
+		return _mbMessageLocalService.getUserDiscussionMessages(userId,
+			classNameIds, status, start, end, obc);
 	}
 
 	@Override
@@ -788,17 +788,17 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 	}
 
 	@Override
-	public int getUserDiscussionMessagesCount(long userId, long[] classNameIds,
-		int status) {
-		return _mbMessageLocalService.getUserDiscussionMessagesCount(userId,
-			classNameIds, status);
-	}
-
-	@Override
 	public int getUserDiscussionMessagesCount(long userId, long classNameId,
 		long classPK, int status) {
 		return _mbMessageLocalService.getUserDiscussionMessagesCount(userId,
 			classNameId, classPK, status);
+	}
+
+	@Override
+	public int getUserDiscussionMessagesCount(long userId, long[] classNameIds,
+		int status) {
+		return _mbMessageLocalService.getUserDiscussionMessagesCount(userId,
+			classNameIds, status);
 	}
 
 	@Override

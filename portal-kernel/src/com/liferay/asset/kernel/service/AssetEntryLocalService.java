@@ -385,11 +385,11 @@ public interface AssetEntryLocalService extends BaseLocalService,
 	public AssetEntry getPreviousEntry(long entryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetEntry> getTopViewedEntries(java.lang.String[] className,
+	public List<AssetEntry> getTopViewedEntries(java.lang.String className,
 		boolean asc, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetEntry> getTopViewedEntries(java.lang.String className,
+	public List<AssetEntry> getTopViewedEntries(java.lang.String[] className,
 		boolean asc, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -421,13 +421,13 @@ public interface AssetEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Hits search(long companyId, long[] groupIds, long userId,
 		java.lang.String className, long classTypeId,
-		java.lang.String keywords, boolean showNonindexable, int[] statuses,
+		java.lang.String keywords, boolean showNonindexable, int status,
 		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Hits search(long companyId, long[] groupIds, long userId,
 		java.lang.String className, long classTypeId,
-		java.lang.String keywords, boolean showNonindexable, int status,
+		java.lang.String keywords, boolean showNonindexable, int[] statuses,
 		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

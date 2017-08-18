@@ -358,21 +358,21 @@ public class MDRRuleGroupLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> getRuleGroups(
-		long[] groupIds, int start, int end) {
-		return getService().getRuleGroups(groupIds, start, end);
-	}
-
-	public static java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> getRuleGroups(
 		long groupId, int start, int end) {
 		return getService().getRuleGroups(groupId, start, end);
 	}
 
-	public static int getRuleGroupsCount(long[] groupIds) {
-		return getService().getRuleGroupsCount(groupIds);
+	public static java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> getRuleGroups(
+		long[] groupIds, int start, int end) {
+		return getService().getRuleGroups(groupIds, start, end);
 	}
 
 	public static int getRuleGroupsCount(long groupId) {
 		return getService().getRuleGroupsCount(groupId);
+	}
+
+	public static int getRuleGroupsCount(long[] groupIds) {
+		return getService().getRuleGroupsCount(groupIds);
 	}
 
 	public static java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> search(

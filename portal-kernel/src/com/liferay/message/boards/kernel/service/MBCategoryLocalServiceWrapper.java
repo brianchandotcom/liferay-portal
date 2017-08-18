@@ -309,23 +309,9 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 
 	@Override
 	public java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
-		long groupId, long[] parentCategoryIds, int start, int end) {
-		return _mbCategoryLocalService.getCategories(groupId,
-			parentCategoryIds, start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
 		long groupId, long parentCategoryId, int start, int end) {
 		return _mbCategoryLocalService.getCategories(groupId, parentCategoryId,
 			start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
-		long groupId, long[] parentCategoryIds, int status, int start, int end) {
-		return _mbCategoryLocalService.getCategories(groupId,
-			parentCategoryIds, status, start, end);
 	}
 
 	@Override
@@ -341,6 +327,20 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 		int status, int start, int end) {
 		return _mbCategoryLocalService.getCategories(groupId,
 			excludedCategoryId, parentCategoryId, status, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+		long groupId, long[] parentCategoryIds, int start, int end) {
+		return _mbCategoryLocalService.getCategories(groupId,
+			parentCategoryIds, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+		long groupId, long[] parentCategoryIds, int status, int start, int end) {
+		return _mbCategoryLocalService.getCategories(groupId,
+			parentCategoryIds, status, start, end);
 	}
 
 	@Override
@@ -396,12 +396,6 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	}
 
 	@Override
-	public int getCategoriesCount(long groupId, long[] parentCategoryIds) {
-		return _mbCategoryLocalService.getCategoriesCount(groupId,
-			parentCategoryIds);
-	}
-
-	@Override
 	public int getCategoriesCount(long groupId, long parentCategoryId) {
 		return _mbCategoryLocalService.getCategoriesCount(groupId,
 			parentCategoryId);
@@ -412,6 +406,19 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 		int status) {
 		return _mbCategoryLocalService.getCategoriesCount(groupId,
 			parentCategoryId, status);
+	}
+
+	@Override
+	public int getCategoriesCount(long groupId, long excludedCategoryId,
+		long parentCategoryId, int status) {
+		return _mbCategoryLocalService.getCategoriesCount(groupId,
+			excludedCategoryId, parentCategoryId, status);
+	}
+
+	@Override
+	public int getCategoriesCount(long groupId, long[] parentCategoryIds) {
+		return _mbCategoryLocalService.getCategoriesCount(groupId,
+			parentCategoryIds);
 	}
 
 	@Override
@@ -426,13 +433,6 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 		long[] parentCategoryIds, int status) {
 		return _mbCategoryLocalService.getCategoriesCount(groupId,
 			excludedCategoryIds, parentCategoryIds, status);
-	}
-
-	@Override
-	public int getCategoriesCount(long groupId, long excludedCategoryId,
-		long parentCategoryId, int status) {
-		return _mbCategoryLocalService.getCategoriesCount(groupId,
-			excludedCategoryId, parentCategoryId, status);
 	}
 
 	@Override

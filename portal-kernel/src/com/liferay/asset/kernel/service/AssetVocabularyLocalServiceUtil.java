@@ -368,11 +368,6 @@ public class AssetVocabularyLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.asset.kernel.model.AssetVocabulary> getGroupVocabularies(
-		long[] groupIds) {
-		return getService().getGroupVocabularies(groupIds);
-	}
-
-	public static java.util.List<com.liferay.asset.kernel.model.AssetVocabulary> getGroupVocabularies(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getGroupVocabularies(groupId);
@@ -388,6 +383,11 @@ public class AssetVocabularyLocalServiceUtil {
 		long groupId, java.lang.String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.kernel.model.AssetVocabulary> obc) {
 		return getService().getGroupVocabularies(groupId, name, start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.asset.kernel.model.AssetVocabulary> getGroupVocabularies(
+		long[] groupIds) {
+		return getService().getGroupVocabularies(groupIds);
 	}
 
 	public static int getGroupVocabulariesCount(long[] groupIds) {

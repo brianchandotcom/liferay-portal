@@ -150,10 +150,10 @@ public interface KBArticleLocalService extends BaseLocalService,
 	public KBArticle deleteKBArticle(long kbArticleId)
 		throws PortalException;
 
-	public void deleteKBArticles(long[] resourcePrimKeys)
+	public void deleteKBArticles(long groupId, long parentResourcePrimKey)
 		throws PortalException;
 
-	public void deleteKBArticles(long groupId, long parentResourcePrimKey)
+	public void deleteKBArticles(long[] resourcePrimKeys)
 		throws PortalException;
 
 	/**
@@ -360,12 +360,12 @@ public interface KBArticleLocalService extends BaseLocalService,
 	public List<KBArticle> getKBArticles(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBArticle> getKBArticles(long[] resourcePrimKeys, int status,
+	public List<KBArticle> getKBArticles(long groupId,
+		long parentResourcePrimKey, int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBArticle> getKBArticles(long groupId,
-		long parentResourcePrimKey, int status, int start, int end,
+	public List<KBArticle> getKBArticles(long[] resourcePrimKeys, int status,
 		OrderByComparator<KBArticle> orderByComparator);
 
 	/**

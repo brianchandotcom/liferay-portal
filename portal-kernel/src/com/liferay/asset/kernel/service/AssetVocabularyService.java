@@ -95,9 +95,6 @@ public interface AssetVocabularyService extends BaseService {
 		java.lang.String className, long classTypePK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetVocabulary> getGroupVocabularies(long[] groupIds);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetVocabulary> getGroupVocabularies(long groupId)
 		throws PortalException;
 
@@ -120,13 +117,16 @@ public interface AssetVocabularyService extends BaseService {
 		OrderByComparator<AssetVocabulary> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetVocabulary> getGroupVocabularies(long[] groupIds);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupVocabulariesCount(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupVocabulariesCount(long[] groupIds);
+	public int getGroupVocabulariesCount(long groupId, java.lang.String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupVocabulariesCount(long groupId, java.lang.String name);
+	public int getGroupVocabulariesCount(long[] groupIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetVocabularyDisplay getGroupVocabulariesDisplay(long groupId,

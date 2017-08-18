@@ -169,14 +169,14 @@ public class KBArticleLocalServiceUtil {
 		return getService().deleteKBArticle(kbArticleId);
 	}
 
-	public static void deleteKBArticles(long[] resourcePrimKeys)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteKBArticles(resourcePrimKeys);
-	}
-
 	public static void deleteKBArticles(long groupId, long parentResourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteKBArticles(groupId, parentResourcePrimKey);
+	}
+
+	public static void deleteKBArticles(long[] resourcePrimKeys)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteKBArticles(resourcePrimKeys);
 	}
 
 	/**
@@ -463,19 +463,19 @@ public class KBArticleLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.knowledge.base.model.KBArticle> getKBArticles(
-		long[] resourcePrimKeys, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator) {
-		return getService()
-				   .getKBArticles(resourcePrimKeys, status, orderByComparator);
-	}
-
-	public static java.util.List<com.liferay.knowledge.base.model.KBArticle> getKBArticles(
 		long groupId, long parentResourcePrimKey, int status, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator) {
 		return getService()
 				   .getKBArticles(groupId, parentResourcePrimKey, status,
 			start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.knowledge.base.model.KBArticle> getKBArticles(
+		long[] resourcePrimKeys, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator) {
+		return getService()
+				   .getKBArticles(resourcePrimKeys, status, orderByComparator);
 	}
 
 	/**

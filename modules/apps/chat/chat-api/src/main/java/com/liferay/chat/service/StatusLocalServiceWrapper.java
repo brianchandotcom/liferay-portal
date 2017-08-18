@@ -222,15 +222,15 @@ public class StatusLocalServiceWrapper implements StatusLocalService,
 
 	@Override
 	public java.util.List<java.lang.Object[]> getSocialStatuses(long userId,
-		int[] types, long modifiedDate, int start, int end) {
-		return _statusLocalService.getSocialStatuses(userId, types,
+		int type, long modifiedDate, int start, int end) {
+		return _statusLocalService.getSocialStatuses(userId, type,
 			modifiedDate, start, end);
 	}
 
 	@Override
 	public java.util.List<java.lang.Object[]> getSocialStatuses(long userId,
-		int type, long modifiedDate, int start, int end) {
-		return _statusLocalService.getSocialStatuses(userId, type,
+		int[] types, long modifiedDate, int start, int end) {
+		return _statusLocalService.getSocialStatuses(userId, types,
 			modifiedDate, start, end);
 	}
 

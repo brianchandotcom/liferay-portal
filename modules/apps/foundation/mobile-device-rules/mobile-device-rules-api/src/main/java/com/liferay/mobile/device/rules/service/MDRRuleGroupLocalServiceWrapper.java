@@ -387,24 +387,24 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 
 	@Override
 	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> getRuleGroups(
-		long[] groupIds, int start, int end) {
-		return _mdrRuleGroupLocalService.getRuleGroups(groupIds, start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> getRuleGroups(
 		long groupId, int start, int end) {
 		return _mdrRuleGroupLocalService.getRuleGroups(groupId, start, end);
 	}
 
 	@Override
-	public int getRuleGroupsCount(long[] groupIds) {
-		return _mdrRuleGroupLocalService.getRuleGroupsCount(groupIds);
+	public java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> getRuleGroups(
+		long[] groupIds, int start, int end) {
+		return _mdrRuleGroupLocalService.getRuleGroups(groupIds, start, end);
 	}
 
 	@Override
 	public int getRuleGroupsCount(long groupId) {
 		return _mdrRuleGroupLocalService.getRuleGroupsCount(groupId);
+	}
+
+	@Override
+	public int getRuleGroupsCount(long[] groupIds) {
+		return _mdrRuleGroupLocalService.getRuleGroupsCount(groupIds);
 	}
 
 	@Override

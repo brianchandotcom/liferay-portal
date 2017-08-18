@@ -114,6 +114,12 @@ public class AssetTagServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.asset.kernel.model.AssetTag> getTags(
+		long groupId, java.lang.String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.kernel.model.AssetTag> obc) {
+		return getService().getTags(groupId, name, start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.asset.kernel.model.AssetTag> getTags(
 		long[] groupIds, java.lang.String name, int start, int end) {
 		return getService().getTags(groupIds, name, start, end);
 	}
@@ -122,12 +128,6 @@ public class AssetTagServiceUtil {
 		long[] groupIds, java.lang.String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.kernel.model.AssetTag> obc) {
 		return getService().getTags(groupIds, name, start, end, obc);
-	}
-
-	public static java.util.List<com.liferay.asset.kernel.model.AssetTag> getTags(
-		long groupId, java.lang.String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.kernel.model.AssetTag> obc) {
-		return getService().getTags(groupId, name, start, end, obc);
 	}
 
 	public static java.util.List<com.liferay.asset.kernel.model.AssetTag> getTags(
@@ -160,13 +160,13 @@ public class AssetTagServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.json.JSONArray search(
-		long[] groupIds, java.lang.String name, int start, int end) {
-		return getService().search(groupIds, name, start, end);
+		long groupId, java.lang.String name, int start, int end) {
+		return getService().search(groupId, name, start, end);
 	}
 
 	public static com.liferay.portal.kernel.json.JSONArray search(
-		long groupId, java.lang.String name, int start, int end) {
-		return getService().search(groupId, name, start, end);
+		long[] groupIds, java.lang.String name, int start, int end) {
+		return getService().search(groupIds, name, start, end);
 	}
 
 	public static com.liferay.asset.kernel.model.AssetTag updateTag(

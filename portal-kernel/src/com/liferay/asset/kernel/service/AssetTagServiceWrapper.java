@@ -121,6 +121,13 @@ public class AssetTagServiceWrapper implements AssetTagService,
 
 	@Override
 	public java.util.List<com.liferay.asset.kernel.model.AssetTag> getTags(
+		long groupId, java.lang.String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.kernel.model.AssetTag> obc) {
+		return _assetTagService.getTags(groupId, name, start, end, obc);
+	}
+
+	@Override
+	public java.util.List<com.liferay.asset.kernel.model.AssetTag> getTags(
 		long[] groupIds, java.lang.String name, int start, int end) {
 		return _assetTagService.getTags(groupIds, name, start, end);
 	}
@@ -130,13 +137,6 @@ public class AssetTagServiceWrapper implements AssetTagService,
 		long[] groupIds, java.lang.String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.kernel.model.AssetTag> obc) {
 		return _assetTagService.getTags(groupIds, name, start, end, obc);
-	}
-
-	@Override
-	public java.util.List<com.liferay.asset.kernel.model.AssetTag> getTags(
-		long groupId, java.lang.String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.kernel.model.AssetTag> obc) {
-		return _assetTagService.getTags(groupId, name, start, end, obc);
 	}
 
 	@Override
@@ -175,15 +175,15 @@ public class AssetTagServiceWrapper implements AssetTagService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.json.JSONArray search(long[] groupIds,
-		java.lang.String name, int start, int end) {
-		return _assetTagService.search(groupIds, name, start, end);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.json.JSONArray search(long groupId,
 		java.lang.String name, int start, int end) {
 		return _assetTagService.search(groupId, name, start, end);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.json.JSONArray search(long[] groupIds,
+		java.lang.String name, int start, int end) {
+		return _assetTagService.search(groupIds, name, start, end);
 	}
 
 	@Override

@@ -69,11 +69,11 @@ public interface UserGroupGroupRoleLocalService extends BaseLocalService,
 	public UserGroupGroupRole addUserGroupGroupRole(
 		UserGroupGroupRole userGroupGroupRole);
 
-	public void addUserGroupGroupRoles(long[] userGroupIds, long groupId,
-		long roleId);
-
 	public void addUserGroupGroupRoles(long userGroupId, long groupId,
 		long[] roleIds);
+
+	public void addUserGroupGroupRoles(long[] userGroupIds, long groupId,
+		long roleId);
 
 	/**
 	* Creates a new user group group role with the primary key. Does not add the user group group role to the database.
@@ -114,12 +114,12 @@ public interface UserGroupGroupRoleLocalService extends BaseLocalService,
 
 	public void deleteUserGroupGroupRoles(long groupId, int roleType);
 
-	public void deleteUserGroupGroupRoles(long[] userGroupIds, long groupId);
+	public void deleteUserGroupGroupRoles(long userGroupId, long groupId,
+		long[] roleIds);
 
 	public void deleteUserGroupGroupRoles(long userGroupId, long[] groupIds);
 
-	public void deleteUserGroupGroupRoles(long userGroupId, long groupId,
-		long[] roleIds);
+	public void deleteUserGroupGroupRoles(long[] userGroupIds, long groupId);
 
 	public void deleteUserGroupGroupRoles(long[] userGroupIds, long groupId,
 		long roleId);

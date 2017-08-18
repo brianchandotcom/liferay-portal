@@ -53,13 +53,13 @@ public class UserGroupRoleLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.UserGroupRole> addUserGroupRoles(
-		long[] userIds, long groupId, long roleId) {
-		return getService().addUserGroupRoles(userIds, groupId, roleId);
+		long userId, long groupId, long[] roleIds) {
+		return getService().addUserGroupRoles(userId, groupId, roleIds);
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.UserGroupRole> addUserGroupRoles(
-		long userId, long groupId, long[] roleIds) {
-		return getService().addUserGroupRoles(userId, groupId, roleIds);
+		long[] userIds, long groupId, long roleId) {
+		return getService().addUserGroupRoles(userIds, groupId, roleId);
 	}
 
 	/**
@@ -110,22 +110,22 @@ public class UserGroupRoleLocalServiceUtil {
 		getService().deleteUserGroupRoles(groupId, roleType);
 	}
 
-	public static void deleteUserGroupRoles(long[] userIds, long groupId) {
-		getService().deleteUserGroupRoles(userIds, groupId);
+	public static void deleteUserGroupRoles(long userId, long groupId,
+		long[] roleIds) {
+		getService().deleteUserGroupRoles(userId, groupId, roleIds);
 	}
 
 	public static void deleteUserGroupRoles(long userId, long[] groupIds) {
 		getService().deleteUserGroupRoles(userId, groupIds);
 	}
 
+	public static void deleteUserGroupRoles(long[] userIds, long groupId) {
+		getService().deleteUserGroupRoles(userIds, groupId);
+	}
+
 	public static void deleteUserGroupRoles(long[] userIds, long groupId,
 		int roleType) {
 		getService().deleteUserGroupRoles(userIds, groupId, roleType);
-	}
-
-	public static void deleteUserGroupRoles(long userId, long groupId,
-		long[] roleIds) {
-		getService().deleteUserGroupRoles(userId, groupId, roleIds);
 	}
 
 	public static void deleteUserGroupRoles(long[] userIds, long groupId,

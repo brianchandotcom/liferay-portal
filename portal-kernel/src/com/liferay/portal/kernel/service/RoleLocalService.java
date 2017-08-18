@@ -497,15 +497,6 @@ public interface RoleLocalService extends BaseLocalService,
 	public List<Role> getRoles(int type, java.lang.String subtype);
 
 	/**
-	* Returns all the roles with the primary keys.
-	*
-	* @param roleIds the primary keys of the roles
-	* @return the roles with the primary keys
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Role> getRoles(long[] roleIds) throws PortalException;
-
-	/**
 	* Returns all the roles in the company.
 	*
 	* @param companyId the primary key of the company
@@ -523,6 +514,15 @@ public interface RoleLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Role> getRoles(long companyId, int[] types);
+
+	/**
+	* Returns all the roles with the primary keys.
+	*
+	* @param roleIds the primary keys of the roles
+	* @return the roles with the primary keys
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Role> getRoles(long[] roleIds) throws PortalException;
 
 	/**
 	* Returns the number of roles.

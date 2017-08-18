@@ -170,15 +170,15 @@ public class KBArticleLocalServiceWrapper implements KBArticleLocalService,
 	}
 
 	@Override
-	public void deleteKBArticles(long[] resourcePrimKeys)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_kbArticleLocalService.deleteKBArticles(resourcePrimKeys);
-	}
-
-	@Override
 	public void deleteKBArticles(long groupId, long parentResourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_kbArticleLocalService.deleteKBArticles(groupId, parentResourcePrimKey);
+	}
+
+	@Override
+	public void deleteKBArticles(long[] resourcePrimKeys)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_kbArticleLocalService.deleteKBArticles(resourcePrimKeys);
 	}
 
 	/**
@@ -499,19 +499,19 @@ public class KBArticleLocalServiceWrapper implements KBArticleLocalService,
 
 	@Override
 	public java.util.List<com.liferay.knowledge.base.model.KBArticle> getKBArticles(
-		long[] resourcePrimKeys, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator) {
-		return _kbArticleLocalService.getKBArticles(resourcePrimKeys, status,
-			orderByComparator);
-	}
-
-	@Override
-	public java.util.List<com.liferay.knowledge.base.model.KBArticle> getKBArticles(
 		long groupId, long parentResourcePrimKey, int status, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator) {
 		return _kbArticleLocalService.getKBArticles(groupId,
 			parentResourcePrimKey, status, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.knowledge.base.model.KBArticle> getKBArticles(
+		long[] resourcePrimKeys, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator) {
+		return _kbArticleLocalService.getKBArticles(resourcePrimKeys, status,
+			orderByComparator);
 	}
 
 	/**

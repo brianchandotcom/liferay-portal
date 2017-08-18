@@ -83,16 +83,8 @@ public interface MBCategoryService extends BaseService {
 	public List<MBCategory> getCategories(long groupId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBCategory> getCategories(long groupId,
-		long[] parentCategoryIds, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBCategory> getCategories(long groupId, long parentCategoryId,
 		int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MBCategory> getCategories(long groupId,
-		long[] parentCategoryIds, int status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBCategory> getCategories(long groupId, long parentCategoryId,
@@ -102,6 +94,14 @@ public interface MBCategoryService extends BaseService {
 	public List<MBCategory> getCategories(long groupId,
 		long excludedCategoryId, long parentCategoryId, int status, int start,
 		int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBCategory> getCategories(long groupId,
+		long[] parentCategoryIds, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBCategory> getCategories(long groupId,
+		long[] parentCategoryIds, int status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBCategory> getCategories(long groupId,
@@ -141,14 +141,18 @@ public interface MBCategoryService extends BaseService {
 		QueryDefinition<?> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCategoriesCount(long groupId, long[] parentCategoryIds);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCategoriesCount(long groupId, long parentCategoryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCategoriesCount(long groupId, long parentCategoryId,
 		int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCategoriesCount(long groupId, long excludedCategoryId,
+		long parentCategoryId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCategoriesCount(long groupId, long[] parentCategoryIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCategoriesCount(long groupId, long[] parentCategoryIds,
@@ -157,10 +161,6 @@ public interface MBCategoryService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCategoriesCount(long groupId, long[] excludedCategoryIds,
 		long[] parentCategoryIds, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCategoriesCount(long groupId, long excludedCategoryId,
-		long parentCategoryId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MBCategory getCategory(long categoryId) throws PortalException;

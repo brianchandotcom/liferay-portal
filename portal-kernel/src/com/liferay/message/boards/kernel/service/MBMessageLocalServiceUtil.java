@@ -699,20 +699,20 @@ public class MBMessageLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getUserDiscussionMessages(
-		long userId, long[] classNameIds, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.message.boards.kernel.model.MBMessage> obc) {
-		return getService()
-				   .getUserDiscussionMessages(userId, classNameIds, status,
-			start, end, obc);
-	}
-
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getUserDiscussionMessages(
 		long userId, long classNameId, long classPK, int status, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.message.boards.kernel.model.MBMessage> obc) {
 		return getService()
 				   .getUserDiscussionMessages(userId, classNameId, classPK,
 			status, start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getUserDiscussionMessages(
+		long userId, long[] classNameIds, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.message.boards.kernel.model.MBMessage> obc) {
+		return getService()
+				   .getUserDiscussionMessages(userId, classNameIds, status,
+			start, end, obc);
 	}
 
 	public static java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getUserDiscussionMessages(
@@ -725,16 +725,16 @@ public class MBMessageLocalServiceUtil {
 	}
 
 	public static int getUserDiscussionMessagesCount(long userId,
-		long[] classNameIds, int status) {
-		return getService()
-				   .getUserDiscussionMessagesCount(userId, classNameIds, status);
-	}
-
-	public static int getUserDiscussionMessagesCount(long userId,
 		long classNameId, long classPK, int status) {
 		return getService()
 				   .getUserDiscussionMessagesCount(userId, classNameId,
 			classPK, status);
+	}
+
+	public static int getUserDiscussionMessagesCount(long userId,
+		long[] classNameIds, int status) {
+		return getService()
+				   .getUserDiscussionMessagesCount(userId, classNameIds, status);
 	}
 
 	public static int getUserDiscussionMessagesCount(long userId,

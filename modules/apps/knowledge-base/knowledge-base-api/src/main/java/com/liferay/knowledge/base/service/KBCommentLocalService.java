@@ -271,16 +271,16 @@ public interface KBCommentLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KBComment> getKBComments(java.lang.String className,
-		long classPK, int[] status, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBComment> getKBComments(java.lang.String className,
 		long classPK, int status, int start, int end,
 		OrderByComparator<KBComment> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KBComment> getKBComments(java.lang.String className,
 		long classPK, int start, int end, OrderByComparator orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KBComment> getKBComments(java.lang.String className,
+		long classPK, int[] status, int start, int end);
 
 	/**
 	* Returns all the kb comments matching the UUID and company.
@@ -328,11 +328,11 @@ public interface KBCommentLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getKBCommentsCount(java.lang.String className, long classPK,
-		int[] status);
+		int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getKBCommentsCount(java.lang.String className, long classPK,
-		int status);
+		int[] status);
 
 	/**
 	* Returns the OSGi service identifier.

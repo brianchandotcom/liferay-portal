@@ -90,23 +90,9 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 
 	@Override
 	public java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
-		long groupId, long[] parentCategoryIds, int start, int end) {
-		return _mbCategoryService.getCategories(groupId, parentCategoryIds,
-			start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
 		long groupId, long parentCategoryId, int start, int end) {
 		return _mbCategoryService.getCategories(groupId, parentCategoryId,
 			start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
-		long groupId, long[] parentCategoryIds, int status, int start, int end) {
-		return _mbCategoryService.getCategories(groupId, parentCategoryIds,
-			status, start, end);
 	}
 
 	@Override
@@ -122,6 +108,20 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 		int status, int start, int end) {
 		return _mbCategoryService.getCategories(groupId, excludedCategoryId,
 			parentCategoryId, status, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+		long groupId, long[] parentCategoryIds, int start, int end) {
+		return _mbCategoryService.getCategories(groupId, parentCategoryIds,
+			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+		long groupId, long[] parentCategoryIds, int status, int start, int end) {
+		return _mbCategoryService.getCategories(groupId, parentCategoryIds,
+			status, start, end);
 	}
 
 	@Override
@@ -189,11 +189,6 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 	}
 
 	@Override
-	public int getCategoriesCount(long groupId, long[] parentCategoryIds) {
-		return _mbCategoryService.getCategoriesCount(groupId, parentCategoryIds);
-	}
-
-	@Override
 	public int getCategoriesCount(long groupId, long parentCategoryId) {
 		return _mbCategoryService.getCategoriesCount(groupId, parentCategoryId);
 	}
@@ -203,6 +198,18 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 		int status) {
 		return _mbCategoryService.getCategoriesCount(groupId, parentCategoryId,
 			status);
+	}
+
+	@Override
+	public int getCategoriesCount(long groupId, long excludedCategoryId,
+		long parentCategoryId, int status) {
+		return _mbCategoryService.getCategoriesCount(groupId,
+			excludedCategoryId, parentCategoryId, status);
+	}
+
+	@Override
+	public int getCategoriesCount(long groupId, long[] parentCategoryIds) {
+		return _mbCategoryService.getCategoriesCount(groupId, parentCategoryIds);
 	}
 
 	@Override
@@ -217,13 +224,6 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 		long[] parentCategoryIds, int status) {
 		return _mbCategoryService.getCategoriesCount(groupId,
 			excludedCategoryIds, parentCategoryIds, status);
-	}
-
-	@Override
-	public int getCategoriesCount(long groupId, long excludedCategoryId,
-		long parentCategoryId, int status) {
-		return _mbCategoryService.getCategoriesCount(groupId,
-			excludedCategoryId, parentCategoryId, status);
 	}
 
 	@Override

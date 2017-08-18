@@ -222,17 +222,17 @@ public class KBArticleServiceWrapper implements KBArticleService,
 	}
 
 	@Override
-	public int getKBArticlesCount(long groupId, long[] resourcePrimKeys,
-		int status) {
-		return _kbArticleService.getKBArticlesCount(groupId, resourcePrimKeys,
-			status);
-	}
-
-	@Override
 	public int getKBArticlesCount(long groupId, long parentResourcePrimKey,
 		int status) {
 		return _kbArticleService.getKBArticlesCount(groupId,
 			parentResourcePrimKey, status);
+	}
+
+	@Override
+	public int getKBArticlesCount(long groupId, long[] resourcePrimKeys,
+		int status) {
+		return _kbArticleService.getKBArticlesCount(groupId, resourcePrimKeys,
+			status);
 	}
 
 	@Override

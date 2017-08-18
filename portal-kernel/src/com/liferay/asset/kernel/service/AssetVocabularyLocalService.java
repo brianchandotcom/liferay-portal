@@ -318,9 +318,6 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 		java.lang.String className, long classTypePK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetVocabulary> getGroupVocabularies(long[] groupIds);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetVocabulary> getGroupVocabularies(long groupId)
 		throws PortalException;
 
@@ -332,6 +329,9 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 	public List<AssetVocabulary> getGroupVocabularies(long groupId,
 		java.lang.String name, int start, int end,
 		OrderByComparator<AssetVocabulary> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetVocabulary> getGroupVocabularies(long[] groupIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupVocabulariesCount(long[] groupIds);

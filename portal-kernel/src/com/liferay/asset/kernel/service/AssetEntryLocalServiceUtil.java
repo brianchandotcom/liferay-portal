@@ -516,12 +516,12 @@ public class AssetEntryLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.asset.kernel.model.AssetEntry> getTopViewedEntries(
-		java.lang.String[] className, boolean asc, int start, int end) {
+		java.lang.String className, boolean asc, int start, int end) {
 		return getService().getTopViewedEntries(className, asc, start, end);
 	}
 
 	public static java.util.List<com.liferay.asset.kernel.model.AssetEntry> getTopViewedEntries(
-		java.lang.String className, boolean asc, int start, int end) {
+		java.lang.String[] className, boolean asc, int start, int end) {
 		return getService().getTopViewedEntries(className, asc, start, end);
 	}
 
@@ -568,19 +568,19 @@ public class AssetEntryLocalServiceUtil {
 	public static com.liferay.portal.kernel.search.Hits search(long companyId,
 		long[] groupIds, long userId, java.lang.String className,
 		long classTypeId, java.lang.String keywords, boolean showNonindexable,
-		int[] statuses, int start, int end) {
+		int status, int start, int end) {
 		return getService()
 				   .search(companyId, groupIds, userId, className, classTypeId,
-			keywords, showNonindexable, statuses, start, end);
+			keywords, showNonindexable, status, start, end);
 	}
 
 	public static com.liferay.portal.kernel.search.Hits search(long companyId,
 		long[] groupIds, long userId, java.lang.String className,
 		long classTypeId, java.lang.String keywords, boolean showNonindexable,
-		int status, int start, int end) {
+		int[] statuses, int start, int end) {
 		return getService()
 				   .search(companyId, groupIds, userId, className, classTypeId,
-			keywords, showNonindexable, status, start, end);
+			keywords, showNonindexable, statuses, start, end);
 	}
 
 	public static com.liferay.portal.kernel.search.Hits search(long companyId,

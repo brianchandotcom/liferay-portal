@@ -93,7 +93,7 @@ public class ExpandoValueLocalServiceWrapper implements ExpandoValueLocalService
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoValue addValue(
 		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, double[] data)
+		java.lang.String columnName, long classPK, double data)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValueLocalService.addValue(companyId, className,
 			tableName, columnName, classPK, data);
@@ -102,7 +102,7 @@ public class ExpandoValueLocalServiceWrapper implements ExpandoValueLocalService
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoValue addValue(
 		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, double data)
+		java.lang.String columnName, long classPK, double[] data)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValueLocalService.addValue(companyId, className,
 			tableName, columnName, classPK, data);
@@ -129,7 +129,7 @@ public class ExpandoValueLocalServiceWrapper implements ExpandoValueLocalService
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoValue addValue(
 		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, int[] data)
+		java.lang.String columnName, long classPK, int data)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValueLocalService.addValue(companyId, className,
 			tableName, columnName, classPK, data);
@@ -138,7 +138,7 @@ public class ExpandoValueLocalServiceWrapper implements ExpandoValueLocalService
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoValue addValue(
 		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, int data)
+		java.lang.String columnName, long classPK, int[] data)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValueLocalService.addValue(companyId, className,
 			tableName, columnName, classPK, data);
@@ -157,7 +157,7 @@ public class ExpandoValueLocalServiceWrapper implements ExpandoValueLocalService
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoValue addValue(
 		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, long[] data)
+		java.lang.String columnName, long classPK, long data)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValueLocalService.addValue(companyId, className,
 			tableName, columnName, classPK, data);
@@ -166,7 +166,7 @@ public class ExpandoValueLocalServiceWrapper implements ExpandoValueLocalService
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoValue addValue(
 		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, long data)
+		java.lang.String columnName, long classPK, long[] data)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValueLocalService.addValue(companyId, className,
 			tableName, columnName, classPK, data);
@@ -186,7 +186,7 @@ public class ExpandoValueLocalServiceWrapper implements ExpandoValueLocalService
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoValue addValue(
 		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, java.lang.Number[] data)
+		java.lang.String columnName, long classPK, java.lang.Number data)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValueLocalService.addValue(companyId, className,
 			tableName, columnName, classPK, data);
@@ -195,7 +195,7 @@ public class ExpandoValueLocalServiceWrapper implements ExpandoValueLocalService
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoValue addValue(
 		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, java.lang.Number data)
+		java.lang.String columnName, long classPK, java.lang.Number[] data)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValueLocalService.addValue(companyId, className,
 			tableName, columnName, classPK, data);
@@ -213,7 +213,7 @@ public class ExpandoValueLocalServiceWrapper implements ExpandoValueLocalService
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoValue addValue(
 		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, short[] data)
+		java.lang.String columnName, long classPK, short data)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValueLocalService.addValue(companyId, className,
 			tableName, columnName, classPK, data);
@@ -222,7 +222,7 @@ public class ExpandoValueLocalServiceWrapper implements ExpandoValueLocalService
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoValue addValue(
 		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, short data)
+		java.lang.String columnName, long classPK, short[] data)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValueLocalService.addValue(companyId, className,
 			tableName, columnName, classPK, data);
@@ -567,18 +567,18 @@ public class ExpandoValueLocalServiceWrapper implements ExpandoValueLocalService
 	}
 
 	@Override
-	public boolean[] getData(long companyId, java.lang.String className,
+	public boolean getData(long companyId, java.lang.String className,
 		java.lang.String tableName, java.lang.String columnName, long classPK,
-		boolean[] defaultData)
+		boolean defaultData)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValueLocalService.getData(companyId, className,
 			tableName, columnName, classPK, defaultData);
 	}
 
 	@Override
-	public boolean getData(long companyId, java.lang.String className,
+	public boolean[] getData(long companyId, java.lang.String className,
 		java.lang.String tableName, java.lang.String columnName, long classPK,
-		boolean defaultData)
+		boolean[] defaultData)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValueLocalService.getData(companyId, className,
 			tableName, columnName, classPK, defaultData);
@@ -714,6 +714,15 @@ public class ExpandoValueLocalServiceWrapper implements ExpandoValueLocalService
 	}
 
 	@Override
+	public short getData(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String columnName, long classPK,
+		short defaultData)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _expandoValueLocalService.getData(companyId, className,
+			tableName, columnName, classPK, defaultData);
+	}
+
+	@Override
 	public short[] getData(long companyId, java.lang.String className,
 		java.lang.String tableName, java.lang.String columnName, long classPK,
 		short[] defaultData)
@@ -723,9 +732,9 @@ public class ExpandoValueLocalServiceWrapper implements ExpandoValueLocalService
 	}
 
 	@Override
-	public short getData(long companyId, java.lang.String className,
+	public java.lang.String getData(long companyId, java.lang.String className,
 		java.lang.String tableName, java.lang.String columnName, long classPK,
-		short defaultData)
+		java.lang.String defaultData)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValueLocalService.getData(companyId, className,
 			tableName, columnName, classPK, defaultData);
@@ -736,15 +745,6 @@ public class ExpandoValueLocalServiceWrapper implements ExpandoValueLocalService
 		java.lang.String className, java.lang.String tableName,
 		java.lang.String columnName, long classPK,
 		java.lang.String[] defaultData)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _expandoValueLocalService.getData(companyId, className,
-			tableName, columnName, classPK, defaultData);
-	}
-
-	@Override
-	public java.lang.String getData(long companyId, java.lang.String className,
-		java.lang.String tableName, java.lang.String columnName, long classPK,
-		java.lang.String defaultData)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValueLocalService.getData(companyId, className,
 			tableName, columnName, classPK, defaultData);

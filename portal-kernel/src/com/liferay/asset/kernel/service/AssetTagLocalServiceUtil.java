@@ -592,17 +592,6 @@ public class AssetTagLocalServiceUtil {
 	}
 
 	/**
-	* Returns the primary keys of the asset tags with the names in the groups.
-	*
-	* @param groupIds the primary keys of the groups
-	* @param names the names of the asset tags
-	* @return the primary keys of the asset tags with the names in the groups
-	*/
-	public static long[] getTagIds(long[] groupIds, java.lang.String[] names) {
-		return getService().getTagIds(groupIds, names);
-	}
-
-	/**
 	* Returns the primary keys of the asset tags with the name in the groups.
 	*
 	* @param groupIds the primary keys of the groups
@@ -611,6 +600,17 @@ public class AssetTagLocalServiceUtil {
 	*/
 	public static long[] getTagIds(long[] groupIds, java.lang.String name) {
 		return getService().getTagIds(groupIds, name);
+	}
+
+	/**
+	* Returns the primary keys of the asset tags with the names in the groups.
+	*
+	* @param groupIds the primary keys of the groups
+	* @param names the names of the asset tags
+	* @return the primary keys of the asset tags with the names in the groups
+	*/
+	public static long[] getTagIds(long[] groupIds, java.lang.String[] names) {
+		return getService().getTagIds(groupIds, names);
 	}
 
 	/**

@@ -400,12 +400,6 @@ public class AssetVocabularyLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.asset.kernel.model.AssetVocabulary> getGroupVocabularies(
-		long[] groupIds) {
-		return _assetVocabularyLocalService.getGroupVocabularies(groupIds);
-	}
-
-	@Override
-	public java.util.List<com.liferay.asset.kernel.model.AssetVocabulary> getGroupVocabularies(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetVocabularyLocalService.getGroupVocabularies(groupId);
@@ -425,6 +419,12 @@ public class AssetVocabularyLocalServiceWrapper
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.kernel.model.AssetVocabulary> obc) {
 		return _assetVocabularyLocalService.getGroupVocabularies(groupId, name,
 			start, end, obc);
+	}
+
+	@Override
+	public java.util.List<com.liferay.asset.kernel.model.AssetVocabulary> getGroupVocabularies(
+		long[] groupIds) {
+		return _assetVocabularyLocalService.getGroupVocabularies(groupIds);
 	}
 
 	@Override

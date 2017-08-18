@@ -333,21 +333,6 @@ public class ResourcePermissionLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#getAvailableResourcePermissionActionIds(long, String, int,
-	String, Collection)}
-	*/
-	@Deprecated
-	@Override
-	public java.util.Map<java.lang.Long, java.util.Set<java.lang.String>> getAvailableResourcePermissionActionIds(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey, long[] roleIds,
-		java.util.Collection<java.lang.String> actionIds) {
-		return _resourcePermissionLocalService.getAvailableResourcePermissionActionIds(companyId,
-			name, scope, primKey, roleIds, actionIds);
-	}
-
-	/**
 	* Returns the intersection of action IDs the role has permission at the
 	* scope to perform on resources of the type.
 	*
@@ -369,6 +354,21 @@ public class ResourcePermissionLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _resourcePermissionLocalService.getAvailableResourcePermissionActionIds(companyId,
 			name, scope, primKey, roleId, actionIds);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	#getAvailableResourcePermissionActionIds(long, String, int,
+	String, Collection)}
+	*/
+	@Deprecated
+	@Override
+	public java.util.Map<java.lang.Long, java.util.Set<java.lang.String>> getAvailableResourcePermissionActionIds(
+		long companyId, java.lang.String name, int scope,
+		java.lang.String primKey, long[] roleIds,
+		java.util.Collection<java.lang.String> actionIds) {
+		return _resourcePermissionLocalService.getAvailableResourcePermissionActionIds(companyId,
+			name, scope, primKey, roleIds, actionIds);
 	}
 
 	@Override
@@ -625,35 +625,6 @@ public class ResourcePermissionLocalServiceWrapper
 	}
 
 	/**
-	* Returns <code>true</code> if the roles have permission at the scope to
-	* perform the action on resources of the type.
-	*
-	* <p>
-	* Depending on the scope, the value of <code>primKey</code> will have
-	* different meanings. For more information, see {@link
-	* com.liferay.portal.model.impl.ResourcePermissionImpl}.
-	* </p>
-	*
-	* @param companyId the primary key of the company
-	* @param name the resource's name, which can be either a class name or a
-	portlet ID
-	* @param scope the scope
-	* @param primKey the primary key
-	* @param roleIds the primary keys of the roles
-	* @param actionId the action ID
-	* @return <code>true</code> if any one of the roles has permission to
-	perform the action on the resource; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean hasResourcePermission(long companyId, java.lang.String name,
-		int scope, java.lang.String primKey, long[] roleIds,
-		java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourcePermissionLocalService.hasResourcePermission(companyId,
-			name, scope, primKey, roleIds, actionId);
-	}
-
-	/**
 	* Returns <code>true</code> if the role has permission at the scope to
 	* perform the action on resources of the type.
 	*
@@ -680,6 +651,35 @@ public class ResourcePermissionLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _resourcePermissionLocalService.hasResourcePermission(companyId,
 			name, scope, primKey, roleId, actionId);
+	}
+
+	/**
+	* Returns <code>true</code> if the roles have permission at the scope to
+	* perform the action on resources of the type.
+	*
+	* <p>
+	* Depending on the scope, the value of <code>primKey</code> will have
+	* different meanings. For more information, see {@link
+	* com.liferay.portal.model.impl.ResourcePermissionImpl}.
+	* </p>
+	*
+	* @param companyId the primary key of the company
+	* @param name the resource's name, which can be either a class name or a
+	portlet ID
+	* @param scope the scope
+	* @param primKey the primary key
+	* @param roleIds the primary keys of the roles
+	* @param actionId the action ID
+	* @return <code>true</code> if any one of the roles has permission to
+	perform the action on the resource; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean hasResourcePermission(long companyId, java.lang.String name,
+		int scope, java.lang.String primKey, long[] roleIds,
+		java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _resourcePermissionLocalService.hasResourcePermission(companyId,
+			name, scope, primKey, roleIds, actionId);
 	}
 
 	/**

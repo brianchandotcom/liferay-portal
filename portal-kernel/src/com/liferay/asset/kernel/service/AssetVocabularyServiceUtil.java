@@ -104,11 +104,6 @@ public class AssetVocabularyServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.asset.kernel.model.AssetVocabulary> getGroupVocabularies(
-		long[] groupIds) {
-		return getService().getGroupVocabularies(groupIds);
-	}
-
-	public static java.util.List<com.liferay.asset.kernel.model.AssetVocabulary> getGroupVocabularies(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getGroupVocabularies(groupId);
@@ -142,17 +137,22 @@ public class AssetVocabularyServiceUtil {
 		return getService().getGroupVocabularies(groupId, name, start, end, obc);
 	}
 
-	public static int getGroupVocabulariesCount(long groupId) {
-		return getService().getGroupVocabulariesCount(groupId);
+	public static java.util.List<com.liferay.asset.kernel.model.AssetVocabulary> getGroupVocabularies(
+		long[] groupIds) {
+		return getService().getGroupVocabularies(groupIds);
 	}
 
-	public static int getGroupVocabulariesCount(long[] groupIds) {
-		return getService().getGroupVocabulariesCount(groupIds);
+	public static int getGroupVocabulariesCount(long groupId) {
+		return getService().getGroupVocabulariesCount(groupId);
 	}
 
 	public static int getGroupVocabulariesCount(long groupId,
 		java.lang.String name) {
 		return getService().getGroupVocabulariesCount(groupId, name);
+	}
+
+	public static int getGroupVocabulariesCount(long[] groupIds) {
+		return getService().getGroupVocabulariesCount(groupIds);
 	}
 
 	public static com.liferay.asset.kernel.model.AssetVocabularyDisplay getGroupVocabulariesDisplay(

@@ -415,16 +415,6 @@ public interface OrganizationLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Organization> getOrganizations(int start, int end);
 
-	/**
-	* Returns the organizations with the primary keys.
-	*
-	* @param organizationIds the primary keys of the organizations
-	* @return the organizations with the primary keys
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Organization> getOrganizations(long[] organizationIds)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Organization> getOrganizations(long userId, int start, int end,
 		OrderByComparator<Organization> obc) throws PortalException;
@@ -467,6 +457,16 @@ public interface OrganizationLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Organization> getOrganizations(long companyId,
 		long parentOrganizationId, int start, int end);
+
+	/**
+	* Returns the organizations with the primary keys.
+	*
+	* @param organizationIds the primary keys of the organizations
+	* @return the organizations with the primary keys
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Organization> getOrganizations(long[] organizationIds)
+		throws PortalException;
 
 	/**
 	* Returns all the organizations and users belonging to the parent

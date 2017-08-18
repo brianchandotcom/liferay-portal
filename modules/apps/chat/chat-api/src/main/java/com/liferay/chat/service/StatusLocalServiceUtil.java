@@ -215,15 +215,15 @@ public class StatusLocalServiceUtil {
 	}
 
 	public static java.util.List<java.lang.Object[]> getSocialStatuses(
-		long userId, int[] types, long modifiedDate, int start, int end) {
-		return getService()
-				   .getSocialStatuses(userId, types, modifiedDate, start, end);
-	}
-
-	public static java.util.List<java.lang.Object[]> getSocialStatuses(
 		long userId, int type, long modifiedDate, int start, int end) {
 		return getService()
 				   .getSocialStatuses(userId, type, modifiedDate, start, end);
+	}
+
+	public static java.util.List<java.lang.Object[]> getSocialStatuses(
+		long userId, int[] types, long modifiedDate, int start, int end) {
+		return getService()
+				   .getSocialStatuses(userId, types, modifiedDate, start, end);
 	}
 
 	/**

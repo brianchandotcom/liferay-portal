@@ -193,11 +193,11 @@ public interface StatusLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object[]> getSocialStatuses(long userId, int[] types,
+	public List<java.lang.Object[]> getSocialStatuses(long userId, int type,
 		long modifiedDate, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object[]> getSocialStatuses(long userId, int type,
+	public List<java.lang.Object[]> getSocialStatuses(long userId, int[] types,
 		long modifiedDate, int start, int end);
 
 	/**

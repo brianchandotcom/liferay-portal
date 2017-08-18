@@ -648,19 +648,6 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	}
 
 	/**
-	* Returns all the roles with the primary keys.
-	*
-	* @param roleIds the primary keys of the roles
-	* @return the roles with the primary keys
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Role> getRoles(
-		long[] roleIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _roleLocalService.getRoles(roleIds);
-	}
-
-	/**
 	* Returns all the roles in the company.
 	*
 	* @param companyId the primary key of the company
@@ -683,6 +670,19 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	public java.util.List<com.liferay.portal.kernel.model.Role> getRoles(
 		long companyId, int[] types) {
 		return _roleLocalService.getRoles(companyId, types);
+	}
+
+	/**
+	* Returns all the roles with the primary keys.
+	*
+	* @param roleIds the primary keys of the roles
+	* @return the roles with the primary keys
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Role> getRoles(
+		long[] roleIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _roleLocalService.getRoles(roleIds);
 	}
 
 	/**

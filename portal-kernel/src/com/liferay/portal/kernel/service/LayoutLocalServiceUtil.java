@@ -908,22 +908,6 @@ public class LayoutLocalServiceUtil {
 	}
 
 	/**
-	* Returns all the layouts that match the layout IDs and belong to the
-	* group.
-	*
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
-	* @param layoutIds the primary keys of the layouts
-	* @return the matching layouts, or an empty list if no matches were found
-	* @throws PortalException if a portal exception occurred
-	*/
-	public static java.util.List<com.liferay.portal.kernel.model.Layout> getLayouts(
-		long groupId, boolean privateLayout, long[] layoutIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getLayouts(groupId, privateLayout, layoutIds);
-	}
-
-	/**
 	* Returns a range of all the layouts belonging to the group that are
 	* children of the parent layout.
 	*
@@ -951,6 +935,22 @@ public class LayoutLocalServiceUtil {
 		return getService()
 				   .getLayouts(groupId, privateLayout, parentLayoutId,
 			incomplete, start, end);
+	}
+
+	/**
+	* Returns all the layouts that match the layout IDs and belong to the
+	* group.
+	*
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout is private to the group
+	* @param layoutIds the primary keys of the layouts
+	* @return the matching layouts, or an empty list if no matches were found
+	* @throws PortalException if a portal exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.kernel.model.Layout> getLayouts(
+		long groupId, boolean privateLayout, long[] layoutIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLayouts(groupId, privateLayout, layoutIds);
 	}
 
 	/**
@@ -1052,14 +1052,14 @@ public class LayoutLocalServiceUtil {
 
 	public static int getLayoutsCount(
 		com.liferay.portal.kernel.model.Group group, boolean privateLayout,
-		long[] layoutIds) {
-		return getService().getLayoutsCount(group, privateLayout, layoutIds);
+		long parentLayoutId) {
+		return getService().getLayoutsCount(group, privateLayout, parentLayoutId);
 	}
 
 	public static int getLayoutsCount(
 		com.liferay.portal.kernel.model.Group group, boolean privateLayout,
-		long parentLayoutId) {
-		return getService().getLayoutsCount(group, privateLayout, parentLayoutId);
+		long[] layoutIds) {
+		return getService().getLayoutsCount(group, privateLayout, layoutIds);
 	}
 
 	public static int getLayoutsCount(

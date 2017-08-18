@@ -1613,11 +1613,6 @@ public interface UserLocalService extends BaseLocalService,
 		int status, LinkedHashMap<java.lang.String, java.lang.Object> params,
 		int start, int end, OrderByComparator<User> obc);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(long companyId, java.lang.String keywords, int status,
-		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
-		int end, Sort[] sorts);
-
 	/**
 	* Returns an ordered range of all the users who match the keywords and
 	* status, using the indexer. It is preferable to use this method instead of
@@ -1651,6 +1646,11 @@ public interface UserLocalService extends BaseLocalService,
 	public Hits search(long companyId, java.lang.String keywords, int status,
 		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
 		int end, Sort sort);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Hits search(long companyId, java.lang.String keywords, int status,
+		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
+		int end, Sort[] sorts);
 
 	/**
 	* Returns an ordered range of all the users with the status, and whose
@@ -1697,13 +1697,6 @@ public interface UserLocalService extends BaseLocalService,
 		LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andSearch, int start, int end, OrderByComparator<User> obc);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(long companyId, java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName,
-		java.lang.String screenName, java.lang.String emailAddress, int status,
-		LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andSearch, int start, int end, Sort[] sorts);
-
 	/**
 	* Returns an ordered range of all the users with the status, and whose
 	* first name, middle name, last name, screen name, and email address match
@@ -1747,6 +1740,13 @@ public interface UserLocalService extends BaseLocalService,
 		java.lang.String screenName, java.lang.String emailAddress, int status,
 		LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andSearch, int start, int end, Sort sort);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Hits search(long companyId, java.lang.String firstName,
+		java.lang.String middleName, java.lang.String lastName,
+		java.lang.String screenName, java.lang.String emailAddress, int status,
+		LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andSearch, int start, int end, Sort[] sorts);
 
 	/**
 	* Returns the number of users who match the keywords and status.
@@ -1803,19 +1803,13 @@ public interface UserLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<User> searchSocial(long[] groupIds, long userId,
-		int[] socialRelationTypes, java.lang.String keywords, int start, int end)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<User> searchSocial(long companyId, long[] groupIds,
 		java.lang.String keywords, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BaseModelSearchResult<User> searchUsers(long companyId,
-		java.lang.String keywords, int status,
-		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
-		int end, Sort[] sorts) throws PortalException;
+	public List<User> searchSocial(long[] groupIds, long userId,
+		int[] socialRelationTypes, java.lang.String keywords, int start, int end)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<User> searchUsers(long companyId,
@@ -1825,12 +1819,9 @@ public interface UserLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<User> searchUsers(long companyId,
-		java.lang.String firstName, java.lang.String middleName,
-		java.lang.String lastName, java.lang.String screenName,
-		java.lang.String emailAddress, int status,
-		LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andSearch, int start, int end, Sort[] sorts)
-		throws PortalException;
+		java.lang.String keywords, int status,
+		LinkedHashMap<java.lang.String, java.lang.Object> params, int start,
+		int end, Sort[] sorts) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<User> searchUsers(long companyId,
@@ -1839,6 +1830,15 @@ public interface UserLocalService extends BaseLocalService,
 		java.lang.String emailAddress, int status,
 		LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andSearch, int start, int end, Sort sort)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<User> searchUsers(long companyId,
+		java.lang.String firstName, java.lang.String middleName,
+		java.lang.String lastName, java.lang.String screenName,
+		java.lang.String emailAddress, int status,
+		LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andSearch, int start, int end, Sort[] sorts)
 		throws PortalException;
 
 	/**

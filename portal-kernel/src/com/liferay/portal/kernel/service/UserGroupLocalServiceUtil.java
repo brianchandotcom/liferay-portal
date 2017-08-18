@@ -172,16 +172,16 @@ public class UserGroupLocalServiceUtil {
 	}
 
 	/**
-	* Copies the user groups' layouts to the user.
+	* Copies the user group's layout to the user.
 	*
-	* @param userGroupIds the primary keys of the user groups
+	* @param userGroupId the primary key of the user group
 	* @param userId the primary key of the user
-	* @deprecated As of 6.1.0
+	* @deprecated As of 6.2.0
 	*/
 	@Deprecated
-	public static void copyUserGroupLayouts(long[] userGroupIds, long userId)
+	public static void copyUserGroupLayouts(long userGroupId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().copyUserGroupLayouts(userGroupIds, userId);
+		getService().copyUserGroupLayouts(userGroupId, userId);
 	}
 
 	/**
@@ -199,16 +199,16 @@ public class UserGroupLocalServiceUtil {
 	}
 
 	/**
-	* Copies the user group's layout to the user.
+	* Copies the user groups' layouts to the user.
 	*
-	* @param userGroupId the primary key of the user group
+	* @param userGroupIds the primary keys of the user groups
 	* @param userId the primary key of the user
-	* @deprecated As of 6.2.0
+	* @deprecated As of 6.1.0
 	*/
 	@Deprecated
-	public static void copyUserGroupLayouts(long userGroupId, long userId)
+	public static void copyUserGroupLayouts(long[] userGroupIds, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().copyUserGroupLayouts(userGroupId, userId);
+		getService().copyUserGroupLayouts(userGroupIds, userId);
 	}
 
 	/**

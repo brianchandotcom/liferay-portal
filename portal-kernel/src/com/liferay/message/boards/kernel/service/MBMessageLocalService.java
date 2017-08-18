@@ -525,12 +525,12 @@ public interface MBMessageLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBMessage> getUserDiscussionMessages(long userId,
-		long[] classNameIds, int status, int start, int end,
+		long classNameId, long classPK, int status, int start, int end,
 		OrderByComparator<MBMessage> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBMessage> getUserDiscussionMessages(long userId,
-		long classNameId, long classPK, int status, int start, int end,
+		long[] classNameIds, int status, int start, int end,
 		OrderByComparator<MBMessage> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -539,12 +539,12 @@ public interface MBMessageLocalService extends BaseLocalService,
 		int end, OrderByComparator<MBMessage> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserDiscussionMessagesCount(long userId, long[] classNameIds,
-		int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserDiscussionMessagesCount(long userId, long classNameId,
 		long classPK, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserDiscussionMessagesCount(long userId, long[] classNameIds,
+		int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserDiscussionMessagesCount(long userId,

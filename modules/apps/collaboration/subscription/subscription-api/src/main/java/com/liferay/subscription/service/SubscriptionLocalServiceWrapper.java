@@ -463,6 +463,23 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 	}
 
 	/**
+	* Returns <code>true</code> if the user is subscribed to the entity.
+	*
+	* @param companyId the primary key of the company
+	* @param userId the primary key of the user
+	* @param className the entity's class name
+	* @param classPK the primary key of the entity's instance
+	* @return <code>true</code> if the user is subscribed to the entity;
+	<code>false</code> otherwise
+	*/
+	@Override
+	public boolean isSubscribed(long companyId, long userId,
+		java.lang.String className, long classPK) {
+		return _subscriptionLocalService.isSubscribed(companyId, userId,
+			className, classPK);
+	}
+
+	/**
 	* Returns <code>true</code> if the user is subscribed to any of the
 	* entities.
 	*
@@ -478,23 +495,6 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 		java.lang.String className, long[] classPKs) {
 		return _subscriptionLocalService.isSubscribed(companyId, userId,
 			className, classPKs);
-	}
-
-	/**
-	* Returns <code>true</code> if the user is subscribed to the entity.
-	*
-	* @param companyId the primary key of the company
-	* @param userId the primary key of the user
-	* @param className the entity's class name
-	* @param classPK the primary key of the entity's instance
-	* @return <code>true</code> if the user is subscribed to the entity;
-	<code>false</code> otherwise
-	*/
-	@Override
-	public boolean isSubscribed(long companyId, long userId,
-		java.lang.String className, long classPK) {
-		return _subscriptionLocalService.isSubscribed(companyId, userId,
-			className, classPK);
 	}
 
 	/**

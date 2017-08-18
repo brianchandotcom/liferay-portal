@@ -52,14 +52,14 @@ public class UserGroupGroupRoleLocalServiceUtil {
 		return getService().addUserGroupGroupRole(userGroupGroupRole);
 	}
 
-	public static void addUserGroupGroupRoles(long[] userGroupIds,
-		long groupId, long roleId) {
-		getService().addUserGroupGroupRoles(userGroupIds, groupId, roleId);
-	}
-
 	public static void addUserGroupGroupRoles(long userGroupId, long groupId,
 		long[] roleIds) {
 		getService().addUserGroupGroupRoles(userGroupId, groupId, roleIds);
+	}
+
+	public static void addUserGroupGroupRoles(long[] userGroupIds,
+		long groupId, long roleId) {
+		getService().addUserGroupGroupRoles(userGroupIds, groupId, roleId);
 	}
 
 	/**
@@ -110,9 +110,9 @@ public class UserGroupGroupRoleLocalServiceUtil {
 		getService().deleteUserGroupGroupRoles(groupId, roleType);
 	}
 
-	public static void deleteUserGroupGroupRoles(long[] userGroupIds,
-		long groupId) {
-		getService().deleteUserGroupGroupRoles(userGroupIds, groupId);
+	public static void deleteUserGroupGroupRoles(long userGroupId,
+		long groupId, long[] roleIds) {
+		getService().deleteUserGroupGroupRoles(userGroupId, groupId, roleIds);
 	}
 
 	public static void deleteUserGroupGroupRoles(long userGroupId,
@@ -120,9 +120,9 @@ public class UserGroupGroupRoleLocalServiceUtil {
 		getService().deleteUserGroupGroupRoles(userGroupId, groupIds);
 	}
 
-	public static void deleteUserGroupGroupRoles(long userGroupId,
-		long groupId, long[] roleIds) {
-		getService().deleteUserGroupGroupRoles(userGroupId, groupId, roleIds);
+	public static void deleteUserGroupGroupRoles(long[] userGroupIds,
+		long groupId) {
+		getService().deleteUserGroupGroupRoles(userGroupIds, groupId);
 	}
 
 	public static void deleteUserGroupGroupRoles(long[] userGroupIds,

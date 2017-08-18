@@ -370,13 +370,13 @@ public class DLFileEntryLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> getDDMStructureFileEntries(
-		long[] ddmStructureIds) {
-		return getService().getDDMStructureFileEntries(ddmStructureIds);
+		long groupId, long[] ddmStructureIds) {
+		return getService().getDDMStructureFileEntries(groupId, ddmStructureIds);
 	}
 
 	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> getDDMStructureFileEntries(
-		long groupId, long[] ddmStructureIds) {
-		return getService().getDDMStructureFileEntries(groupId, ddmStructureIds);
+		long[] ddmStructureIds) {
+		return getService().getDDMStructureFileEntries(ddmStructureIds);
 	}
 
 	/**

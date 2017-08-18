@@ -152,14 +152,14 @@ public interface UserGroupLocalService extends BaseLocalService,
 	public void clearUserUserGroups(long userId);
 
 	/**
-	* Copies the user groups' layouts to the user.
+	* Copies the user group's layout to the user.
 	*
-	* @param userGroupIds the primary keys of the user groups
+	* @param userGroupId the primary key of the user group
 	* @param userId the primary key of the user
-	* @deprecated As of 6.1.0
+	* @deprecated As of 6.2.0
 	*/
 	@java.lang.Deprecated
-	public void copyUserGroupLayouts(long[] userGroupIds, long userId)
+	public void copyUserGroupLayouts(long userGroupId, long userId)
 		throws PortalException;
 
 	/**
@@ -175,14 +175,14 @@ public interface UserGroupLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Copies the user group's layout to the user.
+	* Copies the user groups' layouts to the user.
 	*
-	* @param userGroupId the primary key of the user group
+	* @param userGroupIds the primary keys of the user groups
 	* @param userId the primary key of the user
-	* @deprecated As of 6.2.0
+	* @deprecated As of 6.1.0
 	*/
 	@java.lang.Deprecated
-	public void copyUserGroupLayouts(long userGroupId, long userId)
+	public void copyUserGroupLayouts(long[] userGroupIds, long userId)
 		throws PortalException;
 
 	/**

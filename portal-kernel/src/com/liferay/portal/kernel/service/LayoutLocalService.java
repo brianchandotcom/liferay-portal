@@ -765,20 +765,6 @@ public interface LayoutLocalService extends BaseLocalService,
 		long parentLayoutId);
 
 	/**
-	* Returns all the layouts that match the layout IDs and belong to the
-	* group.
-	*
-	* @param groupId the primary key of the group
-	* @param privateLayout whether the layout is private to the group
-	* @param layoutIds the primary keys of the layouts
-	* @return the matching layouts, or an empty list if no matches were found
-	* @throws PortalException if a portal exception occurred
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Layout> getLayouts(long groupId, boolean privateLayout,
-		long[] layoutIds) throws PortalException;
-
-	/**
 	* Returns a range of all the layouts belonging to the group that are
 	* children of the parent layout.
 	*
@@ -803,6 +789,20 @@ public interface LayoutLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Layout> getLayouts(long groupId, boolean privateLayout,
 		long parentLayoutId, boolean incomplete, int start, int end);
+
+	/**
+	* Returns all the layouts that match the layout IDs and belong to the
+	* group.
+	*
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout is private to the group
+	* @param layoutIds the primary keys of the layouts
+	* @return the matching layouts, or an empty list if no matches were found
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Layout> getLayouts(long groupId, boolean privateLayout,
+		long[] layoutIds) throws PortalException;
 
 	/**
 	* Returns all the layouts that match the type and belong to the group.
@@ -885,11 +885,11 @@ public interface LayoutLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLayoutsCount(Group group, boolean privateLayout,
-		long[] layoutIds);
+		long parentLayoutId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLayoutsCount(Group group, boolean privateLayout,
-		long parentLayoutId);
+		long[] layoutIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLayoutsCount(User user, boolean privateLayout)

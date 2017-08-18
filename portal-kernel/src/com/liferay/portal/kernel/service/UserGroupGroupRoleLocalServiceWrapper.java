@@ -45,17 +45,17 @@ public class UserGroupGroupRoleLocalServiceWrapper
 	}
 
 	@Override
-	public void addUserGroupGroupRoles(long[] userGroupIds, long groupId,
-		long roleId) {
-		_userGroupGroupRoleLocalService.addUserGroupGroupRoles(userGroupIds,
-			groupId, roleId);
-	}
-
-	@Override
 	public void addUserGroupGroupRoles(long userGroupId, long groupId,
 		long[] roleIds) {
 		_userGroupGroupRoleLocalService.addUserGroupGroupRoles(userGroupId,
 			groupId, roleIds);
+	}
+
+	@Override
+	public void addUserGroupGroupRoles(long[] userGroupIds, long groupId,
+		long roleId) {
+		_userGroupGroupRoleLocalService.addUserGroupGroupRoles(userGroupIds,
+			groupId, roleId);
 	}
 
 	/**
@@ -113,9 +113,10 @@ public class UserGroupGroupRoleLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteUserGroupGroupRoles(long[] userGroupIds, long groupId) {
-		_userGroupGroupRoleLocalService.deleteUserGroupGroupRoles(userGroupIds,
-			groupId);
+	public void deleteUserGroupGroupRoles(long userGroupId, long groupId,
+		long[] roleIds) {
+		_userGroupGroupRoleLocalService.deleteUserGroupGroupRoles(userGroupId,
+			groupId, roleIds);
 	}
 
 	@Override
@@ -125,10 +126,9 @@ public class UserGroupGroupRoleLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteUserGroupGroupRoles(long userGroupId, long groupId,
-		long[] roleIds) {
-		_userGroupGroupRoleLocalService.deleteUserGroupGroupRoles(userGroupId,
-			groupId, roleIds);
+	public void deleteUserGroupGroupRoles(long[] userGroupIds, long groupId) {
+		_userGroupGroupRoleLocalService.deleteUserGroupGroupRoles(userGroupIds,
+			groupId);
 	}
 
 	@Override

@@ -400,15 +400,15 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 
 	@Override
 	public java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> getDDMStructureFileEntries(
-		long[] ddmStructureIds) {
-		return _dlFileEntryLocalService.getDDMStructureFileEntries(ddmStructureIds);
+		long groupId, long[] ddmStructureIds) {
+		return _dlFileEntryLocalService.getDDMStructureFileEntries(groupId,
+			ddmStructureIds);
 	}
 
 	@Override
 	public java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> getDDMStructureFileEntries(
-		long groupId, long[] ddmStructureIds) {
-		return _dlFileEntryLocalService.getDDMStructureFileEntries(groupId,
-			ddmStructureIds);
+		long[] ddmStructureIds) {
+		return _dlFileEntryLocalService.getDDMStructureFileEntries(ddmStructureIds);
 	}
 
 	/**

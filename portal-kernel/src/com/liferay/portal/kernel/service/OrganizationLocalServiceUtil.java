@@ -508,18 +508,6 @@ public class OrganizationLocalServiceUtil {
 		return getService().getOrganizations(start, end);
 	}
 
-	/**
-	* Returns the organizations with the primary keys.
-	*
-	* @param organizationIds the primary keys of the organizations
-	* @return the organizations with the primary keys
-	*/
-	public static java.util.List<com.liferay.portal.kernel.model.Organization> getOrganizations(
-		long[] organizationIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getOrganizations(organizationIds);
-	}
-
 	public static java.util.List<com.liferay.portal.kernel.model.Organization> getOrganizations(
 		long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.Organization> obc)
@@ -567,6 +555,18 @@ public class OrganizationLocalServiceUtil {
 		long companyId, long parentOrganizationId, int start, int end) {
 		return getService()
 				   .getOrganizations(companyId, parentOrganizationId, start, end);
+	}
+
+	/**
+	* Returns the organizations with the primary keys.
+	*
+	* @param organizationIds the primary keys of the organizations
+	* @return the organizations with the primary keys
+	*/
+	public static java.util.List<com.liferay.portal.kernel.model.Organization> getOrganizations(
+		long[] organizationIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getOrganizations(organizationIds);
 	}
 
 	/**

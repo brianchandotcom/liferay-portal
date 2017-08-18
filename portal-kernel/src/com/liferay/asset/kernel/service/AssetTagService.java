@@ -103,15 +103,15 @@ public interface AssetTagService extends BaseService {
 		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetTag> getTags(long groupId, java.lang.String name,
+		int start, int end, OrderByComparator<AssetTag> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetTag> getTags(long[] groupIds, java.lang.String name,
 		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetTag> getTags(long[] groupIds, java.lang.String name,
-		int start, int end, OrderByComparator<AssetTag> obc);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetTag> getTags(long groupId, java.lang.String name,
 		int start, int end, OrderByComparator<AssetTag> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -134,11 +134,11 @@ public interface AssetTagService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JSONArray search(long[] groupIds, java.lang.String name, int start,
+	public JSONArray search(long groupId, java.lang.String name, int start,
 		int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JSONArray search(long groupId, java.lang.String name, int start,
+	public JSONArray search(long[] groupIds, java.lang.String name, int start,
 		int end);
 
 	public AssetTag updateTag(long tagId, java.lang.String name,

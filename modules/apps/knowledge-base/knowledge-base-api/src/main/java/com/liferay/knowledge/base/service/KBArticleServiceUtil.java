@@ -222,15 +222,15 @@ public class KBArticleServiceUtil {
 			orderByComparator);
 	}
 
-	public static int getKBArticlesCount(long groupId, long[] resourcePrimKeys,
-		int status) {
-		return getService().getKBArticlesCount(groupId, resourcePrimKeys, status);
-	}
-
 	public static int getKBArticlesCount(long groupId,
 		long parentResourcePrimKey, int status) {
 		return getService()
 				   .getKBArticlesCount(groupId, parentResourcePrimKey, status);
+	}
+
+	public static int getKBArticlesCount(long groupId, long[] resourcePrimKeys,
+		int status) {
+		return getService().getKBArticlesCount(groupId, resourcePrimKeys, status);
 	}
 
 	public static com.liferay.knowledge.base.model.KBArticleSearchDisplay getKBArticleSearchDisplay(

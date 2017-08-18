@@ -102,7 +102,7 @@
 </tr>
 <tr>
 	<td>VIEW_AGENDA_BUTTON_ACTIVE</td>
-	<td>//button[contains(@class,'scheduler-base-view') and contains(@class,'scheduler-base-view-agendabtn') and contains(@class,'active')]</td>
+	<td>//button[contains(@class,'scheduler-base-view') and contains(@class,'scheduler-base-view-agenda') and contains(@class,'active')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -552,6 +552,17 @@
 <tr>
 	<td>SCHEDULER_VIEW_MONTH_SHOW_MORE_LOCALIZED</td>
 	<td>//div[contains(@class,'scheduler-view-month-content')]//a[@class='scheduler-view-table-more' and contains(.,'${key_messageLocalized}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SCHEDULER_VIEW_AGENDA-->
+<tr>
+	<td>SCHEDULER_VIEW_AGENDA</td>
+	<td>//div[contains(@class,'scheduler-view scheduler-view-agenda') and not(contains(@class,'hide'))]</td>
 	<td></td>
 </tr>
 <tr>

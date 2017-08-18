@@ -2060,7 +2060,7 @@
 	</command>
 
 	<command name="ConfigureDefaultView" priority="3">
-		<for list="Day,Week,Month" param="defaultView">
+		<for list="Day,Week,Month,Agenda" param="defaultView">
 			<execute macro="Navigator#gotoPage">
 				<var name="pageName" value="Calendar Page" />
 			</execute>

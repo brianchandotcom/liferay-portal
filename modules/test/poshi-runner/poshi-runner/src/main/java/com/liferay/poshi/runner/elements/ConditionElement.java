@@ -57,7 +57,7 @@ public class ConditionElement extends ExecuteElement {
 
 		if (parentPoshiElement instanceof IfElement &&
 			readableSyntax.endsWith(")") &&
-			!readableSyntax.startsWith("isset(")) {
+			!readableSyntax.startsWith("isSet(")) {
 
 			return true;
 		}

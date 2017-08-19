@@ -55,7 +55,7 @@ public class IsSetElement extends PoshiElement {
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
 		if (parentPoshiElement instanceof IfElement &&
-			readableSyntax.startsWith("isset(")) {
+			readableSyntax.startsWith("isSet(")) {
 
 			return true;
 		}
@@ -65,7 +65,7 @@ public class IsSetElement extends PoshiElement {
 
 	@Override
 	public String getBlockName() {
-		return "isset";
+		return "isSet";
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class IsSetElement extends PoshiElement {
 
 	@Override
 	public String toReadableSyntax() {
-		return "isset(" + attributeValue("var") + ")";
+		return "isSet(" + attributeValue("var") + ")";
 	}
 
 	protected IsSetElement(Element element) {

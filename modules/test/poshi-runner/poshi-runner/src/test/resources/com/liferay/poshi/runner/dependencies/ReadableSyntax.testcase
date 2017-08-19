@@ -34,7 +34,7 @@ definition {
 
 			AssertTextEquals(locator1 = "Breadcrumb#BREADCRUMB_ENTRY", value1 = "${breadcrumbNameUppercase}");
 
-			if (isset(duplicate)) {
+			if (isSet(duplicate)) {
 				Alert.viewErrorMessage(
 					errorMessage = "A configuration with this ID already exists. Please enter a unique ID."
 				);
@@ -59,12 +59,12 @@ definition {
 		property portal.smoke = "true";
 		property test.assert.warning.exceptions = "true";
 
-		if (isset(duplicate)) {
+		if (isSet(duplicate)) {
 			Alert.viewErrorMessage(
 				errorMessage = "A configuration with this ID already exists. Please enter a unique ID."
 			);
 
-			if (isset(duplicate)) {
+			if (isSet(duplicate)) {
 				Alert.viewErrorMessage(
 					errorMessage = "A configuration with this ID already exists. Please enter a unique ID."
 				);
@@ -76,7 +76,7 @@ definition {
 		else {
 			Alert.viewSuccessMessage();
 
-			if (isset(duplicate)) {
+			if (isSet(duplicate)) {
 				Alert.viewErrorMessage(
 					errorMessage = "A configuration with this ID already exists. Please enter a unique ID."
 				);

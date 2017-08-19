@@ -28,9 +28,11 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -532,6 +534,318 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 	}
 
 	/**
+	 * Returns all the fragment entries that the user has permission to view where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching fragment entries that the user has permission to view
+	 */
+	@Override
+	public List<FragmentEntry> filterFindByGroupId(long groupId) {
+		return filterFindByGroupId(groupId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the fragment entries that the user has permission to view where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link FragmentEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of fragment entries
+	 * @param end the upper bound of the range of fragment entries (not inclusive)
+	 * @return the range of matching fragment entries that the user has permission to view
+	 */
+	@Override
+	public List<FragmentEntry> filterFindByGroupId(long groupId, int start,
+		int end) {
+		return filterFindByGroupId(groupId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the fragment entries that the user has permissions to view where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link FragmentEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of fragment entries
+	 * @param end the upper bound of the range of fragment entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching fragment entries that the user has permission to view
+	 */
+	@Override
+	public List<FragmentEntry> filterFindByGroupId(long groupId, int start,
+		int end, OrderByComparator<FragmentEntry> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByGroupId(groupId, start, end, orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(3 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_FRAGMENTENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_FRAGMENTENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_FRAGMENTENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(FragmentEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(FragmentEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				FragmentEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, FragmentEntryImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, FragmentEntryImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			return (List<FragmentEntry>)QueryUtil.list(q, getDialect(), start,
+				end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the fragment entries before and after the current fragment entry in the ordered set of fragment entries that the user has permission to view where groupId = &#63;.
+	 *
+	 * @param fragmentEntryId the primary key of the current fragment entry
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next fragment entry
+	 * @throws NoSuchEntryException if a fragment entry with the primary key could not be found
+	 */
+	@Override
+	public FragmentEntry[] filterFindByGroupId_PrevAndNext(
+		long fragmentEntryId, long groupId,
+		OrderByComparator<FragmentEntry> orderByComparator)
+		throws NoSuchEntryException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByGroupId_PrevAndNext(fragmentEntryId, groupId,
+				orderByComparator);
+		}
+
+		FragmentEntry fragmentEntry = findByPrimaryKey(fragmentEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			FragmentEntry[] array = new FragmentEntryImpl[3];
+
+			array[0] = filterGetByGroupId_PrevAndNext(session, fragmentEntry,
+					groupId, orderByComparator, true);
+
+			array[1] = fragmentEntry;
+
+			array[2] = filterGetByGroupId_PrevAndNext(session, fragmentEntry,
+					groupId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected FragmentEntry filterGetByGroupId_PrevAndNext(Session session,
+		FragmentEntry fragmentEntry, long groupId,
+		OrderByComparator<FragmentEntry> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_FRAGMENTENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_FRAGMENTENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_FRAGMENTENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(FragmentEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(FragmentEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				FragmentEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, FragmentEntryImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, FragmentEntryImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(fragmentEntry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<FragmentEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
 	 * Removes all the fragment entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -593,6 +907,54 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 		}
 
 		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of fragment entries that the user has permission to view where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the number of matching fragment entries that the user has permission to view
+	 */
+	@Override
+	public int filterCountByGroupId(long groupId) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByGroupId(groupId);
+		}
+
+		StringBundler query = new StringBundler(2);
+
+		query.append(_FILTER_SQL_COUNT_FRAGMENTENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				FragmentEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "fragmentEntry.groupId = ?";
@@ -1856,6 +2218,333 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 	}
 
 	/**
+	 * Returns all the fragment entries that the user has permission to view where groupId = &#63; and fragmentCollectionId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param fragmentCollectionId the fragment collection ID
+	 * @return the matching fragment entries that the user has permission to view
+	 */
+	@Override
+	public List<FragmentEntry> filterFindByG_FC(long groupId,
+		long fragmentCollectionId) {
+		return filterFindByG_FC(groupId, fragmentCollectionId,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the fragment entries that the user has permission to view where groupId = &#63; and fragmentCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link FragmentEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param fragmentCollectionId the fragment collection ID
+	 * @param start the lower bound of the range of fragment entries
+	 * @param end the upper bound of the range of fragment entries (not inclusive)
+	 * @return the range of matching fragment entries that the user has permission to view
+	 */
+	@Override
+	public List<FragmentEntry> filterFindByG_FC(long groupId,
+		long fragmentCollectionId, int start, int end) {
+		return filterFindByG_FC(groupId, fragmentCollectionId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the fragment entries that the user has permissions to view where groupId = &#63; and fragmentCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link FragmentEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param fragmentCollectionId the fragment collection ID
+	 * @param start the lower bound of the range of fragment entries
+	 * @param end the upper bound of the range of fragment entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching fragment entries that the user has permission to view
+	 */
+	@Override
+	public List<FragmentEntry> filterFindByG_FC(long groupId,
+		long fragmentCollectionId, int start, int end,
+		OrderByComparator<FragmentEntry> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_FC(groupId, fragmentCollectionId, start, end,
+				orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_FRAGMENTENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_FRAGMENTENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_FC_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_FC_FRAGMENTCOLLECTIONID_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_FRAGMENTENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(FragmentEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(FragmentEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				FragmentEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, FragmentEntryImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, FragmentEntryImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(fragmentCollectionId);
+
+			return (List<FragmentEntry>)QueryUtil.list(q, getDialect(), start,
+				end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the fragment entries before and after the current fragment entry in the ordered set of fragment entries that the user has permission to view where groupId = &#63; and fragmentCollectionId = &#63;.
+	 *
+	 * @param fragmentEntryId the primary key of the current fragment entry
+	 * @param groupId the group ID
+	 * @param fragmentCollectionId the fragment collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next fragment entry
+	 * @throws NoSuchEntryException if a fragment entry with the primary key could not be found
+	 */
+	@Override
+	public FragmentEntry[] filterFindByG_FC_PrevAndNext(long fragmentEntryId,
+		long groupId, long fragmentCollectionId,
+		OrderByComparator<FragmentEntry> orderByComparator)
+		throws NoSuchEntryException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_FC_PrevAndNext(fragmentEntryId, groupId,
+				fragmentCollectionId, orderByComparator);
+		}
+
+		FragmentEntry fragmentEntry = findByPrimaryKey(fragmentEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			FragmentEntry[] array = new FragmentEntryImpl[3];
+
+			array[0] = filterGetByG_FC_PrevAndNext(session, fragmentEntry,
+					groupId, fragmentCollectionId, orderByComparator, true);
+
+			array[1] = fragmentEntry;
+
+			array[2] = filterGetByG_FC_PrevAndNext(session, fragmentEntry,
+					groupId, fragmentCollectionId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected FragmentEntry filterGetByG_FC_PrevAndNext(Session session,
+		FragmentEntry fragmentEntry, long groupId, long fragmentCollectionId,
+		OrderByComparator<FragmentEntry> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_FRAGMENTENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_FRAGMENTENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_FC_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_FC_FRAGMENTCOLLECTIONID_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_FRAGMENTENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(FragmentEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(FragmentEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				FragmentEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, FragmentEntryImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, FragmentEntryImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(fragmentCollectionId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(fragmentEntry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<FragmentEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
 	 * Removes all the fragment entries where groupId = &#63; and fragmentCollectionId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1923,6 +2612,59 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 		}
 
 		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of fragment entries that the user has permission to view where groupId = &#63; and fragmentCollectionId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param fragmentCollectionId the fragment collection ID
+	 * @return the number of matching fragment entries that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_FC(long groupId, long fragmentCollectionId) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_FC(groupId, fragmentCollectionId);
+		}
+
+		StringBundler query = new StringBundler(3);
+
+		query.append(_FILTER_SQL_COUNT_FRAGMENTENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_G_FC_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_FC_FRAGMENTCOLLECTIONID_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				FragmentEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(fragmentCollectionId);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	private static final String _FINDER_COLUMN_G_FC_GROUPID_2 = "fragmentEntry.groupId = ? AND ";
@@ -2456,6 +3198,378 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 	}
 
 	/**
+	 * Returns all the fragment entries that the user has permission to view where groupId = &#63; and name LIKE &#63; and fragmentCollectionId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param fragmentCollectionId the fragment collection ID
+	 * @return the matching fragment entries that the user has permission to view
+	 */
+	@Override
+	public List<FragmentEntry> filterFindByG_LikeN_FC(long groupId,
+		String name, long fragmentCollectionId) {
+		return filterFindByG_LikeN_FC(groupId, name, fragmentCollectionId,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the fragment entries that the user has permission to view where groupId = &#63; and name LIKE &#63; and fragmentCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link FragmentEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param fragmentCollectionId the fragment collection ID
+	 * @param start the lower bound of the range of fragment entries
+	 * @param end the upper bound of the range of fragment entries (not inclusive)
+	 * @return the range of matching fragment entries that the user has permission to view
+	 */
+	@Override
+	public List<FragmentEntry> filterFindByG_LikeN_FC(long groupId,
+		String name, long fragmentCollectionId, int start, int end) {
+		return filterFindByG_LikeN_FC(groupId, name, fragmentCollectionId,
+			start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the fragment entries that the user has permissions to view where groupId = &#63; and name LIKE &#63; and fragmentCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link FragmentEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param fragmentCollectionId the fragment collection ID
+	 * @param start the lower bound of the range of fragment entries
+	 * @param end the upper bound of the range of fragment entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching fragment entries that the user has permission to view
+	 */
+	@Override
+	public List<FragmentEntry> filterFindByG_LikeN_FC(long groupId,
+		String name, long fragmentCollectionId, int start, int end,
+		OrderByComparator<FragmentEntry> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_LikeN_FC(groupId, name, fragmentCollectionId, start,
+				end, orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_FRAGMENTENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_FRAGMENTENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_LIKEN_FC_GROUPID_2);
+
+		boolean bindName = false;
+
+		if (name == null) {
+			query.append(_FINDER_COLUMN_G_LIKEN_FC_NAME_1);
+		}
+		else if (name.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_LIKEN_FC_NAME_3);
+		}
+		else {
+			bindName = true;
+
+			query.append(_FINDER_COLUMN_G_LIKEN_FC_NAME_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_LIKEN_FC_FRAGMENTCOLLECTIONID_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_FRAGMENTENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(FragmentEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(FragmentEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				FragmentEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, FragmentEntryImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, FragmentEntryImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			if (bindName) {
+				qPos.add(StringUtil.toLowerCase(name));
+			}
+
+			qPos.add(fragmentCollectionId);
+
+			return (List<FragmentEntry>)QueryUtil.list(q, getDialect(), start,
+				end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the fragment entries before and after the current fragment entry in the ordered set of fragment entries that the user has permission to view where groupId = &#63; and name LIKE &#63; and fragmentCollectionId = &#63;.
+	 *
+	 * @param fragmentEntryId the primary key of the current fragment entry
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param fragmentCollectionId the fragment collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next fragment entry
+	 * @throws NoSuchEntryException if a fragment entry with the primary key could not be found
+	 */
+	@Override
+	public FragmentEntry[] filterFindByG_LikeN_FC_PrevAndNext(
+		long fragmentEntryId, long groupId, String name,
+		long fragmentCollectionId,
+		OrderByComparator<FragmentEntry> orderByComparator)
+		throws NoSuchEntryException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_LikeN_FC_PrevAndNext(fragmentEntryId, groupId, name,
+				fragmentCollectionId, orderByComparator);
+		}
+
+		FragmentEntry fragmentEntry = findByPrimaryKey(fragmentEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			FragmentEntry[] array = new FragmentEntryImpl[3];
+
+			array[0] = filterGetByG_LikeN_FC_PrevAndNext(session,
+					fragmentEntry, groupId, name, fragmentCollectionId,
+					orderByComparator, true);
+
+			array[1] = fragmentEntry;
+
+			array[2] = filterGetByG_LikeN_FC_PrevAndNext(session,
+					fragmentEntry, groupId, name, fragmentCollectionId,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected FragmentEntry filterGetByG_LikeN_FC_PrevAndNext(Session session,
+		FragmentEntry fragmentEntry, long groupId, String name,
+		long fragmentCollectionId,
+		OrderByComparator<FragmentEntry> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(7 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_FRAGMENTENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_FRAGMENTENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_LIKEN_FC_GROUPID_2);
+
+		boolean bindName = false;
+
+		if (name == null) {
+			query.append(_FINDER_COLUMN_G_LIKEN_FC_NAME_1);
+		}
+		else if (name.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_LIKEN_FC_NAME_3);
+		}
+		else {
+			bindName = true;
+
+			query.append(_FINDER_COLUMN_G_LIKEN_FC_NAME_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_LIKEN_FC_FRAGMENTCOLLECTIONID_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_FRAGMENTENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(FragmentEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(FragmentEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				FragmentEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, FragmentEntryImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, FragmentEntryImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		if (bindName) {
+			qPos.add(StringUtil.toLowerCase(name));
+		}
+
+		qPos.add(fragmentCollectionId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(fragmentEntry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<FragmentEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
 	 * Removes all the fragment entries where groupId = &#63; and name LIKE &#63; and fragmentCollectionId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -2545,6 +3659,79 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 		}
 
 		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of fragment entries that the user has permission to view where groupId = &#63; and name LIKE &#63; and fragmentCollectionId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param fragmentCollectionId the fragment collection ID
+	 * @return the number of matching fragment entries that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_LikeN_FC(long groupId, String name,
+		long fragmentCollectionId) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_LikeN_FC(groupId, name, fragmentCollectionId);
+		}
+
+		StringBundler query = new StringBundler(4);
+
+		query.append(_FILTER_SQL_COUNT_FRAGMENTENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_G_LIKEN_FC_GROUPID_2);
+
+		boolean bindName = false;
+
+		if (name == null) {
+			query.append(_FINDER_COLUMN_G_LIKEN_FC_NAME_1);
+		}
+		else if (name.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_G_LIKEN_FC_NAME_3);
+		}
+		else {
+			bindName = true;
+
+			query.append(_FINDER_COLUMN_G_LIKEN_FC_NAME_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_LIKEN_FC_FRAGMENTCOLLECTIONID_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				FragmentEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			if (bindName) {
+				qPos.add(StringUtil.toLowerCase(name));
+			}
+
+			qPos.add(fragmentCollectionId);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	private static final String _FINDER_COLUMN_G_LIKEN_FC_GROUPID_2 = "fragmentEntry.groupId = ? AND ";
@@ -3377,7 +4564,17 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 	private static final String _SQL_SELECT_FRAGMENTENTRY_WHERE = "SELECT fragmentEntry FROM FragmentEntry fragmentEntry WHERE ";
 	private static final String _SQL_COUNT_FRAGMENTENTRY = "SELECT COUNT(fragmentEntry) FROM FragmentEntry fragmentEntry";
 	private static final String _SQL_COUNT_FRAGMENTENTRY_WHERE = "SELECT COUNT(fragmentEntry) FROM FragmentEntry fragmentEntry WHERE ";
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "fragmentEntry.fragmentEntryId";
+	private static final String _FILTER_SQL_SELECT_FRAGMENTENTRY_WHERE = "SELECT DISTINCT {fragmentEntry.*} FROM FragmentEntry fragmentEntry WHERE ";
+	private static final String _FILTER_SQL_SELECT_FRAGMENTENTRY_NO_INLINE_DISTINCT_WHERE_1 =
+		"SELECT {FragmentEntry.*} FROM (SELECT DISTINCT fragmentEntry.fragmentEntryId FROM FragmentEntry fragmentEntry WHERE ";
+	private static final String _FILTER_SQL_SELECT_FRAGMENTENTRY_NO_INLINE_DISTINCT_WHERE_2 =
+		") TEMP_TABLE INNER JOIN FragmentEntry ON TEMP_TABLE.fragmentEntryId = FragmentEntry.fragmentEntryId";
+	private static final String _FILTER_SQL_COUNT_FRAGMENTENTRY_WHERE = "SELECT COUNT(DISTINCT fragmentEntry.fragmentEntryId) AS COUNT_VALUE FROM FragmentEntry fragmentEntry WHERE ";
+	private static final String _FILTER_ENTITY_ALIAS = "fragmentEntry";
+	private static final String _FILTER_ENTITY_TABLE = "FragmentEntry";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "fragmentEntry.";
+	private static final String _ORDER_BY_ENTITY_TABLE = "FragmentEntry.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No FragmentEntry exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No FragmentEntry exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(FragmentEntryPersistenceImpl.class);

@@ -100,7 +100,7 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 		TABLE_COLUMNS_MAP.put("fragmentCollectionId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table FragmentEntry (fragmentEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,css VARCHAR(75) null,html VARCHAR(75) null,js VARCHAR(75) null,fragmentCollectionId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table FragmentEntry (fragmentEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,css STRING null,html STRING null,js STRING null,fragmentCollectionId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table FragmentEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY fragmentEntry.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY FragmentEntry.name ASC";

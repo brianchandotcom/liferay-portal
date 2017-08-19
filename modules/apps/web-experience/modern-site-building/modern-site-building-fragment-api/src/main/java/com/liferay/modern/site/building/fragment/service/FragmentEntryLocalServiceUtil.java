@@ -53,6 +53,17 @@ public class FragmentEntryLocalServiceUtil {
 		return getService().addFragmentEntry(fragmentEntry);
 	}
 
+	public static com.liferay.modern.site.building.fragment.model.FragmentEntry addFragmentEntry(
+		long userId, long groupId, long fragmentCollectionId,
+		java.lang.String name, java.lang.String css, java.lang.String html,
+		java.lang.String js,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addFragmentEntry(userId, groupId, fragmentCollectionId,
+			name, css, html, js, serviceContext);
+	}
+
 	/**
 	* Creates a new fragment entry with the primary key. Does not add the fragment entry to the database.
 	*
@@ -69,9 +80,11 @@ public class FragmentEntryLocalServiceUtil {
 	*
 	* @param fragmentEntry the fragment entry
 	* @return the fragment entry that was removed
+	* @throws PortalException
 	*/
 	public static com.liferay.modern.site.building.fragment.model.FragmentEntry deleteFragmentEntry(
-		com.liferay.modern.site.building.fragment.model.FragmentEntry fragmentEntry) {
+		com.liferay.modern.site.building.fragment.model.FragmentEntry fragmentEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteFragmentEntry(fragmentEntry);
 	}
 
@@ -175,6 +188,11 @@ public class FragmentEntryLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static java.util.List<com.liferay.modern.site.building.fragment.model.FragmentEntry> fetchFragmentEntries(
+		long fragmentCollectionId) {
+		return getService().fetchFragmentEntries(fragmentCollectionId);
+	}
+
 	public static com.liferay.modern.site.building.fragment.model.FragmentEntry fetchFragmentEntry(
 		long fragmentEntryId) {
 		return getService().fetchFragmentEntry(fragmentEntryId);
@@ -198,6 +216,30 @@ public class FragmentEntryLocalServiceUtil {
 	public static java.util.List<com.liferay.modern.site.building.fragment.model.FragmentEntry> getFragmentEntries(
 		int start, int end) {
 		return getService().getFragmentEntries(start, end);
+	}
+
+	public static java.util.List<com.liferay.modern.site.building.fragment.model.FragmentEntry> getFragmentEntries(
+		long fragmentCollectionId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getFragmentEntries(fragmentCollectionId, start, end);
+	}
+
+	public static java.util.List<com.liferay.modern.site.building.fragment.model.FragmentEntry> getFragmentEntries(
+		long groupId, long fragmentCollectionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.modern.site.building.fragment.model.FragmentEntry> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getFragmentEntries(groupId, fragmentCollectionId, start,
+			end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.modern.site.building.fragment.model.FragmentEntry> getFragmentEntries(
+		long groupId, long fragmentCollectionId, java.lang.String name,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.modern.site.building.fragment.model.FragmentEntry> obc) {
+		return getService()
+				   .getFragmentEntries(groupId, fragmentCollectionId, name,
+			start, end, obc);
 	}
 
 	/**
@@ -250,6 +292,14 @@ public class FragmentEntryLocalServiceUtil {
 	public static com.liferay.modern.site.building.fragment.model.FragmentEntry updateFragmentEntry(
 		com.liferay.modern.site.building.fragment.model.FragmentEntry fragmentEntry) {
 		return getService().updateFragmentEntry(fragmentEntry);
+	}
+
+	public static com.liferay.modern.site.building.fragment.model.FragmentEntry updateFragmentEntry(
+		long fragmentEntryId, java.lang.String name, java.lang.String css,
+		java.lang.String html, java.lang.String js)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateFragmentEntry(fragmentEntryId, name, css, html, js);
 	}
 
 	public static FragmentEntryLocalService getService() {

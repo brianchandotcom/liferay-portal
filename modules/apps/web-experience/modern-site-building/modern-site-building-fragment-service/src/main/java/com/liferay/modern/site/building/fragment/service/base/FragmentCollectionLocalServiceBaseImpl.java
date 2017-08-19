@@ -119,11 +119,12 @@ public abstract class FragmentCollectionLocalServiceBaseImpl
 	 *
 	 * @param fragmentCollection the fragment collection
 	 * @return the fragment collection that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public FragmentCollection deleteFragmentCollection(
-		FragmentCollection fragmentCollection) {
+		FragmentCollection fragmentCollection) throws PortalException {
 		return fragmentCollectionPersistence.remove(fragmentCollection);
 	}
 

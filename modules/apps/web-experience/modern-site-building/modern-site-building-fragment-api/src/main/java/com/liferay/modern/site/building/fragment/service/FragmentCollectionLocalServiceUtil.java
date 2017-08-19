@@ -53,6 +53,16 @@ public class FragmentCollectionLocalServiceUtil {
 		return getService().addFragmentCollection(fragmentCollection);
 	}
 
+	public static com.liferay.modern.site.building.fragment.model.FragmentCollection addFragmentCollection(
+		long userId, long groupId, java.lang.String name,
+		java.lang.String description,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addFragmentCollection(userId, groupId, name, description,
+			serviceContext);
+	}
+
 	/**
 	* Creates a new fragment collection with the primary key. Does not add the fragment collection to the database.
 	*
@@ -69,9 +79,11 @@ public class FragmentCollectionLocalServiceUtil {
 	*
 	* @param fragmentCollection the fragment collection
 	* @return the fragment collection that was removed
+	* @throws PortalException
 	*/
 	public static com.liferay.modern.site.building.fragment.model.FragmentCollection deleteFragmentCollection(
-		com.liferay.modern.site.building.fragment.model.FragmentCollection fragmentCollection) {
+		com.liferay.modern.site.building.fragment.model.FragmentCollection fragmentCollection)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteFragmentCollection(fragmentCollection);
 	}
 
@@ -213,6 +225,28 @@ public class FragmentCollectionLocalServiceUtil {
 		return getService().getFragmentCollections(start, end);
 	}
 
+	public static java.util.List<com.liferay.modern.site.building.fragment.model.FragmentCollection> getFragmentCollections(
+		long groupId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getFragmentCollections(groupId, start, end);
+	}
+
+	public static java.util.List<com.liferay.modern.site.building.fragment.model.FragmentCollection> getFragmentCollections(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.modern.site.building.fragment.model.FragmentCollection> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getFragmentCollections(groupId, start, end,
+			orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.modern.site.building.fragment.model.FragmentCollection> getFragmentCollections(
+		long groupId, java.lang.String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.modern.site.building.fragment.model.FragmentCollection> obc) {
+		return getService()
+				   .getFragmentCollections(groupId, name, start, end, obc);
+	}
+
 	/**
 	* Returns the number of fragment collections.
 	*
@@ -250,6 +284,15 @@ public class FragmentCollectionLocalServiceUtil {
 	public static com.liferay.modern.site.building.fragment.model.FragmentCollection updateFragmentCollection(
 		com.liferay.modern.site.building.fragment.model.FragmentCollection fragmentCollection) {
 		return getService().updateFragmentCollection(fragmentCollection);
+	}
+
+	public static com.liferay.modern.site.building.fragment.model.FragmentCollection updateFragmentCollection(
+		long fragmentCollectionId, java.lang.String name,
+		java.lang.String description)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateFragmentCollection(fragmentCollectionId, name,
+			description);
 	}
 
 	public static FragmentCollectionLocalService getService() {

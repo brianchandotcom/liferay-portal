@@ -33,6 +33,74 @@ public class FragmentEntryServiceWrapper implements FragmentEntryService,
 		_fragmentEntryService = fragmentEntryService;
 	}
 
+	@Override
+	public com.liferay.modern.site.building.fragment.model.FragmentEntry addFragmentEntry(
+		long groupId, long fragmentCollectionId, java.lang.String name,
+		java.lang.String css, java.lang.String html, java.lang.String js,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _fragmentEntryService.addFragmentEntry(groupId,
+			fragmentCollectionId, name, css, html, js, serviceContext);
+	}
+
+	@Override
+	public java.util.List<com.liferay.modern.site.building.fragment.model.FragmentEntry> deleteFragmentEntries(
+		long[] fragmentEntriesIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _fragmentEntryService.deleteFragmentEntries(fragmentEntriesIds);
+	}
+
+	@Override
+	public com.liferay.modern.site.building.fragment.model.FragmentEntry deleteFragmentEntry(
+		long fragmentEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _fragmentEntryService.deleteFragmentEntry(fragmentEntryId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.modern.site.building.fragment.model.FragmentEntry> fetchFragmentEntries(
+		long fragmentCollectionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _fragmentEntryService.fetchFragmentEntries(fragmentCollectionId);
+	}
+
+	@Override
+	public com.liferay.modern.site.building.fragment.model.FragmentEntry fetchFragmentEntry(
+		long fragmentEntryId) {
+		return _fragmentEntryService.fetchFragmentEntry(fragmentEntryId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.modern.site.building.fragment.model.FragmentEntry> getFragmentEntries(
+		long fragmentCollectionId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _fragmentEntryService.getFragmentEntries(fragmentCollectionId,
+			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.modern.site.building.fragment.model.FragmentEntry> getFragmentEntries(
+		long groupId, long fragmentCollectionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.modern.site.building.fragment.model.FragmentEntry> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _fragmentEntryService.getFragmentEntries(groupId,
+			fragmentCollectionId, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.modern.site.building.fragment.model.FragmentEntry> getFragmentEntries(
+		long groupId, long fragmentCollectionId, java.lang.String name,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.modern.site.building.fragment.model.FragmentEntry> obc) {
+		return _fragmentEntryService.getFragmentEntries(groupId,
+			fragmentCollectionId, name, start, end, obc);
+	}
+
+	@Override
+	public int getGroupFragmentCollectionsCount(long fragmentCollectionId) {
+		return _fragmentEntryService.getGroupFragmentCollectionsCount(fragmentCollectionId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -41,6 +109,15 @@ public class FragmentEntryServiceWrapper implements FragmentEntryService,
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _fragmentEntryService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.modern.site.building.fragment.model.FragmentEntry updateFragmentEntry(
+		long fragmentEntryId, java.lang.String name, java.lang.String css,
+		java.lang.String html, java.lang.String js)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _fragmentEntryService.updateFragmentEntry(fragmentEntryId, name,
+			css, html, js);
 	}
 
 	@Override

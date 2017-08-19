@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -71,6 +72,10 @@ public interface FragmentCollectionLocalService extends BaseLocalService,
 	public FragmentCollection addFragmentCollection(
 		FragmentCollection fragmentCollection);
 
+	public FragmentCollection addFragmentCollection(long userId, long groupId,
+		java.lang.String name, java.lang.String description,
+		ServiceContext serviceContext) throws PortalException;
+
 	/**
 	* Creates a new fragment collection with the primary key. Does not add the fragment collection to the database.
 	*
@@ -85,10 +90,11 @@ public interface FragmentCollectionLocalService extends BaseLocalService,
 	*
 	* @param fragmentCollection the fragment collection
 	* @return the fragment collection that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public FragmentCollection deleteFragmentCollection(
-		FragmentCollection fragmentCollection);
+		FragmentCollection fragmentCollection) throws PortalException;
 
 	/**
 	* Deletes the fragment collection with the primary key from the database. Also notifies the appropriate model listeners.
@@ -198,6 +204,21 @@ public interface FragmentCollectionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentCollection> getFragmentCollections(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FragmentCollection> getFragmentCollections(long groupId,
+		int start, int end) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FragmentCollection> getFragmentCollections(long groupId,
+		int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FragmentCollection> getFragmentCollections(long groupId,
+		java.lang.String name, int start, int end,
+		OrderByComparator<FragmentCollection> obc);
+
 	/**
 	* Returns the number of fragment collections.
 	*
@@ -230,4 +251,8 @@ public interface FragmentCollectionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public FragmentCollection updateFragmentCollection(
 		FragmentCollection fragmentCollection);
+
+	public FragmentCollection updateFragmentCollection(
+		long fragmentCollectionId, java.lang.String name,
+		java.lang.String description) throws PortalException;
 }

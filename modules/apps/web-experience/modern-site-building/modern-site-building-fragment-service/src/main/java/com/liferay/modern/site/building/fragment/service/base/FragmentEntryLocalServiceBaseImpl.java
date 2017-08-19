@@ -117,10 +117,12 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	 *
 	 * @param fragmentEntry the fragment entry
 	 * @return the fragment entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public FragmentEntry deleteFragmentEntry(FragmentEntry fragmentEntry) {
+	public FragmentEntry deleteFragmentEntry(FragmentEntry fragmentEntry)
+		throws PortalException {
 		return fragmentEntryPersistence.remove(fragmentEntry);
 	}
 

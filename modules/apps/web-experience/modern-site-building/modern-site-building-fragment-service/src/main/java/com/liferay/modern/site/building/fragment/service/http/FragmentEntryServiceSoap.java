@@ -16,9 +16,16 @@ package com.liferay.modern.site.building.fragment.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.modern.site.building.fragment.service.FragmentEntryServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.modern.site.building.fragment.service.FragmentEntryServiceUtil} service utility. The
+ * {@link FragmentEntryServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,174 @@ import aQute.bnd.annotation.ProviderType;
  * @author Brian Wing Shun Chan
  * @see FragmentEntryServiceHttp
  * @see com.liferay.modern.site.building.fragment.model.FragmentEntrySoap
- * @see com.liferay.modern.site.building.fragment.service.FragmentEntryServiceUtil
+ * @see FragmentEntryServiceUtil
  * @generated
  */
 @ProviderType
 public class FragmentEntryServiceSoap {
+	public static com.liferay.modern.site.building.fragment.model.FragmentEntrySoap addFragmentEntry(
+		long groupId, long fragmentCollectionId, java.lang.String name,
+		java.lang.String css, java.lang.String html, java.lang.String js,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.modern.site.building.fragment.model.FragmentEntry returnValue =
+				FragmentEntryServiceUtil.addFragmentEntry(groupId,
+					fragmentCollectionId, name, css, html, js, serviceContext);
+
+			return com.liferay.modern.site.building.fragment.model.FragmentEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.modern.site.building.fragment.model.FragmentEntrySoap[] deleteFragmentEntries(
+		long[] fragmentEntriesIds) throws RemoteException {
+		try {
+			java.util.List<com.liferay.modern.site.building.fragment.model.FragmentEntry> returnValue =
+				FragmentEntryServiceUtil.deleteFragmentEntries(fragmentEntriesIds);
+
+			return com.liferay.modern.site.building.fragment.model.FragmentEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.modern.site.building.fragment.model.FragmentEntrySoap deleteFragmentEntry(
+		long fragmentEntryId) throws RemoteException {
+		try {
+			com.liferay.modern.site.building.fragment.model.FragmentEntry returnValue =
+				FragmentEntryServiceUtil.deleteFragmentEntry(fragmentEntryId);
+
+			return com.liferay.modern.site.building.fragment.model.FragmentEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.modern.site.building.fragment.model.FragmentEntrySoap[] fetchFragmentEntries(
+		long fragmentCollectionId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.modern.site.building.fragment.model.FragmentEntry> returnValue =
+				FragmentEntryServiceUtil.fetchFragmentEntries(fragmentCollectionId);
+
+			return com.liferay.modern.site.building.fragment.model.FragmentEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.modern.site.building.fragment.model.FragmentEntrySoap fetchFragmentEntry(
+		long fragmentEntryId) throws RemoteException {
+		try {
+			com.liferay.modern.site.building.fragment.model.FragmentEntry returnValue =
+				FragmentEntryServiceUtil.fetchFragmentEntry(fragmentEntryId);
+
+			return com.liferay.modern.site.building.fragment.model.FragmentEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.modern.site.building.fragment.model.FragmentEntrySoap[] getFragmentEntries(
+		long fragmentCollectionId, int start, int end)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.modern.site.building.fragment.model.FragmentEntry> returnValue =
+				FragmentEntryServiceUtil.getFragmentEntries(fragmentCollectionId,
+					start, end);
+
+			return com.liferay.modern.site.building.fragment.model.FragmentEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.modern.site.building.fragment.model.FragmentEntrySoap[] getFragmentEntries(
+		long groupId, long fragmentCollectionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.modern.site.building.fragment.model.FragmentEntry> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.modern.site.building.fragment.model.FragmentEntry> returnValue =
+				FragmentEntryServiceUtil.getFragmentEntries(groupId,
+					fragmentCollectionId, start, end, orderByComparator);
+
+			return com.liferay.modern.site.building.fragment.model.FragmentEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.modern.site.building.fragment.model.FragmentEntrySoap[] getFragmentEntries(
+		long groupId, long fragmentCollectionId, java.lang.String name,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.modern.site.building.fragment.model.FragmentEntry> obc)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.modern.site.building.fragment.model.FragmentEntry> returnValue =
+				FragmentEntryServiceUtil.getFragmentEntries(groupId,
+					fragmentCollectionId, name, start, end, obc);
+
+			return com.liferay.modern.site.building.fragment.model.FragmentEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getGroupFragmentCollectionsCount(
+		long fragmentCollectionId) throws RemoteException {
+		try {
+			int returnValue = FragmentEntryServiceUtil.getGroupFragmentCollectionsCount(fragmentCollectionId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.modern.site.building.fragment.model.FragmentEntrySoap updateFragmentEntry(
+		long fragmentEntryId, java.lang.String name, java.lang.String css,
+		java.lang.String html, java.lang.String js) throws RemoteException {
+		try {
+			com.liferay.modern.site.building.fragment.model.FragmentEntry returnValue =
+				FragmentEntryServiceUtil.updateFragmentEntry(fragmentEntryId,
+					name, css, html, js);
+
+			return com.liferay.modern.site.building.fragment.model.FragmentEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(FragmentEntryServiceSoap.class);
 }

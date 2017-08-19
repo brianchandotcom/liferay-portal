@@ -19,8 +19,8 @@ create table FragmentEntry (
 	createDate DATE null,
 	modifiedDate DATE null,
 	name VARCHAR(75) null,
-	css VARCHAR(75) null,
-	html VARCHAR(75) null,
-	js VARCHAR(75) null,
+	css STRING null,
+	html STRING null,
+	js STRING null,
 	fragmentCollectionId LONG
 );

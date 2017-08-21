@@ -293,6 +293,25 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		}
 
 		@Test
+		public void shouldInferMoreSpecificMimeTypeFromExtension()
+			throws Exception {
+
+			String fileName = RandomTestUtil.randomString() + ".js";
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+			FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(), fileName,
+				ContentTypes.APPLICATION_OCTET_STREAM, fileName,
+				StringPool.BLANK, StringPool.BLANK, CONTENT.getBytes(),
+				serviceContext);
+
+			Assert.assertEquals(
+				"application/javascript", fileEntry.getMimeType());
+		}
+
+		@Test
 		public void shouldInferValidMimeType() throws Exception {
 			String fileName = RandomTestUtil.randomString();
 

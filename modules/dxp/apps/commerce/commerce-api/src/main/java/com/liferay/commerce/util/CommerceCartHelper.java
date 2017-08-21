@@ -36,6 +36,10 @@ public interface CommerceCartHelper {
 			HttpServletRequest httpServletRequest, int type)
 		throws PortalException;
 
+	public int getCurrentCommerceCartItemsCount(
+			HttpServletRequest httpServletRequest, int type)
+		throws PortalException;
+
 	public void updateCurrentCommerceCart(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, CommerceCart commerceCart);

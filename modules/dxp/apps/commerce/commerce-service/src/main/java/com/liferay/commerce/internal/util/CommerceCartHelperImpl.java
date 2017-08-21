@@ -17,6 +17,7 @@ package com.liferay.commerce.internal.util;
 import com.liferay.commerce.constants.CommerceCartConstants;
 import com.liferay.commerce.constants.CommerceCartWebKeys;
 import com.liferay.commerce.model.CommerceCart;
+import com.liferay.commerce.service.CommerceCartItemService;
 import com.liferay.commerce.service.CommerceCartService;
 import com.liferay.commerce.util.CommerceCartHelper;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -40,6 +41,20 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class CommerceCartHelperImpl implements CommerceCartHelper {
+
+	public int getCurrentCommerceCartItemsCount(
+			HttpServletRequest httpServletRequest, int type)
+		throws PortalException{
+
+		CommerceCart commerceCart = getCurrentCommerceCart(httpServletRequest, type);
+
+		if(commerceCart == null){
+			return 0;
+		}
+
+		return _commerceCartItemService.getCommerceCartItemsCount(
+			commerceCart.getCommerceCartId());
+	}
 
 	@Override
 	public CommerceCart getCurrentCommerceCart(
@@ -172,6 +187,9 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 
 	@Reference
 	private CommerceCartService _commerceCartService;
+
+	@Reference
+	private CommerceCartItemService _commerceCartItemService;
 
 	@Reference
 	private Portal _portal;

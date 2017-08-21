@@ -4671,10 +4671,6 @@ public class ServiceBuilder {
 			}
 		}
 
-		for (JavaMethod method : methods) {
-			Arrays.sort(method.getExceptions());
-		}
-
 		return methods.toArray(new JavaMethod[methods.size()]);
 	}
 

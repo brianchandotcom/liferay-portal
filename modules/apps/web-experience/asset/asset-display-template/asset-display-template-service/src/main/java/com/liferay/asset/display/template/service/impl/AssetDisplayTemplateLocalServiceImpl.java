@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
 import com.liferay.dynamic.data.mapping.kernel.DDMTemplateManager;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -47,6 +48,8 @@ public class AssetDisplayTemplateLocalServiceImpl
 			String language, String scriptContent, boolean main,
 			ServiceContext serviceContext)
 		throws PortalException {
+
+		// Display Template
 
 		User user = userLocalService.getUser(userId);
 
@@ -92,8 +95,35 @@ public class AssetDisplayTemplateLocalServiceImpl
 
 		assetDisplayTemplatePersistence.update(assetDisplayTemplate);
 
+		// Resources
+
 		resourceLocalService.addModelResources(
 			assetDisplayTemplate, serviceContext);
+
+		return assetDisplayTemplate;
+	}
+
+	@Override
+	public AssetDisplayTemplate deleteAssetDisplayTemplate(
+			AssetDisplayTemplate assetDisplayTemplate)
+		throws PortalException {
+
+		// Display Template
+
+		assetDisplayTemplatePersistence.remove(assetDisplayTemplate);
+
+		// DDM Template
+
+		_ddmTemplateLocalService.deleteDDMTemplate(
+			assetDisplayTemplate.getTemplateId());
+
+		// Resources
+
+		resourceLocalService.deleteResource(
+			assetDisplayTemplate.getCompanyId(),
+			AssetDisplayTemplate.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			assetDisplayTemplate.getAssetDisplayTemplateId());
 
 		return assetDisplayTemplate;
 	}
@@ -106,12 +136,7 @@ public class AssetDisplayTemplateLocalServiceImpl
 		AssetDisplayTemplate assetDisplayTemplate = getAssetDisplayTemplate(
 			assetDisplayTemplateId);
 
-		_ddmTemplateLocalService.deleteDDMTemplate(
-			assetDisplayTemplate.getTemplateId());
-
-		assetDisplayTemplatePersistence.remove(assetDisplayTemplateId);
-
-		return assetDisplayTemplate;
+		return deleteAssetDisplayTemplate(assetDisplayTemplate);
 	}
 
 	@Override
@@ -147,6 +172,8 @@ public class AssetDisplayTemplateLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		// Display Template
+
 		AssetDisplayTemplate assetDisplayTemplate = getAssetDisplayTemplate(
 			assetDisplayTemplateId);
 
@@ -155,6 +182,10 @@ public class AssetDisplayTemplateLocalServiceImpl
 		assetDisplayTemplate.setMain(main);
 		assetDisplayTemplate.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
+
+		assetDisplayTemplatePersistence.update(assetDisplayTemplate);
+
+		// DDM Template
 
 		DDMTemplate ddmTemplate = _ddmTemplateManager.getTemplate(
 			assetDisplayTemplate.getTemplateId());
@@ -167,7 +198,7 @@ public class AssetDisplayTemplateLocalServiceImpl
 			ddmTemplate.isCacheable(), ddmTemplate.isSmallImage(),
 			ddmTemplate.getSmallImageURL(), null, serviceContext);
 
-		return assetDisplayTemplatePersistence.update(assetDisplayTemplate);
+		return assetDisplayTemplate;
 	}
 
 	@ServiceReference(type = DDMTemplateLocalService.class)

@@ -18,7 +18,10 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ORMException;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
@@ -1157,6 +1160,18 @@ public class ResourceBlockLocalServiceImpl
 			(ActionableDynamicQuery)getActionableDynamicQueryMethod.invoke(
 				persistedModelLocalService);
 
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					Property property = PropertyFactoryUtil.forName(
+						"resourceBlockId");
+
+					dynamicQuery.add(property.eq(oldResourceBlockId));
+				}
+
+			});
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.
 				PerformActionMethod<PermissionedModel>() {
@@ -1165,14 +1180,8 @@ public class ResourceBlockLocalServiceImpl
 				public void performAction(PermissionedModel permissionedModel)
 					throws PortalException {
 
-					if (permissionedModel.getResourceBlockId() ==
-							oldResourceBlockId) {
-
-						permissionedModel.setResourceBlockId(
-							newResourceBlockId);
-
-						permissionedModel.persist();
-					}
+					permissionedModel.setResourceBlockId(newResourceBlockId);
+					permissionedModel.persist();
 				}
 
 			});

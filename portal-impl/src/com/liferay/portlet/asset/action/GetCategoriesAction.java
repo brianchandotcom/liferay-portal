@@ -76,20 +76,34 @@ public class GetCategoriesAction extends JSONAction {
 		long vocabularyId = ParamUtil.getLong(request, "vocabularyId");
 		int start = ParamUtil.getInteger(request, "start", QueryUtil.ALL_POS);
 		int end = ParamUtil.getInteger(request, "end", QueryUtil.ALL_POS);
+		long scopeGroupId = ParamUtil.getLong(request, "scopeGroupId");
 
 		List<AssetCategory> categories = Collections.emptyList();
 
 		if (categoryId > 0) {
-			categories = AssetCategoryServiceUtil.getChildCategories(
-				categoryId, start, end, null);
+			if (scopeGroupId > 0) {
+				categories = AssetCategoryServiceUtil.getVocabularyCategories(
+					scopeGroupId, categoryId, vocabularyId, start, end, null);
+			}
+			else {
+				categories = AssetCategoryServiceUtil.getChildCategories(
+					categoryId, start, end, null);
+			}
 		}
 		else if (vocabularyId > 0) {
 			long parentCategoryId = ParamUtil.getLong(
 				request, "parentCategoryId",
 				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 
-			categories = AssetCategoryServiceUtil.getVocabularyCategories(
-				parentCategoryId, vocabularyId, start, end, null);
+			if (scopeGroupId > 0) {
+				categories = AssetCategoryServiceUtil.getVocabularyCategories(
+					scopeGroupId, parentCategoryId, vocabularyId, start, end,
+					null);
+			}
+			else {
+				categories = AssetCategoryServiceUtil.getVocabularyCategories(
+					parentCategoryId, vocabularyId, start, end, null);
+			}
 		}
 
 		return categories;

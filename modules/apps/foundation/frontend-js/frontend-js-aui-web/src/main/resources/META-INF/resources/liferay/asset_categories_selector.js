@@ -266,12 +266,13 @@ AUI.add(
 						return output;
 					},
 
-					_formatRequestData: function(treeNode) {
+					_formatRequestData: function(parentVocabularyId, treeNode) {
 						var instance = this;
 
 						var data = {};
 
 						data.p_auth = Liferay.authToken;
+						data.scopeGroupId = themeDisplay.getScopeGroupId();
 
 						var assetId = instance._getTreeNodeAssetId(treeNode);
 						var assetType = instance._getTreeNodeAssetType(treeNode);
@@ -279,6 +280,10 @@ AUI.add(
 						if (Lang.isValue(assetId)) {
 							if (assetType == 'category') {
 								data.categoryId = assetId;
+
+								if (parentVocabularyId) {
+									data.vocabularyId = parentVocabularyId;
+								}
 							}
 							else {
 								data.vocabularyId = assetId;
@@ -708,7 +713,7 @@ AUI.add(
 								children: [vocabularyRootNode],
 								io: {
 									cfg: {
-										data: A.bind('_formatRequestData', instance),
+										data: A.bind('_formatRequestData', instance, vocabularyId),
 										on: {
 											success: function(event) {
 												var treeViews = instance.TREEVIEWS;

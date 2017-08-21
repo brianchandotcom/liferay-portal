@@ -1,10 +1,7 @@
 <#assign
-    cartItemsCount = commerceCartHelper.getCurrentCommerceCartItemsCount(request, 0)
-    wishListItemsCount = commerceCartHelper.getCurrentCommerceCartItemsCount(request, 1)
-/>
+	cartItemsCount = commerceCartHelper.getCurrentCommerceCartItemsCount(request, 0)
+		wishListItemsCount = commerceCartHelper.getCurrentCommerceCartItemsCount(request, 1)
 
-
-<#assign
 	demo_mode = getterUtil.getBoolean(themeDisplay.getThemeSetting("demo-mode"))
 	show_cart_icon = getterUtil.getBoolean(themeDisplay.getThemeSetting("show-cart-icon"))
 	show_main_search_icon = getterUtil.getBoolean(themeDisplay.getThemeSetting("show-main-search-icon"))

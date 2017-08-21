@@ -42,20 +42,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class CommerceCartHelperImpl implements CommerceCartHelper {
 
-	public int getCurrentCommerceCartItemsCount(
-			HttpServletRequest httpServletRequest, int type)
-		throws PortalException{
-
-		CommerceCart commerceCart = getCurrentCommerceCart(httpServletRequest, type);
-
-		if(commerceCart == null){
-			return 0;
-		}
-
-		return _commerceCartItemService.getCommerceCartItemsCount(
-			commerceCart.getCommerceCartId());
-	}
-
 	@Override
 	public CommerceCart getCurrentCommerceCart(
 			HttpServletRequest httpServletRequest)
@@ -85,6 +71,21 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 			uuid, groupId);
 
 		return commerceCart;
+	}
+
+	public int getCurrentCommerceCartItemsCount(
+			HttpServletRequest httpServletRequest, int type)
+		throws PortalException {
+
+		CommerceCart commerceCart = getCurrentCommerceCart(
+			httpServletRequest, type);
+
+		if (commerceCart == null) {
+			return 0;
+		}
+
+		return _commerceCartItemService.getCommerceCartItemsCount(
+			commerceCart.getCommerceCartId());
 	}
 
 	@Override
@@ -186,10 +187,10 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 	}
 
 	@Reference
-	private CommerceCartService _commerceCartService;
+	private CommerceCartItemService _commerceCartItemService;
 
 	@Reference
-	private CommerceCartItemService _commerceCartItemService;
+	private CommerceCartService _commerceCartService;
 
 	@Reference
 	private Portal _portal;

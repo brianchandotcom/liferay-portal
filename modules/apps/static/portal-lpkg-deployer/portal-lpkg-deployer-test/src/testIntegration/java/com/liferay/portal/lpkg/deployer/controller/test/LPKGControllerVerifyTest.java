@@ -16,6 +16,7 @@ package com.liferay.portal.lpkg.deployer.controller.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Collections;
 
@@ -54,7 +55,7 @@ public class LPKGControllerVerifyTest {
 		for (Bundle bundle : _bundleContext.getBundles()) {
 			String symbolicName = bundle.getSymbolicName();
 
-			if (symbolicName.equals("Test")) {
+			if (symbolicName.equals(_LPKG_NAME)) {
 				lpkgBundle = bundle;
 			}
 			else if (symbolicName.equals(_SYMBOLIC_NAME)) {
@@ -64,7 +65,8 @@ public class LPKGControllerVerifyTest {
 				warBundle = bundle;
 			}
 			else if (symbolicName.equals(
-						"Test-" + _SYMBOLIC_NAME + "-war-wrapper")) {
+						_LPKG_NAME + StringPool.DASH + _SYMBOLIC_NAME +
+							"-war-wrapper")) {
 
 				warWrapperBundle = bundle;
 			}
@@ -110,7 +112,8 @@ public class LPKGControllerVerifyTest {
 				warBundle = bundle;
 			}
 			else if (symbolicName.equals(
-						"Test-" + _SYMBOLIC_NAME + "-war-wrapper")) {
+						_LPKG_NAME + StringPool.DASH + _SYMBOLIC_NAME +
+							"-war-wrapper")) {
 
 				warWrapperBundle = bundle;
 			}
@@ -191,6 +194,8 @@ public class LPKGControllerVerifyTest {
 		Assert.assertEquals(
 			FrameworkEvent.PACKAGES_REFRESHED, frameworkEvent.getType());
 	}
+
+	private static final String _LPKG_NAME = "Liferay Controller Test";
 
 	private static final String _SYMBOLIC_NAME = "lpkg.controller.test";
 

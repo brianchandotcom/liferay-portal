@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
+import com.liferay.portal.lpkg.deployer.internal.LPKGInnerBundleLocationUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -168,22 +169,29 @@ public class LPKGDeployerTest {
 							bundle);
 					}
 					else {
-						Bundle bundle = bundleContext.getBundle(
-							StringPool.SLASH + name);
+						String location =
+							LPKGInnerBundleLocationUtil.
+								generateInnerBundleLocation(
+									lpkgBundle, StringPool.SLASH.concat(name));
+
+						Bundle bundle = bundleContext.getBundle(location);
 
 						Assert.assertNotNull(
-							"No matching app bundle for /" + name, bundle);
+							"No matching app bundle for " + location, bundle);
 
 						actualAppBundles.add(bundle);
 					}
 				}
 
 				if (name.endsWith(".war")) {
-					Bundle bundle = bundleContext.getBundle(
-						StringPool.SLASH + name);
+					String location =
+						LPKGInnerBundleLocationUtil.generateInnerBundleLocation(
+							lpkgBundle, StringPool.SLASH.concat(name));
+
+					Bundle bundle = bundleContext.getBundle(location);
 
 					Assert.assertNotNull(
-						"No matching app bundle for /" + name, bundle);
+						"No matching app bundle for " + location, bundle);
 
 					actualAppBundles.add(bundle);
 
@@ -255,7 +263,7 @@ public class LPKGDeployerTest {
 						sb.append(portalProfileNames);
 					}
 
-					String location = sb.toString();
+					location = sb.toString();
 
 					Assert.assertNotNull(
 						"Missing WAR bundle for wrapper bundle " + bundle +

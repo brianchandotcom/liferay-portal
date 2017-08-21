@@ -14,7 +14,7 @@
 
 package com.liferay.portal.lpkg.deployer.controller;
 
-import com.liferay.portal.lpkg.deployer.util.LPKGTestUtil;
+import com.liferay.portal.lpkg.deployer.test.util.LPKGTestUtil;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -35,7 +35,8 @@ public class LPKGControllerTest {
 		Assert.assertNotNull(
 			"Missing system property \"liferay.home\"", liferayHome);
 
-		Path path = Paths.get(liferayHome, "osgi/marketplace/Test.lpkg");
+		Path path = Paths.get(
+			liferayHome, "osgi/marketplace/Liferay Controller Test.lpkg");
 
 		Files.createFile(path);
 

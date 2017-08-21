@@ -1,4 +1,6 @@
 Bundle-Name: Liferay Portal LPKG Deployer Test
 Bundle-SymbolicName: com.liferay.portal.lpkg.deployer.test
 Bundle-Version: 1.0.0
--includeresource: test-classes/integration
+-includeresource:\
+	test-classes/integration,\
+	@lib/com.liferay.portal.lpkg.deployer.jar!/com/liferay/portal/lpkg/deployer/internal/LPKGInnerBundleLocationUtil.class

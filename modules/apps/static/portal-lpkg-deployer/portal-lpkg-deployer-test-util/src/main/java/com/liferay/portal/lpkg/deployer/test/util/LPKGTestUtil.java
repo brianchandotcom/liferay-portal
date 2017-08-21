@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.lpkg.deployer.util;
+package com.liferay.portal.lpkg.deployer.test.util;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
@@ -94,8 +94,16 @@ public class LPKGTestUtil {
 			sb.append("icon-url=https://www.liferay.com/web/guest");
 			sb.append("/marketplace/-/mp/asset/icon/71985553\n");
 			sb.append("remote-app-id=Test\n");
-			sb.append("title=Test\n");
-			sb.append("version=1.0");
+			sb.append("restart-required=false\n");
+			sb.append("title=");
+
+			Path namePath = path.getFileName();
+
+			String name = namePath.toString();
+
+			sb.append(name.substring(0, name.indexOf(".lpkg")));
+
+			sb.append("\nversion=1.0");
 
 			String properties = sb.toString();
 

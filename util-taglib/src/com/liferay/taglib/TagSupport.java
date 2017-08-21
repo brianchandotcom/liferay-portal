@@ -14,8 +14,6 @@
 
 package com.liferay.taglib;
 
-import static javax.servlet.jsp.tagext.Tag.SKIP_BODY;
-
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.Tag;

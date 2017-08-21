@@ -17,6 +17,8 @@ package com.liferay.modern.site.building.fragment.service.permission;
 import com.liferay.modern.site.building.fragment.model.FragmentEntry;
 import com.liferay.modern.site.building.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -86,24 +88,17 @@ public class FragmentEntryPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		Map<Object, Object> permissionChecksMap =
-			permissionChecker.getPermissionChecksMap();
+		FragmentEntry fragmentEntry =
+			FragmentEntryLocalServiceUtil.fetchFragmentEntry(fragmentEntryId);
 
-		PermissionCacheKey permissionCacheKey = new PermissionCacheKey(
-			fragmentEntryId, actionId);
+		if (fragmentEntry == null) {
+			_log.error(
+				"Unable to get fragment entry with id " + fragmentEntryId);
 
-		Boolean contains = (Boolean)permissionChecksMap.get(permissionCacheKey);
-
-		if (contains == null) {
-			FragmentEntry fragmentEntry =
-				FragmentEntryLocalServiceUtil.getFragmentEntry(fragmentEntryId);
-
-			contains = _contains(permissionChecker, fragmentEntry, actionId);
-
-			permissionChecksMap.put(permissionCacheKey, contains);
+			return false;
 		}
 
-		return contains;
+		return contains(permissionChecker, fragmentEntry, actionId);
 	}
 
 	@Override
@@ -132,6 +127,9 @@ public class FragmentEntryPermission implements BaseModelPermissionChecker {
 
 		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FragmentEntryPermission.class);
 
 	private static class PermissionCacheKey {
 

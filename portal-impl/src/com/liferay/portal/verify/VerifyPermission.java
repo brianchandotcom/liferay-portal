@@ -393,16 +393,26 @@ public class VerifyPermission extends VerifyProcess {
 			long userClassNameId, long userGroupClassNameId, long[] companyIds)
 		throws Exception {
 
+		try {
+			runSQL(
+				"create index tmp_idx on ResourcePermission (roleId, scope, " +
+					"primKey[$COLUMN_LENGTH:255$])");
+		}
+		catch (SQLException sqle) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(sqle, sqle);
+			}
+		}
+
 		for (long companyId : companyIds) {
 			Role powerUserRole = RoleLocalServiceUtil.getRole(
 				companyId, RoleConstants.POWER_USER);
 			Role userRole = RoleLocalServiceUtil.getRole(
 				companyId, RoleConstants.USER);
 
-			StringBundler sb = new StringBundler(19);
+			StringBundler sb = new StringBundler(18);
 
 			sb.append("update ignore ResourcePermission inner join Layout on ");
-			sb.append("ResourcePermission.companyId = Layout.companyId and ");
 			sb.append("ResourcePermission.primKey like ");
 			sb.append("replace('[$PLID$]_LAYOUT_%', '[$PLID$]', ");
 			sb.append("cast_text(Layout.plid)) inner join Group_ on ");
@@ -423,6 +433,8 @@ public class VerifyPermission extends VerifyProcess {
 
 			runSQL(sb.toString());
 		}
+
+		runSQL("drop index tmp_idx on ResourcePermission");
 	}
 
 	protected void fixUserDefaultRolePermissionsOracle(

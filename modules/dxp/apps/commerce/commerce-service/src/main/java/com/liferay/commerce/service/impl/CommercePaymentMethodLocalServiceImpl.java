@@ -14,11 +14,153 @@
 
 package com.liferay.commerce.service.impl;
 
+import com.liferay.commerce.exception.CommercePaymentMethodEngineKeyException;
+import com.liferay.commerce.exception.CommercePaymentMethodNameException;
+import com.liferay.commerce.model.CommercePaymentEngine;
+import com.liferay.commerce.model.CommercePaymentMethod;
 import com.liferay.commerce.service.base.CommercePaymentMethodLocalServiceBaseImpl;
+import com.liferay.commerce.util.CommercePaymentEngineRegistry;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Andrea Di Giorgi
  */
 public class CommercePaymentMethodLocalServiceImpl
 	extends CommercePaymentMethodLocalServiceBaseImpl {
+
+	@Override
+	public CommercePaymentMethod addCommercePaymentMethod(
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			String engineKey, Map<String, String> engineParameterMap,
+			double priority, boolean active, ServiceContext serviceContext)
+		throws PortalException {
+
+		// Commerce payment method
+
+		User user = userLocalService.getUser(serviceContext.getUserId());
+		long groupId = serviceContext.getScopeGroupId();
+
+		validate(nameMap, engineKey);
+
+		long commercePaymentMethodId = counterLocalService.increment();
+
+		CommercePaymentMethod commercePaymentMethod =
+			commercePaymentMethodPersistence.create(commercePaymentMethodId);
+
+		commercePaymentMethod.setGroupId(groupId);
+		commercePaymentMethod.setCompanyId(user.getCompanyId());
+		commercePaymentMethod.setUserId(user.getUserId());
+		commercePaymentMethod.setUserName(user.getFullName());
+		commercePaymentMethod.setNameMap(nameMap);
+		commercePaymentMethod.setDescriptionMap(descriptionMap);
+		commercePaymentMethod.setEngineKey(engineKey);
+		commercePaymentMethod.setPriority(priority);
+		commercePaymentMethod.setActive(active);
+
+		commercePaymentMethodPersistence.update(commercePaymentMethod);
+
+		// Commerce payment engine
+
+		updateCommercePaymentEngineConfiguration(
+			engineKey, engineParameterMap, serviceContext);
+
+		return commercePaymentMethod;
+	}
+
+	@Override
+	public void deleteCommercePaymentMethods(long groupId) {
+		commercePaymentMethodPersistence.removeByGroupId(groupId);
+	}
+
+	@Override
+	public List<CommercePaymentMethod> getCommercePaymentMethods(long groupId) {
+		return commercePaymentMethodPersistence.findByGroupId(groupId);
+	}
+
+	@Override
+	public List<CommercePaymentMethod> getCommercePaymentMethods(
+		long groupId, boolean active) {
+
+		return commercePaymentMethodPersistence.findByG_A(groupId, active);
+	}
+
+	@Override
+	public CommercePaymentMethod updateCommercePaymentMethod(
+			long commercePaymentMethodId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap,
+			Map<String, String> engineParameterMap, double priority,
+			boolean active, ServiceContext serviceContext)
+		throws PortalException {
+
+		// Commerce payment method
+
+		CommercePaymentMethod commercePaymentMethod =
+			commercePaymentMethodPersistence.findByPrimaryKey(
+				commercePaymentMethodId);
+
+		commercePaymentMethod.setNameMap(nameMap);
+		commercePaymentMethod.setDescriptionMap(descriptionMap);
+		commercePaymentMethod.setPriority(priority);
+		commercePaymentMethod.setActive(active);
+
+		commercePaymentMethodPersistence.update(commercePaymentMethod);
+
+		// Commerce payment engine
+
+		updateCommercePaymentEngineConfiguration(
+			commercePaymentMethod.getEngineKey(), engineParameterMap,
+			serviceContext);
+
+		return commercePaymentMethod;
+	}
+
+	protected void updateCommercePaymentEngineConfiguration(
+			String key, Map<String, String> parameterMap,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CommercePaymentEngine commercePaymentEngine =
+			_commercePaymentEngineRegistry.getCommercePaymentEngine(key);
+
+		try {
+			commercePaymentEngine.updateConfiguration(
+				parameterMap, serviceContext);
+		}
+		catch (PortalException pe) {
+			throw pe;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+	}
+
+	protected void validate(Map<Locale, String> nameMap, String engineKey)
+		throws PortalException {
+
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		String name = nameMap.get(locale);
+
+		if (Validator.isNull(name)) {
+			throw new CommercePaymentMethodNameException();
+		}
+
+		if (Validator.isNull(engineKey)) {
+			throw new CommercePaymentMethodEngineKeyException();
+		}
+	}
+
+	@ServiceReference(type = CommercePaymentEngineRegistry.class)
+	private CommercePaymentEngineRegistry _commercePaymentEngineRegistry;
+
 }

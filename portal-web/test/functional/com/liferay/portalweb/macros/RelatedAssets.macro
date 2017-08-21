@@ -85,6 +85,5 @@
 		</if>
 
 		<execute function="AssertTextEquals" locator1="Relatedassets#ASSET_TITLE_1" value1="${assetTitle}" />
-		<execute function="AssertElementPresent" locator1="Relatedassets#ASSET_EDIT_1" />
 	</command>
 </definition>

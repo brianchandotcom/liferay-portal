@@ -257,12 +257,9 @@
 	</command>
 
 	<command name="gotoWCArticle">
-		<execute macro="WebContentNavigator#gotoArticleMenuPGViaWCD">
-			<var name="webContentTitle" value="${webContentTitle}" />
-		</execute>
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
-			<var name="key_menuItem" value="Permissions" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Permissions" />
+			<var name="rowEntry" value="${webContentTitle}" />
 		</execute>
 
 		<execute macro="IFrame#selectPermissionsFrame" />

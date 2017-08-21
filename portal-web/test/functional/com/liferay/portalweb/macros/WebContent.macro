@@ -868,13 +868,9 @@
 	</command>
 
 	<command name="editDisplayPagePGViaAP">
-		<var name="key_assetTitle" value="${assetTitle}" />
-
-		<execute function="MouseOver" locator1="AP#BODY" />
-
-		<execute function="Click#mouseOverClick" locator1="Icon#EDIT" />
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		<execute macro="AssetPublisherPortlet#gotoEditAssetPG">
+			<var name="assetTitle" value="${assetTitle}" />
+		</execute>
 
 		<execute macro="WebContent#editDisplayPage">
 			<var name="pageName" value="${displayPageName}" />

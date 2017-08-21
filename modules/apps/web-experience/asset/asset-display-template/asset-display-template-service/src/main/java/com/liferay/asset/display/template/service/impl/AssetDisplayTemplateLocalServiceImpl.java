@@ -152,6 +152,11 @@ public class AssetDisplayTemplateLocalServiceImpl
 	}
 
 	@Override
+	public List<AssetDisplayTemplate> getAssetDisplayTemplates(long groupId) {
+		return assetDisplayTemplatePersistence.findByGroupId(groupId);
+	}
+
+	@Override
 	public List<AssetDisplayTemplate> getAssetDisplayTemplates(
 		long groupId, int start, int end,
 		OrderByComparator<AssetDisplayTemplate> orderByComparator) {

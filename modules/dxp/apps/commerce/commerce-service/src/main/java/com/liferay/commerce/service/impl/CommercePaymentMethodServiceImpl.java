@@ -14,11 +14,69 @@
 
 package com.liferay.commerce.service.impl;
 
+import com.liferay.commerce.constants.CommerceActionKeys;
+import com.liferay.commerce.model.CommercePaymentMethod;
 import com.liferay.commerce.service.base.CommercePaymentMethodServiceBaseImpl;
+import com.liferay.commerce.service.permission.CommercePermission;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
+
+import java.util.Locale;
+import java.util.Map;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Andrea Di Giorgi
  */
 public class CommercePaymentMethodServiceImpl
 	extends CommercePaymentMethodServiceBaseImpl {
+
+	@Override
+	public CommercePaymentMethod addCommercePaymentMethod(
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			String engineKey, Map<String, String> engineParameterMap,
+			double priority, boolean active, ServiceContext serviceContext)
+		throws PortalException {
+
+		CommercePermission.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			CommerceActionKeys.MANAGE_COMMERCE_PAYMENT_METHODS);
+
+		return commercePaymentMethodLocalService.addCommercePaymentMethod(
+			nameMap, descriptionMap, engineKey, engineParameterMap, priority,
+			active, serviceContext);
+	}
+
+	@Override
+	public void deleteCommercePaymentMethod(long commercePaymentMethodId)
+		throws PortalException {
+
+		CommercePaymentMethod commercePaymentMethod =
+			commercePaymentMethodLocalService.getCommercePaymentMethod(
+				commercePaymentMethodId);
+
+		CommercePermission.check(
+			getPermissionChecker(), commercePaymentMethod.getGroupId(),
+			CommerceActionKeys.MANAGE_COMMERCE_PAYMENT_METHODS);
+
+		commercePaymentMethodLocalService.deleteCommercePaymentMethod(
+			commercePaymentMethod);
+	}
+
+	@Override
+	public CommercePaymentMethod updateCommercePaymentMethod(
+			long commercePaymentMethodId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap,
+			Map<String, String> engineParameterMap, double priority,
+			boolean active, ServiceContext serviceContext)
+		throws PortalException {
+
+		CommercePermission.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			CommerceActionKeys.MANAGE_COMMERCE_PAYMENT_METHODS);
+
+		return commercePaymentMethodLocalService.updateCommercePaymentMethod(
+			commercePaymentMethodId, nameMap, descriptionMap,
+			engineParameterMap, priority, active, serviceContext);
+	}
+
 }

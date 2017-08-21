@@ -14,6 +14,10 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.servlet.HttpMethods;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.StringUtil;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -49,12 +53,16 @@ public abstract class ClientDataRequestImpl
 
 	@Override
 	public InputStream getPortletInputStream() throws IOException {
+		_checkContentType();
+
 		return getHttpServletRequest().getInputStream();
 	}
 
 	@Override
 	public BufferedReader getReader()
 		throws IOException, UnsupportedEncodingException {
+
+		_checkContentType();
 
 		_calledGetReader = true;
 
@@ -70,6 +78,16 @@ public abstract class ClientDataRequestImpl
 		}
 
 		getHttpServletRequest().setCharacterEncoding(enc);
+	}
+
+	private void _checkContentType() {
+		if (StringUtil.equalsIgnoreCase(getMethod(), HttpMethods.POST) &&
+			StringUtil.equalsIgnoreCase(
+				getContentType(),
+				ContentTypes.APPLICATION_X_WWW_FORM_URLENCODED)) {
+
+			throw new IllegalStateException();
+		}
 	}
 
 	private boolean _calledGetReader;

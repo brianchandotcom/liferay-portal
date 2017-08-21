@@ -46,6 +46,20 @@ public class CommercePaymentMethodLocalServiceWrapper
 		return _commercePaymentMethodLocalService.addCommercePaymentMethod(commercePaymentMethod);
 	}
 
+	@Override
+	public com.liferay.commerce.model.CommercePaymentMethod addCommercePaymentMethod(
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String engineKey,
+		java.util.Map<java.lang.String, java.lang.String> engineParameterMap,
+		double priority, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commercePaymentMethodLocalService.addCommercePaymentMethod(nameMap,
+			descriptionMap, engineKey, engineParameterMap, priority, active,
+			serviceContext);
+	}
+
 	/**
 	* Creates a new commerce payment method with the primary key. Does not add the commerce payment method to the database.
 	*
@@ -82,6 +96,11 @@ public class CommercePaymentMethodLocalServiceWrapper
 		long commercePaymentMethodId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commercePaymentMethodLocalService.deleteCommercePaymentMethod(commercePaymentMethodId);
+	}
+
+	@Override
+	public void deleteCommercePaymentMethods(long groupId) {
+		_commercePaymentMethodLocalService.deleteCommercePaymentMethods(groupId);
 	}
 
 	/**
@@ -223,6 +242,19 @@ public class CommercePaymentMethodLocalServiceWrapper
 			end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommercePaymentMethod> getCommercePaymentMethods(
+		long groupId) {
+		return _commercePaymentMethodLocalService.getCommercePaymentMethods(groupId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommercePaymentMethod> getCommercePaymentMethods(
+		long groupId, boolean active) {
+		return _commercePaymentMethodLocalService.getCommercePaymentMethods(groupId,
+			active);
+	}
+
 	/**
 	* Returns the number of commerce payment methods.
 	*
@@ -265,6 +297,20 @@ public class CommercePaymentMethodLocalServiceWrapper
 	public com.liferay.commerce.model.CommercePaymentMethod updateCommercePaymentMethod(
 		com.liferay.commerce.model.CommercePaymentMethod commercePaymentMethod) {
 		return _commercePaymentMethodLocalService.updateCommercePaymentMethod(commercePaymentMethod);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommercePaymentMethod updateCommercePaymentMethod(
+		long commercePaymentMethodId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.lang.String, java.lang.String> engineParameterMap,
+		double priority, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commercePaymentMethodLocalService.updateCommercePaymentMethod(commercePaymentMethodId,
+			nameMap, descriptionMap, engineParameterMap, priority, active,
+			serviceContext);
 	}
 
 	@Override

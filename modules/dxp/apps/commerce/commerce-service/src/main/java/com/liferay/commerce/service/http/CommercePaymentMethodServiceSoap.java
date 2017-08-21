@@ -16,9 +16,16 @@ package com.liferay.commerce.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.service.CommercePaymentMethodServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.commerce.service.CommercePaymentMethodServiceUtil} service utility. The
+ * {@link CommercePaymentMethodServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,22 @@ import aQute.bnd.annotation.ProviderType;
  * @author Alessio Antonio Rendina
  * @see CommercePaymentMethodServiceHttp
  * @see com.liferay.commerce.model.CommercePaymentMethodSoap
- * @see com.liferay.commerce.service.CommercePaymentMethodServiceUtil
+ * @see CommercePaymentMethodServiceUtil
  * @generated
  */
 @ProviderType
 public class CommercePaymentMethodServiceSoap {
+	public static void deleteCommercePaymentMethod(long commercePaymentMethodId)
+		throws RemoteException {
+		try {
+			CommercePaymentMethodServiceUtil.deleteCommercePaymentMethod(commercePaymentMethodId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(CommercePaymentMethodServiceSoap.class);
 }

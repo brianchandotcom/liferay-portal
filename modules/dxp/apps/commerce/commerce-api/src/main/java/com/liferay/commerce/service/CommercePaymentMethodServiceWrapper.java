@@ -34,6 +34,26 @@ public class CommercePaymentMethodServiceWrapper
 		_commercePaymentMethodService = commercePaymentMethodService;
 	}
 
+	@Override
+	public com.liferay.commerce.model.CommercePaymentMethod addCommercePaymentMethod(
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String engineKey,
+		java.util.Map<java.lang.String, java.lang.String> engineParameterMap,
+		double priority, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commercePaymentMethodService.addCommercePaymentMethod(nameMap,
+			descriptionMap, engineKey, engineParameterMap, priority, active,
+			serviceContext);
+	}
+
+	@Override
+	public void deleteCommercePaymentMethod(long commercePaymentMethodId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commercePaymentMethodService.deleteCommercePaymentMethod(commercePaymentMethodId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -42,6 +62,20 @@ public class CommercePaymentMethodServiceWrapper
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _commercePaymentMethodService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommercePaymentMethod updateCommercePaymentMethod(
+		long commercePaymentMethodId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.lang.String, java.lang.String> engineParameterMap,
+		double priority, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commercePaymentMethodService.updateCommercePaymentMethod(commercePaymentMethodId,
+			nameMap, descriptionMap, engineParameterMap, priority, active,
+			serviceContext);
 	}
 
 	@Override

@@ -41,6 +41,23 @@ public class CommercePaymentMethodServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.service.impl.CommercePaymentMethodServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.commerce.model.CommercePaymentMethod addCommercePaymentMethod(
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String engineKey,
+		java.util.Map<java.lang.String, java.lang.String> engineParameterMap,
+		double priority, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCommercePaymentMethod(nameMap, descriptionMap,
+			engineKey, engineParameterMap, priority, active, serviceContext);
+	}
+
+	public static void deleteCommercePaymentMethod(long commercePaymentMethodId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCommercePaymentMethod(commercePaymentMethodId);
+	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -49,6 +66,20 @@ public class CommercePaymentMethodServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.commerce.model.CommercePaymentMethod updateCommercePaymentMethod(
+		long commercePaymentMethodId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.lang.String, java.lang.String> engineParameterMap,
+		double priority, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCommercePaymentMethod(commercePaymentMethodId,
+			nameMap, descriptionMap, engineParameterMap, priority, active,
+			serviceContext);
 	}
 
 	public static CommercePaymentMethodService getService() {

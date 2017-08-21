@@ -16,14 +16,20 @@ package com.liferay.commerce.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.model.CommercePaymentMethod;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the remote service interface for CommercePaymentMethod. Methods of this
@@ -49,6 +55,16 @@ public interface CommercePaymentMethodService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommercePaymentMethodServiceUtil} to access the commerce payment method remote service. Add custom service methods to {@link com.liferay.commerce.service.impl.CommercePaymentMethodServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public CommercePaymentMethod addCommercePaymentMethod(
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap,
+		java.lang.String engineKey,
+		Map<java.lang.String, java.lang.String> engineParameterMap,
+		double priority, boolean active, ServiceContext serviceContext)
+		throws PortalException;
+
+	public void deleteCommercePaymentMethod(long commercePaymentMethodId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -56,4 +72,11 @@ public interface CommercePaymentMethodService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	public CommercePaymentMethod updateCommercePaymentMethod(
+		long commercePaymentMethodId, Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap,
+		Map<java.lang.String, java.lang.String> engineParameterMap,
+		double priority, boolean active, ServiceContext serviceContext)
+		throws PortalException;
 }

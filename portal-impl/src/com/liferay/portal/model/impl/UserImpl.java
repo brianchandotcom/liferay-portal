@@ -72,6 +72,7 @@ import com.liferay.portal.security.auth.EmailAddressGeneratorFactory;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.users.admin.kernel.util.UserInitialsGeneratorUtil;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -514,10 +515,16 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public String getInitials() {
-		String firstInitial = StringUtil.shorten(getFirstName(), 1);
-		String lastInitial = StringUtil.shorten(getLastName(), 1);
+		String initials = UserInitialsGeneratorUtil.getInitials(this);
 
-		return StringUtil.toUpperCase(firstInitial.concat(lastInitial));
+		if (initials == null) {
+			String firstInitial = StringUtil.shorten(getFirstName(), 1);
+			String lastInitial = StringUtil.shorten(getLastName(), 1);
+
+			initials = StringUtil.toUpperCase(firstInitial.concat(lastInitial));
+		}
+
+		return initials;
 	}
 
 	@Override

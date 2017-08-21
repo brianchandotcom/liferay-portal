@@ -120,6 +120,8 @@ public class ExportPageMVCActionCommand extends BaseMVCActionCommand {
 				nodeId, title, version, targetExtension, viewPageURL,
 				editPageURL, themeDisplay, request, response);
 
+			hideDefaultSuccessMessage(actionRequest);
+
 			actionResponse.setRenderParameter("mvcPath", "/null.jsp");
 		}
 		catch (Exception e) {

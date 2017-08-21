@@ -373,6 +373,12 @@
 			<else>
 				<execute function="AssertClickNoError" locator1="Button#CONTINUE" value1="Continue" />
 
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="Update Data" />
+				</execute>
+
+				<execute function="Click" locator1="Wiki#MIRROR_WITH_OVERWRITING_RADIO" />
+
 				<execute function="Pause" locator1="5000" />
 
 				<execute function="AssertVisible" locator1="Link#BACK" />
@@ -935,5 +941,11 @@
 		<execute function="Click" locator1="Icon#DISPLAY_STYLE_LIST" />
 
 		<execute function="AssertElementPresent" locator1="Icon#DISPLAY_STYLE_LIST_ACTIVE" />
+	</command>
+
+	<command name="_gotoExportImportAdmin">
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="Wiki#OPTIONS_MENULIST_EXPORT_IMPORT" value1="Export / Import" />
 	</command>
 </definition>

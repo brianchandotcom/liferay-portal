@@ -211,14 +211,12 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		if (repository != null) {
 			dlFileEntryLocalService.deleteRepositoryFileEntries(
-				repository.getRepositoryId(), repository.getDlFolderId());
+				repository.getRepositoryId());
 		}
 		else {
-			dlFileEntryLocalService.deleteFileEntries(
-				groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+			dlFileEntryLocalService.deleteRepositoryFileEntries(groupId);
 
-			dlFileShortcutLocalService.deleteFileShortcuts(
-				groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+			dlFileShortcutLocalService.deleteRepositoryFileShortcuts(groupId);
 		}
 
 		DLStoreUtil.deleteDirectory(

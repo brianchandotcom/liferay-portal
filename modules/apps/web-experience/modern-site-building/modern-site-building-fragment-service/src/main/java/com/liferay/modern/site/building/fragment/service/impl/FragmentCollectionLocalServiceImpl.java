@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Jürgen Kappler
@@ -131,7 +132,7 @@ public class FragmentCollectionLocalServiceImpl
 			fragmentCollectionPersistence.findByPrimaryKey(
 				fragmentCollectionId);
 
-		if (!fragmentCollection.getName().equals(name)) {
+		if (!Objects.equals(fragmentCollection.getName(), name)) {
 			validate(fragmentCollection.getGroupId(), name);
 		}
 
@@ -143,25 +144,18 @@ public class FragmentCollectionLocalServiceImpl
 		return fragmentCollection;
 	}
 
-	protected boolean hasFragmentCollection(long groupId, String name) {
-		if (fragmentCollectionPersistence.countByG_N(groupId, name) == 0) {
-			return false;
-		}
-		else {
-			return true;
-		}
-	}
-
 	protected void validate(long groupId, String name) throws PortalException {
 		if (Validator.isNull(name)) {
 			throw new FragmentCollectionNameException(
 				"Fragment collection name cannot be null for group " + groupId);
 		}
 
-		if (hasFragmentCollection(groupId, name)) {
+		FragmentCollection fragmentCollection =
+			fragmentCollectionPersistence.fetchByG_N(groupId, name);
+
+		if (fragmentCollection != null) {
 			throw new DuplicateFragmentCollectionException(
-				"A fragment collection with the name " + name +
-					" already exists");
+				"A fragment collection with name " + name + " already exists");
 		}
 	}
 

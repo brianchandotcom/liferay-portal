@@ -17,6 +17,8 @@ package com.liferay.modern.site.building.fragment.service.permission;
 import com.liferay.modern.site.building.fragment.model.FragmentCollection;
 import com.liferay.modern.site.building.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -88,26 +90,19 @@ public class FragmentCollectionPermission
 			String actionId)
 		throws PortalException {
 
-		Map<Object, Object> permissionChecksMap =
-			permissionChecker.getPermissionChecksMap();
+		FragmentCollection fragmentCollection =
+			FragmentCollectionLocalServiceUtil.fetchFragmentCollection(
+				fragmentCollectionId);
 
-		PermissionCacheKey permissionCacheKey = new PermissionCacheKey(
-			fragmentCollectionId, actionId);
-
-		Boolean contains = (Boolean)permissionChecksMap.get(permissionCacheKey);
-
-		if (contains == null) {
-			FragmentCollection fragmentCollection =
-				FragmentCollectionLocalServiceUtil.getFragmentCollection(
+		if (fragmentCollection == null) {
+			_log.error(
+				"Unable to get fragment collection with id " +
 					fragmentCollectionId);
 
-			contains = _contains(
-				permissionChecker, fragmentCollection, actionId);
-
-			permissionChecksMap.put(permissionCacheKey, contains);
+			return false;
 		}
 
-		return contains;
+		return contains(permissionChecker, fragmentCollection, actionId);
 	}
 
 	@Override
@@ -129,7 +124,8 @@ public class FragmentCollectionPermission
 				fragmentCollection.getFragmentCollectionId(),
 				fragmentCollection.getUserId(), actionId) ||
 			permissionChecker.hasPermission(
-				fragmentCollection.getGroupId(), FragmentCollection.class.getName(),
+				fragmentCollection.getGroupId(),
+				FragmentCollection.class.getName(),
 				fragmentCollection.getFragmentCollectionId(), actionId)) {
 
 			return true;
@@ -137,6 +133,9 @@ public class FragmentCollectionPermission
 
 		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FragmentCollectionPermission.class);
 
 	private static class PermissionCacheKey {
 

@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -181,10 +182,6 @@ public class SoyPortlet extends MVCPortlet {
 		}
 	}
 
-	/**
-	 * @deprecated As of 3.1.0
-	 */
-	@Deprecated
 	protected Set<String> getJavaScriptRequiredModules(String path) {
 		try {
 			Set<String> javaScriptRequiredModules = new HashSet<>();
@@ -554,9 +551,19 @@ public class SoyPortlet extends MVCPortlet {
 			portletComponentId, portletId, portletNamespace, portletWrapperId,
 			template);
 
+		Set<String> requiredModules = new HashSet<>();
+
+		requiredModules.add(
+			"portal-portlet-bridge-soy/router/SoyPortletRouter");
+
+		String path = getPath(portletRequest, portletResponse);
+
+		requiredModules.addAll(getJavaScriptRequiredModules(path));
+
+		String requiredModulesString = StringUtil.merge(requiredModules);
+
 		scriptData.append(
-			portletId, portletJavaScript,
-			"portal-portlet-bridge-soy/router/SoyPortletRouter",
+			portletId, portletJavaScript, requiredModulesString,
 			ScriptData.ModulesType.ES6);
 
 		scriptData.writeTo(writer);

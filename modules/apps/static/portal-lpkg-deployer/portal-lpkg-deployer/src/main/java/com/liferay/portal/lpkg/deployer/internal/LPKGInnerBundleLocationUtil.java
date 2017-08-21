@@ -14,23 +14,19 @@
 
 package com.liferay.portal.lpkg.deployer.internal;
 
-import com.liferay.portal.kernel.util.StringBundler;
-
 import org.osgi.framework.Bundle;
 
 /**
  * @author Matthew Tambara
  */
-public class LPKGUtil {
+public class LPKGInnerBundleLocationUtil {
 
-	public static String generateBundleLocation(Bundle bundle, String path) {
-		StringBundler sb = new StringBundler(3);
+	public static String generateInnerBundleLocation(
+		Bundle lpkgBundle, String path) {
 
-		sb.append(path);
-		sb.append("?lpkgPath=");
-		sb.append(bundle.getLocation());
+		String location = path.concat("?lpkgPath=");
 
-		return sb.toString();
+		return location.concat(lpkgBundle.getLocation());
 	}
 
 }

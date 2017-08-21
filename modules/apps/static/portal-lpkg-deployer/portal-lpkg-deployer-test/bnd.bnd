@@ -3,4 +3,4 @@ Bundle-SymbolicName: com.liferay.portal.lpkg.deployer.test
 Bundle-Version: 1.0.0
 -includeresource:\
 	test-classes/integration,\
-	@lib/com.liferay.portal.lpkg.deployer.jar!/com/liferay/portal/lpkg/deployer/internal/LPKGUtil.class
+	@lib/com.liferay.portal.lpkg.deployer.jar!/com/liferay/portal/lpkg/deployer/internal/LPKGInnerBundleLocationUtil.class

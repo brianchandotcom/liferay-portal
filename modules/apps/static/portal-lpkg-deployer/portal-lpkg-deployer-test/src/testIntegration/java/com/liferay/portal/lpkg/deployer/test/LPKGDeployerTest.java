@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
-import com.liferay.portal.lpkg.deployer.internal.LPKGUtil;
+import com.liferay.portal.lpkg.deployer.internal.LPKGInnerBundleLocationUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -169,8 +169,10 @@ public class LPKGDeployerTest {
 							bundle);
 					}
 					else {
-						String location = LPKGUtil.generateBundleLocation(
-							lpkgBundle, StringPool.SLASH.concat(name));
+						String location =
+							LPKGInnerBundleLocationUtil.
+								generateInnerBundleLocation(
+									lpkgBundle, StringPool.SLASH.concat(name));
 
 						Bundle bundle = bundleContext.getBundle(location);
 
@@ -182,8 +184,9 @@ public class LPKGDeployerTest {
 				}
 
 				if (name.endsWith(".war")) {
-					String location = LPKGUtil.generateBundleLocation(
-						lpkgBundle, StringPool.SLASH.concat(name));
+					String location =
+						LPKGInnerBundleLocationUtil.generateInnerBundleLocation(
+							lpkgBundle, StringPool.SLASH.concat(name));
 
 					Bundle bundle = bundleContext.getBundle(location);
 

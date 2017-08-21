@@ -166,8 +166,9 @@ public class LPKGBundleTrackerCustomizer
 				while (enumeration.hasMoreElements()) {
 					URL url = enumeration.nextElement();
 
-					String location = LPKGUtil.generateBundleLocation(
-						bundle, url.getPath());
+					String location =
+						LPKGInnerBundleLocationUtil.generateInnerBundleLocation(
+							bundle, url.getPath());
 
 					if (_checkOverridden(symbolicName, url, location)) {
 						continue;
@@ -211,8 +212,9 @@ public class LPKGBundleTrackerCustomizer
 			while (enumeration.hasMoreElements()) {
 				URL url = enumeration.nextElement();
 
-				String location = LPKGUtil.generateBundleLocation(
-					bundle, url.getPath());
+				String location =
+					LPKGInnerBundleLocationUtil.generateInnerBundleLocation(
+						bundle, url.getPath());
 
 				if (_checkOverridden(symbolicName, url, location)) {
 					continue;
@@ -430,8 +432,9 @@ public class LPKGBundleTrackerCustomizer
 			Version version = new Version(
 				attributes.getValue(Constants.BUNDLE_VERSION));
 
-			String location = LPKGUtil.generateBundleLocation(
-				bundle, url.getPath());
+			String location =
+				LPKGInnerBundleLocationUtil.generateInnerBundleLocation(
+					bundle, url.getPath());
 
 			for (Bundle installedBundle : _bundleContext.getBundles()) {
 				if (symbolicName.equals(installedBundle.getSymbolicName()) &&

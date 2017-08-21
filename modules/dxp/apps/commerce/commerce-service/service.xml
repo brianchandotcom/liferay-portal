@@ -226,6 +226,52 @@
 
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
+	<entity local-service="true" name="CommercePaymentMethod" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="commercePaymentMethodId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column localized="true" name="name" type="String" />
+		<column localized="true" name="description" type="String" />
+		<column name="engineKey" type="String" />
+		<column name="priority" type="double" />
+		<column name="active" type="boolean" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="priority" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="G_E" return-type="CommercePaymentMethod" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="engineKey" />
+		</finder>
+		<finder name="G_A" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="active" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="CommerceRegion" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
@@ -273,6 +319,8 @@
 		<exception>CommerceCountryName</exception>
 		<exception>CommerceCountryThreeLettersISOCode</exception>
 		<exception>CommerceCountryTwoLettersISOCode</exception>
+		<exception>CommercePaymentMethodEngineKey</exception>
+		<exception>CommercePaymentMethodName</exception>
 		<exception>CommerceRegionName</exception>
 	</exceptions>
 </service-builder>

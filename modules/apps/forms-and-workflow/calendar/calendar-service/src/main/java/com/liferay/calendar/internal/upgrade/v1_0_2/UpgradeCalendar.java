@@ -31,12 +31,12 @@ import java.sql.ResultSet;
 public class UpgradeCalendar extends UpgradeProcess {
 
 	@Override
-	protected void doUpgrade() throws Exception {
+	public void doUpgrade() throws Exception {
 		updateCalendarTable();
 		updateCalendarTimeZoneIds();
 	}
 
-	protected void updateCalendarTable() throws Exception {
+	public void updateCalendarTable() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			if (!hasColumn("Calendar", "timeZoneId")) {
 				runSQL("alter table Calendar add timeZoneId VARCHAR(75) null");
@@ -44,7 +44,7 @@ public class UpgradeCalendar extends UpgradeProcess {
 		}
 	}
 
-	protected void updateCalendarTimeZoneId(long calendarId, String timeZoneId)
+	public void updateCalendarTimeZoneId(long calendarId, String timeZoneId)
 		throws Exception {
 
 		try (PreparedStatement ps = connection.prepareStatement(
@@ -57,7 +57,7 @@ public class UpgradeCalendar extends UpgradeProcess {
 		}
 	}
 
-	protected void updateCalendarTimeZoneIds() throws Exception {
+	public void updateCalendarTimeZoneIds() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			StringBundler sb = new StringBundler(5);
 

@@ -435,6 +435,28 @@
 	<td>//div[@data-title='${key_wikiPageTitle}']//span[@class='entry-title']</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--UPDATE_DATA-->
+<tr>
+	<td>UPDATE_DATA_MIRROR_WITH_OVERWRITING_RADIO</td>
+	<td>//div[contains(@class, radio)]//label[contains(., 'Mirror with overwriting')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--OPTIONS_MENULIST-->
+<tr>
+	<td>OPTIONS_MENULIST_EXPORT_IMPORT</td>
+	<td>//a[@role='menuitem' and contains(.,'Export / Import')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

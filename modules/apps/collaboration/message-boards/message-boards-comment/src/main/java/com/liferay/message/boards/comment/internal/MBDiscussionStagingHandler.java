@@ -34,7 +34,9 @@ import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.messageboards.service.permission.MBPermission;
 
@@ -56,6 +58,14 @@ public class MBDiscussionStagingHandler implements DiscussionStagingHandler {
 				ExportImportClassedModelUtil.getClassPK(stagedModel));
 
 		if (mbDiscussion == null) {
+			return;
+		}
+
+		long groupId = mbDiscussion.getGroupId();
+
+		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+		if ((group != null) && group.isControlPanel()) {
 			return;
 		}
 

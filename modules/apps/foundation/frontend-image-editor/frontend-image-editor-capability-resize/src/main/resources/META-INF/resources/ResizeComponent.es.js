@@ -22,8 +22,8 @@ class ResizeComponent extends Component {
 
 				this.imageRatio_ = this.imageWidth / this.imageHeight;
 
-				this.imageHeightInput_ = this.element.querySelector('#' + this.key + 'Height');
-				this.imageWidthInput_ = this.element.querySelector('#' + this.key + 'Width');
+				this.imageHeightInput_ = this.element.querySelector('#' + this.ref + 'Height');
+				this.imageWidthInput_ = this.element.querySelector('#' + this.ref + 'Width');
 
 				this.lockProportions = true;
 			});

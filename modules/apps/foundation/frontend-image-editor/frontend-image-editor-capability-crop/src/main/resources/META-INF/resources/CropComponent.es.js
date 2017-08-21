@@ -25,7 +25,7 @@ class CropComponent extends Component {
 		var horizontalRatio = imageData.width / imageCanvas.offsetWidth;
 		var verticalRatio = imageData.height / imageCanvas.offsetHeight;
 
-		let cropHandles = this.components[this.key + 'CropHandles'];
+		let cropHandles = this.components[this.ref + 'CropHandles'];
 		let selection = {
 			height: cropHandles.element.offsetHeight,
 			left: cropHandles.element.offsetLeft - imageCanvas.offsetLeft,

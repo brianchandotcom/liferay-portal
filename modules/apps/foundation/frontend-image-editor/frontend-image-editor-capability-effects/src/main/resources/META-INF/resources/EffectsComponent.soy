@@ -4,17 +4,17 @@
  * Image Editor Effects Component
  *
  * @param effects
- * @param key
+ * @param ref
  * @param thumbnailSize
  * @param? currentEffect_
  */
 {template .render}
-	<div id="{$key}">
+	<div id="{$ref}">
 		<ul class="carousel list-unstyled list-table">
 			{foreach $effect in $effects}
 				<li class="item">
 					<a data-onclick="previewEffect" data-effect="{$effect}" class="{$currentEffect_ == $effect ? 'active' : ''}">
-						<div id="{$key}{$effect}" style="position: relative;">
+						<div id="{$ref}{$effect}" style="position: relative;">
 							<canvas width="{$thumbnailSize}" height="{$thumbnailSize}"></canvas>
 						</div>
 						<span>{$effect}</span>

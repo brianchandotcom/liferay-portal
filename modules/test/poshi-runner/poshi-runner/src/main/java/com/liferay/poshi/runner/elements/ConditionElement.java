@@ -21,17 +21,61 @@ import org.dom4j.Element;
  */
 public class ConditionElement extends ExecuteElement {
 
-	public ConditionElement(Element element) {
-		super("condition", element);
+	public static final String ELEMENT_NAME = "condition";
+
+	static {
+		PoshiElementFactory conditionElementFactory =
+			new PoshiElementFactory() {
+
+				@Override
+				public PoshiElement newPoshiElement(Element element) {
+					if (isElementType(ELEMENT_NAME, element)) {
+						return new ConditionElement(element);
+					}
+
+					return null;
+				}
+
+				@Override
+				public PoshiElement newPoshiElement(
+					PoshiElement parentPoshiElement, String readableSyntax) {
+
+					if (isElementType(parentPoshiElement, readableSyntax)) {
+						return new ConditionElement(readableSyntax);
+					}
+
+					return null;
+				}
+
+			};
+
+		PoshiElement.addPoshiElementFactory(conditionElementFactory);
 	}
 
-	public ConditionElement(String readableSyntax) {
-		super("condition", readableSyntax);
+	public static boolean isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (parentPoshiElement instanceof IfElement &&
+			readableSyntax.endsWith(")") &&
+			!readableSyntax.startsWith("isSet(")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
 	public String getBlockName() {
 		return attributeValue("function");
+	}
+
+	protected ConditionElement(Element element) {
+		super(ELEMENT_NAME, element);
+	}
+
+	protected ConditionElement(String readableSyntax) {
+		super(ELEMENT_NAME, readableSyntax);
 	}
 
 	@Override

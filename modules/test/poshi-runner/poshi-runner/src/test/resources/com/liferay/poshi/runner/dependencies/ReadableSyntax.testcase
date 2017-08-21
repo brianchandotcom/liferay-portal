@@ -33,6 +33,15 @@ definition {
 			var breadcrumbNameUppercase = "StringUtil.upperCase('${breadcrumbName}')";
 
 			AssertTextEquals(locator1 = "Breadcrumb#BREADCRUMB_ENTRY", value1 = "${breadcrumbNameUppercase}");
+
+			if (isSet(duplicate)) {
+				Alert.viewErrorMessage(
+					errorMessage = "A configuration with this ID already exists. Please enter a unique ID."
+				);
+			}
+			else {
+				Alert.viewSuccessMessage();
+			}
 		}
 
 		User.addCP(
@@ -50,13 +59,31 @@ definition {
 		property portal.smoke = "true";
 		property test.assert.warning.exceptions = "true";
 
-		if (isset(duplicate)) {
+		if (isSet(duplicate)) {
 			Alert.viewErrorMessage(
 				errorMessage = "A configuration with this ID already exists. Please enter a unique ID."
 			);
+
+			if (isSet(duplicate)) {
+				Alert.viewErrorMessage(
+					errorMessage = "A configuration with this ID already exists. Please enter a unique ID."
+				);
+			}
+			else {
+				Alert.viewSuccessMessage();
+			}
 		}
 		else {
 			Alert.viewSuccessMessage();
+
+			if (isSet(duplicate)) {
+				Alert.viewErrorMessage(
+					errorMessage = "A configuration with this ID already exists. Please enter a unique ID."
+				);
+			}
+			else {
+				Alert.viewSuccessMessage();
+			}
 		}
 
 		if ("${check}" == "true") {
@@ -80,6 +107,10 @@ document.getElementById('demo').innerHTML = 'FAIL';
 </script>";
 
 		Smoke.viewWelcomePage();
+
+		while (IsElementPresent(locator1 = "AssetCategorization#TAGS_REMOVE_ICON_GENERIC")) {
+			Click(locator1 = "AssetCategorization#TAGS_REMOVE_ICON_GENERIC");
+		}
 
 		Smoke.runSmoke();
 

@@ -29,21 +29,20 @@ else if (displayStyle.equals("vertical")) {
 
 <liferay-util:html-bottom outputKey="taglib_ui_social_bookmark_facebook">
 	<script data-senna-track="temporary" type="text/javascript">
-		(function(d, s, id) {
-			var js;
-			var fjs = d.getElementsByTagName(s)[0];
-
-			if (d.getElementById(id)) {
+		(function(doc, scriptTagName, id) {
+			if (doc.getElementById(id)) {
 				return;
 			}
 
-			js = d.createElement(s);
+			var facebookScriptNode = doc.createElement(scriptTagName);
 
-			js.id = id;
+			facebookScriptNode.id = id;
 
-			js.src = '//connect.facebook.net/<%= locale.getLanguage() %>_<%= locale.getCountry() %>/sdk.js#xfbml=1&version=v2.10';
+			facebookScriptNode.src = '//connect.facebook.net/<%= locale.getLanguage() %>_<%= locale.getCountry() %>/sdk.js#xfbml=1&version=v2.10';
 
-			fjs.parentNode.insertBefore(js, fjs);
+			var firstScriptNode = doc.getElementsByTagName(scriptTagName)[0];
+
+			firstScriptNode.parentNode.insertBefore(facebookScriptNode, firstScriptNode);
 		}(document, 'script', 'facebook-jssdk'));
 	</script>
 </liferay-util:html-bottom>

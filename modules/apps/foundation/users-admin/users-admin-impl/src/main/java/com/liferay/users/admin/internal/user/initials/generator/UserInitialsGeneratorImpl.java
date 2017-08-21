@@ -68,13 +68,22 @@ public class UserInitialsGeneratorImpl implements UserInitialsGenerator {
 	}
 
 	private String[] _getUserInitialsFieldNames(Locale locale) {
-		String[] userInitialsFieldNames = StringUtil.split(
+		String[] userInitialsFieldNames = _userInitialsFieldNamesMap.get(
+			locale);
+
+		if (userInitialsFieldNames != null) {
+			return userInitialsFieldNames;
+		}
+
+		userInitialsFieldNames = StringUtil.split(
 			LanguageUtil.get(
 				locale, LanguageConstants.KEY_USER_INITIALS_FIELD_NAMES, null));
 
 		if (ArrayUtil.isEmpty(userInitialsFieldNames)) {
 			userInitialsFieldNames = _DEFAULT_USER_INITIALS_FIELD_NAMES;
 		}
+
+		_userInitialsFieldNamesMap.put(locale, userInitialsFieldNames);
 
 		return userInitialsFieldNames;
 	}
@@ -90,5 +99,8 @@ public class UserInitialsGeneratorImpl implements UserInitialsGenerator {
 		_userNameIndexMap.put(LanguageConstants.VALUE_MIDDLE_NAME, 1);
 		_userNameIndexMap.put(LanguageConstants.VALUE_LAST_NAME, 2);
 	}
+
+	private final Map<Locale, String[]> _userInitialsFieldNamesMap =
+		new HashMap<>();
 
 }

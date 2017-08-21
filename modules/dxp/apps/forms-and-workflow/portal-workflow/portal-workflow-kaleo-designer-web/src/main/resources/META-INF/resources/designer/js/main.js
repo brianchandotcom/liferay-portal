@@ -476,9 +476,17 @@ AUI.add(
 								buffer.push(XMLUtil.create('resourceActions', xmlResourceAction));
 							}
 							else if (assignmentType === 'roleId') {
-								var xmlRoleId = XMLUtil.create('roleId', dataAssignments.roleId);
+								buffer.push(xmlRoles.open);
 
-								buffer.push(xmlRoles.open, XMLUtil.create('role', xmlRoleId), xmlRoles.close);
+								var xmlRole = XMLUtil.createObj('role');
+
+								buffer.push(
+									xmlRole.open,
+									XMLUtil.create('roleNameAC', dataAssignments.roleNameAC),
+									XMLUtil.create('roleId', dataAssignments.roleId),
+									xmlRole.close);
+
+								buffer.push(xmlRoles.close);
 							}
 							else if (assignmentType === 'roleType') {
 								buffer.push(xmlRoles.open);
@@ -812,6 +820,10 @@ AUI.add(
 												{
 													key: 'roleId',
 													locator: 'role-id'
+												},
+												{
+													key: 'roleNameAC',
+													locator: 'role-name-ac'
 												}
 											],
 											resultListLocator: 'role'

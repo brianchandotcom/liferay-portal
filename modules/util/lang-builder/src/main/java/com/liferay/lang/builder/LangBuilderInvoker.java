@@ -29,6 +29,7 @@ public class LangBuilderInvoker {
 		throws Exception {
 
 		return new LangBuilder(
+			langBuilderArgs.getExcludedLanguageIds(),
 			_getAbsolutePath(baseDir, langBuilderArgs.getLangDirName()),
 			langBuilderArgs.getLangFileName(), langBuilderArgs.isPlugin(),
 			langBuilderArgs.getPortalLanguagePropertiesFileName(),

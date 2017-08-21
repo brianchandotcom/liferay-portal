@@ -186,7 +186,8 @@ public class UserInitialsGeneratorImplTest {
 	private static final String _lastName = "Last";
 	private static final Locale _locale = LocaleUtil.ENGLISH;
 	private static final String _middleName = "Middle";
-	private static final UserInitialsGenerator _userInitialsGenerator =
+
+	private final UserInitialsGenerator _userInitialsGenerator =
 		new UserInitialsGeneratorImpl();
 
 }

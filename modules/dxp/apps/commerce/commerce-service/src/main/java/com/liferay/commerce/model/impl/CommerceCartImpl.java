@@ -15,8 +15,14 @@
 package com.liferay.commerce.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
+import com.liferay.commerce.model.CommerceCartItem;
+import com.liferay.commerce.service.CommerceCartItemLocalServiceUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+
+import java.util.List;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 @ProviderType
@@ -25,4 +31,9 @@ public class CommerceCartImpl extends CommerceCartBaseImpl {
 	public CommerceCartImpl() {
 	}
 
+	@Override
+	public List<CommerceCartItem> getCommerceCartItems(){
+		return CommerceCartItemLocalServiceUtil.getCommerceCartItems(
+			getCommerceCartId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
 }

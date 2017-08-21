@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
 import com.liferay.portal.lpkg.deployer.LPKGVerifier;
 import com.liferay.portal.lpkg.deployer.LPKGVerifyException;
+import com.liferay.portal.lpkg.deployer.util.BundleStartLevelUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;

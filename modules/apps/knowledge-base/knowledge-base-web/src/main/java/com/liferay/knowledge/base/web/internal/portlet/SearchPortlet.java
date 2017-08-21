@@ -48,6 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.display-category=category.cms",
 		"com.liferay.portlet.header-portlet-css=/admin/css/common.css",
 		"com.liferay.portlet.icon=/icons/search.png",
+		"com.liferay.portlet.restore-current-view=false",
 		"com.liferay.portlet.scopeable=true",
 		"javax.portlet.display-name=Knowledge Base Search",
 		"javax.portlet.expiration-cache=0",

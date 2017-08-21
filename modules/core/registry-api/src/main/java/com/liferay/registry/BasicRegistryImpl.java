@@ -147,8 +147,14 @@ public class BasicRegistryImpl implements Registry {
 			Class<T> clazz, String filterString)
 		throws Exception {
 
-		return Arrays.asList(
-			this.<T>getServiceReferences(clazz.getName(), filterString));
+		ServiceReference<T>[] serviceReferences = getServiceReferences(
+			clazz.getName(), filterString);
+
+		if (serviceReferences == null) {
+			return Collections.emptyList();
+		}
+
+		return Arrays.asList(serviceReferences);
 	}
 
 	@Override

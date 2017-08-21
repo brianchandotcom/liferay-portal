@@ -27,7 +27,7 @@
 		<execute macro="TestOAuth#getConsumerKeyAndSecret">
 			<return from="consumerKey" name="consumerKey" />
 			<return from="consumerSecret" name="consumerSecret" />
-			<var name="keyName" value="oauth1" />
+			<var name="applicationName" value="oauth1" />
 		</execute>
 
 		<execute macro="Page#add">

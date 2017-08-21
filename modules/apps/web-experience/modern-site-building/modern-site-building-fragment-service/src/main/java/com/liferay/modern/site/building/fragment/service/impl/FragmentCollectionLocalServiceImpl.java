@@ -17,6 +17,7 @@ package com.liferay.modern.site.building.fragment.service.impl;
 import com.liferay.modern.site.building.fragment.exception.DuplicateFragmentCollectionException;
 import com.liferay.modern.site.building.fragment.exception.FragmentCollectionNameException;
 import com.liferay.modern.site.building.fragment.model.FragmentCollection;
+import com.liferay.modern.site.building.fragment.model.FragmentEntry;
 import com.liferay.modern.site.building.fragment.service.base.FragmentCollectionLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -72,6 +73,16 @@ public class FragmentCollectionLocalServiceImpl
 	public FragmentCollection deleteFragmentCollection(
 			FragmentCollection fragmentCollection)
 		throws PortalException {
+
+		// Entries
+
+		List<FragmentEntry> fragmentEntries =
+			fragmentEntryPersistence.findByFragmentCollectionId(
+				fragmentCollection.getFragmentCollectionId());
+
+		for (FragmentEntry fragmentEntry : fragmentEntries) {
+			fragmentEntryLocalService.deleteFragmentEntry(fragmentEntry);
+		}
 
 		// Collection
 

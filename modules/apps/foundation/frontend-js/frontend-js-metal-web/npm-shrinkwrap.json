@@ -161,8 +161,8 @@
 		},
 		"core-js": {
 			"from": "core-js@>=2.4.1 <3.0.0",
-			"resolved": "https://registry.npmjs.org/core-js/-/core-js-2.4.1.tgz",
-			"version": "2.4.1"
+			"resolved": "https://registry.npmjs.org/core-js/-/core-js-2.5.0.tgz",
+			"version": "2.5.0"
 		},
 		"core-util-is": {
 			"from": "core-util-is@>=1.0.0 <1.1.0",
@@ -215,11 +215,16 @@
 					"from": "lru-cache@>=3.2.0 <4.0.0",
 					"resolved": "https://registry.npmjs.org/lru-cache/-/lru-cache-3.2.0.tgz",
 					"version": "3.2.0"
+				},
+				"semver": {
+					"from": "semver@>=5.1.0 <6.0.0",
+					"resolved": "https://registry.npmjs.org/semver/-/semver-5.4.1.tgz",
+					"version": "5.4.1"
 				}
 			},
 			"from": "editorconfig@>=0.13.2 <0.14.0",
-			"resolved": "https://registry.npmjs.org/editorconfig/-/editorconfig-0.13.2.tgz",
-			"version": "0.13.2"
+			"resolved": "https://registry.npmjs.org/editorconfig/-/editorconfig-0.13.3.tgz",
+			"version": "0.13.3"
 		},
 		"end-of-stream": {
 			"dependencies": {
@@ -747,8 +752,8 @@
 		},
 		"liferay-module-config-generator": {
 			"from": "liferay-module-config-generator@>=1.2.1 <2.0.0",
-			"resolved": "https://registry.npmjs.org/liferay-module-config-generator/-/liferay-module-config-generator-1.3.0.tgz",
-			"version": "1.3.0"
+			"resolved": "https://registry.npmjs.org/liferay-module-config-generator/-/liferay-module-config-generator-1.3.2.tgz",
+			"version": "1.3.2"
 		},
 		"liftoff": {
 			"from": "liftoff@>=2.1.0 <3.0.0",
@@ -2900,8 +2905,8 @@
 		},
 		"metal-uri": {
 			"from": "metal-uri@>=2.0.2 <3.0.0",
-			"resolved": "https://registry.npmjs.org/metal-uri/-/metal-uri-2.2.6.tgz",
-			"version": "2.2.6"
+			"resolved": "https://registry.npmjs.org/metal-uri/-/metal-uri-2.3.0.tgz",
+			"version": "2.3.0"
 		},
 		"metal-useragent": {
 			"from": "metal-useragent@>=2.1.1 <3.0.0",
@@ -3234,8 +3239,8 @@
 		},
 		"remove-trailing-separator": {
 			"from": "remove-trailing-separator@>=1.0.1 <2.0.0",
-			"resolved": "https://registry.npmjs.org/remove-trailing-separator/-/remove-trailing-separator-1.0.2.tgz",
-			"version": "1.0.2"
+			"resolved": "https://registry.npmjs.org/remove-trailing-separator/-/remove-trailing-separator-1.1.0.tgz",
+			"version": "1.1.0"
 		},
 		"repeat-element": {
 			"from": "repeat-element@>=1.1.2 <2.0.0",
@@ -3512,8 +3517,8 @@
 		},
 		"which": {
 			"from": "which@>=1.2.12 <2.0.0",
-			"resolved": "https://registry.npmjs.org/which/-/which-1.2.14.tgz",
-			"version": "1.2.14"
+			"resolved": "https://registry.npmjs.org/which/-/which-1.3.0.tgz",
+			"version": "1.3.0"
 		},
 		"widest-line": {
 			"from": "widest-line@>=1.0.0 <2.0.0",

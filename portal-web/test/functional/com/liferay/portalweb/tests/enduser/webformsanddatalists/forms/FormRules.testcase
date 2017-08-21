@@ -33,6 +33,7 @@
 
 	<command name="ConfigureAutofillRule" priority="5">
 		<property name="portal.acceptance" value="pending" />
+		<property name="test.name.skip.portal.instance" value="FormRules#ConfigureAutofillRule" />
 
 		<description message="This is a use case for LPS-70446." />
 

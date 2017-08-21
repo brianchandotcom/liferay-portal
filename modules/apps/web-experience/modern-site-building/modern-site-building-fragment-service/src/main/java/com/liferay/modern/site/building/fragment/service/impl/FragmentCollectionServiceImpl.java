@@ -16,7 +16,6 @@ package com.liferay.modern.site.building.fragment.service.impl;
 
 import com.liferay.modern.site.building.fragment.constants.FragmentActionKeys;
 import com.liferay.modern.site.building.fragment.model.FragmentCollection;
-import com.liferay.modern.site.building.fragment.model.FragmentEntry;
 import com.liferay.modern.site.building.fragment.service.base.FragmentCollectionServiceBaseImpl;
 import com.liferay.modern.site.building.fragment.service.permission.FragmentCollectionPermission;
 import com.liferay.modern.site.building.fragment.service.permission.FragmentPermission;
@@ -74,15 +73,6 @@ public class FragmentCollectionServiceImpl
 				FragmentCollectionPermission.check(
 					getPermissionChecker(), fragmentCollectionId,
 					ActionKeys.DELETE);
-
-				List<FragmentEntry> fragmentEntries =
-					fragmentEntryService.fetchFragmentEntries(
-						fragmentCollectionId);
-
-				for (FragmentEntry fragmentEntry : fragmentEntries) {
-					fragmentEntryService.deleteFragmentEntry(
-						fragmentEntry.getFragmentEntryId());
-				}
 
 				fragmentCollectionLocalService.deleteFragmentCollection(
 					fragmentCollectionId);

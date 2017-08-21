@@ -48,7 +48,6 @@ import org.elasticsearch.index.query.MatchAllQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.TermQueryBuilder;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -263,11 +262,6 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 			DocumentTypes.LIFERAY, searchContext, documents, true);
 	}
 
-	@Activate
-	protected void activate() {
-		_searchHitsProcessor = new DeleteDocumentsSearchHitsProcessor(this);
-	}
-
 	@Reference(unbind = "-")
 	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
 
@@ -281,6 +275,7 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ElasticsearchIndexWriter.class);
 
-	private SearchHitsProcessor _searchHitsProcessor;
+	private final SearchHitsProcessor _searchHitsProcessor =
+		new DeleteDocumentsSearchHitsProcessor(this);
 
 }

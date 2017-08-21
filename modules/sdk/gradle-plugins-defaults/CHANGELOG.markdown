@@ -1942,6 +1942,16 @@ the `versions.xml` file by setting the system property
 setting the system property `[task name].lint` (where `[task name]` is the name
 of the `JavaCompile` task to configure).
 
+## 5.0.19 - 2017-08-17
+
+### Changed
+- [LPS-74222]: Update the [Liferay Gradle Plugins] dependency to version 3.4.32.
+
+## 5.0.20 - 2017-08-18
+
+### Changed
+- [LPS-74155]: Update the [Liferay Gradle Plugins] dependency to version 3.4.33.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -2151,6 +2161,7 @@ of the `JavaCompile` task to configure).
 [LPS-74126]: https://issues.liferay.com/browse/LPS-74126
 [LPS-74155]: https://issues.liferay.com/browse/LPS-74155
 [LPS-74210]: https://issues.liferay.com/browse/LPS-74210
+[LPS-74222]: https://issues.liferay.com/browse/LPS-74222
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

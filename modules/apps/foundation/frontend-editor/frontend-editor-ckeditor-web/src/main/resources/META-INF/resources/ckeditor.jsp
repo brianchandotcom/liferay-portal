@@ -653,11 +653,18 @@ name = HtmlUtil.escapeJS(name);
 			};
 
 			ckEditor.on(
-				'dataReady',
+				'instanceReady',
 				function() {
-					if (instanceReady) {
-						ckEditor.once('focus', onBlur.bind(this, document.activeElement));
-						ckEditor.focus();
+					var editorWrapper = A.one('#cke_<%= name %>');
+
+					if (editorWrapper) {
+						editorWrapper.once(
+							'mouseenter',
+							function(event) {
+								ckEditor.once('focus', onBlur.bind(this, document.activeElement));
+								ckEditor.focus();
+							}
+						);
 					}
 				}
 			);

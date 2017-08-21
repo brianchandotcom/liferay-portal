@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calendar.upgrade.v1_0_2;
+package com.liferay.calendar.internal.upgrade.v1_0_2;
 
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;

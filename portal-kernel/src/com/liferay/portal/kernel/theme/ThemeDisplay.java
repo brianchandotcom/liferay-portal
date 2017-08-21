@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.admin.kernel.util.PortalMyAccountApplicationType;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.mobile.device.rules.kernel.MDRRuleGroupInstance;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -47,11 +48,14 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.Mergeable;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TimeZoneThreadLocal;
@@ -1919,9 +1923,17 @@ public class ThemeDisplay
 				_layoutFriendlyURLs = new HashMap<>();
 			}
 			else {
-				_layoutFriendlyURLs =
-					LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
-						_siteGroup, _layouts, _languageId);
+				int layoutManagePagesInitialChildren =
+					_getLayoutManagePagesInitialChildren();
+
+				if (layoutManagePagesInitialChildren != 0) {
+					_layoutFriendlyURLs =
+						LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
+							_siteGroup,
+							_getFriendlyURLLayouts(
+								layoutManagePagesInitialChildren),
+							_languageId);
+				}
 			}
 		}
 
@@ -1936,7 +1948,30 @@ public class ThemeDisplay
 		return layoutFriendlyURL;
 	}
 
+	private List<Layout> _getFriendlyURLLayouts(
+		int layoutManagePagesInitialChildren) {
+
+		if ((layoutManagePagesInitialChildren == QueryUtil.ALL_POS) ||
+			(_layouts.size() <= layoutManagePagesInitialChildren)) {
+
+			return _layouts;
+		}
+
+		return _layouts.subList(0, layoutManagePagesInitialChildren);
+	}
+
+	private int _getLayoutManagePagesInitialChildren() {
+		if (_layoutManagePagesInitialChildren == Integer.MIN_VALUE) {
+			_layoutManagePagesInitialChildren = GetterUtil.getInteger(
+				PropsUtil.get(PropsKeys.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN));
+		}
+
+		return _layoutManagePagesInitialChildren;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(ThemeDisplay.class);
+
+	private static int _layoutManagePagesInitialChildren = Integer.MIN_VALUE;
 
 	private Account _account;
 	private boolean _addSessionIdToURL;

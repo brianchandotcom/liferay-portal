@@ -2587,7 +2587,7 @@
 		<execute macro="FormsAdmin#viewRadioEntry">
 			<var name="fieldLabel" value="New Radio" />
 			<var name="fieldName" value="Radio" />
-			<var name="fieldValue" value="Option 1" />
+			<var name="fieldValue" value="Option 2" />
 		</execute>
 
 		<execute macro="FormsAdmin#viewDateEntry">
@@ -2670,7 +2670,7 @@
 		<execute macro="FormsAdmin#viewRadioEntry">
 			<var name="fieldLabel" value="New Radio" />
 			<var name="fieldName" value="Radio" />
-			<var name="fieldValue" value="Option1" />
+			<var name="fieldValue" value="Option2" />
 		</execute>
 
 		<execute macro="FormsAdmin#viewDateEntry">

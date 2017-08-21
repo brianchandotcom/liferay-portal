@@ -431,14 +431,11 @@
 	</command>
 
 	<command name="viewRadioValue">
+		<var method="StringUtil#replace('${fieldValue}', ' ', '')" name="fieldValue" />
 		<var name="key_fieldName" value="${fieldName}" />
 		<var name="key_radioOption" value="${fieldValue}" />
 
-		<execute function="AssertElementPresent" locator1="FormFields#RADIO_OPTION" />
-
-		<var method="StringUtil#replace('${fieldValue}', ' ', '')" name="fieldValue" />
-
-		<execute function="AssertTextEquals" locator1="FormFields#RADIO_OPTION" value1="${fieldValue}" />
+		<execute function="AssertTextEquals" locator1="FormFields#RADIO_OPTION_CHECKED" value1="${fieldValue}" />
 	</command>
 
 	<command name="viewRepeatableFieldHelpText">

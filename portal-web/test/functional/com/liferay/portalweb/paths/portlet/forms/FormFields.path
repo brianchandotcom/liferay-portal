@@ -180,6 +180,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RADIO_OPTION_CHECKED</td>
+	<td>//label[contains(@class,'${key_radioOption}')]/input[@type='radio' and @checked="" and contains(@name,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RADIO_LABEL</td>
 	<td>//div[contains(@data-fieldname,'${key_fieldName}')]/label</td>
 	<td></td>

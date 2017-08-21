@@ -14,8 +14,8 @@
 
 package com.liferay.portal.lpkg.deployer.internal.wrapper.bundle;
 
-import com.liferay.portal.lpkg.deployer.internal.BundleStartLevelUtil;
 import com.liferay.portal.lpkg.deployer.internal.WABWrapperUtil;
+import com.liferay.portal.lpkg.deployer.util.BundleStartLevelUtil;
 
 import java.net.URL;
 import java.net.URLConnection;

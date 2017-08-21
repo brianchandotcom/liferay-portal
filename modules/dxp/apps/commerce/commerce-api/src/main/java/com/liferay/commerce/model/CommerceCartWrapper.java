@@ -157,6 +157,11 @@ public class CommerceCartWrapper implements CommerceCart,
 		return _commerceCart.getCommerceCartId();
 	}
 
+	@Override
+	public java.util.List<CommerceCartItem> getCommerceCartItems() {
+		return _commerceCart.getCommerceCartItems();
+	}
+
 	/**
 	* Returns the company ID of this commerce cart.
 	*

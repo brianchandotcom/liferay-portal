@@ -53,4 +53,6 @@ public interface CommerceCart extends CommerceCartModel, PersistedModel {
 				return CommerceCart.class;
 			}
 		};
+
+	public java.util.List<CommerceCartItem> getCommerceCartItems();
 }

@@ -18,9 +18,9 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarLocalServiceUtil;
-import com.liferay.calendar.upgrade.v1_0_2.UpgradeCalendar;
+import com.liferay.calendar.test.util.CalendarUpgradeTestUtil;
+import com.liferay.calendar.test.util.UpgradeDatabaseTestHelper;
 import com.liferay.calendar.util.CalendarResourceUtil;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -28,11 +28,10 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.sql.Connection;
 
 import java.util.List;
 
@@ -47,7 +46,7 @@ import org.junit.runner.RunWith;
  * @author Adam Brandizzi
  */
 @RunWith(Arquillian.class)
-public class UpgradeCalendarTest extends UpgradeCalendar {
+public class UpgradeCalendarTest {
 
 	@ClassRule
 	@Rule
@@ -59,17 +58,19 @@ public class UpgradeCalendarTest extends UpgradeCalendar {
 		_group = GroupTestUtil.addGroup();
 
 		_user = UserTestUtil.addUser();
+
+		_upgradeCalendar = CalendarUpgradeTestUtil.getUpgradeStep(
+			"com.liferay.calendar.internal.upgrade.v1_0_2.UpgradeCalendar");
+		_upgradeDatabaseTestHelper =
+			CalendarUpgradeTestUtil.getUpgradeDatabaseTestHelper();
 	}
 
 	@Test
 	public void testUpgradeCreatesCalendarTimeZoneId() throws Exception {
-		upgrade();
+		_upgradeCalendar.upgrade();
 
-		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
-			connection = con;
-
-			Assert.assertTrue(hasColumn("Calendar", "timeZoneId"));
-		}
+		Assert.assertTrue(
+			_upgradeDatabaseTestHelper.hasColumn("Calendar", "timeZoneId"));
 	}
 
 	@Test
@@ -78,7 +79,7 @@ public class UpgradeCalendarTest extends UpgradeCalendar {
 			CalendarResourceUtil.getGroupCalendarResource(
 				_group.getGroupId(), new ServiceContext());
 
-		upgrade();
+		_upgradeCalendar.upgrade();
 
 		List<Calendar> calendars =
 			CalendarLocalServiceUtil.getCalendarResourceCalendars(
@@ -105,7 +106,7 @@ public class UpgradeCalendarTest extends UpgradeCalendar {
 			CalendarResourceUtil.getUserCalendarResource(
 				_user.getUserId(), serviceContext);
 
-		upgrade();
+		_upgradeCalendar.upgrade();
 
 		List<Calendar> calendars =
 			CalendarLocalServiceUtil.getCalendarResourceCalendars(
@@ -118,6 +119,9 @@ public class UpgradeCalendarTest extends UpgradeCalendar {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private UpgradeProcess _upgradeCalendar;
+	private UpgradeDatabaseTestHelper _upgradeDatabaseTestHelper;
 
 	@DeleteAfterTestRun
 	private User _user;

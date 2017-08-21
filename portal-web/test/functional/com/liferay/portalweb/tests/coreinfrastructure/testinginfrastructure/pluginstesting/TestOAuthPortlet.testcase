@@ -1,0 +1,51 @@
+<definition component-name="portal-test-plugins">
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
+	<property name="testray.main.component.name" value="Test Plugins" />
+	<property name="portlet.plugins.includes" value="test-oauth-portlet" />
+	<property name="test.run.environment" value="EE" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command name="ViewOAuth" priority="4">
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="OAuth Admin" />
+		</execute>
+
+		<execute macro="TestOAuth#addApplication">
+			<var name="applicationName" value="oauth1" />
+			<var name="callbackURI" value="http://localhost:8080" />
+			<var name="websiteURL" value="http://www.liferay.com" />
+		</execute>
+
+		<execute macro="TestOAuth#getConsumerKeyAndSecret">
+			<return from="consumerKey" name="consumerKey" />
+			<return from="consumerSecret" name="consumerSecret" />
+			<var name="keyName" value="oauth1" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Test Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Test OAuth" />
+		</execute>
+
+		<execute macro="TestOAuth#testConsumerKeyAndSecret">
+			<var name="consumerKey" value="${consumerKey}" />
+			<var name="consumerSecret" value="${consumerSecret}" />
+			<var name="webID" value="liferay.com" />
+		</execute>
+
+		<execute macro="TestOAuth#viewJSON">
+			<var name="domainName" value="liferay.com" />
+		</execute>
+	</command>
+</definition>

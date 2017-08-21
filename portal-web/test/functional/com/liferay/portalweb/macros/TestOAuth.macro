@@ -1,0 +1,56 @@
+<definition>
+	<command name="addApplication">
+		<execute function="AssertClick" locator1="TestOAuth#OAUTH_ADMIN_ADD" value1="Add" />
+
+		<execute function="Type" locator1="TestOAuth#OAUTH_ADMIN_APPLICATION_NAME" value1="${applicationName}" />
+		<execute function="Type" locator1="TestOAuth#OAUTH_ADMIN_WEBSITE_URL" value1="${websiteURL}" />
+		<execute function="Type" locator1="TestOAuth#OAUTH_ADMIN_CALLBACK_URI" value1="${callbackURI}" />
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
+	<command name="getConsumerKeyAndSecret" returns="consumerKey,consumerSecret">
+		<var name="keyName" value="${keyName}" />
+
+		<execute function="AssertClick" locator1="TestOAuth#OAUTH_ADMIN_TABLE_NAME" value1="${keyName}" />
+
+		<var locator="TestOAuth#OAUTH_ADMIN_applicationCredentials" name="applicationCredentials" />
+
+		<var method="StringUtil#stripBetween('${applicationCredentials}', 'Application', 'Secret: ')" name="consumerSecret" />
+
+		<var method="StringUtil#stripBetween('${applicationCredentials}', 'Application', 'Key: ')" name="strippedResult" />
+
+		<var method="StringUtil#stripBetween('${strippedResult}', ' Consumer', '${consumerSecret}')" name="consumerKey" />
+
+		<return name="consumerKey" value="${consumerKey}" />
+		<return name="consumerSecret" value="${consumerSecret}" />
+	</command>
+
+	<command name="testConsumerKeyAndSecret">
+		<execute function="Type" locator1="TestOAuth#TEST_PORTLET_KEY" value1="${consumerKey}" />
+		<execute function="Type" locator1="TestOAuth#TEST_PORTLET_SECRET" value1="${consumerSecret}" />
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+
+		<execute function="AssertClick" locator1="TestOAuth#TEST_PORTLET_AUTHORIZE_ACCESS" value1="Authorize Access" />
+
+		<execute function="AssertClick" locator1="TestOAuth#TEST_PORTLET_GRANT_ACCESS" value1="Grant Access" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+
+		<execute function="Type" locator1="TestOAuth#TEST_PORTLET_WEB_ID" value1="${webID}" />
+
+		<execute function="AssertClick" locator1="TestOAuth#TEST_PORTLET_TEST" value1="Test" />
+	</command>
+
+	<command name="viewJSON">
+		<execute function="AssertVisible" locator1="TestOAuth#TEST_PORTLET_JSON" />
+
+		<execute function="AssertTextPresent" locator1="TestOAuth#TEST_PORTLET_JSON" value1="&quot;mx&quot;:&quot;${domainName}&quot;" />
+		<execute function="AssertTextPresent" locator1="TestOAuth#TEST_PORTLET_JSON" value1="&quot;webId&quot;:&quot;${domainName}&quot;" />
+	</command>
+</definition>

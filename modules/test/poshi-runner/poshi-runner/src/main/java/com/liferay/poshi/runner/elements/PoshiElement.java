@@ -58,6 +58,7 @@ public abstract class PoshiElement extends DefaultElement {
 		}
 
 		String formattedElement = null;
+
 		try {
 			formattedElement = Dom4JUtil.format(element);
 		}

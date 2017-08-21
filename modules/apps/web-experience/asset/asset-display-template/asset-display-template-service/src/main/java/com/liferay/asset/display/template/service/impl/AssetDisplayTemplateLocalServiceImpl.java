@@ -53,19 +53,17 @@ public class AssetDisplayTemplateLocalServiceImpl
 
 		User user = userLocalService.getUser(userId);
 
-		Date now = new Date();
-
 		long assetDisplayTemplateId = counterLocalService.increment();
 
 		AssetDisplayTemplate assetDisplayTemplate =
 			assetDisplayTemplatePersistence.create(assetDisplayTemplateId);
 
 		assetDisplayTemplate.setCompanyId(user.getCompanyId());
-		assetDisplayTemplate.setCreateDate(serviceContext.getCreateDate(now));
+		assetDisplayTemplate.setCreateDate(
+			serviceContext.getCreateDate(new Date()));
 		assetDisplayTemplate.setGroupId(groupId);
 		assetDisplayTemplate.setUserId(userId);
 		assetDisplayTemplate.setUserName(user.getFullName());
-
 		assetDisplayTemplate.setClassNameId(classNameId);
 		assetDisplayTemplate.setName(name);
 		assetDisplayTemplate.setMain(main);

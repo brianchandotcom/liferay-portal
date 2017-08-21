@@ -16,7 +16,6 @@ package com.liferay.portal.tools.db.upgrade.client;
 
 import com.liferay.portal.tools.db.upgrade.client.util.GogoTelnetClient;
 import com.liferay.portal.tools.db.upgrade.client.util.Properties;
-import com.liferay.portal.tools.db.upgrade.client.util.StringUtil;
 import com.liferay.portal.tools.db.upgrade.client.util.TeePrintStream;
 
 import java.io.BufferedReader;
@@ -88,19 +87,22 @@ public class UpgradeClient {
 			File logFile = null;
 
 			if (commandLine.hasOption("log-file")) {
-				logFile = new File(commandLine.getOptionValue("log-file"));
+				logFile = new File(
+					_jarFolder, commandLine.getOptionValue("log-file"));
 			}
 			else {
-				logFile = new File("upgrade.log");
+				logFile = new File(_jarFolder, "upgrade.log");
 			}
 
 			if (logFile.exists()) {
 				String logFileName = logFile.getName();
 
 				logFile.renameTo(
-					new File(logFileName + "." + logFile.lastModified()));
+					new File(
+						_jarFolder,
+						logFileName + "." + logFile.lastModified()));
 
-				logFile = new File(logFileName);
+				logFile = new File(_jarFolder, logFileName);
 			}
 
 			boolean shell = false;
@@ -133,18 +135,19 @@ public class UpgradeClient {
 		_logFile = logFile;
 		_shell = shell;
 
-		_appServerPropertiesFile = new File("app-server.properties");
+		_appServerPropertiesFile = new File(
+			_jarFolder, "app-server.properties");
 
 		_appServerProperties = _readProperties(_appServerPropertiesFile);
 
 		_portalUpgradeDatabasePropertiesFile = new File(
-			"portal-upgrade-database.properties");
+			_jarFolder, "portal-upgrade-database.properties");
 
 		_portalUpgradeDatabaseProperties = _readProperties(
 			_portalUpgradeDatabasePropertiesFile);
 
 		_portalUpgradeExtPropertiesFile = new File(
-			"portal-upgrade-ext.properties");
+			_jarFolder, "portal-upgrade-ext.properties");
 
 		_portalUpgradeExtProperties = _readProperties(
 			_portalUpgradeExtPropertiesFile);
@@ -179,6 +182,7 @@ public class UpgradeClient {
 		commands.add(DBUpgraderLauncher.class.getName());
 
 		processBuilder.command(commands);
+		processBuilder.directory(_jarFolder);
 
 		processBuilder.redirectErrorStream(true);
 
@@ -310,27 +314,11 @@ public class UpgradeClient {
 	}
 
 	private String _getBootstrapClassPath() throws IOException {
-		ProtectionDomain protectionDomain =
-			UpgradeClient.class.getProtectionDomain();
+		StringBuilder sb = new StringBuilder();
 
-		CodeSource codeSource = protectionDomain.getCodeSource();
+		_appendClassPath(sb, _jarFolder);
 
-		URL url = codeSource.getLocation();
-
-		try {
-			StringBuilder sb = new StringBuilder();
-
-			Path path = Paths.get(url.toURI());
-
-			File jarFile = path.toFile();
-
-			_appendClassPath(sb, jarFile.getParentFile());
-
-			return sb.toString();
-		}
-		catch (URISyntaxException urise) {
-			throw new IOException(urise);
-		}
+		return sb.toString();
 	}
 
 	private String _getClassPath() throws IOException {
@@ -343,43 +331,17 @@ public class UpgradeClient {
 			sb.append(File.pathSeparator);
 		}
 
-		_appendClassPath(sb, new File("lib"));
-		_appendClassPath(sb, new File("."));
+		_appendClassPath(sb, new File(_jarFolder, "lib"));
+		_appendClassPath(sb, _jarFolder);
 		_appendClassPath(sb, _appServer.getGlobalLibDir());
 		_appendClassPath(sb, _appServer.getExtraLibDirs());
 
-		File portalClassesDir = _appServer.getPortalClassesDir();
-
-		sb.append(portalClassesDir.getCanonicalPath());
-
+		sb.append(_appServer.getPortalClassesDir());
 		sb.append(File.pathSeparator);
 
 		_appendClassPath(sb, _appServer.getPortalLibDir());
 
 		return sb.toString();
-	}
-
-	private String _getRelativeFileName(File baseFile, File pathFile) {
-		return _getRelativeFileName(baseFile.toPath(), pathFile.toPath());
-	}
-
-	private String _getRelativeFileName(Path basePath, Path path) {
-		Path relativePath = basePath.relativize(path);
-
-		return relativePath.toString();
-	}
-
-	private List<String> _getRelativeFileNames(
-		File baseFile, List<File> pathFiles) {
-
-		List<String> relativeFileNames = new ArrayList<>(pathFiles.size());
-
-		for (File pathFile : pathFiles) {
-			relativeFileNames.add(
-				_getRelativeFileName(baseFile.toPath(), pathFile.toPath()));
-		}
-
-		return relativeFileNames;
 	}
 
 	private boolean _isFinished(GogoTelnetClient gogoTelnetClient)
@@ -489,8 +451,6 @@ public class UpgradeClient {
 			}
 
 			File dir = _appServer.getDir();
-			File globalLibDir = _appServer.getGlobalLibDir();
-			File portalDir = _appServer.getPortalDir();
 
 			System.out.println(
 				"Please enter your application server directory (" + dir +
@@ -503,8 +463,9 @@ public class UpgradeClient {
 			}
 
 			System.out.println(
-				"Please enter your extra library directories (" +
-					_appServer.getExtraLibDirNames() + "): ");
+				"Please enter your extra library directories in application " +
+					"server directory (" + _appServer.getExtraLibDirNames() +
+						"): ");
 
 			response = _consoleReader.readLine();
 
@@ -513,8 +474,9 @@ public class UpgradeClient {
 			}
 
 			System.out.println(
-				"Please enter your global library directory (" + globalLibDir +
-					"): ");
+				"Please enter your global library directory in application " +
+					"server directory (" + _appServer.getGlobalLibDirName() +
+						"): ");
 
 			response = _consoleReader.readLine();
 
@@ -523,7 +485,8 @@ public class UpgradeClient {
 			}
 
 			System.out.println(
-				"Please enter your portal directory (" + portalDir + "): ");
+				"Please enter your portal directory in application server " +
+					"directory (" + _appServer.getPortalDirName() + "): ");
 
 			response = _consoleReader.readLine();
 
@@ -533,14 +496,11 @@ public class UpgradeClient {
 
 			_appServerProperties.setProperty("dir", dir.getCanonicalPath());
 			_appServerProperties.setProperty(
-				"extra.lib.dirs",
-				StringUtil.join(
-					_getRelativeFileNames(dir, _appServer.getExtraLibDirs()),
-					','));
+				"extra.lib.dirs", _appServer.getExtraLibDirNames());
 			_appServerProperties.setProperty(
-				"global.lib.dir", _getRelativeFileName(dir, globalLibDir));
+				"global.lib.dir", _appServer.getGlobalLibDirName());
 			_appServerProperties.setProperty(
-				"portal.dir", _getRelativeFileName(dir, portalDir));
+				"portal.dir", _appServer.getPortalDirName());
 			_appServerProperties.setProperty(
 				"server.detector.server.id",
 				_appServer.getServerDetectorServerId());
@@ -551,6 +511,10 @@ public class UpgradeClient {
 				_appServerProperties.getProperty("extra.lib.dirs"),
 				_appServerProperties.getProperty("global.lib.dir"),
 				_appServerProperties.getProperty("portal.dir"), value);
+
+			File dir = _appServer.getDir();
+
+			_appServerProperties.setProperty("dir", dir.getCanonicalPath());
 		}
 	}
 
@@ -674,19 +638,23 @@ public class UpgradeClient {
 		String value = _portalUpgradeExtProperties.getProperty("liferay.home");
 
 		if ((value == null) || value.isEmpty()) {
-			System.out.println("Please enter your Liferay home (../../): ");
+			File defaultLiferayHome = new File(_jarFolder, "../../");
 
-			String response = _consoleReader.readLine();
+			System.out.println(
+				"Please enter your Liferay home (" +
+					defaultLiferayHome.getCanonicalPath() + "): ");
 
-			if (response.isEmpty()) {
-				response = "../../";
+			value = _consoleReader.readLine();
+
+			if (value.isEmpty()) {
+				value = defaultLiferayHome.getCanonicalPath();
 			}
-
-			File liferayHome = new File(response);
-
-			_portalUpgradeExtProperties.setProperty(
-				"liferay.home", liferayHome.getCanonicalPath());
 		}
+
+		File liferayHome = new File(value);
+
+		_portalUpgradeExtProperties.setProperty(
+			"liferay.home", liferayHome.getCanonicalPath());
 	}
 
 	private static final String _JAVA_HOME = System.getenv("JAVA_HOME");
@@ -695,6 +663,7 @@ public class UpgradeClient {
 		new LinkedHashMap<>();
 	private static final Map<String, Database> _databases =
 		new LinkedHashMap<>();
+	private static File _jarFolder;
 
 	static {
 		_appServers.put("jboss", AppServer.getJBossEAPAppServer());
@@ -713,6 +682,24 @@ public class UpgradeClient {
 		_databases.put("postgresql", Database.getPostgreSQLDatabase());
 		_databases.put("sqlserver", Database.getSQLServerDatabase());
 		_databases.put("sybase", Database.getSybaseDatabase());
+
+		ProtectionDomain protectionDomain =
+			UpgradeClient.class.getProtectionDomain();
+
+		CodeSource codeSource = protectionDomain.getCodeSource();
+
+		URL url = codeSource.getLocation();
+
+		try {
+			Path path = Paths.get(url.toURI());
+
+			File jarFile = path.toFile();
+
+			_jarFolder = jarFile.getParentFile();
+		}
+		catch (URISyntaxException urise) {
+			throw new ExceptionInInitializerError(urise);
+		}
 	}
 
 	private AppServer _appServer;

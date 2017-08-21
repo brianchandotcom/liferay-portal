@@ -44,46 +44,10 @@ public class CommerceCartTemplateContextContributor
 	public void prepare(
 		Map<String, Object> contextObjects, HttpServletRequest request) {
 
-		int cartItemsCount = 0;
-		int wishListItemsCount = 0;
-
-		try {
-			CommerceCart currentCart =
-				_commerceCartHelper.getCurrentCommerceCart(
-					request, CommerceCartConstants.COMMERCE_CART_TYPE_CART);
-
-			if (currentCart != null) {
-				cartItemsCount =
-					_commerceCartItemService.getCommerceCartItemsCount(
-						currentCart.getCommerceCartId());
-			}
-
-			CommerceCart currentWishList =
-				_commerceCartHelper.getCurrentCommerceCart(
-					request,
-					CommerceCartConstants.COMMERCE_CART_TYPE_WISH_LIST);
-
-			if (currentWishList != null) {
-				wishListItemsCount =
-					_commerceCartItemService.getCommerceCartItemsCount(
-						currentWishList.getCommerceCartId());
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		contextObjects.put("cartItemsCount", cartItemsCount);
-		contextObjects.put("wishListItemsCount", wishListItemsCount);
+		contextObjects.put("commerceCartHelper", _commerceCartHelper);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceCartTemplateContextContributor.class);
 
 	@Reference
 	private CommerceCartHelper _commerceCartHelper;
-
-	@Reference
-	private CommerceCartItemService _commerceCartItemService;
 
 }

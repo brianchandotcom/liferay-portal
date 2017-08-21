@@ -40,6 +40,8 @@ public class FragmentEntryLocalServiceImpl
 			String css, String html, String js, ServiceContext serviceContext)
 		throws PortalException {
 
+		// Entry
+
 		validate(groupId, name);
 
 		User user = userLocalService.getUser(userId);
@@ -61,7 +63,27 @@ public class FragmentEntryLocalServiceImpl
 
 		fragmentEntryPersistence.update(fragmentEntry);
 
+		// Resources
+
 		resourceLocalService.addModelResources(fragmentEntry, serviceContext);
+
+		return fragmentEntry;
+	}
+
+	@Override
+	public FragmentEntry deleteFragmentEntry(FragmentEntry fragmentEntry)
+		throws PortalException {
+
+		// Entry
+
+		fragmentEntryPersistence.remove(fragmentEntry);
+
+		// Resources
+
+		resourceLocalService.deleteResource(
+			fragmentEntry.getCompanyId(), FragmentEntry.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			fragmentEntry.getFragmentEntryId());
 
 		return fragmentEntry;
 	}
@@ -72,14 +94,7 @@ public class FragmentEntryLocalServiceImpl
 
 		FragmentEntry fragmentEntry = getFragmentEntry(fragmentEntryId);
 
-		resourceLocalService.deleteResource(
-			fragmentEntry.getCompanyId(), FragmentEntry.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			fragmentEntry.getFragmentEntryId());
-
-		fragmentEntryPersistence.remove(fragmentEntry);
-
-		return fragmentEntry;
+		return deleteFragmentEntry(fragmentEntry);
 	}
 
 	@Override

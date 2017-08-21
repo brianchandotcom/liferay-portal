@@ -40,6 +40,8 @@ public class FragmentCollectionLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		// Collection
+
 		validate(groupId, name);
 
 		User user = userLocalService.getUser(userId);
@@ -58,8 +60,30 @@ public class FragmentCollectionLocalServiceImpl
 
 		fragmentCollectionPersistence.update(fragmentCollection);
 
+		// Resources
+
 		resourceLocalService.addModelResources(
 			fragmentCollection, serviceContext);
+
+		return fragmentCollection;
+	}
+
+	@Override
+	public FragmentCollection deleteFragmentCollection(
+			FragmentCollection fragmentCollection)
+		throws PortalException {
+
+		// Collection
+
+		fragmentCollectionPersistence.remove(fragmentCollection);
+
+		// Resources
+
+		resourceLocalService.deleteResource(
+			fragmentCollection.getCompanyId(),
+			FragmentCollection.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			fragmentCollection.getFragmentCollectionId());
 
 		return fragmentCollection;
 	}
@@ -72,15 +96,7 @@ public class FragmentCollectionLocalServiceImpl
 		FragmentCollection fragmentCollection = getFragmentCollection(
 			fragmentCollectionId);
 
-		resourceLocalService.deleteResource(
-			fragmentCollection.getCompanyId(),
-			FragmentCollection.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			fragmentCollection.getFragmentCollectionId());
-
-		fragmentCollectionPersistence.remove(fragmentCollection);
-
-		return fragmentCollection;
+		return deleteFragmentCollection(fragmentCollection);
 	}
 
 	@Override

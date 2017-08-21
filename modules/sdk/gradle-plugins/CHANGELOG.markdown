@@ -2175,6 +2175,10 @@ version 1.0.163.
 ## 3.4.34 - 2017-08-21
 
 ### Changed
+- [LPS-74155]: Update the [Liferay Gradle Plugins Service Builder] dependency
+to version 1.0.48.
+- [LPS-74155]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.164.
 - [LPS-74250]: Update the [Liferay Gradle Plugins Lang Builder] dependency to
 version 2.1.0.
 - [LPS-74250]: Update the [Liferay Lang Builder] dependency to version 1.0.14.

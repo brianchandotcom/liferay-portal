@@ -76,7 +76,7 @@ public interface MBMessageService extends BaseService {
 		java.lang.String format, java.lang.String fileName, File file,
 		boolean anonymous, double priority, boolean allowPingbacks,
 		ServiceContext serviceContext)
-		throws PortalException, FileNotFoundException;
+		throws FileNotFoundException, PortalException;
 
 	public MBMessage addMessage(long categoryId, java.lang.String subject,
 		java.lang.String body, ServiceContext serviceContext)

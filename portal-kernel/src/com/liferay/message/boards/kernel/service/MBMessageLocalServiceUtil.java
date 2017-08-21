@@ -115,8 +115,8 @@ public class MBMessageLocalServiceUtil {
 		java.lang.String format, java.lang.String fileName, java.io.File file,
 		boolean anonymous, double priority, boolean allowPingbacks,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			java.io.FileNotFoundException {
+		throws java.io.FileNotFoundException,
+			com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addMessage(userId, userName, groupId, categoryId, subject,
 			body, format, fileName, file, anonymous, priority, allowPingbacks,

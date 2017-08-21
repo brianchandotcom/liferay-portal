@@ -119,7 +119,7 @@ public interface MBMessageLocalService extends BaseLocalService,
 		java.lang.String body, java.lang.String format,
 		java.lang.String fileName, File file, boolean anonymous,
 		double priority, boolean allowPingbacks, ServiceContext serviceContext)
-		throws PortalException, FileNotFoundException;
+		throws FileNotFoundException, PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #addMessage(long, String,

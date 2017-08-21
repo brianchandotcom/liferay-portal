@@ -14,12 +14,9 @@
 
 package com.liferay.modern.site.building.fragment.service.permission;
 
-import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.modern.site.building.fragment.model.FragmentEntry;
 import com.liferay.modern.site.building.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -122,29 +119,18 @@ public class FragmentEntryPermission implements BaseModelPermissionChecker {
 		PermissionChecker permissionChecker, FragmentEntry fragmentEntry,
 		String actionId) {
 
-		String portletId = PortletProviderUtil.getPortletId(
-			FragmentEntry.class.getName(), PortletProvider.Action.EDIT);
-
-		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, fragmentEntry.getGroupId(),
-			FragmentEntry.class.getName(), fragmentEntry.getFragmentEntryId(),
-			portletId, actionId);
-
-		if (hasPermission != null) {
-			return hasPermission.booleanValue();
-		}
-
 		if (permissionChecker.hasOwnerPermission(
 				fragmentEntry.getCompanyId(), FragmentEntry.class.getName(),
 				fragmentEntry.getFragmentCollectionId(),
-				fragmentEntry.getUserId(), actionId)) {
+				fragmentEntry.getUserId(), actionId) ||
+			permissionChecker.hasPermission(
+				fragmentEntry.getGroupId(), FragmentEntry.class.getName(),
+				fragmentEntry.getFragmentEntryId(), actionId)) {
 
 			return true;
 		}
 
-		return permissionChecker.hasPermission(
-			fragmentEntry.getGroupId(), FragmentEntry.class.getName(),
-			fragmentEntry.getFragmentEntryId(), actionId);
+		return false;
 	}
 
 	private static class PermissionCacheKey {

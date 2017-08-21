@@ -14,12 +14,9 @@
 
 package com.liferay.modern.site.building.fragment.service.permission;
 
-import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.modern.site.building.fragment.model.FragmentCollection;
 import com.liferay.modern.site.building.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -126,30 +123,19 @@ public class FragmentCollectionPermission
 		PermissionChecker permissionChecker,
 		FragmentCollection fragmentCollection, String actionId) {
 
-		String portletId = PortletProviderUtil.getPortletId(
-			FragmentCollection.class.getName(), PortletProvider.Action.EDIT);
-
-		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, fragmentCollection.getGroupId(),
-			FragmentCollection.class.getName(),
-			fragmentCollection.getFragmentCollectionId(), portletId, actionId);
-
-		if (hasPermission != null) {
-			return hasPermission.booleanValue();
-		}
-
 		if (permissionChecker.hasOwnerPermission(
 				fragmentCollection.getCompanyId(),
 				FragmentCollection.class.getName(),
 				fragmentCollection.getFragmentCollectionId(),
-				fragmentCollection.getUserId(), actionId)) {
+				fragmentCollection.getUserId(), actionId) ||
+			permissionChecker.hasPermission(
+				fragmentCollection.getGroupId(), FragmentCollection.class.getName(),
+				fragmentCollection.getFragmentCollectionId(), actionId)) {
 
 			return true;
 		}
 
-		return permissionChecker.hasPermission(
-			fragmentCollection.getGroupId(), FragmentCollection.class.getName(),
-			fragmentCollection.getFragmentCollectionId(), actionId);
+		return false;
 	}
 
 	private static class PermissionCacheKey {

@@ -74,6 +74,21 @@ create table CommerceOrderItem (
 	json VARCHAR(75) null
 );
 
+create table CommercePaymentMethod (
+	commercePaymentMethodId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	name STRING null,
+	description STRING null,
+	engineKey VARCHAR(75) null,
+	priority DOUBLE,
+	active_ BOOLEAN
+);
+
 create table CommerceRegion (
 	uuid_ VARCHAR(75) null,
 	commerceRegionId LONG not null primary key,

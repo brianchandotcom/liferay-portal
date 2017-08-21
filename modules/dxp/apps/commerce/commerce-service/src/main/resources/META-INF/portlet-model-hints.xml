@@ -84,6 +84,20 @@
 		<field name="quantity" type="int" />
 		<field name="json" type="String" />
 	</model>
+	<model name="com.liferay.commerce.model.CommercePaymentMethod">
+		<field name="commercePaymentMethodId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field localized="true" name="name" type="String" />
+		<field localized="true" name="description" type="String" />
+		<field name="engineKey" type="String" />
+		<field name="priority" type="double" />
+		<field name="active" type="boolean" />
+	</model>
 	<model name="com.liferay.commerce.model.CommerceRegion">
 		<field name="uuid" type="String" />
 		<field name="commerceRegionId" type="long" />

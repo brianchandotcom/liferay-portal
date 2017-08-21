@@ -21,6 +21,7 @@ import com.liferay.commerce.service.persistence.CommerceCartPersistence;
 import com.liferay.commerce.service.persistence.CommerceCountryPersistence;
 import com.liferay.commerce.service.persistence.CommerceOrderItemPersistence;
 import com.liferay.commerce.service.persistence.CommerceOrderPersistence;
+import com.liferay.commerce.service.persistence.CommercePaymentMethodPersistence;
 import com.liferay.commerce.service.persistence.CommerceRegionPersistence;
 
 import com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence;
@@ -343,6 +344,63 @@ public abstract class CommerceCartItemServiceBaseImpl extends BaseServiceImpl
 	public void setCommerceOrderItemPersistence(
 		CommerceOrderItemPersistence commerceOrderItemPersistence) {
 		this.commerceOrderItemPersistence = commerceOrderItemPersistence;
+	}
+
+	/**
+	 * Returns the commerce payment method local service.
+	 *
+	 * @return the commerce payment method local service
+	 */
+	public com.liferay.commerce.service.CommercePaymentMethodLocalService getCommercePaymentMethodLocalService() {
+		return commercePaymentMethodLocalService;
+	}
+
+	/**
+	 * Sets the commerce payment method local service.
+	 *
+	 * @param commercePaymentMethodLocalService the commerce payment method local service
+	 */
+	public void setCommercePaymentMethodLocalService(
+		com.liferay.commerce.service.CommercePaymentMethodLocalService commercePaymentMethodLocalService) {
+		this.commercePaymentMethodLocalService = commercePaymentMethodLocalService;
+	}
+
+	/**
+	 * Returns the commerce payment method remote service.
+	 *
+	 * @return the commerce payment method remote service
+	 */
+	public com.liferay.commerce.service.CommercePaymentMethodService getCommercePaymentMethodService() {
+		return commercePaymentMethodService;
+	}
+
+	/**
+	 * Sets the commerce payment method remote service.
+	 *
+	 * @param commercePaymentMethodService the commerce payment method remote service
+	 */
+	public void setCommercePaymentMethodService(
+		com.liferay.commerce.service.CommercePaymentMethodService commercePaymentMethodService) {
+		this.commercePaymentMethodService = commercePaymentMethodService;
+	}
+
+	/**
+	 * Returns the commerce payment method persistence.
+	 *
+	 * @return the commerce payment method persistence
+	 */
+	public CommercePaymentMethodPersistence getCommercePaymentMethodPersistence() {
+		return commercePaymentMethodPersistence;
+	}
+
+	/**
+	 * Sets the commerce payment method persistence.
+	 *
+	 * @param commercePaymentMethodPersistence the commerce payment method persistence
+	 */
+	public void setCommercePaymentMethodPersistence(
+		CommercePaymentMethodPersistence commercePaymentMethodPersistence) {
+		this.commercePaymentMethodPersistence = commercePaymentMethodPersistence;
 	}
 
 	/**
@@ -669,6 +727,12 @@ public abstract class CommerceCartItemServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.commerce.service.CommerceOrderItemService commerceOrderItemService;
 	@BeanReference(type = CommerceOrderItemPersistence.class)
 	protected CommerceOrderItemPersistence commerceOrderItemPersistence;
+	@BeanReference(type = com.liferay.commerce.service.CommercePaymentMethodLocalService.class)
+	protected com.liferay.commerce.service.CommercePaymentMethodLocalService commercePaymentMethodLocalService;
+	@BeanReference(type = com.liferay.commerce.service.CommercePaymentMethodService.class)
+	protected com.liferay.commerce.service.CommercePaymentMethodService commercePaymentMethodService;
+	@BeanReference(type = CommercePaymentMethodPersistence.class)
+	protected CommercePaymentMethodPersistence commercePaymentMethodPersistence;
 	@BeanReference(type = com.liferay.commerce.service.CommerceRegionLocalService.class)
 	protected com.liferay.commerce.service.CommerceRegionLocalService commerceRegionLocalService;
 	@BeanReference(type = com.liferay.commerce.service.CommerceRegionService.class)

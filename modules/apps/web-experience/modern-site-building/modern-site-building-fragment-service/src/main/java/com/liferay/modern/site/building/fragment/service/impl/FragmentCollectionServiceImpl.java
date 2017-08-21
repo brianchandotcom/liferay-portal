@@ -31,26 +31,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The implementation of the fragment collection remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.modern.site.building.fragment.service.FragmentCollectionService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see FragmentCollectionServiceBaseImpl
- * @see com.liferay.modern.site.building.fragment.service.FragmentCollectionServiceUtil
+ * @author Jürgen Kappler
  */
 public class FragmentCollectionServiceImpl
 	extends FragmentCollectionServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.modern.site.building.fragment.service.FragmentCollectionServiceUtil} to access the fragment collection remote service.
-	 */
 
 	@Override
 	public FragmentCollection addFragmentCollection(

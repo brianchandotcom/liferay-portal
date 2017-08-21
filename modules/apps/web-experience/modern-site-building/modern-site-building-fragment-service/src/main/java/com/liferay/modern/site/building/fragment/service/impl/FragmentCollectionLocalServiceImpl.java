@@ -30,26 +30,10 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.List;
 
 /**
- * The implementation of the fragment collection local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.modern.site.building.fragment.service.FragmentCollectionLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see FragmentCollectionLocalServiceBaseImpl
- * @see com.liferay.modern.site.building.fragment.service.FragmentCollectionLocalServiceUtil
+ * @author Jürgen Kappler
  */
 public class FragmentCollectionLocalServiceImpl
 	extends FragmentCollectionLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.modern.site.building.fragment.service.FragmentCollectionLocalServiceUtil} to access the fragment collection local service.
-	 */
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override

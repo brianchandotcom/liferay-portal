@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCap
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
+import com.liferay.portal.kernel.scheduler.SchedulerException;
+import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
@@ -55,9 +57,8 @@ import org.osgi.service.component.annotations.Reference;
 public class TempFileEntriesMessageListener extends BaseMessageListener {
 
 	@Activate
-	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_dlConfiguration = ConfigurableUtil.createConfigurable(
+		DLConfiguration dlConfiguration = ConfigurableUtil.createConfigurable(
 			DLConfiguration.class, properties);
 
 		Class<?> clazz = getClass();
@@ -66,8 +67,7 @@ public class TempFileEntriesMessageListener extends BaseMessageListener {
 
 		Trigger trigger = _triggerFactory.createTrigger(
 			className, className, null, null,
-			_dlConfiguration.temporaryFileEntriesCheckInterval(),
-			TimeUnit.HOUR);
+			dlConfiguration.temporaryFileEntriesCheckInterval(), TimeUnit.HOUR);
 
 		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
 			className, trigger);
@@ -139,6 +139,24 @@ public class TempFileEntriesMessageListener extends BaseMessageListener {
 		actionableDynamicQuery.performActions();
 	}
 
+	@Modified
+	protected void modified(Map<String, Object> properties)
+		throws SchedulerException {
+
+		DLConfiguration dlConfiguration = ConfigurableUtil.createConfigurable(
+			DLConfiguration.class, properties);
+
+		Class<?> clazz = getClass();
+
+		String className = clazz.getName();
+
+		Trigger trigger = _triggerFactory.createTrigger(
+			className, className, null, null,
+			dlConfiguration.temporaryFileEntriesCheckInterval(), TimeUnit.HOUR);
+
+		_schedulerEngineHelper.update(trigger, StorageType.MEMORY_CLUSTERED);
+	}
+
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
@@ -172,7 +190,6 @@ public class TempFileEntriesMessageListener extends BaseMessageListener {
 	private static final Log _log = LogFactoryUtil.getLog(
 		TempFileEntriesMessageListener.class);
 
-	private volatile DLConfiguration _dlConfiguration;
 	private RepositoryLocalService _repositoryLocalService;
 	private RepositoryProvider _repositoryProvider;
 	private SchedulerEngineHelper _schedulerEngineHelper;

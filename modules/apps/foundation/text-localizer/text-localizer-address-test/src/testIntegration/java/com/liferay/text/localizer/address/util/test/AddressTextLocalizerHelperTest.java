@@ -73,11 +73,11 @@ public class AddressTextLocalizerHelperTest {
 
 	@Test
 	public void testFormatWithTheCorrectLocalizer() {
-		AddressTextLocalizer localizer =
+		AddressTextLocalizer addressTextLocalizer =
 			AddressTextLocalizerHelper.getAddressTextLocalizer(_address);
 
 		Assert.assertEquals(
-			localizer.format(_address),
+			addressTextLocalizer.format(_address),
 			AddressTextLocalizerHelper.format(_address));
 	}
 
@@ -94,24 +94,22 @@ public class AddressTextLocalizerHelperTest {
 			AddressTextLocalizerHelper.getAddressTextLocalizer(
 				"US") instanceof USAddressTextLocalizer);
 
-		String testCountryA2 = RandomTestUtil.randomString();
-		String testFormattedString = RandomTestUtil.randomString();
+		String countryA2 = RandomTestUtil.randomString();
+		String formattedString = RandomTestUtil.randomString();
 
-		AddressTextLocalizer testAddressTextLocalizer =
-			address -> testFormattedString;
+		AddressTextLocalizer addressTextLocalizer = address -> formattedString;
 
 		_serviceRegistration = _registerAddressTextLocalizer(
-			testAddressTextLocalizer, testCountryA2);
+			addressTextLocalizer, countryA2);
 
 		AddressTextLocalizer retrievedAddressTextLocalizer =
-			AddressTextLocalizerHelper.getAddressTextLocalizer(testCountryA2);
+			AddressTextLocalizerHelper.getAddressTextLocalizer(countryA2);
 
 		Assert.assertEquals(
-			testAddressTextLocalizer, retrievedAddressTextLocalizer);
+			addressTextLocalizer, retrievedAddressTextLocalizer);
 
 		Assert.assertEquals(
-			testFormattedString,
-			retrievedAddressTextLocalizer.format(_address));
+			formattedString, retrievedAddressTextLocalizer.format(_address));
 	}
 
 	private Address _addAddress(User user) throws Exception {
@@ -127,13 +125,13 @@ public class AddressTextLocalizerHelperTest {
 	private ServiceRegistration<?> _registerAddressTextLocalizer(
 		AddressTextLocalizer addressTextLocalizer, String countryA2) {
 
-		Dictionary<String, String> properties = new HashMapDictionary<>();
+		Dictionary<String, String> dictionary = new HashMapDictionary<>();
 
-		properties.put("country", countryA2);
+		dictionary.put("country", countryA2);
 
 		return _bundleContext.registerService(
 			AddressTextLocalizer.class.getName(), addressTextLocalizer,
-			properties);
+			dictionary);
 	}
 
 	private static final BundleContext _bundleContext;

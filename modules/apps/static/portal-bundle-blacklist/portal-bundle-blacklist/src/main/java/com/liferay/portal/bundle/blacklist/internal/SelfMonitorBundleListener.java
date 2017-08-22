@@ -94,6 +94,8 @@ public class SelfMonitorBundleListener implements BundleListener {
 
 		try {
 			classLoader.loadClass(BundleStartLevelUtil.class.getName());
+			classLoader.loadClass(BundleUtil.class.getName());
+			classLoader.loadClass(ParamUtil.class.getName());
 		}
 		catch (ClassNotFoundException cnfe) {
 			throw new ExceptionInInitializerError(cnfe);

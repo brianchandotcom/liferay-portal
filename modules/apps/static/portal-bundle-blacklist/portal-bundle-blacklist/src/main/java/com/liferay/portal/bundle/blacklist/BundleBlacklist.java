@@ -184,10 +184,6 @@ public class BundleBlacklist {
 	private Map<String, String[]> _getParameterMap(String string) {
 		Map<String, String[]> parameterMap = new LinkedHashMap<>();
 
-		if (Validator.isNull(string)) {
-			return parameterMap;
-		}
-
 		int pos = string.indexOf(CharPool.QUESTION);
 
 		if (pos == -1) {

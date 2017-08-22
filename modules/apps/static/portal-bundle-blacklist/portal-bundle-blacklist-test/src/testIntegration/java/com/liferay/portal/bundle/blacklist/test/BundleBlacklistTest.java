@@ -174,7 +174,7 @@ public class BundleBlacklistTest {
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-		//Blacklist WAR wrapper
+		// Blacklist WAR wrapper
 
 		properties.put(
 			_PROP_KEY, new String[] {warWrapperBundle.getSymbolicName()});
@@ -204,7 +204,7 @@ public class BundleBlacklistTest {
 		Assert.assertEquals(
 			"WAR bundle not reinstalled", Bundle.ACTIVE, warBundle.getState());
 
-		//Blacklist WAR
+		// Blacklist WAR
 
 		properties.put(_PROP_KEY, new String[] {warBundle.getSymbolicName()});
 
@@ -223,7 +223,7 @@ public class BundleBlacklistTest {
 		Assert.assertEquals(
 			"WAR bundle not reinstalled", Bundle.ACTIVE, warBundle.getState());
 
-		//Blacklist JAR
+		// Blacklist JAR
 
 		properties.put(_PROP_KEY, new String[] {jarBundle.getSymbolicName()});
 
@@ -242,7 +242,7 @@ public class BundleBlacklistTest {
 		Assert.assertEquals(
 			"JAR bundle not reinstalled", Bundle.ACTIVE, jarBundle.getState());
 
-		//Blacklist LPKG
+		// Blacklist LPKG
 
 		properties.put(_PROP_KEY, new String[] {lpkgBundle.getSymbolicName()});
 

@@ -116,19 +116,21 @@ public class UpgradeMDRRuleGroupInstance extends UpgradeProcess {
 	}
 
 	public void populateResourcePermissions() throws Exception {
-		StringBundler sb = new StringBundler();
+		StringBundler sb1 = new StringBundler();
 
-		sb.append("select MDRRuleGroupInstance.companyId, ");
-		sb.append("MDRRuleGroupInstance.ruleGroupInstanceId, ");
-		sb.append("MDRRuleGroupInstance.userId from MDRRuleGroupInstance ");
-		sb.append("where not exists (select 1 from ResourcePermission where ");
-		sb.append("(MDRRuleGroupInstance.companyId = ResourcePermission.");
-		sb.append("companyId) and (MDRRuleGroupInstance.ruleGroupInstanceId =");
-		sb.append("ResourcePermission.primKeyId) and (MDRRuleGroupInstance.");
-		sb.append("userId = ResourcePermission.ownerId) and ");
-		sb.append("(ResourcePermission.name = '");
-		sb.append("com.liferay.mobile.device.rules.model.MDRRuleGroupInstance");
-		sb.append("'))");
+		sb1.append("select MDRRuleGroupInstance.companyId, ");
+		sb1.append("MDRRuleGroupInstance.ruleGroupInstanceId, ");
+		sb1.append("MDRRuleGroupInstance.userId from MDRRuleGroupInstance ");
+		sb1.append("where not exists (select 1 from ResourcePermission where ");
+		sb1.append("(MDRRuleGroupInstance.companyId = ResourcePermission.");
+		sb1.append(
+			"companyId) and (MDRRuleGroupInstance.ruleGroupInstanceId = ");
+		sb1.append("ResourcePermission.primKeyId) and (MDRRuleGroupInstance.");
+		sb1.append("userId = ResourcePermission.ownerId) and ");
+		sb1.append("(ResourcePermission.name = '");
+		sb1.append(
+			"com.liferay.mobile.device.rules.model.MDRRuleGroupInstance");
+		sb1.append("'))");
 
 		StringBundler sb2 = new StringBundler();
 
@@ -143,7 +145,8 @@ public class UpgradeMDRRuleGroupInstance extends UpgradeProcess {
 
 		long actionIds = getActionIds(className);
 
-		try (PreparedStatement ps1 = connection.prepareStatement(sb.toString());
+		try (PreparedStatement ps1 = connection.prepareStatement(
+				sb1.toString());
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection, sb2.toString());

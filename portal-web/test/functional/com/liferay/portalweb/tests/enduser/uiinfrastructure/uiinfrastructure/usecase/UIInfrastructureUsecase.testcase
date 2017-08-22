@@ -35,7 +35,7 @@
 
 		<execute macro="ProductMenuHelper#openProductMenu" />
 
-		<execute macro="Page#assertRTLLayout" />
+		<execute macro="Page#viewRTLLayout" />
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
 			<var name="language" value="English (United States)" />

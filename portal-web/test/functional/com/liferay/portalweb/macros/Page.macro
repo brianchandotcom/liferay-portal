@@ -347,14 +347,6 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Home#NODE_NAME" value1="${nodePort}" />
 	</command>
 
-	<command name="assertRTLLayout">
-		<execute function="AssertCssValue" locator1="Home#SITE_NAME" locator2="margin-right" value1="20px" />
-
-		<execute function="AssertCssValue" locator1="ProductMenu#TOGGLE" locator2="text-align" value1="right" />
-
-		<execute function="AssertCssValue" locator1="ProductMenu#PRODUCT_MENU_OPENED" locator2="right" value1="0px" />
-	</command>
-
 	<command name="changeCurrentTheme">
 		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="${page}" />
@@ -1229,6 +1221,12 @@
 
 			<execute function="AssertTextEquals" locator1="Panel#MENU_ITEM" value1="${portletName}" />
 		</for>
+	</command>
+
+	<command name="viewRTLLayout">
+		<execute function="AssertCssValue" locator1="Home#SITE_NAME" locator2="margin-right" value1="20px" />
+		<execute function="AssertCssValue" locator1="ProductMenu#TOGGLE" locator2="text-align" value1="right" />
+		<execute function="AssertCssValue" locator1="ProductMenu#PRODUCT_MENU_OPENED" locator2="right" value1="0px" />
 	</command>
 
 	<command name="viewSelectedLayoutColumn">

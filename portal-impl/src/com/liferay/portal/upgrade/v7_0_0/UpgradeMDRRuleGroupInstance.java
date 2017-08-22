@@ -128,8 +128,7 @@ public class UpgradeMDRRuleGroupInstance extends UpgradeProcess {
 		sb1.append("ResourcePermission.primKeyId) and (MDRRuleGroupInstance.");
 		sb1.append("userId = ResourcePermission.ownerId) and ");
 		sb1.append("(ResourcePermission.name = '");
-		sb1.append(
-			"com.liferay.mobile.device.rules.model.MDRRuleGroupInstance");
+		sb1.append(_MDR_RULE_GROUP_INSTANCE);
 		sb1.append("'))");
 
 		StringBundler sb2 = new StringBundler();
@@ -139,11 +138,9 @@ public class UpgradeMDRRuleGroupInstance extends UpgradeProcess {
 		sb2.append("ownerId, actionIds, viewActionId) values (?, ?, ?, ?, ?, ");
 		sb2.append("?, ?, ?, ?, ?)");
 
-		String className =
-			"com.liferay.mobile.device.rules.model.MDRRuleGroupInstance";
 		Map<Long, Long> ownerRoleIds = getOwnerRoleIds();
 
-		long actionIds = getActionIds(className);
+		long actionIds = getActionIds(_MDR_RULE_GROUP_INSTANCE);
 
 		try (PreparedStatement ps1 = connection.prepareStatement(
 				sb1.toString());
@@ -159,7 +156,7 @@ public class UpgradeMDRRuleGroupInstance extends UpgradeProcess {
 
 				ps2.setLong(1, increment(ResourcePermission.class.getName()));
 				ps2.setLong(2, companyId);
-				ps2.setString(3, className);
+				ps2.setString(3, _MDR_RULE_GROUP_INSTANCE);
 				ps2.setInt(4, 4);
 				ps2.setString(5, String.valueOf(ruleGroupInstanceId));
 				ps2.setLong(6, ruleGroupInstanceId);
@@ -174,5 +171,8 @@ public class UpgradeMDRRuleGroupInstance extends UpgradeProcess {
 			ps2.executeBatch();
 		}
 	}
+
+	private static final String _MDR_RULE_GROUP_INSTANCE =
+		"com.liferay.mobile.device.rules.model.MDRRuleGroupInstance";
 
 }

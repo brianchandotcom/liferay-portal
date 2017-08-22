@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.asset.util.impl.AssetUtil;
 import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -39,7 +40,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portlet.asset.util.AssetUtil;
 
 import java.util.ArrayList;
 import java.util.List;

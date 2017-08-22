@@ -6,12 +6,8 @@ Export-Package:\
 	com.microsoft.schemas.sharepoint.soap;-split-package:=merge-first,\
 	com.microsoft.schemas.sharepoint.soap.holders,\
 	com.microsoft.webservices.SharePoint.QueryService
-Include-Resource:\
-	wsdl/copy.wsdl,\
-	wsdl/lists.wsdl,\
-	wsdl/search.wsdl,\
-	wsdl/versions.wsdl
 -includeresource:\
+	wsdl=wsdl,\
 	@lib/copy-ws.jar,\
 	@lib/lists-ws.jar,\
 	@lib/search-ws.jar,\

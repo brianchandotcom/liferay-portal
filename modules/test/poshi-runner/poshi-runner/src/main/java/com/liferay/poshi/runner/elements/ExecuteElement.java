@@ -28,36 +28,6 @@ import org.dom4j.Element;
  */
 public class ExecuteElement extends PoshiElement {
 
-	public static final String ELEMENT_NAME = "execute";
-
-	static {
-		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
-
-			@Override
-			public PoshiElement newPoshiElement(Element element) {
-				if (isElementType(ELEMENT_NAME, element)) {
-					return new ExecuteElement(element);
-				}
-
-				return null;
-			}
-
-			@Override
-			public PoshiElement newPoshiElement(
-				PoshiElement parentPoshiElement, String readableSyntax) {
-
-				if (isElementType(parentPoshiElement, readableSyntax)) {
-					return new ExecuteElement(readableSyntax);
-				}
-
-				return null;
-			}
-
-		};
-
-		PoshiElement.addPoshiElementFactory(poshiElementFactory);
-	}
-
 	public static boolean isElementType(
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
@@ -250,7 +220,37 @@ public class ExecuteElement extends PoshiElement {
 		return attributeValue("macro");
 	}
 
+	private static final String _ELEMENT_NAME = "execute";
+
 	private static final Pattern _assignmentPattern = Pattern.compile(
 		"([^,]*? = \".*?\")");
+
+	static {
+		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
+
+			@Override
+			public PoshiElement newPoshiElement(Element element) {
+				if (isElementType(_ELEMENT_NAME, element)) {
+					return new ExecuteElement(element);
+				}
+
+				return null;
+			}
+
+			@Override
+			public PoshiElement newPoshiElement(
+				PoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new ExecuteElement(readableSyntax);
+				}
+
+				return null;
+			}
+
+		};
+
+		PoshiElement.addPoshiElementFactory(poshiElementFactory);
+	}
 
 }

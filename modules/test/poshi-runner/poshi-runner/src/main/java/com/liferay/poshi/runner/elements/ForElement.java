@@ -24,36 +24,6 @@ import org.dom4j.Element;
  */
 public class ForElement extends PoshiElement {
 
-	public static final String ELEMENT_NAME = "for";
-
-	static {
-		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
-
-			@Override
-			public PoshiElement newPoshiElement(Element element) {
-				if (isElementType(ELEMENT_NAME, element)) {
-					return new ForElement(element);
-				}
-
-				return null;
-			}
-
-			@Override
-			public PoshiElement newPoshiElement(
-				PoshiElement parentPoshiElement, String readableSyntax) {
-
-				if (isElementType(parentPoshiElement, readableSyntax)) {
-					return new ForElement(readableSyntax);
-				}
-
-				return null;
-			}
-
-		};
-
-		PoshiElement.addPoshiElementFactory(poshiElementFactory);
-	}
-
 	public static boolean isElementType(
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
@@ -121,11 +91,11 @@ public class ForElement extends PoshiElement {
 	}
 
 	protected ForElement(Element element) {
-		super(ELEMENT_NAME, element);
+		super(_ELEMENT_NAME, element);
 	}
 
 	protected ForElement(String readableSyntax) {
-		super(ELEMENT_NAME, readableSyntax);
+		super(_ELEMENT_NAME, readableSyntax);
 	}
 
 	protected List<String> getReadableBlocks(String readableSyntax) {
@@ -157,6 +127,36 @@ public class ForElement extends PoshiElement {
 		}
 
 		return readableBlocks;
+	}
+
+	private static final String _ELEMENT_NAME = "for";
+
+	static {
+		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
+
+			@Override
+			public PoshiElement newPoshiElement(Element element) {
+				if (isElementType(_ELEMENT_NAME, element)) {
+					return new ForElement(element);
+				}
+
+				return null;
+			}
+
+			@Override
+			public PoshiElement newPoshiElement(
+				PoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new ForElement(readableSyntax);
+				}
+
+				return null;
+			}
+
+		};
+
+		PoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 }

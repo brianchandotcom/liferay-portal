@@ -21,36 +21,6 @@ import org.dom4j.Element;
  */
 public class SetUpElement extends CommandElement {
 
-	public static final String ELEMENT_NAME = "set-up";
-
-	static {
-		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
-
-			@Override
-			public PoshiElement newPoshiElement(Element element) {
-				if (isElementType(ELEMENT_NAME, element)) {
-					return new SetUpElement(element);
-				}
-
-				return null;
-			}
-
-			@Override
-			public PoshiElement newPoshiElement(
-				PoshiElement parentPoshiElement, String readableSyntax) {
-
-				if (isElementType(parentPoshiElement, readableSyntax)) {
-					return new SetUpElement(readableSyntax);
-				}
-
-				return null;
-			}
-
-		};
-
-		PoshiElement.addPoshiElementFactory(poshiElementFactory);
-	}
-
 	public static boolean isElementType(
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
@@ -82,16 +52,46 @@ public class SetUpElement extends CommandElement {
 	}
 
 	protected SetUpElement(Element element) {
-		super(ELEMENT_NAME, element);
+		super(_ELEMENT_NAME, element);
 	}
 
 	protected SetUpElement(String readableSyntax) {
-		super(ELEMENT_NAME, readableSyntax);
+		super(_ELEMENT_NAME, readableSyntax);
 	}
 
 	@Override
 	protected String getReadableCommandTitle() {
 		return "setUp";
+	}
+
+	private static final String _ELEMENT_NAME = "set-up";
+
+	static {
+		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
+
+			@Override
+			public PoshiElement newPoshiElement(Element element) {
+				if (isElementType(_ELEMENT_NAME, element)) {
+					return new SetUpElement(element);
+				}
+
+				return null;
+			}
+
+			@Override
+			public PoshiElement newPoshiElement(
+				PoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new SetUpElement(readableSyntax);
+				}
+
+				return null;
+			}
+
+		};
+
+		PoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 }

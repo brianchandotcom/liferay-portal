@@ -24,36 +24,6 @@ import org.dom4j.Element;
  */
 public class DefinitionElement extends PoshiElement {
 
-	public static final String ELEMENT_NAME = "definition";
-
-	static {
-		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
-
-			@Override
-			public PoshiElement newPoshiElement(Element element) {
-				if (isElementType(ELEMENT_NAME, element)) {
-					return new DefinitionElement(element);
-				}
-
-				return null;
-			}
-
-			@Override
-			public PoshiElement newPoshiElement(
-				PoshiElement parentPoshiElement, String readableSyntax) {
-
-				if (isElementType(parentPoshiElement, readableSyntax)) {
-					return new DefinitionElement(readableSyntax);
-				}
-
-				return null;
-			}
-
-		};
-
-		PoshiElement.addPoshiElementFactory(poshiElementFactory);
-	}
-
 	public static boolean isElementType(
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
@@ -156,11 +126,11 @@ public class DefinitionElement extends PoshiElement {
 	}
 
 	protected DefinitionElement(Element element) {
-		super(ELEMENT_NAME, element);
+		super(_ELEMENT_NAME, element);
 	}
 
 	protected DefinitionElement(String readableSyntax) {
-		super(ELEMENT_NAME, readableSyntax);
+		super(_ELEMENT_NAME, readableSyntax);
 	}
 
 	@Override
@@ -229,6 +199,36 @@ public class DefinitionElement extends PoshiElement {
 		}
 
 		return false;
+	}
+
+	private static final String _ELEMENT_NAME = "definition";
+
+	static {
+		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
+
+			@Override
+			public PoshiElement newPoshiElement(Element element) {
+				if (isElementType(_ELEMENT_NAME, element)) {
+					return new DefinitionElement(element);
+				}
+
+				return null;
+			}
+
+			@Override
+			public PoshiElement newPoshiElement(
+				PoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new DefinitionElement(readableSyntax);
+				}
+
+				return null;
+			}
+
+		};
+
+		PoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 }

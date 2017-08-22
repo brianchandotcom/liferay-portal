@@ -21,14 +21,54 @@ import org.dom4j.Element;
  */
 public class ConditionElement extends ExecuteElement {
 
-	public static final String ELEMENT_NAME = "condition";
+	public static boolean isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (parentPoshiElement instanceof IfElement &&
+			readableSyntax.endsWith(")") &&
+			!readableSyntax.startsWith("isSet(")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public String getBlockName() {
+		return attributeValue("function");
+	}
+
+	protected ConditionElement(Element element) {
+		super(_ELEMENT_NAME, element);
+	}
+
+	protected ConditionElement(String readableSyntax) {
+		super(_ELEMENT_NAME, readableSyntax);
+	}
+
+	@Override
+	protected String createReadableBlock(String content) {
+		String readableBlock = super.createReadableBlock(content);
+
+		readableBlock = readableBlock.trim();
+
+		if (readableBlock.endsWith(";")) {
+			readableBlock = readableBlock.substring(
+				0, readableBlock.length() - 1);
+		}
+
+		return readableBlock;
+	}
+
+	private static final String _ELEMENT_NAME = "condition";
 
 	static {
 		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
 
 			@Override
 			public PoshiElement newPoshiElement(Element element) {
-				if (isElementType(ELEMENT_NAME, element)) {
+				if (isElementType(_ELEMENT_NAME, element)) {
 					return new ConditionElement(element);
 				}
 
@@ -49,46 +89,6 @@ public class ConditionElement extends ExecuteElement {
 		};
 
 		PoshiElement.addPoshiElementFactory(poshiElementFactory);
-	}
-
-	public static boolean isElementType(
-		PoshiElement parentPoshiElement, String readableSyntax) {
-
-		if (parentPoshiElement instanceof IfElement &&
-			readableSyntax.endsWith(")") &&
-			!readableSyntax.startsWith("isSet(")) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public String getBlockName() {
-		return attributeValue("function");
-	}
-
-	protected ConditionElement(Element element) {
-		super(ELEMENT_NAME, element);
-	}
-
-	protected ConditionElement(String readableSyntax) {
-		super(ELEMENT_NAME, readableSyntax);
-	}
-
-	@Override
-	protected String createReadableBlock(String content) {
-		String readableBlock = super.createReadableBlock(content);
-
-		readableBlock = readableBlock.trim();
-
-		if (readableBlock.endsWith(";")) {
-			readableBlock = readableBlock.substring(
-				0, readableBlock.length() - 1);
-		}
-
-		return readableBlock;
 	}
 
 }

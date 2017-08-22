@@ -355,7 +355,7 @@ public class BundleBlacklistTest {
 
 	private static final String _LPKG_NAME = "Bundle Blacklist Test";
 
-	private static final String _PROP_KEY = "blacklistBundles";
+	private static final String _PROP_KEY = "blacklistBundleSymbolicNames";
 
 	private static final String _SYMBOLIC_NAME =
 		"com.liferay.portal.bundle.blacklist.test.bundle";

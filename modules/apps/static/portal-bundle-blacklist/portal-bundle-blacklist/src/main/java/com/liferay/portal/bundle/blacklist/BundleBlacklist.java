@@ -133,8 +133,8 @@ public class BundleBlacklist {
 
 		_scanBundles();
 
-		String[] blacklistBundles =
-			_bundleBlacklistConfiguration.blacklistBundles();
+		String[] blacklistBundleSymbolicNames =
+			_bundleBlacklistConfiguration.blacklistBundleSymbolicNames();
 
 		Set<Entry<String, UninstalledBundleData>> entrySet =
 			_uninstalledBundles.entrySet();
@@ -147,7 +147,9 @@ public class BundleBlacklist {
 
 			String symbolicName = entry.getKey();
 
-			if (!ArrayUtil.contains(blacklistBundles, symbolicName)) {
+			if (!ArrayUtil.contains(
+					blacklistBundleSymbolicNames, symbolicName)) {
+
 				if (_log.isInfoEnabled()) {
 					_log.info("Reinstalling bundle " + symbolicName);
 				}
@@ -248,12 +250,12 @@ public class BundleBlacklist {
 	}
 
 	private boolean _processBundle(Bundle bundle) throws Exception {
-		String[] blacklistBundles =
-			_bundleBlacklistConfiguration.blacklistBundles();
+		String[] blacklistBundleSymbolicNames =
+			_bundleBlacklistConfiguration.blacklistBundleSymbolicNames();
 
 		String symbolicName = bundle.getSymbolicName();
 
-		if (ArrayUtil.contains(blacklistBundles, symbolicName)) {
+		if (ArrayUtil.contains(blacklistBundleSymbolicNames, symbolicName)) {
 			if (_log.isInfoEnabled()) {
 				_log.info("Stopping blacklisted bundle " + bundle);
 			}

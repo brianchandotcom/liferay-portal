@@ -27,10 +27,10 @@
 						<return name="siteName" value="${portalURL}" />
 					</then>
 					<else>
-						<var method="TestPropsUtil#get('liferay.portal.branch')" name="testPortalBranch" />
+						<var method="TestPropsUtil#get('test.run.environment')" name="testRunEnviroment" />
 
 						<if>
-							<equals arg1="${testPortalBranch}" arg2="ee-7.0.x" />
+							<equals arg1="${testRunEnviroment}" arg2="EE" />
 							<then>
 								<return name="siteName" value="Liferay DXP" />
 							</then>

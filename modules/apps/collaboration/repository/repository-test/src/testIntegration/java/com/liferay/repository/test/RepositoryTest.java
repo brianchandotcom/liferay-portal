@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.repository;
+package com.liferay.repository.test;
 
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;

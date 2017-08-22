@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.repository;
+package com.liferay.repository.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFileVersionException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
@@ -38,10 +39,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Adolfo Pérez
  */
+@RunWith(Arquillian.class)
 public class RepositoryProviderTest {
 
 	@ClassRule

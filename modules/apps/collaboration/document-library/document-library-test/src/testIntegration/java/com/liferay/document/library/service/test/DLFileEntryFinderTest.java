@@ -1475,7 +1475,8 @@ public class DLFileEntryFinderTest {
 			fileEntry.getFileEntryId(), "FE3.txt", ContentTypes.TEXT_PLAIN,
 			"FE3.txt".concat(titleSuffix), StringPool.BLANK, StringPool.BLANK,
 			false,
-			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
+			RandomTestUtil.randomBytes(
+				new TikaSafeRandomizerBumper(ContentTypes.TEXT_PLAIN)),
 			serviceContext);
 
 		dlFileEntry = ((LiferayFileEntry)fileEntry).getDLFileEntry();

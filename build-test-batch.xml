@@ -2281,6 +2281,8 @@ app.server.type=@{app.server.type}]]></echo>
 
 				<for list="${modules.compile.task.groups}" param="modules.compile.task.group" trim="true">
 					<sequential>
+						<echo>Executing Gradle tasks: @{modules.compile.task.group}.</echo>
+
 						<gradle-execute dir="modules" task="@{modules.compile.task.group}">
 							<arg value="--continue" />
 							<arg value="--parallel" />

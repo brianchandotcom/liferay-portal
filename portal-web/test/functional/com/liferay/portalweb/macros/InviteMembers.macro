@@ -15,5 +15,7 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="Button#SEND_INVITATIONS" value1="Send Invitations" />
+
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 </definition>

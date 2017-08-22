@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.lpkg.deployer.test.util.LPKGTestUtil;
+import com.liferay.portal.osgi.util.test.OSGiServiceUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -60,21 +61,12 @@ public class BundleBlacklistTest {
 
 		_bundleContext = bundle.getBundleContext();
 
-		ServiceReference<ConfigurationAdmin> serviceReference =
-			_bundleContext.getServiceReference(ConfigurationAdmin.class);
+		_bundleBlacklistConfiguration = OSGiServiceUtil.callService(
+			_bundleContext, ConfigurationAdmin.class,
+			configurationAdmin -> configurationAdmin.getConfiguration(
+				_CONFIG_NAME, null));
 
-		try {
-			ConfigurationAdmin configurationAdmin = _bundleContext.getService(
-				serviceReference);
-
-			_bundleBlacklistConfiguration = configurationAdmin.getConfiguration(
-				_CONFIG_NAME, null);
-
-			_properties = _bundleBlacklistConfiguration.getProperties();
-		}
-		finally {
-			_bundleContext.ungetService(serviceReference);
-		}
+		_properties = _bundleBlacklistConfiguration.getProperties();
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 

@@ -81,6 +81,17 @@
 		<execute function="AssertClick" locator1="NavBar#ASSET_TITLE" value1="Builder" />
 	</command>
 
+	<command name="gotoPermissions">
+		<var name="key_rowEntry" value="${entryTitle}" />
+		<var name="key_menuItem" value="${menuItem}" />
+
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+	</command>
+
 	<command name="gotoPreviewForm">
 		<execute function="AssertClick" locator1="Button#PREVIEW" value1="Preview Form" />
 	</command>

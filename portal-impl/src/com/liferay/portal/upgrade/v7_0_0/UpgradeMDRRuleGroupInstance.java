@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -40,25 +39,19 @@ public class UpgradeMDRRuleGroupInstance extends UpgradeProcess {
 
 	public long getActionIds(String className) throws Exception {
 		long actionIds = 0;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
 
-		try {
-			ps = connection.prepareStatement(
-				"select bitwiseValue from ResourceAction where name = ?");
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select bitwiseValue from ResourceAction where name = ?")) {
 
 			ps.setString(1, className);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					long bitwiseValue = rs.getLong(1);
 
-			while (rs.next()) {
-				long bitwiseValue = rs.getLong(1);
-
-				actionIds |= bitwiseValue;
+					actionIds |= bitwiseValue;
+				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 
 		return actionIds;
@@ -70,28 +63,21 @@ public class UpgradeMDRRuleGroupInstance extends UpgradeProcess {
 		String roleName = RoleConstants.OWNER;
 		int roleType = RoleConstants.TYPE_REGULAR;
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select companyId, roleId from Role_ where name = ? and " +
-					"type_ = ?");
+					"type_ = ?")) {
 
 			ps.setString(1, roleName);
 			ps.setInt(2, roleType);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					long companyId = rs.getLong(1);
+					long roleId = rs.getLong(2);
 
-			while (rs.next()) {
-				long companyId = rs.getLong(1);
-				long roleId = rs.getLong(2);
-
-				ownerRoleIds.put(companyId, roleId);
+					ownerRoleIds.put(companyId, roleId);
+				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
 		}
 
 		return ownerRoleIds;
@@ -107,28 +93,25 @@ public class UpgradeMDRRuleGroupInstance extends UpgradeProcess {
 		sb.append("MDRRuleGroupInstance.ruleGroupId where ");
 		sb.append("MDRRuleGroupInstance.companyId = 0");
 
-		try (PreparedStatement ps1 =
+		try (PreparedStatement ps1 = connection.prepareStatement(sb.toString());
+			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update MDRRuleGroupInstance set companyId = ? where " +
 						"ruleGroupInstanceId = ?");
+			ResultSet rs = ps1.executeQuery()) {
 
-			PreparedStatement ps2 = connection.prepareStatement(
-				sb.toString())) {
+			while (rs.next()) {
+				long companyId = rs.getLong(1);
+				long ruleGroupInstanceId = rs.getLong(2);
 
-			try (ResultSet rs = ps2.executeQuery()) {
-				while (rs.next()) {
-					long companyId = rs.getLong(1);
-					long ruleGroupInstanceId = rs.getLong(2);
+				ps2.setLong(1, companyId);
+				ps2.setLong(2, ruleGroupInstanceId);
 
-					ps1.setLong(1, companyId);
-					ps1.setLong(2, ruleGroupInstanceId);
-
-					ps1.addBatch();
-				}
-
-				ps1.executeBatch();
+				ps2.addBatch();
 			}
+
+			ps2.executeBatch();
 		}
 	}
 
@@ -160,36 +143,32 @@ public class UpgradeMDRRuleGroupInstance extends UpgradeProcess {
 
 		long actionIds = getActionIds(className);
 
-		try (PreparedStatement ps1 =
+		try (PreparedStatement ps1 = connection.prepareStatement(sb.toString());
+			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection, sb2.toString());
+			ResultSet rs = ps1.executeQuery()) {
 
-			PreparedStatement ps2 = connection.prepareStatement(
-				sb.toString())) {
+			while (rs.next()) {
+				long companyId = rs.getLong(1);
+				long ruleGroupInstanceId = rs.getLong(2);
+				long userId = rs.getLong(3);
 
-			try (ResultSet rs = ps2.executeQuery()) {
-				while (rs.next()) {
-					long companyId = rs.getLong(1);
-					long ruleGroupInstanceId = rs.getLong(2);
-					long userId = rs.getLong(3);
+				ps2.setLong(1, increment(ResourcePermission.class.getName()));
+				ps2.setLong(2, companyId);
+				ps2.setString(3, className);
+				ps2.setInt(4, 4);
+				ps2.setString(5, String.valueOf(ruleGroupInstanceId));
+				ps2.setLong(6, ruleGroupInstanceId);
+				ps2.setLong(7, ownerRoleIds.get(companyId));
+				ps2.setLong(8, userId);
+				ps2.setLong(9, actionIds);
+				ps2.setBoolean(10, true);
 
-					ps1.setLong(
-						1, increment(ResourcePermission.class.getName()));
-					ps1.setLong(2, companyId);
-					ps1.setString(3, className);
-					ps1.setInt(4, 4);
-					ps1.setString(5, String.valueOf(ruleGroupInstanceId));
-					ps1.setLong(6, ruleGroupInstanceId);
-					ps1.setLong(7, ownerRoleIds.get(companyId));
-					ps1.setLong(8, userId);
-					ps1.setLong(9, actionIds);
-					ps1.setBoolean(10, true);
-
-					ps1.addBatch();
-				}
-
-				ps1.executeBatch();
+				ps2.addBatch();
 			}
+
+			ps2.executeBatch();
 		}
 	}
 

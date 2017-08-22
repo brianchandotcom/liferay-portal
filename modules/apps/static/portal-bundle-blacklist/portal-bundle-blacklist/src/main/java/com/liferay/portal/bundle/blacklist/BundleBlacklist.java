@@ -34,9 +34,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -126,15 +128,17 @@ public class BundleBlacklist {
 
 		_initializeBlacklistMap(bundle);
 
-		_bundleBlacklistConfiguration = ConfigurableUtil.createConfigurable(
-			BundleBlacklistConfiguration.class, properties);
+		BundleBlacklistConfiguration bundleBlacklistConfiguration =
+			ConfigurableUtil.createConfigurable(
+				BundleBlacklistConfiguration.class, properties);
+
+		_blacklistBundleSymbolicNames = new HashSet<>(
+			Arrays.asList(
+				bundleBlacklistConfiguration.blacklistBundleSymbolicNames()));
 
 		bundleContext.addBundleListener(_bundleListener);
 
 		_scanBundles();
-
-		String[] blacklistBundleSymbolicNames =
-			_bundleBlacklistConfiguration.blacklistBundleSymbolicNames();
 
 		Set<Entry<String, UninstalledBundleData>> entrySet =
 			_uninstalledBundles.entrySet();
@@ -147,9 +151,7 @@ public class BundleBlacklist {
 
 			String symbolicName = entry.getKey();
 
-			if (!ArrayUtil.contains(
-					blacklistBundleSymbolicNames, symbolicName)) {
-
+			if (!_blacklistBundleSymbolicNames.contains(symbolicName)) {
 				if (_log.isInfoEnabled()) {
 					_log.info("Reinstalling bundle " + symbolicName);
 				}
@@ -250,12 +252,9 @@ public class BundleBlacklist {
 	}
 
 	private boolean _processBundle(Bundle bundle) throws Exception {
-		String[] blacklistBundleSymbolicNames =
-			_bundleBlacklistConfiguration.blacklistBundleSymbolicNames();
-
 		String symbolicName = bundle.getSymbolicName();
 
-		if (ArrayUtil.contains(blacklistBundleSymbolicNames, symbolicName)) {
+		if (_blacklistBundleSymbolicNames.contains(symbolicName)) {
 			if (_log.isInfoEnabled()) {
 				_log.info("Stopping blacklisted bundle " + bundle);
 			}
@@ -380,7 +379,7 @@ public class BundleBlacklist {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BundleBlacklist.class);
 
-	private BundleBlacklistConfiguration _bundleBlacklistConfiguration;
+	private Set<String> _blacklistBundleSymbolicNames;
 	private BundleContext _bundleContext;
 
 	private final BundleListener _bundleListener =

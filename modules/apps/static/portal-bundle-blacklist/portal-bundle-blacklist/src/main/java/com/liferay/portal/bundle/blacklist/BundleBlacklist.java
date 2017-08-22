@@ -92,7 +92,7 @@ public class BundleBlacklist {
 
 		systemBundleContext.addBundleListener(_selfMonitorBundleListener);
 
-		_initializeBlacklistMap();
+		_loadFromBlacklistFile();
 
 		BundleBlacklistConfiguration bundleBlacklistConfiguration =
 			ConfigurableUtil.createConfigurable(
@@ -128,12 +128,34 @@ public class BundleBlacklist {
 
 				iterator.remove();
 
-				_removeBlacklistProperty(symbolicName);
+				_removeFromBlacklistFile(symbolicName);
 			}
 		}
 	}
 
-	private void _initializeBlacklistMap() throws IOException {
+	private void _addToBlacklistFile(
+			String symbolicName, UninstalledBundleData uninstalledBundleData)
+		throws Exception {
+
+		Properties blacklistProperties = new Properties();
+
+		if (_blacklistFile.exists()) {
+			try (InputStream inputStream = new FileInputStream(
+					_blacklistFile)) {
+
+				blacklistProperties.load(inputStream);
+			}
+		}
+
+		blacklistProperties.setProperty(
+			symbolicName, uninstalledBundleData.toString());
+
+		try (OutputStream outputStream = new FileOutputStream(_blacklistFile)) {
+			blacklistProperties.store(outputStream, null);
+		}
+	}
+
+	private void _loadFromBlacklistFile() throws IOException {
 		if (!_blacklistFile.exists()) {
 			return;
 		}
@@ -180,7 +202,7 @@ public class BundleBlacklist {
 			try {
 				bundle.uninstall();
 
-				_saveBlacklistProperty(symbolicName, uninstalledBundleData);
+				_addToBlacklistFile(symbolicName, uninstalledBundleData);
 			}
 			catch (Exception e) {
 				_log.error("Unable to uninstall " + bundle, e);
@@ -194,7 +216,7 @@ public class BundleBlacklist {
 		return false;
 	}
 
-	private void _removeBlacklistProperty(String symbolicName)
+	private void _removeFromBlacklistFile(String symbolicName)
 		throws Exception {
 
 		Properties blacklistProperties = new Properties();
@@ -208,28 +230,6 @@ public class BundleBlacklist {
 		}
 
 		blacklistProperties.remove(symbolicName);
-
-		try (OutputStream outputStream = new FileOutputStream(_blacklistFile)) {
-			blacklistProperties.store(outputStream, null);
-		}
-	}
-
-	private void _saveBlacklistProperty(
-			String symbolicName, UninstalledBundleData uninstalledBundleData)
-		throws Exception {
-
-		Properties blacklistProperties = new Properties();
-
-		if (_blacklistFile.exists()) {
-			try (InputStream inputStream = new FileInputStream(
-					_blacklistFile)) {
-
-				blacklistProperties.load(inputStream);
-			}
-		}
-
-		blacklistProperties.setProperty(
-			symbolicName, uninstalledBundleData.toString());
 
 		try (OutputStream outputStream = new FileOutputStream(_blacklistFile)) {
 			blacklistProperties.store(outputStream, null);

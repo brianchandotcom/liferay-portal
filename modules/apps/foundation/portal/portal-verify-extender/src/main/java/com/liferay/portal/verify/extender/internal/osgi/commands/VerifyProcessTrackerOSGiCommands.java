@@ -77,6 +77,16 @@ import org.osgi.service.component.annotations.Reference;
 public class VerifyProcessTrackerOSGiCommands {
 
 	public void check(final String verifyProcessName) {
+		try {
+			getVerifyProcesses(verifyProcessName);
+		}
+		catch (IllegalArgumentException iae) {
+			System.out.println(
+				"No verify process with name " + verifyProcessName);
+
+			return;
+		}
+
 		Release release = releaseLocalService.fetchRelease(verifyProcessName);
 
 		if ((release == null) ||

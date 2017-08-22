@@ -71,7 +71,7 @@ public class BundleBlacklist {
 	@Modified
 	protected void activate(
 			BundleContext bundleContext, Map<String, String> properties)
-		throws Throwable {
+		throws Exception {
 
 		Bundle bundle = bundleContext.getBundle();
 
@@ -135,7 +135,7 @@ public class BundleBlacklist {
 
 	private void _addToBlacklistFile(
 			String symbolicName, UninstalledBundleData uninstalledBundleData)
-		throws Exception {
+		throws IOException {
 
 		Properties blacklistProperties = new Properties();
 
@@ -182,7 +182,7 @@ public class BundleBlacklist {
 		}
 	}
 
-	private boolean _processBundle(Bundle bundle) throws Exception {
+	private boolean _processBundle(Bundle bundle) {
 		String symbolicName = bundle.getSymbolicName();
 
 		if (_blacklistBundleSymbolicNames.contains(symbolicName)) {
@@ -217,7 +217,7 @@ public class BundleBlacklist {
 	}
 
 	private void _removeFromBlacklistFile(String symbolicName)
-		throws Exception {
+		throws IOException {
 
 		Properties blacklistProperties = new Properties();
 
@@ -237,8 +237,7 @@ public class BundleBlacklist {
 	}
 
 	private void _scanBundles(
-			BundleContext bundleContext, FrameworkWiring frameworkWiring)
-		throws Exception {
+		BundleContext bundleContext, FrameworkWiring frameworkWiring) {
 
 		List<Bundle> uninstalledBundles = new ArrayList<>();
 

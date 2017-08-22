@@ -24,36 +24,6 @@ import org.dom4j.Element;
  */
 public class ThenElement extends PoshiElement {
 
-	public static final String ELEMENT_NAME = "then";
-
-	static {
-		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
-
-			@Override
-			public PoshiElement newPoshiElement(Element element) {
-				if (isElementType(ELEMENT_NAME, element)) {
-					return new ThenElement(element);
-				}
-
-				return null;
-			}
-
-			@Override
-			public PoshiElement newPoshiElement(
-				PoshiElement parentPoshiElement, String readableSyntax) {
-
-				if (isElementType(parentPoshiElement, readableSyntax)) {
-					return new ThenElement(readableSyntax);
-				}
-
-				return null;
-			}
-
-		};
-
-		PoshiElement.addPoshiElementFactory(poshiElementFactory);
-	}
-
 	public static boolean isElementType(
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
@@ -79,11 +49,11 @@ public class ThenElement extends PoshiElement {
 	}
 
 	protected ThenElement(Element element) {
-		super(ELEMENT_NAME, element);
+		super(_ELEMENT_NAME, element);
 	}
 
 	protected ThenElement(String readableSyntax) {
-		super(ELEMENT_NAME, readableSyntax);
+		super(_ELEMENT_NAME, readableSyntax);
 	}
 
 	protected ThenElement(String name, Element element) {
@@ -119,6 +89,36 @@ public class ThenElement extends PoshiElement {
 		}
 
 		return readableBlocks;
+	}
+
+	private static final String _ELEMENT_NAME = "then";
+
+	static {
+		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
+
+			@Override
+			public PoshiElement newPoshiElement(Element element) {
+				if (isElementType(_ELEMENT_NAME, element)) {
+					return new ThenElement(element);
+				}
+
+				return null;
+			}
+
+			@Override
+			public PoshiElement newPoshiElement(
+				PoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new ThenElement(readableSyntax);
+				}
+
+				return null;
+			}
+
+		};
+
+		PoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 }

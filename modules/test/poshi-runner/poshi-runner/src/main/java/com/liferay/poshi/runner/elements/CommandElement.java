@@ -27,36 +27,6 @@ import org.dom4j.Element;
  */
 public class CommandElement extends PoshiElement {
 
-	public static final String ELEMENT_NAME = "command";
-
-	static {
-		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
-
-			@Override
-			public PoshiElement newPoshiElement(Element element) {
-				if (isElementType(ELEMENT_NAME, element)) {
-					return new CommandElement(element);
-				}
-
-				return null;
-			}
-
-			@Override
-			public PoshiElement newPoshiElement(
-				PoshiElement parentPoshiElement, String readableSyntax) {
-
-				if (isElementType(parentPoshiElement, readableSyntax)) {
-					return new CommandElement(readableSyntax);
-				}
-
-				return null;
-			}
-
-		};
-
-		PoshiElement.addPoshiElementFactory(poshiElementFactory);
-	}
-
 	public static boolean isElementType(
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
@@ -153,11 +123,11 @@ public class CommandElement extends PoshiElement {
 	}
 
 	protected CommandElement(Element element) {
-		this(ELEMENT_NAME, element);
+		this(_ELEMENT_NAME, element);
 	}
 
 	protected CommandElement(String readableSyntax) {
-		this(ELEMENT_NAME, readableSyntax);
+		this(_ELEMENT_NAME, readableSyntax);
 	}
 
 	protected CommandElement(String name, Element element) {
@@ -274,6 +244,36 @@ public class CommandElement extends PoshiElement {
 		}
 
 		return false;
+	}
+
+	private static final String _ELEMENT_NAME = "command";
+
+	static {
+		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
+
+			@Override
+			public PoshiElement newPoshiElement(Element element) {
+				if (isElementType(_ELEMENT_NAME, element)) {
+					return new CommandElement(element);
+				}
+
+				return null;
+			}
+
+			@Override
+			public PoshiElement newPoshiElement(
+				PoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new CommandElement(readableSyntax);
+				}
+
+				return null;
+			}
+
+		};
+
+		PoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 }

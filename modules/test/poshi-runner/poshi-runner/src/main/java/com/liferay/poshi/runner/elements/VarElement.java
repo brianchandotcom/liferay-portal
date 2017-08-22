@@ -27,36 +27,6 @@ import org.dom4j.Node;
  */
 public class VarElement extends PoshiElement {
 
-	public static final String ELEMENT_NAME = "var";
-
-	static {
-		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
-
-			@Override
-			public PoshiElement newPoshiElement(Element element) {
-				if (isElementType(ELEMENT_NAME, element)) {
-					return new VarElement(element);
-				}
-
-				return null;
-			}
-
-			@Override
-			public PoshiElement newPoshiElement(
-				PoshiElement parentPoshiElement, String readableSyntax) {
-
-				if (isElementType(parentPoshiElement, readableSyntax)) {
-					return new VarElement(readableSyntax);
-				}
-
-				return null;
-			}
-
-		};
-
-		PoshiElement.addPoshiElementFactory(poshiElementFactory);
-	}
-
 	public static boolean isElementType(
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
@@ -155,11 +125,11 @@ public class VarElement extends PoshiElement {
 	}
 
 	protected VarElement(Element element) {
-		this(ELEMENT_NAME, element);
+		this(_ELEMENT_NAME, element);
 	}
 
 	protected VarElement(String readableSyntax) {
-		this(ELEMENT_NAME, readableSyntax);
+		this(_ELEMENT_NAME, readableSyntax);
 	}
 
 	protected VarElement(String name, Element element) {
@@ -210,5 +180,35 @@ public class VarElement extends PoshiElement {
 	}
 
 	protected String valueAttributeName;
+
+	private static final String _ELEMENT_NAME = "var";
+
+	static {
+		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
+
+			@Override
+			public PoshiElement newPoshiElement(Element element) {
+				if (isElementType(_ELEMENT_NAME, element)) {
+					return new VarElement(element);
+				}
+
+				return null;
+			}
+
+			@Override
+			public PoshiElement newPoshiElement(
+				PoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new VarElement(readableSyntax);
+				}
+
+				return null;
+			}
+
+		};
+
+		PoshiElement.addPoshiElementFactory(poshiElementFactory);
+	}
 
 }

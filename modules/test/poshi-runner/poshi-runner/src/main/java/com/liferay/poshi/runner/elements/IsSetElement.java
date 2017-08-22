@@ -21,36 +21,6 @@ import org.dom4j.Element;
  */
 public class IsSetElement extends PoshiElement {
 
-	public static final String ELEMENT_NAME = "isset";
-
-	static {
-		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
-
-			@Override
-			public PoshiElement newPoshiElement(Element element) {
-				if (isElementType(ELEMENT_NAME, element)) {
-					return new IsSetElement(element);
-				}
-
-				return null;
-			}
-
-			@Override
-			public PoshiElement newPoshiElement(
-				PoshiElement parentPoshiElement, String readableSyntax) {
-
-				if (isElementType(parentPoshiElement, readableSyntax)) {
-					return new IsSetElement(readableSyntax);
-				}
-
-				return null;
-			}
-
-		};
-
-		PoshiElement.addPoshiElementFactory(poshiElementFactory);
-	}
-
 	public static boolean isElementType(
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
@@ -81,11 +51,41 @@ public class IsSetElement extends PoshiElement {
 	}
 
 	protected IsSetElement(Element element) {
-		super(ELEMENT_NAME, element);
+		super(_ELEMENT_NAME, element);
 	}
 
 	protected IsSetElement(String readableSyntax) {
-		super(ELEMENT_NAME, readableSyntax);
+		super(_ELEMENT_NAME, readableSyntax);
+	}
+
+	private static final String _ELEMENT_NAME = "isset";
+
+	static {
+		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
+
+			@Override
+			public PoshiElement newPoshiElement(Element element) {
+				if (isElementType(_ELEMENT_NAME, element)) {
+					return new IsSetElement(element);
+				}
+
+				return null;
+			}
+
+			@Override
+			public PoshiElement newPoshiElement(
+				PoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new IsSetElement(readableSyntax);
+				}
+
+				return null;
+			}
+
+		};
+
+		PoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 }

@@ -86,29 +86,15 @@
 	</target>
 
 	<target name="check-current-branch">
-		<loadfile property="release.info.name" srcfile="${modules.dir}/../portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java">
-			<filterchain>
-				<linecontains>
-					<contains value="private static final String _NAME =" />
-				</linecontains>
-
-				<tokenfilter>
-					<replaceregex pattern="\s*private static final String _NAME = &quot;([A-Za-z ]+)&quot;;" replace="\1" />
-				</tokenfilter>
-
-				<striplinebreaks />
-			</filterchain>
-		</loadfile>
-
 		<condition property="current.branch.private">
-			<equals arg1="${release.info.name}" arg2="Liferay DXP Digital Enterprise" />
+			<or>
+				<istrue value="${ee.override}" />
+				<resourcecontains resource="${modules.dir}/../portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java" substring=" DXP " />
+			</or>
 		</condition>
 
 		<condition else="Liferay CE" property="liferay.releng.app.title.prefix" value="Liferay">
-			<or>
-				<istrue value="${ee.override}" />
-				<istrue value="${current.branch.private}" />
-			</or>
+			<istrue value="${current.branch.private}" />
 		</condition>
 	</target>
 

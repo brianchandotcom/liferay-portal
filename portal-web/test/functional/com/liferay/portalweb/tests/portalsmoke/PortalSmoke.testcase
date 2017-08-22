@@ -37,7 +37,9 @@
 
 	<command name="SmokeWithDeveloperProperties" priority="5">
 		<property name="custom.properties" value="include-and-override=portal-developer.properties" />
-		<property name="portal.acceptance" value="quarantine" />
+		<property name="osgi.module.configuration.file.names" value="com.liferay.document.library.document.conversion.configuration.OpenOfficeConfiguration" />
+		<property name="osgi.module.configurations" value="cacheEnabled=&quot;false&quot;" />
+		<property name="portal.acceptance" value="true" />
 		<property name="portal.smoke" value="false" />
 
 		<execute macro="Smoke#viewWelcomePage" />

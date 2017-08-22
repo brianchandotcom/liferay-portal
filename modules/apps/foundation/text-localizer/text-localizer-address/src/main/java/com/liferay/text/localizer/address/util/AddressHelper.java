@@ -26,7 +26,7 @@ import java.util.Optional;
  * @author Pei-Jung Lan
  * @author Drew Brokke
  */
-public class AddressTextLocalizerUtil {
+public class AddressHelper {
 
 	public static Optional<String> getCountryNameOptional(Address address) {
 		Optional<Address> addressOptional = Optional.ofNullable(address);

@@ -16,6 +16,7 @@ package com.liferay.portal.bundle.blacklist.internal;
 
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
+import com.liferay.portal.lpkg.deployer.util.BundleStartLevelUtil;
 
 import java.util.Map;
 
@@ -86,5 +87,17 @@ public class SelfMonitorBundleListener implements BundleListener {
 	private final LPKGDeployer _lpkgDeployer;
 	private final BundleContext _systemBundleContext;
 	private final Map<String, UninstalledBundleData> _uninstalledBundles;
+
+	static {
+		ClassLoader classLoader =
+			SelfMonitorBundleListener.class.getClassLoader();
+
+		try {
+			classLoader.loadClass(BundleStartLevelUtil.class.getName());
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new ExceptionInInitializerError(cnfe);
+		}
+	}
 
 }

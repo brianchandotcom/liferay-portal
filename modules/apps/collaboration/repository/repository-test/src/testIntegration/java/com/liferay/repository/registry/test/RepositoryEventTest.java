@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.repository.registry;
+package com.liferay.repository.registry.test;
 
 import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;

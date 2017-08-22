@@ -85,44 +85,18 @@ public class BundleBlacklist {
 
 		classLoader.loadClass(BundleStartLevelUtil.class.getName());
 
-		final Bundle bundle = bundleContext.getBundle();
+		Bundle bundle = bundleContext.getBundle();
 
 		Bundle systemBundle = bundleContext.getBundle(0);
 
-		final BundleContext systemBundleContext =
-			systemBundle.getBundleContext();
+		BundleContext systemBundleContext = systemBundle.getBundleContext();
 
-		systemBundleContext.addBundleListener(
-			new BundleListener() {
+		if (_selfMonitorBundleListener == null) {
+			_selfMonitorBundleListener = new SelfMonitorBundleListener(
+				bundle, systemBundleContext);
+		}
 
-				@Override
-				public void bundleChanged(BundleEvent bundleEvent) {
-					if (bundleEvent.getType() != BundleEvent.UNINSTALLED) {
-						return;
-					}
-
-					Bundle uninstalledBundle = bundleEvent.getBundle();
-
-					if (!uninstalledBundle.equals(bundle)) {
-						return;
-					}
-
-					for (UninstalledBundleData uninstalledBundleData :
-							_uninstalledBundles.values()) {
-
-						try {
-							_installBundle(
-								uninstalledBundleData, systemBundleContext);
-						}
-						catch (Throwable t) {
-							ReflectionUtil.throwException(t);
-						}
-					}
-
-					systemBundleContext.removeBundleListener(this);
-				}
-
-			});
+		systemBundleContext.addBundleListener(_selfMonitorBundleListener);
 
 		_frameworkWiring = systemBundle.adapt(FrameworkWiring.class);
 
@@ -408,8 +382,49 @@ public class BundleBlacklist {
 
 	private final Pattern _pattern = Pattern.compile(
 		"\\{location=(.+), startLevel=(\\d+)\\}");
+	private BundleListener _selfMonitorBundleListener;
 	private final Map<String, UninstalledBundleData> _uninstalledBundles =
 		new HashMap<>();
+
+	private class SelfMonitorBundleListener implements BundleListener {
+
+		@Override
+		public void bundleChanged(BundleEvent bundleEvent) {
+			if (bundleEvent.getType() != BundleEvent.UNINSTALLED) {
+				return;
+			}
+
+			Bundle uninstalledBundle = bundleEvent.getBundle();
+
+			if (!uninstalledBundle.equals(_bundle)) {
+				return;
+			}
+
+			for (UninstalledBundleData uninstalledBundleData :
+					_uninstalledBundles.values()) {
+
+				try {
+					_installBundle(uninstalledBundleData, _systemBundleContext);
+				}
+				catch (Throwable t) {
+					ReflectionUtil.throwException(t);
+				}
+			}
+
+			_systemBundleContext.removeBundleListener(this);
+		}
+
+		private SelfMonitorBundleListener(
+			Bundle bundle, BundleContext systemBundleContext) {
+
+			_bundle = bundle;
+			_systemBundleContext = systemBundleContext;
+		}
+
+		private final Bundle _bundle;
+		private final BundleContext _systemBundleContext;
+
+	}
 
 	private class UninstalledBundleData {
 

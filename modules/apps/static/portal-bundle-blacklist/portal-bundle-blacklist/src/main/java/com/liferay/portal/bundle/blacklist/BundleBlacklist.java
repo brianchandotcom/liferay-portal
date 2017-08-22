@@ -16,6 +16,7 @@ package com.liferay.portal.bundle.blacklist;
 
 import com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration;
 import com.liferay.portal.bundle.blacklist.internal.BundleUtil;
+import com.liferay.portal.bundle.blacklist.internal.SelfMonitorBundleListener;
 import com.liferay.portal.bundle.blacklist.internal.UninstalledBundleData;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -299,66 +300,5 @@ public class BundleBlacklist {
 	private BundleListener _selfMonitorBundleListener;
 	private final Map<String, UninstalledBundleData> _uninstalledBundles =
 		new HashMap<>();
-
-	private static class SelfMonitorBundleListener implements BundleListener {
-
-		@Override
-		public void bundleChanged(BundleEvent bundleEvent) {
-			Bundle bundle = bundleEvent.getBundle();
-
-			if (!bundle.equals(_bundle)) {
-				return;
-			}
-
-			if (bundleEvent.getType() == BundleEvent.STARTED) {
-
-				// In case of STARTED, that means the blacklist bundle has been
-				// updated or refreshed, we must unregister the self monitor
-				// listener to release previous BundleRevision.
-
-				_systemBundleContext.removeBundleListener(this);
-
-				return;
-			}
-
-			if (bundleEvent.getType() != BundleEvent.UNINSTALLED) {
-				return;
-			}
-
-			for (UninstalledBundleData uninstalledBundleData :
-					_uninstalledBundles.values()) {
-
-				try {
-					BundleUtil.reinstallBundle(
-						_frameworkWiring, uninstalledBundleData,
-						_systemBundleContext, _lpkgDeployer);
-				}
-				catch (Throwable t) {
-					ReflectionUtil.throwException(t);
-				}
-			}
-
-			_systemBundleContext.removeBundleListener(this);
-		}
-
-		private SelfMonitorBundleListener(
-			Bundle bundle, BundleContext systemBundleContext,
-			FrameworkWiring frameworkWiring, LPKGDeployer lpkgDeployer,
-			Map<String, UninstalledBundleData> uninstalledBundles) {
-
-			_bundle = bundle;
-			_systemBundleContext = systemBundleContext;
-			_frameworkWiring = frameworkWiring;
-			_lpkgDeployer = lpkgDeployer;
-			_uninstalledBundles = uninstalledBundles;
-		}
-
-		private final Bundle _bundle;
-		private final FrameworkWiring _frameworkWiring;
-		private final LPKGDeployer _lpkgDeployer;
-		private final BundleContext _systemBundleContext;
-		private final Map<String, UninstalledBundleData> _uninstalledBundles;
-
-	}
 
 }

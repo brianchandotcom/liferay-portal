@@ -132,7 +132,7 @@ public class BundleBlacklist {
 					_log.info("Reinstalling bundle " + symbolicName);
 				}
 
-				_installBundle(
+				_reinstallBundle(
 					frameworkWiring, entry.getValue(), bundleContext,
 					_lpkgDeployer);
 
@@ -143,7 +143,36 @@ public class BundleBlacklist {
 		}
 	}
 
-	private static void _installBundle(
+	private static void _refreshBundles(
+		FrameworkWiring frameworkWiring, List<Bundle> refreshBundles) {
+
+		final DefaultNoticeableFuture<FrameworkEvent> defaultNoticeableFuture =
+			new DefaultNoticeableFuture<>();
+
+		frameworkWiring.refreshBundles(
+			refreshBundles,
+			new FrameworkListener() {
+
+				@Override
+				public void frameworkEvent(FrameworkEvent frameworkEvent) {
+					defaultNoticeableFuture.set(frameworkEvent);
+				}
+
+			});
+
+		try {
+			FrameworkEvent frameworkEvent = defaultNoticeableFuture.get();
+
+			if (frameworkEvent.getType() != FrameworkEvent.PACKAGES_REFRESHED) {
+				throw frameworkEvent.getThrowable();
+			}
+		}
+		catch (Throwable t) {
+			ReflectionUtil.throwException(t);
+		}
+	}
+
+	private static void _reinstallBundle(
 			FrameworkWiring frameworkWiring,
 			UninstalledBundleData uninstalledBundleData,
 			BundleContext bundleContext, LPKGDeployer lpkgDeployer)
@@ -201,35 +230,6 @@ public class BundleBlacklist {
 
 		BundleStartLevelUtil.setStartLevelAndStart(
 			bundle, startLevel, bundleContext);
-	}
-
-	private static void _refreshBundles(
-		FrameworkWiring frameworkWiring, List<Bundle> refreshBundles) {
-
-		final DefaultNoticeableFuture<FrameworkEvent> defaultNoticeableFuture =
-			new DefaultNoticeableFuture<>();
-
-		frameworkWiring.refreshBundles(
-			refreshBundles,
-			new FrameworkListener() {
-
-				@Override
-				public void frameworkEvent(FrameworkEvent frameworkEvent) {
-					defaultNoticeableFuture.set(frameworkEvent);
-				}
-
-			});
-
-		try {
-			FrameworkEvent frameworkEvent = defaultNoticeableFuture.get();
-
-			if (frameworkEvent.getType() != FrameworkEvent.PACKAGES_REFRESHED) {
-				throw frameworkEvent.getThrowable();
-			}
-		}
-		catch (Throwable t) {
-			ReflectionUtil.throwException(t);
-		}
 	}
 
 	private void _initializeBlacklistMap(Bundle bundle) throws IOException {
@@ -424,7 +424,7 @@ public class BundleBlacklist {
 					_uninstalledBundles.values()) {
 
 				try {
-					_installBundle(
+					_reinstallBundle(
 						_frameworkWiring, uninstalledBundleData,
 						_systemBundleContext, _lpkgDeployer);
 				}

@@ -30,7 +30,6 @@ import com.liferay.text.localizer.address.USAddressTextLocalizer;
 import com.liferay.text.localizer.address.util.AddressTextLocalizerHelper;
 
 import java.util.Dictionary;
-import java.util.Optional;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -67,8 +66,9 @@ public class AddressTextLocalizerHelperTest {
 
 	@After
 	public void tearDown() {
-		Optional.ofNullable(_serviceRegistration).ifPresent(
-			ServiceRegistration::unregister);
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
 	}
 
 	@Test

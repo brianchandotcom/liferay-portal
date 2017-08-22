@@ -16,9 +16,14 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.portal.search.web.internal.facet.display.builder.AssetEntriesSearchFacetDisplayBuilder" %><%@
+<%@ page import="com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil" %><%@
+page import="com.liferay.portal.search.web.internal.facet.display.builder.AssetCategoriesSearchFacetDisplayBuilder" %><%@
+page import="com.liferay.portal.search.web.internal.facet.display.builder.AssetCategoryPermissionCheckerImpl" %><%@
+page import="com.liferay.portal.search.web.internal.facet.display.builder.AssetEntriesSearchFacetDisplayBuilder" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.builder.FolderSearchFacetDisplayBuilder" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.builder.ScopeSearchFacetDisplayBuilder" %><%@
+page import="com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetDisplayContext" %><%@
+page import="com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetTermDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.AssetEntriesSearchFacetDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.AssetEntriesSearchFacetTermDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.facet.display.context.FolderSearchFacetDisplayContext" %><%@
@@ -39,8 +44,6 @@ FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
 JSONObject dataJSONObject = facetConfiguration.getData();
 
 FacetCollector facetCollector = facet.getFacetCollector();
-
-List<TermCollector> termCollectors = facetCollector.getTermCollectors();
 
 String cssClass = "search-facet search-".concat(HtmlUtil.escapeAttribute(facetConfiguration.getDisplayStyle()));
 %>

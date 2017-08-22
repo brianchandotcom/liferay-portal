@@ -21,12 +21,72 @@ import org.dom4j.Element;
  */
 public class SetUpElement extends CommandElement {
 
-	public SetUpElement(Element element) {
-		super("set-up", element);
+	public static final String ELEMENT_NAME = "set-up";
+
+	static {
+		PoshiElementFactory setUpElementFactory = new PoshiElementFactory() {
+
+			@Override
+			public PoshiElement newPoshiElement(Element element) {
+				if (isElementType(ELEMENT_NAME, element)) {
+					return new SetUpElement(element);
+				}
+
+				return null;
+			}
+
+			@Override
+			public PoshiElement newPoshiElement(
+				PoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new SetUpElement(readableSyntax);
+				}
+
+				return null;
+			}
+
+		};
+
+		PoshiElement.addPoshiElementFactory(setUpElementFactory);
 	}
 
-	public SetUpElement(String readableSyntax) {
-		super("set-up", readableSyntax);
+	public static boolean isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		readableSyntax = readableSyntax.trim();
+
+		if (!isBalancedReadableSyntax(readableSyntax)) {
+			return false;
+		}
+
+		if (!readableSyntax.endsWith("}")) {
+			return false;
+		}
+
+		for (String line : readableSyntax.split("\n")) {
+			line = line.trim();
+
+			if (line.startsWith("@")) {
+				continue;
+			}
+
+			if (!line.equals("setUp {")) {
+				return false;
+			}
+
+			break;
+		}
+
+		return true;
+	}
+
+	protected SetUpElement(Element element) {
+		super(ELEMENT_NAME, element);
+	}
+
+	protected SetUpElement(String readableSyntax) {
+		super(ELEMENT_NAME, readableSyntax);
 	}
 
 	@Override

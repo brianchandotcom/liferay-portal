@@ -14,8 +14,6 @@
 
 package com.liferay.poshi.runner.elements;
 
-import java.util.List;
-
 import org.dom4j.Element;
 
 /**
@@ -23,12 +21,46 @@ import org.dom4j.Element;
  */
 public class ElseElement extends ThenElement {
 
-	public ElseElement(Element element) {
-		super("else", element);
+	public static final String ELEMENT_NAME = "else";
+
+	static {
+		PoshiElementFactory elseElementFactory = new PoshiElementFactory() {
+
+			@Override
+			public PoshiElement newPoshiElement(Element element) {
+				if (isElementType(ELEMENT_NAME, element)) {
+					return new ElseElement(element);
+				}
+
+				return null;
+			}
+
+			@Override
+			public PoshiElement newPoshiElement(
+				PoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new ElseElement(readableSyntax);
+				}
+
+				return null;
+			}
+
+		};
+
+		PoshiElement.addPoshiElementFactory(elseElementFactory);
 	}
 
-	public ElseElement(String readableSyntax) {
-		super("else", readableSyntax);
+	public static boolean isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (parentPoshiElement instanceof IfElement &&
+			readableSyntax.startsWith("else {")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -43,10 +75,12 @@ public class ElseElement extends ThenElement {
 		return createReadableBlock(readableSyntax);
 	}
 
-	protected List<String> getReadableBlocks(String readableSyntax) {
-		String content = getBracedContent(readableSyntax);
+	protected ElseElement(Element element) {
+		super("else", element);
+	}
 
-		return super.getReadableBlocks(content);
+	protected ElseElement(String readableSyntax) {
+		super("else", readableSyntax);
 	}
 
 }

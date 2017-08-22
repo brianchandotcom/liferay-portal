@@ -156,10 +156,8 @@
 		</or>
 	</condition>
 
-	<condition else="Liferay" property="liferay.releng.app.title.prefix" value="Liferay CE">
-		<not>
-			<istrue value="${liferay.releng.ee}" />
-		</not>
+	<condition else="Liferay CE" property="liferay.releng.app.title.prefix" value="Liferay">
+		<istrue value="${liferay.releng.ee}" />
 	</condition>
 
 	<condition else="Liferay DXP" property="liferay.releng.product.display.name" value="Liferay Portal CE">

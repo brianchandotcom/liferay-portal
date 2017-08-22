@@ -77,6 +77,8 @@ public class BundleBlacklist {
 
 		Bundle bundle = bundleContext.getBundle();
 
+		_blacklistFile = bundle.getDataFile(_BLACKLIST_FILE_NAME);
+
 		Bundle systemBundle = bundleContext.getBundle(0);
 
 		BundleContext systemBundleContext = systemBundle.getBundleContext();
@@ -92,7 +94,7 @@ public class BundleBlacklist {
 
 		systemBundleContext.addBundleListener(_selfMonitorBundleListener);
 
-		_initializeBlacklistMap(bundle);
+		_initializeBlacklistMap();
 
 		BundleBlacklistConfiguration bundleBlacklistConfiguration =
 			ConfigurableUtil.createConfigurable(
@@ -133,16 +135,14 @@ public class BundleBlacklist {
 		}
 	}
 
-	private void _initializeBlacklistMap(Bundle bundle) throws IOException {
-		File blacklistFile = bundle.getDataFile(_BLACKLIST_FILE_NAME);
-
-		if (!blacklistFile.exists()) {
+	private void _initializeBlacklistMap() throws IOException {
+		if (!_blacklistFile.exists()) {
 			return;
 		}
 
 		Properties blacklistProperties = new Properties();
 
-		try (InputStream inputStream = new FileInputStream(blacklistFile)) {
+		try (InputStream inputStream = new FileInputStream(_blacklistFile)) {
 			blacklistProperties.load(inputStream);
 		}
 
@@ -199,21 +199,19 @@ public class BundleBlacklist {
 	private void _removeBlacklistProperty(String symbolicName)
 		throws Exception {
 
-		Bundle bundle = _bundleContext.getBundle();
-
-		File blacklistFile = bundle.getDataFile(_BLACKLIST_FILE_NAME);
-
 		Properties blacklistProperties = new Properties();
 
-		if (blacklistFile.exists()) {
-			try (InputStream inputStream = new FileInputStream(blacklistFile)) {
+		if (_blacklistFile.exists()) {
+			try (InputStream inputStream = new FileInputStream(
+					_blacklistFile)) {
+
 				blacklistProperties.load(inputStream);
 			}
 		}
 
 		blacklistProperties.remove(symbolicName);
 
-		try (OutputStream outputStream = new FileOutputStream(blacklistFile)) {
+		try (OutputStream outputStream = new FileOutputStream(_blacklistFile)) {
 			blacklistProperties.store(outputStream, null);
 		}
 	}
@@ -222,14 +220,12 @@ public class BundleBlacklist {
 			String symbolicName, UninstalledBundleData uninstalledBundleData)
 		throws Exception {
 
-		Bundle bundle = _bundleContext.getBundle();
-
-		File blacklistFile = bundle.getDataFile(_BLACKLIST_FILE_NAME);
-
 		Properties blacklistProperties = new Properties();
 
-		if (blacklistFile.exists()) {
-			try (InputStream inputStream = new FileInputStream(blacklistFile)) {
+		if (_blacklistFile.exists()) {
+			try (InputStream inputStream = new FileInputStream(
+					_blacklistFile)) {
+
 				blacklistProperties.load(inputStream);
 			}
 		}
@@ -237,7 +233,7 @@ public class BundleBlacklist {
 		blacklistProperties.setProperty(
 			symbolicName, uninstalledBundleData.toString());
 
-		try (OutputStream outputStream = new FileOutputStream(blacklistFile)) {
+		try (OutputStream outputStream = new FileOutputStream(_blacklistFile)) {
 			blacklistProperties.store(outputStream, null);
 		}
 	}
@@ -266,6 +262,7 @@ public class BundleBlacklist {
 		BundleBlacklist.class);
 
 	private Set<String> _blacklistBundleSymbolicNames;
+	private File _blacklistFile;
 	private BundleContext _bundleContext;
 
 	private final BundleListener _bundleListener =

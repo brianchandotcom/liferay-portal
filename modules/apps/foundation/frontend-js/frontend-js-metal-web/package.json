@@ -1,19 +1,19 @@
 {
 	"dependencies": {
-		"metal": "^2.6.4",
+		"metal": "^2.13.2",
 		"metal-affix": "^2.0.0",
 		"metal-ajax": "^2.1.1",
 		"metal-alert": "^2.0.0",
 		"metal-autocomplete": "^2.0.0",
 		"metal-button-group": "^2.0.0",
 		"metal-clipboard": "^2.0.0",
-		"metal-component": "^2.9.0",
+		"metal-component": "^2.13.2",
 		"metal-datatable": "^2.0.0",
-		"metal-dom": "^2.9.0",
+		"metal-dom": "^2.13.2",
 		"metal-dropdown": "^2.0.0",
-		"metal-events": "^2.6.4",
-		"metal-incremental-dom": "^2.9.0",
-		"metal-jsx": "^2.9.0",
+		"metal-events": "^2.13.2",
+		"metal-incremental-dom": "^2.13.2",
+		"metal-jsx": "^2.13.2",
 		"metal-list": "^2.0.0",
 		"metal-modal": "^2.0.0",
 		"metal-multimap": "^2.0.0",
@@ -22,12 +22,13 @@
 		"metal-popover": "^2.0.0",
 		"metal-progressbar": "^2.0.0",
 		"metal-rating": "^2.0.0",
+		"metal-router": "^3.6.3",
 		"metal-scrollspy": "^2.0.0",
 		"metal-select": "^2.0.0",
 		"metal-slider": "^2.0.0",
-		"metal-soy": "^2.8.0",
-		"metal-soy-bundle": "2.9.0",
-		"metal-state": "^2.9.0",
+		"metal-soy": "^2.13.2",
+		"metal-soy-bundle": "2.13.2",
+		"metal-state": "^2.13.2",
 		"metal-structs": "^1.0.1",
 		"metal-switcher": "^2.0.0",
 		"metal-toggler": "^2.0.0",
@@ -37,8 +38,8 @@
 		"metal-useragent": "^2.1.1"
 	},
 	"devDependencies": {
-		"liferay-module-config-generator": "^1.2.1",
-		"metal-cli": "^4.0.1"
+		"liferay-module-config-generator": "^1.3.2",
+		"metal-cli": "^4.3.3"
 	},
 	"name": "frontend-js-metal-web",
 	"version": "1.0.18"

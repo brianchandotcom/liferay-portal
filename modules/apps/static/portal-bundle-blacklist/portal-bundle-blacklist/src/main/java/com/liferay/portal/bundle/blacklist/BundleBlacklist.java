@@ -16,13 +16,13 @@ package com.liferay.portal.bundle.blacklist;
 
 import com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration;
 import com.liferay.portal.bundle.blacklist.internal.ParamUtil;
+import com.liferay.portal.bundle.blacklist.internal.UninstalledBundleData;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
 import com.liferay.portal.lpkg.deployer.util.BundleStartLevelUtil;
 
@@ -453,40 +453,6 @@ public class BundleBlacklist {
 		private final LPKGDeployer _lpkgDeployer;
 		private final BundleContext _systemBundleContext;
 		private final Map<String, UninstalledBundleData> _uninstalledBundles;
-
-	}
-
-	private static class UninstalledBundleData {
-
-		public String getLocation() {
-			return _location;
-		}
-
-		public int getStartLevel() {
-			return _startLevel;
-		}
-
-		@Override
-		public String toString() {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("{location=");
-			sb.append(_location);
-			sb.append(", startLevel=");
-			sb.append(_startLevel);
-			sb.append("}");
-
-			return sb.toString();
-		}
-
-		private UninstalledBundleData(String location, int startLevel) {
-			_location = location;
-
-			_startLevel = startLevel;
-		}
-
-		private final String _location;
-		private final int _startLevel;
 
 	}
 

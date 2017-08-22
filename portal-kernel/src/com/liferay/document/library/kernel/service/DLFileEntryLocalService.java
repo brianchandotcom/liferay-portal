@@ -191,6 +191,9 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
+	public void deleteRepositoryFileEntries(long repositoryId)
+		throws PortalException;
+
 	public void deleteRepositoryFileEntries(long repositoryId, long folderId)
 		throws PortalException;
 

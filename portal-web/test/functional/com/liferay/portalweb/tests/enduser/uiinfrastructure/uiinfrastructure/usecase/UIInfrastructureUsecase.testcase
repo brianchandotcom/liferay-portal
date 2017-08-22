@@ -21,8 +21,6 @@
 	</tear-down>
 
 	<command name="RightToLeftSmoke" priority="4">
-		<execute macro="User#firstLoginPG" />
-
 		<execute macro="Page#add">
 			<var name="pageName" value="RTL Test Page" />
 		</execute>

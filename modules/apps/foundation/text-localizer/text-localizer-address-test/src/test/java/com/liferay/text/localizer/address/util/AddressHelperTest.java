@@ -38,7 +38,7 @@ import org.junit.Test;
 /**
  * @author Drew Brokke
  */
-public class AddressTextLocalizerUtilTest {
+public class AddressHelperTest {
 
 	@Before
 	public void setUp() {
@@ -53,7 +53,7 @@ public class AddressTextLocalizerUtilTest {
 	@Test
 	public void testGetCountryNameOptionalEmptyWithNoCountrySet() {
 		Optional<String> countryNameOptional =
-			AddressTextLocalizerUtil.getCountryNameOptional(_address);
+			AddressHelper.getCountryNameOptional(_address);
 
 		Assert.assertFalse(countryNameOptional.isPresent());
 	}
@@ -61,7 +61,7 @@ public class AddressTextLocalizerUtilTest {
 	@Test
 	public void testGetCountryNameOptionalEmptyWithNullAddress() {
 		Optional<String> countryNameOptional =
-			AddressTextLocalizerUtil.getCountryNameOptional(null);
+			AddressHelper.getCountryNameOptional(null);
 
 		Assert.assertFalse(countryNameOptional.isPresent());
 	}
@@ -77,7 +77,7 @@ public class AddressTextLocalizerUtilTest {
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		Optional<String> countryNameOptional =
-			AddressTextLocalizerUtil.getCountryNameOptional(_address);
+			AddressHelper.getCountryNameOptional(_address);
 
 		Assert.assertEquals(_COUNTRY_NAME_LOCALIZED, countryNameOptional.get());
 	}
@@ -87,7 +87,7 @@ public class AddressTextLocalizerUtilTest {
 		_address = _setCountry(_address);
 
 		Optional<String> countryNameOptional =
-			AddressTextLocalizerUtil.getCountryNameOptional(_address);
+			AddressHelper.getCountryNameOptional(_address);
 
 		Assert.assertEquals(_COUNTRY_NAME, countryNameOptional.get());
 	}
@@ -110,7 +110,7 @@ public class AddressTextLocalizerUtilTest {
 		};
 
 		Optional<String> regionNameOptional =
-			AddressTextLocalizerUtil.getRegionNameOptional(_address);
+			AddressHelper.getRegionNameOptional(_address);
 
 		Assert.assertEquals(_REGION_NAME, regionNameOptional.get());
 	}
@@ -118,7 +118,7 @@ public class AddressTextLocalizerUtilTest {
 	@Test
 	public void testGetRegionNameOptionalEmptyWithNoRegionSet() {
 		Optional<String> regionNameOptional =
-			AddressTextLocalizerUtil.getRegionNameOptional(_address);
+			AddressHelper.getRegionNameOptional(_address);
 
 		Assert.assertFalse(regionNameOptional.isPresent());
 	}
@@ -126,7 +126,7 @@ public class AddressTextLocalizerUtilTest {
 	@Test
 	public void testGetRegionNameOptionalEmptyWithNullAddress() {
 		Optional<String> regionNameOptional =
-			AddressTextLocalizerUtil.getRegionNameOptional(null);
+			AddressHelper.getRegionNameOptional(null);
 
 		Assert.assertFalse(regionNameOptional.isPresent());
 	}

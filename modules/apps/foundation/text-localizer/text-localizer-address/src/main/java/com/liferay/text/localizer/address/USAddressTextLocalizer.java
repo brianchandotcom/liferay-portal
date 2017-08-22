@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.text.localizer.address.util.AddressTextLocalizerUtil;
+import com.liferay.text.localizer.address.util.AddressHelper;
 
 import java.util.Optional;
 
@@ -40,9 +40,9 @@ public class USAddressTextLocalizer implements AddressTextLocalizer {
 		StringBundler sb = new StringBundler(14);
 
 		Optional<String> countryNameOptional =
-			AddressTextLocalizerUtil.getCountryNameOptional(address);
+			AddressHelper.getCountryNameOptional(address);
 		Optional<String> regionNameOptional =
-			AddressTextLocalizerUtil.getRegionNameOptional(address);
+			AddressHelper.getRegionNameOptional(address);
 
 		Address escapedAddress = address.toEscapedModel();
 

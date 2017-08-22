@@ -127,13 +127,13 @@ public class AddressTextLocalizerHelperTest {
 	private ServiceRegistration<?> _registerAddressTextLocalizer(
 		AddressTextLocalizer addressTextLocalizer, String countryA2) {
 
-		Dictionary<String, String> properties = new HashMapDictionary<>();
+		Dictionary<String, String> dictionary = new HashMapDictionary<>();
 
-		properties.put("country", countryA2);
+		dictionary.put("country", countryA2);
 
 		return _bundleContext.registerService(
 			AddressTextLocalizer.class.getName(), addressTextLocalizer,
-			properties);
+			dictionary);
 	}
 
 	private static final BundleContext _bundleContext;

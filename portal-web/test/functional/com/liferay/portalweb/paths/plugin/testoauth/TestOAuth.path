@@ -31,7 +31,7 @@
 </tr>
 <tr>
 	<td>OAUTH_ADMIN_TABLE_NAME</td>
-	<td>//td[contains(@class,'table-cell')]/a[contains(.,'${key_name}')]</td>
+	<td>//td[contains(@class,'table-cell')]/a[contains(.,'${key_applicationName}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -14,11 +14,13 @@
 
 package com.liferay.repository.registry.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.repository.registry.DefaultRepositoryEventRegistry;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -36,6 +38,7 @@ import org.junit.runner.RunWith;
 @RunWith(Enclosed.class)
 public class RepositoryEventTest {
 
+	@RunWith(Arquillian.class)
 	public static final class WhenRegisteringRepositoryEvents {
 
 		@ClassRule
@@ -62,6 +65,7 @@ public class RepositoryEventTest {
 
 	}
 
+	@RunWith(Arquillian.class)
 	public static final class WhenTriggeringEvents {
 
 		@ClassRule

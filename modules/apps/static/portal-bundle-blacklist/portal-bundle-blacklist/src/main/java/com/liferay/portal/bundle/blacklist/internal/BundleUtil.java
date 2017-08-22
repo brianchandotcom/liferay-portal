@@ -71,7 +71,7 @@ public class BundleUtil {
 			FrameworkWiring frameworkWiring,
 			UninstalledBundleData uninstalledBundleData,
 			BundleContext bundleContext, LPKGDeployer lpkgDeployer)
-		throws Throwable {
+		throws Exception {
 
 		Bundle bundle = null;
 

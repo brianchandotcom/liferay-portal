@@ -852,6 +852,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/development/tomcat-util.jar</file-name>
+				<version>9.0.6</version>
+				<project-name>Tomcat</project-name>
+				<project-url>http://tomcat.apache.org</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/development/velocity.jar</file-name>
 				<version>1.6.4</version>
 				<project-name>Velocity</project-name>

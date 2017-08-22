@@ -489,7 +489,7 @@ public class BundleBlacklist {
 	private LPKGDeployer _lpkgDeployer;
 
 	private final Pattern _pattern = Pattern.compile(
-		"\\{location=(.*), startLevel=(.*)\\}");
+		"\\{location=(.+), startLevel=(\\d+)\\}");
 	private final Map<String, UninstalledBundleData> _uninstalledBundles =
 		new HashMap<>();
 

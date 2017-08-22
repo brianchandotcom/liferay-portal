@@ -180,7 +180,7 @@ public class LibraryReferenceTest {
 			String referenceJar = jar;
 
 			if (fileName.equals(_GIT_IGNORE_FILE_NAME)) {
-				referenceJar = CharPool.SLASH + referenceJar;
+				referenceJar = referenceJar.substring(LIB_DIR_NAME.length());
 			}
 
 			Assert.assertTrue(
@@ -225,6 +225,8 @@ public class LibraryReferenceTest {
 		}
 	}
 
+	protected static final String LIB_DIR_NAME = "lib";
+
 	private static void _initEclipse(DocumentBuilder documentBuilder)
 		throws Exception {
 
@@ -243,7 +245,7 @@ public class LibraryReferenceTest {
 			String kind = kindNode.getNodeValue();
 			String path = pathNode.getNodeValue();
 
-			if (kind.equals(_LIB_DIR_NAME)) {
+			if (kind.equals(LIB_DIR_NAME)) {
 				_eclipseJars.add(path);
 			}
 			else if (kind.equals("src")) {
@@ -262,17 +264,13 @@ public class LibraryReferenceTest {
 			String line = null;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
-				if (line.startsWith(
-						CharPool.SLASH + _LIB_DIR_NAME + CharPool.SLASH)) {
-
-					_gitIgnoreJars.add(line.substring(1));
-				}
+				_gitIgnoreJars.add(LIB_DIR_NAME + line);
 			}
 		}
 	}
 
 	private static void _initLibJars() throws IOException {
-		Path libDirPath = Paths.get(_LIB_DIR_NAME);
+		Path libDirPath = Paths.get(LIB_DIR_NAME);
 
 		for (String line :
 				Files.readAllLines(
@@ -439,9 +437,8 @@ public class LibraryReferenceTest {
 
 	private static final String _ECLIPSE_FILE_NAME = ".classpath";
 
-	private static final String _GIT_IGNORE_FILE_NAME = ".gitignore";
-
-	private static final String _LIB_DIR_NAME = "lib";
+	private static final String _GIT_IGNORE_FILE_NAME =
+		LIB_DIR_NAME + "/.gitignore";
 
 	private static final String _MODULES_DIR_NAME = "modules";
 
@@ -450,10 +447,10 @@ public class LibraryReferenceTest {
 	private static final String _SRC_JAVA_DIR_NAME = "src/main/java";
 
 	private static final String _VERSIONS_EXT_FILE_NAME =
-		_LIB_DIR_NAME + "/versions-ext.xml";
+		LIB_DIR_NAME + "/versions-ext.xml";
 
 	private static final String _VERSIONS_FILE_NAME =
-		_LIB_DIR_NAME + "/versions.xml";
+		LIB_DIR_NAME + "/versions.xml";
 
 	private static final Set<String> _eclipseJars = new HashSet<>();
 	private static final Set<String> _eclipseModuleSourceDirs = new HashSet<>();

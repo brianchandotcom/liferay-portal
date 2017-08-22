@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
 import java.nio.ByteBuffer;
@@ -69,6 +70,13 @@ public class MessageDatagramReceiveHandlerTest {
 	@AdviseWith(adviceClasses = {PortalExecutorManagerUtilAdvice.class})
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
+	public void testDeprecatedConstructor() {
+		new MessageDatagramReceiveHandler(null);
+	}
+
+	@AdviseWith(adviceClasses = {PortalExecutorManagerUtilAdvice.class})
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
+	@Test
 	public void testDoReceive1() throws Exception {
 
 		// No such destination, not synchronized
@@ -77,6 +85,10 @@ public class MessageDatagramReceiveHandlerTest {
 			MessageDatagramReceiveHandlerTest.class.getClassLoader());
 
 		MessageBus messageBus = Mockito.mock(MessageBus.class);
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		registry.registerService(MessageBus.class, messageBus);
 
 		MessageDatagramReceiveHandler messageDatagramReceiveHandler =
 			new MessageDatagramReceiveHandler();

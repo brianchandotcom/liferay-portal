@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
-import com.liferay.portal.lpkg.deployer.util.BundleStartLevelUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -75,10 +74,6 @@ public class BundleBlacklist {
 		throws Throwable {
 
 		_bundleContext = bundleContext;
-
-		ClassLoader classLoader = BundleBlacklist.class.getClassLoader();
-
-		classLoader.loadClass(BundleStartLevelUtil.class.getName());
 
 		Bundle bundle = bundleContext.getBundle();
 

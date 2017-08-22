@@ -37,8 +37,6 @@ if (classPK > 0) {
 		%>
 
 			<li class="<%= (address.isPrimary() && !addresses.isEmpty()) ? "icon-star" : StringPool.BLANK %>">
-				<%@ include file="/common/addresses_address_init.jspf" %>
-
 				<%@ include file="/common/addresses_address.jspf" %>
 			</li>
 

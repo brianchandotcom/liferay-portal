@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<taglib
+	version="2.1"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+>
+	<tlib-version>1.0</tlib-version>
+	<short-name>liferay-text-localizer</short-name>
+	<uri>http://liferay.com/tld/text-localizer</uri>
+	<tag>
+		<description>Displays an address in a localized format.</description>
+		<name>address-display</name>
+		<tag-class>com.liferay.text.localizer.taglib.servlet.taglib.AddressDisplayTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>The address to be displayed.</description>
+			<name>address</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+</taglib>

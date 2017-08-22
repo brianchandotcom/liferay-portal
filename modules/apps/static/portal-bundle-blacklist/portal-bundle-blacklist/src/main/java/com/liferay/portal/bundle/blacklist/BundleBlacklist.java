@@ -181,21 +181,21 @@ public class BundleBlacklist {
 	}
 
 	private Map<String, String[]> _getParameterMap(String string) {
-		Map<String, String[]> parameterMap = new HashMap<>();
-
 		int pos = string.indexOf(CharPool.QUESTION);
 
 		if (pos == -1) {
-			return parameterMap;
+			return Collections.emptyMap();
 		}
 
 		string = string.substring(pos + 1);
 
 		if (Validator.isNull(string)) {
-			return parameterMap;
+			return Collections.emptyMap();
 		}
 
 		String[] parameters = StringUtil.split(string, CharPool.AMPERSAND);
+
+		Map<String, String[]> parameterMap = new HashMap<>();
 
 		for (String parameter : parameters) {
 			if (parameter.length() > 0) {

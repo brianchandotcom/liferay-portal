@@ -24,7 +24,7 @@ public class EqualsElement extends PoshiElement {
 	public static final String ELEMENT_NAME = "equals";
 
 	static {
-		PoshiElementFactory equalsElementFactory = new PoshiElementFactory() {
+		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
 
 			@Override
 			public PoshiElement newPoshiElement(Element element) {
@@ -48,7 +48,7 @@ public class EqualsElement extends PoshiElement {
 
 		};
 
-		PoshiElement.addPoshiElementFactory(equalsElementFactory);
+		PoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 	public static boolean isElementType(

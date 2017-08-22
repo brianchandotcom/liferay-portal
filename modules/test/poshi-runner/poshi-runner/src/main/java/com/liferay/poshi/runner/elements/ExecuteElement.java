@@ -31,7 +31,7 @@ public class ExecuteElement extends PoshiElement {
 	public static final String ELEMENT_NAME = "execute";
 
 	static {
-		PoshiElementFactory executeElementFactory = new PoshiElementFactory() {
+		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
 
 			@Override
 			public PoshiElement newPoshiElement(Element element) {
@@ -55,7 +55,7 @@ public class ExecuteElement extends PoshiElement {
 
 		};
 
-		PoshiElement.addPoshiElementFactory(executeElementFactory);
+		PoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 	public static boolean isElementType(

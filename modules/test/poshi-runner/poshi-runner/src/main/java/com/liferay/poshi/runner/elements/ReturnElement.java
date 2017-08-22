@@ -26,7 +26,7 @@ public class ReturnElement extends PoshiElement {
 	public static final String ELEMENT_NAME = "return";
 
 	static {
-		PoshiElementFactory returnElementFactory = new PoshiElementFactory() {
+		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
 
 			@Override
 			public PoshiElement newPoshiElement(Element element) {
@@ -50,7 +50,7 @@ public class ReturnElement extends PoshiElement {
 
 		};
 
-		PoshiElement.addPoshiElementFactory(returnElementFactory);
+		PoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 	public static boolean isElementType(

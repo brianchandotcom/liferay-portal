@@ -24,7 +24,7 @@ public class ElseElement extends ThenElement {
 	public static final String ELEMENT_NAME = "else";
 
 	static {
-		PoshiElementFactory elseElementFactory = new PoshiElementFactory() {
+		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
 
 			@Override
 			public PoshiElement newPoshiElement(Element element) {
@@ -48,7 +48,7 @@ public class ElseElement extends ThenElement {
 
 		};
 
-		PoshiElement.addPoshiElementFactory(elseElementFactory);
+		PoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 	public static boolean isElementType(

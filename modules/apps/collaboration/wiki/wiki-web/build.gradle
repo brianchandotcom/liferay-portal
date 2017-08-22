@@ -29,6 +29,7 @@ dependencies {
 	provided project(":apps:collaboration:subscription:subscription-api")
 	provided project(":apps:collaboration:wiki:wiki-api")
 	provided project(":apps:collaboration:wiki:wiki-service")
+	provided project(":apps:web-experience:asset:asset-service")
 	provided project(":apps:web-experience:asset:asset-taglib")
 	provided project(":apps:web-experience:trash:trash-api")
 }

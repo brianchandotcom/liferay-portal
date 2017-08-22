@@ -600,12 +600,12 @@
 </tr>
 <tr>
 	<td>ROTATE_LEFT</td>
-	<td>//a[contains(@class,'btn-link') and (@data-onclick='rotateLeft')]</td>
+	<td>//div[contains(@id,'rotate')]/a[contains(@class,'btn-link')][1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ROTATE_RIGHT</td>
-	<td>//a[contains(@class,'btn-link') and (@data-onclick='rotateRight')]</td>
+	<td>//div[contains(@id,'rotate')]/a[contains(@class,'btn-link')][2]</td>
 	<td></td>
 </tr>
 <tr>

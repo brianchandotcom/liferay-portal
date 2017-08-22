@@ -24,7 +24,7 @@ public class TearDownElement extends CommandElement {
 	public static final String ELEMENT_NAME = "tear-down";
 
 	static {
-		PoshiElementFactory tearDownElementFactory = new PoshiElementFactory() {
+		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
 
 			@Override
 			public PoshiElement newPoshiElement(Element element) {
@@ -48,7 +48,7 @@ public class TearDownElement extends CommandElement {
 
 		};
 
-		PoshiElement.addPoshiElementFactory(tearDownElementFactory);
+		PoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 	public static boolean isElementType(

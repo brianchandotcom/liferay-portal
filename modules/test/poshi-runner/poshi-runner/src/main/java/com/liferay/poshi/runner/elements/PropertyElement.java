@@ -24,7 +24,7 @@ public class PropertyElement extends VarElement {
 	public static final String ELEMENT_NAME = "property";
 
 	static {
-		PoshiElementFactory propertyElementFactory = new PoshiElementFactory() {
+		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
 
 			@Override
 			public PoshiElement newPoshiElement(Element element) {
@@ -48,7 +48,7 @@ public class PropertyElement extends VarElement {
 
 		};
 
-		PoshiElement.addPoshiElementFactory(propertyElementFactory);
+		PoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 	public static boolean isElementType(

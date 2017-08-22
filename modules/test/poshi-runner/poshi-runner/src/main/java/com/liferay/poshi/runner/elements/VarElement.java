@@ -30,7 +30,7 @@ public class VarElement extends PoshiElement {
 	public static final String ELEMENT_NAME = "var";
 
 	static {
-		PoshiElementFactory varElementFactory = new PoshiElementFactory() {
+		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
 
 			@Override
 			public PoshiElement newPoshiElement(Element element) {
@@ -54,7 +54,7 @@ public class VarElement extends PoshiElement {
 
 		};
 
-		PoshiElement.addPoshiElementFactory(varElementFactory);
+		PoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 	public static boolean isElementType(

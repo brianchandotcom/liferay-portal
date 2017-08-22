@@ -24,7 +24,7 @@ public class WhileElement extends IfElement {
 	public static final String ELEMENT_NAME = "while";
 
 	static {
-		PoshiElementFactory whileElementFactory = new PoshiElementFactory() {
+		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
 
 			@Override
 			public PoshiElement newPoshiElement(Element element) {
@@ -48,7 +48,7 @@ public class WhileElement extends IfElement {
 
 		};
 
-		PoshiElement.addPoshiElementFactory(whileElementFactory);
+		PoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 	public static boolean isElementType(

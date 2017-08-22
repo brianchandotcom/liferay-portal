@@ -24,8 +24,7 @@ public class DescriptionElement extends PoshiElement {
 	public static final String ELEMENT_NAME = "description";
 
 	static {
-		PoshiElementFactory descriptionElementFactory =
-			new PoshiElementFactory() {
+		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
 
 				@Override
 				public PoshiElement newPoshiElement(Element element) {
@@ -49,7 +48,7 @@ public class DescriptionElement extends PoshiElement {
 
 			};
 
-		PoshiElement.addPoshiElementFactory(descriptionElementFactory);
+		PoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 	public static boolean isElementType(

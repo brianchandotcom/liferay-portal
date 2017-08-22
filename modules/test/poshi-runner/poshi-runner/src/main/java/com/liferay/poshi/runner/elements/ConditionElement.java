@@ -24,8 +24,7 @@ public class ConditionElement extends ExecuteElement {
 	public static final String ELEMENT_NAME = "condition";
 
 	static {
-		PoshiElementFactory conditionElementFactory =
-			new PoshiElementFactory() {
+		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
 
 				@Override
 				public PoshiElement newPoshiElement(Element element) {
@@ -49,7 +48,7 @@ public class ConditionElement extends ExecuteElement {
 
 			};
 
-		PoshiElement.addPoshiElementFactory(conditionElementFactory);
+		PoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 	public static boolean isElementType(

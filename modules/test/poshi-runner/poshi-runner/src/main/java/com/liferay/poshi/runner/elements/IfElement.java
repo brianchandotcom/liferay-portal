@@ -27,7 +27,7 @@ public class IfElement extends PoshiElement {
 	public static final String ELEMENT_NAME = "if";
 
 	static {
-		PoshiElementFactory ifElementFactory = new PoshiElementFactory() {
+		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
 
 			@Override
 			public PoshiElement newPoshiElement(Element element) {
@@ -51,7 +51,7 @@ public class IfElement extends PoshiElement {
 
 		};
 
-		PoshiElement.addPoshiElementFactory(ifElementFactory);
+		PoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 	public static boolean isElementType(

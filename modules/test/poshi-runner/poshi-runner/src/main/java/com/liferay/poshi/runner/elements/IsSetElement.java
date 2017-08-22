@@ -24,7 +24,7 @@ public class IsSetElement extends PoshiElement {
 	public static final String ELEMENT_NAME = "isset";
 
 	static {
-		PoshiElementFactory isSetElementFactory = new PoshiElementFactory() {
+		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
 
 			@Override
 			public PoshiElement newPoshiElement(Element element) {
@@ -48,7 +48,7 @@ public class IsSetElement extends PoshiElement {
 
 		};
 
-		PoshiElement.addPoshiElementFactory(isSetElementFactory);
+		PoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 	public static boolean isElementType(

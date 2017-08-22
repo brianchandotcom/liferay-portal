@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.asset.util;
+package com.liferay.asset.util.impl;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
@@ -77,6 +77,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 import com.liferay.portlet.asset.service.permission.AssetVocabularyPermission;
+import com.liferay.portlet.asset.util.AssetPublisherAddItemHolder;
+import com.liferay.portlet.asset.util.AssetSearcher;
 
 import java.io.Serializable;
 
@@ -100,10 +102,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.asset.util.impl.AssetUtil}
  */
-@Deprecated
 public class AssetUtil {
 
 	public static final int ASSET_ENTRY_ABSTRACT_LENGTH = 200;
@@ -384,7 +383,7 @@ public class AssetUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of 1.1.0, replaced by {@link
 	 *             #getAddPortletURL(LiferayPortletRequest,
 	 *             LiferayPortletResponse, long, String, long, long[], String[],
 	 *             String)}
@@ -408,7 +407,7 @@ public class AssetUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of 1.1.0, replaced by {@link
 	 *             #getAssetPublisherAddItemHolders(LiferayPortletRequest,
 	 *             LiferayPortletResponse, long, long[], long[], long[],
 	 *             String[], String)}
@@ -442,7 +441,7 @@ public class AssetUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of 1.1.0, replaced by {@link
 	 *             #getAssetPublisherAddItemHolders(LiferayPortletRequest,
 	 *             LiferayPortletResponse, long, long[], long[], long[],
 	 *             String[], String)}
@@ -491,7 +490,7 @@ public class AssetUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getAddURLPopUp(long, long,
+	 * @deprecated As of 1.1.0, replaced by {@link #getAddURLPopUp(long, long,
 	 *             PortletURL, boolean, Layout)}
 	 */
 	@Deprecated
@@ -647,7 +646,7 @@ public class AssetUtil {
 	}
 
 	public static String getClassName(String className) {
-		int pos = className.indexOf(AssetUtil.CLASSNAME_SEPARATOR);
+		int pos = className.indexOf(CLASSNAME_SEPARATOR);
 
 		if (pos != -1) {
 			className = className.substring(0, pos);
@@ -657,17 +656,16 @@ public class AssetUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of 1.1.0, with no direct replacement
 	 */
 	@Deprecated
 	public static String getClassNameMessage(String className, Locale locale) {
 		String message = null;
 
-		int pos = className.indexOf(AssetUtil.CLASSNAME_SEPARATOR);
+		int pos = className.indexOf(CLASSNAME_SEPARATOR);
 
 		if (pos != -1) {
-			message = className.substring(
-				pos + AssetUtil.CLASSNAME_SEPARATOR.length());
+			message = className.substring(pos + CLASSNAME_SEPARATOR.length());
 
 			className = className.substring(0, pos);
 		}

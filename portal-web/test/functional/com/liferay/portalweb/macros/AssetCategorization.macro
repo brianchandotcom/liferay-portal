@@ -4,20 +4,11 @@
 
 		<execute function="AssertClick" locator1="AssetCategorization#CATEGORY_SELECT" value1="Select" />
 
-		<execute function="SelectFrameTop" />
+		<execute macro="AssetCategorization#gotoSelectCategory" />
 
-		<if>
-			<condition function="IsElementPresent" locator1="IFrame#SELECT_CATEGORY" />
-			<then>
-				<execute macro="IFrame#selectCategoryFrame" />
-			</then>
-		</if>
-
-		<var name="key_categoryName" value="${categoryName}" />
-
-		<execute function="Click" locator1="AssetCategorization#CATEGORIES_CATEGORY_CHECKBOX" />
-
-		<execute function="AssertVisible" locator1="AssetCategorization#CATEGORIES_CATEGORY_CHECKBOX_CHECKED" />
+		<execute macro="Portlet#selectTreeNode">
+			<var name="nodeName" value="${categoryName}" />
+		</execute>
 
 		<execute function="SelectFrameTop" />
 
@@ -38,7 +29,9 @@
 			</then>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="AssetCategorization#CATEGORY" value1="${categoryName}" />
+		<execute function="AssertTextEquals" locator1="AssetCategorization#CATEGORY" value1="${categoryName}">
+			<var name="key_categoryName" value="${categoryName}" />
+		</execute>
 	</command>
 
 	<command name="addMultipleCategories">
@@ -46,12 +39,12 @@
 
 		<execute function="AssertClick" locator1="AssetCategorization#CATEGORY_SELECT" value1="Select" />
 
+		<execute macro="AssetCategorization#gotoSelectCategory" />
+
 		<for list="${categoryNameList}" param="categoryName">
-			<var name="key_categoryName" value="${categoryName}" />
-
-			<execute function="Click" locator1="AssetCategorization#CATEGORIES_CATEGORY_CHECKBOX" />
-
-			<execute function="AssertVisible" locator1="AssetCategorization#CATEGORIES_CATEGORY_CHECKBOX_CHECKED" />
+			<execute macro="Portlet#selectTreeNode">
+				<var name="nodeName" value="${categoryName}" />
+			</execute>
 		</for>
 
 		<execute function="Click" locator1="Icon#CLOSE" />
@@ -72,6 +65,19 @@
 		<execute function="AssertClick" locator1="Button#ADD_TAGS" value1="Add" />
 
 		<execute function="AssertTextEquals" locator1="AssetCategorization#TAG" value1="${tagName}" />
+	</command>
+
+	<command name="gotoSelectCategory">
+		<execute function="SelectFrameTop" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="IFrame#SELECT_CATEGORY" />
+			<then>
+				<execute macro="IFrame#selectCategoryFrame" />
+			</then>
+		</if>
+
+		<execute macro="Portlet#expandTree" />
 	</command>
 
 	<command name="removeTag">

@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>Treeview</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="1">Treeview</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>GLYPHICON_MINUS</td>
+	<td>//span[contains(@class,'glyphicon-minus')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GLYPHICON_PLUS</td>
+	<td>//span[contains(@class,'glyphicon-plus')]</td>
+	<tr></tr>
+</tr>
+<tr>
+	<td>NODE_SELECTED</td>
+	<td>//li[@class='tree-node']/div[contains(@class,'tree-node-checked')][span[@class='tree-label'][text()='${nodeName}']]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NODE_UNSELECTED</td>
+	<td>//li[@class='tree-node']/div[not(contains(@class,'tree-node-checked'))][span[@class='tree-label'][text()='${nodeName}']]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

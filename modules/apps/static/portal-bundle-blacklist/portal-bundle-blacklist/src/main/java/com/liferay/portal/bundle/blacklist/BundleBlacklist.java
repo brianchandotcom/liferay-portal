@@ -73,8 +73,6 @@ public class BundleBlacklist {
 			BundleContext bundleContext, Map<String, String> properties)
 		throws Throwable {
 
-		_bundleContext = bundleContext;
-
 		Bundle bundle = bundleContext.getBundle();
 
 		_blacklistFile = bundle.getDataFile(_BLACKLIST_FILE_NAME);
@@ -106,7 +104,7 @@ public class BundleBlacklist {
 
 		bundleContext.addBundleListener(_bundleListener);
 
-		_scanBundles(frameworkWiring);
+		_scanBundles(bundleContext, frameworkWiring);
 
 		Set<Entry<String, UninstalledBundleData>> entrySet =
 			_uninstalledBundles.entrySet();
@@ -238,12 +236,13 @@ public class BundleBlacklist {
 		}
 	}
 
-	private void _scanBundles(FrameworkWiring frameworkWiring)
+	private void _scanBundles(
+			BundleContext bundleContext, FrameworkWiring frameworkWiring)
 		throws Exception {
 
 		List<Bundle> uninstalledBundles = new ArrayList<>();
 
-		for (Bundle bundle : _bundleContext.getBundles()) {
+		for (Bundle bundle : bundleContext.getBundles()) {
 			if ((bundle.getState() != Bundle.UNINSTALLED) &&
 				_processBundle(bundle)) {
 
@@ -263,7 +262,6 @@ public class BundleBlacklist {
 
 	private Set<String> _blacklistBundleSymbolicNames;
 	private File _blacklistFile;
-	private BundleContext _bundleContext;
 
 	private final BundleListener _bundleListener =
 		new SynchronousBundleListener() {

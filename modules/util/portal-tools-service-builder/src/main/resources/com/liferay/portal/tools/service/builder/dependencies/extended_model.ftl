@@ -105,7 +105,7 @@ public interface ${entity.name} extends
 	</#list>
 
 	<#list methods as method>
-		<#if !method.isConstructor() && !method.isStatic() && method.isPublic()>
+		<#if !method.isStatic() && method.isPublic()>
 			${serviceBuilder.getJavadocComment(method)}
 
 			<#assign
@@ -115,7 +115,7 @@ public interface ${entity.name} extends
 			/>
 
 			<#list annotations as annotation>
-				<#if !stringUtil.equals(annotation.type.javaClass.name, "Override")>
+				<#if !stringUtil.equals(annotation.type.name, "Override")>
 					${annotation.toString()}
 				<#else>
 					<#if stringUtil.equals(method.name, "equals") && (parameters?size == 1)>
@@ -149,7 +149,7 @@ public interface ${entity.name} extends
 					throws
 				</#if>
 
-				${exception.value}
+				${exception.fullyQualifiedName}
 
 				<#if exception_has_next>
 					,

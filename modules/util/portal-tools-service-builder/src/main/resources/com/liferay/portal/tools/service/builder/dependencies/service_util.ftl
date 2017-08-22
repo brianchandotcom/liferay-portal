@@ -67,7 +67,7 @@ public class ${entity.name}${sessionTypeName}ServiceUtil {
 	 */
 
 	<#list methods as method>
-		<#if !method.isConstructor() && !method.isStatic() && method.isPublic() && serviceBuilder.isCustomMethod(method)>
+		<#if !method.isStatic() && method.isPublic() && serviceBuilder.isCustomMethod(method)>
 			${serviceBuilder.getJavadocComment(method)}
 
 			<#if serviceBuilder.hasAnnotation(method, "Deprecated")>
@@ -96,7 +96,7 @@ public class ${entity.name}${sessionTypeName}ServiceUtil {
 					throws
 				</#if>
 
-				${exception.value}
+				${exception.fullyQualifiedName}
 
 				<#if exception_has_next>
 					,

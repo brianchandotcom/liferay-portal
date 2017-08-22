@@ -23,7 +23,7 @@ public class ${entity.name}${sessionTypeName}ServiceClpInvoker {
 
 	public ${entity.name}${sessionTypeName}ServiceClpInvoker() {
 		<#list methods as method>
-			<#if !method.isConstructor() && method.isPublic() && serviceBuilder.isCustomMethod(method) && !stringUtil.equals(method.name, "invokeMethod")>
+			<#if method.isPublic() && serviceBuilder.isCustomMethod(method) && !stringUtil.equals(method.name, "invokeMethod")>
 				<#assign parameters = method.parameters />
 
 				_methodName${method_index} = "${method.name}";
@@ -48,7 +48,7 @@ public class ${entity.name}${sessionTypeName}ServiceClpInvoker {
 		throws Throwable {
 
 		<#list methods as method>
-			<#if !method.isConstructor() && method.isPublic() && serviceBuilder.isCustomMethod(method) && !stringUtil.equals(method.name, "invokeMethod")>
+			<#if method.isPublic() && serviceBuilder.isCustomMethod(method) && !stringUtil.equals(method.name, "invokeMethod")>
 				<#assign
 					returnTypeName = serviceBuilder.getTypeGenericsName(method.returns)
 					parameters = method.parameters
@@ -91,7 +91,7 @@ public class ${entity.name}${sessionTypeName}ServiceClpInvoker {
 	}
 
 	<#list methods as method>
-		<#if !method.isConstructor() && method.isPublic() && serviceBuilder.isCustomMethod(method) && !stringUtil.equals(method.name, "invokeMethod")>
+		<#if method.isPublic() && serviceBuilder.isCustomMethod(method) && !stringUtil.equals(method.name, "invokeMethod")>
 			<#assign parameters = method.parameters />
 
 			private String _methodName${method_index};

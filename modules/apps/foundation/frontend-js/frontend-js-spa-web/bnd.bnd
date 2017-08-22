@@ -8,3 +8,4 @@ Provide-Capability:\
 	osgi.extender;\
 		osgi.extender="liferay.spa";\
 		version:Version="${Bundle-Version}"
+Web-ContextPath: /frontend-js-spa-web

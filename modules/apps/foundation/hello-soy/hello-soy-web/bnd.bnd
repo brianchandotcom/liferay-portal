@@ -4,3 +4,4 @@ Bundle-Version: 1.0.10
 Require-Capability:\
 	soy;\
 		filter:="(type=metal)"
+Web-ContextPath: /hello-soy-web

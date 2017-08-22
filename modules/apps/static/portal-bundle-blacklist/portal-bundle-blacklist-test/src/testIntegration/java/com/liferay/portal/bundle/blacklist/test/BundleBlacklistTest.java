@@ -78,8 +78,6 @@ public class BundleBlacklistTest {
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-		properties.put(_PROP_KEY, _EMPTY_VALUE);
-
 		_bundleBlacklistConfiguration.update(properties);
 
 		CountDownLatch countDownLatch = new CountDownLatch(1);
@@ -199,7 +197,7 @@ public class BundleBlacklistTest {
 			"WAR bundle not uninstalled", Bundle.UNINSTALLED,
 			warBundle.getState());
 
-		properties.put(_PROP_KEY, _EMPTY_VALUE);
+		properties.remove(_PROP_KEY);
 
 		_updateConfiguration(properties);
 
@@ -224,7 +222,7 @@ public class BundleBlacklistTest {
 			"WAR bundle not uninstalled", Bundle.UNINSTALLED,
 			warBundle.getState());
 
-		properties.put(_PROP_KEY, _EMPTY_VALUE);
+		properties.remove(_PROP_KEY);
 
 		_updateConfiguration(properties);
 
@@ -243,7 +241,7 @@ public class BundleBlacklistTest {
 			"JAR bundle not uninstalled", Bundle.UNINSTALLED,
 			jarBundle.getState());
 
-		properties.put(_PROP_KEY, _EMPTY_VALUE);
+		properties.remove(_PROP_KEY);
 
 		_updateConfiguration(properties);
 
@@ -273,7 +271,7 @@ public class BundleBlacklistTest {
 			"WAR bundle not uninstalled", Bundle.UNINSTALLED,
 			warBundle.getState());
 
-		properties.put(_PROP_KEY, _EMPTY_VALUE);
+		properties.remove(_PROP_KEY);
 
 		_updateConfiguration(properties);
 
@@ -350,8 +348,6 @@ public class BundleBlacklistTest {
 	private static final String _CONFIG_NAME =
 		"com.liferay.portal.bundle.blacklist.internal." +
 			"BundleBlacklistConfiguration";
-
-	private static final String[] _EMPTY_VALUE = new String[0];
 
 	private static final String _LPKG_NAME = "Bundle Blacklist Test";
 

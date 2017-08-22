@@ -48,7 +48,7 @@ class EffectsComponent extends Component {
 		});
 
 		promise.then((imageData) => {
-			let canvas = this.element.querySelector('#' + this.key + effect + ' canvas');
+			let canvas = this.element.querySelector('#' + this.ref + effect + ' canvas');
 			canvas.getContext('2d').putImageData(imageData, 0, 0);
 		});
 

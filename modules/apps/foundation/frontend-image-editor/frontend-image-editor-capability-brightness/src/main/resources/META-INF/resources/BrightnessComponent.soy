@@ -3,12 +3,12 @@
 /**
  * Image Editor Brightness Component
  *
- * @param key
  * @param? pathThemeImages
+ * @param ref
  * @param requestPreview
  */
 {template .render}
-	<div id="{$key}">
+	<div id="{$ref}">
 		<svg class="lexicon-icon min-value">
 			<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#sun"></use>
 		</svg>
@@ -18,7 +18,7 @@
 				{param events: [
 					'valueChanged': $requestPreview
 				] /}
-				{param key: 'slider' /}
+				{param ref: 'slider' /}
 				{param value: 50 /}
 			{/call}
 		</div>

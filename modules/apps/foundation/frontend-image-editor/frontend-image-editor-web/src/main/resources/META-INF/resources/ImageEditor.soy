@@ -28,7 +28,7 @@
 				<canvas class="fade {$imageEditorReady ? 'in' : ''} image-preview"></canvas>
 
 				{call ImageEditorLoading.render data="all"}
-					{param key: 'loading' /}
+					{param ref: 'loading' /}
 				{/call}
 			</div>
 
@@ -212,7 +212,7 @@
  */
 {template .active_controls}
 	{delcall ImageEditor.Controls allowemptydefault="true" variant="$variant" data="all" }
-		{param key: $id + '_selected_control_' + $variant /}
+		{param ref: $id + '_selected_control_' + $variant /}
 	{/delcall}
 {/template}
 

@@ -29,9 +29,7 @@ class ImageEditor extends Component {
 	/**
 	 * @inheritDoc
 	 */
-	constructor(opt_config) {
-		super(opt_config);
-
+	attached() {
 		/**
 		 * This index points to the current state in the history.
 		 *

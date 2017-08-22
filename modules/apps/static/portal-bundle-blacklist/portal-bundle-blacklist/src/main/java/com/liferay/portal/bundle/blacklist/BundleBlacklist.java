@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
 import com.liferay.portal.lpkg.deployer.util.BundleStartLevelUtil;
@@ -165,21 +164,6 @@ public class BundleBlacklist {
 		}
 	}
 
-	private String _decodeURL(String url) {
-		if (Validator.isNull(url)) {
-			return url;
-		}
-
-		try {
-			return URLCodec.decodeURL(url, StringPool.UTF8);
-		}
-		catch (IllegalArgumentException iae) {
-			_log.error(iae.getMessage());
-		}
-
-		return StringPool.BLANK;
-	}
-
 	private Map<String, String[]> _getParameterMap(String string) {
 		int pos = string.indexOf(CharPool.QUESTION);
 
@@ -210,19 +194,7 @@ public class BundleBlacklist {
 				String value = StringPool.BLANK;
 
 				if (kvp.length > 1) {
-					try {
-						value = _decodeURL(kvp[1]);
-					}
-					catch (IllegalArgumentException iae) {
-						if (_log.isInfoEnabled()) {
-							_log.info(
-								"Skipping parameter with key " + key +
-									" because of invalid value " + kvp[1],
-								iae);
-						}
-
-						continue;
-					}
+					value = kvp[1];
 				}
 
 				String[] values = parameterMap.get(key);

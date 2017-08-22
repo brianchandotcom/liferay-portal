@@ -646,7 +646,7 @@ public class AssetUtil {
 	}
 
 	public static String getClassName(String className) {
-		int pos = className.indexOf(AssetUtil.CLASSNAME_SEPARATOR);
+		int pos = className.indexOf(CLASSNAME_SEPARATOR);
 
 		if (pos != -1) {
 			className = className.substring(0, pos);
@@ -662,11 +662,10 @@ public class AssetUtil {
 	public static String getClassNameMessage(String className, Locale locale) {
 		String message = null;
 
-		int pos = className.indexOf(AssetUtil.CLASSNAME_SEPARATOR);
+		int pos = className.indexOf(CLASSNAME_SEPARATOR);
 
 		if (pos != -1) {
-			message = className.substring(
-				pos + AssetUtil.CLASSNAME_SEPARATOR.length());
+			message = className.substring(pos + CLASSNAME_SEPARATOR.length());
 
 			className = className.substring(0, pos);
 		}

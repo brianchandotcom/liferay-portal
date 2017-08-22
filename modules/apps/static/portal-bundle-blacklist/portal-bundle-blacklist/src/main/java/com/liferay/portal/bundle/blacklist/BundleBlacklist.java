@@ -390,13 +390,24 @@ public class BundleBlacklist {
 
 		@Override
 		public void bundleChanged(BundleEvent bundleEvent) {
-			if (bundleEvent.getType() != BundleEvent.UNINSTALLED) {
+			Bundle bundle = bundleEvent.getBundle();
+
+			if (!bundle.equals(_bundle)) {
 				return;
 			}
 
-			Bundle uninstalledBundle = bundleEvent.getBundle();
+			if (bundleEvent.getType() == BundleEvent.STARTED) {
 
-			if (!uninstalledBundle.equals(_bundle)) {
+				// In case of STARTED, that means the blacklist bundle has been
+				// updated or refreshed, we must unregister the self monitor
+				// listener to release previous BundleRevision.
+
+				_systemBundleContext.removeBundleListener(this);
+
+				return;
+			}
+
+			if (bundleEvent.getType() != BundleEvent.UNINSTALLED) {
 				return;
 			}
 

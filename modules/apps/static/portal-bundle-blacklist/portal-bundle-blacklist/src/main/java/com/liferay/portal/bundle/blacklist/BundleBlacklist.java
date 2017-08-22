@@ -143,36 +143,7 @@ public class BundleBlacklist {
 		}
 	}
 
-	private void _initializeBlacklistMap(Bundle bundle) throws IOException {
-		File blacklistFile = bundle.getDataFile(_BLACKLIST_FILE_NAME);
-
-		if (!blacklistFile.exists()) {
-			return;
-		}
-
-		Properties blacklistProperties = new Properties();
-
-		try (InputStream inputStream = new FileInputStream(blacklistFile)) {
-			blacklistProperties.load(inputStream);
-		}
-
-		Set<Entry<Object, Object>> entries = blacklistProperties.entrySet();
-
-		for (Entry<Object, Object> entry : entries) {
-			String value = (String)entry.getValue();
-
-			Matcher matcher = _pattern.matcher(value);
-
-			if (matcher.matches()) {
-				_uninstalledBundles.put(
-					(String)entry.getKey(),
-					new UninstalledBundleData(
-						matcher.group(1), Integer.valueOf(matcher.group(2))));
-			}
-		}
-	}
-
-	private void _installBundle(
+	private static void _installBundle(
 			FrameworkWiring frameworkWiring,
 			UninstalledBundleData uninstalledBundleData,
 			BundleContext bundleContext, LPKGDeployer lpkgDeployer)
@@ -232,6 +203,64 @@ public class BundleBlacklist {
 			bundle, startLevel, bundleContext);
 	}
 
+	private static void _refreshBundles(
+		FrameworkWiring frameworkWiring, List<Bundle> refreshBundles) {
+
+		final DefaultNoticeableFuture<FrameworkEvent> defaultNoticeableFuture =
+			new DefaultNoticeableFuture<>();
+
+		frameworkWiring.refreshBundles(
+			refreshBundles,
+			new FrameworkListener() {
+
+				@Override
+				public void frameworkEvent(FrameworkEvent frameworkEvent) {
+					defaultNoticeableFuture.set(frameworkEvent);
+				}
+
+			});
+
+		try {
+			FrameworkEvent frameworkEvent = defaultNoticeableFuture.get();
+
+			if (frameworkEvent.getType() != FrameworkEvent.PACKAGES_REFRESHED) {
+				throw frameworkEvent.getThrowable();
+			}
+		}
+		catch (Throwable t) {
+			ReflectionUtil.throwException(t);
+		}
+	}
+
+	private void _initializeBlacklistMap(Bundle bundle) throws IOException {
+		File blacklistFile = bundle.getDataFile(_BLACKLIST_FILE_NAME);
+
+		if (!blacklistFile.exists()) {
+			return;
+		}
+
+		Properties blacklistProperties = new Properties();
+
+		try (InputStream inputStream = new FileInputStream(blacklistFile)) {
+			blacklistProperties.load(inputStream);
+		}
+
+		Set<Entry<Object, Object>> entries = blacklistProperties.entrySet();
+
+		for (Entry<Object, Object> entry : entries) {
+			String value = (String)entry.getValue();
+
+			Matcher matcher = _pattern.matcher(value);
+
+			if (matcher.matches()) {
+				_uninstalledBundles.put(
+					(String)entry.getKey(),
+					new UninstalledBundleData(
+						matcher.group(1), Integer.valueOf(matcher.group(2))));
+			}
+		}
+	}
+
 	private boolean _processBundle(Bundle bundle) throws Exception {
 		String symbolicName = bundle.getSymbolicName();
 
@@ -264,35 +293,6 @@ public class BundleBlacklist {
 		}
 
 		return false;
-	}
-
-	private void _refreshBundles(
-		FrameworkWiring frameworkWiring, List<Bundle> refreshBundles) {
-
-		final DefaultNoticeableFuture<FrameworkEvent> defaultNoticeableFuture =
-			new DefaultNoticeableFuture<>();
-
-		frameworkWiring.refreshBundles(
-			refreshBundles,
-			new FrameworkListener() {
-
-				@Override
-				public void frameworkEvent(FrameworkEvent frameworkEvent) {
-					defaultNoticeableFuture.set(frameworkEvent);
-				}
-
-			});
-
-		try {
-			FrameworkEvent frameworkEvent = defaultNoticeableFuture.get();
-
-			if (frameworkEvent.getType() != FrameworkEvent.PACKAGES_REFRESHED) {
-				throw frameworkEvent.getThrowable();
-			}
-		}
-		catch (Throwable t) {
-			ReflectionUtil.throwException(t);
-		}
 	}
 
 	private void _removeBlacklistProperty(String symbolicName)
@@ -395,7 +395,7 @@ public class BundleBlacklist {
 	private final Map<String, UninstalledBundleData> _uninstalledBundles =
 		new HashMap<>();
 
-	private class SelfMonitorBundleListener implements BundleListener {
+	private static class SelfMonitorBundleListener implements BundleListener {
 
 		@Override
 		public void bundleChanged(BundleEvent bundleEvent) {
@@ -456,13 +456,7 @@ public class BundleBlacklist {
 
 	}
 
-	private class UninstalledBundleData {
-
-		public UninstalledBundleData(String location, int startLevel) {
-			_location = location;
-
-			_startLevel = startLevel;
-		}
+	private static class UninstalledBundleData {
 
 		public String getLocation() {
 			return _location;
@@ -472,6 +466,7 @@ public class BundleBlacklist {
 			return _startLevel;
 		}
 
+		@Override
 		public String toString() {
 			StringBundler sb = new StringBundler();
 
@@ -482,6 +477,12 @@ public class BundleBlacklist {
 			sb.append("}");
 
 			return sb.toString();
+		}
+
+		private UninstalledBundleData(String location, int startLevel) {
+			_location = location;
+
+			_startLevel = startLevel;
 		}
 
 		private final String _location;

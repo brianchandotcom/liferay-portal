@@ -101,22 +101,37 @@ public class USAddressTextLocalizerTest {
 
 	@Test
 	public void testRegionLineWithOnlyCity() {
-		Assert.assertTrue(true);
+		_setCity(_address);
+
+		Assert.assertEquals(
+			_constructExpectedAddress(_CITY), _localizer.format(_address));
 	}
 
 	@Test
 	public void testRegionLineWithOnlyRegionName() {
-		Assert.assertTrue(true);
+		_setRegion(_address);
+
+		Assert.assertEquals(
+			_constructExpectedAddress(_REGION_NAME),
+			_localizer.format(_address));
 	}
 
 	@Test
 	public void testRegionLineWithOnlyZip() {
-		Assert.assertTrue(true);
+		_setZip(_address);
+
+		Assert.assertEquals(
+			_constructExpectedAddress(_ZIP), _localizer.format(_address));
 	}
 
 	@Test
 	public void testRegionLineWithRegionNameAndZip() {
-		Assert.assertTrue(true);
+		_setRegion(_address);
+		_setZip(_address);
+
+		Assert.assertEquals(
+			_constructExpectedAddress(_REGION_NAME, StringPool.SPACE, _ZIP),
+			_localizer.format(_address));
 	}
 
 	@Test

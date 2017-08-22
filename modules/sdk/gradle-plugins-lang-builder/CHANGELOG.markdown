@@ -13,5 +13,12 @@ support the Translator Text Translation API on Microsoft Cognitive Services.
 - [LPS-71375]: The properties `translateClientId` and `translateClientSecret` of
 `BuildLangTask` are no longer available.
 
+## 2.1.0 - 2017-08-21
+
+### Added
+- [LPS-74250]: Add the property `excludedLanguageIds` in `BuildLangTask` to
+configure which language IDs to exclude in the automatic translation.
+
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-71375]: https://issues.liferay.com/browse/LPS-71375
+[LPS-74250]: https://issues.liferay.com/browse/LPS-74250

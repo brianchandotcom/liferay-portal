@@ -1067,11 +1067,11 @@
 
 		<execute function="AssertTextEquals" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
-		<var method="selenium#getText('//ul/li/div/h5')" name="valueName" />
+		<var locator="//tr/td/span/a/span" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
-		<var group="1" input="${valueName}" name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9KB)]*" />
+		<var method="RegexUtil#replace('${valueName}', '([0-9a-zA-Z_.-]+).*', '1')" name="larFileName" />
 
 		<echo message="lar file name ${larFileName}" />
 

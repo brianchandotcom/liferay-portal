@@ -15,17 +15,14 @@
 package com.liferay.portal.bundle.blacklist;
 
 import com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration;
+import com.liferay.portal.bundle.blacklist.internal.ParamUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
 import com.liferay.portal.lpkg.deployer.util.BundleStartLevelUtil;
 
@@ -164,53 +161,6 @@ public class BundleBlacklist {
 		}
 	}
 
-	private Map<String, String[]> _getParameterMap(String string) {
-		int pos = string.indexOf(CharPool.QUESTION);
-
-		if (pos == -1) {
-			return Collections.emptyMap();
-		}
-
-		string = string.substring(pos + 1);
-
-		if (Validator.isNull(string)) {
-			return Collections.emptyMap();
-		}
-
-		String[] parameters = StringUtil.split(string, CharPool.AMPERSAND);
-
-		Map<String, String[]> parameterMap = new HashMap<>();
-
-		for (String parameter : parameters) {
-			if (parameter.length() > 0) {
-				String[] kvp = StringUtil.split(parameter, CharPool.EQUAL);
-
-				if (kvp.length == 0) {
-					continue;
-				}
-
-				String key = kvp[0];
-
-				String value = StringPool.BLANK;
-
-				if (kvp.length > 1) {
-					value = kvp[1];
-				}
-
-				String[] values = parameterMap.get(key);
-
-				if (values == null) {
-					parameterMap.put(key, new String[] {value});
-				}
-				else {
-					parameterMap.put(key, ArrayUtil.append(values, value));
-				}
-			}
-		}
-
-		return parameterMap;
-	}
-
 	private void _initializeBlacklistMap(Bundle bundle) throws IOException {
 		File blacklistFile = bundle.getDataFile(_BLACKLIST_FILE_NAME);
 
@@ -249,7 +199,7 @@ public class BundleBlacklist {
 
 		String location = uninstalledBundleData.getLocation();
 
-		Map<String, String[]> parameters = _getParameterMap(location);
+		Map<String, String[]> parameters = ParamUtil.getParameterMap(location);
 
 		String[] lpkgPath = parameters.get("lpkgPath");
 

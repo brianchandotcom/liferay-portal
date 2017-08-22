@@ -15,13 +15,11 @@
 package com.liferay.portal.bundle.blacklist;
 
 import com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration;
-import com.liferay.portal.bundle.blacklist.internal.ParamUtil;
+import com.liferay.portal.bundle.blacklist.internal.BundleUtil;
 import com.liferay.portal.bundle.blacklist.internal.UninstalledBundleData;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
 import com.liferay.portal.lpkg.deployer.util.BundleStartLevelUtil;
@@ -35,8 +33,6 @@ import java.io.OutputStream;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -52,8 +48,6 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleListener;
-import org.osgi.framework.FrameworkEvent;
-import org.osgi.framework.FrameworkListener;
 import org.osgi.framework.SynchronousBundleListener;
 import org.osgi.framework.startlevel.BundleStartLevel;
 import org.osgi.framework.wiring.FrameworkWiring;
@@ -132,7 +126,7 @@ public class BundleBlacklist {
 					_log.info("Reinstalling bundle " + symbolicName);
 				}
 
-				_reinstallBundle(
+				BundleUtil.reinstallBundle(
 					frameworkWiring, entry.getValue(), bundleContext,
 					_lpkgDeployer);
 
@@ -141,95 +135,6 @@ public class BundleBlacklist {
 				_removeBlacklistProperty(symbolicName);
 			}
 		}
-	}
-
-	private static void _refreshBundles(
-		FrameworkWiring frameworkWiring, List<Bundle> refreshBundles) {
-
-		final DefaultNoticeableFuture<FrameworkEvent> defaultNoticeableFuture =
-			new DefaultNoticeableFuture<>();
-
-		frameworkWiring.refreshBundles(
-			refreshBundles,
-			new FrameworkListener() {
-
-				@Override
-				public void frameworkEvent(FrameworkEvent frameworkEvent) {
-					defaultNoticeableFuture.set(frameworkEvent);
-				}
-
-			});
-
-		try {
-			FrameworkEvent frameworkEvent = defaultNoticeableFuture.get();
-
-			if (frameworkEvent.getType() != FrameworkEvent.PACKAGES_REFRESHED) {
-				throw frameworkEvent.getThrowable();
-			}
-		}
-		catch (Throwable t) {
-			ReflectionUtil.throwException(t);
-		}
-	}
-
-	private static void _reinstallBundle(
-			FrameworkWiring frameworkWiring,
-			UninstalledBundleData uninstalledBundleData,
-			BundleContext bundleContext, LPKGDeployer lpkgDeployer)
-		throws Throwable {
-
-		Bundle bundle = null;
-
-		String location = uninstalledBundleData.getLocation();
-
-		Map<String, String[]> parameters = ParamUtil.getParameterMap(location);
-
-		String[] lpkgPath = parameters.get("lpkgPath");
-
-		String[] protocol = parameters.get("protocol");
-
-		String[] webContextPath = parameters.get("Web-ContextPath");
-
-		if (parameters.isEmpty() && location.endsWith(".lpkg")) {
-			bundle = bundleContext.installBundle(
-				location, lpkgDeployer.toBundle(new File(location)));
-		}
-		else if (ArrayUtil.isNotEmpty(lpkgPath)) {
-			bundle = bundleContext.getBundle(lpkgPath[0]);
-
-			_refreshBundles(
-				frameworkWiring, Collections.<Bundle>singletonList(bundle));
-
-			return;
-		}
-		else if (ArrayUtil.isNotEmpty(protocol) && protocol[0].equals("lpkg") &&
-				 ArrayUtil.isNotEmpty(webContextPath)) {
-
-			String contextName = webContextPath[0].substring(1);
-
-			for (Bundle installedBundle : bundleContext.getBundles()) {
-				Dictionary<String, String> headers =
-					installedBundle.getHeaders();
-
-				if (contextName.equals(
-						headers.get("Liferay-WAB-Context-Name"))) {
-
-					_refreshBundles(
-						frameworkWiring,
-						Collections.<Bundle>singletonList(installedBundle));
-				}
-			}
-
-			return;
-		}
-		else {
-			bundle = bundleContext.installBundle(location);
-		}
-
-		int startLevel = uninstalledBundleData.getStartLevel();
-
-		BundleStartLevelUtil.setStartLevelAndStart(
-			bundle, startLevel, bundleContext);
 	}
 
 	private void _initializeBlacklistMap(Bundle bundle) throws IOException {
@@ -355,7 +260,7 @@ public class BundleBlacklist {
 		}
 
 		if (!uninstalledBundles.isEmpty()) {
-			_refreshBundles(frameworkWiring, uninstalledBundles);
+			BundleUtil.refreshBundles(frameworkWiring, uninstalledBundles);
 		}
 	}
 
@@ -424,7 +329,7 @@ public class BundleBlacklist {
 					_uninstalledBundles.values()) {
 
 				try {
-					_reinstallBundle(
+					BundleUtil.reinstallBundle(
 						_frameworkWiring, uninstalledBundleData,
 						_systemBundleContext, _lpkgDeployer);
 				}

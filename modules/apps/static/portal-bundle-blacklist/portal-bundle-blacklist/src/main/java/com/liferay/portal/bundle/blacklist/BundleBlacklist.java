@@ -91,14 +91,15 @@ public class BundleBlacklist {
 
 		BundleContext systemBundleContext = systemBundle.getBundleContext();
 
+		FrameworkWiring frameworkWiring = systemBundle.adapt(
+			FrameworkWiring.class);
+
 		if (_selfMonitorBundleListener == null) {
 			_selfMonitorBundleListener = new SelfMonitorBundleListener(
-				bundle, systemBundleContext);
+				bundle, systemBundleContext, frameworkWiring);
 		}
 
 		systemBundleContext.addBundleListener(_selfMonitorBundleListener);
-
-		_frameworkWiring = systemBundle.adapt(FrameworkWiring.class);
 
 		_initializeBlacklistMap(bundle);
 
@@ -112,7 +113,7 @@ public class BundleBlacklist {
 
 		bundleContext.addBundleListener(_bundleListener);
 
-		_scanBundles();
+		_scanBundles(frameworkWiring);
 
 		Set<Entry<String, UninstalledBundleData>> entrySet =
 			_uninstalledBundles.entrySet();
@@ -130,7 +131,8 @@ public class BundleBlacklist {
 					_log.info("Reinstalling bundle " + symbolicName);
 				}
 
-				_installBundle(entry.getValue(), bundleContext);
+				_installBundle(
+					frameworkWiring, entry.getValue(), bundleContext);
 
 				iterator.remove();
 
@@ -169,6 +171,7 @@ public class BundleBlacklist {
 	}
 
 	private void _installBundle(
+			FrameworkWiring frameworkWiring,
 			UninstalledBundleData uninstalledBundleData,
 			BundleContext bundleContext)
 		throws Throwable {
@@ -192,7 +195,8 @@ public class BundleBlacklist {
 		else if (ArrayUtil.isNotEmpty(lpkgPath)) {
 			bundle = bundleContext.getBundle(lpkgPath[0]);
 
-			_refreshBundles(Collections.<Bundle>singletonList(bundle));
+			_refreshBundles(
+				frameworkWiring, Collections.<Bundle>singletonList(bundle));
 
 			return;
 		}
@@ -209,6 +213,7 @@ public class BundleBlacklist {
 						headers.get("Liferay-WAB-Context-Name"))) {
 
 					_refreshBundles(
+						frameworkWiring,
 						Collections.<Bundle>singletonList(installedBundle));
 				}
 			}
@@ -259,11 +264,13 @@ public class BundleBlacklist {
 		return false;
 	}
 
-	private void _refreshBundles(List<Bundle> refreshBundles) {
+	private void _refreshBundles(
+		FrameworkWiring frameworkWiring, List<Bundle> refreshBundles) {
+
 		final DefaultNoticeableFuture<FrameworkEvent> defaultNoticeableFuture =
 			new DefaultNoticeableFuture<>();
 
-		_frameworkWiring.refreshBundles(
+		frameworkWiring.refreshBundles(
 			refreshBundles,
 			new FrameworkListener() {
 
@@ -332,7 +339,9 @@ public class BundleBlacklist {
 		}
 	}
 
-	private void _scanBundles() throws Exception {
+	private void _scanBundles(FrameworkWiring frameworkWiring)
+		throws Exception {
+
 		List<Bundle> uninstalledBundles = new ArrayList<>();
 
 		for (Bundle bundle : _bundleContext.getBundles()) {
@@ -344,7 +353,7 @@ public class BundleBlacklist {
 		}
 
 		if (!uninstalledBundles.isEmpty()) {
-			_refreshBundles(uninstalledBundles);
+			_refreshBundles(frameworkWiring, uninstalledBundles);
 		}
 	}
 
@@ -374,8 +383,6 @@ public class BundleBlacklist {
 			}
 
 		};
-
-	private FrameworkWiring _frameworkWiring;
 
 	@Reference
 	private LPKGDeployer _lpkgDeployer;
@@ -415,7 +422,9 @@ public class BundleBlacklist {
 					_uninstalledBundles.values()) {
 
 				try {
-					_installBundle(uninstalledBundleData, _systemBundleContext);
+					_installBundle(
+						_frameworkWiring, uninstalledBundleData,
+						_systemBundleContext);
 				}
 				catch (Throwable t) {
 					ReflectionUtil.throwException(t);
@@ -426,13 +435,16 @@ public class BundleBlacklist {
 		}
 
 		private SelfMonitorBundleListener(
-			Bundle bundle, BundleContext systemBundleContext) {
+			Bundle bundle, BundleContext systemBundleContext,
+			FrameworkWiring frameworkWiring) {
 
 			_bundle = bundle;
 			_systemBundleContext = systemBundleContext;
+			_frameworkWiring = frameworkWiring;
 		}
 
 		private final Bundle _bundle;
+		private final FrameworkWiring _frameworkWiring;
 		private final BundleContext _systemBundleContext;
 
 	}

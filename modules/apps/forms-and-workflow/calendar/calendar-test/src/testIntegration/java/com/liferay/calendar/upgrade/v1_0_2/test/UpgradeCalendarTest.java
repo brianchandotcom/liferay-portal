@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calendar.upgrade.test;
+package com.liferay.calendar.upgrade.v1_0_2.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.calendar.model.Calendar;

@@ -26,27 +26,27 @@ public class ConditionElement extends ExecuteElement {
 	static {
 		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
 
-				@Override
-				public PoshiElement newPoshiElement(Element element) {
-					if (isElementType(ELEMENT_NAME, element)) {
-						return new ConditionElement(element);
-					}
-
-					return null;
+			@Override
+			public PoshiElement newPoshiElement(Element element) {
+				if (isElementType(ELEMENT_NAME, element)) {
+					return new ConditionElement(element);
 				}
 
-				@Override
-				public PoshiElement newPoshiElement(
-					PoshiElement parentPoshiElement, String readableSyntax) {
+				return null;
+			}
 
-					if (isElementType(parentPoshiElement, readableSyntax)) {
-						return new ConditionElement(readableSyntax);
-					}
+			@Override
+			public PoshiElement newPoshiElement(
+				PoshiElement parentPoshiElement, String readableSyntax) {
 
-					return null;
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new ConditionElement(readableSyntax);
 				}
 
-			};
+				return null;
+			}
+
+		};
 
 		PoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}

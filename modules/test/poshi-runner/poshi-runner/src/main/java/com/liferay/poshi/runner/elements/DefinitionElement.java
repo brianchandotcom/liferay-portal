@@ -29,27 +29,27 @@ public class DefinitionElement extends PoshiElement {
 	static {
 		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
 
-				@Override
-				public PoshiElement newPoshiElement(Element element) {
-					if (isElementType(ELEMENT_NAME, element)) {
-						return new DefinitionElement(element);
-					}
-
-					return null;
+			@Override
+			public PoshiElement newPoshiElement(Element element) {
+				if (isElementType(ELEMENT_NAME, element)) {
+					return new DefinitionElement(element);
 				}
 
-				@Override
-				public PoshiElement newPoshiElement(
-					PoshiElement parentPoshiElement, String readableSyntax) {
+				return null;
+			}
 
-					if (isElementType(parentPoshiElement, readableSyntax)) {
-						return new DefinitionElement(readableSyntax);
-					}
+			@Override
+			public PoshiElement newPoshiElement(
+				PoshiElement parentPoshiElement, String readableSyntax) {
 
-					return null;
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new DefinitionElement(readableSyntax);
 				}
 
-			};
+				return null;
+			}
+
+		};
 
 		PoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}

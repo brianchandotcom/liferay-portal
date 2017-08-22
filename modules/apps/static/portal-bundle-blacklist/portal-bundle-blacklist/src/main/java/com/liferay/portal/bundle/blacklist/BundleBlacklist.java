@@ -96,7 +96,8 @@ public class BundleBlacklist {
 
 		if (_selfMonitorBundleListener == null) {
 			_selfMonitorBundleListener = new SelfMonitorBundleListener(
-				bundle, systemBundleContext, frameworkWiring);
+				bundle, systemBundleContext, frameworkWiring, _lpkgDeployer,
+				_uninstalledBundles);
 		}
 
 		systemBundleContext.addBundleListener(_selfMonitorBundleListener);
@@ -132,7 +133,8 @@ public class BundleBlacklist {
 				}
 
 				_installBundle(
-					frameworkWiring, entry.getValue(), bundleContext);
+					frameworkWiring, entry.getValue(), bundleContext,
+					_lpkgDeployer);
 
 				iterator.remove();
 
@@ -173,7 +175,7 @@ public class BundleBlacklist {
 	private void _installBundle(
 			FrameworkWiring frameworkWiring,
 			UninstalledBundleData uninstalledBundleData,
-			BundleContext bundleContext)
+			BundleContext bundleContext, LPKGDeployer lpkgDeployer)
 		throws Throwable {
 
 		Bundle bundle = null;
@@ -190,7 +192,7 @@ public class BundleBlacklist {
 
 		if (parameters.isEmpty() && location.endsWith(".lpkg")) {
 			bundle = bundleContext.installBundle(
-				location, _lpkgDeployer.toBundle(new File(location)));
+				location, lpkgDeployer.toBundle(new File(location)));
 		}
 		else if (ArrayUtil.isNotEmpty(lpkgPath)) {
 			bundle = bundleContext.getBundle(lpkgPath[0]);
@@ -424,7 +426,7 @@ public class BundleBlacklist {
 				try {
 					_installBundle(
 						_frameworkWiring, uninstalledBundleData,
-						_systemBundleContext);
+						_systemBundleContext, _lpkgDeployer);
 				}
 				catch (Throwable t) {
 					ReflectionUtil.throwException(t);
@@ -436,16 +438,21 @@ public class BundleBlacklist {
 
 		private SelfMonitorBundleListener(
 			Bundle bundle, BundleContext systemBundleContext,
-			FrameworkWiring frameworkWiring) {
+			FrameworkWiring frameworkWiring, LPKGDeployer lpkgDeployer,
+			Map<String, UninstalledBundleData> uninstalledBundles) {
 
 			_bundle = bundle;
 			_systemBundleContext = systemBundleContext;
 			_frameworkWiring = frameworkWiring;
+			_lpkgDeployer = lpkgDeployer;
+			_uninstalledBundles = uninstalledBundles;
 		}
 
 		private final Bundle _bundle;
 		private final FrameworkWiring _frameworkWiring;
+		private final LPKGDeployer _lpkgDeployer;
 		private final BundleContext _systemBundleContext;
+		private final Map<String, UninstalledBundleData> _uninstalledBundles;
 
 	}
 

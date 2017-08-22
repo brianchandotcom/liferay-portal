@@ -470,7 +470,7 @@ portletURL.setParameter("portletResource", portletResource);
 	</c:when>
 </c:choose>
 
-<aui:script use="liferay-export-import">
+<aui:script use="liferay-export-import-export-import">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="exportImport" var="exportProcessesURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 		<portlet:param name="tabs2" value="export" />

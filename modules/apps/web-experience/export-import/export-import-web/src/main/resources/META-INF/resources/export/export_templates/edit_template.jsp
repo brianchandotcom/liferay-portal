@@ -127,7 +127,7 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 	</aui:form>
 </div>
 
-<aui:script use="liferay-export-import">
+<aui:script use="liferay-export-import-export-import">
 	var exportImport = new Liferay.ExportImport(
 		{
 			archivedSetupsNode: '#<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>',

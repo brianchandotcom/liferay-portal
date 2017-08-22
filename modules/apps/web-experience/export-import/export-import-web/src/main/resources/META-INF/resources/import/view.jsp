@@ -71,7 +71,7 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 	</c:otherwise>
 </c:choose>
 
-<aui:script use="liferay-export-import">
+<aui:script use="liferay-export-import-export-import">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="importLayouts" var="importProcessesURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.IMPORT %>" />
 		<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />

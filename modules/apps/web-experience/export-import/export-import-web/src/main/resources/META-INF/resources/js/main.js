@@ -1,5 +1,5 @@
 AUI.add(
-	'liferay-export-import',
+	'liferay-export-import-export-import',
 	function(A) {
 		var $ = AUI.$;
 

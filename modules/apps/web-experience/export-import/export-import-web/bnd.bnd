@@ -4,6 +4,7 @@ Bundle-Version: 1.0.30
 Export-Package:\
 	com.liferay.exportimport.web.constants,\
 	com.liferay.exportimport.web.trash
+Liferay-JS-Config: /META-INF/resources/js/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Management
 Web-ContextPath: /exportimport-web

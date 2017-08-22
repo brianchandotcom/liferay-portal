@@ -320,7 +320,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 	</aui:button-row>
 </aui:form>
 
-<aui:script use="liferay-export-import">
+<aui:script use="liferay-export-import-export-import">
 	new Liferay.ExportImport(
 		{
 			commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>',

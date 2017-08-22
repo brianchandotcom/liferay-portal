@@ -102,6 +102,8 @@ public class BundleBlacklist {
 			Arrays.asList(
 				bundleBlacklistConfiguration.blacklistBundleSymbolicNames()));
 
+		_blacklistBundleSymbolicNames.remove(bundle.getSymbolicName());
+
 		bundleContext.addBundleListener(_bundleListener);
 
 		_scanBundles(bundleContext, frameworkWiring);

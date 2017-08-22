@@ -20,17 +20,14 @@
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectFileEntryType");
 %>
 
-<liferay-util:include page="/document_library/file_entry_type_toolbar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="mvcPath" value="/document_library/select_restricted_file_entry_type.jsp" />
-	<liferay-util:param name="includeBasicFileEntryType" value="<%= Boolean.TRUE.toString() %>" />
-</liferay-util:include>
+<liferay-util:include page="/document_library/file_entry_type_toolbar.jsp" servletContext="<%= application %>" />
 
 <liferay-portlet:renderURL varImpl="portletURL">
 	<portlet:param name="mvcPath" value="/document_library/select_restricted_file_entry_type.jsp" />
 	<portlet:param name="includeBasicFileEntryType" value="<%= Boolean.TRUE.toString() %>" />
 </liferay-portlet:renderURL>
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="selectFileEntryTypeFm">
+<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="selectFileEntryTypeFm">
 	<liferay-ui:search-container
 		searchContainer='<%= new SearchContainer(renderRequest, new DisplayTerms(request), new DisplayTerms(request), SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, LanguageUtil.get(request, "there-are-no-results")) %>'
 	>
@@ -61,7 +58,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator />
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

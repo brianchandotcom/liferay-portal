@@ -17,18 +17,14 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-String mvcPath = ParamUtil.getString(request, "mvcPath", "/document_library/view_file_entry_types.jsp");
-
 String toolbarItem = ParamUtil.getString(request, "toolbarItem");
-
-boolean includeBasicFileEntryType = ParamUtil.getBoolean(request, "includeBasicFileEntryType");
 %>
 
 <aui:nav-bar markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<portlet:renderURL var="viewFileEntryTypesURL">
-			<portlet:param name="mvcPath" value="<%= mvcPath %>" />
-			<portlet:param name="includeBasicFileEntryType" value="<%= String.valueOf(includeBasicFileEntryType) %>" />
+			<portlet:param name="mvcPath" value="/document_library/select_restricted_file_entry_type.jsp" />
+			<portlet:param name="includeBasicFileEntryType" value="<%= Boolean.TRUE.toString() %>" />
 		</portlet:renderURL>
 
 		<c:if test="<%= DLPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_DOCUMENT_TYPE) %>">
@@ -44,7 +40,7 @@ boolean includeBasicFileEntryType = ParamUtil.getBoolean(request, "includeBasicF
 	<aui:nav-bar-search>
 		<div class="form-search">
 			<liferay-portlet:renderURL varImpl="searchURL">
-				<portlet:param name="mvcPath" value="<%= mvcPath %>" />
+				<portlet:param name="mvcPath" value="/document_library/select_restricted_file_entry_type.jsp" />
 			</liferay-portlet:renderURL>
 
 			<aui:form action="<%= searchURL.toString() %>" method="post" name="fm">

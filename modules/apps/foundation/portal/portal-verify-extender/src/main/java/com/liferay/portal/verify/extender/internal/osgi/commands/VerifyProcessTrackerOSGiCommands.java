@@ -234,8 +234,7 @@ public class VerifyProcessTrackerOSGiCommands {
 	}
 
 	protected void executeVerifyProcesses(
-		String verifyProcessName, OutputStream outputStream,
-		boolean forceVerify) {
+		String verifyProcessName, OutputStream outputStream, boolean force) {
 
 		PrintWriter printWriter = new PrintWriter(outputStream, true);
 
@@ -255,7 +254,7 @@ public class VerifyProcessTrackerOSGiCommands {
 			Release release = releaseLocalService.fetchRelease(
 				verifyProcessName);
 
-			if ((release != null) && !forceVerify && release.isVerified()) {
+			if ((release != null) && !force && release.isVerified()) {
 				if (!_serviceRegistrations.containsKey(verifyProcessName)) {
 					_registerVerifyProcessCompletionMarker(verifyProcessName);
 				}
@@ -292,16 +291,17 @@ public class VerifyProcessTrackerOSGiCommands {
 			}
 
 			if (verifyException == null) {
-				release.setVerified(true);
 				release.setState(ReleaseConstants.STATE_GOOD);
+				release.setVerified(true);
 
 				releaseLocalService.updateRelease(release);
 
 				_registerVerifyProcessCompletionMarker(verifyProcessName);
 			}
 			else {
-				release.setVerified(false);
 				release.setState(ReleaseConstants.STATE_VERIFY_FAILURE);
+				release.setVerified(false);
+
 				releaseLocalService.updateRelease(release);
 			}
 		}
@@ -315,7 +315,7 @@ public class VerifyProcessTrackerOSGiCommands {
 
 	protected void executeVerifyProcesses(
 		final String verifyProcessName, String outputStreamContainerFactoryName,
-		String outputStreamName, final boolean forceVerify) {
+		String outputStreamName, final boolean force) {
 
 		OutputStreamContainerFactory outputStreamContainerFactory;
 
@@ -343,7 +343,7 @@ public class VerifyProcessTrackerOSGiCommands {
 				@Override
 				public void run() {
 					executeVerifyProcesses(
-						verifyProcessName, outputStream, forceVerify);
+						verifyProcessName, outputStream, force);
 				}
 
 			},
@@ -384,11 +384,11 @@ public class VerifyProcessTrackerOSGiCommands {
 
 	private void _execute(
 		final String verifyProcessName, String outputStreamContainerFactoryName,
-		final boolean forceVerify) {
+		final boolean force) {
 
 		executeVerifyProcesses(
 			verifyProcessName, outputStreamContainerFactoryName,
-			"verify-" + verifyProcessName, forceVerify);
+			"verify-" + verifyProcessName, force);
 	}
 
 	private void _registerVerifyProcessCompletionMarker(
@@ -408,7 +408,7 @@ public class VerifyProcessTrackerOSGiCommands {
 
 	private void _runAllVerifiersWithFactory(
 		OutputStreamContainerFactory outputStreamContainerFactory,
-		boolean forceVerify) {
+		boolean force) {
 
 		OutputStreamContainer outputStreamContainer =
 			outputStreamContainerFactory.create("all-verifiers");
@@ -417,7 +417,7 @@ public class VerifyProcessTrackerOSGiCommands {
 			outputStreamContainer.getOutputStream();
 
 		outputStreamContainerFactoryTracker.runWithSwappedLog(
-			new AllVerifiersRunnable(outputStream, forceVerify),
+			new AllVerifiersRunnable(outputStream, force),
 			outputStreamContainer.getDescription(), outputStream);
 	}
 
@@ -433,11 +433,9 @@ public class VerifyProcessTrackerOSGiCommands {
 
 	private class AllVerifiersRunnable implements Runnable {
 
-		public AllVerifiersRunnable(
-			OutputStream outputStream, boolean forceVerify) {
-
+		public AllVerifiersRunnable(OutputStream outputStream, boolean force) {
 			_outputStream = outputStream;
-			_forceVerify = forceVerify;
+			_force = force;
 		}
 
 		@Override
@@ -446,11 +444,11 @@ public class VerifyProcessTrackerOSGiCommands {
 
 			for (String verifyProcessName : verifyProcessNames) {
 				executeVerifyProcesses(
-					verifyProcessName, _outputStream, _forceVerify);
+					verifyProcessName, _outputStream, _force);
 			}
 		}
 
-		private final boolean _forceVerify;
+		private final boolean _force;
 		private final OutputStream _outputStream;
 
 	}

@@ -1,0 +1,1 @@
+create index IX_1DFADA96 on AssetDisplayTemplate (groupId, classNameId);

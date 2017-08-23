@@ -147,8 +147,7 @@ public class AssetAddButtonTag extends IncludeTag {
 			"liferay-ui:asset-add-button:useDialog", _useDialog);
 	}
 
-	private static final String _PAGE =
-		"/html/taglib/ui/asset_add_button/page.jsp";
+	private static final String _PAGE = "/asset_add_button/page.jsp";
 
 	private boolean _addDisplayPageParameter;
 	private long[] _allAssetCategoryIds;

@@ -65,8 +65,7 @@ public class InputAssetLinksTag extends AssetLinksTag {
 			"liferay-ui:input-asset-links:className", className);
 	}
 
-	private static final String _PAGE =
-		"/html/taglib/ui/input_asset_links/page.jsp";
+	private static final String _PAGE = "/input_asset_links/page.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		InputAssetLinksTag.class);

@@ -1,15 +1,14 @@
-import Alert from 'metal-alert/src/Alert';
-import async from 'metal/src/async/async';
-import Component from 'metal-component/src/Component';
-import dom from 'metal-dom/src/dom';
-import RequestScreen from 'senna/src/screen/RequestScreen';
-import Router from 'metal-router/src/Router';
-import Soy from 'metal-soy/src/Soy';
-import State from 'metal-state/src/State';
-import Uri from 'metal-uri/src/Uri';
-import utils from 'senna/src/utils/utils';
-import { CancellablePromise } from 'metal-promise/src/promise/Promise';
-import { toRegex } from 'metal-path-parser/src/pathParser';
+import Alert from 'metal-alert';
+import async from 'metal';
+import Component from 'metal-component';
+import dom from 'metal-dom';
+import Router from 'metal-router';
+import Soy from 'metal-soy';
+import State from 'metal-state';
+import Uri from 'metal-uri';
+import { CancellablePromise } from 'metal-promise';
+import { RequestScreen, utils } from 'senna';
+import { toRegex } from 'metal-path-parser';
 
 /**
  * Specific Router implementation on top of metal-router to target the specific

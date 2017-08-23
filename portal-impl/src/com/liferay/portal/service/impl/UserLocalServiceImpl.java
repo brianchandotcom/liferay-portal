@@ -7047,21 +7047,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 							entityCache.getPortalCache(UserImpl.class);
 
 						PortalCacheMapSynchronizeUtil.synchronize(
-							portalCache, _defaultUsers,
-							(map, key, value, timeToLive) -> {
-								if (!(value instanceof UserCacheModel)) {
-									return;
-								}
-
-								UserCacheModel userCacheModel =
-									(UserCacheModel)value;
-
-								if (!userCacheModel.defaultUser) {
-									return;
-								}
-
-								_defaultUsers.remove(userCacheModel.companyId);
-							});
+							portalCache, _defaultUsers, _synchronizer);
 
 						return null;
 					});
@@ -7072,5 +7058,28 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 
 		};
+
+	private final PortalCacheMapSynchronizeUtil.Synchronizer
+		<Serializable, Serializable> _synchronizer =
+			new PortalCacheMapSynchronizeUtil.Synchronizer
+				<Serializable, Serializable>() {
+
+				@Override
+				public void onSynchronize(
+					Map<? extends Serializable, ? extends Serializable> map,
+					Serializable key, Serializable value, int timeToLive) {
+
+					if (!(value instanceof UserCacheModel)) {
+						return;
+					}
+
+					UserCacheModel userCacheModel = (UserCacheModel)value;
+
+					if (userCacheModel.defaultUser) {
+						_defaultUsers.remove(userCacheModel.companyId);
+					}
+				}
+
+			};
 
 }

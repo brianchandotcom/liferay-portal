@@ -553,7 +553,8 @@ public class TopLevelBuild extends BaseBuild {
 
 			Dom4JUtil.addToElement(
 				rootElement, Dom4JUtil.getNewElement("hr"),
-				Dom4JUtil.getNewElement("h4", null, "Failed Jobs:"));
+				Dom4JUtil.getNewElement(
+					"h4", null, "Failures unique to this pull:"));
 
 			List<Element> failureElements = new ArrayList<>();
 			List<Element> upstreamJobFailureElements = new ArrayList<>();

@@ -77,6 +77,30 @@ public class TopLevelBuild extends BaseBuild {
 		}
 	}
 
+	public String getAcceptanceUpstreamURL() {
+		String jobName = getJobName();
+
+		if (jobName.contains("pullrequest")) {
+			String acceptanceUpstreamJobURL = JenkinsResultsParserUtil.combine(
+				"https://test-1-1.liferay.com/job/",
+				jobName.replace("pullrequest", "upstream"));
+
+			try {
+				JenkinsResultsParserUtil.toString(
+					JenkinsResultsParserUtil.getLocalURL(
+						acceptanceUpstreamJobURL),
+					false, 0, 0, 0);
+			}
+			catch (IOException ioe) {
+				return null;
+			}
+
+			return acceptanceUpstreamJobURL;
+		}
+
+		return null;
+	}
+
 	public Map<String, String> getBaseGitRepositoryDetailsTempMap() {
 		String repositoryType = getBaseRepositoryType();
 
@@ -603,25 +627,7 @@ public class TopLevelBuild extends BaseBuild {
 			Dom4JUtil.getOrderedListElement(
 				failureElements, rootElement, maxFailureCount);
 
-			String acceptanceUpstreamJobURL = null;
-
-			String jobName = getJobName();
-
-			if (jobName.contains("pullrequest")) {
-				acceptanceUpstreamJobURL = JenkinsResultsParserUtil.combine(
-					"https://test-1-1.liferay.com/job/",
-					jobName.replace("pullrequest", "upstream"));
-
-				try {
-					JenkinsResultsParserUtil.toString(
-						JenkinsResultsParserUtil.getLocalURL(
-							acceptanceUpstreamJobURL),
-						false, 0, 0, 0);
-				}
-				catch (IOException ioe) {
-					System.out.println("No upstream build detected.");
-				}
-			}
+			String acceptanceUpstreamJobURL = getAcceptanceUpstreamURL();
 
 			if ((failureElements.size() < maxFailureCount) &&
 				!upstreamJobFailureElements.isEmpty()) {
@@ -653,7 +659,8 @@ public class TopLevelBuild extends BaseBuild {
 			}
 
 			if (jobName.contains("pullrequest") &&
-				upstreamJobFailureElements.isEmpty()) {
+				upstreamJobFailureElements.isEmpty() &&
+				(acceptanceUpstreamJobURL != null)) {
 
 				Dom4JUtil.addToElement(
 					Dom4JUtil.getNewElement("h4", rootElement),

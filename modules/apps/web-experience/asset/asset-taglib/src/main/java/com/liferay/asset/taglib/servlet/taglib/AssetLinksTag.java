@@ -131,7 +131,7 @@ public class AssetLinksTag extends IncludeTag {
 		request.setAttribute("liferay-ui:asset-links:portletURL", _portletURL);
 	}
 
-	private static final String _PAGE = "/html/taglib/ui/asset_links/page.jsp";
+	private static final String _PAGE = "/asset_links/page.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(AssetLinksTag.class);
 

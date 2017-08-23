@@ -26,7 +26,6 @@ public class AssetCategoriesErrorTag extends IncludeTag {
 		return _PAGE;
 	}
 
-	private static final String _PAGE =
-		"/html/taglib/ui/asset_categories_error/page.jsp";
+	private static final String _PAGE = "/asset_categories_error/page.jsp";
 
 }

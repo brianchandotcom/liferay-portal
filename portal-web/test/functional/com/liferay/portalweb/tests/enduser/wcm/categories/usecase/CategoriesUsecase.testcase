@@ -1239,6 +1239,20 @@
 		</execute>
 	</command>
 
+	<command name="ImportLAR" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Categories" />
+		</execute>
+
+		<execute macro="LAR#importPortlet">
+			<var name="larFileName" value="Moon-Rocks-Unit-Category-Hierarchy.lar" />
+			<var name="uploadFrom" value="dependencies" />
+		</execute>
+	</command>
+
 	<command name="MoveSubcategory" priority="3">
 		<property name="testray.component.names" value="Categories" />
 

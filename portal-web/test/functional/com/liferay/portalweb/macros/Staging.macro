@@ -178,8 +178,8 @@
 	<command name="addPublishTemplate">
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Publish Templates" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Publish Templates">
+			<var name="key_menuItem" value="Publish Templates" />
 		</execute>
 
 		<execute function="Pause" locator1="3000" />
@@ -517,8 +517,8 @@
 	<command name="deletePublishTemplate">
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Publish Templates" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Publish Templates">
+			<var name="key_menuItem" value="Publish Templates" />
 		</execute>
 
 		<var name="key_rowEntry" value="${publishTemplateName}" />
@@ -727,8 +727,8 @@
 	<command name="moveToTheRecycleBinPublishTemplate">
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Publish Templates" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Publish Templates">
+			<var name="key_menuItem" value="Publish Templates" />
 		</execute>
 
 		<var name="key_rowEntry" value="${publishTemplateName}" />
@@ -976,8 +976,8 @@
 	<command name="searchPublishTemplate">
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Publish Templates" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Publish Templates">
+			<var name="key_menuItem" value="Publish Templates" />
 		</execute>
 
 		<execute function="Pause" locator1="3000" />
@@ -1145,8 +1145,8 @@
 			</then>
 		</if>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Publish Templates" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Publish Templates">
+			<var name="key_menuItem" value="Publish Templates" />
 		</execute>
 
 		<var name="key_publishTemplateName" value="${publishTemplateName}" />

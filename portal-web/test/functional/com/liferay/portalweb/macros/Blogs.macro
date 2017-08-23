@@ -69,7 +69,7 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="BlogsEntry#ENTRY_COVER_IMAGE_SELECT_FILE" value1="Select File" />
+		<execute macro="BlogsNavigator#gotoSelectFile" />
 
 		<execute macro="ItemSelector#selectDMImage">
 			<var name="dmFolderName" value="${dmFolderName}" />
@@ -169,7 +169,7 @@
 	<command name="addEntryWithUploadedCoverImage">
 		<execute macro="BlogsNavigator#gotoAddEntry" />
 
-		<execute function="AssertClick" locator1="BlogsEntry#ENTRY_COVER_IMAGE_SELECT_FILE" value1="Select File" />
+		<execute macro="BlogsNavigator#gotoSelectFile" />
 
 		<execute macro="ItemSelector#uploadFile">
 			<var name="navTab" value="${navTab}" />

@@ -299,6 +299,36 @@
 		</execute>
 	</command>
 
+	<command name="AddBlogWithFormatting" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Blogs" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<execute macro="BlogsNavigator#gotoSelectFile" />
+
+		<execute macro="ItemSelector#uploadFile">
+			<var name="navTab" value="Upload Image" />
+			<var name="uploadFileName" value="Document_1.jpg" />
+		</execute>
+
+		<execute macro="BlogsEntry#addEntryContent">
+			<var name="entryContent"><![CDATA[A World-Renowned Professor<br />It's no secret that Agricultural Science Department professor Dr. Wolfgang von Richter has built his entire career on solving the problem of sustainable living on other planets. For Dr. von Richter, the humble lima bean, which comes from the aptly-named phaseolus lunatus plant of the legume family, is the solution. For years, Dr. von Richter has cultivated variety after variety of lima bean. He's turned lima beans cobalt blue by adding the hardiness of a violet gene; he's grown lima beans the size of fists with his nutrient-rich, hyper-growth soil. But how realistic is his dream of getting lima beans to grow in the harsh, unpredictable, and, frankly, otherworldly conditions of different planets?]]></var>
+			<var name="entrySubtitle" value="A conversation with Dr. Von Richter" />
+			<var name="entryTitle" value="Is the Lima Bean Really the Answer to Our Life on Other Planets?" />
+		</execute>
+
+		<execute macro="BlogsEntry#selectFormattingStyle">
+			<var name="styleFormat" value="Heading 2" />
+		</execute>
+
+		<execute macro="Button#clickPublish" />
+	</command>
+
 	<command name="CKEditorSmoke" priority="5">
 		<property name="custom.properties" value="editor.wysiwyg.portal-web.docroot.html.portlet.blogs.edit_entry.jsp=ckeditor" />
 

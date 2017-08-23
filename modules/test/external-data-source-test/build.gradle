@@ -1,0 +1,7 @@
+dependencies {
+	provided group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	provided project(":test:external-data-source-test-api")
+	provided project(":test:external-data-source-test-service")
+}

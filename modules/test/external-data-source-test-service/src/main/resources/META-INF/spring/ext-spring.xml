@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+>
+	<bean class="com.liferay.external.data.source.test.service.destroyer.DataSourceDestroyer" id="dataSourceDestroyer">
+		<constructor-arg ref="liferayDataSourceTarget" />
+	</bean>
+	<bean class="com.liferay.portal.dao.jdbc.spring.DataSourceFactoryBean" id="liferayDataSourceTarget">
+		<property name="propertyPrefix" value="jdbc.test." />
+	</bean>
+	<bean class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy" id="liferayDataSource">
+		<property name="targetDataSource" ref="liferayDataSourceTarget" />
+	</bean>
+</beans>

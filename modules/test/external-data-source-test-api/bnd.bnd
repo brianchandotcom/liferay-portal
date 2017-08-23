@@ -1,0 +1,8 @@
+Bundle-Name: Liferay External Data Source Test API
+Bundle-SymbolicName: com.liferay.external.data.source.test.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.external.data.source.test.exception,\
+	com.liferay.external.data.source.test.model,\
+	com.liferay.external.data.source.test.service,\
+	com.liferay.external.data.source.test.service.persistence

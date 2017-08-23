@@ -65,7 +65,7 @@ public class CalendarCacheModel implements CacheModel<Calendar>, Externalizable 
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -83,8 +83,6 @@ public class CalendarCacheModel implements CacheModel<Calendar>, Externalizable 
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", resourceBlockId=");
-		sb.append(resourceBlockId);
 		sb.append(", calendarResourceId=");
 		sb.append(calendarResourceId);
 		sb.append(", name=");
@@ -145,7 +143,6 @@ public class CalendarCacheModel implements CacheModel<Calendar>, Externalizable 
 			calendarImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		calendarImpl.setResourceBlockId(resourceBlockId);
 		calendarImpl.setCalendarResourceId(calendarResourceId);
 
 		if (name == null) {
@@ -201,8 +198,6 @@ public class CalendarCacheModel implements CacheModel<Calendar>, Externalizable 
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
-		resourceBlockId = objectInput.readLong();
-
 		calendarResourceId = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
@@ -246,8 +241,6 @@ public class CalendarCacheModel implements CacheModel<Calendar>, Externalizable 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		objectOutput.writeLong(resourceBlockId);
-
 		objectOutput.writeLong(calendarResourceId);
 
 		if (name == null) {
@@ -289,7 +282,6 @@ public class CalendarCacheModel implements CacheModel<Calendar>, Externalizable 
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public long resourceBlockId;
 	public long calendarResourceId;
 	public String name;
 	public String description;

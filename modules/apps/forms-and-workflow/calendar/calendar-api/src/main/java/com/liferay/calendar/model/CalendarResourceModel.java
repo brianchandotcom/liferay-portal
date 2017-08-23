@@ -215,20 +215,6 @@ public interface CalendarResourceModel extends AttachedModel,
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the resource block ID of this calendar resource.
-	 *
-	 * @return the resource block ID of this calendar resource
-	 */
-	public long getResourceBlockId();
-
-	/**
-	 * Sets the resource block ID of this calendar resource.
-	 *
-	 * @param resourceBlockId the resource block ID of this calendar resource
-	 */
-	public void setResourceBlockId(long resourceBlockId);
-
-	/**
 	 * Returns the fully qualified class name of this calendar resource.
 	 *
 	 * @return the fully qualified class name of this calendar resource

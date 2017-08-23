@@ -68,7 +68,6 @@ public class CalendarResourceWrapper implements CalendarResource,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("resourceBlockId", getResourceBlockId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("classUuid", getClassUuid());
@@ -129,12 +128,6 @@ public class CalendarResourceWrapper implements CalendarResource,
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
-		}
-
-		Long resourceBlockId = (Long)attributes.get("resourceBlockId");
-
-		if (resourceBlockId != null) {
-			setResourceBlockId(resourceBlockId);
 		}
 
 		Long classNameId = (Long)attributes.get("classNameId");
@@ -514,16 +507,6 @@ public class CalendarResourceWrapper implements CalendarResource,
 	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _calendarResource.getPrimaryKeyObj();
-	}
-
-	/**
-	* Returns the resource block ID of this calendar resource.
-	*
-	* @return the resource block ID of this calendar resource
-	*/
-	@Override
-	public long getResourceBlockId() {
-		return _calendarResource.getResourceBlockId();
 	}
 
 	@Override
@@ -915,16 +898,6 @@ public class CalendarResourceWrapper implements CalendarResource,
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_calendarResource.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	/**
-	* Sets the resource block ID of this calendar resource.
-	*
-	* @param resourceBlockId the resource block ID of this calendar resource
-	*/
-	@Override
-	public void setResourceBlockId(long resourceBlockId) {
-		_calendarResource.setResourceBlockId(resourceBlockId);
 	}
 
 	/**

@@ -17,7 +17,7 @@ package com.liferay.calendar.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.annotation.ImplementationClassName;
-import com.liferay.portal.kernel.model.PermissionedModel;
+import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.Accessor;
 
 /**
@@ -31,8 +31,7 @@ import com.liferay.portal.kernel.util.Accessor;
  */
 @ImplementationClassName("com.liferay.calendar.model.impl.CalendarResourceImpl")
 @ProviderType
-public interface CalendarResource extends CalendarResourceModel,
-	PermissionedModel {
+public interface CalendarResource extends CalendarResourceModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

@@ -139,8 +139,6 @@ public class CalendarBookingPersistenceTest {
 
 		newCalendarBooking.setModifiedDate(RandomTestUtil.nextDate());
 
-		newCalendarBooking.setResourceBlockId(RandomTestUtil.nextLong());
-
 		newCalendarBooking.setCalendarId(RandomTestUtil.nextLong());
 
 		newCalendarBooking.setCalendarResourceId(RandomTestUtil.nextLong());
@@ -205,8 +203,6 @@ public class CalendarBookingPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCalendarBooking.getModifiedDate()),
 			Time.getShortTimestamp(newCalendarBooking.getModifiedDate()));
-		Assert.assertEquals(existingCalendarBooking.getResourceBlockId(),
-			newCalendarBooking.getResourceBlockId());
 		Assert.assertEquals(existingCalendarBooking.getCalendarId(),
 			newCalendarBooking.getCalendarId());
 		Assert.assertEquals(existingCalendarBooking.getCalendarResourceId(),
@@ -251,13 +247,6 @@ public class CalendarBookingPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCalendarBooking.getStatusDate()),
 			Time.getShortTimestamp(newCalendarBooking.getStatusDate()));
-	}
-
-	@Test
-	public void testCountByResourceBlockId() throws Exception {
-		_persistence.countByResourceBlockId(RandomTestUtil.nextLong());
-
-		_persistence.countByResourceBlockId(0L);
 	}
 
 	@Test
@@ -381,8 +370,8 @@ public class CalendarBookingPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CalendarBooking", "uuid",
 			true, "calendarBookingId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "resourceBlockId", true, "calendarId", true,
-			"calendarResourceId", true, "parentCalendarBookingId", true,
+			"modifiedDate", true, "calendarId", true, "calendarResourceId",
+			true, "parentCalendarBookingId", true,
 			"recurringCalendarBookingId", true, "vEventUid", true, "title",
 			true, "location", true, "startTime", true, "endTime", true,
 			"allDay", true, "recurrence", true, "firstReminder", true,
@@ -638,8 +627,6 @@ public class CalendarBookingPersistenceTest {
 		calendarBooking.setCreateDate(RandomTestUtil.nextDate());
 
 		calendarBooking.setModifiedDate(RandomTestUtil.nextDate());
-
-		calendarBooking.setResourceBlockId(RandomTestUtil.nextLong());
 
 		calendarBooking.setCalendarId(RandomTestUtil.nextLong());
 

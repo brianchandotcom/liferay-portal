@@ -56,16 +56,15 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceAction;
-import com.liferay.portal.kernel.model.ResourceBlockConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
-import com.liferay.portal.kernel.service.ResourceBlockLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -537,28 +536,24 @@ public class CalEventImporter {
 		return newResourceAction.getBitwiseValue();
 	}
 
-	protected long getActionIds(
+	protected String[] getActionIds(
 		ResourcePermission resourcePermission, String oldClassName,
-		String newClassName) {
+		List<String> modelResourceActions) {
 
-		long actionIds = 0;
+		List<String> actionIds = new ArrayList<>();
 
-		List<ResourceAction> oldResourceActions =
+		List<ResourceAction> resourceActions =
 			_resourceActionLocalService.getResourceActions(oldClassName);
 
-		for (ResourceAction oldResourceAction : oldResourceActions) {
-			boolean hasActionId = _resourcePermissionLocalService.hasActionId(
-				resourcePermission, oldResourceAction);
+		for (ResourceAction resourceAction : resourceActions) {
+			if (resourcePermission.hasAction(resourceAction) &&
+				modelResourceActions.contains(resourceAction.getActionId())) {
 
-			if (!hasActionId) {
-				continue;
+				actionIds.add(resourceAction.getActionId());
 			}
-
-			actionIds = actionIds | getActionId(
-				oldResourceAction, newClassName);
 		}
 
-		return actionIds;
+		return actionIds.toArray(new String[actionIds.size()]);
 	}
 
 	protected AssetCategory getAssetCategory(
@@ -835,25 +830,29 @@ public class CalEventImporter {
 	}
 
 	protected void importCalendarBookingResourcePermission(
-			ResourcePermission resourcePermission, long calendarBookingId)
+			ResourcePermission resourcePermission, long calendarBookingId,
+			List<String> modelResourceActions)
 		throws PortalException {
 
 		CalendarBooking calendarBooking =
 			_calendarBookingLocalService.getCalendarBooking(calendarBookingId);
 
-		long actionIds = getActionIds(
-			resourcePermission, _CLASS_NAME, CalendarBooking.class.getName());
+		String[] actionIds = getActionIds(
+			resourcePermission, _CLASS_NAME, modelResourceActions);
 
-		_resourceBlockLocalService.updateIndividualScopePermissions(
-			calendarBooking.getCompanyId(), calendarBooking.getGroupId(),
-			CalendarBooking.class.getName(), calendarBooking,
-			resourcePermission.getRoleId(), actionIds,
-			ResourceBlockConstants.OPERATOR_SET);
+		_resourcePermissionLocalService.setResourcePermissions(
+			calendarBooking.getCompanyId(), CalendarBooking.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(calendarBooking),
+			resourcePermission.getRoleId(), actionIds);
 	}
 
 	protected void importCalendarBookingResourcePermissions(
 			long companyId, long eventId, long calendarBookingId)
 		throws PortalException {
+
+		List<String> modelResourceActions =
+			ResourceActionsUtil.getModelResourceActions(
+				CalendarBooking.class.getName());
 
 		List<ResourcePermission> resourcePermissions =
 			_resourcePermissionLocalService.getResourcePermissions(
@@ -862,7 +861,7 @@ public class CalEventImporter {
 
 		for (ResourcePermission resourcePermission : resourcePermissions) {
 			importCalendarBookingResourcePermission(
-				resourcePermission, calendarBookingId);
+				resourcePermission, calendarBookingId, modelResourceActions);
 		}
 	}
 
@@ -1381,13 +1380,6 @@ public class CalEventImporter {
 	}
 
 	@Reference(unbind = "-")
-	protected void setResourceBlockLocalService(
-		ResourceBlockLocalService resourceBlockLocalService) {
-
-		_resourceBlockLocalService = resourceBlockLocalService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setResourcePermissionLocalService(
 		ResourcePermissionLocalService resourcePermissionLocalService) {
 
@@ -1475,7 +1467,6 @@ public class CalEventImporter {
 	private RatingsEntryLocalService _ratingsEntryLocalService;
 	private RatingsStatsLocalService _ratingsStatsLocalService;
 	private ResourceActionLocalService _resourceActionLocalService;
-	private ResourceBlockLocalService _resourceBlockLocalService;
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
 	private RoleLocalService _roleLocalService;
 	private SocialActivityLocalService _socialActivityLocalService;

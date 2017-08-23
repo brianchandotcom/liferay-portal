@@ -139,8 +139,6 @@ public class CalendarResourcePersistenceTest {
 
 		newCalendarResource.setModifiedDate(RandomTestUtil.nextDate());
 
-		newCalendarResource.setResourceBlockId(RandomTestUtil.nextLong());
-
 		newCalendarResource.setClassNameId(RandomTestUtil.nextLong());
 
 		newCalendarResource.setClassPK(RandomTestUtil.nextLong());
@@ -179,8 +177,6 @@ public class CalendarResourcePersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCalendarResource.getModifiedDate()),
 			Time.getShortTimestamp(newCalendarResource.getModifiedDate()));
-		Assert.assertEquals(existingCalendarResource.getResourceBlockId(),
-			newCalendarResource.getResourceBlockId());
 		Assert.assertEquals(existingCalendarResource.getClassNameId(),
 			newCalendarResource.getClassNameId());
 		Assert.assertEquals(existingCalendarResource.getClassPK(),
@@ -198,13 +194,6 @@ public class CalendarResourcePersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCalendarResource.getLastPublishDate()),
 			Time.getShortTimestamp(newCalendarResource.getLastPublishDate()));
-	}
-
-	@Test
-	public void testCountByResourceBlockId() throws Exception {
-		_persistence.countByResourceBlockId(RandomTestUtil.nextLong());
-
-		_persistence.countByResourceBlockId(0L);
 	}
 
 	@Test
@@ -323,9 +312,9 @@ public class CalendarResourcePersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CalendarResource", "uuid",
 			true, "calendarResourceId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "resourceBlockId", true, "classNameId", true,
-			"classPK", true, "classUuid", true, "code", true, "name", true,
-			"description", true, "active", true, "lastPublishDate", true);
+			"modifiedDate", true, "classNameId", true, "classPK", true,
+			"classUuid", true, "code", true, "name", true, "description", true,
+			"active", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -564,8 +553,6 @@ public class CalendarResourcePersistenceTest {
 		calendarResource.setCreateDate(RandomTestUtil.nextDate());
 
 		calendarResource.setModifiedDate(RandomTestUtil.nextDate());
-
-		calendarResource.setResourceBlockId(RandomTestUtil.nextLong());
 
 		calendarResource.setClassNameId(RandomTestUtil.nextLong());
 

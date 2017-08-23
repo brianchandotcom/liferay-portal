@@ -66,7 +66,7 @@ public class CalendarResourceCacheModel implements CacheModel<CalendarResource>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -84,8 +84,6 @@ public class CalendarResourceCacheModel implements CacheModel<CalendarResource>,
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", resourceBlockId=");
-		sb.append(resourceBlockId);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
 		sb.append(", classPK=");
@@ -144,7 +142,6 @@ public class CalendarResourceCacheModel implements CacheModel<CalendarResource>,
 			calendarResourceImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		calendarResourceImpl.setResourceBlockId(resourceBlockId);
 		calendarResourceImpl.setClassNameId(classNameId);
 		calendarResourceImpl.setClassPK(classPK);
 
@@ -205,8 +202,6 @@ public class CalendarResourceCacheModel implements CacheModel<CalendarResource>,
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
-		resourceBlockId = objectInput.readLong();
-
 		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
@@ -246,8 +241,6 @@ public class CalendarResourceCacheModel implements CacheModel<CalendarResource>,
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
-
-		objectOutput.writeLong(resourceBlockId);
 
 		objectOutput.writeLong(classNameId);
 
@@ -293,7 +286,6 @@ public class CalendarResourceCacheModel implements CacheModel<CalendarResource>,
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public long resourceBlockId;
 	public long classNameId;
 	public long classPK;
 	public String classUuid;

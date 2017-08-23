@@ -10,7 +10,6 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="resourceBlockId" type="long" />
 		<field name="calendarResourceId" type="long" />
 		<field localized="true" name="name" type="String" />
 		<field localized="true" name="description" type="String">
@@ -32,7 +31,6 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="resourceBlockId" type="long" />
 		<field name="calendarId" type="long" />
 		<field name="calendarResourceId" type="long" />
 		<field name="parentCalendarBookingId" type="long" />
@@ -95,7 +93,6 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="resourceBlockId" type="long" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="classUuid" type="String" />

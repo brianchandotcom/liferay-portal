@@ -31,7 +31,10 @@ import javax.servlet.jsp.JspException;
 
 /**
  * @author Julio Camarero
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.asset.taglib.servlet.taglib.AssetAddonEntryDisplayTag}
  */
+@Deprecated
 public class AssetAddonEntryDisplayTag extends IncludeTag {
 
 	@Override

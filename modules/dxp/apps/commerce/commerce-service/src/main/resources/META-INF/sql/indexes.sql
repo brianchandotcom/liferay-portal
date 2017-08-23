@@ -21,3 +21,6 @@ create unique index IX_B0FDFD55 on CommercePaymentMethod (groupId, engineKey[$CO
 create index IX_49C93338 on CommerceRegion (commerceCountryId, active_);
 create index IX_3BC85C89 on CommerceRegion (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_DBA0714B on CommerceRegion (uuid_[$COLUMN_LENGTH:75$], groupId);
+
+create index IX_42E5F6EF on CommerceShippingMethod (groupId, active_);
+create unique index IX_C4557F93 on CommerceShippingMethod (groupId, engineKey[$COLUMN_LENGTH:75$]);

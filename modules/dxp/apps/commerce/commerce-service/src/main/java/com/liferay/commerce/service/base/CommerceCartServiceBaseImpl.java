@@ -23,6 +23,7 @@ import com.liferay.commerce.service.persistence.CommerceOrderItemPersistence;
 import com.liferay.commerce.service.persistence.CommerceOrderPersistence;
 import com.liferay.commerce.service.persistence.CommercePaymentMethodPersistence;
 import com.liferay.commerce.service.persistence.CommerceRegionPersistence;
+import com.liferay.commerce.service.persistence.CommerceShippingMethodPersistence;
 
 import com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence;
 
@@ -460,6 +461,63 @@ public abstract class CommerceCartServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the commerce shipping method local service.
+	 *
+	 * @return the commerce shipping method local service
+	 */
+	public com.liferay.commerce.service.CommerceShippingMethodLocalService getCommerceShippingMethodLocalService() {
+		return commerceShippingMethodLocalService;
+	}
+
+	/**
+	 * Sets the commerce shipping method local service.
+	 *
+	 * @param commerceShippingMethodLocalService the commerce shipping method local service
+	 */
+	public void setCommerceShippingMethodLocalService(
+		com.liferay.commerce.service.CommerceShippingMethodLocalService commerceShippingMethodLocalService) {
+		this.commerceShippingMethodLocalService = commerceShippingMethodLocalService;
+	}
+
+	/**
+	 * Returns the commerce shipping method remote service.
+	 *
+	 * @return the commerce shipping method remote service
+	 */
+	public com.liferay.commerce.service.CommerceShippingMethodService getCommerceShippingMethodService() {
+		return commerceShippingMethodService;
+	}
+
+	/**
+	 * Sets the commerce shipping method remote service.
+	 *
+	 * @param commerceShippingMethodService the commerce shipping method remote service
+	 */
+	public void setCommerceShippingMethodService(
+		com.liferay.commerce.service.CommerceShippingMethodService commerceShippingMethodService) {
+		this.commerceShippingMethodService = commerceShippingMethodService;
+	}
+
+	/**
+	 * Returns the commerce shipping method persistence.
+	 *
+	 * @return the commerce shipping method persistence
+	 */
+	public CommerceShippingMethodPersistence getCommerceShippingMethodPersistence() {
+		return commerceShippingMethodPersistence;
+	}
+
+	/**
+	 * Sets the commerce shipping method persistence.
+	 *
+	 * @param commerceShippingMethodPersistence the commerce shipping method persistence
+	 */
+	public void setCommerceShippingMethodPersistence(
+		CommerceShippingMethodPersistence commerceShippingMethodPersistence) {
+		this.commerceShippingMethodPersistence = commerceShippingMethodPersistence;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -738,6 +796,12 @@ public abstract class CommerceCartServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.commerce.service.CommerceRegionService commerceRegionService;
 	@BeanReference(type = CommerceRegionPersistence.class)
 	protected CommerceRegionPersistence commerceRegionPersistence;
+	@BeanReference(type = com.liferay.commerce.service.CommerceShippingMethodLocalService.class)
+	protected com.liferay.commerce.service.CommerceShippingMethodLocalService commerceShippingMethodLocalService;
+	@BeanReference(type = com.liferay.commerce.service.CommerceShippingMethodService.class)
+	protected com.liferay.commerce.service.CommerceShippingMethodService commerceShippingMethodService;
+	@BeanReference(type = CommerceShippingMethodPersistence.class)
+	protected CommerceShippingMethodPersistence commerceShippingMethodPersistence;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)

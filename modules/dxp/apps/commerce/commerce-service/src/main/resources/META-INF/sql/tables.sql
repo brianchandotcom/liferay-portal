@@ -105,3 +105,18 @@ create table CommerceRegion (
 	active_ BOOLEAN,
 	lastPublishDate DATE null
 );
+
+create table CommerceShippingMethod (
+	commerceShippingMethodId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	name STRING null,
+	description STRING null,
+	engineKey VARCHAR(75) null,
+	priority DOUBLE,
+	active_ BOOLEAN
+);

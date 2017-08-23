@@ -25,6 +25,7 @@ import com.liferay.commerce.service.persistence.CommerceOrderItemPersistence;
 import com.liferay.commerce.service.persistence.CommerceOrderPersistence;
 import com.liferay.commerce.service.persistence.CommercePaymentMethodPersistence;
 import com.liferay.commerce.service.persistence.CommerceRegionPersistence;
+import com.liferay.commerce.service.persistence.CommerceShippingMethodPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -595,6 +596,44 @@ public abstract class CommercePaymentMethodLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the commerce shipping method local service.
+	 *
+	 * @return the commerce shipping method local service
+	 */
+	public com.liferay.commerce.service.CommerceShippingMethodLocalService getCommerceShippingMethodLocalService() {
+		return commerceShippingMethodLocalService;
+	}
+
+	/**
+	 * Sets the commerce shipping method local service.
+	 *
+	 * @param commerceShippingMethodLocalService the commerce shipping method local service
+	 */
+	public void setCommerceShippingMethodLocalService(
+		com.liferay.commerce.service.CommerceShippingMethodLocalService commerceShippingMethodLocalService) {
+		this.commerceShippingMethodLocalService = commerceShippingMethodLocalService;
+	}
+
+	/**
+	 * Returns the commerce shipping method persistence.
+	 *
+	 * @return the commerce shipping method persistence
+	 */
+	public CommerceShippingMethodPersistence getCommerceShippingMethodPersistence() {
+		return commerceShippingMethodPersistence;
+	}
+
+	/**
+	 * Sets the commerce shipping method persistence.
+	 *
+	 * @param commerceShippingMethodPersistence the commerce shipping method persistence
+	 */
+	public void setCommerceShippingMethodPersistence(
+		CommerceShippingMethodPersistence commerceShippingMethodPersistence) {
+		this.commerceShippingMethodPersistence = commerceShippingMethodPersistence;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -787,6 +826,10 @@ public abstract class CommercePaymentMethodLocalServiceBaseImpl
 	protected com.liferay.commerce.service.CommerceRegionLocalService commerceRegionLocalService;
 	@BeanReference(type = CommerceRegionPersistence.class)
 	protected CommerceRegionPersistence commerceRegionPersistence;
+	@BeanReference(type = com.liferay.commerce.service.CommerceShippingMethodLocalService.class)
+	protected com.liferay.commerce.service.CommerceShippingMethodLocalService commerceShippingMethodLocalService;
+	@BeanReference(type = CommerceShippingMethodPersistence.class)
+	protected CommerceShippingMethodPersistence commerceShippingMethodPersistence;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)

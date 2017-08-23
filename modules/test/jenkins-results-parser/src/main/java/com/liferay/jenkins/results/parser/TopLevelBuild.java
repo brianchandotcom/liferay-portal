@@ -599,6 +599,26 @@ public class TopLevelBuild extends BaseBuild {
 			Dom4JUtil.getOrderedListElement(
 				failureElements, rootElement, maxFailureCount);
 
+			String acceptanceUpstreamJobURL = null;
+
+			String jobName = getJobName();
+
+			if (jobName.contains("pullrequest")) {
+				acceptanceUpstreamJobURL = JenkinsResultsParserUtil.combine(
+					"https://test-1-1.liferay.com/job/",
+					jobName.replace("pullrequest", "upstream"));
+
+				try {
+					JenkinsResultsParserUtil.toString(
+						JenkinsResultsParserUtil.getLocalURL(
+							acceptanceUpstreamJobURL),
+						false, 0, 0, 0);
+				}
+				catch (IOException ioe) {
+					System.out.println("No upstream build detected.");
+				}
+			}
+
 			if ((failureElements.size() < maxFailureCount) &&
 				!upstreamJobFailureElements.isEmpty()) {
 
@@ -621,23 +641,12 @@ public class TopLevelBuild extends BaseBuild {
 			String jobName = getJobName();
 
 			if (jobName.contains("pullrequest")) {
-				String url = JenkinsResultsParserUtil.combine(
-					"https://test-1-1.liferay.com/job/",
-					jobName.replace("pullrequest", "upstream"));
-
-				try {
-					JenkinsResultsParserUtil.toString(
-						JenkinsResultsParserUtil.getLocalURL(url), false, 0, 0,
-						0);
-
-					Dom4JUtil.addToElement(
-						Dom4JUtil.getNewElement("h4", rootElement),
-						"For upstream results, click ",
-						Dom4JUtil.getNewAnchorElement(url, "here"), ".");
-				}
-				catch (IOException ioe) {
-					System.out.println("No upstream build detected.");
-				}
+				Dom4JUtil.addToElement(
+					Dom4JUtil.getNewElement("h4", rootElement),
+					"For upstream results, click ",
+					Dom4JUtil.getNewAnchorElement(
+						acceptanceUpstreamJobURL, "here"),
+					".");
 			}
 		}
 

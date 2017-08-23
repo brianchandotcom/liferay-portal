@@ -216,7 +216,8 @@ public class AssetDisplayTag extends IncludeTag {
 			}
 		}
 
-		request.setAttribute("liferay-ui:asset-display:assetEntry", assetEntry);
+		request.setAttribute(
+			"liferay-asset:asset-display:assetEntry", assetEntry);
 
 		if ((_renderer == null) && (assetEntry != null)) {
 			_renderer = assetEntry.getAssetRenderer();
@@ -229,7 +230,7 @@ public class AssetDisplayTag extends IncludeTag {
 		}
 		else {
 			request.setAttribute(
-				"liferay-ui:asset-display:renderer", _renderer);
+				"liferay-asset:asset-display:renderer", _renderer);
 		}
 
 		AssetRendererFactory<?> assetRendererFactory = _assetRendererFactory;

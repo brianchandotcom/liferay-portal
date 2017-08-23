@@ -33,10 +33,10 @@ page import="javax.portlet.PortletResponse" %>
 
 <%
 List<AssetAddonEntry> assetAddonEntries = (List<AssetAddonEntry>)request.getAttribute(WebKeys.ASSET_ADDON_ENTRIES);
-String hiddenInput = (String)request.getAttribute("liferay-ui:asset-addon-entry-selector:hiddenInput");
-String id = GetterUtil.getString((String)request.getAttribute("liferay-ui:asset-addon-entry-selector:id"));
-List<AssetAddonEntry> selectedAssetAddonEntries = (List<AssetAddonEntry>)request.getAttribute("liferay-ui:asset-addon-entry-selector:selectedAssetAddonEntries");
-String title = GetterUtil.getString((String)request.getAttribute("liferay-ui:asset-addon-entry-selector:title"));
+String hiddenInput = (String)request.getAttribute("liferay-asset:asset-addon-entry-selector:hiddenInput");
+String id = GetterUtil.getString((String)request.getAttribute("liferay-asset:asset-addon-entry-selector:id"));
+List<AssetAddonEntry> selectedAssetAddonEntries = (List<AssetAddonEntry>)request.getAttribute("liferay-asset:asset-addon-entry-selector:selectedAssetAddonEntries");
+String title = GetterUtil.getString((String)request.getAttribute("liferay-asset:asset-addon-entry-selector:title"));
 
 PortletRequest portletRequest = (PortletRequest)request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
 

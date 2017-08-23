@@ -2,9 +2,9 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping auto-import="false" default-lazy="false">
-	<import class="com.liferay.modern.site.building.fragment.model.FragmentCollection" />
-	<import class="com.liferay.modern.site.building.fragment.model.FragmentEntry" />
-	<class name="com.liferay.modern.site.building.fragment.model.impl.FragmentCollectionImpl" table="FragmentCollection">
+	<import class="com.liferay.modern.site.building.fragment.model.MSBFragmentCollection" />
+	<import class="com.liferay.modern.site.building.fragment.model.MSBFragmentEntry" />
+	<class name="com.liferay.modern.site.building.fragment.model.impl.MSBFragmentCollectionImpl" table="MSBFragmentCollection">
 		<id name="fragmentCollectionId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -17,7 +17,7 @@
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
-	<class name="com.liferay.modern.site.building.fragment.model.impl.FragmentEntryImpl" table="FragmentEntry">
+	<class name="com.liferay.modern.site.building.fragment.model.impl.MSBFragmentEntryImpl" table="MSBFragmentEntry">
 		<id name="fragmentEntryId" type="long">
 			<generator class="assigned" />
 		</id>

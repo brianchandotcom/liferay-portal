@@ -118,10 +118,10 @@ public class EditCommercePaymentMethodMVCActionCommand
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 		String engineKey = ParamUtil.getString(actionRequest, "engineKey");
-		double priority = ParamUtil.getDouble(actionRequest, "priority");
-		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 		UnicodeProperties engineParameterMap =
 			PropertiesParamUtil.getProperties(actionRequest, "settings--");
+		double priority = ParamUtil.getDouble(actionRequest, "priority");
+		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommercePaymentMethod.class.getName(), actionRequest);

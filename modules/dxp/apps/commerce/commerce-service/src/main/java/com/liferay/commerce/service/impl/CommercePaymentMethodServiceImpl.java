@@ -70,13 +70,18 @@ public class CommercePaymentMethodServiceImpl
 			boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
+		CommercePaymentMethod commercePaymentMethod =
+			commercePaymentMethodLocalService.getCommercePaymentMethod(
+				commercePaymentMethodId);
+
 		CommercePermission.check(
-			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			getPermissionChecker(), commercePaymentMethod.getGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_PAYMENT_METHODS);
 
 		return commercePaymentMethodLocalService.updateCommercePaymentMethod(
-			commercePaymentMethodId, nameMap, descriptionMap,
-			engineParameterMap, priority, active, serviceContext);
+			commercePaymentMethod.getCommercePaymentMethodId(), nameMap,
+			descriptionMap, engineParameterMap, priority, active,
+			serviceContext);
 	}
 
 }

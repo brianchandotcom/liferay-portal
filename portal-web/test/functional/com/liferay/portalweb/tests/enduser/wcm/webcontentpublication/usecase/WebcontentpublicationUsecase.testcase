@@ -1573,6 +1573,7 @@
 	</command>
 
 	<command name="ViewAssetPaginationAndShowContentAddButtonViaAP" priority="5">
+		<property name="portal.acceptance" value="pending" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="AssetPublisherPortlet#configureAssetLinkBehaviorPG">

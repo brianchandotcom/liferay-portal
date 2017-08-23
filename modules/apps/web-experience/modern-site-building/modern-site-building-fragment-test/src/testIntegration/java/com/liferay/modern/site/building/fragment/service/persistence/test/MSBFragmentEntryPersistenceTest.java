@@ -242,6 +242,12 @@ public class MSBFragmentEntryPersistenceTest {
 			getOrderByComparator());
 	}
 
+	@Test
+	public void testFilterFindByGroupId() throws Exception {
+		_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, getOrderByComparator());
+	}
+
 	protected OrderByComparator<MSBFragmentEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("MSBFragmentEntry",
 			"fragmentEntryId", true, "groupId", true, "companyId", true,

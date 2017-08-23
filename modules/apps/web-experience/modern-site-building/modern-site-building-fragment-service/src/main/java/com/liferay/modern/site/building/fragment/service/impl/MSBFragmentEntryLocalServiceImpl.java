@@ -16,8 +16,8 @@ package com.liferay.modern.site.building.fragment.service.impl;
 
 import com.liferay.modern.site.building.fragment.exception.DuplicateFragmentEntryException;
 import com.liferay.modern.site.building.fragment.exception.FragmentEntryNameException;
-import com.liferay.modern.site.building.fragment.model.FragmentEntry;
-import com.liferay.modern.site.building.fragment.service.base.FragmentEntryLocalServiceBaseImpl;
+import com.liferay.modern.site.building.fragment.model.MSBFragmentEntry;
+import com.liferay.modern.site.building.fragment.service.base.MSBFragmentEntryLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
@@ -31,11 +31,11 @@ import java.util.Objects;
 /**
  * @author Jürgen Kappler
  */
-public class FragmentEntryLocalServiceImpl
-	extends FragmentEntryLocalServiceBaseImpl {
+public class MSBFragmentEntryLocalServiceImpl
+	extends MSBFragmentEntryLocalServiceBaseImpl {
 
 	@Override
-	public FragmentEntry addFragmentEntry(
+	public MSBFragmentEntry addFragmentEntry(
 			long userId, long groupId, long fragmentCollectionId, String name,
 			String css, String html, String js, ServiceContext serviceContext)
 		throws PortalException {
@@ -48,7 +48,7 @@ public class FragmentEntryLocalServiceImpl
 
 		long fragmentEntryId = counterLocalService.increment();
 
-		FragmentEntry fragmentEntry = fragmentEntryPersistence.create(
+		MSBFragmentEntry fragmentEntry = msbFragmentEntryPersistence.create(
 			fragmentEntryId);
 
 		fragmentEntry.setGroupId(groupId);
@@ -61,7 +61,7 @@ public class FragmentEntryLocalServiceImpl
 		fragmentEntry.setHtml(html);
 		fragmentEntry.setJs(js);
 
-		fragmentEntryPersistence.update(fragmentEntry);
+		msbFragmentEntryPersistence.update(fragmentEntry);
 
 		// Resources
 
@@ -71,17 +71,26 @@ public class FragmentEntryLocalServiceImpl
 	}
 
 	@Override
-	public FragmentEntry deleteFragmentEntry(FragmentEntry fragmentEntry)
+	public MSBFragmentEntry deleteFragmentEntry(long fragmentEntryId)
+		throws PortalException {
+
+		MSBFragmentEntry fragmentEntry = getMSBFragmentEntry(fragmentEntryId);
+
+		return deleteMSBFragmentEntry(fragmentEntry);
+	}
+
+	@Override
+	public MSBFragmentEntry deleteFragmentEntry(MSBFragmentEntry fragmentEntry)
 		throws PortalException {
 
 		// Entry
 
-		fragmentEntryPersistence.remove(fragmentEntry);
+		msbFragmentEntryPersistence.remove(fragmentEntry);
 
 		// Resources
 
 		resourceLocalService.deleteResource(
-			fragmentEntry.getCompanyId(), FragmentEntry.class.getName(),
+			fragmentEntry.getCompanyId(), MSBFragmentEntry.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			fragmentEntry.getFragmentEntryId());
 
@@ -89,66 +98,59 @@ public class FragmentEntryLocalServiceImpl
 	}
 
 	@Override
-	public FragmentEntry deleteFragmentEntry(long fragmentEntryId)
-		throws PortalException {
+	public List<MSBFragmentEntry> fetchFragmentEntries(
+		long fragmentCollectionId) {
 
-		FragmentEntry fragmentEntry = getFragmentEntry(fragmentEntryId);
-
-		return deleteFragmentEntry(fragmentEntry);
-	}
-
-	@Override
-	public List<FragmentEntry> fetchFragmentEntries(long fragmentCollectionId) {
-		return fragmentEntryPersistence.findByFragmentCollectionId(
+		return msbFragmentEntryPersistence.findByFragmentCollectionId(
 			fragmentCollectionId);
 	}
 
 	@Override
-	public FragmentEntry fetchFragmentEntry(long fragmentEntryId) {
-		return fragmentEntryPersistence.fetchByPrimaryKey(fragmentEntryId);
+	public MSBFragmentEntry fetchFragmentEntry(long fragmentEntryId) {
+		return msbFragmentEntryPersistence.fetchByPrimaryKey(fragmentEntryId);
 	}
 
 	@Override
-	public List<FragmentEntry> getFragmentEntries(
+	public List<MSBFragmentEntry> getFragmentEntries(
 			long fragmentCollectionId, int start, int end)
 		throws PortalException {
 
-		return fragmentEntryPersistence.findByFragmentCollectionId(
+		return msbFragmentEntryPersistence.findByFragmentCollectionId(
 			fragmentCollectionId, start, end);
 	}
 
 	@Override
-	public List<FragmentEntry> getFragmentEntries(
+	public List<MSBFragmentEntry> getFragmentEntries(
 			long groupId, long fragmentCollectionId, int start, int end,
-			OrderByComparator<FragmentEntry> orderByComparator)
+			OrderByComparator<MSBFragmentEntry> orderByComparator)
 		throws PortalException {
 
-		return fragmentEntryPersistence.findByG_FC(
+		return msbFragmentEntryPersistence.findByG_FC(
 			groupId, fragmentCollectionId, start, end, orderByComparator);
 	}
 
 	@Override
-	public List<FragmentEntry> getFragmentEntries(
+	public List<MSBFragmentEntry> getFragmentEntries(
 		long groupId, long fragmentCollectionId, String name, int start,
-		int end, OrderByComparator<FragmentEntry> obc) {
+		int end, OrderByComparator<MSBFragmentEntry> obc) {
 
 		if (Validator.isNull(name)) {
-			return fragmentEntryPersistence.findByG_FC(
+			return msbFragmentEntryPersistence.findByG_FC(
 				groupId, fragmentCollectionId, start, end, obc);
 		}
 
-		return fragmentEntryPersistence.findByG_LikeN_FC(
+		return msbFragmentEntryPersistence.findByG_LikeN_FC(
 			groupId, name, fragmentCollectionId, start, end, obc);
 	}
 
 	@Override
-	public FragmentEntry updateFragmentEntry(
+	public MSBFragmentEntry updateFragmentEntry(
 			long fragmentEntryId, String name, String css, String html,
 			String js)
 		throws PortalException {
 
-		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
-			fragmentEntryId);
+		MSBFragmentEntry fragmentEntry =
+			msbFragmentEntryPersistence.findByPrimaryKey(fragmentEntryId);
 
 		if (!Objects.equals(fragmentEntry.getName(), name)) {
 			validate(fragmentEntry.getGroupId(), name);
@@ -159,7 +161,7 @@ public class FragmentEntryLocalServiceImpl
 		fragmentEntry.setHtml(html);
 		fragmentEntry.setJs(js);
 
-		fragmentEntryPersistence.update(fragmentEntry);
+		msbFragmentEntryPersistence.update(fragmentEntry);
 
 		return fragmentEntry;
 	}
@@ -170,7 +172,7 @@ public class FragmentEntryLocalServiceImpl
 				"Fragment entry name cannot be null for group " + groupId);
 		}
 
-		FragmentEntry fragmentEntry = fragmentEntryPersistence.fetchByG_N(
+		MSBFragmentEntry fragmentEntry = msbFragmentEntryPersistence.fetchByG_N(
 			groupId, name);
 
 		if (fragmentEntry != null) {

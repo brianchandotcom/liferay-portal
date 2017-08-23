@@ -14,11 +14,11 @@
 
 package com.liferay.modern.site.building.fragment.service.impl;
 
-import com.liferay.modern.site.building.fragment.constants.FragmentActionKeys;
-import com.liferay.modern.site.building.fragment.model.FragmentCollection;
-import com.liferay.modern.site.building.fragment.service.base.FragmentCollectionServiceBaseImpl;
-import com.liferay.modern.site.building.fragment.service.permission.FragmentCollectionPermission;
-import com.liferay.modern.site.building.fragment.service.permission.FragmentPermission;
+import com.liferay.modern.site.building.fragment.constants.MSBFragmentActionKeys;
+import com.liferay.modern.site.building.fragment.model.MSBFragmentCollection;
+import com.liferay.modern.site.building.fragment.service.base.MSBFragmentCollectionServiceBaseImpl;
+import com.liferay.modern.site.building.fragment.service.permission.MSBFragmentCollectionPermission;
+import com.liferay.modern.site.building.fragment.service.permission.MSBFragmentPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -32,49 +32,50 @@ import java.util.List;
 /**
  * @author Jürgen Kappler
  */
-public class FragmentCollectionServiceImpl
-	extends FragmentCollectionServiceBaseImpl {
+public class MSBFragmentCollectionServiceImpl
+	extends MSBFragmentCollectionServiceBaseImpl {
 
 	@Override
-	public FragmentCollection addFragmentCollection(
+	public MSBFragmentCollection addFragmentCollection(
 			long groupId, String name, String description,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		FragmentPermission.check(
+		MSBFragmentPermission.check(
 			getPermissionChecker(), groupId,
-			FragmentActionKeys.ADD_FRAGMENT_COLLECTION);
+			MSBFragmentActionKeys.ADD_FRAGMENT_COLLECTION);
 
-		return fragmentCollectionLocalService.addFragmentCollection(
+		return msbFragmentCollectionLocalService.addFragmentCollection(
 			getUserId(), groupId, name, description, serviceContext);
 	}
 
 	@Override
-	public FragmentCollection deleteFragmentCollection(
+	public MSBFragmentCollection deleteFragmentCollection(
 			long fragmentCollectionId)
 		throws PortalException {
 
-		FragmentCollectionPermission.check(
+		MSBFragmentCollectionPermission.check(
 			getPermissionChecker(), fragmentCollectionId, ActionKeys.DELETE);
 
-		return fragmentCollectionLocalService.deleteFragmentCollection(
+		return msbFragmentCollectionLocalService.deleteMSBFragmentCollection(
 			fragmentCollectionId);
 	}
 
 	@Override
-	public List<FragmentCollection> deleteFragmentCollections(
+	public List<MSBFragmentCollection> deleteFragmentCollections(
 			long[] fragmentCollectionIds)
 		throws PortalException {
 
-		List<FragmentCollection> failedFragmentCollections = new ArrayList<>();
+		List<MSBFragmentCollection> failedFragmentCollections =
+			new ArrayList<>();
 
 		for (long fragmentCollectionId : fragmentCollectionIds) {
 			try {
-				FragmentCollectionPermission.check(
+				MSBFragmentCollectionPermission.check(
 					getPermissionChecker(), fragmentCollectionId,
 					ActionKeys.DELETE);
 
-				fragmentCollectionLocalService.deleteFragmentCollection(
+				msbFragmentCollectionLocalService.deleteMSBFragmentCollection(
 					fragmentCollectionId);
 			}
 			catch (PortalException pe) {
@@ -82,8 +83,8 @@ public class FragmentCollectionServiceImpl
 					_log.debug(pe, pe);
 				}
 
-				FragmentCollection fragmentCollection =
-					fragmentCollectionPersistence.fetchByPrimaryKey(
+				MSBFragmentCollection fragmentCollection =
+					msbFragmentCollectionPersistence.fetchByPrimaryKey(
 						fragmentCollectionId);
 
 				failedFragmentCollections.add(fragmentCollection);
@@ -94,60 +95,61 @@ public class FragmentCollectionServiceImpl
 	}
 
 	@Override
-	public FragmentCollection fetchFragmentCollection(long fragmentCollectionId)
+	public MSBFragmentCollection fetchFragmentCollection(
+			long fragmentCollectionId)
 		throws PortalException {
 
-		return fragmentCollectionLocalService.fetchFragmentCollection(
+		return msbFragmentCollectionLocalService.fetchMSBFragmentCollection(
 			fragmentCollectionId);
 	}
 
 	@Override
-	public List<FragmentCollection> getFragmentCollections(
+	public List<MSBFragmentCollection> getFragmentCollections(
 			long groupId, int start, int end)
 		throws PortalException {
 
-		return fragmentCollectionLocalService.getFragmentCollections(
+		return msbFragmentCollectionLocalService.getFragmentCollections(
 			groupId, start, end);
 	}
 
 	@Override
-	public List<FragmentCollection> getFragmentCollections(
+	public List<MSBFragmentCollection> getFragmentCollections(
 			long groupId, int start, int end,
-			OrderByComparator<FragmentCollection> orderByComparator)
+			OrderByComparator<MSBFragmentCollection> orderByComparator)
 		throws PortalException {
 
-		return fragmentCollectionLocalService.getFragmentCollections(
+		return msbFragmentCollectionLocalService.getFragmentCollections(
 			groupId, start, end, orderByComparator);
 	}
 
 	@Override
-	public List<FragmentCollection> getFragmentCollections(
+	public List<MSBFragmentCollection> getFragmentCollections(
 			long groupId, String name, int start, int end,
-			OrderByComparator<FragmentCollection> orderByComparator)
+			OrderByComparator<MSBFragmentCollection> orderByComparator)
 		throws PortalException {
 
-		return fragmentCollectionLocalService.getFragmentCollections(
+		return msbFragmentCollectionLocalService.getFragmentCollections(
 			groupId, name, start, end, orderByComparator);
 	}
 
 	@Override
 	public int getGroupFragmentCollectionsCount(long groupId) {
-		return fragmentCollectionPersistence.countByGroupId(groupId);
+		return msbFragmentCollectionPersistence.countByGroupId(groupId);
 	}
 
 	@Override
-	public FragmentCollection updateFragmentCollection(
+	public MSBFragmentCollection updateFragmentCollection(
 			long fragmentCollectionId, String name, String description)
 		throws PortalException {
 
-		FragmentCollectionPermission.check(
+		MSBFragmentCollectionPermission.check(
 			getPermissionChecker(), fragmentCollectionId, ActionKeys.UPDATE);
 
-		return fragmentCollectionLocalService.updateFragmentCollection(
+		return msbFragmentCollectionLocalService.updateFragmentCollection(
 			fragmentCollectionId, name, description);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		FragmentCollectionServiceImpl.class);
+		MSBFragmentCollectionServiceImpl.class);
 
 }

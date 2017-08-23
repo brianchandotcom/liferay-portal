@@ -3,7 +3,7 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.modern.site.building.fragment">
 	<namespace>Fragment</namespace>
-	<entity local-service="true" name="FragmentCollection" remote-service="true">
+	<entity local-service="true" name="MSBFragmentCollection" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -48,11 +48,11 @@
 
 		<!-- References -->
 
-		<reference entity="FragmentEntry" package-path="com.liferay.modern.site.building.fragment" />
+		<reference entity="MSBFragmentEntry" package-path="com.liferay.modern.site.building.fragment" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="FragmentEntry" remote-service="true">
+	<entity local-service="true" name="MSBFragmentEntry" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -108,7 +108,7 @@
 
 		<!-- References -->
 
-		<reference entity="FragmentCollection" package-path="com.liferay.modern.site.building.fragment" />
+		<reference entity="MSBFragmentCollection" package-path="com.liferay.modern.site.building.fragment" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>

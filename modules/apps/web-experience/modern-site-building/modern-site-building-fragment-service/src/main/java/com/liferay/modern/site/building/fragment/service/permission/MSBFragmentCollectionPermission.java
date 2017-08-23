@@ -14,8 +14,8 @@
 
 package com.liferay.modern.site.building.fragment.service.permission;
 
-import com.liferay.modern.site.building.fragment.model.FragmentEntry;
-import com.liferay.modern.site.building.fragment.service.FragmentEntryLocalServiceUtil;
+import com.liferay.modern.site.building.fragment.model.MSBFragmentCollection;
+import com.liferay.modern.site.building.fragment.service.MSBFragmentCollectionLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -33,72 +33,76 @@ import org.osgi.service.component.annotations.Component;
  * @author Jürgen Kappler
  */
 @Component(
-	property = {"model.class.name=com.liferay.modern.site.building.fragment.model.FragmentEntry"},
+	property = {"model.class.name=com.liferay.modern.site.building.fragment.model.FragmentCollection"},
 	service = BaseModelPermissionChecker.class
 )
-public class FragmentEntryPermission implements BaseModelPermissionChecker {
+public class MSBFragmentCollectionPermission
+	implements BaseModelPermissionChecker {
 
 	public static void check(
-			PermissionChecker permissionChecker, FragmentEntry fragmentEntry,
+			PermissionChecker permissionChecker, long fragmentCollectionId,
 			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, fragmentEntry, actionId)) {
+		if (!contains(permissionChecker, fragmentCollectionId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, FragmentEntry.class.getName(),
-				fragmentEntry.getFragmentEntryId(), actionId);
+				permissionChecker, MSBFragmentCollection.class.getName(),
+				fragmentCollectionId, actionId);
 		}
 	}
 
 	public static void check(
-			PermissionChecker permissionChecker, long fragmentEntryId,
-			String actionId)
+			PermissionChecker permissionChecker,
+			MSBFragmentCollection fragmentCollection, String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, fragmentEntryId, actionId)) {
+		if (!contains(permissionChecker, fragmentCollection, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, FragmentEntry.class.getName(),
-				fragmentEntryId, actionId);
+				permissionChecker, MSBFragmentCollection.class.getName(),
+				fragmentCollection.getFragmentCollectionId(), actionId);
 		}
 	}
 
 	public static boolean contains(
-		PermissionChecker permissionChecker, FragmentEntry fragmentEntry,
-		String actionId) {
+			PermissionChecker permissionChecker, long fragmentCollectionId,
+			String actionId)
+		throws PortalException {
+
+		MSBFragmentCollection fragmentCollection =
+			MSBFragmentCollectionLocalServiceUtil.fetchFragmentCollection(
+				fragmentCollectionId);
+
+		if (fragmentCollection == null) {
+			_log.error(
+				"Unable to get fragment collection with id " +
+					fragmentCollectionId);
+
+			return false;
+		}
+
+		return contains(permissionChecker, fragmentCollection, actionId);
+	}
+
+	public static boolean contains(
+		PermissionChecker permissionChecker,
+		MSBFragmentCollection fragmentCollection, String actionId) {
 
 		Map<Object, Object> permissionChecksMap =
 			permissionChecker.getPermissionChecksMap();
 
 		PermissionCacheKey permissionCacheKey = new PermissionCacheKey(
-			fragmentEntry.getFragmentEntryId(), actionId);
+			fragmentCollection.getFragmentCollectionId(), actionId);
 
 		Boolean contains = (Boolean)permissionChecksMap.get(permissionCacheKey);
 
 		if (contains == null) {
-			contains = _contains(permissionChecker, fragmentEntry, actionId);
+			contains = _contains(
+				permissionChecker, fragmentCollection, actionId);
 
 			permissionChecksMap.put(permissionCacheKey, contains);
 		}
 
 		return contains;
-	}
-
-	public static boolean contains(
-			PermissionChecker permissionChecker, long fragmentEntryId,
-			String actionId)
-		throws PortalException {
-
-		FragmentEntry fragmentEntry =
-			FragmentEntryLocalServiceUtil.fetchFragmentEntry(fragmentEntryId);
-
-		if (fragmentEntry == null) {
-			_log.error(
-				"Unable to get fragment entry with id " + fragmentEntryId);
-
-			return false;
-		}
-
-		return contains(permissionChecker, fragmentEntry, actionId);
 	}
 
 	@Override
@@ -111,16 +115,18 @@ public class FragmentEntryPermission implements BaseModelPermissionChecker {
 	}
 
 	private static boolean _contains(
-		PermissionChecker permissionChecker, FragmentEntry fragmentEntry,
-		String actionId) {
+		PermissionChecker permissionChecker,
+		MSBFragmentCollection fragmentCollection, String actionId) {
 
 		if (permissionChecker.hasOwnerPermission(
-				fragmentEntry.getCompanyId(), FragmentEntry.class.getName(),
-				fragmentEntry.getFragmentCollectionId(),
-				fragmentEntry.getUserId(), actionId) ||
+				fragmentCollection.getCompanyId(),
+				MSBFragmentCollection.class.getName(),
+				fragmentCollection.getFragmentCollectionId(),
+				fragmentCollection.getUserId(), actionId) ||
 			permissionChecker.hasPermission(
-				fragmentEntry.getGroupId(), FragmentEntry.class.getName(),
-				fragmentEntry.getFragmentEntryId(), actionId)) {
+				fragmentCollection.getGroupId(),
+				MSBFragmentCollection.class.getName(),
+				fragmentCollection.getFragmentCollectionId(), actionId)) {
 
 			return true;
 		}
@@ -129,7 +135,7 @@ public class FragmentEntryPermission implements BaseModelPermissionChecker {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		FragmentEntryPermission.class);
+		MSBFragmentCollectionPermission.class);
 
 	private static class PermissionCacheKey {
 

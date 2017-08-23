@@ -17,5 +17,5 @@ package com.liferay.modern.site.building.fragment.model.impl;
 /**
  * @author Jürgen Kappler
  */
-public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
+public class MSBFragmentEntryImpl extends MSBFragmentEntryBaseImpl {
 }

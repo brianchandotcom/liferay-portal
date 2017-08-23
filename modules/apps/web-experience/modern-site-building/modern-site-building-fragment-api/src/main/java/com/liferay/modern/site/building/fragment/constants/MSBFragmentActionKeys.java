@@ -17,7 +17,7 @@ package com.liferay.modern.site.building.fragment.constants;
 /**
  * @author Jürgen Kappler
  */
-public class FragmentActionKeys {
+public class MSBFragmentActionKeys {
 
 	public static final String ADD_FRAGMENT_COLLECTION =
 		"ADD_FRAGMENT_COLLECTION";

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/asset_tags_error/init.jsp" %>
+<%@ include file="/asset_tags_error/init.jsp" %>
 
 <liferay-ui:error exception="<%= AssetTagException.class %>">
 

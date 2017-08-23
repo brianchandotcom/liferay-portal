@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/asset_tags_navigation/init.jsp" %>
+<%@ include file="/asset_tags_navigation/init.jsp" %>
 
 <%
 long classNameId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:asset-tags-navigation:classNameId"));

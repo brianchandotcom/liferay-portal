@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/asset_links/init.jsp" %>
+<%@ include file="/asset_links/init.jsp" %>
 
 <%
 long assetEntryId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:asset-links:assetEntryId"));
@@ -121,5 +121,5 @@ PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:asset-links
 </div>
 
 <%!
-private static Log _log = LogFactoryUtil.getLog("portal_web.docroot.html.taglib.ui.asset_links.page_jsp");
+private static Log _log = LogFactoryUtil.getLog("com.liferay.asset.taglib.asset_links.page_jsp");
 %>

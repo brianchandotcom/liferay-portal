@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/asset_categories_error/init.jsp" %>
+<%@ include file="/asset_categories_error/init.jsp" %>
 
 <liferay-ui:error exception="<%= AssetCategoryException.class %>">
 

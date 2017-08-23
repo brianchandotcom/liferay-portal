@@ -534,9 +534,15 @@ public class TopLevelBuild extends BaseBuild {
 		Element rootElement = Dom4JUtil.getNewElement(
 			"html", null, getResultElement(), getBuildTimeElement(),
 			Dom4JUtil.getNewElement("h4", null, "Base Branch:"),
-			getBaseBranchDetailsElement(),
-			Dom4JUtil.getNewElement("h4", null, "Job Summary:"),
-			getJobSummaryListElement(), getMoreDetailsElement());
+			getBaseBranchDetailsElement());
+
+		if (!result.equals("SUCCESS")) {
+			Dom4JUtil.addToElement(rootElement, getFailedJobSummaryElement());
+		}
+
+		Dom4JUtil.addToElement(
+			rootElement, getSuccessfulJobSummaryElement(),
+			getMoreDetailsElement());
 
 		String result = getResult();
 

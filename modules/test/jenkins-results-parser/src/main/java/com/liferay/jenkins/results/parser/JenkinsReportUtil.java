@@ -106,64 +106,195 @@ public class JenkinsReportUtil {
 		return headElement;
 	}
 
+	protected static Element getBatchInfoTableElement(
+		List<Build> batchBuilds, String statusCountCaption) {
+
+		Element tableElement = Dom4JUtil.getNewElement("table");
+
+		tableElement.add(
+			Dom4JUtil.getNewElement("caption", null, statusCountCaption));
+
+		for (Build batchBuild : batchBuilds) {
+			String jobName = batchBuild.getJobName();
+
+			String batchName = batchBuild.getDisplayName();
+
+			if (batchName.contains("-dist(")) {
+				batchName = batchName.replace(jobName, "dist");
+			}
+			else {
+				batchName = batchName.replace(jobName + "/", "");
+			}
+
+			String batchBuildURL = batchBuild.getBuildURL();
+
+			String batchConsoleURL = batchBuildURL + "console";
+
+			String batchTestReportURL = batchBuildURL + "testReport";
+
+			long batchDuration = batchBuild.getDuration();
+
+			String batchDurationString =
+				JenkinsResultsParserUtil.toDurationString(batchDuration);
+
+			long batchStartTime = batchBuild.getStartTimestamp();
+
+			Date batchStartDate = new Date(batchStartTime);
+
+			Element batchNameElement = Dom4JUtil.getNewAnchorElement(
+				batchBuildURL, null, batchName);
+
+			Element batchConsoleElement = Dom4JUtil.getNewAnchorElement(
+				batchConsoleURL, null, "Console");
+
+			Element batchTestReportElement = Dom4JUtil.getNewAnchorElement(
+				batchTestReportURL, null, "Test Report");
+
+			Element thBatchNameElement = Dom4JUtil.getNewElement("th");
+
+			thBatchNameElement.add(batchNameElement);
+
+			Element thBatchConsoleElement = Dom4JUtil.getNewElement("th");
+
+			thBatchConsoleElement.add(batchConsoleElement);
+
+			Element thTestReportElement = Dom4JUtil.getNewElement("th");
+
+			thTestReportElement.add(batchTestReportElement);
+
+			Element thStartTimeStringElement = Dom4JUtil.getNewElement(
+				"th", null, "START TIME:");
+
+			Element thStartTimeElement = Dom4JUtil.getNewElement(
+				"th", null, batchStartDate.toLocaleString());
+
+			Element thBuildTimeStringElement = Dom4JUtil.getNewElement(
+				"th", null, "BUILD TIME:");
+
+			Element thBuildTimeElement = Dom4JUtil.getNewElement(
+				"th", null, batchDurationString);
+
+			Element thStatusResultElement = Dom4JUtil.getNewElement("th");
+
+			String status = batchBuild.getStatus();
+
+			String result = batchBuild.getResult();
+
+			if (result != null) {
+				thStatusResultElement.addText(result);
+			}
+			else {
+				thStatusResultElement.addText(status);
+			}
+
+			Element trBatchElement = Dom4JUtil.getNewElement("tr");
+
+			Dom4JUtil.addToElement(
+				trBatchElement, thBatchNameElement, thBatchConsoleElement,
+				thTestReportElement, thStartTimeStringElement,
+				thStartTimeElement, thBuildTimeStringElement,
+				thBuildTimeElement, thStatusResultElement);
+
+			tableElement.add(trBatchElement);
+		}
+
+		return tableElement;
+	}
+
 	protected static Element getBatchReportElement(
 		Map<String, Build> batchBuilds) {
 
-		Set<String> batchBuildsKeySet = batchBuilds.keySet();
+		List<Build> abortedBuilds = new ArrayList();
+
+		List<Build> failureBuilds = new ArrayList();
+
+		List<Build> missingBuilds = new ArrayList();
 
 		List<Build> queuedBuilds = new ArrayList();
 
-		List<Build> startingBuilds = new ArrayList();
-
 		List<Build> runningBuilds = new ArrayList();
 
-		List<Build> completedAbortedBuilds = new ArrayList();
+		List<Build> startingBuilds = new ArrayList();
 
-		List<Build> completedFailureBuilds = new ArrayList();
+		List<Build> successBuilds = new ArrayList();
 
-		List<Build> completedSuccessBuilds = new ArrayList();
+		Set<String> batchBuildsKeySet = batchBuilds.keySet();
 
 		for (String key : batchBuildsKeySet) {
 			Build build = batchBuilds.get(key);
 
 			switch (build.getStatus()) {
 
-				case "queued":
-					queuedBuilds.add(build);
+				case "completed":
+					String result = build.getResult();
+
+					if (result.equals("SUCCESS")) {
+						successBuilds.add(build);
+					}
+					else if (result.equals("FAILURE") ||
+							 result.equals("UNSTABLE")) {
+
+						failureBuilds.add(build);
+					}
+					else if (result.equals("ABORTED")) {
+						abortedBuilds.add(build);
+					}
+
 					break;
 
-				case "starting":
-					startingBuilds.add(build);
+				case "missing":
+					missingBuilds.add(build);
+					break;
+
+				case "queued":
+					queuedBuilds.add(build);
 					break;
 
 				case "running":
 					runningBuilds.add(build);
 					break;
 
-				case "completed":
-					String result = build.getResult();
-
-					if (result.equals("SUCCESS")) {
-						completedSuccessBuilds.add(build);
-					}
-					else if (result.equals("FAILURE") ||
-							 result.equals("UNSTABLE")) {
-
-						completedFailureBuilds.add(build);
-					}
-					else if (result.equals("ABORTED")) {
-						completedAbortedBuilds.add(build);
-					}
-
-					break;
-
-				case "missing":
-					completedAbortedBuilds.add(build);
+				case "starting":
+					startingBuilds.add(build);
 					break;
 			}
 		}
 
+		Element abortedBatchElement = getBatchInfoTableElement(
+			abortedBuilds, "---- Aborted: " + abortedBuilds.size());
+
+		Element failureBatchElement = getBatchInfoTableElement(
+			failureBuilds, "---- Failure: " + failureBuilds.size());
+
+		Element successBatchElement = getBatchInfoTableElement(
+			successBuilds, "---- Success: " + successBuilds.size());
+
+		Element completedBatchElement = Dom4JUtil.getNewElement("table");
+
+		completedBatchElement.add(
+			Dom4JUtil.getNewElement("caption", null, "Completed: "));
+
+		Dom4JUtil.addToElement(
+			completedBatchElement, abortedBatchElement, failureBatchElement,
+			successBatchElement);
+
+		Element missingBatchElement = getBatchInfoTableElement(
+			missingBuilds, "Missing: " + missingBuilds.size());
+
+		Element queuedBatchElement = getBatchInfoTableElement(
+			queuedBuilds, "Queued: " + queuedBuilds.size());
+
+		Element runningBatchElement = getBatchInfoTableElement(
+			runningBuilds, "Running: " + runningBuilds.size());
+
+		Element startingBatchElement = getBatchInfoTableElement(
+			startingBuilds, "Starting: " + startingBuilds.size());
+
 		Element divElement = Dom4JUtil.getNewElement("div");
+
+		Dom4JUtil.addToElement(
+			divElement, queuedBatchElement, startingBatchElement,
+			runningBatchElement, missingBatchElement, completedBatchElement);
 
 		return divElement;
 	}

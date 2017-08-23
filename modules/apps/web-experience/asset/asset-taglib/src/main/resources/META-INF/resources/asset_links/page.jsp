@@ -17,9 +17,9 @@
 <%@ include file="/asset_links/init.jsp" %>
 
 <%
-long assetEntryId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:asset-links:assetEntryId"));
-List<AssetLink> assetLinks = (List<AssetLink>)request.getAttribute("liferay-ui:asset-links:assetLinks");
-PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:asset-links:portletURL");
+long assetEntryId = GetterUtil.getLong((String)request.getAttribute("liferay-asset:asset-links:assetEntryId"));
+List<AssetLink> assetLinks = (List<AssetLink>)request.getAttribute("liferay-asset:asset-links:assetLinks");
+PortletURL portletURL = (PortletURL)request.getAttribute("liferay-asset:asset-links:portletURL");
 %>
 
 <div class="taglib-asset-links">

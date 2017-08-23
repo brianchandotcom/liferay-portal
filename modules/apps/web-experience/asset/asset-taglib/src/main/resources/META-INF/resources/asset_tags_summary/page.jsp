@@ -17,15 +17,15 @@
 <%@ include file="/asset_tags_summary/init.jsp" %>
 
 <%
-String[] assetTagNames = StringUtil.split((String)request.getAttribute("liferay-ui:asset-tags-summary:assetTagNames"));
-String className = (String)request.getAttribute("liferay-ui:asset-tags-summary:className");
-long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:asset-tags-summary:classPK"));
-String message = GetterUtil.getString((String)request.getAttribute("liferay-ui:asset-tags-summary:message"));
-String paramName = GetterUtil.getString((String)request.getAttribute("liferay-ui:asset-tags-summary:paramName"), "tag");
-PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:asset-tags-summary:portletURL");
+String[] assetTagNames = StringUtil.split((String)request.getAttribute("liferay-asset:asset-tags-summary:assetTagNames"));
+String className = (String)request.getAttribute("liferay-asset:asset-tags-summary:className");
+long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-asset:asset-tags-summary:classPK"));
+String message = GetterUtil.getString((String)request.getAttribute("liferay-asset:asset-tags-summary:message"));
+String paramName = GetterUtil.getString((String)request.getAttribute("liferay-asset:asset-tags-summary:paramName"), "tag");
+PortletURL portletURL = (PortletURL)request.getAttribute("liferay-asset:asset-tags-summary:portletURL");
 
 if (assetTagNames.length == 0) {
-	List<AssetTag> tags = (List<AssetTag>)request.getAttribute("liferay-ui:asset-tags-summary:assetTags");
+	List<AssetTag> tags = (List<AssetTag>)request.getAttribute("liferay-asset:asset-tags-summary:assetTags");
 
 	if (ListUtil.isEmpty(tags)) {
 		tags = AssetTagServiceUtil.getTags(className, classPK);

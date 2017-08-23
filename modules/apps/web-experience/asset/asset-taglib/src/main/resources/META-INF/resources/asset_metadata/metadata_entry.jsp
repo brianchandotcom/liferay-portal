@@ -17,10 +17,10 @@
 <%@ include file="/asset_metadata/init.jsp" %>
 
 <%
-AssetEntry assetEntry = (AssetEntry)request.getAttribute("liferay-ui:asset-metadata:assetEntry");
-AssetRenderer<?> assetRenderer = (AssetRenderer<?>)request.getAttribute("liferay-ui:asset-metadata:assetRenderer");
-boolean filterByMetadata = GetterUtil.getBoolean(request.getAttribute("liferay-ui:asset-metadata:filterByMetadata"));
-String metadataField = (String)request.getAttribute("liferay-ui:asset-metadata:metadataField");
+AssetEntry assetEntry = (AssetEntry)request.getAttribute("liferay-asset:asset-metadata:assetEntry");
+AssetRenderer<?> assetRenderer = (AssetRenderer<?>)request.getAttribute("liferay-asset:asset-metadata:assetRenderer");
+boolean filterByMetadata = GetterUtil.getBoolean(request.getAttribute("liferay-asset:asset-metadata:filterByMetadata"));
+String metadataField = (String)request.getAttribute("liferay-asset:asset-metadata:metadataField");
 
 String label = LanguageUtil.get(resourceBundle, metadataField);
 String metadataFieldCssClass = "metadata-" + metadataField;

@@ -24,6 +24,7 @@ import org.dom4j.Element;
 
 /**
  * @author Kenji Heigel
+ * @author Yi-Chen Tsai
  */
 public class JenkinsReportUtil {
 
@@ -86,6 +87,18 @@ public class JenkinsReportUtil {
 		scriptElement.addText(resource);
 
 		return scriptElement;
+	}
+
+	public static Element getHTMLBodyElement(Build topLevelBuild) {
+		Element bodyElement = Dom4JUtil.getNewElement("body");
+
+		return bodyElement;
+	}
+
+	public static Element getHTMLHeadElement() {
+		Element headElement = Dom4JUtil.getNewElement("head");
+
+		return headElement;
 	}
 
 	public static Element getTimelineElement(

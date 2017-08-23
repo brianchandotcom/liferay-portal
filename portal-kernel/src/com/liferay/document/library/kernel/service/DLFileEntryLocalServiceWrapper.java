@@ -242,6 +242,12 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 	}
 
 	@Override
+	public void deleteRepositoryFileEntries(long repositoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlFileEntryLocalService.deleteRepositoryFileEntries(repositoryId);
+	}
+
+	@Override
 	public void deleteRepositoryFileEntries(long repositoryId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlFileEntryLocalService.deleteRepositoryFileEntries(repositoryId,

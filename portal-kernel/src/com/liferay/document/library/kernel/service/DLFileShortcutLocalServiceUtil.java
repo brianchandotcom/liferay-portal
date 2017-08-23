@@ -164,6 +164,11 @@ public class DLFileShortcutLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
+	public static void deleteRepositoryFileShortcuts(long repositoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteRepositoryFileShortcuts(repositoryId);
+	}
+
 	public static void disableFileShortcuts(long toFileEntryId) {
 		getService().disableFileShortcuts(toFileEntryId);
 	}

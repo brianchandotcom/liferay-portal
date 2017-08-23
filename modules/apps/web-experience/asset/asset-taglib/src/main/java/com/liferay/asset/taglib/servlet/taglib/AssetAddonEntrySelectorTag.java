@@ -91,8 +91,7 @@ public class AssetAddonEntrySelectorTag extends IncludeTag {
 			"liferay-ui:asset-addon-entry-selector:title", _title);
 	}
 
-	private static final String _PAGE =
-		"/html/taglib/ui/asset_addon_entry_selector/page.jsp";
+	private static final String _PAGE = "/asset_addon_entry_selector/page.jsp";
 
 	private List<AssetAddonEntry> _assetAddonEntries;
 	private String _hiddenInput;

@@ -195,8 +195,7 @@ public class AssetDisplayTag extends IncludeTag {
 			_log.error("Unable to include asset renderer template", e);
 		}
 
-		super.includePage(
-			"/html/taglib/ui/asset_display/" + _template + ".jsp", response);
+		super.includePage("/asset_display/" + _template + ".jsp", response);
 	}
 
 	@Override

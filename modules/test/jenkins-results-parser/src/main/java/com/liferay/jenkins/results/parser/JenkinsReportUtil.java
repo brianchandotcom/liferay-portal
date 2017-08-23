@@ -88,7 +88,7 @@ public class JenkinsReportUtil {
 
 		Dom4JUtil.addToElement(
 			bodyElement, h1Element,
-			getBasicHeaderElement(
+			getSummaryElement(
 				topLevelBuild, axisBuilds, batchBuilds, testResults),
 			getTimelineElement(topLevelBuild, axisBuilds));
 
@@ -99,40 +99,6 @@ public class JenkinsReportUtil {
 		Element headElement = Dom4JUtil.getNewElement("head");
 
 		return headElement;
-	}
-
-	protected static Element getBasicHeaderElement(
-		Build topLevelBuild, Map<String, Build> axisBuilds,
-		Map<String, Build> batchBuilds, Map<String, TestResult> testResults) {
-
-		long startTimeStamp = topLevelBuild.getStartTimestamp();
-
-		long durationTime = topLevelBuild.getDuration();
-
-		Date startTime = new Date(startTimeStamp);
-
-		Element startTimeElement = Dom4JUtil.getNewElement(
-			"p", null, "Start Time: ", startTime.toLocaleString(),
-			" - Build Time: ",
-			JenkinsResultsParserUtil.toDurationString(durationTime));
-
-		Element ciUsageElement = getTotalCIUsageElement(axisBuilds);
-
-		Element vmUsageElement = getTotalVMUSageElement(axisBuilds);
-
-		Element longestBatchElement = getLongestBatchElement(batchBuilds);
-
-		Element longestAxisElement = getLongestAxisElement(axisBuilds);
-
-		Element longestTestElement = getLongestTestElement(testResults);
-
-		Element divElement = Dom4JUtil.getNewElement("div");
-
-		Dom4JUtil.addToElement(
-			divElement, startTimeElement, ciUsageElement, vmUsageElement,
-			longestBatchElement, longestAxisElement, longestTestElement);
-
-		return divElement;
 	}
 
 	protected static Element getBatchReportElement(
@@ -340,6 +306,40 @@ public class JenkinsReportUtil {
 			JenkinsResultsParserUtil.toDurationString(longestTestDuration));
 
 		return longestTestElement;
+	}
+
+	protected static Element getSummaryElement(
+		Build topLevelBuild, Map<String, Build> axisBuilds,
+		Map<String, Build> batchBuilds, Map<String, TestResult> testResults) {
+
+		long startTimeStamp = topLevelBuild.getStartTimestamp();
+
+		long durationTime = topLevelBuild.getDuration();
+
+		Date startTime = new Date(startTimeStamp);
+
+		Element startTimeElement = Dom4JUtil.getNewElement(
+			"p", null, "Start Time: ", startTime.toLocaleString(),
+			" - Build Time: ",
+			JenkinsResultsParserUtil.toDurationString(durationTime));
+
+		Element ciUsageElement = getTotalCIUsageElement(axisBuilds);
+
+		Element vmUsageElement = getTotalVMUSageElement(axisBuilds);
+
+		Element longestBatchElement = getLongestBatchElement(batchBuilds);
+
+		Element longestAxisElement = getLongestAxisElement(axisBuilds);
+
+		Element longestTestElement = getLongestTestElement(testResults);
+
+		Element divElement = Dom4JUtil.getNewElement("div");
+
+		Dom4JUtil.addToElement(
+			divElement, startTimeElement, ciUsageElement, vmUsageElement,
+			longestBatchElement, longestAxisElement, longestTestElement);
+
+		return divElement;
 	}
 
 	protected static Element getTimelineElement(

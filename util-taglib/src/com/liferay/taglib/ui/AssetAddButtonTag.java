@@ -23,7 +23,10 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.asset.taglib.servlet.taglib.AssetAddButtonTag}
  */
+@Deprecated
 public class AssetAddButtonTag extends IncludeTag {
 
 	public long[] getAllAssetCategoryIds() {

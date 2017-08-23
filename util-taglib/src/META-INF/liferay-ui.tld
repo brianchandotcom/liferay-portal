@@ -438,6 +438,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-asset:asset-add-button</code>]]>.</description>
 		<name>asset-add-button</name>
 		<tag-class>com.liferay.taglib.ui.AssetAddButtonTag</tag-class>
 		<body-content>JSP</body-content>
@@ -483,6 +484,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-asset:asset-entry-display</code>]]>.</description>
 		<name>asset-addon-entry-display</name>
 		<tag-class>com.liferay.taglib.ui.AssetAddonEntryDisplayTag</tag-class>
 		<body-content>JSP</body-content>
@@ -493,6 +495,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-asset:asset-addon-entry-selector</code>]]>.</description>
 		<name>asset-addon-entry-selector</name>
 		<tag-class>com.liferay.taglib.ui.AssetAddonEntrySelectorTag</tag-class>
 		<body-content>JSP</body-content>
@@ -523,6 +526,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-asset:asset-categories-available</code>]]>.</description>
 		<name>asset-categories-available</name>
 		<tag-class>com.liferay.taglib.ui.AssetCategoriesAvailableTag</tag-class>
 		<body-content>JSP</body-content>
@@ -538,11 +542,13 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-asset:asset-categories-error</code>]]>.</description>
 		<name>asset-categories-error</name>
 		<tag-class>com.liferay.taglib.ui.AssetCategoriesErrorTag</tag-class>
 		<body-content>JSP</body-content>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-asset:asset-categories-summary</code>]]>.</description>
 		<name>asset-categories-summary</name>
 		<tag-class>com.liferay.taglib.ui.AssetCategoriesSummaryTag</tag-class>
 		<body-content>JSP</body-content>
@@ -573,6 +579,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-asset:asset-display</code>]]>.</description>
 		<name>asset-display</name>
 		<tag-class>com.liferay.taglib.ui.AssetDisplayTag</tag-class>
 		<body-content>JSP</body-content>
@@ -638,6 +645,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-asset:asset-links</code>]]>.</description>
 		<name>asset-links</name>
 		<tag-class>com.liferay.taglib.ui.AssetLinksTag</tag-class>
 		<body-content>JSP</body-content>
@@ -663,6 +671,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-asset:asset-metadata</code>]]>.</description>
 		<name>asset-metadata</name>
 		<tag-class>com.liferay.taglib.ui.AssetMetadataTag</tag-class>
 		<body-content>JSP</body-content>
@@ -688,6 +697,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-asset:asset-tags-available</code>]]>.</description>
 		<name>asset-tags-available</name>
 		<tag-class>com.liferay.taglib.ui.AssetTagsAvailableTag</tag-class>
 		<body-content>JSP</body-content>
@@ -703,12 +713,13 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a <![CDATA[<code>liferay-ui:error</code>]]> component to display tag-related error messages.</description>
+		<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-asset:asset-tags-error</code>]]>. Creates a <![CDATA[<code>liferay-ui:error</code>]]> component to display tag-related error messages.</description>
 		<name>asset-tags-error</name>
 		<tag-class>com.liferay.taglib.ui.AssetTagsErrorTag</tag-class>
 		<body-content>JSP</body-content>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-asset:asset-tags-navigation</code>]]>.</description>
 		<name>asset-tags-navigation</name>
 		<tag-class>com.liferay.taglib.ui.AssetTagsNavigationTag</tag-class>
 		<body-content>JSP</body-content>
@@ -744,7 +755,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a component to display all the tags associated with an asset, such as a blog entry, wiki page, or message boards message.</description>
+		<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-asset:asset-tags-summary</code>]]>. Creates a component to display all the tags associated with an asset, such as a blog entry, wiki page, or message boards message.</description>
 		<name>asset-tags-summary</name>
 		<tag-class>com.liferay.taglib.ui.AssetTagsSummaryTag</tag-class>
 		<body-content>JSP</body-content>
@@ -1592,6 +1603,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-asset:input-asset-links</code>]]>.</description>
 		<name>input-asset-links</name>
 		<tag-class>com.liferay.taglib.ui.InputAssetLinksTag</tag-class>
 		<body-content>JSP</body-content>

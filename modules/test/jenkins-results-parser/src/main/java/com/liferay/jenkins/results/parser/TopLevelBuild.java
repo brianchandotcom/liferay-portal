@@ -349,6 +349,20 @@ public class TopLevelBuild extends BaseBuild {
 		return Executors.newFixedThreadPool(20);
 	}
 
+	protected Element getFailedJobSummaryElement() {
+		Element jobSummaryListElement = getJobSummaryListElement(false);
+
+		int failCount =
+			getDownstreamBuildCount(null) -
+				getDownstreamBuildCountByResult("SUCCESS") + 1;
+
+		return Dom4JUtil.getNewElement(
+			"div", null,
+			Dom4JUtil.getNewElement(
+				"h4", null, Integer.toString(failCount), " Failed Jobs:"),
+			jobSummaryListElement);
+	}
+
 	@Override
 	protected FailureMessageGenerator[] getFailureMessageGenerators() {
 		return _FAILURE_MESSAGE_GENERATORS;
@@ -479,6 +493,21 @@ public class TopLevelBuild extends BaseBuild {
 			TEMP_MAP_BASE_URL, getMaster(), "/", getJobName(), "/",
 			Integer.toString(getBuildNumber()), "/", getJobName(), "/",
 			"stop.properties");
+	}
+
+	protected Element getSuccessfulJobSummaryElement() {
+		Element jobSummaryListElement = getJobSummaryListElement(true);
+
+		int successCount = getDownstreamBuildCountByResult("SUCCESS");
+
+		return Dom4JUtil.getNewElement(
+			"details", null,
+			Dom4JUtil.getNewElement(
+				"summary", null,
+				Dom4JUtil.getNewElement(
+					"strong", null, Integer.toString(successCount),
+					" Successful Jobs:")),
+			jobSummaryListElement);
 	}
 
 	@Override

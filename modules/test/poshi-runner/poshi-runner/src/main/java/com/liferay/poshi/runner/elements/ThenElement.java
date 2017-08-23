@@ -24,20 +24,16 @@ import org.dom4j.Element;
  */
 public class ThenElement extends PoshiElement {
 
-	public ThenElement(Element element) {
-		super("then", element);
-	}
+	public static boolean isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
 
-	public ThenElement(String readableSyntax) {
-		super("then", readableSyntax);
-	}
+		if (parentPoshiElement instanceof IfElement &&
+			readableSyntax.startsWith("{")) {
 
-	public ThenElement(String name, Element element) {
-		super(name, element);
-	}
+			return true;
+		}
 
-	public ThenElement(String name, String readableSyntax) {
-		super(name, readableSyntax);
+		return false;
 	}
 
 	@Override
@@ -48,8 +44,24 @@ public class ThenElement extends PoshiElement {
 	@Override
 	public void parseReadableSyntax(String readableSyntax) {
 		for (String readableBlock : getReadableBlocks(readableSyntax)) {
-			addElementFromReadableSyntax(readableBlock);
+			add(newPoshiElement(this, readableBlock));
 		}
+	}
+
+	protected ThenElement(Element element) {
+		super(_ELEMENT_NAME, element);
+	}
+
+	protected ThenElement(String readableSyntax) {
+		super(_ELEMENT_NAME, readableSyntax);
+	}
+
+	protected ThenElement(String name, Element element) {
+		super(name, element);
+	}
+
+	protected ThenElement(String name, String readableSyntax) {
+		super(name, readableSyntax);
 	}
 
 	protected List<String> getReadableBlocks(String readableSyntax) {
@@ -58,18 +70,55 @@ public class ThenElement extends PoshiElement {
 		List<String> readableBlocks = new ArrayList<>();
 
 		for (String line : readableSyntax.split("\n")) {
-			sb.append(line);
-
 			String readableBlock = sb.toString();
 
-			if (isValidReadableBlock(readableBlock)) {
-				readableBlocks.add(readableBlock);
-
-				sb.setLength(0);
+			if (line.endsWith("{") && readableBlocks.isEmpty()) {
+				continue;
 			}
+
+			if (!line.startsWith("else {")) {
+				if (isValidReadableBlock(readableBlock)) {
+					readableBlocks.add(readableBlock);
+
+					sb.setLength(0);
+				}
+			}
+
+			sb.append(line);
+			sb.append("\n");
 		}
 
 		return readableBlocks;
+	}
+
+	private static final String _ELEMENT_NAME = "then";
+
+	static {
+		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
+
+			@Override
+			public PoshiElement newPoshiElement(Element element) {
+				if (isElementType(_ELEMENT_NAME, element)) {
+					return new ThenElement(element);
+				}
+
+				return null;
+			}
+
+			@Override
+			public PoshiElement newPoshiElement(
+				PoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new ThenElement(readableSyntax);
+				}
+
+				return null;
+			}
+
+		};
+
+		PoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 }

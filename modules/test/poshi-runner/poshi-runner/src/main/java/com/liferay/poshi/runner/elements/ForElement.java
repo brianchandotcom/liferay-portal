@@ -24,20 +24,31 @@ import org.dom4j.Element;
  */
 public class ForElement extends PoshiElement {
 
-	public ForElement(Element element) {
-		super("for", element);
-	}
+	public static boolean isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
 
-	public ForElement(String readableSyntax) {
-		super("for", readableSyntax);
+		readableSyntax = readableSyntax.trim();
+
+		if (!isBalancedReadableSyntax(readableSyntax)) {
+			return false;
+		}
+
+		if (!readableSyntax.startsWith("for (")) {
+			return false;
+		}
+
+		if (!readableSyntax.endsWith("}")) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
 	public String getBlockName() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("for ");
-		sb.append("(");
+		sb.append("for (");
 		sb.append(attributeValue("param"));
 		sb.append(" : \"");
 		sb.append(attributeValue("list"));
@@ -68,7 +79,7 @@ public class ForElement extends PoshiElement {
 				continue;
 			}
 
-			addElementFromReadableSyntax(readableBlock);
+			add(PoshiElement.newPoshiElement(this, readableBlock));
 		}
 	}
 
@@ -77,6 +88,14 @@ public class ForElement extends PoshiElement {
 		String readableSyntax = super.toReadableSyntax();
 
 		return "\n" + createReadableBlock(readableSyntax);
+	}
+
+	protected ForElement(Element element) {
+		super(_ELEMENT_NAME, element);
+	}
+
+	protected ForElement(String readableSyntax) {
+		super(_ELEMENT_NAME, readableSyntax);
 	}
 
 	protected List<String> getReadableBlocks(String readableSyntax) {
@@ -91,20 +110,53 @@ public class ForElement extends PoshiElement {
 				continue;
 			}
 
-			String readableBlock = sb.toString();
+			if (!line.startsWith("else {")) {
+				String readableBlock = sb.toString();
 
-			readableBlock = readableBlock.trim();
+				readableBlock = readableBlock.trim();
 
-			if (isValidReadableBlock(readableBlock)) {
-				readableBlocks.add(readableBlock);
+				if (isValidReadableBlock(readableBlock)) {
+					readableBlocks.add(readableBlock);
 
-				sb.setLength(0);
+					sb.setLength(0);
+				}
 			}
 
 			sb.append(line);
+			sb.append("\n");
 		}
 
 		return readableBlocks;
+	}
+
+	private static final String _ELEMENT_NAME = "for";
+
+	static {
+		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
+
+			@Override
+			public PoshiElement newPoshiElement(Element element) {
+				if (isElementType(_ELEMENT_NAME, element)) {
+					return new ForElement(element);
+				}
+
+				return null;
+			}
+
+			@Override
+			public PoshiElement newPoshiElement(
+				PoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new ForElement(readableSyntax);
+				}
+
+				return null;
+			}
+
+		};
+
+		PoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 }

@@ -27,22 +27,28 @@ import org.dom4j.Node;
  */
 public class VarElement extends PoshiElement {
 
-	public VarElement(Element element) {
-		this("var", element);
-	}
+	public static boolean isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
 
-	public VarElement(String readableSyntax) {
-		this("var", readableSyntax);
-	}
+		readableSyntax = readableSyntax.trim();
 
-	public VarElement(String name, Element element) {
-		super(name, element);
+		if (!isBalancedReadableSyntax(readableSyntax)) {
+			return false;
+		}
 
-		initValueAttributeName(element);
-	}
+		if (!readableSyntax.endsWith(";")) {
+			return false;
+		}
 
-	public VarElement(String name, String readableSyntax) {
-		super(name, readableSyntax);
+		if (!readableSyntax.startsWith("var ")) {
+			return false;
+		}
+
+		if (readableSyntax.contains(" = return(")) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public String getVarValue() {
@@ -118,6 +124,26 @@ public class VarElement extends PoshiElement {
 		return sb.toString();
 	}
 
+	protected VarElement(Element element) {
+		this(_ELEMENT_NAME, element);
+	}
+
+	protected VarElement(String readableSyntax) {
+		this(_ELEMENT_NAME, readableSyntax);
+	}
+
+	protected VarElement(String name, Element element) {
+		super(name, element);
+
+		if (isElementType(name, element)) {
+			initValueAttributeName(element);
+		}
+	}
+
+	protected VarElement(String name, String readableSyntax) {
+		super(name, readableSyntax);
+	}
+
 	@Override
 	protected String getBlockName() {
 		return null;
@@ -154,5 +180,35 @@ public class VarElement extends PoshiElement {
 	}
 
 	protected String valueAttributeName;
+
+	private static final String _ELEMENT_NAME = "var";
+
+	static {
+		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
+
+			@Override
+			public PoshiElement newPoshiElement(Element element) {
+				if (isElementType(_ELEMENT_NAME, element)) {
+					return new VarElement(element);
+				}
+
+				return null;
+			}
+
+			@Override
+			public PoshiElement newPoshiElement(
+				PoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new VarElement(readableSyntax);
+				}
+
+				return null;
+			}
+
+		};
+
+		PoshiElement.addPoshiElementFactory(poshiElementFactory);
+	}
 
 }

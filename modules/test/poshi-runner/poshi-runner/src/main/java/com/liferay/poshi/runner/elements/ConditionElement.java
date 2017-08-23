@@ -21,17 +21,30 @@ import org.dom4j.Element;
  */
 public class ConditionElement extends ExecuteElement {
 
-	public ConditionElement(Element element) {
-		super("condition", element);
-	}
+	public static boolean isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
 
-	public ConditionElement(String readableSyntax) {
-		super("condition", readableSyntax);
+		if (parentPoshiElement instanceof IfElement &&
+			readableSyntax.endsWith(")") &&
+			!readableSyntax.startsWith("isSet(")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
 	public String getBlockName() {
 		return attributeValue("function");
+	}
+
+	protected ConditionElement(Element element) {
+		super(_ELEMENT_NAME, element);
+	}
+
+	protected ConditionElement(String readableSyntax) {
+		super(_ELEMENT_NAME, readableSyntax);
 	}
 
 	@Override
@@ -46,6 +59,36 @@ public class ConditionElement extends ExecuteElement {
 		}
 
 		return readableBlock;
+	}
+
+	private static final String _ELEMENT_NAME = "condition";
+
+	static {
+		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
+
+			@Override
+			public PoshiElement newPoshiElement(Element element) {
+				if (isElementType(_ELEMENT_NAME, element)) {
+					return new ConditionElement(element);
+				}
+
+				return null;
+			}
+
+			@Override
+			public PoshiElement newPoshiElement(
+				PoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new ConditionElement(readableSyntax);
+				}
+
+				return null;
+			}
+
+		};
+
+		PoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 }

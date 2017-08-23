@@ -32,6 +32,18 @@
 			<var method="StringUtil#upperCase('${breadcrumbName}')" name="breadcrumbNameUppercase" />
 
 			<execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_ENTRY" value1="${breadcrumbNameUppercase}" />
+
+			<if>
+				<isset var="duplicate" />
+				<then>
+					<execute macro="Alert#viewErrorMessage">
+						<var name="errorMessage" value="A configuration with this ID already exists. Please enter a unique ID." />
+					</execute>
+				</then>
+				<else>
+					<execute macro="Alert#viewSuccessMessage" />
+				</else>
+			</if>
 		</for>
 
 		<execute macro="User#addCP">
@@ -55,9 +67,33 @@
 				<execute macro="Alert#viewErrorMessage">
 					<var name="errorMessage" value="A configuration with this ID already exists. Please enter a unique ID." />
 				</execute>
+
+				<if>
+					<isset var="duplicate" />
+					<then>
+						<execute macro="Alert#viewErrorMessage">
+							<var name="errorMessage" value="A configuration with this ID already exists. Please enter a unique ID." />
+						</execute>
+					</then>
+					<else>
+						<execute macro="Alert#viewSuccessMessage" />
+					</else>
+				</if>
 			</then>
 			<else>
 				<execute macro="Alert#viewSuccessMessage" />
+
+				<if>
+					<isset var="duplicate" />
+					<then>
+						<execute macro="Alert#viewErrorMessage">
+							<var name="errorMessage" value="A configuration with this ID already exists. Please enter a unique ID." />
+						</execute>
+					</then>
+					<else>
+						<execute macro="Alert#viewSuccessMessage" />
+					</else>
+				</if>
 			</else>
 		</if>
 
@@ -87,6 +123,13 @@ document.getElementById('demo').innerHTML = 'FAIL';
 </script>]]></var>
 
 		<execute macro="Smoke#viewWelcomePage" />
+
+		<while>
+			<condition function="IsElementPresent" locator1="AssetCategorization#TAGS_REMOVE_ICON_GENERIC" />
+			<then>
+				<execute function="Click" locator1="AssetCategorization#TAGS_REMOVE_ICON_GENERIC" />
+			</then>
+		</while>
 
 		<execute macro="Smoke#runSmoke" />
 

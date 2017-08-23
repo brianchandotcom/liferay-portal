@@ -21,17 +21,77 @@ import org.dom4j.Element;
  */
 public class TearDownElement extends CommandElement {
 
-	public TearDownElement(Element element) {
-		super("tear-down", element);
+	public static boolean isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		readableSyntax = readableSyntax.trim();
+
+		if (!isBalancedReadableSyntax(readableSyntax)) {
+			return false;
+		}
+
+		if (!readableSyntax.endsWith("}")) {
+			return false;
+		}
+
+		for (String line : readableSyntax.split("\n")) {
+			line = line.trim();
+
+			if (line.startsWith("@")) {
+				continue;
+			}
+
+			if (!line.equals("tearDown {")) {
+				return false;
+			}
+
+			break;
+		}
+
+		return true;
 	}
 
-	public TearDownElement(String readableSyntax) {
-		super("tear-down", readableSyntax);
+	protected TearDownElement(Element element) {
+		super(_ELEMENT_NAME, element);
+	}
+
+	protected TearDownElement(String readableSyntax) {
+		super(_ELEMENT_NAME, readableSyntax);
 	}
 
 	@Override
 	protected String getReadableCommandTitle() {
 		return "tearDown";
+	}
+
+	private static final String _ELEMENT_NAME = "tear-down";
+
+	static {
+		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
+
+			@Override
+			public PoshiElement newPoshiElement(Element element) {
+				if (isElementType(_ELEMENT_NAME, element)) {
+					return new TearDownElement(element);
+				}
+
+				return null;
+			}
+
+			@Override
+			public PoshiElement newPoshiElement(
+				PoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new TearDownElement(readableSyntax);
+				}
+
+				return null;
+			}
+
+		};
+
+		PoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 }

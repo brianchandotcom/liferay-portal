@@ -19,13 +19,13 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class EqualsElement extends PoshiElement {
+public class IsSetElement extends PoshiElement {
 
 	public static boolean isElementType(
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
 		if (parentPoshiElement instanceof IfElement &&
-			readableSyntax.contains("==")) {
+			readableSyntax.startsWith("isSet(")) {
 
 			return true;
 		}
@@ -35,48 +35,30 @@ public class EqualsElement extends PoshiElement {
 
 	@Override
 	public String getBlockName() {
-		return "equals";
+		return "isSet";
 	}
 
 	@Override
 	public void parseReadableSyntax(String readableSyntax) {
-		String[] equalsContentArray = readableSyntax.split("==");
+		String issetContent = getParentheticalContent(readableSyntax);
 
-		String arg1 = equalsContentArray[0].trim();
-
-		arg1 = getQuotedContent(arg1);
-
-		addAttribute("arg1", arg1);
-
-		String arg2 = equalsContentArray[1].trim();
-
-		arg2 = getQuotedContent(arg2);
-
-		addAttribute("arg2", arg2);
+		addAttribute("var", issetContent);
 	}
 
 	@Override
 	public String toReadableSyntax() {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("\"");
-		sb.append(attributeValue("arg1"));
-		sb.append("\" == \"");
-		sb.append(attributeValue("arg2"));
-		sb.append("\"");
-
-		return sb.toString();
+		return "isSet(" + attributeValue("var") + ")";
 	}
 
-	protected EqualsElement(Element element) {
+	protected IsSetElement(Element element) {
 		super(_ELEMENT_NAME, element);
 	}
 
-	protected EqualsElement(String readableSyntax) {
+	protected IsSetElement(String readableSyntax) {
 		super(_ELEMENT_NAME, readableSyntax);
 	}
 
-	private static final String _ELEMENT_NAME = "equals";
+	private static final String _ELEMENT_NAME = "isset";
 
 	static {
 		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
@@ -84,7 +66,7 @@ public class EqualsElement extends PoshiElement {
 			@Override
 			public PoshiElement newPoshiElement(Element element) {
 				if (isElementType(_ELEMENT_NAME, element)) {
-					return new EqualsElement(element);
+					return new IsSetElement(element);
 				}
 
 				return null;
@@ -95,7 +77,7 @@ public class EqualsElement extends PoshiElement {
 				PoshiElement parentPoshiElement, String readableSyntax) {
 
 				if (isElementType(parentPoshiElement, readableSyntax)) {
-					return new EqualsElement(readableSyntax);
+					return new IsSetElement(readableSyntax);
 				}
 
 				return null;

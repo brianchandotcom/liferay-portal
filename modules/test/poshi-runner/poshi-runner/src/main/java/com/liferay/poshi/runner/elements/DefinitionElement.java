@@ -24,12 +24,34 @@ import org.dom4j.Element;
  */
 public class DefinitionElement extends PoshiElement {
 
-	public DefinitionElement(Element element) {
-		super("definition", element);
-	}
+	public static boolean isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
 
-	public DefinitionElement(String readableSyntax) {
-		super("definition", readableSyntax);
+		readableSyntax = readableSyntax.trim();
+
+		if (!isBalancedReadableSyntax(readableSyntax)) {
+			return false;
+		}
+
+		if (!readableSyntax.endsWith("}")) {
+			return false;
+		}
+
+		for (String line : readableSyntax.split("\n")) {
+			line = line.trim();
+
+			if (line.startsWith("@")) {
+				continue;
+			}
+
+			if (!line.equals("definition {")) {
+				return false;
+			}
+
+			break;
+		}
+
+		return true;
 	}
 
 	@Override
@@ -47,7 +69,7 @@ public class DefinitionElement extends PoshiElement {
 				continue;
 			}
 
-			addElementFromReadableSyntax(readableBlock);
+			add(newPoshiElement(this, readableBlock));
 		}
 	}
 
@@ -101,6 +123,14 @@ public class DefinitionElement extends PoshiElement {
 		String string = sb.toString();
 
 		return string.trim();
+	}
+
+	protected DefinitionElement(Element element) {
+		super(_ELEMENT_NAME, element);
+	}
+
+	protected DefinitionElement(String readableSyntax) {
+		super(_ELEMENT_NAME, readableSyntax);
 	}
 
 	@Override
@@ -169,6 +199,36 @@ public class DefinitionElement extends PoshiElement {
 		}
 
 		return false;
+	}
+
+	private static final String _ELEMENT_NAME = "definition";
+
+	static {
+		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
+
+			@Override
+			public PoshiElement newPoshiElement(Element element) {
+				if (isElementType(_ELEMENT_NAME, element)) {
+					return new DefinitionElement(element);
+				}
+
+				return null;
+			}
+
+			@Override
+			public PoshiElement newPoshiElement(
+				PoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new DefinitionElement(readableSyntax);
+				}
+
+				return null;
+			}
+
+		};
+
+		PoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 }

@@ -21,12 +21,62 @@ import org.dom4j.Element;
  */
 public class PropertyElement extends VarElement {
 
-	public PropertyElement(Element element) {
-		super("property", element);
+	public static boolean isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		readableSyntax = readableSyntax.trim();
+
+		if (!isBalancedReadableSyntax(readableSyntax)) {
+			return false;
+		}
+
+		if (!readableSyntax.endsWith(";")) {
+			return false;
+		}
+
+		if (!readableSyntax.startsWith("property ")) {
+			return false;
+		}
+
+		return true;
 	}
 
-	public PropertyElement(String readableSyntax) {
-		super("property", readableSyntax);
+	protected PropertyElement(Element element) {
+		super(_ELEMENT_NAME, element);
+	}
+
+	protected PropertyElement(String readableSyntax) {
+		super(_ELEMENT_NAME, readableSyntax);
+	}
+
+	private static final String _ELEMENT_NAME = "property";
+
+	static {
+		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
+
+			@Override
+			public PoshiElement newPoshiElement(Element element) {
+				if (isElementType(_ELEMENT_NAME, element)) {
+					return new PropertyElement(element);
+				}
+
+				return null;
+			}
+
+			@Override
+			public PoshiElement newPoshiElement(
+				PoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new PropertyElement(readableSyntax);
+				}
+
+				return null;
+			}
+
+		};
+
+		PoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 }

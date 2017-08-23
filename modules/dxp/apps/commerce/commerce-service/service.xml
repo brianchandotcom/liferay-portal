@@ -376,6 +376,92 @@
 			<finder-column name="active" />
 		</finder>
 	</entity>
+	<entity local-service="true" name="CommerceWarehouse" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceWarehouseId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+		<column name="description" type="String" />
+		<column name="street1" type="String" />
+		<column name="street2" type="String" />
+		<column name="street3" type="String" />
+		<column name="city" type="String" />
+		<column name="zip" type="String" />
+		<column name="commerceRegionId" type="long" />
+		<column name="commerceCountryId" type="long" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="name" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="G_C" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="commerceCountryId" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="CommerceWarehouseItem" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceWarehouseItemId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceWarehouseId" type="long" />
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+		<column name="quantity" type="int" />
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceWarehouseId" return-type="Collection">
+			<finder-column name="commerceWarehouseId" />
+		</finder>
+		<finder name="C_C" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+		<finder name="C_C_C" return-type="CommerceWarehouseItem" unique="true">
+			<finder-column name="commerceWarehouseId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+	</entity>
 	<exceptions>
 		<exception>CommerceCountryName</exception>
 		<exception>CommerceCountryThreeLettersISOCode</exception>
@@ -385,5 +471,7 @@
 		<exception>CommerceRegionName</exception>
 		<exception>CommerceShippingMethodEngineKey</exception>
 		<exception>CommerceShippingMethodName</exception>
+		<exception>CommerceWarehouseCommerceRegionId</exception>
+		<exception>CommerceWarehouseName</exception>
 	</exceptions>
 </service-builder>

@@ -25,7 +25,7 @@
 
 		<column name="name" type="String" />
 		<column name="classNameId" type="long" />
-		<column name="templateId" type="long" />
+		<column name="DDMTemplateId" type="long" />
 		<column name="main" type="boolean" />
 
 		<!-- Order -->

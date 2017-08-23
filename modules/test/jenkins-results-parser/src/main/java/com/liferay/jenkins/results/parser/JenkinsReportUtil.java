@@ -16,8 +16,10 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -92,7 +94,8 @@ public class JenkinsReportUtil {
 			bodyElement, h1Element, h2Element,
 			getSummaryElement(
 				topLevelBuild, axisBuilds, batchBuilds, testResults),
-			getTimelineElement(topLevelBuild, axisBuilds));
+			getTimelineElement(topLevelBuild, axisBuilds),
+			getBatchReportElement(batchBuilds));
 
 		return bodyElement;
 	}
@@ -104,20 +107,65 @@ public class JenkinsReportUtil {
 	}
 
 	protected static Element getBatchReportElement(
-		Build topLevelBuild, Map<String, Build> builds) {
+		Map<String, Build> batchBuilds) {
 
-		Set<String> buildsKeySet = builds.keySet();
+		Set<String> batchBuildsKeySet = batchBuilds.keySet();
 
-		for (String key : buildsKeySet) {
-			Build build = builds.get(key);
+		List<Build> queuedBuilds = new ArrayList();
 
-			long buildDuration = build.getDuration();
-			long buildStartTime = build.getStartTimestamp();
+		List<Build> startingBuilds = new ArrayList();
 
-			long buildEndTime = buildDuration + buildStartTime;
+		List<Build> runningBuilds = new ArrayList();
+
+		List<Build> completedAbortedBuilds = new ArrayList();
+
+		List<Build> completedFailureBuilds = new ArrayList();
+
+		List<Build> completedSuccessBuilds = new ArrayList();
+
+		for (String key : batchBuildsKeySet) {
+			Build build = batchBuilds.get(key);
+
+			switch (build.getStatus()) {
+
+				case "queued":
+					queuedBuilds.add(build);
+					break;
+
+				case "starting":
+					startingBuilds.add(build);
+					break;
+
+				case "running":
+					runningBuilds.add(build);
+					break;
+
+				case "completed":
+					String result = build.getResult();
+
+					if (result.equals("SUCCESS")) {
+						completedSuccessBuilds.add(build);
+					}
+					else if (result.equals("FAILURE") ||
+							 result.equals("UNSTABLE")) {
+
+						completedFailureBuilds.add(build);
+					}
+					else if (result.equals("ABORTED")) {
+						completedAbortedBuilds.add(build);
+					}
+
+					break;
+
+				case "missing":
+					completedAbortedBuilds.add(build);
+					break;
+			}
 		}
 
-		return null;
+		Element divElement = Dom4JUtil.getNewElement("div");
+
+		return divElement;
 	}
 
 	protected static Element getChartJSScriptElement(

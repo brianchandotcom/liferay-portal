@@ -587,6 +587,10 @@ public class AssetUtil {
 			PortletBag portletBag = PortletBagPool.get(
 				portlet.getRootPortletId());
 
+			if (portletBag == null) {
+				continue;
+			}
+
 			ResourceBundle resourceBundle = portletBag.getResourceBundle(
 				locale);
 

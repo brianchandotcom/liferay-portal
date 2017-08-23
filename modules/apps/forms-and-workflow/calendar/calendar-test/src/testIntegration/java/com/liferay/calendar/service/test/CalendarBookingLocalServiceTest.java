@@ -21,13 +21,13 @@ import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.notification.NotificationType;
 import com.liferay.calendar.recurrence.Recurrence;
 import com.liferay.calendar.recurrence.RecurrenceSerializer;
-import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
 import com.liferay.calendar.service.CalendarLocalServiceUtil;
 import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
 import com.liferay.calendar.test.util.CalendarBookingTestUtil;
 import com.liferay.calendar.test.util.CalendarStagingTestUtil;
 import com.liferay.calendar.test.util.CalendarTestUtil;
+import com.liferay.calendar.test.util.CheckBookingsMessageListenerTestUtil;
 import com.liferay.calendar.test.util.RecurrenceTestUtil;
 import com.liferay.calendar.util.JCalendarUtil;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -46,7 +45,6 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
@@ -55,9 +53,6 @@ import com.liferay.portal.test.mail.MailMessage;
 import com.liferay.portal.test.mail.MailServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
-
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -74,11 +69,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 
 /**
  * @author Adam Brandizzi
@@ -99,12 +89,12 @@ public class CalendarBookingLocalServiceTest {
 	public void setUp() throws Exception {
 		_user = UserTestUtil.addUser();
 
-		setUpCheckBookingMessageListener();
+		CheckBookingsMessageListenerTestUtil.setUp();
 	}
 
 	@After
 	public void tearDown() {
-		tearDownCheckBookingMessageListener();
+		CheckBookingsMessageListenerTestUtil.tearDown();
 
 		CalendarStagingTestUtil.cleanUp();
 	}
@@ -2564,55 +2554,10 @@ public class CalendarBookingLocalServiceTest {
 		}
 	}
 
-	protected void setUpCheckBookingMessageListener() {
-		Bundle bundle = FrameworkUtil.getBundle(
-			CalendarBookingLocalServiceTest.class);
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		ServiceReference<?> serviceReference =
-			bundleContext.getServiceReference(
-				"com.liferay.calendar.web.internal.messaging." +
-					"CheckBookingsMessageListener");
-
-		_checkBookingMessageListener = bundleContext.getService(
-			serviceReference);
-
-		ReflectionTestUtil.setFieldValue(
-			_checkBookingMessageListener, "_calendarBookingLocalService",
-			ProxyUtil.newProxyInstance(
-				CalendarBookingLocalService.class.getClassLoader(),
-				new Class<?>[] {CalendarBookingLocalService.class},
-				new InvocationHandler() {
-
-					@Override
-					public Object invoke(
-							Object proxy, Method method, Object[] args)
-						throws Throwable {
-
-						if ("checkCalendarBookings".equals(method.getName())) {
-							return null;
-						}
-
-						return method.invoke(
-							CalendarBookingLocalServiceUtil.getService(), args);
-					}
-
-				}));
-	}
-
-	protected void tearDownCheckBookingMessageListener() {
-		ReflectionTestUtil.setFieldValue(
-			_checkBookingMessageListener, "_calendarBookingLocalService",
-			CalendarBookingLocalServiceUtil.getService());
-	}
-
 	private static final TimeZone _losAngelesTimeZone = TimeZone.getTimeZone(
 		"America/Los_Angeles");
 	private static final TimeZone _utcTimeZone = TimeZoneUtil.getTimeZone(
 		StringPool.UTC);
-
-	private Object _checkBookingMessageListener;
 
 	@DeleteAfterTestRun
 	private Group _group;

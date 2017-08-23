@@ -24,14 +24,12 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.search.facet.tag.AssetTagNamesFacetFactory;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.util.Collections;
 import java.util.Map;
 
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -52,17 +50,6 @@ public class AssetTagNamesFacetedSearcherTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
-
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		_assetTagNamesFacetFactory = registry.getService(
-			AssetTagNamesFacetFactory.class);
-	}
 
 	@Test
 	public void testSearchByFacet() throws Exception {
@@ -115,6 +102,7 @@ public class AssetTagNamesFacetedSearcherTest
 		assertTags(keywords, hits, expected);
 	}
 
-	private AssetTagNamesFacetFactory _assetTagNamesFacetFactory;
+	@Inject
+	private static AssetTagNamesFacetFactory _assetTagNamesFacetFactory;
 
 }

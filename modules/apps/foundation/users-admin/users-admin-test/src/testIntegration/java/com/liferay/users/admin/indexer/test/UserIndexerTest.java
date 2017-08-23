@@ -33,9 +33,8 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -65,14 +64,7 @@ public class UserIndexerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_userLocalService = registry.getService(UserLocalService.class);
-
-		IndexerRegistry indexerRegistry = registry.getService(
-			IndexerRegistry.class);
-
-		_indexer = indexerRegistry.getIndexer(User.class);
+		_indexer = _indexerRegistry.getIndexer(User.class);
 	}
 
 	@Test
@@ -467,10 +459,15 @@ public class UserIndexerTest {
 		return strings.toString();
 	}
 
+	@Inject
+	private static IndexerRegistry _indexerRegistry;
+
+	@Inject
+	private static UserLocalService _userLocalService;
+
 	@DeleteAfterTestRun
 	private User _expectedUser;
 
 	private Indexer<User> _indexer;
-	private UserLocalService _userLocalService;
 
 }

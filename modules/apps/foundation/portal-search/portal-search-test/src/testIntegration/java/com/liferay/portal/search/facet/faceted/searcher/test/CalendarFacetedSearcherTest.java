@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.facet.AssetEntriesFacetFactory;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -42,9 +41,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -76,19 +74,6 @@ public class CalendarFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		assetEntriesFacetFactory = registry.getService(
-			AssetEntriesFacetFactory.class);
-
-		calendarBookingLocalService = registry.getService(
-			CalendarBookingLocalService.class);
-
-		calendarLocalService = registry.getService(CalendarLocalService.class);
-
-		permissionCheckerFactory = registry.getService(
-			PermissionCheckerFactory.class);
 
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -177,10 +162,14 @@ public class CalendarFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 		return facet;
 	}
 
-	protected AssetEntriesFacetFactory assetEntriesFacetFactory;
-	protected CalendarBookingLocalService calendarBookingLocalService;
-	protected CalendarLocalService calendarLocalService;
-	protected PermissionCheckerFactory permissionCheckerFactory;
+	@Inject
+	protected static CalendarBookingLocalService calendarBookingLocalService;
+
+	@Inject
+	protected static CalendarLocalService calendarLocalService;
+
+	@Inject
+	protected static PermissionCheckerFactory permissionCheckerFactory;
 
 	private PermissionChecker _originalPermissionChecker;
 

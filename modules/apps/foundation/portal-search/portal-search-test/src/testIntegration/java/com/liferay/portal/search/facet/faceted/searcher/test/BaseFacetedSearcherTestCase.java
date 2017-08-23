@@ -30,8 +30,7 @@ import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.search.test.internal.util.UserSearchFixture;
 import com.liferay.portal.search.test.util.AssertUtils;
 import com.liferay.portal.search.test.util.TermCollectorUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
+import com.liferay.portal.test.rule.Inject;
 
 import java.util.List;
 import java.util.Map;
@@ -53,7 +52,6 @@ public abstract class BaseFacetedSearcherTestCase {
 	public void setUp() throws Exception {
 		WorkflowThreadLocal.setEnabled(false);
 
-		setUpFacetedSearcherManager();
 		setUpUserSearchFixture();
 	}
 
@@ -134,13 +132,6 @@ public abstract class BaseFacetedSearcherTestCase {
 		return facetedSearcher.search(searchContext);
 	}
 
-	protected void setUpFacetedSearcherManager() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_facetedSearcherManager = registry.getService(
-			FacetedSearcherManager.class);
-	}
-
 	protected void setUpUserSearchFixture() throws Exception {
 		userSearchFixture.setUp();
 
@@ -156,10 +147,11 @@ public abstract class BaseFacetedSearcherTestCase {
 	protected final UserSearchFixture userSearchFixture =
 		new UserSearchFixture();
 
+	@Inject
+	private static FacetedSearcherManager _facetedSearcherManager;
+
 	@DeleteAfterTestRun
 	private List<AssetTag> _assetTags;
-
-	private FacetedSearcherManager _facetedSearcherManager;
 
 	@DeleteAfterTestRun
 	private List<Group> _groups;

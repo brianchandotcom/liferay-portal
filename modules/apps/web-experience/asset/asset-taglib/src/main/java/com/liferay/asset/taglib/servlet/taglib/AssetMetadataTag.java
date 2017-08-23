@@ -131,8 +131,7 @@ public class AssetMetadataTag extends IncludeTag {
 			"liferay-ui:asset-metadata:metadataFields", _metadataFields);
 	}
 
-	private static final String _PAGE =
-		"/html/taglib/ui/asset_metadata/page.jsp";
+	private static final String _PAGE = "/asset_metadata/page.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetMetadataTag.class);

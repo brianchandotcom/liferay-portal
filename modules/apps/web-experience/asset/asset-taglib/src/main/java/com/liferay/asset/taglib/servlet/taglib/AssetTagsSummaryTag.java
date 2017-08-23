@@ -104,8 +104,7 @@ public class AssetTagsSummaryTag<R> extends IncludeTag {
 			"liferay-ui:asset-tags-summary:portletURL", _portletURL);
 	}
 
-	private static final String _PAGE =
-		"/html/taglib/ui/asset_tags_summary/page.jsp";
+	private static final String _PAGE = "/asset_tags_summary/page.jsp";
 
 	private String _assetTagNames;
 	private String _className;

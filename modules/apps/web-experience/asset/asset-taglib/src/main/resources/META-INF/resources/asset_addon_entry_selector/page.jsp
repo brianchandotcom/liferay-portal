@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/asset_addon_entry_selector/init.jsp" %>
+<%@ include file="/asset_addon_entry_selector/init.jsp" %>
 
 <div class="lfr-asset-addon-entry-selector" id="<%= namespace + id %>assetAddonEntrySelector">
 	<aui:input name="<%= hiddenInput %>" type="hidden" value='<%= ListUtil.toString(selectedAssetAddonEntries, "key") %>' />

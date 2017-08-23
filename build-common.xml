@@ -642,7 +642,7 @@ information.
 								<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />
 								<arg value="-Dforced.cache.enabled=@{forcedcacheenabled}" />
 								<arg value="-Dliferay.home=${liferay.home}" />
-								<arg value="@{task}" />
+								<arg line="@{task}" />
 								<env key="GRADLE_OPTS" value="${env.ANT_OPTS}" />
 								<redirector errorproperty="@{outputproperty}.error" outputproperty="@{outputproperty}" unless:blank="@{outputproperty}" />
 							</exec>

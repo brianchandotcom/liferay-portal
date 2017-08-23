@@ -21,7 +21,6 @@ import com.liferay.portal.bundle.blacklist.internal.UninstalledBundleData;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
 
 import java.io.File;
@@ -269,15 +268,8 @@ public class BundleBlacklist {
 
 			@Override
 			public void bundleChanged(BundleEvent bundleEvent) {
-				if (bundleEvent.getType() != BundleEvent.INSTALLED) {
-					return;
-				}
-
-				try {
+				if (bundleEvent.getType() == BundleEvent.INSTALLED) {
 					_processBundle(bundleEvent.getBundle());
-				}
-				catch (Exception e) {
-					ReflectionUtil.throwException(e);
 				}
 			}
 
@@ -287,7 +279,7 @@ public class BundleBlacklist {
 	private LPKGDeployer _lpkgDeployer;
 
 	private final Pattern _pattern = Pattern.compile(
-		"\\{location=(.+), startLevel=(\\d+)\\}");
+		"\\{location=([^,]+), startLevel=(\\d+)\\}");
 	private BundleListener _selfMonitorBundleListener;
 	private final Map<String, UninstalledBundleData> _uninstalledBundles =
 		new HashMap<>();

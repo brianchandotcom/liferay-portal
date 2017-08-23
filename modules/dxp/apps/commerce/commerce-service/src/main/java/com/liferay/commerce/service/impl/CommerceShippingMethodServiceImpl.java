@@ -70,13 +70,18 @@ public class CommerceShippingMethodServiceImpl
 			boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
+		CommerceShippingMethod commerceShippingMethod =
+			commerceShippingMethodLocalService.getCommerceShippingMethod(
+				commerceShippingMethodId);
+
 		CommercePermission.check(
-			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			getPermissionChecker(), commerceShippingMethod.getGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
 
 		return commerceShippingMethodLocalService.updateCommerceShippingMethod(
-			commerceShippingMethodId, nameMap, descriptionMap,
-			engineParameterMap, priority, active, serviceContext);
+			commerceShippingMethod.getCommerceShippingMethodId(), nameMap,
+			descriptionMap, engineParameterMap, priority, active,
+			serviceContext);
 	}
 
 }

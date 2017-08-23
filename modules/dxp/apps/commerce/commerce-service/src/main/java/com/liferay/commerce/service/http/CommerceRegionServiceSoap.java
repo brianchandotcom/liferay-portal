@@ -110,6 +110,22 @@ public class CommerceRegionServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceRegionSoap[] getCommerceRegions(
+		long commerceCountryId, boolean active) throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.model.CommerceRegion> returnValue =
+				CommerceRegionServiceUtil.getCommerceRegions(commerceCountryId,
+					active);
+
+			return com.liferay.commerce.model.CommerceRegionSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceRegionSoap[] getCommerceRegions(
 		long commerceCountryId, boolean active, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceRegion> orderByComparator)
 		throws RemoteException {

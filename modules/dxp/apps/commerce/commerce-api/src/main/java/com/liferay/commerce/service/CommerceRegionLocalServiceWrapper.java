@@ -268,6 +268,13 @@ public class CommerceRegionLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceRegion> getCommerceRegions(
+		long commerceCountryId, boolean active) {
+		return _commerceRegionLocalService.getCommerceRegions(commerceCountryId,
+			active);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceRegion> getCommerceRegions(
 		long commerceCountryId, boolean active, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceRegion> orderByComparator) {
 		return _commerceRegionLocalService.getCommerceRegions(commerceCountryId,

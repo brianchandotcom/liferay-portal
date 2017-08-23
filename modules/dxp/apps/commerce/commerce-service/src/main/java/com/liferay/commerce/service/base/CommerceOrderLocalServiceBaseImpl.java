@@ -20,12 +20,15 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.persistence.CommerceCartItemPersistence;
 import com.liferay.commerce.service.persistence.CommerceCartPersistence;
+import com.liferay.commerce.service.persistence.CommerceCountryFinder;
 import com.liferay.commerce.service.persistence.CommerceCountryPersistence;
 import com.liferay.commerce.service.persistence.CommerceOrderItemPersistence;
 import com.liferay.commerce.service.persistence.CommerceOrderPersistence;
 import com.liferay.commerce.service.persistence.CommercePaymentMethodPersistence;
 import com.liferay.commerce.service.persistence.CommerceRegionPersistence;
 import com.liferay.commerce.service.persistence.CommerceShippingMethodPersistence;
+import com.liferay.commerce.service.persistence.CommerceWarehouseFinder;
+import com.liferay.commerce.service.persistence.CommerceWarehouseItemFinder;
 import com.liferay.commerce.service.persistence.CommerceWarehouseItemPersistence;
 import com.liferay.commerce.service.persistence.CommerceWarehousePersistence;
 
@@ -442,6 +445,25 @@ public abstract class CommerceOrderLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the commerce country finder.
+	 *
+	 * @return the commerce country finder
+	 */
+	public CommerceCountryFinder getCommerceCountryFinder() {
+		return commerceCountryFinder;
+	}
+
+	/**
+	 * Sets the commerce country finder.
+	 *
+	 * @param commerceCountryFinder the commerce country finder
+	 */
+	public void setCommerceCountryFinder(
+		CommerceCountryFinder commerceCountryFinder) {
+		this.commerceCountryFinder = commerceCountryFinder;
+	}
+
+	/**
 	 * Returns the commerce order local service.
 	 *
 	 * @return the commerce order local service
@@ -670,6 +692,25 @@ public abstract class CommerceOrderLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the commerce warehouse finder.
+	 *
+	 * @return the commerce warehouse finder
+	 */
+	public CommerceWarehouseFinder getCommerceWarehouseFinder() {
+		return commerceWarehouseFinder;
+	}
+
+	/**
+	 * Sets the commerce warehouse finder.
+	 *
+	 * @param commerceWarehouseFinder the commerce warehouse finder
+	 */
+	public void setCommerceWarehouseFinder(
+		CommerceWarehouseFinder commerceWarehouseFinder) {
+		this.commerceWarehouseFinder = commerceWarehouseFinder;
+	}
+
+	/**
 	 * Returns the commerce warehouse item local service.
 	 *
 	 * @return the commerce warehouse item local service
@@ -705,6 +746,25 @@ public abstract class CommerceOrderLocalServiceBaseImpl
 	public void setCommerceWarehouseItemPersistence(
 		CommerceWarehouseItemPersistence commerceWarehouseItemPersistence) {
 		this.commerceWarehouseItemPersistence = commerceWarehouseItemPersistence;
+	}
+
+	/**
+	 * Returns the commerce warehouse item finder.
+	 *
+	 * @return the commerce warehouse item finder
+	 */
+	public CommerceWarehouseItemFinder getCommerceWarehouseItemFinder() {
+		return commerceWarehouseItemFinder;
+	}
+
+	/**
+	 * Sets the commerce warehouse item finder.
+	 *
+	 * @param commerceWarehouseItemFinder the commerce warehouse item finder
+	 */
+	public void setCommerceWarehouseItemFinder(
+		CommerceWarehouseItemFinder commerceWarehouseItemFinder) {
+		this.commerceWarehouseItemFinder = commerceWarehouseItemFinder;
 	}
 
 	/**
@@ -922,6 +982,8 @@ public abstract class CommerceOrderLocalServiceBaseImpl
 	protected com.liferay.commerce.service.CommerceCountryLocalService commerceCountryLocalService;
 	@BeanReference(type = CommerceCountryPersistence.class)
 	protected CommerceCountryPersistence commerceCountryPersistence;
+	@BeanReference(type = CommerceCountryFinder.class)
+	protected CommerceCountryFinder commerceCountryFinder;
 	@BeanReference(type = CommerceOrderLocalService.class)
 	protected CommerceOrderLocalService commerceOrderLocalService;
 	@BeanReference(type = CommerceOrderPersistence.class)
@@ -946,10 +1008,14 @@ public abstract class CommerceOrderLocalServiceBaseImpl
 	protected com.liferay.commerce.service.CommerceWarehouseLocalService commerceWarehouseLocalService;
 	@BeanReference(type = CommerceWarehousePersistence.class)
 	protected CommerceWarehousePersistence commerceWarehousePersistence;
+	@BeanReference(type = CommerceWarehouseFinder.class)
+	protected CommerceWarehouseFinder commerceWarehouseFinder;
 	@BeanReference(type = com.liferay.commerce.service.CommerceWarehouseItemLocalService.class)
 	protected com.liferay.commerce.service.CommerceWarehouseItemLocalService commerceWarehouseItemLocalService;
 	@BeanReference(type = CommerceWarehouseItemPersistence.class)
 	protected CommerceWarehouseItemPersistence commerceWarehouseItemPersistence;
+	@BeanReference(type = CommerceWarehouseItemFinder.class)
+	protected CommerceWarehouseItemFinder commerceWarehouseItemFinder;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)

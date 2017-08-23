@@ -55,4 +55,7 @@ public interface CommerceWarehouseItem extends CommerceWarehouseItemModel,
 				return CommerceWarehouseItem.class;
 			}
 		};
+
+	public CommerceWarehouse getCommerceWarehouse()
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

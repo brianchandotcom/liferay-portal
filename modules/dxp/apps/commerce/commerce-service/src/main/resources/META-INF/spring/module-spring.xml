@@ -10,6 +10,7 @@
 	<bean class="com.liferay.commerce.service.impl.CommerceCountryLocalServiceImpl" id="com.liferay.commerce.service.CommerceCountryLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceCountryServiceImpl" id="com.liferay.commerce.service.CommerceCountryService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceCountryPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceCountryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.service.persistence.impl.CommerceCountryFinderImpl" id="com.liferay.commerce.service.persistence.CommerceCountryFinder" parent="basePersistence" />
 	<bean class="com.liferay.commerce.service.impl.CommerceOrderLocalServiceImpl" id="com.liferay.commerce.service.CommerceOrderLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceOrderServiceImpl" id="com.liferay.commerce.service.CommerceOrderService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceOrderPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceOrderPersistence" parent="basePersistence" />
@@ -28,7 +29,9 @@
 	<bean class="com.liferay.commerce.service.impl.CommerceWarehouseLocalServiceImpl" id="com.liferay.commerce.service.CommerceWarehouseLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceWarehouseServiceImpl" id="com.liferay.commerce.service.CommerceWarehouseService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceWarehousePersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceWarehousePersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.service.persistence.impl.CommerceWarehouseFinderImpl" id="com.liferay.commerce.service.persistence.CommerceWarehouseFinder" parent="basePersistence" />
 	<bean class="com.liferay.commerce.service.impl.CommerceWarehouseItemLocalServiceImpl" id="com.liferay.commerce.service.CommerceWarehouseItemLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceWarehouseItemServiceImpl" id="com.liferay.commerce.service.CommerceWarehouseItemService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceWarehouseItemPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceWarehouseItemPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.service.persistence.impl.CommerceWarehouseItemFinderImpl" id="com.liferay.commerce.service.persistence.CommerceWarehouseItemFinder" parent="basePersistence" />
 </beans>

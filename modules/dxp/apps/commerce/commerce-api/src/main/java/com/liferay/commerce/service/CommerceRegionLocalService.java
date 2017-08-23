@@ -234,6 +234,10 @@ public interface CommerceRegionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceRegion> getCommerceRegions(long commerceCountryId,
+		boolean active);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceRegion> getCommerceRegions(long commerceCountryId,
 		boolean active, int start, int end,
 		OrderByComparator<CommerceRegion> orderByComparator);
 

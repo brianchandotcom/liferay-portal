@@ -70,6 +70,10 @@ public interface CommerceRegionService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceRegion> getCommerceRegions(long commerceCountryId,
+		boolean active);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceRegion> getCommerceRegions(long commerceCountryId,
 		boolean active, int start, int end,
 		OrderByComparator<CommerceRegion> orderByComparator);
 

@@ -41,6 +41,47 @@ public class CommerceWarehouseItemServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceWarehouseItemServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.commerce.model.CommerceWarehouseItem addCommerceWarehouseItem(
+		long commerceWarehouseId, java.lang.String className, long classPK,
+		int quantity,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCommerceWarehouseItem(commerceWarehouseId, className,
+			classPK, quantity, serviceContext);
+	}
+
+	public static void deleteCommerceWarehouseItem(long commerceWarehouseItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCommerceWarehouseItem(commerceWarehouseItemId);
+	}
+
+	public static com.liferay.commerce.model.CommerceWarehouseItem getCommerceWarehouseItem(
+		long commerceWarehouseItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommerceWarehouseItem(commerceWarehouseItemId);
+	}
+
+	public static java.util.List<com.liferay.commerce.model.CommerceWarehouseItem> getCommerceWarehouseItems(
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommerceWarehouseItems(className, classPK);
+	}
+
+	public static java.util.List<com.liferay.commerce.model.CommerceWarehouseItem> getCommerceWarehouseItems(
+		java.lang.String className, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouseItem> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCommerceWarehouseItems(className, classPK, start, end,
+			orderByComparator);
+	}
+
+	public static int getCommerceWarehouseItemsCount(
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommerceWarehouseItemsCount(className, classPK);
+	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -49,6 +90,15 @@ public class CommerceWarehouseItemServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.commerce.model.CommerceWarehouseItem updateCommerceWarehouseItem(
+		long commerceWarehouseItemId, int quantity,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCommerceWarehouseItem(commerceWarehouseItemId,
+			quantity, serviceContext);
 	}
 
 	public static CommerceWarehouseItemService getService() {

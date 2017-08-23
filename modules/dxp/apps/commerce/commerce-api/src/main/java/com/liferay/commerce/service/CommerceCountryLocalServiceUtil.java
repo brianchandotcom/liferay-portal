@@ -231,6 +231,11 @@ public class CommerceCountryLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceCountry> getCommerceCountries(
+		long groupId, boolean active) {
+		return getService().getCommerceCountries(groupId, active);
+	}
+
+	public static java.util.List<com.liferay.commerce.model.CommerceCountry> getCommerceCountries(
 		long groupId, boolean active, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceCountry> orderByComparator) {
 		return getService()
@@ -342,6 +347,11 @@ public class CommerceCountryLocalServiceUtil {
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static java.util.List<com.liferay.commerce.model.CommerceCountry> getWarehouseCommerceCountries(
+		long groupId) {
+		return getService().getWarehouseCommerceCountries(groupId);
 	}
 
 	/**

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -71,6 +72,10 @@ public interface CommerceWarehouseItemLocalService extends BaseLocalService,
 	public CommerceWarehouseItem addCommerceWarehouseItem(
 		CommerceWarehouseItem commerceWarehouseItem);
 
+	public CommerceWarehouseItem addCommerceWarehouseItem(
+		long commerceWarehouseId, java.lang.String className, long classPK,
+		int quantity, ServiceContext serviceContext) throws PortalException;
+
 	/**
 	* Creates a new commerce warehouse item with the primary key. Does not add the commerce warehouse item to the database.
 	*
@@ -100,6 +105,11 @@ public interface CommerceWarehouseItemLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public CommerceWarehouseItem deleteCommerceWarehouseItem(
 		long commerceWarehouseItemId) throws PortalException;
+
+	public void deleteCommerceWarehouseItems(long commerceWarehouseId);
+
+	public void deleteCommerceWarehouseItems(java.lang.String className,
+		long classPK);
 
 	/**
 	* @throws PortalException
@@ -200,6 +210,15 @@ public interface CommerceWarehouseItemLocalService extends BaseLocalService,
 	public List<CommerceWarehouseItem> getCommerceWarehouseItems(int start,
 		int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceWarehouseItem> getCommerceWarehouseItems(
+		java.lang.String className, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceWarehouseItem> getCommerceWarehouseItems(
+		java.lang.String className, long classPK, int start, int end,
+		OrderByComparator<CommerceWarehouseItem> orderByComparator);
+
 	/**
 	* Returns the number of commerce warehouse items.
 	*
@@ -207,6 +226,10 @@ public interface CommerceWarehouseItemLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceWarehouseItemsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceWarehouseItemsCount(java.lang.String className,
+		long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -232,4 +255,8 @@ public interface CommerceWarehouseItemLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceWarehouseItem updateCommerceWarehouseItem(
 		CommerceWarehouseItem commerceWarehouseItem);
+
+	public CommerceWarehouseItem updateCommerceWarehouseItem(
+		long commerceWarehouseItemId, int quantity,
+		ServiceContext serviceContext) throws PortalException;
 }

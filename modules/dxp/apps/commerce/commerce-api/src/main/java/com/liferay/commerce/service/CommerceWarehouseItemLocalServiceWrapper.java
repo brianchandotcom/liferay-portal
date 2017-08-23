@@ -46,6 +46,16 @@ public class CommerceWarehouseItemLocalServiceWrapper
 		return _commerceWarehouseItemLocalService.addCommerceWarehouseItem(commerceWarehouseItem);
 	}
 
+	@Override
+	public com.liferay.commerce.model.CommerceWarehouseItem addCommerceWarehouseItem(
+		long commerceWarehouseId, java.lang.String className, long classPK,
+		int quantity,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceWarehouseItemLocalService.addCommerceWarehouseItem(commerceWarehouseId,
+			className, classPK, quantity, serviceContext);
+	}
+
 	/**
 	* Creates a new commerce warehouse item with the primary key. Does not add the commerce warehouse item to the database.
 	*
@@ -82,6 +92,18 @@ public class CommerceWarehouseItemLocalServiceWrapper
 		long commerceWarehouseItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceWarehouseItemLocalService.deleteCommerceWarehouseItem(commerceWarehouseItemId);
+	}
+
+	@Override
+	public void deleteCommerceWarehouseItems(long commerceWarehouseId) {
+		_commerceWarehouseItemLocalService.deleteCommerceWarehouseItems(commerceWarehouseId);
+	}
+
+	@Override
+	public void deleteCommerceWarehouseItems(java.lang.String className,
+		long classPK) {
+		_commerceWarehouseItemLocalService.deleteCommerceWarehouseItems(className,
+			classPK);
 	}
 
 	/**
@@ -223,6 +245,21 @@ public class CommerceWarehouseItemLocalServiceWrapper
 			end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceWarehouseItem> getCommerceWarehouseItems(
+		java.lang.String className, long classPK) {
+		return _commerceWarehouseItemLocalService.getCommerceWarehouseItems(className,
+			classPK);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceWarehouseItem> getCommerceWarehouseItems(
+		java.lang.String className, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouseItem> orderByComparator) {
+		return _commerceWarehouseItemLocalService.getCommerceWarehouseItems(className,
+			classPK, start, end, orderByComparator);
+	}
+
 	/**
 	* Returns the number of commerce warehouse items.
 	*
@@ -231,6 +268,13 @@ public class CommerceWarehouseItemLocalServiceWrapper
 	@Override
 	public int getCommerceWarehouseItemsCount() {
 		return _commerceWarehouseItemLocalService.getCommerceWarehouseItemsCount();
+	}
+
+	@Override
+	public int getCommerceWarehouseItemsCount(java.lang.String className,
+		long classPK) {
+		return _commerceWarehouseItemLocalService.getCommerceWarehouseItemsCount(className,
+			classPK);
 	}
 
 	@Override
@@ -265,6 +309,15 @@ public class CommerceWarehouseItemLocalServiceWrapper
 	public com.liferay.commerce.model.CommerceWarehouseItem updateCommerceWarehouseItem(
 		com.liferay.commerce.model.CommerceWarehouseItem commerceWarehouseItem) {
 		return _commerceWarehouseItemLocalService.updateCommerceWarehouseItem(commerceWarehouseItem);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceWarehouseItem updateCommerceWarehouseItem(
+		long commerceWarehouseItemId, int quantity,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceWarehouseItemLocalService.updateCommerceWarehouseItem(commerceWarehouseItemId,
+			quantity, serviceContext);
 	}
 
 	@Override

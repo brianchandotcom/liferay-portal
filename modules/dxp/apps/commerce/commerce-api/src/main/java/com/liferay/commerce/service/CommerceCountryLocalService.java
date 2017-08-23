@@ -216,6 +216,10 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceCountry> getCommerceCountries(long groupId,
+		boolean active);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceCountry> getCommerceCountries(long groupId,
 		boolean active, int start, int end,
 		OrderByComparator<CommerceCountry> orderByComparator);
 
@@ -304,6 +308,9 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceCountry> getWarehouseCommerceCountries(long groupId);
 
 	/**
 	* Updates the commerce country in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

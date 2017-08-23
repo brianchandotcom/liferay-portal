@@ -56,6 +56,12 @@ public class CommerceCountryServiceWrapper implements CommerceCountryService,
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceCountry> getCommerceCountries(
+		long groupId, boolean active) {
+		return _commerceCountryService.getCommerceCountries(groupId, active);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceCountry> getCommerceCountries(
 		long groupId, boolean active, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceCountry> orderByComparator) {
 		return _commerceCountryService.getCommerceCountries(groupId, active,
@@ -95,6 +101,13 @@ public class CommerceCountryServiceWrapper implements CommerceCountryService,
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _commerceCountryService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceCountry> getWarehouseCommerceCountries(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCountryService.getWarehouseCommerceCountries(groupId);
 	}
 
 	@Override

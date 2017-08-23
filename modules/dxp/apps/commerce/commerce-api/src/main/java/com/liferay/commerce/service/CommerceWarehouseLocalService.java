@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -71,6 +72,13 @@ public interface CommerceWarehouseLocalService extends BaseLocalService,
 	public CommerceWarehouse addCommerceWarehouse(
 		CommerceWarehouse commerceWarehouse);
 
+	public CommerceWarehouse addCommerceWarehouse(java.lang.String name,
+		java.lang.String description, java.lang.String street1,
+		java.lang.String street2, java.lang.String street3,
+		java.lang.String city, java.lang.String zip, long commerceRegionId,
+		long commerceCountryId, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Creates a new commerce warehouse with the primary key. Does not add the commerce warehouse to the database.
 	*
@@ -99,6 +107,8 @@ public interface CommerceWarehouseLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public CommerceWarehouse deleteCommerceWarehouse(long commerceWarehouseId)
 		throws PortalException;
+
+	public void deleteCommerceWarehouses(long groupId);
 
 	/**
 	* @throws PortalException
@@ -197,6 +207,11 @@ public interface CommerceWarehouseLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceWarehouse> getCommerceWarehouses(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceWarehouse> getCommerceWarehouses(long groupId,
+		long commerceCountryId, int start, int end,
+		OrderByComparator<CommerceWarehouse> orderByComparator);
+
 	/**
 	* Returns the number of commerce warehouses.
 	*
@@ -204,6 +219,9 @@ public interface CommerceWarehouseLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceWarehousesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceWarehousesCount(long groupId, long commerceCountryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -220,6 +238,15 @@ public interface CommerceWarehouseLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceWarehouse> search(long groupId,
+		java.lang.String keywords, long commerceCountryId, int start, int end,
+		OrderByComparator<CommerceWarehouse> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long groupId, java.lang.String keywords,
+		long commerceCountryId);
+
 	/**
 	* Updates the commerce warehouse in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -229,4 +256,11 @@ public interface CommerceWarehouseLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceWarehouse updateCommerceWarehouse(
 		CommerceWarehouse commerceWarehouse);
+
+	public CommerceWarehouse updateCommerceWarehouse(long commerceWarehouseId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String street1, java.lang.String street2,
+		java.lang.String street3, java.lang.String city, java.lang.String zip,
+		long commerceRegionId, long commerceCountryId,
+		ServiceContext serviceContext) throws PortalException;
 }

@@ -16,9 +16,16 @@ package com.liferay.commerce.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.service.CommerceWarehouseItemServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.commerce.service.CommerceWarehouseItemServiceUtil} service utility. The
+ * {@link CommerceWarehouseItemServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,120 @@ import aQute.bnd.annotation.ProviderType;
  * @author Alessio Antonio Rendina
  * @see CommerceWarehouseItemServiceHttp
  * @see com.liferay.commerce.model.CommerceWarehouseItemSoap
- * @see com.liferay.commerce.service.CommerceWarehouseItemServiceUtil
+ * @see CommerceWarehouseItemServiceUtil
  * @generated
  */
 @ProviderType
 public class CommerceWarehouseItemServiceSoap {
+	public static com.liferay.commerce.model.CommerceWarehouseItemSoap addCommerceWarehouseItem(
+		long commerceWarehouseId, java.lang.String className, long classPK,
+		int quantity,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceWarehouseItem returnValue = CommerceWarehouseItemServiceUtil.addCommerceWarehouseItem(commerceWarehouseId,
+					className, classPK, quantity, serviceContext);
+
+			return com.liferay.commerce.model.CommerceWarehouseItemSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void deleteCommerceWarehouseItem(long commerceWarehouseItemId)
+		throws RemoteException {
+		try {
+			CommerceWarehouseItemServiceUtil.deleteCommerceWarehouseItem(commerceWarehouseItemId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceWarehouseItemSoap getCommerceWarehouseItem(
+		long commerceWarehouseItemId) throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceWarehouseItem returnValue = CommerceWarehouseItemServiceUtil.getCommerceWarehouseItem(commerceWarehouseItemId);
+
+			return com.liferay.commerce.model.CommerceWarehouseItemSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceWarehouseItemSoap[] getCommerceWarehouseItems(
+		java.lang.String className, long classPK) throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.model.CommerceWarehouseItem> returnValue =
+				CommerceWarehouseItemServiceUtil.getCommerceWarehouseItems(className,
+					classPK);
+
+			return com.liferay.commerce.model.CommerceWarehouseItemSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceWarehouseItemSoap[] getCommerceWarehouseItems(
+		java.lang.String className, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouseItem> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.model.CommerceWarehouseItem> returnValue =
+				CommerceWarehouseItemServiceUtil.getCommerceWarehouseItems(className,
+					classPK, start, end, orderByComparator);
+
+			return com.liferay.commerce.model.CommerceWarehouseItemSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCommerceWarehouseItemsCount(
+		java.lang.String className, long classPK) throws RemoteException {
+		try {
+			int returnValue = CommerceWarehouseItemServiceUtil.getCommerceWarehouseItemsCount(className,
+					classPK);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceWarehouseItemSoap updateCommerceWarehouseItem(
+		long commerceWarehouseItemId, int quantity,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceWarehouseItem returnValue = CommerceWarehouseItemServiceUtil.updateCommerceWarehouseItem(commerceWarehouseItemId,
+					quantity, serviceContext);
+
+			return com.liferay.commerce.model.CommerceWarehouseItemSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(CommerceWarehouseItemServiceSoap.class);
 }

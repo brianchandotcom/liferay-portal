@@ -184,6 +184,12 @@ public class CommerceWarehouseItemWrapper implements CommerceWarehouseItem,
 		return _commerceWarehouseItem.getClassPK();
 	}
 
+	@Override
+	public CommerceWarehouse getCommerceWarehouse()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceWarehouseItem.getCommerceWarehouse();
+	}
+
 	/**
 	* Returns the commerce warehouse ID of this commerce warehouse item.
 	*

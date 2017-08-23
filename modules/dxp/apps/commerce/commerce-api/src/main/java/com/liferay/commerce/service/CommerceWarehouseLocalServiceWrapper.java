@@ -46,6 +46,19 @@ public class CommerceWarehouseLocalServiceWrapper
 		return _commerceWarehouseLocalService.addCommerceWarehouse(commerceWarehouse);
 	}
 
+	@Override
+	public com.liferay.commerce.model.CommerceWarehouse addCommerceWarehouse(
+		java.lang.String name, java.lang.String description,
+		java.lang.String street1, java.lang.String street2,
+		java.lang.String street3, java.lang.String city, java.lang.String zip,
+		long commerceRegionId, long commerceCountryId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceWarehouseLocalService.addCommerceWarehouse(name,
+			description, street1, street2, street3, city, zip,
+			commerceRegionId, commerceCountryId, serviceContext);
+	}
+
 	/**
 	* Creates a new commerce warehouse with the primary key. Does not add the commerce warehouse to the database.
 	*
@@ -82,6 +95,11 @@ public class CommerceWarehouseLocalServiceWrapper
 		long commerceWarehouseId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceWarehouseLocalService.deleteCommerceWarehouse(commerceWarehouseId);
+	}
+
+	@Override
+	public void deleteCommerceWarehouses(long groupId) {
+		_commerceWarehouseLocalService.deleteCommerceWarehouses(groupId);
 	}
 
 	/**
@@ -222,6 +240,14 @@ public class CommerceWarehouseLocalServiceWrapper
 		return _commerceWarehouseLocalService.getCommerceWarehouses(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceWarehouse> getCommerceWarehouses(
+		long groupId, long commerceCountryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouse> orderByComparator) {
+		return _commerceWarehouseLocalService.getCommerceWarehouses(groupId,
+			commerceCountryId, start, end, orderByComparator);
+	}
+
 	/**
 	* Returns the number of commerce warehouses.
 	*
@@ -230,6 +256,12 @@ public class CommerceWarehouseLocalServiceWrapper
 	@Override
 	public int getCommerceWarehousesCount() {
 		return _commerceWarehouseLocalService.getCommerceWarehousesCount();
+	}
+
+	@Override
+	public int getCommerceWarehousesCount(long groupId, long commerceCountryId) {
+		return _commerceWarehouseLocalService.getCommerceWarehousesCount(groupId,
+			commerceCountryId);
 	}
 
 	@Override
@@ -254,6 +286,22 @@ public class CommerceWarehouseLocalServiceWrapper
 		return _commerceWarehouseLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceWarehouse> search(
+		long groupId, java.lang.String keywords, long commerceCountryId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouse> orderByComparator) {
+		return _commerceWarehouseLocalService.search(groupId, keywords,
+			commerceCountryId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int searchCount(long groupId, java.lang.String keywords,
+		long commerceCountryId) {
+		return _commerceWarehouseLocalService.searchCount(groupId, keywords,
+			commerceCountryId);
+	}
+
 	/**
 	* Updates the commerce warehouse in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -264,6 +312,20 @@ public class CommerceWarehouseLocalServiceWrapper
 	public com.liferay.commerce.model.CommerceWarehouse updateCommerceWarehouse(
 		com.liferay.commerce.model.CommerceWarehouse commerceWarehouse) {
 		return _commerceWarehouseLocalService.updateCommerceWarehouse(commerceWarehouse);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceWarehouse updateCommerceWarehouse(
+		long commerceWarehouseId, java.lang.String name,
+		java.lang.String description, java.lang.String street1,
+		java.lang.String street2, java.lang.String street3,
+		java.lang.String city, java.lang.String zip, long commerceRegionId,
+		long commerceCountryId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceWarehouseLocalService.updateCommerceWarehouse(commerceWarehouseId,
+			name, description, street1, street2, street3, city, zip,
+			commerceRegionId, commerceCountryId, serviceContext);
 	}
 
 	@Override

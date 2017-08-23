@@ -53,6 +53,19 @@ public class CommerceWarehouseLocalServiceUtil {
 		return getService().addCommerceWarehouse(commerceWarehouse);
 	}
 
+	public static com.liferay.commerce.model.CommerceWarehouse addCommerceWarehouse(
+		java.lang.String name, java.lang.String description,
+		java.lang.String street1, java.lang.String street2,
+		java.lang.String street3, java.lang.String city, java.lang.String zip,
+		long commerceRegionId, long commerceCountryId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCommerceWarehouse(name, description, street1, street2,
+			street3, city, zip, commerceRegionId, commerceCountryId,
+			serviceContext);
+	}
+
 	/**
 	* Creates a new commerce warehouse with the primary key. Does not add the commerce warehouse to the database.
 	*
@@ -86,6 +99,10 @@ public class CommerceWarehouseLocalServiceUtil {
 		long commerceWarehouseId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteCommerceWarehouse(commerceWarehouseId);
+	}
+
+	public static void deleteCommerceWarehouses(long groupId) {
+		getService().deleteCommerceWarehouses(groupId);
 	}
 
 	/**
@@ -213,6 +230,14 @@ public class CommerceWarehouseLocalServiceUtil {
 		return getService().getCommerceWarehouses(start, end);
 	}
 
+	public static java.util.List<com.liferay.commerce.model.CommerceWarehouse> getCommerceWarehouses(
+		long groupId, long commerceCountryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouse> orderByComparator) {
+		return getService()
+				   .getCommerceWarehouses(groupId, commerceCountryId, start,
+			end, orderByComparator);
+	}
+
 	/**
 	* Returns the number of commerce warehouses.
 	*
@@ -220,6 +245,12 @@ public class CommerceWarehouseLocalServiceUtil {
 	*/
 	public static int getCommerceWarehousesCount() {
 		return getService().getCommerceWarehousesCount();
+	}
+
+	public static int getCommerceWarehousesCount(long groupId,
+		long commerceCountryId) {
+		return getService()
+				   .getCommerceWarehousesCount(groupId, commerceCountryId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
@@ -241,6 +272,20 @@ public class CommerceWarehouseLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static java.util.List<com.liferay.commerce.model.CommerceWarehouse> search(
+		long groupId, java.lang.String keywords, long commerceCountryId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouse> orderByComparator) {
+		return getService()
+				   .search(groupId, keywords, commerceCountryId, start, end,
+			orderByComparator);
+	}
+
+	public static int searchCount(long groupId, java.lang.String keywords,
+		long commerceCountryId) {
+		return getService().searchCount(groupId, keywords, commerceCountryId);
+	}
+
 	/**
 	* Updates the commerce warehouse in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -250,6 +295,20 @@ public class CommerceWarehouseLocalServiceUtil {
 	public static com.liferay.commerce.model.CommerceWarehouse updateCommerceWarehouse(
 		com.liferay.commerce.model.CommerceWarehouse commerceWarehouse) {
 		return getService().updateCommerceWarehouse(commerceWarehouse);
+	}
+
+	public static com.liferay.commerce.model.CommerceWarehouse updateCommerceWarehouse(
+		long commerceWarehouseId, java.lang.String name,
+		java.lang.String description, java.lang.String street1,
+		java.lang.String street2, java.lang.String street3,
+		java.lang.String city, java.lang.String zip, long commerceRegionId,
+		long commerceCountryId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCommerceWarehouse(commerceWarehouseId, name,
+			description, street1, street2, street3, city, zip,
+			commerceRegionId, commerceCountryId, serviceContext);
 	}
 
 	public static CommerceWarehouseLocalService getService() {

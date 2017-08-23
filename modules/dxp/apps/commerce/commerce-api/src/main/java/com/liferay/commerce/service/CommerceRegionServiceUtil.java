@@ -63,6 +63,11 @@ public class CommerceRegionServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceRegion> getCommerceRegions(
+		long commerceCountryId, boolean active) {
+		return getService().getCommerceRegions(commerceCountryId, active);
+	}
+
+	public static java.util.List<com.liferay.commerce.model.CommerceRegion> getCommerceRegions(
 		long commerceCountryId, boolean active, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceRegion> orderByComparator) {
 		return getService()

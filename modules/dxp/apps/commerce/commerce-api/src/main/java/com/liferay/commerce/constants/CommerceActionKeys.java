@@ -28,4 +28,7 @@ public class CommerceActionKeys {
 	public static final String MANAGE_COMMERCE_PAYMENT_METHODS =
 		"MANAGE_COMMERCE_PAYMENT_METHODS";
 
+	public static final String MANAGE_COMMERCE_SHIPPING_METHODS =
+		"MANAGE_COMMERCE_SHIPPING_METHODS";
+
 }

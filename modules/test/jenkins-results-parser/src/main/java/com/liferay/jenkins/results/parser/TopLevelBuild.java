@@ -540,9 +540,12 @@ public class TopLevelBuild extends BaseBuild {
 			Dom4JUtil.addToElement(rootElement, getFailedJobSummaryElement());
 		}
 
-		Dom4JUtil.addToElement(
-			rootElement, getSuccessfulJobSummaryElement(),
-			getMoreDetailsElement());
+		if (getDownstreamBuildCountByResult("SUCCESS") > 0) {
+			Dom4JUtil.addToElement(
+				rootElement, getSuccessfulJobSummaryElement());
+		}
+
+		Dom4JUtil.addToElement(rootElement, getMoreDetailsElement());
 
 		String result = getResult();
 

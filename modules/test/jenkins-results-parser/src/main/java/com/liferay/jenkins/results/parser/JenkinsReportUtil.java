@@ -17,6 +17,7 @@ package com.liferay.jenkins.results.parser;
 import java.io.IOException;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -87,7 +88,8 @@ public class JenkinsReportUtil {
 
 		Dom4JUtil.addToElement(
 			bodyElement, h1Element,
-			getBasicHeaderElement(topLevelBuild, axisBuilds),
+			getBasicHeaderElement(
+				topLevelBuild, axisBuilds, batchBuilds, testResults),
 			getTimelineElement(topLevelBuild, axisBuilds));
 
 		return bodyElement;
@@ -100,20 +102,35 @@ public class JenkinsReportUtil {
 	}
 
 	protected static Element getBasicHeaderElement(
-		Build topLevelBuild, Map<String, Build> builds) {
+		Build topLevelBuild, Map<String, Build> axisBuilds,
+		Map<String, Build> batchBuilds, Map<String, TestResult> testResults) {
 
-		long totalTime = 0;
+		long startTimeStamp = topLevelBuild.getStartTimestamp();
 
-		for (Build axisBuild : builds.values()) {
-			totalTime = totalTime + axisBuild.getDuration();
-		}
+		long durationTime = topLevelBuild.getDuration();
+
+		Date startTime = new Date(startTimeStamp);
+
+		Element startTimeElement = Dom4JUtil.getNewElement(
+			"p", null, "Start Time: ", startTime.toLocaleString(),
+			" - Build Time: ",
+			JenkinsResultsParserUtil.toDurationString(durationTime));
+
+		Element ciUsageElement = getTotalCIUsageElement(axisBuilds);
+
+		Element vmUsageElement = getTotalVMUSageElement(axisBuilds);
+
+		Element longestBatchElement = getLongestBatchElement(batchBuilds);
+
+		Element longestAxisElement = getLongestAxisElement(axisBuilds);
+
+		Element longestTestElement = getLongestTestElement(testResults);
 
 		Element divElement = Dom4JUtil.getNewElement("div");
 
-		long hoursTotalTime = totalTime / 3600000;
-
-		divElement.addText(
-			"Total CI Usage: " + hoursTotalTime + " server hours");
+		Dom4JUtil.addToElement(
+			divElement, startTimeElement, ciUsageElement, vmUsageElement,
+			longestBatchElement, longestAxisElement, longestTestElement);
 
 		return divElement;
 	}
@@ -158,6 +175,171 @@ public class JenkinsReportUtil {
 		scriptElement.addText(resource);
 
 		return scriptElement;
+	}
+
+	protected static Element getLongestAxisElement(
+		Map<String, Build> axisBuilds) {
+
+		String jobName = "Unavailable";
+
+		long longestAxisDuration = 0;
+
+		String longestAxisName = "Unavailable";
+
+		String longestAxisParentName = "Unavailable";
+
+		String longestAxisURL = "Unavailable";
+
+		Set<String> axisBuildsKeySet = axisBuilds.keySet();
+
+		for (String key : axisBuildsKeySet) {
+			Build axisBuild = axisBuilds.get(key);
+
+			long axisDuration = axisBuild.getDuration();
+
+			if (axisDuration > longestAxisDuration) {
+				longestAxisDuration = axisDuration;
+
+				String axisNumber = ((AxisBuild)axisBuild).getAxisNumber();
+
+				longestAxisName = "AXIS_VARAIBLE=" + axisNumber;
+
+				longestAxisParentName =
+					axisBuild.getParentBuild().getDisplayName();
+
+				jobName = axisBuild.getJobName();
+
+				longestAxisURL = axisBuild.getBuildURL();
+			}
+		}
+
+		longestAxisParentName = longestAxisParentName.replace(
+			jobName + "/", "");
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(longestAxisParentName);
+
+		sb.append("/");
+
+		sb.append(longestAxisName);
+
+		String longestAxisDisplayName = sb.toString();
+
+		Element longestAxisElement = Dom4JUtil.getNewElement(
+			"p", null, "Longest Axis: ",
+			Dom4JUtil.getNewAnchorElement(
+				longestAxisURL, longestAxisDisplayName),
+			" in: ",
+			JenkinsResultsParserUtil.toDurationString(longestAxisDuration));
+
+		return longestAxisElement;
+	}
+
+	protected static Element getLongestBatchElement(
+		Map<String, Build> batchBuilds) {
+
+		String jobName = "Unavailable";
+
+		long longestBatchDuration = 0;
+
+		String longestBatchName = "Unavailable";
+
+		String longestBatchURL = "Unavailable";
+
+		Set<String> batchBuildsKeySet = batchBuilds.keySet();
+
+		for (String key : batchBuildsKeySet) {
+			Build build = batchBuilds.get(key);
+
+			long batchDuration = build.getDuration();
+
+			if (longestBatchDuration < batchDuration) {
+				longestBatchDuration = batchDuration;
+
+				jobName = build.getJobName();
+
+				longestBatchName = build.getDisplayName();
+
+				longestBatchURL = build.getBuildURL();
+			}
+		}
+
+		String longestBatchDisplayName = longestBatchName.replace(
+			jobName + "/", "");
+
+		Element longestBatchElement = Dom4JUtil.getNewElement(
+			"p", null, "Longest Batch: ",
+			Dom4JUtil.getNewAnchorElement(
+				longestBatchURL, longestBatchDisplayName),
+			" in: ",
+			JenkinsResultsParserUtil.toDurationString(longestBatchDuration));
+
+		return longestBatchElement;
+	}
+
+	protected static Element getLongestTestElement(
+		Map<String, TestResult> testResults) {
+
+		long longestTestDuration = 0;
+
+		String longestTestName = "Unavailable";
+
+		String longestTestParentName = "Unavailable";
+
+		TestResult longestTestResult = null;
+
+		String longestTestURL = "Unavailable";
+
+		Set<String> testResultsKeySet = testResults.keySet();
+
+		for (String key : testResultsKeySet) {
+			TestResult testResult = testResults.get(key);
+
+			long testDuration = testResult.getDuration();
+
+			if (longestTestDuration < testDuration) {
+				longestTestDuration = testDuration;
+
+				longestTestResult = testResult;
+			}
+		}
+
+		if (longestTestResult != null) {
+			longestTestName = longestTestResult.getDisplayName();
+
+			longestTestURL = longestTestResult.getTestReportURL();
+
+			Build testAxisBuild = longestTestResult.getAxisBuild();
+
+			Build testBatchBuild = testAxisBuild.getParentBuild();
+
+			String testBatchBuildName = testBatchBuild.getDisplayName();
+
+			String testBatchJobName = testBatchBuild.getJobName();
+
+			longestTestParentName = testBatchBuildName.replace(
+				testBatchJobName + "/", "");
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(longestTestParentName);
+
+		sb.append("/");
+
+		sb.append(longestTestName);
+
+		String longestTestDisplayName = sb.toString();
+
+		Element longestTestElement = Dom4JUtil.getNewElement(
+			"p", null, "Longest Test: ",
+			Dom4JUtil.getNewAnchorElement(
+				longestTestURL, longestTestDisplayName),
+			" in: ",
+			JenkinsResultsParserUtil.toDurationString(longestTestDuration));
+
+		return longestTestElement;
 	}
 
 	protected static Element getTimelineElement(
@@ -222,6 +404,36 @@ public class JenkinsReportUtil {
 			divElement, canvasElement, scriptElement, chartJSScriptElement);
 
 		return divElement;
+	}
+
+	protected static Element getTotalCIUsageElement(
+		Map<String, Build> axisBuilds) {
+
+		long totalTime = 0;
+
+		for (Build axisBuild : axisBuilds.values()) {
+			long axisDuration = axisBuild.getDuration();
+
+			totalTime = totalTime + axisDuration;
+		}
+
+		long hoursTotalTime = totalTime / 3600000;
+
+		Element totalCIUsageElement = Dom4JUtil.getNewElement(
+			"p", null, "Total CI Usage: " + hoursTotalTime + " server hours");
+
+		return totalCIUsageElement;
+	}
+
+	protected static Element getTotalVMUSageElement(
+		Map<String, Build> axisBuilds) {
+
+		long totalVMUsed = axisBuilds.size();
+
+		Element totalVMUsageElement = Dom4JUtil.getNewElement(
+			"p", null, "Total VM used: " + totalVMUsed + " slaves");
+
+		return totalVMUsageElement;
 	}
 
 	private static final String _CHART_JS_FILE =

@@ -27,7 +27,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.asset.taglib.servlet.taglib.AssetCategoriesSummaryTag}
  */
+@Deprecated
 public class AssetCategoriesSummaryTag<R> extends IncludeTag {
 
 	public PortletURL getPortletURL() {

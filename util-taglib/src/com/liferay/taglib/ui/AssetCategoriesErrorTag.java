@@ -18,7 +18,10 @@ import com.liferay.taglib.util.IncludeTag;
 
 /**
  * @author Juan Fernández
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.asset.taglib.servlet.taglib.AssetCategoriesErrorTag}
  */
+@Deprecated
 public class AssetCategoriesErrorTag extends IncludeTag {
 
 	@Override

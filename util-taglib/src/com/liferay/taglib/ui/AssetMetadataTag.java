@@ -31,7 +31,10 @@ import javax.servlet.jsp.JspException;
 
 /**
  * @author Eudaldo Alonso
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.asset.taglib.servlet.taglib.AssetMetadataTag}
  */
+@Deprecated
 public class AssetMetadataTag extends IncludeTag {
 
 	@Override

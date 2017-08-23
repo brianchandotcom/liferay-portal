@@ -26,7 +26,10 @@ import javax.servlet.jsp.JspException;
 
 /**
  * @author Sergio González
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.asset.taglib.servlet.taglib.AssetCategoriesAvailableTag}
  */
+@Deprecated
 public class AssetCategoriesAvailableTag<R> extends TagSupport {
 
 	@Override

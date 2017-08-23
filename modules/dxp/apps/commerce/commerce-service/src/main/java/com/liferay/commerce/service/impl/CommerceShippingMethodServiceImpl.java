@@ -14,11 +14,69 @@
 
 package com.liferay.commerce.service.impl;
 
+import com.liferay.commerce.constants.CommerceActionKeys;
+import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.service.base.CommerceShippingMethodServiceBaseImpl;
+import com.liferay.commerce.service.permission.CommercePermission;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
+
+import java.util.Locale;
+import java.util.Map;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Andrea Di Giorgi
  */
 public class CommerceShippingMethodServiceImpl
 	extends CommerceShippingMethodServiceBaseImpl {
+
+	@Override
+	public CommerceShippingMethod addCommerceShippingMethod(
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			String engineKey, Map<String, String> engineParameterMap,
+			double priority, boolean active, ServiceContext serviceContext)
+		throws PortalException {
+
+		CommercePermission.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
+
+		return commerceShippingMethodLocalService.addCommerceShippingMethod(
+			nameMap, descriptionMap, engineKey, engineParameterMap, priority,
+			active, serviceContext);
+	}
+
+	@Override
+	public void deleteCommerceShippingMethod(long commerceShippingMethodId)
+		throws PortalException {
+
+		CommerceShippingMethod commerceShippingMethod =
+			commerceShippingMethodLocalService.getCommerceShippingMethod(
+				commerceShippingMethodId);
+
+		CommercePermission.check(
+			getPermissionChecker(), commerceShippingMethod.getGroupId(),
+			CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
+
+		commerceShippingMethodLocalService.deleteCommerceShippingMethod(
+			commerceShippingMethod);
+	}
+
+	@Override
+	public CommerceShippingMethod updateCommerceShippingMethod(
+			long commerceShippingMethodId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap,
+			Map<String, String> engineParameterMap, double priority,
+			boolean active, ServiceContext serviceContext)
+		throws PortalException {
+
+		CommercePermission.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
+
+		return commerceShippingMethodLocalService.updateCommerceShippingMethod(
+			commerceShippingMethodId, nameMap, descriptionMap,
+			engineParameterMap, priority, active, serviceContext);
+	}
+
 }

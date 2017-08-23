@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import org.dom4j.Element;
 
@@ -90,7 +91,65 @@ public class JenkinsReportUtil {
 	}
 
 	public static Element getHTMLBodyElement(Build topLevelBuild) {
+		Map<String, Build> axisBuilds = new TreeMap<>();
+		Map<String, Build> batchBuilds = new TreeMap<>();
+		Map<String, TestResult> testResults = new TreeMap<>();
+
+		try {
+			for (Build batchBuild : topLevelBuild.getDownstreamBuilds(null)) {
+				batchBuilds.put(batchBuild.getDisplayName(), batchBuild);
+
+				for (Build axisBuild : batchBuild.getDownstreamBuilds(null)) {
+					try {
+						String axisKey =
+							batchBuild.getDisplayName() + "/" +
+								JenkinsResultsParserUtil.getAxisVariable(
+									axisBuild.getBuildURL());
+
+						axisBuilds.put(axisKey, axisBuild);
+					}
+					catch (Exception e) {
+					}
+
+					for (TestResult testResult :
+							axisBuild.getTestResults(null)) {
+
+						try {
+							testResults.put(
+								testResult.getDisplayName(), testResult);
+						}
+						catch (Exception e) {
+						}
+					}
+				}
+			}
+		}
+		catch (Exception e) {
+			return null;
+		}
+
+		Element h1Element = Dom4JUtil.getNewElement("h1");
+
+		String githubReceiverUsername = topLevelBuild.getParameterValue(
+			"GITHUB_RECEIVER_USERNAME");
+
+		String githubPullRequestNumber = topLevelBuild.getParameterValue(
+			"GITHUB_PULL_REQUEST_NUMBER");
+
+		Dom4JUtil.addToElement(
+			h1Element, "Jenkins timeline for ",
+			Dom4JUtil.getNewAnchorElement(
+				topLevelBuild.getBuildURL(), topLevelBuild.getBuildURL()),
+			Dom4JUtil.getNewElement(
+				"p", null, githubReceiverUsername, " - ",
+				"PR#" + githubPullRequestNumber, " - ", "JENKINS REPORT LINK"));
+
 		Element bodyElement = Dom4JUtil.getNewElement("body");
+
+		Dom4JUtil.addToElement(
+			bodyElement, h1Element,
+			getBasicHeaderElement(topLevelBuild, axisBuilds),
+			getTimelineElement(topLevelBuild, axisBuilds));
 
 		return bodyElement;
 	}

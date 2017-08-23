@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
@@ -187,48 +186,15 @@ public class TopLevelBuild extends BaseBuild {
 
 	@Override
 	public Element getJenkinsReportElement() {
-		Map<String, Build> axisBuilds = new TreeMap<>();
-		Map<String, Build> batchBuilds = new TreeMap<>();
+		Element headElement = JenkinsReportUtil.getHTMLHeadElement();
 
-		try {
-			for (Build batchBuild : getDownstreamBuilds(null)) {
-				batchBuilds.put(batchBuild.getDisplayName(), batchBuild);
+		Element bodyElement = JenkinsReportUtil.getHTMLBodyElement(this);
 
-				for (Build axisBuild : batchBuild.getDownstreamBuilds(null)) {
-					String key = null;
+		Element jenkinsReportElement = Dom4JUtil.getNewElement("html");
 
-					try {
-						key =
-							batchBuild.getDisplayName() + "/" +
-								JenkinsResultsParserUtil.getAxisVariable(
-									axisBuild.getBuildURL());
-					}
-					catch (Exception e) {
-					}
+		Dom4JUtil.addToElement(jenkinsReportElement, headElement, bodyElement);
 
-					axisBuilds.put(key, axisBuild);
-				}
-			}
-
-			Element divElement = Dom4JUtil.getNewElement("div");
-
-			Element h3Element = Dom4JUtil.getNewElement("h3");
-
-			Dom4JUtil.addToElement(
-				h3Element, "Jenkins timeline for ",
-				Dom4JUtil.getNewAnchorElement(getBuildURL(), getBuildURL()));
-
-			Dom4JUtil.addToElement(
-				divElement, h3Element,
-				JenkinsReportUtil.getBasicHeaderElement(this, axisBuilds),
-				JenkinsReportUtil.getTimelineElement(this, axisBuilds));
-
-			return divElement;
-		}
-		catch (Exception e) {
-		}
-
-		return null;
+		return jenkinsReportElement;
 	}
 
 	public String getJenkinsReportURL() {

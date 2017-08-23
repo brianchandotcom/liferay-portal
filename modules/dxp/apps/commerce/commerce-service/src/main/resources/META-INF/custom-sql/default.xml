@@ -20,4 +20,50 @@
 				CommerceCountry.priority
 		]]>
 	</sql>
+	<sql id="com.liferay.commerce.service.persistence.CommerceWarehouseFinder.countByG_N_D_S_C_Z_C">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT commerceWarehouseId) AS COUNT_VALUE
+			FROM
+				CommerceWarehouse
+			WHERE
+				(CommerceWarehouse.groupId = ?) AND
+				(
+					(lower(CommerceWarehouse.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(CommerceWarehouse.description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(
+						(lower(CommerceWarehouse.street1) LIKE ? [$AND_OR_NULL_CHECK$]) OR
+						(lower(CommerceWarehouse.street2) LIKE ? [$AND_OR_NULL_CHECK$]) OR
+						(lower(CommerceWarehouse.street3) LIKE ? [$AND_OR_NULL_CHECK$])
+					) [$AND_OR_CONNECTOR$]
+					(lower(CommerceWarehouse.city) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(lower(CommerceWarehouse.zip) LIKE ? [$AND_OR_NULL_CHECK$])
+				)
+				AND (CommerceWarehouse.commerceCountryId = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.service.persistence.CommerceWarehouseFinder.findByG_N_D_S_C_Z_C">
+		<![CDATA[
+			SELECT
+				{CommerceWarehouse.*}
+			FROM
+				CommerceWarehouse
+			WHERE
+				(CommerceWarehouse.groupId = ?) AND
+				(
+					(lower(CommerceWarehouse.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(CommerceWarehouse.description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(
+						(lower(CommerceWarehouse.street1) LIKE ? [$AND_OR_NULL_CHECK$]) OR
+						(lower(CommerceWarehouse.street2) LIKE ? [$AND_OR_NULL_CHECK$]) OR
+						(lower(CommerceWarehouse.street3) LIKE ? [$AND_OR_NULL_CHECK$])
+					) [$AND_OR_CONNECTOR$]
+					(lower(CommerceWarehouse.city) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(lower(CommerceWarehouse.zip) LIKE ? [$AND_OR_NULL_CHECK$])
+				)
+				AND (CommerceWarehouse.commerceCountryId = ?)
+			ORDER BY
+				CommerceWarehouse.name ASC
+		]]>
+	</sql>
 </custom-sql>

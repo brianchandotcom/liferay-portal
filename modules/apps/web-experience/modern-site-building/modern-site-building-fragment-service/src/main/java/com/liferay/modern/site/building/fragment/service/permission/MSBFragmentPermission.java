@@ -26,10 +26,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Jürgen Kappler
  */
 @Component(
-	property = {"resource.name=" + FragmentPermission.RESOURCE_NAME},
+	property = {"resource.name=" + MSBFragmentPermission.RESOURCE_NAME},
 	service = ResourcePermissionChecker.class
 )
-public class FragmentPermission extends BaseResourcePermissionChecker {
+public class MSBFragmentPermission extends BaseResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME =
 		"com.liferay.modern.site.building.fragment";

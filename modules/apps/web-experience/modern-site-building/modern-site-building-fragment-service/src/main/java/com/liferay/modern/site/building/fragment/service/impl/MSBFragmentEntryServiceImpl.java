@@ -14,11 +14,11 @@
 
 package com.liferay.modern.site.building.fragment.service.impl;
 
-import com.liferay.modern.site.building.fragment.constants.FragmentActionKeys;
-import com.liferay.modern.site.building.fragment.model.FragmentEntry;
-import com.liferay.modern.site.building.fragment.service.base.FragmentEntryServiceBaseImpl;
-import com.liferay.modern.site.building.fragment.service.permission.FragmentEntryPermission;
-import com.liferay.modern.site.building.fragment.service.permission.FragmentPermission;
+import com.liferay.modern.site.building.fragment.constants.MSBFragmentActionKeys;
+import com.liferay.modern.site.building.fragment.model.MSBFragmentEntry;
+import com.liferay.modern.site.building.fragment.service.base.MSBFragmentEntryServiceBaseImpl;
+import com.liferay.modern.site.building.fragment.service.permission.MSBFragmentEntryPermission;
+import com.liferay.modern.site.building.fragment.service.permission.MSBFragmentPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -32,45 +32,49 @@ import java.util.List;
 /**
  * @author Jürgen Kappler
  */
-public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
+public class MSBFragmentEntryServiceImpl
+	extends MSBFragmentEntryServiceBaseImpl {
 
 	@Override
-	public FragmentEntry addFragmentEntry(
+	public MSBFragmentEntry addFragmentEntry(
 			long groupId, long fragmentCollectionId, String name, String css,
 			String html, String js, ServiceContext serviceContext)
 		throws PortalException {
 
-		FragmentPermission.check(
+		MSBFragmentPermission.check(
 			getPermissionChecker(), groupId,
-			FragmentActionKeys.ADD_FRAGMENT_ENTRY);
+			MSBFragmentActionKeys.ADD_FRAGMENT_ENTRY);
 
-		return fragmentEntryLocalService.addFragmentEntry(
+		return msbFragmentEntryLocalService.addFragmentEntry(
 			getUserId(), groupId, fragmentCollectionId, name, css, html, js,
 			serviceContext);
 	}
 
 	@Override
-	public List<FragmentEntry> deleteFragmentEntries(long[] fragmentEntriesIds)
+	public List<MSBFragmentEntry> deleteFragmentEntries(
+			long[] fragmentEntriesIds)
 		throws PortalException {
 
-		List<FragmentEntry> failedFragmentEntries = new ArrayList<>();
+		List<MSBFragmentEntry> failedFragmentEntries = new ArrayList<>();
 
 		for (long fragmentEntryId : fragmentEntriesIds) {
 			try {
-				FragmentEntryPermission.check(
+				MSBFragmentEntryPermission.check(
 					getPermissionChecker(), fragmentEntryId, ActionKeys.DELETE);
 
-				fragmentEntryLocalService.deleteFragmentEntry(fragmentEntryId);
+				msbFragmentEntryLocalService.deleteMSBFragmentEntry(
+					fragmentEntryId);
 			}
 			catch (PortalException pe) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(pe, pe);
 				}
 
-				FragmentEntry fragmentEntry =
-					fragmentEntryPersistence.fetchByPrimaryKey(fragmentEntryId);
+				MSBFragmentEntry mSBFragmentEntry =
+					msbFragmentEntryPersistence.fetchByPrimaryKey(
+						fragmentEntryId);
 
-				failedFragmentEntries.add(fragmentEntry);
+				failedFragmentEntries.add(mSBFragmentEntry);
 			}
 		}
 
@@ -78,76 +82,79 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 	}
 
 	@Override
-	public FragmentEntry deleteFragmentEntry(long fragmentEntryId)
+	public MSBFragmentEntry deleteFragmentEntry(long fragmentEntryId)
 		throws PortalException {
 
-		FragmentEntryPermission.check(
+		MSBFragmentEntryPermission.check(
 			getPermissionChecker(), fragmentEntryId, ActionKeys.DELETE);
 
-		return fragmentEntryLocalService.deleteFragmentEntry(fragmentEntryId);
+		return msbFragmentEntryLocalService.deleteMSBFragmentEntry(
+			fragmentEntryId);
 	}
 
 	@Override
-	public List<FragmentEntry> fetchFragmentEntries(long fragmentCollectionId)
+	public List<MSBFragmentEntry> fetchFragmentEntries(
+			long fragmentCollectionId)
 		throws PortalException {
 
-		return fragmentEntryLocalService.fetchFragmentEntries(
+		return msbFragmentEntryLocalService.fetchFragmentEntries(
 			fragmentCollectionId);
 	}
 
 	@Override
-	public FragmentEntry fetchFragmentEntry(long fragmentEntryId) {
-		return fragmentEntryLocalService.fetchFragmentEntry(fragmentEntryId);
+	public MSBFragmentEntry fetchFragmentEntry(long fragmentEntryId) {
+		return msbFragmentEntryLocalService.fetchMSBFragmentEntry(
+			fragmentEntryId);
 	}
 
 	@Override
-	public List<FragmentEntry> getFragmentEntries(
+	public List<MSBFragmentEntry> getFragmentEntries(
 			long fragmentCollectionId, int start, int end)
 		throws PortalException {
 
-		return fragmentEntryLocalService.getFragmentEntries(
+		return msbFragmentEntryLocalService.getFragmentEntries(
 			fragmentCollectionId, start, end);
 	}
 
 	@Override
-	public List<FragmentEntry> getFragmentEntries(
+	public List<MSBFragmentEntry> getFragmentEntries(
 			long groupId, long fragmentCollectionId, int start, int end,
-			OrderByComparator<FragmentEntry> orderByComparator)
+			OrderByComparator<MSBFragmentEntry> orderByComparator)
 		throws PortalException {
 
-		return fragmentEntryLocalService.getFragmentEntries(
+		return msbFragmentEntryLocalService.getFragmentEntries(
 			groupId, fragmentCollectionId, start, end, orderByComparator);
 	}
 
 	@Override
-	public List<FragmentEntry> getFragmentEntries(
+	public List<MSBFragmentEntry> getFragmentEntries(
 		long groupId, long fragmentCollectionId, String name, int start,
-		int end, OrderByComparator<FragmentEntry> obc) {
+		int end, OrderByComparator<MSBFragmentEntry> obc) {
 
-		return fragmentEntryLocalService.getFragmentEntries(
+		return msbFragmentEntryLocalService.getFragmentEntries(
 			groupId, fragmentCollectionId, name, start, end, obc);
 	}
 
 	@Override
 	public int getGroupFragmentCollectionsCount(long fragmentCollectionId) {
-		return fragmentEntryPersistence.countByFragmentCollectionId(
+		return msbFragmentEntryPersistence.countByFragmentCollectionId(
 			fragmentCollectionId);
 	}
 
 	@Override
-	public FragmentEntry updateFragmentEntry(
+	public MSBFragmentEntry updateFragmentEntry(
 			long fragmentEntryId, String name, String css, String html,
 			String js)
 		throws PortalException {
 
-		FragmentEntryPermission.check(
+		MSBFragmentEntryPermission.check(
 			getPermissionChecker(), fragmentEntryId, ActionKeys.UPDATE);
 
-		return fragmentEntryLocalService.updateFragmentEntry(
+		return msbFragmentEntryLocalService.updateFragmentEntry(
 			fragmentEntryId, name, css, html, js);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		FragmentEntryServiceImpl.class);
+		MSBFragmentEntryServiceImpl.class);
 
 }

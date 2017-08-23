@@ -605,12 +605,9 @@
 			<var name="portlet" value="Wiki" />
 		</execute>
 
-		<execute macro="LAR#_gotoExportImportAdmin" />
-
-		<execute macro="LAR#_selectImportFile">
-			<var name="cannotImport" value="false" />
-			<var name="importPermissions" value="false" />
+		<execute macro="LAR#importPortlet">
 			<var name="larFileName" value="research-projects-update-node.lar" />
+			<var name="mirrorWithOverwriting" value="true" />
 			<var name="uploadFrom" value="dependencies" />
 		</execute>
 

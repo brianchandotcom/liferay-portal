@@ -235,18 +235,18 @@ public interface AssetDisplayTemplateModel extends BaseModel<AssetDisplayTemplat
 	public void setClassNameId(long classNameId);
 
 	/**
-	 * Returns the template ID of this asset display template.
+	 * Returns the ddm template ID of this asset display template.
 	 *
-	 * @return the template ID of this asset display template
+	 * @return the ddm template ID of this asset display template
 	 */
-	public long getTemplateId();
+	public long getDDMTemplateId();
 
 	/**
-	 * Sets the template ID of this asset display template.
+	 * Sets the ddm template ID of this asset display template.
 	 *
-	 * @param templateId the template ID of this asset display template
+	 * @param DDMTemplateId the ddm template ID of this asset display template
 	 */
-	public void setTemplateId(long templateId);
+	public void setDDMTemplateId(long DDMTemplateId);
 
 	/**
 	 * Returns the main of this asset display template.

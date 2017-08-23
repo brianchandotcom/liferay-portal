@@ -68,7 +68,7 @@ public class AssetDisplayTemplateWrapper implements AssetDisplayTemplate,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("classNameId", getClassNameId());
-		attributes.put("templateId", getTemplateId());
+		attributes.put("DDMTemplateId", getDDMTemplateId());
 		attributes.put("main", getMain());
 
 		return attributes;
@@ -131,10 +131,10 @@ public class AssetDisplayTemplateWrapper implements AssetDisplayTemplate,
 			setClassNameId(classNameId);
 		}
 
-		Long templateId = (Long)attributes.get("templateId");
+		Long DDMTemplateId = (Long)attributes.get("DDMTemplateId");
 
-		if (templateId != null) {
-			setTemplateId(templateId);
+		if (DDMTemplateId != null) {
+			setDDMTemplateId(DDMTemplateId);
 		}
 
 		Boolean main = (Boolean)attributes.get("main");
@@ -210,6 +210,16 @@ public class AssetDisplayTemplateWrapper implements AssetDisplayTemplate,
 		return _assetDisplayTemplate.getCreateDate();
 	}
 
+	/**
+	* Returns the ddm template ID of this asset display template.
+	*
+	* @return the ddm template ID of this asset display template
+	*/
+	@Override
+	public long getDDMTemplateId() {
+		return _assetDisplayTemplate.getDDMTemplateId();
+	}
+
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _assetDisplayTemplate.getExpandoBridge();
@@ -268,16 +278,6 @@ public class AssetDisplayTemplateWrapper implements AssetDisplayTemplate,
 	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _assetDisplayTemplate.getPrimaryKeyObj();
-	}
-
-	/**
-	* Returns the template ID of this asset display template.
-	*
-	* @return the template ID of this asset display template
-	*/
-	@Override
-	public long getTemplateId() {
-		return _assetDisplayTemplate.getTemplateId();
 	}
 
 	/**
@@ -395,6 +395,16 @@ public class AssetDisplayTemplateWrapper implements AssetDisplayTemplate,
 		_assetDisplayTemplate.setCreateDate(createDate);
 	}
 
+	/**
+	* Sets the ddm template ID of this asset display template.
+	*
+	* @param DDMTemplateId the ddm template ID of this asset display template
+	*/
+	@Override
+	public void setDDMTemplateId(long DDMTemplateId) {
+		_assetDisplayTemplate.setDDMTemplateId(DDMTemplateId);
+	}
+
 	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
@@ -469,16 +479,6 @@ public class AssetDisplayTemplateWrapper implements AssetDisplayTemplate,
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_assetDisplayTemplate.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	/**
-	* Sets the template ID of this asset display template.
-	*
-	* @param templateId the template ID of this asset display template
-	*/
-	@Override
-	public void setTemplateId(long templateId) {
-		_assetDisplayTemplate.setTemplateId(templateId);
 	}
 
 	/**

@@ -81,7 +81,7 @@ public class AssetDisplayTemplateModelImpl extends BaseModelImpl<AssetDisplayTem
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "name", Types.VARCHAR },
 			{ "classNameId", Types.BIGINT },
-			{ "templateId", Types.BIGINT },
+			{ "DDMTemplateId", Types.BIGINT },
 			{ "main", Types.BOOLEAN }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -96,11 +96,11 @@ public class AssetDisplayTemplateModelImpl extends BaseModelImpl<AssetDisplayTem
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("templateId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("DDMTemplateId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("main", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AssetDisplayTemplate (assetDisplayTemplateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,classNameId LONG,templateId LONG,main BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table AssetDisplayTemplate (assetDisplayTemplateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,classNameId LONG,DDMTemplateId LONG,main BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table AssetDisplayTemplate";
 	public static final String ORDER_BY_JPQL = " ORDER BY assetDisplayTemplate.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY AssetDisplayTemplate.name ASC";
@@ -143,7 +143,7 @@ public class AssetDisplayTemplateModelImpl extends BaseModelImpl<AssetDisplayTem
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setName(soapModel.getName());
 		model.setClassNameId(soapModel.getClassNameId());
-		model.setTemplateId(soapModel.getTemplateId());
+		model.setDDMTemplateId(soapModel.getDDMTemplateId());
 		model.setMain(soapModel.getMain());
 
 		return model;
@@ -219,7 +219,7 @@ public class AssetDisplayTemplateModelImpl extends BaseModelImpl<AssetDisplayTem
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("classNameId", getClassNameId());
-		attributes.put("templateId", getTemplateId());
+		attributes.put("DDMTemplateId", getDDMTemplateId());
 		attributes.put("main", getMain());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -285,10 +285,10 @@ public class AssetDisplayTemplateModelImpl extends BaseModelImpl<AssetDisplayTem
 			setClassNameId(classNameId);
 		}
 
-		Long templateId = (Long)attributes.get("templateId");
+		Long DDMTemplateId = (Long)attributes.get("DDMTemplateId");
 
-		if (templateId != null) {
-			setTemplateId(templateId);
+		if (DDMTemplateId != null) {
+			setDDMTemplateId(DDMTemplateId);
 		}
 
 		Boolean main = (Boolean)attributes.get("main");
@@ -477,13 +477,13 @@ public class AssetDisplayTemplateModelImpl extends BaseModelImpl<AssetDisplayTem
 
 	@JSON
 	@Override
-	public long getTemplateId() {
-		return _templateId;
+	public long getDDMTemplateId() {
+		return _DDMTemplateId;
 	}
 
 	@Override
-	public void setTemplateId(long templateId) {
-		_templateId = templateId;
+	public void setDDMTemplateId(long DDMTemplateId) {
+		_DDMTemplateId = DDMTemplateId;
 	}
 
 	@JSON
@@ -543,7 +543,7 @@ public class AssetDisplayTemplateModelImpl extends BaseModelImpl<AssetDisplayTem
 		assetDisplayTemplateImpl.setModifiedDate(getModifiedDate());
 		assetDisplayTemplateImpl.setName(getName());
 		assetDisplayTemplateImpl.setClassNameId(getClassNameId());
-		assetDisplayTemplateImpl.setTemplateId(getTemplateId());
+		assetDisplayTemplateImpl.setDDMTemplateId(getDDMTemplateId());
 		assetDisplayTemplateImpl.setMain(getMain());
 
 		assetDisplayTemplateImpl.resetOriginalValues();
@@ -666,7 +666,7 @@ public class AssetDisplayTemplateModelImpl extends BaseModelImpl<AssetDisplayTem
 
 		assetDisplayTemplateCacheModel.classNameId = getClassNameId();
 
-		assetDisplayTemplateCacheModel.templateId = getTemplateId();
+		assetDisplayTemplateCacheModel.DDMTemplateId = getDDMTemplateId();
 
 		assetDisplayTemplateCacheModel.main = getMain();
 
@@ -695,8 +695,8 @@ public class AssetDisplayTemplateModelImpl extends BaseModelImpl<AssetDisplayTem
 		sb.append(getName());
 		sb.append(", classNameId=");
 		sb.append(getClassNameId());
-		sb.append(", templateId=");
-		sb.append(getTemplateId());
+		sb.append(", DDMTemplateId=");
+		sb.append(getDDMTemplateId());
 		sb.append(", main=");
 		sb.append(getMain());
 		sb.append("}");
@@ -750,8 +750,8 @@ public class AssetDisplayTemplateModelImpl extends BaseModelImpl<AssetDisplayTem
 		sb.append(getClassNameId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>templateId</column-name><column-value><![CDATA[");
-		sb.append(getTemplateId());
+			"<column><column-name>DDMTemplateId</column-name><column-value><![CDATA[");
+		sb.append(getDDMTemplateId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>main</column-name><column-value><![CDATA[");
@@ -781,7 +781,7 @@ public class AssetDisplayTemplateModelImpl extends BaseModelImpl<AssetDisplayTem
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;
-	private long _templateId;
+	private long _DDMTemplateId;
 	private boolean _main;
 	private long _columnBitmask;
 	private AssetDisplayTemplate _escapedModel;

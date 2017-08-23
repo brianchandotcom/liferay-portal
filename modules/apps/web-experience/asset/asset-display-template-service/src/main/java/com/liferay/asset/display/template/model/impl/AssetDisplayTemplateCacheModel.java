@@ -86,8 +86,8 @@ public class AssetDisplayTemplateCacheModel implements CacheModel<AssetDisplayTe
 		sb.append(name);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
-		sb.append(", templateId=");
-		sb.append(templateId);
+		sb.append(", DDMTemplateId=");
+		sb.append(DDMTemplateId);
 		sb.append(", main=");
 		sb.append(main);
 		sb.append("}");
@@ -133,7 +133,7 @@ public class AssetDisplayTemplateCacheModel implements CacheModel<AssetDisplayTe
 		}
 
 		assetDisplayTemplateImpl.setClassNameId(classNameId);
-		assetDisplayTemplateImpl.setTemplateId(templateId);
+		assetDisplayTemplateImpl.setDDMTemplateId(DDMTemplateId);
 		assetDisplayTemplateImpl.setMain(main);
 
 		assetDisplayTemplateImpl.resetOriginalValues();
@@ -157,7 +157,7 @@ public class AssetDisplayTemplateCacheModel implements CacheModel<AssetDisplayTe
 
 		classNameId = objectInput.readLong();
 
-		templateId = objectInput.readLong();
+		DDMTemplateId = objectInput.readLong();
 
 		main = objectInput.readBoolean();
 	}
@@ -192,7 +192,7 @@ public class AssetDisplayTemplateCacheModel implements CacheModel<AssetDisplayTe
 
 		objectOutput.writeLong(classNameId);
 
-		objectOutput.writeLong(templateId);
+		objectOutput.writeLong(DDMTemplateId);
 
 		objectOutput.writeBoolean(main);
 	}
@@ -206,6 +206,6 @@ public class AssetDisplayTemplateCacheModel implements CacheModel<AssetDisplayTe
 	public long modifiedDate;
 	public String name;
 	public long classNameId;
-	public long templateId;
+	public long DDMTemplateId;
 	public boolean main;
 }

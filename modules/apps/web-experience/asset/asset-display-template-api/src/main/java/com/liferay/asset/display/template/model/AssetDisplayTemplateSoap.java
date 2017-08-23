@@ -44,7 +44,7 @@ public class AssetDisplayTemplateSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setName(model.getName());
 		soapModel.setClassNameId(model.getClassNameId());
-		soapModel.setTemplateId(model.getTemplateId());
+		soapModel.setDDMTemplateId(model.getDDMTemplateId());
 		soapModel.setMain(model.getMain());
 
 		return soapModel;
@@ -173,12 +173,12 @@ public class AssetDisplayTemplateSoap implements Serializable {
 		_classNameId = classNameId;
 	}
 
-	public long getTemplateId() {
-		return _templateId;
+	public long getDDMTemplateId() {
+		return _DDMTemplateId;
 	}
 
-	public void setTemplateId(long templateId) {
-		_templateId = templateId;
+	public void setDDMTemplateId(long DDMTemplateId) {
+		_DDMTemplateId = DDMTemplateId;
 	}
 
 	public boolean getMain() {
@@ -202,6 +202,6 @@ public class AssetDisplayTemplateSoap implements Serializable {
 	private Date _modifiedDate;
 	private String _name;
 	private long _classNameId;
-	private long _templateId;
+	private long _DDMTemplateId;
 	private boolean _main;
 }

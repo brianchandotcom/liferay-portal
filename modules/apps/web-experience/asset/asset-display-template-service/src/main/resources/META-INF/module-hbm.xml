@@ -15,7 +15,7 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="templateId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="DDMTemplateId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="main" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 </hibernate-mapping>

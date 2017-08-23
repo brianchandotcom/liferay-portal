@@ -11,7 +11,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="name" type="String" />
 		<field name="classNameId" type="long" />
-		<field name="templateId" type="long" />
+		<field name="DDMTemplateId" type="long" />
 		<field name="main" type="boolean" />
 	</model>
 </model-hints>

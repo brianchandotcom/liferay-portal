@@ -138,7 +138,7 @@ public class AssetDisplayTemplatePersistenceTest {
 
 		newAssetDisplayTemplate.setClassNameId(RandomTestUtil.nextLong());
 
-		newAssetDisplayTemplate.setTemplateId(RandomTestUtil.nextLong());
+		newAssetDisplayTemplate.setDDMTemplateId(RandomTestUtil.nextLong());
 
 		newAssetDisplayTemplate.setMain(RandomTestUtil.randomBoolean());
 
@@ -166,8 +166,8 @@ public class AssetDisplayTemplatePersistenceTest {
 			newAssetDisplayTemplate.getName());
 		Assert.assertEquals(existingAssetDisplayTemplate.getClassNameId(),
 			newAssetDisplayTemplate.getClassNameId());
-		Assert.assertEquals(existingAssetDisplayTemplate.getTemplateId(),
-			newAssetDisplayTemplate.getTemplateId());
+		Assert.assertEquals(existingAssetDisplayTemplate.getDDMTemplateId(),
+			newAssetDisplayTemplate.getDDMTemplateId());
 		Assert.assertEquals(existingAssetDisplayTemplate.getMain(),
 			newAssetDisplayTemplate.getMain());
 	}
@@ -221,7 +221,7 @@ public class AssetDisplayTemplatePersistenceTest {
 			"assetDisplayTemplateId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "name", true, "classNameId", true,
-			"templateId", true, "main", true);
+			"DDMTemplateId", true, "main", true);
 	}
 
 	@Test
@@ -444,7 +444,7 @@ public class AssetDisplayTemplatePersistenceTest {
 
 		assetDisplayTemplate.setClassNameId(RandomTestUtil.nextLong());
 
-		assetDisplayTemplate.setTemplateId(RandomTestUtil.nextLong());
+		assetDisplayTemplate.setDDMTemplateId(RandomTestUtil.nextLong());
 
 		assetDisplayTemplate.setMain(RandomTestUtil.randomBoolean());
 

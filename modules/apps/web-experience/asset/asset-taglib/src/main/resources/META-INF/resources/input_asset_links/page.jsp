@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/input_asset_links/init.jsp" %>
+<%@ include file="/input_asset_links/init.jsp" %>
 
 <liferay-util:buffer var="removeLinkIcon">
 	<liferay-ui:icon

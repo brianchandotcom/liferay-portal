@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/asset_metadata/init.jsp" %>
+<%@ include file="/asset_metadata/init.jsp" %>
 
 <%
 AssetEntry assetEntry = (AssetEntry)request.getAttribute("liferay-ui:asset-metadata:assetEntry");

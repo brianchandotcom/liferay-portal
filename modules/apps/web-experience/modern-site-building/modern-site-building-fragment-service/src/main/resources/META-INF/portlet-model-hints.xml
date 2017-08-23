@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<model name="com.liferay.modern.site.building.fragment.model.FragmentCollection">
+	<model name="com.liferay.modern.site.building.fragment.model.MSBFragmentCollection">
 		<field name="fragmentCollectionId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -12,7 +12,7 @@
 		<field name="name" type="String" />
 		<field name="description" type="String" />
 	</model>
-	<model name="com.liferay.modern.site.building.fragment.model.FragmentEntry">
+	<model name="com.liferay.modern.site.building.fragment.model.MSBFragmentEntry">
 		<field name="fragmentEntryId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />

@@ -1,4 +1,4 @@
-create table FragmentCollection (
+create table MSBFragmentCollection (
 	fragmentCollectionId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -10,7 +10,7 @@ create table FragmentCollection (
 	description VARCHAR(75) null
 );
 
-create table FragmentEntry (
+create table MSBFragmentEntry (
 	fragmentEntryId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,

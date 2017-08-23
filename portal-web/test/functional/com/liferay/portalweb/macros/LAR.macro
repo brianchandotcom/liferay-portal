@@ -377,7 +377,7 @@
 					<var name="panelHeading" value="Update Data" />
 				</execute>
 
-				<execute function="Click" locator1="Wiki#MIRROR_WITH_OVERWRITING_RADIO" />
+				<execute function="Click" locator1="ExportImport#MIRROR_WITH_OVERWRITING_RADIO" />
 
 				<execute function="Pause" locator1="5000" />
 

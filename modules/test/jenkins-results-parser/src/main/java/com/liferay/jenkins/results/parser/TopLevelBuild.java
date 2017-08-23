@@ -622,25 +622,35 @@ public class TopLevelBuild extends BaseBuild {
 			if ((failureElements.size() < maxFailureCount) &&
 				!upstreamJobFailureElements.isEmpty()) {
 
-				Dom4JUtil.addToElement(
-					rootElement, Dom4JUtil.getNewElement("hr"),
+				Element acceptanceUpstreamJobLinkElement =
+					Dom4JUtil.getNewAnchorElement(
+						acceptanceUpstreamJobURL,
+						"acceptance upstream results");
+
+				Element upstreamJobFailureElement = Dom4JUtil.getNewElement(
+					"details", null,
 					Dom4JUtil.getNewElement(
-						"h4", null,
-						JenkinsResultsParserUtil.combine(
-							"Failures in common with upstream(",
-							getUpstreamJobFailuresSHA(), "):")));
+						"summary", null,
+						Dom4JUtil.getNewElement(
+							"strong", null, "Failures in common with ",
+							acceptanceUpstreamJobLinkElement, " at ",
+							getUpstreamJobFailuresSHA(), ":")));
 
 				int remainingFailureCount =
 					maxFailureCount - failureElements.size();
 
 				Dom4JUtil.getOrderedListElement(
-					upstreamJobFailureElements, rootElement,
+					upstreamJobFailureElements, upstreamJobFailureElement,
 					remainingFailureCount);
+
+				Dom4JUtil.addToElement(
+					rootElement, Dom4JUtil.getNewElement("hr"),
+					upstreamJobFailureElement);
 			}
 
-			String jobName = getJobName();
+			if (jobName.contains("pullrequest") &&
+				upstreamJobFailureElements.isEmpty()) {
 
-			if (jobName.contains("pullrequest")) {
 				Dom4JUtil.addToElement(
 					Dom4JUtil.getNewElement("h4", rootElement),
 					"For upstream results, click ",

@@ -29,67 +29,6 @@ import org.dom4j.Element;
  */
 public class JenkinsReportUtil {
 
-	public static Element getBasicHeaderElement(
-		Build topLevelBuild, Map<String, Build> builds) {
-
-		long totalTime = 0;
-
-		for (Build axisBuild : builds.values()) {
-			totalTime = totalTime + axisBuild.getDuration();
-		}
-
-		Element divElement = Dom4JUtil.getNewElement("div");
-
-		long hoursTotalTime = totalTime / 3600000;
-
-		divElement.addText(
-			"Total CI Usage: " + hoursTotalTime + " server hours");
-
-		return divElement;
-	}
-
-	public static Element getBatchReportElement(
-		Build topLevelBuild, Map<String, Build> builds) {
-
-		Set<String> buildsKeySet = builds.keySet();
-
-		for (String key : buildsKeySet) {
-			Build build = builds.get(key);
-
-			long buildDuration = build.getDuration();
-			long buildStartTime = build.getStartTimestamp();
-
-			long buildEndTime = buildDuration + buildStartTime;
-		}
-
-		return null;
-	}
-
-	public static Element getChartJSScriptElement(
-		String xData, String y1Data, String y2Data) {
-
-		String resource = null;
-
-		try {
-			Class<?> clazz = JenkinsResultsParserUtil.class;
-
-			resource = JenkinsResultsParserUtil.readInputStream(
-				clazz.getResourceAsStream("chart-template.js"));
-		}
-		catch (IOException ioe) {
-		}
-
-		resource = resource.replace("'xData'", xData);
-		resource = resource.replace("'y1Data'", y1Data);
-		resource = resource.replace("'y2Data'", y2Data);
-
-		Element scriptElement = Dom4JUtil.getNewElement("script");
-
-		scriptElement.addText(resource);
-
-		return scriptElement;
-	}
-
 	public static Element getHTMLBodyElement(Build topLevelBuild) {
 		Map<String, Build> axisBuilds = new TreeMap<>();
 		Map<String, Build> batchBuilds = new TreeMap<>();
@@ -160,7 +99,68 @@ public class JenkinsReportUtil {
 		return headElement;
 	}
 
-	public static Element getTimelineElement(
+	protected static Element getBasicHeaderElement(
+		Build topLevelBuild, Map<String, Build> builds) {
+
+		long totalTime = 0;
+
+		for (Build axisBuild : builds.values()) {
+			totalTime = totalTime + axisBuild.getDuration();
+		}
+
+		Element divElement = Dom4JUtil.getNewElement("div");
+
+		long hoursTotalTime = totalTime / 3600000;
+
+		divElement.addText(
+			"Total CI Usage: " + hoursTotalTime + " server hours");
+
+		return divElement;
+	}
+
+	protected static Element getBatchReportElement(
+		Build topLevelBuild, Map<String, Build> builds) {
+
+		Set<String> buildsKeySet = builds.keySet();
+
+		for (String key : buildsKeySet) {
+			Build build = builds.get(key);
+
+			long buildDuration = build.getDuration();
+			long buildStartTime = build.getStartTimestamp();
+
+			long buildEndTime = buildDuration + buildStartTime;
+		}
+
+		return null;
+	}
+
+	protected static Element getChartJSScriptElement(
+		String xData, String y1Data, String y2Data) {
+
+		String resource = null;
+
+		try {
+			Class<?> clazz = JenkinsResultsParserUtil.class;
+
+			resource = JenkinsResultsParserUtil.readInputStream(
+				clazz.getResourceAsStream("chart-template.js"));
+		}
+		catch (IOException ioe) {
+		}
+
+		resource = resource.replace("'xData'", xData);
+		resource = resource.replace("'y1Data'", y1Data);
+		resource = resource.replace("'y2Data'", y2Data);
+
+		Element scriptElement = Dom4JUtil.getNewElement("script");
+
+		scriptElement.addText(resource);
+
+		return scriptElement;
+	}
+
+	protected static Element getTimelineElement(
 		Build topLevelBuild, Map<String, Build> builds) {
 
 		long topLevelDuration = topLevelBuild.getDuration();

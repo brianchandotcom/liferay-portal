@@ -45,6 +45,10 @@ public class PortalWebResourcesUtil {
 		PortalWebResources portalWebResources = _portalWebResourcesMap.get(
 			resourceType);
 
+		if (portalWebResources == null) {
+			return -1;
+		}
+
 		return portalWebResources.getLastModified();
 	}
 

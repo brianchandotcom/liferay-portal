@@ -100,6 +100,10 @@ public class PortletConfigurationIconTracker {
 		List<PortletConfigurationIcon> portletConfigurationIcons =
 			new ArrayList<>();
 
+		if (portletRequest == null) {
+			return portletConfigurationIcons;
+		}
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

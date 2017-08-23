@@ -51,6 +51,7 @@ Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/dao/db/IndexMetadataFactoryUtil.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/exception/NestableException.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/exception/NestableRuntimeException.class,\
+	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/exception/NoSuchModelException.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/exception/PortalException.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/exception/SystemException.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncBufferedReader.class,\
@@ -61,14 +62,22 @@ Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncStringReader.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncStringWriter.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/json/JSONArray.class,\
+	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/json/JSONSerializable.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/language/Language.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/language/LanguageUtil.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/log/*,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/memory/SoftReferenceThreadLocal.class,\
+	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/model/AuditedModel.class,\
+	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/model/BaseModel.class,\
+	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/model/ClassedModel.class,\
+	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/model/GroupedModel.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/model/ModelHints.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/model/ModelHintsCallback.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/model/ModelHintsConstants.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/model/ModelHintsUtil.class,\
+	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/model/PersistedModel.class,\
+	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/model/ShardedModel.class,\
+	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/model/StagedModel.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/model/cache/CacheField.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/nio/charset/*,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/plugin/Version.class,\
@@ -85,6 +94,12 @@ Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalRuntimePermission$PACL.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/security/xml/SecureXMLFactoryProvider.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/security/xml/SecureXMLFactoryProviderUtil.class,\
+	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/service/BaseLocalService.class,\
+	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/service/BaseService.class,\
+	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/service/InvokableLocalService.class,\
+	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/service/InvokableService.class,\
+	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/service/PersistedModelLocalService.class,\
+	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/service/persistence/BasePersistence.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/transaction/Transactional.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/Accessor.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/ArrayUtil.class,\

@@ -27,7 +27,7 @@ public class ${entity.name}${sessionTypeName}ServiceWrapper implements ${entity.
 	}
 
 	<#list methods as method>
-		<#if !method.isConstructor() && method.isPublic() && serviceBuilder.isCustomMethod(method)>
+		<#if method.isPublic() && serviceBuilder.isCustomMethod(method)>
 			${serviceBuilder.getJavadocComment(method)}
 
 			<#if serviceBuilder.hasAnnotation(method, "Deprecated")>
@@ -58,7 +58,7 @@ public class ${entity.name}${sessionTypeName}ServiceWrapper implements ${entity.
 					throws
 				</#if>
 
-				${exception.value}
+				${exception.fullyQualifiedName}
 
 				<#if exception_has_next>
 					,

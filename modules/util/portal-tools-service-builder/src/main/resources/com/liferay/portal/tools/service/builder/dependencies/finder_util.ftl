@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
 public class ${entity.name}FinderUtil {
 
 	<#list methods as method>
-		<#if !method.isConstructor() && method.isPublic()>
+		<#if method.isPublic()>
 			public static ${serviceBuilder.getTypeGenericsName(method.returns)} ${method.name}(
 
 			<#list method.parameters as parameter>
@@ -40,7 +40,7 @@ public class ${entity.name}FinderUtil {
 					throws
 				</#if>
 
-				${exception.value}
+				${exception.fullyQualifiedName}
 
 				<#if exception_has_next>
 					,

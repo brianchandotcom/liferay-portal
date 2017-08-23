@@ -55,7 +55,7 @@ public class ${entity.name}ServiceHttp {
 	<#assign hasMethods = false />
 
 	<#list methods as method>
-		<#if !method.isConstructor() && method.isPublic() && serviceBuilder.isCustomMethod(method)>
+		<#if method.isPublic() && serviceBuilder.isCustomMethod(method)>
 			<#assign
 				hasMethods = true
 
@@ -75,7 +75,7 @@ public class ${entity.name}ServiceHttp {
 				throws
 
 				<#list method.exceptions as exception>
-					${exception.value}
+					${exception.fullyQualifiedName}
 
 					<#if exception_has_next>
 						,
@@ -108,8 +108,8 @@ public class ${entity.name}ServiceHttp {
 					}
 					catch (Exception e) {
 						<#list method.exceptions as exception>
-							if (e instanceof ${exception.value}) {
-								throw (${exception.value})e;
+							if (e instanceof ${exception.fullyQualifiedName}) {
+								throw (${exception.fullyQualifiedName})e;
 							}
 						</#list>
 
@@ -150,7 +150,7 @@ public class ${entity.name}ServiceHttp {
 	</#if>
 
 	<#list methods as method>
-		<#if !method.isConstructor() && method.isPublic() && serviceBuilder.isCustomMethod(method)>
+		<#if method.isPublic() && serviceBuilder.isCustomMethod(method)>
 			<#assign parameters = method.parameters />
 
 			private static final Class<?>[] _${method.name}ParameterTypes${method_index} = new Class[] {

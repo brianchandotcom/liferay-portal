@@ -781,7 +781,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		<#assign
 			variableName = serviceBuilder.getVariableName(cacheField)
 			methodName = serviceBuilder.getCacheFieldMethodName(cacheField)
-			typeName = cacheField.getType().getGenericValue()
+			typeName = serviceBuilder.getGenericValue(cacheField.getType())
 		/>
 
 		<#if !stringUtil.equals(methodName, "DefaultLanguageId")>

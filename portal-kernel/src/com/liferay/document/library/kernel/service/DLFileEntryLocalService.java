@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.increment.BufferedIncrement;
+import com.liferay.portal.kernel.increment.NumberIncrement;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -600,7 +601,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	public boolean hasFileEntryLock(long userId, long fileEntryId)
 		throws PortalException;
 
-	@BufferedIncrement(configuration = "DLFileEntry", incrementClass = com.liferay.portal.kernel.increment.NumberIncrement.class)
+	@BufferedIncrement(configuration = "DLFileEntry", incrementClass = NumberIncrement.class)
 	public void incrementViewCounter(DLFileEntry dlFileEntry, int increment);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

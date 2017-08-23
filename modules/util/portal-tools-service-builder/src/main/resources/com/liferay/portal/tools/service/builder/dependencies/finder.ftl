@@ -18,7 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 public interface ${entity.name}Finder {
 
 	<#list methods as method>
-		<#if !method.isConstructor() && method.isPublic()>
+		<#if method.isPublic()>
 			public ${serviceBuilder.getTypeGenericsName(method.returns)} ${method.name}(
 
 			<#list method.parameters as parameter>
@@ -36,7 +36,7 @@ public interface ${entity.name}Finder {
 					throws
 				</#if>
 
-				${exception.value}
+				${exception.fullyQualifiedName}
 
 				<#if exception_has_next>
 					,

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.increment.BufferedIncrement;
+import com.liferay.portal.kernel.increment.DateOverrideIncrement;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -592,7 +593,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 		List<java.lang.Long> fileEntryTypeIds, int restrictionType,
 		ServiceContext serviceContext) throws PortalException;
 
-	@BufferedIncrement(configuration = "DLFolderEntry", incrementClass = com.liferay.portal.kernel.increment.DateOverrideIncrement.class)
+	@BufferedIncrement(configuration = "DLFolderEntry", incrementClass = DateOverrideIncrement.class)
 	public void updateLastPostDate(long folderId, Date lastPostDate)
 		throws PortalException;
 

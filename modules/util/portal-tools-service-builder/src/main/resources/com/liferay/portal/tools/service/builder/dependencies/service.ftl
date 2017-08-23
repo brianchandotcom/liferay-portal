@@ -111,11 +111,11 @@ public interface ${entity.name}${sessionTypeName}Service
 	 */
 
 	<#list methods as method>
-		<#if !method.isConstructor() && !method.isStatic() && method.isPublic() && serviceBuilder.isCustomMethod(method)>
+		<#if !method.isStatic() && method.isPublic() && serviceBuilder.isCustomMethod(method)>
 			${serviceBuilder.getJavadocComment(method)}
 
 			<#list method.annotations as annotation>
-				<#if (annotation.type != "java.lang.Override") && (annotation.type != "java.lang.SuppressWarnings")>
+				<#if !stringUtil.equals(annotation.type.name, "Override") && !stringUtil.equals(annotation.type.name, "SuppressWarnings")>
 					${serviceBuilder.annotationToString(annotation)}
 				</#if>
 			</#list>
@@ -151,7 +151,7 @@ public interface ${entity.name}${sessionTypeName}Service
 						throws
 					</#if>
 
-					${exception.value}
+					${exception.fullyQualifiedName}
 
 					<#if exception_has_next>
 						,
@@ -163,7 +163,7 @@ public interface ${entity.name}${sessionTypeName}Service
 						throws
 					</#if>
 
-					${exception.value}
+					${exception.fullyQualifiedName}
 
 					<#if exception_has_next>
 						,

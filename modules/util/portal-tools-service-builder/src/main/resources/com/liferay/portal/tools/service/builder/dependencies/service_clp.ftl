@@ -23,7 +23,7 @@ public class ${entity.name}${sessionTypeName}ServiceClp implements ${entity.name
 		_invokable${sessionTypeName}Service = invokable${sessionTypeName}Service;
 
 		<#list methods as method>
-			<#if !method.isConstructor() && method.isPublic() && serviceBuilder.isCustomMethod(method) && !stringUtil.equals(method.name, "invokeMethod")>
+			<#if method.isPublic() && serviceBuilder.isCustomMethod(method) && !stringUtil.equals(method.name, "invokeMethod")>
 				<#assign parameters = method.parameters />
 
 				_methodName${method_index} = "${method.name}";
@@ -44,7 +44,7 @@ public class ${entity.name}${sessionTypeName}ServiceClp implements ${entity.name
 	}
 
 	<#list methods as method>
-		<#if !method.isConstructor() && method.isPublic() && serviceBuilder.isCustomMethod(method)>
+		<#if method.isPublic() && serviceBuilder.isCustomMethod(method)>
 			<#assign
 				returnTypeName = serviceBuilder.getTypeGenericsName(method.returns)
 				parameters = method.parameters
@@ -74,7 +74,7 @@ public class ${entity.name}${sessionTypeName}ServiceClp implements ${entity.name
 					throws
 				</#if>
 
-				${exception.value}
+				${exception.fullyQualifiedName}
 
 				<#if exception_has_next>
 					,
@@ -121,8 +121,8 @@ public class ${entity.name}${sessionTypeName}ServiceClp implements ${entity.name
 						t = ClpSerializer.translateThrowable(t);
 
 						<#list method.exceptions as exception>
-							if (t instanceof ${exception.value}) {
-								throw (${exception.value})t;
+							if (t instanceof ${exception.fullyQualifiedName}) {
+								throw (${exception.fullyQualifiedName})t;
 							}
 						</#list>
 
@@ -159,7 +159,7 @@ public class ${entity.name}${sessionTypeName}ServiceClp implements ${entity.name
 	private Invokable${sessionTypeName}Service _invokable${sessionTypeName}Service;
 
 	<#list methods as method>
-		<#if !method.isConstructor() && method.isPublic() && serviceBuilder.isCustomMethod(method) && !stringUtil.equals(method.name, "invokeMethod")>
+		<#if method.isPublic() && serviceBuilder.isCustomMethod(method) && !stringUtil.equals(method.name, "invokeMethod")>
 			<#assign parameters = method.parameters />
 
 			private String _methodName${method_index};

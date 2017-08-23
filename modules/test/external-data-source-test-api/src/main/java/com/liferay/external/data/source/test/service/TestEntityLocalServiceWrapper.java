@@ -68,18 +68,6 @@ public class TestEntityLocalServiceWrapper implements TestEntityLocalService,
 	}
 
 	/**
-	* Deletes the test entity from the database. Also notifies the appropriate model listeners.
-	*
-	* @param testEntity the test entity
-	* @return the test entity that was removed
-	*/
-	@Override
-	public com.liferay.external.data.source.test.model.TestEntity deleteTestEntity(
-		com.liferay.external.data.source.test.model.TestEntity testEntity) {
-		return _testEntityLocalService.deleteTestEntity(testEntity);
-	}
-
-	/**
 	* Deletes the test entity with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param id the primary key of the test entity
@@ -90,6 +78,18 @@ public class TestEntityLocalServiceWrapper implements TestEntityLocalService,
 	public com.liferay.external.data.source.test.model.TestEntity deleteTestEntity(
 		long id) throws com.liferay.portal.kernel.exception.PortalException {
 		return _testEntityLocalService.deleteTestEntity(id);
+	}
+
+	/**
+	* Deletes the test entity from the database. Also notifies the appropriate model listeners.
+	*
+	* @param testEntity the test entity
+	* @return the test entity that was removed
+	*/
+	@Override
+	public com.liferay.external.data.source.test.model.TestEntity deleteTestEntity(
+		com.liferay.external.data.source.test.model.TestEntity testEntity) {
+		return _testEntityLocalService.deleteTestEntity(testEntity);
 	}
 
 	@Override

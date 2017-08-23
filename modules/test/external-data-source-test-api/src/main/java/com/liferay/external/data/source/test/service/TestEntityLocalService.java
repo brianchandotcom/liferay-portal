@@ -86,15 +86,6 @@ public interface TestEntityLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the test entity from the database. Also notifies the appropriate model listeners.
-	*
-	* @param testEntity the test entity
-	* @return the test entity that was removed
-	*/
-	@Indexable(type = IndexableType.DELETE)
-	public TestEntity deleteTestEntity(TestEntity testEntity);
-
-	/**
 	* Deletes the test entity with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param id the primary key of the test entity
@@ -103,6 +94,15 @@ public interface TestEntityLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public TestEntity deleteTestEntity(long id) throws PortalException;
+
+	/**
+	* Deletes the test entity from the database. Also notifies the appropriate model listeners.
+	*
+	* @param testEntity the test entity
+	* @return the test entity that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public TestEntity deleteTestEntity(TestEntity testEntity);
 
 	public DynamicQuery dynamicQuery();
 

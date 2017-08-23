@@ -168,14 +168,14 @@ public class TestEntityWrapper implements TestEntity, ModelWrapper<TestEntity> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_testEntity.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_testEntity.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_testEntity.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override

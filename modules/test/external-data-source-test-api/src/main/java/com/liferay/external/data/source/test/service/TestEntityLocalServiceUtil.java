@@ -74,17 +74,6 @@ public class TestEntityLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the test entity from the database. Also notifies the appropriate model listeners.
-	*
-	* @param testEntity the test entity
-	* @return the test entity that was removed
-	*/
-	public static com.liferay.external.data.source.test.model.TestEntity deleteTestEntity(
-		com.liferay.external.data.source.test.model.TestEntity testEntity) {
-		return getService().deleteTestEntity(testEntity);
-	}
-
-	/**
 	* Deletes the test entity with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param id the primary key of the test entity
@@ -94,6 +83,17 @@ public class TestEntityLocalServiceUtil {
 	public static com.liferay.external.data.source.test.model.TestEntity deleteTestEntity(
 		long id) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteTestEntity(id);
+	}
+
+	/**
+	* Deletes the test entity from the database. Also notifies the appropriate model listeners.
+	*
+	* @param testEntity the test entity
+	* @return the test entity that was removed
+	*/
+	public static com.liferay.external.data.source.test.model.TestEntity deleteTestEntity(
+		com.liferay.external.data.source.test.model.TestEntity testEntity) {
+		return getService().deleteTestEntity(testEntity);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {

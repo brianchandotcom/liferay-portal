@@ -16,6 +16,7 @@ package com.liferay.push.notifications.sender.apple.internal;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -34,6 +35,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -180,17 +182,28 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 			builder.sound(sound);
 		}
 
-		payloadJSONObject.remove(PushNotificationsConstants.KEY_BADGE);
-		payloadJSONObject.remove(PushNotificationsConstants.KEY_BODY);
-		payloadJSONObject.remove(PushNotificationsConstants.KEY_BODY_LOCALIZED);
-		payloadJSONObject.remove(
-			PushNotificationsConstants.KEY_BODY_LOCALIZED_ARGUMENTS);
-		payloadJSONObject.remove(PushNotificationsConstants.KEY_SILENT);
-		payloadJSONObject.remove(PushNotificationsConstants.KEY_SOUND);
+		JSONObject customPayloadJSONObject = JSONFactoryUtil.createJSONObject();
+
+		Iterator<String> keysIterator = payloadJSONObject.keys();
+
+		while (keysIterator.hasNext()) {
+			String key = keysIterator.next();
+
+			if (!key.equals(PushNotificationsConstants.KEY_BADGE) &&
+				!key.equals(PushNotificationsConstants.KEY_BODY) &&
+				!key.equals(PushNotificationsConstants.KEY_BODY_LOCALIZED) &&
+				!key.equals(
+					PushNotificationsConstants.KEY_BODY_LOCALIZED_ARGUMENTS) &&
+				!key.equals(PushNotificationsConstants.KEY_SOUND) &&
+				!key.equals(PushNotificationsConstants.KEY_SILENT)) {
+
+				customPayloadJSONObject.put(key, payloadJSONObject.get(key));
+			}
+		}
 
 		builder.customField(
 			PushNotificationsConstants.KEY_PAYLOAD,
-			payloadJSONObject.toString());
+			customPayloadJSONObject.toString());
 
 		return builder.build();
 	}

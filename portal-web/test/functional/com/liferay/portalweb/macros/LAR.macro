@@ -380,7 +380,7 @@
 							<var name="panelHeading" value="Update Data" />
 						</execute>
 
-						<execute function="Click" locator1="ExportImport#MIRROR_WITH_OVERWRITING_RADIO" />
+						<execute function="Click" locator1="ExportImport#UPDATE_DATA_MIRROR_WITH_OVERWRITING_RADIO" />
 					</then>
 				</if>
 

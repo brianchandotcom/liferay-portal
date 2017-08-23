@@ -53,11 +53,7 @@
 			Liferay.Service(
 				'/pushnotifications.pushnotificationsdevice/send-push-notification',
 				{
-					payload: A.JSON.stringify(
-						{
-							body: message
-						}
-					),
+					payload: message,
 					toUserIds: []
 				},
 				<portlet:namespace />onSendPushNotification

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean class="com.liferay.modern.site.building.fragment.service.impl.MSBFragmentCollectionLocalServiceImpl" id="com.liferay.modern.site.building.fragment.service.MSBFragmentCollectionLocalService" />
+	<bean class="com.liferay.modern.site.building.fragment.service.impl.MSBFragmentCollectionServiceImpl" id="com.liferay.modern.site.building.fragment.service.MSBFragmentCollectionService" />
+	<bean class="com.liferay.modern.site.building.fragment.service.persistence.impl.MSBFragmentCollectionPersistenceImpl" id="com.liferay.modern.site.building.fragment.service.persistence.MSBFragmentCollectionPersistence" parent="basePersistence" />
+	<bean class="com.liferay.modern.site.building.fragment.service.impl.MSBFragmentEntryLocalServiceImpl" id="com.liferay.modern.site.building.fragment.service.MSBFragmentEntryLocalService" />
+	<bean class="com.liferay.modern.site.building.fragment.service.impl.MSBFragmentEntryServiceImpl" id="com.liferay.modern.site.building.fragment.service.MSBFragmentEntryService" />
+	<bean class="com.liferay.modern.site.building.fragment.service.persistence.impl.MSBFragmentEntryPersistenceImpl" id="com.liferay.modern.site.building.fragment.service.persistence.MSBFragmentEntryPersistence" parent="basePersistence" />
+</beans>

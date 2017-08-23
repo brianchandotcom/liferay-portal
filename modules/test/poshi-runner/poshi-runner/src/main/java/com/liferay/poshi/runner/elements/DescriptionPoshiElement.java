@@ -19,13 +19,13 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class IsSetElement extends PoshiElement {
+public class DescriptionPoshiElement extends BasePoshiElement {
 
 	public static boolean isElementType(
-		PoshiElement parentPoshiElement, String readableSyntax) {
+		BasePoshiElement parentPoshiElement, String readableSyntax) {
 
-		if (parentPoshiElement instanceof IfElement &&
-			readableSyntax.startsWith("isSet(")) {
+		if (parentPoshiElement instanceof CommandPoshiElement &&
+			readableSyntax.startsWith("@description")) {
 
 			return true;
 		}
@@ -35,49 +35,44 @@ public class IsSetElement extends PoshiElement {
 
 	@Override
 	public String getBlockName() {
-		return "isSet";
+		return "description";
 	}
 
 	@Override
 	public void parseReadableSyntax(String readableSyntax) {
-		String issetContent = getParentheticalContent(readableSyntax);
+		String message = getQuotedContent(readableSyntax);
 
-		addAttribute("var", issetContent);
+		addAttribute("message", message);
 	}
 
-	@Override
-	public String toReadableSyntax() {
-		return "isSet(" + attributeValue("var") + ")";
-	}
-
-	protected IsSetElement(Element element) {
+	protected DescriptionPoshiElement(Element element) {
 		super(_ELEMENT_NAME, element);
 	}
 
-	protected IsSetElement(String readableSyntax) {
+	protected DescriptionPoshiElement(String readableSyntax) {
 		super(_ELEMENT_NAME, readableSyntax);
 	}
 
-	private static final String _ELEMENT_NAME = "isset";
+	private static final String _ELEMENT_NAME = "description";
 
 	static {
 		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
 
 			@Override
-			public PoshiElement newPoshiElement(Element element) {
-				if (isElementType(_ELEMENT_NAME, element)) {
-					return new IsSetElement(element);
+			public BasePoshiElement newPoshiElement(
+				BasePoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new DescriptionPoshiElement(readableSyntax);
 				}
 
 				return null;
 			}
 
 			@Override
-			public PoshiElement newPoshiElement(
-				PoshiElement parentPoshiElement, String readableSyntax) {
-
-				if (isElementType(parentPoshiElement, readableSyntax)) {
-					return new IsSetElement(readableSyntax);
+			public BasePoshiElement newPoshiElement(Element element) {
+				if (isElementType(_ELEMENT_NAME, element)) {
+					return new DescriptionPoshiElement(element);
 				}
 
 				return null;
@@ -85,7 +80,7 @@ public class IsSetElement extends PoshiElement {
 
 		};
 
-		PoshiElement.addPoshiElementFactory(poshiElementFactory);
+		BasePoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 }

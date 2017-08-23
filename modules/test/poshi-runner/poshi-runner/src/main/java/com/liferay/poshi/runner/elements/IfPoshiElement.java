@@ -22,10 +22,10 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class IfElement extends PoshiElement {
+public class IfPoshiElement extends BasePoshiElement {
 
 	public static boolean isElementType(
-		PoshiElement parentPoshiElement, String readableSyntax) {
+		BasePoshiElement parentPoshiElement, String readableSyntax) {
 
 		readableSyntax = readableSyntax.trim();
 
@@ -52,7 +52,7 @@ public class IfElement extends PoshiElement {
 
 		for (String conditionName : _conditionNames) {
 			if (element(conditionName) != null) {
-				PoshiElement poshiElement = (PoshiElement)element(
+				BasePoshiElement poshiElement = (BasePoshiElement)element(
 					conditionName);
 
 				sb.append(" (");
@@ -71,7 +71,7 @@ public class IfElement extends PoshiElement {
 		for (String readableBlock : getReadableBlocks(readableSyntax)) {
 			if (readableBlock.startsWith(getName() + " (")) {
 				add(
-					PoshiElement.newPoshiElement(
+					BasePoshiElement.newPoshiElement(
 						this, getParentheticalContent(readableBlock)));
 
 				continue;
@@ -87,14 +87,14 @@ public class IfElement extends PoshiElement {
 
 		sb.append("\n");
 
-		PoshiElement thenElement = (PoshiElement)element("then");
+		BasePoshiElement thenElement = (BasePoshiElement)element("then");
 
 		String thenReadableSyntax = thenElement.toReadableSyntax();
 
 		sb.append(createReadableBlock(thenReadableSyntax));
 
 		if (element("else") != null) {
-			PoshiElement elseElement = (PoshiElement)element("else");
+			BasePoshiElement elseElement = (BasePoshiElement)element("else");
 
 			sb.append(elseElement.toReadableSyntax());
 		}
@@ -102,19 +102,19 @@ public class IfElement extends PoshiElement {
 		return sb.toString();
 	}
 
-	protected IfElement(Element element) {
+	protected IfPoshiElement(Element element) {
 		super("if", element);
 	}
 
-	protected IfElement(String readableSyntax) {
+	protected IfPoshiElement(String readableSyntax) {
 		super("if", readableSyntax);
 	}
 
-	protected IfElement(String name, Element element) {
+	protected IfPoshiElement(String name, Element element) {
 		super(name, element);
 	}
 
-	protected IfElement(String name, String readableSyntax) {
+	protected IfPoshiElement(String name, String readableSyntax) {
 		super(name, readableSyntax);
 	}
 
@@ -164,20 +164,20 @@ public class IfElement extends PoshiElement {
 		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
 
 			@Override
-			public PoshiElement newPoshiElement(Element element) {
-				if (isElementType(_ELEMENT_NAME, element)) {
-					return new IfElement(element);
+			public BasePoshiElement newPoshiElement(
+				BasePoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new IfPoshiElement(readableSyntax);
 				}
 
 				return null;
 			}
 
 			@Override
-			public PoshiElement newPoshiElement(
-				PoshiElement parentPoshiElement, String readableSyntax) {
-
-				if (isElementType(parentPoshiElement, readableSyntax)) {
-					return new IfElement(readableSyntax);
+			public BasePoshiElement newPoshiElement(Element element) {
+				if (isElementType(_ELEMENT_NAME, element)) {
+					return new IfPoshiElement(element);
 				}
 
 				return null;
@@ -185,7 +185,7 @@ public class IfElement extends PoshiElement {
 
 		};
 
-		PoshiElement.addPoshiElementFactory(poshiElementFactory);
+		BasePoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 }

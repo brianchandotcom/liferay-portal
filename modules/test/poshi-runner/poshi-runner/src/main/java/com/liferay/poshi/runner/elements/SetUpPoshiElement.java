@@ -19,10 +19,10 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class TearDownElement extends CommandElement {
+public class SetUpPoshiElement extends CommandPoshiElement {
 
 	public static boolean isElementType(
-		PoshiElement parentPoshiElement, String readableSyntax) {
+		BasePoshiElement parentPoshiElement, String readableSyntax) {
 
 		readableSyntax = readableSyntax.trim();
 
@@ -41,7 +41,7 @@ public class TearDownElement extends CommandElement {
 				continue;
 			}
 
-			if (!line.equals("tearDown {")) {
+			if (!line.equals("setUp {")) {
 				return false;
 			}
 
@@ -51,39 +51,39 @@ public class TearDownElement extends CommandElement {
 		return true;
 	}
 
-	protected TearDownElement(Element element) {
+	protected SetUpPoshiElement(Element element) {
 		super(_ELEMENT_NAME, element);
 	}
 
-	protected TearDownElement(String readableSyntax) {
+	protected SetUpPoshiElement(String readableSyntax) {
 		super(_ELEMENT_NAME, readableSyntax);
 	}
 
 	@Override
 	protected String getReadableCommandTitle() {
-		return "tearDown";
+		return "setUp";
 	}
 
-	private static final String _ELEMENT_NAME = "tear-down";
+	private static final String _ELEMENT_NAME = "set-up";
 
 	static {
 		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
 
 			@Override
-			public PoshiElement newPoshiElement(Element element) {
-				if (isElementType(_ELEMENT_NAME, element)) {
-					return new TearDownElement(element);
+			public BasePoshiElement newPoshiElement(
+				BasePoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new SetUpPoshiElement(readableSyntax);
 				}
 
 				return null;
 			}
 
 			@Override
-			public PoshiElement newPoshiElement(
-				PoshiElement parentPoshiElement, String readableSyntax) {
-
-				if (isElementType(parentPoshiElement, readableSyntax)) {
-					return new TearDownElement(readableSyntax);
+			public BasePoshiElement newPoshiElement(Element element) {
+				if (isElementType(_ELEMENT_NAME, element)) {
+					return new SetUpPoshiElement(element);
 				}
 
 				return null;
@@ -91,7 +91,7 @@ public class TearDownElement extends CommandElement {
 
 		};
 
-		PoshiElement.addPoshiElementFactory(poshiElementFactory);
+		BasePoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 }

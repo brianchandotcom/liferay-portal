@@ -37,7 +37,7 @@ import org.dom4j.tree.DefaultElement;
 /**
  * @author Kenji Heigel
  */
-public abstract class PoshiElement extends DefaultElement {
+public abstract class BasePoshiElement extends DefaultElement {
 
 	public static boolean isElementType(String name, Element element) {
 		if (name.equals(element.getName())) {
@@ -47,9 +47,25 @@ public abstract class PoshiElement extends DefaultElement {
 		return false;
 	}
 
-	public static PoshiElement newPoshiElement(Element element) {
+	public static BasePoshiElement newPoshiElement(
+		BasePoshiElement parentPoshiElement, String readableSyntax) {
+
 		for (PoshiElementFactory poshiElementFactory : _poshiElementFactories) {
-			PoshiElement poshiElement = poshiElementFactory.newPoshiElement(
+			BasePoshiElement poshiElement = poshiElementFactory.newPoshiElement(
+				parentPoshiElement, readableSyntax);
+
+			if (poshiElement != null) {
+				return poshiElement;
+			}
+		}
+
+		throw new RuntimeException(
+			"Unknown readable syntax\n" + readableSyntax);
+	}
+
+	public static BasePoshiElement newPoshiElement(Element element) {
+		for (PoshiElementFactory poshiElementFactory : _poshiElementFactories) {
+			BasePoshiElement poshiElement = poshiElementFactory.newPoshiElement(
 				element);
 
 			if (poshiElement != null) {
@@ -69,23 +85,7 @@ public abstract class PoshiElement extends DefaultElement {
 		throw new RuntimeException("Unknown element\n" + formattedElement);
 	}
 
-	public static PoshiElement newPoshiElement(
-		PoshiElement parentPoshiElement, String readableSyntax) {
-
-		for (PoshiElementFactory poshiElementFactory : _poshiElementFactories) {
-			PoshiElement poshiElement = poshiElementFactory.newPoshiElement(
-				parentPoshiElement, readableSyntax);
-
-			if (poshiElement != null) {
-				return poshiElement;
-			}
-		}
-
-		throw new RuntimeException(
-			"Unknown readable syntax\n" + readableSyntax);
-	}
-
-	public static PoshiElement newPoshiElementFromFile(String filePath) {
+	public static BasePoshiElement newPoshiElementFromFile(String filePath) {
 		File file = new File(filePath);
 
 		try {
@@ -143,7 +143,7 @@ public abstract class PoshiElement extends DefaultElement {
 	public String toReadableSyntax() {
 		StringBuilder sb = new StringBuilder();
 
-		for (PoshiElement poshiElement : toPoshiElements(elements())) {
+		for (BasePoshiElement poshiElement : toPoshiElements(elements())) {
 			sb.append(poshiElement.toReadableSyntax());
 		}
 
@@ -210,12 +210,12 @@ public abstract class PoshiElement extends DefaultElement {
 		return stack.isEmpty();
 	}
 
-	protected PoshiElement(String name, Element element) {
+	protected BasePoshiElement(String name, Element element) {
 		super(name);
 
 		if (!isElementType(name, element)) {
 			throw new RuntimeException(
-				"Element does not match expected PoshiElement name\n" +
+				"Element does not match expected BasePoshiElement name\n" +
 					element.toString());
 		}
 
@@ -223,7 +223,7 @@ public abstract class PoshiElement extends DefaultElement {
 		_addElements(element);
 	}
 
-	protected PoshiElement(String name, String readableSyntax) {
+	protected BasePoshiElement(String name, String readableSyntax) {
 		super(name);
 
 		parseReadableSyntax(readableSyntax);
@@ -309,15 +309,15 @@ public abstract class PoshiElement extends DefaultElement {
 		return poshiElementAttributes;
 	}
 
-	protected List<PoshiElement> toPoshiElements(List<?> list) {
+	protected List<BasePoshiElement> toPoshiElements(List<?> list) {
 		if (list == null) {
 			return null;
 		}
 
-		List<PoshiElement> poshiElements = new ArrayList<>(list.size());
+		List<BasePoshiElement> poshiElements = new ArrayList<>(list.size());
 
 		for (Object object : list) {
-			poshiElements.add((PoshiElement)object);
+			poshiElements.add((BasePoshiElement)object);
 		}
 
 		return poshiElements;
@@ -346,11 +346,13 @@ public abstract class PoshiElement extends DefaultElement {
 
 	static {
 		String[] elementClassNames = {
-			"CommandElement", "ConditionElement", "DefinitionElement",
-			"DescriptionElement", "ElseElement", "EqualsElement",
-			"ExecuteElement", "ForElement", "IfElement", "IsSetElement",
-			"PropertyElement", "ReturnElement", "SetUpElement",
-			"TearDownElement", "ThenElement", "VarElement", "WhileElement"
+			"CommandPoshiElement", "ConditionPoshiElement",
+			"DefinitionPoshiElement", "DescriptionPoshiElement",
+			"ElsePoshiElement", "EqualsPoshiElement", "ExecutePoshiElement",
+			"ForPoshiElement", "IfPoshiElement", "IsSetPoshiElement",
+			"PropertyPoshiElement", "ReturnPoshiElement", "SetUpPoshiElement",
+			"TearDownPoshiElement", "ThenPoshiElement", "VarPoshiElement",
+			"WhilePoshiElement"
 		};
 
 		for (String elementClassName : elementClassNames) {

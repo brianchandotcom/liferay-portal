@@ -25,10 +25,10 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class CommandElement extends PoshiElement {
+public class CommandPoshiElement extends BasePoshiElement {
 
 	public static boolean isElementType(
-		PoshiElement parentPoshiElement, String readableSyntax) {
+		BasePoshiElement parentPoshiElement, String readableSyntax) {
 
 		readableSyntax = readableSyntax.trim();
 
@@ -63,7 +63,7 @@ public class CommandElement extends PoshiElement {
 			if (readableBlock.endsWith("}") || readableBlock.endsWith(";") ||
 				readableBlock.startsWith("@description")) {
 
-				add(PoshiElement.newPoshiElement(this, readableBlock));
+				add(BasePoshiElement.newPoshiElement(this, readableBlock));
 
 				continue;
 			}
@@ -90,7 +90,7 @@ public class CommandElement extends PoshiElement {
 	public String toReadableSyntax() {
 		StringBuilder sb = new StringBuilder();
 
-		for (PoshiElement poshiElement :
+		for (BasePoshiElement poshiElement :
 				toPoshiElements(elements("description"))) {
 
 			sb.append("\n\t@description = \"");
@@ -113,7 +113,7 @@ public class CommandElement extends PoshiElement {
 
 		List<String> readableBlocks = new ArrayList<>();
 
-		for (PoshiElement poshiElement : toPoshiElements(elements())) {
+		for (BasePoshiElement poshiElement : toPoshiElements(elements())) {
 			readableBlocks.add(poshiElement.toReadableSyntax());
 		}
 
@@ -122,19 +122,19 @@ public class CommandElement extends PoshiElement {
 		return sb.toString();
 	}
 
-	protected CommandElement(Element element) {
+	protected CommandPoshiElement(Element element) {
 		this(_ELEMENT_NAME, element);
 	}
 
-	protected CommandElement(String readableSyntax) {
+	protected CommandPoshiElement(String readableSyntax) {
 		this(_ELEMENT_NAME, readableSyntax);
 	}
 
-	protected CommandElement(String name, Element element) {
+	protected CommandPoshiElement(String name, Element element) {
 		super(name, element);
 	}
 
-	protected CommandElement(String name, String readableSyntax) {
+	protected CommandPoshiElement(String name, String readableSyntax) {
 		super(name, readableSyntax);
 	}
 
@@ -252,20 +252,20 @@ public class CommandElement extends PoshiElement {
 		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
 
 			@Override
-			public PoshiElement newPoshiElement(Element element) {
-				if (isElementType(_ELEMENT_NAME, element)) {
-					return new CommandElement(element);
+			public BasePoshiElement newPoshiElement(
+				BasePoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new CommandPoshiElement(readableSyntax);
 				}
 
 				return null;
 			}
 
 			@Override
-			public PoshiElement newPoshiElement(
-				PoshiElement parentPoshiElement, String readableSyntax) {
-
-				if (isElementType(parentPoshiElement, readableSyntax)) {
-					return new CommandElement(readableSyntax);
+			public BasePoshiElement newPoshiElement(Element element) {
+				if (isElementType(_ELEMENT_NAME, element)) {
+					return new CommandPoshiElement(element);
 				}
 
 				return null;
@@ -273,7 +273,7 @@ public class CommandElement extends PoshiElement {
 
 		};
 
-		PoshiElement.addPoshiElementFactory(poshiElementFactory);
+		BasePoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 }

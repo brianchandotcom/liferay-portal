@@ -19,12 +19,12 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class ConditionElement extends ExecuteElement {
+public class ConditionPoshiElement extends ExecutePoshiElement {
 
 	public static boolean isElementType(
-		PoshiElement parentPoshiElement, String readableSyntax) {
+		BasePoshiElement parentPoshiElement, String readableSyntax) {
 
-		if (parentPoshiElement instanceof IfElement &&
+		if (parentPoshiElement instanceof IfPoshiElement &&
 			readableSyntax.endsWith(")") &&
 			!readableSyntax.startsWith("isSet(")) {
 
@@ -39,11 +39,11 @@ public class ConditionElement extends ExecuteElement {
 		return attributeValue("function");
 	}
 
-	protected ConditionElement(Element element) {
+	protected ConditionPoshiElement(Element element) {
 		super(_ELEMENT_NAME, element);
 	}
 
-	protected ConditionElement(String readableSyntax) {
+	protected ConditionPoshiElement(String readableSyntax) {
 		super(_ELEMENT_NAME, readableSyntax);
 	}
 
@@ -67,20 +67,20 @@ public class ConditionElement extends ExecuteElement {
 		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
 
 			@Override
-			public PoshiElement newPoshiElement(Element element) {
-				if (isElementType(_ELEMENT_NAME, element)) {
-					return new ConditionElement(element);
+			public BasePoshiElement newPoshiElement(
+				BasePoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new ConditionPoshiElement(readableSyntax);
 				}
 
 				return null;
 			}
 
 			@Override
-			public PoshiElement newPoshiElement(
-				PoshiElement parentPoshiElement, String readableSyntax) {
-
-				if (isElementType(parentPoshiElement, readableSyntax)) {
-					return new ConditionElement(readableSyntax);
+			public BasePoshiElement newPoshiElement(Element element) {
+				if (isElementType(_ELEMENT_NAME, element)) {
+					return new ConditionPoshiElement(element);
 				}
 
 				return null;
@@ -88,7 +88,7 @@ public class ConditionElement extends ExecuteElement {
 
 		};
 
-		PoshiElement.addPoshiElementFactory(poshiElementFactory);
+		BasePoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 }

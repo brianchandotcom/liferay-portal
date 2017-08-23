@@ -22,12 +22,12 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class ThenElement extends PoshiElement {
+public class ThenPoshiElement extends BasePoshiElement {
 
 	public static boolean isElementType(
-		PoshiElement parentPoshiElement, String readableSyntax) {
+		BasePoshiElement parentPoshiElement, String readableSyntax) {
 
-		if (parentPoshiElement instanceof IfElement &&
+		if (parentPoshiElement instanceof IfPoshiElement &&
 			readableSyntax.startsWith("{")) {
 
 			return true;
@@ -48,19 +48,19 @@ public class ThenElement extends PoshiElement {
 		}
 	}
 
-	protected ThenElement(Element element) {
+	protected ThenPoshiElement(Element element) {
 		super(_ELEMENT_NAME, element);
 	}
 
-	protected ThenElement(String readableSyntax) {
+	protected ThenPoshiElement(String readableSyntax) {
 		super(_ELEMENT_NAME, readableSyntax);
 	}
 
-	protected ThenElement(String name, Element element) {
+	protected ThenPoshiElement(String name, Element element) {
 		super(name, element);
 	}
 
-	protected ThenElement(String name, String readableSyntax) {
+	protected ThenPoshiElement(String name, String readableSyntax) {
 		super(name, readableSyntax);
 	}
 
@@ -97,20 +97,20 @@ public class ThenElement extends PoshiElement {
 		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
 
 			@Override
-			public PoshiElement newPoshiElement(Element element) {
-				if (isElementType(_ELEMENT_NAME, element)) {
-					return new ThenElement(element);
+			public BasePoshiElement newPoshiElement(
+				BasePoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new ThenPoshiElement(readableSyntax);
 				}
 
 				return null;
 			}
 
 			@Override
-			public PoshiElement newPoshiElement(
-				PoshiElement parentPoshiElement, String readableSyntax) {
-
-				if (isElementType(parentPoshiElement, readableSyntax)) {
-					return new ThenElement(readableSyntax);
+			public BasePoshiElement newPoshiElement(Element element) {
+				if (isElementType(_ELEMENT_NAME, element)) {
+					return new ThenPoshiElement(element);
 				}
 
 				return null;
@@ -118,7 +118,7 @@ public class ThenElement extends PoshiElement {
 
 		};
 
-		PoshiElement.addPoshiElementFactory(poshiElementFactory);
+		BasePoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 }

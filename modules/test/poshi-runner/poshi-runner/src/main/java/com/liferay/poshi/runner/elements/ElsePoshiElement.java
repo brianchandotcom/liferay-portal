@@ -19,12 +19,12 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class ElseElement extends ThenElement {
+public class ElsePoshiElement extends ThenPoshiElement {
 
 	public static boolean isElementType(
-		PoshiElement parentPoshiElement, String readableSyntax) {
+		BasePoshiElement parentPoshiElement, String readableSyntax) {
 
-		if (parentPoshiElement instanceof IfElement &&
+		if (parentPoshiElement instanceof IfPoshiElement &&
 			readableSyntax.startsWith("else {")) {
 
 			return true;
@@ -45,11 +45,11 @@ public class ElseElement extends ThenElement {
 		return createReadableBlock(readableSyntax);
 	}
 
-	protected ElseElement(Element element) {
+	protected ElsePoshiElement(Element element) {
 		super("else", element);
 	}
 
-	protected ElseElement(String readableSyntax) {
+	protected ElsePoshiElement(String readableSyntax) {
 		super("else", readableSyntax);
 	}
 
@@ -59,20 +59,20 @@ public class ElseElement extends ThenElement {
 		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
 
 			@Override
-			public PoshiElement newPoshiElement(Element element) {
-				if (isElementType(_ELEMENT_NAME, element)) {
-					return new ElseElement(element);
+			public BasePoshiElement newPoshiElement(
+				BasePoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new ElsePoshiElement(readableSyntax);
 				}
 
 				return null;
 			}
 
 			@Override
-			public PoshiElement newPoshiElement(
-				PoshiElement parentPoshiElement, String readableSyntax) {
-
-				if (isElementType(parentPoshiElement, readableSyntax)) {
-					return new ElseElement(readableSyntax);
+			public BasePoshiElement newPoshiElement(Element element) {
+				if (isElementType(_ELEMENT_NAME, element)) {
+					return new ElsePoshiElement(element);
 				}
 
 				return null;
@@ -80,7 +80,7 @@ public class ElseElement extends ThenElement {
 
 		};
 
-		PoshiElement.addPoshiElementFactory(poshiElementFactory);
+		BasePoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 }

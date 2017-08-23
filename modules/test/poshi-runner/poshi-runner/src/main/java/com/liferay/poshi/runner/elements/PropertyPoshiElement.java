@@ -19,10 +19,10 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class WhileElement extends IfElement {
+public class PropertyPoshiElement extends VarPoshiElement {
 
 	public static boolean isElementType(
-		PoshiElement parentPoshiElement, String readableSyntax) {
+		BasePoshiElement parentPoshiElement, String readableSyntax) {
 
 		readableSyntax = readableSyntax.trim();
 
@@ -30,45 +30,45 @@ public class WhileElement extends IfElement {
 			return false;
 		}
 
-		if (!readableSyntax.startsWith("while (")) {
+		if (!readableSyntax.endsWith(";")) {
 			return false;
 		}
 
-		if (!readableSyntax.endsWith("}")) {
+		if (!readableSyntax.startsWith("property ")) {
 			return false;
 		}
 
 		return true;
 	}
 
-	protected WhileElement(Element element) {
+	protected PropertyPoshiElement(Element element) {
 		super(_ELEMENT_NAME, element);
 	}
 
-	protected WhileElement(String readableSyntax) {
+	protected PropertyPoshiElement(String readableSyntax) {
 		super(_ELEMENT_NAME, readableSyntax);
 	}
 
-	private static final String _ELEMENT_NAME = "while";
+	private static final String _ELEMENT_NAME = "property";
 
 	static {
 		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
 
 			@Override
-			public PoshiElement newPoshiElement(Element element) {
-				if (isElementType(_ELEMENT_NAME, element)) {
-					return new WhileElement(element);
+			public BasePoshiElement newPoshiElement(
+				BasePoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new PropertyPoshiElement(readableSyntax);
 				}
 
 				return null;
 			}
 
 			@Override
-			public PoshiElement newPoshiElement(
-				PoshiElement parentPoshiElement, String readableSyntax) {
-
-				if (isElementType(parentPoshiElement, readableSyntax)) {
-					return new WhileElement(readableSyntax);
+			public BasePoshiElement newPoshiElement(Element element) {
+				if (isElementType(_ELEMENT_NAME, element)) {
+					return new PropertyPoshiElement(element);
 				}
 
 				return null;
@@ -76,7 +76,7 @@ public class WhileElement extends IfElement {
 
 		};
 
-		PoshiElement.addPoshiElementFactory(poshiElementFactory);
+		BasePoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 }

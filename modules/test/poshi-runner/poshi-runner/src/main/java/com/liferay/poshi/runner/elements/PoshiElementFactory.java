@@ -21,9 +21,9 @@ import org.dom4j.Element;
  */
 public interface PoshiElementFactory {
 
-	public PoshiElement newPoshiElement(Element element);
+	public BasePoshiElement newPoshiElement(
+		BasePoshiElement parentPoshiElement, String readableSyntax);
 
-	public PoshiElement newPoshiElement(
-		PoshiElement parentPoshiElement, String readableSyntax);
+	public BasePoshiElement newPoshiElement(Element element);
 
 }

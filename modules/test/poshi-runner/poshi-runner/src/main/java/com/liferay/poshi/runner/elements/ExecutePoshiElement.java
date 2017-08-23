@@ -26,10 +26,10 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class ExecuteElement extends PoshiElement {
+public class ExecutePoshiElement extends BasePoshiElement {
 
 	public static boolean isElementType(
-		PoshiElement parentPoshiElement, String readableSyntax) {
+		BasePoshiElement parentPoshiElement, String readableSyntax) {
 
 		readableSyntax = readableSyntax.trim();
 
@@ -60,8 +60,8 @@ public class ExecuteElement extends PoshiElement {
 
 	@Override
 	public void parseReadableSyntax(String readableSyntax) {
-		if (ReturnElement.isElementType(this, readableSyntax)) {
-			add(new ReturnElement(readableSyntax));
+		if (ReturnPoshiElement.isElementType(this, readableSyntax)) {
+			add(new ReturnPoshiElement(readableSyntax));
 
 			readableSyntax = RegexUtil.getGroup(
 				readableSyntax, "return\\((.*),", 1);
@@ -106,7 +106,7 @@ public class ExecuteElement extends PoshiElement {
 			if (executeType.equals("macro")) {
 				assignment = "var " + assignment + ";";
 
-				add(PoshiElement.newPoshiElement(this, assignment));
+				add(BasePoshiElement.newPoshiElement(this, assignment));
 
 				continue;
 			}
@@ -145,10 +145,10 @@ public class ExecuteElement extends PoshiElement {
 
 		StringBuilder sb = new StringBuilder();
 
-		PoshiElement returnElement = null;
+		BasePoshiElement returnElement = null;
 
-		for (PoshiElement poshiElement : toPoshiElements(elements())) {
-			if (poshiElement instanceof ReturnElement) {
+		for (BasePoshiElement poshiElement : toPoshiElements(elements())) {
+			if (poshiElement instanceof ReturnPoshiElement) {
 				returnElement = poshiElement;
 
 				continue;
@@ -166,19 +166,19 @@ public class ExecuteElement extends PoshiElement {
 		return returnElement.createReadableBlock(readableBlock);
 	}
 
-	protected ExecuteElement(Element element) {
+	protected ExecutePoshiElement(Element element) {
 		super("execute", element);
 	}
 
-	protected ExecuteElement(String readableSyntax) {
+	protected ExecutePoshiElement(String readableSyntax) {
 		super("execute", readableSyntax);
 	}
 
-	protected ExecuteElement(String name, Element element) {
+	protected ExecutePoshiElement(String name, Element element) {
 		super(name, element);
 	}
 
-	protected ExecuteElement(String name, String readableSyntax) {
+	protected ExecutePoshiElement(String name, String readableSyntax) {
 		super(name, readableSyntax);
 	}
 
@@ -229,20 +229,20 @@ public class ExecuteElement extends PoshiElement {
 		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
 
 			@Override
-			public PoshiElement newPoshiElement(Element element) {
-				if (isElementType(_ELEMENT_NAME, element)) {
-					return new ExecuteElement(element);
+			public BasePoshiElement newPoshiElement(
+				BasePoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new ExecutePoshiElement(readableSyntax);
 				}
 
 				return null;
 			}
 
 			@Override
-			public PoshiElement newPoshiElement(
-				PoshiElement parentPoshiElement, String readableSyntax) {
-
-				if (isElementType(parentPoshiElement, readableSyntax)) {
-					return new ExecuteElement(readableSyntax);
+			public BasePoshiElement newPoshiElement(Element element) {
+				if (isElementType(_ELEMENT_NAME, element)) {
+					return new ExecutePoshiElement(element);
 				}
 
 				return null;
@@ -250,7 +250,7 @@ public class ExecuteElement extends PoshiElement {
 
 		};
 
-		PoshiElement.addPoshiElementFactory(poshiElementFactory);
+		BasePoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 }

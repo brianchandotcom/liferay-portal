@@ -22,10 +22,10 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class ForElement extends PoshiElement {
+public class ForPoshiElement extends BasePoshiElement {
 
 	public static boolean isElementType(
-		PoshiElement parentPoshiElement, String readableSyntax) {
+		BasePoshiElement parentPoshiElement, String readableSyntax) {
 
 		readableSyntax = readableSyntax.trim();
 
@@ -79,7 +79,7 @@ public class ForElement extends PoshiElement {
 				continue;
 			}
 
-			add(PoshiElement.newPoshiElement(this, readableBlock));
+			add(BasePoshiElement.newPoshiElement(this, readableBlock));
 		}
 	}
 
@@ -90,11 +90,11 @@ public class ForElement extends PoshiElement {
 		return "\n" + createReadableBlock(readableSyntax);
 	}
 
-	protected ForElement(Element element) {
+	protected ForPoshiElement(Element element) {
 		super(_ELEMENT_NAME, element);
 	}
 
-	protected ForElement(String readableSyntax) {
+	protected ForPoshiElement(String readableSyntax) {
 		super(_ELEMENT_NAME, readableSyntax);
 	}
 
@@ -135,20 +135,20 @@ public class ForElement extends PoshiElement {
 		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
 
 			@Override
-			public PoshiElement newPoshiElement(Element element) {
-				if (isElementType(_ELEMENT_NAME, element)) {
-					return new ForElement(element);
+			public BasePoshiElement newPoshiElement(
+				BasePoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new ForPoshiElement(readableSyntax);
 				}
 
 				return null;
 			}
 
 			@Override
-			public PoshiElement newPoshiElement(
-				PoshiElement parentPoshiElement, String readableSyntax) {
-
-				if (isElementType(parentPoshiElement, readableSyntax)) {
-					return new ForElement(readableSyntax);
+			public BasePoshiElement newPoshiElement(Element element) {
+				if (isElementType(_ELEMENT_NAME, element)) {
+					return new ForPoshiElement(element);
 				}
 
 				return null;
@@ -156,7 +156,7 @@ public class ForElement extends PoshiElement {
 
 		};
 
-		PoshiElement.addPoshiElementFactory(poshiElementFactory);
+		BasePoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 }

@@ -25,10 +25,10 @@ import org.dom4j.Node;
 /**
  * @author Kenji Heigel
  */
-public class VarElement extends PoshiElement {
+public class VarPoshiElement extends BasePoshiElement {
 
 	public static boolean isElementType(
-		PoshiElement parentPoshiElement, String readableSyntax) {
+		BasePoshiElement parentPoshiElement, String readableSyntax) {
 
 		readableSyntax = readableSyntax.trim();
 
@@ -94,7 +94,7 @@ public class VarElement extends PoshiElement {
 
 		sb.append("\n\t");
 
-		PoshiElement parentElement = (PoshiElement)getParent();
+		BasePoshiElement parentElement = (BasePoshiElement)getParent();
 
 		String parentElementName = parentElement.getName();
 
@@ -124,15 +124,15 @@ public class VarElement extends PoshiElement {
 		return sb.toString();
 	}
 
-	protected VarElement(Element element) {
+	protected VarPoshiElement(Element element) {
 		this(_ELEMENT_NAME, element);
 	}
 
-	protected VarElement(String readableSyntax) {
+	protected VarPoshiElement(String readableSyntax) {
 		this(_ELEMENT_NAME, readableSyntax);
 	}
 
-	protected VarElement(String name, Element element) {
+	protected VarPoshiElement(String name, Element element) {
 		super(name, element);
 
 		if (isElementType(name, element)) {
@@ -140,7 +140,7 @@ public class VarElement extends PoshiElement {
 		}
 	}
 
-	protected VarElement(String name, String readableSyntax) {
+	protected VarPoshiElement(String name, String readableSyntax) {
 		super(name, readableSyntax);
 	}
 
@@ -187,20 +187,20 @@ public class VarElement extends PoshiElement {
 		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
 
 			@Override
-			public PoshiElement newPoshiElement(Element element) {
-				if (isElementType(_ELEMENT_NAME, element)) {
-					return new VarElement(element);
+			public BasePoshiElement newPoshiElement(
+				BasePoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new VarPoshiElement(readableSyntax);
 				}
 
 				return null;
 			}
 
 			@Override
-			public PoshiElement newPoshiElement(
-				PoshiElement parentPoshiElement, String readableSyntax) {
-
-				if (isElementType(parentPoshiElement, readableSyntax)) {
-					return new VarElement(readableSyntax);
+			public BasePoshiElement newPoshiElement(Element element) {
+				if (isElementType(_ELEMENT_NAME, element)) {
+					return new VarPoshiElement(element);
 				}
 
 				return null;
@@ -208,7 +208,7 @@ public class VarElement extends PoshiElement {
 
 		};
 
-		PoshiElement.addPoshiElementFactory(poshiElementFactory);
+		BasePoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 }

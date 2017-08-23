@@ -22,10 +22,10 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class DefinitionElement extends PoshiElement {
+public class DefinitionPoshiElement extends BasePoshiElement {
 
 	public static boolean isElementType(
-		PoshiElement parentPoshiElement, String readableSyntax) {
+		BasePoshiElement parentPoshiElement, String readableSyntax) {
 
 		readableSyntax = readableSyntax.trim();
 
@@ -87,7 +87,7 @@ public class DefinitionElement extends PoshiElement {
 
 		StringBuilder content = new StringBuilder();
 
-		for (PoshiElement poshiElement :
+		for (BasePoshiElement poshiElement :
 				toPoshiElements(elements("property"))) {
 
 			content.append(poshiElement.toReadableSyntax());
@@ -95,25 +95,29 @@ public class DefinitionElement extends PoshiElement {
 
 		content.append("\n");
 
-		for (PoshiElement poshiElement : toPoshiElements(elements("var"))) {
+		for (BasePoshiElement poshiElement : toPoshiElements(elements("var"))) {
 			content.append(poshiElement.toReadableSyntax());
 		}
 
 		content.append("\n");
 
-		for (PoshiElement poshiElement : toPoshiElements(elements("set-up"))) {
+		for (BasePoshiElement poshiElement :
+				toPoshiElements(elements("set-up"))) {
+
 			content.append(poshiElement.toReadableSyntax());
 		}
 
 		content.append("\n");
 
-		for (PoshiElement poshiElement :
+		for (BasePoshiElement poshiElement :
 				toPoshiElements(elements("tear-down"))) {
 
 			content.append(poshiElement.toReadableSyntax());
 		}
 
-		for (PoshiElement poshiElement : toPoshiElements(elements("command"))) {
+		for (BasePoshiElement poshiElement :
+				toPoshiElements(elements("command"))) {
+
 			content.append("\n");
 			content.append(poshiElement.toReadableSyntax());
 		}
@@ -125,11 +129,11 @@ public class DefinitionElement extends PoshiElement {
 		return string.trim();
 	}
 
-	protected DefinitionElement(Element element) {
+	protected DefinitionPoshiElement(Element element) {
 		super(_ELEMENT_NAME, element);
 	}
 
-	protected DefinitionElement(String readableSyntax) {
+	protected DefinitionPoshiElement(String readableSyntax) {
 		super(_ELEMENT_NAME, readableSyntax);
 	}
 
@@ -207,20 +211,20 @@ public class DefinitionElement extends PoshiElement {
 		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
 
 			@Override
-			public PoshiElement newPoshiElement(Element element) {
-				if (isElementType(_ELEMENT_NAME, element)) {
-					return new DefinitionElement(element);
+			public BasePoshiElement newPoshiElement(
+				BasePoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new DefinitionPoshiElement(readableSyntax);
 				}
 
 				return null;
 			}
 
 			@Override
-			public PoshiElement newPoshiElement(
-				PoshiElement parentPoshiElement, String readableSyntax) {
-
-				if (isElementType(parentPoshiElement, readableSyntax)) {
-					return new DefinitionElement(readableSyntax);
+			public BasePoshiElement newPoshiElement(Element element) {
+				if (isElementType(_ELEMENT_NAME, element)) {
+					return new DefinitionPoshiElement(element);
 				}
 
 				return null;
@@ -228,7 +232,7 @@ public class DefinitionElement extends PoshiElement {
 
 		};
 
-		PoshiElement.addPoshiElementFactory(poshiElementFactory);
+		BasePoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 }

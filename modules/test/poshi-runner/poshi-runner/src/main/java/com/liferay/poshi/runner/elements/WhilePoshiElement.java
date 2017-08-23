@@ -19,10 +19,10 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class PropertyElement extends VarElement {
+public class WhilePoshiElement extends IfPoshiElement {
 
 	public static boolean isElementType(
-		PoshiElement parentPoshiElement, String readableSyntax) {
+		BasePoshiElement parentPoshiElement, String readableSyntax) {
 
 		readableSyntax = readableSyntax.trim();
 
@@ -30,45 +30,45 @@ public class PropertyElement extends VarElement {
 			return false;
 		}
 
-		if (!readableSyntax.endsWith(";")) {
+		if (!readableSyntax.startsWith("while (")) {
 			return false;
 		}
 
-		if (!readableSyntax.startsWith("property ")) {
+		if (!readableSyntax.endsWith("}")) {
 			return false;
 		}
 
 		return true;
 	}
 
-	protected PropertyElement(Element element) {
+	protected WhilePoshiElement(Element element) {
 		super(_ELEMENT_NAME, element);
 	}
 
-	protected PropertyElement(String readableSyntax) {
+	protected WhilePoshiElement(String readableSyntax) {
 		super(_ELEMENT_NAME, readableSyntax);
 	}
 
-	private static final String _ELEMENT_NAME = "property";
+	private static final String _ELEMENT_NAME = "while";
 
 	static {
 		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
 
 			@Override
-			public PoshiElement newPoshiElement(Element element) {
-				if (isElementType(_ELEMENT_NAME, element)) {
-					return new PropertyElement(element);
+			public BasePoshiElement newPoshiElement(
+				BasePoshiElement parentPoshiElement, String readableSyntax) {
+
+				if (isElementType(parentPoshiElement, readableSyntax)) {
+					return new WhilePoshiElement(readableSyntax);
 				}
 
 				return null;
 			}
 
 			@Override
-			public PoshiElement newPoshiElement(
-				PoshiElement parentPoshiElement, String readableSyntax) {
-
-				if (isElementType(parentPoshiElement, readableSyntax)) {
-					return new PropertyElement(readableSyntax);
+			public BasePoshiElement newPoshiElement(Element element) {
+				if (isElementType(_ELEMENT_NAME, element)) {
+					return new WhilePoshiElement(element);
 				}
 
 				return null;
@@ -76,7 +76,7 @@ public class PropertyElement extends VarElement {
 
 		};
 
-		PoshiElement.addPoshiElementFactory(poshiElementFactory);
+		BasePoshiElement.addPoshiElementFactory(poshiElementFactory);
 	}
 
 }

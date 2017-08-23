@@ -17,12 +17,12 @@
 <%@ include file="/asset_categories_summary/init.jsp" %>
 
 <%
-String className = (String)request.getAttribute("liferay-ui:asset-categories-summary:className");
-long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:asset-categories-summary:classPK"));
-String paramName = GetterUtil.getString((String)request.getAttribute("liferay-ui:asset-categories-summary:paramName"), "categoryId");
-PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:asset-categories-summary:portletURL");
+String className = (String)request.getAttribute("liferay-asset:asset-categories-summary:className");
+long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-asset:asset-categories-summary:classPK"));
+String paramName = GetterUtil.getString((String)request.getAttribute("liferay-asset:asset-categories-summary:paramName"), "categoryId");
+PortletURL portletURL = (PortletURL)request.getAttribute("liferay-asset:asset-categories-summary:portletURL");
 
-List<AssetCategory> categories = (List<AssetCategory>)request.getAttribute("liferay-ui:asset-categories-summary:assetCategories");
+List<AssetCategory> categories = (List<AssetCategory>)request.getAttribute("liferay-asset:asset-categories-summary:assetCategories");
 
 if (ListUtil.isEmpty(categories)) {
 	categories = AssetCategoryServiceUtil.getCategories(className, classPK);

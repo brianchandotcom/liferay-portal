@@ -81,20 +81,20 @@ public class AssetCategoriesSummaryTag<R> extends IncludeTag {
 		}
 
 		request.setAttribute(
-			"liferay-ui:asset-categories-summary:assetCategories",
+			"liferay-asset:asset-categories-summary:assetCategories",
 			assetCategories);
 
 		request.setAttribute(
-			"liferay-ui:asset-categories-summary:className", _className);
+			"liferay-asset:asset-categories-summary:className", _className);
 		request.setAttribute(
-			"liferay-ui:asset-categories-summary:classPK",
+			"liferay-asset:asset-categories-summary:classPK",
 			String.valueOf(_classPK));
 		request.setAttribute(
-			"liferay-ui:asset-categories-summary:message", _message);
+			"liferay-asset:asset-categories-summary:message", _message);
 		request.setAttribute(
-			"liferay-ui:asset-categories-summary:paramName", _paramName);
+			"liferay-asset:asset-categories-summary:paramName", _paramName);
 		request.setAttribute(
-			"liferay-ui:asset-categories-summary:portletURL", _portletURL);
+			"liferay-asset:asset-categories-summary:portletURL", _portletURL);
 	}
 
 	private static final String _PAGE = "/asset_categories_summary/page.jsp";

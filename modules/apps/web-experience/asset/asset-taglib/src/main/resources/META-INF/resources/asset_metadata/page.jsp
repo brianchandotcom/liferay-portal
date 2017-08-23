@@ -17,8 +17,8 @@
 <%@ include file="/asset_metadata/init.jsp" %>
 
 <%
-AssetEntry assetEntry = (AssetEntry)request.getAttribute("liferay-ui:asset-metadata:assetEntry");
-String[] metadataFields = (String[])request.getAttribute("liferay-ui:asset-metadata:metadataFields");
+AssetEntry assetEntry = (AssetEntry)request.getAttribute("liferay-asset:asset-metadata:assetEntry");
+String[] metadataFields = (String[])request.getAttribute("liferay-asset:asset-metadata:metadataFields");
 %>
 
 <dl class="taglib-asset-metadata">
@@ -26,7 +26,7 @@ String[] metadataFields = (String[])request.getAttribute("liferay-ui:asset-metad
 		<c:when test="<%= metadataFields.length == 1 %>">
 
 			<%
-			request.setAttribute("liferay-ui:asset-metadata:metadataField", metadataFields[0]);
+			request.setAttribute("liferay-asset:asset-metadata:metadataField", metadataFields[0]);
 			%>
 
 			<liferay-util:include page="/asset_metadata/metadata_entry.jsp" />
@@ -35,7 +35,7 @@ String[] metadataFields = (String[])request.getAttribute("liferay-ui:asset-metad
 			<c:if test='<%= ArrayUtil.contains(metadataFields, String.valueOf("author")) %>'>
 
 				<%
-				request.setAttribute("liferay-ui:asset-metadata:metadataField", "author");
+				request.setAttribute("liferay-asset:asset-metadata:metadataField", "author");
 
 				metadataFields = ArrayUtil.remove(metadataFields, String.valueOf("author"));
 				%>
@@ -47,7 +47,7 @@ String[] metadataFields = (String[])request.getAttribute("liferay-ui:asset-metad
 
 				<%
 				for (String metadataField : metadataFields) {
-					request.setAttribute("liferay-ui:asset-metadata:metadataField", metadataField);
+					request.setAttribute("liferay-asset:asset-metadata:metadataField", metadataField);
 				%>
 
 					<liferay-util:include page="/asset_metadata/metadata_entry.jsp" />

@@ -17,12 +17,12 @@
 <%@ include file="/asset_tags_navigation/init.jsp" %>
 
 <%
-long classNameId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:asset-tags-navigation:classNameId"));
-String displayStyle = (String)request.getAttribute("liferay-ui:asset-tags-navigation:displayStyle");
-boolean hidePortletWhenEmpty = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:asset-tags-navigation:hidePortletWhenEmpty"));
-int maxAssetTags = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:asset-tags-navigation:maxAssetTags"));
-boolean showAssetCount = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:asset-tags-navigation:showAssetCount"));
-boolean showZeroAssetCount = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:asset-tags-navigation:showZeroAssetCount"));
+long classNameId = GetterUtil.getLong((String)request.getAttribute("liferay-asset:asset-tags-navigation:classNameId"));
+String displayStyle = (String)request.getAttribute("liferay-asset:asset-tags-navigation:displayStyle");
+boolean hidePortletWhenEmpty = GetterUtil.getBoolean((String)request.getAttribute("liferay-asset:asset-tags-navigation:hidePortletWhenEmpty"));
+int maxAssetTags = GetterUtil.getInteger((String)request.getAttribute("liferay-asset:asset-tags-navigation:maxAssetTags"));
+boolean showAssetCount = GetterUtil.getBoolean((String)request.getAttribute("liferay-asset:asset-tags-navigation:showAssetCount"));
+boolean showZeroAssetCount = GetterUtil.getBoolean((String)request.getAttribute("liferay-asset:asset-tags-navigation:showZeroAssetCount"));
 
 String tag = ParamUtil.getString(request, "tag");
 

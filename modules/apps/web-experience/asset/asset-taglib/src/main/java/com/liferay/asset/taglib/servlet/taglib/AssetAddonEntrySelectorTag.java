@@ -81,14 +81,16 @@ public class AssetAddonEntrySelectorTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(WebKeys.ASSET_ADDON_ENTRIES, _assetAddonEntries);
 		request.setAttribute(
-			"liferay-ui:asset-addon-entry-selector:hiddenInput", _hiddenInput);
+			"liferay-asset:asset-addon-entry-selector:hiddenInput",
+			_hiddenInput);
 		request.setAttribute(
-			"liferay-ui:asset-addon-entry-selector:id", getId());
+			"liferay-asset:asset-addon-entry-selector:id", getId());
 		request.setAttribute(
-			"liferay-ui:asset-addon-entry-selector:selectedAssetAddonEntries",
+			"liferay-asset:asset-addon-entry-selector:" +
+				"selectedAssetAddonEntries",
 			_selectedAssetAddonEntries);
 		request.setAttribute(
-			"liferay-ui:asset-addon-entry-selector:title", _title);
+			"liferay-asset:asset-addon-entry-selector:title", _title);
 	}
 
 	private static final String _PAGE = "/asset_addon_entry_selector/page.jsp";

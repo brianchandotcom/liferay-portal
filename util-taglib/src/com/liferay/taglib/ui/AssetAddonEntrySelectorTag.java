@@ -27,7 +27,10 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Julio Camarero
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.asset.taglib.servlet.taglib.AssetAddonEntrySelectorTag}
  */
+@Deprecated
 public class AssetAddonEntrySelectorTag extends IncludeTag {
 
 	public void setAssetAddonEntries(List<AssetAddonEntry> assetAddonEntries) {

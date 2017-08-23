@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.commerce.service.persistence.CommerceCountryFinder.findByCommerceWarehouses">
+		<![CDATA[
+			SELECT
+				{CommerceCountry.*}
+			FROM
+				CommerceCountry
+			WHERE
+				(CommerceCountry.commerceCountryId IN (
+					SELECT
+						commerceCountryId
+					FROM
+						CommerceWarehouse
+					WHERE
+						(CommerceWarehouse.groupId = ?)
+				))
+			ORDER BY
+				CommerceCountry.priority
+		]]>
+	</sql>
+</custom-sql>

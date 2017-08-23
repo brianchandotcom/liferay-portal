@@ -111,6 +111,18 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 	}
 
 	@Override
+	public List<CommerceCountry> getWarehouseCommerceCountries(long groupId)
+		throws PortalException {
+
+		CommercePermission.check(
+			getPermissionChecker(), groupId,
+			CommerceActionKeys.MANAGE_COMMERCE_WAREHOUSES);
+
+		return commerceCountryLocalService.getWarehouseCommerceCountries(
+			groupId);
+	}
+
+	@Override
 	public CommerceCountry updateCommerceCountry(
 			long commerceCountryId, Map<Locale, String> nameMap,
 			boolean billingAllowed, boolean shippingAllowed,

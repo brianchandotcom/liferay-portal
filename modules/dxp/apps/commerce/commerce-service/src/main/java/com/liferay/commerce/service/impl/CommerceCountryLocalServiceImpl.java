@@ -152,6 +152,11 @@ public class CommerceCountryLocalServiceImpl
 	}
 
 	@Override
+	public List<CommerceCountry> getWarehouseCommerceCountries(long groupId) {
+		return commerceCountryFinder.findByCommerceWarehouses(groupId);
+	}
+
+	@Override
 	public CommerceCountry updateCommerceCountry(
 			long commerceCountryId, Map<Locale, String> nameMap,
 			boolean billingAllowed, boolean shippingAllowed,

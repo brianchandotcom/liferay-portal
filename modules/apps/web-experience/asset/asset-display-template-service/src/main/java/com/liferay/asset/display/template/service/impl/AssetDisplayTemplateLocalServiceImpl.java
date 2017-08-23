@@ -89,7 +89,7 @@ public class AssetDisplayTemplateLocalServiceImpl
 			DDMTemplateManager.TEMPLATE_MODE_CREATE, language, scriptContent,
 			true, false, null, null, serviceContext);
 
-		assetDisplayTemplate.setTemplateId(ddmTemplate.getTemplateId());
+		assetDisplayTemplate.setDDMTemplateId(ddmTemplate.getTemplateId());
 
 		assetDisplayTemplatePersistence.update(assetDisplayTemplate);
 
@@ -113,7 +113,7 @@ public class AssetDisplayTemplateLocalServiceImpl
 		// DDM Template
 
 		_ddmTemplateLocalService.deleteDDMTemplate(
-			assetDisplayTemplate.getTemplateId());
+			assetDisplayTemplate.getDDMTemplateId());
 
 		// Resources
 
@@ -188,7 +188,7 @@ public class AssetDisplayTemplateLocalServiceImpl
 		// DDM Template
 
 		DDMTemplate ddmTemplate = _ddmTemplateManager.getTemplate(
-			assetDisplayTemplate.getTemplateId());
+			assetDisplayTemplate.getDDMTemplateId());
 
 		_ddmTemplateLocalService.updateTemplate(
 			ddmTemplate.getUserId(), ddmTemplate.getTemplateId(),

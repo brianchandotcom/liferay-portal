@@ -1,5 +1,5 @@
-create unique index IX_536510F5 on FragmentCollection (groupId, name[$COLUMN_LENGTH:75$]);
+create unique index IX_F0F44819 on MSBFragmentCollection (groupId, name[$COLUMN_LENGTH:75$]);
 
-create index IX_2095DA5 on FragmentEntry (fragmentCollectionId);
-create index IX_19A0A97F on FragmentEntry (groupId, fragmentCollectionId);
-create unique index IX_CACC7CC1 on FragmentEntry (groupId, name[$COLUMN_LENGTH:75$]);
+create index IX_78A75BC9 on MSBFragmentEntry (fragmentCollectionId);
+create index IX_FC3453DB on MSBFragmentEntry (groupId, fragmentCollectionId);
+create unique index IX_30585F1D on MSBFragmentEntry (groupId, name[$COLUMN_LENGTH:75$]);

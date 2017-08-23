@@ -53,6 +53,19 @@ public class CommerceShippingMethodLocalServiceUtil {
 		return getService().addCommerceShippingMethod(commerceShippingMethod);
 	}
 
+	public static com.liferay.commerce.model.CommerceShippingMethod addCommerceShippingMethod(
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String engineKey,
+		java.util.Map<java.lang.String, java.lang.String> engineParameterMap,
+		double priority, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCommerceShippingMethod(nameMap, descriptionMap,
+			engineKey, engineParameterMap, priority, active, serviceContext);
+	}
+
 	/**
 	* Creates a new commerce shipping method with the primary key. Does not add the commerce shipping method to the database.
 	*
@@ -88,6 +101,10 @@ public class CommerceShippingMethodLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .deleteCommerceShippingMethod(commerceShippingMethodId);
+	}
+
+	public static void deleteCommerceShippingMethods(long groupId) {
+		getService().deleteCommerceShippingMethods(groupId);
 	}
 
 	/**
@@ -215,6 +232,16 @@ public class CommerceShippingMethodLocalServiceUtil {
 		return getService().getCommerceShippingMethods(start, end);
 	}
 
+	public static java.util.List<com.liferay.commerce.model.CommerceShippingMethod> getCommerceShippingMethods(
+		long groupId) {
+		return getService().getCommerceShippingMethods(groupId);
+	}
+
+	public static java.util.List<com.liferay.commerce.model.CommerceShippingMethod> getCommerceShippingMethods(
+		long groupId, boolean active) {
+		return getService().getCommerceShippingMethods(groupId, active);
+	}
+
 	/**
 	* Returns the number of commerce shipping methods.
 	*
@@ -252,6 +279,20 @@ public class CommerceShippingMethodLocalServiceUtil {
 	public static com.liferay.commerce.model.CommerceShippingMethod updateCommerceShippingMethod(
 		com.liferay.commerce.model.CommerceShippingMethod commerceShippingMethod) {
 		return getService().updateCommerceShippingMethod(commerceShippingMethod);
+	}
+
+	public static com.liferay.commerce.model.CommerceShippingMethod updateCommerceShippingMethod(
+		long commerceShippingMethodId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.lang.String, java.lang.String> engineParameterMap,
+		double priority, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCommerceShippingMethod(commerceShippingMethodId,
+			nameMap, descriptionMap, engineParameterMap, priority, active,
+			serviceContext);
 	}
 
 	public static CommerceShippingMethodLocalService getService() {

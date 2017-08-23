@@ -41,6 +41,24 @@ public class CommerceShippingMethodServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceShippingMethodServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.commerce.model.CommerceShippingMethod addCommerceShippingMethod(
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String engineKey,
+		java.util.Map<java.lang.String, java.lang.String> engineParameterMap,
+		double priority, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCommerceShippingMethod(nameMap, descriptionMap,
+			engineKey, engineParameterMap, priority, active, serviceContext);
+	}
+
+	public static void deleteCommerceShippingMethod(
+		long commerceShippingMethodId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCommerceShippingMethod(commerceShippingMethodId);
+	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -49,6 +67,20 @@ public class CommerceShippingMethodServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.commerce.model.CommerceShippingMethod updateCommerceShippingMethod(
+		long commerceShippingMethodId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.lang.String, java.lang.String> engineParameterMap,
+		double priority, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCommerceShippingMethod(commerceShippingMethodId,
+			nameMap, descriptionMap, engineParameterMap, priority, active,
+			serviceContext);
 	}
 
 	public static CommerceShippingMethodService getService() {

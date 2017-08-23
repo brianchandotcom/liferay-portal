@@ -16,14 +16,20 @@ package com.liferay.commerce.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.model.CommerceShippingMethod;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the remote service interface for CommerceShippingMethod. Methods of this
@@ -49,6 +55,16 @@ public interface CommerceShippingMethodService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceShippingMethodServiceUtil} to access the commerce shipping method remote service. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceShippingMethodServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public CommerceShippingMethod addCommerceShippingMethod(
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap,
+		java.lang.String engineKey,
+		Map<java.lang.String, java.lang.String> engineParameterMap,
+		double priority, boolean active, ServiceContext serviceContext)
+		throws PortalException;
+
+	public void deleteCommerceShippingMethod(long commerceShippingMethodId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -56,4 +72,11 @@ public interface CommerceShippingMethodService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	public CommerceShippingMethod updateCommerceShippingMethod(
+		long commerceShippingMethodId, Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap,
+		Map<java.lang.String, java.lang.String> engineParameterMap,
+		double priority, boolean active, ServiceContext serviceContext)
+		throws PortalException;
 }

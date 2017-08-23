@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -37,6 +38,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the local service interface for CommerceShippingMethod. Methods of this
@@ -71,6 +74,14 @@ public interface CommerceShippingMethodLocalService extends BaseLocalService,
 	public CommerceShippingMethod addCommerceShippingMethod(
 		CommerceShippingMethod commerceShippingMethod);
 
+	public CommerceShippingMethod addCommerceShippingMethod(
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap,
+		java.lang.String engineKey,
+		Map<java.lang.String, java.lang.String> engineParameterMap,
+		double priority, boolean active, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Creates a new commerce shipping method with the primary key. Does not add the commerce shipping method to the database.
 	*
@@ -100,6 +111,8 @@ public interface CommerceShippingMethodLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public CommerceShippingMethod deleteCommerceShippingMethod(
 		long commerceShippingMethodId) throws PortalException;
+
+	public void deleteCommerceShippingMethods(long groupId);
 
 	/**
 	* @throws PortalException
@@ -200,6 +213,13 @@ public interface CommerceShippingMethodLocalService extends BaseLocalService,
 	public List<CommerceShippingMethod> getCommerceShippingMethods(int start,
 		int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceShippingMethod> getCommerceShippingMethods(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceShippingMethod> getCommerceShippingMethods(
+		long groupId, boolean active);
+
 	/**
 	* Returns the number of commerce shipping methods.
 	*
@@ -232,4 +252,11 @@ public interface CommerceShippingMethodLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceShippingMethod updateCommerceShippingMethod(
 		CommerceShippingMethod commerceShippingMethod);
+
+	public CommerceShippingMethod updateCommerceShippingMethod(
+		long commerceShippingMethodId, Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap,
+		Map<java.lang.String, java.lang.String> engineParameterMap,
+		double priority, boolean active, ServiceContext serviceContext)
+		throws PortalException;
 }

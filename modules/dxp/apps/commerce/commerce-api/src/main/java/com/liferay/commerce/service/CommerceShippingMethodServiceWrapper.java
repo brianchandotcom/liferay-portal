@@ -34,6 +34,26 @@ public class CommerceShippingMethodServiceWrapper
 		_commerceShippingMethodService = commerceShippingMethodService;
 	}
 
+	@Override
+	public com.liferay.commerce.model.CommerceShippingMethod addCommerceShippingMethod(
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String engineKey,
+		java.util.Map<java.lang.String, java.lang.String> engineParameterMap,
+		double priority, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceShippingMethodService.addCommerceShippingMethod(nameMap,
+			descriptionMap, engineKey, engineParameterMap, priority, active,
+			serviceContext);
+	}
+
+	@Override
+	public void deleteCommerceShippingMethod(long commerceShippingMethodId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commerceShippingMethodService.deleteCommerceShippingMethod(commerceShippingMethodId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -42,6 +62,20 @@ public class CommerceShippingMethodServiceWrapper
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _commerceShippingMethodService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceShippingMethod updateCommerceShippingMethod(
+		long commerceShippingMethodId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.lang.String, java.lang.String> engineParameterMap,
+		double priority, boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceShippingMethodService.updateCommerceShippingMethod(commerceShippingMethodId,
+			nameMap, descriptionMap, engineParameterMap, priority, active,
+			serviceContext);
 	}
 
 	@Override

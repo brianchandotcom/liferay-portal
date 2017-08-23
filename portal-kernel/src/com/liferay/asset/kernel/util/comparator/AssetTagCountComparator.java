@@ -21,7 +21,10 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
  * @author Miguel Pastor
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.asset.util.comparator.AssetTagCountComparator}
  */
+@Deprecated
 @ProviderType
 public class AssetTagCountComparator extends OrderByComparator<AssetTag> {
 

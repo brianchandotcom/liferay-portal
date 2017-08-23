@@ -123,12 +123,14 @@ public class AssetLinksTag extends IncludeTag {
 		}
 
 		request.setAttribute(
-			"liferay-ui:asset-links:assetEntryId",
+			"liferay-asset:asset-links:assetEntryId",
 			String.valueOf(_assetEntryId));
 
-		request.setAttribute("liferay-ui:asset-links:assetLinks", assetLinks);
+		request.setAttribute(
+			"liferay-asset:asset-links:assetLinks", assetLinks);
 
-		request.setAttribute("liferay-ui:asset-links:portletURL", _portletURL);
+		request.setAttribute(
+			"liferay-asset:asset-links:portletURL", _portletURL);
 	}
 
 	private static final String _PAGE = "/asset_links/page.jsp";

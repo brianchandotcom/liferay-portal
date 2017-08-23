@@ -17,14 +17,14 @@
 <%@ include file="/asset_add_button/init.jsp" %>
 
 <%
-boolean addDisplayPageParameter = GetterUtil.getBoolean(request.getAttribute("liferay-ui:asset-add-button:addDisplayPageParameter"));
-long[] allAssetCategoryIds = GetterUtil.getLongValues(request.getAttribute("liferay-ui:asset-add-button:allAssetCategoryIds"), null);
-String[] allAssetTagNames = GetterUtil.getStringValues(request.getAttribute("liferay-ui:asset-add-button:allAssetTagNames"), null);
-long[] classNameIds = GetterUtil.getLongValues(request.getAttribute("liferay-ui:asset-add-button:classNameIds"));
-long[] classTypeIds = GetterUtil.getLongValues(request.getAttribute("liferay-ui:asset-add-button:classTypeIds"));
-long[] groupIds = GetterUtil.getLongValues(request.getAttribute("liferay-ui:asset-add-button:groupIds"));
-String redirect = (String)request.getAttribute("liferay-ui:asset-add-button:redirect");
-boolean useDialog = GetterUtil.getBoolean(request.getAttribute("liferay-ui:asset-add-button:useDialog"), true);
+boolean addDisplayPageParameter = GetterUtil.getBoolean(request.getAttribute("liferay-asset:asset-add-button:addDisplayPageParameter"));
+long[] allAssetCategoryIds = GetterUtil.getLongValues(request.getAttribute("liferay-asset:asset-add-button:allAssetCategoryIds"), null);
+String[] allAssetTagNames = GetterUtil.getStringValues(request.getAttribute("liferay-asset:asset-add-button:allAssetTagNames"), null);
+long[] classNameIds = GetterUtil.getLongValues(request.getAttribute("liferay-asset:asset-add-button:classNameIds"));
+long[] classTypeIds = GetterUtil.getLongValues(request.getAttribute("liferay-asset:asset-add-button:classTypeIds"));
+long[] groupIds = GetterUtil.getLongValues(request.getAttribute("liferay-asset:asset-add-button:groupIds"));
+String redirect = (String)request.getAttribute("liferay-asset:asset-add-button:redirect");
+boolean useDialog = GetterUtil.getBoolean(request.getAttribute("liferay-asset:asset-add-button:useDialog"), true);
 
 boolean hasAddPortletURLs = false;
 
@@ -97,7 +97,7 @@ for (long groupId : groupIds) {
 <%
 }
 
-request.setAttribute("liferay-ui:asset-add-button:hasAddPortletURLs", hasAddPortletURLs);
+request.setAttribute("liferay-asset:asset-add-button:hasAddPortletURLs", hasAddPortletURLs);
 %>
 
 <%!

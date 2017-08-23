@@ -410,6 +410,30 @@ public class TopLevelBuild extends BaseBuild {
 		return jobSummaryListElement;
 	}
 
+	protected Element getJobSummaryListElement(boolean success) {
+		Element jobSummaryListElement = Dom4JUtil.getNewElement("ul");
+
+		List<Build> builds = new ArrayList<>();
+
+		builds.add(this);
+
+		builds.addAll(getDownstreamBuilds(null));
+
+		for (Build build : builds) {
+			String result = build.getResult();
+
+			if (result.equals("SUCCESS") == success) {
+				Element jobSummaryListItemElement = Dom4JUtil.getNewElement(
+					"li", jobSummaryListElement);
+
+				jobSummaryListItemElement.add(
+					build.getGitHubMessageBuildAnchorElement());
+			}
+		}
+
+		return jobSummaryListElement;
+	}
+
 	protected Element getMoreDetailsElement() {
 		Element moreDetailsElement = Dom4JUtil.getNewElement(
 			"h5", null, "For more details click ",

@@ -17,38 +17,23 @@ package com.liferay.calendar.upgrade.v2_0_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
-import com.liferay.calendar.model.CalendarBookingConstants;
-import com.liferay.calendar.model.CalendarResource;
-import com.liferay.calendar.service.CalendarBookingLocalService;
+import com.liferay.calendar.model.impl.CalendarBookingImpl;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
-import com.liferay.calendar.upgrade.v2_0_0.UpgradeSchema;
-import com.liferay.calendar.util.CalendarResourceUtil;
-import com.liferay.calendar.util.CalendarUtil;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.calendar.test.util.CalendarBookingTestUtil;
+import com.liferay.calendar.test.util.CalendarTestUtil;
+import com.liferay.calendar.test.util.CalendarUpgradeTestUtil;
+import com.liferay.calendar.test.util.CheckBookingsMessageListenerTestUtil;
+import com.liferay.calendar.test.util.UpgradeDatabaseTestHelper;
+import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.DateUtil;
-import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
-
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -58,17 +43,12 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
-
 /**
  * @author Adam Brandizzi
  */
 @RunWith(Arquillian.class)
 @Sync
-public class UpgradeSchemaTest extends UpgradeSchema {
+public class UpgradeSchemaTest {
 
 	@ClassRule
 	@Rule
@@ -80,48 +60,21 @@ public class UpgradeSchemaTest extends UpgradeSchema {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_user = UserTestUtil.addUser();
+		_calendar = CalendarTestUtil.addCalendar(_group);
 
-		Bundle bundle = FrameworkUtil.getBundle(UpgradeSchemaTest.class);
+		_upgradeDatabaseTestHelper =
+			CalendarUpgradeTestUtil.getUpgradeDatabaseTestHelper();
+		_upgradeSchema = CalendarUpgradeTestUtil.getUpgradeStep(
+			"com.liferay.calendar.internal.upgrade.v2_0_0.UpgradeSchema");
 
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		ServiceReference<?> serviceReference =
-			bundleContext.getServiceReference(
-				"com.liferay.calendar.web.internal.messaging." +
-					"CheckBookingsMessageListener");
-
-		_checkBookingMessageListener = bundleContext.getService(
-			serviceReference);
-
-		ReflectionTestUtil.setFieldValue(
-			_checkBookingMessageListener, "_calendarBookingLocalService",
-			ProxyUtil.newProxyInstance(
-				CalendarBookingLocalService.class.getClassLoader(),
-				new Class<?>[] {CalendarBookingLocalService.class},
-				new InvocationHandler() {
-
-					@Override
-					public Object invoke(
-							Object proxy, Method method, Object[] args)
-						throws Throwable {
-
-						if ("checkCalendarBookings".equals(method.getName())) {
-							return null;
-						}
-
-						return method.invoke(
-							CalendarBookingLocalServiceUtil.getService(), args);
-					}
-
-				}));
+		CheckBookingsMessageListenerTestUtil.setUp();
 	}
 
 	@After
-	public void tearDown() {
-		ReflectionTestUtil.setFieldValue(
-			_checkBookingMessageListener, "_calendarBookingLocalService",
-			CalendarBookingLocalServiceUtil.getService());
+	public void tearDown() throws Exception {
+		CheckBookingsMessageListenerTestUtil.tearDown();
+
+		_upgradeDatabaseTestHelper.close();
 	}
 
 	@Test
@@ -130,98 +83,72 @@ public class UpgradeSchemaTest extends UpgradeSchema {
 
 		dropColumnRecurringCalendarBookingId();
 
-		upgrade();
+		assertDoesNotHaveColumn("recurringCalendarBookingId");
 
-		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
-			connection = con;
+		_upgradeSchema.upgrade();
 
-			Assert.assertTrue(
-				hasColumn("CalendarBooking", "recurringCalendarBookingId"));
-		}
+		assertHasColumn("recurringCalendarBookingId");
 	}
 
 	@Test
 	public void testUpgradeSetsRecurringCalendarBookingId() throws Exception {
-		CalendarBooking calendarBooking = addCalendarBooking();
+		CalendarBooking calendarBooking =
+			CalendarBookingTestUtil.addRegularCalendarBooking(_calendar);
 
 		long recurringCalendarBookingId =
 			calendarBooking.getRecurringCalendarBookingId();
 
 		dropColumnRecurringCalendarBookingId();
 
-		upgrade();
+		_upgradeSchema.upgrade();
 
-		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
-			connection = con;
-
-			Statement statement = connection.createStatement();
-
-			ResultSet rs = statement.executeQuery(
-				"select recurringCalendarBookingId from CalendarBooking " +
-					"where calendarBookingId = " +
-						calendarBooking.getCalendarBookingId());
-
-			rs.next();
-
-			Assert.assertEquals(recurringCalendarBookingId, rs.getLong(1));
-		}
+		assertRecurringCalendarBookingIdValue(
+			calendarBooking, recurringCalendarBookingId);
 	}
 
-	protected Calendar addCalendar() throws PortalException {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
-		serviceContext.setCompanyId(_user.getCompanyId());
-
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
-
-		return calendarResource.getDefaultCalendar();
+	protected void assertDoesNotHaveColumn(String columnName) throws Exception {
+		Assert.assertFalse(
+			_upgradeDatabaseTestHelper.hasColumn(
+				"CalendarBooking", columnName));
 	}
 
-	protected CalendarBooking addCalendarBooking() throws PortalException {
-		Calendar calendar = addCalendar();
+	protected void assertHasColumn(String columnName) throws Exception {
+		Assert.assertTrue(
+			_upgradeDatabaseTestHelper.hasColumn(
+				"CalendarBooking", columnName));
+	}
 
-		long startTime = DateUtil.newTime();
+	protected void assertRecurringCalendarBookingIdValue(
+			CalendarBooking calendarBooking, long recurringCalendarBookingId)
+		throws PortalException {
 
-		return CalendarBookingLocalServiceUtil.addCalendarBooking(
-			_user.getUserId(), calendar.getCalendarId(), new long[0],
-			CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
-			CalendarBookingConstants.RECURRING_CALENDAR_BOOKING_ID_DEFAULT,
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomString(), startTime, startTime + Time.HOUR,
-			false, null, 0, null, 0, null,
-			ServiceContextTestUtil.getServiceContext());
+		EntityCacheUtil.clearCache(CalendarBookingImpl.class);
+
+		Assert.assertNotEquals(
+			0, calendarBooking.getRecurringCalendarBookingId());
+
+		calendarBooking = CalendarBookingLocalServiceUtil.getCalendarBooking(
+			calendarBooking.getCalendarBookingId());
+
+		Assert.assertEquals(
+			recurringCalendarBookingId,
+			calendarBooking.getRecurringCalendarBookingId());
 	}
 
 	protected void dropColumnRecurringCalendarBookingId() throws Exception {
-		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
-			connection = con;
-
-			if (hasColumn("CalendarBooking", "recurringCalendarBookingId")) {
-
-				// Hack through the OSGi classloading, it is not worth exporting
-				// the generated *Table packages just to support this test
-
-				ClassLoader classLoader = CalendarUtil.class.getClassLoader();
-
-				alter(
-					classLoader.loadClass(
-						"com.liferay.calendar.internal.upgrade.v1_0_0.util." +
-							"CalendarBookingTable"),
-					new AlterTableDropColumn("recurringCalendarBookingId"));
-			}
-		}
+		_upgradeDatabaseTestHelper.dropColumn(
+			"com.liferay.calendar.internal.upgrade.v1_0_0.util." +
+				"CalendarBookingTable",
+			"CalendarBooking", "recurringCalendarBookingId");
 	}
 
-	private Object _checkBookingMessageListener;
+	@DeleteAfterTestRun
+	private Calendar _calendar;
 
 	@DeleteAfterTestRun
 	private Group _group;
 
-	@DeleteAfterTestRun
-	private User _user;
+	private UpgradeDatabaseTestHelper _upgradeDatabaseTestHelper;
+	private UpgradeProcess _upgradeSchema;
 
 }

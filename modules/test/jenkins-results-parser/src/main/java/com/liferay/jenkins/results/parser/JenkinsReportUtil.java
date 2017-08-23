@@ -14,84 +14,21 @@
 
 package com.liferay.jenkins.results.parser;
 
-import org.dom4j.Element;
-
 import java.io.IOException;
+
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
+
+import org.dom4j.Element;
 
 /**
  * @author Kenji Heigel
  */
 public class JenkinsReportUtil {
-	public static Element getTimelineElement(
-		Build topLevelBuild, Map<String, Build> builds) {
-
-		long topLevelDuration = topLevelBuild.getDuration();
-		long topLevelStartTime = topLevelBuild.getStartTimestamp();
-
-		int dataPoints = 500;
-
-		long[] invocationData = new long[dataPoints];
-		long[] slaveUsageData = new long[dataPoints];
-
-		for (String key : builds.keySet()) {
-			Build build = builds.get(key);
-
-			long buildDuration = build.getDuration();
-			long buildStartTime = build.getStartTimestamp();
-
-			long buildEndTime = buildDuration + buildStartTime;
-
-			long dataEnd =
-				(buildEndTime - topLevelStartTime) * dataPoints /
-					topLevelDuration;
-			long dataStart =
-				(buildStartTime - topLevelStartTime) * dataPoints /
-					topLevelDuration;
-
-			for (int i = (int)dataStart; i < dataEnd; i++) {
-				slaveUsageData[i] = ++slaveUsageData[i];
-			}
-
-			invocationData[(int)dataStart] = ++invocationData[(int)dataStart];
-		}
-
-		long[] timeData = new long[dataPoints];
-
-//		timeData[0] = topLevelStartTime;
-		timeData[0] = 0;
-
-		for (int i = 1; i < timeData.length; i++) {
-			timeData[i] = timeData[0] + i * topLevelDuration / dataPoints ;
-		}
-
-		Element canvasElement = Dom4JUtil.getNewElement("canvas");
-
-		canvasElement.addAttribute("height", "300");
-		canvasElement.addAttribute("id", "timeline");
-
-		Element scriptElement = Dom4JUtil.getNewElement("script");
-
-		scriptElement.addAttribute("src", _CHART_JS_FILE);
-		scriptElement.addText("");
-
-		Element chartJSScriptElement =
-			getChartJSScriptElement(
-				Arrays.toString(timeData), Arrays.toString(slaveUsageData),
-				Arrays.toString(invocationData));
-
-		Element divElement = Dom4JUtil.getNewElement("div");
-
-		Dom4JUtil.addToElement(
-			divElement, canvasElement, scriptElement, chartJSScriptElement);
-
-		return divElement;
-	}
 
 	public static Element getBasicHeaderElement(
-	Build topLevelBuild, Map<String, Build> builds) {
+		Build topLevelBuild, Map<String, Build> builds) {
 
 		long totalTime = 0;
 
@@ -135,7 +72,7 @@ public class JenkinsReportUtil {
 			Class<?> clazz = JenkinsResultsParserUtil.class;
 
 			resource = JenkinsResultsParserUtil.readInputStream(
-			clazz.getResourceAsStream("chart-template.js"));
+				clazz.getResourceAsStream("chart-template.js"));
 		}
 		catch (IOException ioe) {
 		}
@@ -151,6 +88,71 @@ public class JenkinsReportUtil {
 		return scriptElement;
 	}
 
+	public static Element getTimelineElement(
+		Build topLevelBuild, Map<String, Build> builds) {
+
+		long topLevelDuration = topLevelBuild.getDuration();
+		long topLevelStartTime = topLevelBuild.getStartTimestamp();
+
+		int dataPoints = 500;
+
+		long[] invocationData = new long[dataPoints];
+		long[] slaveUsageData = new long[dataPoints];
+
+		for (String key : builds.keySet()) {
+			Build build = builds.get(key);
+
+			long buildDuration = build.getDuration();
+			long buildStartTime = build.getStartTimestamp();
+
+			long buildEndTime = buildDuration + buildStartTime;
+
+			long dataEnd =
+				(buildEndTime - topLevelStartTime) * dataPoints /
+					topLevelDuration;
+
+			long dataStart =
+				(buildStartTime - topLevelStartTime) * dataPoints /
+					topLevelDuration;
+
+			for (int i = (int)dataStart; i < dataEnd; i++) {
+				slaveUsageData[i] = ++slaveUsageData[i];
+			}
+
+			invocationData[(int)dataStart] = ++invocationData[(int)dataStart];
+		}
+
+		long[] timeData = new long[dataPoints];
+
+		timeData[0] = 0;
+
+		for (int i = 1; i < timeData.length; i++) {
+			timeData[i] = timeData[0] + i * topLevelDuration / dataPoints;
+		}
+
+		Element canvasElement = Dom4JUtil.getNewElement("canvas");
+
+		canvasElement.addAttribute("height", "300");
+		canvasElement.addAttribute("id", "timeline");
+
+		Element scriptElement = Dom4JUtil.getNewElement("script");
+
+		scriptElement.addAttribute("src", _CHART_JS_FILE);
+		scriptElement.addText("");
+
+		Element chartJSScriptElement = getChartJSScriptElement(
+			Arrays.toString(timeData), Arrays.toString(slaveUsageData),
+			Arrays.toString(invocationData));
+
+		Element divElement = Dom4JUtil.getNewElement("div");
+
+		Dom4JUtil.addToElement(
+			divElement, canvasElement, scriptElement, chartJSScriptElement);
+
+		return divElement;
+	}
+
 	private static final String _CHART_JS_FILE =
 		"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js";
+
 }

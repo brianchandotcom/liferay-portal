@@ -26,7 +26,6 @@ import java.io.StringWriter;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -199,9 +198,10 @@ public class TopLevelBuild extends BaseBuild {
 					String key = null;
 
 					try {
-						key = batchBuild.getDisplayName() + "/" +
-						JenkinsResultsParserUtil.getAxisVariable(
-						axisBuild.getBuildURL());
+						key =
+							batchBuild.getDisplayName() + "/" +
+								JenkinsResultsParserUtil.getAxisVariable(
+									axisBuild.getBuildURL());
 					}
 					catch (Exception e) {
 					}
@@ -216,8 +216,7 @@ public class TopLevelBuild extends BaseBuild {
 
 			Dom4JUtil.addToElement(
 				h3Element, "Jenkins timeline for ",
-				Dom4JUtil.getNewAnchorElement(
-					this.getBuildURL(), this.getBuildURL()));
+				Dom4JUtil.getNewAnchorElement(getBuildURL(), getBuildURL()));
 
 			Dom4JUtil.addToElement(
 				divElement, h3Element,
@@ -226,8 +225,7 @@ public class TopLevelBuild extends BaseBuild {
 
 			return divElement;
 		}
-		catch (Exception e)
-		{
+		catch (Exception e) {
 		}
 
 		return null;

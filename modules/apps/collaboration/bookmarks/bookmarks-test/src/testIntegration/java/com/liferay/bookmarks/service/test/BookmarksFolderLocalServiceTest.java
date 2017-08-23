@@ -23,13 +23,14 @@ import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.bookmarks.service.permission.BookmarksFolderPermissionChecker;
 import com.liferay.bookmarks.util.test.BookmarksTestUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.service.ResourceBlockServiceUtil;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -91,9 +92,10 @@ public class BookmarksFolderLocalServiceTest {
 			TestPropsValues.getUserId(), null, 0, StringUtil.randomString(),
 			null, null, RoleConstants.TYPE_SITE, null, serviceContext);
 
-		ResourceBlockServiceUtil.addCompanyScopePermission(
-			_group.getGroupId(), _group.getCompanyId(),
-			BookmarksFolder.class.getName(), role.getRoleId(),
+		ResourcePermissionLocalServiceUtil.addResourcePermission(
+			_group.getCompanyId(), BookmarksFolder.class.getName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(_group.getCompanyId()), role.getRoleId(),
 			ActionKeys.ADD_SUBFOLDER);
 
 		User user = UserTestUtil.addGroupUser(_group, role.getName());

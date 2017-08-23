@@ -17,7 +17,7 @@ package com.liferay.bookmarks.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.annotation.ImplementationClassName;
-import com.liferay.portal.kernel.model.PermissionedModel;
+import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.TreeModel;
 import com.liferay.portal.kernel.util.Accessor;
 
@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.Accessor;
  */
 @ImplementationClassName("com.liferay.bookmarks.model.impl.BookmarksFolderImpl")
 @ProviderType
-public interface BookmarksFolder extends BookmarksFolderModel, PermissionedModel,
+public interface BookmarksFolder extends BookmarksFolderModel, PersistedModel,
 	TreeModel {
 	/*
 	 * NOTE FOR DEVELOPERS:

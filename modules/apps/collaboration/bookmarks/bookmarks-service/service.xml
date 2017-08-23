@@ -21,10 +21,6 @@
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
-		<!-- Permission fields -->
-
-		<column name="resourceBlockId" type="long" />
-
 		<!-- Other fields -->
 
 		<column name="folderId" type="long" />
@@ -123,10 +119,6 @@
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
-
-		<!-- Permission fields -->
-
-		<column name="resourceBlockId" type="long" />
 
 		<!-- Other fields -->
 

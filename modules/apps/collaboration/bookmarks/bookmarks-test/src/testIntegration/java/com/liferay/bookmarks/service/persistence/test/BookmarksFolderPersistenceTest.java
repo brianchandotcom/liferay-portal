@@ -139,8 +139,6 @@ public class BookmarksFolderPersistenceTest {
 
 		newBookmarksFolder.setModifiedDate(RandomTestUtil.nextDate());
 
-		newBookmarksFolder.setResourceBlockId(RandomTestUtil.nextLong());
-
 		newBookmarksFolder.setParentFolderId(RandomTestUtil.nextLong());
 
 		newBookmarksFolder.setTreePath(RandomTestUtil.randomString());
@@ -181,8 +179,6 @@ public class BookmarksFolderPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingBookmarksFolder.getModifiedDate()),
 			Time.getShortTimestamp(newBookmarksFolder.getModifiedDate()));
-		Assert.assertEquals(existingBookmarksFolder.getResourceBlockId(),
-			newBookmarksFolder.getResourceBlockId());
 		Assert.assertEquals(existingBookmarksFolder.getParentFolderId(),
 			newBookmarksFolder.getParentFolderId());
 		Assert.assertEquals(existingBookmarksFolder.getTreePath(),
@@ -203,13 +199,6 @@ public class BookmarksFolderPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingBookmarksFolder.getStatusDate()),
 			Time.getShortTimestamp(newBookmarksFolder.getStatusDate()));
-	}
-
-	@Test
-	public void testCountByResourceBlockId() throws Exception {
-		_persistence.countByResourceBlockId(RandomTestUtil.nextLong());
-
-		_persistence.countByResourceBlockId(0L);
 	}
 
 	@Test
@@ -326,10 +315,10 @@ public class BookmarksFolderPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("BookmarksFolder", "uuid",
 			true, "folderId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "resourceBlockId", true, "parentFolderId",
-			true, "treePath", true, "name", true, "description", true,
-			"lastPublishDate", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true);
+			"modifiedDate", true, "parentFolderId", true, "treePath", true,
+			"name", true, "description", true, "lastPublishDate", true,
+			"status", true, "statusByUserId", true, "statusByUserName", true,
+			"statusDate", true);
 	}
 
 	@Test
@@ -558,8 +547,6 @@ public class BookmarksFolderPersistenceTest {
 		bookmarksFolder.setCreateDate(RandomTestUtil.nextDate());
 
 		bookmarksFolder.setModifiedDate(RandomTestUtil.nextDate());
-
-		bookmarksFolder.setResourceBlockId(RandomTestUtil.nextLong());
 
 		bookmarksFolder.setParentFolderId(RandomTestUtil.nextLong());
 

@@ -10,7 +10,6 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="resourceBlockId" type="long" />
 		<field name="folderId" type="long" />
 		<field name="treePath" type="String">
 			<hint name="max-length">4000</hint>
@@ -45,7 +44,6 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="resourceBlockId" type="long" />
 		<field name="parentFolderId" type="long" />
 		<field name="treePath" type="String">
 			<hint name="max-length">4000</hint>

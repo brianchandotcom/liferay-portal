@@ -139,8 +139,6 @@ public class BookmarksEntryPersistenceTest {
 
 		newBookmarksEntry.setModifiedDate(RandomTestUtil.nextDate());
 
-		newBookmarksEntry.setResourceBlockId(RandomTestUtil.nextLong());
-
 		newBookmarksEntry.setFolderId(RandomTestUtil.nextLong());
 
 		newBookmarksEntry.setTreePath(RandomTestUtil.randomString());
@@ -187,8 +185,6 @@ public class BookmarksEntryPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingBookmarksEntry.getModifiedDate()),
 			Time.getShortTimestamp(newBookmarksEntry.getModifiedDate()));
-		Assert.assertEquals(existingBookmarksEntry.getResourceBlockId(),
-			newBookmarksEntry.getResourceBlockId());
 		Assert.assertEquals(existingBookmarksEntry.getFolderId(),
 			newBookmarksEntry.getFolderId());
 		Assert.assertEquals(existingBookmarksEntry.getTreePath(),
@@ -215,13 +211,6 @@ public class BookmarksEntryPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingBookmarksEntry.getStatusDate()),
 			Time.getShortTimestamp(newBookmarksEntry.getStatusDate()));
-	}
-
-	@Test
-	public void testCountByResourceBlockId() throws Exception {
-		_persistence.countByResourceBlockId(RandomTestUtil.nextLong());
-
-		_persistence.countByResourceBlockId(0L);
 	}
 
 	@Test
@@ -385,11 +374,10 @@ public class BookmarksEntryPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("BookmarksEntry", "uuid",
 			true, "entryId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "resourceBlockId", true, "folderId", true,
-			"treePath", true, "name", true, "url", true, "description", true,
-			"visits", true, "priority", true, "lastPublishDate", true,
-			"status", true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+			"modifiedDate", true, "folderId", true, "treePath", true, "name",
+			true, "url", true, "description", true, "visits", true, "priority",
+			true, "lastPublishDate", true, "status", true, "statusByUserId",
+			true, "statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -618,8 +606,6 @@ public class BookmarksEntryPersistenceTest {
 		bookmarksEntry.setCreateDate(RandomTestUtil.nextDate());
 
 		bookmarksEntry.setModifiedDate(RandomTestUtil.nextDate());
-
-		bookmarksEntry.setResourceBlockId(RandomTestUtil.nextLong());
 
 		bookmarksEntry.setFolderId(RandomTestUtil.nextLong());
 

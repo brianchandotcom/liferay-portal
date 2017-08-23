@@ -11,5 +11,5 @@ Export-Package:\
 	com.liferay.bookmarks.verify
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Bookmarks
-Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Require-SchemaVersion: 2.0.0
 Liferay-Service: true

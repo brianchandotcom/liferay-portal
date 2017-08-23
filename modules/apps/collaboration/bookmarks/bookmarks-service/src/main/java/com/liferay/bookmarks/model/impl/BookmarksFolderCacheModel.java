@@ -66,7 +66,7 @@ public class BookmarksFolderCacheModel implements CacheModel<BookmarksFolder>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -84,8 +84,6 @@ public class BookmarksFolderCacheModel implements CacheModel<BookmarksFolder>,
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", resourceBlockId=");
-		sb.append(resourceBlockId);
 		sb.append(", parentFolderId=");
 		sb.append(parentFolderId);
 		sb.append(", treePath=");
@@ -146,7 +144,6 @@ public class BookmarksFolderCacheModel implements CacheModel<BookmarksFolder>,
 			bookmarksFolderImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		bookmarksFolderImpl.setResourceBlockId(resourceBlockId);
 		bookmarksFolderImpl.setParentFolderId(parentFolderId);
 
 		if (treePath == null) {
@@ -214,8 +211,6 @@ public class BookmarksFolderCacheModel implements CacheModel<BookmarksFolder>,
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
-		resourceBlockId = objectInput.readLong();
-
 		parentFolderId = objectInput.readLong();
 		treePath = objectInput.readUTF();
 		name = objectInput.readUTF();
@@ -256,8 +251,6 @@ public class BookmarksFolderCacheModel implements CacheModel<BookmarksFolder>,
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
-
-		objectOutput.writeLong(resourceBlockId);
 
 		objectOutput.writeLong(parentFolderId);
 
@@ -306,7 +299,6 @@ public class BookmarksFolderCacheModel implements CacheModel<BookmarksFolder>,
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public long resourceBlockId;
 	public long parentFolderId;
 	public String treePath;
 	public String name;

@@ -5,7 +5,7 @@
 <model-resource>
 	<model-name>com.liferay.modern.site.building.fragment</model-name>
 	<portlet-ref>
-		<portlet-name>com_liferay_modern_site_building_fragment_web_portlet_FragmentPortlet</portlet-name>
+		<portlet-name>com_liferay_modern_site_building_fragment_web_portlet_MSBFragmentPortlet</portlet-name>
 	</portlet-ref>
 	<root>true</root>
 	<weight>1</weight>
@@ -33,9 +33,9 @@
 	</permissions>
 </model-resource>
 <model-resource>
-	<model-name>com.liferay.modern.site.building.fragment.model.FragmentCollection</model-name>
+	<model-name>com.liferay.modern.site.building.fragment.model.MSBFragmentCollection</model-name>
 	<portlet-ref>
-		<portlet-name>com_liferay_modern_site_building_fragment_web_portlet_FragmentPortlet</portlet-name>
+		<portlet-name>com_liferay_modern_site_building_fragment_web_portlet_MSBFragmentPortlet</portlet-name>
 	</portlet-ref>
 	<weight>2</weight>
 	<permissions>
@@ -57,9 +57,9 @@
 	</permissions>
 </model-resource>
 <model-resource>
-	<model-name>com.liferay.modern.site.building.fragment.model.FragmentEntry</model-name>
+	<model-name>com.liferay.modern.site.building.fragment.model.MSBFragmentEntry</model-name>
 	<portlet-ref>
-		<portlet-name>com_liferay_modern_site_building_fragment_web_portlet_FragmentPortlet</portlet-name>
+		<portlet-name>com_liferay_modern_site_building_fragment_web_portlet_MSBFragmentPortlet</portlet-name>
 	</portlet-ref>
 	<weight>3</weight>
 	<permissions>

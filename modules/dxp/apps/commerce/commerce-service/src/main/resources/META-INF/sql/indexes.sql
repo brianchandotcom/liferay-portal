@@ -26,3 +26,8 @@ create unique index IX_DBA0714B on CommerceRegion (uuid_[$COLUMN_LENGTH:75$], gr
 
 create index IX_42E5F6EF on CommerceShippingMethod (groupId, active_);
 create unique index IX_C4557F93 on CommerceShippingMethod (groupId, engineKey[$COLUMN_LENGTH:75$]);
+
+create index IX_4500A0CA on CommerceWarehouse (groupId, commerceCountryId);
+
+create index IX_3AF0DDD6 on CommerceWarehouseItem (classNameId, classPK);
+create unique index IX_74C3AC07 on CommerceWarehouseItem (commerceWarehouseId, classNameId, classPK);

@@ -25,4 +25,10 @@
 	<bean class="com.liferay.commerce.service.impl.CommerceShippingMethodLocalServiceImpl" id="com.liferay.commerce.service.CommerceShippingMethodLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceShippingMethodServiceImpl" id="com.liferay.commerce.service.CommerceShippingMethodService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceShippingMethodPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceShippingMethodPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.service.impl.CommerceWarehouseLocalServiceImpl" id="com.liferay.commerce.service.CommerceWarehouseLocalService" />
+	<bean class="com.liferay.commerce.service.impl.CommerceWarehouseServiceImpl" id="com.liferay.commerce.service.CommerceWarehouseService" />
+	<bean class="com.liferay.commerce.service.persistence.impl.CommerceWarehousePersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceWarehousePersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.service.impl.CommerceWarehouseItemLocalServiceImpl" id="com.liferay.commerce.service.CommerceWarehouseItemLocalService" />
+	<bean class="com.liferay.commerce.service.impl.CommerceWarehouseItemServiceImpl" id="com.liferay.commerce.service.CommerceWarehouseItemService" />
+	<bean class="com.liferay.commerce.service.persistence.impl.CommerceWarehouseItemPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceWarehouseItemPersistence" parent="basePersistence" />
 </beans>

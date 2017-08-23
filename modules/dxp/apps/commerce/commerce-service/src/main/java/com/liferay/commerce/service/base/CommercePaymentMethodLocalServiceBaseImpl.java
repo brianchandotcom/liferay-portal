@@ -26,6 +26,8 @@ import com.liferay.commerce.service.persistence.CommerceOrderPersistence;
 import com.liferay.commerce.service.persistence.CommercePaymentMethodPersistence;
 import com.liferay.commerce.service.persistence.CommerceRegionPersistence;
 import com.liferay.commerce.service.persistence.CommerceShippingMethodPersistence;
+import com.liferay.commerce.service.persistence.CommerceWarehouseItemPersistence;
+import com.liferay.commerce.service.persistence.CommerceWarehousePersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -634,6 +636,82 @@ public abstract class CommercePaymentMethodLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the commerce warehouse local service.
+	 *
+	 * @return the commerce warehouse local service
+	 */
+	public com.liferay.commerce.service.CommerceWarehouseLocalService getCommerceWarehouseLocalService() {
+		return commerceWarehouseLocalService;
+	}
+
+	/**
+	 * Sets the commerce warehouse local service.
+	 *
+	 * @param commerceWarehouseLocalService the commerce warehouse local service
+	 */
+	public void setCommerceWarehouseLocalService(
+		com.liferay.commerce.service.CommerceWarehouseLocalService commerceWarehouseLocalService) {
+		this.commerceWarehouseLocalService = commerceWarehouseLocalService;
+	}
+
+	/**
+	 * Returns the commerce warehouse persistence.
+	 *
+	 * @return the commerce warehouse persistence
+	 */
+	public CommerceWarehousePersistence getCommerceWarehousePersistence() {
+		return commerceWarehousePersistence;
+	}
+
+	/**
+	 * Sets the commerce warehouse persistence.
+	 *
+	 * @param commerceWarehousePersistence the commerce warehouse persistence
+	 */
+	public void setCommerceWarehousePersistence(
+		CommerceWarehousePersistence commerceWarehousePersistence) {
+		this.commerceWarehousePersistence = commerceWarehousePersistence;
+	}
+
+	/**
+	 * Returns the commerce warehouse item local service.
+	 *
+	 * @return the commerce warehouse item local service
+	 */
+	public com.liferay.commerce.service.CommerceWarehouseItemLocalService getCommerceWarehouseItemLocalService() {
+		return commerceWarehouseItemLocalService;
+	}
+
+	/**
+	 * Sets the commerce warehouse item local service.
+	 *
+	 * @param commerceWarehouseItemLocalService the commerce warehouse item local service
+	 */
+	public void setCommerceWarehouseItemLocalService(
+		com.liferay.commerce.service.CommerceWarehouseItemLocalService commerceWarehouseItemLocalService) {
+		this.commerceWarehouseItemLocalService = commerceWarehouseItemLocalService;
+	}
+
+	/**
+	 * Returns the commerce warehouse item persistence.
+	 *
+	 * @return the commerce warehouse item persistence
+	 */
+	public CommerceWarehouseItemPersistence getCommerceWarehouseItemPersistence() {
+		return commerceWarehouseItemPersistence;
+	}
+
+	/**
+	 * Sets the commerce warehouse item persistence.
+	 *
+	 * @param commerceWarehouseItemPersistence the commerce warehouse item persistence
+	 */
+	public void setCommerceWarehouseItemPersistence(
+		CommerceWarehouseItemPersistence commerceWarehouseItemPersistence) {
+		this.commerceWarehouseItemPersistence = commerceWarehouseItemPersistence;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -830,6 +908,14 @@ public abstract class CommercePaymentMethodLocalServiceBaseImpl
 	protected com.liferay.commerce.service.CommerceShippingMethodLocalService commerceShippingMethodLocalService;
 	@BeanReference(type = CommerceShippingMethodPersistence.class)
 	protected CommerceShippingMethodPersistence commerceShippingMethodPersistence;
+	@BeanReference(type = com.liferay.commerce.service.CommerceWarehouseLocalService.class)
+	protected com.liferay.commerce.service.CommerceWarehouseLocalService commerceWarehouseLocalService;
+	@BeanReference(type = CommerceWarehousePersistence.class)
+	protected CommerceWarehousePersistence commerceWarehousePersistence;
+	@BeanReference(type = com.liferay.commerce.service.CommerceWarehouseItemLocalService.class)
+	protected com.liferay.commerce.service.CommerceWarehouseItemLocalService commerceWarehouseItemLocalService;
+	@BeanReference(type = CommerceWarehouseItemPersistence.class)
+	protected CommerceWarehouseItemPersistence commerceWarehouseItemPersistence;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)

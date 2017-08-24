@@ -42,7 +42,7 @@ if (Validator.isNotNull(workflowDefinition)) {
 	}
 }
 
-Integer status = WorkflowConstants.STATUS_DRAFT;
+int status = WorkflowConstants.STATUS_DRAFT;
 
 if (tabs1.equals("published")) {
 	status = WorkflowConstants.STATUS_APPROVED;

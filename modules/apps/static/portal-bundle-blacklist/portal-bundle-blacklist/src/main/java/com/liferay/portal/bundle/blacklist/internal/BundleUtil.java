@@ -117,6 +117,14 @@ public class BundleUtil {
 
 			return;
 		}
+		else if (location.startsWith("webbundle:")) {
+			WebBundleInstaller webBundleInstaller = new WebBundleInstaller(
+				bundleContext, location, uninstalledBundleData.getStartLevel());
+
+			webBundleInstaller.open();
+
+			return;
+		}
 		else {
 			bundle = bundleContext.installBundle(location);
 		}

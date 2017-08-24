@@ -31,13 +31,11 @@
 	.fieldset {
 		.avatar {
 			max-height: 100%;
-			position: absolute;
 		}
 
 		.lfr-change-logo {
-			display: block;
+			display: inline-block;
 			overflow: hidden;
-			padding-bottom: 56.25%;
 			position: relative;
 		}
 	}

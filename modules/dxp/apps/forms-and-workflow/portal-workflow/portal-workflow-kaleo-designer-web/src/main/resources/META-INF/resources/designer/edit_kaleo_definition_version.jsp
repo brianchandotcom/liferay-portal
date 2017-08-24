@@ -22,9 +22,8 @@
 		<%
 		String mvcPath = ParamUtil.getString(request, "mvcPath", "/designer/edit_kaleo_definition_version.jsp");
 
-		String closeRedirect = ParamUtil.getString(request, "closeRedirect");
-
 		String redirect = ParamUtil.getString(request, "redirect");
+		String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 
 		KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)request.getAttribute(KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION);
 

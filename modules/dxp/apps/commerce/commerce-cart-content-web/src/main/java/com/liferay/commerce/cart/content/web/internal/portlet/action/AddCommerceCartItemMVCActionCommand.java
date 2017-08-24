@@ -106,7 +106,7 @@ public class AddCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
 					CommerceConstants.COMMERCE_CART_DEFAULT_TITLE, type,
 					serviceContext);
 
-				if(!serviceContext.isSignedIn()) {
+				if (!serviceContext.isSignedIn()) {
 					_commerceCartHelper.setGuestCommerceCart(
 						httpServletRequest, httpServletResponse, commerceCart);
 				}

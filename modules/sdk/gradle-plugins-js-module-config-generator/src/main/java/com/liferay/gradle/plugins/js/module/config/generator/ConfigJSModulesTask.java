@@ -171,11 +171,13 @@ public class ConfigJSModulesTask
 	public FileCollection getSourceFiles() {
 		Project project = getProject();
 
-		if (_sourceDir == null) {
+		File sourceDir = getSourceDir();
+
+		if (sourceDir == null) {
 			return project.files();
 		}
 
-		FileTree fileTree = project.fileTree(_sourceDir);
+		FileTree fileTree = project.fileTree(sourceDir);
 
 		return fileTree.matching(_patternFilterable);
 	}

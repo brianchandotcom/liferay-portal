@@ -14,7 +14,15 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.BNDSourceUtil;
+import com.liferay.source.formatter.util.FileUtil;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * @author Hugo Huijser
@@ -28,7 +36,8 @@ public class BNDWebContextPathCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-		String fileName, String absolutePath, String content) {
+			String fileName, String absolutePath, String content)
+		throws Exception {
 
 		if (fileName.endsWith("/bnd.bnd") &&
 			!absolutePath.contains("/testIntegration/") &&
@@ -41,7 +50,8 @@ public class BNDWebContextPathCheck extends BaseFileCheck {
 	}
 
 	private void _checkWebContextPath(
-		String fileName, String absolutePath, String content) {
+			String fileName, String absolutePath, String content)
+		throws IOException {
 
 		String moduleName = BNDSourceUtil.getModuleName(absolutePath);
 
@@ -61,6 +71,50 @@ public class BNDWebContextPathCheck extends BaseFileCheck {
 				fileName, "Incorrect Web-ContextPath '" + webContextPath + "'",
 				"bnd_bundle_information.markdown");
 		}
+
+		if (_hasPackageJSONNameProperty(absolutePath)) {
+			if ((webContextPath == null) ||
+				!webContextPath.equals("/" + moduleName)) {
+
+				addMessage(
+					fileName,
+					"Incorrect Web-ContextPath '" + webContextPath + "'",
+					"bnd_bundle_information.markdown");
+			}
+		}
+	}
+
+	private boolean _hasPackageJSONNameProperty(String absolutePath)
+		throws IOException {
+
+		int pos = absolutePath.lastIndexOf(StringPool.SLASH);
+
+		File file = new File(
+			absolutePath.substring(0, pos + 1) + "package.json");
+
+		if (!file.exists()) {
+			return false;
+		}
+
+		String content = FileUtil.read(file);
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				line = StringUtil.trim(line);
+
+				if (line.startsWith("'name':") ||
+					line.startsWith("\"name\":")) {
+
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 }

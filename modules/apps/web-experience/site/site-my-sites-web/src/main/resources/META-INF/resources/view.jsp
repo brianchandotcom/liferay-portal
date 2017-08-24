@@ -185,7 +185,7 @@ Map<Long, Integer> groupUsersCounts = UserLocalServiceUtil.searchCounts(company.
 						</c:if>
 
 						<h6 class="text-default">
-							<liferay-ui:asset-tags-summary
+							<liferay-asset:asset-tags-summary
 								className="<%= Group.class.getName() %>"
 								classPK="<%= group.getGroupId() %>"
 							/>
@@ -286,7 +286,7 @@ Map<Long, Integer> groupUsersCounts = UserLocalServiceUtil.searchCounts(company.
 					<liferay-ui:search-container-column-text
 						name="tags"
 					>
-						<liferay-ui:asset-tags-summary
+						<liferay-asset:asset-tags-summary
 							className="<%= Group.class.getName() %>"
 							classPK="<%= group.getGroupId() %>"
 						/>

@@ -126,9 +126,9 @@ if (portletTitleBasedNavigation) {
 				<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(UploadServletRequestConfigurationHelperUtil.getMaxSize(), locale) %>" key="request-is-larger-than-x-and-could-not-be-processed" translateArguments="<%= false %>" />
 			</liferay-ui:error>
 
-			<liferay-ui:asset-categories-error />
+			<liferay-asset:asset-categories-error />
 
-			<liferay-ui:asset-tags-error />
+			<liferay-asset:asset-tags-error />
 
 			<aui:model-context bean="<%= entry %>" model="<%= BlogsEntry.class %>" />
 

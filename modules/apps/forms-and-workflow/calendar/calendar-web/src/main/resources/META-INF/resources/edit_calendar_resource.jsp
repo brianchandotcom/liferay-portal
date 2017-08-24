@@ -50,9 +50,9 @@ String code = BeanParamUtil.getString(calendarResource, request, "code");
 	<liferay-ui:error exception="<%= CalendarResourceNameException.class %>" message="please-enter-a-valid-name" />
 	<liferay-ui:error exception="<%= DuplicateCalendarResourceException.class %>" message="please-enter-a-unique-resource-code" />
 
-	<liferay-ui:asset-categories-error />
+	<liferay-asset:asset-categories-error />
 
-	<liferay-ui:asset-tags-error />
+	<liferay-asset:asset-tags-error />
 
 	<aui:model-context bean="<%= calendarResource %>" model="<%= CalendarResource.class %>" />
 

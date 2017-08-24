@@ -69,7 +69,7 @@ public class CommerceOrderItemLocalServiceImpl
 
 		commerceOrderItem.setTitleMap(cpDefinition.getTitleMap());
 
-		commerceOrderItem.setSku(_getSKU(cpDefinitionId, cpInstanceId));
+		commerceOrderItem.setSku(_getSku(cpDefinitionId, cpInstanceId));
 		commerceOrderItem.setExpandoBridgeAttributes(serviceContext);
 
 		commerceOrderItemPersistence.update(commerceOrderItem);
@@ -203,7 +203,7 @@ public class CommerceOrderItemLocalServiceImpl
 		}
 	}
 
-	private String _getSKU(long cpDefinitionId, long cpInstanceId)
+	private String _getSku(long cpDefinitionId, long cpInstanceId)
 		throws PortalException {
 
 		if (cpInstanceId > 0) {

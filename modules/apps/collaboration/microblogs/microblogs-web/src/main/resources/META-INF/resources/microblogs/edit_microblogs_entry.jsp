@@ -441,7 +441,7 @@ if (comment) {
 
 		var createAutocomplete = function(contentTextarea) {
 			AUI.$.ajax(
-				'<liferay-portlet:resourceURL id="/microblogs/get_json_recipients" />',
+				'<liferay-portlet:resourceURL id="/microblogs/autocomplete_user_mentions" />',
 				{
 					data: {
 						userId: <%= user.getUserId() %>

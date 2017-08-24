@@ -45,11 +45,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + MicroblogsPortletKeys.MICROBLOGS,
-		"mvc.command.name=/microblogs/get_json_recipients"
+		"mvc.command.name=/microblogs/autocomplete_user_mentions"
 	},
 	service = MVCResourceCommand.class
 )
-public class GetJSONRecipientsMVCResourceCommand
+public class AutocompleteUserMentionsMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
 	@Override
@@ -83,7 +83,7 @@ public class GetJSONRecipientsMVCResourceCommand
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		GetJSONRecipientsMVCResourceCommand.class);
+		AutocompleteUserMentionsMVCResourceCommand.class);
 
 	@Reference
 	private Portal _portal;

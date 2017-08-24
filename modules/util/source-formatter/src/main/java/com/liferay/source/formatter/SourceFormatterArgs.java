@@ -47,6 +47,8 @@ public class SourceFormatterArgs {
 
 	public static final boolean SHOW_DOCUMENTATION = false;
 
+	public static final boolean SHOW_STATUS_UPDATES = false;
+
 	public static final boolean THROW_EXCEPTION = false;
 
 	public String getBaseDirName() {
@@ -103,6 +105,10 @@ public class SourceFormatterArgs {
 
 	public boolean isShowDocumentation() {
 		return _showDocumentation;
+	}
+
+	public boolean isShowStatusUpdates() {
+		return _showStatusUpdates;
 	}
 
 	public boolean isThrowException() {
@@ -182,6 +188,10 @@ public class SourceFormatterArgs {
 		_showDocumentation = showDocumentation;
 	}
 
+	public void setShowStatusUpdates(boolean showStatusUpdates) {
+		_showStatusUpdates = showStatusUpdates;
+	}
+
 	public void setThrowException(boolean throwException) {
 		_throwException = throwException;
 	}
@@ -200,6 +210,7 @@ public class SourceFormatterArgs {
 	private int _processorThreadCount = PROCESSOR_THREAD_COUNT;
 	private List<String> _recentChangesFileNames;
 	private boolean _showDocumentation = SHOW_DOCUMENTATION;
+	private boolean _showStatusUpdates = SHOW_STATUS_UPDATES;
 	private boolean _throwException = THROW_EXCEPTION;
 
 }

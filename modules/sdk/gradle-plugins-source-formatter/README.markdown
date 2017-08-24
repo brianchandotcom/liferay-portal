@@ -104,6 +104,7 @@ Property Name | Type | Default Value | Description
 `printErrors` | `boolean` | `true` | Whether to print formatting errors on the Standard Output stream. It sets the `source.print.errors` argument.
 `processorThreadCount` | `int` | `5` | The number of threads used by Source Formatter. It sets the `processor.thread.count` argument.
 `showDocumentation` | `boolean` | `false` | Whether to show the documentation for the source formatting issues, if present. It sets the `show.documentation` argument.
+`showStatusUpdates` | `boolean` | `false` | Whether to show status updates during source formatting, if present. It sets the `show.status.updates` argument.
 `throwException` | `boolean` | `false` | Whether to fail the build if formatting errors are found. It sets the `source.throw.exception` argument.
 
 ## Additional Configuration

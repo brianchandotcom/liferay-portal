@@ -21,7 +21,7 @@ import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.service.CommerceCartItemService;
 import com.liferay.commerce.util.CommerceCartHelper;
-import com.liferay.commerce.util.PriceCalculationHelper;
+import com.liferay.commerce.util.CommercePriceCalculationHelper;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -47,13 +47,13 @@ public class CommerceCartContentDisplayContext {
 		CommerceCartHelper commerceCartHelper,
 		CommerceCartItemService commerceCartItemService,
 		CPDefinitionHelper cpDefinitionHelper,
-		PriceCalculationHelper priceCalculationHelper) {
+		CommercePriceCalculationHelper commercePriceCalculationHelper) {
 
 		this.httpServletRequest = httpServletRequest;
 		_commerceCartHelper = commerceCartHelper;
 		_commerceCartItemService = commerceCartItemService;
 		this.cpDefinitionHelper = cpDefinitionHelper;
-		_priceCalculationHelper = priceCalculationHelper;
+		_commercePriceCalculationHelper = commercePriceCalculationHelper;
 
 		CPRequestHelper cpRequestHelper = new CPRequestHelper(
 			httpServletRequest);
@@ -86,11 +86,11 @@ public class CommerceCartContentDisplayContext {
 	public double getCommerceCartItemPrice(long commerceCartItemId)
 		throws PortalException {
 
-		return _priceCalculationHelper.getPrice(commerceCartItemId);
+		return _commercePriceCalculationHelper.getPrice(commerceCartItemId);
 	}
 
 	public double getCommerceCartTotal() throws PortalException {
-		return _priceCalculationHelper.getTotal(getCommerceCartId());
+		return _commercePriceCalculationHelper.getTotal(getCommerceCartId());
 	}
 
 	public int getCommerceCartType() {
@@ -160,7 +160,8 @@ public class CommerceCartContentDisplayContext {
 	private CommerceCart _commerceCart;
 	private final CommerceCartHelper _commerceCartHelper;
 	private final CommerceCartItemService _commerceCartItemService;
-	private final PriceCalculationHelper _priceCalculationHelper;
+	private final CommercePriceCalculationHelper
+		_commercePriceCalculationHelper;
 	private SearchContainer<CommerceCartItem> _searchContainer;
 
 }

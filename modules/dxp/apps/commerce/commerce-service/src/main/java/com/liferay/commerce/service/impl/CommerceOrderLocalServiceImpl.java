@@ -18,7 +18,7 @@ import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.base.CommerceOrderLocalServiceBaseImpl;
-import com.liferay.commerce.util.PriceCalculationHelper;
+import com.liferay.commerce.util.CommercePriceCalculationHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -78,7 +78,7 @@ public class CommerceOrderLocalServiceImpl
 		CommerceOrder commerceOrder =
 			commerceOrderLocalService.addCommerceOrder(
 				commerceCart.getUserId(),
-				_priceCalculationHelper.getTotal(commerceCartId),
+				_commercePriceCalculationHelper.getTotal(commerceCartId),
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		// Commerce order items
@@ -89,7 +89,7 @@ public class CommerceOrderLocalServiceImpl
 				QueryUtil.ALL_POS);
 
 		for (CommerceCartItem commerceCartItem : commerceCartItems) {
-			double price = _priceCalculationHelper.getPrice(
+			double price = _commercePriceCalculationHelper.getPrice(
 				commerceCartItem.getCPDefinitionId(),
 				commerceCartItem.getCPInstanceId(),
 				commerceCartItem.getQuantity());
@@ -162,6 +162,6 @@ public class CommerceOrderLocalServiceImpl
 	}
 
 	@Reference
-	private PriceCalculationHelper _priceCalculationHelper;
+	private CommercePriceCalculationHelper _commercePriceCalculationHelper;
 
 }

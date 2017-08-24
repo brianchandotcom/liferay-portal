@@ -19,7 +19,7 @@ import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.service.CommerceCartItemService;
 import com.liferay.commerce.util.CommerceCartHelper;
-import com.liferay.commerce.util.PriceCalculationHelper;
+import com.liferay.commerce.util.CommercePriceCalculationHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -82,7 +82,7 @@ public class CommerceCartContentMiniPortlet extends MVCPortlet {
 					new CommerceCartContentMiniDisplayContext(
 						httpServletRequest, _commerceCartHelper,
 						_commerceCartItemService, _cpDefinitionHelper,
-						_priceCalculationHelper);
+						_commercePriceCalculationHelper);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -105,12 +105,12 @@ public class CommerceCartContentMiniPortlet extends MVCPortlet {
 	private CommerceCartItemService _commerceCartItemService;
 
 	@Reference
+	private CommercePriceCalculationHelper _commercePriceCalculationHelper;
+
+	@Reference
 	private CPDefinitionHelper _cpDefinitionHelper;
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PriceCalculationHelper _priceCalculationHelper;
 
 }

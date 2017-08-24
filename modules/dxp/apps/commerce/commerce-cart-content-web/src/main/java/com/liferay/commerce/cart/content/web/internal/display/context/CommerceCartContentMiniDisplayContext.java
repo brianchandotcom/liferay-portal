@@ -18,7 +18,7 @@ import com.liferay.commerce.cart.content.web.internal.portlet.configuration.Comm
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.service.CommerceCartItemService;
 import com.liferay.commerce.util.CommerceCartHelper;
-import com.liferay.commerce.util.PriceCalculationHelper;
+import com.liferay.commerce.util.CommercePriceCalculationHelper;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -37,12 +37,12 @@ public class CommerceCartContentMiniDisplayContext
 			CommerceCartHelper commerceCartHelper,
 			CommerceCartItemService commerceCartItemService,
 			CPDefinitionHelper cpDefinitionHelper,
-			PriceCalculationHelper priceCalculationHelper)
+			CommercePriceCalculationHelper commercePriceCalculationHelper)
 		throws ConfigurationException {
 
 		super(
 			httpServletRequest, commerceCartHelper, commerceCartItemService,
-			cpDefinitionHelper, priceCalculationHelper);
+			cpDefinitionHelper, commercePriceCalculationHelper);
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(

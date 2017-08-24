@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Alessio Antonio Rendina
  */
 @ProviderType
-public interface PriceCalculationHelper {
+public interface CommercePriceCalculationHelper {
 
 	public double getPrice(long commerceCartItemId) throws PortalException;
 

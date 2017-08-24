@@ -18,7 +18,7 @@ import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.exception.NoSuchOrderItemException;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
-import com.liferay.commerce.util.PriceCalculationHelper;
+import com.liferay.commerce.util.CommercePriceCalculationHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -120,7 +120,7 @@ public class EditCommerceOrderItemMVCActionCommand
 			_commerceOrderItemLocalService.fetchCommerceOrderItem(
 				commerceOrderItemId);
 
-		double price = _priceCalculationHelper.getPrice(
+		double price = _commercePriceCalculationHelper.getPrice(
 			commerceOrderItem.getCPDefinitionId(),
 			commerceOrderItem.getCPInstanceId(), quantity);
 
@@ -132,6 +132,6 @@ public class EditCommerceOrderItemMVCActionCommand
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
 
 	@Reference
-	private PriceCalculationHelper _priceCalculationHelper;
+	private CommercePriceCalculationHelper _commercePriceCalculationHelper;
 
 }

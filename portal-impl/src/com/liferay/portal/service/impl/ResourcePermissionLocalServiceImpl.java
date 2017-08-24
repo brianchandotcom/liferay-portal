@@ -172,7 +172,7 @@ public class ResourcePermissionLocalServiceImpl
 			String[] ownerPermissions = ownerActionIds.toArray(
 				new String[ownerActionIds.size()]);
 
-			resourcePermissionLocalService.setOwnerResourcePermissions(
+			setOwnerResourcePermissions(
 				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey,
 				ownerRole.getRoleId(), userId, ownerPermissions);
 
@@ -180,7 +180,7 @@ public class ResourcePermissionLocalServiceImpl
 				for (String roleName : modelPermissions.getRoleNames()) {
 					Role role = getRole(companyId, groupId, roleName);
 
-					resourcePermissionLocalService.setResourcePermissions(
+					setResourcePermissions(
 						companyId, name, ResourceConstants.SCOPE_INDIVIDUAL,
 						primKey, role.getRoleId(),
 						modelPermissions.getActionIds(roleName));
@@ -379,7 +379,7 @@ public class ResourcePermissionLocalServiceImpl
 			Role role = roleLocalService.getRole(
 				companyId, RoleConstants.OWNER);
 
-			resourcePermissionLocalService.setOwnerResourcePermissions(
+			setOwnerResourcePermissions(
 				resource.getCompanyId(), resource.getName(),
 				resource.getScope(), resource.getPrimKey(), role.getRoleId(),
 				userId, actionIds.toArray(new String[actionIds.size()]));
@@ -1550,7 +1550,7 @@ public class ResourcePermissionLocalServiceImpl
 			List<String> actionIds = modelPermissions.getActionIdsList(
 				roleName);
 
-			resourcePermissionLocalService.setResourcePermissions(
+			setResourcePermissions(
 				companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey,
 				role.getRoleId(),
 				actionIds.toArray(new String[actionIds.size()]));
@@ -1592,7 +1592,7 @@ public class ResourcePermissionLocalServiceImpl
 
 		Role role = roleLocalService.getDefaultGroupRole(groupId);
 
-		resourcePermissionLocalService.setResourcePermissions(
+		setResourcePermissions(
 			resource.getCompanyId(), resource.getName(), resource.getScope(),
 			resource.getPrimKey(), role.getRoleId(), actionIds);
 	}
@@ -1603,7 +1603,7 @@ public class ResourcePermissionLocalServiceImpl
 		Role guestRole = roleLocalService.getRole(
 			resource.getCompanyId(), RoleConstants.GUEST);
 
-		resourcePermissionLocalService.setResourcePermissions(
+		setResourcePermissions(
 			resource.getCompanyId(), resource.getName(), resource.getScope(),
 			resource.getPrimKey(), guestRole.getRoleId(), actionIds);
 	}

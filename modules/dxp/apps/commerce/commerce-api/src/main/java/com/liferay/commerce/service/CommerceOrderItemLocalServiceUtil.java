@@ -55,12 +55,12 @@ public class CommerceOrderItemLocalServiceUtil {
 
 	public static com.liferay.commerce.model.CommerceOrderItem addCommerceOrderItem(
 		long commerceOrderId, long cpDefinitionId, long cpInstanceId,
-		int quantity, java.lang.String json,
+		int quantity, java.lang.String json, double price,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCommerceOrderItem(commerceOrderId, cpDefinitionId,
-			cpInstanceId, quantity, json, serviceContext);
+			cpInstanceId, quantity, json, price, serviceContext);
 	}
 
 	/**
@@ -298,10 +298,12 @@ public class CommerceOrderItemLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.model.CommerceOrderItem updateCommerceOrderItem(
-		long commerceOrderItemId, int quantity, java.lang.String json)
+		long commerceOrderItemId, int quantity, java.lang.String json,
+		double price)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateCommerceOrderItem(commerceOrderItemId, quantity, json);
+				   .updateCommerceOrderItem(commerceOrderItemId, quantity,
+			json, price);
 	}
 
 	public static void validate(long cpDefinitionId, long cpInstanceId)

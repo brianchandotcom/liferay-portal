@@ -221,6 +221,20 @@ public interface CommerceOrderModel extends BaseModel<CommerceOrder>,
 	public void setOrderUserUuid(String orderUserUuid);
 
 	/**
+	 * Returns the total of this commerce order.
+	 *
+	 * @return the total of this commerce order
+	 */
+	public double getTotal();
+
+	/**
+	 * Sets the total of this commerce order.
+	 *
+	 * @param total the total of this commerce order
+	 */
+	public void setTotal(double total);
+
+	/**
 	 * Returns the status of this commerce order.
 	 *
 	 * @return the status of this commerce order

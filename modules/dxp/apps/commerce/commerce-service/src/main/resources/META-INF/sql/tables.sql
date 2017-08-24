@@ -56,6 +56,7 @@ create table CommerceOrder (
 	createDate DATE null,
 	modifiedDate DATE null,
 	orderUserId LONG,
+	total DOUBLE,
 	status INTEGER
 );
 
@@ -71,7 +72,10 @@ create table CommerceOrderItem (
 	CPDefinitionId LONG,
 	CPInstanceId LONG,
 	quantity INTEGER,
-	json VARCHAR(75) null
+	json VARCHAR(75) null,
+	title STRING null,
+	sku VARCHAR(75) null,
+	price DOUBLE
 );
 
 create table CommercePaymentMethod (

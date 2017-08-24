@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -144,6 +145,12 @@ public class CommerceOrderItemPersistenceTest {
 
 		newCommerceOrderItem.setJson(RandomTestUtil.randomString());
 
+		newCommerceOrderItem.setTitle(RandomTestUtil.randomString());
+
+		newCommerceOrderItem.setSku(RandomTestUtil.randomString());
+
+		newCommerceOrderItem.setPrice(RandomTestUtil.nextDouble());
+
 		_commerceOrderItems.add(_persistence.update(newCommerceOrderItem));
 
 		CommerceOrderItem existingCommerceOrderItem = _persistence.findByPrimaryKey(newCommerceOrderItem.getPrimaryKey());
@@ -174,6 +181,12 @@ public class CommerceOrderItemPersistenceTest {
 			newCommerceOrderItem.getQuantity());
 		Assert.assertEquals(existingCommerceOrderItem.getJson(),
 			newCommerceOrderItem.getJson());
+		Assert.assertEquals(existingCommerceOrderItem.getTitle(),
+			newCommerceOrderItem.getTitle());
+		Assert.assertEquals(existingCommerceOrderItem.getSku(),
+			newCommerceOrderItem.getSku());
+		AssertUtils.assertEquals(existingCommerceOrderItem.getPrice(),
+			newCommerceOrderItem.getPrice());
 	}
 
 	@Test
@@ -224,7 +237,8 @@ public class CommerceOrderItemPersistenceTest {
 			"commerceOrderItemId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "commerceOrderId", true, "CPDefinitionId",
-			true, "CPInstanceId", true, "quantity", true, "json", true);
+			true, "CPInstanceId", true, "quantity", true, "json", true,
+			"title", true, "sku", true, "price", true);
 	}
 
 	@Test
@@ -448,6 +462,12 @@ public class CommerceOrderItemPersistenceTest {
 		commerceOrderItem.setQuantity(RandomTestUtil.nextInt());
 
 		commerceOrderItem.setJson(RandomTestUtil.randomString());
+
+		commerceOrderItem.setTitle(RandomTestUtil.randomString());
+
+		commerceOrderItem.setSku(RandomTestUtil.randomString());
+
+		commerceOrderItem.setPrice(RandomTestUtil.nextDouble());
 
 		_commerceOrderItems.add(_persistence.update(commerceOrderItem));
 

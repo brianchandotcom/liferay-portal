@@ -54,4 +54,6 @@ public interface CommerceOrder extends CommerceOrderModel, PersistedModel {
 				return CommerceOrder.class;
 			}
 		};
+
+	public java.util.List<CommerceOrderItem> getCommerceOrderItems();
 }

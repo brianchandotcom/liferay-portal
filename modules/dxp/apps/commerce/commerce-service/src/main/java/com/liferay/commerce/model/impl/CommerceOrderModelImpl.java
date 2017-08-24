@@ -79,6 +79,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "orderUserId", Types.BIGINT },
+			{ "total", Types.DOUBLE },
 			{ "status", Types.INTEGER }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -92,10 +93,11 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("orderUserId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("total", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceOrder (commerceOrderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,orderUserId LONG,status INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceOrder (commerceOrderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,orderUserId LONG,total DOUBLE,status INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrder";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceOrder.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceOrder.createDate ASC";
@@ -108,7 +110,11 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.commerce.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.liferay.commerce.model.CommerceOrder"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.commerce.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.com.liferay.commerce.model.CommerceOrder"),
+			true);
+	public static final long GROUPID_COLUMN_BITMASK = 1L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -131,6 +137,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setOrderUserId(soapModel.getOrderUserId());
+		model.setTotal(soapModel.getTotal());
 		model.setStatus(soapModel.getStatus());
 
 		return model;
@@ -204,6 +211,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("orderUserId", getOrderUserId());
+		attributes.put("total", getTotal());
 		attributes.put("status", getStatus());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -262,6 +270,12 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 			setOrderUserId(orderUserId);
 		}
 
+		Double total = (Double)attributes.get("total");
+
+		if (total != null) {
+			setTotal(total);
+		}
+
 		Integer status = (Integer)attributes.get("status");
 
 		if (status != null) {
@@ -288,7 +302,19 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 	@Override
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
 		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	@JSON
@@ -353,6 +379,8 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		_columnBitmask = -1L;
+
 		_createDate = createDate;
 	}
 
@@ -402,6 +430,17 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 	@JSON
 	@Override
+	public double getTotal() {
+		return _total;
+	}
+
+	@Override
+	public void setTotal(double total) {
+		_total = total;
+	}
+
+	@JSON
+	@Override
 	public int getStatus() {
 		return _status;
 	}
@@ -409,6 +448,10 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 	@Override
 	public void setStatus(int status) {
 		_status = status;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -446,6 +489,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		commerceOrderImpl.setCreateDate(getCreateDate());
 		commerceOrderImpl.setModifiedDate(getModifiedDate());
 		commerceOrderImpl.setOrderUserId(getOrderUserId());
+		commerceOrderImpl.setTotal(getTotal());
 		commerceOrderImpl.setStatus(getStatus());
 
 		commerceOrderImpl.resetOriginalValues();
@@ -508,7 +552,13 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 	public void resetOriginalValues() {
 		CommerceOrderModelImpl commerceOrderModelImpl = this;
 
+		commerceOrderModelImpl._originalGroupId = commerceOrderModelImpl._groupId;
+
+		commerceOrderModelImpl._setOriginalGroupId = false;
+
 		commerceOrderModelImpl._setModifiedDate = false;
+
+		commerceOrderModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -551,6 +601,8 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 		commerceOrderCacheModel.orderUserId = getOrderUserId();
 
+		commerceOrderCacheModel.total = getTotal();
+
 		commerceOrderCacheModel.status = getStatus();
 
 		return commerceOrderCacheModel;
@@ -558,7 +610,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{commerceOrderId=");
 		sb.append(getCommerceOrderId());
@@ -576,6 +628,8 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		sb.append(getModifiedDate());
 		sb.append(", orderUserId=");
 		sb.append(getOrderUserId());
+		sb.append(", total=");
+		sb.append(getTotal());
 		sb.append(", status=");
 		sb.append(getStatus());
 		sb.append("}");
@@ -585,7 +639,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(34);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.model.CommerceOrder");
@@ -624,6 +678,10 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		sb.append(getOrderUserId());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>total</column-name><column-value><![CDATA[");
+		sb.append(getTotal());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>status</column-name><column-value><![CDATA[");
 		sb.append(getStatus());
 		sb.append("]]></column-value></column>");
@@ -639,6 +697,8 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		};
 	private long _commerceOrderId;
 	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;
@@ -646,6 +706,8 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _orderUserId;
+	private double _total;
 	private int _status;
+	private long _columnBitmask;
 	private CommerceOrder _escapedModel;
 }

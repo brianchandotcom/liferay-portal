@@ -49,11 +49,11 @@ public class CommerceOrderItemLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.model.CommerceOrderItem addCommerceOrderItem(
 		long commerceOrderId, long cpDefinitionId, long cpInstanceId,
-		int quantity, java.lang.String json,
+		int quantity, java.lang.String json, double price,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderItemLocalService.addCommerceOrderItem(commerceOrderId,
-			cpDefinitionId, cpInstanceId, quantity, json, serviceContext);
+			cpDefinitionId, cpInstanceId, quantity, json, price, serviceContext);
 	}
 
 	/**
@@ -318,10 +318,11 @@ public class CommerceOrderItemLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceOrderItem updateCommerceOrderItem(
-		long commerceOrderItemId, int quantity, java.lang.String json)
+		long commerceOrderItemId, int quantity, java.lang.String json,
+		double price)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderItemLocalService.updateCommerceOrderItem(commerceOrderItemId,
-			quantity, json);
+			quantity, json, price);
 	}
 
 	@Override

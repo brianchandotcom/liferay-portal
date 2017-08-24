@@ -42,6 +42,7 @@ public class CommerceOrderSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setOrderUserId(model.getOrderUserId());
+		soapModel.setTotal(model.getTotal());
 		soapModel.setStatus(model.getStatus());
 
 		return soapModel;
@@ -159,6 +160,14 @@ public class CommerceOrderSoap implements Serializable {
 		_orderUserId = orderUserId;
 	}
 
+	public double getTotal() {
+		return _total;
+	}
+
+	public void setTotal(double total) {
+		_total = total;
+	}
+
 	public int getStatus() {
 		return _status;
 	}
@@ -175,5 +184,6 @@ public class CommerceOrderSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _orderUserId;
+	private double _total;
 	private int _status;
 }

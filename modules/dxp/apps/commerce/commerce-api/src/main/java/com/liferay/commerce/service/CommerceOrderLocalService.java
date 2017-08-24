@@ -71,8 +71,8 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder addCommerceOrder(CommerceOrder commerceOrder);
 
-	public CommerceOrder addCommerceOrder(long orderUserId, int status,
-		ServiceContext serviceContext) throws PortalException;
+	public CommerceOrder addCommerceOrder(long orderUserId, double total,
+		int status, ServiceContext serviceContext) throws PortalException;
 
 	public CommerceOrder addCommerceOrderFromCart(long commerceCartId,
 		ServiceContext serviceContext) throws PortalException;
@@ -204,6 +204,14 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceOrder> getCommerceOrders(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrder> getCommerceOrders(long groupId, int start,
+		int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrder> getCommerceOrders(long groupId, int start,
+		int end, OrderByComparator<CommerceOrder> orderByComparator);
+
 	/**
 	* Returns the number of commerce orders.
 	*
@@ -211,6 +219,9 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceOrdersCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceOrdersCount(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

@@ -66,6 +66,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("orderUserId", getOrderUserId());
+		attributes.put("total", getTotal());
 		attributes.put("status", getStatus());
 
 		return attributes;
@@ -121,6 +122,12 @@ public class CommerceOrderWrapper implements CommerceOrder,
 			setOrderUserId(orderUserId);
 		}
 
+		Double total = (Double)attributes.get("total");
+
+		if (total != null) {
+			setTotal(total);
+		}
+
 		Integer status = (Integer)attributes.get("status");
 
 		if (status != null) {
@@ -146,6 +153,11 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	@Override
 	public long getCommerceOrderId() {
 		return _commerceOrder.getCommerceOrderId();
+	}
+
+	@Override
+	public java.util.List<CommerceOrderItem> getCommerceOrderItems() {
+		return _commerceOrder.getCommerceOrderItems();
 	}
 
 	/**
@@ -236,6 +248,16 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	@Override
 	public int getStatus() {
 		return _commerceOrder.getStatus();
+	}
+
+	/**
+	* Returns the total of this commerce order.
+	*
+	* @return the total of this commerce order
+	*/
+	@Override
+	public double getTotal() {
+		return _commerceOrder.getTotal();
 	}
 
 	/**
@@ -412,6 +434,16 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	@Override
 	public void setStatus(int status) {
 		_commerceOrder.setStatus(status);
+	}
+
+	/**
+	* Sets the total of this commerce order.
+	*
+	* @param total the total of this commerce order
+	*/
+	@Override
+	public void setTotal(double total) {
+		_commerceOrder.setTotal(total);
 	}
 
 	/**

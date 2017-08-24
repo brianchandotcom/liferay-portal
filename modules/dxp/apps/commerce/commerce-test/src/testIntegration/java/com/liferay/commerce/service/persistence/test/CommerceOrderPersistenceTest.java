@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -136,6 +137,8 @@ public class CommerceOrderPersistenceTest {
 
 		newCommerceOrder.setOrderUserId(RandomTestUtil.nextLong());
 
+		newCommerceOrder.setTotal(RandomTestUtil.nextDouble());
+
 		newCommerceOrder.setStatus(RandomTestUtil.nextInt());
 
 		_commerceOrders.add(_persistence.update(newCommerceOrder));
@@ -160,8 +163,17 @@ public class CommerceOrderPersistenceTest {
 			Time.getShortTimestamp(newCommerceOrder.getModifiedDate()));
 		Assert.assertEquals(existingCommerceOrder.getOrderUserId(),
 			newCommerceOrder.getOrderUserId());
+		AssertUtils.assertEquals(existingCommerceOrder.getTotal(),
+			newCommerceOrder.getTotal());
 		Assert.assertEquals(existingCommerceOrder.getStatus(),
 			newCommerceOrder.getStatus());
+	}
+
+	@Test
+	public void testCountByGroupId() throws Exception {
+		_persistence.countByGroupId(RandomTestUtil.nextLong());
+
+		_persistence.countByGroupId(0L);
 	}
 
 	@Test
@@ -190,7 +202,8 @@ public class CommerceOrderPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CommerceOrder",
 			"commerceOrderId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "orderUserId", true, "status", true);
+			"modifiedDate", true, "orderUserId", true, "total", true, "status",
+			true);
 	}
 
 	@Test
@@ -405,6 +418,8 @@ public class CommerceOrderPersistenceTest {
 		commerceOrder.setModifiedDate(RandomTestUtil.nextDate());
 
 		commerceOrder.setOrderUserId(RandomTestUtil.nextLong());
+
+		commerceOrder.setTotal(RandomTestUtil.nextDouble());
 
 		commerceOrder.setStatus(RandomTestUtil.nextInt());
 

@@ -48,11 +48,11 @@ public class CommerceOrderLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceOrder addCommerceOrder(
-		long orderUserId, int status,
+		long orderUserId, double total, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceOrderLocalService.addCommerceOrder(orderUserId, status,
-			serviceContext);
+		return _commerceOrderLocalService.addCommerceOrder(orderUserId, total,
+			status, serviceContext);
 	}
 
 	@Override
@@ -241,6 +241,20 @@ public class CommerceOrderLocalServiceWrapper
 		return _commerceOrderLocalService.getCommerceOrders(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrders(
+		long groupId, int start, int end) {
+		return _commerceOrderLocalService.getCommerceOrders(groupId, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrders(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceOrder> orderByComparator) {
+		return _commerceOrderLocalService.getCommerceOrders(groupId, start,
+			end, orderByComparator);
+	}
+
 	/**
 	* Returns the number of commerce orders.
 	*
@@ -249,6 +263,11 @@ public class CommerceOrderLocalServiceWrapper
 	@Override
 	public int getCommerceOrdersCount() {
 		return _commerceOrderLocalService.getCommerceOrdersCount();
+	}
+
+	@Override
+	public int getCommerceOrdersCount(long groupId) {
+		return _commerceOrderLocalService.getCommerceOrdersCount(groupId);
 	}
 
 	@Override

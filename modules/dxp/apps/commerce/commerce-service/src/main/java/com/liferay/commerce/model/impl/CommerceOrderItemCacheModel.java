@@ -66,7 +66,7 @@ public class CommerceOrderItemCacheModel implements CacheModel<CommerceOrderItem
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{commerceOrderItemId=");
 		sb.append(commerceOrderItemId);
@@ -92,6 +92,12 @@ public class CommerceOrderItemCacheModel implements CacheModel<CommerceOrderItem
 		sb.append(quantity);
 		sb.append(", json=");
 		sb.append(json);
+		sb.append(", title=");
+		sb.append(title);
+		sb.append(", sku=");
+		sb.append(sku);
+		sb.append(", price=");
+		sb.append(price);
 		sb.append("}");
 
 		return sb.toString();
@@ -139,6 +145,22 @@ public class CommerceOrderItemCacheModel implements CacheModel<CommerceOrderItem
 			commerceOrderItemImpl.setJson(json);
 		}
 
+		if (title == null) {
+			commerceOrderItemImpl.setTitle(StringPool.BLANK);
+		}
+		else {
+			commerceOrderItemImpl.setTitle(title);
+		}
+
+		if (sku == null) {
+			commerceOrderItemImpl.setSku(StringPool.BLANK);
+		}
+		else {
+			commerceOrderItemImpl.setSku(sku);
+		}
+
+		commerceOrderItemImpl.setPrice(price);
+
 		commerceOrderItemImpl.resetOriginalValues();
 
 		return commerceOrderItemImpl;
@@ -165,6 +187,10 @@ public class CommerceOrderItemCacheModel implements CacheModel<CommerceOrderItem
 
 		quantity = objectInput.readInt();
 		json = objectInput.readUTF();
+		title = objectInput.readUTF();
+		sku = objectInput.readUTF();
+
+		price = objectInput.readDouble();
 	}
 
 	@Override
@@ -202,6 +228,22 @@ public class CommerceOrderItemCacheModel implements CacheModel<CommerceOrderItem
 		else {
 			objectOutput.writeUTF(json);
 		}
+
+		if (title == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(title);
+		}
+
+		if (sku == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(sku);
+		}
+
+		objectOutput.writeDouble(price);
 	}
 
 	public long commerceOrderItemId;
@@ -216,4 +258,7 @@ public class CommerceOrderItemCacheModel implements CacheModel<CommerceOrderItem
 	public long CPInstanceId;
 	public int quantity;
 	public String json;
+	public String title;
+	public String sku;
+	public double price;
 }

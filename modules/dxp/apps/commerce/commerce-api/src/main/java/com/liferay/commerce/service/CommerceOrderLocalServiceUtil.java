@@ -54,10 +54,11 @@ public class CommerceOrderLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder addCommerceOrder(
-		long orderUserId, int status,
+		long orderUserId, double total, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().addCommerceOrder(orderUserId, status, serviceContext);
+		return getService()
+				   .addCommerceOrder(orderUserId, total, status, serviceContext);
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder addCommerceOrderFromCart(
@@ -230,6 +231,18 @@ public class CommerceOrderLocalServiceUtil {
 		return getService().getCommerceOrders(start, end);
 	}
 
+	public static java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrders(
+		long groupId, int start, int end) {
+		return getService().getCommerceOrders(groupId, start, end);
+	}
+
+	public static java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrders(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceOrder> orderByComparator) {
+		return getService()
+				   .getCommerceOrders(groupId, start, end, orderByComparator);
+	}
+
 	/**
 	* Returns the number of commerce orders.
 	*
@@ -237,6 +250,10 @@ public class CommerceOrderLocalServiceUtil {
 	*/
 	public static int getCommerceOrdersCount() {
 		return getService().getCommerceOrdersCount();
+	}
+
+	public static int getCommerceOrdersCount(long groupId) {
+		return getService().getCommerceOrdersCount(groupId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {

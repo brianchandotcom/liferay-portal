@@ -24,6 +24,7 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
+import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -33,9 +34,12 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -45,7 +49,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * The base model implementation for the CommerceOrderItem service. Represents a row in the &quot;CommerceOrderItem&quot; database table, with each column mapped to a property of this class.
@@ -82,7 +89,10 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 			{ "CPDefinitionId", Types.BIGINT },
 			{ "CPInstanceId", Types.BIGINT },
 			{ "quantity", Types.INTEGER },
-			{ "json", Types.VARCHAR }
+			{ "json", Types.VARCHAR },
+			{ "title", Types.VARCHAR },
+			{ "sku", Types.VARCHAR },
+			{ "price", Types.DOUBLE }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -99,9 +109,12 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 		TABLE_COLUMNS_MAP.put("CPInstanceId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("quantity", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("json", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("sku", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("price", Types.DOUBLE);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceOrderItem (commerceOrderItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceOrderId LONG,CPDefinitionId LONG,CPInstanceId LONG,quantity INTEGER,json VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceOrderItem (commerceOrderItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceOrderId LONG,CPDefinitionId LONG,CPInstanceId LONG,quantity INTEGER,json VARCHAR(75) null,title STRING null,sku VARCHAR(75) null,price DOUBLE)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrderItem";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceOrderItem.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceOrderItem.createDate ASC";
@@ -147,6 +160,9 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 		model.setCPInstanceId(soapModel.getCPInstanceId());
 		model.setQuantity(soapModel.getQuantity());
 		model.setJson(soapModel.getJson());
+		model.setTitle(soapModel.getTitle());
+		model.setSku(soapModel.getSku());
+		model.setPrice(soapModel.getPrice());
 
 		return model;
 	}
@@ -224,6 +240,9 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 		attributes.put("CPInstanceId", getCPInstanceId());
 		attributes.put("quantity", getQuantity());
 		attributes.put("json", getJson());
+		attributes.put("title", getTitle());
+		attributes.put("sku", getSku());
+		attributes.put("price", getPrice());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -303,6 +322,24 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 
 		if (json != null) {
 			setJson(json);
+		}
+
+		String title = (String)attributes.get("title");
+
+		if (title != null) {
+			setTitle(title);
+		}
+
+		String sku = (String)attributes.get("sku");
+
+		if (sku != null) {
+			setSku(sku);
+		}
+
+		Double price = (Double)attributes.get("price");
+
+		if (price != null) {
+			setPrice(price);
 		}
 	}
 
@@ -508,6 +545,132 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 		_json = json;
 	}
 
+	@JSON
+	@Override
+	public String getTitle() {
+		if (_title == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _title;
+		}
+	}
+
+	@Override
+	public String getTitle(Locale locale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getTitle(languageId);
+	}
+
+	@Override
+	public String getTitle(Locale locale, boolean useDefault) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getTitle(languageId, useDefault);
+	}
+
+	@Override
+	public String getTitle(String languageId) {
+		return LocalizationUtil.getLocalization(getTitle(), languageId);
+	}
+
+	@Override
+	public String getTitle(String languageId, boolean useDefault) {
+		return LocalizationUtil.getLocalization(getTitle(), languageId,
+			useDefault);
+	}
+
+	@Override
+	public String getTitleCurrentLanguageId() {
+		return _titleCurrentLanguageId;
+	}
+
+	@JSON
+	@Override
+	public String getTitleCurrentValue() {
+		Locale locale = getLocale(_titleCurrentLanguageId);
+
+		return getTitle(locale);
+	}
+
+	@Override
+	public Map<Locale, String> getTitleMap() {
+		return LocalizationUtil.getLocalizationMap(getTitle());
+	}
+
+	@Override
+	public void setTitle(String title) {
+		_title = title;
+	}
+
+	@Override
+	public void setTitle(String title, Locale locale) {
+		setTitle(title, locale, LocaleUtil.getSiteDefault());
+	}
+
+	@Override
+	public void setTitle(String title, Locale locale, Locale defaultLocale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+
+		if (Validator.isNotNull(title)) {
+			setTitle(LocalizationUtil.updateLocalization(getTitle(), "Title",
+					title, languageId, defaultLanguageId));
+		}
+		else {
+			setTitle(LocalizationUtil.removeLocalization(getTitle(), "Title",
+					languageId));
+		}
+	}
+
+	@Override
+	public void setTitleCurrentLanguageId(String languageId) {
+		_titleCurrentLanguageId = languageId;
+	}
+
+	@Override
+	public void setTitleMap(Map<Locale, String> titleMap) {
+		setTitleMap(titleMap, LocaleUtil.getSiteDefault());
+	}
+
+	@Override
+	public void setTitleMap(Map<Locale, String> titleMap, Locale defaultLocale) {
+		if (titleMap == null) {
+			return;
+		}
+
+		setTitle(LocalizationUtil.updateLocalization(titleMap, getTitle(),
+				"Title", LocaleUtil.toLanguageId(defaultLocale)));
+	}
+
+	@JSON
+	@Override
+	public String getSku() {
+		if (_sku == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _sku;
+		}
+	}
+
+	@Override
+	public void setSku(String sku) {
+		_sku = sku;
+	}
+
+	@JSON
+	@Override
+	public double getPrice() {
+		return _price;
+	}
+
+	@Override
+	public void setPrice(double price) {
+		_price = price;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -523,6 +686,67 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
+	public String[] getAvailableLanguageIds() {
+		Set<String> availableLanguageIds = new TreeSet<String>();
+
+		Map<Locale, String> titleMap = getTitleMap();
+
+		for (Map.Entry<Locale, String> entry : titleMap.entrySet()) {
+			Locale locale = entry.getKey();
+			String value = entry.getValue();
+
+			if (Validator.isNotNull(value)) {
+				availableLanguageIds.add(LocaleUtil.toLanguageId(locale));
+			}
+		}
+
+		return availableLanguageIds.toArray(new String[availableLanguageIds.size()]);
+	}
+
+	@Override
+	public String getDefaultLanguageId() {
+		String xml = getTitle();
+
+		if (xml == null) {
+			return StringPool.BLANK;
+		}
+
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		return LocalizationUtil.getDefaultLanguageId(xml, defaultLocale);
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport() throws LocaleException {
+		Locale defaultLocale = LocaleUtil.fromLanguageId(getDefaultLanguageId());
+
+		Locale[] availableLocales = LocaleUtil.fromLanguageIds(getAvailableLanguageIds());
+
+		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(CommerceOrderItem.class.getName(),
+				getPrimaryKey(), defaultLocale, availableLocales);
+
+		prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
+	@Override
+	@SuppressWarnings("unused")
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
+		throws LocaleException {
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		String modelDefaultLanguageId = getDefaultLanguageId();
+
+		String title = getTitle(defaultLocale);
+
+		if (Validator.isNull(title)) {
+			setTitle(getTitle(modelDefaultLanguageId), defaultLocale);
+		}
+		else {
+			setTitle(getTitle(defaultLocale), defaultLocale, defaultLocale);
+		}
 	}
 
 	@Override
@@ -551,6 +775,9 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 		commerceOrderItemImpl.setCPInstanceId(getCPInstanceId());
 		commerceOrderItemImpl.setQuantity(getQuantity());
 		commerceOrderItemImpl.setJson(getJson());
+		commerceOrderItemImpl.setTitle(getTitle());
+		commerceOrderItemImpl.setSku(getSku());
+		commerceOrderItemImpl.setPrice(getPrice());
 
 		commerceOrderItemImpl.resetOriginalValues();
 
@@ -683,12 +910,30 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 			commerceOrderItemCacheModel.json = null;
 		}
 
+		commerceOrderItemCacheModel.title = getTitle();
+
+		String title = commerceOrderItemCacheModel.title;
+
+		if ((title != null) && (title.length() == 0)) {
+			commerceOrderItemCacheModel.title = null;
+		}
+
+		commerceOrderItemCacheModel.sku = getSku();
+
+		String sku = commerceOrderItemCacheModel.sku;
+
+		if ((sku != null) && (sku.length() == 0)) {
+			commerceOrderItemCacheModel.sku = null;
+		}
+
+		commerceOrderItemCacheModel.price = getPrice();
+
 		return commerceOrderItemCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{commerceOrderItemId=");
 		sb.append(getCommerceOrderItemId());
@@ -714,6 +959,12 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 		sb.append(getQuantity());
 		sb.append(", json=");
 		sb.append(getJson());
+		sb.append(", title=");
+		sb.append(getTitle());
+		sb.append(", sku=");
+		sb.append(getSku());
+		sb.append(", price=");
+		sb.append(getPrice());
 		sb.append("}");
 
 		return sb.toString();
@@ -721,7 +972,7 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.model.CommerceOrderItem");
@@ -775,6 +1026,18 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 			"<column><column-name>json</column-name><column-value><![CDATA[");
 		sb.append(getJson());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>title</column-name><column-value><![CDATA[");
+		sb.append(getTitle());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>sku</column-name><column-value><![CDATA[");
+		sb.append(getSku());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>price</column-name><column-value><![CDATA[");
+		sb.append(getPrice());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -804,6 +1067,10 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 	private boolean _setOriginalCPInstanceId;
 	private int _quantity;
 	private String _json;
+	private String _title;
+	private String _titleCurrentLanguageId;
+	private String _sku;
+	private double _price;
 	private long _columnBitmask;
 	private CommerceOrderItem _escapedModel;
 }

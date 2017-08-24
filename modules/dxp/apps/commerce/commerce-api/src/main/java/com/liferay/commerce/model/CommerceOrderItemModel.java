@@ -19,15 +19,19 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
 import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * The base model interface for the CommerceOrderItem service. Represents a row in the &quot;CommerceOrderItem&quot; database table, with each column mapped to a property of this class.
@@ -44,7 +48,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface CommerceOrderItemModel extends BaseModel<CommerceOrderItem>,
-	GroupedModel, ShardedModel {
+	GroupedModel, LocalizedModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -263,6 +267,134 @@ public interface CommerceOrderItemModel extends BaseModel<CommerceOrderItem>,
 	 */
 	public void setJson(String json);
 
+	/**
+	 * Returns the title of this commerce order item.
+	 *
+	 * @return the title of this commerce order item
+	 */
+	public String getTitle();
+
+	/**
+	 * Returns the localized title of this commerce order item in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized title of this commerce order item
+	 */
+	@AutoEscape
+	public String getTitle(Locale locale);
+
+	/**
+	 * Returns the localized title of this commerce order item in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized title of this commerce order item. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@AutoEscape
+	public String getTitle(Locale locale, boolean useDefault);
+
+	/**
+	 * Returns the localized title of this commerce order item in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized title of this commerce order item
+	 */
+	@AutoEscape
+	public String getTitle(String languageId);
+
+	/**
+	 * Returns the localized title of this commerce order item in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized title of this commerce order item
+	 */
+	@AutoEscape
+	public String getTitle(String languageId, boolean useDefault);
+
+	@AutoEscape
+	public String getTitleCurrentLanguageId();
+
+	@AutoEscape
+	public String getTitleCurrentValue();
+
+	/**
+	 * Returns a map of the locales and localized titles of this commerce order item.
+	 *
+	 * @return the locales and localized titles of this commerce order item
+	 */
+	public Map<Locale, String> getTitleMap();
+
+	/**
+	 * Sets the title of this commerce order item.
+	 *
+	 * @param title the title of this commerce order item
+	 */
+	public void setTitle(String title);
+
+	/**
+	 * Sets the localized title of this commerce order item in the language.
+	 *
+	 * @param title the localized title of this commerce order item
+	 * @param locale the locale of the language
+	 */
+	public void setTitle(String title, Locale locale);
+
+	/**
+	 * Sets the localized title of this commerce order item in the language, and sets the default locale.
+	 *
+	 * @param title the localized title of this commerce order item
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	public void setTitle(String title, Locale locale, Locale defaultLocale);
+
+	public void setTitleCurrentLanguageId(String languageId);
+
+	/**
+	 * Sets the localized titles of this commerce order item from the map of locales and localized titles.
+	 *
+	 * @param titleMap the locales and localized titles of this commerce order item
+	 */
+	public void setTitleMap(Map<Locale, String> titleMap);
+
+	/**
+	 * Sets the localized titles of this commerce order item from the map of locales and localized titles, and sets the default locale.
+	 *
+	 * @param titleMap the locales and localized titles of this commerce order item
+	 * @param defaultLocale the default locale
+	 */
+	public void setTitleMap(Map<Locale, String> titleMap, Locale defaultLocale);
+
+	/**
+	 * Returns the sku of this commerce order item.
+	 *
+	 * @return the sku of this commerce order item
+	 */
+	@AutoEscape
+	public String getSku();
+
+	/**
+	 * Sets the sku of this commerce order item.
+	 *
+	 * @param sku the sku of this commerce order item
+	 */
+	public void setSku(String sku);
+
+	/**
+	 * Returns the price of this commerce order item.
+	 *
+	 * @return the price of this commerce order item
+	 */
+	public double getPrice();
+
+	/**
+	 * Sets the price of this commerce order item.
+	 *
+	 * @param price the price of this commerce order item
+	 */
+	public void setPrice(double price);
+
 	@Override
 	public boolean isNew();
 
@@ -295,6 +427,19 @@ public interface CommerceOrderItemModel extends BaseModel<CommerceOrderItem>,
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
+
+	@Override
+	public String[] getAvailableLanguageIds();
+
+	@Override
+	public String getDefaultLanguageId();
+
+	@Override
+	public void prepareLocalizedFieldsForImport() throws LocaleException;
+
+	@Override
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
+		throws LocaleException;
 
 	@Override
 	public Object clone();

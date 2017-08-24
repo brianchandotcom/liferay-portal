@@ -29,19 +29,23 @@ import javax.servlet.http.HttpServletResponse;
 public interface CommerceCartHelper {
 
 	public CommerceCart getCurrentCommerceCart(
-			HttpServletRequest httpServletRequest)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalException;
 
 	public CommerceCart getCurrentCommerceCart(
-			HttpServletRequest httpServletRequest, int type)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, int type)
 		throws PortalException;
 
 	public int getCurrentCommerceCartItemsCount(
-			HttpServletRequest httpServletRequest, int type)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, int type)
 		throws PortalException;
 
-	public void updateCurrentCommerceCart(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, CommerceCart commerceCart);
+	public void setGuestCommerceCart(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, CommerceCart commerceCart)
+		throws PortalException;
 
 }

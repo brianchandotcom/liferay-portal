@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.deploy;
 
 import com.liferay.portal.kernel.model.Plugin;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.tools.ToolDependencies;
 
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class ExtDeployer extends BaseDeployer {
 			}
 		}
 
-		new ExtDeployer(wars, jars);
+		StreamUtil.cleanUp(new ExtDeployer(wars, jars));
 	}
 
 	public ExtDeployer() {

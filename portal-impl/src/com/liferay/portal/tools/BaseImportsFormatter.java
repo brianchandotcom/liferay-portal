@@ -14,11 +14,11 @@
 
 package com.liferay.portal.tools;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -82,12 +82,7 @@ public abstract class BaseImportsFormatter implements ImportsFormatter {
 
 		Set<ImportPackage> importPackages = new TreeSet<>();
 
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(imports));
-
-		String line = null;
-
-		while ((line = unsyncBufferedReader.readLine()) != null) {
+		for (String line : StringUtil.splitLines(imports)) {
 			ImportPackage importPackage = createImportPackage(line);
 
 			if (importPackage != null) {
@@ -125,12 +120,7 @@ public abstract class BaseImportsFormatter implements ImportsFormatter {
 
 		StringBundler sb = new StringBundler();
 
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(imports));
-
-		String line = null;
-
-		while ((line = unsyncBufferedReader.readLine()) != null) {
+		for (String line : StringUtil.splitLines(imports)) {
 			int x = line.indexOf("import ");
 
 			if (x == -1) {

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.tools;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -295,12 +293,7 @@ public class ToolsUtil {
 			break;
 		}
 
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(imports));
-
-		String line = null;
-
-		while ((line = unsyncBufferedReader.readLine()) != null) {
+		for (String line : StringUtil.splitLines(imports)) {
 			int x = line.indexOf("import ");
 
 			if (x == -1) {
@@ -314,10 +307,10 @@ public class ToolsUtil {
 				continue;
 			}
 
-			Pattern pattern3 = Pattern.compile(
-				"\n(.*)(" +
-					StringUtil.replace(importPackageAndClassName, ".", "\\.") +
-						")\\W");
+			String s = StringUtil.replace(
+				importPackageAndClassName, ".", "\\.");
+
+			Pattern pattern3 = Pattern.compile("\n(.*)(" + s + ")\\W");
 
 			outerLoop:
 			while (true) {

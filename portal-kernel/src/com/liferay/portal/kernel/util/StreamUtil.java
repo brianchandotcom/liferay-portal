@@ -41,7 +41,7 @@ public class StreamUtil {
 	public static final boolean FORCE_TIO = GetterUtil.getBoolean(
 		System.getProperty(StreamUtil.class.getName() + ".force.tio"));
 
-	public static void cleanUp(boolean quite, Closeable... closeables) {
+	public static void cleanUp(boolean quiet, Closeable... closeables) {
 		IOException ioException = null;
 
 		for (Closeable closeable : closeables) {
@@ -64,7 +64,7 @@ public class StreamUtil {
 			return;
 		}
 
-		if (quite) {
+		if (quiet) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(ioException, ioException);
 			}

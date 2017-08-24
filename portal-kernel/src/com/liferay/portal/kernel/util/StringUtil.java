@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.highlight.HighlightUtil;
@@ -5230,12 +5229,7 @@ public class StringUtil {
 
 		StringBundler sb = new StringBundler();
 
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(text));
-
-		String s = StringPool.BLANK;
-
-		while ((s = unsyncBufferedReader.readLine()) != null) {
+		for (String s : splitLines(text)) {
 			if (s.length() == 0) {
 				sb.append(lineSeparator);
 

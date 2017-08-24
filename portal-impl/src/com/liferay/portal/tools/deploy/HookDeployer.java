@@ -16,6 +16,7 @@ package com.liferay.portal.tools.deploy;
 
 import com.liferay.portal.kernel.model.Plugin;
 import com.liferay.portal.kernel.plugin.PluginPackage;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.tools.ToolDependencies;
 
 import java.io.File;
@@ -43,7 +44,7 @@ public class HookDeployer extends BaseDeployer {
 			}
 		}
 
-		new HookDeployer(wars, jars);
+		StreamUtil.cleanUp(new HookDeployer(wars, jars));
 	}
 
 	public HookDeployer() {

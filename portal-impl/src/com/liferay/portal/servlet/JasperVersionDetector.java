@@ -54,27 +54,24 @@ public class JasperVersionDetector {
 	}
 
 	private void _initializeJasperVersion() {
-		try {
-			Class<?> clazz = getClass();
+		Class<?> clazz = getClass();
 
-			URL url = clazz.getResource(
-				"/org/apache/jasper/JasperException.class");
+		URL url = clazz.getResource("/org/apache/jasper/JasperException.class");
 
-			if (url == null) {
-				return;
-			}
+		if (url == null) {
+			return;
+		}
 
-			String path = url.getPath();
+		String path = url.getPath();
 
-			int pos = path.indexOf(CharPool.EXCLAMATION);
+		int pos = path.indexOf(CharPool.EXCLAMATION);
 
-			if (pos == -1) {
-				return;
-			}
+		if (pos == -1) {
+			return;
+		}
 
-			URI jarFileURI = new URI(path.substring(0, pos));
-
-			JarFile jarFile = new JarFile(new File(jarFileURI));
+		try (JarFile jarFile = new JarFile(
+				new File(new URI(path.substring(0, pos))))) {
 
 			Manifest manifest = jarFile.getManifest();
 

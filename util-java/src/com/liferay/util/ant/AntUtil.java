@@ -14,12 +14,9 @@
 
 package com.liferay.util.ant;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-
-import java.io.IOException;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import org.apache.tools.ant.BuildEvent;
 import org.apache.tools.ant.BuildLogger;
@@ -46,29 +43,19 @@ public class AntUtil {
 
 				StringBundler sb = new StringBundler();
 
-				try {
-					boolean first = true;
+				boolean first = true;
 
-					UnsyncBufferedReader unsyncBufferedReader =
-						new UnsyncBufferedReader(
-							new UnsyncStringReader(buildEvent.getMessage()));
+				for (String line : StringUtil.splitLines(
+						buildEvent.getMessage())) {
 
-					String line = unsyncBufferedReader.readLine();
-
-					while (line != null) {
-						if (!first) {
-							sb.append(StringPool.OS_EOL);
-						}
-
-						first = false;
-
-						sb.append(StringPool.DOUBLE_SPACE);
-						sb.append(line);
-
-						line = unsyncBufferedReader.readLine();
+					if (!first) {
+						sb.append(StringPool.OS_EOL);
 					}
-				}
-				catch (IOException ioe) {
+
+					first = false;
+
+					sb.append(StringPool.DOUBLE_SPACE);
+					sb.append(line);
 				}
 
 				String message = sb.toString();

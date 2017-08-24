@@ -81,12 +81,7 @@ public abstract class BaseDB implements DB {
 			_log.info("Adding indexes");
 		}
 
-		UnsyncBufferedReader bufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(indexesSQL));
-
-		String sql = null;
-
-		while ((sql = bufferedReader.readLine()) != null) {
+		for (String sql : StringUtil.splitLines(indexesSQL)) {
 			if (Validator.isNull(sql)) {
 				continue;
 			}

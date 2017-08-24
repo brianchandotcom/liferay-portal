@@ -43,7 +43,7 @@ public class MSBFragmentCollectionServiceImpl
 
 		MSBFragmentPermission.check(
 			getPermissionChecker(), groupId,
-			MSBFragmentActionKeys.ADD_FRAGMENT_COLLECTION);
+			MSBFragmentActionKeys.ADD_MSB_FRAGMENT_COLLECTION);
 
 		return msbFragmentCollectionLocalService.addFragmentCollection(
 			getUserId(), groupId, name, description, serviceContext);

@@ -19,9 +19,10 @@ package com.liferay.modern.site.building.fragment.constants;
  */
 public class MSBFragmentActionKeys {
 
-	public static final String ADD_FRAGMENT_COLLECTION =
-		"ADD_FRAGMENT_COLLECTION";
+	public static final String ADD_MSB_FRAGMENT_COLLECTION =
+		"ADD_MSB_FRAGMENT_COLLECTION";
 
-	public static final String ADD_FRAGMENT_ENTRY = "ADD_FRAGMENT_ENTRY";
+	public static final String ADD_MSB_FRAGMENT_ENTRY =
+		"ADD_MSB_FRAGMENT_ENTRY";
 
 }

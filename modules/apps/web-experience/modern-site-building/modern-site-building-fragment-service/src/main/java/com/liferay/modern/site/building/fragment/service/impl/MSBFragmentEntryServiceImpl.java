@@ -43,7 +43,7 @@ public class MSBFragmentEntryServiceImpl
 
 		MSBFragmentPermission.check(
 			getPermissionChecker(), groupId,
-			MSBFragmentActionKeys.ADD_FRAGMENT_ENTRY);
+			MSBFragmentActionKeys.ADD_MSB_FRAGMENT_ENTRY);
 
 		return msbFragmentEntryLocalService.addFragmentEntry(
 			getUserId(), groupId, fragmentCollectionId, name, css, html, js,

@@ -123,7 +123,7 @@ public class AUIUtil {
 			if (inlineField) {
 				sb.append("class=\"");
 				sb.append(baseType);
-				sb.append("-inline\" ");
+				sb.append("-inline\"");
 			}
 		}
 		else {
@@ -137,6 +137,7 @@ public class AUIUtil {
 		}
 
 		if (showForLabel) {
+			sb.append(StringPool.SPACE);
 			sb.append("for=\"");
 			sb.append(HtmlUtil.escapeAttribute(forLabel));
 			sb.append("\"");

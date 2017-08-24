@@ -162,6 +162,7 @@ public class ConfigJSModulesTask
 		return GradleUtil.toFile(getProject(), _outputFile);
 	}
 
+	@Input
 	public File getSourceDir() {
 		return GradleUtil.toFile(getProject(), _sourceDir);
 	}

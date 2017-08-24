@@ -170,8 +170,8 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 				httpServletRequest);
 
 			_commerceCartService.mergeGuestCommerceCart(
-				commerceCart.getCommerceCartId(),
-				guestCommerceCart.getCommerceCartId(), serviceContext);
+				guestCommerceCart.getCommerceCartId(),
+				commerceCart.getCommerceCartId(), serviceContext);
 
 			String domain = CookieKeys.getDomain(httpServletRequest);
 

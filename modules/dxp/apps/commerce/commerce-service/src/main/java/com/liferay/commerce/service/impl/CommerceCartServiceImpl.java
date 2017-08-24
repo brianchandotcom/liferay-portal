@@ -91,12 +91,12 @@ public class CommerceCartServiceImpl extends CommerceCartServiceBaseImpl {
 
 	@Override
 	public void mergeGuestCommerceCart(
-			long userCommerceCartId, long guestCommerceCartId,
+			long guestCommerceCartId, long userCommerceCartId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		commerceCartLocalService.mergeGuestCommerceCart(
-			userCommerceCartId, guestCommerceCartId, serviceContext);
+			guestCommerceCartId, userCommerceCartId, serviceContext);
 	}
 
 }

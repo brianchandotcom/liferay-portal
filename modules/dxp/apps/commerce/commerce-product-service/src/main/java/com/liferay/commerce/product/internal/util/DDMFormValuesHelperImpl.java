@@ -24,14 +24,17 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -79,6 +82,20 @@ public class DDMFormValuesHelperImpl implements DDMFormValuesHelper {
 		ddmFormValues.setDDMFormFieldValues(ddmFormFieldValues);
 
 		return ddmFormValues;
+	}
+
+	public boolean equals(String json1, String json2) throws PortalException {
+		JSONArray jsonArray1 = _jsonFactory.createJSONArray(json1);
+		JSONArray jsonArray2 = _jsonFactory.createJSONArray(json2);
+
+		if (jsonArray1.length() != jsonArray2.length()) {
+			return false;
+		}
+
+		Set<KeyValuePair> set1 = _toSet(jsonArray1);
+		Set<KeyValuePair> set2 = _toSet(jsonArray2);
+
+		return set1.equals(set2);
 	}
 
 	@Override
@@ -137,6 +154,23 @@ public class DDMFormValuesHelperImpl implements DDMFormValuesHelper {
 		jsonObject.put(FIELD_CP_DEFINITION_OPTION_VALUE_REL_ID, valueString);
 
 		return jsonObject;
+	}
+
+	private Set<KeyValuePair> _toSet(JSONArray jsonArray) {
+		Set<KeyValuePair> set = new HashSet<>();
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+
+			String key = jsonObject1.getString(
+				FIELD_CP_DEFINITION_OPTION_REL_ID);
+			String value = jsonObject1.getString(
+				FIELD_CP_DEFINITION_OPTION_VALUE_REL_ID);
+
+			set.add(new KeyValuePair(key, value));
+		}
+
+		return set;
 	}
 
 	@Reference

@@ -32,6 +32,8 @@ public interface DDMFormValuesHelper {
 			DDMForm ddmForm, String json, Locale locale)
 		throws PortalException;
 
+	public boolean equals(String json1, String json2) throws PortalException;
+
 	public String serialize(DDMFormValues ddmFormValues);
 
 }

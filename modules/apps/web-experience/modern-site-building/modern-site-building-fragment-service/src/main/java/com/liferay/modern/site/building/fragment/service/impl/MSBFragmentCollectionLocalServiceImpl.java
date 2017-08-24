@@ -88,7 +88,7 @@ public class MSBFragmentCollectionLocalServiceImpl
 		// Entries
 
 		List<MSBFragmentEntry> fragmentEntries =
-			msbFragmentEntryPersistence.findByFragmentCollectionId(
+			msbFragmentEntryPersistence.findByMSBFragmentCollectionId(
 				fragmentCollection.getFragmentCollectionId());
 
 		for (MSBFragmentEntry fragmentEntry : fragmentEntries) {

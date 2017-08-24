@@ -36,8 +36,9 @@ public class MSBFragmentEntryLocalServiceImpl
 
 	@Override
 	public MSBFragmentEntry addFragmentEntry(
-			long userId, long groupId, long fragmentCollectionId, String name,
-			String css, String html, String js, ServiceContext serviceContext)
+			long userId, long groupId, long msbFragmentCollectionId,
+			String name, String css, String html, String js,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Entry
@@ -55,7 +56,7 @@ public class MSBFragmentEntryLocalServiceImpl
 		fragmentEntry.setCompanyId(user.getCompanyId());
 		fragmentEntry.setUserId(user.getUserId());
 		fragmentEntry.setUserName(user.getFullName());
-		fragmentEntry.setFragmentCollectionId(fragmentCollectionId);
+		fragmentEntry.setMsbFragmentCollectionId(msbFragmentCollectionId);
 		fragmentEntry.setName(name);
 		fragmentEntry.setCss(css);
 		fragmentEntry.setHtml(html);
@@ -99,10 +100,10 @@ public class MSBFragmentEntryLocalServiceImpl
 
 	@Override
 	public List<MSBFragmentEntry> fetchFragmentEntries(
-		long fragmentCollectionId) {
+		long msbFragmentCollectionId) {
 
-		return msbFragmentEntryPersistence.findByFragmentCollectionId(
-			fragmentCollectionId);
+		return msbFragmentEntryPersistence.findByMSBFragmentCollectionId(
+			msbFragmentCollectionId);
 	}
 
 	@Override
@@ -112,35 +113,35 @@ public class MSBFragmentEntryLocalServiceImpl
 
 	@Override
 	public List<MSBFragmentEntry> getFragmentEntries(
-			long fragmentCollectionId, int start, int end)
+			long msbFragmentCollectionId, int start, int end)
 		throws PortalException {
 
-		return msbFragmentEntryPersistence.findByFragmentCollectionId(
-			fragmentCollectionId, start, end);
+		return msbFragmentEntryPersistence.findByMSBFragmentCollectionId(
+			msbFragmentCollectionId, start, end);
 	}
 
 	@Override
 	public List<MSBFragmentEntry> getFragmentEntries(
-			long groupId, long fragmentCollectionId, int start, int end,
+			long groupId, long msbFragmentCollectionId, int start, int end,
 			OrderByComparator<MSBFragmentEntry> orderByComparator)
 		throws PortalException {
 
 		return msbFragmentEntryPersistence.findByG_FC(
-			groupId, fragmentCollectionId, start, end, orderByComparator);
+			groupId, msbFragmentCollectionId, start, end, orderByComparator);
 	}
 
 	@Override
 	public List<MSBFragmentEntry> getFragmentEntries(
-		long groupId, long fragmentCollectionId, String name, int start,
+		long groupId, long msbFragmentCollectionId, String name, int start,
 		int end, OrderByComparator<MSBFragmentEntry> obc) {
 
 		if (Validator.isNull(name)) {
 			return msbFragmentEntryPersistence.findByG_FC(
-				groupId, fragmentCollectionId, start, end, obc);
+				groupId, msbFragmentCollectionId, start, end, obc);
 		}
 
 		return msbFragmentEntryPersistence.findByG_LikeN_FC(
-			groupId, name, fragmentCollectionId, start, end, obc);
+			groupId, name, msbFragmentCollectionId, start, end, obc);
 	}
 
 	@Override

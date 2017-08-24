@@ -72,11 +72,11 @@
 
 		<!-- Other fields -->
 
+		<column name="msbFragmentCollectionId" type="long" />
 		<column name="name" type="String" />
 		<column name="css" type="String" />
 		<column name="html" type="String" />
 		<column name="js" type="String" />
-		<column name="fragmentCollectionId" type="long" />
 
 		<!-- Order -->
 
@@ -89,21 +89,21 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
-		<finder name="FragmentCollectionId" return-type="Collection">
-			<finder-column name="fragmentCollectionId" />
+		<finder name="MSBFragmentCollectionId" return-type="Collection">
+			<finder-column name="msbFragmentCollectionId" />
+		</finder>
+		<finder name="G_MSBFC" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="msbFragmentCollectionId" />
 		</finder>
 		<finder name="G_N" return-type="FragmentEntry" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="name" />
 		</finder>
-		<finder name="G_FC" return-type="Collection">
+		<finder name="G_MSBFC_LikeN" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="fragmentCollectionId" />
-		</finder>
-		<finder name="G_LikeN_FC" return-type="Collection">
-			<finder-column name="groupId" />
+			<finder-column name="msbFragmentCollectionId" />
 			<finder-column case-sensitive="false" comparator="LIKE" name="name" />
-			<finder-column name="fragmentCollectionId" />
 		</finder>
 
 		<!-- References -->

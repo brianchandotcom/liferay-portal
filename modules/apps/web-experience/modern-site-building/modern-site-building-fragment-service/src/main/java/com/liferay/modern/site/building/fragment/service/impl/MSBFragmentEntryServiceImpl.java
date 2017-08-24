@@ -37,7 +37,7 @@ public class MSBFragmentEntryServiceImpl
 
 	@Override
 	public MSBFragmentEntry addFragmentEntry(
-			long groupId, long fragmentCollectionId, String name, String css,
+			long groupId, long msbFragmentCollectionId, String name, String css,
 			String html, String js, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -46,7 +46,7 @@ public class MSBFragmentEntryServiceImpl
 			MSBFragmentActionKeys.ADD_MSB_FRAGMENT_ENTRY);
 
 		return msbFragmentEntryLocalService.addFragmentEntry(
-			getUserId(), groupId, fragmentCollectionId, name, css, html, js,
+			getUserId(), groupId, msbFragmentCollectionId, name, css, html, js,
 			serviceContext);
 	}
 
@@ -94,11 +94,11 @@ public class MSBFragmentEntryServiceImpl
 
 	@Override
 	public List<MSBFragmentEntry> fetchFragmentEntries(
-			long fragmentCollectionId)
+			long msbFragmentCollectionId)
 		throws PortalException {
 
 		return msbFragmentEntryLocalService.fetchFragmentEntries(
-			fragmentCollectionId);
+			msbFragmentCollectionId);
 	}
 
 	@Override
@@ -109,36 +109,36 @@ public class MSBFragmentEntryServiceImpl
 
 	@Override
 	public List<MSBFragmentEntry> getFragmentEntries(
-			long fragmentCollectionId, int start, int end)
+			long msbFragmentCollectionId, int start, int end)
 		throws PortalException {
 
 		return msbFragmentEntryLocalService.getFragmentEntries(
-			fragmentCollectionId, start, end);
+			msbFragmentCollectionId, start, end);
 	}
 
 	@Override
 	public List<MSBFragmentEntry> getFragmentEntries(
-			long groupId, long fragmentCollectionId, int start, int end,
+			long groupId, long msbFragmentCollectionId, int start, int end,
 			OrderByComparator<MSBFragmentEntry> orderByComparator)
 		throws PortalException {
 
 		return msbFragmentEntryLocalService.getFragmentEntries(
-			groupId, fragmentCollectionId, start, end, orderByComparator);
+			groupId, msbFragmentCollectionId, start, end, orderByComparator);
 	}
 
 	@Override
 	public List<MSBFragmentEntry> getFragmentEntries(
-		long groupId, long fragmentCollectionId, String name, int start,
+		long groupId, long msbFragmentCollectionId, String name, int start,
 		int end, OrderByComparator<MSBFragmentEntry> obc) {
 
 		return msbFragmentEntryLocalService.getFragmentEntries(
-			groupId, fragmentCollectionId, name, start, end, obc);
+			groupId, msbFragmentCollectionId, name, start, end, obc);
 	}
 
 	@Override
-	public int getGroupFragmentCollectionsCount(long fragmentCollectionId) {
-		return msbFragmentEntryPersistence.countByFragmentCollectionId(
-			fragmentCollectionId);
+	public int getGroupFragmentCollectionsCount(long msbFragmentCollectionId) {
+		return msbFragmentEntryPersistence.countByMSBFragmentCollectionId(
+			msbFragmentCollectionId);
 	}
 
 	@Override

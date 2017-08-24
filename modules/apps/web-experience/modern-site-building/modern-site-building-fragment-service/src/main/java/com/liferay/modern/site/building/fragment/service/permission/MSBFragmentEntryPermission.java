@@ -117,7 +117,7 @@ public class MSBFragmentEntryPermission implements BaseModelPermissionChecker {
 
 		if (permissionChecker.hasOwnerPermission(
 				fragmentEntry.getCompanyId(), MSBFragmentEntry.class.getName(),
-				fragmentEntry.getFragmentCollectionId(),
+				fragmentEntry.getMsbFragmentCollectionId(),
 				fragmentEntry.getUserId(), actionId) ||
 			permissionChecker.hasPermission(
 				fragmentEntry.getGroupId(), MSBFragmentEntry.class.getName(),

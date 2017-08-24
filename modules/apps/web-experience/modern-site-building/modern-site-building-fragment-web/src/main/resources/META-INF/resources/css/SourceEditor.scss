@@ -1,0 +1,17 @@
+@import "mixins";
+
+.source-editor {
+	border: solid 4px #EEE;
+	box-sizing: border-box;
+	height: 40vh;
+	min-height: 20ch;
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+
+	@include sm {
+		float: left;
+		height: 50%;
+		width: 50%;
+	}
+}

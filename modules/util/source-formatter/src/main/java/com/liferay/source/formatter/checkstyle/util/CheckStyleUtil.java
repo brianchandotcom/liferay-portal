@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.ProgressStatus;
+import com.liferay.source.formatter.ProgressStatusUpdate;
 import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checkstyle.Checker;
 
@@ -39,6 +41,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.BlockingQueue;
 
 import org.xml.sax.InputSource;
 
@@ -48,8 +51,11 @@ import org.xml.sax.InputSource;
 public class CheckStyleUtil {
 
 	public static Set<SourceFormatterMessage> process(
-			Set<File> files, List<File> suppressionsFiles, String baseDirName)
+			Set<File> files, List<File> suppressionsFiles, String baseDirName,
+			BlockingQueue<ProgressStatusUpdate> progressStatusQueue)
 		throws Exception {
+
+		_progressStatusQueue = progressStatusQueue;
 
 		_sourceFormatterMessages.clear();
 
@@ -90,6 +96,7 @@ public class CheckStyleUtil {
 		return checker;
 	}
 
+	private static BlockingQueue<ProgressStatusUpdate> _progressStatusQueue;
 	private static final Set<SourceFormatterMessage> _sourceFormatterMessages =
 		new TreeSet<>();
 
@@ -112,6 +119,19 @@ public class CheckStyleUtil {
 					auditEvent.getMessage(), auditEvent.getLine()));
 
 			super.addError(auditEvent);
+		}
+
+		@Override
+		public void fileFinished(AuditEvent auditEvent) {
+			try {
+				_progressStatusQueue.put(
+					new ProgressStatusUpdate(
+						ProgressStatus.CHECK_STYLE_FILE_COMPLETED));
+			}
+			catch (InterruptedException ie) {
+			}
+
+			super.fileFinished(auditEvent);
 		}
 
 		private Path _getAbsoluteNormalizedPath(String pathName) {

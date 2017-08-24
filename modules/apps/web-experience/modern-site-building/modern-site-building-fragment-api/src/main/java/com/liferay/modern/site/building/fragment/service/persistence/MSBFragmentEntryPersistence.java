@@ -236,141 +236,357 @@ public interface MSBFragmentEntryPersistence extends BasePersistence<MSBFragment
 	public int filterCountByGroupId(long groupId);
 
 	/**
-	* Returns all the msb fragment entries where fragmentCollectionId = &#63;.
+	* Returns all the msb fragment entries where msbFragmentCollectionId = &#63;.
 	*
-	* @param fragmentCollectionId the fragment collection ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
 	* @return the matching msb fragment entries
 	*/
-	public java.util.List<MSBFragmentEntry> findByFragmentCollectionId(
-		long fragmentCollectionId);
+	public java.util.List<MSBFragmentEntry> findByMSBFragmentCollectionId(
+		long msbFragmentCollectionId);
 
 	/**
-	* Returns a range of all the msb fragment entries where fragmentCollectionId = &#63;.
+	* Returns a range of all the msb fragment entries where msbFragmentCollectionId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MSBFragmentEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param fragmentCollectionId the fragment collection ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
 	* @param start the lower bound of the range of msb fragment entries
 	* @param end the upper bound of the range of msb fragment entries (not inclusive)
 	* @return the range of matching msb fragment entries
 	*/
-	public java.util.List<MSBFragmentEntry> findByFragmentCollectionId(
-		long fragmentCollectionId, int start, int end);
+	public java.util.List<MSBFragmentEntry> findByMSBFragmentCollectionId(
+		long msbFragmentCollectionId, int start, int end);
 
 	/**
-	* Returns an ordered range of all the msb fragment entries where fragmentCollectionId = &#63;.
+	* Returns an ordered range of all the msb fragment entries where msbFragmentCollectionId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MSBFragmentEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param fragmentCollectionId the fragment collection ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
 	* @param start the lower bound of the range of msb fragment entries
 	* @param end the upper bound of the range of msb fragment entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching msb fragment entries
 	*/
-	public java.util.List<MSBFragmentEntry> findByFragmentCollectionId(
-		long fragmentCollectionId, int start, int end,
+	public java.util.List<MSBFragmentEntry> findByMSBFragmentCollectionId(
+		long msbFragmentCollectionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator);
 
 	/**
-	* Returns an ordered range of all the msb fragment entries where fragmentCollectionId = &#63;.
+	* Returns an ordered range of all the msb fragment entries where msbFragmentCollectionId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MSBFragmentEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param fragmentCollectionId the fragment collection ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
 	* @param start the lower bound of the range of msb fragment entries
 	* @param end the upper bound of the range of msb fragment entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching msb fragment entries
 	*/
-	public java.util.List<MSBFragmentEntry> findByFragmentCollectionId(
-		long fragmentCollectionId, int start, int end,
+	public java.util.List<MSBFragmentEntry> findByMSBFragmentCollectionId(
+		long msbFragmentCollectionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator,
 		boolean retrieveFromCache);
 
 	/**
-	* Returns the first msb fragment entry in the ordered set where fragmentCollectionId = &#63;.
+	* Returns the first msb fragment entry in the ordered set where msbFragmentCollectionId = &#63;.
 	*
-	* @param fragmentCollectionId the fragment collection ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching msb fragment entry
 	* @throws NoSuchMSBFragmentEntryException if a matching msb fragment entry could not be found
 	*/
-	public MSBFragmentEntry findByFragmentCollectionId_First(
-		long fragmentCollectionId,
+	public MSBFragmentEntry findByMSBFragmentCollectionId_First(
+		long msbFragmentCollectionId,
 		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator)
 		throws NoSuchMSBFragmentEntryException;
 
 	/**
-	* Returns the first msb fragment entry in the ordered set where fragmentCollectionId = &#63;.
+	* Returns the first msb fragment entry in the ordered set where msbFragmentCollectionId = &#63;.
 	*
-	* @param fragmentCollectionId the fragment collection ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching msb fragment entry, or <code>null</code> if a matching msb fragment entry could not be found
 	*/
-	public MSBFragmentEntry fetchByFragmentCollectionId_First(
-		long fragmentCollectionId,
+	public MSBFragmentEntry fetchByMSBFragmentCollectionId_First(
+		long msbFragmentCollectionId,
 		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator);
 
 	/**
-	* Returns the last msb fragment entry in the ordered set where fragmentCollectionId = &#63;.
+	* Returns the last msb fragment entry in the ordered set where msbFragmentCollectionId = &#63;.
 	*
-	* @param fragmentCollectionId the fragment collection ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching msb fragment entry
 	* @throws NoSuchMSBFragmentEntryException if a matching msb fragment entry could not be found
 	*/
-	public MSBFragmentEntry findByFragmentCollectionId_Last(
-		long fragmentCollectionId,
+	public MSBFragmentEntry findByMSBFragmentCollectionId_Last(
+		long msbFragmentCollectionId,
 		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator)
 		throws NoSuchMSBFragmentEntryException;
 
 	/**
-	* Returns the last msb fragment entry in the ordered set where fragmentCollectionId = &#63;.
+	* Returns the last msb fragment entry in the ordered set where msbFragmentCollectionId = &#63;.
 	*
-	* @param fragmentCollectionId the fragment collection ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching msb fragment entry, or <code>null</code> if a matching msb fragment entry could not be found
 	*/
-	public MSBFragmentEntry fetchByFragmentCollectionId_Last(
-		long fragmentCollectionId,
+	public MSBFragmentEntry fetchByMSBFragmentCollectionId_Last(
+		long msbFragmentCollectionId,
 		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator);
 
 	/**
-	* Returns the msb fragment entries before and after the current msb fragment entry in the ordered set where fragmentCollectionId = &#63;.
+	* Returns the msb fragment entries before and after the current msb fragment entry in the ordered set where msbFragmentCollectionId = &#63;.
 	*
 	* @param fragmentEntryId the primary key of the current msb fragment entry
-	* @param fragmentCollectionId the fragment collection ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next msb fragment entry
 	* @throws NoSuchMSBFragmentEntryException if a msb fragment entry with the primary key could not be found
 	*/
-	public MSBFragmentEntry[] findByFragmentCollectionId_PrevAndNext(
-		long fragmentEntryId, long fragmentCollectionId,
+	public MSBFragmentEntry[] findByMSBFragmentCollectionId_PrevAndNext(
+		long fragmentEntryId, long msbFragmentCollectionId,
 		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator)
 		throws NoSuchMSBFragmentEntryException;
 
 	/**
-	* Removes all the msb fragment entries where fragmentCollectionId = &#63; from the database.
+	* Removes all the msb fragment entries where msbFragmentCollectionId = &#63; from the database.
 	*
-	* @param fragmentCollectionId the fragment collection ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
 	*/
-	public void removeByFragmentCollectionId(long fragmentCollectionId);
+	public void removeByMSBFragmentCollectionId(long msbFragmentCollectionId);
 
 	/**
-	* Returns the number of msb fragment entries where fragmentCollectionId = &#63;.
+	* Returns the number of msb fragment entries where msbFragmentCollectionId = &#63;.
 	*
-	* @param fragmentCollectionId the fragment collection ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
 	* @return the number of matching msb fragment entries
 	*/
-	public int countByFragmentCollectionId(long fragmentCollectionId);
+	public int countByMSBFragmentCollectionId(long msbFragmentCollectionId);
+
+	/**
+	* Returns all the msb fragment entries where groupId = &#63; and msbFragmentCollectionId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
+	* @return the matching msb fragment entries
+	*/
+	public java.util.List<MSBFragmentEntry> findByG_MSBFC(long groupId,
+		long msbFragmentCollectionId);
+
+	/**
+	* Returns a range of all the msb fragment entries where groupId = &#63; and msbFragmentCollectionId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MSBFragmentEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
+	* @param start the lower bound of the range of msb fragment entries
+	* @param end the upper bound of the range of msb fragment entries (not inclusive)
+	* @return the range of matching msb fragment entries
+	*/
+	public java.util.List<MSBFragmentEntry> findByG_MSBFC(long groupId,
+		long msbFragmentCollectionId, int start, int end);
+
+	/**
+	* Returns an ordered range of all the msb fragment entries where groupId = &#63; and msbFragmentCollectionId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MSBFragmentEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
+	* @param start the lower bound of the range of msb fragment entries
+	* @param end the upper bound of the range of msb fragment entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching msb fragment entries
+	*/
+	public java.util.List<MSBFragmentEntry> findByG_MSBFC(long groupId,
+		long msbFragmentCollectionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the msb fragment entries where groupId = &#63; and msbFragmentCollectionId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MSBFragmentEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
+	* @param start the lower bound of the range of msb fragment entries
+	* @param end the upper bound of the range of msb fragment entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching msb fragment entries
+	*/
+	public java.util.List<MSBFragmentEntry> findByG_MSBFC(long groupId,
+		long msbFragmentCollectionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first msb fragment entry in the ordered set where groupId = &#63; and msbFragmentCollectionId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching msb fragment entry
+	* @throws NoSuchMSBFragmentEntryException if a matching msb fragment entry could not be found
+	*/
+	public MSBFragmentEntry findByG_MSBFC_First(long groupId,
+		long msbFragmentCollectionId,
+		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator)
+		throws NoSuchMSBFragmentEntryException;
+
+	/**
+	* Returns the first msb fragment entry in the ordered set where groupId = &#63; and msbFragmentCollectionId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching msb fragment entry, or <code>null</code> if a matching msb fragment entry could not be found
+	*/
+	public MSBFragmentEntry fetchByG_MSBFC_First(long groupId,
+		long msbFragmentCollectionId,
+		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator);
+
+	/**
+	* Returns the last msb fragment entry in the ordered set where groupId = &#63; and msbFragmentCollectionId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching msb fragment entry
+	* @throws NoSuchMSBFragmentEntryException if a matching msb fragment entry could not be found
+	*/
+	public MSBFragmentEntry findByG_MSBFC_Last(long groupId,
+		long msbFragmentCollectionId,
+		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator)
+		throws NoSuchMSBFragmentEntryException;
+
+	/**
+	* Returns the last msb fragment entry in the ordered set where groupId = &#63; and msbFragmentCollectionId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching msb fragment entry, or <code>null</code> if a matching msb fragment entry could not be found
+	*/
+	public MSBFragmentEntry fetchByG_MSBFC_Last(long groupId,
+		long msbFragmentCollectionId,
+		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator);
+
+	/**
+	* Returns the msb fragment entries before and after the current msb fragment entry in the ordered set where groupId = &#63; and msbFragmentCollectionId = &#63;.
+	*
+	* @param fragmentEntryId the primary key of the current msb fragment entry
+	* @param groupId the group ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next msb fragment entry
+	* @throws NoSuchMSBFragmentEntryException if a msb fragment entry with the primary key could not be found
+	*/
+	public MSBFragmentEntry[] findByG_MSBFC_PrevAndNext(long fragmentEntryId,
+		long groupId, long msbFragmentCollectionId,
+		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator)
+		throws NoSuchMSBFragmentEntryException;
+
+	/**
+	* Returns all the msb fragment entries that the user has permission to view where groupId = &#63; and msbFragmentCollectionId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
+	* @return the matching msb fragment entries that the user has permission to view
+	*/
+	public java.util.List<MSBFragmentEntry> filterFindByG_MSBFC(long groupId,
+		long msbFragmentCollectionId);
+
+	/**
+	* Returns a range of all the msb fragment entries that the user has permission to view where groupId = &#63; and msbFragmentCollectionId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MSBFragmentEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
+	* @param start the lower bound of the range of msb fragment entries
+	* @param end the upper bound of the range of msb fragment entries (not inclusive)
+	* @return the range of matching msb fragment entries that the user has permission to view
+	*/
+	public java.util.List<MSBFragmentEntry> filterFindByG_MSBFC(long groupId,
+		long msbFragmentCollectionId, int start, int end);
+
+	/**
+	* Returns an ordered range of all the msb fragment entries that the user has permissions to view where groupId = &#63; and msbFragmentCollectionId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MSBFragmentEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
+	* @param start the lower bound of the range of msb fragment entries
+	* @param end the upper bound of the range of msb fragment entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching msb fragment entries that the user has permission to view
+	*/
+	public java.util.List<MSBFragmentEntry> filterFindByG_MSBFC(long groupId,
+		long msbFragmentCollectionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator);
+
+	/**
+	* Returns the msb fragment entries before and after the current msb fragment entry in the ordered set of msb fragment entries that the user has permission to view where groupId = &#63; and msbFragmentCollectionId = &#63;.
+	*
+	* @param fragmentEntryId the primary key of the current msb fragment entry
+	* @param groupId the group ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next msb fragment entry
+	* @throws NoSuchMSBFragmentEntryException if a msb fragment entry with the primary key could not be found
+	*/
+	public MSBFragmentEntry[] filterFindByG_MSBFC_PrevAndNext(
+		long fragmentEntryId, long groupId, long msbFragmentCollectionId,
+		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator)
+		throws NoSuchMSBFragmentEntryException;
+
+	/**
+	* Removes all the msb fragment entries where groupId = &#63; and msbFragmentCollectionId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
+	*/
+	public void removeByG_MSBFC(long groupId, long msbFragmentCollectionId);
+
+	/**
+	* Returns the number of msb fragment entries where groupId = &#63; and msbFragmentCollectionId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
+	* @return the number of matching msb fragment entries
+	*/
+	public int countByG_MSBFC(long groupId, long msbFragmentCollectionId);
+
+	/**
+	* Returns the number of msb fragment entries that the user has permission to view where groupId = &#63; and msbFragmentCollectionId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
+	* @return the number of matching msb fragment entries that the user has permission to view
+	*/
+	public int filterCountByG_MSBFC(long groupId, long msbFragmentCollectionId);
 
 	/**
 	* Returns the msb fragment entry where groupId = &#63; and name = &#63; or throws a {@link NoSuchMSBFragmentEntryException} if it could not be found.
@@ -423,459 +639,245 @@ public interface MSBFragmentEntryPersistence extends BasePersistence<MSBFragment
 	public int countByG_N(long groupId, java.lang.String name);
 
 	/**
-	* Returns all the msb fragment entries where groupId = &#63; and fragmentCollectionId = &#63;.
+	* Returns all the msb fragment entries where groupId = &#63; and msbFragmentCollectionId = &#63; and name LIKE &#63;.
 	*
 	* @param groupId the group ID
-	* @param fragmentCollectionId the fragment collection ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
+	* @param name the name
 	* @return the matching msb fragment entries
 	*/
-	public java.util.List<MSBFragmentEntry> findByG_FC(long groupId,
-		long fragmentCollectionId);
+	public java.util.List<MSBFragmentEntry> findByG_MSBFC_LikeN(long groupId,
+		long msbFragmentCollectionId, java.lang.String name);
 
 	/**
-	* Returns a range of all the msb fragment entries where groupId = &#63; and fragmentCollectionId = &#63;.
+	* Returns a range of all the msb fragment entries where groupId = &#63; and msbFragmentCollectionId = &#63; and name LIKE &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MSBFragmentEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param fragmentCollectionId the fragment collection ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
+	* @param name the name
 	* @param start the lower bound of the range of msb fragment entries
 	* @param end the upper bound of the range of msb fragment entries (not inclusive)
 	* @return the range of matching msb fragment entries
 	*/
-	public java.util.List<MSBFragmentEntry> findByG_FC(long groupId,
-		long fragmentCollectionId, int start, int end);
+	public java.util.List<MSBFragmentEntry> findByG_MSBFC_LikeN(long groupId,
+		long msbFragmentCollectionId, java.lang.String name, int start, int end);
 
 	/**
-	* Returns an ordered range of all the msb fragment entries where groupId = &#63; and fragmentCollectionId = &#63;.
+	* Returns an ordered range of all the msb fragment entries where groupId = &#63; and msbFragmentCollectionId = &#63; and name LIKE &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MSBFragmentEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param fragmentCollectionId the fragment collection ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
+	* @param name the name
 	* @param start the lower bound of the range of msb fragment entries
 	* @param end the upper bound of the range of msb fragment entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching msb fragment entries
 	*/
-	public java.util.List<MSBFragmentEntry> findByG_FC(long groupId,
-		long fragmentCollectionId, int start, int end,
+	public java.util.List<MSBFragmentEntry> findByG_MSBFC_LikeN(long groupId,
+		long msbFragmentCollectionId, java.lang.String name, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator);
 
 	/**
-	* Returns an ordered range of all the msb fragment entries where groupId = &#63; and fragmentCollectionId = &#63;.
+	* Returns an ordered range of all the msb fragment entries where groupId = &#63; and msbFragmentCollectionId = &#63; and name LIKE &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MSBFragmentEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param fragmentCollectionId the fragment collection ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
+	* @param name the name
 	* @param start the lower bound of the range of msb fragment entries
 	* @param end the upper bound of the range of msb fragment entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching msb fragment entries
 	*/
-	public java.util.List<MSBFragmentEntry> findByG_FC(long groupId,
-		long fragmentCollectionId, int start, int end,
+	public java.util.List<MSBFragmentEntry> findByG_MSBFC_LikeN(long groupId,
+		long msbFragmentCollectionId, java.lang.String name, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator,
 		boolean retrieveFromCache);
 
 	/**
-	* Returns the first msb fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63;.
+	* Returns the first msb fragment entry in the ordered set where groupId = &#63; and msbFragmentCollectionId = &#63; and name LIKE &#63;.
 	*
 	* @param groupId the group ID
-	* @param fragmentCollectionId the fragment collection ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
+	* @param name the name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching msb fragment entry
 	* @throws NoSuchMSBFragmentEntryException if a matching msb fragment entry could not be found
 	*/
-	public MSBFragmentEntry findByG_FC_First(long groupId,
-		long fragmentCollectionId,
+	public MSBFragmentEntry findByG_MSBFC_LikeN_First(long groupId,
+		long msbFragmentCollectionId, java.lang.String name,
 		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator)
 		throws NoSuchMSBFragmentEntryException;
 
 	/**
-	* Returns the first msb fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63;.
+	* Returns the first msb fragment entry in the ordered set where groupId = &#63; and msbFragmentCollectionId = &#63; and name LIKE &#63;.
 	*
 	* @param groupId the group ID
-	* @param fragmentCollectionId the fragment collection ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
+	* @param name the name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching msb fragment entry, or <code>null</code> if a matching msb fragment entry could not be found
 	*/
-	public MSBFragmentEntry fetchByG_FC_First(long groupId,
-		long fragmentCollectionId,
+	public MSBFragmentEntry fetchByG_MSBFC_LikeN_First(long groupId,
+		long msbFragmentCollectionId, java.lang.String name,
 		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator);
 
 	/**
-	* Returns the last msb fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63;.
+	* Returns the last msb fragment entry in the ordered set where groupId = &#63; and msbFragmentCollectionId = &#63; and name LIKE &#63;.
 	*
 	* @param groupId the group ID
-	* @param fragmentCollectionId the fragment collection ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
+	* @param name the name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching msb fragment entry
 	* @throws NoSuchMSBFragmentEntryException if a matching msb fragment entry could not be found
 	*/
-	public MSBFragmentEntry findByG_FC_Last(long groupId,
-		long fragmentCollectionId,
+	public MSBFragmentEntry findByG_MSBFC_LikeN_Last(long groupId,
+		long msbFragmentCollectionId, java.lang.String name,
 		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator)
 		throws NoSuchMSBFragmentEntryException;
 
 	/**
-	* Returns the last msb fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63;.
+	* Returns the last msb fragment entry in the ordered set where groupId = &#63; and msbFragmentCollectionId = &#63; and name LIKE &#63;.
 	*
 	* @param groupId the group ID
-	* @param fragmentCollectionId the fragment collection ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
+	* @param name the name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching msb fragment entry, or <code>null</code> if a matching msb fragment entry could not be found
 	*/
-	public MSBFragmentEntry fetchByG_FC_Last(long groupId,
-		long fragmentCollectionId,
+	public MSBFragmentEntry fetchByG_MSBFC_LikeN_Last(long groupId,
+		long msbFragmentCollectionId, java.lang.String name,
 		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator);
 
 	/**
-	* Returns the msb fragment entries before and after the current msb fragment entry in the ordered set where groupId = &#63; and fragmentCollectionId = &#63;.
+	* Returns the msb fragment entries before and after the current msb fragment entry in the ordered set where groupId = &#63; and msbFragmentCollectionId = &#63; and name LIKE &#63;.
 	*
 	* @param fragmentEntryId the primary key of the current msb fragment entry
 	* @param groupId the group ID
-	* @param fragmentCollectionId the fragment collection ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
+	* @param name the name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next msb fragment entry
 	* @throws NoSuchMSBFragmentEntryException if a msb fragment entry with the primary key could not be found
 	*/
-	public MSBFragmentEntry[] findByG_FC_PrevAndNext(long fragmentEntryId,
-		long groupId, long fragmentCollectionId,
+	public MSBFragmentEntry[] findByG_MSBFC_LikeN_PrevAndNext(
+		long fragmentEntryId, long groupId, long msbFragmentCollectionId,
+		java.lang.String name,
 		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator)
 		throws NoSuchMSBFragmentEntryException;
 
 	/**
-	* Returns all the msb fragment entries that the user has permission to view where groupId = &#63; and fragmentCollectionId = &#63;.
+	* Returns all the msb fragment entries that the user has permission to view where groupId = &#63; and msbFragmentCollectionId = &#63; and name LIKE &#63;.
 	*
 	* @param groupId the group ID
-	* @param fragmentCollectionId the fragment collection ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
+	* @param name the name
 	* @return the matching msb fragment entries that the user has permission to view
 	*/
-	public java.util.List<MSBFragmentEntry> filterFindByG_FC(long groupId,
-		long fragmentCollectionId);
+	public java.util.List<MSBFragmentEntry> filterFindByG_MSBFC_LikeN(
+		long groupId, long msbFragmentCollectionId, java.lang.String name);
 
 	/**
-	* Returns a range of all the msb fragment entries that the user has permission to view where groupId = &#63; and fragmentCollectionId = &#63;.
+	* Returns a range of all the msb fragment entries that the user has permission to view where groupId = &#63; and msbFragmentCollectionId = &#63; and name LIKE &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MSBFragmentEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param fragmentCollectionId the fragment collection ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
+	* @param name the name
 	* @param start the lower bound of the range of msb fragment entries
 	* @param end the upper bound of the range of msb fragment entries (not inclusive)
 	* @return the range of matching msb fragment entries that the user has permission to view
 	*/
-	public java.util.List<MSBFragmentEntry> filterFindByG_FC(long groupId,
-		long fragmentCollectionId, int start, int end);
-
-	/**
-	* Returns an ordered range of all the msb fragment entries that the user has permissions to view where groupId = &#63; and fragmentCollectionId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MSBFragmentEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param fragmentCollectionId the fragment collection ID
-	* @param start the lower bound of the range of msb fragment entries
-	* @param end the upper bound of the range of msb fragment entries (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching msb fragment entries that the user has permission to view
-	*/
-	public java.util.List<MSBFragmentEntry> filterFindByG_FC(long groupId,
-		long fragmentCollectionId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator);
-
-	/**
-	* Returns the msb fragment entries before and after the current msb fragment entry in the ordered set of msb fragment entries that the user has permission to view where groupId = &#63; and fragmentCollectionId = &#63;.
-	*
-	* @param fragmentEntryId the primary key of the current msb fragment entry
-	* @param groupId the group ID
-	* @param fragmentCollectionId the fragment collection ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next msb fragment entry
-	* @throws NoSuchMSBFragmentEntryException if a msb fragment entry with the primary key could not be found
-	*/
-	public MSBFragmentEntry[] filterFindByG_FC_PrevAndNext(
-		long fragmentEntryId, long groupId, long fragmentCollectionId,
-		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator)
-		throws NoSuchMSBFragmentEntryException;
-
-	/**
-	* Removes all the msb fragment entries where groupId = &#63; and fragmentCollectionId = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param fragmentCollectionId the fragment collection ID
-	*/
-	public void removeByG_FC(long groupId, long fragmentCollectionId);
-
-	/**
-	* Returns the number of msb fragment entries where groupId = &#63; and fragmentCollectionId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param fragmentCollectionId the fragment collection ID
-	* @return the number of matching msb fragment entries
-	*/
-	public int countByG_FC(long groupId, long fragmentCollectionId);
-
-	/**
-	* Returns the number of msb fragment entries that the user has permission to view where groupId = &#63; and fragmentCollectionId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param fragmentCollectionId the fragment collection ID
-	* @return the number of matching msb fragment entries that the user has permission to view
-	*/
-	public int filterCountByG_FC(long groupId, long fragmentCollectionId);
-
-	/**
-	* Returns all the msb fragment entries where groupId = &#63; and name LIKE &#63; and fragmentCollectionId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param name the name
-	* @param fragmentCollectionId the fragment collection ID
-	* @return the matching msb fragment entries
-	*/
-	public java.util.List<MSBFragmentEntry> findByG_LikeN_FC(long groupId,
-		java.lang.String name, long fragmentCollectionId);
-
-	/**
-	* Returns a range of all the msb fragment entries where groupId = &#63; and name LIKE &#63; and fragmentCollectionId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MSBFragmentEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param name the name
-	* @param fragmentCollectionId the fragment collection ID
-	* @param start the lower bound of the range of msb fragment entries
-	* @param end the upper bound of the range of msb fragment entries (not inclusive)
-	* @return the range of matching msb fragment entries
-	*/
-	public java.util.List<MSBFragmentEntry> findByG_LikeN_FC(long groupId,
-		java.lang.String name, long fragmentCollectionId, int start, int end);
-
-	/**
-	* Returns an ordered range of all the msb fragment entries where groupId = &#63; and name LIKE &#63; and fragmentCollectionId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MSBFragmentEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param name the name
-	* @param fragmentCollectionId the fragment collection ID
-	* @param start the lower bound of the range of msb fragment entries
-	* @param end the upper bound of the range of msb fragment entries (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching msb fragment entries
-	*/
-	public java.util.List<MSBFragmentEntry> findByG_LikeN_FC(long groupId,
-		java.lang.String name, long fragmentCollectionId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator);
-
-	/**
-	* Returns an ordered range of all the msb fragment entries where groupId = &#63; and name LIKE &#63; and fragmentCollectionId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MSBFragmentEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param name the name
-	* @param fragmentCollectionId the fragment collection ID
-	* @param start the lower bound of the range of msb fragment entries
-	* @param end the upper bound of the range of msb fragment entries (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching msb fragment entries
-	*/
-	public java.util.List<MSBFragmentEntry> findByG_LikeN_FC(long groupId,
-		java.lang.String name, long fragmentCollectionId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator,
-		boolean retrieveFromCache);
-
-	/**
-	* Returns the first msb fragment entry in the ordered set where groupId = &#63; and name LIKE &#63; and fragmentCollectionId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param name the name
-	* @param fragmentCollectionId the fragment collection ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching msb fragment entry
-	* @throws NoSuchMSBFragmentEntryException if a matching msb fragment entry could not be found
-	*/
-	public MSBFragmentEntry findByG_LikeN_FC_First(long groupId,
-		java.lang.String name, long fragmentCollectionId,
-		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator)
-		throws NoSuchMSBFragmentEntryException;
-
-	/**
-	* Returns the first msb fragment entry in the ordered set where groupId = &#63; and name LIKE &#63; and fragmentCollectionId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param name the name
-	* @param fragmentCollectionId the fragment collection ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching msb fragment entry, or <code>null</code> if a matching msb fragment entry could not be found
-	*/
-	public MSBFragmentEntry fetchByG_LikeN_FC_First(long groupId,
-		java.lang.String name, long fragmentCollectionId,
-		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator);
-
-	/**
-	* Returns the last msb fragment entry in the ordered set where groupId = &#63; and name LIKE &#63; and fragmentCollectionId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param name the name
-	* @param fragmentCollectionId the fragment collection ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching msb fragment entry
-	* @throws NoSuchMSBFragmentEntryException if a matching msb fragment entry could not be found
-	*/
-	public MSBFragmentEntry findByG_LikeN_FC_Last(long groupId,
-		java.lang.String name, long fragmentCollectionId,
-		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator)
-		throws NoSuchMSBFragmentEntryException;
-
-	/**
-	* Returns the last msb fragment entry in the ordered set where groupId = &#63; and name LIKE &#63; and fragmentCollectionId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param name the name
-	* @param fragmentCollectionId the fragment collection ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching msb fragment entry, or <code>null</code> if a matching msb fragment entry could not be found
-	*/
-	public MSBFragmentEntry fetchByG_LikeN_FC_Last(long groupId,
-		java.lang.String name, long fragmentCollectionId,
-		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator);
-
-	/**
-	* Returns the msb fragment entries before and after the current msb fragment entry in the ordered set where groupId = &#63; and name LIKE &#63; and fragmentCollectionId = &#63;.
-	*
-	* @param fragmentEntryId the primary key of the current msb fragment entry
-	* @param groupId the group ID
-	* @param name the name
-	* @param fragmentCollectionId the fragment collection ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next msb fragment entry
-	* @throws NoSuchMSBFragmentEntryException if a msb fragment entry with the primary key could not be found
-	*/
-	public MSBFragmentEntry[] findByG_LikeN_FC_PrevAndNext(
-		long fragmentEntryId, long groupId, java.lang.String name,
-		long fragmentCollectionId,
-		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator)
-		throws NoSuchMSBFragmentEntryException;
-
-	/**
-	* Returns all the msb fragment entries that the user has permission to view where groupId = &#63; and name LIKE &#63; and fragmentCollectionId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param name the name
-	* @param fragmentCollectionId the fragment collection ID
-	* @return the matching msb fragment entries that the user has permission to view
-	*/
-	public java.util.List<MSBFragmentEntry> filterFindByG_LikeN_FC(
-		long groupId, java.lang.String name, long fragmentCollectionId);
-
-	/**
-	* Returns a range of all the msb fragment entries that the user has permission to view where groupId = &#63; and name LIKE &#63; and fragmentCollectionId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MSBFragmentEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param name the name
-	* @param fragmentCollectionId the fragment collection ID
-	* @param start the lower bound of the range of msb fragment entries
-	* @param end the upper bound of the range of msb fragment entries (not inclusive)
-	* @return the range of matching msb fragment entries that the user has permission to view
-	*/
-	public java.util.List<MSBFragmentEntry> filterFindByG_LikeN_FC(
-		long groupId, java.lang.String name, long fragmentCollectionId,
+	public java.util.List<MSBFragmentEntry> filterFindByG_MSBFC_LikeN(
+		long groupId, long msbFragmentCollectionId, java.lang.String name,
 		int start, int end);
 
 	/**
-	* Returns an ordered range of all the msb fragment entries that the user has permissions to view where groupId = &#63; and name LIKE &#63; and fragmentCollectionId = &#63;.
+	* Returns an ordered range of all the msb fragment entries that the user has permissions to view where groupId = &#63; and msbFragmentCollectionId = &#63; and name LIKE &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MSBFragmentEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
 	* @param name the name
-	* @param fragmentCollectionId the fragment collection ID
 	* @param start the lower bound of the range of msb fragment entries
 	* @param end the upper bound of the range of msb fragment entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching msb fragment entries that the user has permission to view
 	*/
-	public java.util.List<MSBFragmentEntry> filterFindByG_LikeN_FC(
-		long groupId, java.lang.String name, long fragmentCollectionId,
+	public java.util.List<MSBFragmentEntry> filterFindByG_MSBFC_LikeN(
+		long groupId, long msbFragmentCollectionId, java.lang.String name,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator);
 
 	/**
-	* Returns the msb fragment entries before and after the current msb fragment entry in the ordered set of msb fragment entries that the user has permission to view where groupId = &#63; and name LIKE &#63; and fragmentCollectionId = &#63;.
+	* Returns the msb fragment entries before and after the current msb fragment entry in the ordered set of msb fragment entries that the user has permission to view where groupId = &#63; and msbFragmentCollectionId = &#63; and name LIKE &#63;.
 	*
 	* @param fragmentEntryId the primary key of the current msb fragment entry
 	* @param groupId the group ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
 	* @param name the name
-	* @param fragmentCollectionId the fragment collection ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next msb fragment entry
 	* @throws NoSuchMSBFragmentEntryException if a msb fragment entry with the primary key could not be found
 	*/
-	public MSBFragmentEntry[] filterFindByG_LikeN_FC_PrevAndNext(
-		long fragmentEntryId, long groupId, java.lang.String name,
-		long fragmentCollectionId,
+	public MSBFragmentEntry[] filterFindByG_MSBFC_LikeN_PrevAndNext(
+		long fragmentEntryId, long groupId, long msbFragmentCollectionId,
+		java.lang.String name,
 		com.liferay.portal.kernel.util.OrderByComparator<MSBFragmentEntry> orderByComparator)
 		throws NoSuchMSBFragmentEntryException;
 
 	/**
-	* Removes all the msb fragment entries where groupId = &#63; and name LIKE &#63; and fragmentCollectionId = &#63; from the database.
+	* Removes all the msb fragment entries where groupId = &#63; and msbFragmentCollectionId = &#63; and name LIKE &#63; from the database.
 	*
 	* @param groupId the group ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
 	* @param name the name
-	* @param fragmentCollectionId the fragment collection ID
 	*/
-	public void removeByG_LikeN_FC(long groupId, java.lang.String name,
-		long fragmentCollectionId);
+	public void removeByG_MSBFC_LikeN(long groupId,
+		long msbFragmentCollectionId, java.lang.String name);
 
 	/**
-	* Returns the number of msb fragment entries where groupId = &#63; and name LIKE &#63; and fragmentCollectionId = &#63;.
+	* Returns the number of msb fragment entries where groupId = &#63; and msbFragmentCollectionId = &#63; and name LIKE &#63;.
 	*
 	* @param groupId the group ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
 	* @param name the name
-	* @param fragmentCollectionId the fragment collection ID
 	* @return the number of matching msb fragment entries
 	*/
-	public int countByG_LikeN_FC(long groupId, java.lang.String name,
-		long fragmentCollectionId);
+	public int countByG_MSBFC_LikeN(long groupId, long msbFragmentCollectionId,
+		java.lang.String name);
 
 	/**
-	* Returns the number of msb fragment entries that the user has permission to view where groupId = &#63; and name LIKE &#63; and fragmentCollectionId = &#63;.
+	* Returns the number of msb fragment entries that the user has permission to view where groupId = &#63; and msbFragmentCollectionId = &#63; and name LIKE &#63;.
 	*
 	* @param groupId the group ID
+	* @param msbFragmentCollectionId the msb fragment collection ID
 	* @param name the name
-	* @param fragmentCollectionId the fragment collection ID
 	* @return the number of matching msb fragment entries that the user has permission to view
 	*/
-	public int filterCountByG_LikeN_FC(long groupId, java.lang.String name,
-		long fragmentCollectionId);
+	public int filterCountByG_MSBFC_LikeN(long groupId,
+		long msbFragmentCollectionId, java.lang.String name);
 
 	/**
 	* Caches the msb fragment entry in the entity cache if it is enabled.

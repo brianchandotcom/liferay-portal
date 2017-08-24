@@ -61,9 +61,9 @@ public interface MSBFragmentEntryLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MSBFragmentEntryLocalServiceUtil} to access the msb fragment entry local service. Add custom service methods to {@link com.liferay.modern.site.building.fragment.service.impl.MSBFragmentEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public MSBFragmentEntry addFragmentEntry(long userId, long groupId,
-		long fragmentCollectionId, java.lang.String name, java.lang.String css,
-		java.lang.String html, java.lang.String js,
+	public MSBFragmentEntry addMSBFragmentEntry(long groupId, long userId,
+		long msbFragmentCollectionId, java.lang.String name,
+		java.lang.String css, java.lang.String html, java.lang.String js,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -84,12 +84,6 @@ public interface MSBFragmentEntryLocalService extends BaseLocalService,
 	*/
 	public MSBFragmentEntry createMSBFragmentEntry(long fragmentEntryId);
 
-	public MSBFragmentEntry deleteFragmentEntry(long fragmentEntryId)
-		throws PortalException;
-
-	public MSBFragmentEntry deleteFragmentEntry(MSBFragmentEntry fragmentEntry)
-		throws PortalException;
-
 	/**
 	* Deletes the msb fragment entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
@@ -106,10 +100,11 @@ public interface MSBFragmentEntryLocalService extends BaseLocalService,
 	*
 	* @param msbFragmentEntry the msb fragment entry
 	* @return the msb fragment entry that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public MSBFragmentEntry deleteMSBFragmentEntry(
-		MSBFragmentEntry msbFragmentEntry);
+		MSBFragmentEntry msbFragmentEntry) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -178,33 +173,14 @@ public interface MSBFragmentEntryLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MSBFragmentEntry> fetchFragmentEntries(
-		long fragmentCollectionId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MSBFragmentEntry fetchFragmentEntry(long fragmentEntryId);
+	public List<MSBFragmentEntry> fetchMSBFragmentEntries(
+		long msbFragmentCollectionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MSBFragmentEntry fetchMSBFragmentEntry(long fragmentEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MSBFragmentEntry> getFragmentEntries(
-		long fragmentCollectionId, int start, int end)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MSBFragmentEntry> getFragmentEntries(long groupId,
-		long fragmentCollectionId, int start, int end,
-		OrderByComparator<MSBFragmentEntry> orderByComparator)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MSBFragmentEntry> getFragmentEntries(long groupId,
-		long fragmentCollectionId, java.lang.String name, int start, int end,
-		OrderByComparator<MSBFragmentEntry> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -222,6 +198,22 @@ public interface MSBFragmentEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MSBFragmentEntry> getMSBFragmentEntries(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MSBFragmentEntry> getMSBFragmentEntries(
+		long msbFragmentCollectionId, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MSBFragmentEntry> getMSBFragmentEntries(long groupId,
+		long msbFragmentCollectionId, int start, int end,
+		OrderByComparator<MSBFragmentEntry> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MSBFragmentEntry> getMSBFragmentEntries(long groupId,
+		long msbFragmentCollectionId, java.lang.String name, int start,
+		int end, OrderByComparator<MSBFragmentEntry> obc);
 
 	/**
 	* Returns the number of msb fragment entries.
@@ -254,7 +246,7 @@ public interface MSBFragmentEntryLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public MSBFragmentEntry updateFragmentEntry(long fragmentEntryId,
+	public MSBFragmentEntry updateMSBFragmentEntry(long fragmentEntryId,
 		java.lang.String name, java.lang.String css, java.lang.String html,
 		java.lang.String js) throws PortalException;
 

@@ -20,6 +20,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="msbFragmentCollectionId" type="long" />
 		<field name="name" type="String" />
 		<field name="css" type="String">
 			<hint name="max-length">4000</hint>
@@ -30,6 +31,5 @@
 		<field name="js" type="String">
 			<hint name="max-length">4000</hint>
 		</field>
-		<field name="fragmentCollectionId" type="long" />
 	</model>
 </model-hints>

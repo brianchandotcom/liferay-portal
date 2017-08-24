@@ -137,6 +137,8 @@ public class MSBFragmentEntryPersistenceTest {
 
 		newMSBFragmentEntry.setModifiedDate(RandomTestUtil.nextDate());
 
+		newMSBFragmentEntry.setMsbFragmentCollectionId(RandomTestUtil.nextLong());
+
 		newMSBFragmentEntry.setName(RandomTestUtil.randomString());
 
 		newMSBFragmentEntry.setCss(RandomTestUtil.randomString());
@@ -144,8 +146,6 @@ public class MSBFragmentEntryPersistenceTest {
 		newMSBFragmentEntry.setHtml(RandomTestUtil.randomString());
 
 		newMSBFragmentEntry.setJs(RandomTestUtil.randomString());
-
-		newMSBFragmentEntry.setFragmentCollectionId(RandomTestUtil.nextLong());
 
 		_msbFragmentEntries.add(_persistence.update(newMSBFragmentEntry));
 
@@ -167,6 +167,8 @@ public class MSBFragmentEntryPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingMSBFragmentEntry.getModifiedDate()),
 			Time.getShortTimestamp(newMSBFragmentEntry.getModifiedDate()));
+		Assert.assertEquals(existingMSBFragmentEntry.getMsbFragmentCollectionId(),
+			newMSBFragmentEntry.getMsbFragmentCollectionId());
 		Assert.assertEquals(existingMSBFragmentEntry.getName(),
 			newMSBFragmentEntry.getName());
 		Assert.assertEquals(existingMSBFragmentEntry.getCss(),
@@ -175,8 +177,6 @@ public class MSBFragmentEntryPersistenceTest {
 			newMSBFragmentEntry.getHtml());
 		Assert.assertEquals(existingMSBFragmentEntry.getJs(),
 			newMSBFragmentEntry.getJs());
-		Assert.assertEquals(existingMSBFragmentEntry.getFragmentCollectionId(),
-			newMSBFragmentEntry.getFragmentCollectionId());
 	}
 
 	@Test
@@ -187,10 +187,18 @@ public class MSBFragmentEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByFragmentCollectionId() throws Exception {
-		_persistence.countByFragmentCollectionId(RandomTestUtil.nextLong());
+	public void testCountByMSBFragmentCollectionId() throws Exception {
+		_persistence.countByMSBFragmentCollectionId(RandomTestUtil.nextLong());
 
-		_persistence.countByFragmentCollectionId(0L);
+		_persistence.countByMSBFragmentCollectionId(0L);
+	}
+
+	@Test
+	public void testCountByG_MSBFC() throws Exception {
+		_persistence.countByG_MSBFC(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByG_MSBFC(0L, 0L);
 	}
 
 	@Test
@@ -203,21 +211,13 @@ public class MSBFragmentEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_FC() throws Exception {
-		_persistence.countByG_FC(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+	public void testCountByG_MSBFC_LikeN() throws Exception {
+		_persistence.countByG_MSBFC_LikeN(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), StringPool.BLANK);
 
-		_persistence.countByG_FC(0L, 0L);
-	}
+		_persistence.countByG_MSBFC_LikeN(0L, 0L, StringPool.NULL);
 
-	@Test
-	public void testCountByG_LikeN_FC() throws Exception {
-		_persistence.countByG_LikeN_FC(RandomTestUtil.nextLong(),
-			StringPool.BLANK, RandomTestUtil.nextLong());
-
-		_persistence.countByG_LikeN_FC(0L, StringPool.NULL, 0L);
-
-		_persistence.countByG_LikeN_FC(0L, (String)null, 0L);
+		_persistence.countByG_MSBFC_LikeN(0L, 0L, (String)null);
 	}
 
 	@Test
@@ -252,8 +252,8 @@ public class MSBFragmentEntryPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("MSBFragmentEntry",
 			"fragmentEntryId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "name", true, "css", true, "html", true,
-			"js", true, "fragmentCollectionId", true);
+			"modifiedDate", true, "msbFragmentCollectionId", true, "name",
+			true, "css", true, "html", true, "js", true);
 	}
 
 	@Test
@@ -483,6 +483,8 @@ public class MSBFragmentEntryPersistenceTest {
 
 		msbFragmentEntry.setModifiedDate(RandomTestUtil.nextDate());
 
+		msbFragmentEntry.setMsbFragmentCollectionId(RandomTestUtil.nextLong());
+
 		msbFragmentEntry.setName(RandomTestUtil.randomString());
 
 		msbFragmentEntry.setCss(RandomTestUtil.randomString());
@@ -490,8 +492,6 @@ public class MSBFragmentEntryPersistenceTest {
 		msbFragmentEntry.setHtml(RandomTestUtil.randomString());
 
 		msbFragmentEntry.setJs(RandomTestUtil.randomString());
-
-		msbFragmentEntry.setFragmentCollectionId(RandomTestUtil.nextLong());
 
 		_msbFragmentEntries.add(_persistence.update(msbFragmentEntry));
 

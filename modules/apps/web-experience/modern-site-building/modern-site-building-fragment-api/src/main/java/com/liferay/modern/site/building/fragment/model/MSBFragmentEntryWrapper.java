@@ -65,11 +65,11 @@ public class MSBFragmentEntryWrapper implements MSBFragmentEntry,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("msbFragmentCollectionId", getMsbFragmentCollectionId());
 		attributes.put("name", getName());
 		attributes.put("css", getCss());
 		attributes.put("html", getHtml());
 		attributes.put("js", getJs());
-		attributes.put("fragmentCollectionId", getFragmentCollectionId());
 
 		return attributes;
 	}
@@ -118,6 +118,13 @@ public class MSBFragmentEntryWrapper implements MSBFragmentEntry,
 			setModifiedDate(modifiedDate);
 		}
 
+		Long msbFragmentCollectionId = (Long)attributes.get(
+				"msbFragmentCollectionId");
+
+		if (msbFragmentCollectionId != null) {
+			setMsbFragmentCollectionId(msbFragmentCollectionId);
+		}
+
 		String name = (String)attributes.get("name");
 
 		if (name != null) {
@@ -140,12 +147,6 @@ public class MSBFragmentEntryWrapper implements MSBFragmentEntry,
 
 		if (js != null) {
 			setJs(js);
-		}
-
-		Long fragmentCollectionId = (Long)attributes.get("fragmentCollectionId");
-
-		if (fragmentCollectionId != null) {
-			setFragmentCollectionId(fragmentCollectionId);
 		}
 	}
 
@@ -192,16 +193,6 @@ public class MSBFragmentEntryWrapper implements MSBFragmentEntry,
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _msbFragmentEntry.getExpandoBridge();
-	}
-
-	/**
-	* Returns the fragment collection ID of this msb fragment entry.
-	*
-	* @return the fragment collection ID of this msb fragment entry
-	*/
-	@Override
-	public long getFragmentCollectionId() {
-		return _msbFragmentEntry.getFragmentCollectionId();
 	}
 
 	/**
@@ -252,6 +243,16 @@ public class MSBFragmentEntryWrapper implements MSBFragmentEntry,
 	@Override
 	public Date getModifiedDate() {
 		return _msbFragmentEntry.getModifiedDate();
+	}
+
+	/**
+	* Returns the msb fragment collection ID of this msb fragment entry.
+	*
+	* @return the msb fragment collection ID of this msb fragment entry
+	*/
+	@Override
+	public long getMsbFragmentCollectionId() {
+		return _msbFragmentEntry.getMsbFragmentCollectionId();
 	}
 
 	/**
@@ -386,16 +387,6 @@ public class MSBFragmentEntryWrapper implements MSBFragmentEntry,
 	}
 
 	/**
-	* Sets the fragment collection ID of this msb fragment entry.
-	*
-	* @param fragmentCollectionId the fragment collection ID of this msb fragment entry
-	*/
-	@Override
-	public void setFragmentCollectionId(long fragmentCollectionId) {
-		_msbFragmentEntry.setFragmentCollectionId(fragmentCollectionId);
-	}
-
-	/**
 	* Sets the fragment entry ID of this msb fragment entry.
 	*
 	* @param fragmentEntryId the fragment entry ID of this msb fragment entry
@@ -443,6 +434,16 @@ public class MSBFragmentEntryWrapper implements MSBFragmentEntry,
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_msbFragmentEntry.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Sets the msb fragment collection ID of this msb fragment entry.
+	*
+	* @param msbFragmentCollectionId the msb fragment collection ID of this msb fragment entry
+	*/
+	@Override
+	public void setMsbFragmentCollectionId(long msbFragmentCollectionId) {
+		_msbFragmentEntry.setMsbFragmentCollectionId(msbFragmentCollectionId);
 	}
 
 	/**

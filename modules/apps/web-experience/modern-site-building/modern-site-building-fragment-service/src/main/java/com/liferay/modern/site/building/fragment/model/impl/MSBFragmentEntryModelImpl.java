@@ -77,11 +77,11 @@ public class MSBFragmentEntryModelImpl extends BaseModelImpl<MSBFragmentEntry>
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
+			{ "msbFragmentCollectionId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "css", Types.VARCHAR },
 			{ "html", Types.VARCHAR },
-			{ "js", Types.VARCHAR },
-			{ "fragmentCollectionId", Types.BIGINT }
+			{ "js", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -93,14 +93,14 @@ public class MSBFragmentEntryModelImpl extends BaseModelImpl<MSBFragmentEntry>
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("msbFragmentCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("css", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("html", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("js", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("fragmentCollectionId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table MSBFragmentEntry (fragmentEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,css STRING null,html STRING null,js STRING null,fragmentCollectionId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table MSBFragmentEntry (fragmentEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,msbFragmentCollectionId LONG,name VARCHAR(75) null,css STRING null,html STRING null,js STRING null)";
 	public static final String TABLE_SQL_DROP = "drop table MSBFragmentEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY msbFragmentEntry.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY MSBFragmentEntry.name ASC";
@@ -116,8 +116,8 @@ public class MSBFragmentEntryModelImpl extends BaseModelImpl<MSBFragmentEntry>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.modern.site.building.fragment.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.modern.site.building.fragment.model.MSBFragmentEntry"),
 			true);
-	public static final long FRAGMENTCOLLECTIONID_COLUMN_BITMASK = 1L;
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
+	public static final long GROUPID_COLUMN_BITMASK = 1L;
+	public static final long MSBFRAGMENTCOLLECTIONID_COLUMN_BITMASK = 2L;
 	public static final long NAME_COLUMN_BITMASK = 4L;
 
 	/**
@@ -140,11 +140,11 @@ public class MSBFragmentEntryModelImpl extends BaseModelImpl<MSBFragmentEntry>
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setMsbFragmentCollectionId(soapModel.getMsbFragmentCollectionId());
 		model.setName(soapModel.getName());
 		model.setCss(soapModel.getCss());
 		model.setHtml(soapModel.getHtml());
 		model.setJs(soapModel.getJs());
-		model.setFragmentCollectionId(soapModel.getFragmentCollectionId());
 
 		return model;
 	}
@@ -217,11 +217,11 @@ public class MSBFragmentEntryModelImpl extends BaseModelImpl<MSBFragmentEntry>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("msbFragmentCollectionId", getMsbFragmentCollectionId());
 		attributes.put("name", getName());
 		attributes.put("css", getCss());
 		attributes.put("html", getHtml());
 		attributes.put("js", getJs());
-		attributes.put("fragmentCollectionId", getFragmentCollectionId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -273,6 +273,13 @@ public class MSBFragmentEntryModelImpl extends BaseModelImpl<MSBFragmentEntry>
 			setModifiedDate(modifiedDate);
 		}
 
+		Long msbFragmentCollectionId = (Long)attributes.get(
+				"msbFragmentCollectionId");
+
+		if (msbFragmentCollectionId != null) {
+			setMsbFragmentCollectionId(msbFragmentCollectionId);
+		}
+
 		String name = (String)attributes.get("name");
 
 		if (name != null) {
@@ -295,12 +302,6 @@ public class MSBFragmentEntryModelImpl extends BaseModelImpl<MSBFragmentEntry>
 
 		if (js != null) {
 			setJs(js);
-		}
-
-		Long fragmentCollectionId = (Long)attributes.get("fragmentCollectionId");
-
-		if (fragmentCollectionId != null) {
-			setFragmentCollectionId(fragmentCollectionId);
 		}
 	}
 
@@ -422,6 +423,29 @@ public class MSBFragmentEntryModelImpl extends BaseModelImpl<MSBFragmentEntry>
 
 	@JSON
 	@Override
+	public long getMsbFragmentCollectionId() {
+		return _msbFragmentCollectionId;
+	}
+
+	@Override
+	public void setMsbFragmentCollectionId(long msbFragmentCollectionId) {
+		_columnBitmask |= MSBFRAGMENTCOLLECTIONID_COLUMN_BITMASK;
+
+		if (!_setOriginalMsbFragmentCollectionId) {
+			_setOriginalMsbFragmentCollectionId = true;
+
+			_originalMsbFragmentCollectionId = _msbFragmentCollectionId;
+		}
+
+		_msbFragmentCollectionId = msbFragmentCollectionId;
+	}
+
+	public long getOriginalMsbFragmentCollectionId() {
+		return _originalMsbFragmentCollectionId;
+	}
+
+	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -494,29 +518,6 @@ public class MSBFragmentEntryModelImpl extends BaseModelImpl<MSBFragmentEntry>
 		_js = js;
 	}
 
-	@JSON
-	@Override
-	public long getFragmentCollectionId() {
-		return _fragmentCollectionId;
-	}
-
-	@Override
-	public void setFragmentCollectionId(long fragmentCollectionId) {
-		_columnBitmask |= FRAGMENTCOLLECTIONID_COLUMN_BITMASK;
-
-		if (!_setOriginalFragmentCollectionId) {
-			_setOriginalFragmentCollectionId = true;
-
-			_originalFragmentCollectionId = _fragmentCollectionId;
-		}
-
-		_fragmentCollectionId = fragmentCollectionId;
-	}
-
-	public long getOriginalFragmentCollectionId() {
-		return _originalFragmentCollectionId;
-	}
-
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -555,11 +556,11 @@ public class MSBFragmentEntryModelImpl extends BaseModelImpl<MSBFragmentEntry>
 		msbFragmentEntryImpl.setUserName(getUserName());
 		msbFragmentEntryImpl.setCreateDate(getCreateDate());
 		msbFragmentEntryImpl.setModifiedDate(getModifiedDate());
+		msbFragmentEntryImpl.setMsbFragmentCollectionId(getMsbFragmentCollectionId());
 		msbFragmentEntryImpl.setName(getName());
 		msbFragmentEntryImpl.setCss(getCss());
 		msbFragmentEntryImpl.setHtml(getHtml());
 		msbFragmentEntryImpl.setJs(getJs());
-		msbFragmentEntryImpl.setFragmentCollectionId(getFragmentCollectionId());
 
 		msbFragmentEntryImpl.resetOriginalValues();
 
@@ -626,11 +627,11 @@ public class MSBFragmentEntryModelImpl extends BaseModelImpl<MSBFragmentEntry>
 
 		msbFragmentEntryModelImpl._setModifiedDate = false;
 
+		msbFragmentEntryModelImpl._originalMsbFragmentCollectionId = msbFragmentEntryModelImpl._msbFragmentCollectionId;
+
+		msbFragmentEntryModelImpl._setOriginalMsbFragmentCollectionId = false;
+
 		msbFragmentEntryModelImpl._originalName = msbFragmentEntryModelImpl._name;
-
-		msbFragmentEntryModelImpl._originalFragmentCollectionId = msbFragmentEntryModelImpl._fragmentCollectionId;
-
-		msbFragmentEntryModelImpl._setOriginalFragmentCollectionId = false;
 
 		msbFragmentEntryModelImpl._columnBitmask = 0;
 	}
@@ -673,6 +674,8 @@ public class MSBFragmentEntryModelImpl extends BaseModelImpl<MSBFragmentEntry>
 			msbFragmentEntryCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		msbFragmentEntryCacheModel.msbFragmentCollectionId = getMsbFragmentCollectionId();
+
 		msbFragmentEntryCacheModel.name = getName();
 
 		String name = msbFragmentEntryCacheModel.name;
@@ -705,8 +708,6 @@ public class MSBFragmentEntryModelImpl extends BaseModelImpl<MSBFragmentEntry>
 			msbFragmentEntryCacheModel.js = null;
 		}
 
-		msbFragmentEntryCacheModel.fragmentCollectionId = getFragmentCollectionId();
-
 		return msbFragmentEntryCacheModel;
 	}
 
@@ -728,6 +729,8 @@ public class MSBFragmentEntryModelImpl extends BaseModelImpl<MSBFragmentEntry>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+		sb.append(", msbFragmentCollectionId=");
+		sb.append(getMsbFragmentCollectionId());
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", css=");
@@ -736,8 +739,6 @@ public class MSBFragmentEntryModelImpl extends BaseModelImpl<MSBFragmentEntry>
 		sb.append(getHtml());
 		sb.append(", js=");
 		sb.append(getJs());
-		sb.append(", fragmentCollectionId=");
-		sb.append(getFragmentCollectionId());
 		sb.append("}");
 
 		return sb.toString();
@@ -781,6 +782,10 @@ public class MSBFragmentEntryModelImpl extends BaseModelImpl<MSBFragmentEntry>
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>msbFragmentCollectionId</column-name><column-value><![CDATA[");
+		sb.append(getMsbFragmentCollectionId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
 		sb.append(getName());
 		sb.append("]]></column-value></column>");
@@ -795,10 +800,6 @@ public class MSBFragmentEntryModelImpl extends BaseModelImpl<MSBFragmentEntry>
 		sb.append(
 			"<column><column-name>js</column-name><column-value><![CDATA[");
 		sb.append(getJs());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>fragmentCollectionId</column-name><column-value><![CDATA[");
-		sb.append(getFragmentCollectionId());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -820,14 +821,14 @@ public class MSBFragmentEntryModelImpl extends BaseModelImpl<MSBFragmentEntry>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private long _msbFragmentCollectionId;
+	private long _originalMsbFragmentCollectionId;
+	private boolean _setOriginalMsbFragmentCollectionId;
 	private String _name;
 	private String _originalName;
 	private String _css;
 	private String _html;
 	private String _js;
-	private long _fragmentCollectionId;
-	private long _originalFragmentCollectionId;
-	private boolean _setOriginalFragmentCollectionId;
 	private long _columnBitmask;
 	private MSBFragmentEntry _escapedModel;
 }

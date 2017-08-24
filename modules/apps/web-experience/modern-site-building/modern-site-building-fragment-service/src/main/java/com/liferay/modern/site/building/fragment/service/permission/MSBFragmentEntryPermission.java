@@ -68,7 +68,7 @@ public class MSBFragmentEntryPermission implements BaseModelPermissionChecker {
 		throws PortalException {
 
 		MSBFragmentEntry fragmentEntry =
-			MSBFragmentEntryLocalServiceUtil.fetchFragmentEntry(
+			MSBFragmentEntryLocalServiceUtil.fetchMSBFragmentEntry(
 				fragmentEntryId);
 
 		if (fragmentEntry == null) {

@@ -69,7 +69,7 @@ public class MSBFragmentCollectionPermission
 		throws PortalException {
 
 		MSBFragmentCollection fragmentCollection =
-			MSBFragmentCollectionLocalServiceUtil.fetchFragmentCollection(
+			MSBFragmentCollectionLocalServiceUtil.fetchMSBFragmentCollection(
 				fragmentCollectionId);
 
 		if (fragmentCollection == null) {

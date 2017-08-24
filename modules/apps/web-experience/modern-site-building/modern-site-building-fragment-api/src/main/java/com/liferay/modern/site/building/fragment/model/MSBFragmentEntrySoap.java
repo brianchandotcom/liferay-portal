@@ -41,11 +41,11 @@ public class MSBFragmentEntrySoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setMsbFragmentCollectionId(model.getMsbFragmentCollectionId());
 		soapModel.setName(model.getName());
 		soapModel.setCss(model.getCss());
 		soapModel.setHtml(model.getHtml());
 		soapModel.setJs(model.getJs());
-		soapModel.setFragmentCollectionId(model.getFragmentCollectionId());
 
 		return soapModel;
 	}
@@ -156,6 +156,14 @@ public class MSBFragmentEntrySoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public long getMsbFragmentCollectionId() {
+		return _msbFragmentCollectionId;
+	}
+
+	public void setMsbFragmentCollectionId(long msbFragmentCollectionId) {
+		_msbFragmentCollectionId = msbFragmentCollectionId;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -188,14 +196,6 @@ public class MSBFragmentEntrySoap implements Serializable {
 		_js = js;
 	}
 
-	public long getFragmentCollectionId() {
-		return _fragmentCollectionId;
-	}
-
-	public void setFragmentCollectionId(long fragmentCollectionId) {
-		_fragmentCollectionId = fragmentCollectionId;
-	}
-
 	private long _fragmentEntryId;
 	private long _groupId;
 	private long _companyId;
@@ -203,9 +203,9 @@ public class MSBFragmentEntrySoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private long _msbFragmentCollectionId;
 	private String _name;
 	private String _css;
 	private String _html;
 	private String _js;
-	private long _fragmentCollectionId;
 }

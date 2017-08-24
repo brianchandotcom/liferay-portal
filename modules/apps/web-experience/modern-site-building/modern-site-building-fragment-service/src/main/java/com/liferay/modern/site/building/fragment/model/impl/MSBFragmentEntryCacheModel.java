@@ -82,6 +82,8 @@ public class MSBFragmentEntryCacheModel implements CacheModel<MSBFragmentEntry>,
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", msbFragmentCollectionId=");
+		sb.append(msbFragmentCollectionId);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", css=");
@@ -90,8 +92,6 @@ public class MSBFragmentEntryCacheModel implements CacheModel<MSBFragmentEntry>,
 		sb.append(html);
 		sb.append(", js=");
 		sb.append(js);
-		sb.append(", fragmentCollectionId=");
-		sb.append(fragmentCollectionId);
 		sb.append("}");
 
 		return sb.toString();
@@ -127,6 +127,8 @@ public class MSBFragmentEntryCacheModel implements CacheModel<MSBFragmentEntry>,
 			msbFragmentEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		msbFragmentEntryImpl.setMsbFragmentCollectionId(msbFragmentCollectionId);
+
 		if (name == null) {
 			msbFragmentEntryImpl.setName(StringPool.BLANK);
 		}
@@ -155,8 +157,6 @@ public class MSBFragmentEntryCacheModel implements CacheModel<MSBFragmentEntry>,
 			msbFragmentEntryImpl.setJs(js);
 		}
 
-		msbFragmentEntryImpl.setFragmentCollectionId(fragmentCollectionId);
-
 		msbFragmentEntryImpl.resetOriginalValues();
 
 		return msbFragmentEntryImpl;
@@ -174,12 +174,12 @@ public class MSBFragmentEntryCacheModel implements CacheModel<MSBFragmentEntry>,
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+
+		msbFragmentCollectionId = objectInput.readLong();
 		name = objectInput.readUTF();
 		css = objectInput.readUTF();
 		html = objectInput.readUTF();
 		js = objectInput.readUTF();
-
-		fragmentCollectionId = objectInput.readLong();
 	}
 
 	@Override
@@ -202,6 +202,8 @@ public class MSBFragmentEntryCacheModel implements CacheModel<MSBFragmentEntry>,
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		objectOutput.writeLong(msbFragmentCollectionId);
 
 		if (name == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -230,8 +232,6 @@ public class MSBFragmentEntryCacheModel implements CacheModel<MSBFragmentEntry>,
 		else {
 			objectOutput.writeUTF(js);
 		}
-
-		objectOutput.writeLong(fragmentCollectionId);
 	}
 
 	public long fragmentEntryId;
@@ -241,9 +241,9 @@ public class MSBFragmentEntryCacheModel implements CacheModel<MSBFragmentEntry>,
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long msbFragmentCollectionId;
 	public String name;
 	public String css;
 	public String html;
 	public String js;
-	public long fragmentCollectionId;
 }

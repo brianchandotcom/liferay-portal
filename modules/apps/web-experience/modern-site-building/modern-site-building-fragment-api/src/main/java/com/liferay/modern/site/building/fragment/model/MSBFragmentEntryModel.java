@@ -193,6 +193,20 @@ public interface MSBFragmentEntryModel extends BaseModel<MSBFragmentEntry>,
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the msb fragment collection ID of this msb fragment entry.
+	 *
+	 * @return the msb fragment collection ID of this msb fragment entry
+	 */
+	public long getMsbFragmentCollectionId();
+
+	/**
+	 * Sets the msb fragment collection ID of this msb fragment entry.
+	 *
+	 * @param msbFragmentCollectionId the msb fragment collection ID of this msb fragment entry
+	 */
+	public void setMsbFragmentCollectionId(long msbFragmentCollectionId);
+
+	/**
 	 * Returns the name of this msb fragment entry.
 	 *
 	 * @return the name of this msb fragment entry
@@ -251,20 +265,6 @@ public interface MSBFragmentEntryModel extends BaseModel<MSBFragmentEntry>,
 	 * @param js the js of this msb fragment entry
 	 */
 	public void setJs(String js);
-
-	/**
-	 * Returns the fragment collection ID of this msb fragment entry.
-	 *
-	 * @return the fragment collection ID of this msb fragment entry
-	 */
-	public long getFragmentCollectionId();
-
-	/**
-	 * Sets the fragment collection ID of this msb fragment entry.
-	 *
-	 * @param fragmentCollectionId the fragment collection ID of this msb fragment entry
-	 */
-	public void setFragmentCollectionId(long fragmentCollectionId);
 
 	@Override
 	public boolean isNew();

@@ -56,42 +56,42 @@ public interface MSBFragmentEntryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MSBFragmentEntryServiceUtil} to access the msb fragment entry remote service. Add custom service methods to {@link com.liferay.modern.site.building.fragment.service.impl.MSBFragmentEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public MSBFragmentEntry addFragmentEntry(long groupId,
-		long fragmentCollectionId, java.lang.String name, java.lang.String css,
-		java.lang.String html, java.lang.String js,
+	public MSBFragmentEntry addMSBFragmentEntry(long groupId,
+		long msbFragmentCollectionId, java.lang.String name,
+		java.lang.String css, java.lang.String html, java.lang.String js,
 		ServiceContext serviceContext) throws PortalException;
 
-	public List<MSBFragmentEntry> deleteFragmentEntries(
+	public List<MSBFragmentEntry> deleteMSBFragmentEntries(
 		long[] fragmentEntriesIds) throws PortalException;
 
-	public MSBFragmentEntry deleteFragmentEntry(long fragmentEntryId)
+	public MSBFragmentEntry deleteMSBFragmentEntry(long fragmentEntryId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MSBFragmentEntry> fetchFragmentEntries(
-		long fragmentCollectionId) throws PortalException;
+	public List<MSBFragmentEntry> fetchMSBFragmentEntries(
+		long msbFragmentCollectionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MSBFragmentEntry fetchFragmentEntry(long fragmentEntryId);
+	public MSBFragmentEntry fetchMSBFragmentEntry(long fragmentEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MSBFragmentEntry> getFragmentEntries(
-		long fragmentCollectionId, int start, int end)
+	public int getGroupMSBFragmentCollectionsCount(long msbFragmentCollectionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MSBFragmentEntry> getMSBFragmentEntries(
+		long msbFragmentCollectionId, int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MSBFragmentEntry> getFragmentEntries(long groupId,
-		long fragmentCollectionId, int start, int end,
+	public List<MSBFragmentEntry> getMSBFragmentEntries(long groupId,
+		long msbFragmentCollectionId, int start, int end,
 		OrderByComparator<MSBFragmentEntry> orderByComparator)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MSBFragmentEntry> getFragmentEntries(long groupId,
-		long fragmentCollectionId, java.lang.String name, int start, int end,
-		OrderByComparator<MSBFragmentEntry> obc);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupFragmentCollectionsCount(long fragmentCollectionId);
+	public List<MSBFragmentEntry> getMSBFragmentEntries(long groupId,
+		long msbFragmentCollectionId, java.lang.String name, int start,
+		int end, OrderByComparator<MSBFragmentEntry> obc);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -100,7 +100,7 @@ public interface MSBFragmentEntryService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public MSBFragmentEntry updateFragmentEntry(long fragmentEntryId,
+	public MSBFragmentEntry updateMSBFragmentEntry(long fragmentEntryId,
 		java.lang.String name, java.lang.String css, java.lang.String html,
 		java.lang.String js) throws PortalException;
 }

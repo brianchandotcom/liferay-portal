@@ -61,8 +61,8 @@ public interface MSBFragmentCollectionLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MSBFragmentCollectionLocalServiceUtil} to access the msb fragment collection local service. Add custom service methods to {@link com.liferay.modern.site.building.fragment.service.impl.MSBFragmentCollectionLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public MSBFragmentCollection addFragmentCollection(long userId,
-		long groupId, java.lang.String name, java.lang.String description,
+	public MSBFragmentCollection addMSBFragmentCollection(long groupId,
+		long userId, java.lang.String name, java.lang.String description,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -84,12 +84,6 @@ public interface MSBFragmentCollectionLocalService extends BaseLocalService,
 	public MSBFragmentCollection createMSBFragmentCollection(
 		long fragmentCollectionId);
 
-	public MSBFragmentCollection deleteFragmentCollection(
-		long fragmentCollectionId) throws PortalException;
-
-	public MSBFragmentCollection deleteFragmentCollection(
-		MSBFragmentCollection fragmentCollection) throws PortalException;
-
 	/**
 	* Deletes the msb fragment collection with the primary key from the database. Also notifies the appropriate model listeners.
 	*
@@ -106,10 +100,11 @@ public interface MSBFragmentCollectionLocalService extends BaseLocalService,
 	*
 	* @param msbFragmentCollection the msb fragment collection
 	* @return the msb fragment collection that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public MSBFragmentCollection deleteMSBFragmentCollection(
-		MSBFragmentCollection msbFragmentCollection);
+		MSBFragmentCollection msbFragmentCollection) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -178,30 +173,11 @@ public interface MSBFragmentCollectionLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MSBFragmentCollection fetchFragmentCollection(
-		long fragmentCollectionId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MSBFragmentCollection fetchMSBFragmentCollection(
 		long fragmentCollectionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MSBFragmentCollection> getFragmentCollections(long groupId,
-		int start, int end) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MSBFragmentCollection> getFragmentCollections(long groupId,
-		int start, int end,
-		OrderByComparator<MSBFragmentCollection> orderByComparator)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MSBFragmentCollection> getFragmentCollections(long groupId,
-		java.lang.String name, int start, int end,
-		OrderByComparator<MSBFragmentCollection> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -232,6 +208,21 @@ public interface MSBFragmentCollectionLocalService extends BaseLocalService,
 	public List<MSBFragmentCollection> getMSBFragmentCollections(int start,
 		int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MSBFragmentCollection> getMSBFragmentCollections(long groupId,
+		int start, int end) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MSBFragmentCollection> getMSBFragmentCollections(long groupId,
+		int start, int end,
+		OrderByComparator<MSBFragmentCollection> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MSBFragmentCollection> getMSBFragmentCollections(long groupId,
+		java.lang.String name, int start, int end,
+		OrderByComparator<MSBFragmentCollection> obc);
+
 	/**
 	* Returns the number of msb fragment collections.
 	*
@@ -252,7 +243,7 @@ public interface MSBFragmentCollectionLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public MSBFragmentCollection updateFragmentCollection(
+	public MSBFragmentCollection updateMSBFragmentCollection(
 		long fragmentCollectionId, java.lang.String name,
 		java.lang.String description) throws PortalException;
 

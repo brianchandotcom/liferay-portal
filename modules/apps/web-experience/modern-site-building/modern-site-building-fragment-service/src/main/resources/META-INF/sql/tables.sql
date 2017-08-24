@@ -18,9 +18,9 @@ create table MSBFragmentEntry (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	msbFragmentCollectionId LONG,
 	name VARCHAR(75) null,
 	css STRING null,
 	html STRING null,
-	js STRING null,
-	fragmentCollectionId LONG
+	js STRING null
 );

@@ -15,6 +15,7 @@
 package com.liferay.source.formatter;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -39,6 +40,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -46,6 +48,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * @author Hugo Huijser
@@ -212,37 +215,41 @@ public class SourceFormatter {
 	}
 
 	public void format() throws Exception {
+		_printProgressStatusMessage("Scanning for files...");
+
 		_init();
 
-		List<SourceProcessor> sourceProcessors = new ArrayList<>();
+		_printProgressStatusMessage("Initializing checks...");
 
-		sourceProcessors.add(new BNDSourceProcessor());
-		sourceProcessors.add(new CodeownersSourceProcessor());
-		sourceProcessors.add(new CQLSourceProcessor());
-		sourceProcessors.add(new CSSSourceProcessor());
-		sourceProcessors.add(new DockerfileSourceProcessor());
-		sourceProcessors.add(new FTLSourceProcessor());
-		sourceProcessors.add(new GradleSourceProcessor());
-		sourceProcessors.add(new GroovySourceProcessor());
-		sourceProcessors.add(new JavaSourceProcessor());
-		sourceProcessors.add(new JSONSourceProcessor());
-		sourceProcessors.add(new JSPSourceProcessor());
-		sourceProcessors.add(new JSSourceProcessor());
-		sourceProcessors.add(new MarkdownSourceProcessor());
-		sourceProcessors.add(new PropertiesSourceProcessor());
-		sourceProcessors.add(new SHSourceProcessor());
-		sourceProcessors.add(new SoySourceProcessor());
-		sourceProcessors.add(new SQLSourceProcessor());
-		sourceProcessors.add(new TLDSourceProcessor());
-		sourceProcessors.add(new XMLSourceProcessor());
-		sourceProcessors.add(new YMLSourceProcessor());
+		_progressStatusThread.start();
+
+		_sourceProcessors.add(new BNDSourceProcessor());
+		_sourceProcessors.add(new CodeownersSourceProcessor());
+		_sourceProcessors.add(new CQLSourceProcessor());
+		_sourceProcessors.add(new CSSSourceProcessor());
+		_sourceProcessors.add(new DockerfileSourceProcessor());
+		_sourceProcessors.add(new FTLSourceProcessor());
+		_sourceProcessors.add(new GradleSourceProcessor());
+		_sourceProcessors.add(new GroovySourceProcessor());
+		_sourceProcessors.add(new JavaSourceProcessor());
+		_sourceProcessors.add(new JSONSourceProcessor());
+		_sourceProcessors.add(new JSPSourceProcessor());
+		_sourceProcessors.add(new JSSourceProcessor());
+		_sourceProcessors.add(new MarkdownSourceProcessor());
+		_sourceProcessors.add(new PropertiesSourceProcessor());
+		_sourceProcessors.add(new SHSourceProcessor());
+		_sourceProcessors.add(new SoySourceProcessor());
+		_sourceProcessors.add(new SQLSourceProcessor());
+		_sourceProcessors.add(new TLDSourceProcessor());
+		_sourceProcessors.add(new XMLSourceProcessor());
+		_sourceProcessors.add(new YMLSourceProcessor());
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
-			sourceProcessors.size());
+			_sourceProcessors.size());
 
-		List<Future<Void>> futures = new ArrayList<>(sourceProcessors.size());
+		List<Future<Void>> futures = new ArrayList<>(_sourceProcessors.size());
 
-		for (final SourceProcessor sourceProcessor : sourceProcessors) {
+		for (final SourceProcessor sourceProcessor : _sourceProcessors) {
 			Future<Void> future = executorService.submit(
 				new Callable<Void>() {
 
@@ -303,6 +310,9 @@ public class SourceFormatter {
 				throw _firstSourceMismatchException;
 			}
 		}
+
+		_progressStatusQueue.put(
+			new ProgressStatusUpdate(ProgressStatus.SOURCE_FORMAT_COMPLETED));
 	}
 
 	public List<String> getModifiedFileNames() {
@@ -404,6 +414,14 @@ public class SourceFormatter {
 		}
 	}
 
+	private void _printProgressStatusMessage(String message) {
+		if (message.length() > _maxStatusMessageLength) {
+			_maxStatusMessageLength = message.length();
+		}
+
+		System.out.print(message + "\r");
+	}
+
 	private void _readProperties(File propertiesFile) throws Exception {
 		Properties properties = _getProperties(propertiesFile);
 
@@ -444,6 +462,7 @@ public class SourceFormatter {
 		throws Exception {
 
 		sourceProcessor.setAllFileNames(_allFileNames);
+		sourceProcessor.setProgressStatusQueue(_progressStatusQueue);
 		sourceProcessor.setPropertiesMap(_propertiesMap);
 		sourceProcessor.setSourceFormatterArgs(_sourceFormatterArgs);
 		sourceProcessor.setSourceFormatterExcludes(_sourceFormatterExcludes);
@@ -465,12 +484,170 @@ public class SourceFormatter {
 
 	private List<String> _allFileNames;
 	private volatile SourceMismatchException _firstSourceMismatchException;
+	private int _maxStatusMessageLength = -1;
 	private final List<String> _modifiedFileNames =
 		new CopyOnWriteArrayList<>();
+	private final BlockingQueue<ProgressStatusUpdate> _progressStatusQueue =
+		new LinkedBlockingQueue<>();
+
+	private final Thread _progressStatusThread = new Thread() {
+
+		@Override
+		public void run() {
+			int fileScansCompletedCount = 0;
+			int percentage = 0;
+			int processedCheckStyleFileCount = 0;
+			int processedSourceChecksFileCount = 0;
+			int totalCheckStyleFileCount = 0;
+			int totalSourceChecksFileCount = 0;
+
+			boolean sourceChecksInitialized = false;
+			boolean sourceChecksCompleted = false;
+
+			while (true) {
+				try {
+					ProgressStatusUpdate progressStatusUpdate =
+						_progressStatusQueue.take();
+
+					ProgressStatus progressStatus =
+						progressStatusUpdate.getProgressStatus();
+
+					if (progressStatus.equals(
+							ProgressStatus.CHECK_STYLE_FILE_COMPLETED)) {
+
+						processedCheckStyleFileCount++;
+
+						if (!sourceChecksCompleted) {
+
+							// Do not show progress for CheckStyle when there
+							// are still source checks that are not done yet.
+
+							continue;
+						}
+
+						percentage = _processCompletedPercentage(
+							percentage, processedCheckStyleFileCount,
+							totalCheckStyleFileCount, "CheckStyle checks");
+					}
+					else if (progressStatus.equals(
+								ProgressStatus.CHECK_STYLE_STARTING)) {
+
+						totalCheckStyleFileCount =
+							progressStatusUpdate.getCount();
+					}
+					else if (progressStatus.equals(
+								ProgressStatus.SOURCE_CHECKS_INITIALIZED)) {
+
+						fileScansCompletedCount++;
+						totalSourceChecksFileCount +=
+							progressStatusUpdate.getCount();
+
+						if (fileScansCompletedCount ==
+								_sourceProcessors.size()) {
+
+							sourceChecksInitialized = true;
+
+							// Some SourceProcessors might already have
+							// processed files before other SourceProcessors
+							// finished initializing. In order to show the
+							// status for the remaining files, we deduct the
+							// processed files from the total count and reset
+							// the processed files count.
+
+							totalSourceChecksFileCount -=
+								processedSourceChecksFileCount;
+
+							processedSourceChecksFileCount = 0;
+						}
+					}
+					else if (progressStatus.equals(
+								ProgressStatus.SOURCE_CHECK_FILE_COMPLETED)) {
+
+						processedSourceChecksFileCount++;
+
+						if (!sourceChecksInitialized) {
+
+							// Do not show progress when there are still other
+							// source checks that are still being finalized.
+
+							continue;
+						}
+
+						percentage = _processCompletedPercentage(
+							percentage, processedSourceChecksFileCount,
+							totalSourceChecksFileCount, "source checks");
+
+						if (percentage == 100) {
+							sourceChecksCompleted = true;
+
+							// Checkstyle might already have processed files
+							// before all the source checks finished. In order
+							// to show the status for the remaining files, we
+							// deduct the processed files from the total count
+							// and reset the processed files count.
+
+							totalCheckStyleFileCount -=
+								processedCheckStyleFileCount;
+
+							processedCheckStyleFileCount = 0;
+
+							percentage = 0;
+						}
+					}
+					else if (progressStatus.equals(
+								ProgressStatus.SOURCE_FORMAT_COMPLETED)) {
+
+						if (_maxStatusMessageLength == -1) {
+							break;
+						}
+
+						// Print empty line to clear the line in order to
+						// prevent characters from old lines to still show
+
+						StringBundler sb = new StringBundler(
+							_maxStatusMessageLength);
+
+						for (int i = 0; i < _maxStatusMessageLength; i++) {
+							sb.append(CharPool.SPACE);
+						}
+
+						_printProgressStatusMessage(sb.toString());
+
+						break;
+					}
+				}
+				catch (InterruptedException ie) {
+				}
+			}
+		}
+
+		private int _processCompletedPercentage(
+			int percentage, int count, int total, String checkType) {
+
+			int newPercentage = (count * 100) / total;
+
+			if (newPercentage > percentage) {
+				StringBundler sb = new StringBundler();
+
+				sb.append("Processing ");
+				sb.append(checkType);
+				sb.append(": ");
+				sb.append(newPercentage);
+				sb.append("% completed");
+
+				_printProgressStatusMessage(sb.toString());
+			}
+
+			return newPercentage;
+		}
+
+	};
+
 	private Map<String, Properties> _propertiesMap = new HashMap<>();
 	private final SourceFormatterArgs _sourceFormatterArgs;
 	private SourceFormatterExcludes _sourceFormatterExcludes;
 	private final Set<SourceFormatterMessage> _sourceFormatterMessages =
 		new ConcurrentSkipListSet<>();
+	private List<SourceProcessor> _sourceProcessors = new ArrayList<>();
 
 }

@@ -64,9 +64,10 @@ public class CommerceCartLocalServiceImpl
 	public CommerceCart assignGuestCartToUser(long userId, long commerceCartId)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
 		CommerceCart commerceCart = commerceCartPersistence.fetchByPrimaryKey(
 			commerceCartId);
+
+		User user = userLocalService.getUser(userId);
 
 		commerceCart.setUserId(user.getUserId());
 		commerceCart.setUserName(user.getFullName());
@@ -137,29 +138,31 @@ public class CommerceCartLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		List<CommerceCartItem> commerceCartItems =
+		List<CommerceCartItem> guestCommerceCartItems =
 			commerceCartItemPersistence.findByCommerceCartId(
 				guestCommerceCartId);
 
-		for (CommerceCartItem commerceCartItem : commerceCartItems) {
-			List<CommerceCartItem> existingCommerceCartItems =
+		for (CommerceCartItem guestCommerceCartItem : guestCommerceCartItems) {
+			List<CommerceCartItem> userCommerceCartItems =
 				commerceCartItemPersistence.findByC_D_I(
-					userCommerceCartId, commerceCartItem.getCPDefinitionId(),
-					commerceCartItem.getCPInstanceId());
+					userCommerceCartId,
+					guestCommerceCartItem.getCPDefinitionId(),
+					guestCommerceCartItem.getCPInstanceId());
 
-			if ((existingCommerceCartItems != null) &&
-				!existingCommerceCartItems.isEmpty()) {
+			if ((userCommerceCartItems != null) &&
+				!userCommerceCartItems.isEmpty()) {
 
 				boolean found = false;
 
-				for (CommerceCartItem curCommerceCartItem :
-						existingCommerceCartItems) {
+				for (CommerceCartItem userCommerceCartItem :
+						userCommerceCartItems) {
 
 					if (_ddmFormValuesHelper.equals(
-							curCommerceCartItem.getJson(),
-							commerceCartItem.getJson())) {
+							userCommerceCartItem.getJson(),
+							guestCommerceCartItem.getJson())) {
 
 						found = true;
+
 						break;
 					}
 				}
@@ -170,13 +173,13 @@ public class CommerceCartLocalServiceImpl
 			}
 
 			commerceCartItemLocalService.addCommerceCartItem(
-				userCommerceCartId, commerceCartItem.getCPDefinitionId(),
-				commerceCartItem.getCPInstanceId(),
-				commerceCartItem.getQuantity(), commerceCartItem.getJson(),
-				serviceContext);
+				userCommerceCartId, guestCommerceCartItem.getCPDefinitionId(),
+				guestCommerceCartItem.getCPInstanceId(),
+				guestCommerceCartItem.getQuantity(),
+				guestCommerceCartItem.getJson(), serviceContext);
 		}
 
-		deleteCommerceCart(guestCommerceCartId);
+		commerceCartLocalService.deleteCommerceCart(guestCommerceCartId);
 	}
 
 	@Reference

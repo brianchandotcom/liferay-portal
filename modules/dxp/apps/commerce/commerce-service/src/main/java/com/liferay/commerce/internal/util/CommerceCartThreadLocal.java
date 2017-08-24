@@ -24,32 +24,32 @@ import java.util.Map;
  */
 public class CommerceCartThreadLocal {
 
-	public static String getCommerceCartUUID(int type) {
-		Map<Integer, String> commerceCartUUIDMap = _commerceCartUUIDMap.get();
+	public static String getCommerceCartUuid(int type) {
+		Map<Integer, String> commerceCartUuidMap = _commerceCartUuidMap.get();
 
-		if ((commerceCartUUIDMap != null) &&
-			commerceCartUUIDMap.containsKey(type)) {
+		if ((commerceCartUuidMap != null) &&
+			commerceCartUuidMap.containsKey(type)) {
 
-			return commerceCartUUIDMap.get(type);
+			return commerceCartUuidMap.get(type);
 		}
 
 		return null;
 	}
 
-	public static void setCommerceCartUUID(int type, String commerceCartUUID) {
-		Map<Integer, String> commerceCartUUIDMap = _commerceCartUUIDMap.get();
+	public static void setCommerceCartUuid(int type, String commerceCartUuid) {
+		Map<Integer, String> commerceCartUuidMap = _commerceCartUuidMap.get();
 
-		if (commerceCartUUIDMap == null) {
-			commerceCartUUIDMap = new HashMap<>();
+		if (commerceCartUuidMap == null) {
+			commerceCartUuidMap = new HashMap<>();
 		}
 
-		commerceCartUUIDMap.put(type, commerceCartUUID);
+		commerceCartUuidMap.put(type, commerceCartUuid);
 
-		_commerceCartUUIDMap.set(commerceCartUUIDMap);
+		_commerceCartUuidMap.set(commerceCartUuidMap);
 	}
 
 	private static final ThreadLocal<Map<Integer, String>>
-		_commerceCartUUIDMap = new AutoResetThreadLocal<>(
+		_commerceCartUuidMap = new AutoResetThreadLocal<>(
 			CommerceCartThreadLocal.class + "._commerce_cart_uuid_map");
 
 }

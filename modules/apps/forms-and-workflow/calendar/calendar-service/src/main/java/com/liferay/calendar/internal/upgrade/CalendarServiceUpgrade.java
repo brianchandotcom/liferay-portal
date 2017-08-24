@@ -14,6 +14,7 @@
 
 package com.liferay.calendar.internal.upgrade;
 
+import com.liferay.calendar.internal.upgrade.v1_0_2.UpgradeCalendar;
 import com.liferay.calendar.internal.upgrade.v1_0_4.UpgradeClassNames;
 import com.liferay.calendar.internal.upgrade.v1_0_5.UpgradeCalendarResource;
 import com.liferay.calendar.internal.upgrade.v1_0_5.UpgradeCompanyId;
@@ -23,7 +24,6 @@ import com.liferay.calendar.internal.upgrade.v2_0_0.UpgradeSchema;
 import com.liferay.calendar.internal.upgrade.v3_0_0.UpgradeCalendarBookingResourceBlock;
 import com.liferay.calendar.internal.upgrade.v3_0_0.UpgradeCalendarResourceBlock;
 import com.liferay.calendar.internal.upgrade.v3_0_0.UpgradeCalendarResourceResourceBlock;
-import com.liferay.calendar.upgrade.v1_0_2.UpgradeCalendar;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;

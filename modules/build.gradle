@@ -87,7 +87,9 @@ gradle.beforeProject {
 		}
 
 		printProjectPath {
-			println project.path
+			doLast {
+				println project.path
+			}
 		}
 
 		if (project.path.startsWith(":sdk:project-templates-")) {

@@ -64,6 +64,26 @@ if (cpDefinitions == null) {
 			<p>
 				<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= cpDefinition.getStatus() %>" />
 			</p>
+
+			<%
+			Date createDate = cpDefinition.getCreateDate();
+			Date modifiedDate = cpDefinition.getModifiedDate();
+
+			String createDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
+			String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
+			%>
+
+			<h5><liferay-ui:message key="create-date" /></h5>
+
+			<p>
+				<liferay-ui:message arguments="<%= createDateDescription %>" key="x-ago" />
+			</p>
+
+			<h5><liferay-ui:message key="modified-date" /></h5>
+
+			<p>
+				<liferay-ui:message arguments="<%= modifiedDateDescription %>" key="x-ago" />
+			</p>
 		</div>
 	</c:when>
 	<c:otherwise>

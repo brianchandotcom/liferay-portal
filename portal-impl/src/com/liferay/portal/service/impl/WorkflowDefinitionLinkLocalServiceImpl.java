@@ -190,6 +190,20 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 	}
 
 	@Override
+	public List<WorkflowDefinitionLink> getWorkflowDefinitionLinks(
+			long companyId, String workflowDefinitionName,
+			int workflowDefinitionVersion)
+		throws PortalException {
+
+		if (!WorkflowEngineManagerUtil.isDeployed()) {
+			throw new NoSuchWorkflowDefinitionLinkException();
+		}
+
+		return workflowDefinitionLinkPersistence.findByC_W_W(
+			companyId, workflowDefinitionName, workflowDefinitionVersion);
+	}
+
+	@Override
 	public int getWorkflowDefinitionLinksCount(
 		long companyId, long groupId, String className) {
 

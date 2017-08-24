@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<archetype-descriptor name="liferay-module-mvc-war-portlet">
+	<fileSets>
+		<fileSet filtered="true">
+			<directory>docroot</directory>
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="true">
+			<directory></directory>
+			<includes>
+				<include>.gitignore</include>
+				<include>build.gradle</include>
+			</includes>
+		</fileSet>
+	</fileSets>
+	<requiredProperties>
+		<requiredProperty key="author">
+		</requiredProperty>
+		<requiredProperty key="buildType">
+			<defaultValue>maven</defaultValue>
+		</requiredProperty>
+		<requiredProperty key="className">
+		</requiredProperty>
+		<requiredProperty key="projectType">
+			<defaultValue>standalone</defaultValue>
+		</requiredProperty>
+	</requiredProperties>
+</archetype-descriptor>

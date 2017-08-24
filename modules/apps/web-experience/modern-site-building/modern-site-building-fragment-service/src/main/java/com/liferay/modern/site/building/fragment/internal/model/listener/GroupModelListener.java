@@ -37,13 +37,13 @@ public class GroupModelListener extends BaseModelListener<Group> {
 	public void onBeforeRemove(Group group) throws ModelListenerException {
 		try {
 			List<MSBFragmentCollection> msbFragmentCollections =
-				_msbFragmentCollectionLocalService.getFragmentCollections(
+				_msbFragmentCollectionLocalService.getMSBFragmentCollections(
 					group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 			for (MSBFragmentCollection msbFragmentCollection :
 					msbFragmentCollections) {
 
-				_msbFragmentCollectionLocalService.deleteFragmentCollection(
+				_msbFragmentCollectionLocalService.deleteMSBFragmentCollection(
 					msbFragmentCollection);
 			}
 		}

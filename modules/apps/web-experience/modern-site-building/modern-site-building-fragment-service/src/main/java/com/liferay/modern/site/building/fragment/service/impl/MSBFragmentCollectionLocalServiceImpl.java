@@ -37,7 +37,7 @@ public class MSBFragmentCollectionLocalServiceImpl
 	extends MSBFragmentCollectionLocalServiceBaseImpl {
 
 	@Override
-	public MSBFragmentCollection addFragmentCollection(
+	public MSBFragmentCollection addMSBFragmentCollection(
 			long groupId, long userId, String name, String description,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -75,18 +75,18 @@ public class MSBFragmentCollectionLocalServiceImpl
 	}
 
 	@Override
-	public MSBFragmentCollection deleteFragmentCollection(
+	public MSBFragmentCollection deleteMSBFragmentCollection(
 			long fragmentCollectionId)
 		throws PortalException {
 
 		MSBFragmentCollection fragmentCollection = getMSBFragmentCollection(
 			fragmentCollectionId);
 
-		return deleteFragmentCollection(fragmentCollection);
+		return deleteMSBFragmentCollection(fragmentCollection);
 	}
 
 	@Override
-	public MSBFragmentCollection deleteFragmentCollection(
+	public MSBFragmentCollection deleteMSBFragmentCollection(
 			MSBFragmentCollection fragmentCollection)
 		throws PortalException {
 
@@ -116,7 +116,7 @@ public class MSBFragmentCollectionLocalServiceImpl
 	}
 
 	@Override
-	public MSBFragmentCollection fetchFragmentCollection(
+	public MSBFragmentCollection fetchMSBFragmentCollection(
 		long fragmentCollectionId) {
 
 		return msbFragmentCollectionPersistence.fetchByPrimaryKey(
@@ -124,15 +124,15 @@ public class MSBFragmentCollectionLocalServiceImpl
 	}
 
 	@Override
-	public List<MSBFragmentCollection> getFragmentCollections(
+	public List<MSBFragmentCollection> getMSBFragmentCollections(
 			long groupId, int start, int end)
 		throws PortalException {
 
-		return getFragmentCollections(groupId, start, end, null);
+		return getMSBFragmentCollections(groupId, start, end, null);
 	}
 
 	@Override
-	public List<MSBFragmentCollection> getFragmentCollections(
+	public List<MSBFragmentCollection> getMSBFragmentCollections(
 			long groupId, int start, int end,
 			OrderByComparator<MSBFragmentCollection> orderByComparator)
 		throws PortalException {
@@ -142,7 +142,7 @@ public class MSBFragmentCollectionLocalServiceImpl
 	}
 
 	@Override
-	public List<MSBFragmentCollection> getFragmentCollections(
+	public List<MSBFragmentCollection> getMSBFragmentCollections(
 		long groupId, String name, int start, int end,
 		OrderByComparator<MSBFragmentCollection> obc) {
 
@@ -156,7 +156,7 @@ public class MSBFragmentCollectionLocalServiceImpl
 	}
 
 	@Override
-	public MSBFragmentCollection updateFragmentCollection(
+	public MSBFragmentCollection updateMSBFragmentCollection(
 			long fragmentCollectionId, String name, String description)
 		throws PortalException {
 

@@ -36,7 +36,7 @@ public class MSBFragmentEntryLocalServiceImpl
 	extends MSBFragmentEntryLocalServiceBaseImpl {
 
 	@Override
-	public MSBFragmentEntry addFragmentEntry(
+	public MSBFragmentEntry addMSBFragmentEntry(
 			long groupId, long userId, long msbFragmentCollectionId,
 			String name, String css, String html, String js,
 			ServiceContext serviceContext)
@@ -76,7 +76,7 @@ public class MSBFragmentEntryLocalServiceImpl
 	}
 
 	@Override
-	public MSBFragmentEntry deleteFragmentEntry(long fragmentEntryId)
+	public MSBFragmentEntry deleteMSBFragmentEntry(long fragmentEntryId)
 		throws PortalException {
 
 		MSBFragmentEntry fragmentEntry = getMSBFragmentEntry(fragmentEntryId);
@@ -85,7 +85,8 @@ public class MSBFragmentEntryLocalServiceImpl
 	}
 
 	@Override
-	public MSBFragmentEntry deleteFragmentEntry(MSBFragmentEntry fragmentEntry)
+	public MSBFragmentEntry deleteMSBFragmentEntry(
+			MSBFragmentEntry fragmentEntry)
 		throws PortalException {
 
 		// Entry
@@ -103,7 +104,7 @@ public class MSBFragmentEntryLocalServiceImpl
 	}
 
 	@Override
-	public List<MSBFragmentEntry> fetchFragmentEntries(
+	public List<MSBFragmentEntry> fetchMSBFragmentEntries(
 		long msbFragmentCollectionId) {
 
 		return msbFragmentEntryPersistence.findByMSBFragmentCollectionId(
@@ -111,12 +112,12 @@ public class MSBFragmentEntryLocalServiceImpl
 	}
 
 	@Override
-	public MSBFragmentEntry fetchFragmentEntry(long fragmentEntryId) {
+	public MSBFragmentEntry fetchMSBFragmentEntry(long fragmentEntryId) {
 		return msbFragmentEntryPersistence.fetchByPrimaryKey(fragmentEntryId);
 	}
 
 	@Override
-	public List<MSBFragmentEntry> getFragmentEntries(
+	public List<MSBFragmentEntry> getMSBFragmentEntries(
 			long msbFragmentCollectionId, int start, int end)
 		throws PortalException {
 
@@ -125,31 +126,31 @@ public class MSBFragmentEntryLocalServiceImpl
 	}
 
 	@Override
-	public List<MSBFragmentEntry> getFragmentEntries(
+	public List<MSBFragmentEntry> getMSBFragmentEntries(
 			long groupId, long msbFragmentCollectionId, int start, int end,
 			OrderByComparator<MSBFragmentEntry> orderByComparator)
 		throws PortalException {
 
-		return msbFragmentEntryPersistence.findByG_FC(
+		return msbFragmentEntryPersistence.findByG_MSBFC(
 			groupId, msbFragmentCollectionId, start, end, orderByComparator);
 	}
 
 	@Override
-	public List<MSBFragmentEntry> getFragmentEntries(
+	public List<MSBFragmentEntry> getMSBFragmentEntries(
 		long groupId, long msbFragmentCollectionId, String name, int start,
 		int end, OrderByComparator<MSBFragmentEntry> obc) {
 
 		if (Validator.isNull(name)) {
-			return msbFragmentEntryPersistence.findByG_FC(
+			return msbFragmentEntryPersistence.findByG_MSBFC(
 				groupId, msbFragmentCollectionId, start, end, obc);
 		}
 
-		return msbFragmentEntryPersistence.findByG_LikeN_FC(
-			groupId, name, msbFragmentCollectionId, start, end, obc);
+		return msbFragmentEntryPersistence.findByG_MSBFC_LikeN(
+			groupId, msbFragmentCollectionId, name, start, end, obc);
 	}
 
 	@Override
-	public MSBFragmentEntry updateFragmentEntry(
+	public MSBFragmentEntry updateMSBFragmentEntry(
 			long fragmentEntryId, String name, String css, String html,
 			String js)
 		throws PortalException {

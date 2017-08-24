@@ -36,7 +36,7 @@ public class MSBFragmentCollectionServiceImpl
 	extends MSBFragmentCollectionServiceBaseImpl {
 
 	@Override
-	public MSBFragmentCollection addFragmentCollection(
+	public MSBFragmentCollection addMSBFragmentCollection(
 			long groupId, String name, String description,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -45,12 +45,12 @@ public class MSBFragmentCollectionServiceImpl
 			getPermissionChecker(), groupId,
 			MSBFragmentActionKeys.ADD_MSB_FRAGMENT_COLLECTION);
 
-		return msbFragmentCollectionLocalService.addFragmentCollection(
+		return msbFragmentCollectionLocalService.addMSBFragmentCollection(
 			groupId, getUserId(), name, description, serviceContext);
 	}
 
 	@Override
-	public MSBFragmentCollection deleteFragmentCollection(
+	public MSBFragmentCollection deleteMSBFragmentCollection(
 			long fragmentCollectionId)
 		throws PortalException {
 
@@ -62,7 +62,7 @@ public class MSBFragmentCollectionServiceImpl
 	}
 
 	@Override
-	public List<MSBFragmentCollection> deleteFragmentCollections(
+	public List<MSBFragmentCollection> deleteMSBFragmentCollections(
 			long[] fragmentCollectionIds)
 		throws PortalException {
 
@@ -95,7 +95,7 @@ public class MSBFragmentCollectionServiceImpl
 	}
 
 	@Override
-	public MSBFragmentCollection fetchFragmentCollection(
+	public MSBFragmentCollection fetchMSBFragmentCollection(
 			long fragmentCollectionId)
 		throws PortalException {
 
@@ -104,48 +104,48 @@ public class MSBFragmentCollectionServiceImpl
 	}
 
 	@Override
-	public List<MSBFragmentCollection> getFragmentCollections(
-			long groupId, int start, int end)
-		throws PortalException {
-
-		return msbFragmentCollectionLocalService.getFragmentCollections(
-			groupId, start, end);
-	}
-
-	@Override
-	public List<MSBFragmentCollection> getFragmentCollections(
-			long groupId, int start, int end,
-			OrderByComparator<MSBFragmentCollection> orderByComparator)
-		throws PortalException {
-
-		return msbFragmentCollectionLocalService.getFragmentCollections(
-			groupId, start, end, orderByComparator);
-	}
-
-	@Override
-	public List<MSBFragmentCollection> getFragmentCollections(
-			long groupId, String name, int start, int end,
-			OrderByComparator<MSBFragmentCollection> orderByComparator)
-		throws PortalException {
-
-		return msbFragmentCollectionLocalService.getFragmentCollections(
-			groupId, name, start, end, orderByComparator);
-	}
-
-	@Override
-	public int getGroupFragmentCollectionsCount(long groupId) {
+	public int getGroupMSBFragmentCollectionsCount(long groupId) {
 		return msbFragmentCollectionPersistence.countByGroupId(groupId);
 	}
 
 	@Override
-	public MSBFragmentCollection updateFragmentCollection(
+	public List<MSBFragmentCollection> getMSBFragmentCollections(
+			long groupId, int start, int end)
+		throws PortalException {
+
+		return msbFragmentCollectionLocalService.getMSBFragmentCollections(
+			groupId, start, end);
+	}
+
+	@Override
+	public List<MSBFragmentCollection> getMSBFragmentCollections(
+			long groupId, int start, int end,
+			OrderByComparator<MSBFragmentCollection> orderByComparator)
+		throws PortalException {
+
+		return msbFragmentCollectionLocalService.getMSBFragmentCollections(
+			groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<MSBFragmentCollection> getMSBFragmentCollections(
+			long groupId, String name, int start, int end,
+			OrderByComparator<MSBFragmentCollection> orderByComparator)
+		throws PortalException {
+
+		return msbFragmentCollectionLocalService.getMSBFragmentCollections(
+			groupId, name, start, end, orderByComparator);
+	}
+
+	@Override
+	public MSBFragmentCollection updateMSBFragmentCollection(
 			long fragmentCollectionId, String name, String description)
 		throws PortalException {
 
 		MSBFragmentCollectionPermission.check(
 			getPermissionChecker(), fragmentCollectionId, ActionKeys.UPDATE);
 
-		return msbFragmentCollectionLocalService.updateFragmentCollection(
+		return msbFragmentCollectionLocalService.updateMSBFragmentCollection(
 			fragmentCollectionId, name, description);
 	}
 

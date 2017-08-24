@@ -65,10 +65,10 @@ public class MSBFragmentCollectionServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		MSBFragmentCollectionServiceUtil.addFragmentCollection(
+		MSBFragmentCollectionServiceUtil.addMSBFragmentCollection(
 			_group.getGroupId(), "Fragment Collection", null, serviceContext);
 
-		MSBFragmentCollectionServiceUtil.addFragmentCollection(
+		MSBFragmentCollectionServiceUtil.addMSBFragmentCollection(
 			_group.getGroupId(), "Fragment Collection", null, serviceContext);
 	}
 
@@ -79,7 +79,7 @@ public class MSBFragmentCollectionServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		MSBFragmentCollection fragmentCollection =
-			MSBFragmentCollectionServiceUtil.addFragmentCollection(
+			MSBFragmentCollectionServiceUtil.addMSBFragmentCollection(
 				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
 				serviceContext);
 
@@ -93,7 +93,7 @@ public class MSBFragmentCollectionServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		MSBFragmentCollectionServiceUtil.addFragmentCollection(
+		MSBFragmentCollectionServiceUtil.addMSBFragmentCollection(
 			_group.getGroupId(), StringPool.BLANK, StringPool.BLANK,
 			serviceContext);
 	}
@@ -104,7 +104,7 @@ public class MSBFragmentCollectionServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		MSBFragmentCollectionServiceUtil.addFragmentCollection(
+		MSBFragmentCollectionServiceUtil.addMSBFragmentCollection(
 			_group.getGroupId(), null, StringPool.BLANK, serviceContext);
 	}
 
@@ -115,20 +115,20 @@ public class MSBFragmentCollectionServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		int originalFragmentCollectionsCount =
-			MSBFragmentCollectionServiceUtil.getGroupFragmentCollectionsCount(
-				_group.getGroupId());
+			MSBFragmentCollectionServiceUtil.
+				getGroupMSBFragmentCollectionsCount(_group.getGroupId());
 
-		MSBFragmentCollectionServiceUtil.addFragmentCollection(
+		MSBFragmentCollectionServiceUtil.addMSBFragmentCollection(
 			_group.getGroupId(), "Fragment Collection 1", StringPool.BLANK,
 			serviceContext);
 
-		MSBFragmentCollectionServiceUtil.addFragmentCollection(
+		MSBFragmentCollectionServiceUtil.addMSBFragmentCollection(
 			_group.getGroupId(), "Fragment Collection 2", StringPool.BLANK,
 			serviceContext);
 
 		int actualFragmentCollectionsCount =
-			MSBFragmentCollectionServiceUtil.getGroupFragmentCollectionsCount(
-				_group.getGroupId());
+			MSBFragmentCollectionServiceUtil.
+				getGroupMSBFragmentCollectionsCount(_group.getGroupId());
 
 		Assert.assertEquals(
 			originalFragmentCollectionsCount + 2,
@@ -142,15 +142,15 @@ public class MSBFragmentCollectionServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		MSBFragmentCollection fragmentCollection =
-			MSBFragmentCollectionServiceUtil.addFragmentCollection(
+			MSBFragmentCollectionServiceUtil.addMSBFragmentCollection(
 				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
 				serviceContext);
 
-		MSBFragmentCollectionServiceUtil.deleteFragmentCollection(
+		MSBFragmentCollectionServiceUtil.deleteMSBFragmentCollection(
 			fragmentCollection.getFragmentCollectionId());
 
 		Assert.assertNull(
-			MSBFragmentCollectionServiceUtil.fetchFragmentCollection(
+			MSBFragmentCollectionServiceUtil.fetchMSBFragmentCollection(
 				fragmentCollection.getFragmentCollectionId()));
 	}
 
@@ -163,20 +163,20 @@ public class MSBFragmentCollectionServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		MSBFragmentCollection fragmentCollection =
-			MSBFragmentCollectionServiceUtil.addFragmentCollection(
+			MSBFragmentCollectionServiceUtil.addMSBFragmentCollection(
 				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
 				serviceContext);
 
-		MSBFragmentEntryServiceUtil.addFragmentEntry(
+		MSBFragmentEntryServiceUtil.addMSBFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
 			"Fragment Entry", StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, serviceContext);
 
-		MSBFragmentCollectionServiceUtil.deleteFragmentCollection(
+		MSBFragmentCollectionServiceUtil.deleteMSBFragmentCollection(
 			fragmentCollection.getFragmentCollectionId());
 
 		Assert.assertNull(
-			MSBFragmentCollectionServiceUtil.fetchFragmentCollection(
+			MSBFragmentCollectionServiceUtil.fetchMSBFragmentCollection(
 				fragmentCollection.getFragmentCollectionId()));
 	}
 

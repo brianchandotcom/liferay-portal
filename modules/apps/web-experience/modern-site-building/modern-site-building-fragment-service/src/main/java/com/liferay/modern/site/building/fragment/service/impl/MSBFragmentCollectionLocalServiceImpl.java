@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -56,6 +57,10 @@ public class MSBFragmentCollectionLocalServiceImpl
 		fragmentCollection.setCompanyId(user.getCompanyId());
 		fragmentCollection.setUserId(user.getUserId());
 		fragmentCollection.setUserName(user.getFullName());
+		fragmentCollection.setCreateDate(
+			serviceContext.getCreateDate(new Date()));
+		fragmentCollection.setModifiedDate(
+			serviceContext.getModifiedDate(new Date()));
 		fragmentCollection.setName(name);
 		fragmentCollection.setDescription(description);
 
@@ -163,6 +168,7 @@ public class MSBFragmentCollectionLocalServiceImpl
 			validate(fragmentCollection.getGroupId(), name);
 		}
 
+		fragmentCollection.setModifiedDate(new Date());
 		fragmentCollection.setName(name);
 		fragmentCollection.setDescription(description);
 

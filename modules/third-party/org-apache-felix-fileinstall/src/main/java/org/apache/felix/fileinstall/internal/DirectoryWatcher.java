@@ -1034,6 +1034,11 @@ public class DirectoryWatcher extends Thread implements BundleListener
         Util.log(context, Logger.LOG_INFO, "Installing bundle " + sn
                 + " / " + v, null);
         Bundle b = context.installBundle(bundleLocation, is);
+
+               if (b.getState() == Bundle.UNINSTALLED) {
+                       return b;
+               }
+
         Util.storeChecksum(b, checksum, context);
         modified.set(true);
 
@@ -1489,3 +1494,4 @@ public class DirectoryWatcher extends Thread implements BundleListener
     }
 
 }
+/* @generated */

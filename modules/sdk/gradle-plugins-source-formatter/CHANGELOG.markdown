@@ -975,3 +975,4 @@ another task with the same name is being executed in a parent project.
 [LPS-74139]: https://issues.liferay.com/browse/LPS-74139
 [LPS-74222]: https://issues.liferay.com/browse/LPS-74222
 [LPS-74269]: https://issues.liferay.com/browse/LPS-74269
+[LPS-74314]: https://issues.liferay.com/browse/LPS-74314

@@ -38,7 +38,7 @@ public class UpgradeSamlKeyStoreProperties extends UpgradeProcess {
 	}
 
 	@Override
-	protected void doUpgrade() throws Exception {
+	public void doUpgrade() throws Exception {
 		String samlKeyStoreManagerImpl = _prefsProps.getString(
 			"saml.keystore.manager.impl");
 

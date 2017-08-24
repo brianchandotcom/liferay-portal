@@ -15,7 +15,6 @@
 package com.liferay.saml.runtime.internal.upgrade;
 
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.saml.runtime.internal.upgrade.v1_0_0.UpgradeSamlKeyStoreProperties;
@@ -54,10 +53,10 @@ public class UpgradeSamlKeyStorePropertiesTest extends PowerMockito {
 			""
 		);
 
-		UpgradeProcess upgradeProcess = new UpgradeSamlKeyStoreProperties(
-			configurationAdmin, prefsProps);
+		UpgradeSamlKeyStoreProperties upgradeSamlKeyStoreProperties =
+			new UpgradeSamlKeyStoreProperties(configurationAdmin, prefsProps);
 
-		upgradeProcess.upgrade();
+		upgradeSamlKeyStoreProperties.doUpgrade();
 
 		verifyZeroInteractions(configurationAdmin);
 	}
@@ -75,10 +74,10 @@ public class UpgradeSamlKeyStorePropertiesTest extends PowerMockito {
 			null
 		);
 
-		UpgradeProcess upgradeProcess = new UpgradeSamlKeyStoreProperties(
-			configurationAdmin, prefsProps);
+		UpgradeSamlKeyStoreProperties upgradeSamlKeyStoreProperties =
+			new UpgradeSamlKeyStoreProperties(configurationAdmin, prefsProps);
 
-		upgradeProcess.upgrade();
+		upgradeSamlKeyStoreProperties.doUpgrade();
 
 		verifyZeroInteractions(configurationAdmin);
 	}
@@ -107,10 +106,10 @@ public class UpgradeSamlKeyStorePropertiesTest extends PowerMockito {
 			samlKeyStoreManagerImpl
 		);
 
-		UpgradeProcess upgradeProcess = new UpgradeSamlKeyStoreProperties(
-			configurationAdmin, prefsProps);
+		UpgradeSamlKeyStoreProperties upgradeSamlKeyStoreProperties =
+			new UpgradeSamlKeyStoreProperties(configurationAdmin, prefsProps);
 
-		upgradeProcess.upgrade();
+		upgradeSamlKeyStoreProperties.doUpgrade();
 
 		ConfigurationAdmin verifyConfigurationAdmin = Mockito.verify(
 			configurationAdmin, Mockito.times(1));

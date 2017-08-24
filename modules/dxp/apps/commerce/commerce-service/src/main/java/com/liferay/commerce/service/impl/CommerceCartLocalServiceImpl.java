@@ -149,9 +149,7 @@ public class CommerceCartLocalServiceImpl
 					guestCommerceCartItem.getCPDefinitionId(),
 					guestCommerceCartItem.getCPInstanceId());
 
-			if ((userCommerceCartItems != null) &&
-				!userCommerceCartItems.isEmpty()) {
-
+			if (!userCommerceCartItems.isEmpty()) {
 				boolean found = false;
 
 				for (CommerceCartItem userCommerceCartItem :

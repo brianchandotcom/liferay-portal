@@ -94,6 +94,7 @@ public class TranspileJSTask extends ExecuteNodeScriptTask {
 		return GradleUtil.toString(_modules);
 	}
 
+	@Input
 	public File getSourceDir() {
 		return GradleUtil.toFile(getProject(), _sourceDir);
 	}

@@ -151,36 +151,34 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 			return _commerceCartService.updateUser(
 				commerceCart.getCommerceCartId(), user.getUserId());
 		}
-		else {
-			String commerceCartUuidWebKey = _getCommerceCartUuidWebKey(
-				commerceCart.getType(), groupId);
 
-			String commerceCartUuid = CookieKeys.getCookie(
-				httpServletRequest, commerceCartUuidWebKey, false);
+		String commerceCartUuidWebKey = _getCommerceCartUuidWebKey(
+			commerceCart.getType(), groupId);
 
-			if (Validator.isNull(commerceCartUuid)) {
-				return commerceCart;
-			}
+		String commerceCartUuid = CookieKeys.getCookie(
+			httpServletRequest, commerceCartUuidWebKey, false);
 
-			CommerceCart guestCommerceCart =
-				_commerceCartService.fetchCommerceCart(
-					commerceCartUuid, groupId);
-
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				httpServletRequest);
-
-			_commerceCartService.mergeGuestCommerceCart(
-				guestCommerceCart.getCommerceCartId(),
-				commerceCart.getCommerceCartId(), serviceContext);
-
-			String domain = CookieKeys.getDomain(httpServletRequest);
-
-			CookieKeys.deleteCookies(
-				httpServletRequest, httpServletResponse, domain,
-				commerceCartUuidWebKey);
-
+		if (Validator.isNull(commerceCartUuid)) {
 			return commerceCart;
 		}
+
+		CommerceCart guestCommerceCart = _commerceCartService.fetchCommerceCart(
+			commerceCartUuid, groupId);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			httpServletRequest);
+
+		_commerceCartService.mergeGuestCommerceCart(
+			guestCommerceCart.getCommerceCartId(),
+			commerceCart.getCommerceCartId(), serviceContext);
+
+		String domain = CookieKeys.getDomain(httpServletRequest);
+
+		CookieKeys.deleteCookies(
+			httpServletRequest, httpServletResponse, domain,
+			commerceCartUuidWebKey);
+
+		return commerceCart;
 	}
 
 	private String _getCommerceCartUuidWebKey(int type, long groupId) {

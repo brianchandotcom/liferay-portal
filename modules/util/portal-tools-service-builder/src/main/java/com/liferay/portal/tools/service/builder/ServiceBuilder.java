@@ -1867,7 +1867,8 @@ public class ServiceBuilder {
 
 		sb.append(type.getFullyQualifiedName());
 
-		Map<String, Object> namedParameters = javaAnnotation.getNamedParameterMap();
+		Map<String, Object> namedParameters =
+			javaAnnotation.getNamedParameterMap();
 
 		if (namedParameters.isEmpty()) {
 			return sb.toString();
@@ -1889,7 +1890,8 @@ public class ServiceBuilder {
 
 				for (Object object : values) {
 					if (object instanceof JavaAnnotation) {
-						sb.append(javaAnnotationToString((JavaAnnotation)object));
+						sb.append(
+							javaAnnotationToString((JavaAnnotation)object));
 					}
 					else {
 						sb.append(object);
@@ -2143,7 +2145,8 @@ public class ServiceBuilder {
 						"package " + _apiPackagePath + ".exception;",
 						"package " + _apiPackagePath + ".exception;",
 						"package " + _apiPackagePath + ".exception;",
-						"com.liferay.portal.kernel.exception.NoSuchModelException"
+						"com.liferay.portal.kernel.exception." +
+							"NoSuchModelException"
 					});
 
 				_write(exceptionFile, content);
@@ -4659,7 +4662,8 @@ public class ServiceBuilder {
 				}
 
 				if (!GetterUtil.getBoolean(
-						javaAnnotation.getNamedParameter("propagateToInterface"))) {
+						javaAnnotation.getNamedParameter(
+							"propagateToInterface"))) {
 
 					String methodName = null;
 
@@ -4973,7 +4977,8 @@ public class ServiceBuilder {
 	}
 
 	private List<JavaAnnotation> _mergeAnnotations(
-		List<JavaAnnotation> javaAnnotations1, List<JavaAnnotation> javaAnnotations2) {
+		List<JavaAnnotation> javaAnnotations1,
+		List<JavaAnnotation> javaAnnotations2) {
 
 		Map<JavaType, JavaAnnotation> javaAnnotationsMap = new HashMap<>();
 
@@ -4993,12 +4998,14 @@ public class ServiceBuilder {
 
 				@Override
 				public int compare(
-					JavaAnnotation javaAnnotation1, JavaAnnotation javaAnnotation2) {
+					JavaAnnotation javaAnnotation1,
+					JavaAnnotation javaAnnotation2) {
 
 					String javaAnnotationString1 = javaAnnotation1.toString();
 					String javaAnnotationString2 = javaAnnotation2.toString();
 
-					return javaAnnotationString1.compareTo(javaAnnotationString2);
+					return javaAnnotationString1.compareTo(
+						javaAnnotationString2);
 				}
 
 			};

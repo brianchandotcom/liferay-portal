@@ -430,6 +430,7 @@ public class CPTestUtil {
 			RandomTestUtil.randomInt(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomInt(), RandomTestUtil.randomDouble(),
 			RandomTestUtil.randomDouble(), RandomTestUtil.randomDouble(),
+			RandomTestUtil.randomDouble(), RandomTestUtil.randomDouble(),
 			RandomTestUtil.randomDouble(), null, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,

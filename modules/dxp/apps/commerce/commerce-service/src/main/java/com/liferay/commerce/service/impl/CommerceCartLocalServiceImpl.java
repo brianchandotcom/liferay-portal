@@ -15,6 +15,8 @@
 package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.model.CommerceCart;
+import com.liferay.commerce.model.CommerceCartItem;
+import com.liferay.commerce.product.util.DDMFormValuesHelper;
 import com.liferay.commerce.service.base.CommerceCartLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -22,6 +24,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -54,6 +58,20 @@ public class CommerceCartLocalServiceImpl
 		commerceCartPersistence.update(commerceCart);
 
 		return commerceCart;
+	}
+
+	@Override
+	public CommerceCart assignGuestCartToUser(long userId, long commerceCartId)
+		throws PortalException {
+
+		User user = userLocalService.getUser(userId);
+		CommerceCart commerceCart = commerceCartPersistence.fetchByPrimaryKey(
+			commerceCartId);
+
+		commerceCart.setUserId(user.getUserId());
+		commerceCart.setUserName(user.getFullName());
+
+		return commerceCartPersistence.update(commerceCart);
 	}
 
 	@Override
@@ -112,5 +130,56 @@ public class CommerceCartLocalServiceImpl
 	public int getCommerceCartsCount(long groupId, int type) {
 		return commerceCartPersistence.countByG_T(groupId, type);
 	}
+
+	@Override
+	public void mergeGuestCommerceCart(
+			long userCommerceCartId, long guestCommerceCartId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		List<CommerceCartItem> commerceCartItems =
+			commerceCartItemPersistence.findByCommerceCartId(
+				guestCommerceCartId);
+
+		for (CommerceCartItem commerceCartItem : commerceCartItems) {
+			List<CommerceCartItem> existingCommerceCartItems =
+				commerceCartItemPersistence.findByC_D_I(
+					userCommerceCartId, commerceCartItem.getCPDefinitionId(),
+					commerceCartItem.getCPInstanceId());
+
+			if ((existingCommerceCartItems != null) &&
+				!existingCommerceCartItems.isEmpty()) {
+
+				boolean found = false;
+
+				for (CommerceCartItem curCommerceCartItem :
+						existingCommerceCartItems) {
+
+					if (_ddmFormValuesHelper.equals(
+							curCommerceCartItem.getJson(),
+							commerceCartItem.getJson())) {
+
+						found = true;
+						break;
+					}
+				}
+
+				if (found) {
+					break;
+				}
+			}
+
+			commerceCartItemLocalService.addCommerceCartItem(
+				userCommerceCartId, commerceCartItem.getCPDefinitionId(),
+				commerceCartItem.getCPInstanceId(),
+				commerceCartItem.getQuantity(), commerceCartItem.getJson(),
+				serviceContext);
+		}
+
+		deleteCommerceCart(guestCommerceCartId);
+	}
+
+	@Reference
+	private DDMFormValuesHelper _ddmFormValuesHelper;
 
 }

@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String toolbarItem = ParamUtil.getString(request, "toolbarItem", "edit-product-instance-details");
+
 CPInstanceDisplayContext cpInstanceDisplayContext = (CPInstanceDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CPDefinition cpDefinition = cpInstanceDisplayContext.getCPDefinition();
@@ -34,7 +36,12 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(productSkusURL.toString());
 
 renderResponse.setTitle((cpInstance == null) ? LanguageUtil.get(request, "add-sku") : cpDefinition.getTitle(languageId) + " - " + cpInstance.getSku());
+
+request.setAttribute("view.jsp-cpInstance", cpInstance);
+request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 %>
+
+<liferay-util:include page="/instance_navbar.jsp" servletContext="<%= application %>" />
 
 <portlet:actionURL name="editProductInstance" var="editProductInstanceActionURL" />
 

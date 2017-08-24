@@ -27,8 +27,11 @@ import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import javax.portlet.PortletConfig;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -47,12 +50,21 @@ public class CommerceCartContentMiniConfigurationAction
 
 	@Override
 	public String getJspPath(HttpServletRequest request) {
+		return "/cart_mini/configuration.jsp";
+	}
+
+	@Override
+	public void include(
+			PortletConfig portletConfig, HttpServletRequest request,
+			HttpServletResponse response)
+		throws Exception {
+
 		try {
 			CommerceCartContentMiniDisplayContext
 				commerceCartContentDisplayContext =
 					new CommerceCartContentMiniDisplayContext(
-						request, _commerceCartHelper, _commerceCartItemService,
-						_cpDefinitionHelper, _commercePriceCalculationHelper);
+						request, response, _commerceCartHelper,
+						_commerceCartItemService, _cpDefinitionHelper, commercePriceCalculationHelper);
 
 			request.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -62,7 +74,7 @@ public class CommerceCartContentMiniConfigurationAction
 			_log.error(e, e);
 		}
 
-		return "/cart_mini/configuration.jsp";
+		super.include(portletConfig, request, response);
 	}
 
 	@Override

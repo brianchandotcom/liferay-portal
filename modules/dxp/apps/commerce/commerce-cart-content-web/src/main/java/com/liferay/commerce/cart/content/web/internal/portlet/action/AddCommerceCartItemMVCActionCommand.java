@@ -95,7 +95,7 @@ public class AddCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			CommerceCart commerceCart =
 				_commerceCartHelper.getCurrentCommerceCart(
-					httpServletRequest, type);
+					httpServletRequest, httpServletResponse, type);
 
 			if (commerceCart == null) {
 				ServiceContext serviceContext =
@@ -106,8 +106,10 @@ public class AddCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
 					CommerceConstants.COMMERCE_CART_DEFAULT_TITLE, type,
 					serviceContext);
 
-				_commerceCartHelper.updateCurrentCommerceCart(
-					httpServletRequest, httpServletResponse, commerceCart);
+				if(!serviceContext.isSignedIn()) {
+					_commerceCartHelper.setGuestCommerceCart(
+						httpServletRequest, httpServletResponse, commerceCart);
+				}
 			}
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(

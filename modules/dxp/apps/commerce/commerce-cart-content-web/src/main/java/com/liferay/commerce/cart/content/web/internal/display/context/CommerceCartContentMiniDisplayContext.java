@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Marco Leo
@@ -34,6 +35,7 @@ public class CommerceCartContentMiniDisplayContext
 
 	public CommerceCartContentMiniDisplayContext(
 			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
 			CommerceCartHelper commerceCartHelper,
 			CommerceCartItemService commerceCartItemService,
 			CPDefinitionHelper cpDefinitionHelper,
@@ -41,8 +43,8 @@ public class CommerceCartContentMiniDisplayContext
 		throws ConfigurationException {
 
 		super(
-			httpServletRequest, commerceCartHelper, commerceCartItemService,
-			cpDefinitionHelper, commercePriceCalculationHelper);
+			httpServletRequest, httpServletResponse, commerceCartHelper,
+			commerceCartItemService, cpDefinitionHelper, commercePriceCalculationHelper);
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(

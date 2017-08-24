@@ -35,6 +35,7 @@ import java.util.List;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Marco Leo
@@ -44,12 +45,14 @@ public class CommerceCartContentDisplayContext {
 
 	public CommerceCartContentDisplayContext(
 		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse,
 		CommerceCartHelper commerceCartHelper,
 		CommerceCartItemService commerceCartItemService,
 		CPDefinitionHelper cpDefinitionHelper,
 		CommercePriceCalculationHelper commercePriceCalculationHelper) {
 
 		this.httpServletRequest = httpServletRequest;
+		this.httpServletResponse = httpServletResponse;
 		_commerceCartHelper = commerceCartHelper;
 		_commerceCartItemService = commerceCartItemService;
 		this.cpDefinitionHelper = cpDefinitionHelper;
@@ -68,7 +71,7 @@ public class CommerceCartContentDisplayContext {
 		}
 
 		_commerceCart = _commerceCartHelper.getCurrentCommerceCart(
-			httpServletRequest, getCommerceCartType());
+			httpServletRequest, httpServletResponse, getCommerceCartType());
 
 		return _commerceCart;
 	}
@@ -154,6 +157,7 @@ public class CommerceCartContentDisplayContext {
 
 	protected final CPDefinitionHelper cpDefinitionHelper;
 	protected final HttpServletRequest httpServletRequest;
+	protected final HttpServletResponse httpServletResponse;
 	protected final LiferayPortletRequest liferayPortletRequest;
 	protected final LiferayPortletResponse liferayPortletResponse;
 

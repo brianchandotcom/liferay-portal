@@ -142,7 +142,11 @@ AUI.add(
 
 						var emptyPageRenderer = SoyTemplateUtil.getTemplateRenderer('ddm.tabbed_form_frame');
 
-						var emptyPageNode = A.Node.create(emptyPageRenderer());
+						var container = document.createDocumentFragment();
+
+						new emptyPageRenderer({}, container);
+
+						var emptyPageNode = A.Node.create(container.firstChild.outerHTML);
 
 						var sidebarBody = A.one('.sidebar-body');
 
@@ -214,29 +218,37 @@ AUI.add(
 					_getAutocompleteCardActionTemplate: function() {
 						var instance = this;
 
-						var actionPanelRenderer = SoyTemplateUtil.getTemplateRenderer('ddl.autocomplete.actionPanel');
+						var actionPanelRenderer = SoyTemplateUtil.getTemplateRenderer('DDLAutoComplete.actionPanel');
 
-						return actionPanelRenderer(
+						var container = document.createDocumentFragment();
+
+						new actionPanelRenderer(
 							{
 								addAutoCompleteButton: Liferay.Util.getLexiconIconTpl('angle-right'),
 								label: Liferay.Language.get('autocomplete')
-							}
+							},
+							container
 						);
+
+						return container.firstChild.outerHTML;
 					},
 
 					_getAutocompleteContainerTemplate: function() {
 						var instance = this;
 
-						var autocompleteContainerRenderer = SoyTemplateUtil.getTemplateRenderer('ddl.autocomplete.container');
+						var autocompleteContainerRenderer = SoyTemplateUtil.getTemplateRenderer('DDLAutoComplete.container');
 
-						var autocompleteContainer = autocompleteContainerRenderer(
+						var container = document.createDocumentFragment();
+
+						new autocompleteContainerRenderer(
 							{
 								backButton: Liferay.Util.getLexiconIconTpl('angle-left', 'icon-monospaced'),
 								label: Liferay.Language.get('autocomplete')
-							}
+							},
+							container
 						);
 
-						return autocompleteContainer;
+						return container.firstChild.outerHTML;
 					},
 
 					_getFormBuilderFieldType: function() {

@@ -251,25 +251,29 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 							function() {
 								Liferay.DDM.Renderer.FieldTypes.register(fieldTypes);
 
-								Liferay.component(
-									'formPortlet',
-									new Liferay.DDL.Portlet(
-										{
-											context: <%= ddlFormAdminDisplayContext.getFormBuilderContext() %>,
-											localizedDescription: <%= ddlFormAdminDisplayContext.getFormLocalizedDescription() %>,
-											localizedName: <%= ddlFormAdminDisplayContext.getFormLocalizedName() %>,
-											defaultLanguageId: '<%= ddlFormAdminDisplayContext.getDefaultLanguageId() %>',
-											editingLanguageId: '<%= ddlFormAdminDisplayContext.getDefaultLanguageId() %>',
-											editForm: event.form,
-											namespace: '<portlet:namespace />',
-											published: !!<%= ddlFormAdminDisplayContext.isFormPublished() %>,
-											publishRecordSetURL: '<%= publishRecordSetURL.toString() %>',
-											recordSetId: <%= recordSetId %>,
-											rules: <%= ddlFormAdminDisplayContext.getSerializedDDMFormRules() %>,
-											translationManager: Liferay.component('<portlet:namespace />translationManager')
-										}
-									)
-								);
+								setTimeout(
+									function() {
+										Liferay.component(
+											'formPortlet',
+											new Liferay.DDL.Portlet(
+												{
+													context: <%= ddlFormAdminDisplayContext.getFormBuilderContext() %>,
+													localizedDescription: <%= ddlFormAdminDisplayContext.getFormLocalizedDescription() %>,
+													localizedName: <%= ddlFormAdminDisplayContext.getFormLocalizedName() %>,
+													defaultLanguageId: '<%= ddlFormAdminDisplayContext.getDefaultLanguageId() %>',
+													editingLanguageId: '<%= ddlFormAdminDisplayContext.getDefaultLanguageId() %>',
+													editForm: event.form,
+													namespace: '<portlet:namespace />',
+													published: !!<%= ddlFormAdminDisplayContext.isFormPublished() %>,
+													publishRecordSetURL: '<%= publishRecordSetURL.toString() %>',
+													recordSetId: <%= recordSetId %>,
+													rules: <%= ddlFormAdminDisplayContext.getSerializedDDMFormRules() %>,
+													translationManager: Liferay.component('<portlet:namespace />translationManager')
+												}
+											)
+										);
+									}
+									, 500);
 							},
 							['liferay-ddl-portlet'].concat(systemFieldModules)
 						);

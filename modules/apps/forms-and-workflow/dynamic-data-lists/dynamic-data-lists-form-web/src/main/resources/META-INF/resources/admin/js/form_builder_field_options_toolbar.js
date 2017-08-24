@@ -64,12 +64,28 @@ AUI.add(
 						(new A.EventHandle(instance._eventHandlers)).detach();
 					},
 
+					getTemplate: function() {
+						var instance = this;
+
+						var renderer = instance.getTemplateRenderer();
+
+						var container = document.createDocumentFragment();
+
+						new renderer(instance.getTemplateContext(), container);
+
+						return container.firstChild.outerHTML;
+					},
+
 					getTemplateContext: function() {
 						var instance = this;
 
 						return {
 							options: instance.get('options')
 						};
+					},
+
+					getTemplateRenderer: function() {
+						return AObject.getValue(window, ['DDLFieldSettingsToolbar', 'render']);
 					},
 
 					_bindUI: function() {

@@ -108,7 +108,11 @@ AUI.add(
 
 						var renderer = instance.getTemplateRenderer();
 
-						return renderer(instance.getTemplateContext());
+						var container = document.createDocumentFragment();
+
+						new renderer(instance.getTemplateContext(), container);
+
+						return container.firstChild.outerHTML;
 					},
 
 					getTemplateContext: function() {
@@ -127,7 +131,7 @@ AUI.add(
 					},
 
 					getTemplateRenderer: function() {
-						return AObject.getValue(window, ['ddl', 'sidebar', 'render']);
+						return AObject.getValue(window, ['DDLSidebar', 'render']);
 					},
 
 					isOpen: function() {

@@ -362,15 +362,20 @@ AUI.add(
 
 						var strings = instance.get('strings');
 
-						var dataProviderParametersTemplateRenderer = Liferay.DDM.SoyTemplateUtil.getTemplateRenderer('ddl.data_provider_parameter.settings');
+						var dataProviderParametersTemplateRenderer = Liferay.DDM.SoyTemplateUtil.getTemplateRenderer('DDLDataProviderParameter.render');
 
-						return dataProviderParametersTemplateRenderer(
+						var container = document.createDocumentFragment();
+
+						new dataProviderParametersTemplateRenderer(
 							{
 								hasInputs: inputs.length > 0,
 								hasRequiredInputs: !AObject.isEmpty(instance._getRequiredInputs()),
 								strings: strings
-							}
+							},
+							container
 						);
+
+						return container.firstChild.outerHTML;
 					},
 
 					_getUUId: function(id) {

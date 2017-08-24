@@ -53,25 +53,3 @@ mergeLang {
 		"src/main/resources/content"
 	]
 }
-
-processResources {
-	doLast {
-		FileTree soyJsFileTree = fileTree(dir: destinationDir, include: "**/*.soy.js")
-
-		soyJsFileTree.each {
-			String fileName = it.name[0 .. -8]
-
-			String moduleName = "liferay-ddl-form-builder-" + fileName.replaceAll("_", "-") + "-template"
-
-			String soyJsWrapperHeader = "AUI.add('${moduleName}', function(A) {"
-			String soyJsWrapperFooter = "}, '', {requires: ['soyutils']});";
-
-			it.text = soyJsWrapperHeader + it.text.replace("(typeof ddl == 'undefined') { var ddl = {}; }", "(typeof ddl == 'undefined') { window.ddl = {}; }") + soyJsWrapperFooter
-		}
-	}
-}
-
-transpileJS {
-	soySrcIncludes = ""
-	srcIncludes = "**/*.es.js"
-}

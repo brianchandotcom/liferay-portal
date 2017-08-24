@@ -117,6 +117,8 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 				SessionErrors.add(renderRequest, e.getClass());
 			}
 			else {
+				_log.error(e, e);
+
 				throw new PortletException(e);
 			}
 		}

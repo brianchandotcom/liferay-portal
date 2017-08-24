@@ -363,9 +363,11 @@ AUI.add(
 					_getRuleContainerTemplate: function(rule) {
 						var instance = this;
 
-						var settingsTemplateRenderer = SoyTemplateUtil.getTemplateRenderer('ddl.rule.settings');
+						var settingsTemplateRenderer = SoyTemplateUtil.getTemplateRenderer('DDLRule.render');
 
-						return settingsTemplateRenderer(
+						var container = document.createDocumentFragment();
+
+						new settingsTemplateRenderer(
 							{
 								actions: rule ? rule.actions : [],
 								conditions: rule ? rule.conditions : [],
@@ -375,8 +377,11 @@ AUI.add(
 								plusIcon: Liferay.Util.getLexiconIconTpl('plus', 'icon-monospaced'),
 								showLabel: false,
 								strings: instance.get('strings')
-							}
+							},
+							container
 						);
+
+						return container.firstChild.outerHTML;
 					},
 
 					_getSelectFieldFirstValue: function(selectField) {
@@ -428,19 +433,22 @@ AUI.add(
 
 						var index = instance._actionsIndexes[instance._actionsIndexes.length - 1] + 1;
 
-						var actionTemplateRenderer = SoyTemplateUtil.getTemplateRenderer('ddl.rule.action');
-
 						var strings = instance.get('strings');
 
-						actionListNode.append(
-							actionTemplateRenderer(
-								{
-									deleteIcon: Liferay.Util.getLexiconIconTpl('trash', 'icon-monospaced'),
-									do: strings.do,
-									index: index
-								}
-							)
+						var actionTemplateRenderer = SoyTemplateUtil.getTemplateRenderer('DDLRule.action');
+
+						var container = document.createDocumentFragment();
+
+						new actionTemplateRenderer(
+							{
+								deleteIcon: Liferay.Util.getLexiconIconTpl('trash', 'icon-monospaced'),
+								do: strings.do,
+								index: index
+							},
+							container
 						);
+
+						actionListNode.append(container.firstChild.outerHTML);
 
 						instance._addAction(index);
 

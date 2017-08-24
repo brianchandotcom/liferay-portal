@@ -300,18 +300,21 @@ AUI.add(
 
 				var index = instance._conditionsIndexes[instance._conditionsIndexes.length - 1] + 1;
 
-				var conditionTemplateRenderer = Liferay.DDM.SoyTemplateUtil.getTemplateRenderer('ddl.rule.condition');
+				var conditionTemplateRenderer = Liferay.DDM.SoyTemplateUtil.getTemplateRenderer('DDLRule.condition');
 
-				conditionListNode.append(
-					conditionTemplateRenderer(
-						{
-							deleteIcon: Liferay.Util.getLexiconIconTpl('trash', 'icon-monospaced'),
-							if: instance.get('if'),
-							index: index,
-							logicOperator: instance.get('logicOperator')
-						}
-					)
+				var container = document.createDocumentFragment();
+
+				new conditionTemplateRenderer(
+					{
+						deleteIcon: Liferay.Util.getLexiconIconTpl('trash', 'icon-monospaced'),
+						if: instance.get('if'),
+						index: index,
+						logicOperator: instance.get('logicOperator')
+					},
+					container
 				);
+
+				conditionListNode.append(container.firstChild.outerHTML);
 
 				instance._addCondition(index);
 

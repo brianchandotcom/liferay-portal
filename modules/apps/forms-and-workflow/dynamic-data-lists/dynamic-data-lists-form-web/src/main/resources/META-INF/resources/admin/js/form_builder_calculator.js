@@ -134,15 +134,20 @@ AUI.add(
 
 						var strings = instance.get('strings');
 
-						var calculatorTemplateRenderer = Liferay.DDM.SoyTemplateUtil.getTemplateRenderer('ddl.calculator.settings');
+						var calculatorTemplateRenderer = Liferay.DDM.SoyTemplateUtil.getTemplateRenderer('DDLCalculator.render');
 
-						return calculatorTemplateRenderer(
+						var container = document.createDocumentFragment();
+
+						new calculatorTemplateRenderer(
 							{
 								calculatorAngleLeft: Liferay.Util.getLexiconIconTpl('angle-left', 'icon-monospaced'),
 								calculatorEllipsis: Liferay.Util.getLexiconIconTpl('ellipsis-h', 'icon-monospaced'),
 								strings: strings
-							}
+							},
+							container
 						);
+
+						return container.firstChild.outerHTML;
 					},
 
 					_handleButtonClick: function(event) {

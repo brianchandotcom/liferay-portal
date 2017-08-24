@@ -187,9 +187,13 @@ AUI.add(
 					_getRuleContainerTemplate: function() {
 						var instance = this;
 
-						var calculateTemplateRenderer = Liferay.DDM.SoyTemplateUtil.getTemplateRenderer('ddl.calculate.settings');
+						var calculateTemplateRenderer = Liferay.DDM.SoyTemplateUtil.getTemplateRenderer('DDLCalculate.render');
 
-						return calculateTemplateRenderer();
+						var container = document.createDocumentFragment();
+
+						new calculateTemplateRenderer({}, container);
+
+						return container.firstChild.outerHTML;
 					},
 
 					_handleClickedKey: function(event) {

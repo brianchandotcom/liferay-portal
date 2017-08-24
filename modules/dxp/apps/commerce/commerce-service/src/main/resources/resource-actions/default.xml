@@ -7,6 +7,7 @@
 		<portlet-ref>
 			<portlet-name>com_liferay_commerce_admin_web_internal_portlet_CommerceAdminPortlet</portlet-name>
 			<portlet-name>com_liferay_commerce_cart_web_internal_portlet_CommerceCartPortlet</portlet-name>
+			<portlet-name>com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>

@@ -18,22 +18,29 @@ import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.base.CommerceOrderLocalServiceBaseImpl;
+import com.liferay.commerce.util.PriceCalculationHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
 public class CommerceOrderLocalServiceImpl
 	extends CommerceOrderLocalServiceBaseImpl {
 
 	@Override
 	public CommerceOrder addCommerceOrder(
-			long orderUserId, int status, ServiceContext serviceContext)
+			long orderUserId, double total, int status,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
@@ -49,6 +56,7 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setUserId(user.getUserId());
 		commerceOrder.setUserName(user.getFullName());
 		commerceOrder.setOrderUserId(orderUserId);
+		commerceOrder.setTotal(total);
 		commerceOrder.setStatus(status);
 		commerceOrder.setExpandoBridgeAttributes(serviceContext);
 
@@ -69,7 +77,9 @@ public class CommerceOrderLocalServiceImpl
 
 		CommerceOrder commerceOrder =
 			commerceOrderLocalService.addCommerceOrder(
-				commerceCart.getUserId(), 0, serviceContext);
+				commerceCart.getUserId(),
+				_priceCalculationHelper.getTotal(commerceCartId),
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		// Commerce order items
 
@@ -79,12 +89,17 @@ public class CommerceOrderLocalServiceImpl
 				QueryUtil.ALL_POS);
 
 		for (CommerceCartItem commerceCartItem : commerceCartItems) {
+			double price = _priceCalculationHelper.getPrice(
+				commerceCartItem.getCPDefinitionId(),
+				commerceCartItem.getCPInstanceId(),
+				commerceCartItem.getQuantity());
+
 			commerceOrderItemLocalService.addCommerceOrderItem(
 				commerceOrder.getCommerceOrderId(),
 				commerceCartItem.getCPDefinitionId(),
 				commerceCartItem.getCPInstanceId(),
 				commerceCartItem.getQuantity(), commerceCartItem.getJson(),
-				serviceContext);
+				price, serviceContext);
 		}
 
 		// Commerce cart
@@ -123,5 +138,30 @@ public class CommerceOrderLocalServiceImpl
 
 		return commerceOrderLocalService.deleteCommerceOrder(commerceOrder);
 	}
+
+	@Override
+	public List<CommerceOrder> getCommerceOrders(
+		long groupId, int start, int end) {
+
+		return commerceOrderLocalService.getCommerceOrders(
+			groupId, start, end, null);
+	}
+
+	@Override
+	public List<CommerceOrder> getCommerceOrders(
+		long groupId, int start, int end,
+		OrderByComparator<CommerceOrder> orderByComparator) {
+
+		return commerceOrderPersistence.findByGroupId(
+			groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCommerceOrdersCount(long groupId) {
+		return commerceOrderPersistence.countByGroupId(groupId);
+	}
+
+	@Reference
+	private PriceCalculationHelper _priceCalculationHelper;
 
 }

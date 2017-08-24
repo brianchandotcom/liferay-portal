@@ -32,6 +32,7 @@ import java.util.List;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
 public class CommerceOrderItemLocalServiceImpl
 	extends CommerceOrderItemLocalServiceBaseImpl {
@@ -39,7 +40,8 @@ public class CommerceOrderItemLocalServiceImpl
 	@Override
 	public CommerceOrderItem addCommerceOrderItem(
 			long commerceOrderId, long cpDefinitionId, long cpInstanceId,
-			int quantity, String json, ServiceContext serviceContext)
+			int quantity, String json, double price,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
@@ -61,6 +63,13 @@ public class CommerceOrderItemLocalServiceImpl
 		commerceOrderItem.setCPInstanceId(cpInstanceId);
 		commerceOrderItem.setQuantity(quantity);
 		commerceOrderItem.setJson(json);
+		commerceOrderItem.setPrice(price);
+
+		CPDefinition cpDefinition = commerceOrderItem.getCPDefinition();
+
+		commerceOrderItem.setTitleMap(cpDefinition.getTitleMap());
+
+		commerceOrderItem.setSku(_getSKU(cpDefinitionId, cpInstanceId));
 		commerceOrderItem.setExpandoBridgeAttributes(serviceContext);
 
 		commerceOrderItemPersistence.update(commerceOrderItem);
@@ -158,7 +167,7 @@ public class CommerceOrderItemLocalServiceImpl
 
 	@Override
 	public CommerceOrderItem updateCommerceOrderItem(
-			long commerceOrderItemId, int quantity, String json)
+			long commerceOrderItemId, int quantity, String json, double price)
 		throws PortalException {
 
 		CommerceOrderItem commerceOrderItem =
@@ -166,6 +175,7 @@ public class CommerceOrderItemLocalServiceImpl
 
 		commerceOrderItem.setQuantity(quantity);
 		commerceOrderItem.setJson(json);
+		commerceOrderItem.setPrice(price);
 
 		commerceOrderItemPersistence.update(commerceOrderItem);
 
@@ -190,6 +200,23 @@ public class CommerceOrderItemLocalServiceImpl
 						" belongs to a different CPDefinition than " +
 							cpDefinition.getCPDefinitionId());
 			}
+		}
+	}
+
+	private String _getSKU(long cpDefinitionId, long cpInstanceId)
+		throws PortalException {
+
+		if (cpInstanceId > 0) {
+			CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
+				cpInstanceId);
+
+			return cpInstance.getSku();
+		}
+		else {
+			CPDefinition cpDefinition =
+				_cpDefinitionLocalService.getCPDefinition(cpDefinitionId);
+
+			return cpDefinition.getBaseSKU();
 		}
 	}
 

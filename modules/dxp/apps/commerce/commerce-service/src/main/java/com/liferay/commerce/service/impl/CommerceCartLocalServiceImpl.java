@@ -61,21 +61,6 @@ public class CommerceCartLocalServiceImpl
 	}
 
 	@Override
-	public CommerceCart assignGuestCartToUser(long userId, long commerceCartId)
-		throws PortalException {
-
-		CommerceCart commerceCart = commerceCartPersistence.findByPrimaryKey(
-			commerceCartId);
-
-		User user = userLocalService.getUser(userId);
-
-		commerceCart.setUserId(user.getUserId());
-		commerceCart.setUserName(user.getFullName());
-
-		return commerceCartPersistence.update(commerceCart);
-	}
-
-	@Override
 	public CommerceCart deleteCommerceCart(CommerceCart commerceCart)
 		throws PortalException {
 
@@ -178,6 +163,21 @@ public class CommerceCartLocalServiceImpl
 		}
 
 		commerceCartLocalService.deleteCommerceCart(guestCommerceCartId);
+	}
+
+	@Override
+	public CommerceCart updateUser(long commerceCartId, long userId)
+		throws PortalException {
+
+		CommerceCart commerceCart = commerceCartPersistence.findByPrimaryKey(
+			commerceCartId);
+
+		User user = userLocalService.getUser(userId);
+
+		commerceCart.setUserId(user.getUserId());
+		commerceCart.setUserName(user.getFullName());
+
+		return commerceCartPersistence.update(commerceCart);
 	}
 
 	@Reference

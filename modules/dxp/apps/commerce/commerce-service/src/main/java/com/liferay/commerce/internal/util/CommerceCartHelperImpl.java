@@ -148,8 +148,8 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 		}
 
 		if (commerceCart.isGuestCart()) {
-			return _commerceCartService.assignGuestCartToUser(
-				user.getUserId(), commerceCart.getCommerceCartId());
+			return _commerceCartService.updateUser(
+				commerceCart.getCommerceCartId(), user.getUserId());
 		}
 		else {
 			String commerceCartUuidWebKey = _getCommerceCartUuidWebKey(

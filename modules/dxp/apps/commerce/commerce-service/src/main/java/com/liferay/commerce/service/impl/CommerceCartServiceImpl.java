@@ -37,14 +37,6 @@ public class CommerceCartServiceImpl extends CommerceCartServiceBaseImpl {
 	}
 
 	@Override
-	public CommerceCart assignGuestCartToUser(long userId, long commerceCartId)
-		throws PortalException {
-
-		return commerceCartLocalService.assignGuestCartToUser(
-			userId, commerceCartId);
-	}
-
-	@Override
 	public void deleteCommerceCart(long commerceCartId) throws PortalException {
 		commerceCartLocalService.deleteCommerceCart(commerceCartId);
 	}
@@ -97,6 +89,13 @@ public class CommerceCartServiceImpl extends CommerceCartServiceBaseImpl {
 
 		commerceCartLocalService.mergeGuestCommerceCart(
 			guestCommerceCartId, userCommerceCartId, serviceContext);
+	}
+
+	@Override
+	public CommerceCart updateUser(long commerceCartId, long userId)
+		throws PortalException {
+
+		return commerceCartLocalService.updateUser(commerceCartId, userId);
 	}
 
 }

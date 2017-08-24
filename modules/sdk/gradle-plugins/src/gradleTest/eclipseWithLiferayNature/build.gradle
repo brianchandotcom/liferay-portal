@@ -4,8 +4,8 @@ task runGradleTest
 
 runGradleTest {
 	dependsOn tasks.eclipse
-	doLast {
 
+	doLast {
 		File expectedFile = file('./.project')
 
 		String fileContents = expectedFile.text

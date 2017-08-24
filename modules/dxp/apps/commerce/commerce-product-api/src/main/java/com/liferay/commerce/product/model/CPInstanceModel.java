@@ -287,6 +287,90 @@ public interface CPInstanceModel extends BaseModel<CPInstance>, ShardedModel,
 	public void setDDMContent(String DDMContent);
 
 	/**
+	 * Returns the width of this cp instance.
+	 *
+	 * @return the width of this cp instance
+	 */
+	public double getWidth();
+
+	/**
+	 * Sets the width of this cp instance.
+	 *
+	 * @param width the width of this cp instance
+	 */
+	public void setWidth(double width);
+
+	/**
+	 * Returns the height of this cp instance.
+	 *
+	 * @return the height of this cp instance
+	 */
+	public double getHeight();
+
+	/**
+	 * Sets the height of this cp instance.
+	 *
+	 * @param height the height of this cp instance
+	 */
+	public void setHeight(double height);
+
+	/**
+	 * Returns the depth of this cp instance.
+	 *
+	 * @return the depth of this cp instance
+	 */
+	public double getDepth();
+
+	/**
+	 * Sets the depth of this cp instance.
+	 *
+	 * @param depth the depth of this cp instance
+	 */
+	public void setDepth(double depth);
+
+	/**
+	 * Returns the weight of this cp instance.
+	 *
+	 * @return the weight of this cp instance
+	 */
+	public double getWeight();
+
+	/**
+	 * Sets the weight of this cp instance.
+	 *
+	 * @param weight the weight of this cp instance
+	 */
+	public void setWeight(double weight);
+
+	/**
+	 * Returns the cost of this cp instance.
+	 *
+	 * @return the cost of this cp instance
+	 */
+	public double getCost();
+
+	/**
+	 * Sets the cost of this cp instance.
+	 *
+	 * @param cost the cost of this cp instance
+	 */
+	public void setCost(double cost);
+
+	/**
+	 * Returns the price of this cp instance.
+	 *
+	 * @return the price of this cp instance
+	 */
+	public double getPrice();
+
+	/**
+	 * Sets the price of this cp instance.
+	 *
+	 * @param price the price of this cp instance
+	 */
+	public void setPrice(double price);
+
+	/**
 	 * Returns the display date of this cp instance.
 	 *
 	 * @return the display date of this cp instance

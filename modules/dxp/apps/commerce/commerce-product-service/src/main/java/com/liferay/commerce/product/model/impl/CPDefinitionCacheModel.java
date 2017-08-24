@@ -66,7 +66,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(61);
+		StringBundler sb = new StringBundler(65);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -110,6 +110,10 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		sb.append(depth);
 		sb.append(", weight=");
 		sb.append(weight);
+		sb.append(", cost=");
+		sb.append(cost);
+		sb.append(", price=");
+		sb.append(price);
 		sb.append(", DDMStructureKey=");
 		sb.append(DDMStructureKey);
 		sb.append(", displayDate=");
@@ -214,6 +218,8 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		cpDefinitionImpl.setHeight(height);
 		cpDefinitionImpl.setDepth(depth);
 		cpDefinitionImpl.setWeight(weight);
+		cpDefinitionImpl.setCost(cost);
+		cpDefinitionImpl.setPrice(price);
 
 		if (DDMStructureKey == null) {
 			cpDefinitionImpl.setDDMStructureKey(StringPool.BLANK);
@@ -307,6 +313,10 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		depth = objectInput.readDouble();
 
 		weight = objectInput.readDouble();
+
+		cost = objectInput.readDouble();
+
+		price = objectInput.readDouble();
 		DDMStructureKey = objectInput.readUTF();
 		displayDate = objectInput.readLong();
 		expirationDate = objectInput.readLong();
@@ -399,6 +409,10 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 
 		objectOutput.writeDouble(weight);
 
+		objectOutput.writeDouble(cost);
+
+		objectOutput.writeDouble(price);
+
 		if (DDMStructureKey == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -452,6 +466,8 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 	public double height;
 	public double depth;
 	public double weight;
+	public double cost;
+	public double price;
 	public String DDMStructureKey;
 	public long displayDate;
 	public long expirationDate;

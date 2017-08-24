@@ -54,8 +54,8 @@ public class CPDefinitionServiceUtil {
 		java.lang.String gtin, java.lang.String manufacturerPartNumber,
 		int minCartQuantity, int maxCartQuantity,
 		java.lang.String allowedCartQuantities, int multipleCartQuantity,
-		double width, double height, double depth, double weight,
-		java.lang.String ddmStructureKey, int displayDateMonth,
+		double width, double height, double depth, double weight, double cost,
+		double price, java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
@@ -68,11 +68,11 @@ public class CPDefinitionServiceUtil {
 			metaDescriptionMap, layoutUuid, productTypeName, gtin,
 			manufacturerPartNumber, minCartQuantity, maxCartQuantity,
 			allowedCartQuantities, multipleCartQuantity, width, height, depth,
-			weight, ddmStructureKey, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			weight, cost, price, ddmStructureKey, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinition addCPDefinition(
@@ -221,7 +221,8 @@ public class CPDefinitionServiceUtil {
 		java.lang.String manufacturerPartNumber, int minCartQuantity,
 		int maxCartQuantity, java.lang.String allowedCartQuantities,
 		int multipleCartQuantity, double width, double height, double depth,
-		double weight, java.lang.String ddmStructureKey, int displayDateMonth,
+		double weight, double cost, double price,
+		java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
@@ -234,11 +235,11 @@ public class CPDefinitionServiceUtil {
 			metaKeywordsMap, metaDescriptionMap, layoutUuid, gtin,
 			manufacturerPartNumber, minCartQuantity, maxCartQuantity,
 			allowedCartQuantities, multipleCartQuantity, width, height, depth,
-			weight, ddmStructureKey, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			weight, cost, price, ddmStructureKey, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinition updateCPDefinition(
@@ -270,6 +271,12 @@ public class CPDefinitionServiceUtil {
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, serviceContext);
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinition updatePricingInfo(
+		long cpDefinitionId, double cost, double price)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updatePricingInfo(cpDefinitionId, cost, price);
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinition updateShippingInfo(

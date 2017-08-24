@@ -55,6 +55,8 @@ public class CPDefinitionSoap implements Serializable {
 		soapModel.setHeight(model.getHeight());
 		soapModel.setDepth(model.getDepth());
 		soapModel.setWeight(model.getWeight());
+		soapModel.setCost(model.getCost());
+		soapModel.setPrice(model.getPrice());
 		soapModel.setDDMStructureKey(model.getDDMStructureKey());
 		soapModel.setDisplayDate(model.getDisplayDate());
 		soapModel.setExpirationDate(model.getExpirationDate());
@@ -288,6 +290,22 @@ public class CPDefinitionSoap implements Serializable {
 		_weight = weight;
 	}
 
+	public double getCost() {
+		return _cost;
+	}
+
+	public void setCost(double cost) {
+		_cost = cost;
+	}
+
+	public double getPrice() {
+		return _price;
+	}
+
+	public void setPrice(double price) {
+		_price = price;
+	}
+
 	public String getDDMStructureKey() {
 		return _DDMStructureKey;
 	}
@@ -381,6 +399,8 @@ public class CPDefinitionSoap implements Serializable {
 	private double _height;
 	private double _depth;
 	private double _weight;
+	private double _cost;
+	private double _price;
 	private String _DDMStructureKey;
 	private Date _displayDate;
 	private Date _expirationDate;

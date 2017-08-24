@@ -72,6 +72,12 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 		attributes.put("gtin", getGtin());
 		attributes.put("manufacturerPartNumber", getManufacturerPartNumber());
 		attributes.put("DDMContent", getDDMContent());
+		attributes.put("width", getWidth());
+		attributes.put("height", getHeight());
+		attributes.put("depth", getDepth());
+		attributes.put("weight", getWeight());
+		attributes.put("cost", getCost());
+		attributes.put("price", getPrice());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
@@ -164,6 +170,42 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 			setDDMContent(DDMContent);
 		}
 
+		Double width = (Double)attributes.get("width");
+
+		if (width != null) {
+			setWidth(width);
+		}
+
+		Double height = (Double)attributes.get("height");
+
+		if (height != null) {
+			setHeight(height);
+		}
+
+		Double depth = (Double)attributes.get("depth");
+
+		if (depth != null) {
+			setDepth(depth);
+		}
+
+		Double weight = (Double)attributes.get("weight");
+
+		if (weight != null) {
+			setWeight(weight);
+		}
+
+		Double cost = (Double)attributes.get("cost");
+
+		if (cost != null) {
+			setCost(cost);
+		}
+
+		Double price = (Double)attributes.get("price");
+
+		if (price != null) {
+			setPrice(price);
+		}
+
 		Date displayDate = (Date)attributes.get("displayDate");
 
 		if (displayDate != null) {
@@ -227,6 +269,16 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 		return _cpInstance.getCompanyId();
 	}
 
+	/**
+	* Returns the cost of this cp instance.
+	*
+	* @return the cost of this cp instance
+	*/
+	@Override
+	public double getCost() {
+		return _cpInstance.getCost();
+	}
+
 	@Override
 	public CPDefinition getCPDefinition()
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -271,6 +323,16 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	@Override
 	public java.lang.String getDDMContent() {
 		return _cpInstance.getDDMContent();
+	}
+
+	/**
+	* Returns the depth of this cp instance.
+	*
+	* @return the depth of this cp instance
+	*/
+	@Override
+	public double getDepth() {
+		return _cpInstance.getDepth();
 	}
 
 	/**
@@ -319,6 +381,16 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	}
 
 	/**
+	* Returns the height of this cp instance.
+	*
+	* @return the height of this cp instance
+	*/
+	@Override
+	public double getHeight() {
+		return _cpInstance.getHeight();
+	}
+
+	/**
 	* Returns the last publish date of this cp instance.
 	*
 	* @return the last publish date of this cp instance
@@ -346,6 +418,16 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	@Override
 	public Date getModifiedDate() {
 		return _cpInstance.getModifiedDate();
+	}
+
+	/**
+	* Returns the price of this cp instance.
+	*
+	* @return the price of this cp instance
+	*/
+	@Override
+	public double getPrice() {
+		return _cpInstance.getPrice();
 	}
 
 	/**
@@ -494,6 +576,26 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	@Override
 	public java.lang.String getUuid() {
 		return _cpInstance.getUuid();
+	}
+
+	/**
+	* Returns the weight of this cp instance.
+	*
+	* @return the weight of this cp instance
+	*/
+	@Override
+	public double getWeight() {
+		return _cpInstance.getWeight();
+	}
+
+	/**
+	* Returns the width of this cp instance.
+	*
+	* @return the width of this cp instance
+	*/
+	@Override
+	public double getWidth() {
+		return _cpInstance.getWidth();
 	}
 
 	@Override
@@ -647,6 +749,16 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	}
 
 	/**
+	* Sets the cost of this cp instance.
+	*
+	* @param cost the cost of this cp instance
+	*/
+	@Override
+	public void setCost(double cost) {
+		_cpInstance.setCost(cost);
+	}
+
+	/**
 	* Sets the cp definition ID of this cp instance.
 	*
 	* @param CPDefinitionId the cp definition ID of this cp instance
@@ -684,6 +796,16 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	@Override
 	public void setDDMContent(java.lang.String DDMContent) {
 		_cpInstance.setDDMContent(DDMContent);
+	}
+
+	/**
+	* Sets the depth of this cp instance.
+	*
+	* @param depth the depth of this cp instance
+	*/
+	@Override
+	public void setDepth(double depth) {
+		_cpInstance.setDepth(depth);
 	}
 
 	/**
@@ -743,6 +865,16 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	}
 
 	/**
+	* Sets the height of this cp instance.
+	*
+	* @param height the height of this cp instance
+	*/
+	@Override
+	public void setHeight(double height) {
+		_cpInstance.setHeight(height);
+	}
+
+	/**
 	* Sets the last publish date of this cp instance.
 	*
 	* @param lastPublishDate the last publish date of this cp instance
@@ -776,6 +908,16 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	@Override
 	public void setNew(boolean n) {
 		_cpInstance.setNew(n);
+	}
+
+	/**
+	* Sets the price of this cp instance.
+	*
+	* @param price the price of this cp instance
+	*/
+	@Override
+	public void setPrice(double price) {
+		_cpInstance.setPrice(price);
 	}
 
 	/**
@@ -891,6 +1033,26 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_cpInstance.setUuid(uuid);
+	}
+
+	/**
+	* Sets the weight of this cp instance.
+	*
+	* @param weight the weight of this cp instance
+	*/
+	@Override
+	public void setWeight(double weight) {
+		_cpInstance.setWeight(weight);
+	}
+
+	/**
+	* Sets the width of this cp instance.
+	*
+	* @param width the width of this cp instance
+	*/
+	@Override
+	public void setWidth(double width) {
+		_cpInstance.setWidth(width);
 	}
 
 	@Override

@@ -88,8 +88,8 @@ public class CPDefinitionServiceSoap {
 		java.lang.String gtin, java.lang.String manufacturerPartNumber,
 		int minCartQuantity, int maxCartQuantity,
 		java.lang.String allowedCartQuantities, int multipleCartQuantity,
-		double width, double height, double depth, double weight,
-		java.lang.String ddmStructureKey, int displayDateMonth,
+		double width, double height, double depth, double weight, double cost,
+		double price, java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
@@ -117,8 +117,8 @@ public class CPDefinitionServiceSoap {
 					metaTitleMap, metaKeywordsMap, metaDescriptionMap,
 					layoutUuid, productTypeName, gtin, manufacturerPartNumber,
 					minCartQuantity, maxCartQuantity, allowedCartQuantities,
-					multipleCartQuantity, width, height, depth, weight,
-					ddmStructureKey, displayDateMonth, displayDateDay,
+					multipleCartQuantity, width, height, depth, weight, cost,
+					price, ddmStructureKey, displayDateMonth, displayDateDay,
 					displayDateYear, displayDateHour, displayDateMinute,
 					expirationDateMonth, expirationDateDay, expirationDateYear,
 					expirationDateHour, expirationDateMinute, neverExpire,
@@ -405,7 +405,8 @@ public class CPDefinitionServiceSoap {
 		java.lang.String manufacturerPartNumber, int minCartQuantity,
 		int maxCartQuantity, java.lang.String allowedCartQuantities,
 		int multipleCartQuantity, double width, double height, double depth,
-		double weight, java.lang.String ddmStructureKey, int displayDateMonth,
+		double weight, double cost, double price,
+		java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
@@ -434,10 +435,10 @@ public class CPDefinitionServiceSoap {
 					metaDescriptionMap, layoutUuid, gtin,
 					manufacturerPartNumber, minCartQuantity, maxCartQuantity,
 					allowedCartQuantities, multipleCartQuantity, width, height,
-					depth, weight, ddmStructureKey, displayDateMonth,
-					displayDateDay, displayDateYear, displayDateHour,
-					displayDateMinute, expirationDateMonth, expirationDateDay,
-					expirationDateYear, expirationDateHour,
+					depth, weight, cost, price, ddmStructureKey,
+					displayDateMonth, displayDateDay, displayDateYear,
+					displayDateHour, displayDateMinute, expirationDateMonth,
+					expirationDateDay, expirationDateYear, expirationDateHour,
 					expirationDateMinute, neverExpire, serviceContext);
 
 			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModel(returnValue);
@@ -502,6 +503,22 @@ public class CPDefinitionServiceSoap {
 					expirationDateMonth, expirationDateDay, expirationDateYear,
 					expirationDateHour, expirationDateMinute, neverExpire,
 					serviceContext);
+
+			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionSoap updatePricingInfo(
+		long cpDefinitionId, double cost, double price)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.updatePricingInfo(cpDefinitionId,
+					cost, price);
 
 			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModel(returnValue);
 		}

@@ -81,6 +81,8 @@ public class CPDefinitionWrapper implements CPDefinition,
 		attributes.put("height", getHeight());
 		attributes.put("depth", getDepth());
 		attributes.put("weight", getWeight());
+		attributes.put("cost", getCost());
+		attributes.put("price", getPrice());
 		attributes.put("DDMStructureKey", getDDMStructureKey());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
@@ -226,6 +228,18 @@ public class CPDefinitionWrapper implements CPDefinition,
 			setWeight(weight);
 		}
 
+		Double cost = (Double)attributes.get("cost");
+
+		if (cost != null) {
+			setCost(cost);
+		}
+
+		Double price = (Double)attributes.get("price");
+
+		if (price != null) {
+			setPrice(price);
+		}
+
 		String DDMStructureKey = (String)attributes.get("DDMStructureKey");
 
 		if (DDMStructureKey != null) {
@@ -334,6 +348,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public long getCompanyId() {
 		return _cpDefinition.getCompanyId();
+	}
+
+	/**
+	* Returns the cost of this cp definition.
+	*
+	* @return the cost of this cp definition
+	*/
+	@Override
+	public double getCost() {
+		return _cpDefinition.getCost();
 	}
 
 	/**
@@ -655,6 +679,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public int getMultipleCartQuantity() {
 		return _cpDefinition.getMultipleCartQuantity();
+	}
+
+	/**
+	* Returns the price of this cp definition.
+	*
+	* @return the price of this cp definition
+	*/
+	@Override
+	public double getPrice() {
+		return _cpDefinition.getPrice();
 	}
 
 	/**
@@ -1078,6 +1112,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	/**
+	* Sets the cost of this cp definition.
+	*
+	* @param cost the cost of this cp definition
+	*/
+	@Override
+	public void setCost(double cost) {
+		_cpDefinition.setCost(cost);
+	}
+
+	/**
 	* Sets the cp definition ID of this cp definition.
 	*
 	* @param CPDefinitionId the cp definition ID of this cp definition
@@ -1268,6 +1312,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public void setNew(boolean n) {
 		_cpDefinition.setNew(n);
+	}
+
+	/**
+	* Sets the price of this cp definition.
+	*
+	* @param price the price of this cp definition
+	*/
+	@Override
+	public void setPrice(double price) {
+		_cpDefinition.setPrice(price);
 	}
 
 	/**

@@ -84,6 +84,16 @@ public interface CPInstanceLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CPInstance addCPInstance(long cpDefinitionId, java.lang.String sku,
 		java.lang.String gtin, java.lang.String manufacturerPartNumber,
+		java.lang.String ddmContent, double width, double height, double depth,
+		double weight, double cost, double price, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		ServiceContext serviceContext) throws PortalException;
+
+	public CPInstance addCPInstance(long cpDefinitionId, java.lang.String sku,
+		java.lang.String gtin, java.lang.String manufacturerPartNumber,
 		java.lang.String ddmContent, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
@@ -336,11 +346,26 @@ public interface CPInstanceLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CPInstance updateCPInstance(long cpInstanceId, java.lang.String sku,
 		java.lang.String gtin, java.lang.String manufacturerPartNumber,
+		double width, double height, double depth, double weight, double cost,
+		double price, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		ServiceContext serviceContext) throws PortalException;
+
+	public CPInstance updateCPInstance(long cpInstanceId, java.lang.String sku,
+		java.lang.String gtin, java.lang.String manufacturerPartNumber,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
+
+	public CPInstance updatePricingInfo(long cpInstanceId, double cost,
+		double price) throws PortalException;
+
+	public CPInstance updateShippingInfo(long cpInstanceId, double width,
+		double height, double depth, double weight) throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CPInstance updateStatus(long userId, long cpInstanceId, int status,

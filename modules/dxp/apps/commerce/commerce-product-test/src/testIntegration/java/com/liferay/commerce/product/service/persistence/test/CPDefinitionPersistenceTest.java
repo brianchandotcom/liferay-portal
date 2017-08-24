@@ -166,6 +166,10 @@ public class CPDefinitionPersistenceTest {
 
 		newCPDefinition.setWeight(RandomTestUtil.nextDouble());
 
+		newCPDefinition.setCost(RandomTestUtil.nextDouble());
+
+		newCPDefinition.setPrice(RandomTestUtil.nextDouble());
+
 		newCPDefinition.setDDMStructureKey(RandomTestUtil.randomString());
 
 		newCPDefinition.setDisplayDate(RandomTestUtil.nextDate());
@@ -232,6 +236,10 @@ public class CPDefinitionPersistenceTest {
 			newCPDefinition.getDepth());
 		AssertUtils.assertEquals(existingCPDefinition.getWeight(),
 			newCPDefinition.getWeight());
+		AssertUtils.assertEquals(existingCPDefinition.getCost(),
+			newCPDefinition.getCost());
+		AssertUtils.assertEquals(existingCPDefinition.getPrice(),
+			newCPDefinition.getPrice());
 		Assert.assertEquals(existingCPDefinition.getDDMStructureKey(),
 			newCPDefinition.getDDMStructureKey());
 		Assert.assertEquals(Time.getShortTimestamp(
@@ -358,10 +366,11 @@ public class CPDefinitionPersistenceTest {
 			"availableIndividually", true, "minCartQuantity", true,
 			"maxCartQuantity", true, "allowedCartQuantities", true,
 			"multipleCartQuantity", true, "width", true, "height", true,
-			"depth", true, "weight", true, "DDMStructureKey", true,
-			"displayDate", true, "expirationDate", true, "lastPublishDate",
-			true, "status", true, "statusByUserId", true, "statusByUserName",
-			true, "statusDate", true, "defaultLanguageId", true);
+			"depth", true, "weight", true, "cost", true, "price", true,
+			"DDMStructureKey", true, "displayDate", true, "expirationDate",
+			true, "lastPublishDate", true, "status", true, "statusByUserId",
+			true, "statusByUserName", true, "statusDate", true,
+			"defaultLanguageId", true);
 	}
 
 	@Test
@@ -618,6 +627,10 @@ public class CPDefinitionPersistenceTest {
 		cpDefinition.setDepth(RandomTestUtil.nextDouble());
 
 		cpDefinition.setWeight(RandomTestUtil.nextDouble());
+
+		cpDefinition.setCost(RandomTestUtil.nextDouble());
+
+		cpDefinition.setPrice(RandomTestUtil.nextDouble());
 
 		cpDefinition.setDDMStructureKey(RandomTestUtil.randomString());
 

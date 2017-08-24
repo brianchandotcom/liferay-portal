@@ -408,6 +408,34 @@ public interface CPDefinitionModel extends BaseModel<CPDefinition>, ShardedModel
 	public void setWeight(double weight);
 
 	/**
+	 * Returns the cost of this cp definition.
+	 *
+	 * @return the cost of this cp definition
+	 */
+	public double getCost();
+
+	/**
+	 * Sets the cost of this cp definition.
+	 *
+	 * @param cost the cost of this cp definition
+	 */
+	public void setCost(double cost);
+
+	/**
+	 * Returns the price of this cp definition.
+	 *
+	 * @return the price of this cp definition
+	 */
+	public double getPrice();
+
+	/**
+	 * Sets the price of this cp definition.
+	 *
+	 * @param price the price of this cp definition
+	 */
+	public void setPrice(double price);
+
+	/**
 	 * Returns the ddm structure key of this cp definition.
 	 *
 	 * @return the ddm structure key of this cp definition

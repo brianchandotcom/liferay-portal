@@ -47,6 +47,12 @@ public class CPInstanceSoap implements Serializable {
 		soapModel.setGtin(model.getGtin());
 		soapModel.setManufacturerPartNumber(model.getManufacturerPartNumber());
 		soapModel.setDDMContent(model.getDDMContent());
+		soapModel.setWidth(model.getWidth());
+		soapModel.setHeight(model.getHeight());
+		soapModel.setDepth(model.getDepth());
+		soapModel.setWeight(model.getWeight());
+		soapModel.setCost(model.getCost());
+		soapModel.setPrice(model.getPrice());
 		soapModel.setDisplayDate(model.getDisplayDate());
 		soapModel.setExpirationDate(model.getExpirationDate());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
@@ -210,6 +216,54 @@ public class CPInstanceSoap implements Serializable {
 		_DDMContent = DDMContent;
 	}
 
+	public double getWidth() {
+		return _width;
+	}
+
+	public void setWidth(double width) {
+		_width = width;
+	}
+
+	public double getHeight() {
+		return _height;
+	}
+
+	public void setHeight(double height) {
+		_height = height;
+	}
+
+	public double getDepth() {
+		return _depth;
+	}
+
+	public void setDepth(double depth) {
+		_depth = depth;
+	}
+
+	public double getWeight() {
+		return _weight;
+	}
+
+	public void setWeight(double weight) {
+		_weight = weight;
+	}
+
+	public double getCost() {
+		return _cost;
+	}
+
+	public void setCost(double cost) {
+		_cost = cost;
+	}
+
+	public double getPrice() {
+		return _price;
+	}
+
+	public void setPrice(double price) {
+		_price = price;
+	}
+
 	public Date getDisplayDate() {
 		return _displayDate;
 	}
@@ -279,6 +333,12 @@ public class CPInstanceSoap implements Serializable {
 	private String _gtin;
 	private String _manufacturerPartNumber;
 	private String _DDMContent;
+	private double _width;
+	private double _height;
+	private double _depth;
+	private double _weight;
+	private double _cost;
+	private double _price;
 	private Date _displayDate;
 	private Date _expirationDate;
 	private Date _lastPublishDate;

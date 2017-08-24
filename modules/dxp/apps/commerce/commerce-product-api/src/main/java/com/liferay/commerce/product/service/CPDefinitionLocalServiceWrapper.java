@@ -59,8 +59,8 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		java.lang.String gtin, java.lang.String manufacturerPartNumber,
 		int minCartQuantity, int maxCartQuantity,
 		java.lang.String allowedCartQuantities, int multipleCartQuantity,
-		double width, double height, double depth, double weight,
-		java.lang.String ddmStructureKey, int displayDateMonth,
+		double width, double height, double depth, double weight, double cost,
+		double price, java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
@@ -72,11 +72,11 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 			metaKeywordsMap, metaDescriptionMap, layoutUuid, productTypeName,
 			gtin, manufacturerPartNumber, minCartQuantity, maxCartQuantity,
 			allowedCartQuantities, multipleCartQuantity, width, height, depth,
-			weight, ddmStructureKey, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			weight, cost, price, ddmStructureKey, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	@Override
@@ -610,7 +610,8 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		java.lang.String manufacturerPartNumber, int minCartQuantity,
 		int maxCartQuantity, java.lang.String allowedCartQuantities,
 		int multipleCartQuantity, double width, double height, double depth,
-		double weight, java.lang.String ddmStructureKey, int displayDateMonth,
+		double weight, double cost, double price,
+		java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
@@ -622,8 +623,8 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 			urlTitleMap, metaTitleMap, metaKeywordsMap, metaDescriptionMap,
 			layoutUuid, gtin, manufacturerPartNumber, minCartQuantity,
 			maxCartQuantity, allowedCartQuantities, multipleCartQuantity,
-			width, height, depth, weight, ddmStructureKey, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour,
+			width, height, depth, weight, cost, price, ddmStructureKey,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, serviceContext);
@@ -658,6 +659,14 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 			displayDateHour, displayDateMinute, expirationDateMonth,
 			expirationDateDay, expirationDateYear, expirationDateHour,
 			expirationDateMinute, neverExpire, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPDefinition updatePricingInfo(
+		long cpDefinitionId, double cost, double price)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionLocalService.updatePricingInfo(cpDefinitionId,
+			cost, price);
 	}
 
 	@Override

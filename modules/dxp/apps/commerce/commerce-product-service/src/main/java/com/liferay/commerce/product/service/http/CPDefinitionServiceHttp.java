@@ -68,8 +68,8 @@ public class CPDefinitionServiceHttp {
 		java.lang.String gtin, java.lang.String manufacturerPartNumber,
 		int minCartQuantity, int maxCartQuantity,
 		java.lang.String allowedCartQuantities, int multipleCartQuantity,
-		double width, double height, double depth, double weight,
-		java.lang.String ddmStructureKey, int displayDateMonth,
+		double width, double height, double depth, double weight, double cost,
+		double price, java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
@@ -85,8 +85,8 @@ public class CPDefinitionServiceHttp {
 					metaTitleMap, metaKeywordsMap, metaDescriptionMap,
 					layoutUuid, productTypeName, gtin, manufacturerPartNumber,
 					minCartQuantity, maxCartQuantity, allowedCartQuantities,
-					multipleCartQuantity, width, height, depth, weight,
-					ddmStructureKey, displayDateMonth, displayDateDay,
+					multipleCartQuantity, width, height, depth, weight, cost,
+					price, ddmStructureKey, displayDateMonth, displayDateDay,
 					displayDateYear, displayDateHour, displayDateMinute,
 					expirationDateMonth, expirationDateDay, expirationDateYear,
 					expirationDateHour, expirationDateMinute, neverExpire,
@@ -651,7 +651,8 @@ public class CPDefinitionServiceHttp {
 		java.lang.String manufacturerPartNumber, int minCartQuantity,
 		int maxCartQuantity, java.lang.String allowedCartQuantities,
 		int multipleCartQuantity, double width, double height, double depth,
-		double weight, java.lang.String ddmStructureKey, int displayDateMonth,
+		double weight, double cost, double price,
+		java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
@@ -668,10 +669,10 @@ public class CPDefinitionServiceHttp {
 					metaDescriptionMap, layoutUuid, gtin,
 					manufacturerPartNumber, minCartQuantity, maxCartQuantity,
 					allowedCartQuantities, multipleCartQuantity, width, height,
-					depth, weight, ddmStructureKey, displayDateMonth,
-					displayDateDay, displayDateYear, displayDateHour,
-					displayDateMinute, expirationDateMonth, expirationDateDay,
-					expirationDateYear, expirationDateHour,
+					depth, weight, cost, price, ddmStructureKey,
+					displayDateMonth, displayDateDay, displayDateYear,
+					displayDateHour, displayDateMinute, expirationDateMonth,
+					expirationDateDay, expirationDateYear, expirationDateHour,
 					expirationDateMinute, neverExpire, serviceContext);
 
 			Object returnObj = null;
@@ -754,13 +755,46 @@ public class CPDefinitionServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CPDefinition updatePricingInfo(
+		HttpPrincipal httpPrincipal, long cpDefinitionId, double cost,
+		double price)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CPDefinitionServiceUtil.class,
+					"updatePricingInfo", _updatePricingInfoParameterTypes19);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					cpDefinitionId, cost, price);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.product.model.CPDefinition)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.commerce.product.model.CPDefinition updateShippingInfo(
 		HttpPrincipal httpPrincipal, long cpDefinitionId, double width,
 		double height, double depth, double weight)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionServiceUtil.class,
-					"updateShippingInfo", _updateShippingInfoParameterTypes19);
+					"updateShippingInfo", _updateShippingInfoParameterTypes20);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpDefinitionId, width, height, depth, weight);
@@ -795,7 +829,7 @@ public class CPDefinitionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionServiceUtil.class,
-					"updateStatus", _updateStatusParameterTypes20);
+					"updateStatus", _updateStatusParameterTypes21);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
 					cpDefinitionId, status, serviceContext, workflowContext);
@@ -830,9 +864,9 @@ public class CPDefinitionServiceHttp {
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, int.class, int.class, java.lang.String.class,
 			int.class, double.class, double.class, double.class, double.class,
-			java.lang.String.class, int.class, int.class, int.class, int.class,
+			double.class, double.class, java.lang.String.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			boolean.class,
+			int.class, int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addCPDefinitionParameterTypes1 = new Class[] {
@@ -898,9 +932,9 @@ public class CPDefinitionServiceHttp {
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, int.class, int.class, java.lang.String.class,
 			int.class, double.class, double.class, double.class, double.class,
-			java.lang.String.class, int.class, int.class, int.class, int.class,
+			double.class, double.class, java.lang.String.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			boolean.class,
+			int.class, int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateCPDefinitionParameterTypes18 = new Class[] {
@@ -914,10 +948,13 @@ public class CPDefinitionServiceHttp {
 			int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateShippingInfoParameterTypes19 = new Class[] {
+	private static final Class<?>[] _updatePricingInfoParameterTypes19 = new Class[] {
+			long.class, double.class, double.class
+		};
+	private static final Class<?>[] _updateShippingInfoParameterTypes20 = new Class[] {
 			long.class, double.class, double.class, double.class, double.class
 		};
-	private static final Class<?>[] _updateStatusParameterTypes20 = new Class[] {
+	private static final Class<?>[] _updateStatusParameterTypes21 = new Class[] {
 			long.class, long.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class,
 			java.util.Map.class

@@ -5728,6 +5728,8 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 		cpDefinitionImpl.setHeight(cpDefinition.getHeight());
 		cpDefinitionImpl.setDepth(cpDefinition.getDepth());
 		cpDefinitionImpl.setWeight(cpDefinition.getWeight());
+		cpDefinitionImpl.setCost(cpDefinition.getCost());
+		cpDefinitionImpl.setPrice(cpDefinition.getPrice());
 		cpDefinitionImpl.setDDMStructureKey(cpDefinition.getDDMStructureKey());
 		cpDefinitionImpl.setDisplayDate(cpDefinition.getDisplayDate());
 		cpDefinitionImpl.setExpirationDate(cpDefinition.getExpirationDate());

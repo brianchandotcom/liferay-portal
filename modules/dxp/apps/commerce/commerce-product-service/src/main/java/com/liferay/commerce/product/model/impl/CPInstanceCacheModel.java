@@ -66,7 +66,7 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(53);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -94,6 +94,18 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 		sb.append(manufacturerPartNumber);
 		sb.append(", DDMContent=");
 		sb.append(DDMContent);
+		sb.append(", width=");
+		sb.append(width);
+		sb.append(", height=");
+		sb.append(height);
+		sb.append(", depth=");
+		sb.append(depth);
+		sb.append(", weight=");
+		sb.append(weight);
+		sb.append(", cost=");
+		sb.append(cost);
+		sb.append(", price=");
+		sb.append(price);
 		sb.append(", displayDate=");
 		sb.append(displayDate);
 		sb.append(", expirationDate=");
@@ -180,6 +192,13 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 			cpInstanceImpl.setDDMContent(DDMContent);
 		}
 
+		cpInstanceImpl.setWidth(width);
+		cpInstanceImpl.setHeight(height);
+		cpInstanceImpl.setDepth(depth);
+		cpInstanceImpl.setWeight(weight);
+		cpInstanceImpl.setCost(cost);
+		cpInstanceImpl.setPrice(price);
+
 		if (displayDate == Long.MIN_VALUE) {
 			cpInstanceImpl.setDisplayDate(null);
 		}
@@ -243,6 +262,18 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 		gtin = objectInput.readUTF();
 		manufacturerPartNumber = objectInput.readUTF();
 		DDMContent = objectInput.readUTF();
+
+		width = objectInput.readDouble();
+
+		height = objectInput.readDouble();
+
+		depth = objectInput.readDouble();
+
+		weight = objectInput.readDouble();
+
+		cost = objectInput.readDouble();
+
+		price = objectInput.readDouble();
 		displayDate = objectInput.readLong();
 		expirationDate = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
@@ -312,6 +343,17 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 			objectOutput.writeUTF(DDMContent);
 		}
 
+		objectOutput.writeDouble(width);
+
+		objectOutput.writeDouble(height);
+
+		objectOutput.writeDouble(depth);
+
+		objectOutput.writeDouble(weight);
+
+		objectOutput.writeDouble(cost);
+
+		objectOutput.writeDouble(price);
 		objectOutput.writeLong(displayDate);
 		objectOutput.writeLong(expirationDate);
 		objectOutput.writeLong(lastPublishDate);
@@ -343,6 +385,12 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 	public String gtin;
 	public String manufacturerPartNumber;
 	public String DDMContent;
+	public double width;
+	public double height;
+	public double depth;
+	public double weight;
+	public double cost;
+	public double price;
 	public long displayDate;
 	public long expirationDate;
 	public long lastPublishDate;

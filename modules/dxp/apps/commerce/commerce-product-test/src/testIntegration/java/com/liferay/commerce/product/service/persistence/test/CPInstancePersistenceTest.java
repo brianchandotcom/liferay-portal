@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -149,6 +150,18 @@ public class CPInstancePersistenceTest {
 
 		newCPInstance.setDDMContent(RandomTestUtil.randomString());
 
+		newCPInstance.setWidth(RandomTestUtil.nextDouble());
+
+		newCPInstance.setHeight(RandomTestUtil.nextDouble());
+
+		newCPInstance.setDepth(RandomTestUtil.nextDouble());
+
+		newCPInstance.setWeight(RandomTestUtil.nextDouble());
+
+		newCPInstance.setCost(RandomTestUtil.nextDouble());
+
+		newCPInstance.setPrice(RandomTestUtil.nextDouble());
+
 		newCPInstance.setDisplayDate(RandomTestUtil.nextDate());
 
 		newCPInstance.setExpirationDate(RandomTestUtil.nextDate());
@@ -194,6 +207,18 @@ public class CPInstancePersistenceTest {
 			newCPInstance.getManufacturerPartNumber());
 		Assert.assertEquals(existingCPInstance.getDDMContent(),
 			newCPInstance.getDDMContent());
+		AssertUtils.assertEquals(existingCPInstance.getWidth(),
+			newCPInstance.getWidth());
+		AssertUtils.assertEquals(existingCPInstance.getHeight(),
+			newCPInstance.getHeight());
+		AssertUtils.assertEquals(existingCPInstance.getDepth(),
+			newCPInstance.getDepth());
+		AssertUtils.assertEquals(existingCPInstance.getWeight(),
+			newCPInstance.getWeight());
+		AssertUtils.assertEquals(existingCPInstance.getCost(),
+			newCPInstance.getCost());
+		AssertUtils.assertEquals(existingCPInstance.getPrice(),
+			newCPInstance.getPrice());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCPInstance.getDisplayDate()),
 			Time.getShortTimestamp(newCPInstance.getDisplayDate()));
@@ -322,9 +347,11 @@ public class CPInstancePersistenceTest {
 			"CPInstanceId", true, "groupId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"CPDefinitionId", true, "sku", true, "gtin", true,
-			"manufacturerPartNumber", true, "displayDate", true,
-			"expirationDate", true, "lastPublishDate", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
+			"manufacturerPartNumber", true, "width", true, "height", true,
+			"depth", true, "weight", true, "cost", true, "price", true,
+			"displayDate", true, "expirationDate", true, "lastPublishDate",
+			true, "status", true, "statusByUserId", true, "statusByUserName",
+			true, "statusDate", true);
 	}
 
 	@Test
@@ -572,6 +599,18 @@ public class CPInstancePersistenceTest {
 		cpInstance.setManufacturerPartNumber(RandomTestUtil.randomString());
 
 		cpInstance.setDDMContent(RandomTestUtil.randomString());
+
+		cpInstance.setWidth(RandomTestUtil.nextDouble());
+
+		cpInstance.setHeight(RandomTestUtil.nextDouble());
+
+		cpInstance.setDepth(RandomTestUtil.nextDouble());
+
+		cpInstance.setWeight(RandomTestUtil.nextDouble());
+
+		cpInstance.setCost(RandomTestUtil.nextDouble());
+
+		cpInstance.setPrice(RandomTestUtil.nextDouble());
 
 		cpInstance.setDisplayDate(RandomTestUtil.nextDate());
 

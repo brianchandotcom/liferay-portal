@@ -77,8 +77,8 @@ public interface CPDefinitionService extends BaseService {
 		java.lang.String gtin, java.lang.String manufacturerPartNumber,
 		int minCartQuantity, int maxCartQuantity,
 		java.lang.String allowedCartQuantities, int multipleCartQuantity,
-		double width, double height, double depth, double weight,
-		java.lang.String ddmStructureKey, int displayDateMonth,
+		double width, double height, double depth, double weight, double cost,
+		double price, java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
@@ -182,7 +182,8 @@ public interface CPDefinitionService extends BaseService {
 		java.lang.String manufacturerPartNumber, int minCartQuantity,
 		int maxCartQuantity, java.lang.String allowedCartQuantities,
 		int multipleCartQuantity, double width, double height, double depth,
-		double weight, java.lang.String ddmStructureKey, int displayDateMonth,
+		double weight, double cost, double price,
+		java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
@@ -206,6 +207,9 @@ public interface CPDefinitionService extends BaseService {
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
+
+	public CPDefinition updatePricingInfo(long cpDefinitionId, double cost,
+		double price) throws PortalException;
 
 	public CPDefinition updateShippingInfo(long cpDefinitionId, double width,
 		double height, double depth, double weight) throws PortalException;

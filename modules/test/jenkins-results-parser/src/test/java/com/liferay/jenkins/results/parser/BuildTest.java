@@ -64,6 +64,9 @@ public class BuildTest extends BaseJenkinsResultsParserTestCase {
 			"test-portal-acceptance-pullrequest(master)_passed", "446",
 			"test-portal-acceptance-pullrequest(master)", "test-1-8");
 		downloadSample(
+			"test-portal-acceptance-pullrequest(master)_poshi-test-failure",
+			"1268", "test-portal-acceptance-pullrequest(master)", "test-1-9");
+		downloadSample(
 			"test-portal-acceptance-pullrequest(master)" +
 				"_semantic_versioning_failure",
 			"2003", "test-portal-acceptance-pullrequest(master)", "test-1-3");

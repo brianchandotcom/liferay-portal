@@ -1,0 +1,93 @@
+
+<html>
+  <h1>Some tests FAILED.</h1>
+  <p>Build Time: 51 minutes 8 seconds 712 ms</p>
+  <h4>Base Branch:</h4>
+  <p>Branch Name:
+    <a href="https://github.com/liferay/liferay-portal/tree/master">master</a>
+    <br/>Branch GIT ID:
+    <a href="https://github.com/liferay/liferay-portal/commit/6ad5d7a775fa75b7f9aede711c74ad167c945563">6ad5d7a775fa75b7f9aede711c74ad167c945563</a>
+  </p>
+  <h4>Job Summary:</h4>
+  <ul>
+    <li>
+      <a href="${dependencies.url}/BuildTest/test-portal-acceptance-pullrequest(master)_poshi-test-failure/test-1-9/test-portal-acceptance-pullrequest(master)/1268/">
+        <strike>
+          <strong>test-portal-acceptance-pullrequest(master)</strong>
+        </strike>
+      </a>
+    </li>
+    <li>
+      <a href="${dependencies.url}/BuildTest/test-portal-acceptance-pullrequest(master)_poshi-test-failure/test-1-2/test-portal-acceptance-pullrequest-dist(master)/1488/">test-portal-acceptance-pullrequest-dist(master)/jdk8</a>
+    </li>
+  </ul>
+  <h5>For more details click
+    <a href="${dependencies.url}/BuildTest/test-portal-acceptance-pullrequest(master)_poshi-test-failure/test-1-9/test-portal-acceptance-pullrequest(master)/1268//jenkins-report.html">here</a>.
+  </h5>
+  <hr/>
+  <h4>Failed Jobs:</h4>
+  <ol>
+    <li>
+      <div>
+        <h5>
+          <a href="${dependencies.url}/BuildTest/test-portal-acceptance-pullrequest(master)_poshi-test-failure/test-1-9/test-portal-acceptance-pullrequest(master)/1268/">test-portal-acceptance-pullrequest(master)</a>
+        </h5>
+        <div>
+          <h6>Job Results:</h6>
+          <p>1 Job Passed.
+            <br/>1 Job Failed.
+          </p>
+        </div>
+        <div>
+          <p>POSHI Test Failure:
+            <strong>Execution failed for task ':writePoshiProperties'.</strong>
+          </p>
+          <pre>
+            <code>     [exec]
+     [exec] Invalid function class Check
+     [exec] /opt/dev/projects/github/liferay-portal/modules/private/apps/commerce/commerce-product-test/src/testFunctional/macros/CommerceOptions.macro:90
+     [exec]
+     [exec] Invalid function class Type
+     [exec] /opt/dev/projects/github/liferay-portal/modules/private/apps/commerce/commerce-product-test/src/testFunctional/macros/CommerceEntry.macro:55
+     [exec]
+     [exec] Invalid function class AssertTextEquals
+     [exec] /opt/dev/projects/github/liferay-portal/modules/private/apps/commerce/commerce-product-test/src/testFunctional/macros/CommerceEntry.macro:139
+     [exec]
+     [exec] Invalid function command Click
+     [exec] /opt/dev/projects/github/liferay-portal/modules/private/apps/commerce/commerce-product-test/src/testFunctional/macros/CommerceOptions.macro:21
+     [exec]
+     [exec] Invalid function command AssertElementPresent
+     [exec] /opt/dev/projects/github/liferay-portal/modules/private/apps/commerce/commerce-product-test/src/testFunctional/macros/CommerceOptions.macro:57
+     [exec]
+     [exec] Invalid function class Type
+     [exec] /opt/dev/projects/github/liferay-portal/modules/private/apps/commerce/commerce-product-test/src/testFunctional/macros/CommerceEntry.macro:67
+     [exec]
+     [exec] Invalid function class AssertTextEquals
+     [exec] /opt/dev/projects/github/liferay-portal/modules/private/apps/commerce/commerce-product-test/src/testFunctional/tests/CPCommerceCatalog.testcase:326
+     [exec]
+     [exec] Invalid function class AssertElementPresent
+     [exec] /opt/dev/projects/github/liferay-portal/modules/private/apps/commerce/commerce-product-test/src/testFunctional/macros/CommerceEntry.macro:92
+     [exec]
+     [exec] Invalid property name portal.acceptance
+     [exec] /opt/dev/projects/github/liferay-portal/modules/private/apps/commerce/commerce-product-test/src/testFunctional/tests/CPCommerceOptions.testcase:75
+     [exec]
+     [exec] Invalid function class Type
+     [exec] /opt/dev/projects/github/liferay-portal/modules/private/apps/commerce/commerce-product-test/src/testFunctional/macros/CommerceEntry.macro:5
+     [exec]
+     [exec] Invalid function command Check
+     [exec]
+     [exec] FAILURE: Build failed with an exception.
+     [exec]
+     [exec] * What went wrong:
+     [exec] Execution failed for task ':writePoshiProperties'.
+     [exec] &gt; Process 'command '/opt/java/jdk1.8.0_51/bin/java'' finished with non-zero exit value 1
+     [exec] </code>
+          </pre>
+        </div>
+      </div>
+    </li>
+  </ol>
+  <h4>For upstream results, click
+    <a href="https://test-1-1.liferay.com/job/test-portal-acceptance-upstream(master)">here</a>.
+  </h4>
+</html>

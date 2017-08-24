@@ -40,7 +40,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 String lifecycle = (String)request.getAttribute(liferayPortletRequest.LIFECYCLE_PHASE);
 
-PortletURL cartAdminURLObj = PortalUtil.getControlPanelPortletURL(request, CommerceCartPortletKeys.COMMERCE_CART, lifecycle);
+PortletURL cartAdminURLObj = PortalUtil.getControlPanelPortletURL(request, CommercePortletKeys.COMMERCE_CART, lifecycle);
 
 cartAdminURLObj.setParameter("toolbarItem", cartToolbarItem);
 
@@ -173,20 +173,14 @@ renderResponse.setTitle(commerceCart.getName());
 
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
+								name="price"
+								value="<%= String.valueOf(commerceCartItemDisplayContext.getCommerceCartItemPrice(commerceCartItem.getCommerceCartItemId())) %>"
+							/>
+
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-content"
 								name="user"
 								property="userName"
-							/>
-
-							<liferay-ui:search-container-column-date
-								cssClass="table-cell-content"
-								name="create-date"
-								property="createDate"
-							/>
-
-							<liferay-ui:search-container-column-date
-								cssClass="table-cell-content"
-								name="modified-date"
-								property="modifiedDate"
 							/>
 						</liferay-ui:search-container-row>
 

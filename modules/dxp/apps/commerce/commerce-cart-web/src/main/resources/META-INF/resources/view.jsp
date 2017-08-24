@@ -19,7 +19,7 @@
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-carts");
 
-int type = ParamUtil.getInteger(request, "type", CommerceCartConstants.COMMERCE_CART_TYPE_CART);
+int type = ParamUtil.getInteger(request, "type", CommerceConstants.COMMERCE_CART_TYPE_CART);
 
 CommerceCartDisplayContext commerceCartDisplayContext = (CommerceCartDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
@@ -98,6 +98,12 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 								cssClass="table-cell-content"
 								name="user"
 								property="userName"
+							/>
+
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-content"
+								name="total"
+								value="<%= String.valueOf(commerceCartDisplayContext.getCommerceCartTotal(commerceCart.getCommerceCartId())) %>"
 							/>
 
 							<liferay-ui:search-container-column-date

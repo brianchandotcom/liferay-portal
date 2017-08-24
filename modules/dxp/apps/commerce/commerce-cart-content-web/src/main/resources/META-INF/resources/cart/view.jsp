@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-int type = ParamUtil.getInteger(request, "type", CommerceCartConstants.COMMERCE_CART_TYPE_CART);
+int type = ParamUtil.getInteger(request, "type", CommerceConstants.COMMERCE_CART_TYPE_CART);
 
 CommerceCartContentDisplayContext commerceCartContentDisplayContext = (CommerceCartContentDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
@@ -31,7 +31,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 %>
 
 <div class="container-fluid-1280" id="<portlet:namespace />cartItemsContainer">
-	<div class="commerce-cart-items-container" id="<portlet:namespace />entriesContainer">
+	<div class="col-md-9 commerce-cart-items-container" id="<portlet:namespace />entriesContainer">
 		<liferay-ui:search-container
 			id="commerceCartItems"
 			iteratorURL="<%= portletURL %>"
@@ -67,6 +67,12 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-content"
+					name="price"
+					value="<%= String.valueOf(commerceCartContentDisplayContext.getCommerceCartItemPrice(commerceCartItem.getCommerceCartItemId())) %>"
+				/>
+
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
 				>
 					<portlet:actionURL name="editCommerceCartItem" var="deleteURL">
 						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
@@ -90,5 +96,9 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 			<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" searchContainer="<%= commerceCartItemSearchContainer %>" />
 		</liferay-ui:search-container>
+	</div>
+
+	<div class="col-md-3">
+		<h4><strong><liferay-ui:message key="total" /> <%= HtmlUtil.escape(String.valueOf(commerceCartContentDisplayContext.getCommerceCartTotal())) %></strong></h4>
 	</div>
 </div>

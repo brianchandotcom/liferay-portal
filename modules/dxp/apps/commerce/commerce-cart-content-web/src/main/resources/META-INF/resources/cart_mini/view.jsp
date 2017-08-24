@@ -39,6 +39,10 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	displayStyleGroupId="<%= commerceCartContentMiniDisplayContext.getDisplayStyleGroupId() %>"
 	entries="<%= commerceCartItemSearchContainer.getResults() %>"
 >
+	<div class="commerce-cart-info">
+		<h4><strong><liferay-ui:message key="total" /> <%= HtmlUtil.escape(String.valueOf(commerceCartContentMiniDisplayContext.getCommerceCartTotal())) %></strong></h4>
+	</div>
+
 	<div class="commerce-cart-items-container" id="<portlet:namespace />entriesContainer">
 		<liferay-ui:search-container
 			id="commerceCartItems"
@@ -67,6 +71,12 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 					cssClass="table-cell-content"
 					href="<%= commerceCartContentMiniDisplayContext.getCPDefinitionURL(cpDefinition.getCPDefinitionId(), themeDisplay) %>"
 					value="<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>"
+				/>
+
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
+					name="price"
+					value="<%= String.valueOf(commerceCartContentMiniDisplayContext.getCommerceCartItemPrice(commerceCartItem.getCommerceCartItemId())) %>"
 				/>
 			</liferay-ui:search-container-row>
 

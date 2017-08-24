@@ -19,7 +19,7 @@
 <%
 String languageId = LanguageUtil.getLanguageId(locale);
 
-List<CommerceCartItem> commerceCartItems = (List<CommerceCartItem>)request.getAttribute(CommerceCartWebKeys.COMMERCE_CART_ITEMS);
+List<CommerceCartItem> commerceCartItems = (List<CommerceCartItem>)request.getAttribute(CommerceWebKeys.COMMERCE_CART_ITEMS);
 
 if (commerceCartItems == null) {
 	commerceCartItems = Collections.emptyList();
@@ -52,6 +52,26 @@ if (commerceCartItems == null) {
 
 			<p>
 				<%= HtmlUtil.escape(String.valueOf(commerceCartItem.getCommerceCartItemId())) %>
+			</p>
+
+			<%
+			Date createDate = commerceCartItem.getCreateDate();
+			Date modifiedDate = commerceCartItem.getModifiedDate();
+
+			String createDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
+			String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
+			%>
+
+			<h5><liferay-ui:message key="create-date" /></h5>
+
+			<p>
+				<liferay-ui:message arguments="<%= createDateDescription %>" key="x-ago" />
+			</p>
+
+			<h5><liferay-ui:message key="modified-date" /></h5>
+
+			<p>
+				<liferay-ui:message arguments="<%= modifiedDateDescription %>" key="x-ago" />
 			</p>
 		</div>
 	</c:when>

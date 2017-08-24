@@ -46,7 +46,7 @@ public class MSBFragmentCollectionServiceImpl
 			MSBFragmentActionKeys.ADD_MSB_FRAGMENT_COLLECTION);
 
 		return msbFragmentCollectionLocalService.addFragmentCollection(
-			getUserId(), groupId, name, description, serviceContext);
+			groupId, getUserId(), name, description, serviceContext);
 	}
 
 	@Override

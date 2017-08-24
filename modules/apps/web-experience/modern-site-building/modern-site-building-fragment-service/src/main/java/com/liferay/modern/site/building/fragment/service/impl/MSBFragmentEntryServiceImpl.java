@@ -46,7 +46,7 @@ public class MSBFragmentEntryServiceImpl
 			MSBFragmentActionKeys.ADD_MSB_FRAGMENT_ENTRY);
 
 		return msbFragmentEntryLocalService.addFragmentEntry(
-			getUserId(), groupId, msbFragmentCollectionId, name, css, html, js,
+			groupId, getUserId(), msbFragmentCollectionId, name, css, html, js,
 			serviceContext);
 	}
 

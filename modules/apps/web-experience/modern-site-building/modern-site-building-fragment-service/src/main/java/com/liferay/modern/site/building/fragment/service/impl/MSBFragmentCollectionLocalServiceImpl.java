@@ -37,7 +37,7 @@ public class MSBFragmentCollectionLocalServiceImpl
 
 	@Override
 	public MSBFragmentCollection addFragmentCollection(
-			long userId, long groupId, String name, String description,
+			long groupId, long userId, String name, String description,
 			ServiceContext serviceContext)
 		throws PortalException {
 

@@ -36,7 +36,7 @@ public class MSBFragmentEntryLocalServiceImpl
 
 	@Override
 	public MSBFragmentEntry addFragmentEntry(
-			long userId, long groupId, long msbFragmentCollectionId,
+			long groupId, long userId, long msbFragmentCollectionId,
 			String name, String css, String html, String js,
 			ServiceContext serviceContext)
 		throws PortalException {

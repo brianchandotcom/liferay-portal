@@ -43,6 +43,7 @@
 /dist
 /intellij
 /jacoco
+/modules/.releng/private
 /modules/private
 /nbproject/private
 /out

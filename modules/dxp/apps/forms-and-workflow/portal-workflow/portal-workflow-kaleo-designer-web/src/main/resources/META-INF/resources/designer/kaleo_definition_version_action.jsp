@@ -26,9 +26,9 @@ KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)row.getO
 	<c:if test="<%= KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcPath" value='<%= "/designer/edit_kaleo_definition_version.jsp" %>' />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
 			<portlet:param name="draftVersion" value="<%= kaleoDefinitionVersion.getVersion() %>" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon

@@ -2199,6 +2199,19 @@ to version 1.0.49.
 - [LPS-74278]: Update the [Liferay Portal Tools Service Builder] dependency to
 version 1.0.165.
 
+## 3.4.37 - 2017-08-24
+
+### Added
+- [LPS-74314]: Add the ability to configure the `showStatusUpdates` property of
+all `FormatSourceTask` instances by setting the project property
+`source.formatter.show.status.updates`.
+
+### Changed
+- [LPS-74314]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.1.0.
+- [LPS-74314]: Update the [Liferay Source Formatter] dependency to version
+1.0.446.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -2393,4 +2406,5 @@ version 1.0.165.
 [LPS-74250]: https://issues.liferay.com/browse/LPS-74250
 [LPS-74269]: https://issues.liferay.com/browse/LPS-74269
 [LPS-74278]: https://issues.liferay.com/browse/LPS-74278
+[LPS-74314]: https://issues.liferay.com/browse/LPS-74314
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

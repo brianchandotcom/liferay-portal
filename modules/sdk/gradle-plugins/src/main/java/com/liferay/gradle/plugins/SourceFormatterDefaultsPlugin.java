@@ -88,6 +88,14 @@ public class SourceFormatterDefaultsPlugin
 			formatSourceTask.setMaxLineLength(Integer.parseInt(maxLineLength));
 		}
 
+		String processorThreadCount = GradleUtil.getProperty(
+			project, "source.formatter.processor.thread.count", (String)null);
+
+		if (Validator.isNotNull(processorThreadCount)) {
+			formatSourceTask.setProcessorThreadCount(
+				Integer.parseInt(processorThreadCount));
+		}
+
 		String showDocumentation = GradleUtil.getProperty(
 			project, "source.formatter.show.documentation", (String)null);
 
@@ -96,12 +104,12 @@ public class SourceFormatterDefaultsPlugin
 				Boolean.parseBoolean(showDocumentation));
 		}
 
-		String processorThreadCount = GradleUtil.getProperty(
-			project, "source.formatter.processor.thread.count", (String)null);
+		String showStatusUpdates = GradleUtil.getProperty(
+			project, "source.formatter.show.status.updates", (String)null);
 
-		if (Validator.isNotNull(processorThreadCount)) {
-			formatSourceTask.setProcessorThreadCount(
-				Integer.parseInt(processorThreadCount));
+		if (Validator.isNotNull(showStatusUpdates)) {
+			formatSourceTask.setShowStatusUpdates(
+				Boolean.parseBoolean(showStatusUpdates));
 		}
 	}
 

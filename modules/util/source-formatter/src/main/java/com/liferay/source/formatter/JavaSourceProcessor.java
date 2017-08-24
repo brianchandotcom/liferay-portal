@@ -59,6 +59,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void postFormat() throws Exception {
+		addProgressStatusUpdate(
+			new ProgressStatusUpdate(
+				ProgressStatus.CHECK_STYLE_STARTING, _ungeneratedFiles.size()));
+
 		_processCheckStyle();
 	}
 
@@ -191,7 +195,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			CheckStyleUtil.process(
 				_ungeneratedFiles,
 				getSuppressionsFiles("checkstyle-suppressions.xml"),
-				sourceFormatterArgs.getBaseDirName());
+				sourceFormatterArgs.getBaseDirName(), getProgressStatusQueue());
 
 		for (SourceFormatterMessage sourceFormatterMessage :
 				sourceFormatterMessages) {

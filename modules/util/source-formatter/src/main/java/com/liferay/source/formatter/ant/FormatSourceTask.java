@@ -117,6 +117,10 @@ public class FormatSourceTask extends Task {
 		_sourceFormatterArgs.setShowDocumentation(showDocumentation);
 	}
 
+	public void setShowStatusUpdates(boolean showStatusUpdates) {
+		_sourceFormatterArgs.setShowStatusUpdates(showStatusUpdates);
+	}
+
 	public void setThrowException(boolean throwException) {
 		_sourceFormatterArgs.setThrowException(throwException);
 	}

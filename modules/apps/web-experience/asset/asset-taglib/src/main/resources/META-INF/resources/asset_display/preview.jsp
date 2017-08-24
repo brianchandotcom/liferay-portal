@@ -58,14 +58,14 @@ AssetRenderer<?> assetRenderer = (AssetRenderer<?>)request.getAttribute(WebKeys.
 
 	<div class="asset-metadata">
 		<div class="categories">
-			<liferay-ui:asset-categories-summary
+			<liferay-asset:asset-categories-summary
 				className="<%= assetEntry.getClassName() %>"
 				classPK="<%= assetEntry.getClassPK () %>"
 			/>
 		</div>
 
 		<div class="tags">
-			<liferay-ui:asset-tags-summary
+			<liferay-asset:asset-tags-summary
 				className="<%= assetEntry.getClassName() %>"
 				classPK="<%= assetEntry.getClassPK () %>"
 			/>

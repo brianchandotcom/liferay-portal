@@ -24,9 +24,9 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
-<liferay-ui:asset-categories-error />
+<liferay-asset:asset-categories-error />
 
-<liferay-ui:asset-tags-error />
+<liferay-asset:asset-tags-error />
 
 <liferay-asset:asset-categories-selector className="<%= Layout.class.getName() %>" classPK="<%= (selLayout != null) ? selLayout.getPrimaryKey() : 0 %>" />
 

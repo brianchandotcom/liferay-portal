@@ -84,9 +84,9 @@ if (portletTitleBasedNavigation) {
 			<liferay-ui:error exception="<%= EntryURLException.class %>" message="please-enter-a-valid-url" />
 			<liferay-ui:error exception="<%= NoSuchFolderException.class %>" message="please-enter-a-valid-folder" />
 
-			<liferay-ui:asset-categories-error />
+			<liferay-asset:asset-categories-error />
 
-			<liferay-ui:asset-tags-error />
+			<liferay-asset:asset-tags-error />
 
 			<aui:model-context bean="<%= entry %>" model="<%= BookmarksEntry.class %>" />
 
@@ -174,7 +174,7 @@ if (portletTitleBasedNavigation) {
 				</aui:fieldset>
 
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
-					<liferay-ui:input-asset-links
+					<liferay-asset:input-asset-links
 						className="<%= BookmarksEntry.class.getName() %>"
 						classPK="<%= entryId %>"
 					/>

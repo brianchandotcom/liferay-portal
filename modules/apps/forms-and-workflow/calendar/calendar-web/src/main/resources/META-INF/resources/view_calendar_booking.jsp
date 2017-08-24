@@ -124,14 +124,14 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 			</p>
 
 			<div class="entry-categories">
-				<liferay-ui:asset-categories-summary
+				<liferay-asset:asset-categories-summary
 					className="<%= CalendarBooking.class.getName() %>"
 					classPK="<%= calendarBooking.getCalendarBookingId() %>"
 				/>
 			</div>
 
 			<div class="entry-tags">
-				<liferay-ui:asset-tags-summary
+				<liferay-asset:asset-tags-summary
 					className="<%= CalendarBooking.class.getName() %>"
 					classPK="<%= calendarBooking.getCalendarBookingId() %>"
 					message="tags"
@@ -139,7 +139,7 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 			</div>
 
 			<div class="entry-links">
-				<liferay-ui:asset-links
+				<liferay-asset:asset-links
 					assetEntryId="<%= layoutAssetEntry.getEntryId() %>"
 				/>
 			</div>

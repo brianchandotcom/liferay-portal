@@ -9692,6 +9692,10 @@ jdbc.default.password=${database.mysql.password}</echo>
 						<move todir="${liferay.home}/tmp">
 							<fileset dir="${liferay.home}/deploy" includes="${theme.file.name}" />
 						</move>
+
+						<move todir="${liferay.home}/tmp">
+							<fileset dir="${liferay.home}/osgi/marketplace" includes="*Theme*.lpkg" />
+						</move>
 					</then>
 				</if>
 
@@ -9736,7 +9740,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 				</if>
 
 				<if>
-					<isset property="theme.file.name" />
+					<available file="${liferay.home}/tmp/${theme.file.name}" />
 					<then>
 						<move todir="${liferay.home}/deploy">
 							<fileset dir="${liferay.home}/tmp" includes="${theme.file.name}" />
@@ -9750,6 +9754,16 @@ jdbc.default.password=${database.mysql.password}</echo>
 
 						<fail if="theme.not.deployed" message="${theme.file.name} has failed to deploy." />
 					</then>
+					<elseif>
+						<available file="${liferay.home}/tmp" type="dir" />
+						<then>
+							<move todir="${liferay.home}/osgi/marketplace">
+								<fileset dir="${liferay.home}/tmp" includes="*Theme*.lpkg" />
+							</move>
+
+							<delete dir="${liferay.home}/tmp" failonerror="false" />
+						</then>
+					</elseif>
 				</if>
 			</then>
 		</if>

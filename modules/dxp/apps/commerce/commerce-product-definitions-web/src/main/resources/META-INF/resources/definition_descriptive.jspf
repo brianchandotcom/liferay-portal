@@ -17,14 +17,14 @@
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(thumbnailSrc) %>">
 		<liferay-ui:search-container-column-image
+			href="<%= rowURL %>"
 			src="<%= thumbnailSrc %>"
-			toggleRowChecker="<%= true %>"
 		/>
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container-column-icon
+			href="<%= rowURL %>"
 			icon="documents-and-media"
-			toggleRowChecker="<%= true %>"
 		/>
 	</c:otherwise>
 </c:choose>
@@ -48,6 +48,10 @@
 			<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>
 		</a>
 	</h5>
+
+	<h6>
+		<%= HtmlUtil.escape(String.valueOf(cpDefinition.getPrice())) %>
+	</h6>
 
 	<h6 class="text-default">
 		<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= cpDefinition.getStatus() %>" />

@@ -48,6 +48,11 @@ for (CPDefinitionOptionRel cpDefinitionOptionRel : cpDefinitionOptionRels) {
 }
 %>
 
+<liferay-ui:search-container-column-text
+	cssClass="table-cell-content"
+	name="price"
+/>
+
 <liferay-ui:search-container-column-status
 	cssClass="table-cell-content"
 	name="status"

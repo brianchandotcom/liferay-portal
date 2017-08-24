@@ -1,0 +1,10 @@
+{
+	"extends": "liferay",
+	"env": {
+		"browser": true,
+		"es6": true
+	},
+	"rules": {
+		"eol-last": ["error", "never"]
+	}
+}

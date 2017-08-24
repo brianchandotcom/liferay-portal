@@ -82,6 +82,8 @@ public class FlagsTag extends TemplateRendererTag {
 
 			putValue("message", message);
 
+			putValue("namespace", PortalUtil.getPortletNamespace(PortletKeys.FLAGS));
+
 			putValue("pathThemeImages", themeDisplay.getPathThemeImages());
 
 			String title = message;
@@ -96,6 +98,8 @@ public class FlagsTag extends TemplateRendererTag {
 			putValue("title", title);
 
 			putValue("uri", _getURI());
+
+			putValue("reasons", _getReasons(themeDisplay));
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -188,6 +192,17 @@ public class FlagsTag extends TemplateRendererTag {
 			namespace + "reportedUserId", context.get("reportedUserId"));
 
 		return dataJSONObject;
+	}
+
+	private String[] _getReasons(ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		FlagsGroupServiceConfiguration flagsGroupServiceConfiguration =
+			ConfigurationProviderUtil.getCompanyConfiguration(
+				FlagsGroupServiceConfiguration.class,
+				themeDisplay.getCompanyId());
+
+		return flagsGroupServiceConfiguration.reasons();
 	}
 
 	private String _getURI() throws WindowStateException {

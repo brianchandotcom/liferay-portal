@@ -1,9 +1,14 @@
 import { core } from 'metal';
 import Component from 'metal-component';
+import dom from 'metal-dom';
+import { EventHandler } from 'metal-events';
+import Modal from 'metal-modal';
 
 import Soy from 'metal-soy';
 
 import templates from './Flags.soy';
+
+import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 
 /**
  * Flags
@@ -11,49 +16,64 @@ import templates from './Flags.soy';
  * It opens a dialog where the user can flag the page.
  *
  * @abstract
- * @extends {Component}
+ * @extends {PortletBase}
  */
-class Flags extends Component {
+class Flags extends PortletBase {
+	/**
+	 * @inheritDoc
+	 */
+	created() {
+		this.eventHandler_ = new EventHandler();
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	attached() {
+		this.reportDialogOpen = false;
+		this.rootNode = this.one('.taglib-flags');
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	detached() {
+		super.detached();
+		this.eventHandler_.removeAllListeners();
+	}
+
+	/**
+	 * Closes the dialog to flag the page.
+	 */
+	closeReportDialog() {
+		this.reportDialogOpen = false;
+	}
+
 	/**
 	 * Opens a dialog where the user can flag the page.
 	 */
 	openReportDialog() {
-		AUI().use('aui-io-plugin-deprecated', 'liferay-util-window', (A) => {
-			let dialogTitle = Liferay.Language.get('report-inappropriate-content');
+		this.reportDialogOpen = true;
+	}
 
-			if (this.flagsEnabled) {
-				let popup = Liferay.Util.Window.getWindow(
-					{
-						dialog: {
-							destroyOnHide: true,
-							height: 680,
-							width: 680
-						},
-						title: dialogTitle
-					}
-				);
+	/**
+	 * Checks the reason selected by the user, and allows
+	 * to introduce a specific reasons if necessary.
+	 *
+	 * @param {Event} event
+	 * @protected
+	 */
+	onReasonChange_(event) {
+		let reason = event.delegateTarget.value;
 
-				popup.plug(
-					A.Plugin.IO, {
-						data: this.data,
-						uri: this.uri
-					}
-				);
-			}
-			else {
-				Liferay.Util.Window.getWindow(
-					{
-						dialog: {
-							bodyContent: Liferay.Language.get('please-sign-in-to-flag-this-as-inappropriate'),
-							destroyOnHide: true,
-							height: 680,
-							width: 680
-						},
-						title: dialogTitle
-					}
-				);
-			}
-		});
+		let otherReasonContainer = this.one('#otherReasonContainer');
+
+		if (reason === 'other') {
+			dom.removeClasses(otherReasonContainer, 'hide');
+		}
+		else {
+			dom.addClasses(otherReasonContainer, 'hide');
+		}
 	}
 };
 

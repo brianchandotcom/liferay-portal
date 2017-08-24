@@ -1,6 +1,6 @@
 ## 
 ## See http://www.useragentstring.com/pages/useragentstring.php
-## See http://msdn.microsoft.com/en-us/library/ie/hh869301(v=vs.85).aspx for IE11
+## See https://msdn.microsoft.com/en-us/library/hh869301(v=vs.85).aspx for IE & Edge
 ##
 
 ## Android
@@ -39,6 +39,10 @@ Chrome 27 var1, 27.0, 537.36, mozilla/5.0 (windows nt 6.2; wow64) applewebkit/53
 Chrome 27 var2, 27.0, 537.36, mozilla/5.0 (windows nt 6.1) applewebkit/537.36 (khtml, like gecko) chrome/27.0.1453.93 safari/537.36
 Chrome 27 var3, 27.0, 537.36, mozilla/5.0 (macintosh; intel mac os x 10_8_3) applewebkit/537.36 (khtml, like gecko) chrome/27.0.1453.93 safari/537.36
 Chrome 27 var4, 27.0, 537.36, mozilla/5.0 (macintosh; intel mac os x 10_7_5) applewebkit/537.36 (khtml, like gecko) chrome/27.0.1453.93 safari/537.36
+
+## Edge
+
+Edge 12 var1, , 12.0, mozilla/5.0 (windows nt 10.0) applewebkit/537.36 (khtml, like gecko) chrome/42.0.2311.135 safari/537.36 edge/12.10136
 
 ## Firefox
 

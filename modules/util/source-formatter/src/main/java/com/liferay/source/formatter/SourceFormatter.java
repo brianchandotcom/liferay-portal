@@ -324,8 +324,7 @@ public class SourceFormatter {
 	private List<ExcludeSyntaxPattern> _getExcludeSyntaxPatterns(
 		String sourceFormatterExcludes) {
 
-		List<ExcludeSyntaxPattern> excludeSyntaxPatterns =
-			new ArrayList<ExcludeSyntaxPattern>();
+		List<ExcludeSyntaxPattern> excludeSyntaxPatterns = new ArrayList<>();
 
 		List<String> excludes = ListUtil.fromString(
 			sourceFormatterExcludes, StringPool.COMMA);

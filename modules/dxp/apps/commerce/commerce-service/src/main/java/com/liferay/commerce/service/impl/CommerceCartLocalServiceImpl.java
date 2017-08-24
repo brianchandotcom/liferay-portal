@@ -158,8 +158,8 @@ public class CommerceCartLocalServiceImpl
 						userCommerceCartItems) {
 
 					if (_ddmFormValuesHelper.equals(
-							userCommerceCartItem.getJson(),
-							guestCommerceCartItem.getJson())) {
+							guestCommerceCartItem.getJson(),
+							userCommerceCartItem.getJson())) {
 
 						found = true;
 

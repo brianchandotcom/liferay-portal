@@ -75,13 +75,19 @@ public class WabURLConnection extends URLConnection {
 
 		String[] protocols = parameters.get("protocol");
 
-		if (ArrayUtil.isEmpty(protocols)) {
-			throw new IllegalArgumentException(
-				"The parameter map does not contain the required parameter " +
-					"protocol");
-		}
-
 		String path = url.getPath();
+
+		if (ArrayUtil.isEmpty(protocols)) {
+			if (path.startsWith("file:")) {
+				path = path.substring(5);
+				protocols = new String[] {"file"};
+			}
+			else {
+				throw new IllegalArgumentException(
+					"The parameter map does not contain the required " +
+						"parameter protocol");
+			}
+		}
 
 		String[] portalProfileNames = parameters.get(
 			"liferay-portal-profile-names");

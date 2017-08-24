@@ -54,6 +54,18 @@ if (cpDefinition != null) {
 				/>
 			</c:if>
 
+			<liferay-portlet:renderURL varImpl="editProductDefinitionPricingInfoURL">
+				<portlet:param name="mvcRenderCommandName" value="editProductDefinitionPricingInfo" />
+				<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
+				<portlet:param name="toolbarItem" value="edit-product-definition-pricing-info" />
+			</liferay-portlet:renderURL>
+
+			<aui:nav-item
+				href="<%= editProductDefinitionPricingInfoURL.toString() %>"
+				label='<%= LanguageUtil.get(request, "pricing") %>'
+				selected='<%= toolbarItem.equals("edit-product-definition-pricing-info") %>'
+			/>
+
 			<liferay-portlet:renderURL varImpl="editProductDefinitionShippingInfoURL">
 				<portlet:param name="mvcRenderCommandName" value="editProductDefinitionShippingInfo" />
 				<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />

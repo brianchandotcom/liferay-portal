@@ -138,6 +138,14 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
+			else if (cmd.equals("updatePricingInfo")) {
+				cpDefinition = updatePricingInfo(actionRequest);
+
+				String redirect = getSaveAndContinueRedirect(
+					actionRequest, cpDefinition);
+
+				sendRedirect(actionRequest, actionResponse, redirect);
+			}
 			else if (cmd.equals("updateShippingInfo")) {
 				cpDefinition = updateShippingInfo(actionRequest);
 
@@ -332,6 +340,19 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return cpDefinition;
+	}
+
+	protected CPDefinition updatePricingInfo(ActionRequest actionRequest)
+		throws PortalException {
+
+		long cpDefinitionId = ParamUtil.getLong(
+			actionRequest, "cpDefinitionId");
+
+		double cost = ParamUtil.getDouble(actionRequest, "cost");
+		double price = ParamUtil.getDouble(actionRequest, "price");
+
+		return _cpDefinitionService.updatePricingInfo(
+			cpDefinitionId, cost, price);
 	}
 
 	protected CPDefinition updateShippingInfo(ActionRequest actionRequest)

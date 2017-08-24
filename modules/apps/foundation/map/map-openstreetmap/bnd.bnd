@@ -1,5 +1,4 @@
 Bundle-Name: Liferay Map OpenStreetMap
 Bundle-SymbolicName: com.liferay.map.openstreetmap
 Bundle-Version: 2.0.10
-Liferay-JS-Config: /META-INF/resources/js/config.js
 Web-ContextPath: /map-openstreetmap

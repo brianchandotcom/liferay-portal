@@ -36,7 +36,8 @@ name = namespace + name;
 	<script src="<%= protocol %>://npmcdn.com/leaflet@0.7.3/dist/leaflet.js" type="text/javascript"></script>
 </liferay-util:html-top>
 
-<aui:script use="liferay-map-openstreetmap">
+<aui:script require="map-openstreetmap/js/MapOpenStreetMap.es">
+	var MapOpenStreetMap = mapOpenstreetmapJsMapOpenStreetMapEs.default;
 	var MapControls = Liferay.MapBase.CONTROLS;
 
 	var mapConfig = {
@@ -71,18 +72,23 @@ name = namespace + name;
 
 	var destroyMap = function(event, map) {
 		if (event.portletId === '<%= portletDisplay.getId() %>') {
-			map.destroy();
+			map.destructor();
 
 			Liferay.detach('destroyPortlet', destroyMap);
 		}
 	};
 
 	var createMap = function() {
-		var map = new Liferay['OpenStreetMap'](mapConfig).render();
+		var map = new MapOpenStreetMap(mapConfig);
 
 		Liferay.MapBase.register('<%= name %>', map);
 
-		Liferay.on('destroyPortlet', A.rbind(destroyMap, destroyMap, map));
+		Liferay.on(
+			'destroyPortlet',
+			function(event) {
+				destroyMap(event, map);
+			}
+		);
 	};
 
 	createMap();

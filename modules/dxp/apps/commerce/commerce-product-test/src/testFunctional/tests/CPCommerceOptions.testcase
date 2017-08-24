@@ -27,7 +27,7 @@
 
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Checkbox Option 1 Description" />
-			<var name="optionFieldType" value="Checkbox" />
+			<var name="optionFieldType" value="checkbox_multiple" />
 			<var name="optionTitle" value="Checkbox Option 1 Title" />
 		</execute>
 
@@ -50,7 +50,7 @@
 
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Checkbox Option 1 Description" />
-			<var name="optionFieldType" value="Checkbox" />
+			<var name="optionFieldType" value="checkbox_multiple" />
 			<var name="optionTitle" value="Checkbox Option 1 Title" />
 		</execute>
 
@@ -76,7 +76,7 @@
 
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Checkbox Option 1 Description" />
-			<var name="optionFieldType" value="Checkbox" />
+			<var name="optionFieldType" value="checkbox_multiple" />
 			<var name="optionTitle" value="Checkbox Option 1 Title" />
 		</execute>
 
@@ -287,7 +287,7 @@
 	<command name="AddFacetableCheckboxOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Checkbox Option 1 Description" />
-			<var name="optionFieldType" value="Checkbox" />
+			<var name="optionFieldType" value="checkbox_multiple" />
 			<var name="optionTitle" value="Checkbox Option 1 Title" />
 		</execute>
 
@@ -309,7 +309,7 @@
 	<command name="AddFacetableCheckboxOptionsEntryValue">
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Checkbox Option 1 Description" />
-			<var name="optionFieldType" value="Checkbox" />
+			<var name="optionFieldType" value="checkbox_multiple" />
 			<var name="optionTitle" value="Checkbox Option 1 Title" />
 		</execute>
 
@@ -335,7 +335,7 @@
 	<command name="AddFacetableContributorCheckboxOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Checkbox Option 1 Description" />
-			<var name="optionFieldType" value="Checkbox" />
+			<var name="optionFieldType" value="checkbox_multiple" />
 			<var name="optionTitle" value="Checkbox Option 1 Title" />
 		</execute>
 
@@ -362,7 +362,7 @@
 	<command name="AddFacetableContributorCheckboxOptionsEntryValue">
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Checkbox Option 1 Description" />
-			<var name="optionFieldType" value="Checkbox" />
+			<var name="optionFieldType" value="checkbox_multiple" />
 			<var name="optionTitle" value="Checkbox Option 1 Title" />
 		</execute>
 
@@ -863,7 +863,7 @@
 	<command name="AddFacetableRequiredCheckboxOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Checkbox Option 1 Description" />
-			<var name="optionFieldType" value="Checkbox" />
+			<var name="optionFieldType" value="checkbox_multiple" />
 			<var name="optionTitle" value="Checkbox Option 1 Title" />
 		</execute>
 
@@ -890,7 +890,7 @@
 	<command name="AddFacetableRequiredCheckboxOptionsEntryValue">
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Checkbox Option 1 Description" />
-			<var name="optionFieldType" value="Checkbox" />
+			<var name="optionFieldType" value="checkbox_multiple" />
 			<var name="optionTitle" value="Checkbox Option 1 Title" />
 		</execute>
 
@@ -925,7 +925,7 @@
 	<command name="AddFacetableRequiredContributorCheckboxOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Checkbox Option 1 Description" />
-			<var name="optionFieldType" value="Checkbox" />
+			<var name="optionFieldType" value="checkbox_multiple" />
 			<var name="optionTitle" value="Checkbox Option 1 Title" />
 		</execute>
 
@@ -1591,7 +1591,7 @@
 	<command name="AddRequiredCheckboxOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Checkbox Option 1 Description" />
-			<var name="optionFieldType" value="Checkbox" />
+			<var name="optionFieldType" value="checkbox_multiple" />
 			<var name="optionTitle" value="Checkbox Option 1 Title" />
 		</execute>
 
@@ -1613,7 +1613,7 @@
 	<command name="AddRequiredCheckboxOptionsEntryValue">
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Checkbox Option 1 Description" />
-			<var name="optionFieldType" value="Checkbox" />
+			<var name="optionFieldType" value="checkbox_multiple" />
 			<var name="optionTitle" value="Checkbox Option 1 Title" />
 		</execute>
 
@@ -1639,7 +1639,7 @@
 	<command name="AddRequiredContributorCheckboxOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Checkbox Option 1 Description" />
-			<var name="optionFieldType" value="Checkbox" />
+			<var name="optionFieldType" value="checkbox_multiple" />
 			<var name="optionTitle" value="Checkbox Option 1 Title" />
 		</execute>
 
@@ -1666,7 +1666,7 @@
 	<command name="AddRequiredContributorCheckboxOptionsEntryValue">
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Checkbox Option 1 Description" />
-			<var name="optionFieldType" value="Checkbox" />
+			<var name="optionFieldType" value="checkbox_multiple" />
 			<var name="optionTitle" value="Checkbox Option 1 Title" />
 		</execute>
 
@@ -2272,7 +2272,7 @@
 	<command name="AddSKUContributorCheckboxOptionsEntry">
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Checkbox Option 1 Description" />
-			<var name="optionFieldType" value="Checkbox" />
+			<var name="optionFieldType" value="checkbox_multiple" />
 			<var name="optionTitle" value="Checkbox Option 1 Title" />
 		</execute>
 

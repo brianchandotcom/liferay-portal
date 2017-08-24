@@ -94,8 +94,6 @@ public class AddKaleoDefinitionVersionMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long companyId = themeDisplay.getCompanyId();
-
 		String content = ParamUtil.getString(actionRequest, "content");
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "title");
@@ -109,7 +107,7 @@ public class AddKaleoDefinitionVersionMVCActionCommand
 		KaleoDefinitionVersion kaleoDefinitionVersion =
 			kaleoDefinitionVersionLocalService.
 				fetchLatestKaleoDefinitionVersion(
-					companyId, definition.getName(), null);
+					themeDisplay.getCompanyId(), definition.getName(), null);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			KaleoDefinitionVersion.class.getName(), actionRequest);

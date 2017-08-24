@@ -48,15 +48,13 @@ public class DeleteKaleoDefinitionVersionMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long companyId = themeDisplay.getCompanyId();
-
 		String name = ParamUtil.getString(actionRequest, "name");
 		String draftVersion = ParamUtil.getString(
 			actionRequest, "draftVersion");
 
 		KaleoDefinitionVersion kaleoDefinitionVersion =
 			kaleoDefinitionVersionLocalService.getKaleoDefinitionVersion(
-				companyId, name, draftVersion);
+				themeDisplay.getCompanyId(), name, draftVersion);
 
 		kaleoDefinitionVersionLocalService.deleteKaleoDefinitionVersion(
 			kaleoDefinitionVersion);

@@ -14,13 +14,14 @@
 
 package com.liferay.commerce.cart.content.web.internal.display.context;
 
-import com.liferay.commerce.constants.CommerceCartConstants;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.service.CommerceCartItemService;
 import com.liferay.commerce.util.CommerceCartHelper;
+import com.liferay.commerce.util.PriceCalculationHelper;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -45,12 +46,14 @@ public class CommerceCartContentDisplayContext {
 		HttpServletRequest httpServletRequest,
 		CommerceCartHelper commerceCartHelper,
 		CommerceCartItemService commerceCartItemService,
-		CPDefinitionHelper cpDefinitionHelper) {
+		CPDefinitionHelper cpDefinitionHelper,
+		PriceCalculationHelper priceCalculationHelper) {
 
 		this.httpServletRequest = httpServletRequest;
 		_commerceCartHelper = commerceCartHelper;
 		_commerceCartItemService = commerceCartItemService;
 		this.cpDefinitionHelper = cpDefinitionHelper;
+		_priceCalculationHelper = priceCalculationHelper;
 
 		CPRequestHelper cpRequestHelper = new CPRequestHelper(
 			httpServletRequest);
@@ -80,10 +83,20 @@ public class CommerceCartContentDisplayContext {
 		return commerceCart.getCommerceCartId();
 	}
 
+	public double getCommerceCartItemPrice(long commerceCartItemId)
+		throws PortalException {
+
+		return _priceCalculationHelper.getPrice(commerceCartItemId);
+	}
+
+	public double getCommerceCartTotal() throws PortalException {
+		return _priceCalculationHelper.getTotal(getCommerceCartId());
+	}
+
 	public int getCommerceCartType() {
 		return ParamUtil.getInteger(
 			httpServletRequest, "type",
-			CommerceCartConstants.COMMERCE_CART_TYPE_CART);
+			CommerceConstants.COMMERCE_CART_TYPE_CART);
 	}
 
 	public String getCPDefinitionURL(
@@ -147,6 +160,7 @@ public class CommerceCartContentDisplayContext {
 	private CommerceCart _commerceCart;
 	private final CommerceCartHelper _commerceCartHelper;
 	private final CommerceCartItemService _commerceCartItemService;
+	private final PriceCalculationHelper _priceCalculationHelper;
 	private SearchContainer<CommerceCartItem> _searchContainer;
 
 }

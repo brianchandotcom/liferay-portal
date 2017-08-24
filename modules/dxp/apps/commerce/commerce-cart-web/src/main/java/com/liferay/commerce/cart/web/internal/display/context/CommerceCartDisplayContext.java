@@ -16,9 +16,10 @@ package com.liferay.commerce.cart.web.internal.display.context;
 
 import com.liferay.commerce.cart.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.cart.web.internal.util.CommerceCartPortletUtil;
-import com.liferay.commerce.constants.CommerceCartConstants;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.service.CommerceCartService;
+import com.liferay.commerce.util.PriceCalculationHelper;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -40,7 +41,8 @@ public class CommerceCartDisplayContext
 
 	public CommerceCartDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
-			CommerceCartService commerceCartService)
+			CommerceCartService commerceCartService,
+			PriceCalculationHelper priceCalculationHelper)
 		throws PortalException {
 
 		super(
@@ -50,6 +52,13 @@ public class CommerceCartDisplayContext
 		setDefaultOrderByCol("name");
 
 		_commerceCartService = commerceCartService;
+		_priceCalculationHelper = priceCalculationHelper;
+	}
+
+	public double getCommerceCartTotal(long commerceCartId)
+		throws PortalException {
+
+		return _priceCalculationHelper.getTotal(commerceCartId);
 	}
 
 	@Override
@@ -83,10 +92,10 @@ public class CommerceCartDisplayContext
 
 		int type = getCommerceCartType();
 
-		if (type == CommerceCartConstants.COMMERCE_CART_TYPE_CART) {
+		if (type == CommerceConstants.COMMERCE_CART_TYPE_CART) {
 			searchContainer.setEmptyResultsMessage("no-carts-were-found");
 		}
-		else if (type == CommerceCartConstants.COMMERCE_CART_TYPE_WISH_LIST) {
+		else if (type == CommerceConstants.COMMERCE_CART_TYPE_WISH_LIST) {
 			searchContainer.setEmptyResultsMessage("no-wish-lists-were-found");
 		}
 
@@ -116,9 +125,10 @@ public class CommerceCartDisplayContext
 	protected int getCommerceCartType() {
 		return ParamUtil.getInteger(
 			httpServletRequest, "type",
-			CommerceCartConstants.COMMERCE_CART_TYPE_CART);
+			CommerceConstants.COMMERCE_CART_TYPE_CART);
 	}
 
 	private final CommerceCartService _commerceCartService;
+	private final PriceCalculationHelper _priceCalculationHelper;
 
 }

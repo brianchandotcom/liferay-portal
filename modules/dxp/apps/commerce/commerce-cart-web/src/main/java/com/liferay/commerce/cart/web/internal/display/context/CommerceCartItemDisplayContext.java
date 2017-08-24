@@ -18,6 +18,7 @@ import com.liferay.commerce.cart.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.cart.web.internal.util.CommerceCartPortletUtil;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.service.CommerceCartItemService;
+import com.liferay.commerce.util.PriceCalculationHelper;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -37,7 +38,8 @@ public class CommerceCartItemDisplayContext
 
 	public CommerceCartItemDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
-			CommerceCartItemService commerceCartItemService)
+			CommerceCartItemService commerceCartItemService,
+			PriceCalculationHelper priceCalculationHelper)
 		throws PortalException {
 
 		super(
@@ -45,6 +47,13 @@ public class CommerceCartItemDisplayContext
 			CommerceCartItem.class.getSimpleName());
 
 		_commerceCartItemService = commerceCartItemService;
+		_priceCalculationHelper = priceCalculationHelper;
+	}
+
+	public double getCommerceCartItemPrice(long commerceCartItemId)
+		throws PortalException {
+
+		return _priceCalculationHelper.getPrice(commerceCartItemId);
 	}
 
 	@Override
@@ -102,5 +111,6 @@ public class CommerceCartItemDisplayContext
 	}
 
 	private final CommerceCartItemService _commerceCartItemService;
+	private final PriceCalculationHelper _priceCalculationHelper;
 
 }

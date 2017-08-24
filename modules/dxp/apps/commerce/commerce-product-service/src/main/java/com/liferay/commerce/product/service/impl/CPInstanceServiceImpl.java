@@ -40,6 +40,32 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 	@Override
 	public CPInstance addCPInstance(
 			long cpDefinitionId, String sku, String gtin,
+			String manufacturerPartNumber, String ddmContent, double width,
+			double height, double depth, double weight, double cost,
+			double price, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CPDefinitionPermission.check(
+			getPermissionChecker(), cpDefinitionId,
+			CPActionKeys.ADD_COMMERCE_PRODUCT_INSTANCE);
+
+		return cpInstanceLocalService.addCPInstance(
+			cpDefinitionId, sku, gtin, manufacturerPartNumber, ddmContent,
+			width, height, depth, weight, cost, price, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
+	}
+
+	@Override
+	public CPInstance addCPInstance(
+			long cpDefinitionId, String sku, String gtin,
 			String manufacturerPartNumber, String ddmContent,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
@@ -92,6 +118,21 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			CPActionKeys.DELETE_COMMERCE_PRODUCT_INSTANCE);
 
 		return cpInstanceLocalService.deleteCPInstance(cpInstanceId);
+	}
+
+	@Override
+	public CPInstance fetchCPInstance(long cpInstanceId)
+		throws PortalException {
+
+		CPInstance cpInstance = cpInstanceLocalService.fetchCPInstance(
+			cpInstanceId);
+
+		if (cpInstance != null) {
+			CPDefinitionPermission.checkCPInstance(
+				getPermissionChecker(), cpInstance, ActionKeys.VIEW);
+		}
+
+		return cpInstance;
 	}
 
 	@Override
@@ -157,6 +198,31 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 	@Override
 	public CPInstance updateCPInstance(
 			long cpInstanceId, String sku, String gtin,
+			String manufacturerPartNumber, double width, double height,
+			double depth, double weight, double cost, double price,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
+		throws PortalException {
+
+		CPDefinitionPermission.checkCPInstance(
+			getPermissionChecker(), cpInstanceId,
+			CPActionKeys.UPDATE_COMMERCE_PRODUCT_INSTANCE);
+
+		return cpInstanceLocalService.updateCPInstance(
+			cpInstanceId, sku, gtin, manufacturerPartNumber, width, height,
+			depth, weight, cost, price, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
+	}
+
+	@Override
+	public CPInstance updateCPInstance(
+			long cpInstanceId, String sku, String gtin,
 			String manufacturerPartNumber, int displayDateMonth,
 			int displayDateDay, int displayDateYear, int displayDateHour,
 			int displayDateMinute, int expirationDateMonth,
@@ -175,6 +241,33 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			serviceContext);
+	}
+
+	@Override
+	public CPInstance updatePricingInfo(
+			long cpInstanceId, double cost, double price)
+		throws PortalException {
+
+		CPDefinitionPermission.checkCPInstance(
+			getPermissionChecker(), cpInstanceId,
+			CPActionKeys.UPDATE_COMMERCE_PRODUCT_INSTANCE);
+
+		return cpInstanceLocalService.updatePricingInfo(
+			cpInstanceId, cost, price);
+	}
+
+	@Override
+	public CPInstance updateShippingInfo(
+			long cpInstanceId, double width, double height, double depth,
+			double weight)
+		throws PortalException {
+
+		CPDefinitionPermission.checkCPInstance(
+			getPermissionChecker(), cpInstanceId,
+			CPActionKeys.UPDATE_COMMERCE_PRODUCT_INSTANCE);
+
+		return cpInstanceLocalService.updateShippingInfo(
+			cpInstanceId, width, height, depth, weight);
 	}
 
 	@Override

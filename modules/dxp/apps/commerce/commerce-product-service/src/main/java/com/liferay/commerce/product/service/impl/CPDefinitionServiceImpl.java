@@ -54,12 +54,12 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			int minCartQuantity, int maxCartQuantity,
 			String allowedCartQuantities, int multipleCartQuantity,
 			double width, double height, double depth, double weight,
-			String ddmStructureKey, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			ServiceContext serviceContext)
+			double cost, double price, String ddmStructureKey,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
 		CPPermission.check(
@@ -71,11 +71,11 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			metaTitleMap, metaKeywordsMap, metaDescriptionMap, layoutUuid,
 			productTypeName, gtin, manufacturerPartNumber, minCartQuantity,
 			maxCartQuantity, allowedCartQuantities, multipleCartQuantity, width,
-			height, depth, weight, ddmStructureKey, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			height, depth, weight, cost, price, ddmStructureKey,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	@Override
@@ -282,9 +282,9 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			String gtin, String manufacturerPartNumber, int minCartQuantity,
 			int maxCartQuantity, String allowedCartQuantities,
 			int multipleCartQuantity, double width, double height, double depth,
-			double weight, String ddmStructureKey, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, int expirationDateMonth,
+			double weight, double cost, double price, String ddmStructureKey,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, ServiceContext serviceContext)
@@ -298,11 +298,11 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
 			metaDescriptionMap, layoutUuid, gtin, manufacturerPartNumber,
 			minCartQuantity, maxCartQuantity, allowedCartQuantities,
-			multipleCartQuantity, width, height, depth, weight, ddmStructureKey,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, serviceContext);
+			multipleCartQuantity, width, height, depth, weight, cost, price,
+			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
 	}
 
 	@Override
@@ -336,6 +336,18 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			serviceContext);
+	}
+
+	@Override
+	public CPDefinition updatePricingInfo(
+			long cpDefinitionId, double cost, double price)
+		throws PortalException {
+
+		CPDefinitionPermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
+
+		return cpDefinitionLocalService.updatePricingInfo(
+			cpDefinitionId, cost, price);
 	}
 
 	@Override

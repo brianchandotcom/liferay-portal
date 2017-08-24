@@ -707,7 +707,7 @@ public class ResourcePermissionLocalServiceImpl
 			ResourceAction resourceAction =
 				resourceActionLocalService.getResourceAction(name, actionId);
 
-			if (hasActionId(resourcePermission, resourceAction)) {
+			if (resourcePermission.hasAction(resourceAction)) {
 				availableActionIds.add(actionId);
 			}
 		}
@@ -914,15 +914,7 @@ public class ResourcePermissionLocalServiceImpl
 	public boolean hasActionId(
 		ResourcePermission resourcePermission, ResourceAction resourceAction) {
 
-		long actionIds = resourcePermission.getActionIds();
-		long bitwiseValue = resourceAction.getBitwiseValue();
-
-		if ((actionIds & bitwiseValue) == bitwiseValue) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return resourcePermission.hasAction(resourceAction);
 	}
 
 	/**
@@ -1054,7 +1046,7 @@ public class ResourcePermissionLocalServiceImpl
 		ResourceAction resourceAction =
 			resourceActionLocalService.getResourceAction(name, actionId);
 
-		if (hasActionId(resourcePermission, resourceAction)) {
+		if (resourcePermission.hasAction(resourceAction)) {
 			return true;
 		}
 
@@ -1116,7 +1108,7 @@ public class ResourcePermissionLocalServiceImpl
 			}
 
 			for (ResourcePermission resourcePermission : resourcePermissions) {
-				if (hasActionId(resourcePermission, resourceAction)) {
+				if (resourcePermission.hasAction(resourceAction)) {
 					return true;
 				}
 			}
@@ -1154,7 +1146,7 @@ public class ResourcePermissionLocalServiceImpl
 		}
 
 		for (ResourcePermission resourcePermission : resourcePermissions) {
-			if (hasActionId(resourcePermission, resourceAction)) {
+			if (resourcePermission.hasAction(resourceAction)) {
 				long roleId = resourcePermission.getRoleId();
 
 				for (int i = 0; i < roleIds.length; i++) {

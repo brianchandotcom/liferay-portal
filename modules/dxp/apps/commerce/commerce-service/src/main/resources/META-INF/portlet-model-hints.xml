@@ -68,6 +68,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="orderUserId" type="long" />
+		<field name="total" type="double" />
 		<field name="status" type="int" />
 	</model>
 	<model name="com.liferay.commerce.model.CommerceOrderItem">
@@ -83,6 +84,11 @@
 		<field name="CPInstanceId" type="long" />
 		<field name="quantity" type="int" />
 		<field name="json" type="String" />
+		<field localized="true" name="title" type="String" />
+		<field name="sku" type="String" />
+		<field name="price" type="double">
+			<validator name="number" />
+		</field>
 	</model>
 	<model name="com.liferay.commerce.model.CommercePaymentMethod">
 		<field name="commercePaymentMethodId" type="long" />

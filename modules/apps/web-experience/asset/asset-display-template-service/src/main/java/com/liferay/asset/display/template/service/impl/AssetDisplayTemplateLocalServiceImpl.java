@@ -144,11 +144,6 @@ public class AssetDisplayTemplateLocalServiceImpl
 	}
 
 	@Override
-	public int getAssetDisplayTemplatesCount(long groupId) {
-		return assetDisplayTemplatePersistence.countByGroupId(groupId);
-	}
-
-	@Override
 	public List<AssetDisplayTemplate> getAssetDisplayTemplates(long groupId) {
 		return assetDisplayTemplatePersistence.findByGroupId(groupId);
 	}
@@ -160,6 +155,11 @@ public class AssetDisplayTemplateLocalServiceImpl
 
 		return assetDisplayTemplatePersistence.findByGroupId(
 			groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getAssetDisplayTemplatesCount(long groupId) {
+		return assetDisplayTemplatePersistence.countByGroupId(groupId);
 	}
 
 	@Override

@@ -6,10 +6,8 @@ runGradleTest {
 	dependsOn tasks.eclipse
 
 	doLast {
-		File expectedFile = file('./.project')
+		File generatedFile = file(".project")
 
-		String fileContents = expectedFile.text
-
-		assert fileContents.contains('<nature>com.liferay.ide.core.liferayNature</nature>')
+		assert generatedFile.text.contains("<nature>com.liferay.ide.core.liferayNature</nature>")
 	}
 }

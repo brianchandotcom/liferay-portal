@@ -46,7 +46,7 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 		Project project, EclipsePlugin eclipsePlugin) {
 
 		_configureEclipseClasspathFile(project);
-		_configureEclipseProjectFile(project);
+		_configureEclipseProject(project);
 		_configureTaskEclipse(eclipsePlugin);
 	}
 
@@ -98,7 +98,7 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 		fileContentMerger.whenMerged(closure);
 	}
 
-	private void _configureEclipseProjectFile(Project project) {
+	private void _configureEclipseProject(Project project) {
 		EclipseModel eclipseModel = GradleUtil.getExtension(
 			project, EclipseModel.class);
 

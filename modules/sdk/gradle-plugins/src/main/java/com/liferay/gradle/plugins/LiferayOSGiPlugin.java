@@ -665,6 +665,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			GradleUtil.applyPlugin(project, JSTranspilerPlugin.class);
 		}
 
+		GradleUtil.applyPlugin(project, EclipsePlugin.class);
 		GradleUtil.applyPlugin(project, JavadocFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, JspCPlugin.class);
 		GradleUtil.applyPlugin(project, LangBuilderPlugin.class);
@@ -676,7 +677,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, TestIntegrationPlugin.class);
 		GradleUtil.applyPlugin(project, XMLFormatterPlugin.class);
 
-		GradleUtil.applyPlugin(project, EclipsePlugin.class);
 		AlloyTaglibDefaultsPlugin.INSTANCE.apply(project);
 		CSSBuilderDefaultsPlugin.INSTANCE.apply(project);
 		DBSupportDefaultsPlugin.INSTANCE.apply(project);

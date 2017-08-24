@@ -16,7 +16,7 @@ package com.liferay.commerce.cart.content.web.internal.portlet.template;
 
 import com.liferay.commerce.cart.content.web.internal.display.context.CommerceCartContentMiniDisplayContext;
 import com.liferay.commerce.cart.content.web.internal.portlet.CommerceCartContentMiniPortlet;
-import com.liferay.commerce.constants.CommerceCartPortletKeys;
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.service.CommerceCartItemLocalService;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "javax.portlet.name=" + CommerceCartPortletKeys.COMMERCE_CART_CONTENT_MINI,
+	property = "javax.portlet.name=" + CommercePortletKeys.COMMERCE_CART_CONTENT_MINI,
 	service = TemplateHandler.class
 )
 public class CommerceCartContentMiniPortletDisplayTemplateHandler
@@ -58,7 +58,7 @@ public class CommerceCartContentMiniPortletDisplayTemplateHandler
 			"content.Language", locale, getClass());
 
 		String portletTitle = _portal.getPortletTitle(
-			CommerceCartPortletKeys.COMMERCE_CART_CONTENT_MINI, resourceBundle);
+			CommercePortletKeys.COMMERCE_CART_CONTENT_MINI, resourceBundle);
 
 		return portletTitle.concat(StringPool.SPACE).concat(
 			LanguageUtil.get(locale, "template"));
@@ -66,7 +66,7 @@ public class CommerceCartContentMiniPortletDisplayTemplateHandler
 
 	@Override
 	public String getResourceName() {
-		return CommerceCartPortletKeys.COMMERCE_CART_CONTENT_MINI;
+		return CommercePortletKeys.COMMERCE_CART_CONTENT_MINI;
 	}
 
 	@Override
@@ -94,19 +94,19 @@ public class CommerceCartContentMiniPortletDisplayTemplateHandler
 
 		String[] restrictedVariables = getRestrictedVariables(language);
 
-		TemplateVariableGroup cpDefinitionsServicesTemplateVariableGroup =
+		TemplateVariableGroup commerceCartItemsServicesTemplateVariableGroup =
 			new TemplateVariableGroup(
 				"commerce-cart-item-services", restrictedVariables);
 
-		cpDefinitionsServicesTemplateVariableGroup.setAutocompleteEnabled(
+		commerceCartItemsServicesTemplateVariableGroup.setAutocompleteEnabled(
 			false);
 
-		cpDefinitionsServicesTemplateVariableGroup.addServiceLocatorVariables(
-			CommerceCartItemLocalService.class);
+		commerceCartItemsServicesTemplateVariableGroup.
+			addServiceLocatorVariables(CommerceCartItemLocalService.class);
 
 		templateVariableGroups.put(
-			cpDefinitionsServicesTemplateVariableGroup.getLabel(),
-			cpDefinitionsServicesTemplateVariableGroup);
+			commerceCartItemsServicesTemplateVariableGroup.getLabel(),
+			commerceCartItemsServicesTemplateVariableGroup);
 
 		return templateVariableGroups;
 	}

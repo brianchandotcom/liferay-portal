@@ -27,9 +27,9 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.commerce.cart.web.internal.display.context.CommerceCartDisplayContext" %><%@
 page import="com.liferay.commerce.cart.web.internal.display.context.CommerceCartItemDisplayContext" %><%@
-page import="com.liferay.commerce.constants.CommerceCartConstants" %><%@
-page import="com.liferay.commerce.constants.CommerceCartPortletKeys" %><%@
-page import="com.liferay.commerce.constants.CommerceCartWebKeys" %><%@
+page import="com.liferay.commerce.constants.CommerceConstants" %><%@
+page import="com.liferay.commerce.constants.CommercePortletKeys" %><%@
+page import="com.liferay.commerce.constants.CommerceWebKeys" %><%@
 page import="com.liferay.commerce.model.CommerceCart" %><%@
 page import="com.liferay.commerce.model.CommerceCartItem" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
@@ -44,6 +44,7 @@ page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <%@ page import="java.util.Collections" %><%@
+page import="java.util.Date" %><%@
 page import="java.util.List" %>
 
 <%@ page import="javax.portlet.PortletURL" %>

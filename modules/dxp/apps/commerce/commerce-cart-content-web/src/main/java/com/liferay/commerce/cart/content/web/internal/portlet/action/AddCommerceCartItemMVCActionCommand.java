@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.cart.content.web.internal.portlet.action;
 
-import com.liferay.commerce.constants.CommerceCartConstants;
-import com.liferay.commerce.constants.CommerceCartPortletKeys;
+import com.liferay.commerce.constants.CommerceConstants;
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.product.util.CPInstanceHelper;
@@ -55,8 +55,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CommerceCartPortletKeys.COMMERCE_CART_CONTENT,
-		"javax.portlet.name=" + CommerceCartPortletKeys.COMMERCE_CART_CONTENT_MINI,
+		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_CART_CONTENT,
+		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_CART_CONTENT_MINI,
 		"mvc.command.name=addCommerceCartItem"
 	},
 	service = MVCActionCommand.class
@@ -79,14 +79,13 @@ public class AddCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
 			_portal.getHttpServletResponse(actionResponse);
 
 		int type = ParamUtil.getInteger(
-			actionRequest, "type",
-			CommerceCartConstants.COMMERCE_CART_TYPE_CART);
+			actionRequest, "type", CommerceConstants.COMMERCE_CART_TYPE_CART);
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
 		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
 		int quantity = ParamUtil.getInteger(
 			actionRequest, "quantity",
-			CommerceCartConstants.COMMERCE_CART_TYPE_CART);
+			CommerceConstants.COMMERCE_CART_TYPE_CART);
 		String ddmFormValues = ParamUtil.getString(
 			actionRequest, "ddmFormValues");
 
@@ -104,7 +103,7 @@ public class AddCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
 						CommerceCart.class.getName(), httpServletRequest);
 
 				commerceCart = _commerceCartService.addCommerceCart(
-					CommerceCartConstants.COMMERCE_CART_DEFAULT_TITLE, type,
+					CommerceConstants.COMMERCE_CART_DEFAULT_TITLE, type,
 					serviceContext);
 
 				_commerceCartHelper.updateCurrentCommerceCart(

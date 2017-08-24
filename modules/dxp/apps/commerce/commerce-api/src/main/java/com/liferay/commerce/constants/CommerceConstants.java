@@ -15,17 +15,14 @@
 package com.liferay.commerce.constants;
 
 /**
- * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
-public class CommerceCartWebKeys {
+public class CommerceConstants {
 
-	public static final String COMMERCE_CART = "COMMERCE_CART_CONTENT";
+	public static final String COMMERCE_CART_DEFAULT_TITLE = "default";
 
-	public static final String COMMERCE_CART_ITEMS = "COMMERCE_CART_ITEMS";
+	public static final int COMMERCE_CART_TYPE_CART = 0;
 
-	public static final String COMMERCE_CART_UUID = "COMMERCE_CART_UUID";
-
-	public static final String COMMERCE_CARTS = "COMMERCE_CARTS";
+	public static final int COMMERCE_CART_TYPE_WISH_LIST = 1;
 
 }

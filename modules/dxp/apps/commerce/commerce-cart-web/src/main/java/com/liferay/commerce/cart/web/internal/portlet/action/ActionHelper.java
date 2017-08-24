@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.cart.web.internal.portlet.action;
 
-import com.liferay.commerce.constants.CommerceCartWebKeys;
+import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.service.CommerceCartItemService;
@@ -42,7 +42,7 @@ public class ActionHelper {
 		throws PortalException {
 
 		CommerceCart commerceCart = (CommerceCart)renderRequest.getAttribute(
-			CommerceCartWebKeys.COMMERCE_CART);
+			CommerceWebKeys.COMMERCE_CART);
 
 		if (commerceCart != null) {
 			return commerceCart;
@@ -58,7 +58,7 @@ public class ActionHelper {
 
 		if (commerceCart != null) {
 			renderRequest.setAttribute(
-				CommerceCartWebKeys.COMMERCE_CART, commerceCart);
+				CommerceWebKeys.COMMERCE_CART, commerceCart);
 		}
 
 		return commerceCart;

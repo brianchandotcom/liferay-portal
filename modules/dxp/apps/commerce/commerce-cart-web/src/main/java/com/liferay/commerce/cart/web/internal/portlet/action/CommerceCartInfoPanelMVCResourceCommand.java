@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.cart.web.internal.portlet.action;
 
-import com.liferay.commerce.constants.CommerceCartPortletKeys;
-import com.liferay.commerce.constants.CommerceCartWebKeys;
+import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CommerceCartPortletKeys.COMMERCE_CART,
+		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_CART,
 		"mvc.command.name=commerceCartInfoPanel"
 	},
 	service = MVCResourceCommand.class
@@ -51,7 +51,7 @@ public class CommerceCartInfoPanelMVCResourceCommand
 			resourceRequest);
 
 		resourceRequest.setAttribute(
-			CommerceCartWebKeys.COMMERCE_CARTS, commerceCarts);
+			CommerceWebKeys.COMMERCE_CARTS, commerceCarts);
 
 		include(resourceRequest, resourceResponse, "/cart_info_panel.jsp");
 	}

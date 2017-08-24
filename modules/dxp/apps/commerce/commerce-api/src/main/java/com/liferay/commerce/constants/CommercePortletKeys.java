@@ -17,7 +17,7 @@ package com.liferay.commerce.constants;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceCartPortletKeys {
+public class CommercePortletKeys {
 
 	public static final String COMMERCE_CART =
 		"com_liferay_commerce_cart_web_internal_portlet_CommerceCartPortlet";
@@ -29,5 +29,12 @@ public class CommerceCartPortletKeys {
 	public static final String COMMERCE_CART_CONTENT_MINI =
 		"com_liferay_commerce_cart_content_web_internal_portlet_" +
 			"CommerceCartContentMiniPortlet";
+
+	public static final String COMMERCE_ORDER =
+		"com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet";
+
+	public static final String COMMERCE_ORDER_CONTENT =
+		"com_liferay_commerce_order_content_web_internal_portlet_" +
+			"CommerceOrderContentPortlet";
 
 }

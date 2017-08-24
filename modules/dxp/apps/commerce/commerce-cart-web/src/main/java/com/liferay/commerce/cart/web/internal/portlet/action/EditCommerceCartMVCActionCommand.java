@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.cart.web.internal.portlet.action;
 
-import com.liferay.commerce.constants.CommerceCartPortletKeys;
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.exception.NoSuchCartException;
 import com.liferay.commerce.service.CommerceCartService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CommerceCartPortletKeys.COMMERCE_CART,
+		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_CART,
 		"mvc.command.name=editCommerceCart"
 	},
 	service = MVCActionCommand.class

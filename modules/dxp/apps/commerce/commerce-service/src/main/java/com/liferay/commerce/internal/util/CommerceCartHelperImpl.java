@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.internal.util;
 
-import com.liferay.commerce.constants.CommerceCartConstants;
-import com.liferay.commerce.constants.CommerceCartWebKeys;
+import com.liferay.commerce.constants.CommerceConstants;
+import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.service.CommerceCartItemService;
 import com.liferay.commerce.service.CommerceCartService;
@@ -49,7 +49,7 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 
 		int type = ParamUtil.getInteger(
 			httpServletRequest, "type",
-			CommerceCartConstants.COMMERCE_CART_TYPE_CART);
+			CommerceConstants.COMMERCE_CART_TYPE_CART);
 
 		return getCurrentCommerceCart(httpServletRequest, type);
 	}
@@ -121,8 +121,7 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 	}
 
 	private String _getCommerceCartIdWebKey(int type) {
-		return CommerceCartWebKeys.COMMERCE_CART_UUID + StringPool.UNDERLINE +
-			type;
+		return CommerceWebKeys.COMMERCE_CART_UUID + StringPool.UNDERLINE + type;
 	}
 
 	private String _getCurrentCommerceCartUuid(
@@ -158,7 +157,7 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 			CommerceCart commerceCart =
 				_commerceCartService.fetchDefaultCommerceCart(
 					groupId, user.getUserId(), type,
-					CommerceCartConstants.COMMERCE_CART_DEFAULT_TITLE);
+					CommerceConstants.COMMERCE_CART_DEFAULT_TITLE);
 
 			if (commerceCart != null) {
 				httpSession.setAttribute(

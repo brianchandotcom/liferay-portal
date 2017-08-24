@@ -21,7 +21,7 @@ CommerceCartDisplayContext commerceCartDisplayContext = (CommerceCartDisplayCont
 
 String searchContainerId = ParamUtil.getString(request, "searchContainerId", "commerceCarts");
 
-int type = ParamUtil.getInteger(request, "type", CommerceCartConstants.COMMERCE_CART_TYPE_CART);
+int type = ParamUtil.getInteger(request, "type", CommerceConstants.COMMERCE_CART_TYPE_CART);
 %>
 
 <liferay-frontend:management-bar
@@ -75,10 +75,10 @@ int type = ParamUtil.getInteger(request, "type", CommerceCartConstants.COMMERCE_
 		<%
 		String deleteMessage = StringPool.BLANK;
 
-		if (type == CommerceCartConstants.COMMERCE_CART_TYPE_CART) {
+		if (type == CommerceConstants.COMMERCE_CART_TYPE_CART) {
 			deleteMessage = "are-you-sure-you-want-to-delete-the-selected-carts";
 		}
-		else if (type == CommerceCartConstants.COMMERCE_CART_TYPE_WISH_LIST) {
+		else if (type == CommerceConstants.COMMERCE_CART_TYPE_WISH_LIST) {
 			deleteMessage = "are-you-sure-you-want-to-delete-the-selected-wish-lists";
 		}
 		%>

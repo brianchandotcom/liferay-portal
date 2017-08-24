@@ -29,12 +29,12 @@
 			var cpDefinitionId = productDetail.attr("data-cp-definition-id");
 
 			var data = {
-				'_<%= CommerceCartPortletKeys.COMMERCE_CART_CONTENT %>_cpDefinitionId' : cpDefinitionId ,
-				'_<%= CommerceCartPortletKeys.COMMERCE_CART_CONTENT %>_quantity' : 1
+				'_<%= CommercePortletKeys.COMMERCE_CART_CONTENT %>_cpDefinitionId' : cpDefinitionId ,
+				'_<%= CommercePortletKeys.COMMERCE_CART_CONTENT %>_quantity' : 1
 			};
 
 			A.io.request(
-				'<liferay-portlet:actionURL name="addCommerceCartItem" portletName="<%= CommerceCartPortletKeys.COMMERCE_CART_CONTENT %>" ></liferay-portlet:actionURL>',
+				'<liferay-portlet:actionURL name="addCommerceCartItem" portletName="<%= CommercePortletKeys.COMMERCE_CART_CONTENT %>" ></liferay-portlet:actionURL>',
 				{
 					data: data,
 					on: {

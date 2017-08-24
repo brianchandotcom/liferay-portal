@@ -36,13 +36,15 @@ public class GroupModelListener extends BaseModelListener<Group> {
 	@Override
 	public void onBeforeRemove(Group group) throws ModelListenerException {
 		try {
-			List<MSBFragmentCollection> collections =
+			List<MSBFragmentCollection> msbFragmentCollections =
 				_msbFragmentCollectionLocalService.getFragmentCollections(
 					group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-			for (MSBFragmentCollection collection : collections) {
+			for (MSBFragmentCollection msbFragmentCollection :
+					msbFragmentCollections) {
+
 				_msbFragmentCollectionLocalService.deleteFragmentCollection(
-					collection);
+					msbFragmentCollection);
 			}
 		}
 		catch (Exception e) {

@@ -8,6 +8,7 @@ configurations {
 
 dependencies {
 	provided group: "com.liferay", name: "javax.servlet.jsp.jstl", transitive: false, version: "1.2.3.LIFERAY-PATCHED-2"
+	provided group: "com.liferay", name: "org.apache.felix.bundlerepository", transitive: false, version: "2.0.2.LIFERAY-PATCHED-1"
 	provided group: "com.liferay", name: "org.apache.felix.configadmin", transitive: false, version: "1.8.8.LIFERAY-PATCHED-1"
 	provided group: "com.liferay", name: "org.apache.felix.fileinstall", transitive: false, version: "3.5.4.LIFERAY-PATCHED-1"
 	provided group: "com.liferay", name: "org.eclipse.equinox.console", transitive: false, version: "1.1.100-20150308.220103-2-LIFERAY-CACHED"
@@ -15,7 +16,6 @@ dependencies {
 	provided group: "com.liferay", name: "org.osgi.service.http", transitive: false, version: "3.5.0-20150611.165350-3.LIFERAY-PATCHED-2"
 	provided group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", transitive: false, version: "2.3.2-b01"
 	provided group: "javax.servlet.jsp.jstl", name: "javax.servlet.jsp.jstl-api", transitive: false, version: "1.2.1"
-	provided group: "org.apache.felix", name: "org.apache.felix.bundlerepository", transitive: false, version: "2.0.2"
 	provided group: "org.apache.felix", name: "org.apache.felix.dependencymanager", transitive: false, version: "3.2.0"
 	provided group: "org.apache.felix", name: "org.apache.felix.dependencymanager.shell", transitive: false, version: "3.2.0"
 	provided group: "org.apache.felix", name: "org.apache.felix.eventadmin", transitive: false, version: "1.4.6"

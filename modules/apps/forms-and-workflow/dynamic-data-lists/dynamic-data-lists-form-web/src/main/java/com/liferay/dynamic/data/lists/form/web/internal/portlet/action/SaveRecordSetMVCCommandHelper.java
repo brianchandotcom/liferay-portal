@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.lists.form.web.internal.portlet.action;
 import com.liferay.dynamic.data.lists.exception.RecordSetSettingsRedirectURLException;
 import com.liferay.dynamic.data.lists.form.web.internal.converter.DDLFormRuleDeserializer;
 import com.liferay.dynamic.data.lists.form.web.internal.converter.DDLFormRuleToDDMFormRuleConverter;
+import com.liferay.dynamic.data.lists.form.web.internal.portlet.action.util.RecordSetFieldSettingsValidator;
 import com.liferay.dynamic.data.lists.form.web.internal.util.DDLFormBuilderContextToDDMForm;
 import com.liferay.dynamic.data.lists.form.web.internal.util.DDLFormBuilderContextToDDMFormLayout;
 import com.liferay.dynamic.data.lists.form.web.internal.util.DDMFormTemplateContextToDDMFormValues;
@@ -77,18 +78,29 @@ public class SaveRecordSetMVCCommandHelper {
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
 
+		return saveRecordSet(portletRequest, portletResponse, false);
+	}
+
+	public DDLRecordSet saveRecordSet(
+			PortletRequest portletRequest, PortletResponse portletResponse,
+			boolean validateFormFieldsSettings)
+		throws Exception {
+
 		long recordSetId = ParamUtil.getLong(portletRequest, "recordSetId");
 
 		if (recordSetId == 0) {
-			return addRecordSet(portletRequest, portletResponse);
+			return addRecordSet(
+				portletRequest, portletResponse, validateFormFieldsSettings);
 		}
 		else {
-			return updateRecordSet(portletRequest, portletResponse);
+			return updateRecordSet(
+				portletRequest, portletResponse, validateFormFieldsSettings);
 		}
 	}
 
 	protected DDMStructure addDDMStructure(
-			PortletRequest portletRequest, DDMFormValues settingsDDMFormValues)
+			PortletRequest portletRequest, DDMFormValues settingsDDMFormValues,
+			boolean validateFormFieldsSettings)
 		throws Exception {
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -108,6 +120,10 @@ public class SaveRecordSetMVCCommandHelper {
 		Map<Locale, String> descriptionMap = getLocalizedMap(
 			description, ddmForm.getAvailableLocales(),
 			ddmForm.getDefaultLocale());
+
+		if (validateFormFieldsSettings) {
+			recordSetFieldSettingsValidator.validate(portletRequest, ddmForm);
+		}
 
 		return ddmStructureService.addStructure(
 			groupId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
@@ -154,14 +170,15 @@ public class SaveRecordSetMVCCommandHelper {
 	}
 
 	protected DDLRecordSet addRecordSet(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			PortletRequest portletRequest, PortletResponse portletResponse,
+			boolean validateFormFieldsSettings)
 		throws Exception {
 
 		DDMFormValues settingsDDMFormValues = getSettingsDDMFormValues(
 			portletRequest);
 
 		DDMStructure ddmStructure = addDDMStructure(
-			portletRequest, settingsDDMFormValues);
+			portletRequest, settingsDDMFormValues, validateFormFieldsSettings);
 
 		DDMForm ddmForm = ddmStructure.getDDMForm();
 
@@ -295,7 +312,8 @@ public class SaveRecordSetMVCCommandHelper {
 			value.getString(ddmFormValues.getDefaultLocale()));
 	}
 
-	protected DDMStructure updateDDMStructure(PortletRequest portletRequest)
+	protected DDMStructure updateDDMStructure(
+			PortletRequest portletRequest, boolean validateFormFieldsSettings)
 		throws Exception {
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -313,6 +331,10 @@ public class SaveRecordSetMVCCommandHelper {
 		Map<Locale, String> descriptionMap = getLocalizedMap(
 			description, ddmForm.getAvailableLocales(),
 			ddmForm.getDefaultLocale());
+
+		if (validateFormFieldsSettings) {
+			recordSetFieldSettingsValidator.validate(portletRequest, ddmForm);
+		}
 
 		return ddmStructureService.updateStructure(
 			ddmStructureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
@@ -345,10 +367,12 @@ public class SaveRecordSetMVCCommandHelper {
 	}
 
 	protected DDLRecordSet updateRecordSet(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			PortletRequest portletRequest, PortletResponse portletResponse,
+			boolean validateFormFieldsSettings)
 		throws Exception {
 
-		DDMStructure ddmStructure = updateDDMStructure(portletRequest);
+		DDMStructure ddmStructure = updateDDMStructure(
+			portletRequest, validateFormFieldsSettings);
 
 		DDMForm ddmForm = ddmStructure.getDDMForm();
 
@@ -463,6 +487,10 @@ public class SaveRecordSetMVCCommandHelper {
 
 	@Reference
 	protected JSONFactory jsonFactory;
+
+	@Reference
+	protected volatile RecordSetFieldSettingsValidator
+		recordSetFieldSettingsValidator;
 
 	@Reference
 	protected volatile WorkflowDefinitionLinkLocalService

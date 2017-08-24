@@ -138,6 +138,36 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 			<liferay-ui:message arguments="<%= new Object[] {msvve.getVisibilityExpression(), msvve.getFieldName()} %>" key="the-visibility-expression-x-set-for-field-x-is-invalid" translateArguments="<%= false %>" />
 		</liferay-ui:error>
 
+		<liferay-ui:error exception="<%= RecordSetFieldSettingsException.MustSetValidValueForProperties.class %>">
+
+			<%
+			RecordSetFieldSettingsException.MustSetValidValueForProperties msvvfp = (RecordSetFieldSettingsException.MustSetValidValueForProperties)errorException;
+
+			Map<String, Set<String>> fieldNamePropertiesMap = msvvfp.getFieldNamePropertiesMap();
+
+			StringBundler sb = new StringBundler(fieldNamePropertiesMap.size());
+
+			for (Entry<String, Set<String>> fieldNameProperties : fieldNamePropertiesMap.entrySet()) {
+				Set<String> value = fieldNameProperties.getValue();
+
+				sb.append(
+					LanguageUtil.format(
+						request,
+						(value.size() == 1 ? "the-setting-x-set-for-field-x-is-invalid" :"the-settings-x-set-for-field-x-are-invalid"),
+						new Object[] {StringUtil.merge(fieldNameProperties.getValue(), StringPool.COMMA_AND_SPACE), fieldNameProperties.getKey()},
+						false
+					)
+				);
+
+				sb.append(StringPool.SPACE);
+			}
+
+			sb.setIndex(sb.index() - 1);
+			%>
+
+			<%= sb.toString() %>
+		</liferay-ui:error>
+
 		<liferay-ui:error exception="<%= RecordSetNameException.class %>" message="please-enter-a-valid-form-name" />
 		<liferay-ui:error exception="<%= RecordSetSettingsRedirectURLException.class %>" message="the-specified-redirect-url-is-not-allowed" />
 		<liferay-ui:error exception="<%= StorageException.class %>" message="please-enter-a-valid-form-settings" />

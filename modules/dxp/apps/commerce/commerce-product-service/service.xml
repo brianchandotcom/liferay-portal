@@ -106,6 +106,8 @@
 		<column name="height" type="double" />
 		<column name="depth" type="double" />
 		<column name="weight" type="double" />
+		<column name="cost" type="double" />
+		<column name="price" type="double" />
 		<column name="DDMStructureKey" type="String" />
 		<column name="displayDate" type="Date" />
 		<column name="expirationDate" type="Date" />
@@ -520,6 +522,12 @@
 		<column name="gtin" type="String" />
 		<column name="manufacturerPartNumber" type="String" />
 		<column name="DDMContent" type="String" />
+		<column name="width" type="double" />
+		<column name="height" type="double" />
+		<column name="depth" type="double" />
+		<column name="weight" type="double" />
+		<column name="cost" type="double" />
+		<column name="price" type="double" />
 		<column name="displayDate" type="Date" />
 		<column name="expirationDate" type="Date" />
 		<column name="lastPublishDate" type="Date" />

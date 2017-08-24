@@ -70,6 +70,12 @@
 		<field name="weight" type="double">
 			<validator name="number" />
 		</field>
+		<field name="cost" type="double">
+			<validator name="number" />
+		</field>
+		<field name="price" type="double">
+			<validator name="number" />
+		</field>
 		<field name="DDMStructureKey" type="String" />
 		<field name="displayDate" type="Date" />
 		<field name="expirationDate" type="Date" />
@@ -223,6 +229,24 @@
 		<field name="manufacturerPartNumber" type="String" />
 		<field name="DDMContent" type="String">
 			<hint-collection name="CLOB" />
+		</field>
+		<field name="width" type="double">
+			<validator name="number" />
+		</field>
+		<field name="height" type="double">
+			<validator name="number" />
+		</field>
+		<field name="depth" type="double">
+			<validator name="number" />
+		</field>
+		<field name="weight" type="double">
+			<validator name="number" />
+		</field>
+		<field name="cost" type="double">
+			<validator name="number" />
+		</field>
+		<field name="price" type="double">
+			<validator name="number" />
 		</field>
 		<field name="displayDate" type="Date" />
 		<field name="expirationDate" type="Date" />

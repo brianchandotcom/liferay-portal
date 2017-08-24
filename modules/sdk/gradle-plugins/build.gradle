@@ -1,3 +1,5 @@
+apply plugin: "org.ysb33r.gradletest"
+
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.ant.bnd", version: "2.0.39"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.alloy.taglib", version: "2.0.0"
@@ -24,4 +26,20 @@ dependencies {
 	compile group: "org.dm.gradle", name: "gradle-bundle-plugin", version: "0.9.0"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.extractGradleApi214], dir: new File(rootProject.buildDir, "gradle-2.14"))
+}
+
+task copyGradleTestDependencies(type: Copy)
+
+copyGradleTestDependencies {
+	from configurations.compile
+	into jar.destinationDir
+}
+
+gradleTest {
+	dependsOn copyGradleTestDependencies
+	dependsOn jar
+
+	gradleArguments "--project-prop", "pluginClasspathDir=${uri(jar.destinationDir)}"
+
+	versions "2.14.1", "3.0", "3.1", "3.2.1", "3.3", "4.0", "4.1"
 }

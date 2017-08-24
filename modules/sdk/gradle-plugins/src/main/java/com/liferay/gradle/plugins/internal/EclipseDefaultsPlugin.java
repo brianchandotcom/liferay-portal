@@ -32,6 +32,7 @@ import org.gradle.plugins.ide.eclipse.model.Classpath;
 import org.gradle.plugins.ide.eclipse.model.ClasspathEntry;
 import org.gradle.plugins.ide.eclipse.model.EclipseClasspath;
 import org.gradle.plugins.ide.eclipse.model.EclipseModel;
+import org.gradle.plugins.ide.eclipse.model.EclipseProject;
 
 /**
  * @author Andrea Di Giorgi
@@ -45,6 +46,7 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 		Project project, EclipsePlugin eclipsePlugin) {
 
 		_configureEclipseClasspathFile(project);
+		_configureEclipseProjectFile(project);
 		_configureTaskEclipse(eclipsePlugin);
 	}
 
@@ -94,6 +96,17 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 		};
 
 		fileContentMerger.whenMerged(closure);
+	}
+
+	private void _configureEclipseProjectFile(Project project) {
+		EclipseModel eclipseModel = GradleUtil.getExtension(
+			project, EclipseModel.class);
+
+		EclipseProject eclipseProject = eclipseModel.getProject();
+
+		List<String> natures = eclipseProject.getNatures();
+
+		natures.add("com.liferay.ide.core.liferayNature");
 	}
 
 	private void _configureTaskEclipse(EclipsePlugin eclipsePlugin) {

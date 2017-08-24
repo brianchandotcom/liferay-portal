@@ -116,6 +116,7 @@ import org.gradle.api.tasks.compile.JavaCompile;
 import org.gradle.api.tasks.javadoc.Javadoc;
 import org.gradle.api.tasks.testing.Test;
 import org.gradle.internal.Factory;
+import org.gradle.plugins.ide.eclipse.EclipsePlugin;
 import org.gradle.util.GUtil;
 
 /**
@@ -675,6 +676,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, TestIntegrationPlugin.class);
 		GradleUtil.applyPlugin(project, XMLFormatterPlugin.class);
 
+		GradleUtil.applyPlugin(project, EclipsePlugin.class);
 		AlloyTaglibDefaultsPlugin.INSTANCE.apply(project);
 		CSSBuilderDefaultsPlugin.INSTANCE.apply(project);
 		DBSupportDefaultsPlugin.INSTANCE.apply(project);

@@ -2056,7 +2056,6 @@
 	</command>
 
 	<command name="viewWithStructureCP">
-		<var name="key_fieldName" value="Text" />
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
 		<execute macro="Portlet#changeDisplayStyle">
@@ -2070,7 +2069,49 @@
 
 		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${webContentTitle}" />
 
-		<execute function="AssertTextEquals" locator1="DDMField#TEXT" value1="${webContentText}" />
+		<if>
+			<isset var="webContentText" />
+			<then>
+				<var name="key_fieldName" value="Text" />
+
+				<execute function="AssertTextEquals" locator1="DDMField#TEXT" value1="${webContentText}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="webContentTextBox" />
+			<then>
+				<if>
+					<isset var="fieldName" />
+					<then>
+						<var name="key_fieldName" value="${fieldName}" />
+
+						<execute function="AssertTextEquals" locator1="DDMField#TEXT_BOX" value1="${webContentTextBox}" />
+					</then>
+					<else>
+						<var name="key_fieldName" value="TextBox" />
+
+						<execute function="AssertTextEquals" locator1="DDMField#TEXT_BOX" value1="${webContentTextBox}" />
+					</else>
+				</if>
+			</then>
+		</if>
+
+		<if>
+			<isset var="webContentTextBoxList" />
+			<then>
+				<var name="count" value="1" />
+
+				<for list="${webContentTextBoxList}" param="webContentTextBox">
+
+					<var name="key_fieldName" value="heading${count}" />
+
+					<execute function="AssertTextEquals" locator1="DDMField#TEXT_BOX" value1="${webContentTextBox}" />
+
+					<var method="MathUtil#sum('${count}', '1')" name="count" />
+				</for>
+			</then>
+		</if>
 	</command>
 
 	<command name="viewWithWorkflowCP">

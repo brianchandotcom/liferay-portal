@@ -375,7 +375,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 		%>
 
 		<div class="card-row card-row-padded tags">
-			<liferay-ui:asset-tags-summary
+			<liferay-asset:asset-tags-summary
 				assetTagNames="<%= assetTagNames %>"
 				className="<%= MBMessage.class.getName() %>"
 				classPK="<%= message.getMessageId() %>"
@@ -394,7 +394,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 		</liferay-expando:custom-attributes-available>
 
 		<div class="card-row card-row-padded entry-links">
-			<liferay-ui:asset-links
+			<liferay-asset:asset-links
 				className="<%= MBMessage.class.getName() %>"
 				classPK="<%= message.getMessageId() %>"
 			/>

@@ -24,9 +24,9 @@ User selUser = (User)request.getAttribute("user.selUser");
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="categorization" />
 
-<liferay-ui:asset-categories-error />
+<liferay-asset:asset-categories-error />
 
-<liferay-ui:asset-tags-error />
+<liferay-asset:asset-tags-error />
 
 <aui:fieldset>
 	<liferay-asset:asset-categories-selector className="<%= User.class.getName() %>" classPK="<%= (selUser != null) ? selUser.getPrimaryKey() : 0 %>" />

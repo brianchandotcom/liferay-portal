@@ -64,7 +64,7 @@ public class CommerceCartLocalServiceImpl
 	public CommerceCart assignGuestCartToUser(long userId, long commerceCartId)
 		throws PortalException {
 
-		CommerceCart commerceCart = commerceCartPersistence.fetchByPrimaryKey(
+		CommerceCart commerceCart = commerceCartPersistence.findByPrimaryKey(
 			commerceCartId);
 
 		User user = userLocalService.getUser(userId);

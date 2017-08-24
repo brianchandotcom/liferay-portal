@@ -19,6 +19,9 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.service.CommerceCartItemLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 
 import java.util.List;
 
@@ -36,6 +39,12 @@ public class CommerceCartImpl extends CommerceCartBaseImpl {
 	public List<CommerceCartItem> getCommerceCartItems() {
 		return CommerceCartItemLocalServiceUtil.getCommerceCartItems(
 			getCommerceCartId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	public boolean isGuestCart() throws PortalException {
+		User user = UserLocalServiceUtil.getUser(getUserId());
+
+		return user.isDefaultUser();
 	}
 
 }

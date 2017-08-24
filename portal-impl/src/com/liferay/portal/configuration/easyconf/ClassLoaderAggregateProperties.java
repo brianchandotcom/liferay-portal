@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.lang.reflect.Field;
 
@@ -161,7 +162,14 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 
 		try {
 			FileConfiguration newFileConfiguration =
-				new PropertiesConfiguration(fileName);
+				new PropertiesConfiguration(fileName) {
+
+					@Override
+					public String getEncoding() {
+						return StringPool.UTF8;
+					}
+
+				};
 
 			URL url = newFileConfiguration.getURL();
 
@@ -313,7 +321,14 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 
 		try {
 			PropertiesConfiguration propertiesConfiguration =
-				new PropertiesConfiguration(url);
+				new PropertiesConfiguration(url) {
+
+					@Override
+					public String getEncoding() {
+						return StringPool.UTF8;
+					}
+
+				};
 
 			PropertiesConfigurationLayout propertiesConfigurationLayout =
 				propertiesConfiguration.getLayout();

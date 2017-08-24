@@ -146,7 +146,7 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 					</dl>
 
 					<div class="lfr-asset-categories sidebar-block">
-						<liferay-ui:asset-categories-summary
+						<liferay-asset:asset-categories-summary
 							className="<%= WikiPage.class.getName() %>"
 							classPK="<%= wikiPage.getResourcePrimKey() %>"
 							message="categories"
@@ -154,7 +154,7 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 					</div>
 
 					<div class="lfr-asset-tags sidebar-block">
-						<liferay-ui:asset-tags-summary
+						<liferay-asset:asset-tags-summary
 							className="<%= WikiPage.class.getName() %>"
 							classPK="<%= wikiPage.getResourcePrimKey() %>"
 							message="tags"
@@ -184,7 +184,7 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 
 					<c:if test="<%= (wikiPageAssetEntry != null) && wikiPortletInstanceSettingsHelper.isEnableRelatedAssets() %>">
 						<div class="entry-links">
-							<liferay-ui:asset-links
+							<liferay-asset:asset-links
 								assetEntryId="<%= wikiPageAssetEntry.getEntryId() %>"
 							/>
 						</div>

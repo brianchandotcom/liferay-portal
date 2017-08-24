@@ -199,7 +199,7 @@ String socialBookmarksDisplayPosition = blogsPortletInstanceConfiguration.social
 					<aui:col width="<%= 40 %>">
 						<c:if test="<%= blogsPortletInstanceConfiguration.enableRelatedAssets() %>">
 							<div class="entry-links">
-								<liferay-ui:asset-links
+								<liferay-asset:asset-links
 									assetEntryId="<%= (assetEntry != null) ? assetEntry.getEntryId() : 0 %>"
 									className="<%= BlogsEntry.class.getName() %>"
 									classPK="<%= entry.getEntryId() %>"
@@ -207,37 +207,37 @@ String socialBookmarksDisplayPosition = blogsPortletInstanceConfiguration.social
 							</div>
 						</c:if>
 
-						<liferay-ui:asset-categories-available
+						<liferay-asset:asset-categories-available
 							className="<%= BlogsEntry.class.getName() %>"
 							classPK="<%= entry.getEntryId() %>"
 						>
 							<p><liferay-ui:message key="categories" />:</p>
 
 							<div class="entry-categories">
-								<liferay-ui:asset-categories-summary
+								<liferay-asset:asset-categories-summary
 									className="<%= BlogsEntry.class.getName() %>"
 									classPK="<%= entry.getEntryId() %>"
 									portletURL="<%= renderResponse.createRenderURL() %>"
 								/>
 							</div>
-						</liferay-ui:asset-categories-available>
+						</liferay-asset:asset-categories-available>
 					</aui:col>
 
 					<aui:col width="<%= 60 %>">
-						<liferay-ui:asset-tags-available
+						<liferay-asset:asset-tags-available
 							className="<%= BlogsEntry.class.getName() %>"
 							classPK="<%= entry.getEntryId() %>"
 						>
 							<div class="entry-tags">
 								<p><liferay-ui:message key="tags" />:</p>
 
-								<liferay-ui:asset-tags-summary
+								<liferay-asset:asset-tags-summary
 									className="<%= BlogsEntry.class.getName() %>"
 									classPK="<%= entry.getEntryId() %>"
 									portletURL="<%= renderResponse.createRenderURL() %>"
 								/>
 							</div>
-						</liferay-ui:asset-tags-available>
+						</liferay-asset:asset-tags-available>
 					</aui:col>
 				</aui:container>
 			</c:if>

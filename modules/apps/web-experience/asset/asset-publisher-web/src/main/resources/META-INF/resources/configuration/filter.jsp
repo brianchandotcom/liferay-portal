@@ -25,7 +25,7 @@ if (categorizableGroupIds == null) {
 %>
 
 <aui:fieldset label="displayed-assets-must-match-these-rules" markupView="lexicon">
-	<liferay-ui:asset-tags-error />
+	<liferay-asset:asset-tags-error />
 
 	<%
 	DuplicateQueryRuleException dqre = null;

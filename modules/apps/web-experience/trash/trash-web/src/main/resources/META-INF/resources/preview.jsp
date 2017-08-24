@@ -48,6 +48,6 @@ TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(className);
 TrashRenderer trashRenderer = trashHandler.getTrashRenderer(classPK);
 %>
 
-<liferay-ui:asset-display
+<liferay-asset:asset-display
 	renderer="<%= trashRenderer %>"
 />

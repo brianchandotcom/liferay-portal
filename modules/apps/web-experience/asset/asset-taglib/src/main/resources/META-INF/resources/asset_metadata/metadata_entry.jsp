@@ -118,14 +118,14 @@ else if (metadataField.equals("view-count")) {
 			<dd class="metadata-entry <%= metadataFieldCssClass %>">
 				<c:choose>
 					<c:when test='<%= value.equals("categories") %>'>
-						<liferay-ui:asset-categories-summary
+						<liferay-asset:asset-categories-summary
 							className="<%= assetEntry.getClassName() %>"
 							classPK="<%= assetEntry.getClassPK () %>"
 							portletURL="<%= filterByMetadata ? renderResponse.createRenderURL() : null %>"
 						/>
 					</c:when>
 					<c:when test='<%= value.equals("tags") %>'>
-						<liferay-ui:asset-tags-summary
+						<liferay-asset:asset-tags-summary
 							className="<%= assetEntry.getClassName() %>"
 							classPK="<%= assetEntry.getClassPK () %>"
 							portletURL="<%= filterByMetadata ? renderResponse.createRenderURL() : null %>"

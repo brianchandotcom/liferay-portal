@@ -321,7 +321,7 @@ if (portletTitleBasedNavigation) {
 
 								<div class="page-categorization">
 									<div class="page-categories">
-										<liferay-ui:asset-categories-summary
+										<liferay-asset:asset-categories-summary
 											className="<%= WikiPage.class.getName() %>"
 											classPK="<%= wikiPage.getResourcePrimKey() %>"
 											portletURL="<%= PortletURLUtil.clone(categorizedPagesURL, renderResponse) %>"
@@ -329,18 +329,18 @@ if (portletTitleBasedNavigation) {
 									</div>
 
 									<div class="page-tags">
-										<liferay-ui:asset-tags-available
+										<liferay-asset:asset-tags-available
 											className="<%= WikiPage.class.getName() %>"
 											classPK="<%= wikiPage.getResourcePrimKey() %>"
 										>
 											<h5><liferay-ui:message key="tags" /></h5>
 
-											<liferay-ui:asset-tags-summary
+											<liferay-asset:asset-tags-summary
 												className="<%= WikiPage.class.getName() %>"
 												classPK="<%= wikiPage.getResourcePrimKey() %>"
 												portletURL="<%= PortletURLUtil.clone(taggedPagesURL, renderResponse) %>"
 											/>
-										</liferay-ui:asset-tags-available>
+										</liferay-asset:asset-tags-available>
 									</div>
 								</div>
 
@@ -390,7 +390,7 @@ if (portletTitleBasedNavigation) {
 
 								<c:if test="<%= wikiPortletInstanceSettingsHelper.isEnableRelatedAssets() %>">
 									<div class="entry-links">
-										<liferay-ui:asset-links
+										<liferay-asset:asset-links
 											assetEntryId="<%= assetEntry.getEntryId() %>"
 										/>
 									</div>

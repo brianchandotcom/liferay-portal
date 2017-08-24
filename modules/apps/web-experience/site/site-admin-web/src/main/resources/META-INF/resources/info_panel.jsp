@@ -170,12 +170,12 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 						</p>
 					</c:if>
 
-					<liferay-ui:asset-categories-summary
+					<liferay-asset:asset-categories-summary
 						className="<%= Group.class.getName() %>"
 						classPK="<%= group.getGroupId() %>"
 					/>
 
-					<liferay-ui:asset-tags-summary
+					<liferay-asset:asset-tags-summary
 						className="<%= Group.class.getName() %>"
 						classPK="<%= group.getGroupId() %>"
 					/>

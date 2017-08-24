@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Commerce Order Content Web
+Bundle-SymbolicName: com.liferay.commerce.order.content.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /commerce-order-content-web

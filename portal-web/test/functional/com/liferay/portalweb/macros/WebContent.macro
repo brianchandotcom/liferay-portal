@@ -628,6 +628,22 @@
 		</if>
 
 		<if>
+			<isset var="webContentTextBoxList" />
+			<then>
+				<var name="count" value="1" />
+
+				<for list="${webContentTextBoxList}" param="webContentTextBox">
+
+					<var name="key_fieldName" value="heading${count}" />
+
+					<execute function="Type" locator1="DDMField#TEXT_BOX" value1="${webContentTextBox}" />
+
+					<var method="MathUtil#sum('${count}', '1')" name="count" />
+				</for>
+			</then>
+		</if>
+
+		<if>
 			<isset var="abstractSummary" />
 			<then>
 				<execute function="Type" locator1="TextArea#SUMMARY" value1="${abstractSummary}" />

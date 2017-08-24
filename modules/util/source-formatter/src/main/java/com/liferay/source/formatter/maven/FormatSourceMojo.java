@@ -142,6 +142,13 @@ public class FormatSourceMojo extends AbstractMojo {
 	/**
 	 * @parameter
 	 */
+	public void setShowStatusUpdates(boolean showStatusUpdates) {
+		_sourceFormatterArgs.setShowStatusUpdates(showStatusUpdates);
+	}
+
+	/**
+	 * @parameter
+	 */
 	public void setThrowException(boolean throwException) {
 		_sourceFormatterArgs.setThrowException(throwException);
 	}

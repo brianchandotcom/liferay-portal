@@ -112,6 +112,10 @@ public class FormatSourceTask extends JavaExec {
 		return _sourceFormatterArgs.isShowDocumentation();
 	}
 
+	public boolean isShowStatusUpdates() {
+		return _sourceFormatterArgs.isShowStatusUpdates();
+	}
+
 	public boolean isThrowException() {
 		return _sourceFormatterArgs.isThrowException();
 	}
@@ -169,6 +173,10 @@ public class FormatSourceTask extends JavaExec {
 		_sourceFormatterArgs.setShowDocumentation(showDocumentation);
 	}
 
+	public void setShowStatusUpdates(boolean showStatusUpdates) {
+		_sourceFormatterArgs.setShowStatusUpdates(showStatusUpdates);
+	}
+
 	public void setThrowException(boolean throwException) {
 		_sourceFormatterArgs.setThrowException(throwException);
 	}
@@ -184,6 +192,7 @@ public class FormatSourceTask extends JavaExec {
 		args.add("max.line.length=" + getMaxLineLength());
 		args.add("processor.thread.count=" + getProcessorThreadCount());
 		args.add("show.documentation=" + isShowDocumentation());
+		args.add("show.status.updates=" + isShowStatusUpdates());
 		args.add("source.auto.fix=" + isAutoFix());
 		args.add("source.print.errors=" + isPrintErrors());
 		args.add("source.throw.exception=" + isThrowException());

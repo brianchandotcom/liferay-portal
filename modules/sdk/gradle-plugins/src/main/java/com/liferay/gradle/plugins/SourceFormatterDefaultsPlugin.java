@@ -96,6 +96,14 @@ public class SourceFormatterDefaultsPlugin
 				Boolean.parseBoolean(showDocumentation));
 		}
 
+		String showStatusUpdates = GradleUtil.getProperty(
+			project, "source.formatter.show.status.updates", (String)null);
+
+		if (Validator.isNotNull(showStatusUpdates)) {
+			formatSourceTask.setShowStatusUpdates(
+				Boolean.parseBoolean(showStatusUpdates));
+		}
+
 		String processorThreadCount = GradleUtil.getProperty(
 			project, "source.formatter.processor.thread.count", (String)null);
 

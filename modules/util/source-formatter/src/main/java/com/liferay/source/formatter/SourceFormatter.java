@@ -182,6 +182,12 @@ public class SourceFormatter {
 
 			sourceFormatterArgs.setShowDocumentation(showDocumentation);
 
+			boolean showStatusUpdates = ArgumentsUtil.getBoolean(
+				arguments, "show.status.updates",
+				SourceFormatterArgs.SHOW_STATUS_UPDATES);
+
+			sourceFormatterArgs.setShowStatusUpdates(showStatusUpdates);
+
 			boolean throwException = ArgumentsUtil.getBoolean(
 				arguments, "source.throw.exception",
 				SourceFormatterArgs.THROW_EXCEPTION);
@@ -415,6 +421,10 @@ public class SourceFormatter {
 	}
 
 	private void _printProgressStatusMessage(String message) {
+		if (!_sourceFormatterArgs.isShowStatusUpdates()) {
+			return;
+		}
+
 		if (message.length() > _maxStatusMessageLength) {
 			_maxStatusMessageLength = message.length();
 		}

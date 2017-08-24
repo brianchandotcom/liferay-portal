@@ -268,6 +268,7 @@
 		<exec executable="git" failonerror="true">
 			<arg value="checkout" />
 			<arg value="refs/tags/git-commit-portal-private" />
+			<arg if:true="${checkout.portal.private.releng}" value="modules/.releng/private" />
 			<arg value="modules/private" />
 			<arg value="working.dir.properties" />
 		</exec>
@@ -275,6 +276,7 @@
 		<exec executable="git">
 			<arg value="reset" />
 			<arg value="HEAD" />
+			<arg if:true="${checkout.portal.private.releng}" value="modules/.releng/private" />
 			<arg value="modules/private" />
 			<arg value="working.dir.properties" />
 		</exec>

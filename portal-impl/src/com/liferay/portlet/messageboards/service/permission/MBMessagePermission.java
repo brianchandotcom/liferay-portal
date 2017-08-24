@@ -168,16 +168,15 @@ public class MBMessagePermission implements BaseModelPermissionChecker {
 			return true;
 		}
 
-		boolean checkerResult = permissionChecker.hasPermission(
-			message.getGroupId(), MBMessage.class.getName(),
-			message.getMessageId(), actionId);
+		if (!permissionChecker.hasPermission(
+				message.getGroupId(), MBMessage.class.getName(),
+				message.getMessageId(), actionId)) {
 
-		if (!checkerResult) {
-			return checkerResult;
+			return false;
 		}
 
 		if (message.getMessageId() == message.getRootMessageId()) {
-			return checkerResult;
+			return true;
 		}
 
 		return contains(

@@ -103,7 +103,7 @@ Property Name | Type | Default Value | Description
 `maxLineLength` | `int` | `80` | The maximum number of characters allowed in Java files. It sets the `max.line.length` argument.
 `printErrors` | `boolean` | `true` | Whether to print formatting errors on the Standard Output stream. It sets the `source.print.errors` argument.
 `processorThreadCount` | `int` | `5` | The number of threads used by Source Formatter. It sets the `processor.thread.count` argument.
-`showDocumentation` | `boolean` | `true` | Whether to show the documentation for the source formatting issues, if present. It sets the `show.documentation` argument.
+`showDocumentation` | `boolean` | `false` | Whether to show the documentation for the source formatting issues, if present. It sets the `show.documentation` argument.
 `throwException` | `boolean` | `false` | Whether to fail the build if formatting errors are found. It sets the `source.throw.exception` argument.
 
 ## Additional Configuration

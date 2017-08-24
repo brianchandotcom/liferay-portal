@@ -1190,11 +1190,11 @@ public class ResourcePermissionLocalServiceImpl
 		List<ResourcePermission> resourcePermissions =
 			resourcePermissionPersistence.findByC_N_S(companyId, name, scope);
 
-		for (ResourcePermission resourcePermission : resourcePermissions) {
-			if (hasResourcePermission(
-					companyId, name, scope, resourcePermission.getPrimKey(),
-					roleId, actionId)) {
+		ResourceAction resourceAction =
+			resourceActionLocalService.getResourceAction(name, actionId);
 
+		for (ResourcePermission resourcePermission : resourcePermissions) {
+			if (resourcePermission.hasAction(resourceAction)) {
 				return true;
 			}
 		}

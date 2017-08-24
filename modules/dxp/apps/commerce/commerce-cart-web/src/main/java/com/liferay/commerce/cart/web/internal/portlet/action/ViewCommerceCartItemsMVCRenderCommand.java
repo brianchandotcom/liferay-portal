@@ -15,9 +15,10 @@
 package com.liferay.commerce.cart.web.internal.portlet.action;
 
 import com.liferay.commerce.cart.web.internal.display.context.CommerceCartItemDisplayContext;
-import com.liferay.commerce.constants.CommerceCartPortletKeys;
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.service.CommerceCartItemService;
+import com.liferay.commerce.util.PriceCalculationHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -39,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CommerceCartPortletKeys.COMMERCE_CART,
+		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_CART,
 		"mvc.command.name=viewCommerceCartItems"
 	},
 	service = MVCRenderCommand.class
@@ -57,8 +58,8 @@ public class ViewCommerceCartItemsMVCRenderCommand implements MVCRenderCommand {
 
 			CommerceCartItemDisplayContext commerceCartItemDisplayContext =
 				new CommerceCartItemDisplayContext(
-					_actionHelper, httpServletRequest,
-					_commerceCartItemService);
+					_actionHelper, httpServletRequest, _commerceCartItemService,
+					_priceCalculationHelper);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -82,5 +83,8 @@ public class ViewCommerceCartItemsMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PriceCalculationHelper _priceCalculationHelper;
 
 }

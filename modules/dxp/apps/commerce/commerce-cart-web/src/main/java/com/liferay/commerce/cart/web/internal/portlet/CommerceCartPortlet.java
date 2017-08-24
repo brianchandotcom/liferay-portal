@@ -16,8 +16,9 @@ package com.liferay.commerce.cart.web.internal.portlet;
 
 import com.liferay.commerce.cart.web.internal.display.context.CommerceCartDisplayContext;
 import com.liferay.commerce.cart.web.internal.portlet.action.ActionHelper;
-import com.liferay.commerce.constants.CommerceCartPortletKeys;
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.service.CommerceCartService;
+import com.liferay.commerce.util.PriceCalculationHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -54,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.scopeable=true", "javax.portlet.display-name=Cart",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + CommerceCartPortletKeys.COMMERCE_CART,
+		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_CART,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
@@ -74,7 +75,8 @@ public class CommerceCartPortlet extends MVCPortlet {
 
 			CommerceCartDisplayContext commerceCartDisplayContext =
 				new CommerceCartDisplayContext(
-					_actionHelper, httpServletRequest, _commerceCartService);
+					_actionHelper, httpServletRequest, _commerceCartService,
+					_priceCalculationHelper);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, commerceCartDisplayContext);
@@ -94,5 +96,8 @@ public class CommerceCartPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PriceCalculationHelper _priceCalculationHelper;
 
 }

@@ -15,10 +15,11 @@
 package com.liferay.commerce.cart.content.web.internal.portlet.action;
 
 import com.liferay.commerce.cart.content.web.internal.display.context.CommerceCartContentMiniDisplayContext;
-import com.liferay.commerce.constants.CommerceCartPortletKeys;
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.service.CommerceCartItemService;
 import com.liferay.commerce.util.CommerceCartHelper;
+import com.liferay.commerce.util.PriceCalculationHelper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
@@ -38,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "javax.portlet.name=" + CommerceCartPortletKeys.COMMERCE_CART_CONTENT_MINI,
+	property = "javax.portlet.name=" + CommercePortletKeys.COMMERCE_CART_CONTENT_MINI,
 	service = ConfigurationAction.class
 )
 public class CommerceCartContentMiniConfigurationAction
@@ -51,7 +52,7 @@ public class CommerceCartContentMiniConfigurationAction
 				commerceCartContentDisplayContext =
 					new CommerceCartContentMiniDisplayContext(
 						request, _commerceCartHelper, _commerceCartItemService,
-						_cpDefinitionHelper);
+						_cpDefinitionHelper, _priceCalculationHelper);
 
 			request.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -87,5 +88,8 @@ public class CommerceCartContentMiniConfigurationAction
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PriceCalculationHelper _priceCalculationHelper;
 
 }

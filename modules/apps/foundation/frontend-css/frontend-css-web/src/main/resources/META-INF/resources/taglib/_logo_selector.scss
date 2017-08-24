@@ -24,19 +24,3 @@
 .taglib-logo-selector .avatar {
 	max-width: 100%;
 }
-
-// LPS-59687
-
-.gecko {
-	.fieldset {
-		.avatar {
-			max-height: 100%;
-		}
-
-		.lfr-change-logo {
-			display: inline-block;
-			overflow: hidden;
-			position: relative;
-		}
-	}
-}

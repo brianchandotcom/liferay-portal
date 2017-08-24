@@ -175,9 +175,7 @@ public class MBMessagePermission implements BaseModelPermissionChecker {
 			return false;
 		}
 
-		if ((message.getMessageId() == message.getRootMessageId()) ||
-			!actionId.equals(ActionKeys.VIEW)) {
-
+		if (message.isRoot() || !actionId.equals(ActionKeys.VIEW)) {
 			return true;
 		}
 

@@ -12,29 +12,26 @@
  * details.
  */
 
-package com.liferay.calendar.upgrade.test;
+package com.liferay.calendar.upgrade.v1_0_2.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.calendar.model.Calendar;
-import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarLocalServiceUtil;
-import com.liferay.calendar.upgrade.v1_0_2.UpgradeCalendar;
-import com.liferay.calendar.util.CalendarResourceUtil;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.calendar.test.util.CalendarTestUtil;
+import com.liferay.calendar.test.util.CalendarUpgradeTestUtil;
+import com.liferay.calendar.test.util.UpgradeDatabaseTestHelper;
+import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.sql.Connection;
-
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -47,7 +44,7 @@ import org.junit.runner.RunWith;
  * @author Adam Brandizzi
  */
 @RunWith(Arquillian.class)
-public class UpgradeCalendarTest extends UpgradeCalendar {
+public class UpgradeCalendarTest {
 
 	@ClassRule
 	@Rule
@@ -59,65 +56,69 @@ public class UpgradeCalendarTest extends UpgradeCalendar {
 		_group = GroupTestUtil.addGroup();
 
 		_user = UserTestUtil.addUser();
+
+		_upgradeCalendar = CalendarUpgradeTestUtil.getUpgradeStep(
+			"com.liferay.calendar.internal.upgrade.v1_0_2.UpgradeCalendar");
+		_upgradeDatabaseTestHelper =
+			CalendarUpgradeTestUtil.getUpgradeDatabaseTestHelper();
 	}
 
 	@Test
 	public void testUpgradeCreatesCalendarTimeZoneId() throws Exception {
-		upgrade();
+		_upgradeCalendar.upgrade();
 
-		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
-			connection = con;
-
-			Assert.assertTrue(hasColumn("Calendar", "timeZoneId"));
-		}
+		assertHasColumn("timeZoneId");
 	}
 
 	@Test
 	public void testUpgradeSetsSiteCalendarTimeZoneId() throws Exception {
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getGroupCalendarResource(
-				_group.getGroupId(), new ServiceContext());
+		Calendar calendar = CalendarTestUtil.addCalendar(_group);
 
-		upgrade();
+		_upgradeCalendar.upgrade();
 
-		List<Calendar> calendars =
-			CalendarLocalServiceUtil.getCalendarResourceCalendars(
-				_group.getGroupId(), calendarResource.getCalendarResourceId());
-
-		Calendar calendar = calendars.get(0);
-
-		Assert.assertEquals(
-			PropsUtil.get(PropsKeys.COMPANY_DEFAULT_TIME_ZONE),
-			calendar.getTimeZoneId());
+		assertCalendarTimeZoneId(
+			calendar, PropsUtil.get(PropsKeys.COMPANY_DEFAULT_TIME_ZONE));
 	}
 
 	@Test
 	public void testUpgradeSetsUserCalendarTimeZoneId() throws Exception {
-		_user.setTimeZoneId("Asia/Shangai");
+		setUserTimeZoneId("Asia/Shangai");
+
+		Calendar calendar = CalendarTestUtil.addCalendar(_user);
+
+		_upgradeCalendar.upgrade();
+
+		assertCalendarTimeZoneId(calendar, "Asia/Shangai");
+	}
+
+	protected void assertCalendarTimeZoneId(
+			Calendar calendar, String timeZoneId)
+		throws PortalException {
+
+		EntityCacheUtil.clearCache();
+
+		calendar = CalendarLocalServiceUtil.getCalendar(
+			calendar.getCalendarId());
+
+		Assert.assertEquals(timeZoneId, calendar.getTimeZoneId());
+	}
+
+	protected void assertHasColumn(String columnName) throws Exception {
+		Assert.assertTrue(
+			_upgradeDatabaseTestHelper.hasColumn("Calendar", columnName));
+	}
+
+	protected void setUserTimeZoneId(String timeZoneId) {
+		_user.setTimeZoneId(timeZoneId);
 
 		UserLocalServiceUtil.updateUser(_user);
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setCompanyId(_user.getCompanyId());
-
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
-
-		upgrade();
-
-		List<Calendar> calendars =
-			CalendarLocalServiceUtil.getCalendarResourceCalendars(
-				_user.getGroupId(), calendarResource.getCalendarResourceId());
-
-		Calendar calendar = calendars.get(0);
-
-		Assert.assertEquals("Asia/Shangai", calendar.getTimeZoneId());
 	}
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private UpgradeProcess _upgradeCalendar;
+	private UpgradeDatabaseTestHelper _upgradeDatabaseTestHelper;
 
 	@DeleteAfterTestRun
 	private User _user;

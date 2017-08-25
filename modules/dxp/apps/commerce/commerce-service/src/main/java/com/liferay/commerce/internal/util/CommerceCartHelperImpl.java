@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -147,13 +146,13 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 		if ((user == null) || user.isDefaultUser()) {
 			return commerceCart;
 		}
+
 		String domain = CookieKeys.getDomain(httpServletRequest);
 
 		String commerceCartUuidWebKey = _getCommerceCartUuidWebKey(
 			commerceCart.getType(), groupId);
 
 		if (commerceCart.isGuestCart()) {
-
 			CookieKeys.deleteCookies(
 				httpServletRequest, httpServletResponse, domain,
 				commerceCartUuidWebKey);
@@ -169,10 +168,10 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 			return commerceCart;
 		}
 
-		CommerceCart cookieCommerceCart = _commerceCartService.fetchCommerceCart(
-			commerceCartUuid, groupId);
+		CommerceCart cookieCommerceCart =
+			_commerceCartService.fetchCommerceCart(commerceCartUuid, groupId);
 
-		if((cookieCommerceCart == null) && !cookieCommerceCart.isGuestCart()){
+		if ((cookieCommerceCart == null) && !cookieCommerceCart.isGuestCart()) {
 			return commerceCart;
 		}
 

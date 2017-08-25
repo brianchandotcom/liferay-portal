@@ -76,7 +76,7 @@ public class CommercePriceCalculationHelperImpl
 		CommerceCart commerceCart = _commerceCartService.fetchCommerceCart(
 			commerceCartId);
 
-		if(commerceCart == null){
+		if (commerceCart == null) {
 			return total;
 		}
 

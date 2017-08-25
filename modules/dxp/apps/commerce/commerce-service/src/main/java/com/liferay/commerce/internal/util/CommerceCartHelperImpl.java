@@ -15,6 +15,7 @@
 package com.liferay.commerce.internal.util;
 
 import com.liferay.commerce.constants.CommerceConstants;
+import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.service.CommerceCartItemService;
 import com.liferay.commerce.service.CommerceCartService;
@@ -181,7 +182,7 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 	}
 
 	private String _getCommerceCartUuidWebKey(int type, long groupId) {
-		return CommerceCartWebKeys.COMMERCE_CART_UUID + StringPool.UNDERLINE +
+		return CommerceWebKeys.COMMERCE_CART_UUID + StringPool.UNDERLINE +
 			type + StringPool.UNDERLINE + groupId;
 	}
 
@@ -205,7 +206,7 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 			CommerceCart commerceCart =
 				_commerceCartService.fetchDefaultCommerceCart(
 					groupId, user.getUserId(), type,
-					CommerceCartConstants.COMMERCE_CART_DEFAULT_TITLE);
+					CommerceConstants.COMMERCE_CART_DEFAULT_TITLE);
 
 			if (commerceCart != null) {
 				CommerceCartThreadLocal.setCommerceCartUuid(

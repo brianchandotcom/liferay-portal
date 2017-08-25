@@ -37,7 +37,7 @@ public class SetUpPoshiElement extends CommandPoshiElement {
 	public PoshiElement clone(
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
-		if (_isElementType(parentPoshiElement, readableSyntax)) {
+		if (_isElementType(readableSyntax)) {
 			return new SetUpPoshiElement(readableSyntax);
 		}
 
@@ -57,9 +57,7 @@ public class SetUpPoshiElement extends CommandPoshiElement {
 		return "setUp";
 	}
 
-	private static boolean _isElementType(
-		PoshiElement parentPoshiElement, String readableSyntax) {
-
+	private static boolean _isElementType(String readableSyntax) {
 		readableSyntax = readableSyntax.trim();
 
 		if (!isBalancedReadableSyntax(readableSyntax)) {

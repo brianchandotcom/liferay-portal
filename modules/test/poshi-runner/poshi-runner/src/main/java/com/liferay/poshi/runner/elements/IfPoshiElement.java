@@ -40,7 +40,7 @@ public class IfPoshiElement extends BasePoshiElement {
 	public PoshiElement clone(
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
-		if (_isElementType(parentPoshiElement, readableSyntax)) {
+		if (_isElementType(readableSyntax)) {
 			return new IfPoshiElement(readableSyntax);
 		}
 
@@ -158,9 +158,7 @@ public class IfPoshiElement extends BasePoshiElement {
 		return readableBlocks;
 	}
 
-	private static boolean _isElementType(
-		PoshiElement parentPoshiElement, String readableSyntax) {
-
+	private static boolean _isElementType(String readableSyntax) {
 		readableSyntax = readableSyntax.trim();
 
 		if (!isBalancedReadableSyntax(readableSyntax)) {

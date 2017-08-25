@@ -37,7 +37,7 @@ public class TearDownPoshiElement extends CommandPoshiElement {
 	public PoshiElement clone(
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
-		if (_isElementType(parentPoshiElement, readableSyntax)) {
+		if (_isElementType(readableSyntax)) {
 			return new TearDownPoshiElement(readableSyntax);
 		}
 
@@ -57,9 +57,7 @@ public class TearDownPoshiElement extends CommandPoshiElement {
 		return "tearDown";
 	}
 
-	private static boolean _isElementType(
-		PoshiElement parentPoshiElement, String readableSyntax) {
-
+	private static boolean _isElementType(String readableSyntax) {
 		readableSyntax = readableSyntax.trim();
 
 		if (!isBalancedReadableSyntax(readableSyntax)) {

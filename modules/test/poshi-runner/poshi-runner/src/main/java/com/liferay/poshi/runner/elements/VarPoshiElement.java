@@ -43,7 +43,7 @@ public class VarPoshiElement extends BasePoshiElement {
 	public PoshiElement clone(
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
-		if (_isElementType(parentPoshiElement, readableSyntax)) {
+		if (_isElementType(readableSyntax)) {
 			return new VarPoshiElement(readableSyntax);
 		}
 
@@ -180,9 +180,7 @@ public class VarPoshiElement extends BasePoshiElement {
 
 	protected String valueAttributeName;
 
-	private static boolean _isElementType(
-		PoshiElement parentPoshiElement, String readableSyntax) {
-
+	private static boolean _isElementType(String readableSyntax) {
 		readableSyntax = readableSyntax.trim();
 
 		if (!isBalancedReadableSyntax(readableSyntax)) {

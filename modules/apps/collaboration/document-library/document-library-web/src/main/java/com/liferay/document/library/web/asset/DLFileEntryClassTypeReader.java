@@ -23,7 +23,6 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portlet.documentlibrary.asset.DLFileEntryClassType;
 
 import java.util.ArrayList;
 import java.util.List;

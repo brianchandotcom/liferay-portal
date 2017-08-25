@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portlet.documentlibrary.asset.DLFileEntryClassTypeReader;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryTypePermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;

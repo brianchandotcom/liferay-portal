@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.asset.DLFileEntryDDMFormValuesReader;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.trash.TrashHelper;
 

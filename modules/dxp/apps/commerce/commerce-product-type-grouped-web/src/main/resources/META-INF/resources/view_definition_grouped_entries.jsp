@@ -178,7 +178,7 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 </aui:form>
 
 <liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item id="addDefinitionGroupedEntry" title='<%= LanguageUtil.get(request, "add-grouped-entry") %>' url="javascript:;" />
+	<liferay-frontend:add-menu-item id="addDefinitionGroupedEntry" title='<%= cpDefinitionGroupedEntriesDisplayContext.getLabel(locale, "add-grouped-entry") %>' url="javascript:;" />
 </liferay-frontend:add-menu>
 
 <aui:script>

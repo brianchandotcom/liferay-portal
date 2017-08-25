@@ -15,3 +15,43 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<%
+renderResponse.setTitle(LanguageUtil.get(request, "fragment-collections"));
+%>
+
+<aui:form action="<%= currentURL %>" cssClass="container-fluid-1280" name="fm">
+	<liferay-ui:search-container
+		id="msbFragmentCollections"
+		searchContainer="<%= msbFragmentDisplayContext.getMSBFragmentCollectionsSearchContainer() %>"
+	>
+		<liferay-ui:search-container-row
+			className="com.liferay.modern.site.building.fragment.model.MSBFragmentCollection"
+			keyProperty="msbFragmentCollectionId"
+			modelVar="msbFragmentCollection"
+		>
+
+			<%
+			row.setCssClass("entry-card lfr-asset-folder");
+			%>
+
+			<liferay-ui:search-container-column-text>
+				<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+					<liferay-frontend:horizontal-card
+						resultRow="<%= row %>"
+						rowChecker="<%= searchContainer.getRowChecker() %>"
+						text="<%= HtmlUtil.escape(msbFragmentCollection.getName()) %>"
+					>
+						<liferay-frontend:horizontal-card-col>
+							<liferay-frontend:horizontal-card-icon
+								icon="documents-and-media"
+							/>
+						</liferay-frontend:horizontal-card-col>
+					</liferay-frontend:horizontal-card>
+				</liferay-ui:search-container-column-text>
+			</liferay-ui:search-container-column-text>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator displayStyle="<%= msbFragmentDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
+	</liferay-ui:search-container>
+</aui:form>

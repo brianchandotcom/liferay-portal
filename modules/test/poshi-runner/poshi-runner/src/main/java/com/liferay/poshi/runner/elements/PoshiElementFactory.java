@@ -32,11 +32,11 @@ import org.dom4j.Element;
 public class PoshiElementFactory {
 
 	public static PoshiElement newPoshiElement(
-	BasePoshiElement parentPoshiElement, String readableSyntax) {
+		BasePoshiElement parentPoshiElement, String readableSyntax) {
 
 		for (PoshiElement poshiElement : _poshiElements) {
 			PoshiElement newPoshiElement = poshiElement.clone(
-			parentPoshiElement, readableSyntax);
+				parentPoshiElement, readableSyntax);
 
 			if (newPoshiElement != null) {
 				return newPoshiElement;
@@ -44,7 +44,7 @@ public class PoshiElementFactory {
 		}
 
 		throw new RuntimeException(
-		"Unknown readable syntax\n" + readableSyntax);
+			"Unknown readable syntax\n" + readableSyntax);
 	}
 
 	public static PoshiElement newPoshiElement(Element element) {
@@ -100,16 +100,16 @@ public class PoshiElementFactory {
 
 		try {
 			Class<?> basePoshiElementClass = Class.forName(
-			path + ".BasePoshiElement");
+				path + ".BasePoshiElement");
 
 			File directory = new File(
-			basePoshiElementClass.getResource("").getPath());
+				basePoshiElementClass.getResource("").getPath());
 
 			for (File file : directory.listFiles()) {
 				String fileName = file.getName();
 
 				if (fileName.contains("PoshiElement.class") &&
-				!fileName.contains("Base")) {
+					!fileName.contains("Base")) {
 
 					int index = fileName.indexOf(".");
 
@@ -119,7 +119,7 @@ public class PoshiElementFactory {
 
 					if (basePoshiElementClass.isAssignableFrom(clazz)) {
 						PoshiElement poshiElement =
-						(PoshiElement)clazz.newInstance();
+							(PoshiElement)clazz.newInstance();
 
 						_poshiElements.add(poshiElement);
 					}

@@ -14,7 +14,6 @@
 
 package com.liferay.poshi.runner;
 
-import com.liferay.poshi.runner.elements.BasePoshiElement;
 import com.liferay.poshi.runner.elements.PoshiElementFactory;
 import com.liferay.poshi.runner.selenium.SeleniumUtil;
 import com.liferay.poshi.runner.util.Dom4JUtil;

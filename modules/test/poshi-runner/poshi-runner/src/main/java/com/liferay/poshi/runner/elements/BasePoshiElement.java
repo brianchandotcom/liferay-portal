@@ -15,11 +15,7 @@
 package com.liferay.poshi.runner.elements;
 
 import com.liferay.poshi.runner.util.Dom4JUtil;
-import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.RegexUtil;
-
-import java.io.File;
-import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +26,6 @@ import java.util.Set;
 import java.util.Stack;
 
 import org.dom4j.Attribute;
-import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.tree.DefaultElement;
 

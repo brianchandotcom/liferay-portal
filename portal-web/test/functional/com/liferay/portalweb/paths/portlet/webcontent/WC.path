@@ -233,6 +233,12 @@
 	<td>//div[contains(@class,'treeview')]//div[contains(@class,'card-horizontal') and contains(.,'${key_folderName}')]</td>
 	<td></td>
 </tr>
+<!--TOOLBAR-->
+<tr>
+	<td>TOOLBAR_MOVE_BUTTON</td>
+	<td>//div[@class='management-bar-header-right']/a[@data-title='Move']/span</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

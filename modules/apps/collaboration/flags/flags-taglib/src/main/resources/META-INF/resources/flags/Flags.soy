@@ -10,8 +10,10 @@
  * @param label
  * @param message
  * @param onReasonChange_
+ * @param onSubmitForm_
  * @param pathThemeImages
  * @param reportDialogOpen
+ * @param saveButton_
  * @param title
  */
 {template .render}
@@ -48,6 +50,7 @@
 /**
  *
  * @param closeReportDialog
+ * @param saveButton_
  * @param reportDialogOpen
  */
 {template .reportDialog}
@@ -67,7 +70,7 @@
 			{/param}
 
 			{param footer kind="html"}
-				<button type="button" class="btn btn-primary">Save</button>
+				<button class="btn btn-primary" data-onclick="{$saveButton_}" type="button">Save</button>
 			{/param}
 
 			{param noCloseButton: true /}
@@ -79,6 +82,7 @@
  * @param flagsEnabled
  * @param namespace
  * @param onReasonChange_
+ * @param onSubmitForm_
  * @param pathThemeImages
  * @param reporterEmailAddress
  * @param signedIn
@@ -86,7 +90,7 @@
  */
 {template .reportDialogBody}
 	{if $flagsEnabled}
-		<form class="container-fluid-1280" method="post" name="{$namespace}flagsForm">
+		<form class="container-fluid-1280" method="post" name="{$namespace}flagsForm" onsubmit="{$onSubmitForm_}" >
 			<p>
 			{msg desc=""}
 			you-are-about-to-report-a-violation-of-our-x-terms-of-use.-all-reports-are-strictly-confidential
@@ -97,7 +101,7 @@
 				<div class="form-group">
 					<label class="control-label" for="{$namespace}reason">{msg desc=""}reason-for-the-report{/msg}</label>
 
-					<select class="form-control" name="{$namespace}reason" data-onchange="{$onReasonChange_}">
+					<select class="form-control" id="{$namespace}reason" name="{$namespace}reason" data-onchange="{$onReasonChange_}">
 						{foreach $reason in $reasons}
 							<option value="{$reason}">{$reason}</option>
 						{/foreach}
@@ -108,12 +112,12 @@
 				<span class="hide" id="{$namespace}otherReasonContainer">
 					<div class="form-group">
 						<label class="control-label" for="{$namespace}otherReason">{msg desc=""}other-reason{/msg}</label>
-						<input class="form-control" name="{$namespace}otherReason" />
+						<input class="form-control" id="{$namespace}otherReason" name="{$namespace}otherReason" />
 					</div>
 				</span>
 
 				{if $signedIn}
-					<input name="{$namespace}reporterEmailAddress" type="hidden" value="{$reporterEmailAddress}" />
+					<input id="{$namespace}reporterEmailAddress" name="{$namespace}reporterEmailAddress" type="hidden" value="{$reporterEmailAddress}" />
 				{else}
 					<label class="control-label" for="{$namespace}reporterEmailAddress">{msg desc=""}email-address{/msg}
 						<span class="reference-mark text-warning">
@@ -122,10 +126,11 @@
 							</svg>
 						</span>
 					</label>
-					<input class="form-control" name="{$namespace}reporterEmailAddress" required type="email"/>
+					<input class="form-control" id="{$namespace}reporterEmailAddress" name="{$namespace}reporterEmailAddress" required type="email"/>
 				{/if}
 			</fieldset>
 
+			<input type="submit" class="hide" />
 		</form>
 	{else}
 		<p>{msg desc=""}please-sign-in-to-flag-this-as-inappropriate{/msg}</p>

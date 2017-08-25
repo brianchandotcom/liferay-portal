@@ -57,6 +57,23 @@ class Flags extends PortletBase {
 	}
 
 	/**
+	 * Gets the reason selected by the user.
+	 *
+	 * @return {String} reason
+	 */
+	getReason_() {
+		let reason = this.one('#reason').value;
+
+		if (reason === 'other') {
+			let otherReason = this.one('#otherReason').value;
+
+			reason = otherReason || Liferay.Language.get('no-reason-specified');
+		}
+
+		return reason;
+	}
+
+	/**
 	 * Checks the reason selected by the user, and allows
 	 * to introduce a specific reasons if necessary.
 	 *
@@ -74,6 +91,43 @@ class Flags extends PortletBase {
 		else {
 			dom.addClasses(otherReasonContainer, 'hide');
 		}
+	}
+
+	/**
+	 * Makes an ajax request to submit the data.
+	 *
+	 * @param {Event} event
+	 * @protected
+	 */
+	onSubmitForm_(event) {
+		event.preventDefault();
+
+		let form = this.one('form[name="' + this.ns('flagsForm') +'"]');
+
+		this.data[this.ns('reason')] = this.getReason_();
+		this.data[this.ns('reporterEmailAddress')] = this.one('#reporterEmailAddress').value;
+
+		let formData = new FormData();
+
+		for (let name in this.data) {
+			formData.append(name, this.data[name]);
+		}
+
+		fetch(this.uri, {
+			body: formData,
+			credentials: 'include',
+		 	method: 'post'
+		});
+	}
+
+	/**
+	 * Forms the submit.
+	 * @protected
+	 */
+	saveButton_() {
+		let input = this.one('input[type="submit"]');
+
+		input.click();
 	}
 };
 

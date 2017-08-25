@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -37,6 +36,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Map;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
@@ -218,10 +218,9 @@ public class FlagsTag extends TemplateRendererTag {
 
 	private String _getURI() throws WindowStateException {
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.FLAGS, PortletRequest.RENDER_PHASE);
+			request, PortletKeys.FLAGS, PortletRequest.ACTION_PHASE);
 
-		portletURL.setParameter("mvcRenderCommandName", "/flags/edit_entry");
-		portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
+		portletURL.setParameter(ActionRequest.ACTION_NAME, "/flags/edit_entry");
 
 		return portletURL.toString();
 	}

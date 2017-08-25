@@ -44,7 +44,8 @@ public class CommerceCartContentMiniDisplayContext
 
 		super(
 			httpServletRequest, httpServletResponse, commerceCartHelper,
-			commerceCartItemService, cpDefinitionHelper, commercePriceCalculationHelper);
+			commerceCartItemService, cpDefinitionHelper,
+			commercePriceCalculationHelper);
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(

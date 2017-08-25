@@ -15,7 +15,6 @@
 package com.liferay.commerce.internal.util;
 
 import com.liferay.commerce.constants.CommerceConstants;
-import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.service.CommerceCartItemService;
 import com.liferay.commerce.service.CommerceCartService;

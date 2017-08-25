@@ -33,6 +33,7 @@ if (selUser != null) {
 }
 
 portletURL.setParameter("eventName", eventName);
+portletURL.setParameter("syncEntitiesEventName", syncEntitiesEventName);
 
 long uniqueOrganizationId = 0;
 

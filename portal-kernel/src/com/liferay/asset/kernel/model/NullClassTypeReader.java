@@ -23,7 +23,10 @@ import java.util.Locale;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.asset.reader.NullClassTypeReader}
  */
+@Deprecated
 public class NullClassTypeReader implements ClassTypeReader {
 
 	@Override

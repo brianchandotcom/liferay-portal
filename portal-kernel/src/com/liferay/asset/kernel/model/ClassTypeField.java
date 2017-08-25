@@ -16,7 +16,10 @@ package com.liferay.asset.kernel.model;
 
 /**
  * @author Adolfo Pérez
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.asset.reader.ClassTypeField}
  */
+@Deprecated
 public class ClassTypeField {
 
 	public ClassTypeField(

@@ -26,7 +26,10 @@ import java.util.Locale;
 
 /**
  * @author Adolfo Pérez
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.asset.reader.BaseDDMStructureClassTypeReader}
  */
+@Deprecated
 public class BaseDDMStructureClassTypeReader implements ClassTypeReader {
 
 	public BaseDDMStructureClassTypeReader(String className) {

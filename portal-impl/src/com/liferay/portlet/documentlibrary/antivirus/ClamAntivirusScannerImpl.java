@@ -30,15 +30,15 @@ public class ClamAntivirusScannerImpl extends BaseFileAntivirusScanner {
 		int exitValue = 0;
 
 		try {
-			exitValue = scanProcess("clamdscan", file);
+			exitValue = _scanProcess("clamdscan", file);
 		}
 		catch (InterruptedException | IOException e) {
 			exitValue = -1;
 		}
 
 		try {
-			if(exitValue != 0 && exitValue != 1) {
-				exitValue = scanProcess("clamscan", file);
+			if ((exitValue != 0) && (exitValue != 1)) {
+				exitValue = _scanProcess("clamscan", file);
 			}
 
 			if (exitValue == 1) {
@@ -57,21 +57,21 @@ public class ClamAntivirusScannerImpl extends BaseFileAntivirusScanner {
 		}
 	}
 
-	private int scanProcess(String command, File file) 
-		throws IOException, InterruptedException {
+	private int _scanProcess(String command, File file)
+		throws InterruptedException, IOException {
 
 		Process process = null;
 
 		try {
 			ProcessBuilder processBuilder = new ProcessBuilder(
-					command, "--stdout", "--no-summary", file.getAbsolutePath());
-	
+				command, "--stdout", "--no-summary", file.getAbsolutePath());
+
 			processBuilder.redirectErrorStream(true);
-	
+
 			process = processBuilder.start();
-	
+
 			process.waitFor();
-	
+
 			return process.exitValue();
 		}
 		finally {
@@ -79,6 +79,6 @@ public class ClamAntivirusScannerImpl extends BaseFileAntivirusScanner {
 				process.destroy();
 			}
 		}
-
 	}
+
 }

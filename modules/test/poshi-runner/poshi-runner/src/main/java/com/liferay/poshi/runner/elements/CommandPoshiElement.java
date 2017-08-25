@@ -58,6 +58,26 @@ public class CommandPoshiElement extends BasePoshiElement {
 	}
 
 	@Override
+	public PoshiElement clone(
+		BasePoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (isElementType(parentPoshiElement, readableSyntax)) {
+			return new CommandPoshiElement(readableSyntax);
+		}
+
+		return null;
+	}
+
+	@Override
+	public PoshiElement clone(Element element) {
+		if (isElementType(_ELEMENT_NAME, element)) {
+			return new CommandPoshiElement(element);
+		}
+
+		return null;
+	}
+
+	@Override
 	public void parseReadableSyntax(String readableSyntax) {
 		for (String readableBlock : getReadableBlocks(readableSyntax)) {
 			if (readableBlock.endsWith("}") || readableBlock.endsWith(";") ||

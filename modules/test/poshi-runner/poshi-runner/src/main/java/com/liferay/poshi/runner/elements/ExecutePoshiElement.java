@@ -59,6 +59,26 @@ public class ExecutePoshiElement extends BasePoshiElement {
 	}
 
 	@Override
+	public PoshiElement clone(
+		BasePoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (isElementType(parentPoshiElement, readableSyntax)) {
+			return new ExecutePoshiElement(readableSyntax);
+		}
+
+		return null;
+	}
+
+	@Override
+	public PoshiElement clone(Element element) {
+		if (isElementType(_ELEMENT_NAME, element)) {
+			return new ExecutePoshiElement(element);
+		}
+
+		return null;
+	}
+
+	@Override
 	public void parseReadableSyntax(String readableSyntax) {
 		if (ReturnPoshiElement.isElementType(this, readableSyntax)) {
 			add(new ReturnPoshiElement(readableSyntax));

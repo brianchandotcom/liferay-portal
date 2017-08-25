@@ -51,6 +51,26 @@ public class TearDownPoshiElement extends CommandPoshiElement {
 		return true;
 	}
 
+	@Override
+	public PoshiElement clone(
+		BasePoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (isElementType(parentPoshiElement, readableSyntax)) {
+			return new TearDownPoshiElement(readableSyntax);
+		}
+
+		return null;
+	}
+
+	@Override
+	public PoshiElement clone(Element element) {
+		if (isElementType(_ELEMENT_NAME, element)) {
+			return new TearDownPoshiElement(element);
+		}
+
+		return null;
+	}
+
 	protected TearDownPoshiElement(Element element) {
 		super(_ELEMENT_NAME, element);
 	}

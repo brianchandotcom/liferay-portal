@@ -34,6 +34,26 @@ public class ElsePoshiElement extends ThenPoshiElement {
 	}
 
 	@Override
+	public PoshiElement clone(
+		BasePoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (isElementType(parentPoshiElement, readableSyntax)) {
+			return new ElsePoshiElement(readableSyntax);
+		}
+
+		return null;
+	}
+
+	@Override
+	public PoshiElement clone(Element element) {
+		if (isElementType(_ELEMENT_NAME, element)) {
+			return new ElsePoshiElement(element);
+		}
+
+		return null;
+	}
+
+	@Override
 	public String getBlockName() {
 		return "else";
 	}

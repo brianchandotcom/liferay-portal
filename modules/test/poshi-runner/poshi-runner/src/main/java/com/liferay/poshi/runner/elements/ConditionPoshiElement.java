@@ -35,6 +35,26 @@ public class ConditionPoshiElement extends ExecutePoshiElement {
 	}
 
 	@Override
+	public PoshiElement clone(
+		BasePoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (isElementType(parentPoshiElement, readableSyntax)) {
+			return new ConditionPoshiElement(readableSyntax);
+		}
+
+		return null;
+	}
+
+	@Override
+	public PoshiElement clone(Element element) {
+		if (isElementType(_ELEMENT_NAME, element)) {
+			return new ConditionPoshiElement(element);
+		}
+
+		return null;
+	}
+
+	@Override
 	public String getBlockName() {
 		return attributeValue("function");
 	}

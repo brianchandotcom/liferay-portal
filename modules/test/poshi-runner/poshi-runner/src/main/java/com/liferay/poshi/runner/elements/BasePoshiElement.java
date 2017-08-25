@@ -37,7 +37,8 @@ import org.dom4j.tree.DefaultElement;
 /**
  * @author Kenji Heigel
  */
-public abstract class BasePoshiElement extends DefaultElement {
+public abstract class BasePoshiElement
+	extends DefaultElement implements PoshiElement {
 
 	public static boolean isElementType(String name, Element element) {
 		if (name.equals(element.getName())) {

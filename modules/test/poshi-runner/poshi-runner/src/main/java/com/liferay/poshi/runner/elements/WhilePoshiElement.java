@@ -41,6 +41,26 @@ public class WhilePoshiElement extends IfPoshiElement {
 		return true;
 	}
 
+	@Override
+	public PoshiElement clone(
+		BasePoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (isElementType(parentPoshiElement, readableSyntax)) {
+			return new WhilePoshiElement(readableSyntax);
+		}
+
+		return null;
+	}
+
+	@Override
+	public PoshiElement clone(Element element) {
+		if (isElementType(_ELEMENT_NAME, element)) {
+			return new WhilePoshiElement(element);
+		}
+
+		return null;
+	}
+
 	protected WhilePoshiElement(Element element) {
 		super(_ELEMENT_NAME, element);
 	}

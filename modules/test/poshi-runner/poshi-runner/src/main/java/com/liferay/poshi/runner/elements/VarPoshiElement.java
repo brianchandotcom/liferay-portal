@@ -51,6 +51,26 @@ public class VarPoshiElement extends BasePoshiElement {
 		return true;
 	}
 
+	@Override
+	public PoshiElement clone(
+		BasePoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (isElementType(parentPoshiElement, readableSyntax)) {
+			return new VarPoshiElement(readableSyntax);
+		}
+
+		return null;
+	}
+
+	@Override
+	public PoshiElement clone(Element element) {
+		if (isElementType(_ELEMENT_NAME, element)) {
+			return new VarPoshiElement(element);
+		}
+
+		return null;
+	}
+
 	public String getVarValue() {
 		if (valueAttributeName == null) {
 			for (Node node : Dom4JUtil.toNodeList(content())) {

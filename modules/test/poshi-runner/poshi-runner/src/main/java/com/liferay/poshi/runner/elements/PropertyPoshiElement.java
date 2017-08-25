@@ -41,6 +41,26 @@ public class PropertyPoshiElement extends VarPoshiElement {
 		return true;
 	}
 
+	@Override
+	public PoshiElement clone(
+		BasePoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (isElementType(parentPoshiElement, readableSyntax)) {
+			return new PropertyPoshiElement(readableSyntax);
+		}
+
+		return null;
+	}
+
+	@Override
+	public PoshiElement clone(Element element) {
+		if (isElementType(_ELEMENT_NAME, element)) {
+			return new PropertyPoshiElement(element);
+		}
+
+		return null;
+	}
+
 	protected PropertyPoshiElement(Element element) {
 		super(_ELEMENT_NAME, element);
 	}

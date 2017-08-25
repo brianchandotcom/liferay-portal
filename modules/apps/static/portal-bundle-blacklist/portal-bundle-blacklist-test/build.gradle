@@ -2,9 +2,15 @@ sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
 dependencies {
+	provided project(":apps:static:portal-lpkg-deployer:portal-lpkg-deployer-test-util")
+
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.7"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	testIntegrationCompile project(":apps:static:portal-bundle-blacklist:portal-bundle-blacklist")
-	testIntegrationCompile project(":apps:static:portal-lpkg-deployer:portal-lpkg-deployer-test-util")
+}
+
+test {
+	systemProperty "blacklist.cfg.name", System.getProperty("blacklist.cfg.name")
+	systemProperty "liferay.home", System.getProperty("liferay.home")
 }

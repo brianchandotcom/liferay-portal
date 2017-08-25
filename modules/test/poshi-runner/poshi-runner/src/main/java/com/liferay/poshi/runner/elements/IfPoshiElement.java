@@ -44,6 +44,9 @@ public class IfPoshiElement extends BasePoshiElement {
 		return true;
 	}
 
+	public IfPoshiElement() {
+	}
+
 	@Override
 	public PoshiElement clone(
 		BasePoshiElement parentPoshiElement, String readableSyntax) {

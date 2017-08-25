@@ -36,6 +36,9 @@ public class ThenPoshiElement extends BasePoshiElement {
 		return false;
 	}
 
+	public ThenPoshiElement(){
+	}
+
 	@Override
 	public PoshiElement clone(
 		BasePoshiElement parentPoshiElement, String readableSyntax) {

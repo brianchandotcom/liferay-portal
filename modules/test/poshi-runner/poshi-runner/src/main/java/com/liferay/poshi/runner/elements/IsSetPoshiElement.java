@@ -33,6 +33,9 @@ public class IsSetPoshiElement extends BasePoshiElement {
 		return false;
 	}
 
+	public IsSetPoshiElement() {
+	}
+
 	@Override
 	public PoshiElement clone(
 		BasePoshiElement parentPoshiElement, String readableSyntax) {

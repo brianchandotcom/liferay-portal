@@ -41,6 +41,9 @@ public class PropertyPoshiElement extends VarPoshiElement {
 		return true;
 	}
 
+	public PropertyPoshiElement() {
+	}
+
 	@Override
 	public PoshiElement clone(
 		BasePoshiElement parentPoshiElement, String readableSyntax) {

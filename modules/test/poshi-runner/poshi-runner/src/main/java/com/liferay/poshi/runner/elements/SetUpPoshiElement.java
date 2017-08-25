@@ -51,6 +51,9 @@ public class SetUpPoshiElement extends CommandPoshiElement {
 		return true;
 	}
 
+	public SetUpPoshiElement() {
+	}
+
 	@Override
 	public PoshiElement clone(
 		BasePoshiElement parentPoshiElement, String readableSyntax) {

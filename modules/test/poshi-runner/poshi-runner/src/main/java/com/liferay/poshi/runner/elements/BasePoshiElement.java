@@ -111,6 +111,10 @@ public abstract class BasePoshiElement
 		return null;
 	}
 
+	public BasePoshiElement() {
+		super("");
+	}
+
 	@Override
 	public void add(Attribute attribute) {
 		if (attribute instanceof PoshiElementAttribute) {

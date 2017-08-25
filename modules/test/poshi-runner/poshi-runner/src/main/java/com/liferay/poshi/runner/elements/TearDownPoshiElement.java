@@ -51,6 +51,9 @@ public class TearDownPoshiElement extends CommandPoshiElement {
 		return true;
 	}
 
+	public TearDownPoshiElement() {
+	}
+
 	@Override
 	public PoshiElement clone(
 		BasePoshiElement parentPoshiElement, String readableSyntax) {

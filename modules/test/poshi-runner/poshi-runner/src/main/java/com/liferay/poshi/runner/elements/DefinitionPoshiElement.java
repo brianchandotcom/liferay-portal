@@ -54,6 +54,9 @@ public class DefinitionPoshiElement extends BasePoshiElement {
 		return true;
 	}
 
+	public DefinitionPoshiElement() {
+	}
+
 	@Override
 	public PoshiElement clone(
 		BasePoshiElement parentPoshiElement, String readableSyntax) {

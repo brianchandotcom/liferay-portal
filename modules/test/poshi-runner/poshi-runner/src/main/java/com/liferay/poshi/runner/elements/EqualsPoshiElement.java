@@ -33,6 +33,9 @@ public class EqualsPoshiElement extends BasePoshiElement {
 		return false;
 	}
 
+	public EqualsPoshiElement() {
+	}
+
 	@Override
 	public PoshiElement clone(
 		BasePoshiElement parentPoshiElement, String readableSyntax) {

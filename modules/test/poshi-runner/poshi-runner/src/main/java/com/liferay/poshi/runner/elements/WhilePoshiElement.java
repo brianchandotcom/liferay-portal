@@ -41,6 +41,9 @@ public class WhilePoshiElement extends IfPoshiElement {
 		return true;
 	}
 
+	public WhilePoshiElement() {
+	}
+
 	@Override
 	public PoshiElement clone(
 		BasePoshiElement parentPoshiElement, String readableSyntax) {

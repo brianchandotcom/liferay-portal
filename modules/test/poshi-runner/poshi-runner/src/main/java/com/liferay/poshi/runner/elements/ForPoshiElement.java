@@ -44,6 +44,9 @@ public class ForPoshiElement extends BasePoshiElement {
 		return true;
 	}
 
+	public ForPoshiElement() {
+	}
+
 	@Override
 	public PoshiElement clone(
 		BasePoshiElement parentPoshiElement, String readableSyntax) {

@@ -58,6 +58,9 @@ public class ExecutePoshiElement extends BasePoshiElement {
 		return true;
 	}
 
+	public ExecutePoshiElement() {
+	}
+
 	@Override
 	public PoshiElement clone(
 		BasePoshiElement parentPoshiElement, String readableSyntax) {

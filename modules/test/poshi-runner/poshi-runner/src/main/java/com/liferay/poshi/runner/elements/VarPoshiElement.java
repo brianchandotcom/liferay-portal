@@ -51,6 +51,9 @@ public class VarPoshiElement extends BasePoshiElement {
 		return true;
 	}
 
+	public VarPoshiElement() {
+	}
+
 	@Override
 	public PoshiElement clone(
 		BasePoshiElement parentPoshiElement, String readableSyntax) {

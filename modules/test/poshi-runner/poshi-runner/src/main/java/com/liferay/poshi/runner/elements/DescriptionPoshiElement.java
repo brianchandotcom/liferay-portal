@@ -33,6 +33,9 @@ public class DescriptionPoshiElement extends BasePoshiElement {
 		return false;
 	}
 
+	public DescriptionPoshiElement() {
+	}
+
 	@Override
 	public PoshiElement clone(
 		BasePoshiElement parentPoshiElement, String readableSyntax) {

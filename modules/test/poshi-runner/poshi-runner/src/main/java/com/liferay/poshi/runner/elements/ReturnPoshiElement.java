@@ -35,6 +35,9 @@ public class ReturnPoshiElement extends BasePoshiElement {
 		return false;
 	}
 
+	public ReturnPoshiElement() {
+	}
+
 	@Override
 	public PoshiElement clone(
 		BasePoshiElement parentPoshiElement, String readableSyntax) {

@@ -34,6 +34,9 @@ public class ConditionPoshiElement extends ExecutePoshiElement {
 		return false;
 	}
 
+	public ConditionPoshiElement() {
+	}
+
 	@Override
 	public PoshiElement clone(
 		BasePoshiElement parentPoshiElement, String readableSyntax) {

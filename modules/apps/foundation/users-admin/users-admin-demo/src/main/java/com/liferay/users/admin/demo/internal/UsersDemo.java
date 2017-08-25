@@ -20,6 +20,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.roles.admin.demo.data.creator.RoleDemoDataCreator;
 import com.liferay.site.demo.data.creator.SiteDemoDataCreator;
@@ -81,6 +84,18 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 		_siteMemberUserDemoDataCreator.create(
 			petLoversGroup.getGroupId(), "maria@liferay.com",
 			new long[] {forumModeratorRole.getRoleId()});
+
+		// Portal Content Reviewer role
+
+		Role portalContentReviewerRole = _roleLocalService.getRole(
+			company.getCompanyId(), RoleConstants.PORTAL_CONTENT_REVIEWER);
+
+		User portalContentReviewer = _basicUserDemoDataCreator.create(
+			company.getCompanyId(), "reviewersn", "reviewerea@liferay.com",
+			"reviewerfn", "reviewerln");
+
+		_roleLocalService.addUserRole(
+			portalContentReviewer.getUserId(), portalContentReviewerRole);
 	}
 
 	@Deactivate
@@ -99,6 +114,9 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 
 	@Reference
 	private CompanyAdminUserDemoDataCreator _companyAdminUserDemoDataCreator;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 	@Reference
 	private SiteAdminUserDemoDataCreator _siteAdminUserDemoDataCreator;

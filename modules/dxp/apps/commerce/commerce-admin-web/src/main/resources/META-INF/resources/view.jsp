@@ -24,9 +24,11 @@ NavigableMap<String, CommerceAdminModule> commerceAdminModules = commerceAdminMo
 String selectedCommerceAdminModuleKey = ParamUtil.getString(request, "commerceAdminModuleKey", commerceAdminModules.firstKey());
 
 CommerceAdminModule selectedCommerceAdminModule = commerceAdminModules.get(selectedCommerceAdminModuleKey);
+
+PortletURL searchURL = selectedCommerceAdminModule.getSearchURL(renderRequest, renderResponse);
 %>
 
-<aui:nav-bar markupView="lexicon">
+<aui:nav-bar cssClass='<%= (searchURL != null) ? "collapse-basic-search" : StringPool.BLANK %>' markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 
 		<%
@@ -50,6 +52,17 @@ CommerceAdminModule selectedCommerceAdminModule = commerceAdminModules.get(selec
 		%>
 
 	</aui:nav>
+
+	<c:if test="<%= searchURL != null %>">
+		<aui:nav-bar-search>
+			<aui:form action="<%= searchURL %>" method="get" name="searchFm">
+				<liferay-portlet:renderURLParams portletURL="<%= searchURL %>" />
+				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</aui:nav-bar-search>
+	</c:if>
 </aui:nav-bar>
 
 <%

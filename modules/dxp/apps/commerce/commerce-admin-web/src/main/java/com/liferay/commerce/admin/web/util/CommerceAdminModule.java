@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -46,6 +47,9 @@ public interface CommerceAdminModule {
 	public List<PortletDataHandlerControl> getExportControls(String namespace);
 
 	public String getLabel(Locale locale);
+
+	public PortletURL getSearchURL(
+		RenderRequest renderRequest, RenderResponse renderResponse);
 
 	public void importData(
 			String namespace, PortletDataContext portletDataContext)

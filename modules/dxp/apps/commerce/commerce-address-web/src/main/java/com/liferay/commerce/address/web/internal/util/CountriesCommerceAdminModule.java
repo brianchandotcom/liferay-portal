@@ -42,6 +42,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -122,6 +123,13 @@ public class CountriesCommerceAdminModule implements CommerceAdminModule {
 			"content.Language", locale, getClass());
 
 		return LanguageUtil.get(resourceBundle, "countries");
+	}
+
+	@Override
+	public PortletURL getSearchURL(
+		RenderRequest renderRequest, RenderResponse renderResponse) {
+
+		return null;
 	}
 
 	@Override

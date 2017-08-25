@@ -1092,15 +1092,21 @@ public abstract class BaseBuild implements Build {
 
 	protected static boolean isBuildFailingInUpstreamJob(Build build) {
 		try {
-			String jobVariant = build.getJobVariant();
-			String result = build.getResult();
-
 			List<TestResult> testResults = new ArrayList<>();
 
 			testResults.addAll(build.getTestResults("FAILED"));
 			testResults.addAll(build.getTestResults("REGRESSION"));
 
 			if (testResults.isEmpty()) {
+				String jobVariant = build.getJobVariant();
+				String result = build.getResult();
+
+				if (jobVariant.contains("/")) {
+					int index = jobVariant.lastIndexOf("/");
+
+					jobVariant = jobVariant.substring(0, index);
+				}
+
 				for (String upstreamJobFailure :
 						getUpstreamJobFailures("build")) {
 
@@ -1150,7 +1156,15 @@ public abstract class BaseBuild implements Build {
 			for (String failure : getUpstreamJobFailures("test")) {
 				Build axisBuild = testResult.getAxisBuild();
 
-				if (failure.contains(axisBuild.getJobVariant()) &&
+				String jobVariant = axisBuild.getJobVariant();
+
+				if (jobVariant.contains("/")) {
+					int index = jobVariant.lastIndexOf("/");
+
+					jobVariant = jobVariant.substring(0, index);
+				}
+
+				if (failure.contains(jobVariant) &&
 					failure.contains(testResult.getDisplayName())) {
 
 					return true;

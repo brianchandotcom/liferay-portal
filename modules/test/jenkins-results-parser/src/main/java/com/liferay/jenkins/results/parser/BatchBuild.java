@@ -80,6 +80,13 @@ public class BatchBuild extends BaseBuild {
 
 			Element failureElement = downstreamBuild.getGitHubMessageElement();
 
+			Element upstreamJobFailureElement =
+				downstreamBuild.getGitHubMessageUpstreamJobFailureElement();
+
+			if (upstreamJobFailureElement != null) {
+				upstreamJobFailureElements.add(upstreamJobFailureElement);
+			}
+
 			if (failureElement == null) {
 				continue;
 			}
@@ -91,13 +98,6 @@ public class BatchBuild extends BaseBuild {
 			}
 
 			failureElements.add(failureElement);
-
-			Element upstreamJobFailureElement =
-				downstreamBuild.getGitHubMessageUpstreamJobFailureElement();
-
-			if (upstreamJobFailureElement != null) {
-				upstreamJobFailureElements.add(upstreamJobFailureElement);
-			}
 		}
 
 		if (!upstreamJobFailureElements.isEmpty()) {

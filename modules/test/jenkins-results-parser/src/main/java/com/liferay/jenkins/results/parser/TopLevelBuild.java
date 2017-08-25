@@ -77,6 +77,30 @@ public class TopLevelBuild extends BaseBuild {
 		}
 	}
 
+	public String getAcceptanceUpstreamURL() {
+		String jobName = getJobName();
+
+		if (jobName.contains("pullrequest")) {
+			String acceptanceUpstreamJobURL = JenkinsResultsParserUtil.combine(
+				"https://test-1-1.liferay.com/job/",
+				jobName.replace("pullrequest", "upstream"));
+
+			try {
+				JenkinsResultsParserUtil.toString(
+					JenkinsResultsParserUtil.getLocalURL(
+						acceptanceUpstreamJobURL),
+					false, 0, 0, 0);
+			}
+			catch (IOException ioe) {
+				return null;
+			}
+
+			return acceptanceUpstreamJobURL;
+		}
+
+		return null;
+	}
+
 	public Map<String, String> getBaseGitRepositoryDetailsTempMap() {
 		String repositoryType = getBaseRepositoryType();
 
@@ -349,6 +373,20 @@ public class TopLevelBuild extends BaseBuild {
 		return Executors.newFixedThreadPool(20);
 	}
 
+	protected Element getFailedJobSummaryElement() {
+		Element jobSummaryListElement = getJobSummaryListElement(false);
+
+		int failCount =
+			getDownstreamBuildCount(null) -
+				getDownstreamBuildCountByResult("SUCCESS") + 1;
+
+		return Dom4JUtil.getNewElement(
+			"div", null,
+			Dom4JUtil.getNewElement(
+				"h4", null, Integer.toString(failCount), " Failed Jobs:"),
+			jobSummaryListElement);
+	}
+
 	@Override
 	protected FailureMessageGenerator[] getFailureMessageGenerators() {
 		return _FAILURE_MESSAGE_GENERATORS;
@@ -410,6 +448,30 @@ public class TopLevelBuild extends BaseBuild {
 		return jobSummaryListElement;
 	}
 
+	protected Element getJobSummaryListElement(boolean success) {
+		Element jobSummaryListElement = Dom4JUtil.getNewElement("ul");
+
+		List<Build> builds = new ArrayList<>();
+
+		builds.add(this);
+
+		builds.addAll(getDownstreamBuilds(null));
+
+		for (Build build : builds) {
+			String result = build.getResult();
+
+			if (result.equals("SUCCESS") == success) {
+				Element jobSummaryListItemElement = Dom4JUtil.getNewElement(
+					"li", jobSummaryListElement);
+
+				jobSummaryListItemElement.add(
+					build.getGitHubMessageBuildAnchorElement());
+			}
+		}
+
+		return jobSummaryListElement;
+	}
+
 	protected Element getMoreDetailsElement() {
 		Element moreDetailsElement = Dom4JUtil.getNewElement(
 			"h5", null, "For more details click ",
@@ -457,6 +519,21 @@ public class TopLevelBuild extends BaseBuild {
 			"stop.properties");
 	}
 
+	protected Element getSuccessfulJobSummaryElement() {
+		Element jobSummaryListElement = getJobSummaryListElement(true);
+
+		int successCount = getDownstreamBuildCountByResult("SUCCESS");
+
+		return Dom4JUtil.getNewElement(
+			"details", null,
+			Dom4JUtil.getNewElement(
+				"summary", null,
+				Dom4JUtil.getNewElement(
+					"strong", null, Integer.toString(successCount),
+					" Successful Jobs:")),
+			jobSummaryListElement);
+	}
+
 	@Override
 	protected String getTempMapURL(String tempMapName) {
 		String tempMapURL = super.getTempMapURL(tempMapName);
@@ -481,9 +558,18 @@ public class TopLevelBuild extends BaseBuild {
 		Element rootElement = Dom4JUtil.getNewElement(
 			"html", null, getResultElement(), getBuildTimeElement(),
 			Dom4JUtil.getNewElement("h4", null, "Base Branch:"),
-			getBaseBranchDetailsElement(),
-			Dom4JUtil.getNewElement("h4", null, "Job Summary:"),
-			getJobSummaryListElement(), getMoreDetailsElement());
+			getBaseBranchDetailsElement());
+
+		if (!result.equals("SUCCESS")) {
+			Dom4JUtil.addToElement(rootElement, getFailedJobSummaryElement());
+		}
+
+		if (getDownstreamBuildCountByResult("SUCCESS") > 0) {
+			Dom4JUtil.addToElement(
+				rootElement, getSuccessfulJobSummaryElement());
+		}
+
+		Dom4JUtil.addToElement(rootElement, getMoreDetailsElement());
 
 		String result = getResult();
 
@@ -494,7 +580,8 @@ public class TopLevelBuild extends BaseBuild {
 
 			Dom4JUtil.addToElement(
 				rootElement, Dom4JUtil.getNewElement("hr"),
-				Dom4JUtil.getNewElement("h4", null, "Failed Jobs:"));
+				Dom4JUtil.getNewElement(
+					"h4", null, "Failures unique to this pull:"));
 
 			List<Element> failureElements = new ArrayList<>();
 			List<Element> upstreamJobFailureElements = new ArrayList<>();
@@ -540,45 +627,47 @@ public class TopLevelBuild extends BaseBuild {
 			Dom4JUtil.getOrderedListElement(
 				failureElements, rootElement, maxFailureCount);
 
+			String acceptanceUpstreamJobURL = getAcceptanceUpstreamURL();
+
 			if ((failureElements.size() < maxFailureCount) &&
 				!upstreamJobFailureElements.isEmpty()) {
 
-				Dom4JUtil.addToElement(
-					rootElement, Dom4JUtil.getNewElement("hr"),
+				Element acceptanceUpstreamJobLinkElement =
+					Dom4JUtil.getNewAnchorElement(
+						acceptanceUpstreamJobURL,
+						"acceptance upstream results");
+
+				Element upstreamJobFailureElement = Dom4JUtil.getNewElement(
+					"details", null,
 					Dom4JUtil.getNewElement(
-						"h4", null,
-						JenkinsResultsParserUtil.combine(
-							"Failures in common with upstream(",
-							getUpstreamJobFailuresSHA(), "):")));
+						"summary", null,
+						Dom4JUtil.getNewElement(
+							"strong", null, "Failures in common with ",
+							acceptanceUpstreamJobLinkElement, " at ",
+							getUpstreamJobFailuresSHA(), ":")));
 
 				int remainingFailureCount =
 					maxFailureCount - failureElements.size();
 
 				Dom4JUtil.getOrderedListElement(
-					upstreamJobFailureElements, rootElement,
+					upstreamJobFailureElements, upstreamJobFailureElement,
 					remainingFailureCount);
+
+				Dom4JUtil.addToElement(
+					rootElement, Dom4JUtil.getNewElement("hr"),
+					upstreamJobFailureElement);
 			}
 
-			String jobName = getJobName();
+			if (jobName.contains("pullrequest") &&
+				upstreamJobFailureElements.isEmpty() &&
+				(acceptanceUpstreamJobURL != null)) {
 
-			if (jobName.contains("pullrequest")) {
-				String url = JenkinsResultsParserUtil.combine(
-					"https://test-1-1.liferay.com/job/",
-					jobName.replace("pullrequest", "upstream"));
-
-				try {
-					JenkinsResultsParserUtil.toString(
-						JenkinsResultsParserUtil.getLocalURL(url), false, 0, 0,
-						0);
-
-					Dom4JUtil.addToElement(
-						Dom4JUtil.getNewElement("h4", rootElement),
-						"For upstream results, click ",
-						Dom4JUtil.getNewAnchorElement(url, "here"), ".");
-				}
-				catch (IOException ioe) {
-					System.out.println("No upstream build detected.");
-				}
+				Dom4JUtil.addToElement(
+					Dom4JUtil.getNewElement("h4", rootElement),
+					"For upstream results, click ",
+					Dom4JUtil.getNewAnchorElement(
+						acceptanceUpstreamJobURL, "here"),
+					".");
 			}
 		}
 

@@ -110,7 +110,7 @@ public class CPDefinitionLinkStagedModelDataHandler
 		importedCPDefinitionLink.setGroupId(
 			portletDataContext.getScopeGroupId());
 		importedCPDefinitionLink.setCPDefinitionId1(cpDefinitionId1);
-		importedCPDefinitionLink.setCPDefinitionId1(cpDefinitionId2);
+		importedCPDefinitionLink.setCPDefinitionId2(cpDefinitionId2);
 
 		CPDefinitionLink existingCPDefinitionLink =
 			_stagedModelRepository.fetchStagedModelByUuidAndGroupId(

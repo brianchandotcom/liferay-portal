@@ -74,7 +74,7 @@ public class BNDWebContextPathCheck extends BaseFileCheck {
 		}
 		else if (_hasPackageJSONNameProperty(absolutePath)) {
 			addMessage(
-				fileName, "Incorrect Web-ContextPath '" + webContextPath + "'",
+				fileName, "Missing Web-ContextPath",
 				"bnd_bundle_information.markdown");
 		}
 	}

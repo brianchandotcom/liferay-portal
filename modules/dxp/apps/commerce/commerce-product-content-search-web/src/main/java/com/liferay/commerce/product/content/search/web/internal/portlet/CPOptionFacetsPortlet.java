@@ -190,8 +190,10 @@ public class CPOptionFacetsPortlet
 
 		SearchContext searchContext = buildSearchContext(renderRequest);
 
-		searchContext.setAssetCategoryIds(
-			new long[] {assetCategory.getCategoryId()});
+		if (assetCategory != null) {
+			searchContext.setAssetCategoryIds(
+				new long[] {assetCategory.getCategoryId()});
+		}
 
 		Facet facet = new SimpleFacet(searchContext);
 

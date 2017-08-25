@@ -89,4 +89,11 @@ public interface CommerceCartService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	public void mergeGuestCommerceCart(long guestCommerceCartId,
+		long userCommerceCartId, ServiceContext serviceContext)
+		throws PortalException;
+
+	public CommerceCart updateUser(long commerceCartId, long userId)
+		throws PortalException;
 }

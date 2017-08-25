@@ -291,6 +291,10 @@ public interface CommerceCartLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public void mergeGuestCommerceCart(long guestCommerceCartId,
+		long userCommerceCartId, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Updates the commerce cart in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -299,4 +303,7 @@ public interface CommerceCartLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceCart updateCommerceCart(CommerceCart commerceCart);
+
+	public CommerceCart updateUser(long commerceCartId, long userId)
+		throws PortalException;
 }

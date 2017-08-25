@@ -351,6 +351,15 @@ public class CommerceCartLocalServiceWrapper implements CommerceCartLocalService
 		return _commerceCartLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public void mergeGuestCommerceCart(long guestCommerceCartId,
+		long userCommerceCartId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commerceCartLocalService.mergeGuestCommerceCart(guestCommerceCartId,
+			userCommerceCartId, serviceContext);
+	}
+
 	/**
 	* Updates the commerce cart in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -361,6 +370,13 @@ public class CommerceCartLocalServiceWrapper implements CommerceCartLocalService
 	public com.liferay.commerce.model.CommerceCart updateCommerceCart(
 		com.liferay.commerce.model.CommerceCart commerceCart) {
 		return _commerceCartLocalService.updateCommerceCart(commerceCart);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceCart updateUser(
+		long commerceCartId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCartLocalService.updateUser(commerceCartId, userId);
 	}
 
 	@Override

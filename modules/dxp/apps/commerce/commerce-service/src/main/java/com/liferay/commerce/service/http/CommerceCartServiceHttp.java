@@ -288,6 +288,68 @@ public class CommerceCartServiceHttp {
 		}
 	}
 
+	public static void mergeGuestCommerceCart(HttpPrincipal httpPrincipal,
+		long guestCommerceCartId, long userCommerceCartId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceCartServiceUtil.class,
+					"mergeGuestCommerceCart",
+					_mergeGuestCommerceCartParameterTypes8);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					guestCommerceCartId, userCommerceCartId, serviceContext);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceCart updateUser(
+		HttpPrincipal httpPrincipal, long commerceCartId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceCartServiceUtil.class,
+					"updateUser", _updateUserParameterTypes9);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceCartId, userId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.model.CommerceCart)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(CommerceCartServiceHttp.class);
 	private static final Class<?>[] _addCommerceCartParameterTypes0 = new Class[] {
 			java.lang.String.class, int.class,
@@ -314,5 +376,12 @@ public class CommerceCartServiceHttp {
 		};
 	private static final Class<?>[] _getCommerceCartsCountParameterTypes7 = new Class[] {
 			long.class, int.class
+		};
+	private static final Class<?>[] _mergeGuestCommerceCartParameterTypes8 = new Class[] {
+			long.class, long.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _updateUserParameterTypes9 = new Class[] {
+			long.class, long.class
 		};
 }

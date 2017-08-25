@@ -328,6 +328,15 @@ public class CommerceCartLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static void mergeGuestCommerceCart(long guestCommerceCartId,
+		long userCommerceCartId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.mergeGuestCommerceCart(guestCommerceCartId, userCommerceCartId,
+			serviceContext);
+	}
+
 	/**
 	* Updates the commerce cart in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -337,6 +346,12 @@ public class CommerceCartLocalServiceUtil {
 	public static com.liferay.commerce.model.CommerceCart updateCommerceCart(
 		com.liferay.commerce.model.CommerceCart commerceCart) {
 		return getService().updateCommerceCart(commerceCart);
+	}
+
+	public static com.liferay.commerce.model.CommerceCart updateUser(
+		long commerceCartId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateUser(commerceCartId, userId);
 	}
 
 	public static CommerceCartLocalService getService() {

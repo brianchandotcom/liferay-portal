@@ -1641,6 +1641,606 @@ public class CommerceCartItemPersistenceImpl extends BasePersistenceImpl<Commerc
 	}
 
 	private static final String _FINDER_COLUMN_CPINSTANCEID_CPINSTANCEID_2 = "commerceCartItem.CPInstanceId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_D_I = new FinderPath(CommerceCartItemModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceCartItemModelImpl.FINDER_CACHE_ENABLED,
+			CommerceCartItemImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByC_D_I",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_D_I = new FinderPath(CommerceCartItemModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceCartItemModelImpl.FINDER_CACHE_ENABLED,
+			CommerceCartItemImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_D_I",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			},
+			CommerceCartItemModelImpl.COMMERCECARTID_COLUMN_BITMASK |
+			CommerceCartItemModelImpl.CPDEFINITIONID_COLUMN_BITMASK |
+			CommerceCartItemModelImpl.CPINSTANCEID_COLUMN_BITMASK |
+			CommerceCartItemModelImpl.CREATEDATE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_D_I = new FinderPath(CommerceCartItemModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceCartItemModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_D_I",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			});
+
+	/**
+	 * Returns all the commerce cart items where commerceCartId = &#63; and CPDefinitionId = &#63; and CPInstanceId = &#63;.
+	 *
+	 * @param commerceCartId the commerce cart ID
+	 * @param CPDefinitionId the cp definition ID
+	 * @param CPInstanceId the cp instance ID
+	 * @return the matching commerce cart items
+	 */
+	@Override
+	public List<CommerceCartItem> findByC_D_I(long commerceCartId,
+		long CPDefinitionId, long CPInstanceId) {
+		return findByC_D_I(commerceCartId, CPDefinitionId, CPInstanceId,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce cart items where commerceCartId = &#63; and CPDefinitionId = &#63; and CPInstanceId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param commerceCartId the commerce cart ID
+	 * @param CPDefinitionId the cp definition ID
+	 * @param CPInstanceId the cp instance ID
+	 * @param start the lower bound of the range of commerce cart items
+	 * @param end the upper bound of the range of commerce cart items (not inclusive)
+	 * @return the range of matching commerce cart items
+	 */
+	@Override
+	public List<CommerceCartItem> findByC_D_I(long commerceCartId,
+		long CPDefinitionId, long CPInstanceId, int start, int end) {
+		return findByC_D_I(commerceCartId, CPDefinitionId, CPInstanceId, start,
+			end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce cart items where commerceCartId = &#63; and CPDefinitionId = &#63; and CPInstanceId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param commerceCartId the commerce cart ID
+	 * @param CPDefinitionId the cp definition ID
+	 * @param CPInstanceId the cp instance ID
+	 * @param start the lower bound of the range of commerce cart items
+	 * @param end the upper bound of the range of commerce cart items (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce cart items
+	 */
+	@Override
+	public List<CommerceCartItem> findByC_D_I(long commerceCartId,
+		long CPDefinitionId, long CPInstanceId, int start, int end,
+		OrderByComparator<CommerceCartItem> orderByComparator) {
+		return findByC_D_I(commerceCartId, CPDefinitionId, CPInstanceId, start,
+			end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce cart items where commerceCartId = &#63; and CPDefinitionId = &#63; and CPInstanceId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param commerceCartId the commerce cart ID
+	 * @param CPDefinitionId the cp definition ID
+	 * @param CPInstanceId the cp instance ID
+	 * @param start the lower bound of the range of commerce cart items
+	 * @param end the upper bound of the range of commerce cart items (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching commerce cart items
+	 */
+	@Override
+	public List<CommerceCartItem> findByC_D_I(long commerceCartId,
+		long CPDefinitionId, long CPInstanceId, int start, int end,
+		OrderByComparator<CommerceCartItem> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_D_I;
+			finderArgs = new Object[] {
+					commerceCartId, CPDefinitionId, CPInstanceId
+				};
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_D_I;
+			finderArgs = new Object[] {
+					commerceCartId, CPDefinitionId, CPInstanceId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<CommerceCartItem> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<CommerceCartItem>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CommerceCartItem commerceCartItem : list) {
+					if ((commerceCartId != commerceCartItem.getCommerceCartId()) ||
+							(CPDefinitionId != commerceCartItem.getCPDefinitionId()) ||
+							(CPInstanceId != commerceCartItem.getCPInstanceId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(5 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_COMMERCECARTITEM_WHERE);
+
+			query.append(_FINDER_COLUMN_C_D_I_COMMERCECARTID_2);
+
+			query.append(_FINDER_COLUMN_C_D_I_CPDEFINITIONID_2);
+
+			query.append(_FINDER_COLUMN_C_D_I_CPINSTANCEID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CommerceCartItemModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(commerceCartId);
+
+				qPos.add(CPDefinitionId);
+
+				qPos.add(CPInstanceId);
+
+				if (!pagination) {
+					list = (List<CommerceCartItem>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<CommerceCartItem>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first commerce cart item in the ordered set where commerceCartId = &#63; and CPDefinitionId = &#63; and CPInstanceId = &#63;.
+	 *
+	 * @param commerceCartId the commerce cart ID
+	 * @param CPDefinitionId the cp definition ID
+	 * @param CPInstanceId the cp instance ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce cart item
+	 * @throws NoSuchCartItemException if a matching commerce cart item could not be found
+	 */
+	@Override
+	public CommerceCartItem findByC_D_I_First(long commerceCartId,
+		long CPDefinitionId, long CPInstanceId,
+		OrderByComparator<CommerceCartItem> orderByComparator)
+		throws NoSuchCartItemException {
+		CommerceCartItem commerceCartItem = fetchByC_D_I_First(commerceCartId,
+				CPDefinitionId, CPInstanceId, orderByComparator);
+
+		if (commerceCartItem != null) {
+			return commerceCartItem;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("commerceCartId=");
+		msg.append(commerceCartId);
+
+		msg.append(", CPDefinitionId=");
+		msg.append(CPDefinitionId);
+
+		msg.append(", CPInstanceId=");
+		msg.append(CPInstanceId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCartItemException(msg.toString());
+	}
+
+	/**
+	 * Returns the first commerce cart item in the ordered set where commerceCartId = &#63; and CPDefinitionId = &#63; and CPInstanceId = &#63;.
+	 *
+	 * @param commerceCartId the commerce cart ID
+	 * @param CPDefinitionId the cp definition ID
+	 * @param CPInstanceId the cp instance ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce cart item, or <code>null</code> if a matching commerce cart item could not be found
+	 */
+	@Override
+	public CommerceCartItem fetchByC_D_I_First(long commerceCartId,
+		long CPDefinitionId, long CPInstanceId,
+		OrderByComparator<CommerceCartItem> orderByComparator) {
+		List<CommerceCartItem> list = findByC_D_I(commerceCartId,
+				CPDefinitionId, CPInstanceId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last commerce cart item in the ordered set where commerceCartId = &#63; and CPDefinitionId = &#63; and CPInstanceId = &#63;.
+	 *
+	 * @param commerceCartId the commerce cart ID
+	 * @param CPDefinitionId the cp definition ID
+	 * @param CPInstanceId the cp instance ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce cart item
+	 * @throws NoSuchCartItemException if a matching commerce cart item could not be found
+	 */
+	@Override
+	public CommerceCartItem findByC_D_I_Last(long commerceCartId,
+		long CPDefinitionId, long CPInstanceId,
+		OrderByComparator<CommerceCartItem> orderByComparator)
+		throws NoSuchCartItemException {
+		CommerceCartItem commerceCartItem = fetchByC_D_I_Last(commerceCartId,
+				CPDefinitionId, CPInstanceId, orderByComparator);
+
+		if (commerceCartItem != null) {
+			return commerceCartItem;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("commerceCartId=");
+		msg.append(commerceCartId);
+
+		msg.append(", CPDefinitionId=");
+		msg.append(CPDefinitionId);
+
+		msg.append(", CPInstanceId=");
+		msg.append(CPInstanceId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCartItemException(msg.toString());
+	}
+
+	/**
+	 * Returns the last commerce cart item in the ordered set where commerceCartId = &#63; and CPDefinitionId = &#63; and CPInstanceId = &#63;.
+	 *
+	 * @param commerceCartId the commerce cart ID
+	 * @param CPDefinitionId the cp definition ID
+	 * @param CPInstanceId the cp instance ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce cart item, or <code>null</code> if a matching commerce cart item could not be found
+	 */
+	@Override
+	public CommerceCartItem fetchByC_D_I_Last(long commerceCartId,
+		long CPDefinitionId, long CPInstanceId,
+		OrderByComparator<CommerceCartItem> orderByComparator) {
+		int count = countByC_D_I(commerceCartId, CPDefinitionId, CPInstanceId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CommerceCartItem> list = findByC_D_I(commerceCartId,
+				CPDefinitionId, CPInstanceId, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the commerce cart items before and after the current commerce cart item in the ordered set where commerceCartId = &#63; and CPDefinitionId = &#63; and CPInstanceId = &#63;.
+	 *
+	 * @param commerceCartItemId the primary key of the current commerce cart item
+	 * @param commerceCartId the commerce cart ID
+	 * @param CPDefinitionId the cp definition ID
+	 * @param CPInstanceId the cp instance ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce cart item
+	 * @throws NoSuchCartItemException if a commerce cart item with the primary key could not be found
+	 */
+	@Override
+	public CommerceCartItem[] findByC_D_I_PrevAndNext(long commerceCartItemId,
+		long commerceCartId, long CPDefinitionId, long CPInstanceId,
+		OrderByComparator<CommerceCartItem> orderByComparator)
+		throws NoSuchCartItemException {
+		CommerceCartItem commerceCartItem = findByPrimaryKey(commerceCartItemId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceCartItem[] array = new CommerceCartItemImpl[3];
+
+			array[0] = getByC_D_I_PrevAndNext(session, commerceCartItem,
+					commerceCartId, CPDefinitionId, CPInstanceId,
+					orderByComparator, true);
+
+			array[1] = commerceCartItem;
+
+			array[2] = getByC_D_I_PrevAndNext(session, commerceCartItem,
+					commerceCartId, CPDefinitionId, CPInstanceId,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommerceCartItem getByC_D_I_PrevAndNext(Session session,
+		CommerceCartItem commerceCartItem, long commerceCartId,
+		long CPDefinitionId, long CPInstanceId,
+		OrderByComparator<CommerceCartItem> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		query.append(_SQL_SELECT_COMMERCECARTITEM_WHERE);
+
+		query.append(_FINDER_COLUMN_C_D_I_COMMERCECARTID_2);
+
+		query.append(_FINDER_COLUMN_C_D_I_CPDEFINITIONID_2);
+
+		query.append(_FINDER_COLUMN_C_D_I_CPINSTANCEID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CommerceCartItemModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(commerceCartId);
+
+		qPos.add(CPDefinitionId);
+
+		qPos.add(CPInstanceId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(commerceCartItem);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CommerceCartItem> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the commerce cart items where commerceCartId = &#63; and CPDefinitionId = &#63; and CPInstanceId = &#63; from the database.
+	 *
+	 * @param commerceCartId the commerce cart ID
+	 * @param CPDefinitionId the cp definition ID
+	 * @param CPInstanceId the cp instance ID
+	 */
+	@Override
+	public void removeByC_D_I(long commerceCartId, long CPDefinitionId,
+		long CPInstanceId) {
+		for (CommerceCartItem commerceCartItem : findByC_D_I(commerceCartId,
+				CPDefinitionId, CPInstanceId, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(commerceCartItem);
+		}
+	}
+
+	/**
+	 * Returns the number of commerce cart items where commerceCartId = &#63; and CPDefinitionId = &#63; and CPInstanceId = &#63;.
+	 *
+	 * @param commerceCartId the commerce cart ID
+	 * @param CPDefinitionId the cp definition ID
+	 * @param CPInstanceId the cp instance ID
+	 * @return the number of matching commerce cart items
+	 */
+	@Override
+	public int countByC_D_I(long commerceCartId, long CPDefinitionId,
+		long CPInstanceId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_D_I;
+
+		Object[] finderArgs = new Object[] {
+				commerceCartId, CPDefinitionId, CPInstanceId
+			};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_COMMERCECARTITEM_WHERE);
+
+			query.append(_FINDER_COLUMN_C_D_I_COMMERCECARTID_2);
+
+			query.append(_FINDER_COLUMN_C_D_I_CPDEFINITIONID_2);
+
+			query.append(_FINDER_COLUMN_C_D_I_CPINSTANCEID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(commerceCartId);
+
+				qPos.add(CPDefinitionId);
+
+				qPos.add(CPInstanceId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_D_I_COMMERCECARTID_2 = "commerceCartItem.commerceCartId = ? AND ";
+	private static final String _FINDER_COLUMN_C_D_I_CPDEFINITIONID_2 = "commerceCartItem.CPDefinitionId = ? AND ";
+	private static final String _FINDER_COLUMN_C_D_I_CPINSTANCEID_2 = "commerceCartItem.CPInstanceId = ?";
 
 	public CommerceCartItemPersistenceImpl() {
 		setModelClass(CommerceCartItem.class);
@@ -1905,6 +2505,16 @@ public class CommerceCartItemPersistenceImpl extends BasePersistenceImpl<Commerc
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CPINSTANCEID,
 				args);
 
+			args = new Object[] {
+					commerceCartItemModelImpl.getCommerceCartId(),
+					commerceCartItemModelImpl.getCPDefinitionId(),
+					commerceCartItemModelImpl.getCPInstanceId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_D_I, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_D_I,
+				args);
+
 			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
 				FINDER_ARGS_EMPTY);
@@ -1967,6 +2577,29 @@ public class CommerceCartItemPersistenceImpl extends BasePersistenceImpl<Commerc
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_CPINSTANCEID, args);
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CPINSTANCEID,
+					args);
+			}
+
+			if ((commerceCartItemModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_D_I.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						commerceCartItemModelImpl.getOriginalCommerceCartId(),
+						commerceCartItemModelImpl.getOriginalCPDefinitionId(),
+						commerceCartItemModelImpl.getOriginalCPInstanceId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_D_I, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_D_I,
+					args);
+
+				args = new Object[] {
+						commerceCartItemModelImpl.getCommerceCartId(),
+						commerceCartItemModelImpl.getCPDefinitionId(),
+						commerceCartItemModelImpl.getCPInstanceId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_D_I, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_D_I,
 					args);
 			}
 		}

@@ -95,6 +95,21 @@ public class CommerceCartServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static void mergeGuestCommerceCart(long guestCommerceCartId,
+		long userCommerceCartId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.mergeGuestCommerceCart(guestCommerceCartId, userCommerceCartId,
+			serviceContext);
+	}
+
+	public static com.liferay.commerce.model.CommerceCart updateUser(
+		long commerceCartId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateUser(commerceCartId, userId);
+	}
+
 	public static CommerceCartService getService() {
 		return _serviceTracker.getService();
 	}

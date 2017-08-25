@@ -298,6 +298,12 @@ public class CommerceCartWrapper implements CommerceCart,
 	}
 
 	@Override
+	public boolean isGuestCart()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCart.isGuestCart();
+	}
+
+	@Override
 	public boolean isNew() {
 		return _commerceCart.isNew();
 	}

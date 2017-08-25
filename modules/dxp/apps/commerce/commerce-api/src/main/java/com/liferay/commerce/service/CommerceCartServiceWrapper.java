@@ -96,6 +96,22 @@ public class CommerceCartServiceWrapper implements CommerceCartService,
 	}
 
 	@Override
+	public void mergeGuestCommerceCart(long guestCommerceCartId,
+		long userCommerceCartId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commerceCartService.mergeGuestCommerceCart(guestCommerceCartId,
+			userCommerceCartId, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceCart updateUser(
+		long commerceCartId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCartService.updateUser(commerceCartId, userId);
+	}
+
+	@Override
 	public CommerceCartService getWrappedService() {
 		return _commerceCartService;
 	}

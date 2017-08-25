@@ -185,5 +185,35 @@ public class CommerceCartServiceSoap {
 		}
 	}
 
+	public static void mergeGuestCommerceCart(long guestCommerceCartId,
+		long userCommerceCartId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			CommerceCartServiceUtil.mergeGuestCommerceCart(guestCommerceCartId,
+				userCommerceCartId, serviceContext);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceCartSoap updateUser(
+		long commerceCartId, long userId) throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceCart returnValue = CommerceCartServiceUtil.updateUser(commerceCartId,
+					userId);
+
+			return com.liferay.commerce.model.CommerceCartSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(CommerceCartServiceSoap.class);
 }

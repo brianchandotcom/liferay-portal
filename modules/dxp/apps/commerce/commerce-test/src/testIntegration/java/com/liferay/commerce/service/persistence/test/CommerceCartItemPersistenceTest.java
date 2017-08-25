@@ -198,6 +198,14 @@ public class CommerceCartItemPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_D_I() throws Exception {
+		_persistence.countByC_D_I(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByC_D_I(0L, 0L, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CommerceCartItem newCommerceCartItem = addCommerceCartItem();
 

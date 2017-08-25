@@ -112,6 +112,116 @@
 	</attribute>
 </tag>
 <tag>
+	<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-asset:asset-add-button</code>]]>.</description>
+	<name>asset-add-button</name>
+	<tag-class>com.liferay.taglib.ui.AssetAddButtonTag</tag-class>
+	<body-content>JSP</body-content>
+	<attribute>
+		<name>addDisplayPageParameter</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>allAssetCategoryIds</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>allAssetTagNames</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>classNameIds</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>classTypeIds</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>groupIds</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>redirect</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>useDialog</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+</tag>
+<tag>
+	<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-asset:asset-entry-display</code>]]>.</description>
+	<name>asset-addon-entry-display</name>
+	<tag-class>com.liferay.taglib.ui.AssetAddonEntryDisplayTag</tag-class>
+	<body-content>JSP</body-content>
+	<attribute>
+		<name>assetAddonEntries</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+</tag>
+<tag>
+	<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-asset:asset-addon-entry-selector</code>]]>.</description>
+	<name>asset-addon-entry-selector</name>
+	<tag-class>com.liferay.taglib.ui.AssetAddonEntrySelectorTag</tag-class>
+	<body-content>JSP</body-content>
+	<attribute>
+		<name>assetAddonEntries</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>hiddenInput</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>id</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>selectedAssetAddonEntries</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>title</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+</tag>
+<tag>
+	<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-asset:asset-categories-available</code>]]>.</description>
+	<name>asset-categories-available</name>
+	<tag-class>com.liferay.taglib.ui.AssetCategoriesAvailableTag</tag-class>
+	<body-content>JSP</body-content>
+	<attribute>
+		<name>className</name>
+		<required>true</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>classPK</name>
+		<required>true</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+</tag>
+<tag>
+	<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-asset:asset-categories-error</code>]]>.</description>
+	<name>asset-categories-error</name>
+	<tag-class>com.liferay.taglib.ui.AssetCategoriesErrorTag</tag-class>
+	<body-content>JSP</body-content>
+</tag>
+<tag>
 	<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-asset:asset-categories-selector</code>]]>.</description>
 	<name>asset-categories-selector</name>
 	<tag-class>com.liferay.taglib.ui.AssetCategoriesSelectorTag</tag-class>
@@ -153,6 +263,213 @@
 	</attribute>
 	<attribute>
 		<name>showRequiredLabel</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+</tag>
+<tag>
+	<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-asset:asset-categories-summary</code>]]>.</description>
+	<name>asset-categories-summary</name>
+	<tag-class>com.liferay.taglib.ui.AssetCategoriesSummaryTag</tag-class>
+	<body-content>JSP</body-content>
+	<attribute>
+		<name>className</name>
+		<required>true</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>classPK</name>
+		<required>true</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>message</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>paramName</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>portletURL</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+</tag>
+<tag>
+	<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-asset:asset-display</code>]]>.</description>
+	<name>asset-display</name>
+	<tag-class>com.liferay.taglib.ui.AssetDisplayTag</tag-class>
+	<body-content>JSP</body-content>
+	<attribute>
+		<name>abstractLength</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>assetEntry</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>assetRenderer</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>assetRendererFactory</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>className</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>classPK</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>renderer</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>showComments</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>showExtraInfo</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>showHeader</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>template</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>viewURL</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+</tag>
+<tag>
+	<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-asset:asset-links</code>]]>.</description>
+	<name>asset-links</name>
+	<tag-class>com.liferay.taglib.ui.AssetLinksTag</tag-class>
+	<body-content>JSP</body-content>
+	<attribute>
+		<name>assetEntryId</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>className</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>classPK</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>portletURL</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+</tag>
+<tag>
+	<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-asset:asset-metadata</code>]]>.</description>
+	<name>asset-metadata</name>
+	<tag-class>com.liferay.taglib.ui.AssetMetadataTag</tag-class>
+	<body-content>JSP</body-content>
+	<attribute>
+		<name>className</name>
+		<required>true</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>classPK</name>
+		<required>true</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>filterByMetadata</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>metadataFields</name>
+		<required>true</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+</tag>
+<tag>
+	<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-asset:asset-tags-available</code>]]>.</description>
+	<name>asset-tags-available</name>
+	<tag-class>com.liferay.taglib.ui.AssetTagsAvailableTag</tag-class>
+	<body-content>JSP</body-content>
+	<attribute>
+		<name>className</name>
+		<required>true</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>classPK</name>
+		<required>true</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+</tag>
+<tag>
+	<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-asset:asset-tags-error</code>]]>. Creates a <![CDATA[<code>liferay-ui:error</code>]]> component to display tag-related error messages.</description>
+	<name>asset-tags-error</name>
+	<tag-class>com.liferay.taglib.ui.AssetTagsErrorTag</tag-class>
+	<body-content>JSP</body-content>
+</tag>
+<tag>
+	<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-asset:asset-tags-navigation</code>]]>.</description>
+	<name>asset-tags-navigation</name>
+	<tag-class>com.liferay.taglib.ui.AssetTagsNavigationTag</tag-class>
+	<body-content>JSP</body-content>
+	<attribute>
+		<name>classNameId</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>displayStyle</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>hidePortletWhenEmpty</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>maxAssetTags</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>showAssetCount</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>showZeroAssetCount</name>
 		<required>false</required>
 		<rtexprvalue>true</rtexprvalue>
 	</attribute>
@@ -229,6 +546,48 @@
 	<attribute>
 		<description>A function to be called when a tag is removed.</description>
 		<name>removeCallback</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+</tag>
+<tag>
+	<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-asset:asset-tags-summary</code>]]>. Creates a component to display all the tags associated with an asset, such as a blog entry, wiki page, or message boards message.</description>
+	<name>asset-tags-summary</name>
+	<tag-class>com.liferay.taglib.ui.AssetTagsSummaryTag</tag-class>
+	<body-content>JSP</body-content>
+	<attribute>
+		<description>An array of the asset tag names.</description>
+		<name>assetTagNames</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<description>The Java class of the asset.</description>
+		<name>className</name>
+		<required>true</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<description>The Java class primary key of an asset. This is a Java <![CDATA[<code>long</code>]]>.</description>
+		<name>classPK</name>
+		<required>true</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<description>A message to display before the tag labels. A standard example is <![CDATA[<code>tags</code>]]>, which renders as <![CDATA[<code>Tags:</code>]]>.</description>
+		<name>message</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<description>A parameter name for the tags. The default value is <![CDATA[<code>tag</code>]]>.</description>
+		<name>paramName</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<description>The URL of a portlet to display the tags.</description>
+		<name>portletURL</name>
 		<required>false</required>
 		<rtexprvalue>true</rtexprvalue>
 	</attribute>
@@ -458,6 +817,27 @@
 	</attribute>
 	<attribute>
 		<name>rowChecker</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+</tag>
+<tag>
+	<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-asset:input-asset-links</code>]]>.</description>
+	<name>input-asset-links</name>
+	<tag-class>com.liferay.taglib.ui.InputAssetLinksTag</tag-class>
+	<body-content>JSP</body-content>
+	<attribute>
+		<name>assetEntryId</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>className</name>
+		<required>false</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>classPK</name>
 		<required>false</required>
 		<rtexprvalue>true</rtexprvalue>
 	</attribute>

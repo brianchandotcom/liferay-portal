@@ -290,9 +290,9 @@ while (manageableCalendarsIterator.hasNext()) {
 		<liferay-ui:error exception="<%= CalendarBookingDurationException.class %>" message="please-enter-a-start-date-that-comes-before-the-end-date" />
 		<liferay-ui:error exception="<%= CalendarBookingRecurrenceException.class %>" message="the-last-repeating-date-should-come-after-the-event-start-date" />
 
-		<liferay-ui:asset-categories-error />
+		<liferay-asset:asset-categories-error />
 
-		<liferay-ui:asset-tags-error />
+		<liferay-asset:asset-tags-error />
 
 		<aui:model-context bean="<%= calendarBooking %>" model="<%= CalendarBooking.class %>" />
 
@@ -446,7 +446,7 @@ while (manageableCalendarsIterator.hasNext()) {
 				</liferay-ui:panel>
 
 				<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="calendarBookingAssetLinksPanel" markupView="lexicon" persistState="<%= true %>" title="related-assets">
-					<liferay-ui:input-asset-links
+					<liferay-asset:input-asset-links
 						className="<%= CalendarBooking.class.getName() %>"
 						classPK="<%= calendarBookingId %>"
 					/>

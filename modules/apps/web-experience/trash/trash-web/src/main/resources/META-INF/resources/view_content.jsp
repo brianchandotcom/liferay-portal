@@ -195,7 +195,7 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 		<div class="container-fluid-1280">
 			<aui:fieldset-group markupView="lexicon">
 				<aui:fieldset>
-					<liferay-ui:asset-display
+					<liferay-asset:asset-display
 						renderer="<%= trashRenderer %>"
 					/>
 				</aui:fieldset>

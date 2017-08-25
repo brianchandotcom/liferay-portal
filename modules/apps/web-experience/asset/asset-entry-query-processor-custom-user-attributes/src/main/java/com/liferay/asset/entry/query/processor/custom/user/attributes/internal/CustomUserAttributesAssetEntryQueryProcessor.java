@@ -15,9 +15,9 @@
 package com.liferay.asset.entry.query.processor.custom.user.attributes.internal;
 
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
-import com.liferay.asset.kernel.util.AssetEntryQueryProcessor;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
+import com.liferay.asset.util.AssetEntryQueryProcessor;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;

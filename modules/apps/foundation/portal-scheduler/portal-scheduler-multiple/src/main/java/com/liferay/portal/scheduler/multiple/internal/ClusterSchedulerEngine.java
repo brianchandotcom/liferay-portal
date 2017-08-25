@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.scheduler.SchedulerClusterInvokingThreadLocal;
 
@@ -53,6 +54,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -313,9 +315,20 @@ public class ClusterSchedulerEngine
 						storageType);
 
 					if (_portalReady) {
+						SchedulerResponse schedulerResponse =
+							new SchedulerResponse();
+
+						schedulerResponse.setDescription(description);
+						schedulerResponse.setDestinationName(destinationName);
+						schedulerResponse.setGroupName(trigger.getGroupName());
+						schedulerResponse.setJobName(trigger.getJobName());
+						schedulerResponse.setTrigger(trigger);
+						schedulerResponse.setMessage(message);
+						schedulerResponse.setStorageType(storageType);
+
 						_notifySlave(
-							trigger, description, destinationName, message,
-							storageType);
+							_addMemoryClusteredJobMethodKey, schedulerResponse,
+							getOSGiServiceIdentifier());
 					}
 				}
 			}
@@ -344,20 +357,15 @@ public class ClusterSchedulerEngine
 
 	@Override
 	public void start() throws SchedulerException {
-		try {
-			if (!_clusterMasterExecutor.isMaster()) {
-				initMemoryClusteredJobs();
-			}
-
-			_schedulerClusterMasterTokenTransitionListener =
-				new SchedulerClusterMasterTokenTransitionListener();
-
-			_clusterMasterExecutor.addClusterMasterTokenTransitionListener(
-				_schedulerClusterMasterTokenTransitionListener);
+		if (!_clusterMasterExecutor.isMaster()) {
+			initMemoryClusteredJobs();
 		}
-		catch (Exception e) {
-			throw new SchedulerException("Unable to initialize scheduler", e);
-		}
+
+		_schedulerClusterMasterTokenTransitionListener =
+			new SchedulerClusterMasterTokenTransitionListener();
+
+		_clusterMasterExecutor.addClusterMasterTokenTransitionListener(
+			_schedulerClusterMasterTokenTransitionListener);
 
 		_schedulerEngine.start();
 
@@ -508,20 +516,68 @@ public class ClusterSchedulerEngine
 		return groupName.concat(StringPool.PERIOD).concat(jobName);
 	}
 
-	protected void initMemoryClusteredJobs() throws Exception {
+	protected void initMemoryClusteredJobs() {
 		MethodHandler methodHandler = new MethodHandler(
 			_getScheduledJobsMethodKey, StorageType.MEMORY_CLUSTERED);
 
-		Future<List<SchedulerResponse>> future =
-			_clusterMasterExecutor.executeOnMaster(methodHandler);
+		while (!_clusterMasterExecutor.isMaster()) {
+			try {
+				Future<List<SchedulerResponse>> future =
+					_clusterMasterExecutor.executeOnMaster(methodHandler);
 
-		List<SchedulerResponse> schedulerResponses = future.get(
-			GetterUtil.getLong(
-				_props.get(PropsKeys.CLUSTERABLE_ADVICE_CALL_MASTER_TIMEOUT)),
-			TimeUnit.SECONDS);
+				List<SchedulerResponse> schedulerResponses = future.get(
+					_callMasterTimeout, TimeUnit.SECONDS);
 
-		for (SchedulerResponse schedulerResponse : schedulerResponses) {
-			addMemoryClusteredJob(schedulerResponse);
+				_memoryClusteredJobs.clear();
+
+				for (SchedulerResponse schedulerResponse : schedulerResponses) {
+					addMemoryClusteredJob(schedulerResponse);
+				}
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Load " + schedulerResponses.size() +
+							" memory clustered jobs from master");
+				}
+
+				return;
+			}
+			catch (InterruptedException ie) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Give up the master response waiting due to " +
+							"interruption", ie);
+				}
+
+				return;
+			}
+			catch (Exception e) {
+				StringBundler sb = new StringBundler(7);
+
+				sb.append(
+					"Unable to load memory clustered jobs from master in ");
+				sb.append(_callMasterTimeout);
+				sb.append(" seconds, you might need to increase value set to ");
+				sb.append("\"clusterable.advice.call.master.timeout\", ");
+				sb.append("will retry in ");
+				sb.append(_callMasterTimeout);
+				sb.append(" seconds");
+
+				_log.error(sb.toString(), e);
+			}
+
+			try {
+				Thread.sleep(_callMasterTimeout);
+			}
+			catch (InterruptedException ie) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Give up the master call retry waiting due to " +
+							"interruption", ie);
+				}
+
+				return;
+			}
 		}
 	}
 
@@ -592,6 +648,9 @@ public class ClusterSchedulerEngine
 
 	protected void setProps(Props props) {
 		_props = props;
+
+		_callMasterTimeout = GetterUtil.getLong(
+			_props.get(PropsKeys.CLUSTERABLE_ADVICE_CALL_MASTER_TIMEOUT));
 	}
 
 	protected void updateMemoryClusteredJob(
@@ -642,10 +701,9 @@ public class ClusterSchedulerEngine
 		String jobName = schedulerResponse.getJobName();
 		String groupName = schedulerResponse.getGroupName();
 
-		java.util.concurrent.locks.Lock readLock =
-			clusterSchedulerEngine._readLock;
+		Lock writeLock = clusterSchedulerEngine._writeLock;
 
-		readLock.lock();
+		writeLock.lock();
 
 		try {
 			Map<String, ObjectValuePair<SchedulerResponse, TriggerState>>
@@ -664,31 +722,51 @@ public class ClusterSchedulerEngine
 			}
 		}
 		finally {
-			readLock.unlock();
+			writeLock.unlock();
 		}
 	}
 
-	private void _notifySlave(
-		Trigger trigger, String description, String destinationName,
-		Message message, StorageType storageType) {
+	private static void _reloadMemoryClusteredJobs(String osgiServiceIdentifier)
+		throws Exception {
 
-		String groupName = trigger.getGroupName();
-		String jobName = trigger.getJobName();
+		ClusterSchedulerEngine clusterSchedulerEngine =
+			(ClusterSchedulerEngine)
+				IdentifiableOSGiServiceUtil.getIdentifiableOSGiService(
+					osgiServiceIdentifier);
 
-		SchedulerResponse schedulerResponse = new SchedulerResponse();
+		if (!clusterSchedulerEngine._portalReady) {
+			return;
+		}
 
-		schedulerResponse.setDescription(description);
-		schedulerResponse.setDestinationName(destinationName);
-		schedulerResponse.setGroupName(groupName);
-		schedulerResponse.setJobName(jobName);
-		schedulerResponse.setTrigger(trigger);
-		schedulerResponse.setMessage(message);
-		schedulerResponse.setStorageType(storageType);
+		ClusterMasterExecutor clusterMasterExecutor =
+			clusterSchedulerEngine._clusterMasterExecutor;
+
+		if (clusterMasterExecutor.isMaster()) {
+			return;
+		}
+
+		Lock writeLock = clusterSchedulerEngine._writeLock;
+
+		writeLock.lock();
 
 		try {
+			clusterSchedulerEngine.initMemoryClusteredJobs();
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Receive notification from master, reload memory " +
+						"clustered jobs");
+			}
+		}
+		finally {
+			writeLock.unlock();
+		}
+	}
+
+	private void _notifySlave(MethodKey methodKey, Object... arguments) {
+		try {
 			MethodHandler methodHandler = new MethodHandler(
-				_addMemoryClusteredJobMethodKey, schedulerResponse,
-				getOSGiServiceIdentifier());
+				methodKey, arguments);
 
 			ClusterRequest clusterRequest =
 				ClusterRequest.createMulticastRequest(methodHandler, true);
@@ -714,19 +792,24 @@ public class ClusterSchedulerEngine
 		String.class, StorageType.class);
 	private static final MethodKey _getScheduledJobsMethodKey = new MethodKey(
 		SchedulerEngineHelperUtil.class, "getScheduledJobs", StorageType.class);
+	private static final MethodKey _reloadMemoryClusteredJobsMethodKey =
+		new MethodKey(
+			ClusterSchedulerEngine.class, "_reloadMemoryClusteredJobs",
+			String.class);
 
+	private long _callMasterTimeout;
 	private ClusterExecutor _clusterExecutor;
 	private ClusterMasterExecutor _clusterMasterExecutor;
 	private final Map<String, ObjectValuePair<SchedulerResponse, TriggerState>>
 		_memoryClusteredJobs = new ConcurrentHashMap<>();
 	private boolean _portalReady;
 	private Props _props;
-	private final java.util.concurrent.locks.Lock _readLock;
+	private final Lock _readLock;
 	private ClusterMasterTokenTransitionListener
 		_schedulerClusterMasterTokenTransitionListener;
 	private final SchedulerEngine _schedulerEngine;
 	private final TriggerFactory _triggerFactory;
-	private final java.util.concurrent.locks.Lock _writeLock;
+	private final Lock _writeLock;
 
 	private class SchedulerClusterMasterTokenTransitionListener
 		extends BaseClusterMasterTokenTransitionListener {
@@ -777,6 +860,10 @@ public class ClusterSchedulerEngine
 				}
 
 				_memoryClusteredJobs.clear();
+
+				_notifySlave(
+					_reloadMemoryClusteredJobsMethodKey,
+					getOSGiServiceIdentifier());
 			}
 			finally {
 				ProxyModeThreadLocal.setForceSync(forceSync);
@@ -789,31 +876,41 @@ public class ClusterSchedulerEngine
 		protected void doMasterTokenReleased() throws Exception {
 			_writeLock.lock();
 
-			int count = 0;
-
 			try {
-				for (SchedulerResponse schedulerResponse :
-						_schedulerEngine.getScheduledJobs()) {
+				initMemoryClusteredJobs();
 
-					if (StorageType.MEMORY_CLUSTERED ==
-							schedulerResponse.getStorageType()) {
-
-						_schedulerEngine.delete(
-							schedulerResponse.getJobName(),
-							schedulerResponse.getGroupName(),
-							schedulerResponse.getStorageType());
-
-						count++;
+				if (_clusterMasterExecutor.isMaster()) {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Current node is elected as master again, stop " +
+								"transferring it to slave, all jobs running " +
+									"on current node will keep running");
 					}
+
+					return;
 				}
 
-				initMemoryClusteredJobs();
+				List<SchedulerResponse> schedulerResponses =
+					_schedulerEngine.getScheduledJobs(
+						StorageType.MEMORY_CLUSTERED);
+
+				for (SchedulerResponse schedulerResponse : schedulerResponses) {
+					_schedulerEngine.delete(
+						schedulerResponse.getJobName(),
+						schedulerResponse.getGroupName(),
+						schedulerResponse.getStorageType());
+				}
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						count + " MEMORY_CLUSTERED jobs stopped running on " +
-							"this node");
+						schedulerResponses.size() +
+							" MEMORY_CLUSTERED jobs stopped running on this " +
+								"node");
 				}
+
+				_notifySlave(
+					_reloadMemoryClusteredJobsMethodKey,
+					getOSGiServiceIdentifier());
 			}
 			finally {
 				_writeLock.unlock();

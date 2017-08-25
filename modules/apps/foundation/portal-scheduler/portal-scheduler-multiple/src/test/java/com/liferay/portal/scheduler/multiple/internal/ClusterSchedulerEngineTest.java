@@ -386,13 +386,24 @@ public class ClusterSchedulerEngineTest {
 
 			clusterMasterTokenTransitionListener.masterTokenReleased();
 
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 3, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
 			Assert.assertEquals(
+				"Load 4 memory clustered jobs from master",
+				logRecord.getMessage());
+
+			logRecord = logRecords.get(1);
+
+			Assert.assertEquals(
 				"4 MEMORY_CLUSTERED jobs stopped running on this node",
 				logRecord.getMessage());
+
+			logRecord = logRecords.get(2);
+
+			Assert.assertEquals(
+				"Unable to notify slave", logRecord.getMessage());
 
 			Assert.assertFalse(_mockClusterMasterExecutor.isMaster());
 
@@ -1027,13 +1038,18 @@ public class ClusterSchedulerEngineTest {
 
 			clusterMasterTokenTransitionListener.masterTokenAcquired();
 
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 2, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 
 			Assert.assertEquals(
 				"4 MEMORY_CLUSTERED jobs started running on this node",
 				logRecord.getMessage());
+
+			logRecord = logRecords.get(1);
+
+			Assert.assertEquals(
+				"Unable to notify slave", logRecord.getMessage());
 
 			Assert.assertTrue(_mockClusterMasterExecutor.isMaster());
 
@@ -1044,24 +1060,6 @@ public class ClusterSchedulerEngineTest {
 				schedulerResponses.toString(), 4, schedulerResponses.size());
 
 			Assert.assertTrue(_memoryClusteredJobs.isEmpty());
-		}
-	}
-
-	@AdviseWith(adviceClasses = {ClusterableContextThreadLocalAdvice.class})
-	@Test
-	public void testStart() {
-		_mockClusterMasterExecutor.reset(false, 0, 0);
-
-		_mockClusterMasterExecutor.setException(true);
-
-		try {
-			_clusterSchedulerEngine.start();
-
-			Assert.fail();
-		}
-		catch (SchedulerException se) {
-			Assert.assertEquals(
-				"Unable to initialize scheduler", se.getMessage());
 		}
 	}
 

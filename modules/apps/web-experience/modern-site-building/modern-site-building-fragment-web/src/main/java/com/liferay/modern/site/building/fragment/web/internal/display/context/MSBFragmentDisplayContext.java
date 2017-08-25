@@ -21,6 +21,7 @@ import com.liferay.modern.site.building.fragment.web.util.MSBFragmentPortletUtil
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -64,6 +66,57 @@ public class MSBFragmentDisplayContext {
 		return _displayStyle;
 	}
 
+	public String getEditMSBFragmentCollectionRedirect()
+		throws PortalException {
+
+		String redirect = ParamUtil.getString(_request, "redirect");
+
+		if (Validator.isNull(redirect)) {
+			PortletURL portletURL = _renderResponse.createRenderURL();
+
+			redirect = portletURL.toString();
+		}
+
+		return redirect;
+	}
+
+	public String getKeywords() {
+		if (_keywords != null) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(_request, "keywords");
+
+		return _keywords;
+	}
+
+	public MSBFragmentCollection getMSBFragmentCollection()
+		throws PortalException {
+
+		if (_msbFragmentCollection != null) {
+			return _msbFragmentCollection;
+		}
+
+		MSBFragmentCollection msbFragmentCollection =
+			MSBFragmentCollectionServiceUtil.fetchMSBFragmentCollection(
+				getMSBFragmentCollectionId());
+
+		_msbFragmentCollection = msbFragmentCollection;
+
+		return _msbFragmentCollection;
+	}
+
+	public long getMSBFragmentCollectionId() {
+		if (Validator.isNotNull(_msbFragmentCollectionId)) {
+			return _msbFragmentCollectionId;
+		}
+
+		_msbFragmentCollectionId = ParamUtil.getLong(
+			_request, "msbFragmentCollectionId");
+
+		return _msbFragmentCollectionId;
+	}
+
 	public SearchContainer getMSBFragmentCollectionsSearchContainer()
 		throws PortalException {
 
@@ -76,10 +129,19 @@ public class MSBFragmentDisplayContext {
 				_renderRequest, _renderResponse.createRenderURL(), null,
 				"there-are-no-fragment-collections");
 
-		msbFragmentCollectionsSearchContainer.setEmptyResultsMessage(
-			"there-are-no-fragment-collections.-you-can-add-a-fragment-" +
-				"collection-by-clicking-the-plus-button-on-the-bottom-right-" +
-					"corner");
+		if (!isSearch()) {
+			msbFragmentCollectionsSearchContainer.setEmptyResultsMessage(
+				"there-are-no-fragment-collections.-you-can-add-a-fragment-" +
+					"collection-by-clicking-the-plus-button-on-the-bottom-" +
+						"right-corner");
+
+			msbFragmentCollectionsSearchContainer.
+				setEmptyResultsMessageCssClass(
+					"taglib-empty-result-message-header-has-plus-btn");
+		}
+		else {
+			msbFragmentCollectionsSearchContainer.setSearch(true);
+		}
 
 		msbFragmentCollectionsSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
@@ -96,16 +158,29 @@ public class MSBFragmentDisplayContext {
 		msbFragmentCollectionsSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
 
+		List<MSBFragmentCollection> msbFragmentCollections = null;
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		long scopeGroupId = themeDisplay.getScopeGroupId();
 
-		List<MSBFragmentCollection> msbFragmentCollections =
-			MSBFragmentCollectionServiceUtil.getMSBFragmentCollections(
-				scopeGroupId, msbFragmentCollectionsSearchContainer.getStart(),
-				msbFragmentCollectionsSearchContainer.getEnd(),
-				orderByComparator);
+		if (isSearch()) {
+			msbFragmentCollections =
+				MSBFragmentCollectionServiceUtil.getMSBFragmentCollections(
+					scopeGroupId, getKeywords(),
+					msbFragmentCollectionsSearchContainer.getStart(),
+					msbFragmentCollectionsSearchContainer.getEnd(),
+					orderByComparator);
+		}
+		else {
+			msbFragmentCollections =
+				MSBFragmentCollectionServiceUtil.getMSBFragmentCollections(
+					scopeGroupId,
+					msbFragmentCollectionsSearchContainer.getStart(),
+					msbFragmentCollectionsSearchContainer.getEnd(),
+					orderByComparator);
+		}
 
 		msbFragmentCollectionsSearchContainer.setTotal(
 			msbFragmentCollections.size());
@@ -117,6 +192,17 @@ public class MSBFragmentDisplayContext {
 			msbFragmentCollectionsSearchContainer;
 
 		return _msbFragmentCollectionsSearchContainer;
+	}
+
+	public String getMSBFragmentCollectionTitle() throws PortalException {
+		MSBFragmentCollection msbFragmentCollection =
+			getMSBFragmentCollection();
+
+		if (msbFragmentCollection == null) {
+			return LanguageUtil.get(_request, "add-fragment-collection");
+		}
+
+		return msbFragmentCollection.getName();
 	}
 
 	public String getOrderByCol() {
@@ -140,6 +226,10 @@ public class MSBFragmentDisplayContext {
 		return _orderByType;
 	}
 
+	public String[] getOrderColumns() {
+		return new String[] {"create-date", "name"};
+	}
+
 	public boolean hasMSBFragmentCollectionsResults() throws PortalException {
 		SearchContainer searchContainer =
 			getMSBFragmentCollectionsSearchContainer();
@@ -158,10 +248,37 @@ public class MSBFragmentDisplayContext {
 			return false;
 		}
 
+		if (isSearch()) {
+			return false;
+		}
+
 		return true;
 	}
 
+	public boolean isSearch() {
+		if (Validator.isNotNull(getKeywords())) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isShowMSBFragmentCollectionsSearch() throws PortalException {
+		if (hasMSBFragmentCollectionsResults()) {
+			return true;
+		}
+
+		if (isSearch()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private String _displayStyle;
+	private String _keywords;
+	private MSBFragmentCollection _msbFragmentCollection;
+	private Long _msbFragmentCollectionId;
 	private SearchContainer _msbFragmentCollectionsSearchContainer;
 	private String _orderByCol;
 	private String _orderByType;

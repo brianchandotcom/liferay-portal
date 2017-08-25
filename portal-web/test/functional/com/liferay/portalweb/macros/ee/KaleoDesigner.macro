@@ -648,7 +648,16 @@
 	</command>
 
 	<command name="viewNodeAssignments">
-		<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#SETTINGS_ASSIGNMENTS" value1="${nodeAssignmentType}" />
+		<if>
+			<equals arg1="${nodeAssignmentType}" arg2="Role" />
+			<then>
+				<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#SETTINGS_ASSIGNMENTS" value1="Role ID" />
+			</then>
+			<else>
+				<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#SETTINGS_ASSIGNMENTS" value1="${nodeAssignmentType}" />
+			</else>
+		</if>
+
 		<execute function="DoubleClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_ASSIGNMENTS" />
 		<execute function="AssertElementPresent" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_ASSIGNMENT_TYPE_SELECT" />
 	</command>

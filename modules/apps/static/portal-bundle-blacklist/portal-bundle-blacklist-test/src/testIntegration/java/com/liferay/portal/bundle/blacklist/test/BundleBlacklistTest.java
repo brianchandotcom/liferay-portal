@@ -15,7 +15,6 @@
 package com.liferay.portal.bundle.blacklist.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.bundle.blacklist.BundleBlacklist;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringPool;
@@ -318,7 +317,9 @@ public class BundleBlacklistTest {
 
 				Object service = _bundleContext.getService(serviceReference);
 
-				if (BundleBlacklist.class.isInstance(service)) {
+				Class<?> clazz = service.getClass();
+
+				if (_CLASS_NAME.equals(clazz.getName())) {
 					countDownLatch.countDown();
 				}
 			}
@@ -336,6 +337,9 @@ public class BundleBlacklistTest {
 			_bundleContext.removeServiceListener(serviceListener);
 		}
 	}
+
+	private static final String _CLASS_NAME =
+		"com.liferay.portal.bundle.blacklist.internal.BundleBlacklist";
 
 	private static final String _CONFIG_NAME =
 		"com.liferay.portal.bundle.blacklist.internal." +

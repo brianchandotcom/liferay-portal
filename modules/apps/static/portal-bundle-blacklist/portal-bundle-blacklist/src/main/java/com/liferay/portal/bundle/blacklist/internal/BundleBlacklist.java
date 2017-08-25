@@ -12,12 +12,8 @@
  * details.
  */
 
-package com.liferay.portal.bundle.blacklist;
+package com.liferay.portal.bundle.blacklist.internal;
 
-import com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration;
-import com.liferay.portal.bundle.blacklist.internal.BundleUtil;
-import com.liferay.portal.bundle.blacklist.internal.SelfMonitorBundleListener;
-import com.liferay.portal.bundle.blacklist.internal.UninstalledBundleData;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

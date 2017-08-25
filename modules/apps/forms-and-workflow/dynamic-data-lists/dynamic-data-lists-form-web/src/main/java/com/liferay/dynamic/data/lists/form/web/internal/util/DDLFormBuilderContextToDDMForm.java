@@ -162,12 +162,12 @@ public class DDLFormBuilderContextToDDMForm {
 		else if (Objects.equals(type, "validation")) {
 			return getDDMFormFieldValidation(serializedValue);
 		}
-		else if (Objects.equals(type, "select")) {
-			return getDDMFormFieldSelectValue(serializedValue);
-		}
 		else if (localizable) {
 			return getLocalizedValue(
 				serializedValue, availableLocales, defaultLocale);
+		}
+		else if (Objects.equals(type, "select")) {
+			return getDDMFormFieldSelectValue(serializedValue);
 		}
 		else {
 			return serializedValue;

@@ -105,3 +105,13 @@ renderResponse.setTitle(LanguageUtil.get(request, "fragment-collections"));
 		<liferay-ui:search-iterator displayStyle="<%= msbFragmentDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
+
+<c:if test="<%= msbFragmentDisplayContext.isShowAddButton(MSBFragmentActionKeys.ADD_MSB_FRAGMENT_COLLECTION) %>">
+	<portlet:renderURL var="addFragmentCollectionURL">
+		<portlet:param name="mvcPath" value="/edit_msbfragment_collection.jsp" />
+	</portlet:renderURL>
+
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-fragment-collection") %>' url="<%= addFragmentCollectionURL.toString() %>" />
+	</liferay-frontend:add-menu>
+</c:if>

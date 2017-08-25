@@ -17,6 +17,7 @@ package com.liferay.modern.site.building.fragment.web.internal.display.context;
 import com.liferay.modern.site.building.fragment.constants.MSBFragmentPortletKeys;
 import com.liferay.modern.site.building.fragment.model.MSBFragmentCollection;
 import com.liferay.modern.site.building.fragment.service.MSBFragmentCollectionServiceUtil;
+import com.liferay.modern.site.building.fragment.service.permission.MSBFragmentPermission;
 import com.liferay.modern.site.building.fragment.web.util.MSBFragmentPortletUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -257,6 +258,22 @@ public class MSBFragmentDisplayContext {
 
 	public boolean isSearch() {
 		if (Validator.isNotNull(getKeywords())) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isShowAddButton(String actionId) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (MSBFragmentPermission.contains(
+				themeDisplay.getPermissionChecker(),
+				MSBFragmentPermission.RESOURCE_NAME,
+				MSBFragmentPortletKeys.MSB_FRAGMENT,
+				themeDisplay.getSiteGroupId(), actionId)) {
+
 			return true;
 		}
 

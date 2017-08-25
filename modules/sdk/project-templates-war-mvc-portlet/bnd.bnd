@@ -1,6 +1,6 @@
 Bundle-Description: Creates a Liferay war-style MVC portlet project.
-Bundle-Name: Liferay Project Templates MVC WAR Portlet
-Bundle-SymbolicName: com.liferay.project.templates.mvc.war.portlet
+Bundle-Name: Liferay Project Templates WAR MVC Portlet
+Bundle-SymbolicName: com.liferay.project.templates.war.mvc.portlet
 Bundle-Version: 1.0.0
 -removeheaders:\
 	Import-Package,\

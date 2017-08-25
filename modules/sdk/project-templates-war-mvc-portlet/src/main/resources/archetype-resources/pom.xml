@@ -9,6 +9,7 @@
 	<groupId>${groupId}</groupId>
 	<artifactId>${artifactId}</artifactId>
 	<version>${version}</version>
+	<packaging>war</packaging>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -65,10 +66,10 @@
 				<version>@com.liferay.css.builder.version@</version>
 				<executions>
 					<execution>
-						<id>default-build-css</id>
+						<id>build-css</id>
 						<phase>compile</phase>
 						<goals>
-							<goal>build-css</goal>
+							<goal>build</goal>
 						</goals>
 					</execution>
 				</executions>

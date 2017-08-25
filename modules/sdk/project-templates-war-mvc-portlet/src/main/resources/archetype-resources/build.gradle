@@ -1,7 +1,7 @@
-#if (${projectType} != "workspace")buildscript {
+buildscript {
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.css.builder", version: "com.liferay.gradle.plugins.css.builder.version"
-		classpath group: "com.liferay", name: "com.liferay.css.builder", version: "com.liferay.css.builder.version"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.css.builder", version: "@com.liferay.gradle.plugins.css.builder.version@"
+		classpath group: "com.liferay", name: "com.liferay.css.builder", version: "@com.liferay.css.builder.version@"
 	}
 
 	repositories {
@@ -11,9 +11,11 @@
 	}
 }
 
-apply plugin: 'war'
-
+apply plugin: "com.liferay.css.builder"
+#if (${projectType} != "workspace")
+apply plugin: "war"
 #end
+
 dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	compileOnly group: "javax.portlet", name: "portlet-api", version: "2.0"

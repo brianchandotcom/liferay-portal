@@ -33,6 +33,10 @@ public class ExecutePoshiElement extends BasePoshiElement {
 
 		readableSyntax = readableSyntax.trim();
 
+		if (parentPoshiElement instanceof ExecutePoshiElement) {
+			return false;
+		}
+
 		if (!isBalancedReadableSyntax(readableSyntax)) {
 			return false;
 		}
@@ -83,11 +87,16 @@ public class ExecutePoshiElement extends BasePoshiElement {
 
 	@Override
 	public void parseReadableSyntax(String readableSyntax) {
-		if (ReturnPoshiElement.isElementType(this, readableSyntax)) {
-			add(new ReturnPoshiElement(readableSyntax));
+		if (readableSyntax.contains("return(\n")) {
+			PoshiElement returnPoshiElement =
+				PoshiElementFactory.newPoshiElement(this, readableSyntax);
 
-			readableSyntax = RegexUtil.getGroup(
-				readableSyntax, "return\\((.*),", 1);
+			if (returnPoshiElement instanceof ReturnPoshiElement) {
+				add(returnPoshiElement);
+
+				readableSyntax = RegexUtil.getGroup(
+					readableSyntax, "return\\((.*),", 1);
+			}
 		}
 
 		String executeType = "macro";

@@ -24,9 +24,6 @@ import org.dom4j.Element;
  */
 public class DefinitionPoshiElement extends BasePoshiElement {
 
-	public DefinitionPoshiElement() {
-	}
-
 	@Override
 	public PoshiElement clone(Element element) {
 		if (isElementType(_ELEMENT_NAME, element)) {
@@ -116,6 +113,9 @@ public class DefinitionPoshiElement extends BasePoshiElement {
 		String string = sb.toString();
 
 		return string.trim();
+	}
+
+	protected DefinitionPoshiElement() {
 	}
 
 	protected DefinitionPoshiElement(Element element) {

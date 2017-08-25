@@ -24,9 +24,6 @@ import org.dom4j.Element;
  */
 public class IfPoshiElement extends BasePoshiElement {
 
-	public IfPoshiElement() {
-	}
-
 	@Override
 	public PoshiElement clone(Element element) {
 		if (isElementType(_ELEMENT_NAME, element)) {
@@ -81,6 +78,9 @@ public class IfPoshiElement extends BasePoshiElement {
 		}
 
 		return sb.toString();
+	}
+
+	protected IfPoshiElement() {
 	}
 
 	protected IfPoshiElement(Element element) {

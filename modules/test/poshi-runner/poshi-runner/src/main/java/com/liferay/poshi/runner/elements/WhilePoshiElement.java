@@ -21,9 +21,6 @@ import org.dom4j.Element;
  */
 public class WhilePoshiElement extends IfPoshiElement {
 
-	public WhilePoshiElement() {
-	}
-
 	@Override
 	public PoshiElement clone(Element element) {
 		if (isElementType(_ELEMENT_NAME, element)) {
@@ -42,6 +39,9 @@ public class WhilePoshiElement extends IfPoshiElement {
 		}
 
 		return null;
+	}
+
+	protected WhilePoshiElement() {
 	}
 
 	protected WhilePoshiElement(Element element) {

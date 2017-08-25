@@ -27,9 +27,6 @@ import org.dom4j.Node;
  */
 public class VarPoshiElement extends BasePoshiElement {
 
-	public VarPoshiElement() {
-	}
-
 	@Override
 	public PoshiElement clone(Element element) {
 		if (isElementType(_ELEMENT_NAME, element)) {
@@ -121,6 +118,9 @@ public class VarPoshiElement extends BasePoshiElement {
 		}
 
 		return sb.toString();
+	}
+
+	protected VarPoshiElement() {
 	}
 
 	protected VarPoshiElement(Element element) {

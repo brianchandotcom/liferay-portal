@@ -21,9 +21,6 @@ import org.dom4j.Element;
  */
 public class DescriptionPoshiElement extends BasePoshiElement {
 
-	public DescriptionPoshiElement() {
-	}
-
 	@Override
 	public PoshiElement clone(Element element) {
 		if (isElementType(_ELEMENT_NAME, element)) {
@@ -49,6 +46,9 @@ public class DescriptionPoshiElement extends BasePoshiElement {
 		String message = getQuotedContent(readableSyntax);
 
 		addAttribute("message", message);
+	}
+
+	protected DescriptionPoshiElement() {
 	}
 
 	protected DescriptionPoshiElement(Element element) {

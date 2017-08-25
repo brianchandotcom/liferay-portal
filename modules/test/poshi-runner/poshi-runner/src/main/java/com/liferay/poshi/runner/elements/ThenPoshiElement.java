@@ -24,9 +24,6 @@ import org.dom4j.Element;
  */
 public class ThenPoshiElement extends BasePoshiElement {
 
-	public ThenPoshiElement() {
-	}
-
 	@Override
 	public PoshiElement clone(Element element) {
 		if (isElementType(_ELEMENT_NAME, element)) {
@@ -52,6 +49,9 @@ public class ThenPoshiElement extends BasePoshiElement {
 		for (String readableBlock : getReadableBlocks(readableSyntax)) {
 			add(PoshiElementFactory.newPoshiElement(this, readableBlock));
 		}
+	}
+
+	protected ThenPoshiElement() {
 	}
 
 	protected ThenPoshiElement(Element element) {

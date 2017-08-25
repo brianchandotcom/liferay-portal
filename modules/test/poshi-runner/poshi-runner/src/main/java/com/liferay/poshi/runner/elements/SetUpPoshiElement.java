@@ -21,9 +21,6 @@ import org.dom4j.Element;
  */
 public class SetUpPoshiElement extends CommandPoshiElement {
 
-	public SetUpPoshiElement() {
-	}
-
 	@Override
 	public PoshiElement clone(Element element) {
 		if (isElementType(_ELEMENT_NAME, element)) {
@@ -42,6 +39,9 @@ public class SetUpPoshiElement extends CommandPoshiElement {
 		}
 
 		return null;
+	}
+
+	protected SetUpPoshiElement() {
 	}
 
 	protected SetUpPoshiElement(Element element) {

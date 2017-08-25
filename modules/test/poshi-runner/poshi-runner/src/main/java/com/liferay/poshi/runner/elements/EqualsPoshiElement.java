@@ -21,9 +21,6 @@ import org.dom4j.Element;
  */
 public class EqualsPoshiElement extends BasePoshiElement {
 
-	public EqualsPoshiElement() {
-	}
-
 	@Override
 	public PoshiElement clone(Element element) {
 		if (isElementType(_ELEMENT_NAME, element)) {
@@ -72,6 +69,9 @@ public class EqualsPoshiElement extends BasePoshiElement {
 		sb.append("\"");
 
 		return sb.toString();
+	}
+
+	protected EqualsPoshiElement() {
 	}
 
 	protected EqualsPoshiElement(Element element) {

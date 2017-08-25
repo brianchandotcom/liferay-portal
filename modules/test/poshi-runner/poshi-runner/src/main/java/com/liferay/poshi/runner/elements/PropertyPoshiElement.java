@@ -21,9 +21,6 @@ import org.dom4j.Element;
  */
 public class PropertyPoshiElement extends VarPoshiElement {
 
-	public PropertyPoshiElement() {
-	}
-
 	@Override
 	public PoshiElement clone(Element element) {
 		if (isElementType(_ELEMENT_NAME, element)) {
@@ -42,6 +39,9 @@ public class PropertyPoshiElement extends VarPoshiElement {
 		}
 
 		return null;
+	}
+
+	protected PropertyPoshiElement() {
 	}
 
 	protected PropertyPoshiElement(Element element) {

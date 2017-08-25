@@ -21,9 +21,6 @@ import org.dom4j.Element;
  */
 public class TearDownPoshiElement extends CommandPoshiElement {
 
-	public TearDownPoshiElement() {
-	}
-
 	@Override
 	public PoshiElement clone(Element element) {
 		if (isElementType(_ELEMENT_NAME, element)) {
@@ -42,6 +39,9 @@ public class TearDownPoshiElement extends CommandPoshiElement {
 		}
 
 		return null;
+	}
+
+	protected TearDownPoshiElement() {
 	}
 
 	protected TearDownPoshiElement(Element element) {

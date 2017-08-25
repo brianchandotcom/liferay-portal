@@ -21,9 +21,6 @@ import org.dom4j.Element;
  */
 public class ConditionPoshiElement extends ExecutePoshiElement {
 
-	public ConditionPoshiElement() {
-	}
-
 	@Override
 	public PoshiElement clone(Element element) {
 		if (isElementType(_ELEMENT_NAME, element)) {
@@ -42,6 +39,9 @@ public class ConditionPoshiElement extends ExecutePoshiElement {
 		}
 
 		return null;
+	}
+
+	protected ConditionPoshiElement() {
 	}
 
 	protected ConditionPoshiElement(Element element) {

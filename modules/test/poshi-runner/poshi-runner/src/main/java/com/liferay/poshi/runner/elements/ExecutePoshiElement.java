@@ -28,9 +28,6 @@ import org.dom4j.Element;
  */
 public class ExecutePoshiElement extends BasePoshiElement {
 
-	public ExecutePoshiElement() {
-	}
-
 	@Override
 	public PoshiElement clone(Element element) {
 		if (isElementType(_ELEMENT_NAME, element)) {
@@ -162,6 +159,9 @@ public class ExecutePoshiElement extends BasePoshiElement {
 		}
 
 		return returnPoshiElement.createReadableBlock(readableBlock);
+	}
+
+	protected ExecutePoshiElement() {
 	}
 
 	protected ExecutePoshiElement(Element element) {

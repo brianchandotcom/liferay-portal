@@ -23,9 +23,6 @@ import org.dom4j.Element;
  */
 public class ReturnPoshiElement extends BasePoshiElement {
 
-	public ReturnPoshiElement() {
-	}
-
 	@Override
 	public PoshiElement clone(Element element) {
 		if (isElementType(_ELEMENT_NAME, element)) {
@@ -60,6 +57,9 @@ public class ReturnPoshiElement extends BasePoshiElement {
 	@Override
 	public String toReadableSyntax() {
 		return "";
+	}
+
+	protected ReturnPoshiElement() {
 	}
 
 	protected ReturnPoshiElement(Element element) {

@@ -27,9 +27,6 @@ import org.dom4j.Element;
  */
 public class CommandPoshiElement extends BasePoshiElement {
 
-	public CommandPoshiElement() {
-	}
-
 	@Override
 	public PoshiElement clone(Element element) {
 		if (isElementType(_ELEMENT_NAME, element)) {
@@ -113,6 +110,9 @@ public class CommandPoshiElement extends BasePoshiElement {
 		sb.append(createReadableBlock(readableBlocks));
 
 		return sb.toString();
+	}
+
+	protected CommandPoshiElement() {
 	}
 
 	protected CommandPoshiElement(Element element) {

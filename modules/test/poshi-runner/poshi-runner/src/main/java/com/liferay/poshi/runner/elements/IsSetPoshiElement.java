@@ -21,9 +21,6 @@ import org.dom4j.Element;
  */
 public class IsSetPoshiElement extends BasePoshiElement {
 
-	public IsSetPoshiElement() {
-	}
-
 	@Override
 	public PoshiElement clone(Element element) {
 		if (isElementType(_ELEMENT_NAME, element)) {
@@ -54,6 +51,9 @@ public class IsSetPoshiElement extends BasePoshiElement {
 	@Override
 	public String toReadableSyntax() {
 		return "isSet(" + attributeValue("var") + ")";
+	}
+
+	protected IsSetPoshiElement() {
 	}
 
 	protected IsSetPoshiElement(Element element) {

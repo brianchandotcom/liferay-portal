@@ -92,7 +92,7 @@ public class DefinitionPoshiElement extends BasePoshiElement {
 				continue;
 			}
 
-			add(newPoshiElement(this, readableBlock));
+			add(PoshiElementFactory.newPoshiElement(this, readableBlock));
 		}
 	}
 

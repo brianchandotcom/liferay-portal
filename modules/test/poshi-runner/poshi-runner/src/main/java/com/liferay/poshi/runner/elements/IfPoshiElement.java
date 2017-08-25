@@ -94,13 +94,13 @@ public class IfPoshiElement extends BasePoshiElement {
 		for (String readableBlock : getReadableBlocks(readableSyntax)) {
 			if (readableBlock.startsWith(getName() + " (")) {
 				add(
-					BasePoshiElement.newPoshiElement(
+					PoshiElementFactory.newPoshiElement(
 						this, getParentheticalContent(readableBlock)));
 
 				continue;
 			}
 
-			add(newPoshiElement(this, readableBlock));
+			add(PoshiElementFactory.newPoshiElement(this, readableBlock));
 		}
 	}
 

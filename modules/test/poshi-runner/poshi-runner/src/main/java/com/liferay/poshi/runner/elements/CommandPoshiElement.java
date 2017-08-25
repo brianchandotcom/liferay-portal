@@ -86,7 +86,7 @@ public class CommandPoshiElement extends BasePoshiElement {
 			if (readableBlock.endsWith("}") || readableBlock.endsWith(";") ||
 				readableBlock.startsWith("@description")) {
 
-				add(BasePoshiElement.newPoshiElement(this, readableBlock));
+				add(PoshiElementFactory.newPoshiElement(this, readableBlock));
 
 				continue;
 			}

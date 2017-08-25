@@ -67,7 +67,7 @@ public class ThenPoshiElement extends BasePoshiElement {
 	@Override
 	public void parseReadableSyntax(String readableSyntax) {
 		for (String readableBlock : getReadableBlocks(readableSyntax)) {
-			add(newPoshiElement(this, readableBlock));
+			add(PoshiElementFactory.newPoshiElement(this, readableBlock));
 		}
 	}
 

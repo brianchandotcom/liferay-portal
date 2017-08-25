@@ -129,7 +129,7 @@ public class ExecutePoshiElement extends BasePoshiElement {
 			if (executeType.equals("macro")) {
 				assignment = "var " + assignment + ";";
 
-				add(BasePoshiElement.newPoshiElement(this, assignment));
+				add(PoshiElementFactory.newPoshiElement(this, assignment));
 
 				continue;
 			}

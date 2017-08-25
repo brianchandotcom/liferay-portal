@@ -102,7 +102,7 @@ public class ForPoshiElement extends BasePoshiElement {
 				continue;
 			}
 
-			add(BasePoshiElement.newPoshiElement(this, readableBlock));
+			add(PoshiElementFactory.newPoshiElement(this, readableBlock));
 		}
 	}
 

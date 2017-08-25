@@ -48,69 +48,6 @@ public abstract class BasePoshiElement
 		return false;
 	}
 
-	public static BasePoshiElement newPoshiElement(
-		BasePoshiElement parentPoshiElement, String readableSyntax) {
-
-		for (PoshiElementFactory poshiElementFactory : _poshiElementFactories) {
-			BasePoshiElement poshiElement = poshiElementFactory.newPoshiElement(
-				parentPoshiElement, readableSyntax);
-
-			if (poshiElement != null) {
-				return poshiElement;
-			}
-		}
-
-		throw new RuntimeException(
-			"Unknown readable syntax\n" + readableSyntax);
-	}
-
-	public static BasePoshiElement newPoshiElement(Element element) {
-		for (PoshiElementFactory poshiElementFactory : _poshiElementFactories) {
-			BasePoshiElement poshiElement = poshiElementFactory.newPoshiElement(
-				element);
-
-			if (poshiElement != null) {
-				return poshiElement;
-			}
-		}
-
-		String formattedElement = null;
-
-		try {
-			formattedElement = Dom4JUtil.format(element);
-		}
-		catch (IOException ioe) {
-			formattedElement = element.toString();
-		}
-
-		throw new RuntimeException("Unknown element\n" + formattedElement);
-	}
-
-	public static BasePoshiElement newPoshiElementFromFile(String filePath) {
-		File file = new File(filePath);
-
-		try {
-			String fileContent = FileUtil.read(file);
-
-			if (fileContent.contains("<definition")) {
-				Document document = Dom4JUtil.parse(fileContent);
-
-				Element rootElement = document.getRootElement();
-
-				return newPoshiElement(rootElement);
-			}
-
-			return newPoshiElement(null, fileContent);
-		}
-		catch (Exception e) {
-			System.out.println("Unable to generate the Poshi element");
-
-			e.printStackTrace();
-		}
-
-		return null;
-	}
-
 	public BasePoshiElement() {
 		super("");
 	}
@@ -340,7 +277,7 @@ public abstract class BasePoshiElement
 		for (Element childElement :
 				Dom4JUtil.toElementList(element.elements())) {
 
-			add(newPoshiElement(childElement));
+			add(PoshiElementFactory.newPoshiElement(childElement));
 		}
 	}
 

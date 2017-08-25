@@ -444,7 +444,7 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 		Map<String, Object> properties = new HashMap<>();
 
 		properties.put(
-			"keyStorePath",
+			"saml.keystore.path",
 			"classpath:/com/liferay/saml/opensaml/integration/internal" +
 				"/credential/dependencies/keystore.jks");
 

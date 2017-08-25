@@ -111,7 +111,8 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 	@Test
 	public void testResolveExpandoAttributes() throws Exception {
 		when(
-			_expandoBridge.getAttribute(Mockito.eq("customerId"))
+			_expandoBridge.getAttribute(
+				Mockito.eq("customerId"), Mockito.anyBoolean())
 		).thenReturn(
 			"12345"
 		);

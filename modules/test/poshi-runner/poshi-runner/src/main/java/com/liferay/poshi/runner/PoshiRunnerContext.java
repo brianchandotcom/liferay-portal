@@ -215,16 +215,18 @@ public class PoshiRunnerContext {
 			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
 				pathLocatorKey);
 
-		boolean pathLocatorExists = _pathLocators.containsKey(pathLocatorKey);
+		if (_pathLocators.containsKey(pathLocatorKey)) {
+			return true;
+		}
 
-		if (!pathLocatorExists && _pathExtensions.containsKey(className)) {
-			pathLocatorExists = _pathLocators.containsKey(
+		if (_pathExtensions.containsKey(className)) {
+			return _pathLocators.containsKey(
 				_pathExtensions.get(className) + "#" +
 					PoshiRunnerGetterUtil.getCommandNameFromClassCommandName(
 						pathLocatorKey));
 		}
 
-		return pathLocatorExists;
+		return false;
 	}
 
 	public static boolean isRootElement(String rootElementKey) {

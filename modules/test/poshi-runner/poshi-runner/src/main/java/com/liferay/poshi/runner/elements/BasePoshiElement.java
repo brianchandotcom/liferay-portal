@@ -19,10 +19,8 @@ import com.liferay.poshi.runner.util.RegexUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Stack;
 
 import org.dom4j.Attribute;
@@ -85,12 +83,6 @@ public abstract class BasePoshiElement
 		}
 
 		return sb.toString();
-	}
-
-	protected static void addPoshiElementFactory(
-		PoshiElementFactory poshiElementFactory) {
-
-		_poshiElementFactories.add(poshiElementFactory);
 	}
 
 	protected static String getBracedContent(String readableSyntax) {
@@ -278,31 +270,8 @@ public abstract class BasePoshiElement
 
 	private static final Map<Character, Character> _codeBoundariesMap =
 		new HashMap<>();
-	private static final Set<PoshiElementFactory> _poshiElementFactories =
-		new HashSet<>();
 
 	static {
-		String[] elementClassNames = {
-			"CommandPoshiElement", "ConditionPoshiElement",
-			"DefinitionPoshiElement", "DescriptionPoshiElement",
-			"ElsePoshiElement", "EqualsPoshiElement", "ExecutePoshiElement",
-			"ForPoshiElement", "IfPoshiElement", "IsSetPoshiElement",
-			"PropertyPoshiElement", "ReturnPoshiElement", "SetUpPoshiElement",
-			"TearDownPoshiElement", "ThenPoshiElement", "VarPoshiElement",
-			"WhilePoshiElement"
-		};
-
-		for (String elementClassName : elementClassNames) {
-			try {
-				Class.forName(
-					"com.liferay.poshi.runner.elements." + elementClassName);
-			}
-			catch (ClassNotFoundException cnfe) {
-				throw new RuntimeException(
-					elementClassName + " not found", cnfe);
-			}
-		}
-
 		_codeBoundariesMap.put('\"', '\"');
 		_codeBoundariesMap.put('(', ')');
 		_codeBoundariesMap.put('{', '}');

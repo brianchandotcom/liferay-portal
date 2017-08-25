@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -180,7 +181,7 @@ public class CommerceCartLocalServiceImpl
 		return commerceCartPersistence.update(commerceCart);
 	}
 
-	@Reference
+	@ServiceReference(type = DDMFormValuesHelper.class)
 	private DDMFormValuesHelper _ddmFormValuesHelper;
 
 }

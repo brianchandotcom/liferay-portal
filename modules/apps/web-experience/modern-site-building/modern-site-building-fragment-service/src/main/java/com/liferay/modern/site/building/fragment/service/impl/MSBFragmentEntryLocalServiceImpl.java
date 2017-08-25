@@ -42,7 +42,7 @@ public class MSBFragmentEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		// Mobile site building fragment entry
+		// Modern site building fragment entry
 
 		User user = userLocalService.getUser(userId);
 
@@ -92,7 +92,7 @@ public class MSBFragmentEntryLocalServiceImpl
 			MSBFragmentEntry msbFragmentEntry)
 		throws PortalException {
 
-		// Mobile site building fragment entry
+		// Modern site building fragment entry
 
 		msbFragmentEntryPersistence.remove(msbFragmentEntry);
 

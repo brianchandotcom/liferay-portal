@@ -21,6 +21,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
@@ -54,6 +55,7 @@ public class CPInstanceDisplayContext
 
 	public CPInstanceDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
+			CPDefinitionOptionRelService cpDefinitionOptionRelService,
 			CPInstanceService cpInstanceService,
 			CPInstanceHelper cpInstanceHelper)
 		throws PortalException {
@@ -63,6 +65,7 @@ public class CPInstanceDisplayContext
 
 		setDefaultOrderByCol("sku");
 
+		_cpDefinitionOptionRelService = cpDefinitionOptionRelService;
 		_cpInstanceService = cpInstanceService;
 		_cpInstanceHelper = cpInstanceHelper;
 	}
@@ -217,6 +220,18 @@ public class CPInstanceDisplayContext
 			getCPDefinitionId());
 	}
 
+	public boolean hasSkuContributorOption() throws PortalException {
+		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
+			_cpDefinitionOptionRelService.
+				getSkuContributorCPDefinitionOptionRels(getCPDefinitionId());
+
+		if (cpDefinitionOptionRels.isEmpty()) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
 			parseCPInstanceDDMContent(long cpInstanceId)
 		throws PortalException {
@@ -238,6 +253,7 @@ public class CPInstanceDisplayContext
 			getCPDefinitionId(), renderRequest, renderResponse);
 	}
 
+	private final CPDefinitionOptionRelService _cpDefinitionOptionRelService;
 	private CPInstance _cpInstance;
 	private final CPInstanceHelper _cpInstanceHelper;
 	private final CPInstanceService _cpInstanceService;

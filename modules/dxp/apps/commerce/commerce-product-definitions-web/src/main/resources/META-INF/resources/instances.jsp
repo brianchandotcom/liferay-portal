@@ -198,10 +198,12 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 	<portlet:param name="toolbarItem" value="view-product-instances" />
 </liferay-portlet:actionURL>
 
-<liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item id="addSkuButton" title='<%= LanguageUtil.get(request, "add-sku") %>' url="<%= addProductInstanceURL.toString() %>" />
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "generate-all-sku-combinations") %>' url="<%= addProductInstancesURL.toString() %>" />
-</liferay-frontend:add-menu>
+<c:if test="<%= cpInstanceDisplayContext.hasSkuContributorOption() %>">
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item id="addSkuButton" title='<%= LanguageUtil.get(request, "add-sku") %>' url="<%= addProductInstanceURL.toString() %>" />
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "generate-all-sku-combinations") %>' url="<%= addProductInstancesURL.toString() %>" />
+	</liferay-frontend:add-menu>
+</c:if>
 
 <aui:script>
 	function <portlet:namespace />deleteCPInstances() {

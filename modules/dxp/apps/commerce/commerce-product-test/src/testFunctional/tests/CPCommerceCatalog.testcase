@@ -46,6 +46,8 @@
 
 		<execute macro="CommerceEntry#publishEntry" />
 
+		<execute function="Pause" locator1="3000" />
+
 		<execute macro="CommerceNavigator#gotoSitesCommerce">
 			<var name="portlet" value="Catalog" />
 		</execute>
@@ -69,7 +71,7 @@
 		<execute macro="CommerceEntry#saveEntryAsDraft" />
 	</command>
 
-	<command ignore="true" name="AddSimpleCatalogEntry" priority="5">
+	<command name="AddSimpleCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
 
 		<execute macro="CommerceCatalog#addEntry">
@@ -81,6 +83,8 @@
 		</execute>
 
 		<execute macro="CommerceEntry#publishEntry" />
+
+		<execute function="Pause" locator1="3000" />
 
 		<execute macro="CommerceNavigator#gotoSitesCommerce">
 			<var name="portlet" value="Catalog" />
@@ -117,6 +121,8 @@
 		</execute>
 
 		<execute macro="CommerceEntry#publishEntry" />
+
+		<execute function="Pause" locator1="3000" />
 
 		<execute macro="CommerceNavigator#gotoSitesCommerce">
 			<var name="portlet" value="Catalog" />

@@ -21,6 +21,7 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
+taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
@@ -30,6 +31,8 @@ page import="com.liferay.asset.display.template.web.internal.display.context.Ass
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />
 
 <%
 AssetDisplayTemplateDisplayContext assetDisplayTemplateDisplayContext = (AssetDisplayTemplateDisplayContext)request.getAttribute(AssetDisplayTemplateWebKeys.DISPLAY_CONTEXT);

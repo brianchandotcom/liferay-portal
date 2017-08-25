@@ -27,7 +27,14 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.asset.display.template.service.permission.AssetDisplayTemplatePermission" %><%@
 page import="com.liferay.asset.display.template.web.internal.constants.AssetDisplayTemplateWebKeys" %><%@
-page import="com.liferay.asset.display.template.web.internal.display.context.AssetDisplayTemplateDisplayContext" %>
+page import="com.liferay.asset.display.template.web.internal.display.context.AssetDisplayTemplateDisplayContext" %><%@
+page import="com.liferay.portal.kernel.model.ClassName" %><%@
+page import="com.liferay.portal.kernel.security.permission.ResourceActionsUtil" %><%@
+page import="com.liferay.portal.kernel.service.ClassNameLocalServiceUtil" %><%@
+page import="com.liferay.portal.kernel.util.SetUtil" %>
+
+<%@ page import="java.util.Objects" %><%@
+page import="java.util.Set" %>
 
 <liferay-frontend:defineObjects />
 

@@ -36,6 +36,7 @@ if (cpDefinition != null) {
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
 			<portlet:param name="mvcRenderCommandName" value="editProductDefinition" />
 			<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
+			<portlet:param name="productTypeName" value="<%= cpType.getName() %>" />
 			<portlet:param name="toolbarItem" value="view-product-definition-details" />
 		</liferay-portlet:renderURL>
 

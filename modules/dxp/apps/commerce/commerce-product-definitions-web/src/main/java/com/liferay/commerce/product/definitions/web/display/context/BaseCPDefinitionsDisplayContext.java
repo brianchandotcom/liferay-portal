@@ -100,7 +100,8 @@ public abstract class BaseCPDefinitionsDisplayContext {
 		CPDefinition cpDefinition = getCPDefinition();
 
 		if (cpDefinition == null) {
-			return null;
+			return actionHelper.getCPType(
+				ParamUtil.getString(httpServletRequest, "productTypeName"));
 		}
 
 		return actionHelper.getCPType(cpDefinition.getProductTypeName());

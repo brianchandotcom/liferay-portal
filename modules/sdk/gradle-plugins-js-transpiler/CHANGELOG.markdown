@@ -162,6 +162,12 @@ subdirectories created from the dependencies in the `jsCompile` configuration.
 - [LPS-73472]: Update the [Liferay Gradle Plugins Node] dependency to version
 3.0.0.
 
+## 2.3.17 - 2017-08-24
+
+### Changed
+- [LPS-74343]: Explicitly set the property `sourceDir` of `TranspileJSTask` as
+required.
+
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
@@ -185,3 +191,4 @@ subdirectories created from the dependencies in the `jsCompile` configuration.
 [LPS-72723]: https://issues.liferay.com/browse/LPS-72723
 [LPS-72851]: https://issues.liferay.com/browse/LPS-72851
 [LPS-73472]: https://issues.liferay.com/browse/LPS-73472
+[LPS-74343]: https://issues.liferay.com/browse/LPS-74343

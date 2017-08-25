@@ -1,0 +1,13 @@
+apply plugin: "com.liferay.plugin"
+
+task runGradleTest
+
+runGradleTest {
+	dependsOn tasks.eclipse
+
+	doLast {
+		File generatedFile = file(".project")
+
+		assert generatedFile.text.contains("<nature>com.liferay.ide.core.liferayNature</nature>")
+	}
+}

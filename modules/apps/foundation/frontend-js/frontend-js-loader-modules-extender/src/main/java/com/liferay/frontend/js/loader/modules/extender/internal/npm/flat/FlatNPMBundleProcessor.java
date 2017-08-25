@@ -104,7 +104,19 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 	private String _normalizeModuleContent(String moduleContent) {
 		moduleContent = moduleContent.replaceAll("\n", " ");
 
-		int index = moduleContent.indexOf("function");
+		int index = moduleContent.indexOf("Liferay.Loader.define(");
+
+		if (index == -1) {
+			return StringPool.BLANK;
+		}
+
+		moduleContent = moduleContent.substring(index);
+
+		index = moduleContent.indexOf("function");
+
+		if (index == -1) {
+			return StringPool.BLANK;
+		}
 
 		return moduleContent.substring(0, index);
 	}

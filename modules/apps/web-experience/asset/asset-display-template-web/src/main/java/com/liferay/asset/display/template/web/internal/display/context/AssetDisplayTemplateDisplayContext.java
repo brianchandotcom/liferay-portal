@@ -22,6 +22,9 @@ import com.liferay.asset.display.template.service.permission.AssetDisplayPermiss
 import com.liferay.asset.display.template.util.comparator.AssetDisplayTemplateClassNameIdComparator;
 import com.liferay.asset.display.template.util.comparator.AssetDisplayTemplateCreateDateComparator;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.util.DDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
 import com.liferay.dynamic.data.mapping.util.DDMTemplateHelper;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -32,6 +35,7 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -62,6 +66,34 @@ public class AssetDisplayTemplateDisplayContext {
 		_ddmTemplateHelper = ddmTemplateHelper;
 	}
 
+	public AssetDisplayTemplate getAssetDisplayTemplate()
+		throws PortalException {
+
+		if (_assetDisplayTemplate == null) {
+			_assetDisplayTemplate =
+				AssetDisplayTemplateLocalServiceUtil.fetchAssetDisplayTemplate(
+					getAssetDisplayTemplateId());
+		}
+
+		return _assetDisplayTemplate;
+	}
+
+	public long getAssetDisplayTemplateId() {
+		if (_assetDisplayTemplateId == null) {
+			_assetDisplayTemplateId = ParamUtil.getLong(
+				_request, "assetDisplayTemplateId");
+		}
+
+		return _assetDisplayTemplateId;
+	}
+
+	public String getAutocompleteJSON(
+			HttpServletRequest request, String language)
+		throws Exception {
+
+		return _ddmTemplateHelper.getAutocompleteJSON(request, language);
+	}
+
 	public Set<Long> getAvailableClassNameIds() {
 		if (_availableClassNameIdsSet != null) {
 			return _availableClassNameIdsSet;
@@ -77,6 +109,30 @@ public class AssetDisplayTemplateDisplayContext {
 		_availableClassNameIdsSet = SetUtil.fromArray(availableClassNameIds);
 
 		return _availableClassNameIdsSet;
+	}
+
+	public DDMDisplay getDDMDisplay() {
+		return _ddmDisplayRegistry.getDDMDisplay(
+			AssetDisplayTemplatePortletKeys.ASSET_DISPLAY_TEMPLATE);
+	}
+
+	public DDMTemplate getDDMTemplate() throws Exception {
+		if (_ddmTemplate != null) {
+			return _ddmTemplate;
+		}
+
+		AssetDisplayTemplate assetDisplayTemplate = getAssetDisplayTemplate();
+
+		if (assetDisplayTemplate != null) {
+			_ddmTemplate = DDMTemplateLocalServiceUtil.getDDMTemplate(
+				assetDisplayTemplate.getDDMTemplateId());
+		}
+
+		return _ddmTemplate;
+	}
+
+	public long getDefaultClassNameId() {
+		return PortalUtil.getClassNameId(AssetDisplayTemplate.class);
 	}
 
 	public String getDisplayStyle() {
@@ -180,6 +236,10 @@ public class AssetDisplayTemplateDisplayContext {
 		return _searchContainer;
 	}
 
+	public boolean isAutocompleteEnabled(String language) {
+		return _ddmTemplateHelper.isAutocompleteEnabled(language);
+	}
+
 	public boolean isDisabledManagementBar() throws PortalException {
 		SearchContainer searchContainer = getSearchContainer();
 
@@ -238,8 +298,11 @@ public class AssetDisplayTemplateDisplayContext {
 		return orderByComparator;
 	}
 
+	private AssetDisplayTemplate _assetDisplayTemplate;
+	private Long _assetDisplayTemplateId;
 	private Set<Long> _availableClassNameIdsSet;
 	private final DDMDisplayRegistry _ddmDisplayRegistry;
+	private DDMTemplate _ddmTemplate;
 	private final DDMTemplateHelper _ddmTemplateHelper;
 	private String _displayStyle;
 	private String _keywords;

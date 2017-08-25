@@ -15,6 +15,16 @@
 --%>
 
 <%
+DDMDisplay ddmDisplay = assetDisplayTemplateDisplayContext.getDDMDisplay();
+
+DDMTemplate template = assetDisplayTemplateDisplayContext.getDDMTemplate();
+
+long templateClassNameId = assetDisplayTemplateDisplayContext.getDefaultClassNameId();
+long templateClassPK = assetDisplayTemplateDisplayContext.getAssetDisplayTemplateId();
+
+String language = BeanParamUtil.getString(template, request, "language", ddmDisplay.getDefaultTemplateLanguage());
+String script = BeanParamUtil.getString(template, request, "script");
+
 String scriptContent = ParamUtil.getString(request, "scriptContent");
 
 if (Validator.isNotNull(scriptContent)) {
@@ -26,8 +36,30 @@ if (Validator.isNotNull(scriptContent)) {
 
 <liferay-ui:panel-container extended="<%= true %>" id="templateScriptContainer" markupView="lexicon" persistState="<%= true %>">
 	<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="templateScriptSectionPanel" markupView="lexicon" persistState="<%= true %>" title="script">
+		<aui:select changesContext="<%= true %>" helpMessage='<%= (template == null) ? StringPool.BLANK : "changing-the-language-does-not-automatically-translate-the-existing-template-script" %>' label="language" name="language">
+
+			<%
+			for (String curLangType : ddmDisplay.getTemplateLanguageTypes()) {
+				StringBundler sb = new StringBundler(6);
+
+				sb.append(LanguageUtil.get(request, curLangType + "[stands-for]"));
+				sb.append(StringPool.SPACE);
+				sb.append(StringPool.OPEN_PARENTHESIS);
+				sb.append(StringPool.PERIOD);
+				sb.append(curLangType);
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+			%>
+
+				<aui:option label="<%= sb.toString() %>" selected="<%= language.equals(curLangType) %>" value="<%= curLangType %>" />
+
+			<%
+			}
+			%>
+
+		</aui:select>
+
 		<div class="form-group lfr-template-editor-container">
-			<c:if test="<%= ddmDisplayContext.isAutocompleteEnabled(language) %>">
+			<c:if test="<%= assetDisplayTemplateDisplayContext.isAutocompleteEnabled(language) %>">
 				<div class="lfr-template-palette-container pull-left" id="<portlet:namespace />templatePaletteContainer">
 					<div class="search" id="<portlet:namespace />paletteSearchContainer">
 						<input class="col-md-12 field form-control search-query" id="<portlet:namespace />paletteSearch" placeholder="<liferay-ui:message key="search" />" type="text" />
@@ -37,9 +69,9 @@ if (Validator.isNotNull(scriptContent)) {
 						<div id="<portlet:namespace />paletteData">
 
 							<%
-							long templateHandlerClassNameId = ddmDisplay.getTemplateHandlerClassNameId(template, classNameId);
+							long templateHandlerClassNameId = ddmDisplay.getTemplateHandlerClassNameId(template, templateClassNameId);
 
-							Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(templateHandlerClassNameId, classPK, language, locale);
+							Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(templateHandlerClassNameId, templateClassPK, language, locale);
 
 							TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(templateHandlerClassNameId);
 
@@ -95,7 +127,7 @@ if (Validator.isNotNull(scriptContent)) {
 			<%
 			String editorContainerClass = "lfr-editor-container";
 
-			if (!ddmDisplayContext.isAutocompleteEnabled(language)) {
+			if (!assetDisplayTemplateDisplayContext.isAutocompleteEnabled(language)) {
 				editorContainerClass += " lfr-editor-container-full";
 			}
 			%>
@@ -137,7 +169,7 @@ if (Validator.isNotNull(scriptContent)) {
 	var prevEditorContent;
 	var richEditor;
 
-	<c:if test="<%= ddmDisplayContext.isAutocompleteEnabled(language) %>">
+	<c:if test="<%= assetDisplayTemplateDisplayContext.isAutocompleteEnabled(language) %>">
 		var paletteContainer = panelScriptContainer.one('#<portlet:namespace />templatePaletteContainer');
 		var paletteDataContainer = panelScriptContainer.one('#<portlet:namespace />paletteDataContainer');
 
@@ -322,7 +354,7 @@ if (Validator.isNotNull(scriptContent)) {
 		if (AutoComplete) {
 			var processor = new AutoComplete(
 				{
-					variables: <%= ddmDisplayContext.getAutocompleteJSON(request, language) %>
+					variables: <%= assetDisplayTemplateDisplayContext.getAutocompleteJSON(request, language) %>
 				}
 			);
 
@@ -395,7 +427,7 @@ if (Validator.isNotNull(scriptContent)) {
 
 			setEditorPlugins();
 
-			<c:if test="<%= ddmDisplayContext.isAutocompleteEnabled(language) %>">
+			<c:if test="<%= assetDisplayTemplateDisplayContext.isAutocompleteEnabled(language) %>">
 				paletteContainer.delegate('click', onPaletteItemChosen, '.palette-item');
 
 				new A.TogglerDelegate(
@@ -433,7 +465,7 @@ if (Validator.isNotNull(scriptContent)) {
 			var form = A.one('#<portlet:namespace />fm');
 
 			<portlet:renderURL var="refreshTemplateURL">
-				<portlet:param name="mvcPath" value="/edit_template.jsp" />
+				<portlet:param name="mvcPath" value="/edit_asset_display_template.jsp" />
 			</portlet:renderURL>
 
 			form.attr('action', '<%= refreshTemplateURL %>');
@@ -664,5 +696,5 @@ private String _getVariableReferenceCode(String variableName, String accessor, S
 %>
 
 <%!
-private static Log _log = LogFactoryUtil.getLog("com_liferay_dynamic_data_mapping_web.edit_template_display_jspf");
+private static Log _log = LogFactoryUtil.getLog("com_liferay_asset_display_template_web.edit_asset_display_template_script_jspf");
 %>

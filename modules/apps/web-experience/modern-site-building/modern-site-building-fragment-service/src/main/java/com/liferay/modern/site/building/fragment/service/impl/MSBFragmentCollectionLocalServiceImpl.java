@@ -42,7 +42,7 @@ public class MSBFragmentCollectionLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		// Mobile site building fragment collection
+		// Modern site building fragment collection
 
 		User user = userLocalService.getUser(userId);
 
@@ -90,7 +90,7 @@ public class MSBFragmentCollectionLocalServiceImpl
 			MSBFragmentCollection msbFragmentCollection)
 		throws PortalException {
 
-		/// Mobile site building fragment collection
+		/// Modern site building fragment collection
 
 		msbFragmentCollectionPersistence.remove(msbFragmentCollection);
 
@@ -102,7 +102,7 @@ public class MSBFragmentCollectionLocalServiceImpl
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			msbFragmentCollection.getMsbFragmentCollectionId());
 
-		// Mobile site building fragment entries
+		// Modern site building fragment entries
 
 		List<MSBFragmentEntry> msbFragmentEntries =
 			msbFragmentEntryPersistence.findByMSBFragmentCollectionId(

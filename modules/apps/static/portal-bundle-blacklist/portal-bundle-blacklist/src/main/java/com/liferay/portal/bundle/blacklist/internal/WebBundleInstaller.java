@@ -16,52 +16,39 @@ package com.liferay.portal.bundle.blacklist.internal;
 
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.lpkg.deployer.util.BundleStartLevelUtil;
-
-import java.net.URL;
-import java.net.URLConnection;
+import com.liferay.portal.osgi.web.wab.generator.WabGenerator;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleException;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
-import org.osgi.service.url.URLConstants;
-import org.osgi.service.url.URLStreamHandlerService;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Shuyang Zhou
  */
-public class WebBundleInstaller
-	extends ServiceTracker<URLStreamHandlerService, Void> {
+public class WebBundleInstaller extends ServiceTracker<WabGenerator, Void> {
 
 	public WebBundleInstaller(
 			BundleContext bundleContext, String location, int startLevel)
 		throws InvalidSyntaxException {
 
-		super(bundleContext, bundleContext.createFilter(_FILTER_STRING), null);
+		super(bundleContext, WabGenerator.class, null);
 
 		_location = location;
 		_startLevel = startLevel;
 	}
 
 	@Override
-	public Void addingService(
-		ServiceReference<URLStreamHandlerService> serviceReference) {
-
-		URLStreamHandlerService urlStreamHandlerService = context.getService(
-			serviceReference);
-
+	public Void addingService(ServiceReference<WabGenerator> serviceReference) {
 		try {
-			URLConnection urlConnection =
-				urlStreamHandlerService.openConnection(new URL(_location));
-
-			Bundle bundle = context.installBundle(
-				_location, urlConnection.getInputStream());
+			Bundle bundle = context.installBundle(_location);
 
 			BundleStartLevelUtil.setStartLevelAndStart(
 				bundle, _startLevel, context);
 		}
-		catch (Exception be) {
+		catch (BundleException be) {
 			ReflectionUtil.throwException(be);
 		}
 		finally {
@@ -72,10 +59,6 @@ public class WebBundleInstaller
 
 		return null;
 	}
-
-	private static final String _FILTER_STRING =
-		"(&(" + URLConstants.URL_HANDLER_PROTOCOL + "=webbundle)(objectClass=" +
-			URLStreamHandlerService.class.getName() + "))";
 
 	private final String _location;
 	private final int _startLevel;

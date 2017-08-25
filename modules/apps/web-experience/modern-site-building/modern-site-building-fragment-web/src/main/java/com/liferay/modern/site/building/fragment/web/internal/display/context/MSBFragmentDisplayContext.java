@@ -140,6 +140,27 @@ public class MSBFragmentDisplayContext {
 		return _orderByType;
 	}
 
+	public boolean hasMSBFragmentCollectionsResults() throws PortalException {
+		SearchContainer searchContainer =
+			getMSBFragmentCollectionsSearchContainer();
+
+		if (searchContainer.getTotal() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isDisabledMSBFragmentCollectionsManagementBar()
+		throws PortalException {
+
+		if (hasMSBFragmentCollectionsResults()) {
+			return false;
+		}
+
+		return true;
+	}
+
 	private String _displayStyle;
 	private SearchContainer _msbFragmentCollectionsSearchContainer;
 	private String _orderByCol;

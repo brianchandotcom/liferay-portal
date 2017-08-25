@@ -15,13 +15,26 @@
 package com.liferay.asset.display.template.web.internal.display.context;
 
 import com.liferay.asset.display.template.constants.AssetDisplayTemplatePortletKeys;
+import com.liferay.asset.display.template.model.AssetDisplayTemplate;
+import com.liferay.asset.display.template.service.AssetDisplayTemplateLocalServiceUtil;
+import com.liferay.asset.display.template.service.permission.AssetDisplayTemplatePermission;
+import com.liferay.asset.display.template.util.comparator.AssetDisplayTemplateClassNameIdComparator;
+import com.liferay.asset.display.template.util.comparator.AssetDisplayTemplateCreateDateComparator;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
 import com.liferay.dynamic.data.mapping.util.DDMTemplateHelper;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.List;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -32,6 +45,29 @@ import javax.servlet.http.HttpServletRequest;
  * @author Pavel Savinov
  */
 public class AssetDisplayTemplateDisplayContext {
+
+	public static OrderByComparator<AssetDisplayTemplate>
+		getArticleOrderByComparator(String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<AssetDisplayTemplate> orderByComparator = null;
+
+		if (orderByCol.equals("create-date")) {
+			orderByComparator = new AssetDisplayTemplateCreateDateComparator(
+				orderByAsc);
+		}
+		else if (orderByCol.equals("asset-type")) {
+			orderByComparator = new AssetDisplayTemplateClassNameIdComparator(
+				orderByAsc);
+		}
+
+		return orderByComparator;
+	}
 
 	public AssetDisplayTemplateDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse,
@@ -92,6 +128,84 @@ public class AssetDisplayTemplateDisplayContext {
 		return _orderByType;
 	}
 
+	public SearchContainer getSearchContainer() throws PortalException {
+		if (_searchContainer != null) {
+			return _searchContainer;
+		}
+
+		SearchContainer searchContainer = new SearchContainer(
+			_renderRequest, _renderResponse.createRenderURL(), null,
+			"there-are-no-asset-display-templates");
+
+		String keywords = getKeywords();
+
+		if (Validator.isNull(keywords)) {
+			if (isShowAddButton()) {
+				searchContainer.setEmptyResultsMessage(
+					"there-are-no-asset-display-templates-you-can-add-an-" +
+						"asset-display-template-by-clicking-plus-button-on-" +
+							"the-bottom-right-corner");
+				searchContainer.setEmptyResultsMessageCssClass(
+					"taglib-empty-result-message-header-has-plus-btn");
+			}
+		}
+		else {
+			searchContainer.setSearch(true);
+		}
+
+		searchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_renderResponse));
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String orderByCol = getOrderByCol();
+
+		searchContainer.setOrderByCol(orderByCol);
+
+		String orderByType = getOrderByType();
+
+		searchContainer.setOrderByType(orderByType);
+
+		OrderByComparator<AssetDisplayTemplate> orderByComparator =
+			getArticleOrderByComparator(orderByCol, orderByType);
+
+		searchContainer.setOrderByComparator(orderByComparator);
+
+		long scopeGroupId = themeDisplay.getScopeGroupId();
+
+		int tagsCount =
+			AssetDisplayTemplateLocalServiceUtil.getAssetDisplayTemplatesCount(
+				scopeGroupId);
+
+		searchContainer.setTotal(tagsCount);
+
+		List<AssetDisplayTemplate> assetDisplayTemplates =
+			AssetDisplayTemplateLocalServiceUtil.getAssetDisplayTemplates(
+				scopeGroupId, searchContainer.getStart(),
+				searchContainer.getEnd(), orderByComparator);
+
+		searchContainer.setResults(assetDisplayTemplates);
+
+		_searchContainer = searchContainer;
+
+		return _searchContainer;
+	}
+
+	public boolean hasPermission(
+			AssetDisplayTemplate assetDisplayTemplate, String actionId)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		return AssetDisplayTemplatePermission.contains(
+			permissionChecker, assetDisplayTemplate, actionId);
+	}
+
 	public boolean isDisabledManagementBar() throws PortalException {
 		SearchContainer searchContainer = getSearchContainer();
 
@@ -119,5 +233,6 @@ public class AssetDisplayTemplateDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
+	private SearchContainer _searchContainer;
 
 }

@@ -71,3 +71,82 @@
 		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedAssetDisplayTemplates" label="delete" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
+
+<portlet:actionURL name="deleteAssetDisplayTemplate" var="deleteAssetDisplayTemplateURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
+
+<aui:form action="<%= deleteAssetDisplayTemplateURL %>" cssClass="container-fluid-1280" name="fm">
+	<liferay-ui:search-container
+		id="assetDisplayTemplates"
+		searchContainer="<%= assetDisplayTemplateDisplayContext.getSearchContainer() %>"
+	>
+		<liferay-ui:search-container-row
+			className="com.liferay.asset.display.template.model.AssetDisplayTemplate"
+			keyProperty="assetDisplayTemplateId"
+			modelVar="assetDisplayTemplate"
+		>
+			<c:choose>
+				<c:when test='<%= Objects.equals(assetDisplayTemplateDisplayContext.getDisplayStyle(), "descriptive") %>'>
+					<liferay-ui:search-container-column-icon
+						icon="page-template"
+						toggleRowChecker="<%= true %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
+						<%= assetDisplayTemplate.getName() %>
+
+						<h6 class="text-default">
+							<%= assetDisplayTemplate.getAssetTypeName(locale) %>
+						</h6>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-jsp
+						path="/asset_display_template_action.jsp"
+					/>
+				</c:when>
+				<c:when test='<%= Objects.equals(assetDisplayTemplateDisplayContext.getDisplayStyle(), "icon") %>'>
+
+					<%
+					row.setCssClass("entry-card lfr-asset-item");
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<liferay-frontend:icon-vertical-card
+							actionJsp="/asset_display_template_action.jsp"
+							actionJspServletContext="<%= application %>"
+							icon="page-template"
+							resultRow="<%= row %>"
+							rowChecker="<%= searchContainer.getRowChecker() %>"
+							title="<%= assetDisplayTemplate.getName() %>"
+						>
+							<liferay-frontend:vertical-card-footer>
+								<%= assetDisplayTemplate.getAssetTypeName(locale) %>
+							</liferay-frontend:vertical-card-footer>
+						</liferay-frontend:icon-vertical-card>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:when test='<%= Objects.equals(assetDisplayTemplateDisplayContext.getDisplayStyle(), "list") %>'>
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
+						name="name"
+						value="<%= assetDisplayTemplate.getName() %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						name="asset-type"
+						value="<%= assetDisplayTemplate.getAssetTypeName(locale) %>"
+					/>
+
+					<liferay-ui:search-container-column-jsp
+						path="/asset_display_template_action.jsp"
+					/>
+				</c:when>
+			</c:choose>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator displayStyle="<%= assetDisplayTemplateDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
+	</liferay-ui:search-container>
+</aui:form>

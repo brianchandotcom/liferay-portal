@@ -86,7 +86,7 @@
  */
 {template .reportDialogBody}
 	{if $flagsEnabled}
-		<form class="container-fluid-1280" method="post" name="flagsForm">
+		<form class="container-fluid-1280" method="post" name="{$namespace}flagsForm">
 			<p>
 			{msg desc=""}
 			you-are-about-to-report-a-violation-of-our-x-terms-of-use.-all-reports-are-strictly-confidential
@@ -95,9 +95,9 @@
 
 			<fieldset>
 				<div class="form-group">
-					<label class="control-label" for="reason">{msg desc=""}reason-for-the-report{/msg}</label>
+					<label class="control-label" for="{$namespace}reason">{msg desc=""}reason-for-the-report{/msg}</label>
 
-					<select class="form-control" name="reason" data-onchange="{$onReasonChange_}">
+					<select class="form-control" name="{$namespace}reason" data-onchange="{$onReasonChange_}">
 						{foreach $reason in $reasons}
 							<option value="{$reason}">{$reason}</option>
 						{/foreach}
@@ -107,8 +107,8 @@
 
 				<span class="hide" id="{$namespace}otherReasonContainer">
 					<div class="form-group">
-						<label class="control-label" for="otherReason">{msg desc=""}other-reason{/msg}</label>
-						<input class="form-control" name="otherReason" />
+						<label class="control-label" for="{$namespace}otherReason">{msg desc=""}other-reason{/msg}</label>
+						<input class="form-control" name="{$namespace}otherReason" />
 					</div>
 				</span>
 

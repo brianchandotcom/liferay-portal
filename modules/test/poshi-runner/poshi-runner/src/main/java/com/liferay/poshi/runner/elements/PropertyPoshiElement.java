@@ -22,7 +22,7 @@ import org.dom4j.Element;
 public class PropertyPoshiElement extends VarPoshiElement {
 
 	public static boolean isElementType(
-		BasePoshiElement parentPoshiElement, String readableSyntax) {
+		PoshiElement parentPoshiElement, String readableSyntax) {
 
 		readableSyntax = readableSyntax.trim();
 
@@ -45,20 +45,20 @@ public class PropertyPoshiElement extends VarPoshiElement {
 	}
 
 	@Override
-	public PoshiElement clone(
-		BasePoshiElement parentPoshiElement, String readableSyntax) {
-
-		if (isElementType(parentPoshiElement, readableSyntax)) {
-			return new PropertyPoshiElement(readableSyntax);
+	public PoshiElement clone(Element element) {
+		if (isElementType(_ELEMENT_NAME, element)) {
+			return new PropertyPoshiElement(element);
 		}
 
 		return null;
 	}
 
 	@Override
-	public PoshiElement clone(Element element) {
-		if (isElementType(_ELEMENT_NAME, element)) {
-			return new PropertyPoshiElement(element);
+	public PoshiElement clone(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (isElementType(parentPoshiElement, readableSyntax)) {
+			return new PropertyPoshiElement(readableSyntax);
 		}
 
 		return null;

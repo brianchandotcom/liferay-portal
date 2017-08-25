@@ -28,7 +28,7 @@ import org.dom4j.Node;
 public class VarPoshiElement extends BasePoshiElement {
 
 	public static boolean isElementType(
-		BasePoshiElement parentPoshiElement, String readableSyntax) {
+		PoshiElement parentPoshiElement, String readableSyntax) {
 
 		readableSyntax = readableSyntax.trim();
 
@@ -55,20 +55,20 @@ public class VarPoshiElement extends BasePoshiElement {
 	}
 
 	@Override
-	public PoshiElement clone(
-		BasePoshiElement parentPoshiElement, String readableSyntax) {
-
-		if (isElementType(parentPoshiElement, readableSyntax)) {
-			return new VarPoshiElement(readableSyntax);
+	public PoshiElement clone(Element element) {
+		if (isElementType(_ELEMENT_NAME, element)) {
+			return new VarPoshiElement(element);
 		}
 
 		return null;
 	}
 
 	@Override
-	public PoshiElement clone(Element element) {
-		if (isElementType(_ELEMENT_NAME, element)) {
-			return new VarPoshiElement(element);
+	public PoshiElement clone(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (isElementType(parentPoshiElement, readableSyntax)) {
+			return new VarPoshiElement(readableSyntax);
 		}
 
 		return null;
@@ -117,7 +117,7 @@ public class VarPoshiElement extends BasePoshiElement {
 
 		sb.append("\n\t");
 
-		BasePoshiElement parentElement = (BasePoshiElement)getParent();
+		PoshiElement parentElement = (PoshiElement)getParent();
 
 		String parentElementName = parentElement.getName();
 

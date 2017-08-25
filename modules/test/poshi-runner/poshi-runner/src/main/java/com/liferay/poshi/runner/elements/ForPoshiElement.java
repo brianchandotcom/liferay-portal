@@ -25,7 +25,7 @@ import org.dom4j.Element;
 public class ForPoshiElement extends BasePoshiElement {
 
 	public static boolean isElementType(
-		BasePoshiElement parentPoshiElement, String readableSyntax) {
+		PoshiElement parentPoshiElement, String readableSyntax) {
 
 		readableSyntax = readableSyntax.trim();
 
@@ -48,20 +48,20 @@ public class ForPoshiElement extends BasePoshiElement {
 	}
 
 	@Override
-	public PoshiElement clone(
-		BasePoshiElement parentPoshiElement, String readableSyntax) {
-
-		if (isElementType(parentPoshiElement, readableSyntax)) {
-			return new ForPoshiElement(readableSyntax);
+	public PoshiElement clone(Element element) {
+		if (isElementType(_ELEMENT_NAME, element)) {
+			return new ForPoshiElement(element);
 		}
 
 		return null;
 	}
 
 	@Override
-	public PoshiElement clone(Element element) {
-		if (isElementType(_ELEMENT_NAME, element)) {
-			return new ForPoshiElement(element);
+	public PoshiElement clone(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (isElementType(parentPoshiElement, readableSyntax)) {
+			return new ForPoshiElement(readableSyntax);
 		}
 
 		return null;

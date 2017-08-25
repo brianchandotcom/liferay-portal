@@ -22,7 +22,7 @@ import org.dom4j.Element;
 public class ElsePoshiElement extends ThenPoshiElement {
 
 	public static boolean isElementType(
-		BasePoshiElement parentPoshiElement, String readableSyntax) {
+		PoshiElement parentPoshiElement, String readableSyntax) {
 
 		if (parentPoshiElement instanceof IfPoshiElement &&
 			readableSyntax.startsWith("else {")) {
@@ -37,20 +37,20 @@ public class ElsePoshiElement extends ThenPoshiElement {
 	}
 
 	@Override
-	public PoshiElement clone(
-		BasePoshiElement parentPoshiElement, String readableSyntax) {
-
-		if (isElementType(parentPoshiElement, readableSyntax)) {
-			return new ElsePoshiElement(readableSyntax);
+	public PoshiElement clone(Element element) {
+		if (isElementType(_ELEMENT_NAME, element)) {
+			return new ElsePoshiElement(element);
 		}
 
 		return null;
 	}
 
 	@Override
-	public PoshiElement clone(Element element) {
-		if (isElementType(_ELEMENT_NAME, element)) {
-			return new ElsePoshiElement(element);
+	public PoshiElement clone(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (isElementType(parentPoshiElement, readableSyntax)) {
+			return new ElsePoshiElement(readableSyntax);
 		}
 
 		return null;

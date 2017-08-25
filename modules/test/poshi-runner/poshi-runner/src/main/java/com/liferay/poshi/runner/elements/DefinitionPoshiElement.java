@@ -25,7 +25,7 @@ import org.dom4j.Element;
 public class DefinitionPoshiElement extends BasePoshiElement {
 
 	public static boolean isElementType(
-		BasePoshiElement parentPoshiElement, String readableSyntax) {
+		PoshiElement parentPoshiElement, String readableSyntax) {
 
 		readableSyntax = readableSyntax.trim();
 
@@ -58,20 +58,20 @@ public class DefinitionPoshiElement extends BasePoshiElement {
 	}
 
 	@Override
-	public PoshiElement clone(
-		BasePoshiElement parentPoshiElement, String readableSyntax) {
-
-		if (isElementType(parentPoshiElement, readableSyntax)) {
-			return new DefinitionPoshiElement(readableSyntax);
+	public PoshiElement clone(Element element) {
+		if (isElementType(_ELEMENT_NAME, element)) {
+			return new DefinitionPoshiElement(element);
 		}
 
 		return null;
 	}
 
 	@Override
-	public PoshiElement clone(Element element) {
-		if (isElementType(_ELEMENT_NAME, element)) {
-			return new DefinitionPoshiElement(element);
+	public PoshiElement clone(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (isElementType(parentPoshiElement, readableSyntax)) {
+			return new DefinitionPoshiElement(readableSyntax);
 		}
 
 		return null;
@@ -110,7 +110,7 @@ public class DefinitionPoshiElement extends BasePoshiElement {
 
 		StringBuilder content = new StringBuilder();
 
-		for (BasePoshiElement poshiElement :
+		for (PoshiElement poshiElement :
 				toPoshiElements(elements("property"))) {
 
 			content.append(poshiElement.toReadableSyntax());
@@ -118,29 +118,25 @@ public class DefinitionPoshiElement extends BasePoshiElement {
 
 		content.append("\n");
 
-		for (BasePoshiElement poshiElement : toPoshiElements(elements("var"))) {
+		for (PoshiElement poshiElement : toPoshiElements(elements("var"))) {
 			content.append(poshiElement.toReadableSyntax());
 		}
 
 		content.append("\n");
 
-		for (BasePoshiElement poshiElement :
-				toPoshiElements(elements("set-up"))) {
-
+		for (PoshiElement poshiElement : toPoshiElements(elements("set-up"))) {
 			content.append(poshiElement.toReadableSyntax());
 		}
 
 		content.append("\n");
 
-		for (BasePoshiElement poshiElement :
+		for (PoshiElement poshiElement :
 				toPoshiElements(elements("tear-down"))) {
 
 			content.append(poshiElement.toReadableSyntax());
 		}
 
-		for (BasePoshiElement poshiElement :
-				toPoshiElements(elements("command"))) {
-
+		for (PoshiElement poshiElement : toPoshiElements(elements("command"))) {
 			content.append("\n");
 			content.append(poshiElement.toReadableSyntax());
 		}

@@ -25,7 +25,7 @@ import org.dom4j.Element;
 public class IfPoshiElement extends BasePoshiElement {
 
 	public static boolean isElementType(
-		BasePoshiElement parentPoshiElement, String readableSyntax) {
+		PoshiElement parentPoshiElement, String readableSyntax) {
 
 		readableSyntax = readableSyntax.trim();
 
@@ -48,20 +48,20 @@ public class IfPoshiElement extends BasePoshiElement {
 	}
 
 	@Override
-	public PoshiElement clone(
-		BasePoshiElement parentPoshiElement, String readableSyntax) {
-
-		if (isElementType(parentPoshiElement, readableSyntax)) {
-			return new IfPoshiElement(readableSyntax);
+	public PoshiElement clone(Element element) {
+		if (isElementType(_ELEMENT_NAME, element)) {
+			return new IfPoshiElement(element);
 		}
 
 		return null;
 	}
 
 	@Override
-	public PoshiElement clone(Element element) {
-		if (isElementType(_ELEMENT_NAME, element)) {
-			return new IfPoshiElement(element);
+	public PoshiElement clone(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (isElementType(parentPoshiElement, readableSyntax)) {
+			return new IfPoshiElement(readableSyntax);
 		}
 
 		return null;
@@ -75,7 +75,7 @@ public class IfPoshiElement extends BasePoshiElement {
 
 		for (String conditionName : _conditionNames) {
 			if (element(conditionName) != null) {
-				BasePoshiElement poshiElement = (BasePoshiElement)element(
+				PoshiElement poshiElement = (PoshiElement)element(
 					conditionName);
 
 				sb.append(" (");
@@ -110,14 +110,14 @@ public class IfPoshiElement extends BasePoshiElement {
 
 		sb.append("\n");
 
-		BasePoshiElement thenElement = (BasePoshiElement)element("then");
+		PoshiElement thenElement = (PoshiElement)element("then");
 
 		String thenReadableSyntax = thenElement.toReadableSyntax();
 
 		sb.append(createReadableBlock(thenReadableSyntax));
 
 		if (element("else") != null) {
-			BasePoshiElement elseElement = (BasePoshiElement)element("else");
+			PoshiElement elseElement = (PoshiElement)element("else");
 
 			sb.append(elseElement.toReadableSyntax());
 		}

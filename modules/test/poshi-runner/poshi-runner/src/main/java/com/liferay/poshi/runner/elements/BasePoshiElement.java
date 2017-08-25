@@ -80,7 +80,7 @@ public abstract class BasePoshiElement
 	public String toReadableSyntax() {
 		StringBuilder sb = new StringBuilder();
 
-		for (BasePoshiElement poshiElement : toPoshiElements(elements())) {
+		for (PoshiElement poshiElement : toPoshiElements(elements())) {
 			sb.append(poshiElement.toReadableSyntax());
 		}
 
@@ -152,7 +152,7 @@ public abstract class BasePoshiElement
 
 		if (!isElementType(name, element)) {
 			throw new RuntimeException(
-				"Element does not match expected BasePoshiElement name\n" +
+				"Element does not match expected PoshiElement name\n" +
 					element.toString());
 		}
 
@@ -246,15 +246,15 @@ public abstract class BasePoshiElement
 		return poshiElementAttributes;
 	}
 
-	protected List<BasePoshiElement> toPoshiElements(List<?> list) {
+	protected List<PoshiElement> toPoshiElements(List<?> list) {
 		if (list == null) {
 			return null;
 		}
 
-		List<BasePoshiElement> poshiElements = new ArrayList<>(list.size());
+		List<PoshiElement> poshiElements = new ArrayList<>(list.size());
 
 		for (Object object : list) {
-			poshiElements.add((BasePoshiElement)object);
+			poshiElements.add((PoshiElement)object);
 		}
 
 		return poshiElements;

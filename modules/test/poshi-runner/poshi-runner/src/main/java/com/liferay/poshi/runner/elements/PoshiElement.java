@@ -21,10 +21,10 @@ import org.dom4j.Element;
  */
 public interface PoshiElement extends Element {
 
-	public PoshiElement clone(
-		BasePoshiElement parentPoshiElement, String readableSyntax);
-
 	public PoshiElement clone(Element element);
+
+	public PoshiElement clone(
+		PoshiElement parentPoshiElement, String readableSyntax);
 
 	public String toReadableSyntax();
 

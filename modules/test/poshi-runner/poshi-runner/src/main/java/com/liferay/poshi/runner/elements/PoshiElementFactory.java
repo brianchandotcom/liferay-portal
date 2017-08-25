@@ -31,22 +31,6 @@ import org.dom4j.Element;
  */
 public class PoshiElementFactory {
 
-	public static PoshiElement newPoshiElement(
-		BasePoshiElement parentPoshiElement, String readableSyntax) {
-
-		for (PoshiElement poshiElement : _poshiElements) {
-			PoshiElement newPoshiElement = poshiElement.clone(
-				parentPoshiElement, readableSyntax);
-
-			if (newPoshiElement != null) {
-				return newPoshiElement;
-			}
-		}
-
-		throw new RuntimeException(
-			"Unknown readable syntax\n" + readableSyntax);
-	}
-
 	public static PoshiElement newPoshiElement(Element element) {
 		for (PoshiElement poshiElement : _poshiElements) {
 			PoshiElement newPoshiElement = poshiElement.clone(element);
@@ -66,6 +50,22 @@ public class PoshiElementFactory {
 		}
 
 		throw new RuntimeException("Unknown element\n" + formattedElement);
+	}
+
+	public static PoshiElement newPoshiElement(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		for (PoshiElement poshiElement : _poshiElements) {
+			PoshiElement newPoshiElement = poshiElement.clone(
+				parentPoshiElement, readableSyntax);
+
+			if (newPoshiElement != null) {
+				return newPoshiElement;
+			}
+		}
+
+		throw new RuntimeException(
+			"Unknown readable syntax\n" + readableSyntax);
 	}
 
 	public static PoshiElement newPoshiElementFromFile(String filePath) {

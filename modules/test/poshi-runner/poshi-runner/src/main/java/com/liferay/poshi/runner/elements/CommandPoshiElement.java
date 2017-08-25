@@ -28,7 +28,7 @@ import org.dom4j.Element;
 public class CommandPoshiElement extends BasePoshiElement {
 
 	public static boolean isElementType(
-		BasePoshiElement parentPoshiElement, String readableSyntax) {
+		PoshiElement parentPoshiElement, String readableSyntax) {
 
 		readableSyntax = readableSyntax.trim();
 
@@ -61,20 +61,20 @@ public class CommandPoshiElement extends BasePoshiElement {
 	}
 
 	@Override
-	public PoshiElement clone(
-		BasePoshiElement parentPoshiElement, String readableSyntax) {
-
-		if (isElementType(parentPoshiElement, readableSyntax)) {
-			return new CommandPoshiElement(readableSyntax);
+	public PoshiElement clone(Element element) {
+		if (isElementType(_ELEMENT_NAME, element)) {
+			return new CommandPoshiElement(element);
 		}
 
 		return null;
 	}
 
 	@Override
-	public PoshiElement clone(Element element) {
-		if (isElementType(_ELEMENT_NAME, element)) {
-			return new CommandPoshiElement(element);
+	public PoshiElement clone(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (isElementType(parentPoshiElement, readableSyntax)) {
+			return new CommandPoshiElement(readableSyntax);
 		}
 
 		return null;
@@ -113,7 +113,7 @@ public class CommandPoshiElement extends BasePoshiElement {
 	public String toReadableSyntax() {
 		StringBuilder sb = new StringBuilder();
 
-		for (BasePoshiElement poshiElement :
+		for (PoshiElement poshiElement :
 				toPoshiElements(elements("description"))) {
 
 			sb.append("\n\t@description = \"");
@@ -136,7 +136,7 @@ public class CommandPoshiElement extends BasePoshiElement {
 
 		List<String> readableBlocks = new ArrayList<>();
 
-		for (BasePoshiElement poshiElement : toPoshiElements(elements())) {
+		for (PoshiElement poshiElement : toPoshiElements(elements())) {
 			readableBlocks.add(poshiElement.toReadableSyntax());
 		}
 

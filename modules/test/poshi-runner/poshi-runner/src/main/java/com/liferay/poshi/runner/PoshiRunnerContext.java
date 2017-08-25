@@ -861,13 +861,14 @@ public class PoshiRunnerContext {
 						URI.create(resourceURLString.substring(0, x)),
 						new HashMap<String, String>(), classLoader)) {
 
-					for (URL url : _getPoshiURLs(
+					for (URL poshiURL : _getPoshiURLs(
 							fileSystem, includes,
 							resourceURLString.substring(x + 1))) {
 
 						_storeRootElement(
-							PoshiRunnerGetterUtil.getRootElementFromURL(url),
-							url.getFile());
+							PoshiRunnerGetterUtil.getRootElementFromURL(
+								poshiURL),
+							poshiURL.getFile());
 					}
 				}
 			}

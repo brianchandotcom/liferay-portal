@@ -519,15 +519,7 @@ public final class SummaryLoggerHandler {
 		}
 
 		if (summary == null) {
-			if (element.attributeValue("action") != null) {
-				summary = PoshiRunnerContext.getActionCommandSummary(
-					element.attributeValue("action"));
-			}
-			else if (element.attributeValue("action-summary") != null) {
-				summary = PoshiRunnerContext.getActionCommandSummary(
-					element.attributeValue("action-summary"));
-			}
-			else if (element.attributeValue("function") != null) {
+			if (element.attributeValue("function") != null) {
 				summary = PoshiRunnerContext.getFunctionCommandSummary(
 					element.attributeValue("function"));
 			}

@@ -54,7 +54,13 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 				decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
 
 				deleteFile: '<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>" name="importLayouts"><portlet:param name="mvcRenderCommandName" value="importLayouts" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE_TEMP %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= Group.class.getName() %>" />',
-				fileDescription: '<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>',
+
+				<%
+				DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);
+				%>
+
+				fileDescription: '<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>',
+
 				maxFileSize: '<%= UploadServletRequestConfigurationHelperUtil.getMaxSize() %> B',
 				metadataContainer: '#<portlet:namespace />commonFileMetadataContainer',
 				metadataExplanationContainer: '#<portlet:namespace />metadataExplanationContainer',

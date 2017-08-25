@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.internal.util;
 
+import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
@@ -22,14 +23,13 @@ import com.liferay.document.library.kernel.exception.InvalidFileVersionException
 import com.liferay.document.library.kernel.exception.SourceFileNameException;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.DLValidator;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelper;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.webdav.DLWebDAVUtil;
 
@@ -37,13 +37,20 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
  */
-@Component(immediate = true, service = DLValidator.class)
+@Component(
+	configurationPid = "com.liferay.document.library.configuration.DLConfiguration",
+	immediate = true, service = DLValidator.class
+)
 public final class DLValidatorImpl implements DLValidator {
 
 	@Override
@@ -64,7 +71,7 @@ public final class DLValidatorImpl implements DLValidator {
 
 	@Override
 	public long getMaxAllowableSize() {
-		long fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
+		long fileMaxSize = _dlConfiguration.fileMaxSize();
 
 		if (fileMaxSize == 0) {
 			fileMaxSize = _uploadServletRequestConfigurationHelper.getMaxSize();
@@ -124,8 +131,7 @@ public final class DLValidatorImpl implements DLValidator {
 
 		boolean validFileExtension = false;
 
-		String[] fileExtensions = PrefsPropsUtil.getStringArray(
-			PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA);
+		String[] fileExtensions = _dlConfiguration.fileExtensions();
 
 		for (String fileExtension : fileExtensions) {
 			if (StringPool.STAR.equals(fileExtension) ||
@@ -196,7 +202,7 @@ public final class DLValidatorImpl implements DLValidator {
 	public void validateFileSize(String fileName, long size)
 		throws FileSizeException {
 
-		long maxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
+		long maxSize = _dlConfiguration.fileMaxSize();
 
 		if ((maxSize > 0) && (size > maxSize)) {
 			throw new FileSizeException(
@@ -232,6 +238,13 @@ public final class DLValidatorImpl implements DLValidator {
 			throw new InvalidFileVersionException(
 				"Invalid version label " + versionLabel);
 		}
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_dlConfiguration = ConfigurableUtil.createConfigurable(
+			DLConfiguration.class, properties);
 	}
 
 	protected String replaceDLCharLastBlacklist(String title) {
@@ -279,6 +292,8 @@ public final class DLValidatorImpl implements DLValidator {
 
 		return title;
 	}
+
+	private volatile DLConfiguration _dlConfiguration;
 
 	@Reference
 	private UploadServletRequestConfigurationHelper

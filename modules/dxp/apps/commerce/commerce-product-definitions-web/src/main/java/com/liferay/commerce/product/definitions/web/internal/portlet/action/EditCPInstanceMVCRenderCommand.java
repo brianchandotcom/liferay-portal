@@ -18,6 +18,7 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPInstanceDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -59,7 +60,8 @@ public class EditCPInstanceMVCRenderCommand implements MVCRenderCommand {
 
 			CPInstanceDisplayContext cpInstanceDisplayContext =
 				new CPInstanceDisplayContext(
-					_actionHelper, httpServletRequest, _cpInstanceService,
+					_actionHelper, httpServletRequest,
+					_cpDefinitionOptionRelService, _cpInstanceService,
 					_cpInstanceHelper);
 
 			renderRequest.setAttribute(
@@ -83,6 +85,9 @@ public class EditCPInstanceMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private ActionHelper _actionHelper;
+
+	@Reference
+	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;

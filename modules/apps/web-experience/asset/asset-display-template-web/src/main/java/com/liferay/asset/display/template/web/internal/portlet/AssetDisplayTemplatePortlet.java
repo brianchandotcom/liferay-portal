@@ -15,16 +15,29 @@
 package com.liferay.asset.display.template.web.internal.portlet;
 
 import com.liferay.asset.display.template.constants.AssetDisplayTemplatePortletKeys;
+import com.liferay.asset.display.template.web.internal.constants.AssetDisplayTemplateWebKeys;
+import com.liferay.asset.display.template.web.internal.display.context.AssetDisplayTemplateDisplayContext;
+import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
+import com.liferay.dynamic.data.mapping.util.DDMTemplateHelper;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+
+import java.io.IOException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
@@ -72,5 +85,34 @@ public class AssetDisplayTemplatePortlet extends MVCPortlet {
 			AssetDisplayTemplatePortletKeys.ASSET_DISPLAY_TEMPLATE,
 			"display-style", displayStyle);
 	}
+
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		HttpServletRequest request = _portal.getHttpServletRequest(
+			renderRequest);
+
+		AssetDisplayTemplateDisplayContext assetDisplayTemplateDisplayContext =
+			new AssetDisplayTemplateDisplayContext(
+				renderRequest, renderResponse, request, _ddmDisplayRegistry,
+				_ddmTemplateHelper);
+
+		renderRequest.setAttribute(
+			AssetDisplayTemplateWebKeys.DISPLAY_CONTEXT,
+			assetDisplayTemplateDisplayContext);
+
+		super.doDispatch(renderRequest, renderResponse);
+	}
+
+	@Reference
+	private DDMDisplayRegistry _ddmDisplayRegistry;
+
+	@Reference
+	private DDMTemplateHelper _ddmTemplateHelper;
+
+	@Reference
+	private Portal _portal;
 
 }

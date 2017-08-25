@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -146,14 +147,20 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 		if ((user == null) || user.isDefaultUser()) {
 			return commerceCart;
 		}
-
-		if (commerceCart.isGuestCart()) {
-			return _commerceCartService.updateUser(
-				commerceCart.getCommerceCartId(), user.getUserId());
-		}
+		String domain = CookieKeys.getDomain(httpServletRequest);
 
 		String commerceCartUuidWebKey = _getCommerceCartUuidWebKey(
 			commerceCart.getType(), groupId);
+
+		if (commerceCart.isGuestCart()) {
+
+			CookieKeys.deleteCookies(
+				httpServletRequest, httpServletResponse, domain,
+				commerceCartUuidWebKey);
+
+			return _commerceCartService.updateUser(
+				commerceCart.getCommerceCartId(), user.getUserId());
+		}
 
 		String commerceCartUuid = CookieKeys.getCookie(
 			httpServletRequest, commerceCartUuidWebKey, false);
@@ -162,17 +169,19 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 			return commerceCart;
 		}
 
-		CommerceCart guestCommerceCart = _commerceCartService.fetchCommerceCart(
+		CommerceCart cookieCommerceCart = _commerceCartService.fetchCommerceCart(
 			commerceCartUuid, groupId);
+
+		if((cookieCommerceCart == null) && !cookieCommerceCart.isGuestCart()){
+			return commerceCart;
+		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			httpServletRequest);
 
 		_commerceCartService.mergeGuestCommerceCart(
-			guestCommerceCart.getCommerceCartId(),
+			cookieCommerceCart.getCommerceCartId(),
 			commerceCart.getCommerceCartId(), serviceContext);
-
-		String domain = CookieKeys.getDomain(httpServletRequest);
 
 		CookieKeys.deleteCookies(
 			httpServletRequest, httpServletResponse, domain,

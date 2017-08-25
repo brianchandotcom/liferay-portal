@@ -52,7 +52,7 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.asset.kernel.model.ClassTypeField"
+			className="com.liferay.asset.reader.ClassTypeField"
 			modelVar="field"
 		>
 

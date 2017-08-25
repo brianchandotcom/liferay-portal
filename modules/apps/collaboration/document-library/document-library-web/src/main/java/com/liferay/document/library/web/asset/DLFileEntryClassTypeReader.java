@@ -14,8 +14,8 @@
 
 package com.liferay.document.library.web.asset;
 
-import com.liferay.asset.kernel.model.ClassType;
-import com.liferay.asset.kernel.model.ClassTypeReader;
+import com.liferay.asset.reader.ClassType;
+import com.liferay.asset.reader.ClassTypeReader;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;

@@ -17,7 +17,7 @@ package com.liferay.document.library.web.asset;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
-import com.liferay.asset.kernel.model.ClassTypeReader;
+import com.liferay.asset.reader.ClassTypeReader;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;

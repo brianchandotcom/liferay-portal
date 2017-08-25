@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.web.asset;
 
-import com.liferay.asset.kernel.model.BaseDDMFormValuesReader;
+import com.liferay.asset.reader.BaseDDMFormValuesReader;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;

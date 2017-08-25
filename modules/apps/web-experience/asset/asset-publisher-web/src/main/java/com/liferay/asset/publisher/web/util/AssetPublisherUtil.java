@@ -22,7 +22,6 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetTag;
-import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryService;
@@ -33,6 +32,7 @@ import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfigurat
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.display.context.AssetEntryResult;
 import com.liferay.asset.publisher.web.display.context.AssetPublisherDisplayContext;
+import com.liferay.asset.reader.ClassType;
 import com.liferay.asset.util.AssetEntryQueryProcessor;
 import com.liferay.asset.util.impl.AssetUtil;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;

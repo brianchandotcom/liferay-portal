@@ -16,7 +16,7 @@ package com.liferay.document.library.web.asset;
 
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
-import com.liferay.asset.kernel.model.DDMFormValuesReader;
+import com.liferay.asset.reader.DDMFormValuesReader;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;

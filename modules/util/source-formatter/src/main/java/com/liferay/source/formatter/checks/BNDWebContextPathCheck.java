@@ -73,9 +73,7 @@ public class BNDWebContextPathCheck extends BaseFileCheck {
 		}
 
 		if (_hasPackageJSONNameProperty(absolutePath)) {
-			if ((webContextPath == null) ||
-				!webContextPath.equals("/" + moduleName)) {
-
+			if (webContextPath == null) {
 				addMessage(
 					fileName,
 					"Incorrect Web-ContextPath '" + webContextPath + "'",

@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import java.util.function.Consumer;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -35,39 +37,10 @@ public class BrowserSnifferImplTest {
 
 	@Test
 	public void testIsAndroid() throws IOException {
-		UnsyncBufferedReader unsyncBufferedReader =
-			getResourceAsUnsyncBufferedReader("dependencies/user_agents.csv");
-
-		boolean android = false;
-		String line = null;
-
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			line = line.trim();
-
-			if (line.isEmpty()) {
-				continue;
-			}
-
-			if (line.contains("Android")) {
-				android = true;
-
-				continue;
-			}
-
-			if (android && (line.charAt(0) == CharPool.POUND)) {
-				break;
-			}
-
-			if (android) {
-				MockHttpServletRequest mockHttpServletRequest =
-					new MockHttpServletRequest();
-
-				mockHttpServletRequest.addHeader(HttpHeaders.USER_AGENT, line);
-
-				Assert.assertTrue(
-					_browserSnifferImpl.isAndroid(mockHttpServletRequest));
-			}
-		}
+		assertBrowser(
+			"Android",
+			mockHttpServletRequest -> Assert.assertTrue(
+				_browserSnifferImpl.isAndroid(mockHttpServletRequest)));
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -84,35 +57,9 @@ public class BrowserSnifferImplTest {
 
 	@Test
 	public void testIsEdge() throws IOException {
-		UnsyncBufferedReader unsyncBufferedReader =
-			getResourceAsUnsyncBufferedReader("dependencies/user_agents.csv");
-
-		boolean edge = false;
-		String line = null;
-
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			line = line.trim();
-
-			if (line.isEmpty()) {
-				continue;
-			}
-
-			if (line.contains("## Edge")) {
-				edge = true;
-
-				continue;
-			}
-
-			if (edge && (line.charAt(0) == CharPool.POUND)) {
-				break;
-			}
-
-			if (edge) {
-				MockHttpServletRequest mockHttpServletRequest =
-					new MockHttpServletRequest();
-
-				mockHttpServletRequest.addHeader(HttpHeaders.USER_AGENT, line);
-
+		assertBrowser(
+			"## Edge",
+			mockHttpServletRequest -> {
 				Assert.assertTrue(
 					_browserSnifferImpl.isEdge(mockHttpServletRequest));
 
@@ -127,8 +74,7 @@ public class BrowserSnifferImplTest {
 
 				Assert.assertFalse(
 					_browserSnifferImpl.isMozilla(mockHttpServletRequest));
-			}
-		}
+			});
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -142,39 +88,10 @@ public class BrowserSnifferImplTest {
 
 	@Test
 	public void testIsIe() throws IOException {
-		UnsyncBufferedReader unsyncBufferedReader =
-			getResourceAsUnsyncBufferedReader("dependencies/user_agents.csv");
-
-		boolean ie = false;
-		String line = null;
-
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			line = line.trim();
-
-			if (line.isEmpty()) {
-				continue;
-			}
-
-			if (line.contains("## IE")) {
-				ie = true;
-
-				continue;
-			}
-
-			if (ie && (line.charAt(0) == CharPool.POUND)) {
-				break;
-			}
-
-			if (ie) {
-				MockHttpServletRequest mockHttpServletRequest =
-					new MockHttpServletRequest();
-
-				mockHttpServletRequest.addHeader(HttpHeaders.USER_AGENT, line);
-
-				Assert.assertTrue(
-					_browserSnifferImpl.isIe(mockHttpServletRequest));
-			}
-		}
+		assertBrowser(
+			"## IE",
+			mockHttpServletRequest -> Assert.assertTrue(
+				_browserSnifferImpl.isIe(mockHttpServletRequest)));
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -189,39 +106,10 @@ public class BrowserSnifferImplTest {
 
 	@Test
 	public void testIsMobile() throws IOException {
-		UnsyncBufferedReader unsyncBufferedReader =
-			getResourceAsUnsyncBufferedReader("dependencies/user_agents.csv");
-
-		boolean mobile = false;
-		String line = null;
-
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			line = line.trim();
-
-			if (line.isEmpty()) {
-				continue;
-			}
-
-			if (line.contains("Mobile")) {
-				mobile = true;
-
-				continue;
-			}
-
-			if (mobile && (line.charAt(0) == CharPool.POUND)) {
-				break;
-			}
-
-			if (mobile) {
-				MockHttpServletRequest mockHttpServletRequest =
-					new MockHttpServletRequest();
-
-				mockHttpServletRequest.addHeader(HttpHeaders.USER_AGENT, line);
-
-				Assert.assertTrue(
-					_browserSnifferImpl.isMobile(mockHttpServletRequest));
-			}
-		}
+		assertBrowser(
+			"Mobile",
+			mockHttpServletRequest -> Assert.assertTrue(
+				_browserSnifferImpl.isMobile(mockHttpServletRequest)));
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -273,6 +161,44 @@ public class BrowserSnifferImplTest {
 					BrowserSnifferImpl.parseVersion(
 						userAgent, BrowserSnifferImpl.revisionLeadings,
 						BrowserSnifferImpl.revisionSeparators));
+			}
+		}
+	}
+
+	protected void assertBrowser(
+			String key, Consumer<MockHttpServletRequest> requestConsumer)
+		throws IOException {
+
+		UnsyncBufferedReader unsyncBufferedReader =
+			getResourceAsUnsyncBufferedReader("dependencies/user_agents.csv");
+
+		boolean matches = false;
+		String line = null;
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			line = line.trim();
+
+			if (line.isEmpty()) {
+				continue;
+			}
+
+			if (line.contains(key)) {
+				matches = true;
+
+				continue;
+			}
+
+			if (matches && (line.charAt(0) == CharPool.POUND)) {
+				break;
+			}
+
+			if (matches) {
+				MockHttpServletRequest mockHttpServletRequest =
+					new MockHttpServletRequest();
+
+				mockHttpServletRequest.addHeader(HttpHeaders.USER_AGENT, line);
+
+				requestConsumer.accept(mockHttpServletRequest);
 			}
 		}
 	}

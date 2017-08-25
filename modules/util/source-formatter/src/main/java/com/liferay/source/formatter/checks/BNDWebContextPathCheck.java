@@ -64,21 +64,18 @@ public class BNDWebContextPathCheck extends BaseFileCheck {
 		String webContextPath = BNDSourceUtil.getDefinitionValue(
 			content, "Web-ContextPath");
 
-		if ((webContextPath != null) &&
-			!webContextPath.equals("/" + moduleName)) {
-
-			addMessage(
-				fileName, "Incorrect Web-ContextPath '" + webContextPath + "'",
-				"bnd_bundle_information.markdown");
-		}
-
-		if (_hasPackageJSONNameProperty(absolutePath)) {
-			if (webContextPath == null) {
+		if (webContextPath != null) {
+			if (!webContextPath.equals("/" + moduleName)) {
 				addMessage(
 					fileName,
 					"Incorrect Web-ContextPath '" + webContextPath + "'",
 					"bnd_bundle_information.markdown");
 			}
+		}
+		else if (_hasPackageJSONNameProperty(absolutePath)) {
+			addMessage(
+				fileName, "Incorrect Web-ContextPath '" + webContextPath + "'",
+				"bnd_bundle_information.markdown");
 		}
 	}
 

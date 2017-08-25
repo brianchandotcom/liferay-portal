@@ -28,40 +28,6 @@ import org.dom4j.Element;
  */
 public class ExecutePoshiElement extends BasePoshiElement {
 
-	public static boolean isElementType(
-		PoshiElement parentPoshiElement, String readableSyntax) {
-
-		readableSyntax = readableSyntax.trim();
-
-		if (parentPoshiElement instanceof ExecutePoshiElement) {
-			return false;
-		}
-
-		if (!isBalancedReadableSyntax(readableSyntax)) {
-			return false;
-		}
-
-		if (readableSyntax.startsWith("property ")) {
-			return false;
-		}
-
-		if (readableSyntax.startsWith("var ") &&
-			readableSyntax.contains(" = return(")) {
-
-			return true;
-		}
-
-		if (readableSyntax.startsWith("var ")) {
-			return false;
-		}
-
-		if (!readableSyntax.endsWith(");")) {
-			return false;
-		}
-
-		return true;
-	}
-
 	public ExecutePoshiElement() {
 	}
 
@@ -78,7 +44,7 @@ public class ExecutePoshiElement extends BasePoshiElement {
 	public PoshiElement clone(
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
-		if (isElementType(parentPoshiElement, readableSyntax)) {
+		if (_isElementType(parentPoshiElement, readableSyntax)) {
 			return new ExecutePoshiElement(readableSyntax);
 		}
 
@@ -250,6 +216,40 @@ public class ExecutePoshiElement extends BasePoshiElement {
 		}
 
 		return attributeValue("macro");
+	}
+
+	private static boolean _isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		readableSyntax = readableSyntax.trim();
+
+		if (parentPoshiElement instanceof ExecutePoshiElement) {
+			return false;
+		}
+
+		if (!isBalancedReadableSyntax(readableSyntax)) {
+			return false;
+		}
+
+		if (readableSyntax.startsWith("property ")) {
+			return false;
+		}
+
+		if (readableSyntax.startsWith("var ") &&
+			readableSyntax.contains(" = return(")) {
+
+			return true;
+		}
+
+		if (readableSyntax.startsWith("var ")) {
+			return false;
+		}
+
+		if (!readableSyntax.endsWith(");")) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final String _ELEMENT_NAME = "execute";

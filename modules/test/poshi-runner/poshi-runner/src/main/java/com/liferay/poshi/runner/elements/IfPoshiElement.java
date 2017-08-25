@@ -24,26 +24,6 @@ import org.dom4j.Element;
  */
 public class IfPoshiElement extends BasePoshiElement {
 
-	public static boolean isElementType(
-		PoshiElement parentPoshiElement, String readableSyntax) {
-
-		readableSyntax = readableSyntax.trim();
-
-		if (!isBalancedReadableSyntax(readableSyntax)) {
-			return false;
-		}
-
-		if (!readableSyntax.startsWith("if (")) {
-			return false;
-		}
-
-		if (!readableSyntax.endsWith("}")) {
-			return false;
-		}
-
-		return true;
-	}
-
 	public IfPoshiElement() {
 	}
 
@@ -60,7 +40,7 @@ public class IfPoshiElement extends BasePoshiElement {
 	public PoshiElement clone(
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
-		if (isElementType(parentPoshiElement, readableSyntax)) {
+		if (_isElementType(parentPoshiElement, readableSyntax)) {
 			return new IfPoshiElement(readableSyntax);
 		}
 
@@ -176,6 +156,26 @@ public class IfPoshiElement extends BasePoshiElement {
 		}
 
 		return readableBlocks;
+	}
+
+	private static boolean _isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		readableSyntax = readableSyntax.trim();
+
+		if (!isBalancedReadableSyntax(readableSyntax)) {
+			return false;
+		}
+
+		if (!readableSyntax.startsWith("if (")) {
+			return false;
+		}
+
+		if (!readableSyntax.endsWith("}")) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final String _ELEMENT_NAME = "if";

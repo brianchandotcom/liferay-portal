@@ -27,30 +27,6 @@ import org.dom4j.Node;
  */
 public class VarPoshiElement extends BasePoshiElement {
 
-	public static boolean isElementType(
-		PoshiElement parentPoshiElement, String readableSyntax) {
-
-		readableSyntax = readableSyntax.trim();
-
-		if (!isBalancedReadableSyntax(readableSyntax)) {
-			return false;
-		}
-
-		if (!readableSyntax.endsWith(";")) {
-			return false;
-		}
-
-		if (!readableSyntax.startsWith("var ")) {
-			return false;
-		}
-
-		if (readableSyntax.contains(" = return(")) {
-			return false;
-		}
-
-		return true;
-	}
-
 	public VarPoshiElement() {
 	}
 
@@ -67,7 +43,7 @@ public class VarPoshiElement extends BasePoshiElement {
 	public PoshiElement clone(
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
-		if (isElementType(parentPoshiElement, readableSyntax)) {
+		if (_isElementType(parentPoshiElement, readableSyntax)) {
 			return new VarPoshiElement(readableSyntax);
 		}
 
@@ -203,6 +179,30 @@ public class VarPoshiElement extends BasePoshiElement {
 	}
 
 	protected String valueAttributeName;
+
+	private static boolean _isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		readableSyntax = readableSyntax.trim();
+
+		if (!isBalancedReadableSyntax(readableSyntax)) {
+			return false;
+		}
+
+		if (!readableSyntax.endsWith(";")) {
+			return false;
+		}
+
+		if (!readableSyntax.startsWith("var ")) {
+			return false;
+		}
+
+		if (readableSyntax.contains(" = return(")) {
+			return false;
+		}
+
+		return true;
+	}
 
 	private static final String _ELEMENT_NAME = "var";
 

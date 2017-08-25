@@ -23,18 +23,6 @@ import org.dom4j.Element;
  */
 public class ReturnPoshiElement extends BasePoshiElement {
 
-	public static boolean isElementType(
-		PoshiElement parentPoshiElement, String readableSyntax) {
-
-		if (parentPoshiElement instanceof ExecutePoshiElement &&
-			readableSyntax.contains("return(\n")) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	public ReturnPoshiElement() {
 	}
 
@@ -51,7 +39,7 @@ public class ReturnPoshiElement extends BasePoshiElement {
 	public PoshiElement clone(
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
-		if (isElementType(parentPoshiElement, readableSyntax)) {
+		if (_isElementType(parentPoshiElement, readableSyntax)) {
 			return new ReturnPoshiElement(readableSyntax);
 		}
 
@@ -134,6 +122,18 @@ public class ReturnPoshiElement extends BasePoshiElement {
 		sb.append(" = return");
 
 		return sb.toString();
+	}
+
+	private static boolean _isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (parentPoshiElement instanceof ExecutePoshiElement &&
+			readableSyntax.contains("return(\n")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final String _ELEMENT_NAME = "return";

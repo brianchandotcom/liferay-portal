@@ -21,7 +21,38 @@ import org.dom4j.Element;
  */
 public class PropertyPoshiElement extends VarPoshiElement {
 
-	public static boolean isElementType(
+	public PropertyPoshiElement() {
+	}
+
+	@Override
+	public PoshiElement clone(Element element) {
+		if (isElementType(_ELEMENT_NAME, element)) {
+			return new PropertyPoshiElement(element);
+		}
+
+		return null;
+	}
+
+	@Override
+	public PoshiElement clone(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (_isElementType(parentPoshiElement, readableSyntax)) {
+			return new PropertyPoshiElement(readableSyntax);
+		}
+
+		return null;
+	}
+
+	protected PropertyPoshiElement(Element element) {
+		super(_ELEMENT_NAME, element);
+	}
+
+	protected PropertyPoshiElement(String readableSyntax) {
+		super(_ELEMENT_NAME, readableSyntax);
+	}
+
+	private static boolean _isElementType(
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
 		readableSyntax = readableSyntax.trim();
@@ -39,37 +70,6 @@ public class PropertyPoshiElement extends VarPoshiElement {
 		}
 
 		return true;
-	}
-
-	public PropertyPoshiElement() {
-	}
-
-	@Override
-	public PoshiElement clone(Element element) {
-		if (isElementType(_ELEMENT_NAME, element)) {
-			return new PropertyPoshiElement(element);
-		}
-
-		return null;
-	}
-
-	@Override
-	public PoshiElement clone(
-		PoshiElement parentPoshiElement, String readableSyntax) {
-
-		if (isElementType(parentPoshiElement, readableSyntax)) {
-			return new PropertyPoshiElement(readableSyntax);
-		}
-
-		return null;
-	}
-
-	protected PropertyPoshiElement(Element element) {
-		super(_ELEMENT_NAME, element);
-	}
-
-	protected PropertyPoshiElement(String readableSyntax) {
-		super(_ELEMENT_NAME, readableSyntax);
 	}
 
 	private static final String _ELEMENT_NAME = "property";

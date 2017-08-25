@@ -21,18 +21,6 @@ import org.dom4j.Element;
  */
 public class IsSetPoshiElement extends BasePoshiElement {
 
-	public static boolean isElementType(
-		PoshiElement parentPoshiElement, String readableSyntax) {
-
-		if (parentPoshiElement instanceof IfPoshiElement &&
-			readableSyntax.startsWith("isSet(")) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	public IsSetPoshiElement() {
 	}
 
@@ -49,7 +37,7 @@ public class IsSetPoshiElement extends BasePoshiElement {
 	public PoshiElement clone(
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
-		if (isElementType(parentPoshiElement, readableSyntax)) {
+		if (_isElementType(parentPoshiElement, readableSyntax)) {
 			return new IsSetPoshiElement(readableSyntax);
 		}
 
@@ -79,6 +67,18 @@ public class IsSetPoshiElement extends BasePoshiElement {
 
 	protected IsSetPoshiElement(String readableSyntax) {
 		super(_ELEMENT_NAME, readableSyntax);
+	}
+
+	private static boolean _isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (parentPoshiElement instanceof IfPoshiElement &&
+			readableSyntax.startsWith("isSet(")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final String _ELEMENT_NAME = "isset";

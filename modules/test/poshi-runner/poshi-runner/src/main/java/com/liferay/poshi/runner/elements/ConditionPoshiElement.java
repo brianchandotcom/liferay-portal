@@ -21,19 +21,6 @@ import org.dom4j.Element;
  */
 public class ConditionPoshiElement extends ExecutePoshiElement {
 
-	public static boolean isElementType(
-		PoshiElement parentPoshiElement, String readableSyntax) {
-
-		if (parentPoshiElement instanceof IfPoshiElement &&
-			readableSyntax.endsWith(")") &&
-			!readableSyntax.startsWith("isSet(")) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	public ConditionPoshiElement() {
 	}
 
@@ -50,7 +37,7 @@ public class ConditionPoshiElement extends ExecutePoshiElement {
 	public PoshiElement clone(
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
-		if (isElementType(parentPoshiElement, readableSyntax)) {
+		if (_isElementType(parentPoshiElement, readableSyntax)) {
 			return new ConditionPoshiElement(readableSyntax);
 		}
 
@@ -82,6 +69,19 @@ public class ConditionPoshiElement extends ExecutePoshiElement {
 		}
 
 		return readableBlock;
+	}
+
+	private static boolean _isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (parentPoshiElement instanceof IfPoshiElement &&
+			readableSyntax.endsWith(")") &&
+			!readableSyntax.startsWith("isSet(")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final String _ELEMENT_NAME = "condition";

@@ -21,18 +21,6 @@ import org.dom4j.Element;
  */
 public class ElsePoshiElement extends ThenPoshiElement {
 
-	public static boolean isElementType(
-		PoshiElement parentPoshiElement, String readableSyntax) {
-
-		if (parentPoshiElement instanceof IfPoshiElement &&
-			readableSyntax.startsWith("else {")) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	public ElsePoshiElement() {
 	}
 
@@ -49,7 +37,7 @@ public class ElsePoshiElement extends ThenPoshiElement {
 	public PoshiElement clone(
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
-		if (isElementType(parentPoshiElement, readableSyntax)) {
+		if (_isElementType(parentPoshiElement, readableSyntax)) {
 			return new ElsePoshiElement(readableSyntax);
 		}
 
@@ -74,6 +62,18 @@ public class ElsePoshiElement extends ThenPoshiElement {
 
 	protected ElsePoshiElement(String readableSyntax) {
 		super("else", readableSyntax);
+	}
+
+	private static boolean _isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (parentPoshiElement instanceof IfPoshiElement &&
+			readableSyntax.startsWith("else {")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final String _ELEMENT_NAME = "else";

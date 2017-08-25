@@ -21,18 +21,6 @@ import org.dom4j.Element;
  */
 public class EqualsPoshiElement extends BasePoshiElement {
 
-	public static boolean isElementType(
-		PoshiElement parentPoshiElement, String readableSyntax) {
-
-		if (parentPoshiElement instanceof IfPoshiElement &&
-			readableSyntax.contains("==")) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	public EqualsPoshiElement() {
 	}
 
@@ -49,7 +37,7 @@ public class EqualsPoshiElement extends BasePoshiElement {
 	public PoshiElement clone(
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
-		if (isElementType(parentPoshiElement, readableSyntax)) {
+		if (_isElementType(parentPoshiElement, readableSyntax)) {
 			return new EqualsPoshiElement(readableSyntax);
 		}
 
@@ -97,6 +85,18 @@ public class EqualsPoshiElement extends BasePoshiElement {
 
 	protected EqualsPoshiElement(String readableSyntax) {
 		super(_ELEMENT_NAME, readableSyntax);
+	}
+
+	private static boolean _isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (parentPoshiElement instanceof IfPoshiElement &&
+			readableSyntax.contains("==")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final String _ELEMENT_NAME = "equals";

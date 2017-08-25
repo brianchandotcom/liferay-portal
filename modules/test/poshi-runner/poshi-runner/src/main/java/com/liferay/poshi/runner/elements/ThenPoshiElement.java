@@ -24,18 +24,6 @@ import org.dom4j.Element;
  */
 public class ThenPoshiElement extends BasePoshiElement {
 
-	public static boolean isElementType(
-		PoshiElement parentPoshiElement, String readableSyntax) {
-
-		if (parentPoshiElement instanceof IfPoshiElement &&
-			readableSyntax.startsWith("{")) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	public ThenPoshiElement() {
 	}
 
@@ -52,7 +40,7 @@ public class ThenPoshiElement extends BasePoshiElement {
 	public PoshiElement clone(
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
-		if (isElementType(parentPoshiElement, readableSyntax)) {
+		if (_isElementType(parentPoshiElement, readableSyntax)) {
 			return new ThenPoshiElement(readableSyntax);
 		}
 
@@ -112,6 +100,18 @@ public class ThenPoshiElement extends BasePoshiElement {
 		}
 
 		return readableBlocks;
+	}
+
+	private static boolean _isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (parentPoshiElement instanceof IfPoshiElement &&
+			readableSyntax.startsWith("{")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final String _ELEMENT_NAME = "then";

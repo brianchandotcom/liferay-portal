@@ -14,7 +14,15 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.source.formatter.checks.util.BNDSourceUtil;
+import com.liferay.source.formatter.util.FileUtil;
+
+import java.io.File;
+import java.io.IOException;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
@@ -28,7 +36,8 @@ public class BNDWebContextPathCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-		String fileName, String absolutePath, String content) {
+			String fileName, String absolutePath, String content)
+		throws Exception {
 
 		if (fileName.endsWith("/bnd.bnd") &&
 			!absolutePath.contains("/testIntegration/") &&
@@ -41,7 +50,8 @@ public class BNDWebContextPathCheck extends BaseFileCheck {
 	}
 
 	private void _checkWebContextPath(
-		String fileName, String absolutePath, String content) {
+			String fileName, String absolutePath, String content)
+		throws IOException {
 
 		String moduleName = BNDSourceUtil.getModuleName(absolutePath);
 
@@ -54,13 +64,49 @@ public class BNDWebContextPathCheck extends BaseFileCheck {
 		String webContextPath = BNDSourceUtil.getDefinitionValue(
 			content, "Web-ContextPath");
 
-		if ((webContextPath != null) &&
-			!webContextPath.equals("/" + moduleName)) {
-
+		if (webContextPath != null) {
+			if (!webContextPath.equals("/" + moduleName)) {
+				addMessage(
+					fileName,
+					"Incorrect Web-ContextPath '" + webContextPath + "'",
+					"bnd_bundle_information.markdown");
+			}
+		}
+		else if (_hasPackageJSONNameProperty(absolutePath)) {
 			addMessage(
-				fileName, "Incorrect Web-ContextPath '" + webContextPath + "'",
+				fileName, "Missing Web-ContextPath",
 				"bnd_bundle_information.markdown");
 		}
 	}
+
+	private boolean _hasPackageJSONNameProperty(String absolutePath)
+		throws IOException {
+
+		int pos = absolutePath.lastIndexOf(StringPool.SLASH);
+
+		File file = new File(
+			absolutePath.substring(0, pos + 1) + "package.json");
+
+		if (!file.exists()) {
+			return false;
+		}
+
+		String content = FileUtil.read(file);
+
+		Matcher matcher = _jsonNamePattern.matcher(content);
+
+		while (matcher.find()) {
+			if (getLevel(content.substring(0, matcher.start()), "{", "}") ==
+					1) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private final Pattern _jsonNamePattern = Pattern.compile(
+		"\n\\s*['\"]name['\"]:");
 
 }

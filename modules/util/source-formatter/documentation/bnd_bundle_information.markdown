@@ -26,3 +26,15 @@ For web modules (modules ending with ```-web```), the
 ```Web-ContextPath```:
 
     Web-ContextPath: /marketplace-web
+
+---
+
+Frontend modules that have a ```name``` property in the ```package.json```
+file should have the ```Web-ContextPath``` header.
+
+### Example
+
+```\apps\foundation\frontend-js\frontend-js-web\bnd.bnd``` contains
+the following ```Web-ContextPath```:
+
+    Web-ContextPath: /frontend-js-web

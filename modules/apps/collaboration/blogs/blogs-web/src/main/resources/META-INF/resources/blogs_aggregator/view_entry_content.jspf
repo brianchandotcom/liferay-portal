@@ -133,30 +133,30 @@
 		</c:if>
 
 		<c:if test='<%= !displayStyle.endsWith("-without-title") %>'>
-			<liferay-ui:asset-categories-available
+			<liferay-asset:asset-categories-available
 				className="<%= BlogsEntry.class.getName() %>"
 				classPK="<%= entry.getEntryId() %>"
 			>
 				<span class="entry-categories">
-					<liferay-ui:asset-categories-summary
+					<liferay-asset:asset-categories-summary
 						className="<%= BlogsEntry.class.getName() %>"
 						classPK="<%= entry.getEntryId() %>"
 					/>
 				</span>
-			</liferay-ui:asset-categories-available>
+			</liferay-asset:asset-categories-available>
 
 			<c:if test="<%= showTags %>">
-				<liferay-ui:asset-tags-available
+				<liferay-asset:asset-tags-available
 					className="<%= BlogsEntry.class.getName() %>"
 					classPK="<%= entry.getEntryId() %>"
 				>
 					<span class="entry-tags">
-						<liferay-ui:asset-tags-summary
+						<liferay-asset:asset-tags-summary
 							className="<%= BlogsEntry.class.getName() %>"
 							classPK="<%= entry.getEntryId() %>"
 						/>
 					</span>
-				</liferay-ui:asset-tags-available>
+				</liferay-asset:asset-tags-available>
 			</c:if>
 		</c:if>
 	</div>

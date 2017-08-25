@@ -156,9 +156,9 @@ if (portletTitleBasedNavigation) {
 		<liferay-ui:error exception="<%= PageTitleException.class %>" message="please-enter-a-valid-title" />
 		<liferay-ui:error exception="<%= PageVersionException.class %>" message="another-user-has-made-changes-since-you-started-editing-please-copy-your-changes-and-try-again" />
 
-		<liferay-ui:asset-categories-error />
+		<liferay-asset:asset-categories-error />
 
-		<liferay-ui:asset-tags-error />
+		<liferay-asset:asset-tags-error />
 
 		<aui:model-context bean="<%= ((wikiPage != null) && !wikiPage.isNew()) ? wikiPage : templatePage %>" model="<%= WikiPage.class %>" />
 
@@ -280,7 +280,7 @@ if (portletTitleBasedNavigation) {
 					</aui:fieldset>
 
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
-						<liferay-ui:input-asset-links
+						<liferay-asset:input-asset-links
 							assetEntryId="<%= assetEntryId %>"
 							className="<%= WikiPage.class.getName() %>"
 							classPK="<%= classPK %>"

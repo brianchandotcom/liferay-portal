@@ -34,7 +34,7 @@ contextObjects.put("scopeGroupId", Long.valueOf(scopeGroupId));
 %>
 
 <liferay-ddm:template-renderer className="<%= AssetTag.class.getName() %>" contextObjects="<%= contextObjects %>" displayStyle="<%= displayStyle %>" displayStyleGroupId="<%= displayStyleGroupId %>" entries="<%= assetTags %>">
-	<liferay-ui:asset-tags-navigation
+	<liferay-asset:asset-tags-navigation
 		classNameId="<%= classNameId %>"
 		displayStyle="<%= displayStyle %>"
 		hidePortletWhenEmpty="<%= true %>"

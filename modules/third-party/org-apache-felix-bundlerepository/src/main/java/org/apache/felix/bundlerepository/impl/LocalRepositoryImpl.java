@@ -47,7 +47,9 @@ public class LocalRepositoryImpl implements Repository, SynchronousBundleListene
 
     public void bundleChanged(BundleEvent event)
     {
-        if (event.getType() == BundleEvent.INSTALLED)
+		Bundle bundle = event.getBundle();
+
+        if ((event.getType() == BundleEvent.INSTALLED) && (bundle.getState() != Bundle.UNINSTALLED))
         {
             synchronized (this)
             {
@@ -166,3 +168,4 @@ public class LocalRepositoryImpl implements Repository, SynchronousBundleListene
         }
     }
 }
+/* @generated */

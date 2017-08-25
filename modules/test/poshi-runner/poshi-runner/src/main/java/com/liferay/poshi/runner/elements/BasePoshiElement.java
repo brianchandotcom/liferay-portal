@@ -56,8 +56,6 @@ public abstract class BasePoshiElement
 		super.add(new PoshiElementAttribute(attribute));
 	}
 
-	public abstract void parseReadableSyntax(String readableSyntax);
-
 	@Override
 	public boolean remove(Attribute attribute) {
 		if (attribute instanceof PoshiElementAttribute) {

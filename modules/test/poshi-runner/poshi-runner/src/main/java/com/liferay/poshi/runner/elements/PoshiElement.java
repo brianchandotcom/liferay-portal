@@ -26,6 +26,8 @@ public interface PoshiElement extends Element {
 	public PoshiElement clone(
 		PoshiElement parentPoshiElement, String readableSyntax);
 
+	public void parseReadableSyntax(String readableSyntax);
+
 	public String toReadableSyntax();
 
 }

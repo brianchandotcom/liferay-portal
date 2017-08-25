@@ -45,11 +45,6 @@ public class EqualsPoshiElement extends BasePoshiElement {
 	}
 
 	@Override
-	public String getBlockName() {
-		return "equals";
-	}
-
-	@Override
 	public void parseReadableSyntax(String readableSyntax) {
 		String[] equalsContentArray = readableSyntax.split("==");
 
@@ -85,6 +80,11 @@ public class EqualsPoshiElement extends BasePoshiElement {
 
 	protected EqualsPoshiElement(String readableSyntax) {
 		super(_ELEMENT_NAME, readableSyntax);
+	}
+
+	@Override
+	protected String getBlockName() {
+		return "equals";
 	}
 
 	private static boolean _isElementType(

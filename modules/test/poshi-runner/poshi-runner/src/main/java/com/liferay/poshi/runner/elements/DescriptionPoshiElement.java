@@ -45,11 +45,6 @@ public class DescriptionPoshiElement extends BasePoshiElement {
 	}
 
 	@Override
-	public String getBlockName() {
-		return "description";
-	}
-
-	@Override
 	public void parseReadableSyntax(String readableSyntax) {
 		String message = getQuotedContent(readableSyntax);
 
@@ -62,6 +57,11 @@ public class DescriptionPoshiElement extends BasePoshiElement {
 
 	protected DescriptionPoshiElement(String readableSyntax) {
 		super(_ELEMENT_NAME, readableSyntax);
+	}
+
+	@Override
+	protected String getBlockName() {
+		return "description";
 	}
 
 	private static boolean _isElementType(

@@ -48,28 +48,6 @@ public class IfPoshiElement extends BasePoshiElement {
 	}
 
 	@Override
-	public String getBlockName() {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(getName());
-
-		for (String conditionName : _conditionNames) {
-			if (element(conditionName) != null) {
-				PoshiElement poshiElement = (PoshiElement)element(
-					conditionName);
-
-				sb.append(" (");
-				sb.append(poshiElement.toReadableSyntax());
-				sb.append(")");
-
-				break;
-			}
-		}
-
-		return sb.toString();
-	}
-
-	@Override
 	public void parseReadableSyntax(String readableSyntax) {
 		for (String readableBlock : getReadableBlocks(readableSyntax)) {
 			if (readableBlock.startsWith(getName() + " (")) {
@@ -119,6 +97,28 @@ public class IfPoshiElement extends BasePoshiElement {
 
 	protected IfPoshiElement(String name, String readableSyntax) {
 		super(name, readableSyntax);
+	}
+
+	@Override
+	protected String getBlockName() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(getName());
+
+		for (String conditionName : _conditionNames) {
+			if (element(conditionName) != null) {
+				PoshiElement poshiElement = (PoshiElement)element(
+					conditionName);
+
+				sb.append(" (");
+				sb.append(poshiElement.toReadableSyntax());
+				sb.append(")");
+
+				break;
+			}
+		}
+
+		return sb.toString();
 	}
 
 	protected List<String> getReadableBlocks(String readableSyntax) {

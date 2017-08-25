@@ -45,11 +45,6 @@ public class ElsePoshiElement extends ThenPoshiElement {
 	}
 
 	@Override
-	public String getBlockName() {
-		return "else";
-	}
-
-	@Override
 	public String toReadableSyntax() {
 		String readableSyntax = super.toReadableSyntax();
 
@@ -62,6 +57,11 @@ public class ElsePoshiElement extends ThenPoshiElement {
 
 	protected ElsePoshiElement(String readableSyntax) {
 		super("else", readableSyntax);
+	}
+
+	@Override
+	protected String getBlockName() {
+		return "else";
 	}
 
 	private static boolean _isElementType(

@@ -45,11 +45,6 @@ public class IsSetPoshiElement extends BasePoshiElement {
 	}
 
 	@Override
-	public String getBlockName() {
-		return "isSet";
-	}
-
-	@Override
 	public void parseReadableSyntax(String readableSyntax) {
 		String issetContent = getParentheticalContent(readableSyntax);
 
@@ -67,6 +62,11 @@ public class IsSetPoshiElement extends BasePoshiElement {
 
 	protected IsSetPoshiElement(String readableSyntax) {
 		super(_ELEMENT_NAME, readableSyntax);
+	}
+
+	@Override
+	protected String getBlockName() {
+		return "isSet";
 	}
 
 	private static boolean _isElementType(

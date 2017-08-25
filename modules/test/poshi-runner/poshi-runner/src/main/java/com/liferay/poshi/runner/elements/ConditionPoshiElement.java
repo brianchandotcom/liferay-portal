@@ -44,11 +44,6 @@ public class ConditionPoshiElement extends ExecutePoshiElement {
 		return null;
 	}
 
-	@Override
-	public String getBlockName() {
-		return attributeValue("function");
-	}
-
 	protected ConditionPoshiElement(Element element) {
 		super(_ELEMENT_NAME, element);
 	}
@@ -69,6 +64,11 @@ public class ConditionPoshiElement extends ExecutePoshiElement {
 		}
 
 		return readableBlock;
+	}
+
+	@Override
+	protected String getBlockName() {
+		return attributeValue("function");
 	}
 
 	private static boolean _isElementType(

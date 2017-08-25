@@ -48,11 +48,6 @@ public class ThenPoshiElement extends BasePoshiElement {
 	}
 
 	@Override
-	public String getBlockName() {
-		return "then";
-	}
-
-	@Override
 	public void parseReadableSyntax(String readableSyntax) {
 		for (String readableBlock : getReadableBlocks(readableSyntax)) {
 			add(PoshiElementFactory.newPoshiElement(this, readableBlock));
@@ -73,6 +68,11 @@ public class ThenPoshiElement extends BasePoshiElement {
 
 	protected ThenPoshiElement(String name, String readableSyntax) {
 		super(name, readableSyntax);
+	}
+
+	@Override
+	protected String getBlockName() {
+		return "then";
 	}
 
 	protected List<String> getReadableBlocks(String readableSyntax) {

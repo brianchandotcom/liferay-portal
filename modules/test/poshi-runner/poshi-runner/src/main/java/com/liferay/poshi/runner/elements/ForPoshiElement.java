@@ -48,19 +48,6 @@ public class ForPoshiElement extends BasePoshiElement {
 	}
 
 	@Override
-	public String getBlockName() {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("for (");
-		sb.append(attributeValue("param"));
-		sb.append(" : \"");
-		sb.append(attributeValue("list"));
-		sb.append("\")");
-
-		return sb.toString();
-	}
-
-	@Override
 	public void parseReadableSyntax(String readableSyntax) {
 		for (String readableBlock : getReadableBlocks(readableSyntax)) {
 			if (readableBlock.startsWith("for (")) {
@@ -99,6 +86,19 @@ public class ForPoshiElement extends BasePoshiElement {
 
 	protected ForPoshiElement(String readableSyntax) {
 		super(_ELEMENT_NAME, readableSyntax);
+	}
+
+	@Override
+	protected String getBlockName() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("for (");
+		sb.append(attributeValue("param"));
+		sb.append(" : \"");
+		sb.append(attributeValue("list"));
+		sb.append("\")");
+
+		return sb.toString();
 	}
 
 	protected List<String> getReadableBlocks(String readableSyntax) {

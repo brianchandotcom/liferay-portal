@@ -23,7 +23,7 @@ import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
 import com.liferay.asset.kernel.service.AssetLinkLocalServiceUtil;
-import com.liferay.asset.kernel.util.comparator.AssetRendererFactoryTypeNameComparator;
+import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;

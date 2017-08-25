@@ -48,7 +48,7 @@ int type = cpMeasurementUnitsDisplayContext.getType();
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= renderResponse.createRenderURL() %>"
+			portletURL="<%= cpMeasurementUnitsDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="list"
 		/>
 	</liferay-frontend:management-bar-buttons>

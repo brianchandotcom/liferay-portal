@@ -2212,6 +2212,14 @@ to version 2.1.0.
 - [LPS-74314]: Update the [Liferay Source Formatter] dependency to version
 1.0.446.
 
+## 3.4.38 - 2017-08-24
+
+### Changed
+- [LPS-74343]: Update the [Liferay Gradle Plugins JS Module Config Generator]
+dependency to version 2.1.17.
+- [LPS-74343]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
+version 2.3.17.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -2407,4 +2415,5 @@ to version 2.1.0.
 [LPS-74269]: https://issues.liferay.com/browse/LPS-74269
 [LPS-74278]: https://issues.liferay.com/browse/LPS-74278
 [LPS-74314]: https://issues.liferay.com/browse/LPS-74314
+[LPS-74343]: https://issues.liferay.com/browse/LPS-74343
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

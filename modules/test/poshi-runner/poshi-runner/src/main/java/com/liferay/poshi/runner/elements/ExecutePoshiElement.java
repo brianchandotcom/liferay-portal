@@ -168,11 +168,11 @@ public class ExecutePoshiElement extends BasePoshiElement {
 
 		StringBuilder sb = new StringBuilder();
 
-		PoshiElement returnElement = null;
+		ReturnPoshiElement returnPoshiElement = null;
 
 		for (PoshiElement poshiElement : toPoshiElements(elements())) {
 			if (poshiElement instanceof ReturnPoshiElement) {
-				returnElement = poshiElement;
+				returnPoshiElement = (ReturnPoshiElement)poshiElement;
 
 				continue;
 			}
@@ -182,11 +182,11 @@ public class ExecutePoshiElement extends BasePoshiElement {
 
 		String readableBlock = createReadableBlock(sb.toString());
 
-		if (returnElement == null) {
+		if (returnPoshiElement == null) {
 			return readableBlock;
 		}
 
-		return returnElement.createReadableBlock(readableBlock);
+		return returnPoshiElement.createReadableBlock(readableBlock);
 	}
 
 	protected ExecutePoshiElement(Element element) {

@@ -291,6 +291,7 @@ AUI.add(
 								},
 
 								iframeId: iframeId,
+								iframeTitle: config.title || '',
 								uri: uri
 							}
 						);

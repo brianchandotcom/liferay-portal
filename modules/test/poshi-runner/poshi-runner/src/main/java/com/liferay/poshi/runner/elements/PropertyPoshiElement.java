@@ -74,32 +74,4 @@ public class PropertyPoshiElement extends VarPoshiElement {
 
 	private static final String _ELEMENT_NAME = "property";
 
-	static {
-		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
-
-			@Override
-			public BasePoshiElement newPoshiElement(
-				BasePoshiElement parentPoshiElement, String readableSyntax) {
-
-				if (isElementType(parentPoshiElement, readableSyntax)) {
-					return new PropertyPoshiElement(readableSyntax);
-				}
-
-				return null;
-			}
-
-			@Override
-			public BasePoshiElement newPoshiElement(Element element) {
-				if (isElementType(_ELEMENT_NAME, element)) {
-					return new PropertyPoshiElement(element);
-				}
-
-				return null;
-			}
-
-		};
-
-		BasePoshiElement.addPoshiElementFactory(poshiElementFactory);
-	}
-
 }

@@ -271,32 +271,4 @@ public class CommandPoshiElement extends BasePoshiElement {
 
 	private static final String _ELEMENT_NAME = "command";
 
-	static {
-		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
-
-			@Override
-			public BasePoshiElement newPoshiElement(
-				BasePoshiElement parentPoshiElement, String readableSyntax) {
-
-				if (isElementType(parentPoshiElement, readableSyntax)) {
-					return new CommandPoshiElement(readableSyntax);
-				}
-
-				return null;
-			}
-
-			@Override
-			public BasePoshiElement newPoshiElement(Element element) {
-				if (isElementType(_ELEMENT_NAME, element)) {
-					return new CommandPoshiElement(element);
-				}
-
-				return null;
-			}
-
-		};
-
-		BasePoshiElement.addPoshiElementFactory(poshiElementFactory);
-	}
-
 }

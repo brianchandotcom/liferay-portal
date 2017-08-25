@@ -206,32 +206,4 @@ public class VarPoshiElement extends BasePoshiElement {
 
 	private static final String _ELEMENT_NAME = "var";
 
-	static {
-		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
-
-			@Override
-			public BasePoshiElement newPoshiElement(
-				BasePoshiElement parentPoshiElement, String readableSyntax) {
-
-				if (isElementType(parentPoshiElement, readableSyntax)) {
-					return new VarPoshiElement(readableSyntax);
-				}
-
-				return null;
-			}
-
-			@Override
-			public BasePoshiElement newPoshiElement(Element element) {
-				if (isElementType(_ELEMENT_NAME, element)) {
-					return new VarPoshiElement(element);
-				}
-
-				return null;
-			}
-
-		};
-
-		BasePoshiElement.addPoshiElementFactory(poshiElementFactory);
-	}
-
 }

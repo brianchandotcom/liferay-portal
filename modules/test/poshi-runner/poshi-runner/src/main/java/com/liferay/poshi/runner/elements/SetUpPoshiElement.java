@@ -89,32 +89,4 @@ public class SetUpPoshiElement extends CommandPoshiElement {
 
 	private static final String _ELEMENT_NAME = "set-up";
 
-	static {
-		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
-
-			@Override
-			public BasePoshiElement newPoshiElement(
-				BasePoshiElement parentPoshiElement, String readableSyntax) {
-
-				if (isElementType(parentPoshiElement, readableSyntax)) {
-					return new SetUpPoshiElement(readableSyntax);
-				}
-
-				return null;
-			}
-
-			@Override
-			public BasePoshiElement newPoshiElement(Element element) {
-				if (isElementType(_ELEMENT_NAME, element)) {
-					return new SetUpPoshiElement(element);
-				}
-
-				return null;
-			}
-
-		};
-
-		BasePoshiElement.addPoshiElementFactory(poshiElementFactory);
-	}
-
 }

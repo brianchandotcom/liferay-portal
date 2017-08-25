@@ -74,32 +74,4 @@ public class WhilePoshiElement extends IfPoshiElement {
 
 	private static final String _ELEMENT_NAME = "while";
 
-	static {
-		PoshiElementFactory poshiElementFactory = new PoshiElementFactory() {
-
-			@Override
-			public BasePoshiElement newPoshiElement(
-				BasePoshiElement parentPoshiElement, String readableSyntax) {
-
-				if (isElementType(parentPoshiElement, readableSyntax)) {
-					return new WhilePoshiElement(readableSyntax);
-				}
-
-				return null;
-			}
-
-			@Override
-			public BasePoshiElement newPoshiElement(Element element) {
-				if (isElementType(_ELEMENT_NAME, element)) {
-					return new WhilePoshiElement(element);
-				}
-
-				return null;
-			}
-
-		};
-
-		BasePoshiElement.addPoshiElementFactory(poshiElementFactory);
-	}
-
 }

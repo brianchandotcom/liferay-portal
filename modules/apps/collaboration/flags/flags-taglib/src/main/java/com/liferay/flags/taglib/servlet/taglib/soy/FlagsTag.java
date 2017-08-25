@@ -82,9 +82,20 @@ public class FlagsTag extends TemplateRendererTag {
 
 			putValue("message", message);
 
-			putValue("namespace", PortalUtil.getPortletNamespace(PortletKeys.FLAGS));
+			putValue(
+				"namespace", PortalUtil.getPortletNamespace(PortletKeys.FLAGS));
 
 			putValue("pathThemeImages", themeDisplay.getPathThemeImages());
+
+			boolean signedIn = themeDisplay.isSignedIn();
+
+			putValue("signedIn", signedIn);
+
+			if (signedIn) {
+				putValue(
+					"reporterEmailAddress",
+					themeDisplay.getUser().getEmailAddress());
+			}
 
 			String title = message;
 

@@ -79,6 +79,9 @@
  * @param flagsEnabled
  * @param namespace
  * @param onReasonChange_
+ * @param pathThemeImages
+ * @param reporterEmailAddress
+ * @param signedIn
  * @param reasons
  */
 {template .reportDialogBody}
@@ -109,7 +112,18 @@
 					</div>
 				</span>
 
-				<input name="reporterEmailAddress" type="hidden" value="<%= user.getEmailAddress() %>" />
+				{if $signedIn}
+					<input name="{$namespace}reporterEmailAddress" type="hidden" value="{$reporterEmailAddress}" />
+				{else}
+					<label class="control-label" for="{$namespace}reporterEmailAddress">{msg desc=""}email-address{/msg}
+						<span class="reference-mark text-warning">
+							<svg class="lexicon-icon">
+								<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#asterisk"></use>
+							</svg>
+						</span>
+					</label>
+					<input class="form-control" name="{$namespace}reporterEmailAddress" required type="email"/>
+				{/if}
 			</fieldset>
 
 		</form>

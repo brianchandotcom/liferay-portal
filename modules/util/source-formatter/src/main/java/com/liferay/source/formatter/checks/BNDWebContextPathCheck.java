@@ -14,15 +14,15 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.BNDSourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 import java.io.IOException;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
@@ -98,23 +98,20 @@ public class BNDWebContextPathCheck extends BaseFileCheck {
 
 		String content = FileUtil.read(file);
 
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
+		Matcher matcher = _jsonNamePattern.matcher(content);
 
-			String line = null;
+		while (matcher.find()) {
+			if (getLevel(content.substring(0, matcher.start()), "{", "}") ==
+					1) {
 
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				line = StringUtil.trim(line);
-
-				if (line.startsWith("'name':") ||
-					line.startsWith("\"name\":")) {
-
-					return true;
-				}
+				return true;
 			}
 		}
 
 		return false;
 	}
+
+	private final Pattern _jsonNamePattern = Pattern.compile(
+		"\n\\s*['\"]name['\"]:");
 
 }

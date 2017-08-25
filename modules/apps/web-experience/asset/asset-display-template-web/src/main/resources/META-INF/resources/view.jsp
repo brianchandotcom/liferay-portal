@@ -15,3 +15,23 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<liferay-portlet:renderURL varImpl="portletURL">
+	<liferay-portlet:param name="keywords" value="<%= assetDisplayTemplateDisplayContext.getKeywords() %>" />
+</liferay-portlet:renderURL>
+
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<portlet:renderURL var="mainURL" />
+
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item href="<%= mainURL.toString() %>" label="asset-display-templates" selected="<%= true %>" />
+	</aui:nav>
+
+	<c:if test="<%= assetDisplayTemplateDisplayContext.isShowSearch() %>">
+		<aui:nav-bar-search>
+			<aui:form action="<%= portletURL %>" name="searchFm">
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</aui:nav-bar-search>
+	</c:if>
+</aui:nav-bar>

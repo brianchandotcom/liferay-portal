@@ -79,3 +79,35 @@ List<DDMFormFieldType> ddmFormFieldTypes = cpOptionDisplayContext.getDDMFormFiel
 		titleInput.on('input', onTitleInput);
 	</aui:script>
 </c:if>
+
+<aui:script use="aui-base">
+	function afterDeletingAvailableLocale(event) {
+		var descriptionInputLocalized = Liferay.component('<portlet:namespace />description');
+		var titleInputLocalized = Liferay.component('<portlet:namespace />title');
+
+		var locale = event.locale;
+
+		descriptionInputLocalized.removeInputLanguage(locale);
+		titleInputLocalized.removeInputLanguage(locale);
+	}
+
+	function afterEditingLocaleChange(event) {
+		var descriptionInputLocalized = Liferay.component('<portlet:namespace />description');
+		var titleInputLocalized = Liferay.component('<portlet:namespace />title');
+
+		var editingLocale = event.newVal;
+		var items = descriptionInputLocalized.get('items');
+		var selectedIndex = items.indexOf(editingLocale);
+
+		descriptionInputLocalized.set('selected', selectedIndex);
+		descriptionInputLocalized.selectFlag(editingLocale);
+
+		titleInputLocalized.set('selected', selectedIndex);
+		titleInputLocalized.selectFlag(editingLocale);
+	}
+
+	var translationManager = Liferay.component('<portlet:namespace />translationManager');
+
+	translationManager.on('deleteAvailableLocale', afterDeletingAvailableLocale)
+	translationManager.on('editingLocaleChange', afterEditingLocaleChange)
+</aui:script>

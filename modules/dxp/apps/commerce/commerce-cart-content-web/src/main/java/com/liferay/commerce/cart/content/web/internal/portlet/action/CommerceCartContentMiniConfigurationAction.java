@@ -65,7 +65,7 @@ public class CommerceCartContentMiniConfigurationAction
 					new CommerceCartContentMiniDisplayContext(
 						request, response, _commerceCartHelper,
 						_commerceCartItemService, _cpDefinitionHelper,
-						commercePriceCalculationHelper);
+						_commercePriceCalculationHelper);
 
 			request.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,

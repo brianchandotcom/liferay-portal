@@ -216,8 +216,17 @@ public class CPAttachmentFileEntriesDisplayContext extends
 
 		int workflowDefinitionLinksCount =
 			_workflowDefinitionLinkLocalService.getWorkflowDefinitionLinksCount(
-				themeDisplay.getCompanyId(), WorkflowConstants.DEFAULT_GROUP_ID,
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
 				CPAttachmentFileEntry.class.getName());
+
+		if (workflowDefinitionLinksCount == 0) {
+			workflowDefinitionLinksCount =
+				_workflowDefinitionLinkLocalService.
+					getWorkflowDefinitionLinksCount(
+						themeDisplay.getCompanyId(),
+						WorkflowConstants.DEFAULT_GROUP_ID,
+						CPAttachmentFileEntry.class.getName());
+		}
 
 		if (workflowDefinitionLinksCount > 0) {
 			managementBarFilterItems.add(

@@ -155,9 +155,17 @@ public class CPDefinitionsDisplayContext
 		int workflowDefinitionLinksCount =
 			WorkflowDefinitionLinkLocalServiceUtil.
 				getWorkflowDefinitionLinksCount(
-					themeDisplay.getCompanyId(),
-					WorkflowConstants.DEFAULT_GROUP_ID,
+					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
 					CPDefinition.class.getName());
+
+		if (workflowDefinitionLinksCount == 0) {
+			workflowDefinitionLinksCount =
+				WorkflowDefinitionLinkLocalServiceUtil.
+					getWorkflowDefinitionLinksCount(
+						themeDisplay.getCompanyId(),
+						WorkflowConstants.DEFAULT_GROUP_ID,
+						CPDefinition.class.getName());
+		}
 
 		if (workflowDefinitionLinksCount > 0) {
 			managementBarFilterItems.add(

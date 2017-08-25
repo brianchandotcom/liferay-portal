@@ -183,6 +183,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SETTINGS_CELL_EDITOR_AUTO_CREATE</td>
+	<td>//form[contains(@class,'assignments-cell-editor')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SETTINGS_CELL_EDITOR_REMOVE_SECTION</td>
 	<td>//a[@class='celleditor-view-menu-remove']</td>
 	<td></td>

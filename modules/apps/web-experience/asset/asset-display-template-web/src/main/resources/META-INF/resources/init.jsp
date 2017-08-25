@@ -25,14 +25,50 @@ taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.asset.display.template.service.permission.AssetDisplayTemplatePermission" %><%@
+<%@ page import="com.liferay.asset.display.template.model.AssetDisplayTemplate" %><%@
+page import="com.liferay.asset.display.template.service.permission.AssetDisplayTemplatePermission" %><%@
 page import="com.liferay.asset.display.template.web.internal.constants.AssetDisplayTemplateWebKeys" %><%@
 page import="com.liferay.asset.display.template.web.internal.display.context.AssetDisplayTemplateDisplayContext" %><%@
+page import="com.liferay.dynamic.data.mapping.model.DDMTemplate" %><%@
+page import="com.liferay.dynamic.data.mapping.util.DDMDisplay" %><%@
+page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
+page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
+page import="com.liferay.portal.kernel.editor.EditorModeUtil" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
+page import="com.liferay.portal.kernel.log.Log" %><%@
+page import="com.liferay.portal.kernel.log.LogFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.model.ClassName" %><%@
+page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
+page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.security.permission.ResourceActionsUtil" %><%@
-page import="com.liferay.portal.kernel.service.ClassNameLocalServiceUtil" %>
+page import="com.liferay.portal.kernel.service.ClassNameLocalServiceUtil" %><%@
+page import="com.liferay.portal.kernel.template.TemplateConstants" %><%@
+page import="com.liferay.portal.kernel.template.TemplateHandler" %><%@
+page import="com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil" %><%@
+page import="com.liferay.portal.kernel.template.TemplateVariableDefinition" %><%@
+page import="com.liferay.portal.kernel.template.TemplateVariableGroup" %><%@
+page import="com.liferay.portal.kernel.util.CharPool" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.ResourceBundleLoader" %><%@
+page import="com.liferay.portal.kernel.util.ResourceBundleLoaderUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringBundler" %><%@
+page import="com.liferay.portal.kernel.util.StringPool" %><%@
+page import="com.liferay.portal.kernel.util.StringUtil" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+page import="com.liferay.portal.template.TemplateContextHelper" %>
 
-<%@ page import="java.util.Objects" %>
+<%@ page import="java.util.Map" %><%@
+page import="java.util.Objects" %><%@
+page import="java.util.ResourceBundle" %><%@
+page import="java.util.StringTokenizer" %>
+
+<%@ page import="javax.portlet.PortletURL" %>
+
+<%@ page import="org.osgi.framework.Bundle" %><%@
+page import="org.osgi.framework.FrameworkUtil" %>
 
 <liferay-frontend:defineObjects />
 

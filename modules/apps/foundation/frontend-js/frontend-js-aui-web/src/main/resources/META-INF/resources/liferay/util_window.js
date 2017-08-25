@@ -238,8 +238,6 @@ AUI.add(
 
 					var uri = config.uri;
 
-					var title = config.title;
-
 					if (uri) {
 						if (config.cache === false) {
 							uri = Liferay.Util.addParams(A.guid() + '=' + Date.now(), uri);
@@ -293,7 +291,7 @@ AUI.add(
 								},
 
 								iframeId: iframeId,
-								iframeTitle: title,
+								iframeTitle: config.title || '',
 								uri: uri
 							}
 						);

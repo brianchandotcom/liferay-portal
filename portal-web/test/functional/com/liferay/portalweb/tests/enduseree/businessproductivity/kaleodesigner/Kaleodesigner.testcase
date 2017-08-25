@@ -760,6 +760,45 @@
 		<execute macro="KaleoDesigner#viewNoWorkflowDefinitionsViaKDCP" />
 	</command>
 
+	<command name="EditAssignmentsForTaskNodeKDCP" priority="3">
+		<property name="testray.component.names" value="Training" />
+
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Kaleo Designer" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaKDCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNodeViaViewTab">
+			<var name="nodeDescription" value="Task Node Description" />
+			<var name="nodeName" value="Task" />
+			<var name="nodeNodeLabel" value="Task" />
+			<var name="nodeType" value="task" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="Task" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodeType">
+			<var name="nodeNodeLabel" value="Task" />
+			<var name="nodeType" value="task" />
+		</execute>
+
+		<execute macro="KaleoDesigner#editNodeAssignments">
+			<var name="autoCreate" value="true" />
+			<var name="nodeAssignmentType" value="Role Type" />
+			<var name="roleName" value="Board Member" />
+			<var name="roleType" value="Regular" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodeAssignments">
+			<var name="nodeAssignmentType" value="Role Type" />
+		</execute>
+	</command>
+
 	<command name="PublishDefaultWorkflowDefinition" priority="3">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Kaleo Designer" />
@@ -1489,27 +1528,6 @@
 
 		<execute macro="KaleoDesigner#viewTableDefinitionPublishedViaKDCP">
 			<var name="workflowDefinitionTitle" value="New Workflow Definition" />
-		</execute>
-	</command>
-
-	<command name="ViewAssignmentsForTaskNodeKDCP" priority="3">
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Kaleo Designer" />
-		</execute>
-
-		<execute macro="KaleoDesigner#addNewDefinitionViaKDCP">
-			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
-		</execute>
-
-		<execute macro="KaleoDesigner#addNodeViaViewTab">
-			<var name="nodeDescription" value="Task Node Description" />
-			<var name="nodeName" value="Task" />
-			<var name="nodeNodeLabel" value="Task" />
-			<var name="nodeType" value="task" />
-		</execute>
-
-		<execute macro="KaleoDesigner#viewNodeAssignments">
-			<var name="nodeAssignmentType" value="Asset Creator" />
 		</execute>
 	</command>
 

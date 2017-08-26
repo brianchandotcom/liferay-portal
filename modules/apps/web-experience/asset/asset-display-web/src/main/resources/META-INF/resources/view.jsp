@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-ui:asset-display
+<liferay-asset:asset-display
 	abstractLength="<%= assetDisplayDisplayContext.getAbstractLength() %>"
 	className="<%= assetDisplayDisplayContext.getClassName() %>"
 	classPK="<%= assetDisplayDisplayContext.getClassPK() %>"

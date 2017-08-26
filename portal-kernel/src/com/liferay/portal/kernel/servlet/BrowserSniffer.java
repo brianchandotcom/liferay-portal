@@ -26,6 +26,8 @@ import javax.servlet.http.HttpServletRequest;
 @ProviderType
 public interface BrowserSniffer {
 
+	public static final String BROWSER_ID_EDGE = "edge";
+
 	public static final String BROWSER_ID_FIREFOX = "firefox";
 
 	public static final String BROWSER_ID_IE = "ie";
@@ -49,6 +51,8 @@ public interface BrowserSniffer {
 	public boolean isAndroid(HttpServletRequest request);
 
 	public boolean isChrome(HttpServletRequest request);
+
+	public boolean isEdge(HttpServletRequest request);
 
 	public boolean isFirefox(HttpServletRequest request);
 

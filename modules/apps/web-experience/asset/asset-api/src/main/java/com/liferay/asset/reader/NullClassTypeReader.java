@@ -14,7 +14,7 @@
 
 package com.liferay.asset.reader;
 
-import com.liferay.asset.kernel.NoSuchClassTypeException;
+import com.liferay.asset.reader.exception.NoSuchClassTypeException;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.Collections;

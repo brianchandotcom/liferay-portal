@@ -14,7 +14,7 @@
 
 package com.liferay.asset.reader;
 
-import com.liferay.asset.kernel.NoSuchClassTypeFieldException;
+import com.liferay.asset.reader.exception.NoSuchClassTypeFieldException;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;

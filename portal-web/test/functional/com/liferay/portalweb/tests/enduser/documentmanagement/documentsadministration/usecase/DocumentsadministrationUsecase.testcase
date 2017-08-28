@@ -400,7 +400,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<for list="INLINE_PERMISSIONS_ADD_SUBFOLDER_CHECKBOX,INLINE_PERMISSIONS_ADD_SHORTCUT_CHECKBOX,INLINE_PERMISSIONS_ADD_DOCUMENT_CHECKBOX,INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX" param="permissionsInLineUncheckListsCount" >
+		<for list="INLINE_PERMISSIONS_ADD_SUBFOLDER_CHECKBOX,INLINE_PERMISSIONS_ADD_SHORTCUT_CHECKBOX,INLINE_PERMISSIONS_ADD_DOCUMENT_CHECKBOX,INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX" param="permissionsInLineUncheckListsCount">
 			<execute macro="Role#removePermissionPG">
 				<var name="permissionDefinitionKey" value="${permissionsInLineUncheckListsCount}" />
 				<var name="roleName" value="Site Member" />
@@ -497,7 +497,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<for list="Document_1.jpeg,Document_2.docx,Document_3.mp3" param="DMDocumentNames" >
+		<for list="Document_1.jpeg,Document_2.docx,Document_3.mp3" param="DMDocumentNames">
 			<execute macro="DMDocument#cannotViewCP">
 				<var name="dmDocumentTitle" value="DMDocumentNames" />
 			</execute>
@@ -614,7 +614,7 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<for list="1,2" param="tagCount" >
+		<for list="1,2" param="tagCount">
 			<execute macro="DMDocument#editCmdPG">
 				<var name="dmDocumentTagName" value="tag${tagCount}" />
 				<var name="dmDocumentTitle" value="Document_1.doc" />
@@ -1194,7 +1194,7 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<for list="1,2,3" param="entryCount" >
+		<for list="1,2,3" param="entryCount">
 			<execute macro="DMDocument#addPG">
 				<var name="dmDocumentDescription" value="DM Document Description" />
 				<var name="dmDocumentFile" value="Document_${entryCount}.doc" />
@@ -1206,7 +1206,7 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<for list="1,2,3" param="entryCount" >
+		<for list="1,2,3" param="entryCount">
 			<var name="key_dmDocumentTitle" value="Document_${entryCount}.doc" />
 
 			<execute function="Check" locator1="DocumentsAndMedia#ICON_DOCUMENT_CHECKBOX" />
@@ -1886,7 +1886,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<for list="INLINE_PERMISSIONS_ADD_SUBFOLDER_CHECKBOX,INLINE_PERMISSIONS_ADD_SHORTCUT_CHECKBOX,INLINE_PERMISSIONS_ADD_DOCUMENT_CHECKBOX,INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX" param="permissionsInLineUncheckListsCount" >
+		<for list="INLINE_PERMISSIONS_ADD_SUBFOLDER_CHECKBOX,INLINE_PERMISSIONS_ADD_SHORTCUT_CHECKBOX,INLINE_PERMISSIONS_ADD_DOCUMENT_CHECKBOX,INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX" param="permissionsInLineUncheckListsCount">
 			<execute macro="Role#removePermissionPG">
 				<var name="permissionDefinitionKey" value="${permissionsInLineUncheckListsCount}" />
 				<var name="roleName" value="Site Member" />
@@ -1930,7 +1930,7 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<for list="INLINE_PERMISSIONS_ADD_DOCUMENT_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX,CONTENT_PERMISSIONS_ACCESS_CHECKBOX" param="permissionsInLineUncheckListsCount" >
+		<for list="INLINE_PERMISSIONS_ADD_DOCUMENT_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX,CONTENT_PERMISSIONS_ACCESS_CHECKBOX" param="permissionsInLineUncheckListsCount">
 			<execute macro="Role#definePermissionPG">
 				<var name="permissionDefinitionKey" value="${permissionsInLineUncheckListsCount}" />
 				<var name="roleName" value="Organization User" />

@@ -317,10 +317,35 @@ public class MSBFragmentDisplayContext {
 		return false;
 	}
 
+	public boolean hasMSBFragmentEntriesResults() throws PortalException {
+		SearchContainer searchContainer =
+			getMSBFragmentEntriesSearchContainer();
+
+		if (searchContainer.getTotal() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isDisabledMSBFragmentCollectionsManagementBar()
 		throws PortalException {
 
 		if (hasMSBFragmentCollectionsResults()) {
+			return false;
+		}
+
+		if (isSearch()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean isDisabledMSBFragmentEntriesManagementBar()
+		throws PortalException {
+
+		if (hasMSBFragmentEntriesResults()) {
 			return false;
 		}
 

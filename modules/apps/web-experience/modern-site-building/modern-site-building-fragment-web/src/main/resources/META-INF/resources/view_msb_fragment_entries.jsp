@@ -23,6 +23,20 @@ portletDisplay.setURLBack(msbFragmentDisplayContext.getMSBFragmentCollectionsRed
 renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentCollectionTitle());
 %>
 
+<liferay-frontend:management-bar
+	disabled="<%= msbFragmentDisplayContext.isDisabledMSBFragmentEntriesManagementBar() %>"
+	includeCheckBox="<%= true %>"
+	searchContainerId="msbFragmentEntries"
+>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"icon"} %>'
+			portletURL="<%= currentURLObj %>"
+			selectedDisplayStyle="<%= msbFragmentDisplayContext.getDisplayStyle() %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
+</liferay-frontend:management-bar>
+
 <aui:form action="<%= currentURL %>" cssClass="container-fluid-1280" name="fm">
 	<liferay-ui:search-container
 		id="msbFragmentEntries"

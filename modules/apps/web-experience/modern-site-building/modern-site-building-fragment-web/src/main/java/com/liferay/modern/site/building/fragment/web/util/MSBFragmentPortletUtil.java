@@ -15,8 +15,11 @@
 package com.liferay.modern.site.building.fragment.web.util;
 
 import com.liferay.modern.site.building.fragment.model.MSBFragmentCollection;
+import com.liferay.modern.site.building.fragment.model.MSBFragmentEntry;
 import com.liferay.modern.site.building.fragment.util.comparator.MSBFragmentCollectionCreateDateComparator;
 import com.liferay.modern.site.building.fragment.util.comparator.MSBFragmentCollectionNameComparator;
+import com.liferay.modern.site.building.fragment.util.comparator.MSBFragmentEntryCreateDateComparator;
+import com.liferay.modern.site.building.fragment.util.comparator.MSBFragmentEntryNameComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
@@ -43,6 +46,29 @@ public class MSBFragmentPortletUtil {
 		else if (orderByCol.equals("name")) {
 			orderByComparator = new MSBFragmentCollectionNameComparator(
 				orderByAsc);
+		}
+
+		return orderByComparator;
+	}
+
+	public static OrderByComparator<MSBFragmentEntry>
+		getMSBFragmentEntryOrderByComparator(
+			String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<MSBFragmentEntry> orderByComparator = null;
+
+		if (orderByCol.equals("create-date")) {
+			orderByComparator = new MSBFragmentEntryCreateDateComparator(
+				orderByAsc);
+		}
+		else if (orderByCol.equals("name")) {
+			orderByComparator = new MSBFragmentEntryNameComparator(orderByAsc);
 		}
 
 		return orderByComparator;

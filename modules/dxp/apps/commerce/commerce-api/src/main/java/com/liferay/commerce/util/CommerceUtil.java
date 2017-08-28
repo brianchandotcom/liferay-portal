@@ -15,7 +15,10 @@
 package com.liferay.commerce.util;
 
 import com.liferay.commerce.model.CommerceWarehouse;
+import com.liferay.commerce.model.CommerceWarehouseItem;
 import com.liferay.commerce.util.comparator.CommerceWarehouseCityComparator;
+import com.liferay.commerce.util.comparator.CommerceWarehouseItemQuantityComparator;
+import com.liferay.commerce.util.comparator.CommerceWarehouseItemWarehouseNameComparator;
 import com.liferay.commerce.util.comparator.CommerceWarehouseNameComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -23,6 +26,30 @@ import com.liferay.portal.kernel.util.OrderByComparator;
  * @author Andrea Di Giorgi
  */
 public class CommerceUtil {
+
+	public static OrderByComparator<CommerceWarehouseItem>
+		getCommerceWarehouseItemOrderByComparator(
+			String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<CommerceWarehouseItem> orderByComparator = null;
+
+		if (orderByCol.equals("name")) {
+			orderByComparator =
+				new CommerceWarehouseItemWarehouseNameComparator(orderByAsc);
+		}
+		else if (orderByCol.equals("quantity")) {
+			orderByComparator = new CommerceWarehouseItemQuantityComparator(
+				orderByAsc);
+		}
+
+		return orderByComparator;
+	}
 
 	public static OrderByComparator<CommerceWarehouse>
 		getCommerceWarehouseOrderByComparator(

@@ -49,7 +49,7 @@ buildCSS {
 buildLexicon {
 	dependsOn npmInstall
 
-	File lexiconDestinationDir = new File(themeDestinationDir, "css/aui/lexicon")
+	File lexiconDestinationDir = new File(themeDestinationDir, "css/clay")
 
 	doFirst {
 		delete lexiconDestinationDir
@@ -64,16 +64,16 @@ buildLexicon {
 					line = """\
 @import \"lexicon-base/variables\";
 
-@import \"../../liferay_variables_custom\";
-@import \"../../liferay_variables\";
+@import \"../liferay_variables_custom\";
+@import \"../liferay_variables\";
 @import \"bourbon\";
-@import \"../../aui_custom\";
-@import \"../../liferay_custom\";"""
+@import \"../clay_custom\";
+@import \"../liferay_custom\";"""
 				}
 				else if (line == "// INSERT CUSTOM VARS") {
 					line = """\
 @import url(font-awesome.css);
-@import \"../../aui_variables\";"""
+@import \"../clay_variables\";"""
 				}
 
 				return line
@@ -85,15 +85,15 @@ buildLexicon {
 
 				if (line == "// INSERT CUSTOM BASE VARS") {
 					line = """\
-@import \"../../aui_variables\";
+@import \"../clay_variables\";
 @import \"fonts/alloy-font-awesome/scss/variables\";"""
 				}
 				else if (line == "// INSERT CUSTOM VARS") {
 					line = """\
 @import \"lexicon-base/variables\";
 
-@import \"../../liferay_variables_custom\";
-@import \"../../liferay_variables\";"""
+@import \"../liferay_variables_custom\";
+@import \"../liferay_variables\";"""
 				}
 
 				return line
@@ -112,7 +112,7 @@ buildLexicon {
 buildLexiconFonts {
 	dependsOn npmInstall
 
-	File lexiconFontsDestinationDir = new File(themeDestinationDir, "css/aui/lexicon/fonts")
+	File lexiconFontsDestinationDir = new File(themeDestinationDir, "css/clay/fonts")
 
 	dependsOn buildLexicon
 

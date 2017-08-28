@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"clay": "liferay/clay#develop-compat-layer"
+		"clay": "liferay/clay#develop"
 	},
 	"name": "liferay-frontend-theme-unstyled",
 	"version": "2.2.0"

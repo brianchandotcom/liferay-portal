@@ -56,13 +56,13 @@ buildLexicon {
 	}
 
 	eachFile {
-		if (name in ["atlas.scss", "bootstrap.scss", "lexicon-base.scss"]) {
+		if (name in ["atlas.scss", "bootstrap.scss", "base.scss"]) {
 			filter {
 				String line ->
 
 				if (line == "// INSERT CUSTOM EXTENSIONS") {
 					line = """\
-@import \"lexicon-base/variables\";
+@import \"variables\";
 
 @import \"../liferay_variables_custom\";
 @import \"../liferay_variables\";
@@ -79,18 +79,17 @@ buildLexicon {
 				return line
 			}
 		}
-		else if (name in ["atlas-variables.scss", "lexicon-base-variables.scss"]) {
+		else if (name in ["atlas-variables.scss", "base-variables.scss"]) {
 			filter {
 				String line ->
 
 				if (line == "// INSERT CUSTOM BASE VARS") {
 					line = """\
-@import \"../clay_variables\";
-@import \"fonts/alloy-font-awesome/scss/variables\";"""
+@import \"../clay_variables\";"""
 				}
 				else if (line == "// INSERT CUSTOM VARS") {
 					line = """\
-@import \"lexicon-base/variables\";
+@import \"variables\";
 
 @import \"../liferay_variables_custom\";
 @import \"../liferay_variables\";"""

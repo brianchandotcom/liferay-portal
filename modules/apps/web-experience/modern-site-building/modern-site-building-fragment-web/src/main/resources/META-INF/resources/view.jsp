@@ -88,6 +88,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "fragments"));
 			keyProperty="msbFragmentCollectionId"
 			modelVar="msbFragmentCollection"
 		>
+			<portlet:renderURL var="rowURL">
+				<portlet:param name="mvcPath" value="/view_msb_fragment_entries.jsp" />
+				<portlet:param name="msbFragmentCollectionId" value="<%= String.valueOf(msbFragmentCollection.getMsbFragmentCollectionId()) %>" />
+			</portlet:renderURL>
 
 			<%
 			row.setCssClass("entry-card lfr-asset-folder");
@@ -101,6 +105,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "fragments"));
 						resultRow="<%= row %>"
 						rowChecker="<%= searchContainer.getRowChecker() %>"
 						text="<%= HtmlUtil.escape(msbFragmentCollection.getName()) %>"
+						url="<%= rowURL.toString() %>"
 					>
 						<liferay-frontend:horizontal-card-col>
 							<liferay-frontend:horizontal-card-icon

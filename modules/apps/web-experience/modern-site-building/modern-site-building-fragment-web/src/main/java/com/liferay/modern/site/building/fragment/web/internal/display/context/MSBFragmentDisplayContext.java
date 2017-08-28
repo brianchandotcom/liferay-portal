@@ -16,7 +16,9 @@ package com.liferay.modern.site.building.fragment.web.internal.display.context;
 
 import com.liferay.modern.site.building.fragment.constants.MSBFragmentPortletKeys;
 import com.liferay.modern.site.building.fragment.model.MSBFragmentCollection;
+import com.liferay.modern.site.building.fragment.model.MSBFragmentEntry;
 import com.liferay.modern.site.building.fragment.service.MSBFragmentCollectionServiceUtil;
+import com.liferay.modern.site.building.fragment.service.MSBFragmentEntryServiceUtil;
 import com.liferay.modern.site.building.fragment.service.permission.MSBFragmentPermission;
 import com.liferay.modern.site.building.fragment.web.util.MSBFragmentPortletUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -119,6 +121,20 @@ public class MSBFragmentDisplayContext {
 		return _msbFragmentCollectionId;
 	}
 
+	public String getMSBFragmentCollectionsRedirect() throws PortalException {
+		String redirect = ParamUtil.getString(_request, "redirect");
+
+		if (Validator.isNull(redirect)) {
+			PortletURL backURL = _renderResponse.createRenderURL();
+
+			backURL.setParameter("mvcPath", "/view.jsp");
+
+			redirect = backURL.toString();
+		}
+
+		return redirect;
+	}
+
 	public SearchContainer getMSBFragmentCollectionsSearchContainer()
 		throws PortalException {
 
@@ -209,6 +225,60 @@ public class MSBFragmentDisplayContext {
 		}
 
 		return msbFragmentCollection.getName();
+	}
+
+	public SearchContainer getMSBFragmentEntriesSearchContainer()
+		throws PortalException {
+
+		if (_msbFragmentEntriesSearchContainer != null) {
+			return _msbFragmentEntriesSearchContainer;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		SearchContainer msbFragmentEntriesSearchContainer = new SearchContainer(
+			_renderRequest, _renderResponse.createRenderURL(), null,
+			"there-are-no-fragments");
+
+		msbFragmentEntriesSearchContainer.setEmptyResultsMessage(
+			"there-are-no-fragments.-you-can-add-a-fragment-by-clicking-the-" +
+				"plus-button-on-the-bottom-right-corner");
+		msbFragmentEntriesSearchContainer.setEmptyResultsMessageCssClass(
+			"taglib-empty-result-message-header-has-plus-btn");
+
+		msbFragmentEntriesSearchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_renderResponse));
+
+		OrderByComparator<MSBFragmentEntry> orderByComparator =
+			MSBFragmentPortletUtil.getMSBFragmentEntryOrderByComparator(
+				getOrderByCol(), getOrderByType());
+
+		msbFragmentEntriesSearchContainer.setOrderByCol(getOrderByCol());
+		msbFragmentEntriesSearchContainer.setOrderByComparator(
+			orderByComparator);
+		msbFragmentEntriesSearchContainer.setOrderByType(getOrderByType());
+
+		List<MSBFragmentEntry> msbFragmentEntries = null;
+		int msbFragmentEntriesCount = 0;
+
+		long fragmentCollectionId = getMSBFragmentCollectionId();
+
+		msbFragmentEntries = MSBFragmentEntryServiceUtil.getMSBFragmentEntries(
+			themeDisplay.getScopeGroupId(), fragmentCollectionId,
+			msbFragmentEntriesSearchContainer.getStart(),
+			msbFragmentEntriesSearchContainer.getEnd(), orderByComparator);
+
+		msbFragmentEntriesCount =
+			MSBFragmentEntryServiceUtil.getMSBFragmentCollectionsCount(
+				themeDisplay.getScopeGroupId(), fragmentCollectionId);
+
+		msbFragmentEntriesSearchContainer.setResults(msbFragmentEntries);
+		msbFragmentEntriesSearchContainer.setTotal(msbFragmentEntriesCount);
+
+		_msbFragmentEntriesSearchContainer = msbFragmentEntriesSearchContainer;
+
+		return _msbFragmentEntriesSearchContainer;
 	}
 
 	public String getOrderByCol() {
@@ -302,6 +372,7 @@ public class MSBFragmentDisplayContext {
 	private MSBFragmentCollection _msbFragmentCollection;
 	private Long _msbFragmentCollectionId;
 	private SearchContainer _msbFragmentCollectionsSearchContainer;
+	private SearchContainer _msbFragmentEntriesSearchContainer;
 	private String _orderByCol;
 	private String _orderByType;
 	private final RenderRequest _renderRequest;

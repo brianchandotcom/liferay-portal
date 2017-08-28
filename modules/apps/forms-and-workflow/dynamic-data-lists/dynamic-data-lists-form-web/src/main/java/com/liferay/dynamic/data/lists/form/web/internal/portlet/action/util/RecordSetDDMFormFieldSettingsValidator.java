@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.lists.form.web.internal.portlet.action.util;
 
-import com.liferay.dynamic.data.lists.form.web.RecordSetFieldSettingsException;
+import com.liferay.dynamic.data.lists.form.web.RecordSetDDMFormFieldSettingsException;
 import com.liferay.dynamic.data.lists.form.web.internal.util.DDMFormTemplateContextVisitor;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationException;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
@@ -58,8 +58,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(immediate = true, service = RecordSetFieldSettingsValidator.class)
-public class RecordSetFieldSettingsValidator {
+@Component(immediate = true, service = RecordSetDDMFormFieldSettingsValidator.class)
+public class RecordSetDDMFormFieldSettingsValidator {
 
 	public void validate(PortletRequest portletRequest, DDMForm ddmForm)
 		throws PortalException {
@@ -69,7 +69,7 @@ public class RecordSetFieldSettingsValidator {
 
 		if (!fieldNamePropertiesMap.isEmpty()) {
 			throw new
-				RecordSetFieldSettingsException.MustSetValidValueForProperties(
+				RecordSetDDMFormFieldSettingsException.MustSetValidValueForProperties(
 					fieldNamePropertiesMap);
 		}
 	}

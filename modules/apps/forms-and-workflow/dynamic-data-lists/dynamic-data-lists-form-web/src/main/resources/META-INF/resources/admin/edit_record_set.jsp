@@ -138,10 +138,10 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 			<liferay-ui:message arguments="<%= new Object[] {msvve.getVisibilityExpression(), msvve.getFieldName()} %>" key="the-visibility-expression-x-set-for-field-x-is-invalid" translateArguments="<%= false %>" />
 		</liferay-ui:error>
 
-		<liferay-ui:error exception="<%= RecordSetFieldSettingsException.MustSetValidValueForProperties.class %>">
+		<liferay-ui:error exception="<%= RecordSetDDMFormFieldSettingsException.MustSetValidValueForProperties.class %>">
 
 			<%
-			RecordSetFieldSettingsException.MustSetValidValueForProperties msvvfp = (RecordSetFieldSettingsException.MustSetValidValueForProperties)errorException;
+			RecordSetDDMFormFieldSettingsException.MustSetValidValueForProperties msvvfp = (RecordSetDDMFormFieldSettingsException.MustSetValidValueForProperties)errorException;
 
 			Map<String, Set<String>> fieldNamePropertiesMap = msvvfp.getFieldNamePropertiesMap();
 

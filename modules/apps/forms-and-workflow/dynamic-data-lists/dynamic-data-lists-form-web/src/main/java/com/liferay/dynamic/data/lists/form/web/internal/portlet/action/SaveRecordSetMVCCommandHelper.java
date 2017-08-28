@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.lists.form.web.internal.portlet.action;
 import com.liferay.dynamic.data.lists.exception.RecordSetSettingsRedirectURLException;
 import com.liferay.dynamic.data.lists.form.web.internal.converter.DDLFormRuleDeserializer;
 import com.liferay.dynamic.data.lists.form.web.internal.converter.DDLFormRuleToDDMFormRuleConverter;
-import com.liferay.dynamic.data.lists.form.web.internal.portlet.action.util.RecordSetFieldSettingsValidator;
+import com.liferay.dynamic.data.lists.form.web.internal.portlet.action.util.RecordSetDDMFormFieldSettingsValidator;
 import com.liferay.dynamic.data.lists.form.web.internal.util.DDLFormBuilderContextToDDMForm;
 import com.liferay.dynamic.data.lists.form.web.internal.util.DDLFormBuilderContextToDDMFormLayout;
 import com.liferay.dynamic.data.lists.form.web.internal.util.DDMFormTemplateContextToDDMFormValues;
@@ -489,7 +489,7 @@ public class SaveRecordSetMVCCommandHelper {
 	protected JSONFactory jsonFactory;
 
 	@Reference
-	protected volatile RecordSetFieldSettingsValidator
+	protected volatile RecordSetDDMFormFieldSettingsValidator
 		recordSetFieldSettingsValidator;
 
 	@Reference

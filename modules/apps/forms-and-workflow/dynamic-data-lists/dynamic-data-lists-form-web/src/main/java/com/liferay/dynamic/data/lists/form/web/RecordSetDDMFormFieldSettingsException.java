@@ -22,25 +22,25 @@ import java.util.Set;
 /**
  * @author Rafael Praxedes
  */
-public class RecordSetFieldSettingsException extends PortalException {
+public class RecordSetDDMFormFieldSettingsException extends PortalException {
 
-	public RecordSetFieldSettingsException() {
+	public RecordSetDDMFormFieldSettingsException() {
 	}
 
-	public RecordSetFieldSettingsException(String msg) {
+	public RecordSetDDMFormFieldSettingsException(String msg) {
 		super(msg);
 	}
 
-	public RecordSetFieldSettingsException(String msg, Throwable cause) {
+	public RecordSetDDMFormFieldSettingsException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public RecordSetFieldSettingsException(Throwable cause) {
+	public RecordSetDDMFormFieldSettingsException(Throwable cause) {
 		super(cause);
 	}
 
 	public static class MustSetValidValueForProperties
-		extends RecordSetFieldSettingsException {
+		extends RecordSetDDMFormFieldSettingsException {
 
 		public MustSetValidValueForProperties(
 			Map<String, Set<String>> fieldNamePropertiesMap) {

@@ -30,10 +30,12 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -58,17 +60,21 @@ public class AssetDisplayTemplateDisplayContext {
 		_ddmTemplateHelper = ddmTemplateHelper;
 	}
 
-	public long[] getAvailableClassNameIds() {
-		if (_availableClassNameIds == null) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			_availableClassNameIds =
-				AssetRendererFactoryRegistryUtil.getClassNameIds(
-					themeDisplay.getCompanyId(), true);
+	public Set<Long> getAvailableClassNameIds() {
+		if (_availableClassNameIdsSet != null) {
+			return _availableClassNameIdsSet;
 		}
 
-		return _availableClassNameIds;
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long[] availableClassNameIds =
+			AssetRendererFactoryRegistryUtil.getClassNameIds(
+				themeDisplay.getCompanyId(), true);
+
+		_availableClassNameIdsSet = SetUtil.fromArray(availableClassNameIds);
+
+		return _availableClassNameIdsSet;
 	}
 
 	public String getDisplayStyle() {
@@ -217,7 +223,7 @@ public class AssetDisplayTemplateDisplayContext {
 		return orderByComparator;
 	}
 
-	private long[] _availableClassNameIds;
+	private Set<Long> _availableClassNameIdsSet;
 	private final DDMDisplayRegistry _ddmDisplayRegistry;
 	private final DDMTemplateHelper _ddmTemplateHelper;
 	private String _displayStyle;

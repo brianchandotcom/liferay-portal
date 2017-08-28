@@ -33,6 +33,7 @@ page import="com.liferay.commerce.constants.CommerceWebKeys" %><%@
 page import="com.liferay.commerce.model.CommerceCart" %><%@
 page import="com.liferay.commerce.model.CommerceCartItem" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
+page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
@@ -41,7 +42,7 @@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %><%@ page import="com.liferay.portal.kernel.dao.search.ResultRow" %>
+page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <%@ page import="java.util.Collections" %><%@
 page import="java.util.Date" %><%@

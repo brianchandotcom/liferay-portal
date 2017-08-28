@@ -1,0 +1,14 @@
+.card {
+	display: block; // FF doesn't display cards properly
+}
+
+.card-horizontal {
+	@extend .card;
+}
+
+.card-row.card-row-padded {
+	display: table;
+	height: 100%;
+	padding: 15px;
+	width: 100%;
+}

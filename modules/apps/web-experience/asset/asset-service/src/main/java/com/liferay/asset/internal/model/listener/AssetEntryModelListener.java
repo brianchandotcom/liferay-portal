@@ -16,10 +16,14 @@ package com.liferay.asset.internal.model.listener;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.ModelListener;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Bryan Engler
  */
+@Component(immediate = true, service = ModelListener.class)
 public class AssetEntryModelListener extends BaseModelListener<AssetEntry> {
 
 	@Override

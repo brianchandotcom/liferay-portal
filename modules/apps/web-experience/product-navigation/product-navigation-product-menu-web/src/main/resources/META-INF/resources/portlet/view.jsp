@@ -23,7 +23,7 @@ String productMenuState = SessionClicks.get(request, ProductNavigationProductMen
 <div class="lfr-product-menu-sidebar" id="productMenuSidebar">
 	<div class="sidebar-header">
 		<a href="<%= PortalUtil.addPreservedParameters(themeDisplay, themeDisplay.getURLPortal(), false, true) %>">
-			<span class="company-details">
+			<span class="company-details truncate-text">
 				<img alt="" class="company-logo" src="<%= themeDisplay.getRealCompanyLogo() %>" />
 				<span class="company-name"><%= HtmlUtil.escape(company.getName()) %></span>
 			</span>

@@ -47,7 +47,7 @@ public class RecordSetDDMFormFieldSettingsException extends PortalException {
 
 			super(
 				String.format(
-					"Invalid value set for the properties of fields %s",
+					"Invalid value set for the properties of field %s",
 					fieldNamePropertiesMap.keySet()));
 
 			_fieldNamePropertiesMap = fieldNamePropertiesMap;

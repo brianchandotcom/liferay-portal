@@ -58,7 +58,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(immediate = true, service = RecordSetDDMFormFieldSettingsValidator.class)
+@Component(
+	immediate = true, service = RecordSetDDMFormFieldSettingsValidator.class
+)
 public class RecordSetDDMFormFieldSettingsValidator {
 
 	public void validate(PortletRequest portletRequest, DDMForm ddmForm)
@@ -69,8 +71,8 @@ public class RecordSetDDMFormFieldSettingsValidator {
 
 		if (!fieldNamePropertiesMap.isEmpty()) {
 			throw new
-				RecordSetDDMFormFieldSettingsException.MustSetValidValueForProperties(
-					fieldNamePropertiesMap);
+				RecordSetDDMFormFieldSettingsException.
+					MustSetValidValueForProperties(fieldNamePropertiesMap);
 		}
 	}
 

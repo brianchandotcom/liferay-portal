@@ -83,24 +83,24 @@ public class SaveRecordSetMVCCommandHelper {
 
 	public DDLRecordSet saveRecordSet(
 			PortletRequest portletRequest, PortletResponse portletResponse,
-			boolean validateFormFieldsSettings)
+			boolean validateDDMFormFieldSettings)
 		throws Exception {
 
 		long recordSetId = ParamUtil.getLong(portletRequest, "recordSetId");
 
 		if (recordSetId == 0) {
 			return addRecordSet(
-				portletRequest, portletResponse, validateFormFieldsSettings);
+				portletRequest, portletResponse, validateDDMFormFieldSettings);
 		}
 		else {
 			return updateRecordSet(
-				portletRequest, portletResponse, validateFormFieldsSettings);
+				portletRequest, portletResponse, validateDDMFormFieldSettings);
 		}
 	}
 
 	protected DDMStructure addDDMStructure(
 			PortletRequest portletRequest, DDMFormValues settingsDDMFormValues,
-			boolean validateFormFieldsSettings)
+			boolean validateDDMFormFieldSettings)
 		throws Exception {
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -121,8 +121,9 @@ public class SaveRecordSetMVCCommandHelper {
 			description, ddmForm.getAvailableLocales(),
 			ddmForm.getDefaultLocale());
 
-		if (validateFormFieldsSettings) {
-			recordSetFieldSettingsValidator.validate(portletRequest, ddmForm);
+		if (validateDDMFormFieldSettings) {
+			recordSetDDMFormFieldSettingsValidator.validate(
+				portletRequest, ddmForm);
 		}
 
 		return ddmStructureService.addStructure(
@@ -313,7 +314,7 @@ public class SaveRecordSetMVCCommandHelper {
 	}
 
 	protected DDMStructure updateDDMStructure(
-			PortletRequest portletRequest, boolean validateFormFieldsSettings)
+			PortletRequest portletRequest, boolean validateDDMFormFieldSettings)
 		throws Exception {
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -332,8 +333,9 @@ public class SaveRecordSetMVCCommandHelper {
 			description, ddmForm.getAvailableLocales(),
 			ddmForm.getDefaultLocale());
 
-		if (validateFormFieldsSettings) {
-			recordSetFieldSettingsValidator.validate(portletRequest, ddmForm);
+		if (validateDDMFormFieldSettings) {
+			recordSetDDMFormFieldSettingsValidator.validate(
+				portletRequest, ddmForm);
 		}
 
 		return ddmStructureService.updateStructure(
@@ -368,11 +370,11 @@ public class SaveRecordSetMVCCommandHelper {
 
 	protected DDLRecordSet updateRecordSet(
 			PortletRequest portletRequest, PortletResponse portletResponse,
-			boolean validateFormFieldsSettings)
+			boolean validateDDMFormFieldSettings)
 		throws Exception {
 
 		DDMStructure ddmStructure = updateDDMStructure(
-			portletRequest, validateFormFieldsSettings);
+			portletRequest, validateDDMFormFieldSettings);
 
 		DDMForm ddmForm = ddmStructure.getDDMForm();
 
@@ -490,7 +492,7 @@ public class SaveRecordSetMVCCommandHelper {
 
 	@Reference
 	protected volatile RecordSetDDMFormFieldSettingsValidator
-		recordSetFieldSettingsValidator;
+		recordSetDDMFormFieldSettingsValidator;
 
 	@Reference
 	protected volatile WorkflowDefinitionLinkLocalService

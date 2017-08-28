@@ -108,13 +108,14 @@ public class AssetDisplayTemplateDisplayContext {
 			return _searchContainer;
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		SearchContainer searchContainer = new SearchContainer(
 			_renderRequest, _renderResponse.createRenderURL(), null,
 			"there-are-no-asset-display-templates");
 
-		String keywords = getKeywords();
-
-		if (Validator.isNull(keywords)) {
+		if (!isShowSearch()) {
 			if (isShowAddButton()) {
 				searchContainer.setEmptyResultsMessage(
 					"there-are-no-asset-display-templates-you-can-add-an-" +
@@ -130,34 +131,24 @@ public class AssetDisplayTemplateDisplayContext {
 
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String orderByCol = getOrderByCol();
-
-		searchContainer.setOrderByCol(orderByCol);
-
-		String orderByType = getOrderByType();
-
-		searchContainer.setOrderByType(orderByType);
+		searchContainer.setOrderByCol(getOrderByCol());
 
 		OrderByComparator<AssetDisplayTemplate> orderByComparator =
-			_getOrderByComparator(orderByCol, orderByType);
+			_getOrderByComparator(getOrderByCol(), getOrderByType());
 
 		searchContainer.setOrderByComparator(orderByComparator);
 
-		long scopeGroupId = themeDisplay.getScopeGroupId();
+		searchContainer.setOrderByType(getOrderByType());
 
-		int tagsCount =
+		int assetDisplayTemplatesCount =
 			AssetDisplayTemplateLocalServiceUtil.getAssetDisplayTemplatesCount(
-				scopeGroupId);
+				themeDisplay.getScopeGroupId());
 
-		searchContainer.setTotal(tagsCount);
+		searchContainer.setTotal(assetDisplayTemplatesCount);
 
 		List<AssetDisplayTemplate> assetDisplayTemplates =
 			AssetDisplayTemplateLocalServiceUtil.getAssetDisplayTemplates(
-				scopeGroupId, searchContainer.getStart(),
+				themeDisplay.getScopeGroupId(), searchContainer.getStart(),
 				searchContainer.getEnd(), orderByComparator);
 
 		searchContainer.setResults(assetDisplayTemplates);

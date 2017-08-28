@@ -128,20 +128,6 @@ public class MSBFragmentCollectionServiceSoap {
 		}
 	}
 
-	public static int getGroupMSBFragmentCollectionsCount(long groupId)
-		throws RemoteException {
-		try {
-			int returnValue = MSBFragmentCollectionServiceUtil.getGroupMSBFragmentCollectionsCount(groupId);
-
-			return returnValue;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static com.liferay.modern.site.building.fragment.model.MSBFragmentCollectionSoap[] getMSBFragmentCollections(
 		long groupId, int start, int end) throws RemoteException {
 		try {
@@ -186,6 +172,35 @@ public class MSBFragmentCollectionServiceSoap {
 					name, start, end, orderByComparator);
 
 			return com.liferay.modern.site.building.fragment.model.MSBFragmentCollectionSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getMSBFragmentCollectionsCount(long groupId)
+		throws RemoteException {
+		try {
+			int returnValue = MSBFragmentCollectionServiceUtil.getMSBFragmentCollectionsCount(groupId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getMSBFragmentCollectionsCount(long groupId,
+		java.lang.String name) throws RemoteException {
+		try {
+			int returnValue = MSBFragmentCollectionServiceUtil.getMSBFragmentCollectionsCount(groupId,
+					name);
+
+			return returnValue;
 		}
 		catch (Exception e) {
 			_log.error(e, e);

@@ -74,10 +74,10 @@ public class MSBFragmentEntryServiceUtil {
 		return getService().fetchMSBFragmentEntry(msbFragmentEntryId);
 	}
 
-	public static int getGroupMSBFragmentCollectionsCount(
+	public static int getMSBFragmentCollectionsCount(
 		long msbFragmentCollectionId) {
 		return getService()
-				   .getGroupMSBFragmentCollectionsCount(msbFragmentCollectionId);
+				   .getMSBFragmentCollectionsCount(msbFragmentCollectionId);
 	}
 
 	public static java.util.List<com.liferay.modern.site.building.fragment.model.MSBFragmentEntry> getMSBFragmentEntries(

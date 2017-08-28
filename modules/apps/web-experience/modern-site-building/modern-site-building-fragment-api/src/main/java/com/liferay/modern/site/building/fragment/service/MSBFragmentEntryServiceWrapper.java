@@ -71,8 +71,8 @@ public class MSBFragmentEntryServiceWrapper implements MSBFragmentEntryService,
 	}
 
 	@Override
-	public int getGroupMSBFragmentCollectionsCount(long msbFragmentCollectionId) {
-		return _msbFragmentEntryService.getGroupMSBFragmentCollectionsCount(msbFragmentCollectionId);
+	public int getMSBFragmentCollectionsCount(long msbFragmentCollectionId) {
+		return _msbFragmentEntryService.getMSBFragmentCollectionsCount(msbFragmentCollectionId);
 	}
 
 	@Override

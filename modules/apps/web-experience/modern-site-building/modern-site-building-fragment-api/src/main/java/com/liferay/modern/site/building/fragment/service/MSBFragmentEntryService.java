@@ -75,7 +75,7 @@ public interface MSBFragmentEntryService extends BaseService {
 	public MSBFragmentEntry fetchMSBFragmentEntry(long msbFragmentEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupMSBFragmentCollectionsCount(long msbFragmentCollectionId);
+	public int getMSBFragmentCollectionsCount(long msbFragmentCollectionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MSBFragmentEntry> getMSBFragmentEntries(

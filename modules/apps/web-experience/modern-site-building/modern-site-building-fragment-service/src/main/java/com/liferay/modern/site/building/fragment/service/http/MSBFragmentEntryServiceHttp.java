@@ -217,12 +217,12 @@ public class MSBFragmentEntryServiceHttp {
 		}
 	}
 
-	public static int getGroupMSBFragmentCollectionsCount(
+	public static int getMSBFragmentCollectionsCount(
 		HttpPrincipal httpPrincipal, long msbFragmentCollectionId) {
 		try {
 			MethodKey methodKey = new MethodKey(MSBFragmentEntryServiceUtil.class,
-					"getGroupMSBFragmentCollectionsCount",
-					_getGroupMSBFragmentCollectionsCountParameterTypes5);
+					"getMSBFragmentCollectionsCount",
+					_getMSBFragmentCollectionsCountParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					msbFragmentCollectionId);
@@ -398,7 +398,7 @@ public class MSBFragmentEntryServiceHttp {
 	private static final Class<?>[] _fetchMSBFragmentEntryParameterTypes4 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getGroupMSBFragmentCollectionsCountParameterTypes5 =
+	private static final Class<?>[] _getMSBFragmentCollectionsCountParameterTypes5 =
 		new Class[] { long.class };
 	private static final Class<?>[] _getMSBFragmentEntriesParameterTypes6 = new Class[] {
 			long.class, int.class, int.class

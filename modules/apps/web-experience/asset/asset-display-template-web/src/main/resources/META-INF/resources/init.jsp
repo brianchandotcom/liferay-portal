@@ -25,7 +25,8 @@ taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.asset.display.template.web.internal.constants.AssetDisplayTemplateWebKeys" %><%@
+<%@ page import="com.liferay.asset.display.template.service.permission.AssetDisplayTemplatePermission" %><%@
+page import="com.liferay.asset.display.template.web.internal.constants.AssetDisplayTemplateWebKeys" %><%@
 page import="com.liferay.asset.display.template.web.internal.display.context.AssetDisplayTemplateDisplayContext" %>
 
 <liferay-frontend:defineObjects />

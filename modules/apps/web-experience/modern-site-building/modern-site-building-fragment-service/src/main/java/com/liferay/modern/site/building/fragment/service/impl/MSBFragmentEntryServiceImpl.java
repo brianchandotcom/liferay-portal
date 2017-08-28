@@ -110,9 +110,7 @@ public class MSBFragmentEntryServiceImpl
 	}
 
 	@Override
-	public int getGroupMSBFragmentCollectionsCount(
-		long msbFragmentCollectionId) {
-
+	public int getMSBFragmentCollectionsCount(long msbFragmentCollectionId) {
 		return msbFragmentEntryPersistence.countByMSBFragmentCollectionId(
 			msbFragmentCollectionId);
 	}

@@ -115,8 +115,8 @@ public class MSBFragmentCollectionServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		int originalFragmentCollectionsCount =
-			MSBFragmentCollectionServiceUtil.
-				getGroupMSBFragmentCollectionsCount(_group.getGroupId());
+			MSBFragmentCollectionServiceUtil.getMSBFragmentCollectionsCount(
+				_group.getGroupId());
 
 		MSBFragmentCollectionServiceUtil.addMSBFragmentCollection(
 			_group.getGroupId(), "Fragment Collection 1", StringPool.BLANK,
@@ -127,8 +127,8 @@ public class MSBFragmentCollectionServiceTest {
 			serviceContext);
 
 		int actualFragmentCollectionsCount =
-			MSBFragmentCollectionServiceUtil.
-				getGroupMSBFragmentCollectionsCount(_group.getGroupId());
+			MSBFragmentCollectionServiceUtil.getMSBFragmentCollectionsCount(
+				_group.getGroupId());
 
 		Assert.assertEquals(
 			originalFragmentCollectionsCount + 2,

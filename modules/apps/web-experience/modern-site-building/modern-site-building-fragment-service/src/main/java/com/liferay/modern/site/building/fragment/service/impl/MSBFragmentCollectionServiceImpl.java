@@ -113,11 +113,6 @@ public class MSBFragmentCollectionServiceImpl
 	}
 
 	@Override
-	public int getGroupMSBFragmentCollectionsCount(long groupId) {
-		return msbFragmentCollectionPersistence.filterCountByGroupId(groupId);
-	}
-
-	@Override
 	public List<MSBFragmentCollection> getMSBFragmentCollections(
 			long groupId, int start, int end)
 		throws PortalException {
@@ -144,6 +139,11 @@ public class MSBFragmentCollectionServiceImpl
 
 		return msbFragmentCollectionPersistence.filterFindByG_LikeN(
 			groupId, name, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getMSBFragmentCollectionsCount(long groupId) {
+		return msbFragmentCollectionPersistence.filterCountByGroupId(groupId);
 	}
 
 	@Override

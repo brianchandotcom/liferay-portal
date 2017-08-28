@@ -96,8 +96,12 @@ public interface JournalServiceConfiguration {
 	)
 	public boolean expireAllArticleVersionsEnabled();
 
+	/**
+	 * @deprecated As of 4.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Meta.AD(
-		deflt = "false", description = "journal-article-view-permission-check",
+		deflt = "true", description = "journal-article-view-permission-check",
 		required = false
 	)
 	public boolean articleViewPermissionsCheckEnabled();

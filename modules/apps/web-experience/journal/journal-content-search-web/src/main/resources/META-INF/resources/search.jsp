@@ -36,44 +36,6 @@ PortletURL portletURL = PortletURLUtil.getCurrent(renderRequest, renderResponse)
 
 request.setAttribute("search.jsp-portletURL", portletURL);
 request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack());
-
-String defaultKeywords = LanguageUtil.get(request, "search") + StringPool.TRIPLE_PERIOD;
-
-String keywords = StringUtil.unquote(ParamUtil.getString(request, "keywords", defaultKeywords));
-
-PortletURL renderURL = renderResponse.createRenderURL();
-
-renderURL.setParameter("mvcPath", "/search.jsp");
-renderURL.setParameter("keywords", keywords);
-
-SearchContainer journalContentSearch = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, renderURL, null, LanguageUtil.format(request, "no-pages-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>", false));
-
-Indexer<JournalArticle> indexer = IndexerRegistryUtil.getIndexer(JournalArticle.class);
-
-SearchContext searchContext = SearchContextFactory.getInstance(request);
-
-searchContext.setGroupIds(null);
-searchContext.setKeywords(keywords);
-
-QueryConfig queryConfig = searchContext.getQueryConfig();
-
-queryConfig.setHighlightEnabled(journalContentSearchPortletInstanceConfiguration.enableHighlighting());
-
-Hits hits = indexer.search(searchContext);
-
-String[] queryTerms = hits.getQueryTerms();
-
-ContentHits contentHits = new ContentHits();
-
-contentHits.setShowListed(journalContentSearchPortletInstanceConfiguration.showListed());
-
-contentHits.recordHits(hits, layout.getGroupId(), layout.isPrivateLayout(), journalContentSearch.getStart(), journalContentSearch.getEnd());
-
-journalContentSearch.setTotal(hits.getLength());
-
-List documents = ListUtil.toList(hits.getDocs());
-
-journalContentSearch.setResults(documents);
 %>
 
 <portlet:renderURL var="searchURL">
@@ -88,11 +50,11 @@ journalContentSearch.setResults(documents);
 	</div>
 
 	<div class="search-results">
-		<liferay-ui:search-speed hits="<%= hits %>" searchContainer="<%= journalContentSearch %>" />
+		<liferay-ui:search-speed hits="<%= journalContentSearchDisplayContext.getHits() %>" searchContainer="<%= journalContentSearchDisplayContext.getSearchContainer() %>" />
 	</div>
 
 	<liferay-ui:search-container
-		searchContainer="<%= journalContentSearch %>"
+		searchContainer="<%= journalContentSearchDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.search.Document"
@@ -101,10 +63,7 @@ journalContentSearch.setResults(documents);
 		>
 
 			<%
-			Summary summary = indexer.getSummary(document, StringPool.BLANK, renderRequest, renderResponse);
-
-			summary.setHighlight(PropsValues.INDEX_SEARCH_HIGHLIGHT_ENABLED);
-			summary.setQueryTerms(queryTerms);
+			Summary summary = journalContentSearchDisplayContext.getSummary(document);
 			%>
 
 			<liferay-ui:search-container-column-icon
@@ -115,7 +74,7 @@ journalContentSearch.setResults(documents);
 				colspan="<%= 2 %>"
 			>
 				<h5>
-					<%= summary.getHighlightedTitle() %>
+					<%= summary.getTitle() %>
 				</h5>
 
 				<%

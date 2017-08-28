@@ -1,6 +1,6 @@
 # Liferay Journal
 
-*Journal* is a module for Liferay 7.0 that allows non-technical users to publish content to a Liferay site without having advanced knowledge of web technology or programming of any sort.
+*Journal* is a module for Liferay 7.0. The Journal is part of Liferay's Web Experience Management which provides a full enterprise solution for web publishing and allows non-technical users to publish content to a Liferay site without having advanced knowledge of web technology or programming.
 
 Liferay Journal is part of the Liferay Portal project.
 [Liferay Portal]
@@ -12,14 +12,25 @@ development project in 2000 and was open sourced in 2001.
 To get started, check out the project's community homepage at
 [http://liferay.org](http://liferay.org)!
 
-### Documentation
+### Liferay Developer Network
 
-Take a look at the [Liferay Portal User Guide](https://dev.liferay.com/discover/portal)
-for information about using Liferay Portal.
+The [Liferay Developer Network](https://dev.liferay.com) \(LDN\) at
+<http://dev.liferay.com>, is the best place to learn about Liferay. It has over
+200 tutorials, guided learning, and much more.
 
-For more information about how to use Journal, read the [Creating Web Content]
-(https://dev.liferay.com/discover/portal/-/knowledge_base/7-0/creating-web-content)
-section.
+LDN's [Learning Paths](https://dev.liferay.com/develop/learning-paths) are a
+great place to learn how to develop on Liferay, especially if you're new to
+Liferay development. As you gain experience developing on Liferay, you'll want
+to dive into [Tutorials](https://dev.liferay.com/develop/tutorials) for details
+on leveraging Liferay's technologies and frameworks. If you create apps that you
+want to share or sell, you can read LDN's
+[Distribute](https://dev.liferay.com/distribute) section to learn how to publish
+the apps to the Liferay Marketplace.
+
+The Liferay Developer Network is not only your home for Liferay development, but
+it's also your place to [participate](https://dev.liferay.com/participate) in
+making Liferay better. Come check out the [Liferay Developer
+Network](https://dev.liferay.com).
 
 ### Contributing
 

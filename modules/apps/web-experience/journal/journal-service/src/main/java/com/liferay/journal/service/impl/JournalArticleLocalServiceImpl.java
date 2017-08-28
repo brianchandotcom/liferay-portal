@@ -5027,8 +5027,8 @@ public class JournalArticleLocalServiceImpl
 	 * Subscribes the user to changes in elements that belong to the web content
 	 * article.
 	 *
-	 * @param groupId the primary key of the folder's group
 	 * @param userId the primary key of the user to be subscribed
+	 * @param groupId the primary key of the folder's group
 	 * @param articleId the primary key of the article to subscribe to
 	 */
 	@Override
@@ -5060,8 +5060,8 @@ public class JournalArticleLocalServiceImpl
 	 * Unsubscribes the user from changes in elements that belong to the web
 	 * content article.
 	 *
-	 * @param groupId the primary key of the folder's group
 	 * @param userId the primary key of the user to be subscribed
+	 * @param groupId the primary key of the folder's group
 	 * @param articleId the primary key of the article to unsubscribe from
 	 */
 	@Override
@@ -6391,12 +6391,10 @@ public class JournalArticleLocalServiceImpl
 			}
 		}
 
-		QueryConfig queryConfig = new QueryConfig();
+		QueryConfig queryConfig = searchContext.getQueryConfig();
 
 		queryConfig.setHighlightEnabled(false);
 		queryConfig.setScoreEnabled(false);
-
-		searchContext.setQueryConfig(queryConfig);
 
 		if (sort != null) {
 			searchContext.setSorts(sort);

@@ -48,6 +48,8 @@ public class JournalArticleDescriptionEditorConfigContributor
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 		jsonObject.put(
+			"allowedContent", "p br strong i ol ul li u link pre em a");
+		jsonObject.put(
 			"toolbars", getToolbarsJSONObject(themeDisplay.getLocale()));
 	}
 

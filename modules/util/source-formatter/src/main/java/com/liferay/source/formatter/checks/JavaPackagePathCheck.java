@@ -15,8 +15,11 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.BNDSettings;
+import com.liferay.source.formatter.checks.util.BNDSourceUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
 /**
@@ -26,22 +29,66 @@ public class JavaPackagePathCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-		String fileName, String absolutePath, String content) {
+			String fileName, String absolutePath, String content)
+		throws Exception {
 
-		_checkPackagePath(fileName, content);
-
-		return content;
-	}
-
-	private void _checkPackagePath(String fileName, String content) {
 		String packagePath = JavaSourceUtil.getPackagePath(content);
 
 		if (Validator.isNull(packagePath)) {
 			addMessage(fileName, "Missing package");
 
+			return content;
+		}
+
+		_checkPackagePath(fileName, packagePath);
+
+		if (isModulesFile(absolutePath)) {
+			_checkModulePackagePath(fileName, packagePath);
+		}
+
+		return content;
+	}
+
+	private void _checkModulePackagePath(String fileName, String packagePath)
+		throws Exception {
+
+		if (!packagePath.startsWith("com.liferay")) {
 			return;
 		}
 
+		BNDSettings bndSettings = getBNDSettings(fileName);
+
+		if (bndSettings == null) {
+			return;
+		}
+
+		String bundleSymbolicName = BNDSourceUtil.getDefinitionValue(
+			bndSettings.getContent(), "Bundle-SymbolicName");
+
+		if (!bundleSymbolicName.startsWith("com.liferay")) {
+			return;
+		}
+
+		bundleSymbolicName = bundleSymbolicName.replaceAll(
+			"\\.(api|service|test)$", StringPool.BLANK);
+
+		if (packagePath.contains(bundleSymbolicName)) {
+			return;
+		}
+
+		bundleSymbolicName = bundleSymbolicName.replaceAll(
+			"\\.impl$", ".internal");
+
+		if (!packagePath.contains(bundleSymbolicName)) {
+			addMessage(
+				fileName,
+				"Package should follow Bundle-SymbolicName specified in " +
+					bndSettings.getFileName(),
+				"package.markdown");
+		}
+	}
+
+	private void _checkPackagePath(String fileName, String packagePath) {
 		int pos = fileName.lastIndexOf(CharPool.SLASH);
 
 		String filePath = StringUtil.replace(

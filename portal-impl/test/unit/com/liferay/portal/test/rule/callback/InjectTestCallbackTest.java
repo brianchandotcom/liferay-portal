@@ -42,7 +42,7 @@ public class InjectTestCallbackTest {
 	@Test
 	public void testInjectBaseTestCase() throws Exception {
 		Description description = Description.createTestDescription(
-			TestCase.class, TestCase.class.getName());
+			TestCase1.class, TestCase1.class.getName());
 
 		Service1 service1 = new Service1();
 		Service2 service2 = new Service2();
@@ -53,41 +53,41 @@ public class InjectTestCallbackTest {
 
 		registry.registerService(Service2.class, service2);
 
-		TestCase testCase = new TestCase();
+		TestCase1 testCase1 = new TestCase1();
 
-		Assert.assertNull(TestCase.getService1());
-		Assert.assertNull(testCase.getService2());
+		Assert.assertNull(TestCase1.getService1());
+		Assert.assertNull(testCase1.getService2());
 
 		InjectTestBag classInjectTestBag =
 			InjectTestCallback.INSTANCE.beforeClass(description);
 
-		Assert.assertSame(service1, TestCase.getService1());
-		Assert.assertNull(testCase.getService2());
+		Assert.assertSame(service1, TestCase1.getService1());
+		Assert.assertNull(testCase1.getService2());
 
 		InjectTestBag methodInjectTestBag =
-			InjectTestCallback.INSTANCE.beforeMethod(description, testCase);
+			InjectTestCallback.INSTANCE.beforeMethod(description, testCase1);
 
-		Assert.assertSame(service1, TestCase.getService1());
-		Assert.assertSame(service2, testCase.getService2());
+		Assert.assertSame(service1, TestCase1.getService1());
+		Assert.assertSame(service2, testCase1.getService2());
 
 		InjectTestCallback.INSTANCE.afterMethod(
-			description, methodInjectTestBag, testCase);
+			description, methodInjectTestBag, testCase1);
 
-		Assert.assertSame(service1, TestCase.getService1());
-		Assert.assertNull(testCase.getService2());
+		Assert.assertSame(service1, TestCase1.getService1());
+		Assert.assertNull(testCase1.getService2());
 
 		InjectTestCallback.INSTANCE.afterClass(description, classInjectTestBag);
 
-		Assert.assertNull(TestCase.getService1());
-		Assert.assertNull(testCase.getService2());
+		Assert.assertNull(TestCase1.getService1());
+		Assert.assertNull(testCase1.getService2());
 	}
 
 	@Test
 	public void testInjectBlockingStaticWithoutFilter() throws Exception {
 		Description description = Description.createTestDescription(
-			TestClass.class, TestClass.class.getName());
+			TestCase2.class, TestCase2.class.getName());
 
-		Assert.assertNull(TestClass._service1);
+		Assert.assertNull(TestCase2._service1);
 
 		Thread mainThread = Thread.currentThread();
 
@@ -97,7 +97,7 @@ public class InjectTestCallbackTest {
 			() -> {
 				while (true) {
 					if (mainThread.getState() == Thread.State.TIMED_WAITING) {
-						Assert.assertNull(TestClass._service1);
+						Assert.assertNull(TestCase2._service1);
 
 						Registry registry = RegistryUtil.getRegistry();
 
@@ -115,7 +115,7 @@ public class InjectTestCallbackTest {
 
 		watchingThread.join();
 
-		Assert.assertSame(service1, TestClass._service1);
+		Assert.assertSame(service1, TestCase2._service1);
 
 		AtomicBoolean ungetServiceCalled = new AtomicBoolean();
 
@@ -135,7 +135,7 @@ public class InjectTestCallbackTest {
 
 		InjectTestCallback.INSTANCE.afterClass(description, injectTestBag);
 
-		Assert.assertNull(TestClass._service1);
+		Assert.assertNull(TestCase2._service1);
 
 		Assert.assertTrue(ungetServiceCalled.get());
 	}
@@ -143,14 +143,14 @@ public class InjectTestCallbackTest {
 	@Test
 	public void testInjectNonBlockingNonStaticWithFilter() throws Exception {
 		Description description = Description.createTestDescription(
-			TestClass.class, TestClass.class.getName());
+			TestCase2.class, TestCase2.class.getName());
 
-		TestClass testClass = new TestClass();
+		TestCase2 testCase2 = new TestCase2();
 
 		InjectTestBag injectTestBag = InjectTestCallback.INSTANCE.beforeMethod(
-			description, testClass);
+			description, testCase2);
 
-		Assert.assertNull(testClass._service2);
+		Assert.assertNull(testCase2._service2);
 
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -160,7 +160,7 @@ public class InjectTestCallbackTest {
 
 		injectTestBag.injectFields();
 
-		Assert.assertNull(testClass._service2);
+		Assert.assertNull(testCase2._service2);
 
 		Service3 service3a = new Service3();
 
@@ -168,7 +168,7 @@ public class InjectTestCallbackTest {
 
 		injectTestBag.injectFields();
 
-		Assert.assertNull(testClass._service2);
+		Assert.assertNull(testCase2._service2);
 
 		Service3 service3b = new Service3();
 
@@ -180,15 +180,15 @@ public class InjectTestCallbackTest {
 
 		injectTestBag.injectFields();
 
-		Assert.assertSame(service3b, testClass._service2);
+		Assert.assertSame(service3b, testCase2._service2);
 
-		Assert.assertNull(TestClass._service1);
-		Assert.assertNull(testClass._service3);
+		Assert.assertNull(TestCase2._service1);
+		Assert.assertNull(testCase2._service3);
 
 		InjectTestCallback.INSTANCE.afterMethod(
-			description, injectTestBag, testClass);
+			description, injectTestBag, testCase2);
 
-		Assert.assertNull(testClass._service2);
+		Assert.assertNull(testCase2._service2);
 	}
 
 	private static class BaseTestCase {
@@ -209,10 +209,10 @@ public class InjectTestCallbackTest {
 
 	}
 
-	private static class TestCase extends BaseTestCase {
+	private static class TestCase1 extends BaseTestCase {
 	}
 
-	private static class TestClass {
+	private static class TestCase2 {
 
 		@Inject
 		private static Service1 _service1;

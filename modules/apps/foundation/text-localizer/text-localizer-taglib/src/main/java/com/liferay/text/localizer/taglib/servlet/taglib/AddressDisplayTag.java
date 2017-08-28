@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
-import com.liferay.text.localizer.address.util.AddressTextLocalizerHelper;
+import com.liferay.text.localizer.address.util.AddressTextLocalizerUtil;
 
 import java.io.IOException;
 
@@ -52,7 +52,7 @@ public class AddressDisplayTag extends ParamAndPropertyAncestorTagImpl {
 	}
 
 	private String _getFormattedAddress() {
-		return AddressTextLocalizerHelper.format(_address);
+		return AddressTextLocalizerUtil.format(_address);
 	}
 
 	private Address _address;

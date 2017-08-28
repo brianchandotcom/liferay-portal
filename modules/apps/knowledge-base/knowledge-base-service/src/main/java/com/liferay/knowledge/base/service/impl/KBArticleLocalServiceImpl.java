@@ -1748,7 +1748,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	}
 
 	protected String normalizeUrlTitle(String urlTitle) {
-		if (urlTitle == null) {
+		if (Validator.isNull(urlTitle)) {
 			return null;
 		}
 

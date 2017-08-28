@@ -19,7 +19,6 @@ package com.liferay.asset.display.template.web.internal.constants;
  */
 public class AssetDisplayTemplateWebKeys {
 
-	public static final String DISPLAY_CONTEXT =
-		"ASSET_DISPLAY_TEMPLATE_DISPLAY_CONTEXT";
+	public static final String DISPLAY_CONTEXT = "DISPLAY_CONTEXT";
 
 }

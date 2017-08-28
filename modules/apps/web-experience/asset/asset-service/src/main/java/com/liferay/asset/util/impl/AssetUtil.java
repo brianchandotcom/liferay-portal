@@ -77,7 +77,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 import com.liferay.portlet.asset.service.permission.AssetVocabularyPermission;
-import com.liferay.portlet.asset.util.AssetPublisherAddItemHolder;
 import com.liferay.portlet.asset.util.AssetSearcher;
 
 import java.io.Serializable;

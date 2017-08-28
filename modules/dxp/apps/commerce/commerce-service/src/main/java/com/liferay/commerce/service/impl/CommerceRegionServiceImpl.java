@@ -72,6 +72,14 @@ public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 
 	@Override
 	public List<CommerceRegion> getCommerceRegions(
+		long commerceCountryId, boolean active) {
+
+		return commerceRegionLocalService.getCommerceRegions(
+			commerceCountryId, active);
+	}
+
+	@Override
+	public List<CommerceRegion> getCommerceRegions(
 		long commerceCountryId, boolean active, int start, int end,
 		OrderByComparator<CommerceRegion> orderByComparator) {
 

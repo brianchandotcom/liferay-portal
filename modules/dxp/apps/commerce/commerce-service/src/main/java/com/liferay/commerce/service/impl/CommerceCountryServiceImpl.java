@@ -67,6 +67,14 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 
 	@Override
 	public List<CommerceCountry> getCommerceCountries(
+		long groupId, boolean active) {
+
+		return commerceCountryLocalService.getCommerceCountries(
+			groupId, active);
+	}
+
+	@Override
+	public List<CommerceCountry> getCommerceCountries(
 		long groupId, boolean active, int start, int end,
 		OrderByComparator<CommerceCountry> orderByComparator) {
 

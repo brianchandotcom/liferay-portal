@@ -98,6 +98,13 @@ public class CommerceRegionLocalServiceImpl
 
 	@Override
 	public List<CommerceRegion> getCommerceRegions(
+		long commerceCountryId, boolean active) {
+
+		return commerceRegionPersistence.findByC_A(commerceCountryId, active);
+	}
+
+	@Override
+	public List<CommerceRegion> getCommerceRegions(
 		long commerceCountryId, boolean active, int start, int end,
 		OrderByComparator<CommerceRegion> orderByComparator) {
 

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.MembershipRequestConstants;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.ldap.LDAPSettings;
 import com.liferay.portal.kernel.service.MembershipRequestLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -132,7 +133,14 @@ public class UserModelListener extends BaseModelListener<User> {
 
 		};
 
-		TransactionCommitCallbackUtil.registerCallback(callable);
+		if (_ldapSettings.isPasswordPolicyEnabled(user.getCompanyId()) &&
+			user.isPasswordModified()) {
+
+			callable.call();
+		}
+		else {
+			TransactionCommitCallbackUtil.registerCallback(callable);
+		}
 	}
 
 	protected void updateMembershipRequestStatus(long userId, long groupId)
@@ -159,6 +167,9 @@ public class UserModelListener extends BaseModelListener<User> {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserModelListener.class);
+
+	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	private LDAPSettings _ldapSettings;
 
 	@Reference
 	private MembershipRequestLocalService _membershipRequestLocalService;

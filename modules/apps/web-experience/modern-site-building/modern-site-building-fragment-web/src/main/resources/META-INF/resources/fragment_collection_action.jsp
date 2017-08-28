@@ -25,7 +25,7 @@ MSBFragmentCollection msbFragmentCollection = (MSBFragmentCollection)row.getObje
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= MSBFragmentCollectionPermission.contains(permissionChecker, msbFragmentCollection, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editMSBFragmentCollectionURL">
-			<portlet:param name="mvcPath" value="/edit_msbfragment_collection.jsp" />
+			<portlet:param name="mvcPath" value="/edit_fragment_collection.jsp" />
 			<portlet:param name="msbFragmentCollectionId" value="<%= String.valueOf(msbFragmentCollection.getMsbFragmentCollectionId()) %>" />
 		</portlet:renderURL>
 

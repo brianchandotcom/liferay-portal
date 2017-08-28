@@ -26,7 +26,7 @@ renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentCollectionTitle(
 %>
 
 <portlet:actionURL name="editMSBFragmentCollection" var="editMSBFragmentCollectionURL">
-	<portlet:param name="mvcPath" value="/edit_msbfragment_collection.jsp" />
+	<portlet:param name="mvcPath" value="/edit_fragment_collection.jsp" />
 </portlet:actionURL>
 
 <aui:form action="<%= editMSBFragmentCollectionURL %>" cssClass="container-fluid-1280" name="fm">

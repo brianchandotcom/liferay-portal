@@ -81,6 +81,7 @@ boolean hasManageCommerceCountriesPermission = CommercePermission.contains(permi
 
 				rowURL.setParameter("mvcRenderCommandName", "editCommerceRegion");
 				rowURL.setParameter("redirect", currentURL);
+				rowURL.setParameter("commerceCountryId", String.valueOf(commerceRegion.getCommerceCountryId()));
 				rowURL.setParameter("commerceRegionId", String.valueOf(commerceRegion.getCommerceRegionId()));
 				%>
 

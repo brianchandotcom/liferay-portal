@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -79,6 +80,13 @@ public abstract class BaseCommerceCountriesDisplayContext<T> {
 
 		portletURL.setParameter(
 			"commerceAdminModuleKey", CountriesCommerceAdminModule.KEY);
+
+		String delta = ParamUtil.getString(renderRequest, "delta");
+
+		if (Validator.isNotNull(delta)) {
+			portletURL.setParameter("delta", delta);
+		}
+
 		portletURL.setParameter("navigation", getNavigation());
 		portletURL.setParameter("orderByCol", getOrderByCol());
 		portletURL.setParameter("orderByType", getOrderByType());

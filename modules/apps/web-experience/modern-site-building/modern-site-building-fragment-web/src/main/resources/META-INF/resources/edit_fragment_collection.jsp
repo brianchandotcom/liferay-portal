@@ -40,9 +40,7 @@ renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentCollectionTitle(
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<aui:input autoFocus="<%= true %>" label="name" name="name" placeholder="name">
-				<aui:validator errorMessage="please-enter-a-valid-name" name="required" />
-			</aui:input>
+			<aui:input autoFocus="<%= true %>" label="name" name="name" placeholder="name" />
 
 			<aui:input name="description" placeholder="description" />
 		</aui:fieldset>

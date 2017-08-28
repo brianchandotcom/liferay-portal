@@ -15,6 +15,7 @@
 package com.liferay.portal.test.rule.callback;
 
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.registry.Registry;
@@ -48,15 +49,11 @@ public class InjectTestBag {
 		_target = target;
 
 		while (testClass != Object.class) {
-			for (Field field : testClass.getDeclaredFields()) {
+			for (Field field : ReflectionUtil.getDeclaredFields(testClass)) {
 				boolean staticField = Modifier.isStatic(field.getModifiers());
 
 				if (((_target == null) == staticField) &&
 					field.isAnnotationPresent(Inject.class)) {
-
-					if (!field.isAccessible()) {
-						field.setAccessible(true);
-					}
 
 					_fields.add(field);
 				}

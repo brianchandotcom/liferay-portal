@@ -219,10 +219,10 @@ public class InjectTestCallbackTest {
 		}
 
 		@Inject
-		private static Service1 _service1;
+		private static final Service1 _service1 = null;
 
 		@Inject
-		private Service2 _service2;
+		private final Service2 _service2 = null;
 
 	}
 
@@ -238,7 +238,7 @@ public class InjectTestCallbackTest {
 			blocking = false, filter = "inject.test.rule.test=true",
 			type = Service3.class
 		)
-		private Service2 _service2;
+		private final Service2 _service2 = null;
 
 		private final Service3 _service3 = null;
 

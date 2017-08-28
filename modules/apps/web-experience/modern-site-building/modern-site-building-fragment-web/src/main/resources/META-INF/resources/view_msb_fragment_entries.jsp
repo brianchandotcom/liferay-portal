@@ -35,6 +35,20 @@ renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentCollectionTitle(
 			selectedDisplayStyle="<%= msbFragmentDisplayContext.getDisplayStyle() %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
+
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= currentURLObj %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= msbFragmentDisplayContext.getOrderByCol() %>"
+			orderByType="<%= msbFragmentDisplayContext.getOrderByType() %>"
+			orderColumns="<%= msbFragmentDisplayContext.getOrderColumns() %>"
+			portletURL="<%= currentURLObj %>"
+		/>
+	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 
 <aui:form action="<%= currentURL %>" cssClass="container-fluid-1280" name="fm">

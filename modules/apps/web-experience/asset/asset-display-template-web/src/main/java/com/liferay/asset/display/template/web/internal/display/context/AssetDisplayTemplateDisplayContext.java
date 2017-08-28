@@ -17,7 +17,6 @@ package com.liferay.asset.display.template.web.internal.display.context;
 import com.liferay.asset.display.template.constants.AssetDisplayTemplatePortletKeys;
 import com.liferay.asset.display.template.model.AssetDisplayTemplate;
 import com.liferay.asset.display.template.service.AssetDisplayTemplateLocalServiceUtil;
-import com.liferay.asset.display.template.service.permission.AssetDisplayTemplatePermission;
 import com.liferay.asset.display.template.util.comparator.AssetDisplayTemplateClassNameIdComparator;
 import com.liferay.asset.display.template.util.comparator.AssetDisplayTemplateCreateDateComparator;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
@@ -27,7 +26,6 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -190,20 +188,6 @@ public class AssetDisplayTemplateDisplayContext {
 		_searchContainer = searchContainer;
 
 		return _searchContainer;
-	}
-
-	public boolean hasPermission(
-			AssetDisplayTemplate assetDisplayTemplate, String actionId)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		return AssetDisplayTemplatePermission.contains(
-			permissionChecker, assetDisplayTemplate, actionId);
 	}
 
 	public boolean isDisabledManagementBar() throws PortalException {

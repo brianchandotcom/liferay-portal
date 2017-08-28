@@ -14,9 +14,11 @@
 
 package com.liferay.asset.display.template.web.internal.display.context;
 
+import com.liferay.asset.display.template.constants.AssetDisplayTemplateActionKeys;
 import com.liferay.asset.display.template.constants.AssetDisplayTemplatePortletKeys;
 import com.liferay.asset.display.template.model.AssetDisplayTemplate;
 import com.liferay.asset.display.template.service.AssetDisplayTemplateLocalServiceUtil;
+import com.liferay.asset.display.template.service.permission.AssetDisplayPermission;
 import com.liferay.asset.display.template.util.comparator.AssetDisplayTemplateClassNameIdComparator;
 import com.liferay.asset.display.template.util.comparator.AssetDisplayTemplateCreateDateComparator;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
@@ -189,7 +191,20 @@ public class AssetDisplayTemplateDisplayContext {
 	}
 
 	public boolean isShowAddButton() {
-		return true;
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (AssetDisplayPermission.contains(
+				themeDisplay.getPermissionChecker(),
+				AssetDisplayPermission.RESOURCE_NAME,
+				AssetDisplayTemplatePortletKeys.ASSET_DISPLAY_TEMPLATE,
+				themeDisplay.getSiteGroupId(),
+				AssetDisplayTemplateActionKeys.ADD_ASSET_DISPLAY_TEMPLATE)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isShowSearch() {

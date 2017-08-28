@@ -71,9 +71,6 @@ public interface MSBFragmentCollectionService extends BaseService {
 		long msbFragmentCollectionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupMSBFragmentCollectionsCount(long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MSBFragmentCollection> getMSBFragmentCollections(long groupId,
 		int start, int end) throws PortalException;
 
@@ -88,6 +85,13 @@ public interface MSBFragmentCollectionService extends BaseService {
 		java.lang.String name, int start, int end,
 		OrderByComparator<MSBFragmentCollection> orderByComparator)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getMSBFragmentCollectionsCount(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getMSBFragmentCollectionsCount(long groupId,
+		java.lang.String name);
 
 	/**
 	* Returns the OSGi service identifier.

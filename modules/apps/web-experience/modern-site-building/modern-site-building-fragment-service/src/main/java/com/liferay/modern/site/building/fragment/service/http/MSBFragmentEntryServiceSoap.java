@@ -144,10 +144,10 @@ public class MSBFragmentEntryServiceSoap {
 		}
 	}
 
-	public static int getGroupMSBFragmentCollectionsCount(
+	public static int getMSBFragmentCollectionsCount(
 		long msbFragmentCollectionId) throws RemoteException {
 		try {
-			int returnValue = MSBFragmentEntryServiceUtil.getGroupMSBFragmentCollectionsCount(msbFragmentCollectionId);
+			int returnValue = MSBFragmentEntryServiceUtil.getMSBFragmentCollectionsCount(msbFragmentCollectionId);
 
 			return returnValue;
 		}

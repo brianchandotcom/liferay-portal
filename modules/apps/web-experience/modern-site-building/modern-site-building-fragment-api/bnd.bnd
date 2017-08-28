@@ -6,6 +6,7 @@ Export-Package:\
 	com.liferay.modern.site.building.fragment.exception,\
 	com.liferay.modern.site.building.fragment.model,\
 	com.liferay.modern.site.building.fragment.service,\
-	com.liferay.modern.site.building.fragment.service.persistence
+	com.liferay.modern.site.building.fragment.service.persistence,\
+	com.liferay.modern.site.building.fragment.util.comparator
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Modern Site Building

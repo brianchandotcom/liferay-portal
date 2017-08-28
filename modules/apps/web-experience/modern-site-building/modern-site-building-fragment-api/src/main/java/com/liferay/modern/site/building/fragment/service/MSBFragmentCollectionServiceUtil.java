@@ -69,10 +69,6 @@ public class MSBFragmentCollectionServiceUtil {
 		return getService().fetchMSBFragmentCollection(msbFragmentCollectionId);
 	}
 
-	public static int getGroupMSBFragmentCollectionsCount(long groupId) {
-		return getService().getGroupMSBFragmentCollectionsCount(groupId);
-	}
-
 	public static java.util.List<com.liferay.modern.site.building.fragment.model.MSBFragmentCollection> getMSBFragmentCollections(
 		long groupId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -95,6 +91,15 @@ public class MSBFragmentCollectionServiceUtil {
 		return getService()
 				   .getMSBFragmentCollections(groupId, name, start, end,
 			orderByComparator);
+	}
+
+	public static int getMSBFragmentCollectionsCount(long groupId) {
+		return getService().getMSBFragmentCollectionsCount(groupId);
+	}
+
+	public static int getMSBFragmentCollectionsCount(long groupId,
+		java.lang.String name) {
+		return getService().getMSBFragmentCollectionsCount(groupId, name);
 	}
 
 	/**

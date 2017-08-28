@@ -27,13 +27,7 @@ Map<String, RoundingType> roundingTypes = commerceCurrenciesDisplayContext.getRo
 
 String roundingTypeName = BeanParamUtil.getString(commerceCurrency, request, "roundingType");
 
-boolean defaultPrimary = false;
-
-if (primaryCommerceCurrency == null) {
-	defaultPrimary = true;
-}
-
-boolean primary = BeanParamUtil.getBoolean(commerceCurrency, request, "primary", defaultPrimary);
+boolean primary = BeanParamUtil.getBoolean(commerceCurrency, request, "primary");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);

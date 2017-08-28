@@ -55,6 +55,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 import javax.sql.DataSource;
 
@@ -1547,7 +1548,8 @@ public class TableMapperTest {
 	protected void testDestroy(TableMapper<?, ?> tableMapper) {
 		Registry registry = RegistryUtil.getRegistry();
 
-		MultiVMPool multiVMPool = registry.getService(MultiVMPool.class);
+		MultiVMPool multiVMPool = registry.callService(
+			MultiVMPool.class, Function.identity());
 
 		Map<String, PortalCache<?, ?>> portalCaches =
 			ReflectionTestUtil.getFieldValue(multiVMPool, "_portalCaches");

@@ -14,24 +14,40 @@
 
 package com.liferay.registry;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.registry.dependency.ServiceDependencyManager;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * @author Raymond Augé
  */
+@ProviderType
 public interface Registry {
+
+	public <S, R> R callService(Class<S> serviceClass, Function<S, R> function);
+
+	public <S, R> R callService(String className, Function<S, R> function);
 
 	public Filter getFilter(String filterString) throws RuntimeException;
 
 	public Registry getRegistry() throws SecurityException;
 
+	/**
+	 * @deprecated As of 1.2.0, with no direct replacement
+	 */
+	@Deprecated
 	public <T> T getService(Class<T> clazz);
 
 	public <T> T getService(ServiceReference<T> serviceReference);
 
+	/**
+	 * @deprecated As of 1.2.0, with no direct replacement
+	 */
+	@Deprecated
 	public <T> T getService(String className);
 
 	public Collection<ServiceDependencyManager> getServiceDependencyManagers();

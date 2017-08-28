@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceRegistrar;
 import com.liferay.registry.dependency.ServiceDependencyListener;
 import com.liferay.registry.dependency.ServiceDependencyManager;
@@ -66,14 +67,24 @@ public abstract class AbstractMessagingConfigurator
 				public void dependenciesFulfilled() {
 					Registry registry = RegistryUtil.getRegistry();
 
-					_messageBus = registry.getService(MessageBus.class);
+					_serviceReference = registry.getServiceReference(
+						MessageBus.class);
+
+					_messageBus = registry.getService(_serviceReference);
 
 					initialize();
 				}
 
 				@Override
 				public void destroy() {
+					if (_serviceReference != null) {
+						Registry registry = RegistryUtil.getRegistry();
+
+						registry.ungetService(_serviceReference);
+					}
 				}
+
+				private ServiceReference<MessageBus> _serviceReference;
 
 			});
 

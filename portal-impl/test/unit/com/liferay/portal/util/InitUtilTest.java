@@ -32,6 +32,7 @@ import java.nio.file.Paths;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
@@ -69,10 +70,10 @@ public class InitUtilTest {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		final MultiVMPool testMulitVMPool = registry.getService(
-			MultiVMPool.class);
-		final SingleVMPool testSingleVMPool = registry.getService(
-			SingleVMPool.class);
+		final MultiVMPool testMulitVMPool = registry.callService(
+			MultiVMPool.class, Function.identity());
+		final SingleVMPool testSingleVMPool = registry.callService(
+			SingleVMPool.class, Function.identity());
 
 		RegistryUtil.setRegistry(
 			new BasicRegistryImpl() {

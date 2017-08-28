@@ -37,15 +37,16 @@ public class CalendarUpgradeTestUtil {
 	public static UpgradeProcess getUpgradeStep(String upgradeStepClassName) {
 		Registry registry = RegistryUtil.getRegistry();
 
-		UpgradeStepRegistrator upgradeStepRegistror = registry.getService(
-			_UPGRADE_SERVICE_CLASS_NAME);
+		return registry.callService(
+			_UPGRADE_SERVICE_CLASS_NAME,
+			(UpgradeStepRegistrator upgradeStepRegistror) -> {
+				SearchRegistry searchRegistry = new SearchRegistry(
+					upgradeStepClassName);
 
-		SearchRegistry searchRegistry = new SearchRegistry(
-			upgradeStepClassName);
+				upgradeStepRegistror.register(searchRegistry);
 
-		upgradeStepRegistror.register(searchRegistry);
-
-		return searchRegistry.getUpgradeStep();
+				return searchRegistry.getUpgradeStep();
+			});
 	}
 
 	private static final String _UPGRADE_SERVICE_CLASS_NAME =

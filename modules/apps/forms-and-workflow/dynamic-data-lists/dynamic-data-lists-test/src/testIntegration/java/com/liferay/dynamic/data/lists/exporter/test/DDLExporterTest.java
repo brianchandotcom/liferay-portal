@@ -63,10 +63,9 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -120,7 +119,6 @@ public class DDLExporterTest {
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		setUpDDLExporterFactory();
 		setUpDDMFormFieldDataTypes();
 		setUpDDMFormFieldValues();
 		setUpPermissionChecker();
@@ -731,12 +729,6 @@ public class DDLExporterTest {
 		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
 	}
 
-	protected void setUpDDLExporterFactory() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_ddlExporterFactory = registry.getService(DDLExporterFactory.class);
-	}
-
 	protected Map<DDMFormFieldType, String> setUpDDMFormFieldDataTypes() {
 		_ddmFormFieldDataTypes = new HashMap<>();
 
@@ -805,8 +797,10 @@ public class DDLExporterTest {
 			});
 	}
 
+	@Inject
+	private static DDLExporterFactory _ddlExporterFactory;
+
 	private Set<Locale> _availableLocales;
-	private DDLExporterFactory _ddlExporterFactory;
 	private Map<DDMFormFieldType, String> _ddmFormFieldDataTypes;
 	private Locale _defaultLocale;
 	private Map<DDMFormFieldType, String> _fieldValues;

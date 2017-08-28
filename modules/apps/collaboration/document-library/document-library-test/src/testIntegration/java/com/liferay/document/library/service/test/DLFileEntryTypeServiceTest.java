@@ -53,10 +53,9 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -86,8 +85,6 @@ public class DLFileEntryTypeServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpDDMFormXSDDeserializer();
-
 		_group = GroupTestUtil.addGroup();
 
 		_folder = DLAppLocalServiceUtil.addFolder(
@@ -395,13 +392,6 @@ public class DLFileEntryTypeServiceTest {
 			dlFileEntryType.getPrimaryKey(), dlFileEntry.getFileEntryTypeId());
 	}
 
-	protected void setUpDDMFormXSDDeserializer() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_ddmFormXSDDeserializer = registry.getService(
-			DDMFormXSDDeserializer.class);
-	}
-
 	private long[] _getDDMStructureIds(DLFileEntryType dlFileEntryType) {
 		List<com.liferay.dynamic.data.mapping.kernel.DDMStructure>
 			ddmStructures = dlFileEntryType.getDDMStructures();
@@ -446,9 +436,11 @@ public class DLFileEntryTypeServiceTest {
 	private static final String _TEST_DDM_STRUCTURE =
 		"dependencies/ddmstructure.xml";
 
+	@Inject
+	private static DDMFormXSDDeserializer _ddmFormXSDDeserializer;
+
 	private DLFileEntryType _basicDocumentDLFileEntryType;
 	private DLFileEntryType _contractDLFileEntryType;
-	private DDMFormXSDDeserializer _ddmFormXSDDeserializer;
 	private List<DLFileEntryType> _dlFileEntryTypes;
 	private Folder _folder;
 

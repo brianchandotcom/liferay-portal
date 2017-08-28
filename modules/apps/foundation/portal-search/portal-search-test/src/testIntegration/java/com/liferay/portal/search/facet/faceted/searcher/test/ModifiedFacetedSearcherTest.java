@@ -28,14 +28,12 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.test.util.SearchMapUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.util.Collections;
 import java.util.Map;
 
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -54,16 +52,6 @@ public class ModifiedFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
-
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		_modifiedFacetFactory = registry.getService(ModifiedFacetFactory.class);
-	}
 
 	@Test
 	public void testRanges() throws Exception {
@@ -134,6 +122,7 @@ public class ModifiedFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 		return Collections.singletonMap(key, value);
 	}
 
-	private ModifiedFacetFactory _modifiedFacetFactory;
+	@Inject
+	private static ModifiedFacetFactory _modifiedFacetFactory;
 
 }

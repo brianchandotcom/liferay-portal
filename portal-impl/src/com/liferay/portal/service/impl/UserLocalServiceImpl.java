@@ -24,7 +24,6 @@ import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheMapSynchronizeUtil;
-import com.liferay.portal.kernel.cache.PortalCacheMapSynchronizeUtil.Synchronizer;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
@@ -7041,35 +7040,16 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			public void dependenciesFulfilled() {
 				Registry registry = RegistryUtil.getRegistry();
 
-				EntityCache entityCache = registry.getService(
-					EntityCache.class);
+				registry.callService(
+					EntityCache.class,
+					entityCache -> {
+						PortalCache<Serializable, Serializable> portalCache =
+							entityCache.getPortalCache(UserImpl.class);
 
-				PortalCache<Serializable, Serializable> portalCache =
-					entityCache.getPortalCache(UserImpl.class);
+						PortalCacheMapSynchronizeUtil.synchronize(
+							portalCache, _defaultUsers, _synchronizer);
 
-				PortalCacheMapSynchronizeUtil.synchronize(
-					portalCache, _defaultUsers,
-					new Synchronizer<Serializable, Serializable>() {
-
-						@Override
-						public void onSynchronize(
-							Map<? extends Serializable, ? extends Serializable>
-								map,
-							Serializable key, Serializable value,
-							int timeToLive) {
-
-							if (!(value instanceof UserCacheModel)) {
-								return;
-							}
-
-							UserCacheModel userCacheModel =
-								(UserCacheModel)value;
-
-							if (userCacheModel.defaultUser) {
-								_defaultUsers.remove(userCacheModel.companyId);
-							}
-						}
-
+						return null;
 					});
 			}
 
@@ -7078,5 +7058,28 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 
 		};
+
+	private final PortalCacheMapSynchronizeUtil.Synchronizer
+		<Serializable, Serializable> _synchronizer =
+			new PortalCacheMapSynchronizeUtil.Synchronizer
+				<Serializable, Serializable>() {
+
+				@Override
+				public void onSynchronize(
+					Map<? extends Serializable, ? extends Serializable> map,
+					Serializable key, Serializable value, int timeToLive) {
+
+					if (!(value instanceof UserCacheModel)) {
+						return;
+					}
+
+					UserCacheModel userCacheModel = (UserCacheModel)value;
+
+					if (userCacheModel.defaultUser) {
+						_defaultUsers.remove(userCacheModel.companyId);
+					}
+				}
+
+			};
 
 }

@@ -58,15 +58,12 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
 import com.liferay.portlet.documentlibrary.util.test.DLTestUtil;
-import com.liferay.registry.Filter;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 
 import java.io.ByteArrayInputStream;
 
@@ -78,7 +75,6 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -101,25 +97,10 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 			PermissionCheckerTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
 
-	@BeforeClass
-	public static void setUpClass() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		Filter filter = registry.getFilter(
-			"(&(objectClass=" + VerifyProcess.class.getName() +
-				")(verify.process.name=com.liferay.document.library.service))");
-
-		_serviceTracker = registry.trackServices(filter);
-
-		_serviceTracker.open();
-	}
-
 	@Before
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
-
-		setUpDDMFormXSDDeserializer();
 
 		_group = GroupTestUtil.addGroup();
 	}
@@ -509,19 +490,17 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 
 	@Override
 	protected VerifyProcess getVerifyProcess() {
-		return _serviceTracker.getService();
+		return _verifyProcess;
 	}
 
-	protected void setUpDDMFormXSDDeserializer() {
-		Registry registry = RegistryUtil.getRegistry();
+	@Inject
+	private static DDMFormXSDDeserializer _ddmFormXSDDeserializer;
 
-		_ddmFormXSDDeserializer = registry.getService(
-			DDMFormXSDDeserializer.class);
-	}
-
-	private static ServiceTracker<VerifyProcess, VerifyProcess> _serviceTracker;
-
-	private DDMFormXSDDeserializer _ddmFormXSDDeserializer;
+	@Inject(
+		filter = "verify.process.name=com.liferay.document.library.service",
+		type = VerifyProcess.class
+	)
+	private static VerifyProcess _verifyProcess;
 
 	@DeleteAfterTestRun
 	private Group _group;

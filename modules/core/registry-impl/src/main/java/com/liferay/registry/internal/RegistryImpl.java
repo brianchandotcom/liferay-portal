@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -50,6 +51,47 @@ public class RegistryImpl implements Registry {
 
 	public RegistryImpl(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
+	}
+
+	@Override
+	public <S, R> R callService(
+		Class<S> serviceClass, Function<S, R> function) {
+
+		org.osgi.framework.ServiceReference<S> serviceReference =
+			_bundleContext.getServiceReference(serviceClass);
+
+		if (serviceReference == null) {
+			return function.apply(null);
+		}
+
+		S service = _bundleContext.getService(serviceReference);
+
+		try {
+			return function.apply(service);
+		}
+		finally {
+			_bundleContext.ungetService(serviceReference);
+		}
+	}
+
+	@Override
+	public <S, R> R callService(String className, Function<S, R> function) {
+		org.osgi.framework.ServiceReference<S> serviceReference =
+			(org.osgi.framework.ServiceReference<S>)
+				_bundleContext.getServiceReference(className);
+
+		if (serviceReference == null) {
+			return function.apply(null);
+		}
+
+		S service = _bundleContext.getService(serviceReference);
+
+		try {
+			return function.apply(service);
+		}
+		finally {
+			_bundleContext.ungetService(serviceReference);
+		}
 	}
 
 	public void closeServiceTrackers() {
@@ -95,6 +137,10 @@ public class RegistryImpl implements Registry {
 		return this;
 	}
 
+	/**
+	 * @deprecated As of 1.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public <T> T getService(Class<T> clazz) {
 		org.osgi.framework.ServiceReference<T> serviceReference =
@@ -120,6 +166,10 @@ public class RegistryImpl implements Registry {
 			serviceReferenceWrapper.getServiceReference());
 	}
 
+	/**
+	 * @deprecated As of 1.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public <T> T getService(String className) {
 		org.osgi.framework.ServiceReference<?> serviceReference =

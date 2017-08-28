@@ -46,9 +46,8 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.io.ByteArrayInputStream;
 
@@ -78,8 +77,6 @@ public class DLFileEntryMetadataLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpDDMFormXSDDeserializer();
-
 		_group = GroupTestUtil.addGroup();
 
 		ServiceContext serviceContext =
@@ -225,14 +222,9 @@ public class DLFileEntryMetadataLocalServiceTest {
 		return ddmFormValuesMap;
 	}
 
-	protected void setUpDDMFormXSDDeserializer() {
-		Registry registry = RegistryUtil.getRegistry();
+	@Inject
+	private static DDMFormXSDDeserializer _ddmFormXSDDeserializer;
 
-		_ddmFormXSDDeserializer = registry.getService(
-			DDMFormXSDDeserializer.class);
-	}
-
-	private DDMFormXSDDeserializer _ddmFormXSDDeserializer;
 	private DDMStructure _ddmStructure;
 	private DLFileEntry _dlFileEntry;
 	private DLFileEntryType _dlFileEntryType;

@@ -45,10 +45,9 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.expando.util.test.ExpandoTestUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.io.Serializable;
 
@@ -86,20 +85,7 @@ public class ExpandoSearchTest {
 
 	@Before
 	public void setUp() throws Exception {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_classNameLocalService = registry.getService(
-			ClassNameLocalService.class);
-		_expandoColumnLocalService = registry.getService(
-			ExpandoColumnLocalService.class);
-		_expandoTableLocalService = registry.getService(
-			ExpandoTableLocalService.class);
-		_userLocalService = registry.getService(UserLocalService.class);
-
-		IndexerRegistry indexerRegistry = registry.getService(
-			IndexerRegistry.class);
-
-		_indexer = indexerRegistry.getIndexer(User.class);
+		_indexer = _indexerRegistry.getIndexer(User.class);
 
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -412,16 +398,26 @@ public class ExpandoSearchTest {
 		return sorted.toString();
 	}
 
-	private ClassNameLocalService _classNameLocalService;
-	private ExpandoColumnLocalService _expandoColumnLocalService;
+	@Inject
+	private static ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private static ExpandoColumnLocalService _expandoColumnLocalService;
+
+	@Inject
+	private static ExpandoTableLocalService _expandoTableLocalService;
+
+	@Inject
+	private static IndexerRegistry _indexerRegistry;
+
+	@Inject
+	private static UserLocalService _userLocalService;
 
 	@DeleteAfterTestRun
 	private final List<ExpandoColumn> _expandoColumns = new ArrayList<>();
 
-	private ExpandoTableLocalService _expandoTableLocalService;
 	private Indexer<User> _indexer;
 	private PermissionChecker _originalPermissionChecker;
-	private UserLocalService _userLocalService;
 
 	@DeleteAfterTestRun
 	private final List<User> _users = new ArrayList<>();

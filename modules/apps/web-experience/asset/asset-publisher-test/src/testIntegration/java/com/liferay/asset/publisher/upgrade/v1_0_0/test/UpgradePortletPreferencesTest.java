@@ -43,10 +43,9 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.SAXReader;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.text.DateFormat;
 
@@ -447,18 +446,9 @@ public class UpgradePortletPreferencesTest {
 	}
 
 	protected void setUpUpgradePortletPreferences() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		DDMStructureLocalService ddmStructureLocalService = registry.getService(
-			DDMStructureLocalService.class);
-
-		DDMStructureLinkLocalService ddmStructureLinkLocalService =
-			registry.getService(DDMStructureLinkLocalService.class);
-
-		SAXReader saxReader = registry.getService(SAXReader.class);
-
 		_upgradePortletPreferences = new UpgradePortletPreferences(
-			ddmStructureLocalService, ddmStructureLinkLocalService, saxReader);
+			_ddmStructureLocalService, _ddmStructureLinkLocalService,
+			_saxReader);
 	}
 
 	protected PortletPreferences updatePortletPreferences(
@@ -470,6 +460,15 @@ public class UpgradePortletPreferencesTest {
 
 		return getPortletPreferences(portletId);
 	}
+
+	@Inject
+	private static DDMStructureLinkLocalService _ddmStructureLinkLocalService;
+
+	@Inject
+	private static DDMStructureLocalService _ddmStructureLocalService;
+
+	@Inject
+	private static SAXReader _saxReader;
 
 	private boolean _active;
 

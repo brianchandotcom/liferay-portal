@@ -47,6 +47,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -480,8 +481,10 @@ public class VelocityTemplateTest {
 		protected void activate(Map<String, Object> properties) {
 			Registry registry = RegistryUtil.getRegistry();
 
-			setMultiVMPool(registry.getService(MultiVMPool.class));
-			setSingleVMPool(registry.getService(SingleVMPool.class));
+			setMultiVMPool(
+				registry.callService(MultiVMPool.class, Function.identity()));
+			setSingleVMPool(
+				registry.callService(SingleVMPool.class, Function.identity()));
 
 			super.activate(properties);
 		}

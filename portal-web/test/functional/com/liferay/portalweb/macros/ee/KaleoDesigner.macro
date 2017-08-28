@@ -410,6 +410,50 @@
 		<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#SETTINGS_NAME" value1="${nodeName}" />
 	</command>
 
+	<command name="editNodeTimer">
+		<execute function="DoubleClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_TIMERS" />
+
+		<execute function="Type" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NAME" value1="${timerName}" />
+		<execute function="Type" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_DESCRIPTION" value1="${timerDescription}" />
+
+		<execute macro="KaleoDesigner#editNodeTimerDuration">
+			<var name="durationScale" value="${durationScale1}" />
+			<var name="durationTime" value="${durationTime1}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNodeSettingsSection" />
+
+		<execute macro="KaleoDesigner#editNodeTimerDurationAdditional">
+			<var name="durationScale" value="${durationScale2}" />
+			<var name="durationTime" value="${durationTime2}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#editNodeTimerBlocker">
+			<var name="blockerDescription" value="${blockerDescription}" />
+			<var name="blockerName" value="${blockerName}" />
+			<var name="blockerScript" value="${blockerScript}" />
+		</execute>
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+	</command>
+
+	<command name="editNodeTimerBlocker">
+		<execute function="Check" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_BLOCKING" />
+		<execute function="Type" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_ACTION_NAME" value1="${blockerName}" />
+		<execute function="Type" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_ACTION_DESCRIPTION" value1="${blockerDescription}" />
+		<execute function="Type" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_SCRIPT" value1="${blockerScript}" />
+	</command>
+
+	<command name="editNodeTimerDuration">
+		<execute function="Type" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_DURATION" value1="${durationTime}" />
+		<execute function="Select" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_SCALE_SELECT" value1="${durationScale}" />
+	</command>
+
+	<command name="editNodeTimerDurationAdditional">
+		<execute function="Type" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_DURATION_2" value1="${durationTime}" />
+		<execute function="Select" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_SCALE_SELECT_2" value1="${durationScale}" />
+	</command>
+
 	<command name="editSourceXML">
 		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB" value1="Source (Kaleo XML)" />
 

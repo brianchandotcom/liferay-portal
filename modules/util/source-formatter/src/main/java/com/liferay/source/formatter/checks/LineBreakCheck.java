@@ -69,7 +69,7 @@ public abstract class LineBreakCheck extends BaseFileCheck {
 
 			int x = line.indexOf(" = ");
 
-			if (x != -1) {
+			if ((x != -1) && (getLevel(line, "{", "}") == 0)) {
 				int y = line.indexOf(CharPool.QUOTE);
 
 				if ((y == -1) || (x < y)) {

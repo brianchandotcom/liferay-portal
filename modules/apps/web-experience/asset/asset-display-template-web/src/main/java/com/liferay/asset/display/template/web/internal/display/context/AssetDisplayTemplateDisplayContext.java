@@ -44,29 +44,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class AssetDisplayTemplateDisplayContext {
 
-	public static OrderByComparator<AssetDisplayTemplate>
-		getArticleOrderByComparator(String orderByCol, String orderByType) {
-
-		boolean orderByAsc = false;
-
-		if (orderByType.equals("asc")) {
-			orderByAsc = true;
-		}
-
-		OrderByComparator<AssetDisplayTemplate> orderByComparator = null;
-
-		if (orderByCol.equals("create-date")) {
-			orderByComparator = new AssetDisplayTemplateCreateDateComparator(
-				orderByAsc);
-		}
-		else if (orderByCol.equals("asset-type")) {
-			orderByComparator = new AssetDisplayTemplateClassNameIdComparator(
-				orderByAsc);
-		}
-
-		return orderByComparator;
-	}
-
 	public AssetDisplayTemplateDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse,
 		HttpServletRequest request, DDMDisplayRegistry ddmDisplayRegistry,
@@ -166,7 +143,7 @@ public class AssetDisplayTemplateDisplayContext {
 		searchContainer.setOrderByType(orderByType);
 
 		OrderByComparator<AssetDisplayTemplate> orderByComparator =
-			getArticleOrderByComparator(orderByCol, orderByType);
+			_getOrderByComparator(orderByCol, orderByType);
 
 		searchContainer.setOrderByComparator(orderByComparator);
 
@@ -206,6 +183,29 @@ public class AssetDisplayTemplateDisplayContext {
 		}
 
 		return false;
+	}
+
+	private OrderByComparator<AssetDisplayTemplate> _getOrderByComparator(
+		String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<AssetDisplayTemplate> orderByComparator = null;
+
+		if (orderByCol.equals("create-date")) {
+			orderByComparator = new AssetDisplayTemplateCreateDateComparator(
+				orderByAsc);
+		}
+		else if (orderByCol.equals("asset-type")) {
+			orderByComparator = new AssetDisplayTemplateClassNameIdComparator(
+				orderByAsc);
+		}
+
+		return orderByComparator;
 	}
 
 	private final DDMDisplayRegistry _ddmDisplayRegistry;

@@ -159,9 +159,7 @@
 	<liferay-frontend:add-menu>
 
 		<%
-		Set<Long> availableClassNameIdsSet = SetUtil.fromArray(assetDisplayTemplateDisplayContext.getAvailableClassNameIds());
-
-		for (long curClassNameId : availableClassNameIdsSet) {
+		for (long curClassNameId : assetDisplayTemplateDisplayContext.getAvailableClassNameIds()) {
 			ClassName className = ClassNameLocalServiceUtil.getClassName(curClassNameId);
 
 			editAssetDisplayTemplateURL.setParameter("classNameId", String.valueOf(curClassNameId));
@@ -177,15 +175,11 @@
 </c:if>
 
 <aui:script sandbox="<%= true %>">
-	var Util = Liferay.Util;
-
-	var form = $(document.<portlet:namespace />fm);
-
 	$('#<portlet:namespace />deleteSelectedAssetDisplayTemplates').on(
 		'click',
 		function() {
 			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				submitForm(form);
+				submitForm($(document.<portlet:namespace />fm));
 			}
 		}
 	);

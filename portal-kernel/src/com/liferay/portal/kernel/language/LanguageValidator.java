@@ -37,6 +37,13 @@ public class LanguageValidator {
 
 			return ArrayUtil.contains(LanguageConstants.VALUES_LINE, value);
 		}
+		else if (key.equals(LanguageConstants.KEY_USER_DEFAULT_PORTRAIT)) {
+			return ArrayUtil.contains(
+				LanguageConstants.VALUES_USER_DEFAULT_PORTRAIT, value);
+		}
+		else if (key.equals(LanguageConstants.KEY_USER_INITIALS_FIELD_NAMES)) {
+			return _isValidUserInitialsFieldNamesValue(value);
+		}
 		else if (key.equals(LanguageConstants.KEY_USER_NAME_FIELD_NAMES)) {
 			return _isValidUserNameFieldNamesValue(value);
 		}
@@ -49,6 +56,21 @@ public class LanguageValidator {
 					LanguageConstants.KEY_USER_NAME_REQUIRED_FIELD_NAMES)) {
 
 			return _isValidUserNameRequiredFieldNamesValue(value);
+		}
+
+		return true;
+	}
+
+	private static boolean _isValidUserInitialsFieldNamesValue(String value) {
+		String[] valueArray = StringUtil.split(value);
+
+		for (String curValue : valueArray) {
+			if (!ArrayUtil.contains(
+					LanguageConstants.VALUES_USER_INITIALS_FIELD_NAMES,
+					curValue)) {
+
+				return false;
+			}
 		}
 
 		return true;

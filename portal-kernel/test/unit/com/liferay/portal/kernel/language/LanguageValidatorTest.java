@@ -77,6 +77,70 @@ public class LanguageValidatorTest {
 	}
 
 	@Test
+	public void testIsValidKeyUserDefaultPortrait() {
+		Assert.assertTrue(
+			LanguageValidator.isValid(
+				LanguageConstants.KEY_USER_DEFAULT_PORTRAIT, "image"));
+		Assert.assertTrue(
+			LanguageValidator.isValid(
+				LanguageConstants.KEY_USER_DEFAULT_PORTRAIT, "initials"));
+		Assert.assertFalse(
+			LanguageValidator.isValid(
+				LanguageConstants.KEY_USER_DEFAULT_PORTRAIT,
+				"any-other-value"));
+		Assert.assertFalse(
+			LanguageValidator.isValid(
+				LanguageConstants.KEY_USER_DEFAULT_PORTRAIT,
+				"Any other value"));
+	}
+
+	@Test
+	public void testIsValidKeyUserInitialsFieldNames() {
+		Assert.assertTrue(
+			LanguageValidator.isValid(
+				LanguageConstants.KEY_USER_INITIALS_FIELD_NAMES,
+				"first-name,last-name"));
+		Assert.assertTrue(
+			LanguageValidator.isValid(
+				LanguageConstants.KEY_USER_INITIALS_FIELD_NAMES,
+				"first-name,middle-name"));
+		Assert.assertTrue(
+			LanguageValidator.isValid(
+				LanguageConstants.KEY_USER_INITIALS_FIELD_NAMES,
+				"last-name,first-name"));
+		Assert.assertTrue(
+			LanguageValidator.isValid(
+				LanguageConstants.KEY_USER_INITIALS_FIELD_NAMES,
+				"last-name,middle-name"));
+		Assert.assertTrue(
+			LanguageValidator.isValid(
+				LanguageConstants.KEY_USER_INITIALS_FIELD_NAMES,
+				"middle-name,first-name"));
+		Assert.assertTrue(
+			LanguageValidator.isValid(
+				LanguageConstants.KEY_USER_INITIALS_FIELD_NAMES,
+				"middle-name,last-name"));
+		Assert.assertTrue(
+			LanguageValidator.isValid(
+				LanguageConstants.KEY_USER_INITIALS_FIELD_NAMES, "first-name"));
+		Assert.assertTrue(
+			LanguageValidator.isValid(
+				LanguageConstants.KEY_USER_INITIALS_FIELD_NAMES, "last-name"));
+		Assert.assertTrue(
+			LanguageValidator.isValid(
+				LanguageConstants.KEY_USER_INITIALS_FIELD_NAMES,
+				"middle-name"));
+		Assert.assertFalse(
+			LanguageValidator.isValid(
+				LanguageConstants.KEY_USER_INITIALS_FIELD_NAMES,
+				"any-other-value"));
+		Assert.assertFalse(
+			LanguageValidator.isValid(
+				LanguageConstants.KEY_USER_INITIALS_FIELD_NAMES,
+				"Any other value"));
+	}
+
+	@Test
 	public void testIsValidKeyUserNameFieldNames() {
 		Assert.assertTrue(
 			LanguageValidator.isValid(

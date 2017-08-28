@@ -75,6 +75,16 @@ public class LanguagePropertyTest {
 	}
 
 	@Test
+	public void testSpecialKeyUserDefaultPortrait() {
+		_testSpecialKey(LanguageConstants.KEY_USER_DEFAULT_PORTRAIT);
+	}
+
+	@Test
+	public void testSpecialKeyUserInitialsFieldNames() {
+		_testSpecialKey(LanguageConstants.KEY_USER_INITIALS_FIELD_NAMES);
+	}
+
+	@Test
 	public void testSpecialKeyUserNameFieldNames() {
 		_testSpecialKey(LanguageConstants.KEY_USER_NAME_FIELD_NAMES);
 	}
@@ -150,6 +160,16 @@ public class LanguagePropertyTest {
 	@Test
 	public void testValidKeyLineEnd() {
 		_testValidKey(LanguageConstants.KEY_LINE_END);
+	}
+
+	@Test
+	public void testValidKeyUserDefaultPortrait() {
+		_testValidKey(LanguageConstants.KEY_USER_DEFAULT_PORTRAIT);
+	}
+
+	@Test
+	public void testValidKeyUserInitialsFieldNames() {
+		_testValidKey(LanguageConstants.KEY_USER_INITIALS_FIELD_NAMES);
 	}
 
 	@Test

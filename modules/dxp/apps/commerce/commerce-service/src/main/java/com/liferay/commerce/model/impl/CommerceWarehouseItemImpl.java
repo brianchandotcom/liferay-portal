@@ -16,13 +16,23 @@ package com.liferay.commerce.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.model.CommerceWarehouse;
+import com.liferay.commerce.service.CommerceWarehouseLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
- * @author Alessio Antonio Rendina
+ * @author Andrea Di Giorgi
  */
 @ProviderType
 public class CommerceWarehouseItemImpl extends CommerceWarehouseItemBaseImpl {
 
 	public CommerceWarehouseItemImpl() {
+	}
+
+	@Override
+	public CommerceWarehouse getCommerceWarehouse() throws PortalException {
+		return CommerceWarehouseLocalServiceUtil.getCommerceWarehouse(
+			getCommerceWarehouseId());
 	}
 
 }

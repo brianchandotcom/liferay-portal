@@ -1986,6 +1986,11 @@ of the `JavaCompile` task to configure).
 - [LPS-74345]: The [`Eclipse`](https://docs.gradle.org/current/userguide/eclipse_plugin.html)
 plugin is not applied to OSGi projects anymore.
 
+## 5.0.27 - 2017-08-25
+
+### Changed
+- [LPS-74368]: Update the [Liferay Gradle Plugins] dependency to version 3.4.40.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -2202,6 +2207,7 @@ plugin is not applied to OSGi projects anymore.
 [LPS-74314]: https://issues.liferay.com/browse/LPS-74314
 [LPS-74343]: https://issues.liferay.com/browse/LPS-74343
 [LPS-74345]: https://issues.liferay.com/browse/LPS-74345
+[LPS-74368]: https://issues.liferay.com/browse/LPS-74368
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

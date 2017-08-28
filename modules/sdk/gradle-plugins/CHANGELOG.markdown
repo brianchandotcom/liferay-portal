@@ -2227,6 +2227,17 @@ version 2.3.17.
 - [LPS-74345]: Automatically apply the [`Eclipse`](https://docs.gradle.org/current/userguide/eclipse_plugin.html)
 plugin to OSGi projects.
 
+## 3.4.40 - 2017-08-25
+
+### Changed
+- [LPS-74368]: Update the [Liferay Gradle Plugins Jasper JSPC] dependency to
+version 2.0.2.
+- [LPS-74368]: Update the [Liferay Jasper JSPC] dependency to version 1.0.11.
+
+### Removed
+- [LPS-74368]: Remove all dependency exclusions from the
+`com.liferay.jasper.jspc` default dependency in the `jspCTool` configuration.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -2424,4 +2435,5 @@ plugin to OSGi projects.
 [LPS-74314]: https://issues.liferay.com/browse/LPS-74314
 [LPS-74343]: https://issues.liferay.com/browse/LPS-74343
 [LPS-74345]: https://issues.liferay.com/browse/LPS-74345
+[LPS-74368]: https://issues.liferay.com/browse/LPS-74368
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

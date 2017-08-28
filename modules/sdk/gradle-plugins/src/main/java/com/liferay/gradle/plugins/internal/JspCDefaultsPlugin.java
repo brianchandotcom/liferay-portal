@@ -24,14 +24,12 @@ import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 
-import java.util.Collections;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
-import org.gradle.api.artifacts.ModuleDependency;
 import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.bundling.Jar;
@@ -73,13 +71,9 @@ public class JspCDefaultsPlugin
 			project, portalToolName);
 
 		if (Validator.isNotNull(portalToolVersion)) {
-			ModuleDependency moduleDependency =
-				(ModuleDependency)GradleUtil.addDependency(
-					project, configurationName, PortalTools.GROUP,
-					portalToolName, portalToolVersion);
-
-			moduleDependency.exclude(
-				Collections.singletonMap("group", "com.liferay.portal"));
+			GradleUtil.addDependency(
+				project, configurationName, PortalTools.GROUP, portalToolName,
+				portalToolVersion);
 		}
 	}
 

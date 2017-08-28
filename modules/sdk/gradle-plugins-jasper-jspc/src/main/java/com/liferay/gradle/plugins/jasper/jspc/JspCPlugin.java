@@ -18,7 +18,6 @@ import com.liferay.gradle.util.GradleUtil;
 
 import java.io.File;
 
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -28,7 +27,6 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
-import org.gradle.api.artifacts.ModuleDependency;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.SourceDirectorySet;
@@ -134,15 +132,9 @@ public class JspCPlugin implements Plugin<Project> {
 		GradleUtil.addDependency(
 			project, TOOL_CONFIGURATION_NAME, "org.apache.ant", "ant", "1.9.4");
 
-		ModuleDependency moduleDependency =
-			(ModuleDependency)GradleUtil.addDependency(
-				project, TOOL_CONFIGURATION_NAME, "com.liferay",
-				"com.liferay.jasper.jspc", "latest.release");
-
-		moduleDependency.exclude(
-			Collections.singletonMap("group", "com.liferay.portal"));
-		moduleDependency.exclude(
-			Collections.singletonMap("group", "javax.servlet"));
+		GradleUtil.addDependency(
+			project, TOOL_CONFIGURATION_NAME, "com.liferay",
+			"com.liferay.jasper.jspc", "latest.release");
 	}
 
 	private JavaCompile _addTaskCompileJSP(

@@ -49,6 +49,7 @@
 				]
 			}
 		],
+		"price" : 2350,
 		"productTypeName": "simple",
 		"relatedProducts": ["Amazona Bag"],
 		"shortDescription": "",
@@ -161,6 +162,7 @@
 				]
 			}
 		],
+		"price" : 2450,
 		"productTypeName": "simple",
 		"relatedProducts": ["Amazona Bag"],
 		"shortDescription": "",
@@ -285,6 +287,7 @@
 				]
 			}
 		],
+		"price" : 1290,
 		"productTypeName": "simple",
 		"relatedProducts": ["Amazona Bag"],
 		"shortDescription": "",
@@ -395,6 +398,7 @@
 				]
 			}
 		],
+		"price" : 2350,
 		"productTypeName": "simple",
 		"relatedProducts": ["Amazona Bag"],
 		"shortDescription": "",
@@ -517,6 +521,7 @@
 				]
 			}
 		],
+		"price" : 2350,
 		"productTypeName": "simple",
 		"relatedProducts": ["Amazona Bag"],
 		"shortDescription": "",
@@ -629,6 +634,7 @@
 				]
 			}
 		],
+		"price" : 2450,
 		"productTypeName": "simple",
 		"relatedProducts": ["Puzzle Bag"],
 		"shortDescription": "",
@@ -743,6 +749,7 @@
 				]
 			}
 		],
+		"price" : 550,
 		"productTypeName": "simple",
 		"relatedProducts": ["Amazona Bag"],
 		"shortDescription": "",
@@ -853,6 +860,7 @@
 				]
 			}
 		],
+		"price" : 990,
 		"productTypeName": "simple",
 		"relatedProducts": ["Amazona Bag"],
 		"shortDescription": "",
@@ -957,6 +965,7 @@
 				]
 			}
 		],
+		"price" : 1550,
 		"productTypeName": "simple",
 		"relatedProducts": ["Amazona Bag"],
 		"shortDescription": "",
@@ -1081,6 +1090,7 @@
 				]
 			}
 		],
+		"price" : 650,
 		"productTypeName": "simple",
 		"relatedProducts": ["Amazona Bag"],
 		"shortDescription": "",
@@ -1203,6 +1213,7 @@
 				]
 			}
 		],
+		"price" : 1990,
 		"productTypeName": "simple",
 		"relatedProducts": ["Amazona Bag"],
 		"shortDescription": "",
@@ -1309,6 +1320,7 @@
 				]
 			}
 		],
+		"price" : 2350,
 		"productTypeName": "simple",
 		"relatedProducts": ["Amazona Bag"],
 		"shortDescription": "",
@@ -1425,6 +1437,7 @@
 				]
 			}
 		],
+		"price" : 2450,
 		"productTypeName": "simple",
 		"relatedProducts": ["Amazona Bag"],
 		"shortDescription": "",
@@ -1537,6 +1550,7 @@
 				]
 			}
 		],
+		"price" : 1990,
 		"productTypeName": "simple",
 		"relatedProducts": ["Amazona Bag"],
 		"shortDescription": "",
@@ -1657,6 +1671,7 @@
 				]
 			}
 		],
+		"price" : 890,
 		"productTypeName": "simple",
 		"relatedProducts": ["Amazona Bag"],
 		"shortDescription": "",
@@ -1776,6 +1791,7 @@
 				]
 			}
 		],
+		"price" : 1290,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"Anagram Silk Pleated Skirt Orange/Multicolour",
@@ -1887,6 +1903,7 @@
 				]
 			}
 		],
+		"price" : 2190,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"Knit Skirt Stripes Blue/White",
@@ -1988,6 +2005,7 @@
 				]
 			}
 		],
+		"price" : 1150,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"Anagram Silk Pleated Skirt Orange/Multicolour",
@@ -2116,6 +2134,7 @@
 				]
 			}
 		],
+		"price" : 1790,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"Shirtdress Baby Blue/White"
@@ -2208,6 +2227,7 @@
 				]
 			}
 		],
+		"price" : 1550,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"Long Sleeve Draped Dress"
@@ -2313,6 +2333,7 @@
 				]
 			}
 		],
+		"price" : 650,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"Fisherman Stonewashed Indigo"
@@ -2423,6 +2444,7 @@
 				]
 			}
 		],
+		"price" : 650,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"Fisherman Jeans Blue"
@@ -2523,6 +2545,7 @@
 				]
 			}
 		],
+		"price" : 325,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"T-Shirt Loewe Tartan Patch Black/Red",
@@ -2625,6 +2648,7 @@
 				]
 			}
 		],
+		"price" : 325,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"T-Shirt Lollipops White",
@@ -2727,6 +2751,7 @@
 				]
 			}
 		],
+		"price" : 325,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"T-Shirt Lollipops White",
@@ -2830,6 +2855,7 @@
 				]
 			}
 		],
+		"price" : 650,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"T-Shirt Lollipops White",
@@ -2954,6 +2980,7 @@
 				]
 			}
 		],
+		"price" : 325,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"T-Shirt Lollipops White",
@@ -3058,6 +3085,7 @@
 				]
 			}
 		],
+		"price" : 890,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"Asymetric Shirt Contrast Bib Baby Blue/White",
@@ -3169,6 +3197,7 @@
 				]
 			}
 		],
+		"price" : 2450,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"Asymetric Shirt Contrast Bib Baby Blue/White",
@@ -3280,6 +3309,7 @@
 				]
 			}
 		],
+		"price" : 890,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"Asymetric Shirt White",
@@ -3376,6 +3406,7 @@
 				]
 			}
 		],
+		"price" : 990,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"Cardigan Lollipops Black/Multicolor",
@@ -3477,6 +3508,7 @@
 				]
 			}
 		],
+		"price" : 1390,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"Cardigan Lollipops Black/Multicolor",
@@ -3578,6 +3610,7 @@
 				]
 			}
 		],
+		"price" : 990,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"Loewe Detail Cardigan Petroleum",
@@ -3701,6 +3734,7 @@
 				]
 			}
 		],
+		"price" : 2450,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"Oversize Trenchcoat Blue",
@@ -3812,6 +3846,7 @@
 				]
 			}
 		],
+		"price" : 2450,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"Oversize Trenchcoat Blue",
@@ -3903,6 +3938,7 @@
 				]
 			}
 		],
+		"price" : 1950,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"Double Face Coat",
@@ -4014,6 +4050,7 @@
 				]
 			}
 		],
+		"price" : 1290,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"Leggings Black",
@@ -4120,6 +4157,7 @@
 				]
 			}
 		],
+		"price" : 2690,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"Leggings Black",
@@ -4226,6 +4264,7 @@
 				]
 			}
 		],
+		"price" : 1990,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"Culotte Trousers Black",
@@ -4371,6 +4410,7 @@
 				]
 			}
 		],
+		"price" : 450,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"Anklestrap Knot Rhinestones Black/Silver",
@@ -4474,6 +4514,7 @@
 				]
 			}
 		],
+		"price" : 1290,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"Anklestrap Knot Rhinestones Black/Silver",
@@ -4585,6 +4626,7 @@
 				]
 			}
 		],
+		"price" : 890,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"Espadrille Nappa",
@@ -4684,6 +4726,7 @@
 				]
 			}
 		],
+		"price" : 450,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"Zip Around Wallet",
@@ -4775,6 +4818,7 @@
 				]
 			}
 		],
+		"price" : 650,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"Zip Around Wallet",
@@ -4876,6 +4920,7 @@
 				]
 			}
 		],
+		"price" : 650,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"Small Zip Wallet",
@@ -4971,6 +5016,7 @@
 				]
 			}
 		],
+		"price" : 125,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"L Chain Necklace",
@@ -5052,6 +5098,7 @@
 				]
 			}
 		],
+		"price" : 325,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"L Chain Necklace",
@@ -5131,6 +5178,7 @@
 				]
 			}
 		],
+		"price" : 250,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"Lollipop Earrings",
@@ -5204,6 +5252,7 @@
 				]
 			}
 		],
+		"price" : 450,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"Filipa Sunglasses",
@@ -5277,6 +5326,7 @@
 				]
 			}
 		],
+		"price" : 330,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"Filipa Sunglasses",
@@ -5368,6 +5418,7 @@
 				]
 			}
 		],
+		"price" : 450,
 		"productTypeName": "simple",
 		"relatedProducts": [
 			"Alejandra Sunglasses",

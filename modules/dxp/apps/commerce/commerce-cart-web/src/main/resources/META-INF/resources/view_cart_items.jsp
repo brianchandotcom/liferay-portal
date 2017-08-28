@@ -182,6 +182,11 @@ renderResponse.setTitle(commerceCart.getName());
 								name="user"
 								property="userName"
 							/>
+
+							<liferay-ui:search-container-column-jsp
+								cssClass="entry-action-column"
+								path="/cart_item_action.jsp"
+							/>
 						</liferay-ui:search-container-row>
 
 						<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" searchContainer="<%= commerceCartItemSearchContainer %>" />

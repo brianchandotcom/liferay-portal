@@ -19,24 +19,14 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-CommerceOrderItem commerceOrderItem = (CommerceOrderItem)row.getObject();
+CommerceCartItem commerceCartItem = (CommerceCartItem)row.getObject();
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-	<portlet:renderURL var="editURL">
-		<portlet:param name="mvcRenderCommandName" value="editCommerceOrderItem" />
-		<portlet:param name="commerceOrderItemId" value="<%= String.valueOf(commerceOrderItem.getCommerceOrderItemId()) %>" />
-	</portlet:renderURL>
-
-	<liferay-ui:icon
-		message="edit"
-		url="<%= editURL %>"
-	/>
-
-	<portlet:actionURL name="editCommerceOrderItem" var="deleteURL">
+	<portlet:actionURL name="editCommerceCartItem" var="deleteURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="commerceOrderItemId" value="<%= String.valueOf(commerceOrderItem.getCommerceOrderItemId()) %>" />
+		<portlet:param name="commerceCartItemId" value="<%= String.valueOf(commerceCartItem.getCommerceCartItemId()) %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon-delete

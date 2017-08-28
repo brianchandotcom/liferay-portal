@@ -117,6 +117,11 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 								name="modified-date"
 								property="modifiedDate"
 							/>
+
+							<liferay-ui:search-container-column-jsp
+								cssClass="entry-action-column"
+								path="/cart_action.jsp"
+							/>
 						</liferay-ui:search-container-row>
 
 						<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" searchContainer="<%= commerceCartSearchContainer %>" />

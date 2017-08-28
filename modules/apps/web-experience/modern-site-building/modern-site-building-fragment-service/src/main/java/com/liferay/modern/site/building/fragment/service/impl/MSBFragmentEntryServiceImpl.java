@@ -104,9 +104,19 @@ public class MSBFragmentEntryServiceImpl
 	}
 
 	@Override
-	public MSBFragmentEntry fetchMSBFragmentEntry(long msbFragmentEntryId) {
-		return msbFragmentEntryLocalService.fetchMSBFragmentEntry(
-			msbFragmentEntryId);
+	public MSBFragmentEntry fetchMSBFragmentEntry(long msbFragmentEntryId)
+		throws PortalException {
+
+		MSBFragmentEntry msbFragmentEntry =
+			msbFragmentEntryLocalService.fetchMSBFragmentEntry(
+				msbFragmentEntryId);
+
+		if (msbFragmentEntry != null) {
+			MSBFragmentEntryPermission.check(
+				getPermissionChecker(), msbFragmentEntry, ActionKeys.VIEW);
+		}
+
+		return msbFragmentEntry;
 	}
 
 	@Override

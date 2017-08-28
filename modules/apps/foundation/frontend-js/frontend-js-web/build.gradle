@@ -21,7 +21,7 @@ File jsDestinationDir = file("tmp/META-INF/resources")
 
 buildClay {
 	dependsOn npmInstall
-	File clayDestinationDir = new File(jsDestinationDir, "lexicon")
+	File clayDestinationDir = new File(jsDestinationDir, "clay")
 
 	doFirst {
 		delete clayDestinationDir

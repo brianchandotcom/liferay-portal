@@ -292,7 +292,8 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 
 		String uniqueUrlTitle = urlTitle;
 
-		KBFolder kbFolder = null;
+		KBFolder kbFolder = kbFolderPersistence.fetchByG_P_UT(
+			groupId, parentKbFolderId, uniqueUrlTitle);
 
 		for (int i = 1; kbFolder != null; i++) {
 			uniqueUrlTitle = urlTitle + StringPool.DASH + i;

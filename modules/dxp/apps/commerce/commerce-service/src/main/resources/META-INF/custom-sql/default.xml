@@ -66,4 +66,20 @@
 				CommerceWarehouse.name ASC
 		]]>
 	</sql>
+	<sql id="com.liferay.commerce.service.persistence.CommerceWarehouseItemFinder.findByC_C">
+		<![CDATA[
+			SELECT
+				{CommerceWarehouseItem.*}
+			FROM
+				CommerceWarehouseItem
+			INNER JOIN
+				CommerceWarehouse ON
+					(CommerceWarehouseItem.commerceWarehouseId = CommerceWarehouse.commerceWarehouseId)
+			WHERE
+				(CommerceWarehouseItem.classNameId = ?) AND
+				(CommerceWarehouseItem.classPK = ?)
+			ORDER BY
+				CommerceWarehouseItem.quantity
+		]]>
+	</sql>
 </custom-sql>

@@ -62,25 +62,6 @@ public interface KaleoTaskFormLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoTaskFormLocalServiceUtil} to access the kaleo task form local service. Add custom service methods to {@link com.liferay.portal.workflow.kaleo.service.impl.KaleoTaskFormLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Adds the kaleo task form to the database. Also notifies the appropriate model listeners.
@@ -103,6 +84,10 @@ public interface KaleoTaskFormLocalService extends BaseLocalService,
 	*/
 	public KaleoTaskForm createKaleoTaskForm(long kaleoTaskFormId);
 
+	public void deleteCompanyKaleoTaskForms(long companyId);
+
+	public void deleteKaleoDefinitionKaleoTaskForms(long kaleoDefinitionId);
+
 	/**
 	* Deletes the kaleo task form from the database. Also notifies the appropriate model listeners.
 	*
@@ -123,43 +108,14 @@ public interface KaleoTaskFormLocalService extends BaseLocalService,
 	public KaleoTaskForm deleteKaleoTaskForm(long kaleoTaskFormId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoTaskForm fetchKaleoTaskForm(long kaleoTaskFormId);
-
 	/**
-	* Returns the kaleo task form with the primary key.
-	*
-	* @param kaleoTaskFormId the primary key of the kaleo task form
-	* @return the kaleo task form
-	* @throws PortalException if a kaleo task form with the primary key could not be found
+	* @throws PortalException
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoTaskForm getKaleoTaskForm(long kaleoTaskFormId)
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	/**
-	* Updates the kaleo task form in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param kaleoTaskForm the kaleo task form
-	* @return the kaleo task form that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public KaleoTaskForm updateKaleoTaskForm(KaleoTaskForm kaleoTaskForm);
-
-	/**
-	* Returns the number of kaleo task forms.
-	*
-	* @return the number of kaleo task forms
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKaleoTaskFormsCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -201,6 +157,44 @@ public interface KaleoTaskFormLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoTaskForm fetchKaleoTaskForm(long kaleoTaskFormId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the kaleo task form with the primary key.
+	*
+	* @param kaleoTaskFormId the primary key of the kaleo task form
+	* @return the kaleo task form
+	* @throws PortalException if a kaleo task form with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoTaskForm getKaleoTaskForm(long kaleoTaskFormId)
+		throws PortalException;
+
+	/**
 	* Returns a range of all the kaleo task forms.
 	*
 	* <p>
@@ -219,24 +213,31 @@ public interface KaleoTaskFormLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of kaleo task forms.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of kaleo task forms
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getKaleoTaskFormsCount();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public java.lang.String getOSGiServiceIdentifier();
 
-	public void deleteCompanyKaleoTaskForms(long companyId);
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
-	public void deleteKaleoDefinitionKaleoTaskForms(long kaleoDefinitionId);
+	/**
+	* Updates the kaleo task form in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoTaskForm the kaleo task form
+	* @return the kaleo task form that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public KaleoTaskForm updateKaleoTaskForm(KaleoTaskForm kaleoTaskForm);
 }

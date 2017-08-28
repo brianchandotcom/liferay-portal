@@ -1,0 +1,7 @@
+<toggles>
+	<toggle name="LPS-73924">
+		<date>2017-08-11</date>
+		<description>Move Workflow configuration to 1 portlet</description>
+		<owner>Victor Ware</owner>
+	</toggle>
+</toggles>

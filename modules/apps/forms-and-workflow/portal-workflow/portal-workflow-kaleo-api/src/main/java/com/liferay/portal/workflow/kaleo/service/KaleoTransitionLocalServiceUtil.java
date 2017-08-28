@@ -41,32 +41,6 @@ public class KaleoTransitionLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.workflow.kaleo.service.impl.KaleoTransitionLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
 
 	/**
 	* Adds the kaleo transition to the database. Also notifies the appropriate model listeners.
@@ -102,6 +76,15 @@ public class KaleoTransitionLocalServiceUtil {
 		return getService().createKaleoTransition(kaleoTransitionId);
 	}
 
+	public static void deleteCompanyKaleoTransitions(long companyId) {
+		getService().deleteCompanyKaleoTransitions(companyId);
+	}
+
+	public static void deleteKaleoDefinitionKaleoTransitions(
+		long kaleoDefinitionId) {
+		getService().deleteKaleoDefinitionKaleoTransitions(kaleoDefinitionId);
+	}
+
 	/**
 	* Deletes the kaleo transition from the database. Also notifies the appropriate model listeners.
 	*
@@ -126,67 +109,17 @@ public class KaleoTransitionLocalServiceUtil {
 		return getService().deleteKaleoTransition(kaleoTransitionId);
 	}
 
-	public static com.liferay.portal.workflow.kaleo.model.KaleoTransition fetchKaleoTransition(
-		long kaleoTransitionId) {
-		return getService().fetchKaleoTransition(kaleoTransitionId);
-	}
-
-	public static com.liferay.portal.workflow.kaleo.model.KaleoTransition getDefaultKaleoTransition(
-		long kaleoNodeId)
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getDefaultKaleoTransition(kaleoNodeId);
+		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.portal.workflow.kaleo.model.KaleoTransition getKaleoTransition(
-		long kaleoNodeId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getKaleoTransition(kaleoNodeId, name);
-	}
-
-	/**
-	* Returns the kaleo transition with the primary key.
-	*
-	* @param kaleoTransitionId the primary key of the kaleo transition
-	* @return the kaleo transition
-	* @throws PortalException if a kaleo transition with the primary key could not be found
-	*/
-	public static com.liferay.portal.workflow.kaleo.model.KaleoTransition getKaleoTransition(
-		long kaleoTransitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getKaleoTransition(kaleoTransitionId);
-	}
-
-	/**
-	* Updates the kaleo transition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param kaleoTransition the kaleo transition
-	* @return the kaleo transition that was updated
-	*/
-	public static com.liferay.portal.workflow.kaleo.model.KaleoTransition updateKaleoTransition(
-		com.liferay.portal.workflow.kaleo.model.KaleoTransition kaleoTransition) {
-		return getService().updateKaleoTransition(kaleoTransition);
-	}
-
-	/**
-	* Returns the number of kaleo transitions.
-	*
-	* @return the number of kaleo transitions
-	*/
-	public static int getKaleoTransitionsCount() {
-		return getService().getKaleoTransitionsCount();
-	}
-
-	public static int getKaleoTransitionsCount(long kaleoNodeId) {
-		return getService().getKaleoTransitionsCount(kaleoNodeId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -239,32 +172,6 @@ public class KaleoTransitionLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTransition> getKaleoDefinitionKaleoTransitions(
-		long kaleoDefinitionId) {
-		return getService().getKaleoDefinitionKaleoTransitions(kaleoDefinitionId);
-	}
-
-	/**
-	* Returns a range of all the kaleo transitions.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.workflow.kaleo.model.impl.KaleoTransitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of kaleo transitions
-	* @param end the upper bound of the range of kaleo transitions (not inclusive)
-	* @return the range of kaleo transitions
-	*/
-	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTransition> getKaleoTransitions(
-		int start, int end) {
-		return getService().getKaleoTransitions(start, end);
-	}
-
-	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTransition> getKaleoTransitions(
-		long kaleoNodeId) {
-		return getService().getKaleoTransitions(kaleoNodeId);
-	}
-
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -289,13 +196,107 @@ public class KaleoTransitionLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static void deleteCompanyKaleoTransitions(long companyId) {
-		getService().deleteCompanyKaleoTransitions(companyId);
+	public static com.liferay.portal.workflow.kaleo.model.KaleoTransition fetchKaleoTransition(
+		long kaleoTransitionId) {
+		return getService().fetchKaleoTransition(kaleoTransitionId);
 	}
 
-	public static void deleteKaleoDefinitionKaleoTransitions(
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.workflow.kaleo.model.KaleoTransition getDefaultKaleoTransition(
+		long kaleoNodeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDefaultKaleoTransition(kaleoNodeId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTransition> getKaleoDefinitionKaleoTransitions(
 		long kaleoDefinitionId) {
-		getService().deleteKaleoDefinitionKaleoTransitions(kaleoDefinitionId);
+		return getService().getKaleoDefinitionKaleoTransitions(kaleoDefinitionId);
+	}
+
+	/**
+	* Returns the kaleo transition with the primary key.
+	*
+	* @param kaleoTransitionId the primary key of the kaleo transition
+	* @return the kaleo transition
+	* @throws PortalException if a kaleo transition with the primary key could not be found
+	*/
+	public static com.liferay.portal.workflow.kaleo.model.KaleoTransition getKaleoTransition(
+		long kaleoTransitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getKaleoTransition(kaleoTransitionId);
+	}
+
+	public static com.liferay.portal.workflow.kaleo.model.KaleoTransition getKaleoTransition(
+		long kaleoNodeId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getKaleoTransition(kaleoNodeId, name);
+	}
+
+	/**
+	* Returns a range of all the kaleo transitions.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.workflow.kaleo.model.impl.KaleoTransitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of kaleo transitions
+	* @param end the upper bound of the range of kaleo transitions (not inclusive)
+	* @return the range of kaleo transitions
+	*/
+	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTransition> getKaleoTransitions(
+		int start, int end) {
+		return getService().getKaleoTransitions(start, end);
+	}
+
+	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTransition> getKaleoTransitions(
+		long kaleoNodeId) {
+		return getService().getKaleoTransitions(kaleoNodeId);
+	}
+
+	/**
+	* Returns the number of kaleo transitions.
+	*
+	* @return the number of kaleo transitions
+	*/
+	public static int getKaleoTransitionsCount() {
+		return getService().getKaleoTransitionsCount();
+	}
+
+	public static int getKaleoTransitionsCount(long kaleoNodeId) {
+		return getService().getKaleoTransitionsCount(kaleoNodeId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the kaleo transition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoTransition the kaleo transition
+	* @return the kaleo transition that was updated
+	*/
+	public static com.liferay.portal.workflow.kaleo.model.KaleoTransition updateKaleoTransition(
+		com.liferay.portal.workflow.kaleo.model.KaleoTransition kaleoTransition) {
+		return getService().updateKaleoTransition(kaleoTransition);
 	}
 
 	public static KaleoTransitionLocalService getService() {

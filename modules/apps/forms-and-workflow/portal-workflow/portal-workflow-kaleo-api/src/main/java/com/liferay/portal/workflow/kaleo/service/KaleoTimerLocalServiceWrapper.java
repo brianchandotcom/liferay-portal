@@ -33,38 +33,6 @@ public class KaleoTimerLocalServiceWrapper implements KaleoTimerLocalService,
 		_kaleoTimerLocalService = kaleoTimerLocalService;
 	}
 
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _kaleoTimerLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _kaleoTimerLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _kaleoTimerLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoTimerLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoTimerLocalService.getPersistedModel(primaryKeyObj);
-	}
-
 	/**
 	* Adds the kaleo timer to the database. Also notifies the appropriate model listeners.
 	*
@@ -126,56 +94,19 @@ public class KaleoTimerLocalServiceWrapper implements KaleoTimerLocalService,
 		return _kaleoTimerLocalService.deleteKaleoTimer(kaleoTimerId);
 	}
 
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoTimer fetchKaleoTimer(
-		long kaleoTimerId) {
-		return _kaleoTimerLocalService.fetchKaleoTimer(kaleoTimerId);
-	}
-
 	/**
-	* Returns the kaleo timer with the primary key.
-	*
-	* @param kaleoTimerId the primary key of the kaleo timer
-	* @return the kaleo timer
-	* @throws PortalException if a kaleo timer with the primary key could not be found
+	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoTimer getKaleoTimer(
-		long kaleoTimerId)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoTimerLocalService.getKaleoTimer(kaleoTimerId);
+		return _kaleoTimerLocalService.deletePersistedModel(persistedModel);
 	}
 
-	/**
-	* Updates the kaleo timer in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param kaleoTimer the kaleo timer
-	* @return the kaleo timer that was updated
-	*/
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoTimer updateKaleoTimer(
-		com.liferay.portal.workflow.kaleo.model.KaleoTimer kaleoTimer) {
-		return _kaleoTimerLocalService.updateKaleoTimer(kaleoTimer);
-	}
-
-	/**
-	* Returns the number of kaleo timers.
-	*
-	* @return the number of kaleo timers
-	*/
-	@Override
-	public int getKaleoTimersCount() {
-		return _kaleoTimerLocalService.getKaleoTimersCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _kaleoTimerLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _kaleoTimerLocalService.dynamicQuery();
 	}
 
 	/**
@@ -232,6 +163,63 @@ public class KaleoTimerLocalServiceWrapper implements KaleoTimerLocalService,
 	}
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _kaleoTimerLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _kaleoTimerLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
+	}
+
+	@Override
+	public com.liferay.portal.workflow.kaleo.model.KaleoTimer fetchKaleoTimer(
+		long kaleoTimerId) {
+		return _kaleoTimerLocalService.fetchKaleoTimer(kaleoTimerId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _kaleoTimerLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _kaleoTimerLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the kaleo timer with the primary key.
+	*
+	* @param kaleoTimerId the primary key of the kaleo timer
+	* @return the kaleo timer
+	* @throws PortalException if a kaleo timer with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.workflow.kaleo.model.KaleoTimer getKaleoTimer(
+		long kaleoTimerId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoTimerLocalService.getKaleoTimer(kaleoTimerId);
+	}
+
+	/**
 	* Returns a range of all the kaleo timers.
 	*
 	* <p>
@@ -263,30 +251,42 @@ public class KaleoTimerLocalServiceWrapper implements KaleoTimerLocalService,
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of kaleo timers.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of kaleo timers
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _kaleoTimerLocalService.dynamicQueryCount(dynamicQuery);
+	public int getKaleoTimersCount() {
+		return _kaleoTimerLocalService.getKaleoTimersCount();
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _kaleoTimerLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _kaleoTimerLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoTimerLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the kaleo timer in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoTimer the kaleo timer
+	* @return the kaleo timer that was updated
+	*/
+	@Override
+	public com.liferay.portal.workflow.kaleo.model.KaleoTimer updateKaleoTimer(
+		com.liferay.portal.workflow.kaleo.model.KaleoTimer kaleoTimer) {
+		return _kaleoTimerLocalService.updateKaleoTimer(kaleoTimer);
 	}
 
 	@Override

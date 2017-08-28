@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.service.permission.test.BasePermissionTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Map;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -73,6 +75,11 @@ public class JournalArticlePermissionCheckerTest
 				permissionChecker, _subarticle, ActionKeys.VIEW));
 
 		removePortletModelViewPermission();
+
+		Map<Object, Object> permissionChecksMap =
+			permissionChecker.getPermissionChecksMap();
+
+		permissionChecksMap.clear();
 
 		if (_journalServiceConfiguration.articleViewPermissionsCheckEnabled()) {
 			Assert.assertFalse(

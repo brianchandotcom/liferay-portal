@@ -41,33 +41,6 @@ public class KaleoLogLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.workflow.kaleo.service.impl.KaleoLogLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
 	public static com.liferay.portal.workflow.kaleo.model.KaleoLog addActionExecutionKaleoLog(
 		com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken kaleoInstanceToken,
 		com.liferay.portal.workflow.kaleo.model.KaleoAction kaleoAction,
@@ -174,6 +147,18 @@ public class KaleoLogLocalServiceUtil {
 		return getService().createKaleoLog(kaleoLogId);
 	}
 
+	public static void deleteCompanyKaleoLogs(long companyId) {
+		getService().deleteCompanyKaleoLogs(companyId);
+	}
+
+	public static void deleteKaleoDefinitionKaleoLogs(long kaleoDefinitionId) {
+		getService().deleteKaleoDefinitionKaleoLogs(kaleoDefinitionId);
+	}
+
+	public static void deleteKaleoInstanceKaleoLogs(long kaleoInstanceId) {
+		getService().deleteKaleoInstanceKaleoLogs(kaleoInstanceId);
+	}
+
 	/**
 	* Deletes the kaleo log from the database. Also notifies the appropriate model listeners.
 	*
@@ -198,65 +183,17 @@ public class KaleoLogLocalServiceUtil {
 		return getService().deleteKaleoLog(kaleoLogId);
 	}
 
-	public static com.liferay.portal.workflow.kaleo.model.KaleoLog fetchKaleoLog(
-		long kaleoLogId) {
-		return getService().fetchKaleoLog(kaleoLogId);
-	}
-
 	/**
-	* Returns the kaleo log with the primary key.
-	*
-	* @param kaleoLogId the primary key of the kaleo log
-	* @return the kaleo log
-	* @throws PortalException if a kaleo log with the primary key could not be found
+	* @throws PortalException
 	*/
-	public static com.liferay.portal.workflow.kaleo.model.KaleoLog getKaleoLog(
-		long kaleoLogId)
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getKaleoLog(kaleoLogId);
+		return getService().deletePersistedModel(persistedModel);
 	}
 
-	/**
-	* Updates the kaleo log in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param kaleoLog the kaleo log
-	* @return the kaleo log that was updated
-	*/
-	public static com.liferay.portal.workflow.kaleo.model.KaleoLog updateKaleoLog(
-		com.liferay.portal.workflow.kaleo.model.KaleoLog kaleoLog) {
-		return getService().updateKaleoLog(kaleoLog);
-	}
-
-	public static int getKaleoInstanceKaleoLogsCount(long kaleoInstanceId,
-		java.util.List<java.lang.Integer> logTypes) {
-		return getService()
-				   .getKaleoInstanceKaleoLogsCount(kaleoInstanceId, logTypes);
-	}
-
-	/**
-	* Returns the number of kaleo logs.
-	*
-	* @return the number of kaleo logs
-	*/
-	public static int getKaleoLogsCount() {
-		return getService().getKaleoLogsCount();
-	}
-
-	public static int getKaleoTaskInstanceTokenKaleoLogsCount(
-		long kaleoTaskInstanceTokenId,
-		java.util.List<java.lang.Integer> logTypes) {
-		return getService()
-				   .getKaleoTaskInstanceTokenKaleoLogsCount(kaleoTaskInstanceTokenId,
-			logTypes);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -309,40 +246,6 @@ public class KaleoLogLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoLog> getKaleoInstanceKaleoLogs(
-		long kaleoInstanceId, java.util.List<java.lang.Integer> logTypes,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.model.KaleoLog> orderByComparator) {
-		return getService()
-				   .getKaleoInstanceKaleoLogs(kaleoInstanceId, logTypes, start,
-			end, orderByComparator);
-	}
-
-	/**
-	* Returns a range of all the kaleo logs.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.workflow.kaleo.model.impl.KaleoLogModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of kaleo logs
-	* @param end the upper bound of the range of kaleo logs (not inclusive)
-	* @return the range of kaleo logs
-	*/
-	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoLog> getKaleoLogs(
-		int start, int end) {
-		return getService().getKaleoLogs(start, end);
-	}
-
-	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoLog> getKaleoTaskInstanceTokenKaleoLogs(
-		long kaleoTaskInstanceTokenId,
-		java.util.List<java.lang.Integer> logTypes, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.model.KaleoLog> orderByComparator) {
-		return getService()
-				   .getKaleoTaskInstanceTokenKaleoLogs(kaleoTaskInstanceTokenId,
-			logTypes, start, end, orderByComparator);
-	}
-
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -367,16 +270,113 @@ public class KaleoLogLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static void deleteCompanyKaleoLogs(long companyId) {
-		getService().deleteCompanyKaleoLogs(companyId);
+	public static com.liferay.portal.workflow.kaleo.model.KaleoLog fetchKaleoLog(
+		long kaleoLogId) {
+		return getService().fetchKaleoLog(kaleoLogId);
 	}
 
-	public static void deleteKaleoDefinitionKaleoLogs(long kaleoDefinitionId) {
-		getService().deleteKaleoDefinitionKaleoLogs(kaleoDefinitionId);
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
 	}
 
-	public static void deleteKaleoInstanceKaleoLogs(long kaleoInstanceId) {
-		getService().deleteKaleoInstanceKaleoLogs(kaleoInstanceId);
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoLog> getKaleoInstanceKaleoLogs(
+		long kaleoInstanceId, java.util.List<java.lang.Integer> logTypes,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.model.KaleoLog> orderByComparator) {
+		return getService()
+				   .getKaleoInstanceKaleoLogs(kaleoInstanceId, logTypes, start,
+			end, orderByComparator);
+	}
+
+	public static int getKaleoInstanceKaleoLogsCount(long kaleoInstanceId,
+		java.util.List<java.lang.Integer> logTypes) {
+		return getService()
+				   .getKaleoInstanceKaleoLogsCount(kaleoInstanceId, logTypes);
+	}
+
+	/**
+	* Returns the kaleo log with the primary key.
+	*
+	* @param kaleoLogId the primary key of the kaleo log
+	* @return the kaleo log
+	* @throws PortalException if a kaleo log with the primary key could not be found
+	*/
+	public static com.liferay.portal.workflow.kaleo.model.KaleoLog getKaleoLog(
+		long kaleoLogId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getKaleoLog(kaleoLogId);
+	}
+
+	/**
+	* Returns a range of all the kaleo logs.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.workflow.kaleo.model.impl.KaleoLogModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of kaleo logs
+	* @param end the upper bound of the range of kaleo logs (not inclusive)
+	* @return the range of kaleo logs
+	*/
+	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoLog> getKaleoLogs(
+		int start, int end) {
+		return getService().getKaleoLogs(start, end);
+	}
+
+	/**
+	* Returns the number of kaleo logs.
+	*
+	* @return the number of kaleo logs
+	*/
+	public static int getKaleoLogsCount() {
+		return getService().getKaleoLogsCount();
+	}
+
+	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoLog> getKaleoTaskInstanceTokenKaleoLogs(
+		long kaleoTaskInstanceTokenId,
+		java.util.List<java.lang.Integer> logTypes, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.model.KaleoLog> orderByComparator) {
+		return getService()
+				   .getKaleoTaskInstanceTokenKaleoLogs(kaleoTaskInstanceTokenId,
+			logTypes, start, end, orderByComparator);
+	}
+
+	public static int getKaleoTaskInstanceTokenKaleoLogsCount(
+		long kaleoTaskInstanceTokenId,
+		java.util.List<java.lang.Integer> logTypes) {
+		return getService()
+				   .getKaleoTaskInstanceTokenKaleoLogsCount(kaleoTaskInstanceTokenId,
+			logTypes);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the kaleo log in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoLog the kaleo log
+	* @return the kaleo log that was updated
+	*/
+	public static com.liferay.portal.workflow.kaleo.model.KaleoLog updateKaleoLog(
+		com.liferay.portal.workflow.kaleo.model.KaleoLog kaleoLog) {
+		return getService().updateKaleoLog(kaleoLog);
 	}
 
 	public static KaleoLogLocalService getService() {

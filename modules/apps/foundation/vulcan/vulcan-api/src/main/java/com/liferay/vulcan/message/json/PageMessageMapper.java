@@ -15,10 +15,11 @@
 package com.liferay.vulcan.message.json;
 
 import com.liferay.vulcan.list.FunctionalList;
-import com.liferay.vulcan.message.RequestInfo;
 import com.liferay.vulcan.pagination.Page;
 
 import java.util.List;
+
+import javax.ws.rs.core.HttpHeaders;
 
 /**
  * Instances of this interface can be used to add Vulcan the ability to
@@ -31,13 +32,13 @@ import java.util.List;
  * methods a {@link JSONObjectBuilder} is received.
  *
  * All methods are called in a not predefined order, except
- * {@link #onStart(JSONObjectBuilder, Page, Class, RequestInfo)},
- * {@link #onFinish(JSONObjectBuilder, Page, Class, RequestInfo)} (called when
+ * {@link #onStart(JSONObjectBuilder, Page, Class, HttpHeaders)},
+ * {@link #onFinish(JSONObjectBuilder, Page, Class, HttpHeaders)} (called when
  * the writer starts and finishes the page) and
  * {@link #onStartItem(JSONObjectBuilder, JSONObjectBuilder, Object, Class,
- * RequestInfo)},
+ * HttpHeaders)},
  * {@link #onFinishItem(JSONObjectBuilder, JSONObjectBuilder, Object, Class,
- * RequestInfo)} (called when the writer starts and finishes an item).
+ * HttpHeaders)} (called when the writer starts and finishes an item).
  *
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
@@ -270,11 +271,11 @@ public interface PageMessageMapper<T> {
 	 * @param jsonObjectBuilder the json object builder for the page.
 	 * @param page the actual page.
 	 * @param modelClass the model class of the page.
-	 * @param requestInfo the request info for the current request.
+	 * @param httpHeaders the http headers of the current request.
 	 */
 	public default void onFinish(
 		JSONObjectBuilder jsonObjectBuilder, Page<T> page, Class<T> modelClass,
-		RequestInfo requestInfo) {
+		HttpHeaders httpHeaders) {
 	}
 
 	/**
@@ -285,12 +286,12 @@ public interface PageMessageMapper<T> {
 	 * @param itemJSONObjectBuilder the json object builder for the item.
 	 * @param item the actual item.
 	 * @param modelClass the model class of the item.
-	 * @param requestInfo the request info for the current request.
+	 * @param httpHeaders the http headers of the current request.
 	 */
 	public default void onFinishItem(
 		JSONObjectBuilder pageJSONObjectBuilder,
 		JSONObjectBuilder itemJSONObjectBuilder, T item, Class<T> modelClass,
-		RequestInfo requestInfo) {
+		HttpHeaders httpHeaders) {
 	}
 
 	/**
@@ -299,11 +300,11 @@ public interface PageMessageMapper<T> {
 	 * @param jsonObjectBuilder the json object builder for the page.
 	 * @param page the actual page.
 	 * @param modelClass the model class of the page.
-	 * @param requestInfo the request info for the current request.
+	 * @param httpHeaders the http headers of the current request.
 	 */
 	public default void onStart(
 		JSONObjectBuilder jsonObjectBuilder, Page<T> page, Class<T> modelClass,
-		RequestInfo requestInfo) {
+		HttpHeaders httpHeaders) {
 	}
 
 	/**
@@ -313,12 +314,12 @@ public interface PageMessageMapper<T> {
 	 * @param itemJSONObjectBuilder the json object builder for the item.
 	 * @param item the actual item.
 	 * @param modelClass the model class of the item.
-	 * @param requestInfo the request info for the current request.
+	 * @param httpHeaders the http headers of the current request.
 	 */
 	public default void onStartItem(
 		JSONObjectBuilder pageJSONObjectBuilder,
 		JSONObjectBuilder itemJSONObjectBuilder, T item, Class<T> modelClass,
-		RequestInfo requestInfo) {
+		HttpHeaders httpHeaders) {
 	}
 
 	/**
@@ -327,12 +328,12 @@ public interface PageMessageMapper<T> {
 	 *
 	 * @param  page the actual page.
 	 * @param  modelClass the model class of the page.
-	 * @param  requestInfo the request info for the current request.
+	 * @param  httpHeaders the http headers of the current request.
 	 * @return <code>true</code> if mapper supports mapping this request;
 	 *         <code>false</code> otherwise.
 	 */
 	public default boolean supports(
-		Page<T> page, Class<T> modelClass, RequestInfo requestInfo) {
+		Page<T> page, Class<T> modelClass, HttpHeaders httpHeaders) {
 
 		return true;
 	}

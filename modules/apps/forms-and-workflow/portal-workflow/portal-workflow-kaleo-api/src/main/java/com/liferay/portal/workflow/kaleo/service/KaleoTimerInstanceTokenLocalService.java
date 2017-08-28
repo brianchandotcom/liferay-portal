@@ -65,25 +65,6 @@ public interface KaleoTimerInstanceTokenLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoTimerInstanceTokenLocalServiceUtil} to access the kaleo timer instance token local service. Add custom service methods to {@link com.liferay.portal.workflow.kaleo.service.impl.KaleoTimerInstanceTokenLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Adds the kaleo timer instance token to the database. Also notifies the appropriate model listeners.
@@ -101,9 +82,23 @@ public interface KaleoTimerInstanceTokenLocalService extends BaseLocalService,
 		Map<java.lang.String, Serializable> workflowContext,
 		ServiceContext serviceContext) throws PortalException;
 
+	public List<KaleoTimerInstanceToken> addKaleoTimerInstanceTokens(
+		KaleoInstanceToken kaleoInstanceToken,
+		KaleoTaskInstanceToken kaleoTaskInstanceToken,
+		Collection<KaleoTimer> kaleoTimers,
+		Map<java.lang.String, Serializable> workflowContext,
+		ServiceContext serviceContext) throws PortalException;
+
 	public KaleoTimerInstanceToken completeKaleoTimerInstanceToken(
 		long kaleoTimerInstanceTokenId, ServiceContext serviceContext)
 		throws PortalException;
+
+	public void completeKaleoTimerInstanceTokens(
+		List<KaleoTimerInstanceToken> kaleoTimerInstanceTokens,
+		ServiceContext serviceContext) throws PortalException;
+
+	public void completeKaleoTimerInstanceTokens(long kaleoInstanceTokenId,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new kaleo timer instance token with the primary key. Does not add the kaleo timer instance token to the database.
@@ -135,60 +130,19 @@ public interface KaleoTimerInstanceTokenLocalService extends BaseLocalService,
 	public KaleoTimerInstanceToken deleteKaleoTimerInstanceToken(
 		long kaleoTimerInstanceTokenId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoTimerInstanceToken fetchKaleoTimerInstanceToken(
-		long kaleoTimerInstanceTokenId);
+	public void deleteKaleoTimerInstanceToken(long kaleoInstanceTokenId,
+		long kaleoTimerId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoTimerInstanceToken getKaleoTimerInstanceToken(
-		long kaleoInstanceTokenId, long kaleoTimerId) throws PortalException;
+	public void deleteKaleoTimerInstanceTokens(long kaleoInstanceId);
 
 	/**
-	* Returns the kaleo timer instance token with the primary key.
-	*
-	* @param kaleoTimerInstanceTokenId the primary key of the kaleo timer instance token
-	* @return the kaleo timer instance token
-	* @throws PortalException if a kaleo timer instance token with the primary key could not be found
+	* @throws PortalException
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoTimerInstanceToken getKaleoTimerInstanceToken(
-		long kaleoTimerInstanceTokenId) throws PortalException;
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
 
-	/**
-	* Updates the kaleo timer instance token in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param kaleoTimerInstanceToken the kaleo timer instance token
-	* @return the kaleo timer instance token that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public KaleoTimerInstanceToken updateKaleoTimerInstanceToken(
-		KaleoTimerInstanceToken kaleoTimerInstanceToken);
-
-	/**
-	* Returns the number of kaleo timer instance tokens.
-	*
-	* @return the number of kaleo timer instance tokens
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKaleoTimerInstanceTokensCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKaleoTimerInstanceTokensCount(long kaleoInstanceTokenId,
-		boolean blocking, boolean completed, ServiceContext serviceContext);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	public List<KaleoTimerInstanceToken> addKaleoTimerInstanceTokens(
-		KaleoInstanceToken kaleoInstanceToken,
-		KaleoTaskInstanceToken kaleoTaskInstanceToken,
-		Collection<KaleoTimer> kaleoTimers,
-		Map<java.lang.String, Serializable> workflowContext,
-		ServiceContext serviceContext) throws PortalException;
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -230,6 +184,49 @@ public interface KaleoTimerInstanceTokenLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoTimerInstanceToken fetchKaleoTimerInstanceToken(
+		long kaleoTimerInstanceTokenId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the kaleo timer instance token with the primary key.
+	*
+	* @param kaleoTimerInstanceTokenId the primary key of the kaleo timer instance token
+	* @return the kaleo timer instance token
+	* @throws PortalException if a kaleo timer instance token with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoTimerInstanceToken getKaleoTimerInstanceToken(
+		long kaleoTimerInstanceTokenId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoTimerInstanceToken getKaleoTimerInstanceToken(
+		long kaleoInstanceTokenId, long kaleoTimerId) throws PortalException;
+
+	/**
 	* Returns a range of all the kaleo timer instance tokens.
 	*
 	* <p>
@@ -250,32 +247,36 @@ public interface KaleoTimerInstanceTokenLocalService extends BaseLocalService,
 		ServiceContext serviceContext);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of kaleo timer instance tokens.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of kaleo timer instance tokens
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getKaleoTimerInstanceTokensCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getKaleoTimerInstanceTokensCount(long kaleoInstanceTokenId,
+		boolean blocking, boolean completed, ServiceContext serviceContext);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public java.lang.String getOSGiServiceIdentifier();
 
-	public void completeKaleoTimerInstanceTokens(
-		List<KaleoTimerInstanceToken> kaleoTimerInstanceTokens,
-		ServiceContext serviceContext) throws PortalException;
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
-	public void completeKaleoTimerInstanceTokens(long kaleoInstanceTokenId,
-		ServiceContext serviceContext) throws PortalException;
-
-	public void deleteKaleoTimerInstanceToken(long kaleoInstanceTokenId,
-		long kaleoTimerId) throws PortalException;
-
-	public void deleteKaleoTimerInstanceTokens(long kaleoInstanceId);
+	/**
+	* Updates the kaleo timer instance token in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoTimerInstanceToken the kaleo timer instance token
+	* @return the kaleo timer instance token that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public KaleoTimerInstanceToken updateKaleoTimerInstanceToken(
+		KaleoTimerInstanceToken kaleoTimerInstanceToken);
 }

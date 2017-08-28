@@ -121,7 +121,8 @@ public class PersonResource implements Resource<User> {
 			return _userService.getUserById(id);
 		}
 		catch (NoSuchUserException | PrincipalException e) {
-			throw new NotFoundException(e);
+			throw new NotFoundException(
+				"No User can be found with id: " + id, e);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);

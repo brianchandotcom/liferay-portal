@@ -12,6 +12,10 @@ dependencies {
 	provided project(":apps:foundation:portal-template:portal-template-soy")
 }
 
+node {
+	nodeVersion = "8.4.0"
+}
+
 transpileJS {
 	srcIncludes = "**/*.js"
 }

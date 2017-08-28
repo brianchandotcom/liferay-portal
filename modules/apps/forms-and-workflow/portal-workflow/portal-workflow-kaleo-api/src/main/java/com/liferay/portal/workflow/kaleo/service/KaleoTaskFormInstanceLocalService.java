@@ -61,25 +61,6 @@ public interface KaleoTaskFormInstanceLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoTaskFormInstanceLocalServiceUtil} to access the kaleo task form instance local service. Add custom service methods to {@link com.liferay.portal.workflow.kaleo.service.impl.KaleoTaskFormInstanceLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Adds the kaleo task form instance to the database. Also notifies the appropriate model listeners.
@@ -96,6 +77,8 @@ public interface KaleoTaskFormInstanceLocalService extends BaseLocalService,
 		KaleoTaskInstanceToken kaleoTaskInstanceToken,
 		ServiceContext serviceContext) throws PortalException;
 
+	public int countKaleoTaskFormInstanceByKaleoTaskId(long kaleoTaskId);
+
 	/**
 	* Creates a new kaleo task form instance with the primary key. Does not add the kaleo task form instance to the database.
 	*
@@ -104,6 +87,13 @@ public interface KaleoTaskFormInstanceLocalService extends BaseLocalService,
 	*/
 	public KaleoTaskFormInstance createKaleoTaskFormInstance(
 		long kaleoTaskFormInstanceId);
+
+	public void deleteCompanyKaleoTaskFormInstances(long companyId);
+
+	public void deleteKaleoDefinitionKaleoTaskFormInstances(
+		long kaleoDefinitionId);
+
+	public void deleteKaleoInstanceKaleoTaskFormInstances(long kaleoInstanceId);
 
 	/**
 	* Deletes the kaleo task form instance from the database. Also notifies the appropriate model listeners.
@@ -126,55 +116,14 @@ public interface KaleoTaskFormInstanceLocalService extends BaseLocalService,
 	public KaleoTaskFormInstance deleteKaleoTaskFormInstance(
 		long kaleoTaskFormInstanceId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoTaskFormInstance fetchKaleoTaskFormInstance(
-		long kaleoTaskFormInstanceId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoTaskFormInstance fetchKaleoTaskFormKaleoTaskFormInstance(
-		long kaleoTaskFormId);
-
 	/**
-	* Returns the kaleo task form instance with the primary key.
-	*
-	* @param kaleoTaskFormInstanceId the primary key of the kaleo task form instance
-	* @return the kaleo task form instance
-	* @throws PortalException if a kaleo task form instance with the primary key could not be found
+	* @throws PortalException
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoTaskFormInstance getKaleoTaskFormInstance(
-		long kaleoTaskFormInstanceId) throws PortalException;
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoTaskFormInstance getKaleoTaskFormKaleoTaskFormInstance(
-		long kaleoTaskFormId) throws PortalException;
-
-	/**
-	* Updates the kaleo task form instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param kaleoTaskFormInstance the kaleo task form instance
-	* @return the kaleo task form instance that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public KaleoTaskFormInstance updateKaleoTaskFormInstance(
-		KaleoTaskFormInstance kaleoTaskFormInstance);
-
-	public int countKaleoTaskFormInstanceByKaleoTaskId(long kaleoTaskId);
-
-	/**
-	* Returns the number of kaleo task form instances.
-	*
-	* @return the number of kaleo task form instances
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKaleoTaskFormInstancesCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -216,25 +165,6 @@ public interface KaleoTaskFormInstanceLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns a range of all the kaleo task form instances.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskFormInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of kaleo task form instances
-	* @param end the upper bound of the range of kaleo task form instances (not inclusive)
-	* @return the range of kaleo task form instances
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoTaskFormInstance> getKaleoTaskFormInstances(int start,
-		int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoTaskFormInstance> getKaleoTaskKaleoTaskFormInstances(
-		long kaleoTaskId);
-
-	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -252,10 +182,81 @@ public interface KaleoTaskFormInstanceLocalService extends BaseLocalService,
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
 
-	public void deleteCompanyKaleoTaskFormInstances(long companyId);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoTaskFormInstance fetchKaleoTaskFormInstance(
+		long kaleoTaskFormInstanceId);
 
-	public void deleteKaleoDefinitionKaleoTaskFormInstances(
-		long kaleoDefinitionId);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoTaskFormInstance fetchKaleoTaskFormKaleoTaskFormInstance(
+		long kaleoTaskFormId);
 
-	public void deleteKaleoInstanceKaleoTaskFormInstances(long kaleoInstanceId);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the kaleo task form instance with the primary key.
+	*
+	* @param kaleoTaskFormInstanceId the primary key of the kaleo task form instance
+	* @return the kaleo task form instance
+	* @throws PortalException if a kaleo task form instance with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoTaskFormInstance getKaleoTaskFormInstance(
+		long kaleoTaskFormInstanceId) throws PortalException;
+
+	/**
+	* Returns a range of all the kaleo task form instances.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskFormInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of kaleo task form instances
+	* @param end the upper bound of the range of kaleo task form instances (not inclusive)
+	* @return the range of kaleo task form instances
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoTaskFormInstance> getKaleoTaskFormInstances(int start,
+		int end);
+
+	/**
+	* Returns the number of kaleo task form instances.
+	*
+	* @return the number of kaleo task form instances
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getKaleoTaskFormInstancesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoTaskFormInstance getKaleoTaskFormKaleoTaskFormInstance(
+		long kaleoTaskFormId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoTaskFormInstance> getKaleoTaskKaleoTaskFormInstances(
+		long kaleoTaskId);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Updates the kaleo task form instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoTaskFormInstance the kaleo task form instance
+	* @return the kaleo task form instance that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public KaleoTaskFormInstance updateKaleoTaskFormInstance(
+		KaleoTaskFormInstance kaleoTaskFormInstance);
 }

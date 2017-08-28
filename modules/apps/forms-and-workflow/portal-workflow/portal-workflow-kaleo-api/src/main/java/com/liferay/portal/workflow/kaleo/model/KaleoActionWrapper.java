@@ -193,38 +193,8 @@ public class KaleoActionWrapper implements KaleoAction,
 	}
 
 	@Override
-	public KaleoAction toEscapedModel() {
-		return new KaleoActionWrapper(_kaleoAction.toEscapedModel());
-	}
-
-	@Override
-	public KaleoAction toUnescapedModel() {
-		return new KaleoActionWrapper(_kaleoAction.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _kaleoAction.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _kaleoAction.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _kaleoAction.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _kaleoAction.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<KaleoAction> toCacheModel() {
-		return _kaleoAction.toCacheModel();
+	public java.lang.Object clone() {
+		return new KaleoActionWrapper((KaleoAction)_kaleoAction.clone());
 	}
 
 	@Override
@@ -233,28 +203,23 @@ public class KaleoActionWrapper implements KaleoAction,
 	}
 
 	/**
-	* Returns the priority of this kaleo action.
+	* Returns the company ID of this kaleo action.
 	*
-	* @return the priority of this kaleo action
+	* @return the company ID of this kaleo action
 	*/
 	@Override
-	public int getPriority() {
-		return _kaleoAction.getPriority();
+	public long getCompanyId() {
+		return _kaleoAction.getCompanyId();
 	}
 
+	/**
+	* Returns the create date of this kaleo action.
+	*
+	* @return the create date of this kaleo action
+	*/
 	@Override
-	public int hashCode() {
-		return _kaleoAction.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _kaleoAction.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new KaleoActionWrapper((KaleoAction)_kaleoAction.clone());
+	public Date getCreateDate() {
+		return _kaleoAction.getCreateDate();
 	}
 
 	/**
@@ -277,6 +242,31 @@ public class KaleoActionWrapper implements KaleoAction,
 		return _kaleoAction.getExecutionType();
 	}
 
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _kaleoAction.getExpandoBridge();
+	}
+
+	/**
+	* Returns the group ID of this kaleo action.
+	*
+	* @return the group ID of this kaleo action
+	*/
+	@Override
+	public long getGroupId() {
+		return _kaleoAction.getGroupId();
+	}
+
+	/**
+	* Returns the kaleo action ID of this kaleo action.
+	*
+	* @return the kaleo action ID of this kaleo action
+	*/
+	@Override
+	public long getKaleoActionId() {
+		return _kaleoAction.getKaleoActionId();
+	}
+
 	/**
 	* Returns the kaleo class name of this kaleo action.
 	*
@@ -285,6 +275,26 @@ public class KaleoActionWrapper implements KaleoAction,
 	@Override
 	public java.lang.String getKaleoClassName() {
 		return _kaleoAction.getKaleoClassName();
+	}
+
+	/**
+	* Returns the kaleo class pk of this kaleo action.
+	*
+	* @return the kaleo class pk of this kaleo action
+	*/
+	@Override
+	public long getKaleoClassPK() {
+		return _kaleoAction.getKaleoClassPK();
+	}
+
+	/**
+	* Returns the kaleo definition ID of this kaleo action.
+	*
+	* @return the kaleo definition ID of this kaleo action
+	*/
+	@Override
+	public long getKaleoDefinitionId() {
+		return _kaleoAction.getKaleoDefinitionId();
 	}
 
 	/**
@@ -298,6 +308,16 @@ public class KaleoActionWrapper implements KaleoAction,
 	}
 
 	/**
+	* Returns the modified date of this kaleo action.
+	*
+	* @return the modified date of this kaleo action
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _kaleoAction.getModifiedDate();
+	}
+
+	/**
 	* Returns the name of this kaleo action.
 	*
 	* @return the name of this kaleo action
@@ -305,6 +325,31 @@ public class KaleoActionWrapper implements KaleoAction,
 	@Override
 	public java.lang.String getName() {
 		return _kaleoAction.getName();
+	}
+
+	/**
+	* Returns the primary key of this kaleo action.
+	*
+	* @return the primary key of this kaleo action
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _kaleoAction.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _kaleoAction.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the priority of this kaleo action.
+	*
+	* @return the priority of this kaleo action
+	*/
+	@Override
+	public int getPriority() {
+		return _kaleoAction.getPriority();
 	}
 
 	/**
@@ -338,6 +383,16 @@ public class KaleoActionWrapper implements KaleoAction,
 	}
 
 	/**
+	* Returns the user ID of this kaleo action.
+	*
+	* @return the user ID of this kaleo action
+	*/
+	@Override
+	public long getUserId() {
+		return _kaleoAction.getUserId();
+	}
+
+	/**
 	* Returns the user name of this kaleo action.
 	*
 	* @return the user name of this kaleo action
@@ -358,103 +413,23 @@ public class KaleoActionWrapper implements KaleoAction,
 	}
 
 	@Override
-	public java.lang.String toString() {
-		return _kaleoAction.toString();
+	public int hashCode() {
+		return _kaleoAction.hashCode();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _kaleoAction.toXmlString();
+	public boolean isCachedModel() {
+		return _kaleoAction.isCachedModel();
 	}
 
-	/**
-	* Returns the create date of this kaleo action.
-	*
-	* @return the create date of this kaleo action
-	*/
 	@Override
-	public Date getCreateDate() {
-		return _kaleoAction.getCreateDate();
+	public boolean isEscapedModel() {
+		return _kaleoAction.isEscapedModel();
 	}
 
-	/**
-	* Returns the modified date of this kaleo action.
-	*
-	* @return the modified date of this kaleo action
-	*/
 	@Override
-	public Date getModifiedDate() {
-		return _kaleoAction.getModifiedDate();
-	}
-
-	/**
-	* Returns the company ID of this kaleo action.
-	*
-	* @return the company ID of this kaleo action
-	*/
-	@Override
-	public long getCompanyId() {
-		return _kaleoAction.getCompanyId();
-	}
-
-	/**
-	* Returns the group ID of this kaleo action.
-	*
-	* @return the group ID of this kaleo action
-	*/
-	@Override
-	public long getGroupId() {
-		return _kaleoAction.getGroupId();
-	}
-
-	/**
-	* Returns the kaleo action ID of this kaleo action.
-	*
-	* @return the kaleo action ID of this kaleo action
-	*/
-	@Override
-	public long getKaleoActionId() {
-		return _kaleoAction.getKaleoActionId();
-	}
-
-	/**
-	* Returns the kaleo class pk of this kaleo action.
-	*
-	* @return the kaleo class pk of this kaleo action
-	*/
-	@Override
-	public long getKaleoClassPK() {
-		return _kaleoAction.getKaleoClassPK();
-	}
-
-	/**
-	* Returns the kaleo definition ID of this kaleo action.
-	*
-	* @return the kaleo definition ID of this kaleo action
-	*/
-	@Override
-	public long getKaleoDefinitionId() {
-		return _kaleoAction.getKaleoDefinitionId();
-	}
-
-	/**
-	* Returns the primary key of this kaleo action.
-	*
-	* @return the primary key of this kaleo action
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _kaleoAction.getPrimaryKey();
-	}
-
-	/**
-	* Returns the user ID of this kaleo action.
-	*
-	* @return the user ID of this kaleo action
-	*/
-	@Override
-	public long getUserId() {
-		return _kaleoAction.getUserId();
+	public boolean isNew() {
+		return _kaleoAction.isNew();
 	}
 
 	@Override
@@ -508,14 +483,14 @@ public class KaleoActionWrapper implements KaleoAction,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_kaleoAction.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_kaleoAction.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_kaleoAction.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -692,6 +667,31 @@ public class KaleoActionWrapper implements KaleoAction,
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_kaleoAction.setUserUuid(userUuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<KaleoAction> toCacheModel() {
+		return _kaleoAction.toCacheModel();
+	}
+
+	@Override
+	public KaleoAction toEscapedModel() {
+		return new KaleoActionWrapper(_kaleoAction.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _kaleoAction.toString();
+	}
+
+	@Override
+	public KaleoAction toUnescapedModel() {
+		return new KaleoActionWrapper(_kaleoAction.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _kaleoAction.toXmlString();
 	}
 
 	@Override

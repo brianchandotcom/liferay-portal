@@ -175,15 +175,17 @@
 					(JournalArticle.version < tempJournalArticle.version)
 			LEFT JOIN
 				(SELECT
-					JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK
+					JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK,
+					JournalArticleLocalization.title
 				FROM
 					JournalArticleLocalization
 				GROUP BY
-					JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK
-				) tempJournalArticleLocalization
+					JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK,
+					JournalArticleLocalization.title
+				) JournalArticleLocalization
 				ON
-					(JournalArticle.companyId = tempJournalArticleLocalization.companyId) AND
-					(JournalArticle.id_ = tempJournalArticleLocalization.articlePK)
+					(JournalArticle.companyId = JournalArticleLocalization.companyId) AND
+					(JournalArticle.id_ = JournalArticleLocalization.articlePK)
 			WHERE
 				(JournalArticle.groupId = ?) AND
 				([$STATUS$]) AND
@@ -206,15 +208,17 @@
 				(JournalArticle.version < tempJournalArticle.version)
 			LEFT JOIN
 				(SELECT
-					JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK
+					JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK,
+					JournalArticleLocalization.title
 				FROM
 					JournalArticleLocalization
 				GROUP BY
-					JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK
-				) tempJournalArticleLocalization
+					JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK,
+					JournalArticleLocalization.title
+				) JournalArticleLocalization
 				ON
-					(JournalArticle.companyId = tempJournalArticleLocalization.companyId) AND
-					(JournalArticle.id_ = tempJournalArticleLocalization.articlePK)
+					(JournalArticle.companyId = JournalArticleLocalization.companyId) AND
+					(JournalArticle.id_ = JournalArticleLocalization.articlePK)
 			WHERE
 				(JournalArticle.groupId = ?) AND
 				(JournalArticle.classNameId = ?) AND
@@ -238,15 +242,17 @@
 				(JournalArticle.version < tempJournalArticle.version)
 			LEFT JOIN
 				(SELECT
-					JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK
+					JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK,
+					JournalArticleLocalization.title
 				FROM
 					JournalArticleLocalization
 				GROUP BY
-					JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK
-				) tempJournalArticleLocalization
+					JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK,
+					JournalArticleLocalization.title
+				) JournalArticleLocalization
 				ON
-					(JournalArticle.companyId = tempJournalArticleLocalization.companyId) AND
-					(JournalArticle.id_ = tempJournalArticleLocalization.articlePK)
+					(JournalArticle.companyId = JournalArticleLocalization.companyId) AND
+					(JournalArticle.id_ = JournalArticleLocalization.articlePK)
 			WHERE
 				(JournalArticle.groupId = ?) AND
 				(JournalArticle.classNameId = ?) AND
@@ -280,10 +286,10 @@
 				GROUP BY
 					JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK,
 					JournalArticleLocalization.title, JournalArticleLocalization.description
-				) tempJournalArticleLocalization
+				) JournalArticleLocalization
 				ON
-					(JournalArticle.companyId = tempJournalArticleLocalization.companyId) AND
-					(JournalArticle.id_ = tempJournalArticleLocalization.articlePK)
+					(JournalArticle.companyId = JournalArticleLocalization.companyId) AND
+					(JournalArticle.id_ = JournalArticleLocalization.articlePK)
 			WHERE
 				(JournalArticle.companyId = ?) AND
 				(JournalArticle.groupId = ?) AND
@@ -296,8 +302,8 @@
 					(JournalArticle.articleId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(JournalArticle.version = ?) [$AND_OR_CONNECTOR$]
 					(JournalArticle.content LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(LOWER(tempJournalArticleLocalization.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(tempJournalArticleLocalization.description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(LOWER(JournalArticleLocalization.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(JournalArticleLocalization.description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(JournalArticle.displayDate >= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(JournalArticle.displayDate <= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(JournalArticle.reviewDate <= ? [$AND_OR_NULL_CHECK$])

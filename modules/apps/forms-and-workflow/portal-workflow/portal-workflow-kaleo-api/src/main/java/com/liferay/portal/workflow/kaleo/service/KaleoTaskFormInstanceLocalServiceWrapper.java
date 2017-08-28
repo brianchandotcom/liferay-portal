@@ -34,38 +34,6 @@ public class KaleoTaskFormInstanceLocalServiceWrapper
 		_kaleoTaskFormInstanceLocalService = kaleoTaskFormInstanceLocalService;
 	}
 
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _kaleoTaskFormInstanceLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _kaleoTaskFormInstanceLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _kaleoTaskFormInstanceLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoTaskFormInstanceLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoTaskFormInstanceLocalService.getPersistedModel(primaryKeyObj);
-	}
-
 	/**
 	* Adds the kaleo task form instance to the database. Also notifies the appropriate model listeners.
 	*
@@ -88,6 +56,11 @@ public class KaleoTaskFormInstanceLocalServiceWrapper
 			kaleoTaskFormId, formValues, kaleoTaskInstanceToken, serviceContext);
 	}
 
+	@Override
+	public int countKaleoTaskFormInstanceByKaleoTaskId(long kaleoTaskId) {
+		return _kaleoTaskFormInstanceLocalService.countKaleoTaskFormInstanceByKaleoTaskId(kaleoTaskId);
+	}
+
 	/**
 	* Creates a new kaleo task form instance with the primary key. Does not add the kaleo task form instance to the database.
 	*
@@ -98,6 +71,22 @@ public class KaleoTaskFormInstanceLocalServiceWrapper
 	public com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstance createKaleoTaskFormInstance(
 		long kaleoTaskFormInstanceId) {
 		return _kaleoTaskFormInstanceLocalService.createKaleoTaskFormInstance(kaleoTaskFormInstanceId);
+	}
+
+	@Override
+	public void deleteCompanyKaleoTaskFormInstances(long companyId) {
+		_kaleoTaskFormInstanceLocalService.deleteCompanyKaleoTaskFormInstances(companyId);
+	}
+
+	@Override
+	public void deleteKaleoDefinitionKaleoTaskFormInstances(
+		long kaleoDefinitionId) {
+		_kaleoTaskFormInstanceLocalService.deleteKaleoDefinitionKaleoTaskFormInstances(kaleoDefinitionId);
+	}
+
+	@Override
+	public void deleteKaleoInstanceKaleoTaskFormInstances(long kaleoInstanceId) {
+		_kaleoTaskFormInstanceLocalService.deleteKaleoInstanceKaleoTaskFormInstances(kaleoInstanceId);
 	}
 
 	/**
@@ -126,74 +115,19 @@ public class KaleoTaskFormInstanceLocalServiceWrapper
 		return _kaleoTaskFormInstanceLocalService.deleteKaleoTaskFormInstance(kaleoTaskFormInstanceId);
 	}
 
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstance fetchKaleoTaskFormInstance(
-		long kaleoTaskFormInstanceId) {
-		return _kaleoTaskFormInstanceLocalService.fetchKaleoTaskFormInstance(kaleoTaskFormInstanceId);
-	}
-
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstance fetchKaleoTaskFormKaleoTaskFormInstance(
-		long kaleoTaskFormId) {
-		return _kaleoTaskFormInstanceLocalService.fetchKaleoTaskFormKaleoTaskFormInstance(kaleoTaskFormId);
-	}
-
 	/**
-	* Returns the kaleo task form instance with the primary key.
-	*
-	* @param kaleoTaskFormInstanceId the primary key of the kaleo task form instance
-	* @return the kaleo task form instance
-	* @throws PortalException if a kaleo task form instance with the primary key could not be found
+	* @throws PortalException
 	*/
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstance getKaleoTaskFormInstance(
-		long kaleoTaskFormInstanceId)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoTaskFormInstanceLocalService.getKaleoTaskFormInstance(kaleoTaskFormInstanceId);
+		return _kaleoTaskFormInstanceLocalService.deletePersistedModel(persistedModel);
 	}
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstance getKaleoTaskFormKaleoTaskFormInstance(
-		long kaleoTaskFormId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoTaskFormInstanceLocalService.getKaleoTaskFormKaleoTaskFormInstance(kaleoTaskFormId);
-	}
-
-	/**
-	* Updates the kaleo task form instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param kaleoTaskFormInstance the kaleo task form instance
-	* @return the kaleo task form instance that was updated
-	*/
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstance updateKaleoTaskFormInstance(
-		com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstance kaleoTaskFormInstance) {
-		return _kaleoTaskFormInstanceLocalService.updateKaleoTaskFormInstance(kaleoTaskFormInstance);
-	}
-
-	@Override
-	public int countKaleoTaskFormInstanceByKaleoTaskId(long kaleoTaskId) {
-		return _kaleoTaskFormInstanceLocalService.countKaleoTaskFormInstanceByKaleoTaskId(kaleoTaskId);
-	}
-
-	/**
-	* Returns the number of kaleo task form instances.
-	*
-	* @return the number of kaleo task form instances
-	*/
-	@Override
-	public int getKaleoTaskFormInstancesCount() {
-		return _kaleoTaskFormInstanceLocalService.getKaleoTaskFormInstancesCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _kaleoTaskFormInstanceLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _kaleoTaskFormInstanceLocalService.dynamicQuery();
 	}
 
 	/**
@@ -251,30 +185,6 @@ public class KaleoTaskFormInstanceLocalServiceWrapper
 	}
 
 	/**
-	* Returns a range of all the kaleo task form instances.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskFormInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of kaleo task form instances
-	* @param end the upper bound of the range of kaleo task form instances (not inclusive)
-	* @return the range of kaleo task form instances
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstance> getKaleoTaskFormInstances(
-		int start, int end) {
-		return _kaleoTaskFormInstanceLocalService.getKaleoTaskFormInstances(start,
-			end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstance> getKaleoTaskKaleoTaskFormInstances(
-		long kaleoTaskId) {
-		return _kaleoTaskFormInstanceLocalService.getKaleoTaskKaleoTaskFormInstances(kaleoTaskId);
-	}
-
-	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -302,19 +212,109 @@ public class KaleoTaskFormInstanceLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCompanyKaleoTaskFormInstances(long companyId) {
-		_kaleoTaskFormInstanceLocalService.deleteCompanyKaleoTaskFormInstances(companyId);
+	public com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstance fetchKaleoTaskFormInstance(
+		long kaleoTaskFormInstanceId) {
+		return _kaleoTaskFormInstanceLocalService.fetchKaleoTaskFormInstance(kaleoTaskFormInstanceId);
 	}
 
 	@Override
-	public void deleteKaleoDefinitionKaleoTaskFormInstances(
-		long kaleoDefinitionId) {
-		_kaleoTaskFormInstanceLocalService.deleteKaleoDefinitionKaleoTaskFormInstances(kaleoDefinitionId);
+	public com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstance fetchKaleoTaskFormKaleoTaskFormInstance(
+		long kaleoTaskFormId) {
+		return _kaleoTaskFormInstanceLocalService.fetchKaleoTaskFormKaleoTaskFormInstance(kaleoTaskFormId);
 	}
 
 	@Override
-	public void deleteKaleoInstanceKaleoTaskFormInstances(long kaleoInstanceId) {
-		_kaleoTaskFormInstanceLocalService.deleteKaleoInstanceKaleoTaskFormInstances(kaleoInstanceId);
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _kaleoTaskFormInstanceLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _kaleoTaskFormInstanceLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the kaleo task form instance with the primary key.
+	*
+	* @param kaleoTaskFormInstanceId the primary key of the kaleo task form instance
+	* @return the kaleo task form instance
+	* @throws PortalException if a kaleo task form instance with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstance getKaleoTaskFormInstance(
+		long kaleoTaskFormInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoTaskFormInstanceLocalService.getKaleoTaskFormInstance(kaleoTaskFormInstanceId);
+	}
+
+	/**
+	* Returns a range of all the kaleo task form instances.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskFormInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of kaleo task form instances
+	* @param end the upper bound of the range of kaleo task form instances (not inclusive)
+	* @return the range of kaleo task form instances
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstance> getKaleoTaskFormInstances(
+		int start, int end) {
+		return _kaleoTaskFormInstanceLocalService.getKaleoTaskFormInstances(start,
+			end);
+	}
+
+	/**
+	* Returns the number of kaleo task form instances.
+	*
+	* @return the number of kaleo task form instances
+	*/
+	@Override
+	public int getKaleoTaskFormInstancesCount() {
+		return _kaleoTaskFormInstanceLocalService.getKaleoTaskFormInstancesCount();
+	}
+
+	@Override
+	public com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstance getKaleoTaskFormKaleoTaskFormInstance(
+		long kaleoTaskFormId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoTaskFormInstanceLocalService.getKaleoTaskFormKaleoTaskFormInstance(kaleoTaskFormId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstance> getKaleoTaskKaleoTaskFormInstances(
+		long kaleoTaskId) {
+		return _kaleoTaskFormInstanceLocalService.getKaleoTaskKaleoTaskFormInstances(kaleoTaskId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _kaleoTaskFormInstanceLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoTaskFormInstanceLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the kaleo task form instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoTaskFormInstance the kaleo task form instance
+	* @return the kaleo task form instance that was updated
+	*/
+	@Override
+	public com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstance updateKaleoTaskFormInstance(
+		com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstance kaleoTaskFormInstance) {
+		return _kaleoTaskFormInstanceLocalService.updateKaleoTaskFormInstance(kaleoTaskFormInstance);
 	}
 
 	@Override

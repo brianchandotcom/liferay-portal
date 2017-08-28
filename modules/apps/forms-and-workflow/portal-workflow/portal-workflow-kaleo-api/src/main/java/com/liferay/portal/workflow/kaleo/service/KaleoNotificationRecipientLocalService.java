@@ -61,25 +61,6 @@ public interface KaleoNotificationRecipientLocalService extends BaseLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoNotificationRecipientLocalServiceUtil} to access the kaleo notification recipient local service. Add custom service methods to {@link com.liferay.portal.workflow.kaleo.service.impl.KaleoNotificationRecipientLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Adds the kaleo notification recipient to the database. Also notifies the appropriate model listeners.
@@ -104,6 +85,11 @@ public interface KaleoNotificationRecipientLocalService extends BaseLocalService
 	public KaleoNotificationRecipient createKaleoNotificationRecipient(
 		long kaleoNotificationRecipientId);
 
+	public void deleteCompanyKaleoNotificationRecipients(long companyId);
+
+	public void deleteKaleoDefinitionKaleoNotificationRecipients(
+		long kaleoDefinitionId);
+
 	/**
 	* Deletes the kaleo notification recipient from the database. Also notifies the appropriate model listeners.
 	*
@@ -125,45 +111,14 @@ public interface KaleoNotificationRecipientLocalService extends BaseLocalService
 	public KaleoNotificationRecipient deleteKaleoNotificationRecipient(
 		long kaleoNotificationRecipientId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoNotificationRecipient fetchKaleoNotificationRecipient(
-		long kaleoNotificationRecipientId);
-
 	/**
-	* Returns the kaleo notification recipient with the primary key.
-	*
-	* @param kaleoNotificationRecipientId the primary key of the kaleo notification recipient
-	* @return the kaleo notification recipient
-	* @throws PortalException if a kaleo notification recipient with the primary key could not be found
+	* @throws PortalException
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoNotificationRecipient getKaleoNotificationRecipient(
-		long kaleoNotificationRecipientId) throws PortalException;
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
 
-	/**
-	* Updates the kaleo notification recipient in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param kaleoNotificationRecipient the kaleo notification recipient
-	* @return the kaleo notification recipient that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public KaleoNotificationRecipient updateKaleoNotificationRecipient(
-		KaleoNotificationRecipient kaleoNotificationRecipient);
-
-	/**
-	* Returns the number of kaleo notification recipients.
-	*
-	* @return the number of kaleo notification recipients
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKaleoNotificationRecipientsCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -205,6 +160,45 @@ public interface KaleoNotificationRecipientLocalService extends BaseLocalService
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoNotificationRecipient fetchKaleoNotificationRecipient(
+		long kaleoNotificationRecipientId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the kaleo notification recipient with the primary key.
+	*
+	* @param kaleoNotificationRecipientId the primary key of the kaleo notification recipient
+	* @return the kaleo notification recipient
+	* @throws PortalException if a kaleo notification recipient with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoNotificationRecipient getKaleoNotificationRecipient(
+		long kaleoNotificationRecipientId) throws PortalException;
+
+	/**
 	* Returns a range of all the kaleo notification recipients.
 	*
 	* <p>
@@ -224,25 +218,32 @@ public interface KaleoNotificationRecipientLocalService extends BaseLocalService
 		long kaleoNotificationId);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of kaleo notification recipients.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of kaleo notification recipients
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getKaleoNotificationRecipientsCount();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public java.lang.String getOSGiServiceIdentifier();
 
-	public void deleteCompanyKaleoNotificationRecipients(long companyId);
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
-	public void deleteKaleoDefinitionKaleoNotificationRecipients(
-		long kaleoDefinitionId);
+	/**
+	* Updates the kaleo notification recipient in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoNotificationRecipient the kaleo notification recipient
+	* @return the kaleo notification recipient that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public KaleoNotificationRecipient updateKaleoNotificationRecipient(
+		KaleoNotificationRecipient kaleoNotificationRecipient);
 }

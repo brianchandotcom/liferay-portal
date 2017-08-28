@@ -14,11 +14,9 @@
 
 package com.liferay.vulcan.response.control.internal;
 
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.vulcan.pagination.Pagination;
 import com.liferay.vulcan.provider.Provider;
-
-import java.util.Map;
+import com.liferay.vulcan.result.Try;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -37,15 +35,26 @@ public class PaginationProvider implements Provider<Pagination> {
 
 	@Override
 	public Pagination createContext(HttpServletRequest httpServletRequest) {
-		Map<String, String[]> parameterMap =
-			httpServletRequest.getParameterMap();
+		int itemsPerPage = _getAsInt(
+			httpServletRequest.getParameter("per_page"),
+			_ITEMS_PER_PAGE_DEFAULT);
 
-		int itemsPerPage = MapUtil.getInteger(
-			parameterMap, "per_page", _ITEMS_PER_PAGE_DEFAULT);
-		int pageNumber = MapUtil.getInteger(
-			parameterMap, "page", _PAGE_NUMBER_DEFAULT);
+		int pageNumber = _getAsInt(
+			httpServletRequest.getParameter("page"), _PAGE_NUMBER_DEFAULT);
 
 		return new DefaultPagination(itemsPerPage, pageNumber);
+	}
+
+	private int _getAsInt(String parameterValue, int defaultValue) {
+		Try<String> stringTry = Try.success(parameterValue);
+
+		return stringTry.map(
+			Integer::parseInt
+		).filter(
+			integer -> integer > 0
+		).orElse(
+			defaultValue
+		);
 	}
 
 	private static final int _ITEMS_PER_PAGE_DEFAULT = 30;

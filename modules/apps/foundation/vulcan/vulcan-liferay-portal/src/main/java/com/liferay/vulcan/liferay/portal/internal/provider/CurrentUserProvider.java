@@ -21,7 +21,7 @@ import com.liferay.vulcan.provider.Provider;
 
 import javax.servlet.http.HttpServletRequest;
 
-import javax.ws.rs.NotFoundException;
+import javax.ws.rs.ForbiddenException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,7 +45,8 @@ public class CurrentUserProvider implements Provider<CurrentUser> {
 				return _userService.getCurrentUser();
 			}
 			catch (PortalException pe) {
-				throw new NotFoundException(pe);
+				throw new ForbiddenException(
+					"Couldn't found any logged user", pe);
 			}
 		};
 	}

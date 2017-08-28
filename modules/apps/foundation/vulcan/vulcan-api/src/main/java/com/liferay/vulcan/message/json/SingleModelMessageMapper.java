@@ -17,9 +17,10 @@ package com.liferay.vulcan.message.json;
 import aQute.bnd.annotation.ConsumerType;
 
 import com.liferay.vulcan.list.FunctionalList;
-import com.liferay.vulcan.message.RequestInfo;
 
 import java.util.List;
+
+import javax.ws.rs.core.HttpHeaders;
 
 /**
  * Instances of this interface can be used to add Vulcan the ability to
@@ -33,8 +34,8 @@ import java.util.List;
  * methods a {@link JSONObjectBuilder} is received.
  *
  * All methods are called in a not predefined order, except
- * {@link #onStart(JSONObjectBuilder, Object, Class, RequestInfo)},
- * {@link #onFinish(JSONObjectBuilder, Object, Class, RequestInfo)} (called when
+ * {@link #onStart(JSONObjectBuilder, Object, Class, HttpHeaders)},
+ * {@link #onFinish(JSONObjectBuilder, Object, Class, HttpHeaders)} (called when
  * the writer starts and finishes the item).
  *
  * @author Alejandro Hernández
@@ -169,11 +170,11 @@ public interface SingleModelMessageMapper<T> {
 	 * @param jsonObjectBuilder the json object builder for the model.
 	 * @param model the actual model.
 	 * @param modelClass the model class of the model.
-	 * @param requestInfo the request info for the current request.
+	 * @param httpHeaders the http headers of the current request.
 	 */
 	public default void onFinish(
 		JSONObjectBuilder jsonObjectBuilder, T model, Class<T> modelClass,
-		RequestInfo requestInfo) {
+		HttpHeaders httpHeaders) {
 	}
 
 	/**
@@ -182,11 +183,11 @@ public interface SingleModelMessageMapper<T> {
 	 * @param jsonObjectBuilder the json object builder for the model.
 	 * @param model the actual model.
 	 * @param modelClass the model class of the model.
-	 * @param requestInfo the request info for the current request.
+	 * @param httpHeaders the http headers of the current request.
 	 */
 	public default void onStart(
 		JSONObjectBuilder jsonObjectBuilder, T model, Class<T> modelClass,
-		RequestInfo requestInfo) {
+		HttpHeaders httpHeaders) {
 	}
 
 	/**
@@ -195,12 +196,12 @@ public interface SingleModelMessageMapper<T> {
 	 *
 	 * @param  model the actual model.
 	 * @param  modelClass the model class of the model.
-	 * @param  requestInfo the request info for the current request.
+	 * @param  httpHeaders the http headers of the current request.
 	 * @return <code>true</code> if mapper supports mapping this request;
 	 *         <code>false</code> otherwise.
 	 */
 	public default boolean supports(
-		T model, Class<T> modelClass, RequestInfo requestInfo) {
+		T model, Class<T> modelClass, HttpHeaders httpHeaders) {
 
 		return true;
 	}

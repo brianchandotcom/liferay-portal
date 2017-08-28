@@ -92,8 +92,12 @@ public class ClassNameClassPKFilterProvider
 
 		String type = _typeIdFilterProviderHelper.getType(httpServletRequest);
 
-		if ((classPK == GetterUtil.DEFAULT_LONG) || (type == null)) {
-			throw new BadRequestException();
+		if (classPK == GetterUtil.DEFAULT_LONG) {
+			throw new BadRequestException("Invalid classPK");
+		}
+
+		if (type == null) {
+			throw new BadRequestException("Invalid type");
 		}
 
 		String className = _resourceManager.getClassName(type);

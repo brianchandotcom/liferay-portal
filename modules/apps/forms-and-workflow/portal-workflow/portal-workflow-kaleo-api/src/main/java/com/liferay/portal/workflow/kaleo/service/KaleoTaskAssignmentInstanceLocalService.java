@@ -64,25 +64,6 @@ public interface KaleoTaskAssignmentInstanceLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoTaskAssignmentInstanceLocalServiceUtil} to access the kaleo task assignment instance local service. Add custom service methods to {@link com.liferay.portal.workflow.kaleo.service.impl.KaleoTaskAssignmentInstanceLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Adds the kaleo task assignment instance to the database. Also notifies the appropriate model listeners.
@@ -97,6 +78,12 @@ public interface KaleoTaskAssignmentInstanceLocalService
 	public KaleoTaskAssignmentInstance addKaleoTaskAssignmentInstance(
 		long groupId, KaleoTaskInstanceToken kaleoTaskInstanceToken,
 		java.lang.String assigneeClassName, long assigneeClassPK,
+		ServiceContext serviceContext) throws PortalException;
+
+	public List<KaleoTaskAssignmentInstance> addTaskAssignmentInstances(
+		KaleoTaskInstanceToken kaleoTaskInstanceToken,
+		Collection<KaleoTaskAssignment> kaleoTaskAssignments,
+		Map<java.lang.String, Serializable> workflowContext,
 		ServiceContext serviceContext) throws PortalException;
 
 	public KaleoTaskAssignmentInstance assignKaleoTaskAssignmentInstance(
@@ -116,6 +103,14 @@ public interface KaleoTaskAssignmentInstanceLocalService
 	*/
 	public KaleoTaskAssignmentInstance createKaleoTaskAssignmentInstance(
 		long kaleoTaskAssignmentInstanceId);
+
+	public void deleteCompanyKaleoTaskAssignmentInstances(long companyId);
+
+	public void deleteKaleoDefinitionKaleoTaskAssignmentInstances(
+		long kaleoDefintionId);
+
+	public void deleteKaleoInstanceKaleoTaskAssignmentInstances(
+		long kaleoInstanceId);
 
 	/**
 	* Deletes the kaleo task assignment instance from the database. Also notifies the appropriate model listeners.
@@ -138,60 +133,17 @@ public interface KaleoTaskAssignmentInstanceLocalService
 	public KaleoTaskAssignmentInstance deleteKaleoTaskAssignmentInstance(
 		long kaleoTaskAssignmentInstanceId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoTaskAssignmentInstance fetchFirstKaleoTaskAssignmentInstance(
-		long kaleoTaskInstanceTokenId,
-		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoTaskAssignmentInstance fetchKaleoTaskAssignmentInstance(
-		long kaleoTaskAssignmentInstanceId);
+	public void deleteKaleoTaskAssignmentInstances(
+		KaleoTaskInstanceToken kaleoTaskInstanceToken);
 
 	/**
-	* Returns the kaleo task assignment instance with the primary key.
-	*
-	* @param kaleoTaskAssignmentInstanceId the primary key of the kaleo task assignment instance
-	* @return the kaleo task assignment instance
-	* @throws PortalException if a kaleo task assignment instance with the primary key could not be found
+	* @throws PortalException
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoTaskAssignmentInstance getKaleoTaskAssignmentInstance(
-		long kaleoTaskAssignmentInstanceId) throws PortalException;
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
 
-	/**
-	* Updates the kaleo task assignment instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param kaleoTaskAssignmentInstance the kaleo task assignment instance
-	* @return the kaleo task assignment instance that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public KaleoTaskAssignmentInstance updateKaleoTaskAssignmentInstance(
-		KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance);
-
-	/**
-	* Returns the number of kaleo task assignment instances.
-	*
-	* @return the number of kaleo task assignment instances
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKaleoTaskAssignmentInstancesCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKaleoTaskAssignmentInstancesCount(
-		long kaleoTaskInstanceTokenId);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	public List<KaleoTaskAssignmentInstance> addTaskAssignmentInstances(
-		KaleoTaskInstanceToken kaleoTaskInstanceToken,
-		Collection<KaleoTaskAssignment> kaleoTaskAssignments,
-		Map<java.lang.String, Serializable> workflowContext,
-		ServiceContext serviceContext) throws PortalException;
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -233,6 +185,50 @@ public interface KaleoTaskAssignmentInstanceLocalService
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoTaskAssignmentInstance fetchFirstKaleoTaskAssignmentInstance(
+		long kaleoTaskInstanceTokenId,
+		OrderByComparator<KaleoTaskAssignmentInstance> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoTaskAssignmentInstance fetchKaleoTaskAssignmentInstance(
+		long kaleoTaskAssignmentInstanceId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the kaleo task assignment instance with the primary key.
+	*
+	* @param kaleoTaskAssignmentInstanceId the primary key of the kaleo task assignment instance
+	* @return the kaleo task assignment instance
+	* @throws PortalException if a kaleo task assignment instance with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoTaskAssignmentInstance getKaleoTaskAssignmentInstance(
+		long kaleoTaskAssignmentInstanceId) throws PortalException;
+
+	/**
 	* Returns a range of all the kaleo task assignment instances.
 	*
 	* <p>
@@ -252,31 +248,36 @@ public interface KaleoTaskAssignmentInstanceLocalService
 		long kaleoTaskInstanceTokenId);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of kaleo task assignment instances.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of kaleo task assignment instances
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getKaleoTaskAssignmentInstancesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getKaleoTaskAssignmentInstancesCount(
+		long kaleoTaskInstanceTokenId);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public java.lang.String getOSGiServiceIdentifier();
 
-	public void deleteCompanyKaleoTaskAssignmentInstances(long companyId);
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
-	public void deleteKaleoDefinitionKaleoTaskAssignmentInstances(
-		long kaleoDefintionId);
-
-	public void deleteKaleoInstanceKaleoTaskAssignmentInstances(
-		long kaleoInstanceId);
-
-	public void deleteKaleoTaskAssignmentInstances(
-		KaleoTaskInstanceToken kaleoTaskInstanceToken);
+	/**
+	* Updates the kaleo task assignment instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoTaskAssignmentInstance the kaleo task assignment instance
+	* @return the kaleo task assignment instance that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public KaleoTaskAssignmentInstance updateKaleoTaskAssignmentInstance(
+		KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance);
 }

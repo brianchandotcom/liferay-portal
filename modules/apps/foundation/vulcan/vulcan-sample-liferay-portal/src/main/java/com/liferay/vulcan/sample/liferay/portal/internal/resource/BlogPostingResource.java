@@ -151,7 +151,8 @@ public class BlogPostingResource implements Resource<BlogsEntry> {
 			return _blogsService.getEntry(id);
 		}
 		catch (NoSuchEntryException | PrincipalException e) {
-			throw new NotFoundException(e);
+			throw new NotFoundException(
+				"No BlogsEntry can be found with id: " + id, e);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);
@@ -170,12 +171,14 @@ public class BlogPostingResource implements Resource<BlogsEntry> {
 	}
 
 	private Optional<Group> _getGroupOptional(BlogsEntry blogsEntry) {
+		long groupId = blogsEntry.getGroupId();
+
 		try {
-			return Optional.of(
-				_groupLocalService.getGroup(blogsEntry.getGroupId()));
+			return Optional.of(_groupLocalService.getGroup(groupId));
 		}
 		catch (NoSuchGroupException nsge) {
-			throw new NotFoundException(nsge);
+			throw new NotFoundException(
+				"No Group can be found with id: " + groupId, nsge);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);
@@ -195,12 +198,14 @@ public class BlogPostingResource implements Resource<BlogsEntry> {
 	}
 
 	private Optional<User> _getUserOptional(BlogsEntry blogsEntry) {
+		long userId = blogsEntry.getUserId();
+
 		try {
-			return Optional.ofNullable(
-				_userService.getUserById(blogsEntry.getUserId()));
+			return Optional.ofNullable(_userService.getUserById(userId));
 		}
 		catch (NoSuchUserException | PrincipalException e) {
-			throw new NotFoundException(e);
+			throw new NotFoundException(
+				"No User can be found with id: " + userId, e);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);

@@ -1,0 +1,45 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.workflow.web.internal.constants;
+
+/**
+ * @author Adam Brandizzi
+ */
+public class WorkflowWebKeys {
+
+	public static final String WORKFLOW_DEFAULT_TAB = "WORKFLOW_DEFAULT_TAB";
+
+	public static final String WORKFLOW_DEFINITION_DISPLAY_CONTEXT =
+		"WORKFLOW_DEFINITION_DISPLAY_CONTEXT";
+
+	public static final String WORKFLOW_DEFINITION_LINK_DISPLAY_CONTEXT =
+		"WORKFLOW_DEFINITION_LINK_DISPLAY_CONTEXT";
+
+	public static final String WORKFLOW_TAB_DEFINITION = "workflows";
+
+	public static final String WORKFLOW_TAB_DEFINITION_LINK = "schemes";
+
+	public static final String WORKFLOW_TAB_INSTANCE = "monitoring";
+
+	public static final String WORKFLOW_VISIBILITY_DEFINITION =
+		"WORKFLOW_VISIBILITY_DEFINITION";
+
+	public static final String WORKFLOW_VISIBILITY_DEFINITION_LINK =
+		"WORKFLOW_VISIBILITY_DEFINITION_LINK";
+
+	public static final String WORKFLOW_VISIBILITY_INSTANCE =
+		"WORKFLOW_VISIBILITY_INSTANCE";
+
+}

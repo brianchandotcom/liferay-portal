@@ -62,25 +62,6 @@ public interface KaleoInstanceTokenLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoInstanceTokenLocalServiceUtil} to access the kaleo instance token local service. Add custom service methods to {@link com.liferay.portal.workflow.kaleo.service.impl.KaleoInstanceTokenLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Adds the kaleo instance token to the database. Also notifies the appropriate model listeners.
@@ -109,6 +90,12 @@ public interface KaleoInstanceTokenLocalService extends BaseLocalService,
 	public KaleoInstanceToken createKaleoInstanceToken(
 		long kaleoInstanceTokenId);
 
+	public void deleteCompanyKaleoInstanceTokens(long companyId);
+
+	public void deleteKaleoDefinitionKaleoInstanceTokens(long kaleoDefinitionId);
+
+	public void deleteKaleoInstanceKaleoInstanceTokens(long kaleoInstanceId);
+
 	/**
 	* Deletes the kaleo instance token from the database. Also notifies the appropriate model listeners.
 	*
@@ -130,61 +117,14 @@ public interface KaleoInstanceTokenLocalService extends BaseLocalService,
 	public KaleoInstanceToken deleteKaleoInstanceToken(
 		long kaleoInstanceTokenId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoInstanceToken fetchKaleoInstanceToken(long kaleoInstanceTokenId);
-
 	/**
-	* Returns the kaleo instance token with the primary key.
-	*
-	* @param kaleoInstanceTokenId the primary key of the kaleo instance token
-	* @return the kaleo instance token
-	* @throws PortalException if a kaleo instance token with the primary key could not be found
+	* @throws PortalException
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoInstanceToken getKaleoInstanceToken(long kaleoInstanceTokenId)
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoInstanceToken getRootKaleoInstanceToken(long kaleoInstanceId,
-		Map<java.lang.String, Serializable> workflowContext,
-		ServiceContext serviceContext) throws PortalException;
-
-	/**
-	* Updates the kaleo instance token in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param kaleoInstanceToken the kaleo instance token
-	* @return the kaleo instance token that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public KaleoInstanceToken updateKaleoInstanceToken(
-		KaleoInstanceToken kaleoInstanceToken);
-
-	public KaleoInstanceToken updateKaleoInstanceToken(
-		long kaleoInstanceTokenId, long currentKaleoNodeId)
-		throws PortalException;
-
-	/**
-	* Returns the number of kaleo instance tokens.
-	*
-	* @return the number of kaleo instance tokens
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKaleoInstanceTokensCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKaleoInstanceTokensCount(long parentKaleoInstanceTokenId,
-		ServiceContext serviceContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKaleoInstanceTokensCount(long parentKaleoInstanceTokenId,
-		Date completionDate, ServiceContext serviceContext);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -226,29 +166,6 @@ public interface KaleoInstanceTokenLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns a range of all the kaleo instance tokens.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.workflow.kaleo.model.impl.KaleoInstanceTokenModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of kaleo instance tokens
-	* @param end the upper bound of the range of kaleo instance tokens (not inclusive)
-	* @return the range of kaleo instance tokens
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoInstanceToken> getKaleoInstanceTokens(int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoInstanceToken> getKaleoInstanceTokens(
-		long parentKaleoInstanceTokenId, ServiceContext serviceContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoInstanceToken> getKaleoInstanceTokens(
-		long parentKaleoInstanceTokenId, Date completionDate,
-		ServiceContext serviceContext);
-
-	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -266,9 +183,93 @@ public interface KaleoInstanceTokenLocalService extends BaseLocalService,
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
 
-	public void deleteCompanyKaleoInstanceTokens(long companyId);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoInstanceToken fetchKaleoInstanceToken(long kaleoInstanceTokenId);
 
-	public void deleteKaleoDefinitionKaleoInstanceTokens(long kaleoDefinitionId);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
-	public void deleteKaleoInstanceKaleoInstanceTokens(long kaleoInstanceId);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the kaleo instance token with the primary key.
+	*
+	* @param kaleoInstanceTokenId the primary key of the kaleo instance token
+	* @return the kaleo instance token
+	* @throws PortalException if a kaleo instance token with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoInstanceToken getKaleoInstanceToken(long kaleoInstanceTokenId)
+		throws PortalException;
+
+	/**
+	* Returns a range of all the kaleo instance tokens.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.workflow.kaleo.model.impl.KaleoInstanceTokenModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of kaleo instance tokens
+	* @param end the upper bound of the range of kaleo instance tokens (not inclusive)
+	* @return the range of kaleo instance tokens
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoInstanceToken> getKaleoInstanceTokens(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoInstanceToken> getKaleoInstanceTokens(
+		long parentKaleoInstanceTokenId, Date completionDate,
+		ServiceContext serviceContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoInstanceToken> getKaleoInstanceTokens(
+		long parentKaleoInstanceTokenId, ServiceContext serviceContext);
+
+	/**
+	* Returns the number of kaleo instance tokens.
+	*
+	* @return the number of kaleo instance tokens
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getKaleoInstanceTokensCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getKaleoInstanceTokensCount(long parentKaleoInstanceTokenId,
+		Date completionDate, ServiceContext serviceContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getKaleoInstanceTokensCount(long parentKaleoInstanceTokenId,
+		ServiceContext serviceContext);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoInstanceToken getRootKaleoInstanceToken(long kaleoInstanceId,
+		Map<java.lang.String, Serializable> workflowContext,
+		ServiceContext serviceContext) throws PortalException;
+
+	/**
+	* Updates the kaleo instance token in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoInstanceToken the kaleo instance token
+	* @return the kaleo instance token that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public KaleoInstanceToken updateKaleoInstanceToken(
+		KaleoInstanceToken kaleoInstanceToken);
+
+	public KaleoInstanceToken updateKaleoInstanceToken(
+		long kaleoInstanceTokenId, long currentKaleoNodeId)
+		throws PortalException;
 }

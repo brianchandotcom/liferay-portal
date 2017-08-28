@@ -5,14 +5,16 @@ Export-Package:\
 	com.liferay.vulcan.converter,\
 	com.liferay.vulcan.endpoint,\
 	com.liferay.vulcan.error,\
+	com.liferay.vulcan.exception,\
 	com.liferay.vulcan.filter,\
 	com.liferay.vulcan.function,\
 	com.liferay.vulcan.list,\
-	com.liferay.vulcan.message,\
+	com.liferay.vulcan.logger,\
 	com.liferay.vulcan.message.json,\
 	com.liferay.vulcan.pagination,\
 	com.liferay.vulcan.provider,\
 	com.liferay.vulcan.resource,\
 	com.liferay.vulcan.resource.builder,\
 	com.liferay.vulcan.response.control,\
+	com.liferay.vulcan.result,\
 	com.liferay.vulcan.uri

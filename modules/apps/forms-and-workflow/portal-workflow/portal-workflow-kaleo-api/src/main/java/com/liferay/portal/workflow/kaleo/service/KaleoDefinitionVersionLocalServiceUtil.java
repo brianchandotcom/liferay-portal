@@ -41,32 +41,6 @@ public class KaleoDefinitionVersionLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.workflow.kaleo.service.impl.KaleoDefinitionVersionLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
 
 	/**
 	* Adds the kaleo definition version to the database. Also notifies the appropriate model listeners.
@@ -113,13 +87,6 @@ public class KaleoDefinitionVersionLocalServiceUtil {
 		return getService().deleteKaleoDefinitionVersion(kaleoDefinitionVersion);
 	}
 
-	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion deleteKaleoDefinitionVersion(
-		long companyId, java.lang.String name, java.lang.String version)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .deleteKaleoDefinitionVersion(companyId, name, version);
-	}
-
 	/**
 	* Deletes the kaleo definition version with the primary key from the database. Also notifies the appropriate model listeners.
 	*
@@ -134,96 +101,24 @@ public class KaleoDefinitionVersionLocalServiceUtil {
 				   .deleteKaleoDefinitionVersion(kaleoDefinitionVersionId);
 	}
 
-	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion fetchKaleoDefinitionVersion(
-		long kaleoDefinitionVersionId) {
-		return getService().fetchKaleoDefinitionVersion(kaleoDefinitionVersionId);
-	}
-
-	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion fetchLatestKaleoDefinitionVersion(
-		long companyId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .fetchLatestKaleoDefinitionVersion(companyId, name,
-			orderByComparator);
-	}
-
-	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion getKaleoDefinitionVersion(
-		long companyId, java.lang.String name, java.lang.String version)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getKaleoDefinitionVersion(companyId, name, version);
-	}
-
-	/**
-	* Returns the kaleo definition version with the primary key.
-	*
-	* @param kaleoDefinitionVersionId the primary key of the kaleo definition version
-	* @return the kaleo definition version
-	* @throws PortalException if a kaleo definition version with the primary key could not be found
-	*/
-	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion getKaleoDefinitionVersion(
-		long kaleoDefinitionVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getKaleoDefinitionVersion(kaleoDefinitionVersionId);
-	}
-
-	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion getLatestKaleoDefinitionVersion(
-		long companyId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getLatestKaleoDefinitionVersion(companyId, name);
-	}
-
-	/**
-	* Updates the kaleo definition version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param kaleoDefinitionVersion the kaleo definition version
-	* @return the kaleo definition version that was updated
-	*/
-	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion updateKaleoDefinitionVersion(
-		com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion kaleoDefinitionVersion) {
-		return getService().updateKaleoDefinitionVersion(kaleoDefinitionVersion);
-	}
-
-	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion[] getKaleoDefinitionVersionsPrevAndNext(
+	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion deleteKaleoDefinitionVersion(
 		long companyId, java.lang.String name, java.lang.String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .getKaleoDefinitionVersionsPrevAndNext(companyId, name,
-			version);
+				   .deleteKaleoDefinitionVersion(companyId, name, version);
 	}
 
 	/**
-	* Returns the number of kaleo definition versions.
-	*
-	* @return the number of kaleo definition versions
+	* @throws PortalException
 	*/
-	public static int getKaleoDefinitionVersionsCount() {
-		return getService().getKaleoDefinitionVersionsCount();
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static int getKaleoDefinitionVersionsCount(long companyId) {
-		return getService().getKaleoDefinitionVersionsCount(companyId);
-	}
-
-	public static int getKaleoDefinitionVersionsCount(long companyId,
-		java.lang.String name) {
-		return getService().getKaleoDefinitionVersionsCount(companyId, name);
-	}
-
-	public static int getLatestKaleoDefinitionVersionsCount(long companyId,
-		java.lang.String keywords, int status) {
-		return getService()
-				   .getLatestKaleoDefinitionVersionsCount(companyId, keywords,
-			status);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -277,6 +172,71 @@ public class KaleoDefinitionVersionLocalServiceUtil {
 	}
 
 	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion fetchKaleoDefinitionVersion(
+		long kaleoDefinitionVersionId) {
+		return getService().fetchKaleoDefinitionVersion(kaleoDefinitionVersionId);
+	}
+
+	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion fetchLatestKaleoDefinitionVersion(
+		long companyId, java.lang.String name,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .fetchLatestKaleoDefinitionVersion(companyId, name,
+			orderByComparator);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the kaleo definition version with the primary key.
+	*
+	* @param kaleoDefinitionVersionId the primary key of the kaleo definition version
+	* @return the kaleo definition version
+	* @throws PortalException if a kaleo definition version with the primary key could not be found
+	*/
+	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion getKaleoDefinitionVersion(
+		long kaleoDefinitionVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getKaleoDefinitionVersion(kaleoDefinitionVersionId);
+	}
+
+	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion getKaleoDefinitionVersion(
+		long companyId, java.lang.String name, java.lang.String version)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getKaleoDefinitionVersion(companyId, name, version);
+	}
+
+	/**
 	* Returns a range of all the kaleo definition versions.
 	*
 	* <p>
@@ -314,6 +274,38 @@ public class KaleoDefinitionVersionLocalServiceUtil {
 			orderByComparator);
 	}
 
+	/**
+	* Returns the number of kaleo definition versions.
+	*
+	* @return the number of kaleo definition versions
+	*/
+	public static int getKaleoDefinitionVersionsCount() {
+		return getService().getKaleoDefinitionVersionsCount();
+	}
+
+	public static int getKaleoDefinitionVersionsCount(long companyId) {
+		return getService().getKaleoDefinitionVersionsCount(companyId);
+	}
+
+	public static int getKaleoDefinitionVersionsCount(long companyId,
+		java.lang.String name) {
+		return getService().getKaleoDefinitionVersionsCount(companyId, name);
+	}
+
+	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion[] getKaleoDefinitionVersionsPrevAndNext(
+		long companyId, java.lang.String name, java.lang.String version)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getKaleoDefinitionVersionsPrevAndNext(companyId, name,
+			version);
+	}
+
+	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion getLatestKaleoDefinitionVersion(
+		long companyId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLatestKaleoDefinitionVersion(companyId, name);
+	}
+
 	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion> getLatestKaleoDefinitionVersions(
 		long companyId, java.lang.String keywords, int status, int start,
 		int end,
@@ -323,28 +315,37 @@ public class KaleoDefinitionVersionLocalServiceUtil {
 			status, start, end, orderByComparator);
 	}
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
+	public static int getLatestKaleoDefinitionVersionsCount(long companyId,
+		java.lang.String keywords, int status) {
+		return getService()
+				   .getLatestKaleoDefinitionVersionsCount(companyId, keywords,
+			status);
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the kaleo definition version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoDefinitionVersion the kaleo definition version
+	* @return the kaleo definition version that was updated
+	*/
+	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion updateKaleoDefinitionVersion(
+		com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion kaleoDefinitionVersion) {
+		return getService().updateKaleoDefinitionVersion(kaleoDefinitionVersion);
 	}
 
 	public static void updateKaleoDefinitionVersionTitle(long companyId,

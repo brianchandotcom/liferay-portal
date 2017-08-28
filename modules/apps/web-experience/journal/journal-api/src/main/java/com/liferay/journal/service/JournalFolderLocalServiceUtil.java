@@ -282,6 +282,14 @@ public class JournalFolderLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	/**
+	* @deprecated As of 4.0.0, with no direct replacement
+	*/
+	@Deprecated
+	public static com.liferay.portal.kernel.service.SubscriptionLocalService getSubscriptionLocalService() {
+		return getService().getSubscriptionLocalService();
+	}
+
 	public static int getCompanyFoldersCount(long companyId) {
 		return getService().getCompanyFoldersCount(companyId);
 	}
@@ -559,6 +567,15 @@ public class JournalFolderLocalServiceUtil {
 	public static void restoreFolderFromTrash(long userId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().restoreFolderFromTrash(userId, folderId);
+	}
+
+	/**
+	* @deprecated As of 4.0.0, with no direct replacement
+	*/
+	@Deprecated
+	public static void setSubscriptionLocalService(
+		com.liferay.portal.kernel.service.SubscriptionLocalService subscriptionLocalService) {
+		getService().setSubscriptionLocalService(subscriptionLocalService);
 	}
 
 	public static void subscribe(long userId, long groupId, long folderId)

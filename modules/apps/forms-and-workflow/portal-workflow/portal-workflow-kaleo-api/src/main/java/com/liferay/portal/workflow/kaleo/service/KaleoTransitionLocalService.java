@@ -62,25 +62,6 @@ public interface KaleoTransitionLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoTransitionLocalServiceUtil} to access the kaleo transition local service. Add custom service methods to {@link com.liferay.portal.workflow.kaleo.service.impl.KaleoTransitionLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Adds the kaleo transition to the database. Also notifies the appropriate model listeners.
@@ -104,6 +85,10 @@ public interface KaleoTransitionLocalService extends BaseLocalService,
 	*/
 	public KaleoTransition createKaleoTransition(long kaleoTransitionId);
 
+	public void deleteCompanyKaleoTransitions(long companyId);
+
+	public void deleteKaleoDefinitionKaleoTransitions(long kaleoDefinitionId);
+
 	/**
 	* Deletes the kaleo transition from the database. Also notifies the appropriate model listeners.
 	*
@@ -125,55 +110,14 @@ public interface KaleoTransitionLocalService extends BaseLocalService,
 	public KaleoTransition deleteKaleoTransition(long kaleoTransitionId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoTransition fetchKaleoTransition(long kaleoTransitionId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoTransition getDefaultKaleoTransition(long kaleoNodeId)
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoTransition getKaleoTransition(long kaleoNodeId,
-		java.lang.String name) throws PortalException;
-
-	/**
-	* Returns the kaleo transition with the primary key.
-	*
-	* @param kaleoTransitionId the primary key of the kaleo transition
-	* @return the kaleo transition
-	* @throws PortalException if a kaleo transition with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoTransition getKaleoTransition(long kaleoTransitionId)
-		throws PortalException;
-
-	/**
-	* Updates the kaleo transition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param kaleoTransition the kaleo transition
-	* @return the kaleo transition that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public KaleoTransition updateKaleoTransition(
-		KaleoTransition kaleoTransition);
-
-	/**
-	* Returns the number of kaleo transitions.
-	*
-	* @return the number of kaleo transitions
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKaleoTransitionsCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKaleoTransitionsCount(long kaleoNodeId);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -214,9 +158,55 @@ public interface KaleoTransitionLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoTransition fetchKaleoTransition(long kaleoTransitionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoTransition getDefaultKaleoTransition(long kaleoNodeId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoTransition> getKaleoDefinitionKaleoTransitions(
 		long kaleoDefinitionId);
+
+	/**
+	* Returns the kaleo transition with the primary key.
+	*
+	* @param kaleoTransitionId the primary key of the kaleo transition
+	* @return the kaleo transition
+	* @throws PortalException if a kaleo transition with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoTransition getKaleoTransition(long kaleoTransitionId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoTransition getKaleoTransition(long kaleoNodeId,
+		java.lang.String name) throws PortalException;
 
 	/**
 	* Returns a range of all the kaleo transitions.
@@ -236,24 +226,35 @@ public interface KaleoTransitionLocalService extends BaseLocalService,
 	public List<KaleoTransition> getKaleoTransitions(long kaleoNodeId);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of kaleo transitions.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of kaleo transitions
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getKaleoTransitionsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getKaleoTransitionsCount(long kaleoNodeId);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public java.lang.String getOSGiServiceIdentifier();
 
-	public void deleteCompanyKaleoTransitions(long companyId);
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
-	public void deleteKaleoDefinitionKaleoTransitions(long kaleoDefinitionId);
+	/**
+	* Updates the kaleo transition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoTransition the kaleo transition
+	* @return the kaleo transition that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public KaleoTransition updateKaleoTransition(
+		KaleoTransition kaleoTransition);
 }

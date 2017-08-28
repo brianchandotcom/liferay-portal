@@ -33,38 +33,6 @@ public class KaleoTaskLocalServiceWrapper implements KaleoTaskLocalService,
 		_kaleoTaskLocalService = kaleoTaskLocalService;
 	}
 
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _kaleoTaskLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _kaleoTaskLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _kaleoTaskLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoTaskLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoTaskLocalService.getPersistedModel(primaryKeyObj);
-	}
-
 	/**
 	* Adds the kaleo task to the database. Also notifies the appropriate model listeners.
 	*
@@ -99,6 +67,16 @@ public class KaleoTaskLocalServiceWrapper implements KaleoTaskLocalService,
 		return _kaleoTaskLocalService.createKaleoTask(kaleoTaskId);
 	}
 
+	@Override
+	public void deleteCompanyKaleoTasks(long companyId) {
+		_kaleoTaskLocalService.deleteCompanyKaleoTasks(companyId);
+	}
+
+	@Override
+	public void deleteKaleoDefinitionKaleoTasks(long kaleoDefinitionId) {
+		_kaleoTaskLocalService.deleteKaleoDefinitionKaleoTasks(kaleoDefinitionId);
+	}
+
 	/**
 	* Deletes the kaleo task from the database. Also notifies the appropriate model listeners.
 	*
@@ -125,63 +103,19 @@ public class KaleoTaskLocalServiceWrapper implements KaleoTaskLocalService,
 		return _kaleoTaskLocalService.deleteKaleoTask(kaleoTaskId);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoTask fetchKaleoTask(
-		long kaleoTaskId) {
-		return _kaleoTaskLocalService.fetchKaleoTask(kaleoTaskId);
-	}
-
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoTask getKaleoNodeKaleoTask(
-		long kaleoNodeId)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoTaskLocalService.getKaleoNodeKaleoTask(kaleoNodeId);
+		return _kaleoTaskLocalService.deletePersistedModel(persistedModel);
 	}
 
-	/**
-	* Returns the kaleo task with the primary key.
-	*
-	* @param kaleoTaskId the primary key of the kaleo task
-	* @return the kaleo task
-	* @throws PortalException if a kaleo task with the primary key could not be found
-	*/
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoTask getKaleoTask(
-		long kaleoTaskId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoTaskLocalService.getKaleoTask(kaleoTaskId);
-	}
-
-	/**
-	* Updates the kaleo task in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param kaleoTask the kaleo task
-	* @return the kaleo task that was updated
-	*/
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoTask updateKaleoTask(
-		com.liferay.portal.workflow.kaleo.model.KaleoTask kaleoTask) {
-		return _kaleoTaskLocalService.updateKaleoTask(kaleoTask);
-	}
-
-	/**
-	* Returns the number of kaleo tasks.
-	*
-	* @return the number of kaleo tasks
-	*/
-	@Override
-	public int getKaleoTasksCount() {
-		return _kaleoTaskLocalService.getKaleoTasksCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _kaleoTaskLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _kaleoTaskLocalService.dynamicQuery();
 	}
 
 	/**
@@ -238,23 +172,6 @@ public class KaleoTaskLocalServiceWrapper implements KaleoTaskLocalService,
 	}
 
 	/**
-	* Returns a range of all the kaleo tasks.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of kaleo tasks
-	* @param end the upper bound of the range of kaleo tasks (not inclusive)
-	* @return the range of kaleo tasks
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTask> getKaleoTasks(
-		int start, int end) {
-		return _kaleoTaskLocalService.getKaleoTasks(start, end);
-	}
-
-	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -281,13 +198,96 @@ public class KaleoTaskLocalServiceWrapper implements KaleoTaskLocalService,
 	}
 
 	@Override
-	public void deleteCompanyKaleoTasks(long companyId) {
-		_kaleoTaskLocalService.deleteCompanyKaleoTasks(companyId);
+	public com.liferay.portal.workflow.kaleo.model.KaleoTask fetchKaleoTask(
+		long kaleoTaskId) {
+		return _kaleoTaskLocalService.fetchKaleoTask(kaleoTaskId);
 	}
 
 	@Override
-	public void deleteKaleoDefinitionKaleoTasks(long kaleoDefinitionId) {
-		_kaleoTaskLocalService.deleteKaleoDefinitionKaleoTasks(kaleoDefinitionId);
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _kaleoTaskLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _kaleoTaskLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.workflow.kaleo.model.KaleoTask getKaleoNodeKaleoTask(
+		long kaleoNodeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoTaskLocalService.getKaleoNodeKaleoTask(kaleoNodeId);
+	}
+
+	/**
+	* Returns the kaleo task with the primary key.
+	*
+	* @param kaleoTaskId the primary key of the kaleo task
+	* @return the kaleo task
+	* @throws PortalException if a kaleo task with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.workflow.kaleo.model.KaleoTask getKaleoTask(
+		long kaleoTaskId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoTaskLocalService.getKaleoTask(kaleoTaskId);
+	}
+
+	/**
+	* Returns a range of all the kaleo tasks.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of kaleo tasks
+	* @param end the upper bound of the range of kaleo tasks (not inclusive)
+	* @return the range of kaleo tasks
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTask> getKaleoTasks(
+		int start, int end) {
+		return _kaleoTaskLocalService.getKaleoTasks(start, end);
+	}
+
+	/**
+	* Returns the number of kaleo tasks.
+	*
+	* @return the number of kaleo tasks
+	*/
+	@Override
+	public int getKaleoTasksCount() {
+		return _kaleoTaskLocalService.getKaleoTasksCount();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _kaleoTaskLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoTaskLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the kaleo task in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoTask the kaleo task
+	* @return the kaleo task that was updated
+	*/
+	@Override
+	public com.liferay.portal.workflow.kaleo.model.KaleoTask updateKaleoTask(
+		com.liferay.portal.workflow.kaleo.model.KaleoTask kaleoTask) {
+		return _kaleoTaskLocalService.updateKaleoTask(kaleoTask);
 	}
 
 	@Override

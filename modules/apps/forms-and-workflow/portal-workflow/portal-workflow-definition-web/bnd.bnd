@@ -1,7 +1,0 @@
-Bundle-Name: Liferay Portal Workflow Definition Web
-Bundle-SymbolicName: com.liferay.portal.workflow.definition.web
-Bundle-Version: 1.0.10
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Workflow
-Web-ContextPath: /portal-workflow-definition-web
--dsannotations-options: inherit

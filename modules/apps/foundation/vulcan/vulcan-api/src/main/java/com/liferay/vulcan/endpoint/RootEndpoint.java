@@ -17,9 +17,10 @@ package com.liferay.vulcan.endpoint;
 import com.liferay.vulcan.pagination.Page;
 import com.liferay.vulcan.pagination.SingleModel;
 import com.liferay.vulcan.resource.Routes;
+import com.liferay.vulcan.result.Try;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 import javax.ws.rs.GET;
@@ -41,46 +42,57 @@ import javax.ws.rs.PathParam;
 public interface RootEndpoint {
 
 	/**
-	 * Returns the {@link SingleModel} for a given path.
+	 * Returns the {@link SingleModel} for a given path or an exception if an
+	 * error occurred.
 	 *
 	 * @param  path the path from the URL.
-	 * @return the single model at the path.
+	 * @return the single model at the path, or an exception it there was an
+	 *         error.
 	 */
 	@GET
 	@Path("/p/{path}/{id}")
-	public default <T> SingleModel<T> getCollectionItemSingleModel(
+	public default <T> Try<SingleModel<T>> getCollectionItemSingleModel(
 		@PathParam("path") String path, @PathParam("id") String id) {
 
-		Routes<T> routes = getRoutes(path);
+		Try<Routes<T>> routesTry = getRoutes(path);
 
-		Optional<Function<String, SingleModel<T>>> optional =
-			routes.getSingleModelFunctionOptional();
-
-		Function<String, SingleModel<T>> function = optional.orElseThrow(
-			NotFoundException::new);
-
-		return function.apply(id);
+		return routesTry.map(
+			Routes::getSingleModelFunctionOptional
+		).map(
+			Optional::get
+		).mapFailMatching(
+			NoSuchElementException.class,
+			() -> new NotFoundException("No endpoint found at path: " + path)
+		).map(
+			singleModelFunction -> singleModelFunction.apply(id)
+		);
 	}
 
 	/**
-	 * Returns the collection {@link Page} for a given path.
+	 * Returns the collection {@link Page} for a given path or an exception if
+	 * an error occurred.
 	 *
 	 * @param  path the path from the URL.
-	 * @return the collection page at the path.
+	 * @return the collection page at the path, or an exception it there was an
+	 *         error.
 	 */
 	@GET
 	@Path("/p/{path}")
-	public default <T> Page<T> getCollectionPage(
+	public default <T> Try<Page<T>> getCollectionPage(
 		@PathParam("path") String path) {
 
-		Routes<T> routes = getRoutes(path);
+		Try<Routes<T>> routesTry = getRoutes(path);
 
-		Optional<Supplier<Page<T>>> optional = routes.getPageSupplierOptional();
-
-		Supplier<Page<T>> supplier = optional.orElseThrow(
-			NotFoundException::new);
-
-		return supplier.get();
+		return routesTry.map(
+			Routes::getPageSupplierOptional
+		).map(
+			Optional::get
+		).mapFailMatching(
+			NoSuchElementException.class,
+			() -> new NotFoundException("No endpoint found at path: " + path)
+		).map(
+			Supplier::get
+		);
 	}
 
 	/**
@@ -90,6 +102,6 @@ public interface RootEndpoint {
 	 * @param  path the path from the URL.
 	 * @return the {@link Routes} instance for the path.
 	 */
-	public <T> Routes<T> getRoutes(String path);
+	public <T> Try<Routes<T>> getRoutes(String path);
 
 }

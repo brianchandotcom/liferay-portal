@@ -14,9 +14,7 @@
 
 package com.liferay.vulcan.wiring.osgi.util;
 
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ReflectionUtil;
-import com.liferay.vulcan.error.VulcanDeveloperError;
+import com.liferay.vulcan.result.Try;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -31,36 +29,71 @@ import java.lang.reflect.Type;
 public class GenericUtil {
 
 	/**
-	 * Given a type denoted by <code>T&lt;S&gt;</code> returns S class or throws
-	 * a {@link VulcanDeveloperError.MustHaveValidGenericType}.
+	 * Given a type denoted by {@code T<S>} returns S class or an exception, if
+	 * the class couldn't be get.
 	 *
-	 * @param  t instance of type T.
-	 * @param  clazz class of type T.
-	 * @return class of type S.
+	 * @param  clazz class of the actual instance.
+	 * @param  interfaceClass class of type T.
+	 * @return class of type S, or an exception, if the class couldn't be get.
 	 */
-	public static <T, S> Class<S> getGenericClass(T t, Class<T> clazz) {
-		Type genericType = ReflectionUtil.getGenericInterface(t, clazz);
+	public static <T, S> Try<Class<S>> getGenericClassTry(
+		Class<?> clazz, Class<T> interfaceClass) {
 
-		if ((genericType != null) &&
-			(genericType instanceof ParameterizedType)) {
+		Type[] genericInterfaces = clazz.getGenericInterfaces();
 
-			ParameterizedType parameterizedType =
-				(ParameterizedType)genericType;
+		Try<Class<S>> classTry = Try.fail(
+			new IllegalArgumentException(
+				"Class " + clazz + " does not implement any interfaces."));
 
-			Type[] typeArguments = parameterizedType.getActualTypeArguments();
-
-			if (!ArrayUtil.isEmpty(typeArguments) &&
-				(typeArguments.length == 1)) {
-
-				try {
-					return (Class<S>)typeArguments[0];
-				}
-				catch (ClassCastException cce) {
-				}
-			}
+		for (Type genericInterface : genericInterfaces) {
+			classTry = classTry.recoverWith(
+				throwable -> getGenericClassTry(
+					genericInterface, interfaceClass));
 		}
 
-		throw new VulcanDeveloperError.MustHaveValidGenericType(t.getClass());
+		return classTry.recoverWith(
+			throwable -> getGenericClassTry(
+				clazz.getSuperclass(), interfaceClass));
+	}
+
+	/**
+	 * Given a type denoted by {@code T<S>} returns S class or an exception, if
+	 * the class couldn't be get.
+	 *
+	 * @param  type type of the actual instance.
+	 * @param  clazz class of type T.
+	 * @return class of type S, or an exception, if the class couldn't be get.
+	 */
+	public static <T, S> Try<Class<S>> getGenericClassTry(
+		Type type, Class<T> clazz) {
+
+		Try<Type> typeTry = Try.success(type);
+
+		return typeTry.filter(
+			ParameterizedType.class::isInstance
+		).map(
+			ParameterizedType.class::cast
+		).filter(
+			parameterizedType ->
+				parameterizedType.getRawType().equals(clazz)
+		).map(
+			ParameterizedType::getActualTypeArguments
+		).filter(
+			typeArguments -> typeArguments.length == 1
+		).map(
+			typeArguments -> typeArguments[0]
+		).map(
+			typeArgument -> {
+				if (typeArgument instanceof ParameterizedType) {
+					return ((ParameterizedType)typeArgument).getRawType();
+				}
+				else {
+					return typeArgument;
+				}
+			}
+		).map(
+			typeArgument -> (Class<S>)typeArgument
+		);
 	}
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.vulcan.wiring.osgi.manager;
 
+import com.liferay.vulcan.error.VulcanDeveloperError;
+import com.liferay.vulcan.result.Try;
 import com.liferay.vulcan.wiring.osgi.util.GenericUtil;
 
 import java.util.Map;
@@ -52,7 +54,7 @@ public abstract class BaseManager<T> {
 
 		T service = _bundleContext.getService(serviceReference);
 
-		Class<U> genericClass = GenericUtil.getGenericClass(service, clazz);
+		Class<U> genericClass = _getGenericClass(service, clazz);
 
 		_services.computeIfAbsent(
 			genericClass.getName(), name -> new TreeSet<>());
@@ -133,23 +135,36 @@ public abstract class BaseManager<T> {
 
 		T service = _bundleContext.getService(serviceReference);
 
-		Class<U> genericClass = GenericUtil.getGenericClass(service, clazz);
+		Class<U> genericClass = _getGenericClass(service, clazz);
 
 		TreeSet<ServiceReferenceServiceTuple<T>> serviceReferenceServiceTuples =
 			_services.get(genericClass.getName());
 
 		beforeRemovingConsumer.accept(service);
 
-		serviceReferenceServiceTuples.removeIf(
-			serviceReferenceServiceTuple -> {
-				if (serviceReferenceServiceTuple.getService() == service) {
-					return true;
-				}
+		if (serviceReferenceServiceTuples != null) {
+			serviceReferenceServiceTuples.removeIf(
+				serviceReferenceServiceTuple -> {
+					if (serviceReferenceServiceTuple.getService() == service) {
+						return true;
+					}
 
-				return false;
-			});
+					return false;
+				});
+		}
 
 		return genericClass;
+	}
+
+	private <U> Class<U> _getGenericClass(T service, Class<T> interfaceClass) {
+		Class<?> serviceClass = service.getClass();
+
+		Try<Class<U>> classTry = GenericUtil.getGenericClassTry(
+			serviceClass, interfaceClass);
+
+		return classTry.orElseThrow(
+			() -> new VulcanDeveloperError.MustHaveValidGenericType(
+				serviceClass));
 	}
 
 	private final BundleContext _bundleContext;

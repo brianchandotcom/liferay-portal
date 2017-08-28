@@ -2063,6 +2063,15 @@ public class JournalArticleLocalServiceWrapper
 	}
 
 	/**
+	* @deprecated As of 4.0.0, with no direct replacement
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.portal.kernel.service.SubscriptionLocalService getSubscriptionLocalService() {
+		return _journalArticleLocalService.getSubscriptionLocalService();
+	}
+
+	/**
 	* Returns the latest version number of the web content with the group and
 	* article ID.
 	*
@@ -3173,6 +3182,13 @@ public class JournalArticleLocalServiceWrapper
 		return _journalArticleLocalService.getNoPermissionArticles();
 	}
 
+	@Override
+	public java.util.List<?extends com.liferay.portal.kernel.model.PersistedModel> getPersistedModel(
+		long resourcePrimKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _journalArticleLocalService.getPersistedModel(resourcePrimKey);
+	}
+
 	/**
 	* Returns the web content articles matching the DDM structure keys.
 	*
@@ -3877,6 +3893,16 @@ public class JournalArticleLocalServiceWrapper
 		_journalArticleLocalService.rebuildTree(companyId);
 	}
 
+	/**
+	* @deprecated As of 4.0.0, with no direct replacement
+	*/
+	@Deprecated
+	@Override
+	public void setSubscriptionLocalService(
+		com.liferay.portal.kernel.service.SubscriptionLocalService subscriptionLocalService) {
+		_journalArticleLocalService.setSubscriptionLocalService(subscriptionLocalService);
+	}
+
 	@Override
 	public void setTreePaths(long folderId, java.lang.String treePath,
 		boolean reindex)
@@ -3884,6 +3910,14 @@ public class JournalArticleLocalServiceWrapper
 		_journalArticleLocalService.setTreePaths(folderId, treePath, reindex);
 	}
 
+	/**
+	* Subscribes the user to changes in elements that belong to the web content
+	* article.
+	*
+	* @param groupId the primary key of the folder's group
+	* @param userId the primary key of the user to be subscribed
+	* @param articleId the primary key of the article to subscribe to
+	*/
 	@Override
 	public void subscribe(long userId, long groupId, long articleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -3906,6 +3940,14 @@ public class JournalArticleLocalServiceWrapper
 			ddmStructureId);
 	}
 
+	/**
+	* Unsubscribes the user from changes in elements that belong to the web
+	* content article.
+	*
+	* @param groupId the primary key of the folder's group
+	* @param userId the primary key of the user to be subscribed
+	* @param articleId the primary key of the article to unsubscribe from
+	*/
 	@Override
 	public void unsubscribe(long userId, long groupId, long articleId)
 		throws com.liferay.portal.kernel.exception.PortalException {

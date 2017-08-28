@@ -151,38 +151,8 @@ public class KaleoConditionWrapper implements KaleoCondition,
 	}
 
 	@Override
-	public KaleoCondition toEscapedModel() {
-		return new KaleoConditionWrapper(_kaleoCondition.toEscapedModel());
-	}
-
-	@Override
-	public KaleoCondition toUnescapedModel() {
-		return new KaleoConditionWrapper(_kaleoCondition.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _kaleoCondition.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _kaleoCondition.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _kaleoCondition.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _kaleoCondition.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<KaleoCondition> toCacheModel() {
-		return _kaleoCondition.toCacheModel();
+	public java.lang.Object clone() {
+		return new KaleoConditionWrapper((KaleoCondition)_kaleoCondition.clone());
 	}
 
 	@Override
@@ -190,79 +160,14 @@ public class KaleoConditionWrapper implements KaleoCondition,
 		return _kaleoCondition.compareTo(kaleoCondition);
 	}
 
-	@Override
-	public int hashCode() {
-		return _kaleoCondition.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _kaleoCondition.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new KaleoConditionWrapper((KaleoCondition)_kaleoCondition.clone());
-	}
-
 	/**
-	* Returns the script of this kaleo condition.
+	* Returns the company ID of this kaleo condition.
 	*
-	* @return the script of this kaleo condition
+	* @return the company ID of this kaleo condition
 	*/
 	@Override
-	public java.lang.String getScript() {
-		return _kaleoCondition.getScript();
-	}
-
-	/**
-	* Returns the script language of this kaleo condition.
-	*
-	* @return the script language of this kaleo condition
-	*/
-	@Override
-	public java.lang.String getScriptLanguage() {
-		return _kaleoCondition.getScriptLanguage();
-	}
-
-	/**
-	* Returns the script required contexts of this kaleo condition.
-	*
-	* @return the script required contexts of this kaleo condition
-	*/
-	@Override
-	public java.lang.String getScriptRequiredContexts() {
-		return _kaleoCondition.getScriptRequiredContexts();
-	}
-
-	/**
-	* Returns the user name of this kaleo condition.
-	*
-	* @return the user name of this kaleo condition
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _kaleoCondition.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this kaleo condition.
-	*
-	* @return the user uuid of this kaleo condition
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _kaleoCondition.getUserUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _kaleoCondition.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _kaleoCondition.toXmlString();
+	public long getCompanyId() {
+		return _kaleoCondition.getCompanyId();
 	}
 
 	/**
@@ -275,24 +180,9 @@ public class KaleoConditionWrapper implements KaleoCondition,
 		return _kaleoCondition.getCreateDate();
 	}
 
-	/**
-	* Returns the modified date of this kaleo condition.
-	*
-	* @return the modified date of this kaleo condition
-	*/
 	@Override
-	public Date getModifiedDate() {
-		return _kaleoCondition.getModifiedDate();
-	}
-
-	/**
-	* Returns the company ID of this kaleo condition.
-	*
-	* @return the company ID of this kaleo condition
-	*/
-	@Override
-	public long getCompanyId() {
-		return _kaleoCondition.getCompanyId();
+	public ExpandoBridge getExpandoBridge() {
+		return _kaleoCondition.getExpandoBridge();
 	}
 
 	/**
@@ -336,6 +226,16 @@ public class KaleoConditionWrapper implements KaleoCondition,
 	}
 
 	/**
+	* Returns the modified date of this kaleo condition.
+	*
+	* @return the modified date of this kaleo condition
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _kaleoCondition.getModifiedDate();
+	}
+
+	/**
 	* Returns the primary key of this kaleo condition.
 	*
 	* @return the primary key of this kaleo condition
@@ -343,6 +243,41 @@ public class KaleoConditionWrapper implements KaleoCondition,
 	@Override
 	public long getPrimaryKey() {
 		return _kaleoCondition.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _kaleoCondition.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the script of this kaleo condition.
+	*
+	* @return the script of this kaleo condition
+	*/
+	@Override
+	public java.lang.String getScript() {
+		return _kaleoCondition.getScript();
+	}
+
+	/**
+	* Returns the script language of this kaleo condition.
+	*
+	* @return the script language of this kaleo condition
+	*/
+	@Override
+	public java.lang.String getScriptLanguage() {
+		return _kaleoCondition.getScriptLanguage();
+	}
+
+	/**
+	* Returns the script required contexts of this kaleo condition.
+	*
+	* @return the script required contexts of this kaleo condition
+	*/
+	@Override
+	public java.lang.String getScriptRequiredContexts() {
+		return _kaleoCondition.getScriptRequiredContexts();
 	}
 
 	/**
@@ -353,6 +288,46 @@ public class KaleoConditionWrapper implements KaleoCondition,
 	@Override
 	public long getUserId() {
 		return _kaleoCondition.getUserId();
+	}
+
+	/**
+	* Returns the user name of this kaleo condition.
+	*
+	* @return the user name of this kaleo condition
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _kaleoCondition.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this kaleo condition.
+	*
+	* @return the user uuid of this kaleo condition
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _kaleoCondition.getUserUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _kaleoCondition.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _kaleoCondition.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _kaleoCondition.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _kaleoCondition.isNew();
 	}
 
 	@Override
@@ -386,14 +361,14 @@ public class KaleoConditionWrapper implements KaleoCondition,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_kaleoCondition.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_kaleoCondition.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_kaleoCondition.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -530,6 +505,31 @@ public class KaleoConditionWrapper implements KaleoCondition,
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_kaleoCondition.setUserUuid(userUuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<KaleoCondition> toCacheModel() {
+		return _kaleoCondition.toCacheModel();
+	}
+
+	@Override
+	public KaleoCondition toEscapedModel() {
+		return new KaleoConditionWrapper(_kaleoCondition.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _kaleoCondition.toString();
+	}
+
+	@Override
+	public KaleoCondition toUnescapedModel() {
+		return new KaleoConditionWrapper(_kaleoCondition.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _kaleoCondition.toXmlString();
 	}
 
 	@Override

@@ -180,13 +180,295 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	}
 
 	@Override
-	public KaleoDefinitionVersion toEscapedModel() {
-		return new KaleoDefinitionVersionWrapper(_kaleoDefinitionVersion.toEscapedModel());
+	public java.lang.Object clone() {
+		return new KaleoDefinitionVersionWrapper((KaleoDefinitionVersion)_kaleoDefinitionVersion.clone());
 	}
 
 	@Override
-	public KaleoDefinitionVersion toUnescapedModel() {
-		return new KaleoDefinitionVersionWrapper(_kaleoDefinitionVersion.toUnescapedModel());
+	public int compareTo(KaleoDefinitionVersion kaleoDefinitionVersion) {
+		return _kaleoDefinitionVersion.compareTo(kaleoDefinitionVersion);
+	}
+
+	@Override
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _kaleoDefinitionVersion.getAvailableLanguageIds();
+	}
+
+	/**
+	* Returns the company ID of this kaleo definition version.
+	*
+	* @return the company ID of this kaleo definition version
+	*/
+	@Override
+	public long getCompanyId() {
+		return _kaleoDefinitionVersion.getCompanyId();
+	}
+
+	/**
+	* Returns the content of this kaleo definition version.
+	*
+	* @return the content of this kaleo definition version
+	*/
+	@Override
+	public java.lang.String getContent() {
+		return _kaleoDefinitionVersion.getContent();
+	}
+
+	/**
+	* Returns the create date of this kaleo definition version.
+	*
+	* @return the create date of this kaleo definition version
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _kaleoDefinitionVersion.getCreateDate();
+	}
+
+	@Override
+	public java.lang.String getDefaultLanguageId() {
+		return _kaleoDefinitionVersion.getDefaultLanguageId();
+	}
+
+	/**
+	* Returns the description of this kaleo definition version.
+	*
+	* @return the description of this kaleo definition version
+	*/
+	@Override
+	public java.lang.String getDescription() {
+		return _kaleoDefinitionVersion.getDescription();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _kaleoDefinitionVersion.getExpandoBridge();
+	}
+
+	/**
+	* Returns the group ID of this kaleo definition version.
+	*
+	* @return the group ID of this kaleo definition version
+	*/
+	@Override
+	public long getGroupId() {
+		return _kaleoDefinitionVersion.getGroupId();
+	}
+
+	/**
+	* Returns the kaleo definition version ID of this kaleo definition version.
+	*
+	* @return the kaleo definition version ID of this kaleo definition version
+	*/
+	@Override
+	public long getKaleoDefinitionVersionId() {
+		return _kaleoDefinitionVersion.getKaleoDefinitionVersionId();
+	}
+
+	/**
+	* Returns the modified date of this kaleo definition version.
+	*
+	* @return the modified date of this kaleo definition version
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _kaleoDefinitionVersion.getModifiedDate();
+	}
+
+	/**
+	* Returns the name of this kaleo definition version.
+	*
+	* @return the name of this kaleo definition version
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _kaleoDefinitionVersion.getName();
+	}
+
+	/**
+	* Returns the primary key of this kaleo definition version.
+	*
+	* @return the primary key of this kaleo definition version
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _kaleoDefinitionVersion.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _kaleoDefinitionVersion.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the status of this kaleo definition version.
+	*
+	* @return the status of this kaleo definition version
+	*/
+	@Override
+	public int getStatus() {
+		return _kaleoDefinitionVersion.getStatus();
+	}
+
+	/**
+	* Returns the status by user ID of this kaleo definition version.
+	*
+	* @return the status by user ID of this kaleo definition version
+	*/
+	@Override
+	public long getStatusByUserId() {
+		return _kaleoDefinitionVersion.getStatusByUserId();
+	}
+
+	/**
+	* Returns the status by user name of this kaleo definition version.
+	*
+	* @return the status by user name of this kaleo definition version
+	*/
+	@Override
+	public java.lang.String getStatusByUserName() {
+		return _kaleoDefinitionVersion.getStatusByUserName();
+	}
+
+	/**
+	* Returns the status by user uuid of this kaleo definition version.
+	*
+	* @return the status by user uuid of this kaleo definition version
+	*/
+	@Override
+	public java.lang.String getStatusByUserUuid() {
+		return _kaleoDefinitionVersion.getStatusByUserUuid();
+	}
+
+	/**
+	* Returns the status date of this kaleo definition version.
+	*
+	* @return the status date of this kaleo definition version
+	*/
+	@Override
+	public Date getStatusDate() {
+		return _kaleoDefinitionVersion.getStatusDate();
+	}
+
+	/**
+	* Returns the title of this kaleo definition version.
+	*
+	* @return the title of this kaleo definition version
+	*/
+	@Override
+	public java.lang.String getTitle() {
+		return _kaleoDefinitionVersion.getTitle();
+	}
+
+	/**
+	* Returns the localized title of this kaleo definition version in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized title of this kaleo definition version
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale) {
+		return _kaleoDefinitionVersion.getTitle(locale);
+	}
+
+	/**
+	* Returns the localized title of this kaleo definition version in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized title of this kaleo definition version. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
+		return _kaleoDefinitionVersion.getTitle(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized title of this kaleo definition version in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized title of this kaleo definition version
+	*/
+	@Override
+	public java.lang.String getTitle(java.lang.String languageId) {
+		return _kaleoDefinitionVersion.getTitle(languageId);
+	}
+
+	/**
+	* Returns the localized title of this kaleo definition version in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized title of this kaleo definition version
+	*/
+	@Override
+	public java.lang.String getTitle(java.lang.String languageId,
+		boolean useDefault) {
+		return _kaleoDefinitionVersion.getTitle(languageId, useDefault);
+	}
+
+	@Override
+	public java.lang.String getTitleCurrentLanguageId() {
+		return _kaleoDefinitionVersion.getTitleCurrentLanguageId();
+	}
+
+	@Override
+	public java.lang.String getTitleCurrentValue() {
+		return _kaleoDefinitionVersion.getTitleCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized titles of this kaleo definition version.
+	*
+	* @return the locales and localized titles of this kaleo definition version
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getTitleMap() {
+		return _kaleoDefinitionVersion.getTitleMap();
+	}
+
+	/**
+	* Returns the user ID of this kaleo definition version.
+	*
+	* @return the user ID of this kaleo definition version
+	*/
+	@Override
+	public long getUserId() {
+		return _kaleoDefinitionVersion.getUserId();
+	}
+
+	/**
+	* Returns the user name of this kaleo definition version.
+	*
+	* @return the user name of this kaleo definition version
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _kaleoDefinitionVersion.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this kaleo definition version.
+	*
+	* @return the user uuid of this kaleo definition version
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _kaleoDefinitionVersion.getUserUuid();
+	}
+
+	/**
+	* Returns the version of this kaleo definition version.
+	*
+	* @return the version of this kaleo definition version
+	*/
+	@Override
+	public java.lang.String getVersion() {
+		return _kaleoDefinitionVersion.getVersion();
+	}
+
+	@Override
+	public int hashCode() {
+		return _kaleoDefinitionVersion.hashCode();
 	}
 
 	@Override
@@ -290,313 +572,6 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	}
 
 	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _kaleoDefinitionVersion.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<KaleoDefinitionVersion> toCacheModel() {
-		return _kaleoDefinitionVersion.toCacheModel();
-	}
-
-	@Override
-	public int compareTo(KaleoDefinitionVersion kaleoDefinitionVersion) {
-		return _kaleoDefinitionVersion.compareTo(kaleoDefinitionVersion);
-	}
-
-	/**
-	* Returns the status of this kaleo definition version.
-	*
-	* @return the status of this kaleo definition version
-	*/
-	@Override
-	public int getStatus() {
-		return _kaleoDefinitionVersion.getStatus();
-	}
-
-	@Override
-	public int hashCode() {
-		return _kaleoDefinitionVersion.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _kaleoDefinitionVersion.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new KaleoDefinitionVersionWrapper((KaleoDefinitionVersion)_kaleoDefinitionVersion.clone());
-	}
-
-	/**
-	* Returns the content of this kaleo definition version.
-	*
-	* @return the content of this kaleo definition version
-	*/
-	@Override
-	public java.lang.String getContent() {
-		return _kaleoDefinitionVersion.getContent();
-	}
-
-	@Override
-	public java.lang.String getDefaultLanguageId() {
-		return _kaleoDefinitionVersion.getDefaultLanguageId();
-	}
-
-	/**
-	* Returns the description of this kaleo definition version.
-	*
-	* @return the description of this kaleo definition version
-	*/
-	@Override
-	public java.lang.String getDescription() {
-		return _kaleoDefinitionVersion.getDescription();
-	}
-
-	/**
-	* Returns the name of this kaleo definition version.
-	*
-	* @return the name of this kaleo definition version
-	*/
-	@Override
-	public java.lang.String getName() {
-		return _kaleoDefinitionVersion.getName();
-	}
-
-	/**
-	* Returns the status by user name of this kaleo definition version.
-	*
-	* @return the status by user name of this kaleo definition version
-	*/
-	@Override
-	public java.lang.String getStatusByUserName() {
-		return _kaleoDefinitionVersion.getStatusByUserName();
-	}
-
-	/**
-	* Returns the status by user uuid of this kaleo definition version.
-	*
-	* @return the status by user uuid of this kaleo definition version
-	*/
-	@Override
-	public java.lang.String getStatusByUserUuid() {
-		return _kaleoDefinitionVersion.getStatusByUserUuid();
-	}
-
-	/**
-	* Returns the title of this kaleo definition version.
-	*
-	* @return the title of this kaleo definition version
-	*/
-	@Override
-	public java.lang.String getTitle() {
-		return _kaleoDefinitionVersion.getTitle();
-	}
-
-	/**
-	* Returns the localized title of this kaleo definition version in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @return the localized title of this kaleo definition version
-	*/
-	@Override
-	public java.lang.String getTitle(java.lang.String languageId) {
-		return _kaleoDefinitionVersion.getTitle(languageId);
-	}
-
-	/**
-	* Returns the localized title of this kaleo definition version in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized title of this kaleo definition version
-	*/
-	@Override
-	public java.lang.String getTitle(java.lang.String languageId,
-		boolean useDefault) {
-		return _kaleoDefinitionVersion.getTitle(languageId, useDefault);
-	}
-
-	/**
-	* Returns the localized title of this kaleo definition version in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized title of this kaleo definition version
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale) {
-		return _kaleoDefinitionVersion.getTitle(locale);
-	}
-
-	/**
-	* Returns the localized title of this kaleo definition version in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized title of this kaleo definition version. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
-		return _kaleoDefinitionVersion.getTitle(locale, useDefault);
-	}
-
-	@Override
-	public java.lang.String getTitleCurrentLanguageId() {
-		return _kaleoDefinitionVersion.getTitleCurrentLanguageId();
-	}
-
-	@Override
-	public java.lang.String getTitleCurrentValue() {
-		return _kaleoDefinitionVersion.getTitleCurrentValue();
-	}
-
-	/**
-	* Returns the user name of this kaleo definition version.
-	*
-	* @return the user name of this kaleo definition version
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _kaleoDefinitionVersion.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this kaleo definition version.
-	*
-	* @return the user uuid of this kaleo definition version
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _kaleoDefinitionVersion.getUserUuid();
-	}
-
-	/**
-	* Returns the version of this kaleo definition version.
-	*
-	* @return the version of this kaleo definition version
-	*/
-	@Override
-	public java.lang.String getVersion() {
-		return _kaleoDefinitionVersion.getVersion();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _kaleoDefinitionVersion.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _kaleoDefinitionVersion.toXmlString();
-	}
-
-	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
-		return _kaleoDefinitionVersion.getAvailableLanguageIds();
-	}
-
-	/**
-	* Returns the create date of this kaleo definition version.
-	*
-	* @return the create date of this kaleo definition version
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _kaleoDefinitionVersion.getCreateDate();
-	}
-
-	/**
-	* Returns the modified date of this kaleo definition version.
-	*
-	* @return the modified date of this kaleo definition version
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _kaleoDefinitionVersion.getModifiedDate();
-	}
-
-	/**
-	* Returns the status date of this kaleo definition version.
-	*
-	* @return the status date of this kaleo definition version
-	*/
-	@Override
-	public Date getStatusDate() {
-		return _kaleoDefinitionVersion.getStatusDate();
-	}
-
-	/**
-	* Returns a map of the locales and localized titles of this kaleo definition version.
-	*
-	* @return the locales and localized titles of this kaleo definition version
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getTitleMap() {
-		return _kaleoDefinitionVersion.getTitleMap();
-	}
-
-	/**
-	* Returns the company ID of this kaleo definition version.
-	*
-	* @return the company ID of this kaleo definition version
-	*/
-	@Override
-	public long getCompanyId() {
-		return _kaleoDefinitionVersion.getCompanyId();
-	}
-
-	/**
-	* Returns the group ID of this kaleo definition version.
-	*
-	* @return the group ID of this kaleo definition version
-	*/
-	@Override
-	public long getGroupId() {
-		return _kaleoDefinitionVersion.getGroupId();
-	}
-
-	/**
-	* Returns the kaleo definition version ID of this kaleo definition version.
-	*
-	* @return the kaleo definition version ID of this kaleo definition version
-	*/
-	@Override
-	public long getKaleoDefinitionVersionId() {
-		return _kaleoDefinitionVersion.getKaleoDefinitionVersionId();
-	}
-
-	/**
-	* Returns the primary key of this kaleo definition version.
-	*
-	* @return the primary key of this kaleo definition version
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _kaleoDefinitionVersion.getPrimaryKey();
-	}
-
-	/**
-	* Returns the status by user ID of this kaleo definition version.
-	*
-	* @return the status by user ID of this kaleo definition version
-	*/
-	@Override
-	public long getStatusByUserId() {
-		return _kaleoDefinitionVersion.getStatusByUserId();
-	}
-
-	/**
-	* Returns the user ID of this kaleo definition version.
-	*
-	* @return the user ID of this kaleo definition version
-	*/
-	@Override
-	public long getUserId() {
-		return _kaleoDefinitionVersion.getUserId();
-	}
-
-	@Override
 	public void persist() {
 		_kaleoDefinitionVersion.persist();
 	}
@@ -660,14 +635,14 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_kaleoDefinitionVersion.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_kaleoDefinitionVersion.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_kaleoDefinitionVersion.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -884,6 +859,31 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	@Override
 	public void setVersion(java.lang.String version) {
 		_kaleoDefinitionVersion.setVersion(version);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<KaleoDefinitionVersion> toCacheModel() {
+		return _kaleoDefinitionVersion.toCacheModel();
+	}
+
+	@Override
+	public KaleoDefinitionVersion toEscapedModel() {
+		return new KaleoDefinitionVersionWrapper(_kaleoDefinitionVersion.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _kaleoDefinitionVersion.toString();
+	}
+
+	@Override
+	public KaleoDefinitionVersion toUnescapedModel() {
+		return new KaleoDefinitionVersionWrapper(_kaleoDefinitionVersion.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _kaleoDefinitionVersion.toXmlString();
 	}
 
 	@Override

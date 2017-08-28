@@ -53,7 +53,8 @@ public class ClassNameClassPKConverter
 			}
 		}
 
-		throw new BadRequestException();
+		throw new BadRequestException(
+			id + " can't be converted to a className + classPK identifier");
 	}
 
 }

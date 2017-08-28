@@ -32,8 +32,10 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -505,7 +507,7 @@ public class JournalConverterImpl implements JournalConverter {
 			}
 
 			Serializable serializable = getFieldValue(
-				dataType, type, dynamicContentElement);
+				dataType, type, dynamicContentElement, defaultLocale);
 
 			ddmField.addValue(locale, serializable);
 		}
@@ -540,7 +542,8 @@ public class JournalConverterImpl implements JournalConverter {
 	}
 
 	protected Serializable getFieldValue(
-		String dataType, String type, Element dynamicContentElement) {
+		String dataType, String type, Element dynamicContentElement,
+		Locale defaultLocale) {
 
 		Serializable serializable = null;
 
@@ -554,18 +557,24 @@ public class JournalConverterImpl implements JournalConverter {
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+			long layoutId = GetterUtil.getLong(values[0]);
+			boolean privateLayout = !Objects.equals(values[1], "public");
+
 			if (values.length > 2) {
-				jsonObject.put("groupId", GetterUtil.getLong(values[2]));
+				long groupId = GetterUtil.getLong(values[2]);
+
+				jsonObject.put("groupId", groupId);
+
+				Layout layout = _layoutLocalService.fetchLayout(
+					groupId, privateLayout, layoutId);
+
+				if (layout != null) {
+					jsonObject.put("label", layout.getName(defaultLocale));
+				}
 			}
 
-			jsonObject.put("layoutId", GetterUtil.getLong(values[0]));
-
-			if (values[1].equals("public")) {
-				jsonObject.put("privateLayout", false);
-			}
-			else {
-				jsonObject.put("privateLayout", true);
-			}
+			jsonObject.put("layoutId", layoutId);
+			jsonObject.put("privateLayout", privateLayout);
 
 			serializable = jsonObject.toString();
 		}
@@ -1092,5 +1101,8 @@ public class JournalConverterImpl implements JournalConverter {
 	private Http _http;
 
 	private final Map<String, String> _journalTypesToDDMTypes;
+
+	@Reference(unbind = "-")
+	private LayoutLocalService _layoutLocalService;
 
 }

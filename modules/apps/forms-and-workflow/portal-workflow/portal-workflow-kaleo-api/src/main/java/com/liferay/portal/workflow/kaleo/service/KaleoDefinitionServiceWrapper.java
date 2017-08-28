@@ -36,16 +36,6 @@ public class KaleoDefinitionServiceWrapper implements KaleoDefinitionService,
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _kaleoDefinitionService.getOSGiServiceIdentifier();
-	}
-
-	/**
 	* @deprecated As of 2.0.0, with no direct replacement
 	*/
 	@Deprecated
@@ -63,6 +53,16 @@ public class KaleoDefinitionServiceWrapper implements KaleoDefinitionService,
 	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoDefinition> getKaleoDefinitions(
 		long companyId, int start, int end) {
 		return _kaleoDefinitionService.getKaleoDefinitions(companyId, start, end);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _kaleoDefinitionService.getOSGiServiceIdentifier();
 	}
 
 	@Override

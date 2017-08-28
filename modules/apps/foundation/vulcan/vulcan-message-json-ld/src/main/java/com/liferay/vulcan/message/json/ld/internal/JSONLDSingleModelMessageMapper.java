@@ -15,13 +15,14 @@
 package com.liferay.vulcan.message.json.ld.internal;
 
 import com.liferay.vulcan.list.FunctionalList;
-import com.liferay.vulcan.message.RequestInfo;
 import com.liferay.vulcan.message.json.JSONObjectBuilder;
 import com.liferay.vulcan.message.json.SingleModelMessageMapper;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
+
+import javax.ws.rs.core.HttpHeaders;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -198,7 +199,7 @@ public class JSONLDSingleModelMessageMapper<T>
 	@Override
 	public void onFinish(
 		JSONObjectBuilder jsonObjectBuilder, T model, Class<T> modelClass,
-		RequestInfo requestInfo) {
+		HttpHeaders httpHeaders) {
 
 		jsonObjectBuilder.nestedField(
 			"@context", "@vocab"

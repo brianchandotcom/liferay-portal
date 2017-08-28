@@ -69,6 +69,7 @@
 								'liferay-kaleo-designer-remote-services',
 								'liferay-kaleo-designer-utils',
 								'liferay-kaleo-designer-xml-util',
+								'liferay-portlet-url',
 								'liferay-util-window',
 								'liferay-xml-formatter'
 							]

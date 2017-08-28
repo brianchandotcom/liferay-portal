@@ -9,6 +9,7 @@ AUI.add(
 		var XMLUtil = Liferay.XMLUtil;
 
 		var KaleoDesignerEditors = Liferay.KaleoDesignerEditors;
+		var KaleoDesignerRemoteServices = Liferay.KaleoDesignerRemoteServices;
 		var KaleoDesignerStrings = Liferay.KaleoDesignerStrings;
 
 		var isNull = Lang.isNull;
@@ -886,6 +887,10 @@ AUI.add(
 													locator: 'email-address'
 												},
 												{
+													key: 'fullName',
+													locator: 'full-name'
+												},
+												{
 													key: 'screenName',
 													locator: 'screen-name'
 												},
@@ -1095,6 +1100,13 @@ AUI.add(
 							);
 						}
 
+						if (assignments.assignmentType == 'roleId') {
+							instance._populateRole(assignments);
+						}
+						else if (assignments.assignmentType == 'user') {
+							instance._populateUser(assignments);
+						}
+
 						return assignments;
 					},
 
@@ -1186,6 +1198,44 @@ AUI.add(
 						);
 
 						return taskTimers;
+					},
+
+					_populateRole: function(assignments) {
+						KaleoDesignerRemoteServices.getRole(
+							assignments.roleId,
+							function(data) {
+								AArray.each(
+									data,
+									function(item) {
+										if (item) {
+											var index = assignments.roleId.indexOf(item.roleId);
+
+											assignments.roleNameAC[index] = item.name;
+										}
+									}
+								);
+							}
+						);
+					},
+
+					_populateUser: function(assignments) {
+						KaleoDesignerRemoteServices.getUser(
+							assignments.userId,
+							function(data) {
+								AArray.each(
+									data,
+									function(item) {
+										if (item) {
+											var index = assignments.userId.indexOf(item.userId);
+
+											assignments.emailAddress[index] = item.emailAddress;
+											assignments.fullName[index] = item.fullName;
+											assignments.screenName[index] = item.screenName;
+										}
+									}
+								);
+							}
+						);
 					},
 
 					_put: function(obj, key, value) {
@@ -1484,6 +1534,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-ace-editor', 'aui-ace-editor-mode-xml', 'aui-tpl-snippets-deprecated', 'dataschema-xml', 'datasource', 'datatype-xml', 'event-valuechange', 'io-form', 'liferay-kaleo-designer-autocomplete-util', 'liferay-kaleo-designer-editors', 'liferay-kaleo-designer-nodes', 'liferay-kaleo-designer-utils', 'liferay-kaleo-designer-xml-util', 'liferay-util-window', 'liferay-xml-formatter']
+		requires: ['aui-ace-editor', 'aui-ace-editor-mode-xml', 'aui-tpl-snippets-deprecated', 'dataschema-xml', 'datasource', 'datatype-xml', 'event-valuechange', 'io-form', 'liferay-kaleo-designer-autocomplete-util', 'liferay-kaleo-designer-editors', 'liferay-kaleo-designer-nodes', 'liferay-kaleo-designer-remote-services', 'liferay-kaleo-designer-utils', 'liferay-kaleo-designer-xml-util', 'liferay-util-window', 'liferay-xml-formatter']
 	}
 );

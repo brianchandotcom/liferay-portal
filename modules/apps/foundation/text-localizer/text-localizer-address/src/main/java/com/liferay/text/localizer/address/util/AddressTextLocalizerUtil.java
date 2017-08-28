@@ -27,7 +27,7 @@ import org.osgi.framework.FrameworkUtil;
 /**
  * @author Pei-Jung Lan
  */
-public class AddressTextLocalizerHelper {
+public class AddressTextLocalizerUtil {
 
 	public static String format(Address address) {
 		AddressTextLocalizer addressTextLocalizer = getAddressTextLocalizer(
@@ -64,8 +64,7 @@ public class AddressTextLocalizerHelper {
 		_serviceTrackerMap;
 
 	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			AddressTextLocalizerHelper.class);
+		Bundle bundle = FrameworkUtil.getBundle(AddressTextLocalizerUtil.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 

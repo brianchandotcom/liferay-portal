@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.text.localizer.address.AddressTextLocalizer;
 import com.liferay.text.localizer.address.USAddressTextLocalizer;
-import com.liferay.text.localizer.address.util.AddressTextLocalizerHelper;
+import com.liferay.text.localizer.address.util.AddressTextLocalizerUtil;
 
 import java.util.Dictionary;
 
@@ -48,7 +48,7 @@ import org.osgi.framework.ServiceRegistration;
  * @author Drew Brokke
  */
 @RunWith(Arquillian.class)
-public class AddressTextLocalizerHelperTest {
+public class AddressTextLocalizerUtilTest {
 
 	@ClassRule
 	@Rule
@@ -74,24 +74,24 @@ public class AddressTextLocalizerHelperTest {
 	@Test
 	public void testFormatWithTheCorrectLocalizer() {
 		AddressTextLocalizer addressTextLocalizer =
-			AddressTextLocalizerHelper.getAddressTextLocalizer(_address);
+			AddressTextLocalizerUtil.getAddressTextLocalizer(_address);
 
 		Assert.assertEquals(
 			addressTextLocalizer.format(_address),
-			AddressTextLocalizerHelper.format(_address));
+			AddressTextLocalizerUtil.format(_address));
 	}
 
 	@Test
 	public void testGetAddressTextLocalizerFromAddress() {
 		Assert.assertTrue(
-			AddressTextLocalizerHelper.getAddressTextLocalizer(
+			AddressTextLocalizerUtil.getAddressTextLocalizer(
 				_address) instanceof USAddressTextLocalizer);
 	}
 
 	@Test
 	public void testGetAddressTextLocalizerFromCountryA2String() {
 		Assert.assertTrue(
-			AddressTextLocalizerHelper.getAddressTextLocalizer(
+			AddressTextLocalizerUtil.getAddressTextLocalizer(
 				"US") instanceof USAddressTextLocalizer);
 
 		String countryA2 = RandomTestUtil.randomString();
@@ -103,7 +103,7 @@ public class AddressTextLocalizerHelperTest {
 			addressTextLocalizer, countryA2);
 
 		AddressTextLocalizer retrievedAddressTextLocalizer =
-			AddressTextLocalizerHelper.getAddressTextLocalizer(countryA2);
+			AddressTextLocalizerUtil.getAddressTextLocalizer(countryA2);
 
 		Assert.assertEquals(
 			addressTextLocalizer, retrievedAddressTextLocalizer);
@@ -138,7 +138,7 @@ public class AddressTextLocalizerHelperTest {
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(
-			AddressTextLocalizerHelperTest.class);
+			AddressTextLocalizerUtilTest.class);
 
 		if (bundle == null) {
 			_bundleContext = null;

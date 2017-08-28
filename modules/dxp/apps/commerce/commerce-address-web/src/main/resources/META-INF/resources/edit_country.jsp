@@ -17,14 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
 CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCountriesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CommerceCountry commerceCountry = commerceCountriesDisplayContext.getCommerceCountry();
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBack(backURL);
 
 renderResponse.setTitle((commerceCountry == null) ? LanguageUtil.get(request, "add-country") : LanguageUtil.format(request, "edit-x", commerceCountry.getName(locale), false));
 %>

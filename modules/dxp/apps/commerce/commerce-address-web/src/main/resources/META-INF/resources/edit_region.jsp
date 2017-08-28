@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
 CommerceRegionsDisplayContext commerceRegionsDisplayContext = (CommerceRegionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CommerceCountry commerceCountry = commerceRegionsDisplayContext.getCommerceCountry();
@@ -30,7 +28,7 @@ CommerceRegion commerceRegion = commerceRegionsDisplayContext.getCommerceRegion(
 long commerceRegionId = commerceRegionsDisplayContext.getCommerceRegionId();
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBack(backURL);
 
 String contextTitle = commerceCountry.getName(locale);
 

@@ -27,6 +27,7 @@ CommerceCountry commerceCountry = (CommerceCountry)row.getObject();
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcRenderCommandName" value="editCommerceCountry" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="backURL" value="<%= backURL %>" />
 			<portlet:param name="commerceCountryId" value="<%= String.valueOf(commerceCountry.getCommerceCountryId()) %>" />
 		</portlet:renderURL>
 
@@ -38,6 +39,7 @@ CommerceCountry commerceCountry = (CommerceCountry)row.getObject();
 		<portlet:actionURL name="editCommerceCountry" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="backURL" value="<%= backURL %>" />
 			<portlet:param name="commerceCountryId" value="<%= String.valueOf(commerceCountry.getCommerceCountryId()) %>" />
 		</portlet:actionURL>
 

@@ -30,11 +30,9 @@ page import="com.liferay.asset.display.template.web.internal.constants.AssetDisp
 page import="com.liferay.asset.display.template.web.internal.display.context.AssetDisplayTemplateDisplayContext" %><%@
 page import="com.liferay.portal.kernel.model.ClassName" %><%@
 page import="com.liferay.portal.kernel.security.permission.ResourceActionsUtil" %><%@
-page import="com.liferay.portal.kernel.service.ClassNameLocalServiceUtil" %><%@
-page import="com.liferay.portal.kernel.util.SetUtil" %>
+page import="com.liferay.portal.kernel.service.ClassNameLocalServiceUtil" %>
 
-<%@ page import="java.util.Objects" %><%@
-page import="java.util.Set" %>
+<%@ page import="java.util.Objects" %>
 
 <liferay-frontend:defineObjects />
 

@@ -31,8 +31,6 @@ portletDisplay.setURLBack(redirect);
 AssetDisplayTemplate assetDisplayTemplate = assetDisplayTemplateDisplayContext.getAssetDisplayTemplate();
 
 long classNameId = BeanParamUtil.getLong(assetDisplayTemplate, request, "classNameId");
-
-Set<Long> availableClassNameIdsSet = SetUtil.fromArray(assetDisplayTemplateDisplayContext.getAvailableClassNameIds());
 %>
 
 <portlet:actionURL name="/asset_display_template/edit_asset_display_template" var="editAssetDisplayTemplateURL">
@@ -40,8 +38,7 @@ Set<Long> availableClassNameIdsSet = SetUtil.fromArray(assetDisplayTemplateDispl
 </portlet:actionURL>
 
 <aui:form action="<%= editAssetDisplayTemplateURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="assetDisplayTemplateId" type="hidden" value='<%= assetDisplayTemplate != null ? String.valueOf(assetDisplayTemplate.getAssetDisplayTemplateId()) : "0" %>' />
-	<aui:input name="" type="hidden" value="" />
+	<aui:input name="assetDisplayTemplateId" type="hidden" value="<%= (assetDisplayTemplate != null) ? assetDisplayTemplate.getAssetDisplayTemplateId() : 0 %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<aui:model-context bean="<%= assetDisplayTemplate %>" model="<%= AssetDisplayTemplate.class %>" />
@@ -53,11 +50,17 @@ Set<Long> availableClassNameIdsSet = SetUtil.fromArray(assetDisplayTemplateDispl
 			<aui:select label="asset-type" name="classNameId">
 
 				<%
-				for (long curClassNameId : availableClassNameIdsSet) {
+				for (long curClassNameId : assetDisplayTemplateDisplayContext.getAvailableClassNameIds()) {
 					ClassName className = ClassNameLocalServiceUtil.getClassName(curClassNameId);
+
+					boolean selected = false;
+
+					if ((assetDisplayTemplate != null) && (curClassNameId == classNameId)) {
+						selected = true;
+					}
 				%>
 
-					<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, className.getValue()) %>" selected="<%= assetDisplayTemplate != null ? curClassNameId == classNameId : false %>" value="<%= curClassNameId %>" />
+					<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, className.getValue()) %>" selected="<%= selected %>" value="<%= curClassNameId %>" />
 
 				<%
 				}
@@ -65,28 +68,28 @@ Set<Long> availableClassNameIdsSet = SetUtil.fromArray(assetDisplayTemplateDispl
 
 			</aui:select>
 
-			<aui:input checked="<%= assetDisplayTemplate != null ? assetDisplayTemplate.isMain() : false %>" label="default-template-for-this-asset-type" name="main" type="checkbox" />
+			<aui:input checked="<%= (assetDisplayTemplate != null) ? assetDisplayTemplate.isMain() : false %>" label="default-template-for-this-asset-type" name="main" type="checkbox" />
 		</aui:fieldset>
 
 		<%@ include file="/edit_asset_display_template_script.jspf" %>
 	</aui:fieldset-group>
 
+	<%
+	String taglibOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "saveTemplate');";
+	%>
+
 	<aui:button-row>
-		<aui:script>
-			Liferay.after(
-				'<portlet:namespace />saveTemplate',
-				function() {
-					submitForm(document.<portlet:namespace />fm);
-				}
-			);
-		</aui:script>
-
-		<%
-		String taglibOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "saveTemplate');";
-		%>
-
 		<aui:button cssClass="btn-lg" onClick="<%= taglibOnClick %>" type="submit" />
 
 		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
+
+<aui:script>
+	Liferay.after(
+		'<portlet:namespace />saveTemplate',
+		function() {
+			submitForm(document.<portlet:namespace />fm);
+		}
+	);
+</aui:script>

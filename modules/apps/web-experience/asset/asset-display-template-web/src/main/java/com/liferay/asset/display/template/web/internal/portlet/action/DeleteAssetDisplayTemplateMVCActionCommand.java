@@ -50,7 +50,7 @@ public class DeleteAssetDisplayTemplateMVCActionCommand
 		long assetDisplayTemplateId = ParamUtil.getLong(
 			actionRequest, "assetDisplayTemplateId");
 
-		if (assetDisplayTemplateId >= 0) {
+		if (assetDisplayTemplateId > 0) {
 			_assetDisplayTemplateService.deleteAssetDisplayTemplate(
 				assetDisplayTemplateId);
 		}

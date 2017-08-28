@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -49,6 +50,7 @@ import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalServ
 
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -219,12 +221,21 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String keywords = ParamUtil.getString(resourceRequest, "keywords");
-		int type = ParamUtil.getInteger(resourceRequest, "type");
+		List<Role> roles = new ArrayList<>();
 
-		List<Role> roles = _roleLocalService.search(
-			themeDisplay.getCompanyId(), keywords, getRoleTypesObj(type), 0,
-			SearchContainer.DEFAULT_DELTA, new RoleNameComparator());
+		long[] roleIds = ParamUtil.getLongValues(resourceRequest, "roleIds");
+
+		if (ArrayUtil.isNotEmpty(roleIds)) {
+			roles = _roleLocalService.getRoles(roleIds);
+		}
+		else {
+			String keywords = ParamUtil.getString(resourceRequest, "keywords");
+			int type = ParamUtil.getInteger(resourceRequest, "type");
+
+			roles = _roleLocalService.search(
+				themeDisplay.getCompanyId(), keywords, getRoleTypesObj(type), 0,
+				SearchContainer.DEFAULT_DELTA, new RoleNameComparator());
+		}
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -254,13 +265,28 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String keywords = ParamUtil.getString(resourceRequest, "keywords");
+		List<User> users = new ArrayList<>();
 
-		List<User> users = _userLocalService.search(
-			themeDisplay.getCompanyId(), keywords,
-			WorkflowConstants.STATUS_APPROVED,
-			new LinkedHashMap<String, Object>(), 0,
-			SearchContainer.DEFAULT_DELTA, new UserFirstNameComparator());
+		long[] userIds = ParamUtil.getLongValues(resourceRequest, "userIds");
+
+		if (ArrayUtil.isNotEmpty(userIds)) {
+			for (int i = 0; i < userIds.length; i++) {
+				User user = _userLocalService.fetchUser(userIds[i]);
+
+				if (user != null) {
+					users.add(user);
+				}
+			}
+		}
+		else {
+			String keywords = ParamUtil.getString(resourceRequest, "keywords");
+
+			users = _userLocalService.search(
+				themeDisplay.getCompanyId(), keywords,
+				WorkflowConstants.STATUS_APPROVED,
+				new LinkedHashMap<String, Object>(), 0,
+				SearchContainer.DEFAULT_DELTA, new UserFirstNameComparator());
+		}
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 

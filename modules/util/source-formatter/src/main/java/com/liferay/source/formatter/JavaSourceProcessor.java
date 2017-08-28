@@ -117,6 +117,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		fileNames.addAll(getFileNames(excludes, includes));
 
+		System.out.println("pluginJavaFiles.size(): " + fileNames.size());
+
+		for (String fn : fileNames) {
+			System.out.println("pluginJavaFileName: " + fn);
+		}
+
 		return fileNames;
 	}
 
@@ -171,6 +177,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		};
 
 		fileNames.addAll(getFileNames(excludes, includes));
+
+		System.out.println("portalJavaFiles.size(): " + fileNames.size());
+
+		for (String fn : fileNames) {
+			System.out.println("portalJavaFileName: " + fn);
+		}
 
 		return fileNames;
 	}

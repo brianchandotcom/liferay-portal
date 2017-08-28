@@ -41,6 +41,8 @@ public class CopyrightCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
+		System.out.println("A: " + fileName);
+
 		if (!fileName.endsWith(".tpl") && !fileName.endsWith(".vm")) {
 			content = _fixCopyright(fileName, absolutePath, content);
 		}
@@ -54,8 +56,12 @@ public class CopyrightCheck extends BaseFileCheck {
 
 		String customCopyright = _getCustomCopyright(absolutePath);
 
+		System.out.println("B: " + fileName);
+
 		if (!content.contains(_copyright) &&
 			((customCopyright == null) || !content.contains(customCopyright))) {
+
+			System.out.println("C: " + fileName);
 
 			addMessage(fileName, "Missing copyright");
 		}

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.test.rule.callback;
 
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.test.ConsoleTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
@@ -89,14 +91,25 @@ public class InjectTestCallbackTest {
 
 		Assert.assertNull(TestCase2._service1);
 
-		Thread mainThread = Thread.currentThread();
-
 		Service1 service1 = new Service1();
 
-		Thread watchingThread = new Thread(
-			() -> {
-				while (true) {
-					if (mainThread.getState() == Thread.State.TIMED_WAITING) {
+		InjectTestBag injectTestBag = null;
+
+		UnsyncByteArrayOutputStream ubaos = ConsoleTestUtil.hijackStdOut();
+
+		try {
+			Thread registerThread = new Thread(
+				() -> {
+					while (true) {
+						String stdOut = ubaos.toString();
+
+						if (!stdOut.contains(
+								"Waiting for service " +
+									Service1.class.getName())) {
+
+							continue;
+						}
+
 						Assert.assertNull(TestCase2._service1);
 
 						Registry registry = RegistryUtil.getRegistry();
@@ -105,15 +118,19 @@ public class InjectTestCallbackTest {
 
 						return;
 					}
-				}
-			});
+				},
+				"Registering " + Service1.class);
 
-		watchingThread.start();
+			registerThread.start();
 
-		InjectTestBag injectTestBag = InjectTestCallback.INSTANCE.beforeClass(
-			description);
+			injectTestBag = InjectTestCallback.INSTANCE.beforeClass(
+				description);
 
-		watchingThread.join();
+			registerThread.join();
+		}
+		finally {
+			ConsoleTestUtil.restoreStdOut(ubaos);
+		}
 
 		Assert.assertSame(service1, TestCase2._service1);
 

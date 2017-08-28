@@ -164,14 +164,14 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 			</dl>
 
 			<div class="lfr-asset-categories sidebar-block">
-				<liferay-ui:asset-categories-summary
+				<liferay-asset:asset-categories-summary
 					className="<%= BookmarksEntry.class.getName() %>"
 					classPK="<%= entry.getEntryId() %>"
 				/>
 			</div>
 
 			<div class="lfr-asset-tags sidebar-block">
-				<liferay-ui:asset-tags-summary
+				<liferay-asset:asset-tags-summary
 					className="<%= BookmarksEntry.class.getName() %>"
 					classPK="<%= entry.getEntryId() %>"
 					message="tags"
@@ -200,7 +200,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 				%>
 
 				<div class="entry-links">
-					<liferay-ui:asset-links
+					<liferay-asset:asset-links
 						assetEntryId="<%= layoutAssetEntry.getEntryId() %>"
 					/>
 				</div>

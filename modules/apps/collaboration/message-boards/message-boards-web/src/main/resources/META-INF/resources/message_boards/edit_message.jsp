@@ -175,9 +175,9 @@ if (portletTitleBasedNavigation) {
 			<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(UploadServletRequestConfigurationHelperUtil.getMaxSize(), locale) %>" key="request-is-larger-than-x-and-could-not-be-processed" translateArguments="<%= false %>" />
 		</liferay-ui:error>
 
-		<liferay-ui:asset-categories-error />
+		<liferay-asset:asset-categories-error />
 
-		<liferay-ui:asset-tags-error />
+		<liferay-asset:asset-tags-error />
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
@@ -326,7 +326,7 @@ if (portletTitleBasedNavigation) {
 			</c:if>
 
 			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
-				<liferay-ui:input-asset-links
+				<liferay-asset:input-asset-links
 					className="<%= MBMessage.class.getName() %>"
 					classPK="<%= (message != null) ? message.getMessageId() : 0 %>"
 				/>

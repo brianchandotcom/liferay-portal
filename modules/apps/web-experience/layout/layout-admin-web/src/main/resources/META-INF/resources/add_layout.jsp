@@ -191,9 +191,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-new-page"));
 		</aui:fieldset>
 
 		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
-			<liferay-ui:asset-categories-error />
+			<liferay-asset:asset-categories-error />
 
-			<liferay-ui:asset-tags-error />
+			<liferay-asset:asset-tags-error />
 
 			<liferay-asset:asset-categories-selector className="<%= Layout.class.getName() %>" classPK="<%= selLayout != null ? selLayout.getPrimaryKey() : 0 %>" />
 

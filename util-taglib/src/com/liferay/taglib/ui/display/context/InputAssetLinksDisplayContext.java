@@ -62,7 +62,10 @@ import javax.servlet.jsp.PageContext;
 
 /**
  * @author José Manuel Navarro
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.asset.taglib.internal.display.context.InputAssetLinksDisplayContext}
  */
+@Deprecated
 public class InputAssetLinksDisplayContext {
 
 	public InputAssetLinksDisplayContext(PageContext pageContext) {

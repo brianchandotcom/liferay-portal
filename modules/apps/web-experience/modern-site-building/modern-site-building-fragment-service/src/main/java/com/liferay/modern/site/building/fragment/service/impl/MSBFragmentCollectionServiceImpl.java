@@ -105,7 +105,7 @@ public class MSBFragmentCollectionServiceImpl
 
 	@Override
 	public int getGroupMSBFragmentCollectionsCount(long groupId) {
-		return msbFragmentCollectionPersistence.countByGroupId(groupId);
+		return msbFragmentCollectionPersistence.filterCountByGroupId(groupId);
 	}
 
 	@Override
@@ -113,7 +113,7 @@ public class MSBFragmentCollectionServiceImpl
 			long groupId, int start, int end)
 		throws PortalException {
 
-		return msbFragmentCollectionLocalService.getMSBFragmentCollections(
+		return msbFragmentCollectionPersistence.filterFindByGroupId(
 			groupId, start, end);
 	}
 
@@ -123,7 +123,7 @@ public class MSBFragmentCollectionServiceImpl
 			OrderByComparator<MSBFragmentCollection> orderByComparator)
 		throws PortalException {
 
-		return msbFragmentCollectionLocalService.getMSBFragmentCollections(
+		return msbFragmentCollectionPersistence.filterFindByGroupId(
 			groupId, start, end, orderByComparator);
 	}
 
@@ -133,7 +133,7 @@ public class MSBFragmentCollectionServiceImpl
 			OrderByComparator<MSBFragmentCollection> orderByComparator)
 		throws PortalException {
 
-		return msbFragmentCollectionLocalService.getMSBFragmentCollections(
+		return msbFragmentCollectionPersistence.filterFindByG_LikeN(
 			groupId, name, start, end, orderByComparator);
 	}
 

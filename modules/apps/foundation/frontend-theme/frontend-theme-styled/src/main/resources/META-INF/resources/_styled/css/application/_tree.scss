@@ -3,8 +3,7 @@
 		padding-right: 2px;
 
 		&:before {
-			// MIGRATE TO CLAY 2.0
-			//content: $check-empty;
+			content: "\f096";
 		}
 	}
 
@@ -13,8 +12,7 @@
 			padding-right: 0;
 
 			&:before {
-				// MIGRATE TO CLAY 2.0
-				//content: $check;
+				content: "\f046";
 			}
 		}
 	}

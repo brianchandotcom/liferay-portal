@@ -84,6 +84,20 @@ public class MSBFragmentDisplayContext {
 		return redirect;
 	}
 
+	public String getEditMSBFragmentEntryRedirect() throws PortalException {
+		PortletURL backURL = _renderResponse.createRenderURL();
+
+		backURL.setParameter("mvcPath", "/view_msb_fragment_entries.jsp");
+
+		if (getMSBFragmentCollectionId() > 0) {
+			backURL.setParameter(
+				"msbFragmentCollectionId",
+				String.valueOf(getMSBFragmentCollectionId()));
+		}
+
+		return backURL.toString();
+	}
+
 	public String getKeywords() {
 		if (_keywords != null) {
 			return _keywords;
@@ -303,6 +317,40 @@ public class MSBFragmentDisplayContext {
 		return _msbFragmentEntriesSearchContainer;
 	}
 
+	public MSBFragmentEntry getMSBFragmentEntry() throws PortalException {
+		if (_msbFragmentEntry != null) {
+			return _msbFragmentEntry;
+		}
+
+		MSBFragmentEntry msbFragmentEntry =
+			MSBFragmentEntryServiceUtil.fetchMSBFragmentEntry(
+				getMSBFragmentEntryId());
+
+		_msbFragmentEntry = msbFragmentEntry;
+
+		return _msbFragmentEntry;
+	}
+
+	public long getMSBFragmentEntryId() {
+		if (Validator.isNotNull(_msbFragmentEntryId)) {
+			return _msbFragmentEntryId;
+		}
+
+		_msbFragmentEntryId = ParamUtil.getLong(_request, "msbFragmentEntryId");
+
+		return _msbFragmentEntryId;
+	}
+
+	public String getMSBFragmentEntryTitle() throws PortalException {
+		MSBFragmentEntry msbFragmentEntry = getMSBFragmentEntry();
+
+		if (msbFragmentEntry == null) {
+			return LanguageUtil.get(_request, "add-fragment");
+		}
+
+		return msbFragmentEntry.getName();
+	}
+
 	public String getOrderByCol() {
 		if (Validator.isNotNull(_orderByCol)) {
 			return _orderByCol;
@@ -432,6 +480,8 @@ public class MSBFragmentDisplayContext {
 	private Long _msbFragmentCollectionId;
 	private SearchContainer _msbFragmentCollectionsSearchContainer;
 	private SearchContainer _msbFragmentEntriesSearchContainer;
+	private MSBFragmentEntry _msbFragmentEntry;
+	private Long _msbFragmentEntryId;
 	private String _orderByCol;
 	private String _orderByType;
 	private final RenderRequest _renderRequest;

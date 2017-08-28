@@ -42,7 +42,19 @@ public class BrowserMetadata {
 	}
 
 	public boolean isChrome() {
+		if (isEdge()) {
+			return false;
+		}
+
 		if (_userAgent.contains("chrome")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isEdge() {
+		if (_userAgent.contains("edge")) {
 			return true;
 		}
 
@@ -64,6 +76,10 @@ public class BrowserMetadata {
 	}
 
 	public boolean isGecko() {
+		if (isEdge()) {
+			return false;
+		}
+
 		if (_userAgent.contains("gecko")) {
 			return true;
 		}
@@ -136,6 +152,10 @@ public class BrowserMetadata {
 	}
 
 	public boolean isMozilla() {
+		if (isEdge()) {
+			return false;
+		}
+
 		if (_userAgent.contains("compatible")) {
 			return false;
 		}
@@ -165,6 +185,10 @@ public class BrowserMetadata {
 		}
 
 		if (isChrome()) {
+			return true;
+		}
+
+		if (isEdge()) {
 			return true;
 		}
 
@@ -216,6 +240,10 @@ public class BrowserMetadata {
 	}
 
 	public boolean isWebKit() {
+		if (isEdge()) {
+			return false;
+		}
+
 		for (String webKitAlias : _WEBKIT_ALIASES) {
 			if (_userAgent.contains(webKitAlias)) {
 				return true;

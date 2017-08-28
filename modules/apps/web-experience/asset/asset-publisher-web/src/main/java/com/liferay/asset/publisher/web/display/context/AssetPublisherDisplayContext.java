@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.petra.model.adapter.util.ModelAdapterUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -1369,7 +1370,9 @@ public class AssetPublisherDisplayContext {
 				getAssetRendererFactoryByClassNameId(classNameIds[0]);
 
 		ClassTypeReader classTypeReader =
-			assetRendererFactory.getClassTypeReader();
+			ModelAdapterUtil.adapt(
+				ClassTypeReader.class,
+				assetRendererFactory.getClassTypeReader());
 
 		ClassType classType = classTypeReader.getClassType(
 			classTypeIds[0], locale);
@@ -1426,7 +1429,9 @@ public class AssetPublisherDisplayContext {
 					getAssetRendererFactoryByClassNameId(classNameIds[0]);
 
 			ClassTypeReader classTypeReader =
-				assetRendererFactory.getClassTypeReader();
+				ModelAdapterUtil.adapt(
+					ClassTypeReader.class,
+					assetRendererFactory.getClassTypeReader());
 
 			ClassType classType = classTypeReader.getClassType(
 				classTypeIds[0], themeDisplay.getLocale());

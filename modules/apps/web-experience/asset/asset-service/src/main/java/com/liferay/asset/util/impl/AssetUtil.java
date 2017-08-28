@@ -32,6 +32,7 @@ import com.liferay.asset.reader.NullClassTypeReader;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
+import com.liferay.petra.model.adapter.util.ModelAdapterUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -594,7 +595,9 @@ public class AssetUtil {
 				locale);
 
 			ClassTypeReader classTypeReader =
-				assetRendererFactory.getClassTypeReader();
+				ModelAdapterUtil.adapt(
+					ClassTypeReader.class,
+					assetRendererFactory.getClassTypeReader());
 
 			List<ClassType> classTypes = Collections.emptyList();
 

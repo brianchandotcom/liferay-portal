@@ -241,11 +241,16 @@ public class MSBFragmentDisplayContext {
 			_renderRequest, _renderResponse.createRenderURL(), null,
 			"there-are-no-fragments");
 
-		msbFragmentEntriesSearchContainer.setEmptyResultsMessage(
-			"there-are-no-fragments.-you-can-add-a-fragment-by-clicking-the-" +
-				"plus-button-on-the-bottom-right-corner");
-		msbFragmentEntriesSearchContainer.setEmptyResultsMessageCssClass(
-			"taglib-empty-result-message-header-has-plus-btn");
+		if (!isSearch()) {
+			msbFragmentEntriesSearchContainer.setEmptyResultsMessage(
+				"there-are-no-fragments.-you-can-add-a-fragment-by-clicking-" +
+					"the-plus-button-on-the-bottom-right-corner");
+			msbFragmentEntriesSearchContainer.setEmptyResultsMessageCssClass(
+				"taglib-empty-result-message-header-has-plus-btn");
+		}
+		else {
+			msbFragmentEntriesSearchContainer.setSearch(true);
+		}
 
 		msbFragmentEntriesSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
@@ -264,14 +269,31 @@ public class MSBFragmentDisplayContext {
 
 		long fragmentCollectionId = getMSBFragmentCollectionId();
 
-		msbFragmentEntries = MSBFragmentEntryServiceUtil.getMSBFragmentEntries(
-			themeDisplay.getScopeGroupId(), fragmentCollectionId,
-			msbFragmentEntriesSearchContainer.getStart(),
-			msbFragmentEntriesSearchContainer.getEnd(), orderByComparator);
+		if (isSearch()) {
+			msbFragmentEntries =
+				MSBFragmentEntryServiceUtil.getMSBFragmentEntries(
+					themeDisplay.getScopeGroupId(), fragmentCollectionId,
+					getKeywords(), msbFragmentEntriesSearchContainer.getStart(),
+					msbFragmentEntriesSearchContainer.getEnd(),
+					orderByComparator);
 
-		msbFragmentEntriesCount =
-			MSBFragmentEntryServiceUtil.getMSBFragmentCollectionsCount(
-				themeDisplay.getScopeGroupId(), fragmentCollectionId);
+			msbFragmentEntriesCount =
+				MSBFragmentEntryServiceUtil.getMSBFragmentCollectionsCount(
+					themeDisplay.getScopeGroupId(), fragmentCollectionId,
+					getKeywords());
+		}
+		else {
+			msbFragmentEntries =
+				MSBFragmentEntryServiceUtil.getMSBFragmentEntries(
+					themeDisplay.getScopeGroupId(), fragmentCollectionId,
+					msbFragmentEntriesSearchContainer.getStart(),
+					msbFragmentEntriesSearchContainer.getEnd(),
+					orderByComparator);
+
+			msbFragmentEntriesCount =
+				MSBFragmentEntryServiceUtil.getMSBFragmentCollectionsCount(
+					themeDisplay.getScopeGroupId(), fragmentCollectionId);
+		}
 
 		msbFragmentEntriesSearchContainer.setResults(msbFragmentEntries);
 		msbFragmentEntriesSearchContainer.setTotal(msbFragmentEntriesCount);
@@ -382,6 +404,18 @@ public class MSBFragmentDisplayContext {
 
 	public boolean isShowMSBFragmentCollectionsSearch() throws PortalException {
 		if (hasMSBFragmentCollectionsResults()) {
+			return true;
+		}
+
+		if (isSearch()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isShowMSBFragmentEntriesSearch() throws PortalException {
+		if (hasMSBFragmentEntriesResults()) {
 			return true;
 		}
 

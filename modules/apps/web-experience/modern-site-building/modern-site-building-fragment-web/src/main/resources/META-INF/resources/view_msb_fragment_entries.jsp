@@ -23,6 +23,29 @@ portletDisplay.setURLBack(msbFragmentDisplayContext.getMSBFragmentCollectionsRed
 renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentCollectionTitle());
 %>
 
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<portlet:renderURL var="mainURL" />
+
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item href="<%= currentURL %>" label="fragments" selected="<%= true %>" />
+	</aui:nav>
+
+	<c:if test="<%= msbFragmentDisplayContext.isShowMSBFragmentEntriesSearch() %>">
+		<portlet:renderURL var="portletURL">
+			<portlet:param name="mvcPath" value="/view_fragment_entries.jsp" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="msbFragmentCollectionId" value="<%= String.valueOf(msbFragmentDisplayContext.getMSBFragmentCollectionId()) %>" />
+			<portlet:param name="displayStyle" value="<%= msbFragmentDisplayContext.getDisplayStyle() %>" />
+		</portlet:renderURL>
+
+		<aui:nav-bar-search>
+			<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</aui:nav-bar-search>
+	</c:if>
+</aui:nav-bar>
+
 <liferay-frontend:management-bar
 	disabled="<%= msbFragmentDisplayContext.isDisabledMSBFragmentEntriesManagementBar() %>"
 	includeCheckBox="<%= true %>"

@@ -35,7 +35,7 @@ import org.mockito.Mockito;
 /**
  * @author Drew Brokke
  */
-public class AddressHelperTest {
+public class AddressUtilTest {
 
 	@Before
 	public void setUp() {
@@ -50,7 +50,7 @@ public class AddressHelperTest {
 	@Test
 	public void testGetCountryNameOptionalEmptyWithNoCountrySet() {
 		Optional<String> countryNameOptional =
-			AddressHelper.getCountryNameOptional(_address);
+			AddressUtil.getCountryNameOptional(_address);
 
 		Assert.assertFalse(countryNameOptional.isPresent());
 	}
@@ -58,7 +58,7 @@ public class AddressHelperTest {
 	@Test
 	public void testGetCountryNameOptionalEmptyWithNullAddress() {
 		Optional<String> countryNameOptional =
-			AddressHelper.getCountryNameOptional(null);
+			AddressUtil.getCountryNameOptional(null);
 
 		Assert.assertFalse(countryNameOptional.isPresent());
 	}
@@ -74,7 +74,7 @@ public class AddressHelperTest {
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		Optional<String> countryNameOptional =
-			AddressHelper.getCountryNameOptional(_address);
+			AddressUtil.getCountryNameOptional(_address);
 
 		Assert.assertEquals(_COUNTRY_NAME_LOCALIZED, countryNameOptional.get());
 	}
@@ -84,7 +84,7 @@ public class AddressHelperTest {
 		_address = _setCountry(_address);
 
 		Optional<String> countryNameOptional =
-			AddressHelper.getCountryNameOptional(_address);
+			AddressUtil.getCountryNameOptional(_address);
 
 		Assert.assertEquals(_COUNTRY_NAME, countryNameOptional.get());
 	}
@@ -111,24 +111,24 @@ public class AddressHelperTest {
 			_address
 		).getRegion();
 
-		Optional<String> regionNameOptional =
-			AddressHelper.getRegionNameOptional(_address);
+		Optional<String> regionNameOptional = AddressUtil.getRegionNameOptional(
+			_address);
 
 		Assert.assertEquals(_REGION_NAME, regionNameOptional.get());
 	}
 
 	@Test
 	public void testGetRegionNameOptionalEmptyWithNoRegionSet() {
-		Optional<String> regionNameOptional =
-			AddressHelper.getRegionNameOptional(_address);
+		Optional<String> regionNameOptional = AddressUtil.getRegionNameOptional(
+			_address);
 
 		Assert.assertFalse(regionNameOptional.isPresent());
 	}
 
 	@Test
 	public void testGetRegionNameOptionalEmptyWithNullAddress() {
-		Optional<String> regionNameOptional =
-			AddressHelper.getRegionNameOptional(null);
+		Optional<String> regionNameOptional = AddressUtil.getRegionNameOptional(
+			null);
 
 		Assert.assertFalse(regionNameOptional.isPresent());
 	}

@@ -566,7 +566,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 	private String _fixLineStartingWithCloseParenthesis(
 		String content, String fileName) {
 
-		Matcher matcher = _lineStartingWithOpenParenthesisPattern.matcher(
+		Matcher matcher = _lineStartingWithCloseParenthesisPattern.matcher(
 			content);
 
 		while (matcher.find()) {
@@ -763,7 +763,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 		"^(((else )?if|for|try|while) \\()?\\(*(.*\\()$");
 	private final Pattern _incorrectMultiLineCommentPattern = Pattern.compile(
 		"(\n\t*/\\*)\n\t*(.*?)\n\t*(\\*/\n)", Pattern.DOTALL);
-	private final Pattern _lineStartingWithOpenParenthesisPattern =
+	private final Pattern _lineStartingWithCloseParenthesisPattern =
 		Pattern.compile("(.)\n+(\t+)\\)[^.].*\n");
 
 }

@@ -754,8 +754,9 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 				else if ((trimmedLine.length() + previousLineLength) <
 							getMaxLineLength()) {
 
-					if (!trimmedLine.startsWith("new ") ||
-						!line.endsWith(StringPool.OPEN_CURLY_BRACE)) {
+					if ((getLevel(line, "{", "}") == 0) &&
+						(!trimmedLine.startsWith("new ") ||
+						 !line.endsWith(StringPool.OPEN_CURLY_BRACE))) {
 
 						return _getCombinedLinesContent(
 							content, line, trimmedLine, lineLength, lineCount,

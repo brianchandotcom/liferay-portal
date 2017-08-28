@@ -1646,6 +1646,51 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-custom-properties">
+		<sequential>
+			<property name="propertyList" value="" />
+			<propertyregex
+				global="true"
+				input="${custom.properties}"
+				override="true"
+				property="propertyList"
+				regexp="\r\n"
+				replace=","
+			/>
+
+			<property name="propertyName" value="" />
+
+			<for list="${propertyList}" param="property">
+				<sequential>
+					<propertyregex
+						global="true"
+						input="@{property}"
+						override="true"
+						property="propertyName"
+						regexp="=.*"
+						replace=""
+					/>
+
+					<if>
+						<resourcecontains resource="portal-impl/src/portal-ext.properties" substring="${propertyName}" />
+						<then>
+							<replaceregexp file="portal-impl/src/portal-ext.properties"
+								match="${propertyName}=.*"
+								replace="@{property}"
+								byline="true"
+							/>
+						</then>
+						<else>
+							<echo append="true" file="portal-impl/src/portal-ext.properties">
+
+@{property}</echo>
+						</else>
+					</if>
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-database-jndi">
 		<sequential>
 			<if>
@@ -6436,9 +6481,7 @@ web.server.display.node=true</echo>
 		<if>
 			<isset property="custom.properties" />
 			<then>
-				<echo append="true" file="portal-impl/src/portal-ext.properties">
-
-${custom.properties}</echo>
+				<prepare-custom-properties />
 			</then>
 		</if>
 

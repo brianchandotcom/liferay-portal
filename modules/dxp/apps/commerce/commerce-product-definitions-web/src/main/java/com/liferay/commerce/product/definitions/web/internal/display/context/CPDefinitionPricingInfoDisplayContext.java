@@ -45,7 +45,7 @@ public class CPDefinitionPricingInfoDisplayContext
 		_commerceCurrencyService = commerceCurrencyService;
 	}
 
-	public String getCommerceCurrencyName() {
+	public String getCommerceCurrencyCode() {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -55,7 +55,7 @@ public class CPDefinitionPricingInfoDisplayContext
 				themeDisplay.getScopeGroupId());
 
 		if (commerceCurrency != null) {
-			return commerceCurrency.getName(themeDisplay.getLanguageId());
+			return commerceCurrency.getCode(themeDisplay.getLanguageId());
 		}
 
 		return StringPool.BLANK;

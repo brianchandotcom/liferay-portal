@@ -53,9 +53,9 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 	<aui:model-context bean="<%= cpInstance %>" model="<%= CPInstance.class %>" />
 
 	<aui:fieldset>
-		<aui:input name="cost" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyName() %>" />
+		<aui:input name="cost" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyCode() %>" />
 
-		<aui:input name="price" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyName() %>" />
+		<aui:input name="price" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyCode() %>" />
 	</aui:fieldset>
 
 	<aui:button-row>

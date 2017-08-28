@@ -728,6 +728,29 @@
 		<execute function="AssertElementPresent" locator1="KaleoDesignerEditWorkflow#VIEW_FORM_NODE" />
 	</command>
 
+	<command name="viewNodeTimer">
+		<execute function="DoubleClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_TIMERS" />
+
+		<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NAME" value1="${timerName}" />
+
+		<if>
+			<equals arg1="${blocking}" arg2="false" />
+			<then>
+				<execute function="AssertNotChecked" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_BLOCKING" />
+			</then>
+			<elseif>
+				<equals arg1="${blocking}" arg2="true" />
+				<then>
+					<execute function="AssertChecked" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_BLOCKING" />
+				</then>
+			</elseif>
+		</if>
+
+		<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_ACTION_NAME" value1="${blockerName}" />
+		<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_DURATION" value1="${durationTime1}" />
+		<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_DURATION_2" value1="${durationTime2}" />
+	</command>
+
 	<command name="viewNodeType">
 		<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#SETTINGS_TYPE" value1="${nodeType}" />
 	</command>

@@ -20,6 +20,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -28,6 +30,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Stream;
 
 /**
@@ -98,12 +103,9 @@ public class InjectTestBag {
 		}
 	}
 
-	private <T> ServiceReference<T> _getServiceReference(
-			Registry registry, Class<T> clazz, String filter)
-		throws Exception {
-
+	private <T> String _getFilterString(Class<T> clazz, String filter) {
 		if (filter.isEmpty()) {
-			return registry.getServiceReference(clazz);
+			return "(objectClass=" + clazz.getName() + ")";
 		}
 
 		if ((clazz != Object.class) && !filter.contains("objectClass")) {
@@ -129,8 +131,16 @@ public class InjectTestBag {
 			filter = sb.toString();
 		}
 
+		return filter;
+	}
+
+	private <T> ServiceReference<T> _getServiceReference(
+			Registry registry, Class<T> clazz, String filter)
+		throws Exception {
+
 		Collection<ServiceReference<T>> serviceReferences =
-			registry.getServiceReferences(clazz, filter);
+			registry.getServiceReferences(
+				clazz, _getFilterString(clazz, filter));
 
 		Stream<ServiceReference<T>> stream = serviceReferences.stream();
 
@@ -142,6 +152,42 @@ public class InjectTestBag {
 	private <T> ServiceReference<T> _getServiceReference(
 			Registry registry, Class<T> clazz, String filter, boolean blocking)
 		throws Exception {
+
+		CountDownLatch countDownLatch = new CountDownLatch(1);
+
+		AtomicReference<ServiceTracker<T, T>> atomicReference =
+			new AtomicReference<>();
+
+		ServiceTracker<T, T> serviceTracker = registry.trackServices(
+			registry.getFilter(_getFilterString(clazz, filter)),
+			new ServiceTrackerCustomizer<T, T>() {
+
+				@Override
+				public T addingService(ServiceReference<T> serviceReference) {
+					countDownLatch.countDown();
+
+					ServiceTracker<T, T> serviceTracker = atomicReference.get();
+
+					serviceTracker.close();
+
+					return null;
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<T> serviceReference, T service) {
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<T> serviceReference, T service) {
+				}
+
+			});
+
+		atomicReference.set(serviceTracker);
+
+		serviceTracker.open();
 
 		ServiceReference<T> serviceReference = _getServiceReference(
 			registry, clazz, filter);
@@ -163,7 +209,11 @@ public class InjectTestBag {
 				System.out.println(
 					"Waiting for service " + className + " " + filter);
 
-				Thread.sleep(_SLEEP_TIME);
+				try {
+					countDownLatch.await(_SLEEP_TIME, TimeUnit.MILLISECONDS);
+				}
+				catch (InterruptedException ie) {
+				}
 
 				serviceReference = _getServiceReference(
 					registry, clazz, filter);

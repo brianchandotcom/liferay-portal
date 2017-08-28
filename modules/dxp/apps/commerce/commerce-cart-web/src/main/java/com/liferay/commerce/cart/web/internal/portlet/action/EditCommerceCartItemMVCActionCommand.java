@@ -24,13 +24,12 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -62,14 +61,24 @@ public class EditCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (cmd.equals(Constants.DELETE)) {
-				long[] deleteCommerceCartItemIds = StringUtil.split(
-					ParamUtil.getString(
-						actionRequest, "deleteCommerceCartItemIds"),
-					0L);
+				long[] deleteCommerceCartItemIds = null;
 
-				for (long commerceCartItemId : deleteCommerceCartItemIds) {
+				long commerceCartItemId = ParamUtil.getLong(
+					actionRequest, "commerceCartItemId");
+
+				if (commerceCartItemId > 0) {
+					deleteCommerceCartItemIds = new long[] {commerceCartItemId};
+				}
+				else {
+					deleteCommerceCartItemIds = StringUtil.split(
+						ParamUtil.getString(
+							actionRequest, "deleteCommerceCartItemIds"),
+						0L);
+				}
+
+				for (long deleteCommerceCartItemId : deleteCommerceCartItemIds) {
 					_commerceCartItemService.deleteCommerceCartItem(
-						commerceCartItemId);
+						deleteCommerceCartItemId);
 				}
 			}
 		}

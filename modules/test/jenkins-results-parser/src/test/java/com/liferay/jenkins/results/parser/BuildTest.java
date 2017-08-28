@@ -44,22 +44,18 @@ public class BuildTest extends BaseJenkinsResultsParserTestCase {
 			"test-plugins-acceptance-pullrequest(ee-6.2.x)_passed", "66",
 			"test-plugins-acceptance-pullrequest(ee-6.2.x)", "test-1-8");
 		downloadSample(
+			"test-portal-acceptance-pullrequest(7.0.x)_unresolved-req-failure",
+			"103", "test-portal-acceptance-pullrequest(7.0.x)", "test-1-14");
+		downloadSample(
 			"test-portal-acceptance-pullrequest(ee-6.2.x)_passed", "337",
 			"test-portal-acceptance-pullrequest(ee-6.2.x)", "test-1-17");
 		downloadSample(
-			"test-portal-acceptance-pullrequest(ee-7.0.x)" +
-				"_modules_compilation_failure",
-			"492", "test-portal-acceptance-pullrequest(ee-7.0.x)", "test-1-6");
-		downloadSample(
-			"test-portal-acceptance-pullrequest(ee-7.0.x)_sf-failure", "262",
-			"test-portal-acceptance-pullrequest(ee-7.0.x)", "test-1-11");
-		downloadSample(
-			"test-portal-acceptance-pullrequest(ee-7.0.x)" +
-				"_unresolved-req-startup-failure",
-			"495", "test-portal-acceptance-pullrequest(ee-7.0.x)", "test-1-18");
-		downloadSample(
 			"test-portal-acceptance-pullrequest(master)_generic-failure",
 			"1375", "test-portal-acceptance-pullrequest(master)", "test-1-1");
+		downloadSample(
+			"test-portal-acceptance-pullrequest(master)" +
+				"_modules-compile-failure",
+			"999", "test-portal-acceptance-pullrequest(master)", "test-1-21");
 		downloadSample(
 			"test-portal-acceptance-pullrequest(master)_passed", "446",
 			"test-portal-acceptance-pullrequest(master)", "test-1-8");
@@ -70,6 +66,9 @@ public class BuildTest extends BaseJenkinsResultsParserTestCase {
 			"test-portal-acceptance-pullrequest(master)" +
 				"_semantic_versioning_failure",
 			"2003", "test-portal-acceptance-pullrequest(master)", "test-1-3");
+		downloadSample(
+			"test-portal-acceptance-pullrequest(master)_source-format-failure",
+			"2209", "test-portal-acceptance-pullrequest(master)", "test-1-2");
 	}
 
 	@After

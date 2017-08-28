@@ -104,6 +104,13 @@ public class CommercePaymentMethodsDisplayContext {
 
 		portletURL.setParameter(
 			"commerceAdminModuleKey", PaymentMethodsCommerceAdminModule.KEY);
+
+		String delta = ParamUtil.getString(_renderRequest, "delta");
+
+		if (Validator.isNotNull(delta)) {
+			portletURL.setParameter("delta", delta);
+		}
+
 		portletURL.setParameter("navigation", getNavigation());
 
 		return portletURL;

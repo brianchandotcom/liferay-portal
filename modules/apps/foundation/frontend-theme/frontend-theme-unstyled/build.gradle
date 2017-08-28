@@ -4,14 +4,13 @@ import com.liferay.gradle.util.copy.StripPathSegmentsAction
 configurations {
 	alloyUI
 	fontAwesome
-	lexicon
 }
 
 task buildAlloyUITheme(type: Copy)
+task buildClay(type: Copy)
+task buildClayFonts(type: Copy)
+task buildClayIcons(type: Copy)
 task buildFontAwesome(type: Copy)
-task buildLexicon(type: Copy)
-task buildLexiconFonts(type: Copy)
-task buildLexiconIcons(type: Copy)
 task buildTheme
 task publishNodeModule(type: PublishNodeModuleTask)
 
@@ -45,37 +44,17 @@ buildAlloyUITheme {
 	into alloyThemeDestinationDir
 }
 
-buildFontAwesome {
-	File fontAwesomeDestinationDir = new File(themeDestinationDir, "css/font-awesome")
-
-	doFirst {
-		delete fontAwesomeDestinationDir
-	}
-
-	eachFile new StripPathSegmentsAction(5)
-
-	from {
-		zipTree(configurations.fontAwesome.singleFile)
-	}
-
-	include "META-INF/resources/webjars/font-awesome/${fontAwesomeVersion}/scss/**.scss"
-	include "META-INF/resources/webjars/font-awesome/${fontAwesomeVersion}/font/**"
-
-	includeEmptyDirs = false
-	into fontAwesomeDestinationDir
-}
-
 buildCSS {
 	dependsOn buildTheme
 }
 
-buildLexicon {
+buildClay {
 	dependsOn npmInstall
 
-	File lexiconDestinationDir = new File(themeDestinationDir, "css/clay")
+	File clayDestinationDir = new File(themeDestinationDir, "css/clay")
 
 	doFirst {
-		delete lexiconDestinationDir
+		delete clayDestinationDir
 	}
 
 	eachFile {
@@ -128,18 +107,18 @@ buildLexicon {
 	from npmInstall.nodeModulesDir
 	include "clay/src/scss/"
 	includeEmptyDirs = false
-	into lexiconDestinationDir
+	into clayDestinationDir
 }
 
-buildLexiconFonts {
+buildClayFonts {
 	dependsOn npmInstall
 
-	File lexiconFontsDestinationDir = new File(themeDestinationDir, "css/clay/fonts")
+	File clayFontsDestinationDir = new File(themeDestinationDir, "css/clay/fonts")
 
-	dependsOn buildLexicon
+	dependsOn buildClay
 
 	doFirst {
-		delete lexiconFontsDestinationDir
+		delete clayFontsDestinationDir
 	}
 
 	eachFile new StripPathSegmentsAction(3)
@@ -147,30 +126,51 @@ buildLexiconFonts {
 	from npmInstall.nodeModulesDir
 	include "clay/release/fonts/"
 	includeEmptyDirs = false
-	into lexiconFontsDestinationDir
+	into clayFontsDestinationDir
 }
 
-buildLexiconIcons {
+buildClayIcons {
 	dependsOn npmInstall
 
-	File lexiconIconsDestinationDir = new File(themeDestinationDir, "images/lexicon")
+	File clayIconsDestinationDir = new File(themeDestinationDir, "images/clay")
 
 	doFirst {
-		delete lexiconIconsDestinationDir
+		delete clayIconsDestinationDir
 	}
 
 	eachFile new StripPathSegmentsAction(4)
 
 	from npmInstall.nodeModulesDir
-	include "clay/release/images/icons/"
+	include "clay/build/images/icons/"
 	includeEmptyDirs = false
-	into lexiconIconsDestinationDir
+	into clayIconsDestinationDir
+}
+
+buildFontAwesome {
+	File fontAwesomeDestinationDir = new File(themeDestinationDir, "css/font-awesome")
+
+	doFirst {
+		delete fontAwesomeDestinationDir
+	}
+
+	eachFile new StripPathSegmentsAction(5)
+
+	from {
+		zipTree(configurations.fontAwesome.singleFile)
+	}
+
+	include "META-INF/resources/webjars/font-awesome/${fontAwesomeVersion}/scss/**.scss"
+	include "META-INF/resources/webjars/font-awesome/${fontAwesomeVersion}/font/**"
+
+	includeEmptyDirs = false
+	into fontAwesomeDestinationDir
 }
 
 buildTheme {
 	dependsOn buildAlloyUITheme
-	dependsOn buildLexiconFonts
-	dependsOn buildLexiconIcons
+	dependsOn buildClayFonts
+	dependsOn buildClayIcons
+	dependsOn buildFontAwesome
 }
 
 classes {

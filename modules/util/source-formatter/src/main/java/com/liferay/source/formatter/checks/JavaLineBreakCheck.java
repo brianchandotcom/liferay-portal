@@ -570,10 +570,6 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 			content);
 
 		while (matcher.find()) {
-			String tabs = matcher.group(2);
-
-			int lineCount = getLineCount(content, matcher.start(2));
-
 			String lastCharacterPreviousLine = matcher.group(1);
 
 			if (lastCharacterPreviousLine.equals(StringPool.OPEN_PARENTHESIS)) {
@@ -584,16 +580,21 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 				return content;
 			}
 
+			int x = matcher.end(2) + 1;
+
+			int y = x - 1;
+
 			while (true) {
-				lineCount--;
+				if (ToolsUtil.isInsideQuotes(content, y) ||
+					(getLevel(content.substring(y, x)) != 0)) {
 
-				String line = getLine(content, lineCount);
+					y--;
 
-				if (getLeadingTabCount(line) != tabs.length()) {
 					continue;
 				}
 
-				String trimmedLine = StringUtil.trimLeading(line);
+				String trimmedLine = StringUtil.trimLeading(
+					getLine(content, getLineCount(content, y)));
 
 				if (trimmedLine.startsWith(").") ||
 					trimmedLine.startsWith("@")) {
@@ -602,7 +603,8 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 				}
 
 				return StringUtil.replaceFirst(
-					content, "\n" + tabs, StringPool.BLANK, matcher.start());
+					content, "\n" + matcher.group(2), StringPool.BLANK,
+					matcher.start());
 			}
 		}
 

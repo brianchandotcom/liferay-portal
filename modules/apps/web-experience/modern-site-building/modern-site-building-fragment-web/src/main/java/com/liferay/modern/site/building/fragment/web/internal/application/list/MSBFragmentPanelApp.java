@@ -38,12 +38,12 @@ public class MSBFragmentPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return MSBFragmentPortletKeys.MSB_FRAGMENT;
+		return MSBFragmentPortletKeys.MODERN_SITE_BUILDING_FRAGMENT;
 	}
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + MSBFragmentPortletKeys.MSB_FRAGMENT + ")",
+		target = "(javax.portlet.name=" + MSBFragmentPortletKeys.MODERN_SITE_BUILDING_FRAGMENT + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {

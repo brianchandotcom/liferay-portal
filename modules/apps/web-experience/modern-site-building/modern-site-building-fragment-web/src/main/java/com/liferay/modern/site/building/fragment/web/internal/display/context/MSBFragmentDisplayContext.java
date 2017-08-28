@@ -62,7 +62,8 @@ public class MSBFragmentDisplayContext {
 			PortletPreferencesFactoryUtil.getPortalPreferences(_request);
 
 		_displayStyle = portalPreferences.getValue(
-			MSBFragmentPortletKeys.MSB_FRAGMENT, "display-style", "icon");
+			MSBFragmentPortletKeys.MODERN_SITE_BUILDING_FRAGMENT,
+			"display-style", "icon");
 
 		return _displayStyle;
 	}
@@ -271,7 +272,7 @@ public class MSBFragmentDisplayContext {
 		if (MSBFragmentPermission.contains(
 				themeDisplay.getPermissionChecker(),
 				MSBFragmentPermission.RESOURCE_NAME,
-				MSBFragmentPortletKeys.MSB_FRAGMENT,
+				MSBFragmentPortletKeys.MODERN_SITE_BUILDING_FRAGMENT,
 				themeDisplay.getSiteGroupId(), actionId)) {
 
 			return true;

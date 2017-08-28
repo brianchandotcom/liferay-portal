@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.display-name=Modern Site Building Fragment Web",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + MSBFragmentPortletKeys.MSB_FRAGMENT,
+		"javax.portlet.name=" + MSBFragmentPortletKeys.MODERN_SITE_BUILDING_FRAGMENT,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator",
 		"javax.portlet.supports.mime-type=text/html"

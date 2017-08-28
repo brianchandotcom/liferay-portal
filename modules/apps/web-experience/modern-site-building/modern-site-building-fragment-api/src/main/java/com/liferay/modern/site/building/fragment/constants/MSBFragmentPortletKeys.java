@@ -19,7 +19,7 @@ package com.liferay.modern.site.building.fragment.constants;
  */
 public class MSBFragmentPortletKeys {
 
-	public static final String MSB_FRAGMENT =
+	public static final String MODERN_SITE_BUILDING_FRAGMENT =
 		"com_liferay_modern_site_building_fragment_web_portlet_" +
 			"MSBFragmentPortlet";
 

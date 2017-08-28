@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + MSBFragmentPortletKeys.MSB_FRAGMENT,
+		"javax.portlet.name=" + MSBFragmentPortletKeys.MODERN_SITE_BUILDING_FRAGMENT,
 		"mvc.command.name=deleteMSBFragmentCollection"
 	},
 	service = MVCActionCommand.class

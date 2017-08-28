@@ -305,6 +305,11 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 				fileName, "There should be a line break after '}'", lineCount);
 		}
 
+		if (line.matches(".*\\{\\s*\\}")) {
+			addMessage(
+				fileName, "There should be a line break after '{'", lineCount);
+		}
+
 		Matcher matcher = _incorrectLineBreakPattern6.matcher(trimmedLine);
 
 		if (matcher.find() && (getLevel(matcher.group(4)) > 1)) {

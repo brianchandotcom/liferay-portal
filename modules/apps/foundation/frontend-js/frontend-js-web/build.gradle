@@ -3,13 +3,12 @@ import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 configurations {
 	jQuery
-	lexicon
 	lodash
 }
 
+task buildClay(type: Copy)
 task buildJQuery(type: Copy)
 task buildJQueryPluginsForm
-task buildLexicon(type: Copy)
 task buildLiferayAMDLoader(type: Copy)
 task buildLodash(type: Copy)
 task buildSvg4everybody(type: Copy)
@@ -19,6 +18,28 @@ String jQueryVersion = "2.1.4"
 String lodashVersion = "3.10.1"
 
 File jsDestinationDir = file("tmp/META-INF/resources")
+
+buildClay {
+	dependsOn npmInstall
+	File clayDestinationDir = new File(jsDestinationDir, "lexicon")
+
+	doFirst {
+		delete clayDestinationDir
+	}
+
+	eachFile new StripPathSegmentsAction(3)
+
+	filter {
+		String line ->
+
+		line.replace ".offsetWidth // force reflow", ".offsetWidth.toFixed() // force reflow"
+	}
+
+	from npmInstall.nodeModulesDir
+	include "clay/build/js/"
+	includeEmptyDirs = false
+	into clayDestinationDir
+}
 
 buildJQuery {
 	eachFile new StripPathSegmentsAction(6)
@@ -50,28 +71,6 @@ buildJQueryPluginsForm {
 	onlyIf {
 		!jQueryPluginsFormJsFile.exists()
 	}
-}
-
-buildLexicon {
-	dependsOn npmInstall
-	File lexiconDestinationDir = new File(jsDestinationDir, "lexicon")
-
-	doFirst {
-		delete lexiconDestinationDir
-	}
-
-	eachFile new StripPathSegmentsAction(3)
-
-	filter {
-		String line ->
-
-		line.replace ".offsetWidth // force reflow", ".offsetWidth.toFixed() // force reflow"
-	}
-
-	from npmInstall.nodeModulesDir
-	include "clay/release/js/"
-	includeEmptyDirs = false
-	into lexiconDestinationDir
 }
 
 buildLiferayAMDLoader {
@@ -119,9 +118,9 @@ buildSvg4everybody {
 }
 
 classes {
+	dependsOn buildClay
 	dependsOn buildJQuery
 	dependsOn buildJQueryPluginsForm
-	dependsOn buildLexicon
 	dependsOn buildLiferayAMDLoader
 	dependsOn buildLodash
 	dependsOn buildSvg4everybody

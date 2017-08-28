@@ -42,23 +42,21 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 %>
 
 <aui:nav-bar markupView="lexicon">
-	<liferay-portlet:renderURL var="viewNotificationsURL">
-		<liferay-portlet:param name="actionRequired" value="<%= StringPool.FALSE %>" />
-	</liferay-portlet:renderURL>
-
 	<aui:nav cssClass="navbar-nav">
+		<liferay-portlet:renderURL var="viewNotificationsURL">
+			<liferay-portlet:param name="actionRequired" value="<%= StringPool.FALSE %>" />
+		</liferay-portlet:renderURL>
+
 		<aui:nav-item
 			href="<%= viewNotificationsURL %>"
 			label="notifications-list"
 			selected="<%= !actionRequired %>"
 		/>
-	</aui:nav>
 
-	<liferay-portlet:renderURL var="viewRequestsURL">
-		<liferay-portlet:param name="actionRequired" value="<%= StringPool.TRUE %>" />
-	</liferay-portlet:renderURL>
+		<liferay-portlet:renderURL var="viewRequestsURL">
+			<liferay-portlet:param name="actionRequired" value="<%= StringPool.TRUE %>" />
+		</liferay-portlet:renderURL>
 
-	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item
 			href="<%= viewRequestsURL %>"
 			label="requests-list"

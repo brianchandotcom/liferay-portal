@@ -1,4 +1,16 @@
 <definition>
+	<command name="getFileContent" returns="fileContent">
+		<var method="TestPropsUtil#get('test.base.dir.name')" name="baseDir" />
+		<var method="TestPropsUtil#get('test.dependencies.dir.name')" name="dependenciesDir" />
+
+		<execute class="com.liferay.poshi.runner.util.FileUtil" method="read">
+			<arg value="${baseDir}${dependenciesDir}/${fileName}" />
+			<return name="fileContent" />
+		</execute>
+
+		<return name="fileContent" value="${fileContent}" />
+	</command>
+
 	<command name="getSiteName" returns="siteName">
 		<var method="TestPropsUtil#get('test.name.skip.portal.instance')" name="testNameSkipPortalInstance" />
 		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />

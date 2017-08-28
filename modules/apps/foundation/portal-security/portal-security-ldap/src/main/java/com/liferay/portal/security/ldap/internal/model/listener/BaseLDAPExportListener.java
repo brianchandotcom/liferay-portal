@@ -40,7 +40,7 @@ public abstract class BaseLDAPExportListener<T extends BaseModel<T>>
 			final LDAPSettings ldapSettings)
 		throws Exception {
 
-		if (user.isDefaultUser() ||
+		if ((user == null) || user.isDefaultUser() ||
 			UserImportTransactionThreadLocal.isOriginatesFromImport()) {
 
 			return;

@@ -1989,7 +1989,7 @@ plugin is not applied to OSGi projects anymore.
 ## 5.0.27 - 2017-08-28
 
 ### Changed
-- [LPS-74368]: Update the [Liferay Gradle Plugins] dependency to version 3.4.40.
+- [LPS-74368]: Update the [Liferay Gradle Plugins] dependency to version 3.4.41.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report

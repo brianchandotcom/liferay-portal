@@ -9,7 +9,7 @@ dependencies {
 }
 
 node {
-	nodeVersion = "8.1.0"
+	nodeVersion = "8.4.0"
 }
 
 transpileJS {

@@ -214,10 +214,6 @@ public class InjectTestCallbackTest {
 
 	private static class TestClass {
 
-		private void _setService3(Service3 service3) {
-			_service3 = service3;
-		}
-
 		@Inject
 		private static Service1 _service1;
 
@@ -227,7 +223,7 @@ public class InjectTestCallbackTest {
 		)
 		private Service2 _service2;
 
-		private Service3 _service3;
+		private final Service3 _service3 = null;
 
 	}
 

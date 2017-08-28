@@ -499,7 +499,7 @@
 
 		<execute macro="TestCase#getFileContent">
 			<return from="fileContent" name="fileContent" />
-			<var name="fileName" value="task-timers-definition.xml" />
+			<var name="fileName" value="workflow_definition_task_timers.xml" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">

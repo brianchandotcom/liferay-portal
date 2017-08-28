@@ -126,6 +126,9 @@ public class MSBFragmentDisplayContext {
 			return _msbFragmentCollectionsSearchContainer;
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		SearchContainer msbFragmentCollectionsSearchContainer =
 			new SearchContainer(
 				_renderRequest, _renderResponse.createRenderURL(), null,
@@ -155,37 +158,39 @@ public class MSBFragmentDisplayContext {
 		msbFragmentCollectionsSearchContainer.setOrderByComparator(
 			orderByComparator);
 		msbFragmentCollectionsSearchContainer.setOrderByType(getOrderByType());
-
 		msbFragmentCollectionsSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
 
 		List<MSBFragmentCollection> msbFragmentCollections = null;
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long scopeGroupId = themeDisplay.getScopeGroupId();
+		int msbFragmentCollectionsCount = 0;
 
 		if (isSearch()) {
 			msbFragmentCollections =
 				MSBFragmentCollectionServiceUtil.getMSBFragmentCollections(
-					scopeGroupId, getKeywords(),
+					themeDisplay.getScopeGroupId(), getKeywords(),
 					msbFragmentCollectionsSearchContainer.getStart(),
 					msbFragmentCollectionsSearchContainer.getEnd(),
 					orderByComparator);
+
+			msbFragmentCollectionsCount =
+				MSBFragmentCollectionServiceUtil.getMSBFragmentCollectionsCount(
+					themeDisplay.getScopeGroupId(), getKeywords());
 		}
 		else {
 			msbFragmentCollections =
 				MSBFragmentCollectionServiceUtil.getMSBFragmentCollections(
-					scopeGroupId,
+					themeDisplay.getScopeGroupId(),
 					msbFragmentCollectionsSearchContainer.getStart(),
 					msbFragmentCollectionsSearchContainer.getEnd(),
 					orderByComparator);
+
+			msbFragmentCollectionsCount =
+				MSBFragmentCollectionServiceUtil.getMSBFragmentCollectionsCount(
+					themeDisplay.getScopeGroupId());
 		}
 
 		msbFragmentCollectionsSearchContainer.setTotal(
-			msbFragmentCollections.size());
-
+			msbFragmentCollectionsCount);
 		msbFragmentCollectionsSearchContainer.setResults(
 			msbFragmentCollections);
 

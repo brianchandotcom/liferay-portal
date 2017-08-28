@@ -53,12 +53,12 @@ public class EditMSBFragmentCollectionMVCActionCommand
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
 		if (msbFragmentCollectionId <= 0) {
 
 			// Add Fragment Collection
+
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				actionRequest);
 
 			_msbFragmentCollectionService.addMSBFragmentCollection(
 				serviceContext.getScopeGroupId(), name, description,

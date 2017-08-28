@@ -127,15 +127,11 @@ renderResponse.setTitle(LanguageUtil.get(request, "fragments"));
 </c:if>
 
 <aui:script sandbox="<%= true %>">
-	var Util = Liferay.Util;
-
-	var form = $(document.<portlet:namespace />fm);
-
 	$('#<portlet:namespace />deleteSelectedMSBFragmentCollections').on(
 		'click',
 		function() {
 			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				submitForm(form);
+				submitForm($(document.<portlet:namespace />fm));
 			}
 		}
 	);

@@ -494,6 +494,140 @@
 		</execute>
 	</command>
 
+	<command name="ConfigureTaskTimersViaSourceTab" priority="4">
+		<description message="This is a use case for LPS-37209." />
+
+		<execute macro="TestCase#getFileContent">
+			<return from="fileContent" name="fileContent" />
+			<var name="fileName" value="task-timers-definition.xml" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Kaleo Designer" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaKDCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNodeViaSourceXML">
+			<var name="sourceXML" value="${fileContent}" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="__TIMER_REVIEW__" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewNodeTimer">
+			<var name="blockerName" value="timer 1 action" />
+			<var name="blocking" value="false" />
+			<var name="durationTime1" value="1" />
+			<var name="durationTime2" value="2" />
+			<var name="timerName" value="timer 1" />
+		</execute>
+	</command>
+
+	<command name="ConfigureTaskTimerViaViewTab" priority="4">
+		<description message="This is a use case for LPS-37209." />
+
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Kaleo Designer" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaKDCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="StartNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#deleteNode">
+			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNodeViaViewTab">
+			<var name="nodeDescription" value="Task Node Description" />
+			<var name="nodeName" value="Task" />
+			<var name="nodeNodeLabel" value="Task" />
+			<var name="nodeType" value="task" />
+		</execute>
+
+		<execute macro="KaleoDesigner#selectNode">
+			<var name="nodeNodeLabel" value="Task" />
+		</execute>
+
+		<execute macro="KaleoDesigner#editNodeTimer">
+			<var name="blockerDescription" value="Blocker Description" />
+			<var name="blockerName" value="Blocker Name" />
+			<var name="blockerScript" value="Test Script" />
+			<var name="durationScale1" value="Hour" />
+			<var name="durationScale2" value="Hour" />
+			<var name="durationTime1" value="5" />
+			<var name="durationTime2" value="6" />
+			<var name="timerDescription" value="Timer Description" />
+			<var name="timerName" value="Timer Name" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewSourceXMLLine">
+			<var name="kdSourceXML"><![CDATA[<name>Timer Name</name>]]></var>
+			<var name="line" value="21" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewSourceXMLLine">
+			<var name="kdSourceXML"><![CDATA[<duration>5</duration>]]></var>
+			<var name="line" value="24" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewSourceXMLLine">
+			<var name="kdSourceXML"><![CDATA[<scale>hour</scale>]]></var>
+			<var name="line" value="25" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewSourceXMLLine">
+			<var name="kdSourceXML"><![CDATA[<duration>6</duration>]]></var>
+			<var name="line" value="28" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewSourceXMLLine">
+			<var name="kdSourceXML"><![CDATA[<scale>hour</scale>]]></var>
+			<var name="line" value="29" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewSourceXMLLine">
+			<var name="kdSourceXML"><![CDATA[<timer-action>]]></var>
+			<var name="line" value="33" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewSourceXMLLine">
+			<var name="kdSourceXML"><![CDATA[<name>Blocker Name</name>]]></var>
+			<var name="line" value="34" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewSourceXMLLine">
+			<var name="kdSourceXML"><![CDATA[<description>Blocker Description</description>]]></var>
+			<var name="line" value="35" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewSourceXMLLine">
+			<var name="kdSourceXML"><![CDATA[Test Script]]></var>
+			<var name="line" value="37" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewSourceXMLLine">
+			<var name="kdSourceXML"><![CDATA[<blocking>true</blocking>]]></var>
+			<var name="line" value="31" />
+		</execute>
+	</command>
+
 	<command name="DeleteConnectors" priority="5">
 		<property name="portal.acceptance" value="pending" />
 		<property name="testray.component.names" value="Training" />

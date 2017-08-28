@@ -118,6 +118,14 @@ public class MSBFragmentEntryServiceImpl
 	}
 
 	@Override
+	public int getMSBFragmentCollectionsCount(
+		long groupId, long msbFragmentCollectionId, String name) {
+
+		return msbFragmentEntryPersistence.filterCountByG_MSBFCI_LikeN(
+			groupId, msbFragmentCollectionId, name);
+	}
+
+	@Override
 	public List<MSBFragmentEntry> getMSBFragmentEntries(
 			long groupId, long msbFragmentCollectionId, int start, int end)
 		throws PortalException {

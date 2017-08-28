@@ -3,10 +3,12 @@ import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 configurations {
 	alloyUI
+	fontAwesome
 	lexicon
 }
 
 task buildAlloyUITheme(type: Copy)
+task buildFontAwesome(type: Copy)
 task buildLexicon(type: Copy)
 task buildLexiconFonts(type: Copy)
 task buildLexiconIcons(type: Copy)
@@ -14,6 +16,7 @@ task buildTheme
 task publishNodeModule(type: PublishNodeModuleTask)
 
 String alloyUIVersion = "3.1.0-deprecated.23"
+String fontAwesomeVersion = "3.2.1"
 
 File themeDestinationDir = file("src/main/resources/META-INF/resources/_unstyled");
 
@@ -40,6 +43,26 @@ buildAlloyUITheme {
 
 	includeEmptyDirs = false
 	into alloyThemeDestinationDir
+}
+
+buildFontAwesome {
+	File fontAwesomeDestinationDir = new File(themeDestinationDir, "css/font-awesome")
+
+	doFirst {
+		delete fontAwesomeDestinationDir
+	}
+
+	eachFile new StripPathSegmentsAction(5)
+
+	from {
+		zipTree(configurations.fontAwesome.singleFile)
+	}
+
+	include "META-INF/resources/webjars/font-awesome/${fontAwesomeVersion}/scss/**.scss"
+	include "META-INF/resources/webjars/font-awesome/${fontAwesomeVersion}/font/**"
+
+	includeEmptyDirs = false
+	into fontAwesomeDestinationDir
 }
 
 buildCSS {
@@ -156,6 +179,7 @@ classes {
 
 dependencies {
 	alloyUI group: "com.liferay.webjars", name: "com.liferay.webjars.alloy-ui", transitive: false, version: alloyUIVersion
+	fontAwesome group: "org.webjars", name: "font-awesome", transitive: false, version: fontAwesomeVersion
 }
 
 publishNodeModule {

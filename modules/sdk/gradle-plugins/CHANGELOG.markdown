@@ -2227,7 +2227,21 @@ version 2.3.17.
 - [LPS-74345]: Automatically apply the [`Eclipse`](https://docs.gradle.org/current/userguide/eclipse_plugin.html)
 plugin to OSGi projects.
 
-## 3.4.40 - 2017-08-25
+### Changed
+- [LPS-74328]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.1.1.
+- [LPS-74328]: Update the [Liferay Source Formatter] dependency to version
+1.0.447.
+
+## 3.4.40 - 2017-08-28
+
+### Changed
+- [LPS-72705]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.1.2.
+- [LPS-72705]: Update the [Liferay Source Formatter] dependency to version
+1.0.448.
+
+## 3.4.41 - 2017-08-28
 
 ### Changed
 - [LPS-74368]: Update the [Liferay Gradle Plugins Jasper JSPC] dependency to
@@ -2433,6 +2447,7 @@ version 2.0.2.
 [LPS-74269]: https://issues.liferay.com/browse/LPS-74269
 [LPS-74278]: https://issues.liferay.com/browse/LPS-74278
 [LPS-74314]: https://issues.liferay.com/browse/LPS-74314
+[LPS-74328]: https://issues.liferay.com/browse/LPS-74328
 [LPS-74343]: https://issues.liferay.com/browse/LPS-74343
 [LPS-74345]: https://issues.liferay.com/browse/LPS-74345
 [LPS-74368]: https://issues.liferay.com/browse/LPS-74368

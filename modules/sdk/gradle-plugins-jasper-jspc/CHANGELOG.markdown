@@ -15,7 +15,7 @@
 - [LPS-71048]: Exclude `javax.servlet` transitive dependencies from the
 `com.liferay.jasper.jspc` default dependency in the `jspCTool` configuration.
 
-## 2.0.2 - 2017-08-25
+## 2.0.2 - 2017-08-28
 
 ### Removed
 - [LPS-74368]: Remove all dependency exclusions from the

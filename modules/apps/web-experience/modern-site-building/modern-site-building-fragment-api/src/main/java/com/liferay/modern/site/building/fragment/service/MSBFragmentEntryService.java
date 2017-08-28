@@ -72,13 +72,19 @@ public interface MSBFragmentEntryService extends BaseService {
 		long msbFragmentCollectionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MSBFragmentEntry fetchMSBFragmentEntry(long msbFragmentEntryId);
+	public MSBFragmentEntry fetchMSBFragmentEntry(long msbFragmentEntryId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getMSBFragmentCollectionsCount(long msbFragmentCollectionId);
+	public int getMSBFragmentCollectionsCount(long groupId,
+		long msbFragmentCollectionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MSBFragmentEntry> getMSBFragmentEntries(
+	public int getMSBFragmentCollectionsCount(long groupId,
+		long msbFragmentCollectionId, java.lang.String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MSBFragmentEntry> getMSBFragmentEntries(long groupId,
 		long msbFragmentCollectionId, int start, int end)
 		throws PortalException;
 

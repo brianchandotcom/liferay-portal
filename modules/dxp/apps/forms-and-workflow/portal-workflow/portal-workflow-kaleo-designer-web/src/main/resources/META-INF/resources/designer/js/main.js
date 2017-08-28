@@ -476,17 +476,9 @@ AUI.add(
 								buffer.push(XMLUtil.create('resourceActions', xmlResourceAction));
 							}
 							else if (assignmentType === 'roleId') {
-								buffer.push(xmlRoles.open);
+								var xmlRoleId = XMLUtil.create('roleId', dataAssignments.roleId);
 
-								var xmlRole = XMLUtil.createObj('role');
-
-								buffer.push(
-									xmlRole.open,
-									XMLUtil.create('roleNameAC', dataAssignments.roleNameAC),
-									XMLUtil.create('roleId', dataAssignments.roleId),
-									xmlRole.close);
-
-								buffer.push(xmlRoles.close);
+								buffer.push(xmlRoles.open, XMLUtil.create('role', xmlRoleId), xmlRoles.close);
 							}
 							else if (assignmentType === 'roleType') {
 								buffer.push(xmlRoles.open);

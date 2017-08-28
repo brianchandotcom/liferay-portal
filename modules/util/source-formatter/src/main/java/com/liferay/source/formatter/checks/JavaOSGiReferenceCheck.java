@@ -298,16 +298,15 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 			BNDSettings bndSettings = getBNDSettings(fileName);
 
 			String bndSettingsContent = bndSettings.getContent();
-			String bndFileName = bndSettings.getFileLocation() + "bnd.bnd";
 
 			if (!bndSettingsContent.contains(
 					"-dsannotations-options: inherit") &&
-				_bndFileNames.add(bndFileName)) {
+				_bndFileNames.add(bndSettings.getFileName())) {
 
 				addMessage(
 					fileName,
 					"Add '-dsannotations-options: inherit' to '" +
-						bndSettings.getFileLocation() + "bnd.bnd'");
+						bndSettings.getFileName());
 			}
 		}
 

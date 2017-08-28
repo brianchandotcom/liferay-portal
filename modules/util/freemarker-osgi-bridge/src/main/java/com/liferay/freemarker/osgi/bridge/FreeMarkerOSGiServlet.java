@@ -14,7 +14,7 @@
 
 package com.liferay.freemarker.osgi.bridge;
 
-import com.liferay.freemarker.osgi.internal.BundleTemplateLoader;
+import com.liferay.freemarker.osgi.bridge.internal.BundleTemplateLoader;
 
 import freemarker.cache.TemplateLoader;
 

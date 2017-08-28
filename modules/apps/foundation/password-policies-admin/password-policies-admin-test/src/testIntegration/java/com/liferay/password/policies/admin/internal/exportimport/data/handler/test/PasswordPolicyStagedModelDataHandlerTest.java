@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.password.poclicies.admin.internal.exportimport.data.handler.test;
+package com.liferay.password.policies.admin.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;

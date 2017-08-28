@@ -99,6 +99,15 @@ public class MSBFragmentCollectionServiceImpl
 			long msbFragmentCollectionId)
 		throws PortalException {
 
+		MSBFragmentCollection msbFragmentCollection =
+			msbFragmentCollectionLocalService.fetchMSBFragmentCollection(
+				msbFragmentCollectionId);
+
+		if (msbFragmentCollection != null) {
+			MSBFragmentCollectionPermission.check(
+				getPermissionChecker(), msbFragmentCollection, ActionKeys.VIEW);
+		}
+
 		return msbFragmentCollectionLocalService.fetchMSBFragmentCollection(
 			msbFragmentCollectionId);
 	}

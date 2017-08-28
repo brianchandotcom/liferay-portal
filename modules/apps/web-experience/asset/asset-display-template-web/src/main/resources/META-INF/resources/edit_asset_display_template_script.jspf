@@ -19,9 +19,6 @@ DDMDisplay ddmDisplay = assetDisplayTemplateDisplayContext.getDDMDisplay();
 
 DDMTemplate template = assetDisplayTemplateDisplayContext.getDDMTemplate();
 
-long templateClassNameId = assetDisplayTemplateDisplayContext.getDefaultClassNameId();
-long templateClassPK = assetDisplayTemplateDisplayContext.getAssetDisplayTemplateId();
-
 String language = BeanParamUtil.getString(template, request, "language", ddmDisplay.getDefaultTemplateLanguage());
 String script = BeanParamUtil.getString(template, request, "script");
 
@@ -69,9 +66,9 @@ if (Validator.isNotNull(scriptContent)) {
 						<div id="<portlet:namespace />paletteData">
 
 							<%
-							long templateHandlerClassNameId = ddmDisplay.getTemplateHandlerClassNameId(template, templateClassNameId);
+							long templateHandlerClassNameId = ddmDisplay.getTemplateHandlerClassNameId(template, assetDisplayTemplateDisplayContext.getDefaultClassNameId());
 
-							Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(templateHandlerClassNameId, templateClassPK, language, locale);
+							Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(templateHandlerClassNameId, assetDisplayTemplateDisplayContext.getAssetDisplayTemplateId(), language, locale);
 
 							TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(templateHandlerClassNameId);
 

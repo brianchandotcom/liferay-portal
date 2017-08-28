@@ -157,7 +157,19 @@ renderResponse.setTitle(commerceCart.getName());
 
 							<%
 							CPDefinition cpDefinition = commerceCartItem.getCPDefinition();
+
+							String thumbnailSrc = StringPool.BLANK;
+
+							if (cpDefinition != null) {
+								thumbnailSrc = cpDefinition.getDefaultImageThumbnailSrc(themeDisplay);
+							}
 							%>
+
+							<liferay-ui:search-container-column-image
+								cssClass="table-cell-content"
+								name="product"
+								src="<%= thumbnailSrc %>"
+							/>
 
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"

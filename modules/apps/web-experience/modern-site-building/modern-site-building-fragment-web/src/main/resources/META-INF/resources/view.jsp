@@ -44,7 +44,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "fragment-collections"));
 
 <liferay-frontend:management-bar
 	disabled="<%= msbFragmentDisplayContext.isDisabledMSBFragmentCollectionsManagementBar() %>"
-	includeCheckBox="true"
+	includeCheckBox="<%= true %>"
 	searchContainerId="msbFragmentCollections"
 >
 	<liferay-frontend:management-bar-buttons>

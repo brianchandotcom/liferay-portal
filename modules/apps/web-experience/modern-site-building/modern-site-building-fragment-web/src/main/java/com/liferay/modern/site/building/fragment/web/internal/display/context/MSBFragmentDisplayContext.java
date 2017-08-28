@@ -129,13 +129,12 @@ public class MSBFragmentDisplayContext {
 		SearchContainer msbFragmentCollectionsSearchContainer =
 			new SearchContainer(
 				_renderRequest, _renderResponse.createRenderURL(), null,
-				"there-are-no-fragment-collections");
+				"there-are-no-collections");
 
 		if (!isSearch()) {
 			msbFragmentCollectionsSearchContainer.setEmptyResultsMessage(
-				"there-are-no-fragment-collections.-you-can-add-a-fragment-" +
-					"collection-by-clicking-the-plus-button-on-the-bottom-" +
-						"right-corner");
+				"there-are-no-collections.-you-can-add-a-collection-by-" +
+					"clicking-the-plus-button-on-the-bottom-right-corner");
 
 			msbFragmentCollectionsSearchContainer.
 				setEmptyResultsMessageCssClass(
@@ -201,7 +200,7 @@ public class MSBFragmentDisplayContext {
 			getMSBFragmentCollection();
 
 		if (msbFragmentCollection == null) {
-			return LanguageUtil.get(_request, "add-fragment-collection");
+			return LanguageUtil.get(_request, "add-collection");
 		}
 
 		return msbFragmentCollection.getName();

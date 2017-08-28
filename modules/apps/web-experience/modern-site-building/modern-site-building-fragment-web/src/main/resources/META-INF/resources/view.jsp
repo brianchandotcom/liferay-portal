@@ -17,14 +17,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-renderResponse.setTitle(LanguageUtil.get(request, "fragment-collections"));
+renderResponse.setTitle(LanguageUtil.get(request, "fragments"));
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<portlet:renderURL var="mainURL" />
 
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item href="<%= mainURL.toString() %>" label="fragments" selected="<%= true %>" />
+		<aui:nav-item href="<%= mainURL.toString() %>" label="collections" selected="<%= true %>" />
 	</aui:nav>
 
 	<c:if test="<%= msbFragmentDisplayContext.isShowMSBFragmentCollectionsSearch() %>">
@@ -122,7 +122,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "fragment-collections"));
 	</portlet:renderURL>
 
 	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-fragment-collection") %>' url="<%= addFragmentCollectionURL.toString() %>" />
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-collection") %>' url="<%= addFragmentCollectionURL.toString() %>" />
 	</liferay-frontend:add-menu>
 </c:if>
 

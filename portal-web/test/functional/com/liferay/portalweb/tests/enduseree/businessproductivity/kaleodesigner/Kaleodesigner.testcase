@@ -669,8 +669,6 @@
 			<var name="workflowDefinitionTitle" value="Test Definition" />
 		</execute>
 
-		<execute macro="KaleoDesigner#viewSourceXMLTab" />
-
 		<execute macro="KaleoDesigner#viewSourceXMLLine">
 			<var name="kdSourceXML"><![CDATA[<name>NAME EDIT</name>]]></var>
 			<var name="line" value="3" />

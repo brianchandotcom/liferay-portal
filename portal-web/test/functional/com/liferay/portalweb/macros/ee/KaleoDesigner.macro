@@ -772,6 +772,8 @@
 	</command>
 
 	<command name="viewSourceXMLLine">
+		<execute macro="KaleoDesigner#viewSourceXMLTab" />
+
 		<execute function="ScrollWebElementIntoView" locator1="KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB" />
 
 		<var name="key_line" value="${line}" />

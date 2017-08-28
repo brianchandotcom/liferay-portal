@@ -31,6 +31,7 @@ page import="com.liferay.modern.site.building.fragment.exception.MSBFragmentEntr
 page import="com.liferay.modern.site.building.fragment.model.MSBFragmentCollection" %><%@
 page import="com.liferay.modern.site.building.fragment.model.MSBFragmentEntry" %><%@
 page import="com.liferay.modern.site.building.fragment.service.permission.MSBFragmentCollectionPermission" %><%@
+page import="com.liferay.modern.site.building.fragment.service.permission.MSBFragmentEntryPermission" %><%@
 page import="com.liferay.modern.site.building.fragment.web.internal.display.context.MSBFragmentDisplayContext" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@

@@ -91,6 +91,8 @@ renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentCollectionTitle(
 
 			<liferay-ui:search-container-column-text>
 				<liferay-frontend:icon-vertical-card
+					actionJsp="/msb_fragment_entry_action.jsp"
+					actionJspServletContext="<%= application %>"
 					cssClass="entry-display-style"
 					icon="page"
 					resultRow="<%= row %>"

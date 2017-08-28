@@ -5107,6 +5107,69 @@ go]]></replacevalue>
 		<delete dir="/tmp/sprite" />
 	</target>
 
+	<target name="deploy-data-creators">
+		<get-testcase-property property.name="data.creator.includes" />
+
+		<if>
+			<isset property="data.creator.includes" />
+			<then>
+				<var name="modules.apps.dir" value="modules/apps" />
+
+				<for list="${data.creator.includes}" param="data.creator.name" parallel="true">
+					<sequential>
+						<if>
+							<os family="unix" />
+							<then>
+								<exec executable="/bin/bash" outputproperty="@{data.creator.name}.path">
+									<arg value="-c" />
+									<arg value="find ${modules.apps.dir} -name @{data.creator.name}" />
+								</exec>
+							</then>
+							<else>
+								<exec executable="cmd" outputproperty="@{data.creator.name}.path">
+									<arg value="/c" />
+									<arg value="dir /b /s /on /ad @{data.creator.name} 2>nul" />
+								</exec>
+							</else>
+						</if>
+						<echo message="Found: ${@{data.creator.name}.path}" />
+					</sequential>
+				</for>
+
+				<for list="${data.creator.includes}" param="data.creator.name">
+					<sequential>
+						<dirname property="@{data.creator.name}.gradle.dir" file="${@{data.creator.name}.path}"/>
+						<if>
+							<available file="${@{data.creator.name}.gradle.dir}/settings.gradle" />
+							<then>
+								<move file="${@{data.creator.name}.gradle.dir}/settings.gradle" tofile="${@{data.creator.name}.gradle.dir}/settings" />
+							</then>
+						</if>
+					</sequential>
+				</for>
+
+				<for list="${data.creator.includes}" param="data.creator.name" parallel="true">
+					<sequential>
+						<gradle-execute dir="${@{data.creator.name}.path}" task="deploy">
+							<arg value="clean" />
+						</gradle-execute>
+					</sequential>
+				</for>
+
+				<for list="${data.creator.includes}" param="data.creator.name">
+					<sequential>
+						<if>
+							<available file="${@{data.creator.name}.gradle.dir}/settings" />
+							<then>
+								<move file="${@{data.creator.name}.gradle.dir}/settings" tofile="${@{data.creator.name}.gradle.dir}/settings.gradle" />
+							</then>
+						</if>
+					</sequential>
+				</for>
+			</then>
+		</if>
+	</target>
+
 	<target name="deploy-extra-apps">
 		<get-testcase-property property.name="extraapps.plugins.includes" />
 

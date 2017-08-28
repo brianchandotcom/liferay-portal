@@ -15,12 +15,14 @@
 package com.liferay.journal.content.search.web.internal.portlet;
 
 import com.liferay.journal.content.search.web.internal.constants.JournalContentSearchPortletKeys;
+import com.liferay.journal.content.search.web.internal.constants.JournalContentSearchWebKeys;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.summary.SummaryBuilderFactory;
 
 import java.io.IOException;
 
@@ -81,6 +83,18 @@ public class JournalContentSearchPortlet extends MVCPortlet {
 		super.doView(renderRequest, renderResponse);
 	}
 
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(
+			JournalContentSearchWebKeys.SUMMARY_BUILDER_FACTORY,
+			_summaryBuilderFactory);
+
+		super.doDispatch(renderRequest, renderResponse);
+	}
+
 	@Reference
 	protected void setJournalArticleService(
 		JournalArticleService journalArticleService) {
@@ -88,5 +102,8 @@ public class JournalContentSearchPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SummaryBuilderFactory _summaryBuilderFactory;
 
 }

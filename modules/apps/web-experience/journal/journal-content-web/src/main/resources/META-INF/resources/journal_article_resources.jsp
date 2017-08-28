@@ -36,7 +36,6 @@ String articleImageURL = HtmlUtil.escapeAttribute(assetRenderer.getThumbnailPath
 		<liferay-frontend:vertical-card
 			cssClass="article-preview-content"
 			imageUrl="<%= articleImageURL %>"
-			subtitle="<%= assetRenderer.getSummary(liferayPortletRequest, liferayPortletResponse) %>"
 			title="<%= title %>"
 		>
 			<liferay-frontend:vertical-card-sticker-bottom>
@@ -56,7 +55,6 @@ String articleImageURL = HtmlUtil.escapeAttribute(assetRenderer.getThumbnailPath
 		<liferay-frontend:icon-vertical-card
 			cssClass="article-preview-content"
 			icon="web-content"
-			subtitle="<%= assetRenderer.getSummary(liferayPortletRequest, liferayPortletResponse) %>"
 			title="<%= title %>"
 		>
 			<liferay-frontend:vertical-card-sticker-bottom>

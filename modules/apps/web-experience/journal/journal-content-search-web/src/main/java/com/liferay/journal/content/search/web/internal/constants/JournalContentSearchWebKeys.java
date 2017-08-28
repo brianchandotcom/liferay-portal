@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,24 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.journal.content.search.web.internal.constants;
 
-<%
-JournalArticle latestArticle = journalContentDisplayContext.getLatestArticle();
+/**
+ * @author Pavel Savinov
+ */
+public class JournalContentSearchWebKeys {
 
-Map<String, Object> data = new HashMap<String, Object>();
+	public static final String SUMMARY_BUILDER_FACTORY =
+		"SUMMARY_BUILDER_FACTORY";
 
-data.put("destroyOnHide", true);
-data.put("id", HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset");
-data.put("title", HtmlUtil.escape(latestArticle.getTitle(locale)));
-%>
-
-<liferay-ui:icon
-	data="<%= data %>"
-	id="editWebContentIcon"
-	message="edit-web-content"
-	url="<%= journalContentDisplayContext.getURLEdit() %>"
-	useDialog="<%= true %>"
-/>
+}

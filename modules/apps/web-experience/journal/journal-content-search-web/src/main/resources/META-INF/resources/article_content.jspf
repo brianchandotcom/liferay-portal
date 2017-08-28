@@ -21,7 +21,7 @@ long articleGroupId = GetterUtil.getLong(document.get(Field.GROUP_ID));
 List hitLayoutIds = JournalContentSearchLocalServiceUtil.getLayoutIds(layout.getGroupId(), layout.isPrivateLayout(), articleId);
 %>
 
-<%= summary.getHighlightedContent() %><br />
+<%= summary.getContent() %><br />
 
 <c:choose>
 	<c:when test="<%= !hitLayoutIds.isEmpty() %>">

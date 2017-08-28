@@ -452,6 +452,12 @@ public abstract class JournalArticleLocalServiceBaseImpl
 		return journalArticlePersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
+	@Override
+	public List<?extends PersistedModel> getPersistedModel(long resourcePrimKey)
+		throws PortalException {
+		return journalArticlePersistence.findByResourcePrimKey(resourcePrimKey);
+	}
+
 	/**
 	 * Returns all the journal articles matching the UUID and company.
 	 *

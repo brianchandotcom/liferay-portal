@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.PersistedResourcedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -45,6 +46,8 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.io.File;
 import java.io.Serializable;
@@ -71,7 +74,7 @@ import java.util.Map;
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
 public interface JournalArticleLocalService extends BaseLocalService,
-	PersistedModelLocalService {
+	PersistedModelLocalService, PersistedResourcedModelLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -1752,6 +1755,13 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		int status, int start, int end) throws PortalException;
 
 	/**
+	* @deprecated As of 4.0.0, with no direct replacement
+	*/
+	@java.lang.Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.service.SubscriptionLocalService getSubscriptionLocalService();
+
+	/**
 	* Returns the latest version number of the web content with the group and
 	* article ID.
 	*
@@ -2668,6 +2678,11 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalArticle> getNoPermissionArticles();
 
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<?extends PersistedModel> getPersistedModel(long resourcePrimKey)
+		throws PortalException;
+
 	/**
 	* Returns the web content articles matching the DDM structure keys.
 	*
@@ -3255,9 +3270,24 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	*/
 	public void rebuildTree(long companyId) throws PortalException;
 
+	/**
+	* @deprecated As of 4.0.0, with no direct replacement
+	*/
+	@java.lang.Deprecated
+	public void setSubscriptionLocalService(
+		com.liferay.portal.kernel.service.SubscriptionLocalService subscriptionLocalService);
+
 	public void setTreePaths(long folderId, java.lang.String treePath,
 		boolean reindex) throws PortalException;
 
+	/**
+	* Subscribes the user to changes in elements that belong to the web content
+	* article.
+	*
+	* @param groupId the primary key of the folder's group
+	* @param userId the primary key of the user to be subscribed
+	* @param articleId the primary key of the article to subscribe to
+	*/
 	public void subscribe(long userId, long groupId, long articleId)
 		throws PortalException;
 
@@ -3272,6 +3302,14 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	public void subscribeStructure(long groupId, long userId,
 		long ddmStructureId) throws PortalException;
 
+	/**
+	* Unsubscribes the user from changes in elements that belong to the web
+	* content article.
+	*
+	* @param groupId the primary key of the folder's group
+	* @param userId the primary key of the user to be subscribed
+	* @param articleId the primary key of the article to unsubscribe from
+	*/
 	public void unsubscribe(long userId, long groupId, long articleId)
 		throws PortalException;
 

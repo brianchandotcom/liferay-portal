@@ -32,10 +32,13 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	service = {Capability.class, JournalContentMetadataImporterCapability.class}
+	service = {
+		Capability.class, JournalContentMetadataExporterImporterCapability.class
+	}
 )
 @ProviderType
-public class JournalContentMetadataImporterCapability implements Capability {
+public class JournalContentMetadataExporterImporterCapability
+	implements Capability {
 
 	@Override
 	public PortletPreferences process(
@@ -48,6 +51,9 @@ public class JournalContentMetadataImporterCapability implements Capability {
 
 		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_DATA_ALL,
+			new String[] {Boolean.TRUE.toString()});
+		parameterMap.put(
+			PortletDataHandlerKeys.RATINGS,
 			new String[] {Boolean.TRUE.toString()});
 
 		return portletPreferences;

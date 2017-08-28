@@ -75,14 +75,17 @@ public class JournalContentExportImportPortletPreferencesProcessor
 
 	@Override
 	public List<Capability> getExportCapabilities() {
-		return null;
+		return ListUtil.toList(
+			new Capability[] {
+				_journalContentMetadataExporterImporterCapability
+			});
 	}
 
 	@Override
 	public List<Capability> getImportCapabilities() {
 		return ListUtil.toList(
 			new Capability[] {
-				_journalContentMetadataImporterCapability,
+				_journalContentMetadataExporterImporterCapability,
 				_referencedStagedModelImporterCapability
 			});
 	}
@@ -374,8 +377,8 @@ public class JournalContentExportImportPortletPreferencesProcessor
 		_journalArticleResourceLocalService;
 
 	@Reference
-	private JournalContentMetadataImporterCapability
-		_journalContentMetadataImporterCapability;
+	private JournalContentMetadataExporterImporterCapability
+		_journalContentMetadataExporterImporterCapability;
 
 	@Reference(unbind = "-")
 	private JournalContentSearchLocalService _journalContentSearchLocalService;

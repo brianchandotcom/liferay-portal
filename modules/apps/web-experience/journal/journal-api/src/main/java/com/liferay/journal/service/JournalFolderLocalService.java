@@ -43,6 +43,8 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import com.liferay.subscription.service.SubscriptionLocalService;
+
 import java.io.Serializable;
 
 import java.util.List;
@@ -238,6 +240,13 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	/**
+	* @deprecated As of 4.0.0, with no direct replacement
+	*/
+	@java.lang.Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.service.SubscriptionLocalService getSubscriptionLocalService();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompanyFoldersCount(long companyId);
@@ -444,6 +453,13 @@ public interface JournalFolderLocalService extends BaseLocalService,
 
 	public void restoreFolderFromTrash(long userId, long folderId)
 		throws PortalException;
+
+	/**
+	* @deprecated As of 4.0.0, with no direct replacement
+	*/
+	@java.lang.Deprecated
+	public void setSubscriptionLocalService(
+		com.liferay.portal.kernel.service.SubscriptionLocalService subscriptionLocalService);
 
 	public void subscribe(long userId, long groupId, long folderId)
 		throws PortalException;

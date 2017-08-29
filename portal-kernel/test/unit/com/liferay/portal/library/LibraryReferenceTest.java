@@ -112,7 +112,7 @@ public class LibraryReferenceTest {
 
 	@Test
 	public void testLibJarsInNetBeans() {
-		testMissingJarReferences(_netBeansJars, _NETBEANS_FILE_NAME);
+		testMissingJarReferences(_netBeansJars, _NETBEANS_XML_FILE_NAME);
 	}
 
 	@Test
@@ -129,18 +129,18 @@ public class LibraryReferenceTest {
 	@Test
 	public void testModulesSourceDirsInNetBeans() {
 		testMissingModuleSourceDirReferences(
-			_netBeansModuleSourceDirs, _NETBEANS_FILE_NAME);
+			_netBeansModuleSourceDirs, _NETBEANS_XML_FILE_NAME);
 	}
 
 	@Test
 	public void testNetBeansJarsInLib() {
-		testNonexistentJarReferences(_netBeansJars, _NETBEANS_FILE_NAME);
+		testNonexistentJarReferences(_netBeansJars, _NETBEANS_XML_FILE_NAME);
 	}
 
 	@Test
 	public void testNetBeansSourceDirsInModules() {
 		testNonexistentModuleSourceDirReferences(
-			_netBeansModuleSourceDirs, _NETBEANS_FILE_NAME);
+			_netBeansModuleSourceDirs, _NETBEANS_XML_FILE_NAME);
 	}
 
 	@Test
@@ -386,7 +386,7 @@ public class LibraryReferenceTest {
 		throws Exception {
 
 		Document document = documentBuilder.parse(
-			new File(_NETBEANS_FILE_NAME));
+			new File(_NETBEANS_XML_FILE_NAME));
 
 		Properties properties = new Properties();
 
@@ -442,7 +442,8 @@ public class LibraryReferenceTest {
 
 	private static final String _MODULES_DIR_NAME = "modules";
 
-	private static final String _NETBEANS_FILE_NAME = "nbproject/project.xml";
+	private static final String _NETBEANS_XML_FILE_NAME =
+		"nbproject/project.xml";
 
 	private static final String _SRC_JAVA_DIR_NAME = "src/main/java";
 

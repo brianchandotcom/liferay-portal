@@ -137,6 +137,12 @@ when compiling a Java project.
 - [LPS-73472]: The `NpmInstallTask`'s `nodeModulesCacheRemoveBinDirs` property
 is no longer available.
 
+## 3.0.1 - 2017-08-29
+
+### Fixed
+- [LPS-73472]: Remove spurious files before recreating symbolic links in the
+`.bin` directories of `node_modules`.
+
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573

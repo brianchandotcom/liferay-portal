@@ -2252,6 +2252,14 @@ version 2.0.2.
 - [LPS-74368]: Remove all dependency exclusions from the
 `com.liferay.jasper.jspc` default dependency in the `jspCTool` configuration.
 
+## 3.4.42 - 2017-08-28
+
+### Changed
+- [LPS-72705]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.1.3.
+- [LPS-72705]: Update the [Liferay Source Formatter] dependency to version
+1.0.449.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

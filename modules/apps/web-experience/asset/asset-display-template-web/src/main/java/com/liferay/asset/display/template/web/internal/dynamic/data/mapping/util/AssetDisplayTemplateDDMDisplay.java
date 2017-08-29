@@ -20,9 +20,12 @@ import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.BaseDDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.util.SetUtil;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -58,6 +61,11 @@ public class AssetDisplayTemplateDDMDisplay extends BaseDDMDisplay {
 	}
 
 	@Override
+	public Set<String> getTemplateLanguageTypes() {
+		return _templateLanguageTypes;
+	}
+
+	@Override
 	public String getTitle(Locale locale) {
 		ResourceBundle resourceBundle = getResourceBundle(locale);
 
@@ -68,5 +76,8 @@ public class AssetDisplayTemplateDDMDisplay extends BaseDDMDisplay {
 	public boolean isShowBackURLInTitleBar() {
 		return true;
 	}
+
+	private static final Set<String> _templateLanguageTypes = SetUtil.fromArray(
+		new String[] {TemplateConstants.LANG_TYPE_FTL});
 
 }

@@ -5,4 +5,8 @@
 	<category name="com.liferay.portal.bundle.blacklist.internal">
 		<priority value="INFO" />
 	</category>
+
+	<category name="osgi.logging.org_apache_felix_fileinstall">
+		<priority value="ERROR" />
+	</category>
 </log4j:configuration>

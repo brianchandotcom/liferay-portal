@@ -113,11 +113,14 @@ public class DocumentLibraryConvertProcessTest {
 				_CLASS_NAME_FILE_SYSTEM_STORE, Boolean.TRUE.toString()
 			});
 
-		_convertProcess.convert();
+		try {
+			_convertProcess.convert();
+		}
+		finally {
+			PropsValues.DL_STORE_IMPL = PropsUtil.get(PropsKeys.DL_STORE_IMPL);
 
-		PropsValues.DL_STORE_IMPL = PropsUtil.get(PropsKeys.DL_STORE_IMPL);
-
-		_storeFactory.setStore(PropsValues.DL_STORE_IMPL);
+			_storeFactory.setStore(PropsValues.DL_STORE_IMPL);
+		}
 	}
 
 	@Test

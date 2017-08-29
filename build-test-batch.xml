@@ -634,11 +634,7 @@ app.server.type=@{app.server.type}]]></echo>
 
 							<antcall inheritall="false" target="stop-app-server" />
 
-							<replaceregexp
-								file="${liferay.home}/osgi/configs/${blacklist.cfg.name}"
-								match="blacklistBundleSymbolicNames=.*"
-								replace="blacklistBundleSymbolicNames="
-							/>
+							<delete file="${liferay.home}/osgi/configs/${blacklist.cfg.name}" />
 
 							<trycatch>
 								<try>

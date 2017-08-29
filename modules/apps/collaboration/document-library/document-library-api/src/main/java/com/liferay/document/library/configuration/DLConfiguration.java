@@ -55,6 +55,14 @@ public interface DLConfiguration {
 	)
 	public String displayTemplatesConfig();
 
+	@Meta.AD(
+		deflt = "*", description = "file-extensions-help", required = false
+	)
+	public String[] fileExtensions();
+
+	@Meta.AD(deflt = "0", description = "file-max-size-help", required = false)
+	public long fileMaxSize();
+
 	@Meta.AD(deflt = "audio|image|video", required = false)
 	public String[] multimediaFileMimeTypes();
 

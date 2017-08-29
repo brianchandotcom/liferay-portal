@@ -931,8 +931,8 @@ another task with the same name is being executed in a parent project.
 - [LPS-74314]: Add the property `showStatusUpdates` to `FormatSourceTask`.
 
 ### Changed
-- [LPS-74314]: Change the default value of the property `showDocumentation` in
-`FormatSourceTask` to `false`.
+- [LPS-74314]: Change the default value of the `FormatSourceTask`'s
+`showDocumentation` property to `false`.
 - [LPS-74314]: Update the [Liferay Source Formatter] dependency to version
 1.0.446.
 

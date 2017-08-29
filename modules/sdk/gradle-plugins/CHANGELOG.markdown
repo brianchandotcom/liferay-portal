@@ -1107,7 +1107,7 @@ to version 1.0.87.
 - [LPS-66853]: Update the [Liferay Source Formatter] dependency to version
 1.0.354.
 - [LPS-70677]: Exclude `com.liferay.portal` transitive dependencies from the
-`com.liferay.jasper.jspc` default dependency in the `jspCTool` configuration.
+`jspCTool` configuration's `com.liferay.jasper.jspc` default dependency.
 - [LPS-70677]: Update the [Liferay Gradle Plugins Jasper JSPC] dependency to
 version 2.0.0.
 
@@ -2223,7 +2223,7 @@ version 2.3.17.
 ## 3.4.39 - 2017-08-24
 
 ### Added
-- [LPS-74345]: Add the Liferay IDE project nature to the Eclipse files.
+- [LPS-74345]: Add the Liferay IDE project nature to Eclipse files.
 - [LPS-74345]: Automatically apply the [`Eclipse`](https://docs.gradle.org/current/userguide/eclipse_plugin.html)
 plugin to OSGi projects.
 
@@ -2249,8 +2249,8 @@ version 2.0.2.
 - [LPS-74368]: Update the [Liferay Jasper JSPC] dependency to version 1.0.11.
 
 ### Removed
-- [LPS-74368]: Remove all dependency exclusions from the
-`com.liferay.jasper.jspc` default dependency in the `jspCTool` configuration.
+- [LPS-74368]: Remove all dependency exclusions from the `jspCTool`
+configuration's `com.liferay.jasper.jspc` default dependency.
 
 ## 3.4.42 - 2017-08-28
 

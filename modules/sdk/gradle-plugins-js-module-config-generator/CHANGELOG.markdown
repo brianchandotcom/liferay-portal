@@ -146,7 +146,7 @@ to 1.2.1.
 ## 2.1.17 - 2017-08-24
 
 ### Changed
-- [LPS-74343]: Explicitly set the property `sourceDir` of `ConfigJSModulesTask`
+- [LPS-74343]: Explicitly set the `ConfigJSModulesTask`'s `sourceDir` property
 as required.
 
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node

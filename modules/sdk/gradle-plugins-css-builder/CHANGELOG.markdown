@@ -15,7 +15,7 @@
 ## 2.1.0 - 2017-08-12
 
 ### Added
-- [LPS-74126]: Add `appendCssImportTimestamps` property to `BuildCSSTask`.
+- [LPS-74126]: Add the `appendCssImportTimestamps` property to `BuildCSSTask`.
 
 ### Changed
 - [LPS-74126]: Update the [Liferay CSS Builder] dependency to version 1.1.0.

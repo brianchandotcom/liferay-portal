@@ -1067,8 +1067,8 @@ process.
 
 ### Removed
 - [LPS-70677]: Remove exclusion of `com.liferay.portal` transitive dependencies
-from the `com.liferay.jasper.jspc` default dependency in the `jspCTool`
-configuration.
+from the `jspCTool` configuration's `com.liferay.jasper.jspc` default
+dependency.
 - [LPS-70699]: Disable the update check when building themes.
 
 ## 2.4.35 - 2017-02-17
@@ -1919,13 +1919,13 @@ property:
 ### Added
 - [LPS-71285]: Apply and configure version 0.3.11 of the [Gradle License Report]
 plugin in OSGi and Ant plugin projects if the system property
-`license.report.enabled` is `true`. The purpose is to generate a `versions.xml`
-file containing information about dependencies:
-	- declared in the `compileInclude` configuration of an OSGi project.
-	- declared in the `provided` configuration of an OSGi projects, but for
-	which the `bnd.bnd` file of the project includes a `-includeresource` or
-	`Include-Resource` property.
-	- declared in the `ivy.xml` file of an Ant plugin project.
+`license.report.enabled` is `true`. Doing this generates a `versions.xml` file
+containing information about dependencies
+	- declared in an OSGi project's `compileInclude` configuration.
+	- declared in an OSGi project's `provided` configuration; the project's
+	`bnd.bnd` file must include a `-includeresource` or `Include-Resource`
+	property.
+	- declared in the Ant plugin project's `ivy.xml` file.
 - [LPS-71285]: Add the ability to overwrite the default destination directory of
 the `versions.xml` file by setting the system property
 `license.report.output.dir`.
@@ -1939,8 +1939,8 @@ the `versions.xml` file by setting the system property
 
 ### Added
 - [LPS-74210]: Add the ability to set one or more `-Xlint` compiler arguments by
-setting the system property `[task name].lint` (where `[task name]` is the name
-of the `JavaCompile` task to configure).
+setting the system property `[task name].lint`, where `[task name]` is the name
+of the `JavaCompile` task to configure.
 
 ## 5.0.19 - 2017-08-17
 
@@ -1984,7 +1984,7 @@ of the `JavaCompile` task to configure).
 
 ### Removed
 - [LPS-74345]: The [`Eclipse`](https://docs.gradle.org/current/userguide/eclipse_plugin.html)
-plugin is not applied to OSGi projects anymore.
+plugin is no longer applied to OSGi projects.
 
 ## 5.0.27 - 2017-08-28
 

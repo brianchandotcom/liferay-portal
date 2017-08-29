@@ -5,7 +5,7 @@
 ### Changed
 - [LPS-67573]: Make most methods private in order to reduce API surface.
 - [LPS-70677]: Exclude `com.liferay.portal` transitive dependencies from the
-`com.liferay.jasper.jspc` default dependency in the `jspCTool` configuration.
+`jspCTool` configuration's `com.liferay.jasper.jspc` default dependency.
 - [LPS-70677]: Support `compileOnly` dependencies by using
 `sourceSets.main.compileClasspath` as a dependency in the `jspC` configuration.
 
@@ -13,13 +13,13 @@
 
 ### Changed
 - [LPS-71048]: Exclude `javax.servlet` transitive dependencies from the
-`com.liferay.jasper.jspc` default dependency in the `jspCTool` configuration.
+`jspCTool` configuration's `com.liferay.jasper.jspc` default dependency.
 
 ## 2.0.2 - 2017-08-28
 
 ### Removed
-- [LPS-74368]: Remove all dependency exclusions from the
-`com.liferay.jasper.jspc` default dependency in the `jspCTool` configuration.
+- [LPS-74368]: Remove all dependency exclusions from the `jspCTool`
+configuration's `com.liferay.jasper.jspc` default dependency.
 
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-70677]: https://issues.liferay.com/browse/LPS-70677

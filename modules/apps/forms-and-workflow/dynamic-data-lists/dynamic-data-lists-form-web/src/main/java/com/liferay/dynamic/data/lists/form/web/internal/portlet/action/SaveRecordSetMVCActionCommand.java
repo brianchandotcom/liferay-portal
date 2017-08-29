@@ -63,7 +63,7 @@ public class SaveRecordSetMVCActionCommand
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 		DDLRecordSet ddlRecordSet = saveRecordSetMVCCommandHelper.saveRecordSet(
-			actionRequest, actionResponse);
+			actionRequest, actionResponse, true);
 
 		portletURL.setParameter(
 			"recordSetId", String.valueOf(ddlRecordSet.getRecordSetId()));

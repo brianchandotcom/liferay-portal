@@ -80,7 +80,9 @@
 			<var name="productTitle" value="Grouped Product 1 Title" />
 		</execute>
 
-		<execute macro="CommerceEntry#saveEntryAsDraft" />
+		<execute macro="CommerceEntry#saveEntryAsDraft">
+			<var name="status" value="Draft" />
+		</execute>
 	</command>
 
 	<command name="AddSimpleCatalogEntry" priority="5">
@@ -118,7 +120,9 @@
 			<var name="productTitle" value="Simple Product 1 Title" />
 		</execute>
 
-		<execute macro="CommerceEntry#saveEntryAsDraft" />
+		<execute macro="CommerceEntry#saveEntryAsDraft">
+			<var name="status" value="Draft" />
+		</execute>
 	</command>
 
 	<command name="AddVirtualCatalogEntry" priority="5">
@@ -156,7 +160,9 @@
 			<var name="productTitle" value="Virtual Product 1 Title" />
 		</execute>
 
-		<execute macro="CommerceEntry#saveEntryAsDraft" />
+		<execute macro="CommerceEntry#saveEntryAsDraft">
+			<var name="status" value="Draft" />
+		</execute>
 	</command>
 
 	<command name="CheckGroupedDraftCatalogEntry" priority="5">

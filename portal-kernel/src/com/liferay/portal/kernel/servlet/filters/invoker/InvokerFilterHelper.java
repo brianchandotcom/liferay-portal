@@ -476,7 +476,8 @@ public class InvokerFilterHelper {
 				String value = GetterUtil.getString(
 					serviceReference.getProperty(key));
 
-				initParameterMap.put(key, value);
+				initParameterMap.put(
+					StringUtil.replace(key, "init.param.", ""), value);
 			}
 
 			ServletContext servletContext = ServletContextPool.get(

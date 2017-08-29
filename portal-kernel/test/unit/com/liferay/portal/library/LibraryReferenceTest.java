@@ -112,7 +112,7 @@ public class LibraryReferenceTest {
 
 	@Test
 	public void testLibJarsInNetBeans() {
-		testMissingJarReferences(_netBeansJars, _NETBEANS_XML_FILE_NAME);
+		testMissingJarReferences(_netBeansJars, _NETBEANS_PROPERTIES_FILE_NAME);
 	}
 
 	@Test
@@ -134,7 +134,8 @@ public class LibraryReferenceTest {
 
 	@Test
 	public void testNetBeansJarsInLib() {
-		testNonexistentJarReferences(_netBeansJars, _NETBEANS_XML_FILE_NAME);
+		testNonexistentJarReferences(
+			_netBeansJars, _NETBEANS_PROPERTIES_FILE_NAME);
 	}
 
 	@Test

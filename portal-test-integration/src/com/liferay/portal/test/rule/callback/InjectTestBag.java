@@ -150,6 +150,13 @@ public class InjectTestBag {
 			Registry registry, Class<T> clazz, String filter, boolean blocking)
 		throws Exception {
 
+		ServiceReference<T> serviceReference = _getServiceReference(
+			registry, clazz, filter);
+
+		if ((serviceReference != null) || !blocking) {
+			return serviceReference;
+		}
+
 		CountDownLatch countDownLatch = new CountDownLatch(1);
 
 		AtomicReference<ServiceTracker<T, T>> atomicReference =
@@ -186,35 +193,29 @@ public class InjectTestBag {
 
 		serviceTracker.open();
 
-		ServiceReference<T> serviceReference = _getServiceReference(
-			registry, clazz, filter);
+		int waitTime = 0;
 
-		if (blocking) {
-			int waitTime = 0;
+		String className = clazz.getName();
 
-			String className = clazz.getName();
+		while (serviceReference == null) {
+			waitTime += _SLEEP_TIME;
 
-			while (serviceReference == null) {
-				waitTime += _SLEEP_TIME;
-
-				if (waitTime >= TestPropsValues.CI_TEST_TIMEOUT_TIME) {
-					throw new IllegalStateException(
-						"Timed out while waiting for service " + className +
-							" " + filter);
-				}
-
-				System.out.println(
-					"Waiting for service " + className + " " + filter);
-
-				try {
-					countDownLatch.await(_SLEEP_TIME, TimeUnit.MILLISECONDS);
-				}
-				catch (InterruptedException ie) {
-				}
-
-				serviceReference = _getServiceReference(
-					registry, clazz, filter);
+			if (waitTime >= TestPropsValues.CI_TEST_TIMEOUT_TIME) {
+				throw new IllegalStateException(
+					"Timed out while waiting for service " + className + " " +
+						filter);
 			}
+
+			System.out.println(
+				"Waiting for service " + className + " " + filter);
+
+			try {
+				countDownLatch.await(_SLEEP_TIME, TimeUnit.MILLISECONDS);
+			}
+			catch (InterruptedException ie) {
+			}
+
+			serviceReference = _getServiceReference(registry, clazz, filter);
 		}
 
 		return serviceReference;

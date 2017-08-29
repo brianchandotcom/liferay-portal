@@ -40,6 +40,7 @@ public class CommerceOrderContentDisplayContext
 		super(httpServletRequest, commerceOrderLocalService);
 	}
 
+	@Override
 	public SearchContainer<CommerceOrder> getSearchContainer()
 		throws PortalException {
 

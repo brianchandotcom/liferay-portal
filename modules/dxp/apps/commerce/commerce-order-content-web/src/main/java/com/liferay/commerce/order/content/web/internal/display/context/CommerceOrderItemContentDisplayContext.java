@@ -67,6 +67,7 @@ public class CommerceOrderItemContentDisplayContext
 		return portletURL;
 	}
 
+	@Override
 	public SearchContainer<CommerceOrderItem> getSearchContainer()
 		throws PortalException {
 

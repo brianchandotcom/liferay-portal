@@ -41,6 +41,7 @@ public class CommerceCartImpl extends CommerceCartBaseImpl {
 			getCommerceCartId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
+	@Override
 	public boolean isGuestCart() throws PortalException {
 		User user = UserLocalServiceUtil.getUser(getUserId());
 

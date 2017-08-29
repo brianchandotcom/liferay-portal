@@ -172,6 +172,7 @@ public class CommerceCartItemLocalServiceImpl
 		return commerceCartItem;
 	}
 
+	@Override
 	public void validate(long cpDefinitionId, long cpInstanceId)
 		throws PortalException {
 

@@ -84,6 +84,7 @@ public class DDMFormValuesHelperImpl implements DDMFormValuesHelper {
 		return ddmFormValues;
 	}
 
+	@Override
 	public boolean equals(String json1, String json2) throws PortalException {
 		JSONArray jsonArray1 = _jsonFactory.createJSONArray(json1);
 		JSONArray jsonArray2 = _jsonFactory.createJSONArray(json2);

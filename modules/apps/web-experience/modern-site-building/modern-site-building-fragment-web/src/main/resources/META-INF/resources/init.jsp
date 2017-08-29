@@ -26,9 +26,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.modern.site.building.fragment.constants.MSBFragmentActionKeys" %><%@
 page import="com.liferay.modern.site.building.fragment.exception.DuplicateMSBFragmentCollectionException" %><%@
-page import="com.liferay.modern.site.building.fragment.exception.DuplicateMSBFragmentEntryException" %><%@
 page import="com.liferay.modern.site.building.fragment.exception.MSBFragmentCollectionNameException" %><%@
-page import="com.liferay.modern.site.building.fragment.exception.MSBFragmentEntryNameException" %><%@
 page import="com.liferay.modern.site.building.fragment.model.MSBFragmentCollection" %><%@
 page import="com.liferay.modern.site.building.fragment.model.MSBFragmentEntry" %><%@
 page import="com.liferay.modern.site.building.fragment.service.permission.MSBFragmentCollectionPermission" %><%@
@@ -41,9 +39,6 @@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
-
-<%@ page import="java.util.HashMap" %><%@
-page import="java.util.Map" %>
 
 <liferay-frontend:defineObjects />
 

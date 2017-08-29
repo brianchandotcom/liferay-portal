@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.commerce.cart.internal.constants;
+package com.liferay.commerce.product.rest.internal.constants;
 
 /**
  * @author Andrea Di Giorgi
  */
-public class CommerceCartConstants {
+public class CPRestConstants {
 }

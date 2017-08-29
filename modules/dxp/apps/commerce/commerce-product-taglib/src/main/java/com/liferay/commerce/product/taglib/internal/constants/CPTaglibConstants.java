@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.commerce.product.internal.constants;
+package com.liferay.commerce.product.taglib.internal.constants;
 
 /**
  * @author Andrea Di Giorgi
  */
-public class CPConstants {
+public class CPTaglibConstants {
 }

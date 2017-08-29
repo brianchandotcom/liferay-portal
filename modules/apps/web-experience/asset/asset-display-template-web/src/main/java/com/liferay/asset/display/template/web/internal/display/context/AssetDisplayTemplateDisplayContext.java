@@ -230,8 +230,8 @@ public class AssetDisplayTemplateDisplayContext {
 			assetDisplayTemplates =
 				AssetDisplayTemplateLocalServiceUtil.getAssetDisplayTemplates(
 					themeDisplay.getScopeGroupId(), getKeywords(),
-					searchContainer.getStart(),
-					searchContainer.getEnd(), orderByComparator);
+					searchContainer.getStart(), searchContainer.getEnd(),
+					orderByComparator);
 		}
 		else {
 			assetDisplayTemplatesCount =

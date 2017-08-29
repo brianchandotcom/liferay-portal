@@ -560,6 +560,13 @@ public class TopLevelBuild extends BaseBuild {
 			Dom4JUtil.getNewElement("h4", null, "Base Branch:"),
 			getBaseBranchDetailsElement());
 
+		Dom4JUtil.addToElement(
+			rootElement,
+			Integer.toString(getDownstreamBuildCountByResult("SUCCESS")),
+			" out of ",
+			Integer.toString(getDownstreamBuildCountByResult(null) + 1),
+			" jobs PASSED");
+
 		if (!result.equals("SUCCESS")) {
 			Dom4JUtil.addToElement(rootElement, getFailedJobSummaryElement());
 		}

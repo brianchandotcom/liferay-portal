@@ -122,7 +122,7 @@ public class MSBFragmentEntryServiceImpl
 			long groupId, long msbFragmentCollectionId, int start, int end)
 		throws PortalException {
 
-		return getMSBFragmentEntryPersistence().filterFindByG_MSBFCI(
+		return msbFragmentEntryPersistence.filterFindByG_MSBFCI(
 			groupId, msbFragmentCollectionId, start, end);
 	}
 
@@ -132,7 +132,7 @@ public class MSBFragmentEntryServiceImpl
 			OrderByComparator<MSBFragmentEntry> orderByComparator)
 		throws PortalException {
 
-		return getMSBFragmentEntryPersistence().filterFindByG_MSBFCI(
+		return msbFragmentEntryPersistence.filterFindByG_MSBFCI(
 			groupId, msbFragmentCollectionId, start, end, orderByComparator);
 	}
 

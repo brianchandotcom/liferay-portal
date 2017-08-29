@@ -29,8 +29,9 @@ For web modules (modules ending with ```-web```), the
 
 ---
 
-Frontend modules that have a ```name``` property in the ```package.json```
-file should have the ```Web-ContextPath``` header.
+Frontend modules that have a ```name``` property in the ```package.json``` file
+should have the ```Web-ContextPath``` header. The header should match the
+```name``` in the ```package.json``` file.
 
 ### Example
 

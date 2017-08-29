@@ -30,5 +30,6 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = ControlPanelEntry.class
 )
-public class PortalInstancesControlPanelEntry extends
-	OmniadminControlPanelEntry {}
+public class PortalInstancesControlPanelEntry
+	extends OmniadminControlPanelEntry {
+}

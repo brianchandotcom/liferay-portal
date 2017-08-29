@@ -30,5 +30,6 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = ControlPanelEntry.class
 )
-public class LicenseManagerControlPanelEntry extends
-	OmniadminControlPanelEntry {}
+public class LicenseManagerControlPanelEntry
+	extends OmniadminControlPanelEntry {
+}

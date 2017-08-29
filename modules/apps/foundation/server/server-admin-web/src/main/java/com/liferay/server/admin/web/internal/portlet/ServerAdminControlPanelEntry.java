@@ -28,5 +28,5 @@ import org.osgi.service.component.annotations.Component;
 	property = {"javax.portlet.name=" + PortletKeys.SERVER_ADMIN},
 	service = ControlPanelEntry.class
 )
-public class ServerAdminControlPanelEntry extends
-	OmniadminControlPanelEntry {}
+public class ServerAdminControlPanelEntry extends OmniadminControlPanelEntry {
+}

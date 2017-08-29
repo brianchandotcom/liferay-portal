@@ -2572,19 +2572,9 @@
 		<property name="portal.acceptance" value="pending" />
 		<property name="testray.component.names" value="Training" />
 
-		<toggle name="LPS-73924">
-			<on>
-				<execute macro="ProductMenu#gotoControlPanelConfiguration">
-					<var name="portlet" value="Workflow" />
-				</execute>
-			</on>
-
-			<off>
-				<execute macro="ProductMenu#gotoControlPanelConfiguration">
-					<var name="portlet" value="Workflow Definition" />
-				</execute>
-			</off>
-		</toggle>
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Workflow" />
+		</execute>
 
 		<execute macro="Workflow#uploadDefinition">
 			<var name="workflowDefinitionFile" value="workflow_definition_1.xml" />
@@ -3776,19 +3766,9 @@
 	</command>
 
 	<command name="EditProcessWorkflowAfterFormSubmission" priority="4">
-		<toggle name="LPS-73924">
-			<on>
-				<execute macro="ProductMenu#gotoControlPanelConfiguration">
-					<var name="portlet" value="Workflow" />
-				</execute>
-			</on>
-
-			<off>
-				<execute macro="ProductMenu#gotoControlPanelConfiguration">
-					<var name="portlet" value="Workflow Definition" />
-				</execute>
-			</off>
-		</toggle>
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Workflow" />
+		</execute>
 
 		<execute macro="Workflow#uploadDefinition">
 			<var name="workflowDefinitionFile" value="workflow_definition_1.xml" />
@@ -3979,19 +3959,9 @@
 	</command>
 
 	<command name="EditProcessWorkflowBeforeFormSubmission" priority="4">
-		<toggle name="LPS-73924">
-			<on>
-				<execute macro="ProductMenu#gotoControlPanelConfiguration">
-					<var name="portlet" value="Workflow" />
-				</execute>
-			</on>
-
-			<off>
-				<execute macro="ProductMenu#gotoControlPanelConfiguration">
-					<var name="portlet" value="Workflow Definition" />
-				</execute>
-			</off>
-		</toggle>
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Workflow" />
+		</execute>
 
 		<execute macro="Workflow#uploadDefinition">
 			<var name="workflowDefinitionFile" value="workflow_definition_1.xml" />

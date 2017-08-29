@@ -50,6 +50,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.felix.service.command.Descriptor;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
@@ -69,13 +71,15 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"osgi.command.function=check", "osgi.command.function=checkAll",
 		"osgi.command.function=execute", "osgi.command.function=executeAll",
-		"osgi.command.function=list", "osgi.command.function=show",
-		"osgi.command.function=showReports", "osgi.command.scope=verify"
+		"osgi.command.function=help", "osgi.command.function=list",
+		"osgi.command.function=show", "osgi.command.function=showReports",
+		"osgi.command.scope=verify"
 	},
 	service = {VerifyProcessTrackerOSGiCommands.class}
 )
 public class VerifyProcessTrackerOSGiCommands {
 
+	@Descriptor("List latest execution result for a specific verify process")
 	public void check(final String verifyProcessName) {
 		try {
 			getVerifyProcesses(verifyProcessName);
@@ -110,22 +114,26 @@ public class VerifyProcessTrackerOSGiCommands {
 		}
 	}
 
+	@Descriptor("List latest execution result for all verify processes")
 	public void checkAll() {
 		for (String verifyProcessName : _verifyProcesses.keySet()) {
 			check(verifyProcessName);
 		}
 	}
 
+	@Descriptor("Execute a specific verify process")
 	public void execute(final String verifyProcessName) {
 		_execute(verifyProcessName, null, true);
 	}
 
+	@Descriptor("Execute a specific verify process with a specific output")
 	public void execute(
 		String verifyProcessName, String outputStreamContainerFactoryName) {
 
 		_execute(verifyProcessName, outputStreamContainerFactoryName, true);
 	}
 
+	@Descriptor("Execute all verify processes")
 	public void executeAll() {
 		OutputStreamContainerFactory outputStreamContainerFactory =
 			outputStreamContainerFactoryTracker.
@@ -134,6 +142,7 @@ public class VerifyProcessTrackerOSGiCommands {
 		_runAllVerifiersWithFactory(outputStreamContainerFactory, true);
 	}
 
+	@Descriptor("Execute all verify processes with a specific output")
 	public void executeAll(String outputStreamContainerFactoryName) {
 		OutputStreamContainerFactory outputStreamContainerFactory =
 			outputStreamContainerFactoryTracker.getOutputStreamContainerFactory(
@@ -142,12 +151,14 @@ public class VerifyProcessTrackerOSGiCommands {
 		_runAllVerifiersWithFactory(outputStreamContainerFactory, true);
 	}
 
+	@Descriptor("Execute all registered verify processes")
 	public void list() {
 		for (String verifyProcessName : _verifyProcesses.keySet()) {
 			show(verifyProcessName);
 		}
 	}
 
+	@Descriptor("Show all registered verify processes")
 	public void show(String verifyProcessName) {
 		try {
 			getVerifyProcesses(verifyProcessName);
@@ -162,6 +173,7 @@ public class VerifyProcessTrackerOSGiCommands {
 		System.out.println("Registered verify process " + verifyProcessName);
 	}
 
+	@Descriptor("Show all available outputs")
 	public void showReports() {
 		Set<String> outputStreamContainerFactoryNames =
 			outputStreamContainerFactoryTracker.

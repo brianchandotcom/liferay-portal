@@ -105,20 +105,25 @@ public class SharepointRepositoryFactoryProvider {
 
 			sharepointExtRepositoryAdapter.setAssetEntryLocalService(
 				_assetEntryLocalService);
-			sharepointExtRepositoryAdapter.setCompanyLocalService(_companyLocalService);
+			sharepointExtRepositoryAdapter.setCompanyLocalService(
+				_companyLocalService);
 			sharepointExtRepositoryAdapter.setDLAppHelperLocalService(
 				_dlAppHelperLocalService);
-			sharepointExtRepositoryAdapter.setDLFolderLocalService(_dlFolderLocalService);
+			sharepointExtRepositoryAdapter.setDLFolderLocalService(
+				_dlFolderLocalService);
 			sharepointExtRepositoryAdapter.setRepositoryEntryLocalService(
 				_repositoryEntryLocalService);
-			sharepointExtRepositoryAdapter.setUserLocalService(_userLocalService);
+			sharepointExtRepositoryAdapter.setUserLocalService(
+				_userLocalService);
 
 			com.liferay.portal.kernel.model.Repository repository =
 				_repositoryLocalService.getRepository(repositoryId);
 
-			sharepointExtRepositoryAdapter.setCompanyId(repository.getCompanyId());
+			sharepointExtRepositoryAdapter.setCompanyId(
+				repository.getCompanyId());
 			sharepointExtRepositoryAdapter.setGroupId(repository.getGroupId());
-			sharepointExtRepositoryAdapter.setRepositoryId(repository.getRepositoryId());
+			sharepointExtRepositoryAdapter.setRepositoryId(
+				repository.getRepositoryId());
 			sharepointExtRepositoryAdapter.setTypeSettingsProperties(
 				repository.getTypeSettingsProperties());
 

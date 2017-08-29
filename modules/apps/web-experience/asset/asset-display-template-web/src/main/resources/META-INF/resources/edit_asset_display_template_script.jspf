@@ -337,16 +337,7 @@ if (Validator.isNotNull(scriptContent)) {
 	}
 
 	function setEditorPlugins(event) {
-		var AutoComplete;
-
-		<c:choose>
-			<c:when test="<%= language.equals(TemplateConstants.LANG_TYPE_FTL) %>">
-				AutoComplete = A.AceEditor.AutoCompleteFreemarker;
-			</c:when>
-			<c:when test="<%= language.equals(TemplateConstants.LANG_TYPE_VM) %>">
-				AutoComplete = A.AceEditor.AutoCompleteVelocity;
-			</c:when>
-		</c:choose>
+		var AutoComplete = A.AceEditor.AutoCompleteFreemarker;
 
 		if (AutoComplete) {
 			var processor = new AutoComplete(
@@ -482,30 +473,6 @@ if (Validator.isNotNull(scriptContent)) {
 </aui:script>
 
 <%!
-private String _getAccessor(String accessor, String language) {
-	if (StringUtil.equalsIgnoreCase(language, "vm")) {
-		if (!accessor.contains(StringPool.OPEN_PARENTHESIS)) {
-			return accessor;
-		}
-
-		StringTokenizer st = new StringTokenizer(accessor, "(,");
-
-		StringBundler sb = new StringBundler(st.countTokens() * 2);
-
-		sb.append(st.nextToken());
-		sb.append(StringPool.OPEN_PARENTHESIS);
-
-		while (st.hasMoreTokens()) {
-			sb.append(StringPool.DOLLAR);
-			sb.append(st.nextToken());
-		}
-
-		accessor = sb.toString();
-	}
-
-	return accessor;
-}
-
 private String _getDataContent(TemplateVariableDefinition templateVariableDefinition, String language) {
 	String dataContent = StringPool.BLANK;
 
@@ -514,10 +481,10 @@ private String _getDataContent(TemplateVariableDefinition templateVariableDefini
 	if (templateVariableDefinition.isCollection()) {
 		TemplateVariableDefinition itemTemplateVariableDefinition = templateVariableDefinition.getItemTemplateVariableDefinition();
 
-		dataContent = _getListCode(templateVariableDefinition.getName(), itemTemplateVariableDefinition.getName(), itemTemplateVariableDefinition.getAccessor(), language);
+		dataContent = _getListCode(templateVariableDefinition.getName(), itemTemplateVariableDefinition.getName(), itemTemplateVariableDefinition.getAccessor());
 	}
 	else if (Validator.isNull(dataType)) {
-		dataContent = _getVariableReferenceCode(templateVariableDefinition.getName(), templateVariableDefinition.getAccessor(), language);
+		dataContent = _getVariableReferenceCode(templateVariableDefinition.getName(), templateVariableDefinition.getAccessor());
 	}
 	else if (dataType.equals("service-locator")) {
 		Class<?> templateVariableDefinitionClass = templateVariableDefinition.getClazz();
@@ -526,9 +493,9 @@ private String _getDataContent(TemplateVariableDefinition templateVariableDefini
 
 		StringBundler sb = new StringBundler(3);
 
-		sb.append(_getVariableAssignmentCode(variableName, "serviceLocator.findService(\"" + templateVariableDefinition.getName() + "\")", language));
+		sb.append(_getVariableAssignmentCode(variableName, "serviceLocator.findService(\"" + templateVariableDefinition.getName() + "\")"));
 		sb.append("[$CURSOR$]");
-		sb.append(_getVariableReferenceCode(variableName, null, language));
+		sb.append(_getVariableReferenceCode(variableName, null));
 
 		dataContent = sb.toString();
 	}
@@ -546,41 +513,21 @@ private String _getDataContent(TemplateVariableDefinition templateVariableDefini
 	return dataContent;
 }
 
-private String _getListCode(String variableName, String itemName, String accessor, String language) {
-	if (StringUtil.equalsIgnoreCase(language, "ftl")) {
-		StringBundler sb = new StringBundler(10);
+private String _getListCode(String variableName, String itemName, String accessor) {
+	StringBundler sb = new StringBundler(10);
 
-		sb.append("<#if ");
-		sb.append(variableName);
-		sb.append("?has_content>\n\t<#list ");
-		sb.append(variableName);
-		sb.append(" as ");
-		sb.append(itemName);
-		sb.append(">\n\t\t");
-		sb.append(_getVariableReferenceCode(itemName, accessor, language));
-		sb.append("[$CURSOR$]");
-		sb.append("\n\t</#list>\n</#if>");
+	sb.append("<#if ");
+	sb.append(variableName);
+	sb.append("?has_content>\n\t<#list ");
+	sb.append(variableName);
+	sb.append(" as ");
+	sb.append(itemName);
+	sb.append(">\n\t\t");
+	sb.append(_getVariableReferenceCode(itemName, accessor));
+	sb.append("[$CURSOR$]");
+	sb.append("\n\t</#list>\n</#if>");
 
-		return sb.toString();
-	}
-	else if (StringUtil.equalsIgnoreCase(language, "vm")) {
-		StringBundler sb = new StringBundler(10);
-
-		sb.append("#if (!$");
-		sb.append(variableName);
-		sb.append(".isEmpty())\n\t#foreach ($");
-		sb.append(itemName);
-		sb.append(" in $");
-		sb.append(variableName);
-		sb.append(")\n\t\t");
-		sb.append(_getVariableReferenceCode(itemName, accessor, language));
-		sb.append("[$CURSOR$]");
-		sb.append("#end\n#end");
-
-		return sb.toString();
-	}
-
-	return StringPool.BLANK;
+	return sb.toString();
 }
 
 private String _getPaletteItemTitle(HttpServletRequest request, String label, Class<?> clazz) {
@@ -659,36 +606,18 @@ private String _getPaletteItemTitle(HttpServletRequest request, ResourceBundle r
 	return sb.toString();
 }
 
-private String _getVariableAssignmentCode(String variableName, String variableValue, String language) {
-	if (StringUtil.equalsIgnoreCase(language, "ftl")) {
-		return "<#assign " + variableName + " = " + variableValue + ">";
-	}
-	else if (StringUtil.equalsIgnoreCase(language, "vm")) {
-		if (!variableValue.startsWith(StringPool.DOUBLE_QUOTE) && !variableValue.startsWith(StringPool.OPEN_BRACKET) && !variableValue.startsWith(StringPool.OPEN_CURLY_BRACE) && !variableValue.startsWith(StringPool.QUOTE) && !Validator.isNumber(variableValue)) {
-			variableValue = StringPool.DOLLAR + variableValue;
-		}
-
-		return "#set ($" + variableName + " = " + variableValue + ")";
-	}
-
-	return variableName;
+private String _getVariableAssignmentCode(String variableName, String variableValue) {
+	return "<#assign " + variableName + " = " + variableValue + ">";
 }
 
-private String _getVariableReferenceCode(String variableName, String accessor, String language) {
+private String _getVariableReferenceCode(String variableName, String accessor) {
 	String methodInvocation = StringPool.BLANK;
 
 	if (Validator.isNotNull(accessor)) {
-		methodInvocation = StringPool.PERIOD + _getAccessor(accessor, language);
+		methodInvocation = StringPool.PERIOD + accessor;
 	}
 
-	if (StringUtil.equalsIgnoreCase(language, "ftl")) {
-		return "${" + variableName + methodInvocation + "}";
-	}
-	else if (StringUtil.equalsIgnoreCase(language, "vm")) {
-		return "$" + variableName + methodInvocation;
-	}
-
-	return variableName;
+	return "${" + variableName + methodInvocation + "}";
 }
 %>
 

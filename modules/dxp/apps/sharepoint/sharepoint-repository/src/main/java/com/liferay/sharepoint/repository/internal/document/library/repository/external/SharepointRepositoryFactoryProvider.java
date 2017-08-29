@@ -98,33 +98,33 @@ public class SharepointRepositoryFactoryProvider {
 		private BaseRepository _createBaseRepository(long repositoryId)
 			throws PortalException {
 
-			SharepointExtRepositoryAdapter repositoryAdapter =
+			SharepointExtRepositoryAdapter sharepointExtRepositoryAdapter =
 				new SharepointExtRepositoryAdapter(
 					new SharepointExtRepository(
 						_tokenStore, _sharepointRepositoryConfiguration));
 
-			repositoryAdapter.setAssetEntryLocalService(
+			sharepointExtRepositoryAdapter.setAssetEntryLocalService(
 				_assetEntryLocalService);
-			repositoryAdapter.setCompanyLocalService(_companyLocalService);
-			repositoryAdapter.setDLAppHelperLocalService(
+			sharepointExtRepositoryAdapter.setCompanyLocalService(_companyLocalService);
+			sharepointExtRepositoryAdapter.setDLAppHelperLocalService(
 				_dlAppHelperLocalService);
-			repositoryAdapter.setDLFolderLocalService(_dlFolderLocalService);
-			repositoryAdapter.setRepositoryEntryLocalService(
+			sharepointExtRepositoryAdapter.setDLFolderLocalService(_dlFolderLocalService);
+			sharepointExtRepositoryAdapter.setRepositoryEntryLocalService(
 				_repositoryEntryLocalService);
-			repositoryAdapter.setUserLocalService(_userLocalService);
+			sharepointExtRepositoryAdapter.setUserLocalService(_userLocalService);
 
 			com.liferay.portal.kernel.model.Repository repository =
 				_repositoryLocalService.getRepository(repositoryId);
 
-			repositoryAdapter.setCompanyId(repository.getCompanyId());
-			repositoryAdapter.setGroupId(repository.getGroupId());
-			repositoryAdapter.setRepositoryId(repository.getRepositoryId());
-			repositoryAdapter.setTypeSettingsProperties(
+			sharepointExtRepositoryAdapter.setCompanyId(repository.getCompanyId());
+			sharepointExtRepositoryAdapter.setGroupId(repository.getGroupId());
+			sharepointExtRepositoryAdapter.setRepositoryId(repository.getRepositoryId());
+			sharepointExtRepositoryAdapter.setTypeSettingsProperties(
 				repository.getTypeSettingsProperties());
 
-			repositoryAdapter.initRepository();
+			sharepointExtRepositoryAdapter.initRepository();
 
-			return repositoryAdapter;
+			return sharepointExtRepositoryAdapter;
 		}
 
 		private final SharepointRepositoryConfiguration

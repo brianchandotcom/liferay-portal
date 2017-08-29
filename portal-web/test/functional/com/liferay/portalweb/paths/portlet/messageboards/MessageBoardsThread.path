@@ -30,6 +30,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>THREAD_BODY_XSS</td>
+	<td>//div[@class='card-tab message-container']/div/div[3]/div[contains(.,'${key_threadBody}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>THREAD_PUBLISH_BUTTON</td>
 	<td>//div[@class='card list-group-card panel']//button[span[contains(.,'Publish')]]</td>
 	<td></td>

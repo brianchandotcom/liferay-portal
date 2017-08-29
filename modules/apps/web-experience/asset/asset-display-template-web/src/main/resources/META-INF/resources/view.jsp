@@ -27,13 +27,11 @@
 		<aui:nav-item href="<%= mainURL.toString() %>" label="asset-display-templates" selected="<%= true %>" />
 	</aui:nav>
 
-	<c:if test="<%= assetDisplayTemplateDisplayContext.isShowSearch() %>">
-		<aui:nav-bar-search>
-			<aui:form action="<%= portletURL %>" name="searchFm">
-				<liferay-ui:input-search markupView="lexicon" />
-			</aui:form>
-		</aui:nav-bar-search>
-	</c:if>
+	<aui:nav-bar-search>
+		<aui:form action="<%= portletURL %>" name="searchFm">
+			<liferay-ui:input-search markupView="lexicon" />
+		</aui:form>
+	</aui:nav-bar-search>
 </aui:nav-bar>
 
 <liferay-frontend:management-bar

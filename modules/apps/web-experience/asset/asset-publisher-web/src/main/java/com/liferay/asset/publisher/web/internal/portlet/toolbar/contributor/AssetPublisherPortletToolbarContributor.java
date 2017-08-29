@@ -99,7 +99,8 @@ public class AssetPublisherPortletToolbarContributor
 		if (!assetPublisherDisplayContext.isShowAddContentButton() ||
 			(scopeGroup.hasStagingGroup() && !scopeGroup.isStagingGroup() &&
 			 PropsValues.STAGING_LIVE_GROUP_LOCKING_ENABLED) ||
-			layout.isLayoutPrototypeLinkActive() ||
+			(layout.isLayoutPrototypeLinkActive() &&
+			 !assetPublisherDisplayContext.isShowAddContentButton()) ||
 			portletName.equals(
 				AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) ||
 			portletName.equals(AssetPublisherPortletKeys.MOST_VIEWED_ASSETS) ||

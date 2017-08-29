@@ -14,34 +14,14 @@
  */
 --%>
 
-<em class="mailing-name"><%= mailingName %></em>
+<%
+ListType addressListType = address.getType();
 
-<c:if test="<%= Validator.isNotNull(street1) %>">
-	<%= HtmlUtil.escape(street1) %><br />
-</c:if>
+String mailingName = LanguageUtil.get(request, addressListType.getName());
+%>
 
-<c:if test="<%= Validator.isNotNull(street2) %>">
-	<%= HtmlUtil.escape(street2) %><br />
-</c:if>
+<em class="mailing-name"><%= mailingName %></em><br />
 
-<c:if test="<%= Validator.isNotNull(street3) %>">
-	<%= HtmlUtil.escape(street3) %><br />
-</c:if>
-
-<c:if test="<%= Validator.isNotNull(zipCode) %>">
-	<%= HtmlUtil.escape(zipCode) %>,
-</c:if>
-
-<c:if test="<%= Validator.isNotNull(city) %>">
-	<%= HtmlUtil.escape(city) %><br />
-</c:if>
-
-<c:if test="<%= Validator.isNotNull(regionName) %>">
-	<%= HtmlUtil.escape(regionName) %><br />
-</c:if>
-
-<c:if test="<%= Validator.isNotNull(countryName) %>">
-	<%= HtmlUtil.escape(countryName) %>
-</c:if>
+<liferay-text-localizer:address-display address="<%= address %>" />
 
 <c:if test="<%= address.isMailing() %>">(<liferay-ui:message key="mailing" />)</c:if>

@@ -35,4 +35,21 @@ MSBFragmentEntry msbFragmentEntry = (MSBFragmentEntry)row.getObject();
 			url="<%= editMSBFragmentEntryURL %>"
 		/>
 	</c:if>
+
+	<c:if test="<%= MSBFragmentEntryPermission.contains(permissionChecker, msbFragmentEntry, ActionKeys.PERMISSIONS) %>">
+		<liferay-security:permissionsURL
+			modelResource="<%= MSBFragmentEntry.class.getName() %>"
+			modelResourceDescription="<%= msbFragmentEntry.getName() %>"
+			resourcePrimKey="<%= String.valueOf(msbFragmentEntry.getMsbFragmentEntryId()) %>"
+			var="msbFragmentEntryPermissionsURL"
+			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+		/>
+
+		<liferay-ui:icon
+			message="permissions"
+			method="get"
+			url="<%= msbFragmentEntryPermissionsURL %>"
+			useDialog="<%= true %>"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>

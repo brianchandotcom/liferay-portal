@@ -34,4 +34,21 @@ MSBFragmentCollection msbFragmentCollection = (MSBFragmentCollection)row.getObje
 			url="<%= editMSBFragmentCollectionURL %>"
 		/>
 	</c:if>
+
+	<c:if test="<%= MSBFragmentCollectionPermission.contains(permissionChecker, msbFragmentCollection, ActionKeys.PERMISSIONS) %>">
+		<liferay-security:permissionsURL
+			modelResource="<%= MSBFragmentCollection.class.getName() %>"
+			modelResourceDescription="<%= msbFragmentCollection.getName() %>"
+			resourcePrimKey="<%= String.valueOf(msbFragmentCollection.getMsbFragmentCollectionId()) %>"
+			var="msbMSBFragmentCollectionPermissionsURL"
+			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+		/>
+
+		<liferay-ui:icon
+			message="permissions"
+			method="get"
+			url="<%= msbMSBFragmentCollectionPermissionsURL %>"
+			useDialog="<%= true %>"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>

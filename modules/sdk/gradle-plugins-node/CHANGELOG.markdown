@@ -149,6 +149,10 @@ task, if present.
 - [LPS-73070]: Use the `package-lock.json` file to calculate the `node_modules`
 cache digest.
 
+### Fixed
+- [LPS-73472]: Remove spurious files before recreating symbolic links in the
+`.bin` directories of `node_modules`.
+
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573

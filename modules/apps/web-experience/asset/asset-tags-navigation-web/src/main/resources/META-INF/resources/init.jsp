@@ -26,8 +26,8 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 page import="com.liferay.asset.kernel.model.AssetRendererFactory" %><%@
 page import="com.liferay.asset.kernel.model.AssetTag" %><%@
 page import="com.liferay.asset.kernel.service.AssetTagServiceUtil" %><%@
-page import="com.liferay.asset.kernel.util.comparator.AssetRendererFactoryTypeNameComparator" %><%@
-page import="com.liferay.asset.kernel.util.comparator.AssetTagCountComparator" %><%@
+page import="com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator" %><%@
+page import="com.liferay.asset.util.comparator.AssetTagCountComparator" %><%@
 page import="com.liferay.portal.kernel.security.permission.ResourceActionsUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@

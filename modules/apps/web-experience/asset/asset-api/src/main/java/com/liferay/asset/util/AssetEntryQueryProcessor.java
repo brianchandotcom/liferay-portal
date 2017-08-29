@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.kernel.util;
+package com.liferay.asset.util;
 
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.portal.kernel.model.User;
@@ -28,14 +28,11 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Jorge Ferrer
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.asset.util.AssetEntryQueryProcessor}
  */
-@Deprecated
 public interface AssetEntryQueryProcessor {
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 1.0.0
 	 */
 	@Deprecated
 	public String getKey();

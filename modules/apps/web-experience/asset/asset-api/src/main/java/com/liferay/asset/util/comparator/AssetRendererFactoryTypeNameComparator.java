@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.kernel.util.comparator;
+package com.liferay.asset.util.comparator;
 
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.portal.kernel.util.CollatorUtil;
@@ -26,10 +26,7 @@ import java.util.Locale;
 
 /**
  * @author Eduardo Garcia
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator}
  */
-@Deprecated
 public class AssetRendererFactoryTypeNameComparator
 	implements Comparator<AssetRendererFactory<?>>, Serializable {
 

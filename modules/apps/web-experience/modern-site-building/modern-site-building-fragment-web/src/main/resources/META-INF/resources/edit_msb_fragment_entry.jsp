@@ -19,8 +19,6 @@
 <%
 String redirect = msbFragmentDisplayContext.getEditMSBFragmentEntryRedirect();
 
-long fragmentCollectionId = msbFragmentDisplayContext.getMSBFragmentCollectionId();
-
 MSBFragmentEntry msbFragmentEntry = msbFragmentDisplayContext.getMSBFragmentEntry();
 
 portletDisplay.setShowBackIcon(true);
@@ -36,7 +34,7 @@ renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentEntryTitle());
 <aui:form action="<%= editMSBFragmentEntryURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="msbFragmentEntryId" type="hidden" value="<%= msbFragmentDisplayContext.getMSBFragmentEntryId() %>" />
-	<aui:input name="msbFragmentCollectionId" type="hidden" value="<%= fragmentCollectionId %>" />
+	<aui:input name="msbFragmentCollectionId" type="hidden" value="<%= msbFragmentDisplayContext.getMSBFragmentCollectionId() %>" />
 	<aui:input name="cssContent" type="hidden" />
 	<aui:input name="htmlContent" type="hidden" />
 	<aui:input name="jsContent" type="hidden" />
@@ -48,6 +46,7 @@ renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentEntryTitle());
 
 	<%
 	Map<String, Object> editorContext = new HashMap<>();
+
 	editorContext.put("namespace", portletDisplay.getNamespace());
 	%>
 
@@ -57,7 +56,7 @@ renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentEntryTitle());
 
 			<div class="entry-content form-group">
 				<liferay-ui:input-editor
-					contents="<%= HtmlUtil.escape(msbFragmentEntry != null ? msbFragmentEntry.getCss() : StringPool.BLANK) %>"
+					contents="<%= HtmlUtil.escape((msbFragmentEntry != null) ? msbFragmentEntry.getCss() : StringPool.BLANK) %>"
 					editorName="alloyeditor"
 					name="cssEditor"
 					placeholder="css"
@@ -67,7 +66,7 @@ renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentEntryTitle());
 
 			<div class="entry-content form-group">
 				<liferay-ui:input-editor
-					contents="<%= HtmlUtil.escape(msbFragmentEntry != null ? msbFragmentEntry.getHtml() : StringPool.BLANK) %>"
+					contents="<%= HtmlUtil.escape((msbFragmentEntry != null) ? msbFragmentEntry.getHtml() : StringPool.BLANK) %>"
 					editorName="alloyeditor"
 					name="htmlEditor"
 					placeholder="html"
@@ -77,7 +76,7 @@ renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentEntryTitle());
 
 			<div class="entry-content form-group">
 				<liferay-ui:input-editor
-					contents="<%= HtmlUtil.escape(msbFragmentEntry != null ? msbFragmentEntry.getJs() : StringPool.BLANK) %>"
+					contents="<%= HtmlUtil.escape((msbFragmentEntry != null) ? msbFragmentEntry.getJs() : StringPool.BLANK) %>"
 					editorName="alloyeditor"
 					name="jsEditor"
 					placeholder="js"

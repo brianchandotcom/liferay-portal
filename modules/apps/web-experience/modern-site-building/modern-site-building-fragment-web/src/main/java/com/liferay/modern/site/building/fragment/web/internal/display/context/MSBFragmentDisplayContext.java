@@ -115,11 +115,9 @@ public class MSBFragmentDisplayContext {
 			return _msbFragmentCollection;
 		}
 
-		MSBFragmentCollection msbFragmentCollection =
+		_msbFragmentCollection =
 			MSBFragmentCollectionServiceUtil.fetchMSBFragmentCollection(
 				getMSBFragmentCollectionId());
-
-		_msbFragmentCollection = msbFragmentCollection;
 
 		return _msbFragmentCollection;
 	}
@@ -281,32 +279,33 @@ public class MSBFragmentDisplayContext {
 		List<MSBFragmentEntry> msbFragmentEntries = null;
 		int msbFragmentEntriesCount = 0;
 
-		long fragmentCollectionId = getMSBFragmentCollectionId();
-
 		if (isSearch()) {
 			msbFragmentEntries =
 				MSBFragmentEntryServiceUtil.getMSBFragmentEntries(
-					themeDisplay.getScopeGroupId(), fragmentCollectionId,
-					getKeywords(), msbFragmentEntriesSearchContainer.getStart(),
-					msbFragmentEntriesSearchContainer.getEnd(),
-					orderByComparator);
-
-			msbFragmentEntriesCount =
-				MSBFragmentEntryServiceUtil.getMSBFragmentCollectionsCount(
-					themeDisplay.getScopeGroupId(), fragmentCollectionId,
-					getKeywords());
-		}
-		else {
-			msbFragmentEntries =
-				MSBFragmentEntryServiceUtil.getMSBFragmentEntries(
-					themeDisplay.getScopeGroupId(), fragmentCollectionId,
+					themeDisplay.getScopeGroupId(),
+					getMSBFragmentCollectionId(), getKeywords(),
 					msbFragmentEntriesSearchContainer.getStart(),
 					msbFragmentEntriesSearchContainer.getEnd(),
 					orderByComparator);
 
 			msbFragmentEntriesCount =
 				MSBFragmentEntryServiceUtil.getMSBFragmentCollectionsCount(
-					themeDisplay.getScopeGroupId(), fragmentCollectionId);
+					themeDisplay.getScopeGroupId(),
+					getMSBFragmentCollectionId(), getKeywords());
+		}
+		else {
+			msbFragmentEntries =
+				MSBFragmentEntryServiceUtil.getMSBFragmentEntries(
+					themeDisplay.getScopeGroupId(),
+					getMSBFragmentCollectionId(),
+					msbFragmentEntriesSearchContainer.getStart(),
+					msbFragmentEntriesSearchContainer.getEnd(),
+					orderByComparator);
+
+			msbFragmentEntriesCount =
+				MSBFragmentEntryServiceUtil.getMSBFragmentCollectionsCount(
+					themeDisplay.getScopeGroupId(),
+					getMSBFragmentCollectionId());
 		}
 
 		msbFragmentEntriesSearchContainer.setResults(msbFragmentEntries);
@@ -322,11 +321,8 @@ public class MSBFragmentDisplayContext {
 			return _msbFragmentEntry;
 		}
 
-		MSBFragmentEntry msbFragmentEntry =
-			MSBFragmentEntryServiceUtil.fetchMSBFragmentEntry(
-				getMSBFragmentEntryId());
-
-		_msbFragmentEntry = msbFragmentEntry;
+		_msbFragmentEntry = MSBFragmentEntryServiceUtil.fetchMSBFragmentEntry(
+			getMSBFragmentEntryId());
 
 		return _msbFragmentEntry;
 	}

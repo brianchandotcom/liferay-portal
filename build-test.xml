@@ -5115,7 +5115,7 @@ go]]></replacevalue>
 			<then>
 				<var name="modules.apps.dir" value="modules/apps" />
 
-				<for list="${data.creator.includes}" param="data.creator.name" parallel="true">
+				<for list="${data.creator.includes}" parallel="true" param="data.creator.name">
 					<sequential>
 						<if>
 							<os family="unix" />
@@ -5138,7 +5138,7 @@ go]]></replacevalue>
 
 				<for list="${data.creator.includes}" param="data.creator.name">
 					<sequential>
-						<dirname property="@{data.creator.name}.gradle.dir" file="${@{data.creator.name}.path}"/>
+						<dirname file="${@{data.creator.name}.path}" property="@{data.creator.name}.gradle.dir" />
 						<if>
 							<available file="${@{data.creator.name}.gradle.dir}/settings.gradle" />
 							<then>
@@ -5148,7 +5148,7 @@ go]]></replacevalue>
 					</sequential>
 				</for>
 
-				<for list="${data.creator.includes}" param="data.creator.name" parallel="true">
+				<for list="${data.creator.includes}" parallel="true" param="data.creator.name">
 					<sequential>
 						<gradle-execute dir="${@{data.creator.name}.path}" task="deploy">
 							<arg value="clean" />

@@ -35,6 +35,13 @@
 								'liferay-kaleo-designer-utils'
 							]
 						},
+						'liferay-kaleo-designer-remote-services': {
+							path: 'remote_services.js',
+							requires: [
+								'aui-io',
+								'liferay-portlet-url'
+							]
+						},
 						'liferay-kaleo-designer-utils': {
 							path: 'utils.js',
 							requires: []
@@ -59,6 +66,7 @@
 								'liferay-kaleo-designer-autocomplete-util',
 								'liferay-kaleo-designer-editors',
 								'liferay-kaleo-designer-nodes',
+								'liferay-kaleo-designer-remote-services',
 								'liferay-kaleo-designer-utils',
 								'liferay-kaleo-designer-xml-util',
 								'liferay-util-window',

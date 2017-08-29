@@ -136,8 +136,7 @@ public class InjectTestBag {
 		throws Exception {
 
 		Collection<ServiceReference<T>> serviceReferences =
-			registry.getServiceReferences(
-				clazz, _getFilterString(clazz, filter));
+			registry.getServiceReferences(clazz, filter);
 
 		Stream<ServiceReference<T>> stream = serviceReferences.stream();
 
@@ -150,13 +149,22 @@ public class InjectTestBag {
 			Registry registry, Class<T> clazz, String filter, boolean blocking)
 		throws Exception {
 
+		String filterString = _getFilterString(clazz, filter);
+
+		ServiceReference<T> serviceReference = _getServiceReference(
+			registry, clazz, filterString);
+
+		if ((serviceReference != null) || !blocking) {
+			return serviceReference;
+		}
+
 		CountDownLatch countDownLatch = new CountDownLatch(1);
 
 		AtomicReference<ServiceTracker<T, T>> atomicReference =
 			new AtomicReference<>();
 
 		ServiceTracker<T, T> serviceTracker = registry.trackServices(
-			registry.getFilter(_getFilterString(clazz, filter)),
+			registry.getFilter(filterString),
 			new ServiceTrackerCustomizer<T, T>() {
 
 				@Override
@@ -186,35 +194,30 @@ public class InjectTestBag {
 
 		serviceTracker.open();
 
-		ServiceReference<T> serviceReference = _getServiceReference(
-			registry, clazz, filter);
+		int waitTime = 0;
 
-		if (blocking) {
-			int waitTime = 0;
+		String className = clazz.getName();
 
-			String className = clazz.getName();
+		while (serviceReference == null) {
+			waitTime += _SLEEP_TIME;
 
-			while (serviceReference == null) {
-				waitTime += _SLEEP_TIME;
-
-				if (waitTime >= TestPropsValues.CI_TEST_TIMEOUT_TIME) {
-					throw new IllegalStateException(
-						"Timed out while waiting for service " + className +
-							" " + filter);
-				}
-
-				System.out.println(
-					"Waiting for service " + className + " " + filter);
-
-				try {
-					countDownLatch.await(_SLEEP_TIME, TimeUnit.MILLISECONDS);
-				}
-				catch (InterruptedException ie) {
-				}
-
-				serviceReference = _getServiceReference(
-					registry, clazz, filter);
+			if (waitTime >= TestPropsValues.CI_TEST_TIMEOUT_TIME) {
+				throw new IllegalStateException(
+					"Timed out while waiting for service " + className + " " +
+						filter);
 			}
+
+			System.out.println(
+				"Waiting for service " + className + " " + filter);
+
+			try {
+				countDownLatch.await(_SLEEP_TIME, TimeUnit.MILLISECONDS);
+			}
+			catch (InterruptedException ie) {
+			}
+
+			serviceReference = _getServiceReference(
+				registry, clazz, filterString);
 		}
 
 		return serviceReference;

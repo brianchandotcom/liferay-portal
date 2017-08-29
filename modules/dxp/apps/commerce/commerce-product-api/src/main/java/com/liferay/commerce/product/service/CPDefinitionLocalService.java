@@ -109,10 +109,6 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 		Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> shortDescriptionMap,
 		Map<Locale, java.lang.String> descriptionMap,
-		Map<Locale, java.lang.String> urlTitleMap,
-		Map<Locale, java.lang.String> metaTitleMap,
-		Map<Locale, java.lang.String> metaKeywordsMap,
-		Map<Locale, java.lang.String> metaDescriptionMap,
 		java.lang.String layoutUuid, java.lang.String productTypeName,
 		java.lang.String gtin, java.lang.String manufacturerPartNumber,
 		int minCartQuantity, int maxCartQuantity,
@@ -479,10 +475,6 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 		java.lang.String baseSKU, Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> shortDescriptionMap,
 		Map<Locale, java.lang.String> descriptionMap,
-		Map<Locale, java.lang.String> urlTitleMap,
-		Map<Locale, java.lang.String> metaTitleMap,
-		Map<Locale, java.lang.String> metaKeywordsMap,
-		Map<Locale, java.lang.String> metaDescriptionMap,
 		java.lang.String layoutUuid, java.lang.String gtin,
 		java.lang.String manufacturerPartNumber, int minCartQuantity,
 		int maxCartQuantity, java.lang.String allowedCartQuantities,
@@ -493,9 +485,18 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 		int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinition updatePricingInfo(long cpDefinitionId, double cost,
 		double price) throws PortalException;
 
+	public CPDefinition updateSEOInfo(long cpDefinitionId,
+		Map<Locale, java.lang.String> urlTitleMap,
+		Map<Locale, java.lang.String> metaTitleMap,
+		Map<Locale, java.lang.String> metaKeywordsMap,
+		Map<Locale, java.lang.String> metaDescriptionMap)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinition updateShippingInfo(long cpDefinitionId, double width,
 		double height, double depth, double weight) throws PortalException;
 

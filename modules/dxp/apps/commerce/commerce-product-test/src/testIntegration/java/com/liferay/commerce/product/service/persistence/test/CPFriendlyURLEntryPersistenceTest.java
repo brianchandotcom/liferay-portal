@@ -211,16 +211,6 @@ public class CPFriendlyURLEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_L_U() throws Exception {
-		_persistence.countByG_L_U(RandomTestUtil.nextLong(), StringPool.BLANK,
-			StringPool.BLANK);
-
-		_persistence.countByG_L_U(0L, StringPool.NULL, StringPool.NULL);
-
-		_persistence.countByG_L_U(0L, (String)null, (String)null);
-	}
-
-	@Test
 	public void testCountByG_C_C_C() throws Exception {
 		_persistence.countByG_C_C_C(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
@@ -529,19 +519,6 @@ public class CPFriendlyURLEntryPersistenceTest {
 				existingCPFriendlyURLEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(existingCPFriendlyURLEntry,
 				"getOriginalGroupId", new Class<?>[0]));
-
-		Assert.assertEquals(Long.valueOf(
-				existingCPFriendlyURLEntry.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(existingCPFriendlyURLEntry,
-				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertTrue(Objects.equals(
-				existingCPFriendlyURLEntry.getLanguageId(),
-				ReflectionTestUtil.invoke(existingCPFriendlyURLEntry,
-					"getOriginalLanguageId", new Class<?>[0])));
-		Assert.assertTrue(Objects.equals(
-				existingCPFriendlyURLEntry.getUrlTitle(),
-				ReflectionTestUtil.invoke(existingCPFriendlyURLEntry,
-					"getOriginalUrlTitle", new Class<?>[0])));
 
 		Assert.assertEquals(Long.valueOf(
 				existingCPFriendlyURLEntry.getGroupId()),

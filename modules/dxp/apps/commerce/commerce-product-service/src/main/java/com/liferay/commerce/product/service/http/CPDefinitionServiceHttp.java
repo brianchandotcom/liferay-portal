@@ -119,10 +119,6 @@ public class CPDefinitionServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap,
-		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
-		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
-		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
 		java.lang.String layoutUuid, java.lang.String productTypeName,
 		java.lang.String gtin, java.lang.String manufacturerPartNumber,
 		int minCartQuantity, int maxCartQuantity,
@@ -139,9 +135,8 @@ public class CPDefinitionServiceHttp {
 					"addCPDefinition", _addCPDefinitionParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, baseSKU,
-					titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
-					metaTitleMap, metaKeywordsMap, metaDescriptionMap,
-					layoutUuid, productTypeName, gtin, manufacturerPartNumber,
+					titleMap, shortDescriptionMap, descriptionMap, layoutUuid,
+					productTypeName, gtin, manufacturerPartNumber,
 					minCartQuantity, maxCartQuantity, allowedCartQuantities,
 					multipleCartQuantity, ddmStructureKey, displayDateMonth,
 					displayDateDay, displayDateYear, displayDateHour,
@@ -703,10 +698,6 @@ public class CPDefinitionServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap,
-		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
-		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
-		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
 		java.lang.String layoutUuid, java.lang.String gtin,
 		java.lang.String manufacturerPartNumber, int minCartQuantity,
 		int maxCartQuantity, java.lang.String allowedCartQuantities,
@@ -723,15 +714,13 @@ public class CPDefinitionServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpDefinitionId, baseSKU, titleMap, shortDescriptionMap,
-					descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
-					metaDescriptionMap, layoutUuid, gtin,
-					manufacturerPartNumber, minCartQuantity, maxCartQuantity,
-					allowedCartQuantities, multipleCartQuantity,
-					ddmStructureKey, displayDateMonth, displayDateDay,
-					displayDateYear, displayDateHour, displayDateMinute,
-					expirationDateMonth, expirationDateDay, expirationDateYear,
-					expirationDateHour, expirationDateMinute, neverExpire,
-					serviceContext);
+					descriptionMap, layoutUuid, gtin, manufacturerPartNumber,
+					minCartQuantity, maxCartQuantity, allowedCartQuantities,
+					multipleCartQuantity, ddmStructureKey, displayDateMonth,
+					displayDateDay, displayDateYear, displayDateHour,
+					displayDateMinute, expirationDateMonth, expirationDateDay,
+					expirationDateYear, expirationDateHour,
+					expirationDateMinute, neverExpire, serviceContext);
 
 			Object returnObj = null;
 
@@ -788,13 +777,50 @@ public class CPDefinitionServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CPDefinition updateSEOInfo(
+		HttpPrincipal httpPrincipal, long cpDefinitionId,
+		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap,
+		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
+		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
+		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CPDefinitionServiceUtil.class,
+					"updateSEOInfo", _updateSEOInfoParameterTypes20);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					cpDefinitionId, urlTitleMap, metaTitleMap, metaKeywordsMap,
+					metaDescriptionMap);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.product.model.CPDefinition)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.commerce.product.model.CPDefinition updateShippingInfo(
 		HttpPrincipal httpPrincipal, long cpDefinitionId, double width,
 		double height, double depth, double weight)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionServiceUtil.class,
-					"updateShippingInfo", _updateShippingInfoParameterTypes20);
+					"updateShippingInfo", _updateShippingInfoParameterTypes21);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpDefinitionId, width, height, depth, weight);
@@ -829,7 +855,7 @@ public class CPDefinitionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionServiceUtil.class,
-					"updateStatus", _updateStatusParameterTypes21);
+					"updateStatus", _updateStatusParameterTypes22);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
 					cpDefinitionId, status, serviceContext, workflowContext);
@@ -871,13 +897,11 @@ public class CPDefinitionServiceHttp {
 		};
 	private static final Class<?>[] _addCPDefinitionParameterTypes1 = new Class[] {
 			java.lang.String.class, java.util.Map.class, java.util.Map.class,
-			java.util.Map.class, java.util.Map.class, java.util.Map.class,
-			java.util.Map.class, java.util.Map.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, int.class, int.class, java.lang.String.class,
-			int.class, java.lang.String.class, int.class, int.class, int.class,
+			java.util.Map.class, java.lang.String.class, java.lang.String.class,
+			java.lang.String.class, java.lang.String.class, int.class, int.class,
+			java.lang.String.class, int.class, java.lang.String.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, boolean.class,
+			int.class, int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteAssetCategoryCPDefinitionParameterTypes2 =
@@ -939,22 +963,24 @@ public class CPDefinitionServiceHttp {
 		};
 	private static final Class<?>[] _updateCPDefinitionParameterTypes18 = new Class[] {
 			long.class, java.lang.String.class, java.util.Map.class,
-			java.util.Map.class, java.util.Map.class, java.util.Map.class,
-			java.util.Map.class, java.util.Map.class, java.util.Map.class,
-			java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, int.class, int.class, java.lang.String.class,
-			int.class, java.lang.String.class, int.class, int.class, int.class,
+			java.util.Map.class, java.util.Map.class, java.lang.String.class,
+			java.lang.String.class, java.lang.String.class, int.class, int.class,
+			java.lang.String.class, int.class, java.lang.String.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, boolean.class,
+			int.class, int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updatePricingInfoParameterTypes19 = new Class[] {
 			long.class, double.class, double.class
 		};
-	private static final Class<?>[] _updateShippingInfoParameterTypes20 = new Class[] {
+	private static final Class<?>[] _updateSEOInfoParameterTypes20 = new Class[] {
+			long.class, java.util.Map.class, java.util.Map.class,
+			java.util.Map.class, java.util.Map.class
+		};
+	private static final Class<?>[] _updateShippingInfoParameterTypes21 = new Class[] {
 			long.class, double.class, double.class, double.class, double.class
 		};
-	private static final Class<?>[] _updateStatusParameterTypes21 = new Class[] {
+	private static final Class<?>[] _updateStatusParameterTypes22 = new Class[] {
 			long.class, long.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class,
 			java.util.Map.class

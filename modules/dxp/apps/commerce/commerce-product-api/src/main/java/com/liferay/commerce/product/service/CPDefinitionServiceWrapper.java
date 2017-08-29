@@ -72,10 +72,6 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap,
-		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
-		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
-		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
 		java.lang.String layoutUuid, java.lang.String productTypeName,
 		java.lang.String gtin, java.lang.String manufacturerPartNumber,
 		int minCartQuantity, int maxCartQuantity,
@@ -88,8 +84,7 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionService.addCPDefinition(baseSKU, titleMap,
-			shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap,
-			metaKeywordsMap, metaDescriptionMap, layoutUuid, productTypeName,
+			shortDescriptionMap, descriptionMap, layoutUuid, productTypeName,
 			gtin, manufacturerPartNumber, minCartQuantity, maxCartQuantity,
 			allowedCartQuantities, multipleCartQuantity, ddmStructureKey,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
@@ -254,10 +249,6 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap,
-		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
-		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
-		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
 		java.lang.String layoutUuid, java.lang.String gtin,
 		java.lang.String manufacturerPartNumber, int minCartQuantity,
 		int maxCartQuantity, java.lang.String allowedCartQuantities,
@@ -269,9 +260,8 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionService.updateCPDefinition(cpDefinitionId, baseSKU,
-			titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
-			metaTitleMap, metaKeywordsMap, metaDescriptionMap, layoutUuid,
-			gtin, manufacturerPartNumber, minCartQuantity, maxCartQuantity,
+			titleMap, shortDescriptionMap, descriptionMap, layoutUuid, gtin,
+			manufacturerPartNumber, minCartQuantity, maxCartQuantity,
 			allowedCartQuantities, multipleCartQuantity, ddmStructureKey,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
@@ -285,6 +275,18 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionService.updatePricingInfo(cpDefinitionId, cost,
 			price);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPDefinition updateSEOInfo(
+		long cpDefinitionId,
+		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap,
+		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
+		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
+		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionService.updateSEOInfo(cpDefinitionId, urlTitleMap,
+			metaTitleMap, metaKeywordsMap, metaDescriptionMap);
 	}
 
 	@Override

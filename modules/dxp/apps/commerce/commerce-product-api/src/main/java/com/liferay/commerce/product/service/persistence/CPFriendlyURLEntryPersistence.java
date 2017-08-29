@@ -372,66 +372,6 @@ public interface CPFriendlyURLEntryPersistence extends BasePersistence<CPFriendl
 	public int countByUuid_C(java.lang.String uuid, long companyId);
 
 	/**
-	* Returns the cp friendly url entry where groupId = &#63; and languageId = &#63; and urlTitle = &#63; or throws a {@link NoSuchCPFriendlyURLEntryException} if it could not be found.
-	*
-	* @param groupId the group ID
-	* @param languageId the language ID
-	* @param urlTitle the url title
-	* @return the matching cp friendly url entry
-	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
-	*/
-	public CPFriendlyURLEntry findByG_L_U(long groupId,
-		java.lang.String languageId, java.lang.String urlTitle)
-		throws NoSuchCPFriendlyURLEntryException;
-
-	/**
-	* Returns the cp friendly url entry where groupId = &#63; and languageId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param groupId the group ID
-	* @param languageId the language ID
-	* @param urlTitle the url title
-	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
-	*/
-	public CPFriendlyURLEntry fetchByG_L_U(long groupId,
-		java.lang.String languageId, java.lang.String urlTitle);
-
-	/**
-	* Returns the cp friendly url entry where groupId = &#63; and languageId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param groupId the group ID
-	* @param languageId the language ID
-	* @param urlTitle the url title
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
-	*/
-	public CPFriendlyURLEntry fetchByG_L_U(long groupId,
-		java.lang.String languageId, java.lang.String urlTitle,
-		boolean retrieveFromCache);
-
-	/**
-	* Removes the cp friendly url entry where groupId = &#63; and languageId = &#63; and urlTitle = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param languageId the language ID
-	* @param urlTitle the url title
-	* @return the cp friendly url entry that was removed
-	*/
-	public CPFriendlyURLEntry removeByG_L_U(long groupId,
-		java.lang.String languageId, java.lang.String urlTitle)
-		throws NoSuchCPFriendlyURLEntryException;
-
-	/**
-	* Returns the number of cp friendly url entries where groupId = &#63; and languageId = &#63; and urlTitle = &#63;.
-	*
-	* @param groupId the group ID
-	* @param languageId the language ID
-	* @param urlTitle the url title
-	* @return the number of matching cp friendly url entries
-	*/
-	public int countByG_L_U(long groupId, java.lang.String languageId,
-		java.lang.String urlTitle);
-
-	/**
 	* Returns all the cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* @param groupId the group ID

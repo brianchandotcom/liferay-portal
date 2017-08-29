@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 
 import java.util.ArrayList;
@@ -86,7 +87,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 
 		content = _fixArrayLineBreaks(content);
 
-		content = _fixClassLineLineBreaks(content);
+		content = _fixClassOrEnumLineLineBreaks(content);
 
 		content = fixRedundantCommaInsideArray(content);
 
@@ -305,11 +306,6 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 				fileName, "There should be a line break after '}'", lineCount);
 		}
 
-		if (line.matches(".*\\{\\s*\\}")) {
-			addMessage(
-				fileName, "There should be a line break after '{'", lineCount);
-		}
-
 		Matcher matcher = _incorrectLineBreakPattern6.matcher(trimmedLine);
 
 		if (matcher.find() && (getLevel(matcher.group(4)) > 1)) {
@@ -362,13 +358,36 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 		return content;
 	}
 
-	private String _fixClassLineLineBreaks(String content) {
-		Matcher matcher = _classPattern.matcher(content);
+	private String _fixClassOrEnumLineLineBreaks(String content) {
+		Matcher matcher = _classOrEnumPattern.matcher(content);
 
 		while (matcher.find()) {
-			String firstTrailingNonWhitespace = matcher.group(9);
+			String indent = matcher.group(2);
 			String match = matcher.group(1);
-			String trailingWhitespace = matcher.group(8);
+
+			String inBetweenCurlyBraces = matcher.group(9);
+
+			if (inBetweenCurlyBraces != null) {
+				if (Validator.isNull(inBetweenCurlyBraces)) {
+
+					// Case: public class Test {}
+
+					return StringUtil.replaceFirst(
+						content, "}", "\n" + indent + "}", matcher.end(9));
+				}
+
+				// Case: public enum Test { VALUE1, VALUE2 }
+
+				return StringUtil.replaceFirst(
+					content, inBetweenCurlyBraces + "}",
+					"\n\n\t" + indent + StringUtil.trim(inBetweenCurlyBraces) +
+						"\n\n" + indent + "}",
+					matcher.start(8));
+			}
+
+			String firstTrailingNonWhitespace = matcher.group(12);
+
+			String trailingWhitespace = matcher.group(11);
 
 			if (!trailingWhitespace.contains("\n") &&
 				!firstTrailingNonWhitespace.equals("}")) {
@@ -377,7 +396,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 			}
 
 			String formattedClassLine = _getFormattedClassLine(
-				matcher.group(2), match);
+				indent, match);
 
 			if (formattedClassLine != null) {
 				content = StringUtil.replace(
@@ -743,9 +762,10 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 
 	private final Pattern _arrayPattern = Pattern.compile(
 		"(\n\t*.* =) ((new \\w*\\[\\] )?\\{)\n(\t*)([^\t\\{].*)\n\t*(\\};?)\n");
-	private final Pattern _classPattern = Pattern.compile(
+	private final Pattern _classOrEnumPattern = Pattern.compile(
 		"(\n(\t*)(private|protected|public) ((abstract|static) )*" +
-			"(class|enum|interface) ([\\s\\S]*?)\\{)\n(\\s*)(\\S)");
+			"(class|enum|interface) ([\\s\\S]*?)\\{)((.*)\\})?" +
+				"(\\Z|\n(\\s*)(\\S))");
 	private final Pattern _incorrectLineBreakInsideChainPattern1 =
 		Pattern.compile("\n(\t*)\\).*?\\((.+)");
 	private final Pattern _incorrectLineBreakInsideChainPattern2 =

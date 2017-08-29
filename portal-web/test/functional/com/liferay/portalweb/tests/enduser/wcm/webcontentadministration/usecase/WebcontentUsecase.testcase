@@ -1823,12 +1823,10 @@
 			</execute>
 		</for>
 
-		<for list="When It All Began...,Stravinksy in Space?,Student Spotlight" param="webContentTitle">
-			<execute macro="WebContent#moveToFolderCP">
-				<var name="folderName" value="News" />
-				<var name="webContentTitle" value="${webContentTitle}" />
-			</execute>
-		</for>
+		<execute macro="WebContent#moveArticlesToFolderCP">
+			<var name="folderName" value="News" />
+			<var name="webContentArticlesList" value="When It All Began...,Stravinksy in Space?,Student Spotlight" />
+		</execute>
 
 		<execute macro="WebContent#moveArticlesToFolderCP">
 			<var name="folderName" value="Events" />

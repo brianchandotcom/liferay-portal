@@ -154,7 +154,3 @@ dependencies {
 node {
 	nodeVersion = "8.4.0"
 }
-
-testJS {
-	dependsOn gulpTest
-}

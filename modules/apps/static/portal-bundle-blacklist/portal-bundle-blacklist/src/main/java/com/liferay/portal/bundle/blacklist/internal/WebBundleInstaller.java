@@ -42,6 +42,16 @@ public class WebBundleInstaller extends ServiceTracker<WabGenerator, Void> {
 
 	@Override
 	public Void addingService(ServiceReference<WabGenerator> serviceReference) {
+
+		// Service must be explicitly got from BundleContext to ensure DS
+		// Component's lazy activation is completed.
+
+		WabGenerator wabGenerator = context.getService(serviceReference);
+
+		if (wabGenerator == null) {
+			throw new IllegalStateException("Missing WabGenerator");
+		}
+
 		try {
 			Bundle bundle = context.installBundle(_location);
 

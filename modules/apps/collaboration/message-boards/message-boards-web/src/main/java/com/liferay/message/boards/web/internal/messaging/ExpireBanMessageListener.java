@@ -94,10 +94,6 @@ public class ExpireBanMessageListener extends BaseMessageListener {
 		_schedulerEngineHelper = schedulerEngineHelper;
 	}
 
-	@Reference(unbind = "-")
-	protected void setTriggerFactory(TriggerFactory triggerFactory) {
-	}
-
 	private MBBanLocalService _mbBanLocalService;
 	private volatile MBConfiguration _mbConfiguration;
 	private SchedulerEngineHelper _schedulerEngineHelper;

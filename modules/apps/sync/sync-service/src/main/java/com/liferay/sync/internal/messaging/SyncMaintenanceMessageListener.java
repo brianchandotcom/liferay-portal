@@ -158,10 +158,6 @@ public class SyncMaintenanceMessageListener extends BaseMessageListener {
 		_syncDLObjectLocalService = syncDLObjectLocalService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setTriggerFactory(TriggerFactory triggerFactory) {
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		SyncMaintenanceMessageListener.class);
 

@@ -95,10 +95,6 @@ public class PluginRepositoriesMessageListener extends BaseMessageListener {
 		_schedulerEngineHelper = schedulerEngineHelper;
 	}
 
-	@Reference(unbind = "-")
-	protected void setTriggerFactory(TriggerFactory triggerFactory) {
-	}
-
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
 	@Reference

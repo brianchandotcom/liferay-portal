@@ -108,10 +108,6 @@ public class RecentDocumentsMessageListener extends BaseMessageListener {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference(unbind = "-")
-	protected void setTriggerFactory(TriggerFactory triggerFactory) {
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		RecentDocumentsMessageListener.class);
 

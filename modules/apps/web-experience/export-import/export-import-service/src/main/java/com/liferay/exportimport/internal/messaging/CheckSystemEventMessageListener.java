@@ -84,10 +84,6 @@ public class CheckSystemEventMessageListener extends BaseMessageListener {
 		_systemEventLocalService = systemEventLocalService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setTriggerFactory(TriggerFactory triggerFactory) {
-	}
-
 	private SchedulerEngineHelper _schedulerEngineHelper;
 	private SystemEventLocalService _systemEventLocalService;
 

@@ -90,10 +90,6 @@ public class CheckEntryMessageListener extends BaseMessageListener {
 		_trashEntryLocalService = trashEntryLocalService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setTriggerFactory(TriggerFactory triggerFactory) {
-	}
-
 	private SchedulerEngineHelper _schedulerEngineHelper;
 	private TrashEntryLocalService _trashEntryLocalService;
 

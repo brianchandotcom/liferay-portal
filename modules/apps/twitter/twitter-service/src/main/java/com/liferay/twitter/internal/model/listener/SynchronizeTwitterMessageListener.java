@@ -85,10 +85,6 @@ public class SynchronizeTwitterMessageListener extends BaseMessageListener {
 		_schedulerEngineHelper = schedulerEngineHelper;
 	}
 
-	@Reference(unbind = "-")
-	protected void setTriggerFactory(TriggerFactory triggerFactory) {
-	}
-
 	private static volatile TwitterGroupServiceConfiguration
 		_twitterGroupServiceConfiguration;
 

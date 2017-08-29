@@ -99,10 +99,6 @@ public class CheckAssetEntryMessageListener extends BaseMessageListener {
 		_schedulerEngineHelper = schedulerEngineHelper;
 	}
 
-	@Reference(unbind = "-")
-	protected void setTriggerFactory(TriggerFactory triggerFactory) {
-	}
-
 	private AssetEntriesCheckerUtil _assetEntriesCheckerUtil;
 	private SchedulerEngineHelper _schedulerEngineHelper;
 

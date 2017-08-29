@@ -92,10 +92,6 @@ public class LinkbackMessageListener extends BaseMessageListener {
 		_schedulerEngineHelper = schedulerEngineHelper;
 	}
 
-	@Reference(unbind = "-")
-	protected void setTriggerFactory(TriggerFactory triggerFactory) {
-	}
-
 	private volatile BlogsConfiguration _blogsConfiguration;
 
 	@Reference

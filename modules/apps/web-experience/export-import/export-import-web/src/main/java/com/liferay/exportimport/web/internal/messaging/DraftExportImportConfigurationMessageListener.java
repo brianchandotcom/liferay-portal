@@ -280,10 +280,6 @@ public class DraftExportImportConfigurationMessageListener
 		_schedulerEngineHelper = schedulerEngineHelper;
 	}
 
-	@Reference(unbind = "-")
-	protected void setTriggerFactory(TriggerFactory triggerFactory) {
-	}
-
 	private BackgroundTaskLocalService _backgroundTaskLocalService;
 	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;

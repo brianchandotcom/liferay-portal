@@ -95,10 +95,6 @@ public class CheckEntryMessageListener extends BaseMessageListener {
 		_schedulerEngineHelper = schedulerEngineHelper;
 	}
 
-	@Reference(unbind = "-")
-	protected void setTriggerFactory(TriggerFactory triggerFactory) {
-	}
-
 	private volatile BlogsConfiguration _blogsConfiguration;
 	private BlogsEntryLocalService _blogsEntryLocalService;
 	private SchedulerEngineHelper _schedulerEngineHelper;

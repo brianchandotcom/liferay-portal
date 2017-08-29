@@ -87,10 +87,6 @@ public class CheckBookingsMessageListener extends BaseMessageListener {
 		_schedulerEngineHelper = schedulerEngineHelper;
 	}
 
-	@Reference(unbind = "-")
-	protected void setTriggerFactory(TriggerFactory triggerFactory) {
-	}
-
 	private CalendarBookingLocalService _calendarBookingLocalService;
 	private SchedulerEngineHelper _schedulerEngineHelper;
 

@@ -158,8 +158,29 @@ public class AssetDisplayTemplateLocalServiceImpl
 	}
 
 	@Override
+	public List<AssetDisplayTemplate> getAssetDisplayTemplates(
+		long groupId, String name) {
+
+		return assetDisplayTemplatePersistence.findByG_LikeN(groupId, name);
+	}
+
+	@Override
+	public List<AssetDisplayTemplate> getAssetDisplayTemplates(
+		long groupId, String name, int start, int end,
+		OrderByComparator<AssetDisplayTemplate> orderByComparator) {
+
+		return assetDisplayTemplatePersistence.findByG_LikeN(
+			groupId, name, start, end, orderByComparator);
+	}
+
+	@Override
 	public int getAssetDisplayTemplatesCount(long groupId) {
 		return assetDisplayTemplatePersistence.countByGroupId(groupId);
+	}
+
+	@Override
+	public int getAssetDisplayTemplatesCount(long groupId, String name) {
+		return assetDisplayTemplatePersistence.countByG_LikeN(groupId, name);
 	}
 
 	@Override

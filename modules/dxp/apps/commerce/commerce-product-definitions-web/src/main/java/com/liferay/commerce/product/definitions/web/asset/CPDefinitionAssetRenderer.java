@@ -20,7 +20,6 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.permission.CPDefinitionPermission;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -203,17 +202,13 @@ public class CPDefinitionAssetRenderer
 	}
 
 	@Override
-	public boolean hasEditPermission(PermissionChecker permissionChecker)
-		throws PortalException {
-
+	public boolean hasEditPermission(PermissionChecker permissionChecker) {
 		return CPDefinitionPermission.contains(
 			permissionChecker, _cpDefinition, ActionKeys.UPDATE);
 	}
 
 	@Override
-	public boolean hasViewPermission(PermissionChecker permissionChecker)
-		throws PortalException {
-
+	public boolean hasViewPermission(PermissionChecker permissionChecker) {
 		return CPDefinitionPermission.contains(
 			permissionChecker, _cpDefinition, ActionKeys.VIEW);
 	}

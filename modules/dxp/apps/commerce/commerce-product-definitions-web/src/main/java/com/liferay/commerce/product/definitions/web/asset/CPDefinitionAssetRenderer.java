@@ -202,13 +202,6 @@ public class CPDefinitionAssetRenderer
 		return _cpDefinition.getUuid();
 	}
 
-	public boolean hasDeletePermission(PermissionChecker permissionChecker)
-		throws PortalException {
-
-		return CPDefinitionPermission.contains(
-			permissionChecker, _cpDefinition, ActionKeys.DELETE);
-	}
-
 	@Override
 	public boolean hasEditPermission(PermissionChecker permissionChecker)
 		throws PortalException {

@@ -136,8 +136,7 @@ public class InjectTestBag {
 		throws Exception {
 
 		Collection<ServiceReference<T>> serviceReferences =
-			registry.getServiceReferences(
-				clazz, _getFilterString(clazz, filter));
+			registry.getServiceReferences(clazz, filter);
 
 		Stream<ServiceReference<T>> stream = serviceReferences.stream();
 
@@ -150,8 +149,10 @@ public class InjectTestBag {
 			Registry registry, Class<T> clazz, String filter, boolean blocking)
 		throws Exception {
 
+		String filterString = _getFilterString(clazz, filter);
+
 		ServiceReference<T> serviceReference = _getServiceReference(
-			registry, clazz, filter);
+			registry, clazz, filterString);
 
 		if ((serviceReference != null) || !blocking) {
 			return serviceReference;
@@ -163,7 +164,7 @@ public class InjectTestBag {
 			new AtomicReference<>();
 
 		ServiceTracker<T, T> serviceTracker = registry.trackServices(
-			registry.getFilter(_getFilterString(clazz, filter)),
+			registry.getFilter(filterString),
 			new ServiceTrackerCustomizer<T, T>() {
 
 				@Override
@@ -215,7 +216,8 @@ public class InjectTestBag {
 			catch (InterruptedException ie) {
 			}
 
-			serviceReference = _getServiceReference(registry, clazz, filter);
+			serviceReference = _getServiceReference(
+				registry, clazz, filterString);
 		}
 
 		return serviceReference;

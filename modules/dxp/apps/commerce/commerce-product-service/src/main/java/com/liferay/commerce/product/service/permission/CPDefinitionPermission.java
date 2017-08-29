@@ -162,9 +162,8 @@ public class CPDefinitionPermission implements BaseModelPermissionChecker {
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, CPDefinition cpDefinition,
-			String actionId)
-		throws PortalException {
+		PermissionChecker permissionChecker, CPDefinition cpDefinition,
+		String actionId) {
 
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, cpDefinition.getGroupId(),

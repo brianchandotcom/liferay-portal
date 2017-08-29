@@ -43,7 +43,6 @@ page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.security.permission.ResourceActionsUtil" %><%@
 page import="com.liferay.portal.kernel.service.ClassNameLocalServiceUtil" %><%@
-page import="com.liferay.portal.kernel.template.TemplateConstants" %><%@
 page import="com.liferay.portal.kernel.template.TemplateHandler" %><%@
 page import="com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil" %><%@
 page import="com.liferay.portal.kernel.template.TemplateVariableDefinition" %><%@
@@ -63,8 +62,7 @@ page import="com.liferay.portal.template.TemplateContextHelper" %>
 <%@ page import="java.util.Date" %><%@
 page import="java.util.Map" %><%@
 page import="java.util.Objects" %><%@
-page import="java.util.ResourceBundle" %><%@
-page import="java.util.StringTokenizer" %>
+page import="java.util.ResourceBundle" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

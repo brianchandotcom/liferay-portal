@@ -218,17 +218,34 @@ public class AssetDisplayTemplateDisplayContext {
 
 		searchContainer.setOrderByType(getOrderByType());
 
-		int assetDisplayTemplatesCount =
-			AssetDisplayTemplateLocalServiceUtil.getAssetDisplayTemplatesCount(
-				themeDisplay.getScopeGroupId());
+		int assetDisplayTemplatesCount = 0;
+		List<AssetDisplayTemplate> assetDisplayTemplates = null;
+
+		if (isSearch()) {
+			assetDisplayTemplatesCount =
+				AssetDisplayTemplateLocalServiceUtil.
+					getAssetDisplayTemplatesCount(
+						themeDisplay.getScopeGroupId(), getKeywords());
+
+			assetDisplayTemplates =
+				AssetDisplayTemplateLocalServiceUtil.getAssetDisplayTemplates(
+					themeDisplay.getScopeGroupId(), getKeywords(),
+					searchContainer.getStart(),
+					searchContainer.getEnd(), orderByComparator);
+		}
+		else {
+			assetDisplayTemplatesCount =
+				AssetDisplayTemplateLocalServiceUtil.
+					getAssetDisplayTemplatesCount(
+						themeDisplay.getScopeGroupId());
+
+			assetDisplayTemplates =
+				AssetDisplayTemplateLocalServiceUtil.getAssetDisplayTemplates(
+					themeDisplay.getScopeGroupId(), searchContainer.getStart(),
+					searchContainer.getEnd(), orderByComparator);
+		}
 
 		searchContainer.setTotal(assetDisplayTemplatesCount);
-
-		List<AssetDisplayTemplate> assetDisplayTemplates =
-			AssetDisplayTemplateLocalServiceUtil.getAssetDisplayTemplates(
-				themeDisplay.getScopeGroupId(), searchContainer.getStart(),
-				searchContainer.getEnd(), orderByComparator);
-
 		searchContainer.setResults(assetDisplayTemplates);
 
 		_searchContainer = searchContainer;

@@ -16,7 +16,6 @@ package com.liferay.commerce.product.item.selector.web.internal;
 
 import com.liferay.commerce.product.item.selector.criterion.CPDefinitionItemSelectorCriterion;
 import com.liferay.commerce.product.item.selector.web.internal.display.context.CPDefinitionItemSelectorViewDisplayContext;
-import com.liferay.commerce.product.service.CPDefinitionLinkService;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -107,8 +106,7 @@ public class CPDefinitionItemSelectorView
 			cpDefinitionItemSelectorViewDisplayContext =
 				new CPDefinitionItemSelectorViewDisplayContext(
 					httpServletRequest, portletURL, itemSelectedEventName,
-					_cpDefinitionLinkService, _cpDefinitionService,
-					_cpTypeServicesTracker);
+					_cpDefinitionService, _cpTypeServicesTracker);
 
 		request.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -129,9 +127,6 @@ public class CPDefinitionItemSelectorView
 				new ItemSelectorReturnType[] {
 					new UUIDItemSelectorReturnType()
 				}));
-
-	@Reference
-	private CPDefinitionLinkService _cpDefinitionLinkService;
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;

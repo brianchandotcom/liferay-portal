@@ -18,7 +18,6 @@ import com.liferay.commerce.product.item.selector.web.internal.CPDefinitionItemS
 import com.liferay.commerce.product.item.selector.web.internal.search.CPDefinitionItemSelectorChecker;
 import com.liferay.commerce.product.item.selector.web.internal.util.CPItemSelectorViewUtil;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.service.CPDefinitionLinkService;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
@@ -48,16 +47,13 @@ public class CPDefinitionItemSelectorViewDisplayContext
 
 	public CPDefinitionItemSelectorViewDisplayContext(
 		HttpServletRequest httpServletRequest, PortletURL portletURL,
-		String itemSelectedEventName,
-		CPDefinitionLinkService cpDefinitionLinkService,
-		CPDefinitionService cpDefinitionService,
+		String itemSelectedEventName, CPDefinitionService cpDefinitionService,
 		CPTypeServicesTracker cpTypeServicesTracker) {
 
 		super(
 			httpServletRequest, portletURL, itemSelectedEventName,
 			CPDefinitionItemSelectorView.class.getSimpleName());
 
-		_cpDefinitionLinkService = cpDefinitionLinkService;
 		_cpDefinitionService = cpDefinitionService;
 		_cpTypeServicesTracker = cpTypeServicesTracker;
 	}
@@ -162,7 +158,6 @@ public class CPDefinitionItemSelectorViewDisplayContext
 		return searchContainer;
 	}
 
-	private final CPDefinitionLinkService _cpDefinitionLinkService;
 	private final CPDefinitionService _cpDefinitionService;
 	private final CPTypeServicesTracker _cpTypeServicesTracker;
 

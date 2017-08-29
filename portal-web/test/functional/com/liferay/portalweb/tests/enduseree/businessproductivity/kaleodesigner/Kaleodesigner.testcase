@@ -527,7 +527,7 @@
 		</execute>
 	</command>
 
-	<command name="ConfigureTaskTimerViaViewTab" priority="4">
+	<command name="ConfigureTaskTimersViaViewTab" priority="4">
 		<description message="This is a use case for LPS-37209." />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">

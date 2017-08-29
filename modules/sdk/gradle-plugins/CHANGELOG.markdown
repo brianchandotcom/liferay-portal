@@ -2278,6 +2278,14 @@ dependency to version 2.1.18.
 - [LPS-73070]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
 version 2.3.18.
 
+## 3.4.45 - 2017-08-29
+
+### Changed
+- [LPS-73124]: Update the [Liferay Gradle Plugins DB Support] dependency to
+version 1.0.3.
+- [LPS-73124]: Update the [Liferay Portal Tools DB Support] dependency to
+version 1.0.6.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

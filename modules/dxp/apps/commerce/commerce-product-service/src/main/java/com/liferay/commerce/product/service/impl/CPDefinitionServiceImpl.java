@@ -82,10 +82,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	public CPDefinition addCPDefinition(
 			String baseSKU, Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
-			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
-			Map<Locale, String> metaTitleMap,
-			Map<Locale, String> metaKeywordsMap,
-			Map<Locale, String> metaDescriptionMap, String layoutUuid,
+			Map<Locale, String> descriptionMap, String layoutUuid,
 			String productTypeName, String gtin, String manufacturerPartNumber,
 			int minCartQuantity, int maxCartQuantity,
 			String allowedCartQuantities, int multipleCartQuantity,
@@ -102,8 +99,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			CPActionKeys.ADD_COMMERCE_PRODUCT_DEFINITION);
 
 		return cpDefinitionLocalService.addCPDefinition(
-			baseSKU, titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
-			metaTitleMap, metaKeywordsMap, metaDescriptionMap, layoutUuid,
+			baseSKU, titleMap, shortDescriptionMap, descriptionMap, layoutUuid,
 			productTypeName, gtin, manufacturerPartNumber, minCartQuantity,
 			maxCartQuantity, allowedCartQuantities, multipleCartQuantity,
 			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
@@ -309,11 +305,8 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	public CPDefinition updateCPDefinition(
 			long cpDefinitionId, String baseSKU, Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
-			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
-			Map<Locale, String> metaTitleMap,
-			Map<Locale, String> metaKeywordsMap,
-			Map<Locale, String> metaDescriptionMap, String layoutUuid,
-			String gtin, String manufacturerPartNumber, int minCartQuantity,
+			Map<Locale, String> descriptionMap, String layoutUuid, String gtin,
+			String manufacturerPartNumber, int minCartQuantity,
 			int maxCartQuantity, String allowedCartQuantities,
 			int multipleCartQuantity, String ddmStructureKey,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
@@ -328,8 +321,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 		return cpDefinitionLocalService.updateCPDefinition(
 			cpDefinitionId, baseSKU, titleMap, shortDescriptionMap,
-			descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
-			metaDescriptionMap, layoutUuid, gtin, manufacturerPartNumber,
+			descriptionMap, layoutUuid, gtin, manufacturerPartNumber,
 			minCartQuantity, maxCartQuantity, allowedCartQuantities,
 			multipleCartQuantity, ddmStructureKey, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
@@ -348,6 +340,19 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 		return cpDefinitionLocalService.updatePricingInfo(
 			cpDefinitionId, cost, price);
+	}
+
+	@Override
+	public CPDefinition updateSEOInfo(
+			long cpDefinitionId, Map<Locale, String> urlTitleMap,
+			Map<Locale, String> metaTitleMap,
+			Map<Locale, String> metaKeywordsMap,
+			Map<Locale, String> metaDescriptionMap)
+		throws PortalException {
+
+		return cpDefinitionLocalService.updateSEOInfo(
+			cpDefinitionId, urlTitleMap, metaTitleMap, metaKeywordsMap,
+			metaDescriptionMap);
 	}
 
 	@Override

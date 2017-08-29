@@ -182,7 +182,7 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product friendly URL
 
-		urlTitleMap = _getUniqueUrlTitles(cpDefinition, urlTitleMap);
+		urlTitleMap = _getUniqueUrlTitles(cpDefinition, titleMap);
 
 		cpFriendlyURLEntryLocalService.addCPFriendlyURLEntries(
 			groupId, serviceContext.getCompanyId(), CPDefinition.class,
@@ -216,10 +216,7 @@ public class CPDefinitionLocalServiceImpl
 	public CPDefinition addCPDefinition(
 			String baseSKU, Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
-			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
-			Map<Locale, String> metaTitleMap,
-			Map<Locale, String> metaKeywordsMap,
-			Map<Locale, String> metaDescriptionMap, String layoutUuid,
+			Map<Locale, String> descriptionMap, String layoutUuid,
 			String productTypeName, String gtin, String manufacturerPartNumber,
 			int minCartQuantity, int maxCartQuantity,
 			String allowedCartQuantities, int multipleCartQuantity,
@@ -232,15 +229,14 @@ public class CPDefinitionLocalServiceImpl
 		throws PortalException {
 
 		return addCPDefinition(
-			baseSKU, titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
-			metaTitleMap, metaKeywordsMap, metaDescriptionMap, layoutUuid,
-			productTypeName, gtin, manufacturerPartNumber, minCartQuantity,
-			maxCartQuantity, allowedCartQuantities, multipleCartQuantity, 0, 0,
-			0, 0, 0, 0, ddmStructureKey, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			baseSKU, titleMap, shortDescriptionMap, descriptionMap, null, null,
+			null, null, layoutUuid, productTypeName, gtin,
+			manufacturerPartNumber, minCartQuantity, maxCartQuantity,
+			allowedCartQuantities, multipleCartQuantity, 0, 0, 0, 0, 0, 0,
+			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
 	}
 
 	@Override
@@ -901,11 +897,8 @@ public class CPDefinitionLocalServiceImpl
 	public CPDefinition updateCPDefinition(
 			long cpDefinitionId, String baseSKU, Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
-			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
-			Map<Locale, String> metaTitleMap,
-			Map<Locale, String> metaKeywordsMap,
-			Map<Locale, String> metaDescriptionMap, String layoutUuid,
-			String gtin, String manufacturerPartNumber, int minCartQuantity,
+			Map<Locale, String> descriptionMap, String layoutUuid, String gtin,
+			String manufacturerPartNumber, int minCartQuantity,
 			int maxCartQuantity, String allowedCartQuantities,
 			int multipleCartQuantity, String ddmStructureKey,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
@@ -915,18 +908,26 @@ public class CPDefinitionLocalServiceImpl
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
+		CPDefinition cpDefinition = cpDefinitionPersistence.findByPrimaryKey(
+			cpDefinitionId);
+
 		return updateCPDefinition(
 			cpDefinitionId, baseSKU, titleMap, shortDescriptionMap,
-			descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
-			metaDescriptionMap, layoutUuid, gtin, manufacturerPartNumber,
-			minCartQuantity, maxCartQuantity, allowedCartQuantities,
-			multipleCartQuantity, 0, 0, 0, 0, 0, 0, ddmStructureKey,
+			descriptionMap, cpDefinition.getUrlTitleMap(),
+			cpDefinition.getMetaTitleMap(), cpDefinition.getMetaKeywordsMap(),
+			cpDefinition.getMetaDescriptionMap(), layoutUuid, gtin,
+			manufacturerPartNumber, minCartQuantity, maxCartQuantity,
+			allowedCartQuantities, multipleCartQuantity,
+			cpDefinition.getWidth(), cpDefinition.getHeight(),
+			cpDefinition.getDepth(), cpDefinition.getWeight(),
+			cpDefinition.getCost(), cpDefinition.getPrice(), ddmStructureKey,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, serviceContext);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPDefinition updatePricingInfo(
 			long cpDefinitionId, double cost, double price)
@@ -943,6 +944,39 @@ public class CPDefinitionLocalServiceImpl
 		return cpDefinition;
 	}
 
+	@Override
+	public CPDefinition updateSEOInfo(
+			long cpDefinitionId, Map<Locale, String> urlTitleMap,
+			Map<Locale, String> metaTitleMap,
+			Map<Locale, String> metaKeywordsMap,
+			Map<Locale, String> metaDescriptionMap)
+		throws PortalException {
+
+		CPDefinition cpDefinition = cpDefinitionPersistence.findByPrimaryKey(
+			cpDefinitionId);
+
+		// Commerce product definition localization
+
+		_updateCPDefinitionLocalizedFields(
+			cpDefinition.getCompanyId(), cpDefinitionId,
+			cpDefinition.getTitleMap(), cpDefinition.getShortDescriptionMap(),
+			cpDefinition.getDescriptionMap(), metaTitleMap, metaKeywordsMap,
+			metaDescriptionMap);
+
+		if (Validator.isNull(urlTitleMap)) {
+			urlTitleMap = _getUniqueUrlTitles(cpDefinition, urlTitleMap);
+		}
+
+		// Commerce product friendly URL entries
+
+		cpFriendlyURLEntryLocalService.addCPFriendlyURLEntries(
+			cpDefinition.getGroupId(), cpDefinition.getCompanyId(),
+			CPDefinition.class, cpDefinitionId, urlTitleMap);
+
+		return cpDefinition;
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPDefinition updateShippingInfo(
 			long cpDefinitionId, double width, double height, double depth,

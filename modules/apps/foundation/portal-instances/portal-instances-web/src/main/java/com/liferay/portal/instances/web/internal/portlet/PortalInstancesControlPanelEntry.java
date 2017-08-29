@@ -17,16 +17,18 @@ package com.liferay.portal.instances.web.internal.portlet;
 import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.kernel.portlet.ControlPanelEntry;
 import com.liferay.portal.kernel.portlet.OmniadminControlPanelEntry;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Alan Huang
  */
 @Component(
-		immediate = true,
-		property = {"javax.portlet.name=" +
-					PortalInstancesPortletKeys.PORTAL_INSTANCES},
-		service = ControlPanelEntry.class
-	)
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + PortalInstancesPortletKeys.PORTAL_INSTANCES
+	},
+	service = ControlPanelEntry.class
+)
 public class PortalInstancesControlPanelEntry extends
 	OmniadminControlPanelEntry {}

@@ -17,16 +17,18 @@ package com.liferay.push.notifications.web.internal.portlet;
 import com.liferay.portal.kernel.portlet.ControlPanelEntry;
 import com.liferay.portal.kernel.portlet.OmniadminControlPanelEntry;
 import com.liferay.push.notifications.constants.PushNotificationsPortletKeys;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Alan Huang
  */
 @Component(
-		immediate = true,
-		property = {"javax.portlet.name=" +
-					PushNotificationsPortletKeys.PUSH_NOTIFICATIONS},
-		service = ControlPanelEntry.class
-	)
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + PushNotificationsPortletKeys.PUSH_NOTIFICATIONS
+	},
+	service = ControlPanelEntry.class
+)
 public class PushNotificationsControlPanelEntry extends
 	OmniadminControlPanelEntry {}

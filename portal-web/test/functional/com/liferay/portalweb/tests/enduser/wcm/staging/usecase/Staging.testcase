@@ -176,6 +176,7 @@
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditPGViaWCD">
+			<var name="menuItem" value="Edit Web Content" />
 			<var name="webContentTitle" value="WebContent Title" />
 		</execute>
 

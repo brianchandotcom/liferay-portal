@@ -434,6 +434,7 @@
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditPGViaWCD">
+			<var name="menuItem" value="Edit Web Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
@@ -470,6 +471,7 @@
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditPGViaWCD">
+			<var name="menuItem" value="Edit Web Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
@@ -501,6 +503,7 @@
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditPGViaWCD">
+			<var name="menuItem" value="Edit Web Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
@@ -1002,6 +1005,7 @@
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditPGViaWCD">
+			<var name="menuItem" value="Edit Web Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 

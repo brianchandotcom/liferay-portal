@@ -26,8 +26,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -86,6 +90,29 @@ public class BundleBlacklist {
 		systemBundleContext.addBundleListener(_selfMonitorBundleListener);
 
 		_loadFromBlacklistFile();
+
+		String cfgFilePath = properties.get("felix.fileinstall.filename");
+
+		if (cfgFilePath != null) {
+			try {
+				File cfgFile = new File(new URI(cfgFilePath));
+
+				if (!cfgFile.exists()) {
+					properties = Collections.emptyMap();
+
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Due to cfg file " + cfgFilePath +
+								" has been removed, reset blacklist to empty");
+					}
+				}
+			}
+			catch (URISyntaxException urise) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to recreate cfg file URI", urise);
+				}
+			}
+		}
 
 		BundleBlacklistConfiguration bundleBlacklistConfiguration =
 			ConfigurableUtil.createConfigurable(

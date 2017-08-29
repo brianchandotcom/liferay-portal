@@ -449,11 +449,6 @@
 
 		<!-- Finder methods -->
 
-		<finder name="G_L_U" return-type="CPFriendlyURLEntry" unique="true">
-			<finder-column name="groupId" />
-			<finder-column name="languageId" />
-			<finder-column name="urlTitle" />
-		</finder>
 		<finder name="G_C_C_C" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="companyId" />

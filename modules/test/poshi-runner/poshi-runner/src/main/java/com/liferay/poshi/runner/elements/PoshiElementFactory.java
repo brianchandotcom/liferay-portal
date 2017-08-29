@@ -20,6 +20,9 @@ import com.liferay.poshi.runner.util.FileUtil;
 import java.io.File;
 import java.io.IOException;
 
+import java.net.URISyntaxException;
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,13 +102,17 @@ public class PoshiElementFactory {
 		String path = "com.liferay.poshi.runner.elements";
 
 		try {
-			Class<?> basePoshiElementClass = Class.forName(
-				path + ".BasePoshiElement");
+			Class<?> basePoshiElementClass = BasePoshiElement.class;
 
-			File directory = new File(
-				basePoshiElementClass.getResource("").getPath());
+			URL basePoshiElementResource = basePoshiElementClass.getResource(
+				"BasePoshiElement.class");
 
-			for (File file : directory.listFiles()) {
+			File basePoshiElementFile = new File(
+				basePoshiElementResource.toURI());
+
+			File poshiElementsDir = basePoshiElementFile.getParentFile();
+
+			for (File file : poshiElementsDir.listFiles()) {
 				String fileName = file.getName();
 
 				if (fileName.contains("PoshiElement.class") &&
@@ -134,6 +141,9 @@ public class PoshiElementFactory {
 		}
 		catch (IllegalAccessException iae) {
 			throw new RuntimeException(iae);
+		}
+		catch (URISyntaxException urise) {
+			throw new RuntimeException(urise);
 		}
 	}
 

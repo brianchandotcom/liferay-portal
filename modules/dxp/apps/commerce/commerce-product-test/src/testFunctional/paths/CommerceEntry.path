@@ -145,7 +145,7 @@
 </tr>
 <tr>
 	<td>WORKFLOW_STATUS</td>
-	<td>//span[@class='workflow-status']//span[contains(.,'Approved')]</td>
+	<td>//span[@class='workflow-status']//span[contains(.,'${key_status}')]</td>
 	<td></td>
 </tr>
 </tbody>

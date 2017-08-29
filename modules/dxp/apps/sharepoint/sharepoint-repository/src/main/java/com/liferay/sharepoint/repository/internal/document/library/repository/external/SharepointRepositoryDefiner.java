@@ -65,8 +65,8 @@ public class SharepointRepositoryDefiner implements RepositoryDefiner {
 		RepositoryConfigurationBuilder repositoryConfigurationBuilder =
 			new RepositoryConfigurationBuilder(_resourceBundleLoader);
 
-		repositoryConfigurationBuilder.addParameter("site-absolute-url");
 		repositoryConfigurationBuilder.addParameter("library-path");
+		repositoryConfigurationBuilder.addParameter("site-absolute-url");
 
 		return repositoryConfigurationBuilder.build();
 	}

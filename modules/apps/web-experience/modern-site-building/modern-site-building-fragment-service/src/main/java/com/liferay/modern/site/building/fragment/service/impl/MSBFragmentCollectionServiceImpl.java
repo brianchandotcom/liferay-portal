@@ -108,8 +108,7 @@ public class MSBFragmentCollectionServiceImpl
 				getPermissionChecker(), msbFragmentCollection, ActionKeys.VIEW);
 		}
 
-		return msbFragmentCollectionLocalService.fetchMSBFragmentCollection(
-			msbFragmentCollectionId);
+		return msbFragmentCollection;
 	}
 
 	@Override

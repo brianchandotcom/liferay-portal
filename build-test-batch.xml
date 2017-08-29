@@ -2494,7 +2494,7 @@ ${output.content}</echo>
 	<target name="portal-frontend-js-jdk8">
 		<run-batch-test>
 			<test-action>
-				<gradle-execute dir="modules" task="testJS" />
+				<gradle-execute dir="modules" task="npmRunTest" />
 
 				<replace
 					dir="modules"

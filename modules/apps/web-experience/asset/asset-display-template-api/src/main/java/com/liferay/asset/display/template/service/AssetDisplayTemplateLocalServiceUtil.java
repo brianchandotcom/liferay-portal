@@ -244,6 +244,19 @@ public class AssetDisplayTemplateLocalServiceUtil {
 			orderByComparator);
 	}
 
+	public static java.util.List<com.liferay.asset.display.template.model.AssetDisplayTemplate> getAssetDisplayTemplates(
+		long groupId, java.lang.String name) {
+		return getService().getAssetDisplayTemplates(groupId, name);
+	}
+
+	public static java.util.List<com.liferay.asset.display.template.model.AssetDisplayTemplate> getAssetDisplayTemplates(
+		long groupId, java.lang.String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.display.template.model.AssetDisplayTemplate> orderByComparator) {
+		return getService()
+				   .getAssetDisplayTemplates(groupId, name, start, end,
+			orderByComparator);
+	}
+
 	/**
 	* Returns the number of asset display templates.
 	*
@@ -255,6 +268,11 @@ public class AssetDisplayTemplateLocalServiceUtil {
 
 	public static int getAssetDisplayTemplatesCount(long groupId) {
 		return getService().getAssetDisplayTemplatesCount(groupId);
+	}
+
+	public static int getAssetDisplayTemplatesCount(long groupId,
+		java.lang.String name) {
+		return getService().getAssetDisplayTemplatesCount(groupId, name);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {

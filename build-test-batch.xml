@@ -588,7 +588,7 @@ app.server.type=@{app.server.type}]]></echo>
 		</sequential>
 	</macrodef>
 
-<macrodef name="run-bundle-blacklist-restart-test">
+	<macrodef name="run-bundle-blacklist-restart-test">
 		<sequential>
 			<run-batch-test tomcat.gc.log="true">
 				<test-action>

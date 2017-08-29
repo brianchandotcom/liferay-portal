@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.lpkg.deployer.test.util.LPKGTestUtil;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
@@ -44,41 +43,43 @@ public class BundleBlacklistSetUpBatchTest {
 			"Missing system property \"cfg.name\"", blacklistCfgName);
 
 		try (OutputStream outputStream = new FileOutputStream(
-				new File(
-					liferayHome + "/osgi/portal/" + _SYMBOLIC_NAME + ".jar"))) {
+				liferayHome + "/osgi/portal/" + _JAR_BUNDLE_SYMBOLIC_NAME +
+					".jar")) {
 
 			StreamUtil.transfer(
-				LPKGTestUtil.createJAR(_SYMBOLIC_NAME), outputStream);
+				LPKGTestUtil.createJAR(_JAR_BUNDLE_SYMBOLIC_NAME),
+				outputStream);
 		}
 
 		try (OutputStream outputStream = new FileOutputStream(
-				new File(
-					liferayHome + "/deploy/" + _WAR_SYMBOLIC_NAME + ".war"))) {
+				liferayHome + "/deploy/" + _WAR_BUNDLE_SYMBOLIC_NAME +
+					".war")) {
 
 			StreamUtil.transfer(
-				LPKGTestUtil.createWAR(_WAR_SYMBOLIC_NAME), outputStream);
+				LPKGTestUtil.createWAR(_WAR_BUNDLE_SYMBOLIC_NAME),
+				outputStream);
 		}
 
 		StringBundler sb = new StringBundler(4);
 
 		sb.append("blacklistBundleSymbolicNames=");
-		sb.append(_SYMBOLIC_NAME);
+		sb.append(_JAR_BUNDLE_SYMBOLIC_NAME);
 		sb.append(StringPool.COMMA);
-		sb.append(_WAR_SYMBOLIC_NAME);
+		sb.append(_WAR_BUNDLE_SYMBOLIC_NAME);
 
 		String cfgBody = sb.toString();
 
 		try (OutputStream outputStream = new FileOutputStream(
-				new File(liferayHome + "/osgi/configs/" + blacklistCfgName))) {
+				liferayHome + "/osgi/configs/" + blacklistCfgName)) {
 
 			outputStream.write(cfgBody.getBytes());
 		}
 	}
 
-	private static final String _SYMBOLIC_NAME =
+	private static final String _JAR_BUNDLE_SYMBOLIC_NAME =
 		"com.liferay.portal.bundle.blacklist.test.bundle";
 
-	private static final String _WAR_SYMBOLIC_NAME = _SYMBOLIC_NAME.concat(
-		".war");
+	private static final String _WAR_BUNDLE_SYMBOLIC_NAME =
+		_JAR_BUNDLE_SYMBOLIC_NAME.concat(".war");
 
 }

@@ -43,10 +43,10 @@ public class BundleBlacklistVerifyReinstalledTest {
 		for (Bundle installedBundles : bundleContext.getBundles()) {
 			String symbolicName = installedBundles.getSymbolicName();
 
-			if (symbolicName.equals(_SYMBOLIC_NAME)) {
+			if (symbolicName.equals(_JAR_BUNDLE_SYMBOLIC_NAME)) {
 				jarInstalled = true;
 			}
-			else if (symbolicName.equals(_WAR_SYMBOLIC_NAME)) {
+			else if (symbolicName.equals(_WAR_BUNDLE_SYMBOLIC_NAME)) {
 				warInstalled = true;
 			}
 
@@ -55,15 +55,16 @@ public class BundleBlacklistVerifyReinstalledTest {
 			}
 		}
 
-		Assert.assertTrue(_SYMBOLIC_NAME + "was not reinstalled", jarInstalled);
 		Assert.assertTrue(
-			_WAR_SYMBOLIC_NAME + "was not reinstalled", warInstalled);
+			_JAR_BUNDLE_SYMBOLIC_NAME + "was not reinstalled", jarInstalled);
+		Assert.assertTrue(
+			_WAR_BUNDLE_SYMBOLIC_NAME + "was not reinstalled", warInstalled);
 	}
 
-	private static final String _SYMBOLIC_NAME =
+	private static final String _JAR_BUNDLE_SYMBOLIC_NAME =
 		"com.liferay.portal.bundle.blacklist.test.bundle";
 
-	private static final String _WAR_SYMBOLIC_NAME = _SYMBOLIC_NAME.concat(
-		".war");
+	private static final String _WAR_BUNDLE_SYMBOLIC_NAME =
+		_JAR_BUNDLE_SYMBOLIC_NAME.concat(".war");
 
 }

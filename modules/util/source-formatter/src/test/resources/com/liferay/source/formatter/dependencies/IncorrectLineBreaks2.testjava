@@ -65,4 +65,8 @@ public class IncorrectLineBreaks2 {
 		);
 	}
 
+	private class TestClass {}
+
+	private enum TestEnum { TEST_VALUE }
+
 }

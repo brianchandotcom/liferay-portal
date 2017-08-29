@@ -65,4 +65,13 @@ public class IncorrectLineBreaks2 {
 			stringWithAMediumLongVariableName, stringList);
 	}
 
+	private class TestClass {
+	}
+
+	private enum TestEnum {
+
+		TEST_VALUE
+
+	}
+
 }

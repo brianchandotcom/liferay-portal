@@ -94,7 +94,20 @@
 					<liferay-ui:search-container-column-text
 						colspan="<%= 2 %>"
 					>
-						<%= assetDisplayTemplate.getName() %>
+
+						<%
+						Date createDate = assetDisplayTemplate.getCreateDate();
+
+						String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
+						%>
+
+						<h6 class="text-default">
+							<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(assetDisplayTemplate.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
+						</h6>
+
+						<h5>
+							<%= assetDisplayTemplate.getName() %>
+						</h5>
 
 						<h6 class="text-default">
 							<%= assetDisplayTemplate.getAssetTypeName(locale) %>
@@ -120,6 +133,17 @@
 							rowChecker="<%= searchContainer.getRowChecker() %>"
 							title="<%= assetDisplayTemplate.getName() %>"
 						>
+							<liferay-frontend:vertical-card-header>
+
+								<%
+								Date createDate = assetDisplayTemplate.getCreateDate();
+
+								String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
+								%>
+
+								<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(assetDisplayTemplate.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
+							</liferay-frontend:vertical-card-header>
+
 							<liferay-frontend:vertical-card-footer>
 								<%= assetDisplayTemplate.getAssetTypeName(locale) %>
 							</liferay-frontend:vertical-card-footer>
@@ -136,6 +160,11 @@
 					<liferay-ui:search-container-column-text
 						name="asset-type"
 						value="<%= assetDisplayTemplate.getAssetTypeName(locale) %>"
+					/>
+
+					<liferay-ui:search-container-column-date
+						name="modified-date"
+						value="<%= assetDisplayTemplate.getCreateDate() %>"
 					/>
 
 					<liferay-ui:search-container-column-jsp

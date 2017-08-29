@@ -60,7 +60,8 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.template.TemplateContextHelper" %>
 
-<%@ page import="java.util.Map" %><%@
+<%@ page import="java.util.Date" %><%@
+page import="java.util.Map" %><%@
 page import="java.util.Objects" %><%@
 page import="java.util.ResourceBundle" %><%@
 page import="java.util.StringTokenizer" %>

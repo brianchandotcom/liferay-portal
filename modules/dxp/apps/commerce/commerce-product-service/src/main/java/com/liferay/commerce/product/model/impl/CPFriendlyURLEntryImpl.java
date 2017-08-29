@@ -43,10 +43,6 @@ public class CPFriendlyURLEntryImpl extends CPFriendlyURLEntryBaseImpl {
 		int maxLength = ModelHintsUtil.getMaxLength(
 			CPFriendlyURLEntry.class.getName(), "urlTitle");
 
-		if (urlTitle.length() < 2) {
-			return CPFriendlyURLEntryException.TOO_SHORT;
-		}
-
 		if (checkMaxLength && (urlTitle.length() > maxLength)) {
 			return CPFriendlyURLEntryException.TOO_LONG;
 		}

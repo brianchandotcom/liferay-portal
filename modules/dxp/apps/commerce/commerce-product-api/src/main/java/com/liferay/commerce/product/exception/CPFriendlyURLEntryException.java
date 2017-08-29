@@ -25,17 +25,15 @@ import com.liferay.portal.kernel.exception.PortalException;
 @ProviderType
 public class CPFriendlyURLEntryException extends PortalException {
 
-	public static final int ADJACENT_SLASHES = 4;
+	public static final int ADJACENT_SLASHES = 3;
 
 	public static final int ENDS_WITH_SLASH = 2;
 
-	public static final int INVALID_CHARACTERS = 5;
+	public static final int INVALID_CHARACTERS = 4;
 
-	public static final int TOO_DEEP = 6;
+	public static final int TOO_DEEP = 5;
 
 	public static final int TOO_LONG = 1;
-
-	public static final int TOO_SHORT = 3;
 
 	public CPFriendlyURLEntryException(int type) {
 		_type = type;

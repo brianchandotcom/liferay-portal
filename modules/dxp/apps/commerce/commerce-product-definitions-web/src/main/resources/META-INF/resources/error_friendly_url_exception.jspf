@@ -31,8 +31,5 @@
 		<c:when test="<%= cpfuee.getType() == CPFriendlyURLEntryException.TOO_LONG %>">
 			<liferay-ui:message key="the-friendly-url-is-too-long" />
 		</c:when>
-		<c:when test="<%= cpfuee.getType() == CPFriendlyURLEntryException.TOO_SHORT %>">
-			<liferay-ui:message key="please-enter-a-friendly-url-that-is-at-least-two-characters-long" />
-		</c:when>
 	</c:choose>
 </div>

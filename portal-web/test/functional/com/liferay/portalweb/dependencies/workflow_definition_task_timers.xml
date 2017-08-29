@@ -81,7 +81,6 @@
 				<notification-type>user-notification</notification-type>
 				<execution-type>onAssignment</execution-type>
 			</notification>
-
 		</actions>
 		<assignments>
 			<roles>
@@ -305,7 +304,6 @@
 					</timer-notification>
 				</timer-actions>
 			</task-timer>
-
 		</task-timers>
 		<transitions>
 			<transition>

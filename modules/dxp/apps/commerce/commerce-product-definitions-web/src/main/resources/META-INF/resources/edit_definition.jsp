@@ -74,8 +74,10 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 		</liferay-frontend:info-bar>
 	</c:if>
 
-	<aui:translation-manager
+	<liferay-frontend:translation-manager
 		availableLocales="<%= availableLocales %>"
+		changeableDefaultLanguage="<%= true %>"
+		componentId='<%= renderResponse.getNamespace() + "translationManager" %>'
 		defaultLanguageId="<%= defaultLanguageId %>"
 		id="translationManager"
 	/>

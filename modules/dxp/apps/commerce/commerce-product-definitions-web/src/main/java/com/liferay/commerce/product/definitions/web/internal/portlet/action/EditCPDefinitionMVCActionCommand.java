@@ -134,7 +134,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				cpDefinition = updateCPDefinition(actionRequest);
 
 				String redirect = getSaveAndContinueRedirect(
-					actionRequest, cpDefinition);
+					actionRequest, cpDefinition, "editProductDefinition");
 
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
@@ -142,7 +142,17 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				cpDefinition = updatePricingInfo(actionRequest);
 
 				String redirect = getSaveAndContinueRedirect(
-					actionRequest, cpDefinition);
+					actionRequest, cpDefinition,
+					"editProductDefinitionPricingInfo");
+
+				sendRedirect(actionRequest, actionResponse, redirect);
+			}
+			else if (cmd.equals("updateSEOInfo")) {
+				cpDefinition = updateSEOInfo(actionRequest);
+
+				String redirect = getSaveAndContinueRedirect(
+					actionRequest, cpDefinition,
+					"editProductDefinitionSEOInfo");
 
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
@@ -150,7 +160,8 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				cpDefinition = updateShippingInfo(actionRequest);
 
 				String redirect = getSaveAndContinueRedirect(
-					actionRequest, cpDefinition);
+					actionRequest, cpDefinition,
+					"editProductDefinitionShippingInfo");
 
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
@@ -170,13 +181,21 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else if (e instanceof AssetCategoryException ||
-					 e instanceof AssetTagException ||
-					 e instanceof CPFriendlyURLEntryException) {
+					 e instanceof AssetTagException) {
 
 				SessionErrors.add(actionRequest, e.getClass(), e);
 
 				String redirect = getSaveAndContinueRedirect(
-					actionRequest, cpDefinition);
+					actionRequest, cpDefinition, "editProductDefinition");
+
+				sendRedirect(actionRequest, actionResponse, redirect);
+			}
+			else if (e instanceof CPFriendlyURLEntryException) {
+				SessionErrors.add(actionRequest, e.getClass(), e);
+
+				String redirect = getSaveAndContinueRedirect(
+					actionRequest, cpDefinition,
+					"editProductDefinitionSEOInfo");
 
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
@@ -187,32 +206,28 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected String getSaveAndContinueRedirect(
-			ActionRequest actionRequest, CPDefinition cpDefinition)
+			ActionRequest actionRequest, CPDefinition cpDefinition,
+			String mvcRenderCommandName)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		if (cpDefinition != null) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-		PortletURL portletURL = null;
-
-		if (cpDefinition == null) {
-			portletURL = PortletProviderUtil.getPortletURL(
-				actionRequest, themeDisplay.getScopeGroup(),
-				CPDefinition.class.getName(), PortletProvider.Action.VIEW);
-		}
-		else {
-			portletURL = PortletProviderUtil.getPortletURL(
+			PortletURL portletURL = PortletProviderUtil.getPortletURL(
 				actionRequest, themeDisplay.getScopeGroup(),
 				CPDefinition.class.getName(), PortletProvider.Action.EDIT);
 
 			portletURL.setParameter(
-				"mvcRenderCommandName", "editProductDefinition");
+				"mvcRenderCommandName", mvcRenderCommandName);
 			portletURL.setParameter(
 				"cpDefinitionId",
 				String.valueOf(cpDefinition.getCPDefinitionId()));
+
+			return portletURL.toString();
 		}
 
-		return portletURL.toString();
+		return ParamUtil.getString(actionRequest, "redirect");
 	}
 
 	protected void restoreTrashEntries(ActionRequest actionRequest)
@@ -240,16 +255,6 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(
 				actionRequest, "descriptionMapAsXML");
-		Map<Locale, String> urlTitleMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "urlTitleMapAsXML");
-		Map<Locale, String> metaTitleMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "metaTitleMapAsXML");
-		Map<Locale, String> metaKeywordsMap =
-			LocalizationUtil.getLocalizationMap(
-				actionRequest, "metaKeywordsMapAsXML");
-		Map<Locale, String> metaDescriptionMap =
-			LocalizationUtil.getLocalizationMap(
-				actionRequest, "metaDescriptionMapAsXML");
 		String productTypeName = ParamUtil.getString(
 			actionRequest, "productTypeName");
 		String baseSKU = ParamUtil.getString(actionRequest, "baseSKU");
@@ -314,7 +319,6 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 			cpDefinition = _cpDefinitionService.addCPDefinition(
 				baseSKU, titleMap, shortDescriptionMap, descriptionMap,
-				urlTitleMap, metaTitleMap, metaKeywordsMap, metaDescriptionMap,
 				layoutUuid, productTypeName, gtin, manufacturerPartNumber,
 				minCartQuantity, maxCartQuantity, allowedCartQuantities,
 				multipleCartQuantity, null, displayDateMonth, displayDateDay,
@@ -329,8 +333,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 			cpDefinition = _cpDefinitionService.updateCPDefinition(
 				cpDefinitionId, baseSKU, titleMap, shortDescriptionMap,
-				descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
-				metaDescriptionMap, layoutUuid, gtin, manufacturerPartNumber,
+				descriptionMap, layoutUuid, gtin, manufacturerPartNumber,
 				minCartQuantity, maxCartQuantity, allowedCartQuantities,
 				multipleCartQuantity, null, displayDateMonth, displayDateDay,
 				displayDateYear, displayDateHour, displayDateMinute,
@@ -353,6 +356,28 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 		return _cpDefinitionService.updatePricingInfo(
 			cpDefinitionId, cost, price);
+	}
+
+	protected CPDefinition updateSEOInfo(ActionRequest actionRequest)
+		throws PortalException {
+
+		long cpDefinitionId = ParamUtil.getLong(
+			actionRequest, "cpDefinitionId");
+
+		Map<Locale, String> urlTitleMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "urlTitleMapAsXML");
+		Map<Locale, String> metaTitleMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "metaTitleMapAsXML");
+		Map<Locale, String> metaKeywordsMap =
+			LocalizationUtil.getLocalizationMap(
+				actionRequest, "metaKeywordsMapAsXML");
+		Map<Locale, String> metaDescriptionMap =
+			LocalizationUtil.getLocalizationMap(
+				actionRequest, "metaDescriptionMapAsXML");
+
+		return _cpDefinitionService.updateSEOInfo(
+			cpDefinitionId, urlTitleMap, metaTitleMap, metaKeywordsMap,
+			metaDescriptionMap);
 	}
 
 	protected CPDefinition updateShippingInfo(ActionRequest actionRequest)

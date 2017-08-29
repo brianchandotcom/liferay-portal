@@ -36,25 +36,25 @@ public final class PoshiRunnerStackTraceUtil {
 		return _filePaths.peek();
 	}
 
-	public static String getCurrentNamespace(String classCommandName) {
-		String namespace = null;
-
-		if (classCommandName != null) {
-			namespace = PoshiRunnerGetterUtil.getNamespaceFromClassCommandName(
-				classCommandName);
+	public static String getCurrentNamespace() {
+		if (_filePaths.isEmpty()) {
+			return PoshiRunnerContext.getDefaultNamespace();
 		}
 
+		String filePath = getCurrentFilePath();
+
+		int x = filePath.indexOf("[");
+
+		return PoshiRunnerContext.getNamespace(filePath.substring(0, x));
+	}
+
+	public static String getCurrentNamespace(String classCommandName) {
+		String namespace =
+			PoshiRunnerGetterUtil.getNamespaceFromClassCommandName(
+				classCommandName);
+
 		if (namespace == null) {
-			if (_filePaths.isEmpty()) {
-				return PoshiRunnerContext.getDefaultNamespace();
-			}
-
-			String filePath = getCurrentFilePath();
-
-			int x = filePath.indexOf("[");
-
-			namespace = PoshiRunnerContext.getNamespace(
-				filePath.substring(0, x));
+			namespace = getCurrentNamespace();
 		}
 
 		return namespace;

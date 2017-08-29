@@ -356,7 +356,7 @@ public class PoshiRunnerExecutor {
 
 					locator = PoshiRunnerContext.getPathLocator(
 						pathClassName + "#" + locatorKey,
-						PoshiRunnerStackTraceUtil.getCurrentNamespace(null));
+						PoshiRunnerStackTraceUtil.getCurrentNamespace());
 
 					if (locator == null) {
 						exception = new Exception(
@@ -1036,7 +1036,7 @@ public class PoshiRunnerExecutor {
 				if (locator.contains("#")) {
 					locator = PoshiRunnerContext.getPathLocator(
 						locator,
-						PoshiRunnerStackTraceUtil.getCurrentNamespace(null));
+						PoshiRunnerStackTraceUtil.getCurrentNamespace());
 				}
 
 				varValue = liferaySelenium.getAttribute(
@@ -1058,7 +1058,7 @@ public class PoshiRunnerExecutor {
 				if (locator.contains("#")) {
 					locator = PoshiRunnerContext.getPathLocator(
 						locator,
-						PoshiRunnerStackTraceUtil.getCurrentNamespace(null));
+						PoshiRunnerStackTraceUtil.getCurrentNamespace());
 				}
 
 				LiferaySelenium liferaySelenium = SeleniumUtil.getSelenium();
@@ -1090,7 +1090,7 @@ public class PoshiRunnerExecutor {
 				try {
 					varValue = PoshiRunnerGetterUtil.getVarMethodValue(
 						classCommandName,
-						PoshiRunnerStackTraceUtil.getCurrentNamespace(null));
+						PoshiRunnerStackTraceUtil.getCurrentNamespace());
 				}
 				catch (Exception e) {
 					XMLLoggerHandler.updateStatus(element, "fail");

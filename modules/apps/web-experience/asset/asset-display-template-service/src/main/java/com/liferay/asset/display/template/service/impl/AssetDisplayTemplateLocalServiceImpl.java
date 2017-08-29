@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.spring.extender.service.ServiceReference;
-import com.liferay.portlet.display.template.PortletDisplayTemplate;
 
 import java.util.Collections;
 import java.util.Date;
@@ -69,15 +68,13 @@ public class AssetDisplayTemplateLocalServiceImpl
 
 		long assetDisplayTemplateClassNameId = _portal.getClassNameId(
 			AssetDisplayTemplate.class);
-		long resourceClassNameId = _portal.getClassNameId(
-			PortletDisplayTemplate.class);
 		Map<Locale, String> nameMap = Collections.singletonMap(
 			LocaleUtil.getDefault(), name);
 
 		DDMTemplate ddmTemplate = _ddmTemplateManager.addTemplate(
 			userId, groupId, assetDisplayTemplateClassNameId,
 			assetDisplayTemplate.getAssetDisplayTemplateId(),
-			resourceClassNameId,
+			assetDisplayTemplateClassNameId,
 			String.valueOf(assetDisplayTemplate.getAssetDisplayTemplateId()),
 			nameMap, Collections.emptyMap(),
 			DDMTemplateManager.TEMPLATE_TYPE_DISPLAY,

@@ -193,7 +193,7 @@ public class AssetDisplayTemplateDisplayContext {
 			_renderRequest, _renderResponse.createRenderURL(), null,
 			"there-are-no-asset-display-templates");
 
-		if (!isShowSearch()) {
+		if (!isSearch()) {
 			if (isShowAddButton()) {
 				searchContainer.setEmptyResultsMessage(
 					"there-are-no-asset-display-templates-you-can-add-an-" +
@@ -250,6 +250,14 @@ public class AssetDisplayTemplateDisplayContext {
 		return false;
 	}
 
+	public boolean isSearch() {
+		if (Validator.isNotNull(getKeywords())) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isShowAddButton() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -261,14 +269,6 @@ public class AssetDisplayTemplateDisplayContext {
 				themeDisplay.getSiteGroupId(),
 				AssetDisplayTemplateActionKeys.ADD_ASSET_DISPLAY_TEMPLATE)) {
 
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isShowSearch() {
-		if (Validator.isNotNull(getKeywords())) {
 			return true;
 		}
 

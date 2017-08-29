@@ -31,9 +31,9 @@ List<DDMFormFieldType> ddmFormFieldTypes = cpOptionDisplayContext.getDDMFormFiel
 <liferay-ui:error exception="<%= CPOptionKeyException.class %>" message="please-enter-a-unique-key" />
 
 <aui:fieldset>
-	<aui:input name="title" />
+	<aui:input autoFocus="<%= true %>" name="title" wrapperCssClass="commerce-product-option-title" />
 
-	<aui:input name="description" />
+	<aui:input name="description" wrapperCssClass="commerce-product-option-description" />
 
 	<aui:select label="option-field-type" name="DDMFormFieldTypeName" showEmptyOption="<%= true %>">
 
@@ -108,6 +108,8 @@ List<DDMFormFieldType> ddmFormFieldTypes = cpOptionDisplayContext.getDDMFormFiel
 
 	var translationManager = Liferay.component('<portlet:namespace />translationManager');
 
-	translationManager.on('deleteAvailableLocale', afterDeletingAvailableLocale)
-	translationManager.on('editingLocaleChange', afterEditingLocaleChange)
+	if (translationManager) {
+		translationManager.on('deleteAvailableLocale', afterDeletingAvailableLocale);
+		translationManager.on('editingLocaleChange', afterEditingLocaleChange);
+	}
 </aui:script>

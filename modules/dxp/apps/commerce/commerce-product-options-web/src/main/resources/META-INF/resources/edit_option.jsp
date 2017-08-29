@@ -56,8 +56,10 @@ Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLoca
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="cpOptionId" type="hidden" value="<%= String.valueOf(cpOptionId) %>" />
 
-	<aui:translation-manager
+	<liferay-frontend:translation-manager
 		availableLocales="<%= availableLocales %>"
+		changeableDefaultLanguage="<%= true %>"
+		componentId='<%= renderResponse.getNamespace() + "translationManager" %>'
 		defaultLanguageId="<%= defaultLanguageId %>"
 		id="translationManager"
 	/>

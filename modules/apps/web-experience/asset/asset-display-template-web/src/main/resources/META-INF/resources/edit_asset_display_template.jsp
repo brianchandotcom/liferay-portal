@@ -68,7 +68,7 @@ long classNameId = BeanParamUtil.getLong(assetDisplayTemplate, request, "classNa
 
 			</aui:select>
 
-			<aui:input checked="<%= (assetDisplayTemplate != null) ? assetDisplayTemplate.isMain() : false %>" label="default-template-for-this-asset-type" name="main" type="checkbox" />
+			<aui:input checked="<%= (assetDisplayTemplate != null) ? assetDisplayTemplate.isMain() : false %>" label="default-template-for-selected-asset-type" name="main" type="checkbox" />
 		</aui:fieldset>
 
 		<%@ include file="/edit_asset_display_template_script.jspf" %>

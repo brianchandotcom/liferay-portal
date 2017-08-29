@@ -391,7 +391,7 @@ public class LibraryReferenceTest {
 		Properties properties = new Properties();
 
 		try (InputStream in = Files.newInputStream(
-				Paths.get("nbproject/project.properties"))) {
+				Paths.get(_NETBEANS_PROPERTIES_FILE_NAME))) {
 
 			properties.load(in);
 		}
@@ -441,6 +441,9 @@ public class LibraryReferenceTest {
 		LIB_DIR_NAME + "/.gitignore";
 
 	private static final String _MODULES_DIR_NAME = "modules";
+
+	private static final String _NETBEANS_PROPERTIES_FILE_NAME =
+		"nbproject/project.properties";
 
 	private static final String _NETBEANS_XML_FILE_NAME =
 		"nbproject/project.xml";

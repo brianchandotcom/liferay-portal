@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Frontend JS Top Head Extender
+Bundle-SymbolicName: com.liferay.frontend.js.top.head.extender
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.frontend.js.top.head.extender

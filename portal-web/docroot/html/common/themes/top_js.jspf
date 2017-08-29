@@ -376,42 +376,8 @@
 	<script src="<%= HtmlUtil.escape(themeDisplay.getCDNDynamicResourcesHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_JS_LOADER_MODULES) + "/js_loader_modules?t=" + jsLoaderModulesLastModified) %>" type="text/javascript"></script>
 </c:if>
 
-<c:choose>
-	<c:when test="<%= themeDisplay.isThemeJsFastLoad() %>">
-		<c:choose>
-			<c:when test="<%= themeDisplay.isThemeJsBarebone() %>">
-				<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathJavaScript() + "/barebone.jsp", "minifierBundleId=javascript.barebone.files", jsLastModified)) %>" type="text/javascript"></script>
-			</c:when>
-			<c:otherwise>
-				<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathJavaScript() + "/everything.jsp", "minifierBundleId=javascript.everything.files", jsLastModified)) %>" type="text/javascript"></script>
-			</c:otherwise>
-		</c:choose>
-	</c:when>
-	<c:otherwise>
+<liferay-util:dynamic-include key="/html/common/themes/top_js.jspf" />
 
-		<%
-		String path = themeDisplay.getCDNHost().concat(themeDisplay.getPathJavaScript());
-
-		String[] javaScriptFiles = null;
-
-		if (themeDisplay.isThemeJsBarebone()) {
-			javaScriptFiles = JavaScriptBundleUtil.getFileNames(PropsKeys.JAVASCRIPT_BAREBONE_FILES);
-		}
-		else {
-			javaScriptFiles = JavaScriptBundleUtil.getFileNames(PropsKeys.JAVASCRIPT_EVERYTHING_FILES);
-		}
-
-		for (String javaScriptFile : javaScriptFiles) {
-		%>
-
-			<script data-senna-track="permanent" src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, path + "/" + javaScriptFile, "minifierType=", jsLastModified)) %>" type="text/javascript"></script>
-
-		<%
-		}
-		%>
-
-	</c:otherwise>
-</c:choose>
 
 <c:if test="<%= PortalWebResourcesUtil.getPortalWebResources(PortalWebResourceConstants.RESOURCE_TYPE_JS_BUNDLE_CONFIG) != null %>">
 

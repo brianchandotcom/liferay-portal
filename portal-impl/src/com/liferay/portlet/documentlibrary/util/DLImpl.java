@@ -514,7 +514,7 @@ public class DLImpl implements DL {
 
 		String previewQueryString = null;
 
-		if (PropsValues.DL_FILE_ENTRY_THUMBNAIL_ENABLED) {
+		if (PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED) {
 			if (ImageProcessorUtil.hasImages(fileVersion)) {
 				previewQueryString = "&imagePreview=1";
 			}

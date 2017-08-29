@@ -52,4 +52,15 @@ MSBFragmentEntry msbFragmentEntry = (MSBFragmentEntry)row.getObject();
 			useDialog="<%= true %>"
 		/>
 	</c:if>
+
+	<c:if test="<%= MSBFragmentEntryPermission.contains(permissionChecker, msbFragmentEntry, ActionKeys.DELETE) %>">
+		<portlet:actionURL name="deleteMSBFragmentCollection" var="deleteMSBFragmentEntryURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="msbFragmentEntryId" value="<%= String.valueOf(msbFragmentEntry.getMsbFragmentEntryId()) %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon-delete
+			url="<%= deleteMSBFragmentEntryURL %>"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>

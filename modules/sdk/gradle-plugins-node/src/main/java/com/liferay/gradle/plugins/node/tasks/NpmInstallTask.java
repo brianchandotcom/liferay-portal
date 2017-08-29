@@ -243,6 +243,8 @@ public class NpmInstallTask extends ExecuteNpmTask {
 					Path linkPath = nodeModulesBinDirPath.resolve(linkFileName);
 					Path linkTargetPath = dirPath.resolve(linkTargetFileName);
 
+					Files.deleteIfExists(linkPath);
+
 					Files.createSymbolicLink(linkPath, linkTargetPath);
 
 					if (logger.isInfoEnabled()) {

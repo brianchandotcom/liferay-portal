@@ -87,7 +87,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 
 		content = _fixArrayLineBreaks(content);
 
-		content = _fixClassLineLineBreaks(content);
+		content = _fixClassOrEnumLineLineBreaks(content);
 
 		content = fixRedundantCommaInsideArray(content);
 
@@ -363,8 +363,8 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 		return content;
 	}
 
-	private String _fixClassLineLineBreaks(String content) {
-		Matcher matcher = _classPattern.matcher(content);
+	private String _fixClassOrEnumLineLineBreaks(String content) {
+		Matcher matcher = _classOrEnumPattern.matcher(content);
 
 		while (matcher.find()) {
 			String indent = matcher.group(2);
@@ -767,7 +767,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 
 	private final Pattern _arrayPattern = Pattern.compile(
 		"(\n\t*.* =) ((new \\w*\\[\\] )?\\{)\n(\t*)([^\t\\{].*)\n\t*(\\};?)\n");
-	private final Pattern _classPattern = Pattern.compile(
+	private final Pattern _classOrEnumPattern = Pattern.compile(
 		"(\n(\t*)(private|protected|public) ((abstract|static) )*" +
 			"(class|enum|interface) ([\\s\\S]*?)\\{)((.*)\\})?" +
 				"(\\Z|\n(\\s*)(\\S))");

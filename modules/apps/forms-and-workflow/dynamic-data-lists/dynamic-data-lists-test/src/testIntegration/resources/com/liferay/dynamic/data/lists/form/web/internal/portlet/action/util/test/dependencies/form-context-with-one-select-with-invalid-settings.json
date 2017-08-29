@@ -1,0 +1,720 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"defaultLanguageId": "en_US",
+	"description": {
+		"en_US": ""
+	},
+	"name": {
+		"en_US": "Form"
+	},
+	"pages": [
+		{
+			"description": {
+				"en_US": ""
+			},
+			"rows": [
+				{
+					"columns": [
+						{
+							"fields": [
+								{
+									"dataSourceType": "data-provider",
+									"dataType": "string",
+									"ddmDataProviderInstanceId": [],
+									"ddmDataProviderInstanceOutput": [],
+									"fieldName": "Select",
+									"fieldNamespace": "",
+									"indexType": "keyword",
+									"label": "Select",
+									"localizable": false,
+									"multiple": false,
+									"name": "Select",
+									"options": [
+										{
+											"label": "Option",
+											"value": "Option"
+										}
+									],
+									"placeholder": "",
+									"portletNamespace": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_",
+									"predefinedValue": "",
+									"readOnly": true,
+									"repeatable": false,
+									"required": false,
+									"settingsContext": {
+										"containerId": "settings",
+										"dataProviderSettings": {},
+										"evaluatorURL": "/o/dynamic-data-mapping-form-context-provider/",
+										"groupId": "0",
+										"pages": [
+											{
+												"description": null,
+												"enabled": true,
+												"localizedDescription": {},
+												"localizedTitle": {
+													"en_US": "Basic"
+												},
+												"rows": [
+													{
+														"columns": [
+															{
+																"fields": [
+																	{
+																		"autoFocus": true,
+																		"dataType": "string",
+																		"dir": "ltr",
+																		"errorMessage": "",
+																		"fieldName": "label",
+																		"instanceId": "ft55l7iz",
+																		"label": "Label",
+																		"localizable": true,
+																		"localizedValue": {
+																			"en_US": "Select"
+																		},
+																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$label$ft55l7iz$0$$en_US",
+																		"options": [],
+																		"placeholder": "Enter a field label.",
+																		"readOnly": false,
+																		"repeatable": false,
+																		"required": false,
+																		"showLabel": true,
+																		"strings": {
+																			"cancel": "Cancel",
+																			"done": "Done",
+																			"keyLabel": "Field Name"
+																		},
+																		"tooltip": "Enter a descriptive field label that guides users to enter the information you want.",
+																		"type": "key_value",
+																		"valid": true,
+																		"validation": {
+																			"errorMessage": "",
+																			"expression": ""
+																		},
+																		"value": "Select",
+																		"visibilityExpression": "TRUE",
+																		"visible": true
+																	},
+																	{
+																		"autocompleteEnabled": false,
+																		"dataType": "string",
+																		"dir": "ltr",
+																		"displayStyle": "singleline",
+																		"errorMessage": "",
+																		"fieldName": "tip",
+																		"instanceId": "ku8VbS3u",
+																		"label": "Help Text",
+																		"localizable": true,
+																		"localizedValue": {
+																			"en_US": ""
+																		},
+																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$tip$ku8VbS3u$0$$en_US",
+																		"options": [],
+																		"placeholder": "Enter help text.",
+																		"readOnly": false,
+																		"repeatable": false,
+																		"required": false,
+																		"showLabel": true,
+																		"tooltip": "Add a comment to help users understand the field label.",
+																		"type": "text",
+																		"valid": true,
+																		"validation": {
+																			"errorMessage": "",
+																			"expression": ""
+																		},
+																		"value": "",
+																		"visibilityExpression": "TRUE",
+																		"visible": true
+																	},
+																	{
+																		"dataType": "boolean",
+																		"dir": "ltr",
+																		"errorMessage": "",
+																		"fieldName": "required",
+																		"instanceId": "h56kIWRZ",
+																		"label": "Required Field",
+																		"localizable": false,
+																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$required$h56kIWRZ$0$$en_US",
+																		"options": [],
+																		"readOnly": false,
+																		"repeatable": false,
+																		"required": false,
+																		"showAsSwitcher": true,
+																		"showLabel": true,
+																		"type": "checkbox",
+																		"valid": true,
+																		"validation": {
+																			"errorMessage": "",
+																			"expression": ""
+																		},
+																		"value": false,
+																		"visibilityExpression": "TRUE",
+																		"visible": true
+																	},
+																	{
+																		"dataType": "string",
+																		"dir": "ltr",
+																		"errorMessage": "",
+																		"evaluable": true,
+																		"fieldName": "dataSourceType",
+																		"inline": false,
+																		"instanceId": "FvfkBkiG",
+																		"label": "Create List",
+																		"localizable": false,
+																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$dataSourceType$FvfkBkiG$0$$en_US",
+																		"options": [
+																			{
+																				"label": "Manually",
+																				"value": "manual"
+																			},
+																			{
+																				"label": "From Data Provider",
+																				"value": "data-provider"
+																			}
+																		],
+																		"predefinedValue": "manual",
+																		"readOnly": false,
+																		"repeatable": false,
+																		"required": false,
+																		"showLabel": true,
+																		"type": "radio",
+																		"valid": true,
+																		"validation": {
+																			"errorMessage": "",
+																			"expression": ""
+																		},
+																		"value": "data-provider",
+																		"visibilityExpression": "TRUE",
+																		"visible": true
+																	},
+																	{
+																		"allowEmptyOptions": false,
+																		"dataType": "ddm-options",
+																		"defaultLanguageId": "en_US",
+																		"dir": "ltr",
+																		"errorMessage": "",
+																		"evaluable": true,
+																		"fieldName": "options",
+																		"instanceId": "n1wYR7uw",
+																		"label": "Options",
+																		"localizable": false,
+																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$options$n1wYR7uw$0$$en_US",
+																		"options": [],
+																		"readOnly": false,
+																		"repeatable": false,
+																		"required": true,
+																		"showLabel": false,
+																		"type": "options",
+																		"valid": true,
+																		"validation": {
+																			"errorMessage": "",
+																			"expression": ""
+																		},
+																		"value": {
+																			"en_US": [
+																				{
+																					"label": "Option",
+																					"value": "Option"
+																				}
+																			]
+																		},
+																		"visibilityExpression": "equals(dataSourceType, \"manual\")",
+																		"visible": true
+																	},
+																	{
+																		"dataSourceType": "data-provider",
+																		"dataType": "long",
+																		"dir": "ltr",
+																		"errorMessage": "",
+																		"evaluable": true,
+																		"fieldName": "ddmDataProviderInstanceId",
+																		"instanceId": "gu3oe2da",
+																		"label": "Choose a Data Provider",
+																		"localizable": false,
+																		"multiple": "",
+																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$ddmDataProviderInstanceId$gu3oe2da$0$$en_US",
+																		"options": [],
+																		"readOnly": false,
+																		"repeatable": false,
+																		"required": true,
+																		"showLabel": true,
+																		"strings": {
+																			"chooseAnOption": "Choose an Option",
+																			"dynamicallyLoadedData": "Dynamically Loaded Data",
+																			"emptyList": "No results were found.",
+																			"search": "Search"
+																		},
+																		"type": "select",
+																		"valid": true,
+																		"validation": {
+																			"errorMessage": "",
+																			"expression": ""
+																		},
+																		"value": [],
+																		"visibilityExpression": "equals(dataSourceType, \"data-provider\")",
+																		"visible": false
+																	},
+																	{
+																		"dataSourceType": "manual",
+																		"dataType": "string",
+																		"dir": "ltr",
+																		"errorMessage": "",
+																		"evaluable": true,
+																		"fieldName": "ddmDataProviderInstanceOutput",
+																		"instanceId": "69pb2sP7",
+																		"label": "Choose an output parameter.",
+																		"localizable": false,
+																		"multiple": "",
+																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$ddmDataProviderInstanceOutput$69pb2sP7$0$$en_US",
+																		"options": [],
+																		"readOnly": false,
+																		"repeatable": false,
+																		"required": true,
+																		"showLabel": true,
+																		"strings": {
+																			"chooseAnOption": "Choose an Option",
+																			"dynamicallyLoadedData": "Dynamically Loaded Data",
+																			"emptyList": "No results were found.",
+																			"search": "Search"
+																		},
+																		"type": "select",
+																		"valid": true,
+																		"validation": {
+																			"errorMessage": "",
+																			"expression": ""
+																		},
+																		"value": [],
+																		"visibilityExpression": "equals(dataSourceType, \"data-provider\")",
+																		"visible": false
+																	}
+																],
+																"size": 12
+															}
+														]
+													}
+												],
+												"showRequiredFieldsWarning": true,
+												"title": "Basic"
+											},
+											{
+												"description": null,
+												"enabled": true,
+												"localizedDescription": {},
+												"localizedTitle": {
+													"en_US": "Properties"
+												},
+												"rows": [
+													{
+														"columns": [
+															{
+																"fields": [
+																	{
+																		"autocompleteEnabled": false,
+																		"dataType": "string",
+																		"dir": "ltr",
+																		"displayStyle": "singleline",
+																		"errorMessage": "",
+																		"fieldName": "predefinedValue",
+																		"instanceId": "XY2kts5U",
+																		"label": "Predefined Value",
+																		"localizable": true,
+																		"localizedValue": {
+																			"en_US": ""
+																		},
+																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$predefinedValue$XY2kts5U$0$$en_US",
+																		"options": [],
+																		"placeholder": "Enter a default value.",
+																		"readOnly": false,
+																		"repeatable": false,
+																		"required": false,
+																		"showLabel": true,
+																		"tooltip": "Enter a default value that is submitted if no other value is entered.",
+																		"type": "text",
+																		"valid": true,
+																		"validation": {
+																			"errorMessage": "",
+																			"expression": ""
+																		},
+																		"value": "",
+																		"visibilityExpression": "TRUE",
+																		"visible": true
+																	},
+																	{
+																		"autocompleteEnabled": false,
+																		"dataType": "string",
+																		"dir": "ltr",
+																		"displayStyle": "singleline",
+																		"errorMessage": "",
+																		"fieldName": "visibilityExpression",
+																		"instanceId": "0q1ODdXd",
+																		"label": "Field Visibility Expression",
+																		"localizable": false,
+																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$visibilityExpression$0q1ODdXd$0$$en_US",
+																		"options": [],
+																		"placeholder": "equals(Country, \"US\")",
+																		"readOnly": false,
+																		"repeatable": false,
+																		"required": false,
+																		"showLabel": true,
+																		"tooltip": "Write a condition expression to control whether this field is displayed.",
+																		"type": "text",
+																		"valid": true,
+																		"validation": {
+																			"errorMessage": "",
+																			"expression": ""
+																		},
+																		"value": "",
+																		"visibilityExpression": "FALSE",
+																		"visible": false
+																	},
+																	{
+																		"autocompleteEnabled": false,
+																		"dataType": "string",
+																		"dir": "ltr",
+																		"displayStyle": "singleline",
+																		"errorMessage": "",
+																		"fieldName": "validation",
+																		"instanceId": "nofuas6j",
+																		"label": "",
+																		"localizable": false,
+																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$validation$nofuas6j$0$$en_US",
+																		"options": [],
+																		"placeholder": "",
+																		"readOnly": false,
+																		"repeatable": false,
+																		"required": false,
+																		"showLabel": true,
+																		"tooltip": "",
+																		"type": "text",
+																		"valid": true,
+																		"validation": {
+																			"errorMessage": "",
+																			"expression": ""
+																		},
+																		"value": "",
+																		"visibilityExpression": "FALSE",
+																		"visible": false
+																	},
+																	{
+																		"autocompleteEnabled": false,
+																		"dataType": "string",
+																		"dir": "ltr",
+																		"displayStyle": "singleline",
+																		"errorMessage": "",
+																		"fieldName": "fieldNamespace",
+																		"instanceId": "x5gpa6dq",
+																		"label": "",
+																		"localizable": false,
+																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$fieldNamespace$x5gpa6dq$0$$en_US",
+																		"options": [],
+																		"placeholder": "",
+																		"readOnly": false,
+																		"repeatable": false,
+																		"required": false,
+																		"showLabel": true,
+																		"tooltip": "",
+																		"type": "text",
+																		"valid": true,
+																		"validation": {
+																			"errorMessage": "",
+																			"expression": ""
+																		},
+																		"value": "",
+																		"visibilityExpression": "FALSE",
+																		"visible": false
+																	},
+																	{
+																		"dataType": "string",
+																		"dir": "ltr",
+																		"errorMessage": "",
+																		"fieldName": "indexType",
+																		"inline": false,
+																		"instanceId": "ABw2XqR3",
+																		"label": "Indexable",
+																		"localizable": false,
+																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$indexType$ABw2XqR3$0$$en_US",
+																		"options": [
+																			{
+																				"label": "Not Indexable",
+																				"value": ""
+																			},
+																			{
+																				"label": "Indexable - Keyword",
+																				"value": "keyword"
+																			},
+																			{
+																				"label": "Indexable - Text",
+																				"value": "text"
+																			}
+																		],
+																		"predefinedValue": "keyword",
+																		"readOnly": false,
+																		"repeatable": false,
+																		"required": false,
+																		"showLabel": true,
+																		"type": "radio",
+																		"valid": true,
+																		"validation": {
+																			"errorMessage": "",
+																			"expression": ""
+																		},
+																		"value": "keyword",
+																		"visibilityExpression": "FALSE",
+																		"visible": false
+																	},
+																	{
+																		"dataType": "boolean",
+																		"dir": "ltr",
+																		"errorMessage": "",
+																		"fieldName": "localizable",
+																		"instanceId": "0vGl4WJ6",
+																		"label": "Localizable",
+																		"localizable": false,
+																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$localizable$0vGl4WJ6$0$$en_US",
+																		"options": [],
+																		"readOnly": false,
+																		"repeatable": false,
+																		"required": false,
+																		"showAsSwitcher": false,
+																		"showLabel": true,
+																		"type": "checkbox",
+																		"valid": true,
+																		"validation": {
+																			"errorMessage": "",
+																			"expression": ""
+																		},
+																		"value": false,
+																		"visibilityExpression": "FALSE",
+																		"visible": false
+																	},
+																	{
+																		"dataType": "boolean",
+																		"dir": "ltr",
+																		"errorMessage": "",
+																		"fieldName": "readOnly",
+																		"instanceId": "qE8kusPW",
+																		"label": "Read Only",
+																		"localizable": false,
+																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$readOnly$qE8kusPW$0$$en_US",
+																		"options": [],
+																		"readOnly": false,
+																		"repeatable": false,
+																		"required": false,
+																		"showAsSwitcher": false,
+																		"showLabel": true,
+																		"type": "checkbox",
+																		"valid": true,
+																		"validation": {
+																			"errorMessage": "",
+																			"expression": ""
+																		},
+																		"value": false,
+																		"visibilityExpression": "FALSE",
+																		"visible": false
+																	},
+																	{
+																		"autocompleteEnabled": false,
+																		"dataType": "string",
+																		"dir": "ltr",
+																		"displayStyle": "singleline",
+																		"errorMessage": "",
+																		"evaluable": true,
+																		"fieldName": "dataType",
+																		"instanceId": "mKa9jnFT",
+																		"label": "",
+																		"localizable": false,
+																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$dataType$mKa9jnFT$0$$en_US",
+																		"options": [],
+																		"placeholder": "",
+																		"readOnly": false,
+																		"repeatable": false,
+																		"required": true,
+																		"showLabel": true,
+																		"tooltip": "",
+																		"type": "text",
+																		"valid": true,
+																		"validation": {
+																			"errorMessage": "",
+																			"expression": ""
+																		},
+																		"value": "string",
+																		"visibilityExpression": "FALSE",
+																		"visible": false
+																	},
+																	{
+																		"autocompleteEnabled": false,
+																		"dataType": "string",
+																		"dir": "ltr",
+																		"displayStyle": "singleline",
+																		"errorMessage": "",
+																		"evaluable": true,
+																		"fieldName": "type",
+																		"instanceId": "HafWmBuq",
+																		"label": "",
+																		"localizable": false,
+																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$type$HafWmBuq$0$$en_US",
+																		"options": [],
+																		"placeholder": "",
+																		"readOnly": false,
+																		"repeatable": false,
+																		"required": true,
+																		"showLabel": true,
+																		"tooltip": "",
+																		"type": "text",
+																		"valid": true,
+																		"validation": {
+																			"errorMessage": "",
+																			"expression": ""
+																		},
+																		"value": "select",
+																		"visibilityExpression": "FALSE",
+																		"visible": false
+																	},
+																	{
+																		"autocompleteEnabled": false,
+																		"dataType": "string",
+																		"dir": "ltr",
+																		"displayStyle": "singleline",
+																		"errorMessage": "",
+																		"evaluable": true,
+																		"fieldName": "name",
+																		"instanceId": "0g88HS8W",
+																		"label": "Name",
+																		"localizable": false,
+																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$name$0g88HS8W$0$$en_US",
+																		"options": [],
+																		"placeholder": "",
+																		"readOnly": false,
+																		"repeatable": false,
+																		"required": true,
+																		"showLabel": true,
+																		"tooltip": "",
+																		"type": "text",
+																		"valid": true,
+																		"validation": {
+																			"errorMessage": "",
+																			"expression": ""
+																		},
+																		"value": "Select",
+																		"visibilityExpression": "FALSE",
+																		"visible": false
+																	},
+																	{
+																		"dataType": "boolean",
+																		"dir": "ltr",
+																		"errorMessage": "",
+																		"fieldName": "showLabel",
+																		"instanceId": "UYCnxKN0",
+																		"label": "Show Label",
+																		"localizable": false,
+																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$showLabel$UYCnxKN0$0$$en_US",
+																		"options": [],
+																		"readOnly": false,
+																		"repeatable": false,
+																		"required": false,
+																		"showAsSwitcher": true,
+																		"showLabel": true,
+																		"type": "checkbox",
+																		"valid": true,
+																		"validation": {
+																			"errorMessage": "",
+																			"expression": ""
+																		},
+																		"value": true,
+																		"visibilityExpression": "TRUE",
+																		"visible": true
+																	},
+																	{
+																		"dataType": "boolean",
+																		"dir": "ltr",
+																		"errorMessage": "",
+																		"fieldName": "repeatable",
+																		"instanceId": "N8TDXpYg",
+																		"label": "Repeatable",
+																		"localizable": false,
+																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$repeatable$N8TDXpYg$0$$en_US",
+																		"options": [],
+																		"readOnly": false,
+																		"repeatable": false,
+																		"required": false,
+																		"showAsSwitcher": true,
+																		"showLabel": true,
+																		"type": "checkbox",
+																		"valid": true,
+																		"validation": {
+																			"errorMessage": "",
+																			"expression": ""
+																		},
+																		"value": false,
+																		"visibilityExpression": "TRUE",
+																		"visible": true
+																	},
+																	{
+																		"dataType": "boolean",
+																		"dir": "ltr",
+																		"errorMessage": "",
+																		"fieldName": "multiple",
+																		"instanceId": "ydFgXwDq",
+																		"label": "Allow Multiple Selections",
+																		"localizable": false,
+																		"name": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_ddm$$multiple$ydFgXwDq$0$$en_US",
+																		"options": [],
+																		"readOnly": false,
+																		"repeatable": false,
+																		"required": false,
+																		"showAsSwitcher": true,
+																		"showLabel": true,
+																		"type": "checkbox",
+																		"valid": true,
+																		"validation": {
+																			"errorMessage": "",
+																			"expression": ""
+																		},
+																		"value": false,
+																		"visibilityExpression": "TRUE",
+																		"visible": true
+																	}
+																],
+																"size": 12
+															}
+														]
+													}
+												],
+												"showRequiredFieldsWarning": true,
+												"title": "Properties"
+											}
+										],
+										"portletNamespace": "_com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet_",
+										"readOnly": false,
+										"rules": [],
+										"showRequiredFieldsWarning": true,
+										"showSubmitButton": false,
+										"strings": {
+											"next": "Next",
+											"previous": "Previous"
+										},
+										"submitLabel": "Submit",
+										"templateNamespace": "ddm.tabbed_form"
+									},
+									"showLabel": true,
+									"tip": "",
+									"type": "select",
+									"validation": "",
+									"value": "",
+									"visibilityExpression": "",
+									"visible": true
+								}
+							],
+							"size": 12
+						}
+					]
+				}
+			],
+			"title": {
+				"en_US": ""
+			}
+		}
+	],
+	"rules": []
+}

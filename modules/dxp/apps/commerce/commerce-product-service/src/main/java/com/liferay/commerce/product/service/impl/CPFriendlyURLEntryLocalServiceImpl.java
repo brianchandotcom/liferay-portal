@@ -15,7 +15,6 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.exception.CPFriendlyURLEntryException;
-import com.liferay.commerce.product.exception.DuplicateCPFriendlyURLEntryException;
 import com.liferay.commerce.product.model.CPFriendlyURLEntry;
 import com.liferay.commerce.product.model.impl.CPFriendlyURLEntryImpl;
 import com.liferay.commerce.product.service.base.CPFriendlyURLEntryLocalServiceBaseImpl;
@@ -57,14 +56,16 @@ public class CPFriendlyURLEntryLocalServiceImpl
 			String languageId, String title)
 		throws PortalException {
 
-		if (title == null) {
-			return String.valueOf(classPK);
-		}
+		int maxLength = ModelHintsUtil.getMaxLength(
+			CPFriendlyURLEntry.class.getName(), "urlTitle");
 
 		title = StringUtil.toLowerCase(title.trim());
 
 		if (Validator.isNull(title) || Validator.isNumber(title)) {
 			title = String.valueOf(classPK);
+		}
+		else if (title.length() > maxLength) {
+			title = title.substring(0, maxLength);
 		}
 		else {
 			title = FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(
@@ -314,13 +315,6 @@ public class CPFriendlyURLEntryLocalServiceImpl
 			if (cpFriendlyURLEntry != null) {
 				return;
 			}
-		}
-
-		int count = cpFriendlyURLEntryPersistence.countByG_C_C_U(
-			groupId, companyId, classNameId, normalizedUrlTitle);
-
-		if (count > 0) {
-			throw new DuplicateCPFriendlyURLEntryException();
 		}
 	}
 

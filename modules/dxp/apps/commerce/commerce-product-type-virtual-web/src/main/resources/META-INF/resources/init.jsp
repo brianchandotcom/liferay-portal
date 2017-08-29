@@ -48,6 +48,7 @@ page import="com.liferay.journal.model.JournalArticle" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.bean.BeanPropertiesUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.portlet.LiferayPortletRequest" %><%@
 page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
@@ -69,7 +70,7 @@ page import="java.util.Map" %>
 <portlet:defineObjects />
 
 <%
-String lifecycle = (String)request.getAttribute(liferayPortletRequest.LIFECYCLE_PHASE);
+String lifecycle = (String)request.getAttribute(LiferayPortletRequest.LIFECYCLE_PHASE);
 
 PortletURL catalogURLObj = PortalUtil.getControlPanelPortletURL(request, CPPortletKeys.CP_DEFINITIONS, lifecycle);
 

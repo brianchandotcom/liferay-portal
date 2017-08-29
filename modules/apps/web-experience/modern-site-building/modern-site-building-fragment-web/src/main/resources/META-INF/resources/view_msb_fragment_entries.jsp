@@ -134,7 +134,7 @@ renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentCollectionTitle(
 	</liferay-frontend:add-menu>
 
 	<aui:script require="modern-site-building-fragment-web/js/MSBFragmentNameEditor.es">
-		var MSBFragmentNameEditor = modernSiteBuildingMSBFragmentWebJsFragmentNameEditorEs.default;
+		var MSBFragmentNameEditor = modernSiteBuildingFragmentWebJsMSBFragmentNameEditorEs.default;
 		var addMenuItemButton = document.getElementById('<portlet:namespace />addMSBFragmentEntryMenuItem');
 
 		addMenuItemButton.addEventListener(
@@ -142,10 +142,16 @@ renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentCollectionTitle(
 			function(event) {
 				event.preventDefault();
 
-				new MSBFragmentNameEditor({
+				var msbFragmentNameEditor = new MSBFragmentNameEditor({
 					addMSBFragmentEntryURL: '<%= addMSBFragmentEntryURL.toString() %>',
 					editMSBFragmentEntryURL: '<%= editMSBFragmentEntryURL.toString() %>',
-					namespace: '<portlet:namespace />'
+					events: {
+						hide: function() {
+							msbFragmentNameEditor.disposeInternal();
+						}
+					},
+					namespace: '<portlet:namespace />',
+					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
 				});
 			}
 		);

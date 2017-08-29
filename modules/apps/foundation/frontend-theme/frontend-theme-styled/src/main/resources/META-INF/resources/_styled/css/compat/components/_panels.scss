@@ -5,6 +5,10 @@
 	position: relative;
 }
 
+.panel-title {
+	text-transform: none;
+}
+
 // .panel-header-link styling from lexicon-base/_panels.scss
 .panel-title .collapse-icon {
 	color: inherit;

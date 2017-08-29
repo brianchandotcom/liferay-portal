@@ -85,17 +85,17 @@ public class MSBFragmentDisplayContext {
 	}
 
 	public String getEditMSBFragmentEntryRedirect() throws PortalException {
-		PortletURL backURL = _renderResponse.createRenderURL();
+		PortletURL portletURL = _renderResponse.createRenderURL();
 
-		backURL.setParameter("mvcPath", "/view_msb_fragment_entries.jsp");
+		portletURL.setParameter("mvcPath", "/view_msb_fragment_entries.jsp");
 
 		if (getMSBFragmentCollectionId() > 0) {
-			backURL.setParameter(
+			portletURL.setParameter(
 				"msbFragmentCollectionId",
 				String.valueOf(getMSBFragmentCollectionId()));
 		}
 
-		return backURL.toString();
+		return portletURL.toString();
 	}
 
 	public String getKeywords() {

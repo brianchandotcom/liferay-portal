@@ -25,6 +25,7 @@
 			<a class="icon-monospaced portlet-icon-back text-default" href="$portlet_back_url" title="#language ("return-to-full-page")">
 				<svg class="lexicon-icon lexicon-icon-angle-left" viewBox="0 0 512 512">
 					<use xlink:href="${theme_display.getPathThemeImages()}/lexicon/icons.svg#angle-left"></use>
+					<title>#language ("return-to-full-page")</title>
 				</svg>
 			</a>
 		#end

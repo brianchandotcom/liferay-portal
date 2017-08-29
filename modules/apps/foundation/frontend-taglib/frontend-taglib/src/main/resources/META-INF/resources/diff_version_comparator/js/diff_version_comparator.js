@@ -19,7 +19,7 @@ AUI.add(
 
 		var TPL_VERSION = '<div class="pull-right close-version-filter">' +
 				'<a href="javascript:;">' +
-					'<svg class="lexicon-icon" focusable="false"><use data-href="' + Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg#times" /></svg>' +
+					'<svg class="lexicon-icon" focusable="false"><use data-href="' + Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg#times" /><title>Icon</title></svg>' +
 				'</a>' +
 			'</div>' +
 			'<div>' +

@@ -259,7 +259,7 @@ public class KBArticleLocalServiceTest {
 			_serviceContext);
 	}
 
-	@Test(expected = KBArticleUrlTitleException.class)
+	@Test
 	public void testAddKBArticleWithBlankURLTitle() throws Exception {
 		String urlTitle = StringPool.BLANK;
 

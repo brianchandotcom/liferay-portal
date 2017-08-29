@@ -2268,7 +2268,7 @@ to version 2.1.4.
 - [LPS-72705]: Update the [Liferay Source Formatter] dependency to version
 1.0.450.
 
-## 3.4.42 - 2017-08-28
+## 3.4.44 - 2017-08-29
 
 ### Changed
 - [LPS-73070]: Update the [Liferay Gradle Plugins Gulp] dependency to version

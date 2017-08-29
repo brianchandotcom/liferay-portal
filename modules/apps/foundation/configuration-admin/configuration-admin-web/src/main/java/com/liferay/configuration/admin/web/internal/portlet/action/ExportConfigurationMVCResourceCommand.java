@@ -149,7 +149,7 @@ public class ExportConfigurationMVCResourceCommand
 		PortletResponseUtil.sendFile(
 			resourceRequest, resourceResponse, fileName,
 			new FileInputStream(zipWriter.getFile()),
-			ContentTypes.TEXT_XML_UTF8);
+			ContentTypes.APPLICATION_ZIP);
 	}
 
 	protected void exportFactoryPid(
@@ -194,7 +194,7 @@ public class ExportConfigurationMVCResourceCommand
 		PortletResponseUtil.sendFile(
 			resourceRequest, resourceResponse, fileName,
 			new FileInputStream(zipWriter.getFile()),
-			ContentTypes.TEXT_XML_UTF8);
+			ContentTypes.APPLICATION_ZIP);
 	}
 
 	protected void exportPid(

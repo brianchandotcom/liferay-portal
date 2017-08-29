@@ -28,7 +28,10 @@ import javax.portlet.PortletURL;
 
 /**
  * @author Preston Crary
+ * @deprecated As of 7.0.0, moved to {@link
+ *             com.liferay.asset.util.impl.AssetPublisherAddItemHolder}
  */
+@Deprecated
 public class AssetPublisherAddItemHolder
 	implements Comparable<AssetPublisherAddItemHolder> {
 

@@ -21,7 +21,10 @@ import java.util.Locale;
 
 /**
  * @author Adolfo Pérez
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.asset.reader.ClassTypeReader}
  */
+@Deprecated
 public interface ClassTypeReader {
 
 	public List<ClassType> getAvailableClassTypes(

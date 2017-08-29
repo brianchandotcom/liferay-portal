@@ -18,7 +18,10 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 /**
  * @author Adolfo Pérez
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.asset.reader.exception.NoSuchClassTypeFieldException}
  */
+@Deprecated
 public class NoSuchClassTypeFieldException extends NoSuchModelException {
 
 	public NoSuchClassTypeFieldException() {

@@ -22,9 +22,6 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.asset.kernel.model.ClassType;
-import com.liferay.asset.kernel.model.ClassTypeField;
-import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
@@ -37,6 +34,10 @@ import com.liferay.asset.publisher.web.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.web.internal.action.AssetEntryActionRegistry;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
+import com.liferay.asset.reader.ClassType;
+import com.liferay.asset.reader.ClassTypeField;
+import com.liferay.asset.reader.ClassTypeReader;
+import com.liferay.asset.util.impl.AssetPublisherAddItemHolder;
 import com.liferay.asset.util.impl.AssetUtil;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.petra.model.adapter.util.ModelAdapterUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -75,7 +77,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.asset.util.AssetPublisherAddItemHolder;
 
 import java.io.Serializable;
 
@@ -1369,7 +1370,9 @@ public class AssetPublisherDisplayContext {
 				getAssetRendererFactoryByClassNameId(classNameIds[0]);
 
 		ClassTypeReader classTypeReader =
-			assetRendererFactory.getClassTypeReader();
+			ModelAdapterUtil.adapt(
+				ClassTypeReader.class,
+				assetRendererFactory.getClassTypeReader());
 
 		ClassType classType = classTypeReader.getClassType(
 			classTypeIds[0], locale);
@@ -1426,7 +1429,9 @@ public class AssetPublisherDisplayContext {
 					getAssetRendererFactoryByClassNameId(classNameIds[0]);
 
 			ClassTypeReader classTypeReader =
-				assetRendererFactory.getClassTypeReader();
+				ModelAdapterUtil.adapt(
+					ClassTypeReader.class,
+					assetRendererFactory.getClassTypeReader());
 
 			ClassType classType = classTypeReader.getClassType(
 				classTypeIds[0], themeDisplay.getLocale());

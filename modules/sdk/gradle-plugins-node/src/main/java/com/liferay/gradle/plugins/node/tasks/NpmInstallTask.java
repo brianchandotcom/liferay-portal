@@ -114,16 +114,12 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		return project.file("package.json");
 	}
 
+	public File getPackageLockJsonFile() {
+		return _getExistentFile("package-lock.json");
+	}
+
 	public File getShrinkwrapJsonFile() {
-		Project project = getProject();
-
-		File shrinkwrapJsonFile = project.file("npm-shrinkwrap.json");
-
-		if (!shrinkwrapJsonFile.exists()) {
-			shrinkwrapJsonFile = null;
-		}
-
-		return shrinkwrapJsonFile;
+		return _getExistentFile("npm-shrinkwrap.json");
 	}
 
 	public boolean isNodeModulesCacheNativeSync() {
@@ -258,13 +254,24 @@ public class NpmInstallTask extends ExecuteNpmTask {
 	private static String _getNodeModulesCacheDigest(
 		NpmInstallTask npmInstallTask) {
 
+		Logger logger = npmInstallTask.getLogger();
+
 		JsonSlurper jsonSlurper = new JsonSlurper();
 
-		File jsonFile = npmInstallTask.getShrinkwrapJsonFile();
+		File jsonFile = npmInstallTask.getPackageLockJsonFile();
 
 		if (jsonFile == null) {
-			Logger logger = npmInstallTask.getLogger();
+			if (logger.isInfoEnabled()) {
+				logger.info(
+					"Unable to find package-lock.json for {}, using " +
+						"npm-shrinkwrap.json instead",
+					npmInstallTask.getProject());
+			}
 
+			jsonFile = npmInstallTask.getShrinkwrapJsonFile();
+		}
+
+		if (jsonFile == null) {
 			if (logger.isWarnEnabled()) {
 				logger.warn(
 					"Unable to find npm-shrinkwrap.json for {}, using " +
@@ -367,6 +374,18 @@ public class NpmInstallTask extends ExecuteNpmTask {
 				}
 
 			});
+	}
+
+	private File _getExistentFile(String fileName) {
+		Project project = getProject();
+
+		File file = project.file(fileName);
+
+		if (!file.exists()) {
+			file = null;
+		}
+
+		return file;
 	}
 
 	private boolean _isCacheEnabled() {

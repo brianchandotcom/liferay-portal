@@ -1991,6 +1991,14 @@ plugin is not applied to OSGi projects anymore.
 ### Changed
 - [LPS-74368]: Update the [Liferay Gradle Plugins] dependency to version 3.4.41.
 
+## 5.0.28 - 2017-08-28
+
+### Added
+- [LPS-73070]: Check and keep version in the `package-lock.json` file in sync.
+
+### Changed
+- [LPS-73070]: Update the [Liferay Gradle Plugins] dependency to version 3.4.42.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -2164,6 +2172,7 @@ plugin is not applied to OSGi projects anymore.
 [LPS-72914]: https://issues.liferay.com/browse/LPS-72914
 [LPS-72989]: https://issues.liferay.com/browse/LPS-72989
 [LPS-73058]: https://issues.liferay.com/browse/LPS-73058
+[LPS-73070]: https://issues.liferay.com/browse/LPS-73070
 [LPS-73128]: https://issues.liferay.com/browse/LPS-73128
 [LPS-73141]: https://issues.liferay.com/browse/LPS-73141
 [LPS-73148]: https://issues.liferay.com/browse/LPS-73148

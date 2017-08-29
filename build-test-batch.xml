@@ -2472,7 +2472,7 @@ ${output.content}</echo>
 
 		<run-batch-test>
 			<test-action>
-				<gradle-execute dir="${test.base.dir.name}" task="testJS" />
+				<gradle-execute dir="${test.base.dir.name}" task="npmRunTest" />
 			</test-action>
 
 			<test-set-up>

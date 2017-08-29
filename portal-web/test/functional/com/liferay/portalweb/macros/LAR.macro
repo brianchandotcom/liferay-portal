@@ -594,7 +594,6 @@
 
 		<execute macro="LAR#_exportSite">
 			<var name="larFileName" value="${larFileName}" />
-			<var name="valueName" value="${valueName}" />
 		</execute>
 	</command>
 

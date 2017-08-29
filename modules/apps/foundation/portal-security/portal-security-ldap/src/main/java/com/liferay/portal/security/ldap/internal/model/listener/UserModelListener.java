@@ -18,27 +18,21 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.MembershipRequest;
 import com.liferay.portal.kernel.model.MembershipRequestConstants;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.ldap.LDAPSettings;
 import com.liferay.portal.kernel.service.MembershipRequestLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.security.exportimport.UserExporter;
 import com.liferay.portal.security.ldap.internal.UserImportTransactionThreadLocal;
 
-import java.io.Serializable;
-
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.Callable;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -51,7 +45,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Vilmos Papp
  */
 @Component(immediate = true, service = ModelListener.class)
-public class UserModelListener extends BaseModelListener<User> {
+public class UserModelListener extends BaseLDAPExportListener<User> {
 
 	@Override
 	public void onAfterAddAssociation(
@@ -105,34 +99,7 @@ public class UserModelListener extends BaseModelListener<User> {
 	}
 
 	protected void exportToLDAP(final User user) throws Exception {
-		if (user.isDefaultUser() ||
-			UserImportTransactionThreadLocal.isOriginatesFromImport()) {
-
-			return;
-		}
-
-		Callable<Void> callable = new Callable<Void>() {
-
-			@Override
-			public Void call() throws Exception {
-				ServiceContext serviceContext =
-					ServiceContextThreadLocal.getServiceContext();
-
-				Map<String, Serializable> expandoBridgeAttributes = null;
-
-				if (serviceContext != null) {
-					expandoBridgeAttributes =
-						serviceContext.getExpandoBridgeAttributes();
-				}
-
-				_userExporter.exportUser(user, expandoBridgeAttributes);
-
-				return null;
-			}
-
-		};
-
-		TransactionCommitCallbackUtil.registerCallback(callable);
+		exportToLDAP(user, _userExporter, _ldapSettings);
 	}
 
 	protected void updateMembershipRequestStatus(long userId, long groupId)
@@ -159,6 +126,9 @@ public class UserModelListener extends BaseModelListener<User> {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserModelListener.class);
+
+	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	private LDAPSettings _ldapSettings;
 
 	@Reference
 	private MembershipRequestLocalService _membershipRequestLocalService;

@@ -2,5 +2,9 @@ Bundle-Name: Liferay Portal Verify Extender
 Bundle-SymbolicName: com.liferay.portal.verify.extender
 Bundle-Version: 2.1.6
 Export-Package: com.liferay.portal.verify.extender.marker
+Import-Package:\
+	org.apache.felix.service.command;resolution:=optional,\
+	\
+	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Upgrade and Verify

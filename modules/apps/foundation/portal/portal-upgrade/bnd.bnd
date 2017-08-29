@@ -4,5 +4,9 @@ Bundle-Version: 2.8.1
 Export-Package:\
 	com.liferay.portal.upgrade.registry,\
 	com.liferay.portal.upgrade.release
+Import-Package:\
+	org.apache.felix.service.command;resolution:=optional,\
+	\
+	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Upgrade and Verify

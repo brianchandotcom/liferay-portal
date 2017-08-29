@@ -231,9 +231,6 @@ public class UpgradeClient {
 					if (line.equals("exit") || line.equals("quit")) {
 						break;
 					}
-					else if (line.equals("upgrade:help")) {
-						_printHelp();
-					}
 					else {
 						System.out.println(gogoTelnetClient.send(line));
 					}
@@ -369,29 +366,14 @@ public class UpgradeClient {
 	}
 
 	private void _printHelp() {
-		System.out.println("\nUpgrade commands:");
-		System.out.println("exit or quit - Exit Gogo Shell");
 		System.out.println(
-			"upgrade:check - List upgrades that have failed, have not " +
-				"started, or are still running");
+			"\nEnter help to get available upgrade and verify commands");
+
 		System.out.println(
-			"upgrade:execute {module_name} - Execute upgrade for specified " +
-				"module");
-		System.out.println("upgrade:help - Show upgrade commands");
-		System.out.println("upgrade:list - List registered upgrades");
-		System.out.println(
-			"upgrade:list {module_name} - List upgrade steps required for " +
-				"specified module");
-		System.out.println(
-			"upgrade:list | grep Registered - List registered upgrades and " +
-				"their current version");
-		System.out.println(
-			"upgrade:list | grep Registered | grep steps - List upgrades in " +
-				"progress");
-		System.out.println(
-			"verify:execute {module_name} - Execute verifier for specified " +
-				"module");
-		System.out.println("verify:list - List registered verifiers");
+			"Enter help {command} to get additional information about the " +
+				"command. For example, help upgrade:list");
+
+		System.out.println("Enter exit or quit to exit from DB upgrade client");
 	}
 
 	private Properties _readProperties(File file) {

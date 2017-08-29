@@ -372,32 +372,10 @@ public class MSBFragmentDisplayContext {
 		return new String[] {"create-date", "name"};
 	}
 
-	public boolean hasMSBFragmentCollectionsResults() throws PortalException {
-		SearchContainer searchContainer =
-			getMSBFragmentCollectionsSearchContainer();
-
-		if (searchContainer.getTotal() > 0) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean hasMSBFragmentEntriesResults() throws PortalException {
-		SearchContainer searchContainer =
-			getMSBFragmentEntriesSearchContainer();
-
-		if (searchContainer.getTotal() > 0) {
-			return true;
-		}
-
-		return false;
-	}
-
 	public boolean isDisabledMSBFragmentCollectionsManagementBar()
 		throws PortalException {
 
-		if (hasMSBFragmentCollectionsResults()) {
+		if (_hasMSBFragmentCollectionsResults()) {
 			return false;
 		}
 
@@ -411,7 +389,7 @@ public class MSBFragmentDisplayContext {
 	public boolean isDisabledMSBFragmentEntriesManagementBar()
 		throws PortalException {
 
-		if (hasMSBFragmentEntriesResults()) {
+		if (_hasMSBFragmentEntriesResults()) {
 			return false;
 		}
 
@@ -447,7 +425,7 @@ public class MSBFragmentDisplayContext {
 	}
 
 	public boolean isShowMSBFragmentCollectionsSearch() throws PortalException {
-		if (hasMSBFragmentCollectionsResults()) {
+		if (_hasMSBFragmentCollectionsResults()) {
 			return true;
 		}
 
@@ -459,11 +437,33 @@ public class MSBFragmentDisplayContext {
 	}
 
 	public boolean isShowMSBFragmentEntriesSearch() throws PortalException {
-		if (hasMSBFragmentEntriesResults()) {
+		if (_hasMSBFragmentEntriesResults()) {
 			return true;
 		}
 
 		if (isSearch()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _hasMSBFragmentCollectionsResults() throws PortalException {
+		SearchContainer searchContainer =
+			getMSBFragmentCollectionsSearchContainer();
+
+		if (searchContainer.getTotal() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _hasMSBFragmentEntriesResults() throws PortalException {
+		SearchContainer searchContainer =
+			getMSBFragmentEntriesSearchContainer();
+
+		if (searchContainer.getTotal() > 0) {
 			return true;
 		}
 

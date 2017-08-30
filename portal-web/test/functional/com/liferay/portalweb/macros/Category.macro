@@ -468,6 +468,12 @@
 		</execute>
 	</command>
 
+	<command name="viewPath">
+		<execute function="AssertTextEquals" locator1="Categories#CATEGORY_ENTRY_PATH" value1="${path}">
+			<var name="key_categoryName" value="${categoryName}" />
+		</execute>
+	</command>
+
 	<command name="viewRemoveFilterViaAP">
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />

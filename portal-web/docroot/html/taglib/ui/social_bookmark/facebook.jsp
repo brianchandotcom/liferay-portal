@@ -54,6 +54,6 @@ else if (displayStyle.equals("vertical")) {
 	data-href="<%= url %>"
 	data-layout="<%= facebookDisplayStyle %>"
 	data-size="small"
-	data-show_faces="true"
+	data-show-faces="true"
 >
 </div>

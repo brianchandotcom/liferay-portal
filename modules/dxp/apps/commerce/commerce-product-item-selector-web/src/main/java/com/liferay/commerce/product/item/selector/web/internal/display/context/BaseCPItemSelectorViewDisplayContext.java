@@ -134,19 +134,6 @@ public abstract class BaseCPItemSelectorViewDisplayContext<T> {
 		return _portletURL;
 	}
 
-	public RowChecker getRowChecker() {
-		if (_rowChecker != null) {
-			return _rowChecker;
-		}
-
-		RowChecker rowChecker = new EmptyOnClickRowChecker(
-			liferayPortletResponse);
-
-		_rowChecker = rowChecker;
-
-		return _rowChecker;
-	}
-
 	public long getScopeGroupId() {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -200,6 +187,19 @@ public abstract class BaseCPItemSelectorViewDisplayContext<T> {
 		}
 
 		return displayStyle;
+	}
+
+	protected RowChecker getRowChecker() {
+		if (_rowChecker != null) {
+			return _rowChecker;
+		}
+
+		RowChecker rowChecker = new EmptyOnClickRowChecker(
+			liferayPortletResponse);
+
+		_rowChecker = rowChecker;
+
+		return _rowChecker;
 	}
 
 	protected final CPRequestHelper cpRequestHelper;

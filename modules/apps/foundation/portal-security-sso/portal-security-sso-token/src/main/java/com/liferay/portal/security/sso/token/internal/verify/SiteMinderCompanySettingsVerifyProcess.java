@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.sso.token.constants.LegacyTokenPropsKeys;
 import com.liferay.portal.security.sso.token.constants.TokenConfigurationKeys;
 import com.liferay.portal.security.sso.token.constants.TokenConstants;
@@ -59,28 +58,27 @@ public class SiteMinderCompanySettingsVerifyProcess
 	protected Dictionary<String, String> getPropertyValues(long companyId) {
 		Dictionary<String, String> dictionary = new HashMapDictionary<>();
 
-		boolean siteMinderEnabled = _prefsProps.getBoolean(
+		String enabled = _prefsProps.getString(
 			companyId, LegacyTokenPropsKeys.SITEMINDER_AUTH_ENABLED);
 
-		if (!siteMinderEnabled) {
-			return dictionary;
+		if (enabled != null) {
+			dictionary.put(TokenConfigurationKeys.AUTH_ENABLED, enabled);
 		}
 
-		dictionary.put(
-			TokenConfigurationKeys.AUTH_ENABLED,
-			_prefsProps.getString(
-				companyId, LegacyTokenPropsKeys.SITEMINDER_AUTH_ENABLED,
-				StringPool.FALSE));
-		dictionary.put(
-			TokenConfigurationKeys.IMPORT_FROM_LDAP,
-			_prefsProps.getString(
-				companyId, LegacyTokenPropsKeys.SITEMINDER_IMPORT_FROM_LDAP,
-				StringPool.FALSE));
-		dictionary.put(
-			TokenConfigurationKeys.USER_HEADER,
-			_prefsProps.getString(
-				companyId, LegacyTokenPropsKeys.SITEMINDER_USER_HEADER,
-				"SM_USER"));
+		String importFromLDAP = _prefsProps.getString(
+			companyId, LegacyTokenPropsKeys.SITEMINDER_IMPORT_FROM_LDAP);
+
+		if (importFromLDAP != null) {
+			dictionary.put(
+				TokenConfigurationKeys.IMPORT_FROM_LDAP, importFromLDAP);
+		}
+
+		String userTokenName = _prefsProps.getString(
+			companyId, LegacyTokenPropsKeys.SITEMINDER_USER_HEADER);
+
+		if (userTokenName != null) {
+			dictionary.put(TokenConfigurationKeys.USER_HEADER, userTokenName);
+		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

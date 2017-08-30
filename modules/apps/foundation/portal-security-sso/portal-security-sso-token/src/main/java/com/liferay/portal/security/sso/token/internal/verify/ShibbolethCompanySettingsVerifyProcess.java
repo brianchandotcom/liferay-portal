@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.sso.token.constants.LegacyTokenPropsKeys;
 import com.liferay.portal.security.sso.token.constants.TokenConfigurationKeys;
 import com.liferay.portal.security.sso.token.constants.TokenConstants;
@@ -59,33 +58,35 @@ public class ShibbolethCompanySettingsVerifyProcess
 	protected Dictionary<String, String> getPropertyValues(long companyId) {
 		Dictionary<String, String> dictionary = new HashMapDictionary<>();
 
-		boolean shibbolethEnabled = _prefsProps.getBoolean(
+		String enabled = _prefsProps.getString(
 			companyId, LegacyTokenPropsKeys.SHIBBOLETH_AUTH_ENABLED);
 
-		if (!shibbolethEnabled) {
-			return dictionary;
+		if (enabled != null) {
+			dictionary.put(TokenConfigurationKeys.AUTH_ENABLED, enabled);
 		}
 
-		dictionary.put(
-			TokenConfigurationKeys.AUTH_ENABLED,
-			_prefsProps.getString(
-				companyId, LegacyTokenPropsKeys.SHIBBOLETH_AUTH_ENABLED,
-				StringPool.FALSE));
-		dictionary.put(
-			TokenConfigurationKeys.IMPORT_FROM_LDAP,
-			_prefsProps.getString(
-				companyId, LegacyTokenPropsKeys.SHIBBOLETH_IMPORT_FROM_LDAP,
-				StringPool.FALSE));
-		dictionary.put(
-			TokenConfigurationKeys.LOGOUT_REDIRECT_URL,
-			_prefsProps.getString(
-				companyId, LegacyTokenPropsKeys.SHIBBOLETH_LOGOUT_URL,
-				"/Shibboleth.sso/Logout"));
-		dictionary.put(
-			TokenConfigurationKeys.USER_HEADER,
-			_prefsProps.getString(
-				companyId, LegacyTokenPropsKeys.SHIBBOLETH_USER_HEADER,
-				"SHIBBOLETH_USER_EMAIL"));
+		String importFromLDAP = _prefsProps.getString(
+			companyId, LegacyTokenPropsKeys.SHIBBOLETH_IMPORT_FROM_LDAP);
+
+		if (importFromLDAP != null) {
+			dictionary.put(
+				TokenConfigurationKeys.IMPORT_FROM_LDAP, importFromLDAP);
+		}
+
+		String logoutRedirectURL = _prefsProps.getString(
+			companyId, LegacyTokenPropsKeys.SHIBBOLETH_LOGOUT_URL);
+
+		if (logoutRedirectURL != null) {
+			dictionary.put(
+				TokenConfigurationKeys.LOGOUT_REDIRECT_URL, logoutRedirectURL);
+		}
+
+		String userTokenName = _prefsProps.getString(
+			companyId, LegacyTokenPropsKeys.SHIBBOLETH_USER_HEADER);
+
+		if (userTokenName != null) {
+			dictionary.put(TokenConfigurationKeys.USER_HEADER, userTokenName);
+		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

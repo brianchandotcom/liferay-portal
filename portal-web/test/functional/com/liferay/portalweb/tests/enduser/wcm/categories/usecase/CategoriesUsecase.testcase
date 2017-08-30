@@ -1859,6 +1859,59 @@
 		</execute>
 	</command>
 
+	<command name="ViewFlattenedTreeCategoryNavigationDisplayStyle" priority="3">
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="System Settings" />
+		</execute>
+
+		<execute macro="SystemSettings#editConfiguration">
+			<var name="configurationName" value="Asset Categories Web" />
+		</execute>
+
+		<execute macro="SystemSettings#configureCategoryNavigationDisplayStyle">
+			<var name="displayStyle" value="Flattened Tree" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Categories" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Topic" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Categories" />
+		</execute>
+
+		<execute macro="Subcategory#addCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="subcategoryName" value="Subcategory Name" />
+			<var name="vocabularyName" value="Topic" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Categories" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Topic" />
+		</execute>
+
+		<execute macro="Category#viewPath">
+			<var name="categoryName" value="Category Name" />
+			<var name="path" value="Topic > Category Name" />
+		</execute>
+
+		<execute macro="Category#viewPath">
+			<var name="categoryName" value="Subcategory Name" />
+			<var name="path" value="Topic > Category Name > Subcategory Name" />
+		</execute>
+	</command>
+
 	<command name="ViewNavigation" priority="3">
 		<property name="testray.component.names" value="Categories" />
 

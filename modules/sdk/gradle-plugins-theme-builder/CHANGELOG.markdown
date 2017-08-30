@@ -35,8 +35,15 @@ version 2.0.0.
 `parentFile` property so it's possible to use WAR parent themes from the
 `parentThemes` configuration.
 
+## 2.0.3 - 2017-07-10
+
+### Changed
+- [LPS-73495]: Update the [Liferay Gradle Plugins CSS Builder] dependency to
+version 2.0.1.
+
 [LPS-66396]: https://issues.liferay.com/browse/LPS-66396
 [LPS-69223]: https://issues.liferay.com/browse/LPS-69223
 [LPS-72367]: https://issues.liferay.com/browse/LPS-72367
-[Liferay Frontend Theme Classic]: https://github.com/liferay/liferay-portal/tree/master/modules/apps/foundation/frontend-theme/frontend-theme-classic
+[LPS-73495]: https://issues.liferay.com/browse/LPS-73495
+[Liferay Frontend Theme Classic]: https://github.com/liferay/liferay-portal/tree/master/modules/apps/frontend-theme-classic
 [Liferay Gradle Plugins CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-css-builder

@@ -205,11 +205,11 @@ public class CSSBuilder implements AutoCloseable {
 
 		String basedir = docrootDirName.concat(dirName);
 
-		final String[] fileNamesArray = _getScssFiles(basedir);
+		final String[] scssFiles = _getScssFiles(basedir);
 
-		if (!_isModified(basedir, fileNamesArray)) {
+		if (!_isModified(basedir, scssFiles)) {
 			long oldestSassModifiedTime = _getOldestModifiedTime(
-				basedir, fileNamesArray);
+				basedir, scssFiles);
 
 			final String[] scssFragments = _getScssFragments(basedir);
 
@@ -221,7 +221,7 @@ public class CSSBuilder implements AutoCloseable {
 			}
 		}
 
-		for (String fileName : fileNamesArray) {
+		for (String fileName : scssFiles) {
 			if (fileName.contains("_rtl")) {
 				continue;
 			}
@@ -272,9 +272,9 @@ public class CSSBuilder implements AutoCloseable {
 
 		directoryScanner.scan();
 
-		final String[] fileNamesArray = directoryScanner.getIncludedFiles();
+		final String[] includedFiles = directoryScanner.getIncludedFiles();
 
-		return fileNamesArray;
+		return includedFiles;
 	}
 
 	private final long _getLastModifiedTime(final Path path) {

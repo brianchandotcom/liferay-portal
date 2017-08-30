@@ -85,11 +85,11 @@ public class CSSBuilderTest {
 	}
 
 	@Test
-	public void testCssBuilderWithFileChange() throws Exception {
-		final Path changingImport = Paths.get(
+	public void testCssBuilderWithFragmentChange() throws Exception {
+		final Path fragmentFileToChange = Paths.get(
 			_docrootDirName, "css", "_import_change.scss");
 
-		_changeContentInFile(changingImport, "brown", "khaki");
+		_changeContentInPath(fragmentFileToChange, "brown", "khaki");
 
 		try (final CSSBuilder cssBuilder = new CSSBuilder(
 				_docrootDirName, false, ".sass-cache/",
@@ -98,12 +98,12 @@ public class CSSBuilderTest {
 			cssBuilder.execute(Arrays.asList(new String[] {"/css"}));
 		}
 
-		final String testImportChangeCssPath =
+		final String outputCssFilePath =
 			_docrootDirName + "/css/.sass-cache/test_import_change.css";
 
-		String actualTestImportChangeContent = _read(testImportChangeCssPath);
+		String outputCssFileContent = _read(outputCssFilePath);
 
-		_changeContentInFile(changingImport, "khaki", "brown");
+		_changeContentInPath(fragmentFileToChange, "khaki", "brown");
 
 		try (final CSSBuilder cssBuilder = new CSSBuilder(
 				_docrootDirName, false, ".sass-cache/",
@@ -112,9 +112,9 @@ public class CSSBuilderTest {
 			cssBuilder.execute(Arrays.asList(new String[] {"/css"}));
 		}
 
-		actualTestImportChangeContent = _read(testImportChangeCssPath);
+		outputCssFileContent = _read(outputCssFilePath);
 
-		Assert.assertTrue(actualTestImportChangeContent.contains("brown"));
+		Assert.assertTrue(outputCssFileContent.contains("brown"));
 	}
 
 	@Test
@@ -137,15 +137,15 @@ public class CSSBuilderTest {
 		_testCssBuilder("ruby", _PORTAL_COMMON_CSS_DIR_NAME);
 	}
 
-	private static void _changeContentInFile(
-			Path path, String target, String replacement)
+	private static void _changeContentInPath(
+			Path path, String regex, String replacement)
 		throws Exception {
 
 		final Charset charset = StandardCharsets.UTF_8;
 
 		String content = new String(Files.readAllBytes(path), charset);
 
-		content = content.replaceAll(target, replacement);
+		content = content.replaceAll(regex, replacement);
 
 		Files.write(path, content.getBytes(charset));
 	}

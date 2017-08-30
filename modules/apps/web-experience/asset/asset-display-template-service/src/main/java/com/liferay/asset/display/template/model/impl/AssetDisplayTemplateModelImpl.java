@@ -429,7 +429,15 @@ public class AssetDisplayTemplateModelImpl extends BaseModelImpl<AssetDisplayTem
 	public void setName(String name) {
 		_columnBitmask = -1L;
 
+		if (_originalName == null) {
+			_originalName = _name;
+		}
+
 		_name = name;
+	}
+
+	public String getOriginalName() {
+		return GetterUtil.getString(_originalName);
 	}
 
 	@Override
@@ -611,6 +619,8 @@ public class AssetDisplayTemplateModelImpl extends BaseModelImpl<AssetDisplayTem
 
 		assetDisplayTemplateModelImpl._setModifiedDate = false;
 
+		assetDisplayTemplateModelImpl._originalName = assetDisplayTemplateModelImpl._name;
+
 		assetDisplayTemplateModelImpl._originalClassNameId = assetDisplayTemplateModelImpl._classNameId;
 
 		assetDisplayTemplateModelImpl._setOriginalClassNameId = false;
@@ -778,6 +788,7 @@ public class AssetDisplayTemplateModelImpl extends BaseModelImpl<AssetDisplayTem
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _name;
+	private String _originalName;
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;

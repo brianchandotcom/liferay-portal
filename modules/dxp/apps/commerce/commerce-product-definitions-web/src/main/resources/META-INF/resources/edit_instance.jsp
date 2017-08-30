@@ -60,9 +60,6 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 			markupView="lexicon"
 			showButtons="<%= false %>"
 		/>
-	</div>
-
-	<aui:button-row cssClass="product-instance-button-row">
 
 		<%
 		boolean pending = false;
@@ -70,7 +67,18 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 		if (cpInstance != null) {
 			pending = cpInstance.isPending();
 		}
+		%>
 
+		<c:if test="<%= pending %>">
+			<div class="alert alert-info">
+				<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
+			</div>
+		</c:if>
+	</div>
+
+	<aui:button-row cssClass="product-instance-button-row">
+
+		<%
 		String saveButtonLabel = "save";
 
 		if ((cpInstance == null) || cpInstance.isDraft() || cpInstance.isApproved()) {

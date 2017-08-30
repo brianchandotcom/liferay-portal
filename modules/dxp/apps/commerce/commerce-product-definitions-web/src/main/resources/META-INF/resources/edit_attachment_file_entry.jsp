@@ -88,9 +88,6 @@ renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, addMe
 				markupView="lexicon"
 				showButtons="<%= false %>"
 			/>
-		</div>
-
-		<aui:button-row cssClass="product-definition-button-row">
 
 			<%
 			boolean pending = false;
@@ -98,7 +95,18 @@ renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, addMe
 			if (cpAttachmentFileEntry != null) {
 				pending = cpAttachmentFileEntry.isPending();
 			}
+			%>
 
+			<c:if test="<%= pending %>">
+				<div class="alert alert-info">
+					<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
+				</div>
+			</c:if>
+		</div>
+
+		<aui:button-row cssClass="product-definition-button-row">
+
+			<%
 			String saveButtonLabel = "save";
 
 			if ((cpAttachmentFileEntry == null) || cpAttachmentFileEntry.isDraft() || cpAttachmentFileEntry.isApproved() || cpAttachmentFileEntry.isExpired() || cpAttachmentFileEntry.isScheduled()) {

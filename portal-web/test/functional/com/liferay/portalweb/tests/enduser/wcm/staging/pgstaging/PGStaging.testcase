@@ -295,6 +295,7 @@
 
 		<execute macro="WebContent#viewEditWCViaWCD">
 			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
 		<execute macro="Navigator#openSiteURL">
@@ -340,6 +341,7 @@
 
 		<execute macro="WebContent#viewEditWCViaWCD">
 			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 	</command>
 

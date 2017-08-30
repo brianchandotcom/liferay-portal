@@ -86,6 +86,7 @@
 			</then>
 			<else>
 				<execute macro="WebContentNavigator#gotoEditPGViaWCD">
+					<var name="menuItem" value="${menuItem}" />
 					<var name="webContentTitle" value="${webContentTitle}" />
 				</execute>
 

@@ -239,7 +239,9 @@
 
 		<execute function="Type" locator1="SitePages#JAVASCRIPT_TEXTAREA" value1="${javaScript}" />
 
-		<execute macro="PortletEntry#save" />
+		<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
+
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="addPageCategory">

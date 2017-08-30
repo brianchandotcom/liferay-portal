@@ -9,7 +9,7 @@ AUI.add(
 						'<span class="icon-monospaced">' +
 							'<svg class="lexicon-icon lexicon-icon-moon" focusable="false" role="img">' +
 								'<use data-href="{pathThemeImages}/lexicon/icons.svg#moon" />' +
-								'<title>{iconMoonTooltip}</title>' + 
+								'<title>{iconMoonTooltip}</title>' +
 							'</svg>' +
 						'</span>' +
 					'</button>' +

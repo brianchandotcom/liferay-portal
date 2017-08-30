@@ -45,7 +45,7 @@ public class KaleoProcessLocalServiceTest {
 		int initialCount =
 			KaleoProcessLocalServiceUtil.getKaleoProcessesCount();
 
-		KaleoProcessTestUtil.addKaleoProcess(_CLASS_NAME_KALEO_PROCESS);
+		KaleoProcessTestUtil.addKaleoProcess(KaleoProcess.class.getName());
 
 		int actualCount = KaleoProcessLocalServiceUtil.getKaleoProcessesCount();
 
@@ -58,17 +58,14 @@ public class KaleoProcessLocalServiceTest {
 			KaleoProcessLocalServiceUtil.getKaleoProcessesCount();
 
 		KaleoProcess kaleoProcess = KaleoProcessTestUtil.addKaleoProcess(
-			_CLASS_NAME_KALEO_PROCESS);
+			KaleoProcess.class.getName());
 
 		KaleoProcessTestUtil.updateKaleoProcess(
-			kaleoProcess, _CLASS_NAME_KALEO_PROCESS);
+			kaleoProcess, KaleoProcess.class.getName());
 
 		int actualCount = KaleoProcessLocalServiceUtil.getKaleoProcessesCount();
 
 		Assert.assertEquals(initialCount + 1, actualCount);
 	}
-
-	private static final String _CLASS_NAME_KALEO_PROCESS =
-		KaleoProcess.class.getName();
 
 }

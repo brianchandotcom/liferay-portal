@@ -17,8 +17,8 @@ package com.liferay.asset.display.template.service.impl;
 import com.liferay.asset.display.template.model.AssetDisplayTemplate;
 import com.liferay.asset.display.template.service.base.AssetDisplayTemplateLocalServiceBaseImpl;
 import com.liferay.asset.display.template.util.comparator.AssetDisplayTemplateCreateDateComparator;
-import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
-import com.liferay.dynamic.data.mapping.kernel.DDMTemplateManager;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.spring.extender.service.ServiceReference;
-import com.liferay.portlet.display.template.PortletDisplayTemplate;
 
 import java.util.Collections;
 import java.util.Date;
@@ -69,20 +68,16 @@ public class AssetDisplayTemplateLocalServiceImpl
 
 		long assetDisplayTemplateClassNameId = _portal.getClassNameId(
 			AssetDisplayTemplate.class);
-		long resourceClassNameId = _portal.getClassNameId(
-			PortletDisplayTemplate.class);
 		Map<Locale, String> nameMap = Collections.singletonMap(
 			LocaleUtil.getDefault(), name);
 
-		DDMTemplate ddmTemplate = _ddmTemplateManager.addTemplate(
+		DDMTemplate ddmTemplate = _ddmTemplateLocalService.addTemplate(
 			userId, groupId, assetDisplayTemplateClassNameId,
 			assetDisplayTemplate.getAssetDisplayTemplateId(),
-			resourceClassNameId,
-			String.valueOf(assetDisplayTemplate.getAssetDisplayTemplateId()),
-			nameMap, Collections.emptyMap(),
-			DDMTemplateManager.TEMPLATE_TYPE_DISPLAY,
-			DDMTemplateManager.TEMPLATE_MODE_CREATE, language, scriptContent,
-			true, false, null, null, serviceContext);
+			assetDisplayTemplateClassNameId, nameMap, Collections.emptyMap(),
+			DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
+			DDMTemplateConstants.TEMPLATE_MODE_CREATE, language, scriptContent,
+			serviceContext);
 
 		assetDisplayTemplate.setDDMTemplateId(ddmTemplate.getTemplateId());
 
@@ -158,8 +153,29 @@ public class AssetDisplayTemplateLocalServiceImpl
 	}
 
 	@Override
+	public List<AssetDisplayTemplate> getAssetDisplayTemplates(
+		long groupId, String name) {
+
+		return assetDisplayTemplatePersistence.findByG_LikeN(groupId, name);
+	}
+
+	@Override
+	public List<AssetDisplayTemplate> getAssetDisplayTemplates(
+		long groupId, String name, int start, int end,
+		OrderByComparator<AssetDisplayTemplate> orderByComparator) {
+
+		return assetDisplayTemplatePersistence.findByG_LikeN(
+			groupId, name, start, end, orderByComparator);
+	}
+
+	@Override
 	public int getAssetDisplayTemplatesCount(long groupId) {
 		return assetDisplayTemplatePersistence.countByGroupId(groupId);
+	}
+
+	@Override
+	public int getAssetDisplayTemplatesCount(long groupId, String name) {
+		return assetDisplayTemplatePersistence.countByG_LikeN(groupId, name);
 	}
 
 	@Override
@@ -184,7 +200,7 @@ public class AssetDisplayTemplateLocalServiceImpl
 
 		// Dynamic data mapping template
 
-		DDMTemplate ddmTemplate = _ddmTemplateManager.getTemplate(
+		DDMTemplate ddmTemplate = _ddmTemplateLocalService.getTemplate(
 			assetDisplayTemplate.getDDMTemplateId());
 
 		_ddmTemplateLocalService.updateTemplate(
@@ -200,9 +216,6 @@ public class AssetDisplayTemplateLocalServiceImpl
 
 	@ServiceReference(type = DDMTemplateLocalService.class)
 	private DDMTemplateLocalService _ddmTemplateLocalService;
-
-	@ServiceReference(type = DDMTemplateManager.class)
-	private DDMTemplateManager _ddmTemplateManager;
 
 	@ServiceReference(type = Portal.class)
 	private Portal _portal;

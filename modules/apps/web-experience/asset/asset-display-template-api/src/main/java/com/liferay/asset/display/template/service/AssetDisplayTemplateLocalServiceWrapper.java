@@ -258,6 +258,21 @@ public class AssetDisplayTemplateLocalServiceWrapper
 			start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.liferay.asset.display.template.model.AssetDisplayTemplate> getAssetDisplayTemplates(
+		long groupId, java.lang.String name) {
+		return _assetDisplayTemplateLocalService.getAssetDisplayTemplates(groupId,
+			name);
+	}
+
+	@Override
+	public java.util.List<com.liferay.asset.display.template.model.AssetDisplayTemplate> getAssetDisplayTemplates(
+		long groupId, java.lang.String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.display.template.model.AssetDisplayTemplate> orderByComparator) {
+		return _assetDisplayTemplateLocalService.getAssetDisplayTemplates(groupId,
+			name, start, end, orderByComparator);
+	}
+
 	/**
 	* Returns the number of asset display templates.
 	*
@@ -271,6 +286,12 @@ public class AssetDisplayTemplateLocalServiceWrapper
 	@Override
 	public int getAssetDisplayTemplatesCount(long groupId) {
 		return _assetDisplayTemplateLocalService.getAssetDisplayTemplatesCount(groupId);
+	}
+
+	@Override
+	public int getAssetDisplayTemplatesCount(long groupId, java.lang.String name) {
+		return _assetDisplayTemplateLocalService.getAssetDisplayTemplatesCount(groupId,
+			name);
 	}
 
 	@Override

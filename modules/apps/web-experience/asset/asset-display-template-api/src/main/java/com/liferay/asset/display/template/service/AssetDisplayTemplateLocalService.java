@@ -219,6 +219,15 @@ public interface AssetDisplayTemplateLocalService extends BaseLocalService,
 		int start, int end,
 		OrderByComparator<AssetDisplayTemplate> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetDisplayTemplate> getAssetDisplayTemplates(long groupId,
+		java.lang.String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetDisplayTemplate> getAssetDisplayTemplates(long groupId,
+		java.lang.String name, int start, int end,
+		OrderByComparator<AssetDisplayTemplate> orderByComparator);
+
 	/**
 	* Returns the number of asset display templates.
 	*
@@ -229,6 +238,9 @@ public interface AssetDisplayTemplateLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAssetDisplayTemplatesCount(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAssetDisplayTemplatesCount(long groupId, java.lang.String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

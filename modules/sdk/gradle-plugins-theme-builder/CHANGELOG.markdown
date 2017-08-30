@@ -41,9 +41,16 @@ version 2.0.0.
 - [LPS-73495]: Update the [Liferay Gradle Plugins CSS Builder] dependency to
 version 2.0.1.
 
+## 2.0.4 - *(Unreleased)*
+
+### Changed
+- [LPS-74315]: Update the [Liferay Gradle Plugins CSS Builder] dependency to
+version 2.1.2.
+
 [LPS-66396]: https://issues.liferay.com/browse/LPS-66396
 [LPS-69223]: https://issues.liferay.com/browse/LPS-69223
 [LPS-72367]: https://issues.liferay.com/browse/LPS-72367
 [LPS-73495]: https://issues.liferay.com/browse/LPS-73495
+[LPS-74315]: https://issues.liferay.com/browse/LPS-74315
 [Liferay Frontend Theme Classic]: https://github.com/liferay/liferay-portal/tree/master/modules/apps/frontend-theme-classic
 [Liferay Gradle Plugins CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-css-builder

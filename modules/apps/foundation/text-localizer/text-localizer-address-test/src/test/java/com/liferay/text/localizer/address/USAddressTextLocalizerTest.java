@@ -48,7 +48,7 @@ public class USAddressTextLocalizerTest {
 		_setZip(_address);
 
 		Assert.assertEquals(
-			_constructExpectedAddress(
+			_concat(
 				_STREET_1, StringPool.NEW_LINE, _STREET_2, StringPool.NEW_LINE,
 				_STREET_3, StringPool.NEW_LINE, _CITY,
 				StringPool.COMMA_AND_SPACE, _REGION_NAME, StringPool.SPACE,
@@ -61,8 +61,7 @@ public class USAddressTextLocalizerTest {
 		_setCountry(_address);
 
 		Assert.assertEquals(
-			_constructExpectedAddress(_COUNTRY_NAME),
-			_localizer.format(_address));
+			_concat(_COUNTRY_NAME), _localizer.format(_address));
 	}
 
 	@Test
@@ -71,8 +70,7 @@ public class USAddressTextLocalizerTest {
 		_setRegion(_address);
 
 		Assert.assertEquals(
-			_constructExpectedAddress(
-				_CITY, StringPool.COMMA_AND_SPACE, _REGION_NAME),
+			_concat(_CITY, StringPool.COMMA_AND_SPACE, _REGION_NAME),
 			_localizer.format(_address));
 	}
 
@@ -83,7 +81,7 @@ public class USAddressTextLocalizerTest {
 		_setZip(_address);
 
 		Assert.assertEquals(
-			_constructExpectedAddress(
+			_concat(
 				_CITY, StringPool.COMMA_AND_SPACE, _REGION_NAME,
 				StringPool.SPACE, _ZIP),
 			_localizer.format(_address));
@@ -95,7 +93,7 @@ public class USAddressTextLocalizerTest {
 		_setZip(_address);
 
 		Assert.assertEquals(
-			_constructExpectedAddress(_CITY, StringPool.COMMA_AND_SPACE, _ZIP),
+			_concat(_CITY, StringPool.COMMA_AND_SPACE, _ZIP),
 			_localizer.format(_address));
 	}
 
@@ -103,25 +101,21 @@ public class USAddressTextLocalizerTest {
 	public void testRegionLineWithOnlyCity() {
 		_setCity(_address);
 
-		Assert.assertEquals(
-			_constructExpectedAddress(_CITY), _localizer.format(_address));
+		Assert.assertEquals(_concat(_CITY), _localizer.format(_address));
 	}
 
 	@Test
 	public void testRegionLineWithOnlyRegionName() {
 		_setRegion(_address);
 
-		Assert.assertEquals(
-			_constructExpectedAddress(_REGION_NAME),
-			_localizer.format(_address));
+		Assert.assertEquals(_concat(_REGION_NAME), _localizer.format(_address));
 	}
 
 	@Test
 	public void testRegionLineWithOnlyZip() {
 		_setZip(_address);
 
-		Assert.assertEquals(
-			_constructExpectedAddress(_ZIP), _localizer.format(_address));
+		Assert.assertEquals(_concat(_ZIP), _localizer.format(_address));
 	}
 
 	@Test
@@ -130,7 +124,7 @@ public class USAddressTextLocalizerTest {
 		_setZip(_address);
 
 		Assert.assertEquals(
-			_constructExpectedAddress(_REGION_NAME, StringPool.SPACE, _ZIP),
+			_concat(_REGION_NAME, StringPool.SPACE, _ZIP),
 			_localizer.format(_address));
 	}
 
@@ -140,7 +134,7 @@ public class USAddressTextLocalizerTest {
 		_setStreets(_address);
 
 		Assert.assertEquals(
-			_constructExpectedAddress(
+			_concat(
 				_STREET_1, StringPool.NEW_LINE, _STREET_2, StringPool.NEW_LINE,
 				_STREET_3, StringPool.NEW_LINE, _COUNTRY_NAME),
 			_localizer.format(_address));
@@ -151,7 +145,7 @@ public class USAddressTextLocalizerTest {
 		_setStreets(_address);
 
 		Assert.assertEquals(
-			_constructExpectedAddress(
+			_concat(
 				_STREET_1, StringPool.NEW_LINE, _STREET_2, StringPool.NEW_LINE,
 				_STREET_3),
 			_localizer.format(_address));
@@ -159,46 +153,46 @@ public class USAddressTextLocalizerTest {
 
 	@Test
 	public void testWillEscapeFields() {
-		String xssFieldValue =
+		String unescapedValue =
 			"<script type=\"text/javascript\">alert(\"Hello World\");</script>";
 
 		Mockito.doReturn(
-			xssFieldValue
+			unescapedValue
 		).when(
 			_address
 		).getCity();
 
 		Mockito.doReturn(
-			xssFieldValue
+			unescapedValue
 		).when(
 			_address
 		).getStreet1();
 
 		Mockito.doReturn(
-			xssFieldValue
+			unescapedValue
 		).when(
 			_address
 		).getStreet2();
 
 		Mockito.doReturn(
-			xssFieldValue
+			unescapedValue
 		).when(
 			_address
 		).getStreet3();
 
 		Mockito.doReturn(
-			xssFieldValue
+			unescapedValue
 		).when(
 			_address
 		).getZip();
 
-		_setCountry(_address, xssFieldValue);
-		_setRegion(_address, xssFieldValue);
+		_setCountry(_address, unescapedValue);
+		_setRegion(_address, unescapedValue);
 
-		String escapedValue = _html.escape(xssFieldValue);
+		String escapedValue = _html.escape(unescapedValue);
 
 		Assert.assertEquals(
-			_constructExpectedAddress(
+			_concat(
 				escapedValue, StringPool.NEW_LINE, escapedValue,
 				StringPool.NEW_LINE, escapedValue, StringPool.NEW_LINE,
 				escapedValue, StringPool.COMMA_AND_SPACE, escapedValue,
@@ -207,8 +201,8 @@ public class USAddressTextLocalizerTest {
 			_localizer.format(_address));
 	}
 
-	private String _constructExpectedAddress(String... elements) {
-		StringBundler sb = new StringBundler(elements);
+	private String _concat(String... strings) {
+		StringBundler sb = new StringBundler(strings);
 
 		return sb.toString();
 	}

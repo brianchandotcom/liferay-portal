@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"liferay-module-config-generator": "^1.1.10",
 		"metal": "^2.13.2",
 		"metal-dom": "^2.13.2",
 		"metal-state": "^2.13.2"

@@ -1,4 +1,4 @@
-/* global sinon, assert */
+/* global assert */
 
 'use strict';
 
@@ -28,38 +28,36 @@ describe('GeoJSONBase', () => {
 	beforeEach(() => {
 		geoJSONBase = new GeoJSONBase();
 		geoJSONChild = new GeoJSONChild();
-		sinon.spy(geoJSONChild, 'emit');
-		sinon.spy(geoJSONChild, '_getNativeFeatures');
-		sinon.spy(geoJSONChild, '_wrapNativeFeature');
+		jest.spyOn(geoJSONChild, 'emit');
+		jest.spyOn(geoJSONChild, '_getNativeFeatures');
+		jest.spyOn(geoJSONChild, '_wrapNativeFeature');
 	});
 
 	describe('addData()', () => {
 		it('should apply _getNativeFeatures() to the given parameter', () => {
 			geoJSONChild.addData('some data to be parsed');
-			assert(geoJSONChild._getNativeFeatures.calledOnce);
-			assert(
-				geoJSONChild._getNativeFeatures.calledWith('some data to be parsed')
-			);
+			expect(geoJSONChild._getNativeFeatures).toHaveBeenCalledTimes(1);
+			expect(geoJSONChild._getNativeFeatures).toHaveBeenCalledWith('some data to be parsed');
 		});
 
 		it('should emit a featuresAdded event after adding data', () => {
 			geoJSONChild.addData('more data');
-			assert(geoJSONChild.emit.calledOnce);
-			assert.equal(geoJSONChild.emit.firstCall.args[0], 'featuresAdded');
+			expect(geoJSONChild.emit).toHaveBeenCalledTimes(1);
+			expect(geoJSONChild.emit.mock.calls[0][0]).toBe('featuresAdded');
 		});
 
 		it('should not emit a featuresAdded event with no features', () => {
 			geoJSONChild.addData();
-			assert(geoJSONChild.emit.notCalled);
+			expect(geoJSONChild.emit).not.toHaveBeenCalled();
 		});
 
 		it('should wrap every feature with _wrapNativeFeature()', () => {
 			geoJSONChild.addData('even more stuff');
-			assert(geoJSONChild.emit.calledOnce);
-			const eventData = geoJSONChild.emit.firstCall.args[1];
+			expect(geoJSONChild.emit).toHaveBeenCalledTimes(1);
+			const eventData = geoJSONChild.emit.mock.calls[0][1];
 			eventData.features.forEach((wrappedFeature, index) => {
-				assert(wrappedFeature.wrapped);
-				assert.equal(wrappedFeature.feature, features[index]);
+				expect(wrappedFeature.wrapped);
+				expect(wrappedFeature.feature).toBe(features[index]);
 			});
 		});
 	});
@@ -67,15 +65,15 @@ describe('GeoJSONBase', () => {
 	describe('_handleFeatureClicked()', () => {
 		it('should emit a featureClick event', () => {
 			geoJSONChild._handleFeatureClicked();
-			assert(geoJSONChild.emit.calledOnce);
-			assert(geoJSONChild.emit.firstCall.args[0], 'featureClick');
+			expect(geoJSONChild.emit).toHaveBeenCalledTimes(1);
+			expect(geoJSONChild.emit.mock.calls[0][0], 'featureClick');
 		});
 
 		it('should wrap the given feature with _wrapNativeFeature()', () => {
 			geoJSONChild._handleFeatureClicked('Nice feature baby');
-			assert(geoJSONChild.emit.calledOnce);
-			const eventData = geoJSONChild.emit.firstCall.args[1];
-			assert.deepEqual(eventData.feature, {
+			expect(geoJSONChild.emit).toHaveBeenCalledTimes(1);
+			const eventData = geoJSONChild.emit.mock.calls[0][1];
+			expect(eventData.feature).toEqual({
 				feature: 'Nice feature baby',
 				wrapped: true,
 			});
@@ -84,13 +82,17 @@ describe('GeoJSONBase', () => {
 
 	describe('_getNativeFeatures()', () => {
 		it('should throw a not implemented error', () => {
-			assert.throw(() => geoJSONBase._getNativeFeatures());
+			expect(() => {
+				geoJSONBase._getNativeFeatures();
+			}).toThrow();
 		});
 	});
 
 	describe('_wrapNativeFeature()', () => {
 		it('should throw a not implemented error', () => {
-			assert.throw(() => geoJSONBase._wrapNativeFeature());
+			expect(() => {
+				geoJSONBase._wrapNativeFeature();
+			}).toThrow();
 		});
 	});
 });

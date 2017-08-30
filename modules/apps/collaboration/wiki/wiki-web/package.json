@@ -4,8 +4,6 @@
 		"metal-events": "^2.5.0"
 	},
 	"devDependencies": {
-		"gulp": "^3.9.1",
-		"gulp-metal": "^1.9.10",
 		"liferay-module-config-generator": "^1.2.1",
 		"metal-cli": "^4.2.0"
 	},

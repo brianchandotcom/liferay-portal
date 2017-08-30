@@ -24,23 +24,19 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.social.BaseSocialActivityManager;
-import com.liferay.portal.kernel.social.SocialActivityManager;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.service.SocialActivityLocalService;
 
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
+ * @deprecated As of 1.3.0, with no direct replacement
  */
-@Component(
-	property = "model.class.name=com.liferay.message.boards.kernel.model.MBMessage",
-	service = SocialActivityManager.class
-)
+@Deprecated
 public class MBMessageSocialActivityManager
 	extends BaseSocialActivityManager<MBMessage> {
 

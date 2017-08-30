@@ -138,14 +138,14 @@ public class CSSBuilderTest {
 	}
 
 	private static void _changeContentInPath(
-			Path path, String regex, String replacement)
+			Path path, String s, String replacement)
 		throws Exception {
 
 		Charset charset = StandardCharsets.UTF_8;
 
 		String content = new String(Files.readAllBytes(path), charset);
 
-		content = content.replaceAll(regex, replacement);
+		content = content.replace(s, replacement);
 
 		Files.write(path, content.getBytes(charset));
 	}

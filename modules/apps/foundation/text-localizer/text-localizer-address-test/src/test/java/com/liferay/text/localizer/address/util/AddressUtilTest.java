@@ -48,7 +48,7 @@ public class AddressUtilTest {
 	}
 
 	@Test
-	public void testGetCountryNameOptionalEmptyWithNoCountrySet() {
+	public void testGetCountryNameOptionalEmptyWithNoCountry() {
 		Optional<String> countryNameOptional =
 			AddressUtil.getCountryNameOptional(_address);
 
@@ -118,7 +118,7 @@ public class AddressUtilTest {
 	}
 
 	@Test
-	public void testGetRegionNameOptionalEmptyWithNoRegionSet() {
+	public void testGetRegionNameOptionalEmptyWithNoRegion() {
 		Optional<String> regionNameOptional = AddressUtil.getRegionNameOptional(
 			_address);
 

@@ -36,6 +36,7 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -274,7 +275,9 @@ public class CSSBuilder implements AutoCloseable {
 
 	private long _getLastModifiedTime(Path path) {
 		try {
-			return Files.getLastModifiedTime(path).toMillis();
+			FileTime fileTime = Files.getLastModifiedTime(path);
+
+			return fileTime.toMillis();
 		}
 		catch (IOException ioe) {
 			return -1;

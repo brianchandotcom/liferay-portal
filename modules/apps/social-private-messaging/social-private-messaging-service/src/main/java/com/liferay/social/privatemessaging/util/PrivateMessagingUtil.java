@@ -125,7 +125,9 @@ public class PrivateMessagingUtil {
 
 		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
 
-		if (indexer.isIndexerEnabled() && _USERS_SEARCH_WITH_INDEX) {
+		if (indexer.isIndexerEnabled() && _USERS_SEARCH_WITH_INDEX &&
+			type.equals("all")) {
+
 			Sort sort = SortFactoryUtil.getSort(User.class, "firstName", "asc");
 
 			BaseModelSearchResult<User> baseModelSearchResult =

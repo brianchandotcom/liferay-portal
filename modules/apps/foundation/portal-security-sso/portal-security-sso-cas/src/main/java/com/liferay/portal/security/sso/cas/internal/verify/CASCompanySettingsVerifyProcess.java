@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.sso.cas.constants.CASConfigurationKeys;
 import com.liferay.portal.security.sso.cas.constants.CASConstants;
 import com.liferay.portal.security.sso.cas.constants.LegacyCASPropsKeys;
@@ -59,51 +58,73 @@ public class CASCompanySettingsVerifyProcess
 	protected Dictionary<String, String> getPropertyValues(long companyId) {
 		Dictionary<String, String> dictionary = new HashMapDictionary<>();
 
-		dictionary.put(
-			CASConfigurationKeys.AUTH_ENABLED,
-			_prefsProps.getString(
-				companyId, LegacyCASPropsKeys.CAS_AUTH_ENABLED,
-				StringPool.FALSE));
-		dictionary.put(
-			CASConfigurationKeys.IMPORT_FROM_LDAP,
-			_prefsProps.getString(
-				companyId, LegacyCASPropsKeys.CAS_IMPORT_FROM_LDAP,
-				StringPool.FALSE));
-		dictionary.put(
-			CASConfigurationKeys.LOGIN_URL,
-			_prefsProps.getString(
-				companyId, LegacyCASPropsKeys.CAS_LOGIN_URL,
-				"https://localhost:8443/cas-web/login"));
-		dictionary.put(
-			CASConfigurationKeys.LOGOUT_ON_SESSION_EXPIRATION,
-			_prefsProps.getString(
-				companyId, LegacyCASPropsKeys.CAS_LOGOUT_ON_SESSION_EXPIRATION,
-				StringPool.FALSE));
-		dictionary.put(
-			CASConfigurationKeys.LOGOUT_URL,
-			_prefsProps.getString(
-				companyId, LegacyCASPropsKeys.CAS_LOGOUT_URL,
-				"https://localhost:8443/cas-web/logout"));
-		dictionary.put(
-			CASConfigurationKeys.NO_SUCH_USER_REDIRECT_URL,
-			_prefsProps.getString(
-				companyId, LegacyCASPropsKeys.CAS_NO_SUCH_USER_REDIRECT_URL,
-				"http://localhost:8080"));
-		dictionary.put(
-			CASConfigurationKeys.SERVER_NAME,
-			_prefsProps.getString(
-				companyId, LegacyCASPropsKeys.CAS_SERVER_NAME,
-				"https://localhost:8080"));
-		dictionary.put(
-			CASConfigurationKeys.SERVER_URL,
-			_prefsProps.getString(
-				companyId, LegacyCASPropsKeys.CAS_SERVER_URL,
-				"https://localhost:8443/cas-web/"));
-		dictionary.put(
-			CASConfigurationKeys.SERVICE_URL,
-			_prefsProps.getString(
-				companyId, LegacyCASPropsKeys.CAS_SERVICE_URL,
-				"https://localhost:8080"));
+		String enabled = _prefsProps.getString(
+			companyId, LegacyCASPropsKeys.CAS_AUTH_ENABLED);
+
+		if (enabled != null) {
+			dictionary.put(CASConfigurationKeys.AUTH_ENABLED, enabled);
+		}
+
+		String importFromLDAP = _prefsProps.getString(
+			companyId, LegacyCASPropsKeys.CAS_IMPORT_FROM_LDAP);
+
+		if (importFromLDAP != null) {
+			dictionary.put(
+				CASConfigurationKeys.IMPORT_FROM_LDAP, importFromLDAP);
+		}
+
+		String loginURL = _prefsProps.getString(
+			companyId, LegacyCASPropsKeys.CAS_LOGIN_URL);
+
+		if (loginURL != null) {
+			dictionary.put(CASConfigurationKeys.LOGIN_URL, loginURL);
+		}
+
+		String logoutOnSessionExpiration = _prefsProps.getString(
+			companyId, LegacyCASPropsKeys.CAS_LOGOUT_ON_SESSION_EXPIRATION);
+
+		if (logoutOnSessionExpiration != null) {
+			dictionary.put(
+				CASConfigurationKeys.LOGOUT_ON_SESSION_EXPIRATION,
+				logoutOnSessionExpiration);
+		}
+
+		String logoutURL = _prefsProps.getString(
+			companyId, LegacyCASPropsKeys.CAS_LOGOUT_URL);
+
+		if (logoutURL != null) {
+			dictionary.put(CASConfigurationKeys.LOGOUT_URL, logoutURL);
+		}
+
+		String noSuchUserRedirectURL = _prefsProps.getString(
+			companyId, LegacyCASPropsKeys.CAS_NO_SUCH_USER_REDIRECT_URL);
+
+		if (noSuchUserRedirectURL != null) {
+			dictionary.put(
+				CASConfigurationKeys.NO_SUCH_USER_REDIRECT_URL,
+				noSuchUserRedirectURL);
+		}
+
+		String serverName = _prefsProps.getString(
+			companyId, LegacyCASPropsKeys.CAS_SERVER_NAME);
+
+		if (serverName != null) {
+			dictionary.put(CASConfigurationKeys.SERVER_NAME, serverName);
+		}
+
+		String serverURL = _prefsProps.getString(
+			companyId, LegacyCASPropsKeys.CAS_SERVER_URL);
+
+		if (serverURL != null) {
+			dictionary.put(CASConfigurationKeys.SERVER_URL, serverURL);
+		}
+
+		String serviceURL = _prefsProps.getString(
+			companyId, LegacyCASPropsKeys.CAS_SERVICE_URL);
+
+		if (serviceURL != null) {
+			dictionary.put(CASConfigurationKeys.SERVICE_URL, serviceURL);
+		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

@@ -60,8 +60,6 @@ public class AddressTextLocalizerUtilTest {
 		_user = UserTestUtil.addUser();
 
 		_address = _addAddress(_user);
-
-		_serviceRegistration = null;
 	}
 
 	@After

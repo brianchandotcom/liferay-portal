@@ -65,6 +65,13 @@ public class USAddressTextLocalizerTest {
 	}
 
 	@Test
+	public void testRegionLineWithCity() {
+		_setCity(_address);
+
+		Assert.assertEquals(_concat(_CITY), _localizer.format(_address));
+	}
+
+	@Test
 	public void testRegionLineWithCityAndRegionName() {
 		_setCity(_address);
 		_setRegion(_address);
@@ -98,24 +105,10 @@ public class USAddressTextLocalizerTest {
 	}
 
 	@Test
-	public void testRegionLineWithOnlyCity() {
-		_setCity(_address);
-
-		Assert.assertEquals(_concat(_CITY), _localizer.format(_address));
-	}
-
-	@Test
-	public void testRegionLineWithOnlyRegionName() {
+	public void testRegionLineWithRegionName() {
 		_setRegion(_address);
 
 		Assert.assertEquals(_concat(_REGION_NAME), _localizer.format(_address));
-	}
-
-	@Test
-	public void testRegionLineWithOnlyZip() {
-		_setZip(_address);
-
-		Assert.assertEquals(_concat(_ZIP), _localizer.format(_address));
 	}
 
 	@Test
@@ -126,6 +119,13 @@ public class USAddressTextLocalizerTest {
 		Assert.assertEquals(
 			_concat(_REGION_NAME, StringPool.SPACE, _ZIP),
 			_localizer.format(_address));
+	}
+
+	@Test
+	public void testRegionLineWithZip() {
+		_setZip(_address);
+
+		Assert.assertEquals(_concat(_ZIP), _localizer.format(_address));
 	}
 
 	@Test

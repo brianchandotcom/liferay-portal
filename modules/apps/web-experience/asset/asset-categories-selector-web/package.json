@@ -7,7 +7,7 @@
 	},
 	"devDependencies": {
 		"liferay-module-config-generator": "^1.2.1",
-		"metal-cli": "^4.1.2"
+		"metal-cli": "^4.2.0"
 	},
 	"name": "asset-categories-selector-web",
 	"version": "1.0.0"

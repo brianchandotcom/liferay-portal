@@ -166,7 +166,7 @@ public abstract class BaseSocialActivityInterpreter
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 		SocialActivityFeedEntry socialActivityFeedEntry = doInterpret(
-			activity, themeDisplay);
+			activity, serviceContext);
 
 		if (socialActivityFeedEntry !=
 				_deprecatedMarkerSocialActivityFeedEntry) {

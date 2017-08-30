@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -54,6 +55,18 @@ public class DLFileEntryActivityInterpreter
 	@Override
 	public String[] getClassNames() {
 		return _CLASS_NAMES;
+	}
+
+	@Override
+	protected String addNoSuchEntryRedirect(
+			String url, String className, long classPK,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		String viewEntryURL = super.getViewEntryURL(
+			className, classPK, serviceContext);
+
+		return _http.setParameter(url, "noSuchEntryRedirect", viewEntryURL);
 	}
 
 	@Override
@@ -203,6 +216,14 @@ public class DLFileEntryActivityInterpreter
 	}
 
 	@Override
+	protected String getViewEntryURL(
+			String className, long classPK, ServiceContext serviceContext)
+		throws Exception {
+
+		return StringPool.BLANK;
+	}
+
+	@Override
 	protected boolean hasPermissions(
 			PermissionChecker permissionChecker, SocialActivity activity,
 			String actionId, ServiceContext serviceContext)
@@ -232,6 +253,10 @@ public class DLFileEntryActivityInterpreter
 	private static final String[] _CLASS_NAMES = {DLFileEntry.class.getName()};
 
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private Http _http;
+
 	private ResourceBundleLoader _resourceBundleLoader;
 
 }

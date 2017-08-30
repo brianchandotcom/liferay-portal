@@ -19,7 +19,6 @@ import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.message.boards.kernel.service.MBThreadLocalService;
-import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
@@ -32,18 +31,14 @@ import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.social.kernel.model.BaseSocialActivityInterpreter;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivityConstants;
-import com.liferay.social.kernel.model.SocialActivityInterpreter;
 
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Zsolt Berentey
+ * @deprecated As of 1.3.0, with no direct replacement
  */
-@Component(
-	property = {"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS},
-	service = SocialActivityInterpreter.class
-)
+@Deprecated
 public class MBThreadActivityInterpreter extends BaseSocialActivityInterpreter {
 
 	@Override

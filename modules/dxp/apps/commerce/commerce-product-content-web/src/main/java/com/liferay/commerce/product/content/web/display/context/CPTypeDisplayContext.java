@@ -17,6 +17,7 @@ package com.liferay.commerce.product.content.web.display.context;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.content.web.configuration.CPContentConfigurationHelper;
 import com.liferay.commerce.product.content.web.configuration.CPContentPortletInstanceConfiguration;
+import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
@@ -25,6 +26,7 @@ import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -37,6 +39,7 @@ import java.util.List;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -64,6 +67,11 @@ public class CPTypeDisplayContext {
 				WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		CPRequestHelper cpRequestHelper = new CPRequestHelper(
+			httpServletRequest);
+
+		liferayPortletResponse = cpRequestHelper.getLiferayPortletResponse();
 
 		cpContentPortletInstanceConfiguration =
 			portletDisplay.getPortletInstanceConfiguration(
@@ -123,6 +131,21 @@ public class CPTypeDisplayContext {
 			fileEntry, fileEntry.getFileVersion(), themeDisplay, "");
 	}
 
+	public ResourceURL getViewAttachmentURL() {
+		ResourceURL resourceURL = liferayPortletResponse.createResourceURL();
+
+		CPDefinition cpDefinition = getCPDefinition();
+
+		if (cpDefinition != null) {
+			resourceURL.setParameter(
+				"cpDefinitionId", String.valueOf(getCPDefinitionId()));
+		}
+
+		resourceURL.setResourceID("viewCPAttachments");
+
+		return resourceURL;
+	}
+
 	public String renderOptions(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException {
@@ -144,6 +167,7 @@ public class CPTypeDisplayContext {
 	protected final CPDefinition cpDefinition;
 	protected final CPInstanceHelper cpInstanceHelper;
 	protected final HttpServletRequest httpServletRequest;
+	protected final LiferayPortletResponse liferayPortletResponse;
 	protected final Portal portal;
 
 }

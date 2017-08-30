@@ -5,6 +5,9 @@ apply plugin: "com.liferay.maven.plugin.builder"
 task copyPortalCommonCSSJar(type: Copy)
 task unzipPortalCommonCSS(type: Copy)
 
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 buildPluginDescriptor {
 	configurationScopeMapping "mavenCompile", Conf2ScopeMappingContainer.COMPILE
 
@@ -25,16 +28,6 @@ copyPortalCommonCSSJar {
 	rename {
 		"com.liferay.frontend.css.common.jar"
 	}
-}
-
-compileJava {
-    sourceCompatibility = "1.8"
-    targetCompatibility = "1.8"
-}
-
-compileTestJava {
-    sourceCompatibility = "1.8"
-    targetCompatibility = "1.8"
 }
 
 configurations {

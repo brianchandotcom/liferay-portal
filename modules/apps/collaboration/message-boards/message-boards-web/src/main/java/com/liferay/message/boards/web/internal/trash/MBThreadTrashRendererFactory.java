@@ -47,22 +47,12 @@ public class MBThreadTrashRendererFactory implements TrashRendererFactory {
 		return mbThreadTrashRenderer;
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.message.boards.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBThreadLocalService(
-		MBThreadLocalService mbThreadLocalService) {
-
-		_mbThreadLocalService = mbThreadLocalService;
-	}
-
+	@Reference
 	private MBThreadLocalService _mbThreadLocalService;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.message.boards.web)"
+	)
 	private ServletContext _servletContext;
 
 }

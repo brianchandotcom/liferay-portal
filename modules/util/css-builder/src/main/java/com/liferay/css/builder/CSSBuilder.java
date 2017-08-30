@@ -264,16 +264,12 @@ public class CSSBuilder implements AutoCloseable {
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
 		directoryScanner.setBasedir(baseDir);
-
 		directoryScanner.setExcludes(excludes);
-
 		directoryScanner.setIncludes(includes);
 
 		directoryScanner.scan();
 
-		String[] includedFiles = directoryScanner.getIncludedFiles();
-
-		return includedFiles;
+		return directoryScanner.getIncludedFiles();
 	}
 
 	private long _getLastModifiedTime(Path path) {
@@ -288,8 +284,8 @@ public class CSSBuilder implements AutoCloseable {
 	private long _getNewestModifiedTime(String baseDir, String[] fileNames) {
 		Stream<String> stream = Stream.of(fileNames);
 
-		long newestModifiedTime = stream.map(
-			x -> Paths.get(baseDir, x)
+		return stream.map(
+			fileName -> Paths.get(baseDir, fileName)
 		).map(
 			this::_getLastModifiedTime
 		).max(
@@ -297,15 +293,13 @@ public class CSSBuilder implements AutoCloseable {
 		).orElse(
 			Long.MIN_VALUE
 		);
-
-		return newestModifiedTime;
 	}
 
 	private long _getOldestModifiedTime(String baseDir, String[] fileNames) {
 		Stream<String> stream = Stream.of(fileNames);
 
-		long oldestModifiedTime = stream.map(
-			x -> Paths.get(baseDir, x)
+		return stream.map(
+			fileName -> Paths.get(baseDir, fileName)
 		).map(
 			this::_getLastModifiedTime
 		).min(
@@ -313,8 +307,6 @@ public class CSSBuilder implements AutoCloseable {
 		).orElse(
 			Long.MIN_VALUE
 		);
-
-		return oldestModifiedTime;
 	}
 
 	private String _getRtlCss(String fileName, String css) throws Exception {
@@ -337,9 +329,8 @@ public class CSSBuilder implements AutoCloseable {
 	}
 
 	private String[] _getScssFiles(String baseDir) {
-		String[] includes = {"**\\*.scss"};
-
 		String[] fragments = {"**\\_*.scss"};
+		String[] includes = {"**\\*.scss"};
 
 		Stream<String[]> stream = Stream.of(fragments, _EXCLUDES);
 

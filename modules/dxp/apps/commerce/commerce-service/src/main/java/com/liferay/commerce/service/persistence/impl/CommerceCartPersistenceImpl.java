@@ -1478,6 +1478,1034 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "commerceCart.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(commerceCart.uuid IS NULL OR commerceCart.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "commerceCart.companyId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_BILLINGADDRESSID =
+		new FinderPath(CommerceCartModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceCartModelImpl.FINDER_CACHE_ENABLED, CommerceCartImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByBillingAddressId",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BILLINGADDRESSID =
+		new FinderPath(CommerceCartModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceCartModelImpl.FINDER_CACHE_ENABLED, CommerceCartImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByBillingAddressId", new String[] { Long.class.getName() },
+			CommerceCartModelImpl.BILLINGADDRESSID_COLUMN_BITMASK |
+			CommerceCartModelImpl.CREATEDATE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_BILLINGADDRESSID = new FinderPath(CommerceCartModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceCartModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByBillingAddressId", new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the commerce carts where billingAddressId = &#63;.
+	 *
+	 * @param billingAddressId the billing address ID
+	 * @return the matching commerce carts
+	 */
+	@Override
+	public List<CommerceCart> findByBillingAddressId(long billingAddressId) {
+		return findByBillingAddressId(billingAddressId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce carts where billingAddressId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param billingAddressId the billing address ID
+	 * @param start the lower bound of the range of commerce carts
+	 * @param end the upper bound of the range of commerce carts (not inclusive)
+	 * @return the range of matching commerce carts
+	 */
+	@Override
+	public List<CommerceCart> findByBillingAddressId(long billingAddressId,
+		int start, int end) {
+		return findByBillingAddressId(billingAddressId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce carts where billingAddressId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param billingAddressId the billing address ID
+	 * @param start the lower bound of the range of commerce carts
+	 * @param end the upper bound of the range of commerce carts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce carts
+	 */
+	@Override
+	public List<CommerceCart> findByBillingAddressId(long billingAddressId,
+		int start, int end, OrderByComparator<CommerceCart> orderByComparator) {
+		return findByBillingAddressId(billingAddressId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce carts where billingAddressId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param billingAddressId the billing address ID
+	 * @param start the lower bound of the range of commerce carts
+	 * @param end the upper bound of the range of commerce carts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching commerce carts
+	 */
+	@Override
+	public List<CommerceCart> findByBillingAddressId(long billingAddressId,
+		int start, int end, OrderByComparator<CommerceCart> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BILLINGADDRESSID;
+			finderArgs = new Object[] { billingAddressId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_BILLINGADDRESSID;
+			finderArgs = new Object[] {
+					billingAddressId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<CommerceCart> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<CommerceCart>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CommerceCart commerceCart : list) {
+					if ((billingAddressId != commerceCart.getBillingAddressId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_COMMERCECART_WHERE);
+
+			query.append(_FINDER_COLUMN_BILLINGADDRESSID_BILLINGADDRESSID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CommerceCartModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(billingAddressId);
+
+				if (!pagination) {
+					list = (List<CommerceCart>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<CommerceCart>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first commerce cart in the ordered set where billingAddressId = &#63;.
+	 *
+	 * @param billingAddressId the billing address ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce cart
+	 * @throws NoSuchCartException if a matching commerce cart could not be found
+	 */
+	@Override
+	public CommerceCart findByBillingAddressId_First(long billingAddressId,
+		OrderByComparator<CommerceCart> orderByComparator)
+		throws NoSuchCartException {
+		CommerceCart commerceCart = fetchByBillingAddressId_First(billingAddressId,
+				orderByComparator);
+
+		if (commerceCart != null) {
+			return commerceCart;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("billingAddressId=");
+		msg.append(billingAddressId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCartException(msg.toString());
+	}
+
+	/**
+	 * Returns the first commerce cart in the ordered set where billingAddressId = &#63;.
+	 *
+	 * @param billingAddressId the billing address ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
+	 */
+	@Override
+	public CommerceCart fetchByBillingAddressId_First(long billingAddressId,
+		OrderByComparator<CommerceCart> orderByComparator) {
+		List<CommerceCart> list = findByBillingAddressId(billingAddressId, 0,
+				1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last commerce cart in the ordered set where billingAddressId = &#63;.
+	 *
+	 * @param billingAddressId the billing address ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce cart
+	 * @throws NoSuchCartException if a matching commerce cart could not be found
+	 */
+	@Override
+	public CommerceCart findByBillingAddressId_Last(long billingAddressId,
+		OrderByComparator<CommerceCart> orderByComparator)
+		throws NoSuchCartException {
+		CommerceCart commerceCart = fetchByBillingAddressId_Last(billingAddressId,
+				orderByComparator);
+
+		if (commerceCart != null) {
+			return commerceCart;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("billingAddressId=");
+		msg.append(billingAddressId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCartException(msg.toString());
+	}
+
+	/**
+	 * Returns the last commerce cart in the ordered set where billingAddressId = &#63;.
+	 *
+	 * @param billingAddressId the billing address ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
+	 */
+	@Override
+	public CommerceCart fetchByBillingAddressId_Last(long billingAddressId,
+		OrderByComparator<CommerceCart> orderByComparator) {
+		int count = countByBillingAddressId(billingAddressId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CommerceCart> list = findByBillingAddressId(billingAddressId,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the commerce carts before and after the current commerce cart in the ordered set where billingAddressId = &#63;.
+	 *
+	 * @param commerceCartId the primary key of the current commerce cart
+	 * @param billingAddressId the billing address ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce cart
+	 * @throws NoSuchCartException if a commerce cart with the primary key could not be found
+	 */
+	@Override
+	public CommerceCart[] findByBillingAddressId_PrevAndNext(
+		long commerceCartId, long billingAddressId,
+		OrderByComparator<CommerceCart> orderByComparator)
+		throws NoSuchCartException {
+		CommerceCart commerceCart = findByPrimaryKey(commerceCartId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceCart[] array = new CommerceCartImpl[3];
+
+			array[0] = getByBillingAddressId_PrevAndNext(session, commerceCart,
+					billingAddressId, orderByComparator, true);
+
+			array[1] = commerceCart;
+
+			array[2] = getByBillingAddressId_PrevAndNext(session, commerceCart,
+					billingAddressId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommerceCart getByBillingAddressId_PrevAndNext(Session session,
+		CommerceCart commerceCart, long billingAddressId,
+		OrderByComparator<CommerceCart> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_COMMERCECART_WHERE);
+
+		query.append(_FINDER_COLUMN_BILLINGADDRESSID_BILLINGADDRESSID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CommerceCartModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(billingAddressId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(commerceCart);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CommerceCart> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the commerce carts where billingAddressId = &#63; from the database.
+	 *
+	 * @param billingAddressId the billing address ID
+	 */
+	@Override
+	public void removeByBillingAddressId(long billingAddressId) {
+		for (CommerceCart commerceCart : findByBillingAddressId(
+				billingAddressId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(commerceCart);
+		}
+	}
+
+	/**
+	 * Returns the number of commerce carts where billingAddressId = &#63;.
+	 *
+	 * @param billingAddressId the billing address ID
+	 * @return the number of matching commerce carts
+	 */
+	@Override
+	public int countByBillingAddressId(long billingAddressId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_BILLINGADDRESSID;
+
+		Object[] finderArgs = new Object[] { billingAddressId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_COMMERCECART_WHERE);
+
+			query.append(_FINDER_COLUMN_BILLINGADDRESSID_BILLINGADDRESSID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(billingAddressId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_BILLINGADDRESSID_BILLINGADDRESSID_2 =
+		"commerceCart.billingAddressId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_SHIPPINGADDRESSID =
+		new FinderPath(CommerceCartModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceCartModelImpl.FINDER_CACHE_ENABLED, CommerceCartImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByShippingAddressId",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SHIPPINGADDRESSID =
+		new FinderPath(CommerceCartModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceCartModelImpl.FINDER_CACHE_ENABLED, CommerceCartImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByShippingAddressId", new String[] { Long.class.getName() },
+			CommerceCartModelImpl.SHIPPINGADDRESSID_COLUMN_BITMASK |
+			CommerceCartModelImpl.CREATEDATE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_SHIPPINGADDRESSID = new FinderPath(CommerceCartModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceCartModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByShippingAddressId", new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the commerce carts where shippingAddressId = &#63;.
+	 *
+	 * @param shippingAddressId the shipping address ID
+	 * @return the matching commerce carts
+	 */
+	@Override
+	public List<CommerceCart> findByShippingAddressId(long shippingAddressId) {
+		return findByShippingAddressId(shippingAddressId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce carts where shippingAddressId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param shippingAddressId the shipping address ID
+	 * @param start the lower bound of the range of commerce carts
+	 * @param end the upper bound of the range of commerce carts (not inclusive)
+	 * @return the range of matching commerce carts
+	 */
+	@Override
+	public List<CommerceCart> findByShippingAddressId(long shippingAddressId,
+		int start, int end) {
+		return findByShippingAddressId(shippingAddressId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce carts where shippingAddressId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param shippingAddressId the shipping address ID
+	 * @param start the lower bound of the range of commerce carts
+	 * @param end the upper bound of the range of commerce carts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce carts
+	 */
+	@Override
+	public List<CommerceCart> findByShippingAddressId(long shippingAddressId,
+		int start, int end, OrderByComparator<CommerceCart> orderByComparator) {
+		return findByShippingAddressId(shippingAddressId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce carts where shippingAddressId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCartModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param shippingAddressId the shipping address ID
+	 * @param start the lower bound of the range of commerce carts
+	 * @param end the upper bound of the range of commerce carts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching commerce carts
+	 */
+	@Override
+	public List<CommerceCart> findByShippingAddressId(long shippingAddressId,
+		int start, int end, OrderByComparator<CommerceCart> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SHIPPINGADDRESSID;
+			finderArgs = new Object[] { shippingAddressId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_SHIPPINGADDRESSID;
+			finderArgs = new Object[] {
+					shippingAddressId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<CommerceCart> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<CommerceCart>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CommerceCart commerceCart : list) {
+					if ((shippingAddressId != commerceCart.getShippingAddressId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_COMMERCECART_WHERE);
+
+			query.append(_FINDER_COLUMN_SHIPPINGADDRESSID_SHIPPINGADDRESSID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CommerceCartModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(shippingAddressId);
+
+				if (!pagination) {
+					list = (List<CommerceCart>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<CommerceCart>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first commerce cart in the ordered set where shippingAddressId = &#63;.
+	 *
+	 * @param shippingAddressId the shipping address ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce cart
+	 * @throws NoSuchCartException if a matching commerce cart could not be found
+	 */
+	@Override
+	public CommerceCart findByShippingAddressId_First(long shippingAddressId,
+		OrderByComparator<CommerceCart> orderByComparator)
+		throws NoSuchCartException {
+		CommerceCart commerceCart = fetchByShippingAddressId_First(shippingAddressId,
+				orderByComparator);
+
+		if (commerceCart != null) {
+			return commerceCart;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("shippingAddressId=");
+		msg.append(shippingAddressId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCartException(msg.toString());
+	}
+
+	/**
+	 * Returns the first commerce cart in the ordered set where shippingAddressId = &#63;.
+	 *
+	 * @param shippingAddressId the shipping address ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
+	 */
+	@Override
+	public CommerceCart fetchByShippingAddressId_First(long shippingAddressId,
+		OrderByComparator<CommerceCart> orderByComparator) {
+		List<CommerceCart> list = findByShippingAddressId(shippingAddressId, 0,
+				1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last commerce cart in the ordered set where shippingAddressId = &#63;.
+	 *
+	 * @param shippingAddressId the shipping address ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce cart
+	 * @throws NoSuchCartException if a matching commerce cart could not be found
+	 */
+	@Override
+	public CommerceCart findByShippingAddressId_Last(long shippingAddressId,
+		OrderByComparator<CommerceCart> orderByComparator)
+		throws NoSuchCartException {
+		CommerceCart commerceCart = fetchByShippingAddressId_Last(shippingAddressId,
+				orderByComparator);
+
+		if (commerceCart != null) {
+			return commerceCart;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("shippingAddressId=");
+		msg.append(shippingAddressId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCartException(msg.toString());
+	}
+
+	/**
+	 * Returns the last commerce cart in the ordered set where shippingAddressId = &#63;.
+	 *
+	 * @param shippingAddressId the shipping address ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce cart, or <code>null</code> if a matching commerce cart could not be found
+	 */
+	@Override
+	public CommerceCart fetchByShippingAddressId_Last(long shippingAddressId,
+		OrderByComparator<CommerceCart> orderByComparator) {
+		int count = countByShippingAddressId(shippingAddressId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CommerceCart> list = findByShippingAddressId(shippingAddressId,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the commerce carts before and after the current commerce cart in the ordered set where shippingAddressId = &#63;.
+	 *
+	 * @param commerceCartId the primary key of the current commerce cart
+	 * @param shippingAddressId the shipping address ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce cart
+	 * @throws NoSuchCartException if a commerce cart with the primary key could not be found
+	 */
+	@Override
+	public CommerceCart[] findByShippingAddressId_PrevAndNext(
+		long commerceCartId, long shippingAddressId,
+		OrderByComparator<CommerceCart> orderByComparator)
+		throws NoSuchCartException {
+		CommerceCart commerceCart = findByPrimaryKey(commerceCartId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceCart[] array = new CommerceCartImpl[3];
+
+			array[0] = getByShippingAddressId_PrevAndNext(session,
+					commerceCart, shippingAddressId, orderByComparator, true);
+
+			array[1] = commerceCart;
+
+			array[2] = getByShippingAddressId_PrevAndNext(session,
+					commerceCart, shippingAddressId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommerceCart getByShippingAddressId_PrevAndNext(Session session,
+		CommerceCart commerceCart, long shippingAddressId,
+		OrderByComparator<CommerceCart> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_COMMERCECART_WHERE);
+
+		query.append(_FINDER_COLUMN_SHIPPINGADDRESSID_SHIPPINGADDRESSID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CommerceCartModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(shippingAddressId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(commerceCart);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CommerceCart> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the commerce carts where shippingAddressId = &#63; from the database.
+	 *
+	 * @param shippingAddressId the shipping address ID
+	 */
+	@Override
+	public void removeByShippingAddressId(long shippingAddressId) {
+		for (CommerceCart commerceCart : findByShippingAddressId(
+				shippingAddressId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(commerceCart);
+		}
+	}
+
+	/**
+	 * Returns the number of commerce carts where shippingAddressId = &#63;.
+	 *
+	 * @param shippingAddressId the shipping address ID
+	 * @return the number of matching commerce carts
+	 */
+	@Override
+	public int countByShippingAddressId(long shippingAddressId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_SHIPPINGADDRESSID;
+
+		Object[] finderArgs = new Object[] { shippingAddressId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_COMMERCECART_WHERE);
+
+			query.append(_FINDER_COLUMN_SHIPPINGADDRESSID_SHIPPINGADDRESSID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(shippingAddressId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_SHIPPINGADDRESSID_SHIPPINGADDRESSID_2 =
+		"commerceCart.shippingAddressId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T = new FinderPath(CommerceCartModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceCartModelImpl.FINDER_CACHE_ENABLED, CommerceCartImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T",
@@ -3010,6 +4038,19 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 				args);
 
+			args = new Object[] { commerceCartModelImpl.getBillingAddressId() };
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_BILLINGADDRESSID, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BILLINGADDRESSID,
+				args);
+
+			args = new Object[] { commerceCartModelImpl.getShippingAddressId() };
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_SHIPPINGADDRESSID,
+				args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SHIPPINGADDRESSID,
+				args);
+
 			args = new Object[] {
 					commerceCartModelImpl.getGroupId(),
 					commerceCartModelImpl.getType()
@@ -3071,6 +4112,44 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+					args);
+			}
+
+			if ((commerceCartModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BILLINGADDRESSID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						commerceCartModelImpl.getOriginalBillingAddressId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_BILLINGADDRESSID,
+					args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BILLINGADDRESSID,
+					args);
+
+				args = new Object[] { commerceCartModelImpl.getBillingAddressId() };
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_BILLINGADDRESSID,
+					args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BILLINGADDRESSID,
+					args);
+			}
+
+			if ((commerceCartModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SHIPPINGADDRESSID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						commerceCartModelImpl.getOriginalShippingAddressId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_SHIPPINGADDRESSID,
+					args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SHIPPINGADDRESSID,
+					args);
+
+				args = new Object[] { commerceCartModelImpl.getShippingAddressId() };
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_SHIPPINGADDRESSID,
+					args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SHIPPINGADDRESSID,
 					args);
 			}
 
@@ -3153,6 +4232,8 @@ public class CommerceCartPersistenceImpl extends BasePersistenceImpl<CommerceCar
 		commerceCartImpl.setModifiedDate(commerceCart.getModifiedDate());
 		commerceCartImpl.setName(commerceCart.getName());
 		commerceCartImpl.setType(commerceCart.getType());
+		commerceCartImpl.setBillingAddressId(commerceCart.getBillingAddressId());
+		commerceCartImpl.setShippingAddressId(commerceCart.getShippingAddressId());
 
 		return commerceCartImpl;
 	}

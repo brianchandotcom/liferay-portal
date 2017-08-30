@@ -66,7 +66,7 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -88,6 +88,10 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 		sb.append(name);
 		sb.append(", type=");
 		sb.append(type);
+		sb.append(", billingAddressId=");
+		sb.append(billingAddressId);
+		sb.append(", shippingAddressId=");
+		sb.append(shippingAddressId);
 		sb.append("}");
 
 		return sb.toString();
@@ -138,6 +142,8 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 		}
 
 		commerceCartImpl.setType(type);
+		commerceCartImpl.setBillingAddressId(billingAddressId);
+		commerceCartImpl.setShippingAddressId(shippingAddressId);
 
 		commerceCartImpl.resetOriginalValues();
 
@@ -161,6 +167,10 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 		name = objectInput.readUTF();
 
 		type = objectInput.readInt();
+
+		billingAddressId = objectInput.readLong();
+
+		shippingAddressId = objectInput.readLong();
 	}
 
 	@Override
@@ -199,6 +209,10 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 		}
 
 		objectOutput.writeInt(type);
+
+		objectOutput.writeLong(billingAddressId);
+
+		objectOutput.writeLong(shippingAddressId);
 	}
 
 	public String uuid;
@@ -211,4 +225,6 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 	public long modifiedDate;
 	public String name;
 	public int type;
+	public long billingAddressId;
+	public long shippingAddressId;
 }

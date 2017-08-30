@@ -276,6 +276,18 @@ public class CommerceCartLocalServiceWrapper implements CommerceCartLocalService
 			end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceCart> getCommerceCartsByBillingAddress(
+		long billingAddressId) {
+		return _commerceCartLocalService.getCommerceCartsByBillingAddress(billingAddressId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceCart> getCommerceCartsByShippingAddress(
+		long shippingAddressId) {
+		return _commerceCartLocalService.getCommerceCartsByShippingAddress(shippingAddressId);
+	}
+
 	/**
 	* Returns all the commerce carts matching the UUID and company.
 	*
@@ -370,6 +382,14 @@ public class CommerceCartLocalServiceWrapper implements CommerceCartLocalService
 	public com.liferay.commerce.model.CommerceCart updateCommerceCart(
 		com.liferay.commerce.model.CommerceCart commerceCart) {
 		return _commerceCartLocalService.updateCommerceCart(commerceCart);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceCart updateCommerceCart(
+		long commerceCartId, long billingAddressId, long shippingAddressId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCartLocalService.updateCommerceCart(commerceCartId,
+			billingAddressId, shippingAddressId);
 	}
 
 	@Override

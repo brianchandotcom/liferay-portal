@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.service.CommerceCartItemLocalService;
+import com.liferay.commerce.service.persistence.CommerceAddressPersistence;
 import com.liferay.commerce.service.persistence.CommerceCartItemPersistence;
 import com.liferay.commerce.service.persistence.CommerceCartPersistence;
 import com.liferay.commerce.service.persistence.CommerceCountryFinder;
@@ -330,6 +331,44 @@ public abstract class CommerceCartItemLocalServiceBaseImpl
 	public CommerceCartItem updateCommerceCartItem(
 		CommerceCartItem commerceCartItem) {
 		return commerceCartItemPersistence.update(commerceCartItem);
+	}
+
+	/**
+	 * Returns the commerce address local service.
+	 *
+	 * @return the commerce address local service
+	 */
+	public com.liferay.commerce.service.CommerceAddressLocalService getCommerceAddressLocalService() {
+		return commerceAddressLocalService;
+	}
+
+	/**
+	 * Sets the commerce address local service.
+	 *
+	 * @param commerceAddressLocalService the commerce address local service
+	 */
+	public void setCommerceAddressLocalService(
+		com.liferay.commerce.service.CommerceAddressLocalService commerceAddressLocalService) {
+		this.commerceAddressLocalService = commerceAddressLocalService;
+	}
+
+	/**
+	 * Returns the commerce address persistence.
+	 *
+	 * @return the commerce address persistence
+	 */
+	public CommerceAddressPersistence getCommerceAddressPersistence() {
+		return commerceAddressPersistence;
+	}
+
+	/**
+	 * Sets the commerce address persistence.
+	 *
+	 * @param commerceAddressPersistence the commerce address persistence
+	 */
+	public void setCommerceAddressPersistence(
+		CommerceAddressPersistence commerceAddressPersistence) {
+		this.commerceAddressPersistence = commerceAddressPersistence;
 	}
 
 	/**
@@ -972,6 +1011,10 @@ public abstract class CommerceCartItemLocalServiceBaseImpl
 		}
 	}
 
+	@BeanReference(type = com.liferay.commerce.service.CommerceAddressLocalService.class)
+	protected com.liferay.commerce.service.CommerceAddressLocalService commerceAddressLocalService;
+	@BeanReference(type = CommerceAddressPersistence.class)
+	protected CommerceAddressPersistence commerceAddressPersistence;
 	@BeanReference(type = com.liferay.commerce.service.CommerceCartLocalService.class)
 	protected com.liferay.commerce.service.CommerceCartLocalService commerceCartLocalService;
 	@BeanReference(type = CommerceCartPersistence.class)

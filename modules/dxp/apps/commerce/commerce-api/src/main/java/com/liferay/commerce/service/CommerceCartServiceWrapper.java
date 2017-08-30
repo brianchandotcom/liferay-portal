@@ -105,6 +105,14 @@ public class CommerceCartServiceWrapper implements CommerceCartService,
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceCart updateCommerceCart(
+		long commerceCartId, long billingAddressId, long shippingAddressId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCartService.updateCommerceCart(commerceCartId,
+			billingAddressId, shippingAddressId);
+	}
+
+	@Override
 	public com.liferay.commerce.model.CommerceCart updateUser(
 		long commerceCartId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {

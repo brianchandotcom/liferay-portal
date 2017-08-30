@@ -146,9 +146,9 @@ public class CommerceCountryPersistenceTest {
 
 		newCommerceCountry.setShippingAllowed(RandomTestUtil.randomBoolean());
 
-		newCommerceCountry.setTwoLettersISOCode(RandomTestUtil.randomString(2));
+		newCommerceCountry.setTwoLettersISOCode(RandomTestUtil.randomString());
 
-		newCommerceCountry.setThreeLettersISOCode(RandomTestUtil.randomString(3));
+		newCommerceCountry.setThreeLettersISOCode(RandomTestUtil.randomString());
 
 		newCommerceCountry.setNumericISOCode(RandomTestUtil.nextInt());
 
@@ -515,9 +515,9 @@ public class CommerceCountryPersistenceTest {
 
 		commerceCountry.setShippingAllowed(RandomTestUtil.randomBoolean());
 
-		commerceCountry.setTwoLettersISOCode(RandomTestUtil.randomString(2));
+		commerceCountry.setTwoLettersISOCode(RandomTestUtil.randomString());
 
-		commerceCountry.setThreeLettersISOCode(RandomTestUtil.randomString(3));
+		commerceCountry.setThreeLettersISOCode(RandomTestUtil.randomString());
 
 		commerceCountry.setNumericISOCode(RandomTestUtil.nextInt());
 

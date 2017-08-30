@@ -318,12 +318,45 @@ public class CommerceCartServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceCart updateCommerceCart(
+		HttpPrincipal httpPrincipal, long commerceCartId,
+		long billingAddressId, long shippingAddressId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceCartServiceUtil.class,
+					"updateCommerceCart", _updateCommerceCartParameterTypes9);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceCartId, billingAddressId, shippingAddressId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.model.CommerceCart)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.commerce.model.CommerceCart updateUser(
 		HttpPrincipal httpPrincipal, long commerceCartId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceCartServiceUtil.class,
-					"updateUser", _updateUserParameterTypes9);
+					"updateUser", _updateUserParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceCartId, userId);
@@ -381,7 +414,10 @@ public class CommerceCartServiceHttp {
 			long.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateUserParameterTypes9 = new Class[] {
+	private static final Class<?>[] _updateCommerceCartParameterTypes9 = new Class[] {
+			long.class, long.class, long.class
+		};
+	private static final Class<?>[] _updateUserParameterTypes10 = new Class[] {
 			long.class, long.class
 		};
 }

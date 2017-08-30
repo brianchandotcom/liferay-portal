@@ -239,6 +239,34 @@ public interface CommerceCartModel extends BaseModel<CommerceCart>, GroupedModel
 	 */
 	public void setType(int type);
 
+	/**
+	 * Returns the billing address ID of this commerce cart.
+	 *
+	 * @return the billing address ID of this commerce cart
+	 */
+	public long getBillingAddressId();
+
+	/**
+	 * Sets the billing address ID of this commerce cart.
+	 *
+	 * @param billingAddressId the billing address ID of this commerce cart
+	 */
+	public void setBillingAddressId(long billingAddressId);
+
+	/**
+	 * Returns the shipping address ID of this commerce cart.
+	 *
+	 * @return the shipping address ID of this commerce cart
+	 */
+	public long getShippingAddressId();
+
+	/**
+	 * Sets the shipping address ID of this commerce cart.
+	 *
+	 * @param shippingAddressId the shipping address ID of this commerce cart
+	 */
+	public void setShippingAddressId(long shippingAddressId);
+
 	@Override
 	public boolean isNew();
 

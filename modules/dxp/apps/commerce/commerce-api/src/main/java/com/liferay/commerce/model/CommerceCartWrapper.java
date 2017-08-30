@@ -70,6 +70,8 @@ public class CommerceCartWrapper implements CommerceCart,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("type", getType());
+		attributes.put("billingAddressId", getBillingAddressId());
+		attributes.put("shippingAddressId", getShippingAddressId());
 
 		return attributes;
 	}
@@ -135,6 +137,18 @@ public class CommerceCartWrapper implements CommerceCart,
 		if (type != null) {
 			setType(type);
 		}
+
+		Long billingAddressId = (Long)attributes.get("billingAddressId");
+
+		if (billingAddressId != null) {
+			setBillingAddressId(billingAddressId);
+		}
+
+		Long shippingAddressId = (Long)attributes.get("shippingAddressId");
+
+		if (shippingAddressId != null) {
+			setShippingAddressId(shippingAddressId);
+		}
 	}
 
 	@Override
@@ -145,6 +159,16 @@ public class CommerceCartWrapper implements CommerceCart,
 	@Override
 	public int compareTo(CommerceCart commerceCart) {
 		return _commerceCart.compareTo(commerceCart);
+	}
+
+	/**
+	* Returns the billing address ID of this commerce cart.
+	*
+	* @return the billing address ID of this commerce cart
+	*/
+	@Override
+	public long getBillingAddressId() {
+		return _commerceCart.getBillingAddressId();
 	}
 
 	/**
@@ -233,6 +257,16 @@ public class CommerceCartWrapper implements CommerceCart,
 	}
 
 	/**
+	* Returns the shipping address ID of this commerce cart.
+	*
+	* @return the shipping address ID of this commerce cart
+	*/
+	@Override
+	public long getShippingAddressId() {
+		return _commerceCart.getShippingAddressId();
+	}
+
+	/**
 	* Returns the type of this commerce cart.
 	*
 	* @return the type of this commerce cart
@@ -311,6 +345,16 @@ public class CommerceCartWrapper implements CommerceCart,
 	@Override
 	public void persist() {
 		_commerceCart.persist();
+	}
+
+	/**
+	* Sets the billing address ID of this commerce cart.
+	*
+	* @param billingAddressId the billing address ID of this commerce cart
+	*/
+	@Override
+	public void setBillingAddressId(long billingAddressId) {
+		_commerceCart.setBillingAddressId(billingAddressId);
 	}
 
 	@Override
@@ -412,6 +456,16 @@ public class CommerceCartWrapper implements CommerceCart,
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_commerceCart.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the shipping address ID of this commerce cart.
+	*
+	* @param shippingAddressId the shipping address ID of this commerce cart
+	*/
+	@Override
+	public void setShippingAddressId(long shippingAddressId) {
+		_commerceCart.setShippingAddressId(shippingAddressId);
 	}
 
 	/**

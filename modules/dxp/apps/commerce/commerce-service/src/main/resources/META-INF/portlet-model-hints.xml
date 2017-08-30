@@ -1,6 +1,28 @@
 <?xml version="1.0"?>
 
 <model-hints>
+	<model name="com.liferay.commerce.model.CommerceAddress">
+		<field name="commerceAddressId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="addressUserId" type="long" />
+		<field name="name" type="String" />
+		<field name="description" type="String" />
+		<field name="street1" type="String" />
+		<field name="street2" type="String" />
+		<field name="street3" type="String" />
+		<field name="city" type="String" />
+		<field name="zip" type="String" />
+		<field name="commerceRegionId" type="long" />
+		<field name="commerceCountryId" type="long" />
+		<field name="phoneNumber" type="String" />
+		<field name="defaultBilling" type="boolean" />
+		<field name="defaultShipping" type="boolean" />
+	</model>
 	<model name="com.liferay.commerce.model.CommerceCart">
 		<field name="uuid" type="String" />
 		<field name="commerceCartId" type="long" />
@@ -12,6 +34,8 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="name" type="String" />
 		<field name="type" type="int" />
+		<field name="billingAddressId" type="long" />
+		<field name="shippingAddressId" type="long" />
 	</model>
 	<model name="com.liferay.commerce.model.CommerceCartItem">
 		<field name="commerceCartItemId" type="long" />
@@ -36,26 +60,14 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field localized="true" name="name" type="String">
-			<validator name="required" />
-		</field>
+		<field localized="true" name="name" type="String" />
 		<field name="billingAllowed" type="boolean" />
 		<field name="shippingAllowed" type="boolean" />
-		<field name="twoLettersISOCode" type="String">
-			<hint name="min-length">2</hint>
-			<hint name="max-length">2</hint>
-		</field>
-		<field name="threeLettersISOCode" type="String">
-			<hint name="min-length">3</hint>
-			<hint name="max-length">3</hint>
-		</field>
-		<field name="numericISOCode" type="int">
-			<validator name="number" />
-		</field>
+		<field name="twoLettersISOCode" type="String" />
+		<field name="threeLettersISOCode" type="String" />
+		<field name="numericISOCode" type="int" />
 		<field name="subjectToVAT" type="boolean" />
-		<field name="priority" type="double">
-			<validator name="number" />
-		</field>
+		<field name="priority" type="double" />
 		<field name="active" type="boolean" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
@@ -86,9 +98,7 @@
 		<field name="json" type="String" />
 		<field localized="true" name="title" type="String" />
 		<field name="sku" type="String" />
-		<field name="price" type="double">
-			<validator name="number" />
-		</field>
+		<field name="price" type="double" />
 	</model>
 	<model name="com.liferay.commerce.model.CommercePaymentMethod">
 		<field name="commercePaymentMethodId" type="long" />
@@ -98,16 +108,10 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field localized="true" name="name" type="String">
-			<validator name="required" />
-		</field>
-		<field localized="true" name="description" type="String">
-			<hint-collection name="TEXTAREA" />
-		</field>
+		<field localized="true" name="name" type="String" />
+		<field localized="true" name="description" type="String" />
 		<field name="engineKey" type="String" />
-		<field name="priority" type="double">
-			<validator name="number" />
-		</field>
+		<field name="priority" type="double" />
 		<field name="active" type="boolean" />
 	</model>
 	<model name="com.liferay.commerce.model.CommerceRegion">
@@ -120,13 +124,9 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="commerceCountryId" type="long" />
-		<field name="name" type="String">
-			<validator name="required" />
-		</field>
+		<field name="name" type="String" />
 		<field name="code" type="String" />
-		<field name="priority" type="double">
-			<validator name="number" />
-		</field>
+		<field name="priority" type="double" />
 		<field name="active" type="boolean" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
@@ -138,16 +138,10 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field localized="true" name="name" type="String">
-			<validator name="required" />
-		</field>
-		<field localized="true" name="description" type="String">
-			<hint-collection name="TEXTAREA" />
-		</field>
+		<field localized="true" name="name" type="String" />
+		<field localized="true" name="description" type="String" />
 		<field name="engineKey" type="String" />
-		<field name="priority" type="double">
-			<validator name="number" />
-		</field>
+		<field name="priority" type="double" />
 		<field name="active" type="boolean" />
 	</model>
 	<model name="com.liferay.commerce.model.CommerceWarehouse">
@@ -158,12 +152,8 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="name" type="String">
-			<validator name="required" />
-		</field>
-		<field name="description" type="String">
-			<hint-collection name="TEXTAREA" />
-		</field>
+		<field name="name" type="String" />
+		<field name="description" type="String" />
 		<field name="street1" type="String" />
 		<field name="street2" type="String" />
 		<field name="street3" type="String" />
@@ -183,8 +173,6 @@
 		<field name="commerceWarehouseId" type="long" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
-		<field name="quantity" type="int">
-			<validator name="number" />
-		</field>
+		<field name="quantity" type="int" />
 	</model>
 </model-hints>

@@ -200,6 +200,22 @@ public class CommerceCartServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceCartSoap updateCommerceCart(
+		long commerceCartId, long billingAddressId, long shippingAddressId)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceCart returnValue = CommerceCartServiceUtil.updateCommerceCart(commerceCartId,
+					billingAddressId, shippingAddressId);
+
+			return com.liferay.commerce.model.CommerceCartSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.model.CommerceCartSoap updateUser(
 		long commerceCartId, long userId) throws RemoteException {
 		try {

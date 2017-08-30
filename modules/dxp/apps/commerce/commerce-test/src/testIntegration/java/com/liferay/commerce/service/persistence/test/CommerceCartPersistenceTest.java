@@ -143,6 +143,10 @@ public class CommerceCartPersistenceTest {
 
 		newCommerceCart.setType(RandomTestUtil.nextInt());
 
+		newCommerceCart.setBillingAddressId(RandomTestUtil.nextLong());
+
+		newCommerceCart.setShippingAddressId(RandomTestUtil.nextLong());
+
 		_commerceCarts.add(_persistence.update(newCommerceCart));
 
 		CommerceCart existingCommerceCart = _persistence.findByPrimaryKey(newCommerceCart.getPrimaryKey());
@@ -169,6 +173,10 @@ public class CommerceCartPersistenceTest {
 			newCommerceCart.getName());
 		Assert.assertEquals(existingCommerceCart.getType(),
 			newCommerceCart.getType());
+		Assert.assertEquals(existingCommerceCart.getBillingAddressId(),
+			newCommerceCart.getBillingAddressId());
+		Assert.assertEquals(existingCommerceCart.getShippingAddressId(),
+			newCommerceCart.getShippingAddressId());
 	}
 
 	@Test
@@ -196,6 +204,20 @@ public class CommerceCartPersistenceTest {
 		_persistence.countByUuid_C(StringPool.NULL, 0L);
 
 		_persistence.countByUuid_C((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByBillingAddressId() throws Exception {
+		_persistence.countByBillingAddressId(RandomTestUtil.nextLong());
+
+		_persistence.countByBillingAddressId(0L);
+	}
+
+	@Test
+	public void testCountByShippingAddressId() throws Exception {
+		_persistence.countByShippingAddressId(RandomTestUtil.nextLong());
+
+		_persistence.countByShippingAddressId(0L);
 	}
 
 	@Test
@@ -243,7 +265,8 @@ public class CommerceCartPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CommerceCart", "uuid",
 			true, "commerceCartId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "name", true, "type", true);
+			"modifiedDate", true, "name", true, "type", true,
+			"billingAddressId", true, "shippingAddressId", true);
 	}
 
 	@Test
@@ -478,6 +501,10 @@ public class CommerceCartPersistenceTest {
 		commerceCart.setName(RandomTestUtil.randomString());
 
 		commerceCart.setType(RandomTestUtil.nextInt());
+
+		commerceCart.setBillingAddressId(RandomTestUtil.nextLong());
+
+		commerceCart.setShippingAddressId(RandomTestUtil.nextLong());
 
 		_commerceCarts.add(_persistence.update(commerceCart));
 

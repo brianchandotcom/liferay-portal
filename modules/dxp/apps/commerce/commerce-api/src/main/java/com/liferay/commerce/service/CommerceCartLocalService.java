@@ -235,6 +235,14 @@ public interface CommerceCartLocalService extends BaseLocalService,
 	public List<CommerceCart> getCommerceCarts(long groupId, int type,
 		int start, int end, OrderByComparator<CommerceCart> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceCart> getCommerceCartsByBillingAddress(
+		long billingAddressId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceCart> getCommerceCartsByShippingAddress(
+		long shippingAddressId);
+
 	/**
 	* Returns all the commerce carts matching the UUID and company.
 	*
@@ -303,6 +311,10 @@ public interface CommerceCartLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceCart updateCommerceCart(CommerceCart commerceCart);
+
+	public CommerceCart updateCommerceCart(long commerceCartId,
+		long billingAddressId, long shippingAddressId)
+		throws PortalException;
 
 	public CommerceCart updateUser(long commerceCartId, long userId)
 		throws PortalException;

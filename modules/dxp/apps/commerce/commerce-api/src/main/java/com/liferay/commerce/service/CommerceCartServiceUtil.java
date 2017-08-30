@@ -104,6 +104,14 @@ public class CommerceCartServiceUtil {
 			serviceContext);
 	}
 
+	public static com.liferay.commerce.model.CommerceCart updateCommerceCart(
+		long commerceCartId, long billingAddressId, long shippingAddressId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCommerceCart(commerceCartId, billingAddressId,
+			shippingAddressId);
+	}
+
 	public static com.liferay.commerce.model.CommerceCart updateUser(
 		long commerceCartId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {

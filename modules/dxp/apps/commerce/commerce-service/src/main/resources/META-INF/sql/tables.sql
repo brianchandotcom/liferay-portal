@@ -1,3 +1,26 @@
+create table CommerceAddress (
+	commerceAddressId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	addressUserId LONG,
+	name VARCHAR(75) null,
+	description VARCHAR(75) null,
+	street1 VARCHAR(75) null,
+	street2 VARCHAR(75) null,
+	street3 VARCHAR(75) null,
+	city VARCHAR(75) null,
+	zip VARCHAR(75) null,
+	commerceRegionId LONG,
+	commerceCountryId LONG,
+	phoneNumber VARCHAR(75) null,
+	defaultBilling BOOLEAN,
+	defaultShipping BOOLEAN
+);
+
 create table CommerceCart (
 	uuid_ VARCHAR(75) null,
 	commerceCartId LONG not null primary key,
@@ -8,7 +31,9 @@ create table CommerceCart (
 	createDate DATE null,
 	modifiedDate DATE null,
 	name VARCHAR(75) null,
-	type_ INTEGER
+	type_ INTEGER,
+	billingAddressId LONG,
+	shippingAddressId LONG
 );
 
 create table CommerceCartItem (
@@ -38,8 +63,8 @@ create table CommerceCountry (
 	name STRING null,
 	billingAllowed BOOLEAN,
 	shippingAllowed BOOLEAN,
-	twoLettersISOCode VARCHAR(2) null,
-	threeLettersISOCode VARCHAR(3) null,
+	twoLettersISOCode VARCHAR(75) null,
+	threeLettersISOCode VARCHAR(75) null,
 	numericISOCode INTEGER,
 	subjectToVAT BOOLEAN,
 	priority DOUBLE,
@@ -134,7 +159,7 @@ create table CommerceWarehouse (
 	createDate DATE null,
 	modifiedDate DATE null,
 	name VARCHAR(75) null,
-	description STRING null,
+	description VARCHAR(75) null,
 	street1 VARCHAR(75) null,
 	street2 VARCHAR(75) null,
 	street3 VARCHAR(75) null,

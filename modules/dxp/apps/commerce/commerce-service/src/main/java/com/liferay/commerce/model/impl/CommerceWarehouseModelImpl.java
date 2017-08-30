@@ -108,7 +108,7 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 		TABLE_COLUMNS_MAP.put("commerceCountryId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceWarehouse (commerceWarehouseId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null,street1 VARCHAR(75) null,street2 VARCHAR(75) null,street3 VARCHAR(75) null,city VARCHAR(75) null,zip VARCHAR(75) null,commerceRegionId LONG,commerceCountryId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceWarehouse (commerceWarehouseId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description VARCHAR(75) null,street1 VARCHAR(75) null,street2 VARCHAR(75) null,street3 VARCHAR(75) null,city VARCHAR(75) null,zip VARCHAR(75) null,commerceRegionId LONG,commerceCountryId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceWarehouse";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceWarehouse.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceWarehouse.name ASC";

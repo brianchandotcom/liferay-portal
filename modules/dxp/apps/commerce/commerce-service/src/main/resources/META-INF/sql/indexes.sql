@@ -1,5 +1,13 @@
+create index IX_6DCF2DAB on CommerceAddress (addressUserId);
+create index IX_CD76FE87 on CommerceAddress (commerceCountryId);
+create index IX_71C5A9DD on CommerceAddress (commerceRegionId);
+create index IX_B2D4128D on CommerceAddress (groupId, addressUserId, defaultBilling);
+create index IX_F3EF45C0 on CommerceAddress (groupId, addressUserId, defaultShipping);
+
+create index IX_73579769 on CommerceCart (billingAddressId);
 create index IX_13E7A9AC on CommerceCart (groupId, type_);
 create index IX_280446D3 on CommerceCart (groupId, userId, name[$COLUMN_LENGTH:75$], type_);
+create index IX_125C7830 on CommerceCart (shippingAddressId);
 create index IX_BC3AFD75 on CommerceCart (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_73DE5D37 on CommerceCart (uuid_[$COLUMN_LENGTH:75$], groupId);
 

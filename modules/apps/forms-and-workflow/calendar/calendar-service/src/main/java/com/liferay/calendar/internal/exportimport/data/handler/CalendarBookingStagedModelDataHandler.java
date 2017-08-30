@@ -358,8 +358,7 @@ public class CalendarBookingStagedModelDataHandler
 	private static final int[] _EXPORTABLE_STATUSES = {
 		CalendarBookingWorkflowConstants.STATUS_APPROVED,
 		CalendarBookingWorkflowConstants.STATUS_DENIED,
-		CalendarBookingWorkflowConstants.STATUS_MAYBE,
-		CalendarBookingWorkflowConstants.STATUS_PENDING
+		CalendarBookingWorkflowConstants.STATUS_MAYBE
 	};
 
 	private CalendarBookingLocalService _calendarBookingLocalService;

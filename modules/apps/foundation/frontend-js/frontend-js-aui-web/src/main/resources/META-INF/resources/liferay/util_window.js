@@ -49,7 +49,7 @@ AUI.add(
 									{
 										cssClass: 'close',
 										discardDefaultButtonCssClasses: true,
-										labelHTML: '<svg class="lexicon-icon" focusable="false"><use data-href="' + Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg#times" /><title>Close</title></svg>',
+										labelHTML: '<svg class="lexicon-icon" focusable="false"><use data-href="' + Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg#times" /><title>' + Liferay.Language.get('close') + '</title></svg>',
 										on: {
 											click: function(event) {
 												instance.hide();

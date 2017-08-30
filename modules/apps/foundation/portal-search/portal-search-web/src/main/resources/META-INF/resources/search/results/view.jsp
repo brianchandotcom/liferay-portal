@@ -99,7 +99,7 @@ com.liferay.portal.kernel.dao.search.SearchContainer<com.liferay.portal.kernel.s
 						<span class="search-asset-type-sticker sticker sticker-default sticker-lg sticker-rounded sticker-static">
 							<svg class="lexicon-icon">
 								<use xlink:href="<%= searchResultSummaryDisplayContext.getPathThemeImages() %>/lexicon/icons.svg#<%= searchResultSummaryDisplayContext.getIconId() %>" />
-								<title>Icon</title>
+								<title><%= searchResultSummaryDisplayContext.getIconId() %></title>
 							</svg>
 						</span>
 					</c:if>

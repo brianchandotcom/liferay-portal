@@ -88,7 +88,7 @@
 					<span class="icon-monospaced" data-onclick="{$removeAvailableLocale}" data-locale-id="{$locale.id}" href="javascript:;">
 						<svg class="lexicon-icon">
 							<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#times"></use>
-							<title>Icon</title>
+							<title>{$locale.close}</title>
 						</svg>
 					</span>
 				{/param}
@@ -114,7 +114,7 @@
 				<span class="icon-monospaced">
 					<svg class="lexicon-icon">
 						<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$locale.icon}"></use>
-						<title>Icon</title>
+						<title>{$locale.icon}</title>
 					</svg>
 				</span>
 
@@ -143,7 +143,7 @@
 			<a class="icon-monospaced" data-onclick="toggle" href="javascript:;">
 				<svg class="lexicon-icon">
 					<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$icon}"></use>
-					<title>Icon</title>
+					<title>{$icon}</title>
 				</svg>
 			</a>
 		{/param}
@@ -156,7 +156,7 @@
 						<span class="icon-monospaced">
 							<svg class="lexicon-icon">
 								<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$locale.icon}"></use>
-								<title>Icon</title>
+								<title>{$locale.icon}</title>
 							</svg>
 						</span>
 						{$locale.name}

@@ -96,7 +96,7 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 	function <portlet:namespace />saveInstance(forceDisable) {
 		var form = AUI.$(document.<portlet:namespace />fm);
 
-		var cpDefinitionOptionsRenderDDMForm = Liferay.component("cpDefinitionOptionsRenderDDMForm");
+		var cpDefinitionOptionsRenderDDMForm = Liferay.component("<%= cpDefinition.getCPDefinitionId() %>DDMForm");
 
 		if (cpDefinitionOptionsRenderDDMForm) {
 			form.fm('ddmFormValues').val(JSON.stringify(cpDefinitionOptionsRenderDDMForm.toJSON()));

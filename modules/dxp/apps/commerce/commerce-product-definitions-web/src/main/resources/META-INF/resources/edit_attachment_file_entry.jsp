@@ -125,7 +125,7 @@ renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, addMe
 	function <portlet:namespace />saveAttachmentFileEntry(forceDisable) {
 		var form = AUI.$(document.<portlet:namespace />fm);
 
-		var cpDefinitionOptionsRenderDDMForm = Liferay.component("cpDefinitionOptionsRenderDDMForm");
+		var cpDefinitionOptionsRenderDDMForm = Liferay.component("<%= cpDefinitionId %>DDMForm");
 
 		if (cpDefinitionOptionsRenderDDMForm) {
 			form.fm('ddmFormValues').val(JSON.stringify(cpDefinitionOptionsRenderDDMForm.toJSON()));

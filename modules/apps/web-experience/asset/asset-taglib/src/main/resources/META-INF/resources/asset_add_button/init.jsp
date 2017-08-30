@@ -19,7 +19,8 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.asset.util.impl.AssetUtil" %><%@
+<%@ page import="com.liferay.asset.util.impl.AssetPublisherAddItemHolder" %><%@
+page import="com.liferay.asset.util.impl.AssetUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.model.Layout" %><%@
@@ -28,8 +29,7 @@ page import="com.liferay.portal.kernel.portlet.LiferayPortletResponse" %><%@
 page import="com.liferay.portal.kernel.service.GroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.JavaConstants" %><%@
-page import="com.liferay.portlet.asset.util.AssetPublisherAddItemHolder" %>
+page import="com.liferay.portal.kernel.util.JavaConstants" %>
 
 <%@ page import="java.util.List" %>
 

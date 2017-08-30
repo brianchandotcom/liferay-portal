@@ -17,5 +17,4 @@
 		</property>
 	</bean>
 	<bean class="com.liferay.portal.subscription.social.SubscriptionSocialActivityManager" id="com.liferay.portal.subscription.social.SubscriptionSocialActivityManager" />
-	<bean class="com.liferay.portlet.asset.social.AssetEntrySocialActivityManager" id="com.liferay.portlet.asset.social.AssetEntrySocialActivityManager" />
 </beans>

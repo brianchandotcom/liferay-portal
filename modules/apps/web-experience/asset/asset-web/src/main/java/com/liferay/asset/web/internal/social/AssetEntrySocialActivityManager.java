@@ -12,19 +12,23 @@
  * details.
  */
 
-package com.liferay.portlet.asset.social;
+package com.liferay.asset.web.internal.social;
 
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.social.BaseSocialActivityManager;
+import com.liferay.portal.kernel.social.SocialActivityManager;
 import com.liferay.social.kernel.service.SocialActivityLocalService;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
- * @deprecated As of 7.0.0, moved to {@link
- *             com.liferay.asset.web.internal.social.AssetEntrySocialActivityManager}
  */
-@Deprecated
+@Component(
+	property = "model.class.name=com.liferay.asset.kernel.model.AssetEntry",
+	service = SocialActivityManager.class
+)
 public class AssetEntrySocialActivityManager
 	extends BaseSocialActivityManager<AssetEntry> {
 
@@ -43,7 +47,7 @@ public class AssetEntrySocialActivityManager
 		return socialActivityLocalService;
 	}
 
-	@BeanReference(type = SocialActivityLocalService.class)
+	@Reference
 	protected SocialActivityLocalService socialActivityLocalService;
 
 }

@@ -12,17 +12,18 @@
  * details.
  */
 
-package com.liferay.portlet.asset.model;
+package com.liferay.asset.internal.model.listener;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.ModelListener;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Bryan Engler
- * @deprecated As of 7.0.0, moved to {@link
- *             com.liferay.asset.internal.model.listener.AssetEntryModelListener}
  */
-@Deprecated
+@Component(immediate = true, service = ModelListener.class)
 public class AssetEntryModelListener extends BaseModelListener<AssetEntry> {
 
 	@Override

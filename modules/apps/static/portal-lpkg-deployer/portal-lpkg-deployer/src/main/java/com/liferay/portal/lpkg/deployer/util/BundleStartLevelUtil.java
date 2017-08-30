@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.lpkg.deployer.internal;
+package com.liferay.portal.lpkg.deployer.util;
 
 import java.util.Dictionary;
 

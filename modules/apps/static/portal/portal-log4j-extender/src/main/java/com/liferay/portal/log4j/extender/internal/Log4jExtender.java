@@ -42,8 +42,7 @@ public class Log4jExtender implements BundleActivator {
 
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
-		_tracker = new BundleTracker<Void>(
-			bundleContext, Bundle.STARTING, null) {
+		_tracker = new BundleTracker<Void>(bundleContext, Bundle.ACTIVE, null) {
 
 			@Override
 			public Void addingBundle(Bundle bundle, BundleEvent bundleEvent) {

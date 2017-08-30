@@ -109,7 +109,6 @@ public class AddressTextLocalizerUtilTest {
 
 		Assert.assertEquals(
 			addressTextLocalizer, retrievedAddressTextLocalizer);
-
 		Assert.assertEquals(
 			addressText, retrievedAddressTextLocalizer.format(_address));
 	}

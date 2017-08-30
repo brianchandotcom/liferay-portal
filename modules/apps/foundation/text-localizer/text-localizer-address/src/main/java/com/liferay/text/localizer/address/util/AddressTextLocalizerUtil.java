@@ -39,9 +39,9 @@ public class AddressTextLocalizerUtil {
 	public static AddressTextLocalizer getAddressTextLocalizer(
 		Address address) {
 
-		Country country = address.getCountry();
-
 		AddressTextLocalizer addressTextLocalizer = null;
+
+		Country country = address.getCountry();
 
 		if (country != null) {
 			addressTextLocalizer = getAddressTextLocalizer(country.getA2());

@@ -27,6 +27,16 @@ copyPortalCommonCSSJar {
 	}
 }
 
+compileJava {
+    sourceCompatibility = "1.8"
+    targetCompatibility = "1.8"
+}
+
+compileTestJava {
+    sourceCompatibility = "1.8"
+    targetCompatibility = "1.8"
+}
+
 configurations {
 	mavenCompile {
 		extendsFrom compile
@@ -74,16 +84,6 @@ unzipPortalCommonCSS {
 	include "META-INF/resources/**"
 	into new File(buildDir, "portal-common-css")
 	includeEmptyDirs = false
-}
-
-compileJava {
-    sourceCompatibility = "1.8"
-    targetCompatibility = "1.8"
-}
-
-compileTestJava {
-    sourceCompatibility = "1.8"
-    targetCompatibility = "1.8"
 }
 
 updateFileVersions {

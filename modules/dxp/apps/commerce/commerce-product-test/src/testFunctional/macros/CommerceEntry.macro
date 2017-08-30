@@ -91,9 +91,11 @@
 			<then>
 				<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 			</then>
-			<execute function="AssertTextEquals" locator1="CommerceEntry#WORKFLOW_STATUS">
+			<else>
+				<execute function="AssertTextEquals" locator1="CommerceEntry#WORKFLOW_STATUS">
 					<var name="key_status" value="${status}" />
 				</execute>
+			</else>
 		</if>
 	</command>
 

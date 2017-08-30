@@ -189,7 +189,7 @@ public class IconTag extends BaseIconTag {
 				jspWriter.write("\" />");
 				jspWriter.write("<title>");
 				jspWriter.write(title);
-				jspWriter.write("</title>");				
+				jspWriter.write("</title>");
 				jspWriter.write("</svg>");
 			}
 			else {

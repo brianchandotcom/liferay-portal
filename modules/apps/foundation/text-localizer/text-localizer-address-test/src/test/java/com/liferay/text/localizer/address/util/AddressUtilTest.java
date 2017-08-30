@@ -100,16 +100,16 @@ public class AddressUtilTest {
 		).getName();
 
 		Mockito.doReturn(
-			RandomTestUtil.randomLong()
-		).when(
-			region
-		).getRegionId();
-
-		Mockito.doReturn(
 			region
 		).when(
 			_address
 		).getRegion();
+
+		Mockito.doReturn(
+			RandomTestUtil.randomLong()
+		).when(
+			region
+		).getRegionId();
 
 		Optional<String> regionNameOptional = AddressUtil.getRegionNameOptional(
 			_address);
@@ -137,18 +137,16 @@ public class AddressUtilTest {
 		Country country = Mockito.mock(Country.class);
 
 		Mockito.doReturn(
+			country
+		).when(
+			address
+		).getCountry();
+
+		Mockito.doReturn(
 			RandomTestUtil.randomLong()
 		).when(
 			country
 		).getCountryId();
-
-		Mockito.doReturn(
-			_COUNTRY_NAME_LOCALIZED
-		).when(
-			country
-		).getName(
-			Mockito.any(Locale.class)
-		);
 
 		Mockito.doReturn(
 			_COUNTRY_NAME
@@ -157,10 +155,12 @@ public class AddressUtilTest {
 		).getName();
 
 		Mockito.doReturn(
-			country
+			_COUNTRY_NAME_LOCALIZED
 		).when(
-			address
-		).getCountry();
+			country
+		).getName(
+			Mockito.any(Locale.class)
+		);
 
 		return address;
 	}

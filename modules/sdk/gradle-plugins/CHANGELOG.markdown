@@ -2268,15 +2268,23 @@ to version 2.1.4.
 - [LPS-72705]: Update the [Liferay Source Formatter] dependency to version
 1.0.450.
 
-## 3.4.42 - 2017-08-28
+## 3.4.44 - 2017-08-29
 
 ### Changed
-- [LPS-73070]: Update the [Liferay Gradle Plugins Gulp] dependency to version
+- [LPS-73472]: Update the [Liferay Gradle Plugins Gulp] dependency to version
 2.0.18.
-- [LPS-73070]: Update the [Liferay Gradle Plugins JS Module Config Generator]
+- [LPS-73472]: Update the [Liferay Gradle Plugins JS Module Config Generator]
 dependency to version 2.1.18.
-- [LPS-73070]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
+- [LPS-73472]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
 version 2.3.18.
+
+## 3.4.45 - 2017-08-29
+
+### Changed
+- [LPS-73124]: Update the [Liferay Gradle Plugins DB Support] dependency to
+version 1.0.3.
+- [LPS-73124]: Update the [Liferay Portal Tools DB Support] dependency to
+version 1.0.6.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
@@ -2440,7 +2448,6 @@ version 2.3.18.
 [LPS-72868]: https://issues.liferay.com/browse/LPS-72868
 [LPS-72914]: https://issues.liferay.com/browse/LPS-72914
 [LPS-73058]: https://issues.liferay.com/browse/LPS-73058
-[LPS-73070]: https://issues.liferay.com/browse/LPS-73070
 [LPS-73124]: https://issues.liferay.com/browse/LPS-73124
 [LPS-73147]: https://issues.liferay.com/browse/LPS-73147
 [LPS-73148]: https://issues.liferay.com/browse/LPS-73148

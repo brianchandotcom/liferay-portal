@@ -96,6 +96,18 @@
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
 
+	<command name="gotoDocumentsAndMediaDocumentPG">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
+			<var name="key_menuItem" value="Permissions" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+	</command>
+
 	<command name="gotoDocumentsAndMediaHomeFolderPG">
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="${pageName}" />

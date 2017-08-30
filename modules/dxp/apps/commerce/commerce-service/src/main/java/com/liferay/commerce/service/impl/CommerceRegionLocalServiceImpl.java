@@ -71,8 +71,19 @@ public class CommerceRegionLocalServiceImpl
 
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public CommerceRegion deleteCommerceRegion(CommerceRegion commerceRegion) {
-		return commerceRegionPersistence.remove(commerceRegion);
+	public CommerceRegion deleteCommerceRegion(CommerceRegion commerceRegion)
+		throws PortalException {
+
+		// Commerce region
+
+		commerceRegionPersistence.remove(commerceRegion);
+
+		// Commerce addresses
+
+		commerceAddressLocalService.deleteRegionCommerceAddresses(
+			commerceRegion.getCommerceRegionId());
+
+		return commerceRegion;
 	}
 
 	@Override
@@ -86,7 +97,9 @@ public class CommerceRegionLocalServiceImpl
 	}
 
 	@Override
-	public void deleteCommerceRegions(long commerceCountryId) {
+	public void deleteCommerceRegions(long commerceCountryId)
+		throws PortalException {
+
 		List<CommerceRegion> commerceRegions =
 			commerceRegionPersistence.findByCommerceCountryId(
 				commerceCountryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);

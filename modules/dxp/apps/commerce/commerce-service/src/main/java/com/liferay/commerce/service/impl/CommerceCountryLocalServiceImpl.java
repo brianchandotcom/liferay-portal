@@ -79,7 +79,7 @@ public class CommerceCountryLocalServiceImpl
 	}
 
 	@Override
-	public void deleteCommerceCountries(long groupId) {
+	public void deleteCommerceCountries(long groupId) throws PortalException {
 		List<CommerceCountry> commerceCountries =
 			commerceCountryPersistence.findByGroupId(groupId);
 
@@ -91,7 +91,8 @@ public class CommerceCountryLocalServiceImpl
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceCountry deleteCommerceCountry(
-		CommerceCountry commerceCountry) {
+			CommerceCountry commerceCountry)
+		throws PortalException {
 
 		// Commerce country
 
@@ -100,6 +101,11 @@ public class CommerceCountryLocalServiceImpl
 		//Commerce regions
 
 		commerceRegionLocalService.deleteCommerceRegions(
+			commerceCountry.getCommerceCountryId());
+
+		// Commerce addresses
+
+		commerceAddressLocalService.deleteCountryCommerceAddresses(
 			commerceCountry.getCommerceCountryId());
 
 		return commerceCountry;

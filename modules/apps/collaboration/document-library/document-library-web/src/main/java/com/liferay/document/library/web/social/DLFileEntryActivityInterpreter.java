@@ -203,6 +203,14 @@ public class DLFileEntryActivityInterpreter
 	}
 
 	@Override
+	protected String getViewEntryURL(
+			String className, long classPK, ServiceContext serviceContext)
+		throws Exception {
+
+		return StringPool.BLANK;
+	}
+
+	@Override
 	protected boolean hasPermissions(
 			PermissionChecker permissionChecker, SocialActivity activity,
 			String actionId, ServiceContext serviceContext)

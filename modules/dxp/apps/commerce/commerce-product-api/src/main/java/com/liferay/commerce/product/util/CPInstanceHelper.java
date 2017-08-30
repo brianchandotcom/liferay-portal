@@ -16,6 +16,7 @@ package com.liferay.commerce.product.util;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -34,6 +35,10 @@ import javax.portlet.RenderResponse;
  */
 @ProviderType
 public interface CPInstanceHelper {
+
+	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
+			long cpDefinitionId, Locale locale, String serializedDDMFormValues)
+		throws PortalException;
 
 	public DDMForm getDDMForm(
 			long cpDefinitionId, Locale locale, boolean required)

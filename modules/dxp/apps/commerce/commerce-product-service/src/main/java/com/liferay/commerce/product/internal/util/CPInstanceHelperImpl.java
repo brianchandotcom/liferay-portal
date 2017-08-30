@@ -14,11 +14,16 @@
 
 package com.liferay.commerce.product.internal.util;
 
+import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPOption;
-import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
-import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
+import com.liferay.commerce.product.search.CPAttachmentFileEntryIndexer;
+import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
+import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
+import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.product.util.DDMFormValuesHelper;
@@ -37,9 +42,22 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,6 +83,71 @@ import org.osgi.service.component.annotations.Reference;
 public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 	@Override
+	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
+			long cpDefinitionId, Locale locale, String serializedDDMFormValues)
+		throws PortalException {
+
+		List<CPAttachmentFileEntry> cpAttachmentFileEntries = new ArrayList<>();
+
+		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
+			cpDefinitionId);
+
+		long cpDefinitionClassNameId = _portal.getClassNameId(
+			CPDefinition.class);
+
+		DDMFormValues ddmFormValues = getDDMFormValues(
+			cpDefinitionId, locale, serializedDDMFormValues);
+
+		Indexer<CPAttachmentFileEntry> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(CPAttachmentFileEntry.class);
+
+		SearchContext searchContext = new SearchContext();
+
+		Map<String, Serializable> attributes = new HashMap<>();
+
+		attributes.put(
+			CPAttachmentFileEntryIndexer.FIELD_RELATED_ENTITY_CLASS_NAME_ID,
+			cpDefinitionClassNameId);
+		attributes.put(
+			CPAttachmentFileEntryIndexer.FIELD_RELATED_ENTITY_CLASS_PK,
+			cpDefinitionId);
+		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
+
+		searchContext.setAttributes(attributes);
+
+		searchContext.setCompanyId(cpDefinition.getCompanyId());
+		searchContext.setGroupIds(new long[] {cpDefinition.getGroupId()});
+
+		QueryConfig queryConfig = new QueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		searchContext.setQueryConfig(queryConfig);
+
+		Sort prioitySort = SortFactoryUtil.create(Field.PRIORITY, true);
+
+		searchContext.setSorts(prioitySort);
+
+		queryConfig.addSelectedFieldNames(Field.ENTRY_CLASS_PK);
+
+		Hits hits = indexer.search(searchContext);
+
+		Document[] documents = hits.getDocs();
+
+		for (Document document : documents) {
+			long classPK = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			cpAttachmentFileEntries.add(
+				_cpAttachmentFileEntryService.getCPAttachmentFileEntry(
+					classPK));
+		}
+
+		return cpAttachmentFileEntries;
+	}
+
+	@Override
 	public DDMForm getDDMForm(
 			long cpDefinitionId, Locale locale, boolean required)
 		throws PortalException {
@@ -72,7 +155,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		DDMForm ddmForm = new DDMForm();
 
 		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
-			_cpDefinitionOptionRelService.
+			_cpDefinitionOptionRelLocalService.
 				getSkuContributorCPDefinitionOptionRels(cpDefinitionId);
 
 		for (CPDefinitionOptionRel cpDefinitionOptionRel :
@@ -127,7 +210,9 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			ddmForm.addDDMFormField(ddmFormField);
 		}
 
-		ddmForm.addDDMFormRule(createDDMFormRule(ddmForm, cpDefinitionId));
+		//ddmForm.addDDMFormRule(createDDMFormRule(ddmForm, cpDefinitionId));
+		ddmForm.addAvailableLocale(locale);
+		ddmForm.setDefaultLocale(locale);
 
 		return ddmForm;
 	}
@@ -172,7 +257,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 				"cpDefinitionOptionValueRelId");
 
 			CPDefinitionOptionRel cpDefinitionOptionRel =
-				_cpDefinitionOptionRelService.fetchCPDefinitionOptionRel(
+				_cpDefinitionOptionRelLocalService.fetchCPDefinitionOptionRel(
 					cpDefinitionOptionRelId);
 
 			if (cpDefinitionOptionRel == null) {
@@ -180,7 +265,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			}
 
 			CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-				_cpDefinitionOptionValueRelService.
+				_cpDefinitionOptionValueRelLocalService.
 					fetchCPDefinitionOptionValueRel(
 						cpDefinitionOptionValueRelId);
 
@@ -367,11 +452,18 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		CPInstanceHelperImpl.class);
 
 	@Reference
-	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;
+	private CPAttachmentFileEntryService _cpAttachmentFileEntryService;
 
 	@Reference
-	private CPDefinitionOptionValueRelService
-		_cpDefinitionOptionValueRelService;
+	private CPDefinitionOptionRelLocalService
+		_cpDefinitionOptionRelLocalService;
+
+	@Reference
+	private CPDefinitionOptionValueRelLocalService
+		_cpDefinitionOptionValueRelLocalService;
+
+	@Reference
+	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
 	private CPInstanceService _cpInstanceService;

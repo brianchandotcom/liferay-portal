@@ -89,37 +89,16 @@ public class MBMessageSocialActivityManager
 		return _socialActivityLocalService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setClassNameLocalService(
-		ClassNameLocalService classNameLocalService) {
-
-		_classNameLocalService = classNameLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBDiscussionLocalService(
-		MBDiscussionLocalService mbDiscussionLocalService) {
-
-		_mbDiscussionLocalService = mbDiscussionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
-
-		_mbMessageLocalService = mbMessageLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSocialActivityLocalService(
-		SocialActivityLocalService socialActivityLocalService) {
-
-		_socialActivityLocalService = socialActivityLocalService;
-	}
-
+	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private MBDiscussionLocalService _mbDiscussionLocalService;
+
+	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
+
+	@Reference
 	private SocialActivityLocalService _socialActivityLocalService;
 
 }

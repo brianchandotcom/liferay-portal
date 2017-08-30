@@ -160,20 +160,6 @@ public class MBThreadActivityInterpreter extends BaseSocialActivityInterpreter {
 			permissionChecker, message.getMessageId(), actionId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
-
-		_mbMessageLocalService = mbMessageLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBThreadLocalService(
-		MBThreadLocalService mbThreadLocalService) {
-
-		_mbThreadLocalService = mbThreadLocalService;
-	}
-
 	@Reference(
 		target = "(bundle.symbolic.name=com.liferay.message.boards.web)",
 		unbind = "-"
@@ -188,8 +174,12 @@ public class MBThreadActivityInterpreter extends BaseSocialActivityInterpreter {
 
 	private static final String[] _CLASS_NAMES = {MBThread.class.getName()};
 
+	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
+
+	@Reference
 	private MBThreadLocalService _mbThreadLocalService;
+
 	private ResourceBundleLoader _resourceBundleLoader;
 
 }

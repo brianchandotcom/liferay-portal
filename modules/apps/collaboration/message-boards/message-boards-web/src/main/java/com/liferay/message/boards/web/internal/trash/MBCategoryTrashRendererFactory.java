@@ -40,13 +40,7 @@ public class MBCategoryTrashRendererFactory implements TrashRendererFactory {
 		return new MBCategoryTrashRenderer(category);
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBCategoryLocalService(
-		MBCategoryLocalService mbCategoryLocalService) {
-
-		_mbCategoryLocalService = mbCategoryLocalService;
-	}
-
+	@Reference
 	private MBCategoryLocalService _mbCategoryLocalService;
 
 }

@@ -94,21 +94,10 @@ public class MBThreadSocialActivityManager
 		return socialActivityLocalService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
-
-		this.mbMessageLocalService = mbMessageLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSocialActivityLocalService(
-		SocialActivityLocalService socialActivityLocalService) {
-
-		this.socialActivityLocalService = socialActivityLocalService;
-	}
-
+	@Reference
 	protected MBMessageLocalService mbMessageLocalService;
+
+	@Reference
 	protected SocialActivityLocalService socialActivityLocalService;
 
 }

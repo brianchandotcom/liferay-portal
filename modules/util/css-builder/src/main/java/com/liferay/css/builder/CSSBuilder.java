@@ -205,13 +205,13 @@ public class CSSBuilder implements AutoCloseable {
 
 		String basedir = docrootDirName.concat(dirName);
 
-		final String[] scssFiles = _getScssFiles(basedir);
+		String[] scssFiles = _getScssFiles(basedir);
 
 		if (!_isModified(basedir, scssFiles)) {
 			long oldestSassModifiedTime = _getOldestModifiedTime(
 				basedir, scssFiles);
 
-			final String[] scssFragments = _getScssFragments(basedir);
+			String[] scssFragments = _getScssFragments(basedir);
 
 			long newestFragmentModifiedTime = _getNewestModifiedTime(
 				basedir, scssFragments);
@@ -259,10 +259,9 @@ public class CSSBuilder implements AutoCloseable {
 	}
 
 	private String[] _getFilesFromDirectory(
-		final String baseDir, final String[] includes,
-		final String[] excludes) {
+		String baseDir, String[] includes, String[] excludes) {
 
-		final DirectoryScanner directoryScanner = new DirectoryScanner();
+		DirectoryScanner directoryScanner = new DirectoryScanner();
 
 		directoryScanner.setBasedir(baseDir);
 
@@ -272,12 +271,12 @@ public class CSSBuilder implements AutoCloseable {
 
 		directoryScanner.scan();
 
-		final String[] includedFiles = directoryScanner.getIncludedFiles();
+		String[] includedFiles = directoryScanner.getIncludedFiles();
 
 		return includedFiles;
 	}
 
-	private long _getLastModifiedTime(final Path path) {
+	private long _getLastModifiedTime(Path path) {
 		try {
 			return Files.getLastModifiedTime(path).toMillis();
 		}
@@ -286,12 +285,10 @@ public class CSSBuilder implements AutoCloseable {
 		}
 	}
 
-	private long _getNewestModifiedTime(
-		final String baseDir, final String[] fileNames) {
+	private long _getNewestModifiedTime(String baseDir, String[] fileNames) {
+		Stream<String> stream = Stream.of(fileNames);
 
-		final Stream<String> stream = Stream.of(fileNames);
-
-		final long newestModifiedTime = stream.map(
+		long newestModifiedTime = stream.map(
 			x -> Paths.get(baseDir, x)
 		).map(
 			this::_getLastModifiedTime
@@ -304,12 +301,10 @@ public class CSSBuilder implements AutoCloseable {
 		return newestModifiedTime;
 	}
 
-	private long _getOldestModifiedTime(
-		final String baseDir, final String[] fileNames) {
+	private long _getOldestModifiedTime(String baseDir, String[] fileNames) {
+		Stream<String> stream = Stream.of(fileNames);
 
-		final Stream<String> stream = Stream.of(fileNames);
-
-		final long oldestModifiedTime = stream.map(
+		long oldestModifiedTime = stream.map(
 			x -> Paths.get(baseDir, x)
 		).map(
 			this::_getLastModifiedTime
@@ -341,14 +336,14 @@ public class CSSBuilder implements AutoCloseable {
 		return rtlCss;
 	}
 
-	private String[] _getScssFiles(final String baseDir) {
-		final String[] includes = {"**\\*.scss"};
+	private String[] _getScssFiles(String baseDir) {
+		String[] includes = {"**\\*.scss"};
 
-		final String[] fragments = {"**\\_*.scss"};
+		String[] fragments = {"**\\_*.scss"};
 
 		Stream<String[]> stream = Stream.of(fragments, _EXCLUDES);
 
-		final String[] excludes = stream.flatMap(
+		String[] excludes = stream.flatMap(
 			Stream::of
 		).toArray(
 			String[]::new
@@ -357,8 +352,8 @@ public class CSSBuilder implements AutoCloseable {
 		return _getFilesFromDirectory(baseDir, includes, excludes);
 	}
 
-	private String[] _getScssFragments(final String baseDir) {
-		final String[] includes = {"**\\\\_*.scss"};
+	private String[] _getScssFragments(String baseDir) {
+		String[] includes = {"**\\\\_*.scss"};
 
 		return _getFilesFromDirectory(baseDir, includes, _EXCLUDES);
 	}

@@ -86,26 +86,26 @@ public class CSSBuilderTest {
 
 	@Test
 	public void testCssBuilderWithFragmentChange() throws Exception {
-		final Path fragmentFileToChange = Paths.get(
+		Path fragmentFileToChange = Paths.get(
 			_docrootDirName, "css", "_import_change.scss");
 
 		_changeContentInPath(fragmentFileToChange, "brown", "khaki");
 
-		try (final CSSBuilder cssBuilder = new CSSBuilder(
+		try (CSSBuilder cssBuilder = new CSSBuilder(
 				_docrootDirName, false, ".sass-cache/",
 				_PORTAL_COMMON_CSS_DIR_NAME, 6, new String[0], "jni")) {
 
 			cssBuilder.execute(Arrays.asList(new String[] {"/css"}));
 		}
 
-		final String outputCssFilePath =
+		String outputCssFilePath =
 			_docrootDirName + "/css/.sass-cache/test_import_change.css";
 
 		String outputCssFileContent = _read(outputCssFilePath);
 
 		_changeContentInPath(fragmentFileToChange, "khaki", "brown");
 
-		try (final CSSBuilder cssBuilder = new CSSBuilder(
+		try (CSSBuilder cssBuilder = new CSSBuilder(
 				_docrootDirName, false, ".sass-cache/",
 				_PORTAL_COMMON_CSS_DIR_NAME, 6, new String[0], "jni")) {
 
@@ -141,7 +141,7 @@ public class CSSBuilderTest {
 			Path path, String regex, String replacement)
 		throws Exception {
 
-		final Charset charset = StandardCharsets.UTF_8;
+		Charset charset = StandardCharsets.UTF_8;
 
 		String content = new String(Files.readAllBytes(path), charset);
 

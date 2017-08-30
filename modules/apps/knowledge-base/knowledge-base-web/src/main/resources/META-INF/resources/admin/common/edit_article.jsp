@@ -312,6 +312,14 @@ if (portletTitleBasedNavigation) {
 			if (workflowActionInput) {
 				workflowActionInput.val('<%= WorkflowConstants.ACTION_PUBLISH %>');
 			}
+
+			<c:if test="<%= kbArticle == null %>">
+				var customUrl = urlTitleInput.getAttribute('data-customUrl');
+
+				if (customUrl === 'false') {
+					urlTitleInput.val('');
+				}
+			</c:if>
 		}
 	);
 

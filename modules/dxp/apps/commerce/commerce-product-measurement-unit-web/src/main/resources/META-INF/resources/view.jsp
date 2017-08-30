@@ -24,11 +24,14 @@ CPMeasurementUnitsDisplayContext cpMeasurementUnitsDisplayContext = (CPMeasureme
 SearchContainer<CPMeasurementUnit> cpMeasurementUnitSearchContainer = cpMeasurementUnitsDisplayContext.getSearchContainer();
 
 int type = cpMeasurementUnitsDisplayContext.getType();
+
+boolean hasManageCPMeasurementUnitsPermission = CPMeasurementUnitPermission.contains(permissionChecker, scopeGroupId, CPActionKeys.MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS);
 %>
 
 <%@ include file="/navbar.jspf" %>
 
 <liferay-frontend:management-bar
+	includeCheckBox="<%= true %>"
 	searchContainerId="cpMeasurementUnits"
 >
 	<liferay-frontend:management-bar-filters>
@@ -52,64 +55,78 @@ int type = cpMeasurementUnitsDisplayContext.getType();
 			selectedDisplayStyle="list"
 		/>
 	</liferay-frontend:management-bar-buttons>
+
+	<c:if test="<%= hasManageCPMeasurementUnitsPermission %>">
+		<liferay-frontend:management-bar-action-buttons>
+			<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCPMeasurementUnits();" %>' icon="trash" label="delete" />
+		</liferay-frontend:management-bar-action-buttons>
+	</c:if>
 </liferay-frontend:management-bar>
 
 <div class="container-fluid-1280">
-	<liferay-ui:search-container
-		id="cpMeasurementUnits"
-		searchContainer="<%= cpMeasurementUnitSearchContainer %>"
-	>
-		<liferay-ui:search-container-row
-			className="com.liferay.commerce.product.model.CPMeasurementUnit"
-			keyProperty="CPMeasurementUnitId"
-			modelVar="cpMeasurementUnit"
+	<portlet:actionURL name="editCPMeasurementUnit" var="editCPMeasurementUnitActionURL" />
+
+	<aui:form action="<%= editCPMeasurementUnitActionURL %>" method="post" name="fm">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.DELETE %>" />
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="deleteCPMeasurementUnitIds" type="hidden" />
+
+		<liferay-ui:search-container
+			id="cpMeasurementUnits"
+			searchContainer="<%= cpMeasurementUnitSearchContainer %>"
 		>
+			<liferay-ui:search-container-row
+				className="com.liferay.commerce.product.model.CPMeasurementUnit"
+				keyProperty="CPMeasurementUnitId"
+				modelVar="cpMeasurementUnit"
+			>
 
-			<%
-			PortletURL rowURL = renderResponse.createRenderURL();
+				<%
+				PortletURL rowURL = renderResponse.createRenderURL();
 
-			rowURL.setParameter("mvcRenderCommandName", "editCPMeasurementUnit");
-			rowURL.setParameter("redirect", currentURL);
-			rowURL.setParameter("cpMeasurementUnitId", String.valueOf(cpMeasurementUnit.getCPMeasurementUnitId()));
-			rowURL.setParameter("type", String.valueOf(type));
-			%>
+				rowURL.setParameter("mvcRenderCommandName", "editCPMeasurementUnit");
+				rowURL.setParameter("redirect", currentURL);
+				rowURL.setParameter("cpMeasurementUnitId", String.valueOf(cpMeasurementUnit.getCPMeasurementUnitId()));
+				rowURL.setParameter("type", String.valueOf(type));
+				%>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				href="<%= rowURL %>"
-				property="name"
-			/>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
+					href="<%= rowURL %>"
+					property="name"
+				/>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				property="key"
-			/>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
+					property="key"
+				/>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="ratio-to-primary"
-				property="rate"
-			/>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
+					name="ratio-to-primary"
+					property="rate"
+				/>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="primary"
-				value='<%= LanguageUtil.get(request, cpMeasurementUnit.isPrimary() ? "yes" : "no") %>'
-			/>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
+					name="primary"
+					value='<%= LanguageUtil.get(request, cpMeasurementUnit.isPrimary() ? "yes" : "no") %>'
+				/>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				property="priority"
-			/>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
+					property="priority"
+				/>
 
-			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action-column"
-				path="/measurement_unit_action.jsp"
-			/>
-		</liferay-ui:search-container-row>
+				<liferay-ui:search-container-column-jsp
+					cssClass="entry-action-column"
+					path="/measurement_unit_action.jsp"
+				/>
+			</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
-	</liferay-ui:search-container>
+			<liferay-ui:search-iterator markupView="lexicon" />
+		</liferay-ui:search-container>
+	</aui:form>
 </div>
 
 <c:if test="<%= CPMeasurementUnitPermission.contains(permissionChecker, scopeGroupId, CPActionKeys.MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS) %>">
@@ -123,3 +140,15 @@ int type = cpMeasurementUnitsDisplayContext.getType();
 		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-measurement-unit") %>' url="<%= addCPMeasurementUnitURL.toString() %>" />
 	</liferay-frontend:add-menu>
 </c:if>
+
+<aui:script>
+	function <portlet:namespace />deleteCPMeasurementUnits() {
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-measurement-units") %>')) {
+			var form = AUI.$(document.<portlet:namespace />fm);
+
+			form.fm('deleteCPMeasurementUnitIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+			submitForm(form);
+		}
+	}
+</aui:script>

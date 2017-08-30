@@ -20,6 +20,8 @@ import com.liferay.commerce.currency.util.RoundingType;
 import com.liferay.commerce.currency.util.RoundingTypeServicesTracker;
 import com.liferay.commerce.currency.web.internal.util.CommerceCurrencyUtil;
 import com.liferay.commerce.currency.web.internal.util.CurrenciesCommerceAdminModule;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
+import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -143,6 +145,7 @@ public class CommerceCurrenciesDisplayContext {
 		_searchContainer.setOrderByCol(orderByCol);
 		_searchContainer.setOrderByComparator(orderByComparator);
 		_searchContainer.setOrderByType(orderByType);
+		_searchContainer.setRowChecker(getRowChecker());
 
 		int total;
 		List<CommerceCurrency> results;
@@ -173,12 +176,25 @@ public class CommerceCurrenciesDisplayContext {
 		return ParamUtil.getString(_renderRequest, "navigation");
 	}
 
+	protected RowChecker getRowChecker() {
+		if (_rowChecker != null) {
+			return _rowChecker;
+		}
+
+		RowChecker rowChecker = new EmptyOnClickRowChecker(_renderResponse);
+
+		_rowChecker = rowChecker;
+
+		return _rowChecker;
+	}
+
 	private CommerceCurrency _commerceCurrency;
 	private final CommerceCurrencyService _commerceCurrencyService;
 	private CommerceCurrency _primaryCommerceCurrency;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final RoundingTypeServicesTracker _roundingTypeServicesTracker;
+	private RowChecker _rowChecker;
 	private SearchContainer<CommerceCurrency> _searchContainer;
 
 }

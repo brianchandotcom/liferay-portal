@@ -19,6 +19,8 @@ import com.liferay.commerce.product.measurement.unit.web.internal.util.CPMeasure
 import com.liferay.commerce.product.measurement.unit.web.internal.util.CPMeasurementUnitUtil;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
+import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -131,6 +133,7 @@ public class CPMeasurementUnitsDisplayContext {
 		_searchContainer.setOrderByCol(orderByCol);
 		_searchContainer.setOrderByComparator(orderByComparator);
 		_searchContainer.setOrderByType(orderByType);
+		_searchContainer.setRowChecker(getRowChecker());
 
 		int total = _cpMeasurementUnitService.getCPMeasurementUnitsCount(
 			themeDisplay.getScopeGroupId(), getType());
@@ -153,11 +156,24 @@ public class CPMeasurementUnitsDisplayContext {
 			CPConstants.MEASUREMENT_UNIT_TYPE_DIMENSION);
 	}
 
+	protected RowChecker getRowChecker() {
+		if (_rowChecker != null) {
+			return _rowChecker;
+		}
+
+		RowChecker rowChecker = new EmptyOnClickRowChecker(_renderResponse);
+
+		_rowChecker = rowChecker;
+
+		return _rowChecker;
+	}
+
 	private CPMeasurementUnit _cpMeasurementUnit;
 	private final CPMeasurementUnitService _cpMeasurementUnitService;
 	private CPMeasurementUnit _primaryCPMeasurementUnit;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
+	private RowChecker _rowChecker;
 	private SearchContainer<CPMeasurementUnit> _searchContainer;
 
 }

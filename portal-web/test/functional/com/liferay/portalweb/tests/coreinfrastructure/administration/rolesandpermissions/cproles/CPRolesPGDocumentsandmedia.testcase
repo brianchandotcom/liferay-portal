@@ -422,6 +422,53 @@
 		</execute>
 	</command>
 
+	<command name="ViewDMDocumentNoGuestRole" priority="5">
+		<description message="This is a use case for LPS-43104." />
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="Document_1.doc" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoDocumentsAndMediaDocumentPG">
+			<var name="dmDocumentTitle" value="Document_1.doc" />
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Role#removePermissionPG">
+			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
+			<var name="roleName" value="Guest" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMPortlet#setListView" />
+
+		<execute macro="DMPortlet#viewDefaultPG" />
+	</command>
+
 	<command name="ViewDMFolderGuestInline" priority="4">
 		<execute macro="Page#add">
 			<var name="pageName" value="Documents and Media Page" />

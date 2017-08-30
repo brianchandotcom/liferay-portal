@@ -67,10 +67,12 @@ Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/language/LanguageUtil.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/log/*,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/memory/SoftReferenceThreadLocal.class,\
+	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/model/AttachedModel.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/model/AuditedModel.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/model/BaseModel.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/model/ClassedModel.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/model/GroupedModel.class,\
+	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/model/LocalizedModel.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/model/ModelHints.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/model/ModelHintsCallback.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/model/ModelHintsConstants.class,\
@@ -78,6 +80,7 @@ Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/model/PersistedModel.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/model/ShardedModel.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/model/StagedModel.class,\
+	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/model/TypedModel.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/model/cache/CacheField.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/nio/charset/*,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/plugin/Version.class,\

@@ -21,7 +21,9 @@
 	"liferayTheme": {
 		"baseTheme": "styled",
 		"distName": "1975-london-theme",
-		"hookModules": ["liferay-theme-es2015-hook"],
+		"hookModules": [
+			"liferay-theme-es2015-hook"
+		],
 		"rubySass": false,
 		"version": "7.0"
 	},

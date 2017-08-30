@@ -177,13 +177,6 @@ public class MBMessageActivityInterpreter
 			permissionChecker, message.getMessageId(), actionId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
-
-		_mbMessageLocalService = mbMessageLocalService;
-	}
-
 	@Reference(
 		target = "(bundle.symbolic.name=com.liferay.message.boards.web)",
 		unbind = "-"
@@ -201,7 +194,9 @@ public class MBMessageActivityInterpreter
 	@Reference
 	private Http _http;
 
+	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
+
 	private ResourceBundleLoader _resourceBundleLoader;
 
 }

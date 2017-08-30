@@ -38,34 +38,28 @@ import java.util.stream.Stream;
 public class ScopeSearchFacetDisplayBuilder {
 
 	public ScopeSearchFacetDisplayContext build() {
-		boolean nothingSelected = isNothingSelected();
-
-		List<TermCollector> termCollectors = getTermCollectors();
-
-		boolean renderNothing = false;
-
-		if (nothingSelected && termCollectors.isEmpty()) {
-			renderNothing = true;
-		}
-
 		ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext =
 			new ScopeSearchFacetDisplayContext();
 
-		scopeSearchFacetDisplayContext.setNothingSelected(nothingSelected);
+		scopeSearchFacetDisplayContext.setNothingSelected(isNothingSelected());
 		scopeSearchFacetDisplayContext.setParameterName(_parameterName);
 		scopeSearchFacetDisplayContext.setParameterValue(
 			getFirstParameterValueString());
 		scopeSearchFacetDisplayContext.setParameterValues(
 			getParameterValueStrings());
-		scopeSearchFacetDisplayContext.setRenderNothing(renderNothing);
+		scopeSearchFacetDisplayContext.setRenderNothing(isRenderNothing());
 		scopeSearchFacetDisplayContext.setTermDisplayContexts(
-			buildTermDisplayContexts(termCollectors));
+			buildTermDisplayContexts(getTermCollectors()));
 
 		return scopeSearchFacetDisplayContext;
 	}
 
 	public void setFacet(Facet facet) {
 		_facet = facet;
+	}
+
+	public void setFilteredGroupIds(long[] groupIds) {
+		_filteredGroupIds = groupIds;
 	}
 
 	public void setFrequenciesVisible(boolean frequenciesVisible) {
@@ -232,12 +226,38 @@ public class ScopeSearchFacetDisplayBuilder {
 		return Collections.<TermCollector>emptyList();
 	}
 
+	protected boolean isFilteredByThisSite() {
+		if (_filteredGroupIds.length == 1) {
+			return true;
+		}
+
+		return false;
+	}
+
 	protected boolean isNothingSelected() {
 		if (_selectedGroupIds.isEmpty()) {
 			return true;
 		}
 
 		return false;
+	}
+
+	protected boolean isRenderNothing() {
+		if (isFilteredByThisSite()) {
+			return true;
+		}
+
+		if (!isNothingSelected()) {
+			return false;
+		}
+
+		List<TermCollector> termCollectors = getTermCollectors();
+
+		if (!termCollectors.isEmpty()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	protected boolean isSelected(Long groupId) {
@@ -250,6 +270,7 @@ public class ScopeSearchFacetDisplayBuilder {
 
 	private int _countThreshold;
 	private Facet _facet;
+	private long[] _filteredGroupIds = {};
 	private GroupLocalService _groupLocalService;
 	private Locale _locale;
 	private int _maxTerms;

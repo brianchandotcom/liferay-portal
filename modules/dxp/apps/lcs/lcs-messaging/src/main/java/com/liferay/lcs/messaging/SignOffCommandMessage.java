@@ -17,5 +17,25 @@ package com.liferay.lcs.messaging;
 /**
  * @author Ivica Cardic
  */
-public class DeregisterCommandMessage extends CommandMessage {
+public class SignOffCommandMessage extends CommandMessage {
+
+	public boolean isDeregister() {
+		return _deregister;
+	}
+
+	public boolean isInvalidateToken() {
+		return _invalidateToken;
+	}
+
+	public void setDeregister(boolean deregister) {
+		_deregister = deregister;
+	}
+
+	public void setInvalidateToken(boolean invalidateToken) {
+		_invalidateToken = invalidateToken;
+	}
+
+	private boolean _deregister;
+	private boolean _invalidateToken;
+
 }

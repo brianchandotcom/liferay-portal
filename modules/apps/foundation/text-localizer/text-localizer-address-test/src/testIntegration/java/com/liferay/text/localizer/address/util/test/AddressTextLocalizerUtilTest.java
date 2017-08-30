@@ -70,7 +70,7 @@ public class AddressTextLocalizerUtilTest {
 	}
 
 	@Test
-	public void testFormatWithTheCorrectLocalizer() {
+	public void testFormat() {
 		AddressTextLocalizer addressTextLocalizer =
 			AddressTextLocalizerUtil.getAddressTextLocalizer(_address);
 
@@ -81,21 +81,25 @@ public class AddressTextLocalizerUtilTest {
 
 	@Test
 	public void testGetAddressTextLocalizerFromAddress() {
+		AddressTextLocalizer addressTextLocalizer =
+			AddressTextLocalizerUtil.getAddressTextLocalizer(_address);
+
 		Assert.assertTrue(
-			AddressTextLocalizerUtil.getAddressTextLocalizer(
-				_address) instanceof USAddressTextLocalizer);
+			addressTextLocalizer instanceof USAddressTextLocalizer);
 	}
 
 	@Test
-	public void testGetAddressTextLocalizerFromCountryA2String() {
+	public void testGetAddressTextLocalizerFromCountryA2() {
+		AddressTextLocalizer defaultAddressTextLocalizer =
+			AddressTextLocalizerUtil.getAddressTextLocalizer("US");
+
 		Assert.assertTrue(
-			AddressTextLocalizerUtil.getAddressTextLocalizer(
-				"US") instanceof USAddressTextLocalizer);
+			defaultAddressTextLocalizer instanceof USAddressTextLocalizer);
 
 		String countryA2 = RandomTestUtil.randomString();
-		String formattedString = RandomTestUtil.randomString();
+		String addressText = RandomTestUtil.randomString();
 
-		AddressTextLocalizer addressTextLocalizer = address -> formattedString;
+		AddressTextLocalizer addressTextLocalizer = address -> addressText;
 
 		_serviceRegistration = _registerAddressTextLocalizer(
 			addressTextLocalizer, countryA2);
@@ -107,7 +111,7 @@ public class AddressTextLocalizerUtilTest {
 			addressTextLocalizer, retrievedAddressTextLocalizer);
 
 		Assert.assertEquals(
-			formattedString, retrievedAddressTextLocalizer.format(_address));
+			addressText, retrievedAddressTextLocalizer.format(_address));
 	}
 
 	private Address _addAddress(User user) throws Exception {

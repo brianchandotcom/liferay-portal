@@ -258,7 +258,7 @@ public class CSSBuilder implements AutoCloseable {
 			});
 	}
 
-	private final String[] _getFilesFromDirectory(
+	private String[] _getFilesFromDirectory(
 		final String baseDir, final String[] includes,
 		final String[] excludes) {
 
@@ -277,7 +277,7 @@ public class CSSBuilder implements AutoCloseable {
 		return includedFiles;
 	}
 
-	private final long _getLastModifiedTime(final Path path) {
+	private long _getLastModifiedTime(final Path path) {
 		try {
 			return Files.getLastModifiedTime(path).toMillis();
 		}
@@ -286,7 +286,7 @@ public class CSSBuilder implements AutoCloseable {
 		}
 	}
 
-	private final long _getNewestModifiedTime(
+	private long _getNewestModifiedTime(
 		final String baseDir, final String[] fileNames) {
 
 		final Stream<String> stream = Stream.of(fileNames);
@@ -304,7 +304,7 @@ public class CSSBuilder implements AutoCloseable {
 		return newestModifiedTime;
 	}
 
-	private final long _getOldestModifiedTime(
+	private long _getOldestModifiedTime(
 		final String baseDir, final String[] fileNames) {
 
 		final Stream<String> stream = Stream.of(fileNames);
@@ -341,7 +341,7 @@ public class CSSBuilder implements AutoCloseable {
 		return rtlCss;
 	}
 
-	private final String[] _getScssFiles(final String baseDir) {
+	private String[] _getScssFiles(final String baseDir) {
 		final String[] includes = {"**\\*.scss"};
 
 		final String[] fragments = {"**\\_*.scss"};
@@ -357,7 +357,7 @@ public class CSSBuilder implements AutoCloseable {
 		return _getFilesFromDirectory(baseDir, includes, excludes);
 	}
 
-	private final String[] _getScssFragments(final String baseDir) {
+	private String[] _getScssFragments(final String baseDir) {
 		final String[] includes = {"**\\\\_*.scss"};
 
 		return _getFilesFromDirectory(baseDir, includes, _EXCLUDES);

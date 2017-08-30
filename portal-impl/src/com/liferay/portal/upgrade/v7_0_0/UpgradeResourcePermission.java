@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.dao.orm.common.SQLTransformer;
+import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -56,69 +57,97 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 				"update ResourcePermission set viewActionId = [$TRUE$] where " +
 					"MOD(actionIds, 2) = 1");
 
-			List<String> stringPrimKeys = new ArrayList<>();
+			try (PreparedStatement ps1 = connection.prepareStatement(
+					"select distinct name from ResourcePermission");
+				ResultSet rs1 = ps1.executeQuery();
+				PreparedStatement ps2 = connection.prepareStatement(
+					"select distinct primKey from ResourcePermission where " +
+						"name = ?")) {
 
-			try (PreparedStatement ps = connection.prepareStatement(
-					"select distinct primKey from ResourcePermission");
-				ResultSet rs = ps.executeQuery()) {
+				while (rs1.next()) {
+					List<String> stringPrimKeys = new ArrayList<>();
 
-				while (rs.next()) {
-					String primKey = rs.getString("primKey");
+					String name = rs1.getString("name");
 
-					long primKeyId = GetterUtil.getLong(primKey);
+					ps2.setString(1, name);
 
-					if (primKeyId <= 0) {
-						stringPrimKeys.add(primKey);
+					try (ResultSet rs2 = ps2.executeQuery()) {
+						while (rs2.next()) {
+							String primKey = rs2.getString("primKey");
+
+							if ((GetterUtil.getLong(primKey) <= 0) &&
+								!primKey.contains(
+									PortletConstants.LAYOUT_SEPARATOR)) {
+
+								stringPrimKeys.add(primKey);
+							}
+						}
 					}
+
+					_updatePrimKeyIdsByName(name, stringPrimKeys);
 				}
 			}
-
-			if (stringPrimKeys.isEmpty()) {
-				runSQL(
-					"update ResourcePermission set primKeyId = CAST_LONG(" +
-						"primKey)");
-
-				return;
-			}
-
-			StringBundler sb = new StringBundler(stringPrimKeys.size() + 1);
-
-			sb.append("in (?");
-
-			for (int i = 1; i < stringPrimKeys.size(); i++) {
-				sb.append(", ?");
-			}
-
-			sb.append(")");
-
-			String inClause = sb.toString();
-
-			_updatePrimKeyIds(
-				"update ResourcePermission set primKeyId = 0 where primKey " +
-					inClause,
-				stringPrimKeys);
-
-			_updatePrimKeyIds(
-				"update ResourcePermission set primKeyId = CAST_LONG(primKey" +
-					") where primKey not " + inClause,
-				stringPrimKeys);
 		}
 	}
 
-	private void _updatePrimKeyIds(String sql, List<String> primKeys)
+	private void _updatePrimKeyIds(
+			String sql, String name, List<String> primKeys)
 		throws Exception {
 
 		try (PreparedStatement ps = connection.prepareStatement(
 				SQLTransformer.transform(sql))) {
 
+			ps.setString(1, name);
+
 			for (int i = 0; i < primKeys.size(); i++) {
 				String primKey = primKeys.get(i);
 
-				ps.setString(i + 1, primKey);
+				ps.setString(i + 2, primKey);
 			}
 
 			ps.executeUpdate();
 		}
+	}
+
+	private void _updatePrimKeyIdsByName(String name, List<String> primKeys)
+		throws Exception {
+
+		if (primKeys.isEmpty()) {
+			_updatePrimKeyIds(
+				"update ResourcePermission set primKeyId = CAST_LONG(" +
+					"primKey) where name = ? and primKey not like '%_LAYOUT_%'",
+				name, primKeys);
+
+			_updatePrimKeyIds(
+				"update ResourcePermission set primKeyId = 0 where name = ? " +
+					"and primKey like '%_LAYOUT_%'",
+				name, primKeys);
+
+			return;
+		}
+
+		StringBundler sb = new StringBundler(primKeys.size() + 1);
+
+		sb.append("in (?");
+
+		for (int i = 1; i < primKeys.size(); i++) {
+			sb.append(", ?");
+		}
+
+		sb.append(")");
+
+		String inClause = sb.toString();
+
+		_updatePrimKeyIds(
+			"update ResourcePermission set primKeyId = 0 where name = ? and " +
+				"(primKey like '%_LAYOUT_%' or primKey " + inClause + ")",
+			name, primKeys);
+
+		_updatePrimKeyIds(
+			"update ResourcePermission set primKeyId = CAST_LONG(primKey" +
+				") where name = ? and (primKey not like '%_LAYOUT_%' and " +
+					"primKey not " + inClause + ")",
+			name, primKeys);
 	}
 
 }

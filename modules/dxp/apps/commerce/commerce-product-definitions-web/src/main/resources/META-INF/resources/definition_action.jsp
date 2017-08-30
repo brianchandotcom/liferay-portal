@@ -41,6 +41,19 @@ else {
 		url="<%= editURL %>"
 	/>
 
+	<%
+	Map<Locale, String> urlTitleMap = cpDefinition.getUrlTitleMap();
+
+	String productURL = themeDisplay.getPortalURL() + CPConstants.SEPARATOR_PRODUCT_URL + urlTitleMap.get(themeDisplay.getSiteDefaultLocale());
+	%>
+
+	<liferay-ui:icon
+		iconCssClass="icon-new-window"
+		message="view-in-public-store"
+		target="_blank"
+		url="<%= productURL %>"
+	/>
+
 	<portlet:actionURL name="editProductDefinition" var="deleteURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />

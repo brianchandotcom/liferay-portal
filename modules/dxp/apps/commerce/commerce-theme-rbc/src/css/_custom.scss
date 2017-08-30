@@ -25,8 +25,8 @@ body {
 }
 
 #secondHeading {
-	position: relative;
 	padding-top: 20px;
+	position: relative;
 
 	@include sm {
 		min-height: 158px;

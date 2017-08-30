@@ -53,13 +53,13 @@ AssetDisplayTemplate assetDisplayTemplate = (AssetDisplayTemplate)row.getObject(
 	</c:if>
 
 	<c:if test="<%= AssetDisplayTemplatePermission.contains(permissionChecker, assetDisplayTemplate, ActionKeys.DELETE) %>">
-		<portlet:actionURL name="/asset_display_template/delete_asset_display_template" var="deleteCategoryURL">
+		<portlet:actionURL name="/asset_display_template/delete_asset_display_template" var="deleteAssetDisplayTemplateURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="assetDisplayTemplateId" value="<%= String.valueOf(assetDisplayTemplate.getAssetDisplayTemplateId()) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete
-			url="<%= deleteCategoryURL %>"
+			url="<%= deleteAssetDisplayTemplateURL %>"
 		/>
 	</c:if>
 </liferay-ui:icon-menu>

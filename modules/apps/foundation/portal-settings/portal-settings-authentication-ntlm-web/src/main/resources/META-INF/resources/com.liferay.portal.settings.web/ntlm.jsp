@@ -23,6 +23,7 @@ boolean enabled = ntlmConfiguration.enabled();
 String domainController = ntlmConfiguration.domainController();
 String domainControllerName = ntlmConfiguration.domainControllerName();
 String domain = ntlmConfiguration.domain();
+String negotiateFlags = ntlmConfiguration.negotiateFlags();
 String serviceAccount = ntlmConfiguration.serviceAccount();
 
 String servicePassword = ntlmConfiguration.servicePassword();
@@ -46,6 +47,8 @@ if (Validator.isNotNull(servicePassword)) {
 	<aui:input cssClass="lfr-input-text-container" label="service-account" name='<%= PortalSettingsNtlmConstants.FORM_PARAMETER_NAMESPACE + "serviceAccount" %>' type="text" value="<%= serviceAccount %>" />
 
 	<aui:input cssClass="lfr-input-text-container" label="service-password" name='<%= PortalSettingsNtlmConstants.FORM_PARAMETER_NAMESPACE + "servicePassword" %>' type="password" value="<%= servicePassword %>" />
+
+	<aui:input cssClass="lfr-input-text-container" label="negotiate-flags" name='<%= PortalSettingsNtlmConstants.FORM_PARAMETER_NAMESPACE + "negotiateFlags" %>' type="text" value="<%= negotiateFlags %>" />
 
 	<aui:button-row>
 		<portlet:actionURL name="/portal_settings/ntlm_delete" var="resetValuesURL">

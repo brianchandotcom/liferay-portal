@@ -15,13 +15,17 @@
 package com.liferay.commerce.checkout.web.internal.portlet.action;
 
 import com.liferay.commerce.checkout.web.constants.CommerceCheckoutPortletKeys;
+import com.liferay.commerce.checkout.web.internal.display.context.CheckoutStepBillingDisplayContext;
+import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Andrea Di Giorgi
@@ -43,6 +47,13 @@ public class ViewCheckoutStepBillingMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		CheckoutStepBillingDisplayContext checkoutStepBillingDisplayContext =
+			new CheckoutStepBillingDisplayContext(
+				_commerceAddressService, renderRequest);
+
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT, checkoutStepBillingDisplayContext);
+
 		renderRequest.setAttribute(
 			"view_checkout_step.jsp-jspPage", "/checkout_step/billing.jsp");
 		renderRequest.setAttribute(
@@ -51,5 +62,8 @@ public class ViewCheckoutStepBillingMVCRenderCommand
 
 		return "/view_checkout_step.jsp";
 	}
+
+	@Reference
+	private CommerceAddressService _commerceAddressService;
 
 }

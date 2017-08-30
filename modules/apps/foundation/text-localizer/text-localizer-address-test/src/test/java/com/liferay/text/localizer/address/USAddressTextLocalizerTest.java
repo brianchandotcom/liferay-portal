@@ -41,11 +41,11 @@ public class USAddressTextLocalizerTest {
 
 	@Test
 	public void testAllFields() {
-		_setStreets(_address);
 		_setCity(_address);
-		_setRegion(_address);
-		_setZip(_address);
 		_setCountry(_address);
+		_setRegion(_address);
+		_setStreets(_address);
+		_setZip(_address);
 
 		Assert.assertEquals(
 			_constructExpectedAddress(
@@ -136,8 +136,8 @@ public class USAddressTextLocalizerTest {
 
 	@Test
 	public void testStreetAndCountryLines() {
-		_setStreets(_address);
 		_setCountry(_address);
+		_setStreets(_address);
 
 		Assert.assertEquals(
 			_constructExpectedAddress(
@@ -166,6 +166,12 @@ public class USAddressTextLocalizerTest {
 			xssFieldValue
 		).when(
 			_address
+		).getCity();
+
+		Mockito.doReturn(
+			xssFieldValue
+		).when(
+			_address
 		).getStreet1();
 
 		Mockito.doReturn(
@@ -179,12 +185,6 @@ public class USAddressTextLocalizerTest {
 		).when(
 			_address
 		).getStreet3();
-
-		Mockito.doReturn(
-			xssFieldValue
-		).when(
-			_address
-		).getCity();
 
 		Mockito.doReturn(
 			xssFieldValue
@@ -249,10 +249,10 @@ public class USAddressTextLocalizerTest {
 		Country country = Mockito.mock(Country.class);
 
 		Mockito.doReturn(
-			countryName
-		).when(
 			country
-		).getName();
+		).when(
+			address
+		).getCountry();
 
 		Mockito.doReturn(
 			RandomTestUtil.randomLong()
@@ -261,10 +261,10 @@ public class USAddressTextLocalizerTest {
 		).getCountryId();
 
 		Mockito.doReturn(
-			country
+			countryName
 		).when(
-			address
-		).getCountry();
+			country
+		).getName();
 	}
 
 	private void _setRegion(Address address) {
@@ -281,16 +281,16 @@ public class USAddressTextLocalizerTest {
 		).getName();
 
 		Mockito.doReturn(
-			RandomTestUtil.randomLong()
-		).when(
-			region
-		).getRegionId();
-
-		Mockito.doReturn(
 			region
 		).when(
 			address
 		).getRegion();
+
+		Mockito.doReturn(
+			RandomTestUtil.randomLong()
+		).when(
+			region
+		).getRegionId();
 	}
 
 	private void _setStreets(Address address) {

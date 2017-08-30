@@ -344,11 +344,15 @@ public class CSSBuilder implements AutoCloseable {
 	private final String[] _getScssFiles(final String baseDir) {
 		final String[] includes = {"**\\*.scss"};
 
-		final String[] excludes = {
-			"**\\_*.scss", "**\\_diffs\\**", "**\\.sass-cache*\\**",
-			"**\\.sass_cache_*\\**", "**\\_sass_cache_*\\**", "**\\_styled\\**",
-			"**\\_unstyled\\**", "**\\css\\aui\\**", "**\\tmp\\**"
-		};
+		final String[] fragments = {"**\\_*.scss"};
+
+		Stream<String[]> stream = Stream.of(fragments, _EXCLUDES);
+
+		final String[] excludes = stream.flatMap(
+			Stream::of
+		).toArray(
+			String[]::new
+		);
 
 		return _getFilesFromDirectory(baseDir, includes, excludes);
 	}
@@ -356,13 +360,7 @@ public class CSSBuilder implements AutoCloseable {
 	private final String[] _getScssFragments(final String baseDir) {
 		final String[] includes = {"**\\\\_*.scss"};
 
-		final String[] excludes = {
-			"**\\_diffs\\**", "**\\.sass-cache*\\**", "**\\.sass_cache_*\\**",
-			"**\\_sass_cache_*\\**", "**\\_styled\\**", "**\\_unstyled\\**",
-			"**\\css\\aui\\**", "**\\tmp\\**"
-		};
-
-		return _getFilesFromDirectory(baseDir, includes, excludes);
+		return _getFilesFromDirectory(baseDir, includes, _EXCLUDES);
 	}
 
 	private void _initSassCompiler(String sassCompilerClassName)
@@ -560,6 +558,12 @@ public class CSSBuilder implements AutoCloseable {
 
 		outputFile.setLastModified(file.lastModified());
 	}
+
+	private static final String[] _EXCLUDES = {
+		"**\\_diffs\\**", "**\\.sass-cache*\\**", "**\\.sass_cache_*\\**",
+		"**\\_sass_cache_*\\**", "**\\_styled\\**", "**\\_unstyled\\**",
+		"**\\css\\aui\\**", "**\\tmp\\**"
+	};
 
 	private static RTLCSSConverter _rtlCSSConverter;
 

@@ -15,7 +15,11 @@
 package com.liferay.commerce.product.search;
 
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
+import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
+import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,13 +34,18 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -159,14 +168,61 @@ public class CPAttachmentFileEntryIndexer
 
 		document.addText(Field.CONTENT, StringPool.BLANK);
 
+		document.addNumber(Field.PRIORITY, cpAttachmentFileEntry.getPriority());
+
 		document.addNumber(
 			FIELD_RELATED_ENTITY_CLASS_NAME_ID,
 			cpAttachmentFileEntry.getClassNameId());
 		document.addNumber(
-			FIELD_RELATED_ENTITY_CLASS_PK,
-			cpAttachmentFileEntry.getClassNameId());
+			FIELD_RELATED_ENTITY_CLASS_PK, cpAttachmentFileEntry.getClassPK());
 		document.addNumber(
 			FIELD_FILE_ENTRY_ID, cpAttachmentFileEntry.getFileEntryId());
+
+		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
+			cpDefinitionOptionRelListMap = _cpInstanceHelper.parseJSONString(
+				cpAttachmentFileEntry.getJson());
+
+		for (Map.Entry<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
+				cpDefinitionOptionRelListMapEntry :
+					cpDefinitionOptionRelListMap.entrySet()) {
+
+			CPDefinitionOptionRel cpDefinitionOptionRel =
+				cpDefinitionOptionRelListMapEntry.getKey();
+
+			CPOption cpOption = cpDefinitionOptionRel.getCPOption();
+
+			List<String> optionValueNames = new ArrayList<>();
+			List<Long> optionValueIds = new ArrayList<>();
+
+			for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
+					cpDefinitionOptionRelListMapEntry.getValue()) {
+
+				optionValueNames.add(
+					StringUtil.toLowerCase(
+						cpDefinitionOptionValueRel.getKey()));
+				optionValueIds.add(
+					cpDefinitionOptionValueRel.
+						getCPDefinitionOptionValueRelId());
+			}
+
+			document.addText(
+				"ATTRIBUTE_" + cpOption.getKey() +
+					"_VALUES_NAMES",
+				ArrayUtil.toStringArray(optionValueNames));
+			document.addNumber(
+				"ATTRIBUTE_" + cpOption.getKey() +
+					"_VALUES_IDS",
+				ArrayUtil.toLongArray(optionValueIds));
+
+			document.addText(
+				"ATTRIBUTE_" + cpDefinitionOptionRel.getCPOptionId() +
+					"_VALUES_NAMES",
+				ArrayUtil.toStringArray(optionValueNames));
+			document.addNumber(
+				"ATTRIBUTE_" + cpDefinitionOptionRel.getCPOptionId() +
+					"_VALUES_IDS",
+				ArrayUtil.toLongArray(optionValueIds));
+		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -262,6 +318,9 @@ public class CPAttachmentFileEntryIndexer
 	@Reference
 	private CPAttachmentFileEntryLocalService
 		_cpAttachmentFileEntryLocalService;
+
+	@Reference
+	private CPInstanceHelper _cpInstanceHelper;
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;

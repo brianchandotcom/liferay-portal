@@ -20,17 +20,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.trash.TrashRendererFactory;
 
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
+ * @deprecated As of 1.3.0, with no direct replacement
  */
-@Component(
-	immediate = true,
-	property = {"model.class.name=com.liferay.message.boards.kernel.model.MBCategory"},
-	service = TrashRendererFactory.class
-)
+@Deprecated
 public class MBCategoryTrashRendererFactory implements TrashRendererFactory {
 
 	@Override

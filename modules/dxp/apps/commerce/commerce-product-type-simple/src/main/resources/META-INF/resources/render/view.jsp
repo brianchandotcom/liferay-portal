@@ -74,22 +74,6 @@ CPDefinition cpDefinition = cpTypeDisplayContext.getCPDefinition();
 					<div class="col-md-12">
 						<div class="options">
 							<%= cpTypeDisplayContext.renderOptions(renderRequest, renderResponse) %>
-
-							<aui:script>
-								Liferay.on(
-									'<%= cpTypeDisplayContext.getCPDefinitionId() %>DDMForm:render',
-									function(event) {
-										var form = event.form;
-
-										form.after(
-											"*:valueChange",
-											function(valueChangeEvent) {
-												console.log("test", valueChangeEvent);
-											}
-										);
-									}
-								);
-							</aui:script>
 						</div>
 					</div>
 				</div>
@@ -111,5 +95,15 @@ CPDefinition cpDefinition = cpTypeDisplayContext.getCPDefinition();
 						$("#full-image").attr("src",$(this).attr("data-url"));
 				});
 			});
+	</aui:script>
+
+	<aui:script use="liferay-commerce-product-content">
+		new Liferay.Portlet.ProductContent(
+			{
+				cpDefinitionId: <%= cpTypeDisplayContext.getCPDefinitionId() %>,
+				namespace: '<portlet:namespace />',
+				viewAttachmentURL: '<%= cpTypeDisplayContext.getViewAttachmentURL().toString() %>'
+			}
+		);
 	</aui:script>
 </liferay-ddm:template-renderer>

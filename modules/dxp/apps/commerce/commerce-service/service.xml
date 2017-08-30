@@ -4,6 +4,72 @@
 <service-builder auto-namespace-tables="false" package-path="com.liferay.commerce">
 	<author>Alessio Antonio Rendina</author>
 	<namespace>Commerce</namespace>
+	<entity local-service="true" name="CommerceAddress" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceAddressId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="addressUserId" type="long" />
+		<column name="name" type="String" />
+		<column name="description" type="String" />
+		<column name="street1" type="String" />
+		<column name="street2" type="String" />
+		<column name="street3" type="String" />
+		<column name="city" type="String" />
+		<column name="zip" type="String" />
+		<column name="commerceRegionId" type="long" />
+		<column name="commerceCountryId" type="long" />
+		<column name="phoneNumber" type="String" />
+		<column name="defaultBilling" type="boolean" />
+		<column name="defaultShipping" type="boolean" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="name" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="AddressUserId" return-type="Collection">
+			<finder-column name="addressUserId" />
+		</finder>
+		<finder name="CommerceRegionId" return-type="Collection">
+			<finder-column name="commerceRegionId" />
+		</finder>
+		<finder name="CommerceCountryId" return-type="Collection">
+			<finder-column name="commerceCountryId" />
+		</finder>
+		<finder name="G_A" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="addressUserId" />
+		</finder>
+		<finder name="G_A_DB" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="addressUserId" />
+			<finder-column name="defaultBilling" />
+		</finder>
+		<finder name="G_A_DS" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="addressUserId" />
+			<finder-column name="defaultShipping" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="CommerceCart" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
@@ -471,6 +537,10 @@
 		</finder>
 	</entity>
 	<exceptions>
+		<exception>CommerceAddressCity</exception>
+		<exception>CommerceAddressCountry</exception>
+		<exception>CommerceAddressName</exception>
+		<exception>CommerceAddressStreet</exception>
 		<exception>CommerceCartBillingAddress</exception>
 		<exception>CommerceCartShippingAddress</exception>
 		<exception>CommerceCountryName</exception>

@@ -1,4 +1,5 @@
 dependencies {
+	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "2.0.0"
 	provided project (":apps:web-experience:modern-site-building:modern-site-building-fragment-api")
 	provided project (":apps:web-experience:modern-site-building:modern-site-building-fragment-service")
 }

@@ -2005,7 +2005,7 @@ plugin is no longer applied to OSGi projects.
 
 ### Added
 - [LPS-73070]: Check the module's version in the `package-lock.json` file and
-ensure it matches the `Bundle-Version` in the `bnd.bnd`.
+ensure it matches the project version.
 
 ### Changed
 - [LPS-73472]: Update the [Liferay Gradle Plugins] dependency to version 3.4.44.

@@ -15,6 +15,8 @@
 package com.liferay.commerce.health.status.web.internal.util;
 
 import com.liferay.commerce.admin.web.util.CommerceAdminModule;
+import com.liferay.commerce.health.status.web.internal.display.context.CommerceHealthStatusDisplayContext;
+import com.liferay.commerce.health.status.web.util.CommerceHealthStatusServiceTracker;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
@@ -22,19 +24,24 @@ import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import com.liferay.portal.kernel.util.WebKeys;
 
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -92,6 +99,15 @@ public class HealthStatusCommerceAdminModule implements CommerceAdminModule {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException {
 
+		CommerceHealthStatusDisplayContext commerceHealthStatusDisplayContext =
+			new CommerceHealthStatusDisplayContext(
+				_commerceHealthStatusServiceTracker, renderRequest,
+				renderResponse);
+
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT,
+			commerceHealthStatusDisplayContext);
+
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			renderRequest);
 		HttpServletResponse httpServletResponse =
@@ -101,6 +117,10 @@ public class HealthStatusCommerceAdminModule implements CommerceAdminModule {
 			_servletContext, httpServletRequest, httpServletResponse,
 			"/view.jsp");
 	}
+
+	@Reference
+	private CommerceHealthStatusServiceTracker
+		_commerceHealthStatusServiceTracker;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

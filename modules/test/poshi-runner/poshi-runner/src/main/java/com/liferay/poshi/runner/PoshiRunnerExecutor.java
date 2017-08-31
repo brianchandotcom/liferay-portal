@@ -314,17 +314,21 @@ public class PoshiRunnerExecutor {
 
 		String classCommandName = executeElement.attributeValue("function");
 
-		String className = classCommandName;
+		String simpleClassCommandName =
+			PoshiRunnerGetterUtil.getSimpleClassCommandName(classCommandName);
+
+		String className = simpleClassCommandName;
 
 		if (classCommandName.contains("#")) {
 			className = PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
-				classCommandName);
+				simpleClassCommandName);
 		}
 
 		Exception exception = null;
 
 		int locatorCount = PoshiRunnerContext.getFunctionLocatorCount(
-			className);
+			className,
+			PoshiRunnerStackTraceUtil.getCurrentNamespace(classCommandName));
 
 		for (int i = 1; i <= locatorCount; i++) {
 			String locator = executeElement.attributeValue("locator" + i);
@@ -350,12 +354,14 @@ public class PoshiRunnerExecutor {
 					PoshiRunnerVariablesUtil.putIntoExecuteMap(
 						"locator-key" + i, locatorKey);
 
-					try {
-						locator = PoshiRunnerContext.getPathLocator(
-							pathClassName + "#" + locatorKey);
-					}
-					catch (Exception e) {
-						exception = e;
+					locator = PoshiRunnerContext.getPathLocator(
+						pathClassName + "#" + locatorKey,
+						PoshiRunnerStackTraceUtil.getCurrentNamespace());
+
+					if (locator == null) {
+						exception = new Exception(
+							"No such locator key " + pathClassName + "#" +
+								locatorKey);
 					}
 
 					locator = PoshiRunnerVariablesUtil.replaceExecuteVars(
@@ -387,7 +393,8 @@ public class PoshiRunnerExecutor {
 		PoshiRunnerStackTraceUtil.pushStackTrace(executeElement);
 
 		Element commandElement = PoshiRunnerContext.getFunctionCommandElement(
-			classCommandName);
+			simpleClassCommandName,
+			PoshiRunnerStackTraceUtil.getCurrentNamespace(classCommandName));
 
 		try {
 			if (exception != null) {
@@ -628,13 +635,20 @@ public class PoshiRunnerExecutor {
 
 		String classCommandName = executeElement.attributeValue(macroType);
 
+		String simpleClassCommandName =
+			PoshiRunnerGetterUtil.getSimpleClassCommandName(classCommandName);
+
 		String className =
 			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
-				classCommandName);
+				simpleClassCommandName);
 
 		PoshiRunnerStackTraceUtil.pushStackTrace(executeElement);
 
-		Element rootElement = PoshiRunnerContext.getMacroRootElement(className);
+		String namespace = PoshiRunnerStackTraceUtil.getCurrentNamespace(
+			classCommandName);
+
+		Element rootElement = PoshiRunnerContext.getMacroRootElement(
+			className, namespace);
 
 		List<Element> rootVarElements = rootElement.elements("var");
 
@@ -655,7 +669,7 @@ public class PoshiRunnerExecutor {
 		SummaryLoggerHandler.startSummary(executeElement);
 
 		Element commandElement = PoshiRunnerContext.getMacroCommandElement(
-			classCommandName);
+			simpleClassCommandName, namespace);
 
 		try {
 			Map<String, String> macroReturns = runMacroCommandElement(
@@ -1020,7 +1034,9 @@ public class PoshiRunnerExecutor {
 				String locator = element.attributeValue("locator");
 
 				if (locator.contains("#")) {
-					locator = PoshiRunnerContext.getPathLocator(locator);
+					locator = PoshiRunnerContext.getPathLocator(
+						locator,
+						PoshiRunnerStackTraceUtil.getCurrentNamespace());
 				}
 
 				varValue = liferaySelenium.getAttribute(
@@ -1040,7 +1056,9 @@ public class PoshiRunnerExecutor {
 				String locator = element.attributeValue("locator");
 
 				if (locator.contains("#")) {
-					locator = PoshiRunnerContext.getPathLocator(locator);
+					locator = PoshiRunnerContext.getPathLocator(
+						locator,
+						PoshiRunnerStackTraceUtil.getCurrentNamespace());
 				}
 
 				LiferaySelenium liferaySelenium = SeleniumUtil.getSelenium();
@@ -1071,7 +1089,8 @@ public class PoshiRunnerExecutor {
 
 				try {
 					varValue = PoshiRunnerGetterUtil.getVarMethodValue(
-						classCommandName);
+						classCommandName,
+						PoshiRunnerStackTraceUtil.getCurrentNamespace());
 				}
 				catch (Exception e) {
 					XMLLoggerHandler.updateStatus(element, "fail");

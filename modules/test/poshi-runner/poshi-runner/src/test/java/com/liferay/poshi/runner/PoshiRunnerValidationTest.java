@@ -418,7 +418,8 @@ public class PoshiRunnerValidationTest extends TestCase {
 		String filePath = getFilePath("ValidateFunctionContext.macro");
 
 		Element element = PoshiRunnerContext.getMacroCommandElement(
-			"ValidateFunctionContext#validateFunctionContextPass");
+			"ValidateFunctionContext#validateFunctionContextPass",
+			_defaultNamespace);
 
 		List<Element> functionElements = element.elements("execute");
 
@@ -431,7 +432,8 @@ public class PoshiRunnerValidationTest extends TestCase {
 			"ValidateFunctionContext is failing", "", getExceptionMessage());
 
 		element = PoshiRunnerContext.getMacroCommandElement(
-			"ValidateFunctionContext#validateFunctionContextFail1");
+			"ValidateFunctionContext#validateFunctionContextFail1",
+			_defaultNamespace);
 
 		functionElements = element.elements("execute");
 
@@ -445,7 +447,8 @@ public class PoshiRunnerValidationTest extends TestCase {
 			getExceptionMessage());
 
 		element = PoshiRunnerContext.getMacroCommandElement(
-			"ValidateFunctionContext#validateFunctionContextFail2");
+			"ValidateFunctionContext#validateFunctionContextFail2",
+			_defaultNamespace);
 
 		functionElements = element.elements("execute");
 
@@ -1618,10 +1621,10 @@ public class PoshiRunnerValidationTest extends TestCase {
 	}
 
 	protected String getFilePath(String fileName) {
-		String filePath =
+		String filePath = PoshiRunnerGetterUtil.getCanonicalPath(
 			PropsValues.TEST_BASE_DIR_NAME +
 				"resources/com/liferay/poshi/runner/dependencies/validation/" +
-					fileName;
+					fileName);
 
 		if (OSDetector.isWindows()) {
 			filePath = filePath.replace("/", "\\");
@@ -1633,5 +1636,8 @@ public class PoshiRunnerValidationTest extends TestCase {
 	protected URL getURL(String fileName) throws MalformedURLException {
 		return new URL("file:" + getFilePath(fileName));
 	}
+
+	private static final String _defaultNamespace =
+		PoshiRunnerContext.getDefaultNamespace();
 
 }

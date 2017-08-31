@@ -36,6 +36,30 @@ public final class PoshiRunnerStackTraceUtil {
 		return _filePaths.peek();
 	}
 
+	public static String getCurrentNamespace() {
+		if (_filePaths.isEmpty()) {
+			return PoshiRunnerContext.getDefaultNamespace();
+		}
+
+		String filePath = getCurrentFilePath();
+
+		int x = filePath.indexOf("[");
+
+		return PoshiRunnerContext.getNamespace(filePath.substring(0, x));
+	}
+
+	public static String getCurrentNamespace(String classCommandName) {
+		String namespace =
+			PoshiRunnerGetterUtil.getNamespaceFromClassCommandName(
+				classCommandName);
+
+		if (namespace == null) {
+			namespace = getCurrentNamespace();
+		}
+
+		return namespace;
+	}
+
 	public static String getSimpleStackTrace() {
 		StringBuilder sb = new StringBuilder();
 
@@ -167,15 +191,19 @@ public final class PoshiRunnerStackTraceUtil {
 	private static void _pushFilePath(
 		String classCommandName, String classType) {
 
+		String simpleClassCommandName =
+			PoshiRunnerGetterUtil.getSimpleClassCommandName(classCommandName);
+
 		String className =
 			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
-				classCommandName);
+				simpleClassCommandName);
 
 		String fileExtension =
 			PoshiRunnerGetterUtil.getFileExtensionFromClassType(classType);
 
 		String filePath = PoshiRunnerContext.getFilePathFromFileName(
-			className + "." + fileExtension);
+			className + "." + fileExtension,
+			getCurrentNamespace(classCommandName));
 
 		String commandName =
 			PoshiRunnerGetterUtil.getCommandNameFromClassCommandName(

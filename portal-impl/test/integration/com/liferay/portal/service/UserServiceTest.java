@@ -162,6 +162,43 @@ public class UserServiceTest {
 
 	}
 
+	public static class WhenAddingUserWithNumericScreenName {
+
+		@ClassRule
+		@Rule
+		public static final AggregateTestRule aggregateTestRule =
+			new LiferayIntegrationTestRule();
+
+		@Test
+		public void shouldAddUser() throws Exception {
+			String numericScreenName = "12345";
+
+			_user = UserTestUtil.addUser(numericScreenName);
+
+			Assert.assertEquals(numericScreenName, _user.getScreenName());
+		}
+
+		@Test
+		public void shouldAddUserWhenScreenNameMatchesExistingGroupId()
+			throws Exception {
+
+			_group = GroupTestUtil.addGroup();
+
+			long groupId = _group.getGroupId();
+
+			_user = UserTestUtil.addUser(String.valueOf(groupId));
+
+			Assert.assertEquals(String.valueOf(groupId), _user.getScreenName());
+		}
+
+		@DeleteAfterTestRun
+		private Group _group;
+
+		@DeleteAfterTestRun
+		private User _user;
+
+	}
+
 	public static class WhenCompanySecurityStrangersWithMXDisabled {
 
 		@ClassRule

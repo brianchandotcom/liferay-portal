@@ -61,5 +61,5 @@ Bundle bundle = (Bundle)row.getObject();
 		<portlet:param name="bundleIds" value="<%= String.valueOf(bundle.getBundleId()) %>" />
 	</portlet:actionURL>
 
-	<liferay-ui:icon-delete url="<%= uninstallBundlesURL %>" />
+	<liferay-ui:icon-delete message="uninstall" url="<%= uninstallBundlesURL %>" />
 </liferay-ui:icon-menu>

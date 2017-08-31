@@ -61,7 +61,7 @@ String bundleIds = _getBundleIds(moduleGroupDisplay);
 		<portlet:param name="bundleIds" value="<%= bundleIds %>" />
 	</portlet:actionURL>
 
-	<liferay-ui:icon-delete url="<%= uninstallBundlesURL %>" />
+	<liferay-ui:icon-delete message="uninstall" url="<%= uninstallBundlesURL %>" />
 </liferay-ui:icon-menu>
 
 <%!

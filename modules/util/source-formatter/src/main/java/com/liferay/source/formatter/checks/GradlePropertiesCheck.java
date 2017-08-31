@@ -47,10 +47,11 @@ public class GradlePropertiesCheck extends BaseFileCheck {
 					String value = array[1].trim();
 
 					if (ArrayUtil.contains(_KEYS_WITH_QUOTED_VALUE, key)) {
-						value = StringUtil.removeChars(
+						String strippedValue = StringUtil.removeChars(
 							value, CharPool.APOSTROPHE, CharPool.QUOTE);
 
-						line = key + " = \"" + value + "\"";
+						line = StringUtil.replaceLast(
+							line, value, "\"" + strippedValue + "\"");
 					}
 				}
 

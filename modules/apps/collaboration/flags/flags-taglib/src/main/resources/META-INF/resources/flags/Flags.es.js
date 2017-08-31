@@ -124,7 +124,7 @@ class Flags extends PortletBase {
 	 * Forms the submit.
 	 * @protected
 	 */
-	saveButton_() {
+	reportButton_() {
 		let input = this.one('input[type="submit"]');
 
 		input.click();

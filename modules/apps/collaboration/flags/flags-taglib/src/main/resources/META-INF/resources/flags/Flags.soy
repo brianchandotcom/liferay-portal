@@ -13,7 +13,7 @@
  * @param onSubmitForm_
  * @param pathThemeImages
  * @param reportDialogOpen
- * @param saveButton_
+ * @param reportButton_
  * @param title
  */
 {template .render}
@@ -50,7 +50,7 @@
 /**
  *
  * @param closeReportDialog
- * @param saveButton_
+ * @param reportButton_
  * @param reportDialogOpen
  */
 {template .reportDialog}
@@ -70,7 +70,11 @@
 			{/param}
 
 			{param footer kind="html"}
-				<button class="btn btn-primary" data-onclick="{$saveButton_}" type="button">Save</button>
+				<button class="btn btn-primary" data-onclick="{$reportButton_}" type="button">{msg desc=""}report{/msg}</button>
+
+				<button class="btn btn-link" data-onclick="{$closeReportDialog}" type="button">{msg desc=""}cancel{/msg}</button>
+
+				<button class="btn btn-default hidden" data-onclick="{$closeReportDialog}" type="button">{msg desc=""}close{/msg}</button>
 			{/param}
 
 			{param noCloseButton: true /}

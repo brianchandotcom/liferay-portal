@@ -179,6 +179,7 @@ classes {
 
 dependencies {
 	alloyUI group: "com.liferay.webjars", name: "com.liferay.webjars.alloy-ui", transitive: false, version: alloyUIVersion
+
 	fontAwesome group: "org.webjars", name: "font-awesome", transitive: false, version: fontAwesomeVersion
 }
 

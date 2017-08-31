@@ -46,6 +46,7 @@ import com.liferay.gradle.plugins.dependency.checker.DependencyCheckerPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
+import com.liferay.gradle.plugins.js.transpiler.JSTranspilerPlugin;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.patcher.PatchTask;
 import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
@@ -437,6 +438,19 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				project, testProject, MavenPlugin.INSTALL_TASK_NAME,
 				BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
 		}
+
+		GradleUtil.withPlugin(
+			project, JSTranspilerPlugin.class,
+			new Action<JSTranspilerPlugin>() {
+
+				@Override
+				public void execute(JSTranspilerPlugin jsTranspilerPlugin) {
+					_configureConfigurationNoCrossRepoDependencies(
+						project,
+						JSTranspilerPlugin.SOY_COMPILE_CONFIGURATION_NAME);
+				}
+
+			});
 
 		GradleUtil.withPlugin(
 			project, ServiceBuilderPlugin.class,
@@ -1951,6 +1965,53 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS);
 		resolutionStrategy.cacheDynamicVersionsFor(0, TimeUnit.SECONDS);
+	}
+
+	private void _configureConfigurationNoCrossRepoDependencies(
+		final Project project, String name) {
+
+		Configuration configuration = GradleUtil.getConfiguration(
+			project, name);
+
+		ResolvableDependencies resolvableDependencies =
+			configuration.getIncoming();
+
+		resolvableDependencies.beforeResolve(
+			new Action<ResolvableDependencies>() {
+
+				@Override
+				public void execute(
+					ResolvableDependencies resolvableDependencies) {
+
+					File rootDir = GradleUtil.getRootDir(
+						project, "settings.gradle");
+
+					if (rootDir == null) {
+						return;
+					}
+
+					DependencySet dependencySet =
+						resolvableDependencies.getDependencies();
+
+					for (ProjectDependency projectDependency :
+							dependencySet.withType(ProjectDependency.class)) {
+
+						Project dependencyProject =
+							projectDependency.getDependencyProject();
+
+						File dependencyRootDir = GradleUtil.getRootDir(
+							dependencyProject, "settings.gradle");
+
+						if (!rootDir.equals(dependencyRootDir)) {
+							throw new GradleException(
+								projectDependency + " in " + project +
+									" is not allowed to cross sub-repository " +
+										"boundaries");
+						}
+					}
+				}
+
+			});
 	}
 
 	private void _configureConfigurations(

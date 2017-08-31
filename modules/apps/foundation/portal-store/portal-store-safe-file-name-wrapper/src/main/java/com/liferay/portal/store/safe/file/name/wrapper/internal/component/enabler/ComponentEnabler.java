@@ -12,35 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.store.safe.file.name.wrapper.internal;
+package com.liferay.portal.store.safe.file.name.wrapper.internal.component.enabler;
 
 import com.liferay.document.library.kernel.store.Store;
-import com.liferay.document.library.kernel.store.StoreWrapper;
+import com.liferay.osgi.util.ComponentUtil;
+import com.liferay.portal.store.safe.file.name.wrapper.internal.SafeFileNameAdvancedFileSystemStoreWrapper;
 
+import org.osgi.service.component.ComponentContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Roberto Díaz
+ * @author Tina Tian
  */
-@Component(
-	enabled = false, immediate = true,
-	property = {
-		"store.type=com.liferay.portal.store.file.system.AdvancedFileSystemStore"
-	},
-	service = StoreWrapper.class
-)
-public class SafeFileNameAdvancedFileSystemStoreWrapper
-	implements StoreWrapper {
+@Component(immediate = true)
+public class ComponentEnabler {
 
-	@Override
-	public Store wrap(Store store) {
-		return new SafeFileNameStore(store);
+	@Activate
+	protected void activate(ComponentContext componentContext) {
+		ComponentUtil.tryEnableComponents(
+			Store.class,
+			"(store.type=com.liferay.portal.store.file.system." +
+				"AdvancedFileSystemStore)",
+			componentContext, SafeFileNameAdvancedFileSystemStoreWrapper.class);
 	}
-
-	@Reference(
-		target = "(store.type=com.liferay.portal.store.file.system.AdvancedFileSystemStore)"
-	)
-	private Store _store;
 
 }

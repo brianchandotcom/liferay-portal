@@ -497,9 +497,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<for list="Document_1.jpeg,Document_2.docx,Document_3.mp3" param="DMDocumentNames">
+		<for list="Document_1.jpeg,Document_2.docx,Document_3.mp3" param="dmDocumentTitle">
 			<execute macro="DMDocument#cannotViewCP">
-				<var name="dmDocumentTitle" value="DMDocumentNames" />
+				<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 			</execute>
 		</for>
 	</command>

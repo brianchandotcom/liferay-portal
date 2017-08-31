@@ -56,7 +56,8 @@ public class BNDWebContextPathCheck extends BaseFileCheck {
 		String moduleName = BNDSourceUtil.getModuleName(absolutePath);
 
 		if (moduleName.contains("-import-") ||
-			moduleName.contains("-private-")) {
+			moduleName.contains("-private-") ||
+			absolutePath.contains("/modules/private/apps/")) {
 
 			return;
 		}

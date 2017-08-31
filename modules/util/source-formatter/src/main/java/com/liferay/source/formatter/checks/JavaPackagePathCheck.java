@@ -42,7 +42,9 @@ public class JavaPackagePathCheck extends BaseFileCheck {
 
 		_checkPackagePath(fileName, packagePath);
 
-		if (isModulesFile(absolutePath)) {
+		if (isModulesFile(absolutePath) &&
+			!absolutePath.contains("/modules/private/apps/")) {
+
 			_checkModulePackagePath(fileName, packagePath);
 		}
 

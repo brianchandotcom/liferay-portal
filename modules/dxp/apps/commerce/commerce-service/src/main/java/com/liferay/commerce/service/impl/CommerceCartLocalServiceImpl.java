@@ -14,8 +14,12 @@
 
 package com.liferay.commerce.service.impl;
 
+import com.liferay.commerce.exception.CommerceCartBillingAddressException;
+import com.liferay.commerce.exception.CommerceCartShippingAddressException;
+import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
+import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.product.util.DDMFormValuesHelper;
 import com.liferay.commerce.service.base.CommerceCartLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -112,6 +116,21 @@ public class CommerceCartLocalServiceImpl
 	}
 
 	@Override
+	public List<CommerceCart> getCommerceCartsByBillingAddress(
+		long billingAddressId) {
+
+		return commerceCartPersistence.findByBillingAddressId(billingAddressId);
+	}
+
+	@Override
+	public List<CommerceCart> getCommerceCartsByShippingAddress(
+		long shippingAddressId) {
+
+		return commerceCartPersistence.findByShippingAddressId(
+			shippingAddressId);
+	}
+
+	@Override
 	public int getCommerceCartsCount(long groupId, int type) {
 		return commerceCartPersistence.countByG_T(groupId, type);
 	}
@@ -165,6 +184,22 @@ public class CommerceCartLocalServiceImpl
 	}
 
 	@Override
+	public CommerceCart updateCommerceCart(
+			long commerceCartId, long billingAddressId, long shippingAddressId)
+		throws PortalException {
+
+		CommerceCart commerceCart = commerceCartPersistence.findByPrimaryKey(
+			commerceCartId);
+
+		commerceCart.setBillingAddressId(billingAddressId);
+		commerceCart.setShippingAddressId(shippingAddressId);
+
+		commerceCartPersistence.update(commerceCart);
+
+		return commerceCart;
+	}
+
+	@Override
 	public CommerceCart updateUser(long commerceCartId, long userId)
 		throws PortalException {
 
@@ -177,6 +212,69 @@ public class CommerceCartLocalServiceImpl
 		commerceCart.setUserName(user.getFullName());
 
 		return commerceCartPersistence.update(commerceCart);
+	}
+
+	protected void validate(
+			long userId, long billingAddressId, long shippingAddressId)
+		throws PortalException {
+
+		if (billingAddressId > 0) {
+			CommerceAddress commerceAddress =
+				commerceAddressLocalService.getCommerceAddress(
+					billingAddressId);
+
+			if (userId != commerceAddress.getAddressUserId()) {
+				throw new CommerceCartBillingAddressException();
+			}
+
+			CommerceCountry commerceCountry =
+				commerceAddress.getCommerceCountry();
+
+			if ((commerceCountry != null) &&
+				!commerceCountry.isBillingAllowed()) {
+
+				throw new CommerceCartBillingAddressException();
+			}
+		}
+
+		if (shippingAddressId > 0) {
+			CommerceAddress commerceAddress =
+				commerceAddressLocalService.getCommerceAddress(
+					shippingAddressId);
+
+			if (userId != commerceAddress.getAddressUserId()) {
+				throw new CommerceCartShippingAddressException();
+			}
+
+			CommerceCountry commerceCountry =
+				commerceAddress.getCommerceCountry();
+
+			if ((commerceCountry != null) &&
+				!commerceCountry.isShippingAllowed()) {
+
+				throw new CommerceCartShippingAddressException();
+			}
+		}
+	}
+
+	private CommerceCountry _getCommerceAddressCountry(long commerceAddressId)
+		throws PortalException {
+
+		if (commerceAddressId <= 0) {
+			return null;
+		}
+
+		CommerceAddress commerceAddress =
+			commerceAddressLocalService.getCommerceAddress(commerceAddressId);
+
+		long commerceCountryId = commerceAddress.getCommerceCountryId();
+
+		if (commerceCountryId <= 0) {
+			return null;
+		}
+
+		return commerceCountryLocalService.getCommerceCountry(
+			commerceCountryId);
 	}
 
 	@ServiceReference(type = DDMFormValuesHelper.class)

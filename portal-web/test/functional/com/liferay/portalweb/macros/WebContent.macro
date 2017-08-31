@@ -1029,7 +1029,7 @@
 			</execute>
 		</for>
 
-		<execute function="Click" locator1="WC#TOOLBAR_MOVE_BUTTON" value1="Move" />
+		<execute function="Click" locator1="Icon#MOVE" />
 
 		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Move Web Content" />
 
@@ -1043,7 +1043,7 @@
 
 		<execute function="SelectFrameTop" />
 
-		<execute function="AssertClick" locator1="Button#DONE" value1="Done" />
+		<execute macro="Button#clickDone" />
 
 		<execute function="AssertClick" locator1="Button#MOVE" value1="Move" />
 

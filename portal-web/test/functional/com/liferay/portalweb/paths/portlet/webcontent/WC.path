@@ -239,12 +239,6 @@
 	<td>//tr[contains(.,'${key_folderName}')]/td[4]//button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
-<!--TOOLBAR-->
-<tr>
-	<td>TOOLBAR_MOVE_BUTTON</td>
-	<td>//div[@class='management-bar-header-right']/a[@data-title='Move']/span</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

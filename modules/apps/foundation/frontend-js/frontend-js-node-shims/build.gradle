@@ -1,1 +1,5 @@
 apply plugin: "com.liferay.node"
+
+node {
+	nodeVersion = "8.4.0"
+}

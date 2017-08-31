@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.exportimport.configuration.ExportImportServiceConfiguration;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -36,7 +37,9 @@ import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.VirtualLayoutConstants;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalServiceUtil;
@@ -303,6 +306,16 @@ public class BaseTextExportImportContentProcessor
 		}
 
 		return fileEntry;
+	}
+
+	protected boolean isValidateLayoutReferences() throws PortalException {
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		ExportImportServiceConfiguration exportImportServiceConfiguration =
+			ConfigurationProviderUtil.getCompanyConfiguration(
+				ExportImportServiceConfiguration.class, companyId);
+
+		return exportImportServiceConfiguration.validateLayoutReferences();
 	}
 
 	protected String replaceExportDLReferences(
@@ -747,6 +760,12 @@ public class BaseTextExportImportContentProcessor
 					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 			}
 			catch (Exception e) {
+				if (e instanceof NoSuchLayoutException &&
+					!isValidateLayoutReferences()) {
+
+					continue;
+				}
+
 				if (_log.isDebugEnabled()) {
 					_log.debug(e, e);
 				}
@@ -1199,6 +1218,10 @@ public class BaseTextExportImportContentProcessor
 
 	protected void validateLayoutReferences(long groupId, String content)
 		throws PortalException {
+
+		if (!isValidateLayoutReferences()) {
+			return;
+		}
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 

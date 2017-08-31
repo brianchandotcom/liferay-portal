@@ -19,11 +19,13 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.exportimport.configuration.ExportImportServiceConfiguration;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -69,13 +71,16 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Kocsis
  */
 @Component(
+	configurationPid = "com.liferay.exportimport.configuration.ExportImportServiceConfiguration",
 	immediate = true, property = {"model.class.name=java.lang.String"},
 	service = ExportImportContentProcessor.class
 )
@@ -128,6 +133,13 @@ public class DefaultTextExportImportContentProcessor
 		validateDLReferences(groupId, content);
 		validateLayoutReferences(groupId, content);
 		validateLinksToLayoutsReferences(content);
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_exportImportServiceConfiguration = ConfigurableUtil.createConfigurable(
+			ExportImportServiceConfiguration.class, properties);
 	}
 
 	protected void deleteTimestampParameters(StringBuilder sb, int beginPos) {
@@ -735,6 +747,13 @@ public class DefaultTextExportImportContentProcessor
 					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 			}
 			catch (Exception e) {
+				if (e instanceof NoSuchLayoutException &&
+					!_exportImportServiceConfiguration.
+						validateLayoutReferences()) {
+
+					continue;
+				}
+
 				if (_log.isDebugEnabled()) {
 					_log.debug(e, e);
 				}
@@ -1186,6 +1205,10 @@ public class DefaultTextExportImportContentProcessor
 	protected void validateLayoutReferences(long groupId, String content)
 		throws PortalException {
 
+		if (!_exportImportServiceConfiguration.validateLayoutReferences()) {
+			return;
+		}
+
 		Group group = _groupLocalService.getGroup(groupId);
 
 		String[] patterns = {"href=", "[["};
@@ -1500,6 +1523,8 @@ public class DefaultTextExportImportContentProcessor
 
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	private ExportImportServiceConfiguration _exportImportServiceConfiguration;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

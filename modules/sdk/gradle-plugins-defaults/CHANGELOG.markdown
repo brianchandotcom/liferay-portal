@@ -2036,6 +2036,13 @@ dependencies that belong to a different sub-repository.
 - [LPS-74469]: Allow publishing modules whose `soyCompile` configuration
 contains project dependencies.
 
+## 5.0.35 - 2017-08-31
+
+### Changed
+- [LPS-74469]: Look for `.gitrepo` files instead of `settings.gradle` when
+checking if the `soyCompile` configuration contains project dependencies that
+belong to a different sub-repository.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public

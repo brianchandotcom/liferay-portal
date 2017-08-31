@@ -1984,7 +1984,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					ResolvableDependencies resolvableDependencies) {
 
 					File rootDir = GradleUtil.getRootDir(
-						project, "settings.gradle");
+						project, _GIT_REPO_FILE_NAME);
 
 					if (rootDir == null) {
 						return;
@@ -2000,7 +2000,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 							projectDependency.getDependencyProject();
 
 						File dependencyRootDir = GradleUtil.getRootDir(
-							dependencyProject, "settings.gradle");
+							dependencyProject, _GIT_REPO_FILE_NAME);
 
 						if (!rootDir.equals(dependencyRootDir)) {
 							throw new GradleException(

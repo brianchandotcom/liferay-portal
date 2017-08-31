@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.dynamic.data.lists.internal.model.listener;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;

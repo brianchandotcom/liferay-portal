@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
@@ -54,11 +55,24 @@ public class XMLResourceActionsFileCheck extends BaseFileCheck {
 		for (Element resourceElement : resourceElements) {
 			Element nameElement = resourceElement.element(type + "-name");
 
-			if (nameElement == null) {
-				continue;
+			String name = StringPool.BLANK;
+
+			if (nameElement != null) {
+				name = nameElement.getText();
 			}
 
-			String name = nameElement.getText();
+			Element compositeModelNameElement = resourceElement.element(
+				"composite-model-name");
+
+			checkElementOrder(
+				fileName, compositeModelNameElement, "model-name", name,
+				new ResourceActionNameElementComparator());
+
+			Element portletRefElement = resourceElement.element("portlet-ref");
+
+			checkElementOrder(
+				fileName, portletRefElement, "portlet-name", name,
+				new ResourceActionNameElementComparator());
 
 			Element permissionsElement = resourceElement.element("permissions");
 
@@ -72,7 +86,7 @@ public class XMLResourceActionsFileCheck extends BaseFileCheck {
 			for (Element permissionsChildElement : permissionsChildElements) {
 				checkElementOrder(
 					fileName, permissionsChildElement, "action-key", name,
-					new ResourceActionActionKeyElementComparator());
+					new ResourceActionNameElementComparator());
 			}
 		}
 
@@ -81,12 +95,12 @@ public class XMLResourceActionsFileCheck extends BaseFileCheck {
 			new ResourceActionResourceElementComparator(type + "-name"));
 	}
 
-	private class ResourceActionActionKeyElementComparator
+	private class ResourceActionNameElementComparator
 		extends ElementComparator {
 
 		@Override
-		public String getElementName(Element actionKeyElement) {
-			return actionKeyElement.getStringValue();
+		public String getElementName(Element actionNameElement) {
+			return actionNameElement.getStringValue();
 		}
 
 	}

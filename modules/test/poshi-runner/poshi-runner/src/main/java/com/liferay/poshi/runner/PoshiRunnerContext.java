@@ -177,8 +177,16 @@ public class PoshiRunnerContext {
 	}
 
 	public static String getNamespace(String filePath) {
-		if (_filePathToNamespace.containsKey(filePath)) {
-			return _filePathToNamespace.get(filePath);
+		for (Map.Entry<String, String> entry : _filePaths.entrySet()) {
+			String value = entry.getValue();
+
+			if (value.equals(filePath)) {
+				String fileName = PoshiRunnerGetterUtil.getFileNameFromFilePath(
+					filePath);
+				String key = entry.getKey();
+
+				return key.substring(0, key.indexOf("." + fileName));
+			}
 		}
 
 		return _defaultNamespace;
@@ -504,8 +512,6 @@ public class PoshiRunnerContext {
 				namespace + "." +
 					PoshiRunnerGetterUtil.getFileNameFromFilePath(filePath),
 				filePath);
-
-			_filePathToNamespace.put(filePath, namespace);
 
 			_resourceURLs.add(url);
 		}
@@ -1335,8 +1341,6 @@ public class PoshiRunnerContext {
 	private static final Set<String> _componentNames = new TreeSet<>();
 	private static final String _defaultNamespace;
 	private static final Map<String, String> _filePaths = new HashMap<>();
-	private static final Map<String, String> _filePathToNamespace =
-		new HashMap<>();
 	private static final Map<String, Integer> _functionLocatorCounts =
 		new HashMap<>();
 	private static final List<String> _namespaces = new ArrayList<>();

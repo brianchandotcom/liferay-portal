@@ -5135,69 +5135,6 @@ go]]></replacevalue>
 		<delete dir="/tmp/sprite" />
 	</target>
 
-	<target name="deploy-data-creators">
-		<get-testcase-property property.name="data.creator.includes" />
-
-		<if>
-			<isset property="data.creator.includes" />
-			<then>
-				<var name="modules.apps.dir" value="modules/apps" />
-
-				<for list="${data.creator.includes}" parallel="true" param="data.creator.name">
-					<sequential>
-						<if>
-							<os family="unix" />
-							<then>
-								<exec executable="/bin/bash" outputproperty="@{data.creator.name}.path">
-									<arg value="-c" />
-									<arg value="find ${modules.apps.dir} -name @{data.creator.name}" />
-								</exec>
-							</then>
-							<else>
-								<exec executable="cmd" outputproperty="@{data.creator.name}.path">
-									<arg value="/c" />
-									<arg value="dir /b /s /on /ad @{data.creator.name} 2>nul" />
-								</exec>
-							</else>
-						</if>
-						<echo message="Found: ${@{data.creator.name}.path}" />
-					</sequential>
-				</for>
-
-				<for list="${data.creator.includes}" param="data.creator.name">
-					<sequential>
-						<dirname file="${@{data.creator.name}.path}" property="@{data.creator.name}.gradle.dir" />
-						<if>
-							<available file="${@{data.creator.name}.gradle.dir}/settings.gradle" />
-							<then>
-								<move file="${@{data.creator.name}.gradle.dir}/settings.gradle" tofile="${@{data.creator.name}.gradle.dir}/settings" />
-							</then>
-						</if>
-					</sequential>
-				</for>
-
-				<for list="${data.creator.includes}" parallel="true" param="data.creator.name">
-					<sequential>
-						<gradle-execute dir="${@{data.creator.name}.path}" task="deploy">
-							<arg value="clean" />
-						</gradle-execute>
-					</sequential>
-				</for>
-
-				<for list="${data.creator.includes}" param="data.creator.name">
-					<sequential>
-						<if>
-							<available file="${@{data.creator.name}.gradle.dir}/settings" />
-							<then>
-								<move file="${@{data.creator.name}.gradle.dir}/settings" tofile="${@{data.creator.name}.gradle.dir}/settings.gradle" />
-							</then>
-						</if>
-					</sequential>
-				</for>
-			</then>
-		</if>
-	</target>
-
 	<target name="deploy-extra-apps">
 		<get-testcase-property property.name="extraapps.plugins.includes" />
 
@@ -5483,34 +5420,71 @@ go]]></replacevalue>
 			<then>
 				<echo file="tools/sdk/build.${user.name}.properties">auto.deploy.dir=${liferay.home}/deploy</echo>
 
-				<for list="${osgi.modules.includes}" param="osgi.module">
+				<var name="osgi.module.dir" value="modules/apps" />
+
+				<for list="${osgi.modules.includes}" parallel="true" param="osgi.module">
 					<sequential>
-						<local name="osgi.module.build.file" />
-						<local name="osgi.module.dir" />
-
-						<path id="osgi.module.build.file">
-							<fileset dir="${project.dir}/modules">
-								<include name="**/@{osgi.module}/build.gradle" />
-								<include name="**/@{osgi.module}/build.xml" />
-							</fileset>
-						</path>
-
-						<property name="osgi.module.build.file" refid="osgi.module.build.file" />
-
-						<dirname file="${osgi.module.build.file}" property="osgi.module.dir" />
-
 						<if>
-							<equals arg1="@{osgi.module}" arg2="documentum-hook" />
+							<os family="unix" />
 							<then>
-								<propertyfile file="${osgi.module.dir}/docroot/WEB-INF/src/dfc.properties">
-									<entry key="dfc.docbroker.host[0]" value="${cmis.repository.vm.host.name}" />
-								</propertyfile>
+								<exec executable="/bin/bash" outputproperty="@{osgi.module}.paths">
+									<arg value="-c" />
+									<arg value="find ${osgi.module.dir} -name @{osgi.module}" />
+								</exec>
 							</then>
+							<else>
+								<exec executable="cmd" outputproperty="@{osgi.module}.paths">
+									<arg value="/c" />
+									<arg value="dir /b /s /on /ad @{osgi.module} 2>nul" />
+								</exec>
+							</else>
 						</if>
 
-						<gradle-execute dir="${osgi.module.dir}" task="deploy">
+						<for delimiter="${line.separator}" list="${@{osgi.module}.paths}" param="osgi.module.path">
+							<sequential>
+								<if>
+									<or>
+										<available file="@{osgi.module.path}/build.gradle" />
+										<available file="@{osgi.module.path}/build.xml" />
+									</or>
+									<then>
+										<property name="@{osgi.module}.path" value="@{osgi.module.path}" />
+										<echo message="Found: ${@{osgi.module}.path}" />
+									</then>
+								</if>
+							</sequential>
+						</for>
+					</sequential>
+				</for>
+
+				<for list="${osgi.modules.includes}" param="osgi.module">
+					<sequential>
+						<dirname file="${@{osgi.module}.path}" property="@{osgi.module}.gradle.dir" />
+						<if>
+							<available file="${@{osgi.module}.gradle.dir}/settings.gradle" />
+							<then>
+								<move file="${@{osgi.module}.gradle.dir}/settings.gradle" tofile="${@{osgi.module}.gradle.dir}/settings" />
+							</then>
+						</if>
+					</sequential>
+				</for>
+
+				<for list="${osgi.modules.includes}" parallel="true" param="osgi.module">
+					<sequential>
+						<gradle-execute dir="${@{osgi.module}.path}" task="deploy">
 							<arg value="clean" />
 						</gradle-execute>
+					</sequential>
+				</for>
+
+				<for list="${osgi.modules.includes}" param="osgi.module">
+					<sequential>
+						<if>
+							<available file="${@{osgi.module}.gradle.dir}/settings" />
+							<then>
+								<move file="${@{osgi.module}.gradle.dir}/settings" tofile="${@{osgi.module}.gradle.dir}/settings.gradle" />
+							</then>
+						</if>
 					</sequential>
 				</for>
 			</then>

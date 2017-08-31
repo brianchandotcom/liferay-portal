@@ -255,7 +255,7 @@
 </tr>
 <tr>
 	<td>SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_NAME_SEARCH</td>
-	<td>//input[@name='roleTitle']</td>
+	<td>//input[@name='roleName']</td>
 	<td></td>
 </tr>
 <tr>

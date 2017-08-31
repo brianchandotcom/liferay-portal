@@ -17,6 +17,7 @@ package com.liferay.commerce.product.demo.data.creator.internal.util;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringPool;
@@ -39,7 +40,8 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 
 	public Layout createLayout(
-			long userId, long groupId, String name, String friendlyURL)
+			long userId, long groupId, String name, String friendlyURL,
+			String portletId)
 		throws PortalException {
 
 		Layout layout = _layouts.get(name);
@@ -64,6 +66,15 @@ public class LayoutDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 			name, name, null, LayoutConstants.TYPE_PORTLET, true, friendlyURL,
 			serviceContext);
 
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		layoutTypePortlet.addPortletId(userId, portletId);
+
+		_layoutLocalService.updateLayout(
+			layout.getGroupId(), layout.getPrivateLayout(),
+			layout.getLayoutId(), layout.getTypeSettings());
+
 		_layouts.put(name, layout);
 
 		return layout;
@@ -86,13 +97,15 @@ public class LayoutDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 		}
 	}
 
-	public String getLayoutUuid(long userId, long groupId, String name)
+	public String getLayoutUuid(
+			long userId, long groupId, String name, String portletId)
 		throws PortalException {
 
 		String friendlyURL =
 			StringPool.FORWARD_SLASH + StringUtil.toLowerCase(name);
 
-		Layout layout = createLayout(userId, groupId, name, friendlyURL);
+		Layout layout = createLayout(
+			userId, groupId, name, friendlyURL, portletId);
 
 		return layout.getUuid();
 	}

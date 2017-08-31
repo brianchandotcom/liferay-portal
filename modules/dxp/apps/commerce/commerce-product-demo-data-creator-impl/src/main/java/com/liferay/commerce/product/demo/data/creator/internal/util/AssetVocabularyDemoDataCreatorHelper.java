@@ -17,6 +17,7 @@ package com.liferay.commerce.product.demo.data.creator.internal.util;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -49,7 +50,8 @@ public class AssetVocabularyDemoDataCreatorHelper
 		// Layout
 
 		String layoutUuid = _layoutDemoDataCreatorHelper.getLayoutUuid(
-			userId, groupId, "Categories");
+			userId, groupId, "Categories",
+			CPPortletKeys.CP_CATEGORY_CONTENT_WEB);
 
 		// Asset vocabularies
 

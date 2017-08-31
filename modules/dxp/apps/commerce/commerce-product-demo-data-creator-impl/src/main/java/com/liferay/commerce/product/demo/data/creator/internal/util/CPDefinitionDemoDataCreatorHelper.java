@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.demo.data.creator.internal.util;
 
+import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
@@ -72,7 +73,8 @@ public class CPDefinitionDemoDataCreatorHelper
 			// Layout
 
 			String layoutUuid = _layoutDemoDataCreatorHelper.getLayoutUuid(
-				userId, groupId, "Products");
+				userId, groupId, "Product detail",
+				CPPortletKeys.CP_CONTENT_WEB);
 
 			// Asset Categories
 

@@ -103,7 +103,7 @@ public class FacebookConnectCompanySettingsVerifyProcess
 		if (oauthRedirectURL != null) {
 			dictionary.put(
 				FacebookConnectConfigurationKeys.OAUTH_REDIRECT_URL,
-				oauthRedirectURL);
+				upgradeLegacyRedirectURI(oauthRedirectURL));
 		}
 
 		String oauthTokenURL = _prefsProps.getString(

@@ -230,6 +230,12 @@
 	<td>//div[contains(@id,'permissionsTitle')]/a</td>
 	<td></td>
 </tr>
+<!--UPDATE_DATA-->
+<tr>
+	<td>UPDATE_DATA_MIRROR_WITH_OVERWRITING_RADIO</td>
+	<td>//div[contains(@class, radio)]//label[contains(., 'Mirror with overwriting')]/input</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

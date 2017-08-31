@@ -1195,6 +1195,46 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Categories" />
+		</execute>
+
+		<execute macro="Subcategory#addCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="subcategoryName" value="Subcategory Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addWithCategoryCP">
+			<var name="categoryName" value="Subcategory Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Subcategory WC Title" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="Subcategory WC Title" />
+		</execute>
+
+		<execute macro="WebContent#viewCategorizationCategoryCP">
+			<var name="categoryNameList" value="Subcategory Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Test Page Name" />
 			<var name="siteName" value="Site Name" />
@@ -1219,32 +1259,38 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="LAR#_gotoExportSite">
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Categories Navigation" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="LAR#gotoExport">
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<if>
-			<equals arg1="${exportPermissions}" arg2="true" />
-			<then>
-				<execute function="Check" locator1="Checkbox#PERMISSIONS" />
-			</then>
-		</if>
+		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LAR#exportSuccess" />
 
-		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="List" />
+		</execute>
 
-		<var name="key_larFileName" value="${larFileName}" />
-
-		<execute function="AssertTextEquals" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
-
-		<var method="selenium#getText('//ul/li/div/h5')" name="valueName" />
+		<var locator="//tr/td/span/a/span" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
-		<var method="RegexUtil#replace('${valueName}', '([a-zA-z0-9_.-]*)[(0-9KB)]*', '1')" name="larFileName" />
+		<var method="RegexUtil#replace('${valueName}', '([0-9a-zA-Z_.-]+).*', '1')" name="larFileName" />
 
 		<echo message="lar file name ${larFileName}" />
+
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="Descriptive" />
+		</execute>
 
 		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute function="DownloadTempFile" />
@@ -1269,9 +1315,27 @@
 			<var name="siteName" value="Import Site Name" />
 		</execute>
 
+		<execute macro="CategoriesNavigationPortlet#selectCategoryPG">
+			<var name="categoryName" value="Category Name" />
+		</execute>
+
 		<execute macro="AssetPublisherPortlet#viewAssetPG">
 			<var name="assetContent" value="Web Content Content" />
 			<var name="assetTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Import Site Name" />
+		</execute>
+
+		<execute macro="CategoriesNavigationPortlet#selectCategoryPG">
+			<var name="categoryName" value="Subcategory Name" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewAssetPG">
+			<var name="assetContent" value="Web Content Content" />
+			<var name="assetTitle" value="Subcategory WC Title" />
 		</execute>
 
 		<execute macro="Navigator#openSiteURL">
@@ -1289,6 +1353,23 @@
 		<execute macro="WebContent#viewCategorizationCategoryCP">
 			<var name="categoryNameList" value="Category Name" />
 			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Import Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="Subcategory WC Title" />
+		</execute>
+
+		<execute macro="WebContent#viewCategorizationCategoryCP">
+			<var name="categoryNameList" value="Subcategory Name" />
+			<var name="webContentTitle" value="Subcategory WC Title" />
 		</execute>
 	</command>
 

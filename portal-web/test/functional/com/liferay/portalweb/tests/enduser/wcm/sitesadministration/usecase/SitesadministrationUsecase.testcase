@@ -1150,9 +1150,7 @@
 
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />
-
-		<execute function="AssertTextEquals" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+		<execute macro="LAR#exportSuccess" />
 
 		<execute macro="Portlet#changeDisplayStyle">
 			<var name="displayStyle" value="List" />

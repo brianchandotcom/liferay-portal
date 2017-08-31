@@ -279,6 +279,231 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="CannotViewFolderAsSiteMember" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training" />
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="SitePageNavigator#gotoEditPage">
+			<var name="page" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Page#editPageLayoutColumn">
+			<var name="columnName" value="1 Column" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Site#assignUserSitesCP">
+			<var name="siteName" value="Site Name" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMFolder#addPG">
+			<var name="dmFolderDescription" value="DM Folder Description" />
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="DMPortlet#setDescriptiveView" />
+
+		<execute macro="DMNavigator#gotoFolder">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMFolder#addSubfolderPG">
+			<var name="dmSubFolderDescription" value="DM Subfolder1 Description" />
+			<var name="dmSubFolderName" value="Subfolder1 Name" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolder">
+			<var name="dmFolderName" value="Subfolder1 Name" />
+		</execute>
+
+		<execute macro="DMFolder#viewPG">
+			<var name="dmFolderName" value="Subfolder1 Name" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="Document_1.doc" />
+		</execute>
+
+		<execute macro="DMFolder#subscribePG" />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolderPermissions">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<for list="INLINE_PERMISSIONS_ADD_SUBFOLDER_CHECKBOX,INLINE_PERMISSIONS_ADD_SHORTCUT_CHECKBOX,INLINE_PERMISSIONS_ADD_DOCUMENT_CHECKBOX,INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX" param="permissionsInLineUncheckListsCount">
+			<execute macro="Role#removePermissionPG">
+				<var name="permissionDefinitionKey" value="${permissionsInLineUncheckListsCount}" />
+				<var name="roleTitle" value="Site Member" />
+			</execute>
+		</for>
+
+		<execute macro="Role#removePermissionPG">
+			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_VIEW_CHECKBOX" />
+			<var name="roleTitle" value="Guest" />
+		</execute>
+
+		<execute macro="IFrame#selectTopFrame" />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="DMPortlet#viewDefaultPG" />
+	</command>
+
+	<command name="CannotViewMultipleDocumentsAsSiteMember" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training" />
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="SitePageNavigator#gotoEditPage">
+			<var name="page" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Page#editPageLayoutColumn">
+			<var name="columnName" value="1 Column" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#addMultiplePG">
+			<var name="dmDocumentFileList" value="Document_1.jpeg,Document_2.docx,Document_3.mp3" />
+			<var name="viewableBy" value="Owner" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<for list="Document_1.jpeg,Document_2.docx,Document_3.mp3" param="dmDocumentTitle">
+			<execute macro="DMDocument#cannotViewCP">
+				<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+			</execute>
+		</for>
+	</command>
+
 	<command name="CheckoutAndCheckin" priority="5">
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
@@ -389,7 +614,7 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<for list="1,2" param="tagCount" >
+		<for list="1,2" param="tagCount">
 			<execute macro="DMDocument#editCmdPG">
 				<var name="dmDocumentTagName" value="tag${tagCount}" />
 				<var name="dmDocumentTitle" value="Document_1.doc" />
@@ -969,7 +1194,7 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<for list="1,2,3" param="entryCount" >
+		<for list="1,2,3" param="entryCount">
 			<execute macro="DMDocument#addPG">
 				<var name="dmDocumentDescription" value="DM Document Description" />
 				<var name="dmDocumentFile" value="Document_${entryCount}.doc" />
@@ -981,7 +1206,7 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<for list="1,2,3" param="entryCount" >
+		<for list="1,2,3" param="entryCount">
 			<var name="key_dmDocumentTitle" value="Document_${entryCount}.doc" />
 
 			<execute function="Check" locator1="DocumentsAndMedia#ICON_DOCUMENT_CHECKBOX" />
@@ -1543,6 +1768,196 @@
 			<var name="dmDocumentDescription" value="Document Description" />
 			<var name="dmDocumentTitle" value="Document Title" />
 			<var name="tagNameList" value="tag1,tag2" />
+		</execute>
+	</command>
+
+	<command name="ViewFolderAsOrganizationUser" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training" />
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="orgType" value="Organization" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
+		<execute macro="Organization#addMemberCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
+		<execute macro="Organization#addSiteCP">
+			<var name="orgName" value="Organization Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
+		<execute macro="Organization#gotoCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="searchToken" value="Organization Name" />
+		</execute>
+
+		<execute macro="User#searchCP">
+			<var name="searchTerm" value="usersn" />
+		</execute>
+
+		<execute macro="Organization#viewAssignMemberCP">
+			<var name="userName" value="userfn userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="siteName" value="Organization Name" />
+		</execute>
+
+		<execute macro="SitePageNavigator#gotoEditPage">
+			<var name="page" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Page#editPageLayoutColumn">
+			<var name="columnName" value="1 Column" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="siteName" value="Organization Name" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMFolder#addPG">
+			<var name="dmFolderDescription" value="DM Folder Description" />
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolderPermissions">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<for list="INLINE_PERMISSIONS_ADD_SUBFOLDER_CHECKBOX,INLINE_PERMISSIONS_ADD_SHORTCUT_CHECKBOX,INLINE_PERMISSIONS_ADD_DOCUMENT_CHECKBOX,INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX" param="permissionsInLineUncheckListsCount">
+			<execute macro="Role#removePermissionPG">
+				<var name="permissionDefinitionKey" value="${permissionsInLineUncheckListsCount}" />
+				<var name="roleTitle" value="Site Member" />
+			</execute>
+		</for>
+
+		<execute macro="Role#removePermissionPG">
+			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_VIEW_CHECKBOX" />
+			<var name="roleTitle" value="Guest" />
+		</execute>
+
+		<execute macro="IFrame#selectTopFrame" />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="siteName" value="Organization Name" />
+		</execute>
+
+		<execute macro="DMPortlet#viewDefaultPG" />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="siteName" value="Organization Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolderPermissions">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<for list="INLINE_PERMISSIONS_ADD_DOCUMENT_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX,CONTENT_PERMISSIONS_ACCESS_CHECKBOX" param="permissionsInLineUncheckListsCount">
+			<execute macro="Role#definePermissionPG">
+				<var name="permissionDefinitionKey" value="${permissionsInLineUncheckListsCount}" />
+				<var name="roleTitle" value="Organization User" />
+			</execute>
+		</for>
+
+		<execute macro="IFrame#selectTopFrame" />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="siteName" value="Organization Name" />
+		</execute>
+
+		<execute macro="DMPortlet#setDescriptiveView" />
+
+		<execute macro="DMNavigator#gotoFolder">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="Document_1.doc" />
 		</execute>
 	</command>
 

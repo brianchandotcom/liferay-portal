@@ -8,12 +8,12 @@
 <tr><td rowspan="1" colspan="3">GoogleDrive</td></tr>
 </thead>
 <tbody>
-<tr>`
+<tr>
 	<td>GOOGLE_DRIVE_IFRAME</td>
 	<td>//div[contains(@class,'picker-dialog')]//iframe[contains(@src,'https://docs.google.com/picker')]</td>
 	<td></td>
 </tr>
-<tr>`
+<tr>
 	<td>SELECT_BUTTON</td>
 	<td>//div[contains(@role,'button') and contains(.,'Select')]</td>
 	<td></td>

@@ -96,6 +96,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INLINE_PERMISSIONS_ADD_SHORTCUT_CHECKBOX</td>
+	<td>//input[@id='${key_roleName}_ACTION_ADD_SHORTCUT']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INLINE_PERMISSIONS_ADD_SUBFOLDER_CHECKBOX</td>
+	<td>//input[@id='${key_roleName}_ACTION_ADD_SUBFOLDER']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INLINE_PERMISSIONS_PERMISSIONS_CHECKBOX</td>
 	<td>//input[@id='${key_roleTitle}_ACTION_PERMISSIONS']</td>
 	<td></td>

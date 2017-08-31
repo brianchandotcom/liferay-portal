@@ -277,6 +277,55 @@
 		</execute>
 	</command>
 
+	<command name="importWikiLARLinkNode" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training" />
+
+		<execute macro="SitePageNavigator#gotoAddPage">
+			<var name="sitePagePrivacy" value="Private" />
+		</execute>
+
+		<execute macro="Page#addPageTitle">
+			<var name="pageName" value="Research Projects" />
+		</execute>
+
+		<execute macro="Page#saveAddPage" />
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Wiki" />
+		</execute>
+
+		<execute macro="LAR#importPortlet">
+			<var name="larFileName" value="research-projects-update-node.lar" />
+			<var name="mirrorWithOverwriting" value="true" />
+			<var name="uploadFrom" value="dependencies" />
+		</execute>
+
+		<execute macro="IFrame#closeFrame" />
+
+		<execute macro="IFrame#selectTopFrame" />
+
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="Descriptive" />
+		</execute>
+
+		<execute function="AssertClick" locator1="Wiki#DESCRIPTIVE_VIEW_ENTRY_TITLE" value1="Organic Research Projects">
+			<var name="key_wikiPageTitle" value="Organic Research Projects" />
+		</execute>
+
+		<execute function="AssertClick" locator1="Wiki#DESCRIPTIVE_VIEW_ENTRY_TITLE" value1="FrontPage">
+			<var name="key_wikiPageTitle" value="FrontPage" />
+		</execute>
+
+		<execute function="AssertClick" locator1="WikiEntry#BODY_LINK" value1="Sweet Potatoes" />
+
+		<execute function="AssertTextEquals" locator1="WikiEntry#HEADER_TITLE" value1="Sweet Potatoes" />
+	</command>
+
 	<command name="RateAndEditPageComment" priority="5">
 		<execute macro="Navigator#openURL" />
 

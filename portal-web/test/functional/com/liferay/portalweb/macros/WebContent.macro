@@ -1022,6 +1022,34 @@
 		</execute>
 	</command>
 
+	<command name="moveArticlesToFolderCP">
+		<for list="${webContentArticlesList}" param="webContentTitle">
+			<execute function="Check" locator1="WC#ENTRY_DESCRIPTIVE_CHECKBOX">
+				<var name="key_webContentTitle" value="${webContentTitle}" />
+			</execute>
+		</for>
+
+		<execute function="Click" locator1="Icon#MOVE" />
+
+		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Move Web Content" />
+
+		<execute function="Click" locator1="Button#PARENT_FOLDER_SELECT" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute function="AssertClick" locator1="WC#FOLDER_TABLE_CHOOSE" value1="Choose">
+			<var name="key_folderName" value="${folderName}" />
+		</execute>
+
+		<execute function="SelectFrameTop" />
+
+		<execute macro="Button#clickDone" />
+
+		<execute function="AssertClick" locator1="Button#MOVE" value1="Move" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
 	<command name="moveMultipleToFolderCP">
 		<execute macro="Portlet#changeDisplayStyle">
 			<var name="displayStyle" value="Descriptive" />

@@ -78,6 +78,10 @@ public class JavaTermOrderCheck extends BaseJavaTermCheck {
 			"portal-impl/src/custom-sql/default.xml",
 			ToolsUtil.PORTAL_MAX_DIR_LEVEL);
 
+		if (portalCustomSQLFile == null) {
+			return null;
+		}
+
 		String portalCustomSQLContent = FileUtil.read(portalCustomSQLFile);
 
 		Matcher matcher = _customSQLFilePattern.matcher(portalCustomSQLContent);

@@ -105,7 +105,9 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 				"portal-impl/src/portal.properties",
 				ToolsUtil.PORTAL_MAX_DIR_LEVEL);
 
-			return FileUtil.read(file);
+			if (file != null) {
+				return FileUtil.read(file);
+			}
 		}
 
 		ClassLoader classLoader =

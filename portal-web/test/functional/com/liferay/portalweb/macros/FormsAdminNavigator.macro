@@ -44,9 +44,9 @@
 	</command>
 
 	<command name="gotoEdit">
-		<var name="key_rowEntry" value="${formName}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
+			<var name="key_rowEntry" value="${formName}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
 			<var name="key_menuItem" value="Edit" />
@@ -70,9 +70,9 @@
 	</command>
 
 	<command name="gotoEditFormByName">
-		<var name="key_formName" value="${formName}" />
-
-		<execute function="AssertClick" locator1="FormsAdmin#FORMS_TABLE_NAME" value1="${formName}" />
+		<execute function="AssertClick" locator1="FormsAdmin#FORMS_TABLE_NAME" value1="${formName}">
+			<var name="key_formName" value="${formName}" />
+		</execute>
 	</command>
 
 	<command name="gotoFormBuilder">
@@ -82,12 +82,13 @@
 	</command>
 
 	<command name="gotoPermissions">
-		<var name="key_rowEntry" value="${entryTitle}" />
-		<var name="key_menuItem" value="${menuItem}" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
+			<var name="key_rowEntry" value="${entryTitle}" />
+		</execute>
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
+			<var name="key_menuItem" value="${menuItem}" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
@@ -132,8 +133,6 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS_N" />
 
-		<var name="key_formName" value="${formName}" />
-
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="View">
 			<var name="key_menuItem" value="View" />
 		</execute>
@@ -144,19 +143,15 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
-		<var name="key_formName" value="${formName}" />
-
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="View Entries">
 			<var name="key_menuItem" value="View Entries" />
 		</execute>
 	</command>
 
 	<command name="gotoViewEntriesViaIcon">
-		<var name="key_rowEntry" value="${formName}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<var name="key_formName" value="${formName}" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
+			<var name="key_rowEntry" value="${formName}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="View Entries">
 			<var name="key_menuItem" value="View Entries" />

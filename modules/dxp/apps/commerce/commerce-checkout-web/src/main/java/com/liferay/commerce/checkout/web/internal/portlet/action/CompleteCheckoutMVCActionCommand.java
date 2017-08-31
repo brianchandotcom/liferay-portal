@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.checkout.web.internal.portlet.action;
 
-import com.liferay.commerce.checkout.web.internal.constants.CommerceCheckoutPortletKeys;
+import com.liferay.commerce.checkout.web.constants.CommerceCheckoutPortletKeys;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;

@@ -23,7 +23,7 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.commerce.checkout.web.internal.constants.CommerceCheckoutWebKeys" %><%@
+<%@ page import="com.liferay.commerce.checkout.web.constants.CommerceCheckoutWebKeys" %><%@
 page import="com.liferay.commerce.model.CommerceCart" %><%@
 page import="com.liferay.commerce.model.CommerceOrder" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@

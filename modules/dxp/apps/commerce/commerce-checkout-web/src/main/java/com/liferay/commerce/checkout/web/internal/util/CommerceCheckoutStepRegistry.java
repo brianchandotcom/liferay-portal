@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.checkout.web.internal.util;
 
-import com.liferay.commerce.checkout.web.internal.constants.CommerceCheckoutPortletKeys;
+import com.liferay.commerce.checkout.web.constants.CommerceCheckoutPortletKeys;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.StringBundler;

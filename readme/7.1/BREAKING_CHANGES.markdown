@@ -20,7 +20,7 @@ Here are some of the types of changes documented in this file:
   replaces an old API, in spite of the old API being kept in Liferay Portal for
   backwards compatibility.
 
-*This document has been reviewed through commit `327db2f96b5c`.*
+*This document has been reviewed through commit `868fe06cbf30`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -353,7 +353,7 @@ configuration changes.
 
 ---------------------------------------
 
-### Removed soyutils modules
+### Removed the soyutils Module
 - **Date:** 2017-Aug-28
 - **JIRA Ticket:** LPS-69102
 
@@ -368,13 +368,13 @@ This affects anyone using the `soyutils` module.
 #### How should I update my code?
 
 In the rare case that a component is affected, it is recommended that the code
-is migrated to use the `metal-soy` module instead, extending properly from the
-`Metal.js` provided `Component` classes.
+is migrated to use the `metal-soy` module instead. You can do this by extending
+the `Metal.js` provided `Component` classes.
 
 #### Why was this change made?
 
-The removed module exposed a legacy version of `soyutils`. This caused inter-
-operability issue between applications using different versions of the Closure
-Template library.
+The removed module exposed a legacy version of `soyutils`. This caused
+interoperability issues between applications using different versions of the
+Closure Template library.
 
 ---------------------------------------

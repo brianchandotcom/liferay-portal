@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Time;
@@ -1540,7 +1541,7 @@ public class PropsValues {
 
 	public static final String SESSION_COOKIE_DOMAIN = PropsUtil.get(PropsKeys.SESSION_COOKIE_DOMAIN);
 
-	public static final boolean SESSION_COOKIE_USE_FULL_HOSTNAME = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.SESSION_COOKIE_USE_FULL_HOSTNAME));
+	public static final boolean SESSION_COOKIE_USE_FULL_HOSTNAME = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.SESSION_COOKIE_USE_FULL_HOSTNAME, new Filter(ServerDetector.getServerId())));
 
 	public static final boolean SESSION_DISABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.SESSION_DISABLED));
 

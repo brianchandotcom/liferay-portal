@@ -218,7 +218,7 @@ public class LCSUtil {
 		PortletRequest portletRequest) {
 
 		try {
-			isLCSClusterNodeRegistered();
+			return isLCSClusterNodeRegistered();
 		}
 		catch (InitializationException ie) {
 			_log.error("Unable to initialize LCS cluster node", ie);

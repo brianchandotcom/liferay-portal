@@ -16,7 +16,7 @@ package com.liferay.frontend.js.top.head.extender.internal;
 
 import com.liferay.frontend.js.top.head.extender.TopHeadResources;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
-import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
+import com.liferay.portal.kernel.servlet.PortalWebResources;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
@@ -91,11 +91,29 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 		_comboContextPath = pathContext.concat("/combo");
 
 		_portal = portal;
+
+		_rebuild();
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC, unbind = "removePortalWebResources"
+	)
+	protected void addPortalWebResources(
+		PortalWebResources portalWebResources) {
+
+		String resourceType = portalWebResources.getResourceType();
+
+		if (resourceType.equals(PortalWebResourceConstants.RESOURCE_TYPE_JS)) {
+			_portalWebResources = portalWebResources;
+
+			_rebuild();
+		}
 	}
 
 	@Reference(
@@ -108,6 +126,18 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 		synchronized (_topHeadResourcesServiceReferences) {
 			_topHeadResourcesServiceReferences.add(
 				topHeadResourcesServiceReference);
+		}
+
+		_rebuild();
+	}
+
+	protected void removePortalWebResources(
+		PortalWebResources portalWebResources) {
+
+		String resourceType = portalWebResources.getResourceType();
+
+		if (resourceType.equals(PortalWebResourceConstants.RESOURCE_TYPE_JS)) {
+			_portalWebResources = null;
 
 			_rebuild();
 		}
@@ -119,23 +149,29 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 		synchronized (_topHeadResourcesServiceReferences) {
 			_topHeadResourcesServiceReferences.remove(
 				topHeadResourcesServiceReference);
-
-			_rebuild();
 		}
+
+		_rebuild();
 	}
 
 	private void _addPortalBundles(List<String> urls, String propsKey) {
 		String[] fileNames = JavaScriptBundleUtil.getFileNames(propsKey);
 
-		String jsContextPath = PortalWebResourcesUtil.getContextPath(
-			PortalWebResourceConstants.RESOURCE_TYPE_JS);
-
 		for (String fileName : fileNames) {
-			urls.add(jsContextPath + StringPool.SLASH + fileName);
+			urls.add(_jsContextPath + StringPool.SLASH + fileName);
 		}
 	}
 
-	private void _rebuild() {
+	private synchronized void _rebuild() {
+		if ((_portal == null) || (_portalWebResources == null)) {
+			return;
+		}
+
+		_jsContextPath = _portal.getPathProxy();
+
+		_jsContextPath = _jsContextPath.concat(
+			_portalWebResources.getContextPath());
+
 		_jsResourceURLs.clear();
 		_bareboneJsResourceURLs.clear();
 
@@ -145,33 +181,36 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 		_addPortalBundles(
 			_bareboneJsResourceURLs, PropsKeys.JAVASCRIPT_BAREBONE_FILES);
 
-		for (ServiceReference<TopHeadResources>
-				topHeadResourcesServiceReference :
-					_topHeadResourcesServiceReferences) {
+		synchronized (_topHeadResourcesServiceReferences) {
+			for (ServiceReference<TopHeadResources>
+					topHeadResourcesServiceReference :
+						_topHeadResourcesServiceReferences) {
 
-			TopHeadResources topHeadResources = _bundleContext.getService(
-				topHeadResourcesServiceReference);
+				TopHeadResources topHeadResources = _bundleContext.getService(
+					topHeadResourcesServiceReference);
 
-			try {
-				String servletContextPath =
-					topHeadResources.getServletContextPath();
+				try {
+					String servletContextPath =
+						topHeadResources.getServletContextPath();
 
-				for (String jsResourcePath :
-						topHeadResources.getJsResourcePaths()) {
+					for (String jsResourcePath :
+							topHeadResources.getJsResourcePaths()) {
 
-					_jsResourceURLs.add(
-						servletContextPath.concat(jsResourcePath));
+						_jsResourceURLs.add(
+							servletContextPath.concat(jsResourcePath));
+					}
+
+					for (String jsResourcePath :
+							topHeadResources.getJsResourcePaths()) {
+
+						_bareboneJsResourceURLs.add(
+							servletContextPath.concat(jsResourcePath));
+					}
 				}
-
-				for (String jsResourcePath :
-						topHeadResources.getJsResourcePaths()) {
-
-					_bareboneJsResourceURLs.add(
-						servletContextPath.concat(jsResourcePath));
+				finally {
+					_bundleContext.ungetService(
+						topHeadResourcesServiceReference);
 				}
-			}
-			finally {
-				_bundleContext.ungetService(topHeadResourcesServiceReference);
 			}
 		}
 	}
@@ -181,8 +220,11 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 			List<String> urls)
 		throws IOException {
 
-		long jsLastModified = PortalWebResourcesUtil.getLastModified(
-			PortalWebResourceConstants.RESOURCE_TYPE_JS);
+		long jsLastModified = -1;
+
+		if (_portalWebResources != null) {
+			jsLastModified = _portalWebResources.getLastModified();
+		}
 
 		String comboURL = _portal.getStaticResourceURL(
 			request, _comboContextPath, "minifierType=js", jsLastModified);
@@ -226,8 +268,10 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 	private volatile List<String> _bareboneJsResourceURLs = new ArrayList<>();
 	private BundleContext _bundleContext;
 	private String _comboContextPath;
+	private String _jsContextPath = StringPool.BLANK;
 	private volatile List<String> _jsResourceURLs = new ArrayList<>();
 	private Portal _portal;
+	private PortalWebResources _portalWebResources;
 	private final Collection<ServiceReference<TopHeadResources>>
 		_topHeadResourcesServiceReferences = new TreeSet<>();
 

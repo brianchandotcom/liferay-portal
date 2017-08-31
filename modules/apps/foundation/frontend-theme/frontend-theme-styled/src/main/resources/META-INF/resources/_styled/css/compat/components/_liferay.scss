@@ -1,6 +1,6 @@
 #navigationCollapse {
-	padding-right: $navbar-padding-x;
 	padding-left: $navbar-padding-x;
+	padding-right: $navbar-padding-x;
 
 	@include media-breakpoint-up(md) {
 		display: block;

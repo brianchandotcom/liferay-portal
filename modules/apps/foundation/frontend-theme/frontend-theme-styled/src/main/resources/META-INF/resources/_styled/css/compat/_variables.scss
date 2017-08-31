@@ -60,29 +60,29 @@ $management-bar-default-btn-default-active-color: $management-bar-default-btn-de
 
 // Grid
 
-$screen-xs-min:              map-get($grid-breakpoints, sm) !default;
-$screen-sm-min:              map-get($grid-breakpoints, md) !default;
-$screen-md-min:              map-get($grid-breakpoints, lg) !default;
-$screen-lg-min:              map-get($grid-breakpoints, xl) !default;
+$screen-xs-min: map-get($grid-breakpoints, sm) !default;
+$screen-sm-min: map-get($grid-breakpoints, md) !default;
+$screen-md-min: map-get($grid-breakpoints, lg) !default;
+$screen-lg-min: map-get($grid-breakpoints, xl) !default;
 
-$screen-xs-max:              ($screen-sm-min - 1) !default;
-$screen-sm-max:              ($screen-md-min - 1) !default;
-$screen-md-max:              ($screen-lg-min - 1) !default;
+$screen-xs-max: ($screen-sm-min - 1) !default;
+$screen-sm-max: ($screen-md-min - 1) !default;
+$screen-md-max: ($screen-lg-min - 1) !default;
 
 $grid-float-breakpoint: $screen-sm-min !default;
 
 // Pager
 
-$pager-bg:                             $pagination-bg !default;
-$pager-border:                         $pagination-border-color !default;
-$pager-border-radius:                  15px !default;
+$pager-bg: $pagination-bg !default;
+$pager-border: $pagination-border-color !default;
+$pager-border-radius: 15px !default;
 
-$pager-hover-bg:                       $pagination-hover-bg !default;
+$pager-hover-bg: $pagination-hover-bg !default;
 
-$pager-active-bg:                      $pagination-active-bg !default;
-$pager-active-color:                   $pagination-active-color !default;
+$pager-active-bg: $pagination-active-bg !default;
+$pager-active-color: $pagination-active-color !default;
 
-$pager-disabled-color:                 $pagination-disabled-color !default;
+$pager-disabled-color: $pagination-disabled-color !default;
 
 // Progress
 
@@ -91,10 +91,10 @@ $progress-bar-xl-height: 52px !default;
 
 // List groups
 
-$list-group-border:             #ddd !default;
-$list-group-border-radius:      $border-radius-base !default;
+$list-group-border: #DDD !default;
+$list-group-border-radius: $border-radius-base !default;
 
-$list-group-hover-bg:           #f5f5f5 !default;
+$list-group-hover-bg: #F5F5F5 !default;
 
 $list-group-link-heading-color: #333 !default;
 

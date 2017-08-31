@@ -47,7 +47,6 @@ import com.liferay.portal.model.impl.ContactImpl;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -271,25 +270,16 @@ public class UserIndexer extends BaseIndexer<User> {
 
 		document.addKeyword(Field.COMPANY_ID, user.getCompanyId());
 
-		List<Group> groups = user.getGroups();
+		List<Long> groupIdsList = new ArrayList<>();
 
-		List<Long> activatedGroupIds = new ArrayList<>();
-
-		Iterator<Group> iterator = groups.iterator();
-
-		while (iterator.hasNext()) {
-			Group group = iterator.next();
-
-			if (!group.isActive()) {
-				iterator.remove();
-			}
-			else {
-				activatedGroupIds.add(Long.valueOf(group.getGroupId()));
+		for (Group group : user.getGroups()) {
+			if (group.isActive()) {
+				groupIdsList.add(group.getGroupId());
 			}
 		}
 
 		long[] groupIds = ArrayUtil.toArray(
-			activatedGroupIds.toArray(new Long[activatedGroupIds.size()]));
+			groupIdsList.toArray(new Long[groupIdsList.size()]));
 
 		document.addKeyword(Field.GROUP_ID, groupIds);
 

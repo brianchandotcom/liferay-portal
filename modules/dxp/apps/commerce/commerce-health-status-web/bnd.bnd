@@ -1,4 +1,5 @@
 Bundle-Name: Liferay Commerce Health Status Web
 Bundle-SymbolicName: com.liferay.commerce.health.status.web
 Bundle-Version: 1.0.0
+Export-Package: com.liferay.commerce.health.status.web.util
 Web-ContextPath: /commerce-health-status-web

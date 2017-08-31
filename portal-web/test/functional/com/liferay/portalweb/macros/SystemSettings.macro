@@ -1,4 +1,20 @@
 <definition>
+	<command name="configureCategoryNavigationDisplayStyle">
+		<execute function="Click" locator1="Dropdown#TRIGGER" />
+
+		<execute function="Type" locator1="Dropdown#SEARCH_FIELD" value1="${displayStyle}" />
+
+		<execute function="Pause" locator1="3000" />
+
+		<execute function="AssertClick" locator1="Dropdown#RESULT" value1="${displayStyle}">
+			<var name="key_option" value="${displayStyle}" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Dropdown#SELECTED_VALUE" value1="${displayStyle}" />
+
+		<execute macro="SystemSettings#saveConfiguration" />
+	</command>
+
 	<command name="editConfiguration">
 		<var name="key_rowEntry" value="${configurationName}" />
 

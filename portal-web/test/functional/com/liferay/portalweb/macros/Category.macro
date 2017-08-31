@@ -97,6 +97,15 @@
 			</then>
 		</if>
 
+		<if>
+			<isset var="parentCategory" />
+			<then>
+				<execute macro="AssetCategorization#addCategory">
+					<var name="categoryName" value="${parentCategory}" />
+				</execute>
+			</then>
+		</if>
+
 		<execute macro="PortletEntry#save" />
 	</command>
 
@@ -465,6 +474,12 @@
 
 		<execute macro="SiteAdmin#viewPortletTitle">
 			<var name="portletTitle" value="${vocabularyName}" />
+		</execute>
+	</command>
+
+	<command name="viewPath">
+		<execute function="AssertTextEquals" locator1="Categories#CATEGORY_ENTRY_PATH" value1="${path}">
+			<var name="key_categoryName" value="${categoryName}" />
 		</execute>
 	</command>
 

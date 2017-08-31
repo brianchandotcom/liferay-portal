@@ -6,7 +6,6 @@
 
 		<execute macro="AssetCategorization#selectCategory">
 			<var name="categoryName" value="${categoryName}" />
-			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="AssetCategorization#CATEGORY" value1="${categoryName}">

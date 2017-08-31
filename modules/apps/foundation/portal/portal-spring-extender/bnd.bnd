@@ -31,6 +31,7 @@ Import-Package:\
 	com.liferay.portal.spring.bean,\
 	com.liferay.portal.spring.context,\
 	com.liferay.portal.spring.hibernate,\
+	com.liferay.portal.spring.jndi,\
 	com.liferay.portal.spring.transaction,\
 	com.liferay.portal.systemevent,\
 	\
@@ -61,6 +62,7 @@ Import-Package:\
 	org.springframework.ejb.config,\
 	org.springframework.jdbc.config,\
 	org.springframework.jms.config,\
+	org.springframework.jndi,\
 	org.springframework.oxm.config,\
 	org.springframework.scheduling.config,\
 	org.springframework.scripting.config,\

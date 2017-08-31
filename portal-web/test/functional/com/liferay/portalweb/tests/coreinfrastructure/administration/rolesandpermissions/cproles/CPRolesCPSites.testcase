@@ -47,28 +47,21 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCP">
-			<var name="permissionDefinitionKey" value="CONTROL_PANEL_SITES_SITES_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Access in Control Panel" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="VIEW_CONTROL_PANEL" />
+			<var name="resourceName" value="90" />
 			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL" />
+			<var name="resourceName" value="com_liferay_site_admin_web_portlet_SiteAdminPortlet" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
-		<execute macro="Role#definePermissionCP">
-			<var name="permissionDefinitionKey" value="CONTROL_PANEL_USERS_ROLES_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Access in Control Panel" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL" />
+			<var name="resourceName" value="com_liferay_roles_admin_web_portlet_RolesAdminPortlet" />
 			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
@@ -83,12 +76,10 @@
 
 		<execute function="AssertElementNotPresent" locator1="Button#ADD" />
 
-		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_SITE_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Add Site" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="ADD_COMMUNITY" />
+			<var name="resourceName" value="90" />
 			<var name="roleTitle" value="Regrole Name" />
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
@@ -100,10 +91,13 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Permissions#removePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_SITE_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Add Site" />
+		<execute macro="Permissions#removePermissionViaAPI">
+			<var name="resourceAction" value="ADD_COMMUNITY" />
+			<var name="resourceName" value="90" />
 			<var name="roleTitle" value="Regrole Name" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
@@ -338,28 +332,33 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="CONTROL_PANEL_SITES_SITES_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Access in Control Panel" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="VIEW_CONTROL_PANEL" />
+			<var name="resourceName" value="90" />
 			<var name="roleTitle" value="Regrole Name" />
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
-		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_ADD_SITE_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Add Site" />
-			<var name="roleTitle" value="Siterole Name" />
-			<var name="roleType" value="Site" />
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL" />
+			<var name="resourceName" value="com_liferay_site_admin_web_portlet_SiteAdminPortlet" />
+			<var name="roleTitle" value="Regrole Name" />
 		</execute>
 
-		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_UPDATE_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Update" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="UPDATE" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
 			<var name="roleTitle" value="Siterole Name" />
-			<var name="roleType" value="Site" />
+			<var name="roleType" value="site" />
+		</execute>
+
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="ADD_COMMUNITY" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
+			<var name="roleTitle" value="Siterole Name" />
+			<var name="roleType" value="site" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
@@ -410,11 +409,14 @@
 
 		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Public Pages" />
 
-		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_MANAGE_SUBSITES_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Manage Subsites" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="MANAGE_SUBGROUPS" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
 			<var name="roleTitle" value="Siterole Name" />
-			<var name="roleType" value="Site" />
+			<var name="roleType" value="site" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
@@ -443,11 +445,14 @@
 
 		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Public Pages" />
 
-		<execute macro="Permissions#removePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_MANAGE_SUBSITES_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Manage Subsites" />
+		<execute macro="Permissions#removePermissionViaAPI">
+			<var name="resourceAction" value="MANAGE_SUBGROUPS" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
 			<var name="roleTitle" value="Siterole Name" />
-			<var name="roleType" value="Site" />
+			<var name="roleType" value="site" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
@@ -511,10 +516,19 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="CONTROL_PANEL_SITES_SITES_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Access in Control Panel" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL" />
+			<var name="resourceName" value="com_liferay_site_admin_web_portlet_SiteAdminPortlet" />
 			<var name="roleTitle" value="Regrole Name" />
+		</execute>
+
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="VIEW_CONTROL_PANEL" />
+			<var name="resourceName" value="90" />
+			<var name="roleTitle" value="Regrole Name" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
@@ -527,18 +541,19 @@
 
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No sites were found." />
 
-		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="CONTROL_PANEL_SITES_SITES_RESOURCE_PERMISSIONS_SITE_MANAGE_PAGES_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Manage Pages" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="VIEW" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
 			<var name="roleTitle" value="Regrole Name" />
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
-		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="CONTROL_PANEL_SITES_SITES_RESOURCE_PERMISSIONS_SITE_VIEW_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="View" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="MANAGE_LAYOUTS" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
 			<var name="roleTitle" value="Regrole Name" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
@@ -571,18 +586,19 @@
 
 		<execute function="AssertElementPresent" locator1="SitePages#SITE_NAME" value1="Site Name" />
 
-		<execute macro="Permissions#removePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="CONTROL_PANEL_SITES_SITES_RESOURCE_PERMISSIONS_SITE_MANAGE_PAGES_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Manage Pages" />
+		<execute macro="Permissions#removePermissionViaAPI">
+			<var name="resourceAction" value="VIEW" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
 			<var name="roleTitle" value="Regrole Name" />
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
-		<execute macro="Permissions#removePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="CONTROL_PANEL_SITES_SITES_RESOURCE_PERMISSIONS_SITE_VIEW_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="View" />
+		<execute macro="Permissions#removePermissionViaAPI">
+			<var name="resourceAction" value="MANAGE_LAYOUTS" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
 			<var name="roleTitle" value="Regrole Name" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>

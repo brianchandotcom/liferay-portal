@@ -50,10 +50,13 @@
 
 		<execute function="AssertElementNotPresent" locator1="ControlMenu#SIMULATION" />
 
-		<execute macro="Permissions#definePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="CONTROL_PANEL_SITES_SITES_RESOURCE_PERMISSIONS_SITE_PREVIEW_IN_DEVICE_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Preview in Device" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="PREVIEW_IN_DEVICE" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
 			<var name="roleTitle" value="Regrole Name" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
@@ -64,10 +67,13 @@
 			<var name="deviceType" value="smartphone" />
 		</execute>
 
-		<execute macro="Permissions#removePermissionLoginUserCP">
-			<var name="permissionDefinitionKey" value="CONTROL_PANEL_SITES_SITES_RESOURCE_PERMISSIONS_SITE_PREVIEW_IN_DEVICE_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Preview in Device" />
+		<execute macro="Permissions#removePermissionViaAPI">
+			<var name="resourceAction" value="PREVIEW_IN_DEVICE" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
 			<var name="roleTitle" value="Regrole Name" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>

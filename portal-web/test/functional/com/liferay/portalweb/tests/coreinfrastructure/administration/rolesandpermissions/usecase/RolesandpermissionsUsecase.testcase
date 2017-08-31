@@ -46,72 +46,52 @@
 	</tear-down>
 
 	<command name="EditTeamPermissions" priority="4">
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="VIEW_CONTROL_PANEL" />
+			<var name="resourceName" value="90" />
+			<var name="roleTitle" value="User" />
 		</execute>
 
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS_GO_TO_CONTROL_PANEL_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="View Control Panel Menu" />
-			<var name="roleTitle" value="Authenticated" />
-			<var name="roleUser" value="User" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="RoleNavigator#gotoRoleType">
-			<var name="roleType" value="Site" />
-		</execute>
-
-		<execute macro="Role#add">
+		<execute macro="JSONRole#addSiteRole">
+			<var name="roleKey" value="Roles Siterole Name" />
 			<var name="roleTitle" value="Roles Siterole Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
+		<for list="ACCESS_IN_CONTROL_PANEL,ADD_TO_PAGE,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW" param="resourceActionIndex">
+			<execute macro="Permissions#definePermissionViaJSONAPI">
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet" />
+				<var name="roleTitle" value="Roles Siterole Name" />
+				<var name="roleType" value="site" />
+			</execute>
+		</for>
 
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_ACTION_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Action" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-			<var name="roleType" value="Site" />
-		</execute>
+		<for list="ADD_COMMUNITY,ADD_LAYOUT,ADD_LAYOUT_BRANCH,ADD_LAYOUT_SET_BRANCH,ASSIGN_MEMBERS,ASSIGN_USER_ROLES,CONFIGURE_PORTLETS,DELETE,EXPORT_IMPORT_LAYOUTS,EXPORT_IMPORT_PORTLET_INFO,MANAGE_ANNOUNCEMENTS,MANAGE_ARCHIVED_SETUPS,MANAGE_LAYOUTS,MANAGE_STAGING,MANAGE_SUBGROUPS,MANAGE_TEAMS,PERMISSIONS,PREVIEW_IN_DEVICE,PUBLISH_PORTLET_INFO,PUBLISH_STAGING,UPDATE,VIEW,VIEW_MEMBERS,VIEW_SITE_ADMINISTRATION,VIEW_STAGING" param="resourceActionIndex">
+			<execute macro="Permissions#definePermissionViaJSONAPI">
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
+				<var name="roleTitle" value="Roles Siterole Name" />
+				<var name="roleType" value="site" />
+			</execute>
+		</for>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
+		<for list="ASSIGN_MEMBERS,DELETE,PERMISSIONS,UPDATE,VIEW" param="resourceActionIndex">
+			<execute macro="Permissions#definePermissionViaJSONAPI">
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com.liferay.portal.kernel.model.Team" />
+				<var name="roleTitle" value="Roles Siterole Name" />
+				<var name="roleType" value="site" />
+			</execute>
+		</for>
 
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_MEMBERS_SITE_TEAMS_RESOURCE_PERMISSIONS_TEAM_ACTION_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Action" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-			<var name="roleType" value="Site" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_MEMBERS_SITE_MEMBERSHIPS_GENERAL_PERMISSIONS_ACTION_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Action" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-			<var name="roleType" value="Site" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_WEB_CONTENT_DISPLAY_APPLICATIONS_PERMISSIONS_ACTION_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Action" />
-			<var name="roleTitle" value="Roles Siterole Name" />
-			<var name="roleType" value="Site" />
-		</execute>
+		<for list="ADD_TO_PAGE,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW" param="resourceActionIndex">
+			<execute macro="Permissions#definePermissionViaJSONAPI">
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com_liferay_journal_content_web_portlet_JournalContentPortlet" />
+				<var name="roleTitle" value="Roles Siterole Name" />
+				<var name="roleType" value="site" />
+			</execute>
+		</for>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
@@ -748,72 +728,42 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="RoleNavigator#gotoRoleType">
-			<var name="roleType" value="Site" />
-		</execute>
-
-		<execute macro="Role#add">
+		<execute macro="JSONRole#addSiteRole">
+			<var name="roleKey" value="Data Recorder Name" />
 			<var name="roleTitle" value="Data Recorder Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_DYNAMIC_DATA_LISTS_RESOURCE_PERMISSIONS_DYNAMIC_DATA_LISTS_RECORD_SET_ADD_RECORD_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Add Record" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="ADD_RECORD" />
+			<var name="resourceName" value="com.liferay.dynamic.data.lists.model.DDLRecordSet" />
 			<var name="roleTitle" value="Data Recorder Name" />
-			<var name="roleType" value="Site" />
+			<var name="roleType" value="site" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="View" />
+			<var name="resourceName" value="com.liferay.dynamic.data.lists.model.DDLRecordSet" />
+			<var name="roleTitle" value="Data REcorder Name" />
+			<var name="roleType" value="site" />
 		</execute>
 
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_DYNAMIC_DATA_LISTS_RESOURCE_PERMISSIONS_DYNAMIC_DATA_LISTS_RECORD_SET_VIEW_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="View" />
-			<var name="roleTitle" value="Data Recorder Name" />
-			<var name="roleType" value="Site" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="RoleNavigator#gotoRoleType">
-			<var name="roleType" value="Site" />
-		</execute>
-
-		<execute macro="Role#add">
+		<execute macro="JSONRole#addSiteRole">
+			<var name="roleKey" value="Records Manager Name" />
 			<var name="roleTitle" value="Records Manager Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_DYNAMIC_DATA_LISTS_RESOURCE_PERMISSIONS_DYNAMIC_DATA_LISTS_RECORD_SET_UPDATE_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Update" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="UPDATE" />
+			<var name="resourceName" value="com.liferay.dynamic.data.lists.model.DDLRecordSet" />
 			<var name="roleTitle" value="Records Manager Name" />
-			<var name="roleType" value="Site" />
+			<var name="roleType" value="site" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_DYNAMIC_DATA_LISTS_RESOURCE_PERMISSIONS_DYNAMIC_DATA_LISTS_RECORD_SET_VIEW_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="View" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="VIEW" />
+			<var name="resourceName" value="com.liferay.dynamic.data.lists.model.DDLRecordSet" />
 			<var name="roleTitle" value="Records Manager Name" />
-			<var name="roleType" value="Site" />
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -1547,216 +1497,135 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="RoleNavigator#gotoRoleType">
-			<var name="roleType" value="Site" />
-		</execute>
-
-		<execute macro="Role#add">
+		<execute macro="JSONRole#addSiteRole">
+			<var name="roleKey" value="Movie Blogger Name" />
 			<var name="roleTitle" value="Movie Blogger Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Add Entry" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="ADD_ENTRY" />
+			<var name="resourceName" value="com.liferay.blogs" />
 			<var name="roleTitle" value="Movie Blogger Name" />
-			<var name="roleType" value="Site" />
+			<var name="roleType" value="site" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRY_VIEW_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="View" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="VIEW" />
+			<var name="resourceName" value="com.liferay.blogs.model.BlogsEntry" />
 			<var name="roleTitle" value="Movie Blogger Name" />
-			<var name="roleType" value="Site" />
+			<var name="roleType" value="site" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER_APPLICATION_PERIMISSIONS_ADD_TO_PAGE_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Add to Page" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="ADD_TO_PAGE" />
+			<var name="resourceName" value="com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet" />
 			<var name="roleTitle" value="Movie Blogger Name" />
-			<var name="roleType" value="Site" />
+			<var name="roleType" value="site" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER_APPLICATION_PERIMISSIONS_VIEW_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="View" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="VIEW" />
+			<var name="resourceName" value="com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet" />
 			<var name="roleTitle" value="Movie Blogger Name" />
-			<var name="roleType" value="Site" />
+			<var name="roleType" value="site" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="RoleNavigator#gotoRoleType">
-			<var name="roleType" value="Site" />
-		</execute>
-
-		<execute macro="Role#add">
+		<execute macro="JSONRole#addSiteRole">
+			<var name="roleKey" value="Music Fan Name" />
 			<var name="roleTitle" value="Music Fan Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_MESSAGE_BOARDS_RESOURCE_PERMISSIONS_MESSAGES_ADD_CATEGORY_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Add Category" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="VIEW" />
+			<var name="resourceName" value="com.liferay.message.boards" />
 			<var name="roleTitle" value="Music Fan Name" />
-			<var name="roleType" value="Site" />
+			<var name="roleType" value="site" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_MESSAGE_BOARDS_RESOURCE_PERMISSIONS_MESSAGES_ADD_MESSAGE_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Add Message" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="ADD_CATEGORY" />
+			<var name="resourceName" value="com.liferay.message.boards" />
 			<var name="roleTitle" value="Music Fan Name" />
-			<var name="roleType" value="Site" />
+			<var name="roleType" value="site" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_MESSAGE_BOARDS_RESOURCE_PERMISSIONS_MESSAGES_VIEW_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="View" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="ADD_MESSAGE" />
+			<var name="resourceName" value="com.liferay.message.boards" />
 			<var name="roleTitle" value="Music Fan Name" />
-			<var name="roleType" value="Site" />
+			<var name="roleType" value="site" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_MESSAGE_BOARDS_RESOURCE_PERMISSIONS_MESSAGE_BOARDS_CATEGORY_ADD_MESSAGE_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Add Message" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="VIEW" />
+			<var name="resourceName" value="com.liferay.message.boards.kernel.model.MBCategory" />
 			<var name="roleTitle" value="Music Fan Name" />
-			<var name="roleType" value="Site" />
+			<var name="roleType" value="site" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_MESSAGE_BOARDS_RESOURCE_PERMISSIONS_MESSAGE_BOARDS_CATEGORY_VIEW_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="View" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="ADD_MESSAGE" />
+			<var name="resourceName" value="com.liferay.message.boards.kernel.model.MBCategory" />
 			<var name="roleTitle" value="Music Fan Name" />
-			<var name="roleType" value="Site" />
+			<var name="roleType" value="site" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_MESSAGE_BOARDS_RESOURCE_PERMISSIONS_MESSAGE_BOARDS_MESSAGE_VIEW_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="View" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="VIEW" />
+			<var name="resourceName" value="com.liferay.message.boards.kernel.model.MBMessage" />
 			<var name="roleTitle" value="Music Fan Name" />
-			<var name="roleType" value="Site" />
+			<var name="roleType" value="site" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER_APPLICATION_PERIMISSIONS_ADD_TO_PAGE_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Add to Page" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="VIEW" />
+			<var name="resourceName" value="com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet" />
 			<var name="roleTitle" value="Music Fan Name" />
-			<var name="roleType" value="Site" />
+			<var name="roleType" value="site" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER_APPLICATION_PERIMISSIONS_VIEW_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="View" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="ADD_TO_PAGE" />
+			<var name="resourceName" value="com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet" />
 			<var name="roleTitle" value="Music Fan Name" />
-			<var name="roleType" value="Site" />
+			<var name="roleType" value="site" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="RoleNavigator#gotoRoleType">
-			<var name="roleType" value="Site" />
-		</execute>
-
-		<execute macro="Role#add">
+		<execute macro="JSONRole#addSiteRole">
+			<var name="roleKey" value="Sports Journalist Name" />
 			<var name="roleTitle" value="Sports Journalist Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
+		<for list="ADD_DISCUSSION,DELETE,DELETE_DISCUSSION,EXPIRE,PERMISSIONS,SUBSCRIBE,UPDATE,UPDATE_DISCUSSION,VIEW" param="resourceActionIndex">
+			<execute macro="Permissions#definePermissionViaJSONAPI">
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com.liferay.journal.model.JournalArticle" />
+				<var name="roleTitle" value="Sports Journalist Name" />
+				<var name="roleType" value="site" />
+			</execute>
+		</for>
 
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ARTICLE_ACTION_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Action" />
+		<for list="ADD_ARTICLE,ADD_FEED,ADD_FOLDER,ADD_STRUCTURE,ADD_TEMPLATE,PERMISSIONS,SUBSCRIBE,UPDATE,VIEW" param="resourceActionIndex">
+			<execute macro="Permissions#definePermissionViaJSONAPI">
+				<var name="resourceAction" value="${resourceActionIndex}" />
+				<var name="resourceName" value="com.liferay.journal" />
+				<var name="roleTitle" value="Sports Journalist Name" />
+				<var name="roleType" value="site" />
+			</execute>
+		</for>
+
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="VIEW" />
+			<var name="resourceName" value="com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet" />
 			<var name="roleTitle" value="Sports Journalist Name" />
-			<var name="roleType" value="Site" />
+			<var name="roleType" value="site" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ACTION_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Action" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="ADD_TO_PAGE" />
+			<var name="resourceName" value="com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet" />
 			<var name="roleTitle" value="Sports Journalist Name" />
-			<var name="roleType" value="Site" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER_APPLICATION_PERIMISSIONS_ADD_TO_PAGE_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Add to Page" />
-			<var name="roleTitle" value="Sports Journalist Name" />
-			<var name="roleType" value="Site" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_ASSET_PUBLISHER_APPLICATION_PERIMISSIONS_VIEW_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="View" />
-			<var name="roleTitle" value="Sports Journalist Name" />
-			<var name="roleType" value="Site" />
+			<var name="roleType" value="site" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
@@ -2455,51 +2324,38 @@
 	</command>
 
 	<command name="ViewRegRolePermissionsDefaultView" priority="4">
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#add">
+		<execute macro="JSONRole#addRegularRole">
+			<var name="roleKey" value="Roles Regrole Name" />
 			<var name="roleTitle" value="Roles Regrole Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Access in Site Administration" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL" />
+			<var name="resourceName" value="com_liferay_journal_web_portlet_JournalPortlet" />
 			<var name="roleTitle" value="Roles Regrole Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_VIEW_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="View" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="VIEW" />
+			<var name="resourceName" value="com_liferay_journal_web_portlet_JournalPortlet" />
 			<var name="roleTitle" value="Roles Regrole Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ADD_WEB_CONTENT_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="Add Web Content" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="VIEW_SITE_ADMINISTRATION" />
+			<var name="resourceName" value="com.liferay.portal.kernel.model.Group" />
 			<var name="roleTitle" value="Roles Regrole Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="ADD_ARTICLE" />
+			<var name="resourceName" value="com.liferay.journal" />
+			<var name="roleTitle" value="Roles Regrole Name" />
 		</execute>
 
-		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_VIEW_CHECKBOX" />
-			<var name="permissionDefinitionValue" value="View" />
+		<execute macro="Permissions#definePermissionViaJSONAPI">
+			<var name="resourceAction" value="VIEW" />
+			<var name="resourceName" value="com.liferay.journal" />
 			<var name="roleTitle" value="Roles Regrole Name" />
 		</execute>
 

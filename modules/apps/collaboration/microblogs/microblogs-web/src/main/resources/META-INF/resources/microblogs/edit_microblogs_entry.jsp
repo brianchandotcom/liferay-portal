@@ -440,27 +440,35 @@ if (comment) {
 		};
 
 		var createAutocomplete = function(contentTextarea) {
-			autocompleteDiv = new A.AutoComplete(
+			AUI.$.ajax(
+				'<liferay-portlet:resourceURL id="/microblogs/autocomplete_user_mentions" />',
 				{
-					inputNode: contentTextarea,
-					maxResults: 5,
-					on: {
-						clear: function() {
-							var highlighterContent = A.one('#<portlet:namespace />highlighterContent<%= formId %>');
-
-							highlighterContent.html('');
-						},
-						query: updateHighlightDivContent,
-						select: updateContentTextbox
+					data: {
+						userId: <%= user.getUserId() %>
 					},
-					resultFilters: 'phraseMatch',
-					resultFormatter: resultFormatter,
-					resultTextLocator: 'fullName',
-					source: <%= MicroblogsUtil.getJSONRecipients(user.getUserId(), themeDisplay) %>
-				}
-			).render();
+					success: function(responseData) {
+						autocompleteDiv = new A.AutoComplete(
+							{
+								inputNode: contentTextarea,
+								maxResults: 5,
+								on: {
+									clear: function() {
+										var highlighterContent = A.one('#<portlet:namespace />highlighterContent<%= formId %>');
 
-			return autocompleteDiv;
+										highlighterContent.html('');
+									},
+									query: updateHighlightDivContent,
+									select: updateContentTextbox
+								},
+								resultFilters: 'phraseMatch',
+								resultFormatter: resultFormatter,
+								resultTextLocator: 'fullName',
+								source: responseData
+							}
+						).render();
+					}
+				}
+			);
 		};
 
 		<c:choose>

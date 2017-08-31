@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseIndexer;
@@ -44,8 +45,11 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.impl.ContactImpl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -266,7 +270,29 @@ public class UserIndexer extends BaseIndexer<User> {
 		long[] organizationIds = user.getOrganizationIds();
 
 		document.addKeyword(Field.COMPANY_ID, user.getCompanyId());
-		document.addKeyword(Field.GROUP_ID, user.getGroupIds());
+
+		List<Group> groups = user.getGroups();
+
+		List<Long> activatedGroupIds = new ArrayList<>();
+
+		Iterator<Group> iterator = groups.iterator();
+
+		while (iterator.hasNext()) {
+			Group group = iterator.next();
+
+			if (!group.isActive()) {
+				iterator.remove();
+			}
+			else {
+				activatedGroupIds.add(Long.valueOf(group.getGroupId()));
+			}
+		}
+
+		long[] groupIds = ArrayUtil.toArray(
+			activatedGroupIds.toArray(new Long[activatedGroupIds.size()]));
+
+		document.addKeyword(Field.GROUP_ID, groupIds);
+
 		document.addDate(Field.MODIFIED_DATE, user.getModifiedDate());
 		document.addKeyword(Field.SCOPE_GROUP_ID, user.getGroupIds());
 		document.addKeyword(Field.STATUS, user.getStatus());

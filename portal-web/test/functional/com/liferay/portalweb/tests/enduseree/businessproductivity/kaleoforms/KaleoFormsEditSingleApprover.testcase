@@ -125,7 +125,7 @@
 		</execute>
 
 		<execute macro="Role#addCP">
-			<var name="roleName" value="Reviewer Name" />
+			<var name="roleTitle" value="Reviewer Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -133,7 +133,7 @@
 		</execute>
 
 		<execute macro="Role#addCP">
-			<var name="roleName" value="Updater Name" />
+			<var name="roleTitle" value="Updater Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -161,7 +161,7 @@
 		</execute>
 
 		<execute macro="Role#assignRegRoleCP">
-			<var name="roleName" value="Administrator" />
+			<var name="roleTitle" value="Administrator" />
 			<var name="userScreenName" value="creator" />
 		</execute>
 
@@ -190,7 +190,7 @@
 		</execute>
 
 		<execute macro="Role#assignRegRoleCP">
-			<var name="roleName" value="Administrator" />
+			<var name="roleTitle" value="Administrator" />
 			<var name="userScreenName" value="reviewer" />
 		</execute>
 
@@ -199,7 +199,7 @@
 		</execute>
 
 		<execute macro="Role#assignRegRoleCP">
-			<var name="roleName" value="Reviewer Name" />
+			<var name="roleTitle" value="Reviewer Name" />
 			<var name="userScreenName" value="reviewer" />
 		</execute>
 
@@ -228,7 +228,7 @@
 		</execute>
 
 		<execute macro="Role#assignRegRoleCP">
-			<var name="roleName" value="Administrator" />
+			<var name="roleTitle" value="Administrator" />
 			<var name="userScreenName" value="updater" />
 		</execute>
 
@@ -237,7 +237,7 @@
 		</execute>
 
 		<execute macro="Role#assignRegRoleCP">
-			<var name="roleName" value="Updater Name" />
+			<var name="roleTitle" value="Updater Name" />
 			<var name="userScreenName" value="updater" />
 		</execute>
 
@@ -266,7 +266,7 @@
 
 		<execute macro="KaleoDesigner#editNodeAssignments">
 			<var name="nodeAssignmentType" value="Role" />
-			<var name="roleName" value="Reviewer Name" />
+			<var name="roleTitle" value="Reviewer Name" />
 		</execute>
 
 		<execute macro="KaleoDesigner#editNodeNotifications">
@@ -274,7 +274,7 @@
 			<var name="nodeNotificationsName" value="Review Notification" />
 			<var name="nodeNotificationsRecipientType" value="Role" />
 			<var name="nodeNotificationsType" value="Email" />
-			<var name="roleName" value="Reviewer Name" />
+			<var name="roleTitle" value="Reviewer Name" />
 		</execute>
 
 		<execute macro="KaleoDesigner#selectNode">
@@ -283,7 +283,7 @@
 
 		<execute macro="KaleoDesigner#editNodeAssignments">
 			<var name="nodeAssignmentType" value="Role" />
-			<var name="roleName" value="Updater Name" />
+			<var name="roleTitle" value="Updater Name" />
 		</execute>
 
 		<execute macro="KaleoDesigner#editNodeNotifications">
@@ -291,7 +291,7 @@
 			<var name="nodeNotificationsName" value="Updater Modification Notification" />
 			<var name="nodeNotificationsRecipientType" value="Role" />
 			<var name="nodeNotificationsType" value="Email" />
-			<var name="roleName" value="Updater Name" />
+			<var name="roleTitle" value="Updater Name" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#publishWorkflow" />

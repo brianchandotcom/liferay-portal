@@ -437,7 +437,7 @@
 			<var name="nodeNotificationsTemplate" value="A new entry needs your review" />
 			<var name="nodeNotificationsTemplateLanguage" value="Text" />
 			<var name="nodeNotificationsType" value="User Notification" />
-			<var name="roleName" value="Administrator" />
+			<var name="roleTitle" value="Administrator" />
 			<var name="roleType" value="Regular" />
 		</execute>
 
@@ -450,7 +450,7 @@
 			<var name="nodeNotificationsRecipientType" value="Role Type" />
 			<var name="nodeNotificationsTemplateLanguage" value="Text" />
 			<var name="nodeNotificationsType" value="User Notification" />
-			<var name="roleName" value="Administrator" />
+			<var name="roleTitle" value="Administrator" />
 			<var name="roleType" value="Regular" />
 		</execute>
 

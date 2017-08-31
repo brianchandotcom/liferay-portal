@@ -637,7 +637,7 @@
 		</execute>
 
 		<execute macro="Role#add">
-			<var name="roleName" value="KaleoRegRole Name" />
+			<var name="roleTitle" value="KaleoRegRole Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -649,7 +649,7 @@
 			<var name="permissionDefinitionValue" value="Action" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
 			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
-			<var name="roleName" value="KaleoRegRole Name" />
+			<var name="roleTitle" value="KaleoRegRole Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -661,7 +661,7 @@
 			<var name="permissionDefinitionValue" value="Action" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
 			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
-			<var name="roleName" value="KaleoRegRole Name" />
+			<var name="roleTitle" value="KaleoRegRole Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -673,7 +673,7 @@
 			<var name="permissionDefinitionValue" value="Action" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
 			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
-			<var name="roleName" value="KaleoRegRole Name" />
+			<var name="roleTitle" value="KaleoRegRole Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -685,7 +685,7 @@
 			<var name="permissionDefinitionValue" value="Action" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
 			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
-			<var name="roleName" value="KaleoRegRole Name" />
+			<var name="roleTitle" value="KaleoRegRole Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -713,7 +713,7 @@
 		</execute>
 
 		<execute macro="Role#assignRegRoleCP">
-			<var name="roleName" value="KaleoRegRole Name" />
+			<var name="roleTitle" value="KaleoRegRole Name" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
@@ -807,7 +807,7 @@
 			<var name="permissionDefinitionValue" value="View" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
 			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
-			<var name="roleName" value="Portal Content Reviewer" />
+			<var name="roleTitle" value="Portal Content Reviewer" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -819,7 +819,7 @@
 			<var name="permissionDefinitionValue" value="Update" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
 			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
-			<var name="roleName" value="Portal Content Reviewer" />
+			<var name="roleTitle" value="Portal Content Reviewer" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -847,7 +847,7 @@
 		</execute>
 
 		<execute macro="Role#assignRegRoleCP">
-			<var name="roleName" value="Portal Content Reviewer" />
+			<var name="roleTitle" value="Portal Content Reviewer" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
@@ -1002,7 +1002,7 @@
 			<var name="permissionDefinitionValue" value="View" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
 			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
-			<var name="roleName" value="Portal Content Reviewer" />
+			<var name="roleTitle" value="Portal Content Reviewer" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -1014,7 +1014,7 @@
 			<var name="permissionDefinitionValue" value="Complete Form" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
 			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
-			<var name="roleName" value="Portal Content Reviewer" />
+			<var name="roleTitle" value="Portal Content Reviewer" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -1042,7 +1042,7 @@
 		</execute>
 
 		<execute macro="Role#assignRegRoleCP">
-			<var name="roleName" value="Portal Content Reviewer" />
+			<var name="roleTitle" value="Portal Content Reviewer" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
@@ -1206,7 +1206,7 @@
 			<var name="permissionDefinitionValue" value="View" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
 			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
-			<var name="roleName" value="Portal Content Reviewer" />
+			<var name="roleTitle" value="Portal Content Reviewer" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -1218,7 +1218,7 @@
 			<var name="permissionDefinitionValue" value="Update" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
 			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
-			<var name="roleName" value="Portal Content Reviewer" />
+			<var name="roleTitle" value="Portal Content Reviewer" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -1246,7 +1246,7 @@
 		</execute>
 
 		<execute macro="Role#assignRegRoleCP">
-			<var name="roleName" value="Portal Content Reviewer" />
+			<var name="roleTitle" value="Portal Content Reviewer" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
@@ -1404,7 +1404,7 @@
 		</execute>
 
 		<execute macro="Role#add">
-			<var name="roleName" value="KaleoRegRole Name" />
+			<var name="roleTitle" value="KaleoRegRole Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -1416,7 +1416,7 @@
 			<var name="permissionDefinitionValue" value="Access in Site Administration" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
 			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
-			<var name="roleName" value="KaleoRegRole Name" />
+			<var name="roleTitle" value="KaleoRegRole Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -1428,7 +1428,7 @@
 			<var name="permissionDefinitionValue" value="Submit" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
 			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
-			<var name="roleName" value="KaleoRegRole Name" />
+			<var name="roleTitle" value="KaleoRegRole Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -1440,7 +1440,7 @@
 			<var name="permissionDefinitionValue" value="View" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
 			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
-			<var name="roleName" value="KaleoRegRole Name" />
+			<var name="roleTitle" value="KaleoRegRole Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -1496,7 +1496,7 @@
 		</execute>
 
 		<execute macro="Role#assignRegRoleCP">
-			<var name="roleName" value="KaleoRegRole Name" />
+			<var name="roleTitle" value="KaleoRegRole Name" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
@@ -1621,7 +1621,7 @@
 		</execute>
 
 		<execute macro="Role#add">
-			<var name="roleName" value="KaleoRegRole Name" />
+			<var name="roleTitle" value="KaleoRegRole Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -1633,7 +1633,7 @@
 			<var name="permissionDefinitionValue" value="View" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
 			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
-			<var name="roleName" value="KaleoRegRole Name" />
+			<var name="roleTitle" value="KaleoRegRole Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -1671,7 +1671,7 @@
 		</execute>
 
 		<execute macro="Role#assignRegRoleCP">
-			<var name="roleName" value="KaleoRegRole Name" />
+			<var name="roleTitle" value="KaleoRegRole Name" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
@@ -5388,7 +5388,7 @@
 		</execute>
 
 		<execute macro="Role#assignRegRoleCP">
-			<var name="roleName" value="Administrator" />
+			<var name="roleTitle" value="Administrator" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
 

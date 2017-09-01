@@ -58,31 +58,33 @@ public class CommerceCheckoutCommerceHealthStatus
 
 		long groupId = _portal.getScopeGroupId(httpServletRequest);
 
-		if (!isFixed(groupId)) {
-			String name = "Checkout";
-
-			String friendlyURL =
-				StringPool.FORWARD_SLASH + StringUtil.toLowerCase(name);
-
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				Layout.class.getName(), httpServletRequest);
-
-			Layout layout = _layoutService.addLayout(
-				groupId, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, name,
-				name, null, LayoutConstants.TYPE_PORTLET, true, friendlyURL,
-				serviceContext);
-
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)layout.getLayoutType();
-
-			layoutTypePortlet.addPortletId(
-				_portal.getUserId(httpServletRequest),
-				CommerceCheckoutPortletKeys.COMMERCE_CHECKOUT);
-
-			_layoutService.updateLayout(
-				layout.getGroupId(), layout.getPrivateLayout(),
-				layout.getLayoutId(), layout.getTypeSettings());
+		if (isFixed(groupId)) {
+			return;
 		}
+
+		String name = "Checkout";
+
+		String friendlyURL =
+			StringPool.FORWARD_SLASH + StringUtil.toLowerCase(name);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			Layout.class.getName(), httpServletRequest);
+
+		Layout layout = _layoutService.addLayout(
+			groupId, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, name,
+			name, null, LayoutConstants.TYPE_PORTLET, true, friendlyURL,
+			serviceContext);
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		layoutTypePortlet.addPortletId(
+			_portal.getUserId(httpServletRequest),
+			CommerceCheckoutPortletKeys.COMMERCE_CHECKOUT);
+
+		_layoutService.updateLayout(
+			layout.getGroupId(), layout.getPrivateLayout(),
+			layout.getLayoutId(), layout.getTypeSettings());
 	}
 
 	@Override

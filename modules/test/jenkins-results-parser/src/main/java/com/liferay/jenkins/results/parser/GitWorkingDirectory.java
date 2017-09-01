@@ -339,33 +339,45 @@ public class GitWorkingDirectory {
 	}
 
 	public void createLocalBranch(
-		String branchName, boolean force, String startPoint) {
+		String localBranchName, boolean force, String startPoint) {
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
-				"Creating branch ", branchName, " at starting point ",
+				"Creating branch ", localBranchName, " at starting point ",
 				startPoint));
 
-		CreateBranchCommand createBranchCommand = _git.branchCreate();
+		StringBuilder sb = new StringBuilder();
 
-		createBranchCommand.setForce(force);
-		createBranchCommand.setName(branchName);
+		sb.append("git branch ");
+
+		if (force) {
+			sb.append("-f ");
+		}
+
+		sb.append(localBranchName);
 
 		if (startPoint != null) {
-			createBranchCommand.setStartPoint(startPoint);
+			sb.append(" ");
+			sb.append(startPoint);
 		}
 
 		try {
-			createBranchCommand.call();
-		}
-		catch (JGitInternalException jgie) {
-			String errorMessage = jgie.getMessage();
+			Process process = JenkinsResultsParserUtil.executeBashCommands(
+				true, _workingDirectory, 1000 * 5, sb.toString());
 
-			if (errorMessage.contains("FAST_FORWARD")) {
-				return;
+			if (process.exitValue() != 0) {
+				String errorMessage = JenkinsResultsParserUtil.combine(
+					"Unable to create branch ", localBranchName, " at ",
+					startPoint, "\n",
+					JenkinsResultsParserUtil.readInputStream(
+						process.getErrorStream()));
+
+				throw new RuntimeException(errorMessage);
 			}
-
-			throw jgie;
+		}
+		catch (InterruptedException | IOException e) {
+			throw new RuntimeException(
+				"Unable to create branch " + localBranchName);
 		}
 	}
 

@@ -15,7 +15,7 @@ describe('PortletBase', () => {
 					<div class="foo" id="_com_liferay_test_portlet_grand_child_container"></div>
 				</div>
 			</div>
-			
+
 			<div class="foo" id="p_p_id_com_liferay_another_portlet_"></div>
 		`;
 	});

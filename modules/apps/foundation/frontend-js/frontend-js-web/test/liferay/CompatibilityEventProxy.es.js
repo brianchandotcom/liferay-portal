@@ -124,7 +124,7 @@ describe('CompatibilityEventProxy', () => {
 		host.emit(eventNameToEmit, eventObjectToEmit, eventFacadeObjectToEmit);
 
 		expect(spy).toHaveBeenCalledWith(namespacedEventNameToEmit, eventObjectToEmit);
-		
+
 		done();
 	});
 
@@ -142,7 +142,7 @@ describe('CompatibilityEventProxy', () => {
 		host.emit(eventNameToEmit, eventObjectToEmit, eventFacadeObjectToEmit);
 
 		expect(spy).toHaveBeenCalledWith(eventNameToEmit, eventObjectToEmit);
-		
+
 		done();
 	});
 
@@ -160,7 +160,7 @@ describe('CompatibilityEventProxy', () => {
 		host.emit(eventNameToEmit, eventObjectToEmit, eventFacadeObjectToEmit);
 
 		expect(spy).toHaveBeenCalledWith(eventNameToEmit, eventObjectToEmit);
-		
+
 		done();
 	});
 
@@ -181,7 +181,7 @@ describe('CompatibilityEventProxy', () => {
 
 		expect(spy).toHaveBeenCalledWith(eventNameToEmit, eventObjectToEmit);
 		expect(emitFacade).toEqual(mockedTarget._yuievt.events[eventNameToEmit].emitFacade);
-		
+
 		done();
 	});
 
@@ -237,7 +237,7 @@ describe('CompatibilityEventProxy', () => {
 		host.emit(eventNameToEmit, eventObjectToEmit, eventFacadeObjectToEmit);
 
 		expect(spy.mock.calls[0][0]).toEqual(adaptedEventNameToEmit);
-		
+
 		done();
 	});
 

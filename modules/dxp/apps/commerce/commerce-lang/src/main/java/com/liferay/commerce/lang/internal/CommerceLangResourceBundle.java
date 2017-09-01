@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.lang;
+package com.liferay.commerce.lang.internal;
 
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;

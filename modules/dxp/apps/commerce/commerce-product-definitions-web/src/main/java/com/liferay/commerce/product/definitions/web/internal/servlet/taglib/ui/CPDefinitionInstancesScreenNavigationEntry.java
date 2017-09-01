@@ -17,6 +17,7 @@ package com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPInstanceDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
@@ -98,7 +99,8 @@ public class CPDefinitionInstancesScreenNavigationEntry
 		try {
 			CPInstanceDisplayContext cpInstanceDisplayContext =
 				new CPInstanceDisplayContext(
-					_actionHelper, httpServletRequest, _cpInstanceService,
+					_actionHelper, httpServletRequest,
+					_cpDefinitionOptionRelService, _cpInstanceService,
 					_cpInstanceHelper);
 
 			httpServletRequest.setAttribute(
@@ -118,6 +120,9 @@ public class CPDefinitionInstancesScreenNavigationEntry
 
 	@Reference
 	private ActionHelper _actionHelper;
+
+	@Reference
+	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;

@@ -30,10 +30,8 @@ String fixIssueButton = "fixIssueButton" + row.getRowId();
 	A.one('#<portlet:namespace /><%= fixIssueButton %>').on(
 		'click',
 		function(event) {
-			var commerceHealthStatusKey = '<%= commerceHealthStatus.getKey() %>';
-
 			var data = {
-				'<%= PortalUtil.getPortletNamespace(CommerceAdminPortletKeys.COMMERCE_ADMIN) %>commerceHealthStatusKey' : commerceHealthStatusKey
+				'<%= PortalUtil.getPortletNamespace(CommerceAdminPortletKeys.COMMERCE_ADMIN) %>key': '<%= commerceHealthStatus.getKey() %>'
 			};
 
 			this.attr('disabled', true);

@@ -65,8 +65,7 @@ public class FixCommerceHealthStatusIssueMVCActionCommand
 		HttpServletResponse httpServletResponse =
 			_portal.getHttpServletResponse(actionResponse);
 
-		String key = ParamUtil.getString(
-			actionRequest, "commerceHealthStatusKey");
+		String key = ParamUtil.getString(actionRequest, "key");
 
 		try {
 			CommerceHealthStatus commerceHealthStatus =

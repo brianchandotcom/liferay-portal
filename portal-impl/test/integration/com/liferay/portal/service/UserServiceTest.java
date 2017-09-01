@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -53,6 +54,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -60,6 +62,7 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -169,6 +172,11 @@ public class UserServiceTest {
 		public static final AggregateTestRule aggregateTestRule =
 			new LiferayIntegrationTestRule();
 
+		@Before
+		public void setup() throws Exception {
+			PropsValues.USERS_SCREEN_NAME_ALLOW_NUMERIC = true;
+		}
+
 		@Test
 		public void shouldAddUser() throws Exception {
 			String numericScreenName = "12345";
@@ -189,6 +197,12 @@ public class UserServiceTest {
 			_user = UserTestUtil.addUser(String.valueOf(groupId));
 
 			Assert.assertEquals(String.valueOf(groupId), _user.getScreenName());
+		}
+
+		@After
+		public void tearDown() throws Exception {
+			PropsValues.USERS_SCREEN_NAME_ALLOW_NUMERIC = GetterUtil.getBoolean(
+				PropsUtil.get(PropsKeys.USERS_SCREEN_NAME_ALLOW_NUMERIC));
 		}
 
 		@DeleteAfterTestRun

@@ -33,7 +33,7 @@ public interface CommerceHealthStatus {
 
 	public String getLabel(Locale locale);
 
-	public void tryFix(HttpServletRequest httpServletRequest)
+	public void fixIssue(HttpServletRequest httpServletRequest)
 		throws PortalException;
 
 }

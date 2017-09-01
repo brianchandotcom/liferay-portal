@@ -21,13 +21,13 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 
 CommerceHealthStatus commerceHealthStatus = (CommerceHealthStatus)row.getObject();
 
-String tryFixButton = "tryFixButton" + row.getRowId();
+String fixIssueButton = "fixIssueButton" + row.getRowId();
 %>
 
-<aui:button disabled="<%= commerceHealthStatus.checkStatus(themeDisplay.getScopeGroupId()) %>" name="<%= tryFixButton %>" value="try-fix" />
+<aui:button disabled="<%= commerceHealthStatus.checkStatus(themeDisplay.getScopeGroupId()) %>" name="<%= fixIssueButton %>" value="fix-issue" />
 
 <aui:script use="aui-io-request,aui-parse-content,liferay-notification">
-	A.one('#<portlet:namespace /><%= tryFixButton %>').on(
+	A.one('#<portlet:namespace /><%= fixIssueButton %>').on(
 		'click',
 		function(event) {
 			var commerceHealthStatusKey = '<%= commerceHealthStatus.getKey() %>';
@@ -47,7 +47,7 @@ String tryFixButton = "tryFixButton" + row.getRowId();
 			iconTimesContainer.addClass('hide');
 
 			A.io.request(
-				'<liferay-portlet:actionURL name="commerceHealthStatusTryFix" portletName="<%= CommerceAdminPortletKeys.COMMERCE_ADMIN %>" />',
+				'<liferay-portlet:actionURL name="commerceHealthStatusFixIssue" portletName="<%= CommerceAdminPortletKeys.COMMERCE_ADMIN %>" />',
 				{
 					data: data,
 					on: {
@@ -60,7 +60,7 @@ String tryFixButton = "tryFixButton" + row.getRowId();
 								iconTimesContainer.addClass('hide');
 							}
 							else {
-								A.one('#<portlet:namespace /><%= tryFixButton %>').attr('disabled', false);
+								A.one('#<portlet:namespace /><%= fixIssueButton %>').attr('disabled', false);
 
 								iconCheckContainer.addClass('hide');
 								iconSpinnerContainer.addClass('hide');

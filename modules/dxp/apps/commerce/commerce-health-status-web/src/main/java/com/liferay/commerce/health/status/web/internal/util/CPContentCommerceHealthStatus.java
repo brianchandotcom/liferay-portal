@@ -92,7 +92,7 @@ public class CPContentCommerceHealthStatus implements CommerceHealthStatus {
 	}
 
 	@Override
-	public void tryFix(HttpServletRequest httpServletRequest)
+	public void fixIssue(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		long groupId = _portal.getScopeGroupId(httpServletRequest);

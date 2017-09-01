@@ -46,11 +46,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CommerceAdminPortletKeys.COMMERCE_ADMIN,
-		"mvc.command.name=commerceHealthStatusTryFix"
+		"mvc.command.name=commerceHealthStatusFixIssue"
 	},
 	service = MVCActionCommand.class
 )
-public class CommerceHealthStatusTryFixMVCActionCommand
+public class CommerceHealthStatusFixIssueMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override
@@ -73,7 +73,7 @@ public class CommerceHealthStatusTryFixMVCActionCommand
 				_commerceHealthStatusRegistry.getCommerceHealthStatus(key);
 
 			if (commerceHealthStatus != null) {
-				commerceHealthStatus.tryFix(httpServletRequest);
+				commerceHealthStatus.fixIssue(httpServletRequest);
 
 				Thread.sleep(2000);
 
@@ -113,7 +113,7 @@ public class CommerceHealthStatusTryFixMVCActionCommand
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceHealthStatusTryFixMVCActionCommand.class);
+		CommerceHealthStatusFixIssueMVCActionCommand.class);
 
 	@Reference
 	private CommerceHealthStatusRegistry _commerceHealthStatusRegistry;

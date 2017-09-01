@@ -40,6 +40,7 @@ public class BNDWebContextPathCheck extends BaseFileCheck {
 		throws Exception {
 
 		if (fileName.endsWith("/bnd.bnd") &&
+			!absolutePath.contains("/modules/private/apps/") &&
 			!absolutePath.contains("/testIntegration/") &&
 			!absolutePath.contains("/third-party/")) {
 
@@ -56,8 +57,7 @@ public class BNDWebContextPathCheck extends BaseFileCheck {
 		String moduleName = BNDSourceUtil.getModuleName(absolutePath);
 
 		if (moduleName.contains("-import-") ||
-			moduleName.contains("-private-") ||
-			absolutePath.contains("/modules/private/apps/")) {
+			moduleName.contains("-private-")) {
 
 			return;
 		}

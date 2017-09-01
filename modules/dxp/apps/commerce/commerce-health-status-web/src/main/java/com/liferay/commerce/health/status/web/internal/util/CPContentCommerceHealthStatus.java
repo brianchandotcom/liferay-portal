@@ -104,7 +104,7 @@ public class CPContentCommerceHealthStatus implements CommerceHealthStatus {
 	}
 
 	@Override
-	public String getLabel(Locale locale) {
+	public String getName(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 

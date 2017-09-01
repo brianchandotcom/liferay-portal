@@ -34,7 +34,7 @@ SearchContainer<CommerceHealthStatus> commerceHealthStatusSearchContainer = comm
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				name="name"
-				value="<%= commerceHealthStatus.getLabel(locale) %>"
+				value="<%= commerceHealthStatus.getName(locale) %>"
 			/>
 
 			<liferay-ui:search-container-column-text

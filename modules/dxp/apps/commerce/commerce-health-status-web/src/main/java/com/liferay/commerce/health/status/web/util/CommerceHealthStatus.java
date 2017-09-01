@@ -32,7 +32,7 @@ public interface CommerceHealthStatus {
 
 	public String getKey();
 
-	public String getLabel(Locale locale);
+	public String getName(Locale locale);
 
 	public boolean isFixed(long groupId) throws PortalException;
 

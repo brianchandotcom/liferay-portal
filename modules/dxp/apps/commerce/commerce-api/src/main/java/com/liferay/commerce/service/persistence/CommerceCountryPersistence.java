@@ -648,6 +648,327 @@ public interface CommerceCountryPersistence extends BasePersistence<CommerceCoun
 	public int countByG_A(long groupId, boolean active);
 
 	/**
+	* Returns all the commerce countries where groupId = &#63; and billingAllowed = &#63; and active = &#63;.
+	*
+	* @param groupId the group ID
+	* @param billingAllowed the billing allowed
+	* @param active the active
+	* @return the matching commerce countries
+	*/
+	public java.util.List<CommerceCountry> findByG_B_A(long groupId,
+		boolean billingAllowed, boolean active);
+
+	/**
+	* Returns a range of all the commerce countries where groupId = &#63; and billingAllowed = &#63; and active = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCountryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param billingAllowed the billing allowed
+	* @param active the active
+	* @param start the lower bound of the range of commerce countries
+	* @param end the upper bound of the range of commerce countries (not inclusive)
+	* @return the range of matching commerce countries
+	*/
+	public java.util.List<CommerceCountry> findByG_B_A(long groupId,
+		boolean billingAllowed, boolean active, int start, int end);
+
+	/**
+	* Returns an ordered range of all the commerce countries where groupId = &#63; and billingAllowed = &#63; and active = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCountryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param billingAllowed the billing allowed
+	* @param active the active
+	* @param start the lower bound of the range of commerce countries
+	* @param end the upper bound of the range of commerce countries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching commerce countries
+	*/
+	public java.util.List<CommerceCountry> findByG_B_A(long groupId,
+		boolean billingAllowed, boolean active, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceCountry> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the commerce countries where groupId = &#63; and billingAllowed = &#63; and active = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCountryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param billingAllowed the billing allowed
+	* @param active the active
+	* @param start the lower bound of the range of commerce countries
+	* @param end the upper bound of the range of commerce countries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching commerce countries
+	*/
+	public java.util.List<CommerceCountry> findByG_B_A(long groupId,
+		boolean billingAllowed, boolean active, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceCountry> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first commerce country in the ordered set where groupId = &#63; and billingAllowed = &#63; and active = &#63;.
+	*
+	* @param groupId the group ID
+	* @param billingAllowed the billing allowed
+	* @param active the active
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce country
+	* @throws NoSuchCountryException if a matching commerce country could not be found
+	*/
+	public CommerceCountry findByG_B_A_First(long groupId,
+		boolean billingAllowed, boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceCountry> orderByComparator)
+		throws NoSuchCountryException;
+
+	/**
+	* Returns the first commerce country in the ordered set where groupId = &#63; and billingAllowed = &#63; and active = &#63;.
+	*
+	* @param groupId the group ID
+	* @param billingAllowed the billing allowed
+	* @param active the active
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce country, or <code>null</code> if a matching commerce country could not be found
+	*/
+	public CommerceCountry fetchByG_B_A_First(long groupId,
+		boolean billingAllowed, boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceCountry> orderByComparator);
+
+	/**
+	* Returns the last commerce country in the ordered set where groupId = &#63; and billingAllowed = &#63; and active = &#63;.
+	*
+	* @param groupId the group ID
+	* @param billingAllowed the billing allowed
+	* @param active the active
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce country
+	* @throws NoSuchCountryException if a matching commerce country could not be found
+	*/
+	public CommerceCountry findByG_B_A_Last(long groupId,
+		boolean billingAllowed, boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceCountry> orderByComparator)
+		throws NoSuchCountryException;
+
+	/**
+	* Returns the last commerce country in the ordered set where groupId = &#63; and billingAllowed = &#63; and active = &#63;.
+	*
+	* @param groupId the group ID
+	* @param billingAllowed the billing allowed
+	* @param active the active
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce country, or <code>null</code> if a matching commerce country could not be found
+	*/
+	public CommerceCountry fetchByG_B_A_Last(long groupId,
+		boolean billingAllowed, boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceCountry> orderByComparator);
+
+	/**
+	* Returns the commerce countries before and after the current commerce country in the ordered set where groupId = &#63; and billingAllowed = &#63; and active = &#63;.
+	*
+	* @param commerceCountryId the primary key of the current commerce country
+	* @param groupId the group ID
+	* @param billingAllowed the billing allowed
+	* @param active the active
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next commerce country
+	* @throws NoSuchCountryException if a commerce country with the primary key could not be found
+	*/
+	public CommerceCountry[] findByG_B_A_PrevAndNext(long commerceCountryId,
+		long groupId, boolean billingAllowed, boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceCountry> orderByComparator)
+		throws NoSuchCountryException;
+
+	/**
+	* Removes all the commerce countries where groupId = &#63; and billingAllowed = &#63; and active = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param billingAllowed the billing allowed
+	* @param active the active
+	*/
+	public void removeByG_B_A(long groupId, boolean billingAllowed,
+		boolean active);
+
+	/**
+	* Returns the number of commerce countries where groupId = &#63; and billingAllowed = &#63; and active = &#63;.
+	*
+	* @param groupId the group ID
+	* @param billingAllowed the billing allowed
+	* @param active the active
+	* @return the number of matching commerce countries
+	*/
+	public int countByG_B_A(long groupId, boolean billingAllowed, boolean active);
+
+	/**
+	* Returns all the commerce countries where groupId = &#63; and shippingAllowed = &#63; and active = &#63;.
+	*
+	* @param groupId the group ID
+	* @param shippingAllowed the shipping allowed
+	* @param active the active
+	* @return the matching commerce countries
+	*/
+	public java.util.List<CommerceCountry> findByG_S_A(long groupId,
+		boolean shippingAllowed, boolean active);
+
+	/**
+	* Returns a range of all the commerce countries where groupId = &#63; and shippingAllowed = &#63; and active = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCountryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param shippingAllowed the shipping allowed
+	* @param active the active
+	* @param start the lower bound of the range of commerce countries
+	* @param end the upper bound of the range of commerce countries (not inclusive)
+	* @return the range of matching commerce countries
+	*/
+	public java.util.List<CommerceCountry> findByG_S_A(long groupId,
+		boolean shippingAllowed, boolean active, int start, int end);
+
+	/**
+	* Returns an ordered range of all the commerce countries where groupId = &#63; and shippingAllowed = &#63; and active = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCountryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param shippingAllowed the shipping allowed
+	* @param active the active
+	* @param start the lower bound of the range of commerce countries
+	* @param end the upper bound of the range of commerce countries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching commerce countries
+	*/
+	public java.util.List<CommerceCountry> findByG_S_A(long groupId,
+		boolean shippingAllowed, boolean active, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceCountry> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the commerce countries where groupId = &#63; and shippingAllowed = &#63; and active = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCountryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param shippingAllowed the shipping allowed
+	* @param active the active
+	* @param start the lower bound of the range of commerce countries
+	* @param end the upper bound of the range of commerce countries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching commerce countries
+	*/
+	public java.util.List<CommerceCountry> findByG_S_A(long groupId,
+		boolean shippingAllowed, boolean active, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceCountry> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first commerce country in the ordered set where groupId = &#63; and shippingAllowed = &#63; and active = &#63;.
+	*
+	* @param groupId the group ID
+	* @param shippingAllowed the shipping allowed
+	* @param active the active
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce country
+	* @throws NoSuchCountryException if a matching commerce country could not be found
+	*/
+	public CommerceCountry findByG_S_A_First(long groupId,
+		boolean shippingAllowed, boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceCountry> orderByComparator)
+		throws NoSuchCountryException;
+
+	/**
+	* Returns the first commerce country in the ordered set where groupId = &#63; and shippingAllowed = &#63; and active = &#63;.
+	*
+	* @param groupId the group ID
+	* @param shippingAllowed the shipping allowed
+	* @param active the active
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce country, or <code>null</code> if a matching commerce country could not be found
+	*/
+	public CommerceCountry fetchByG_S_A_First(long groupId,
+		boolean shippingAllowed, boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceCountry> orderByComparator);
+
+	/**
+	* Returns the last commerce country in the ordered set where groupId = &#63; and shippingAllowed = &#63; and active = &#63;.
+	*
+	* @param groupId the group ID
+	* @param shippingAllowed the shipping allowed
+	* @param active the active
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce country
+	* @throws NoSuchCountryException if a matching commerce country could not be found
+	*/
+	public CommerceCountry findByG_S_A_Last(long groupId,
+		boolean shippingAllowed, boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceCountry> orderByComparator)
+		throws NoSuchCountryException;
+
+	/**
+	* Returns the last commerce country in the ordered set where groupId = &#63; and shippingAllowed = &#63; and active = &#63;.
+	*
+	* @param groupId the group ID
+	* @param shippingAllowed the shipping allowed
+	* @param active the active
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce country, or <code>null</code> if a matching commerce country could not be found
+	*/
+	public CommerceCountry fetchByG_S_A_Last(long groupId,
+		boolean shippingAllowed, boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceCountry> orderByComparator);
+
+	/**
+	* Returns the commerce countries before and after the current commerce country in the ordered set where groupId = &#63; and shippingAllowed = &#63; and active = &#63;.
+	*
+	* @param commerceCountryId the primary key of the current commerce country
+	* @param groupId the group ID
+	* @param shippingAllowed the shipping allowed
+	* @param active the active
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next commerce country
+	* @throws NoSuchCountryException if a commerce country with the primary key could not be found
+	*/
+	public CommerceCountry[] findByG_S_A_PrevAndNext(long commerceCountryId,
+		long groupId, boolean shippingAllowed, boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceCountry> orderByComparator)
+		throws NoSuchCountryException;
+
+	/**
+	* Removes all the commerce countries where groupId = &#63; and shippingAllowed = &#63; and active = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param shippingAllowed the shipping allowed
+	* @param active the active
+	*/
+	public void removeByG_S_A(long groupId, boolean shippingAllowed,
+		boolean active);
+
+	/**
+	* Returns the number of commerce countries where groupId = &#63; and shippingAllowed = &#63; and active = &#63;.
+	*
+	* @param groupId the group ID
+	* @param shippingAllowed the shipping allowed
+	* @param active the active
+	* @return the number of matching commerce countries
+	*/
+	public int countByG_S_A(long groupId, boolean shippingAllowed,
+		boolean active);
+
+	/**
 	* Caches the commerce country in the entity cache if it is enabled.
 	*
 	* @param commerceCountry the commerce country

@@ -116,7 +116,7 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 		TABLE_COLUMNS_MAP.put("defaultShipping", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceAddress (commerceAddressId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,addressUserId LONG,name VARCHAR(75) null,description VARCHAR(75) null,street1 VARCHAR(75) null,street2 VARCHAR(75) null,street3 VARCHAR(75) null,city VARCHAR(75) null,zip VARCHAR(75) null,commerceRegionId LONG,commerceCountryId LONG,phoneNumber VARCHAR(75) null,defaultBilling BOOLEAN,defaultShipping BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceAddress (commerceAddressId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,addressUserId LONG,name VARCHAR(75) null,description STRING null,street1 VARCHAR(75) null,street2 VARCHAR(75) null,street3 VARCHAR(75) null,city VARCHAR(75) null,zip VARCHAR(75) null,commerceRegionId LONG,commerceCountryId LONG,phoneNumber VARCHAR(75) null,defaultBilling BOOLEAN,defaultShipping BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceAddress";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceAddress.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceAddress.name ASC";

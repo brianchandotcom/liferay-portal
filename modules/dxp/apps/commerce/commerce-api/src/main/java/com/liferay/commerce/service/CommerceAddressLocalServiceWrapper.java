@@ -46,6 +46,22 @@ public class CommerceAddressLocalServiceWrapper
 		return _commerceAddressLocalService.addCommerceAddress(commerceAddress);
 	}
 
+	@Override
+	public com.liferay.commerce.model.CommerceAddress addCommerceAddress(
+		long addressUserId, java.lang.String name,
+		java.lang.String description, java.lang.String street1,
+		java.lang.String street2, java.lang.String street3,
+		java.lang.String city, java.lang.String zip, long commerceRegionId,
+		long commerceCountryId, java.lang.String phoneNumber,
+		boolean defaultBilling, boolean defaultShipping,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceAddressLocalService.addCommerceAddress(addressUserId,
+			name, description, street1, street2, street3, city, zip,
+			commerceRegionId, commerceCountryId, phoneNumber, defaultBilling,
+			defaultShipping, serviceContext);
+	}
+
 	/**
 	* Creates a new commerce address with the primary key. Does not add the commerce address to the database.
 	*
@@ -63,10 +79,12 @@ public class CommerceAddressLocalServiceWrapper
 	*
 	* @param commerceAddress the commerce address
 	* @return the commerce address that was removed
+	* @throws PortalException
 	*/
 	@Override
 	public com.liferay.commerce.model.CommerceAddress deleteCommerceAddress(
-		com.liferay.commerce.model.CommerceAddress commerceAddress) {
+		com.liferay.commerce.model.CommerceAddress commerceAddress)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceAddressLocalService.deleteCommerceAddress(commerceAddress);
 	}
 
@@ -84,6 +102,12 @@ public class CommerceAddressLocalServiceWrapper
 		return _commerceAddressLocalService.deleteCommerceAddress(commerceAddressId);
 	}
 
+	@Override
+	public void deleteCountryCommerceAddresses(long commerceCountryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commerceAddressLocalService.deleteCountryCommerceAddresses(commerceCountryId);
+	}
+
 	/**
 	* @throws PortalException
 	*/
@@ -92,6 +116,18 @@ public class CommerceAddressLocalServiceWrapper
 		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceAddressLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public void deleteRegionCommerceAddresses(long commerceRegionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commerceAddressLocalService.deleteRegionCommerceAddresses(commerceRegionId);
+	}
+
+	@Override
+	public void deleteUserCommerceAddresses(long addressUserId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commerceAddressLocalService.deleteUserCommerceAddresses(addressUserId);
 	}
 
 	@Override
@@ -222,6 +258,13 @@ public class CommerceAddressLocalServiceWrapper
 		return _commerceAddressLocalService.getCommerceAddresses(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceAddress> getCommerceAddresses(
+		long groupId, long addressUserId) {
+		return _commerceAddressLocalService.getCommerceAddresses(groupId,
+			addressUserId);
+	}
+
 	/**
 	* Returns the number of commerce addresses.
 	*
@@ -264,6 +307,22 @@ public class CommerceAddressLocalServiceWrapper
 	public com.liferay.commerce.model.CommerceAddress updateCommerceAddress(
 		com.liferay.commerce.model.CommerceAddress commerceAddress) {
 		return _commerceAddressLocalService.updateCommerceAddress(commerceAddress);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceAddress updateCommerceAddress(
+		long commerceAddressId, java.lang.String name,
+		java.lang.String description, java.lang.String street1,
+		java.lang.String street2, java.lang.String street3,
+		java.lang.String city, java.lang.String zip, long commerceRegionId,
+		long commerceCountryId, java.lang.String phoneNumber,
+		boolean defaultBilling, boolean defaultShipping,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceAddressLocalService.updateCommerceAddress(commerceAddressId,
+			name, description, street1, street2, street3, city, zip,
+			commerceRegionId, commerceCountryId, phoneNumber, defaultBilling,
+			defaultShipping, serviceContext);
 	}
 
 	@Override

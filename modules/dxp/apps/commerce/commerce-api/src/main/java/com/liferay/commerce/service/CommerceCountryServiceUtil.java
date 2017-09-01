@@ -60,6 +60,12 @@ public class CommerceCountryServiceUtil {
 		getService().deleteCommerceCountry(commerceCountryId);
 	}
 
+	public static java.util.List<com.liferay.commerce.model.CommerceCountry> getBillingCommerceCountries(
+		long groupId, boolean billingAllowed, boolean active) {
+		return getService()
+				   .getBillingCommerceCountries(groupId, billingAllowed, active);
+	}
+
 	public static java.util.List<com.liferay.commerce.model.CommerceCountry> getCommerceCountries(
 		long groupId, boolean active) {
 		return getService().getCommerceCountries(groupId, active);
@@ -101,6 +107,13 @@ public class CommerceCountryServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.commerce.model.CommerceCountry> getShippingCommerceCountries(
+		long groupId, boolean shippingAllowed, boolean active) {
+		return getService()
+				   .getShippingCommerceCountries(groupId, shippingAllowed,
+			active);
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceCountry> getWarehouseCommerceCountries(

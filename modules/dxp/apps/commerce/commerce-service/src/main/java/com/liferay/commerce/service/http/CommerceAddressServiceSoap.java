@@ -16,9 +16,16 @@ package com.liferay.commerce.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.service.CommerceAddressServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.commerce.service.CommerceAddressServiceUtil} service utility. The
+ * {@link CommerceAddressServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,100 @@ import aQute.bnd.annotation.ProviderType;
  * @author Alessio Antonio Rendina
  * @see CommerceAddressServiceHttp
  * @see com.liferay.commerce.model.CommerceAddressSoap
- * @see com.liferay.commerce.service.CommerceAddressServiceUtil
+ * @see CommerceAddressServiceUtil
  * @generated
  */
 @ProviderType
 public class CommerceAddressServiceSoap {
+	public static com.liferay.commerce.model.CommerceAddressSoap addCommerceAddress(
+		long addressUserId, java.lang.String name,
+		java.lang.String description, java.lang.String street1,
+		java.lang.String street2, java.lang.String street3,
+		java.lang.String city, java.lang.String zip, long commerceRegionId,
+		long commerceCountryId, java.lang.String phoneNumber,
+		boolean defaultBilling, boolean defaultShipping,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceAddress returnValue = CommerceAddressServiceUtil.addCommerceAddress(addressUserId,
+					name, description, street1, street2, street3, city, zip,
+					commerceRegionId, commerceCountryId, phoneNumber,
+					defaultBilling, defaultShipping, serviceContext);
+
+			return com.liferay.commerce.model.CommerceAddressSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void deleteCommerceAddress(long commerceAddressId)
+		throws RemoteException {
+		try {
+			CommerceAddressServiceUtil.deleteCommerceAddress(commerceAddressId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceAddressSoap getCommerceAddress(
+		long commerceAddressId) throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceAddress returnValue = CommerceAddressServiceUtil.getCommerceAddress(commerceAddressId);
+
+			return com.liferay.commerce.model.CommerceAddressSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceAddressSoap[] getCommerceAddresses(
+		long groupId, long addressUserId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.model.CommerceAddress> returnValue =
+				CommerceAddressServiceUtil.getCommerceAddresses(groupId,
+					addressUserId);
+
+			return com.liferay.commerce.model.CommerceAddressSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceAddressSoap updateCommerceAddress(
+		long commerceAddressId, java.lang.String name,
+		java.lang.String description, java.lang.String street1,
+		java.lang.String street2, java.lang.String street3,
+		java.lang.String city, java.lang.String zip, long commerceRegionId,
+		long commerceCountryId, java.lang.String phoneNumber,
+		boolean defaultBilling, boolean defaultShipping,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceAddress returnValue = CommerceAddressServiceUtil.updateCommerceAddress(commerceAddressId,
+					name, description, street1, street2, street3, city, zip,
+					commerceRegionId, commerceCountryId, phoneNumber,
+					defaultBilling, defaultShipping, serviceContext);
+
+			return com.liferay.commerce.model.CommerceAddressSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(CommerceAddressServiceSoap.class);
 }

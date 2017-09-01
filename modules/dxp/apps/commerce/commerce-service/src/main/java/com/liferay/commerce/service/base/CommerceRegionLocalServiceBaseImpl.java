@@ -137,10 +137,12 @@ public abstract class CommerceRegionLocalServiceBaseImpl
 	 *
 	 * @param commerceRegion the commerce region
 	 * @return the commerce region that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public CommerceRegion deleteCommerceRegion(CommerceRegion commerceRegion) {
+	public CommerceRegion deleteCommerceRegion(CommerceRegion commerceRegion)
+		throws PortalException {
 		return commerceRegionPersistence.remove(commerceRegion);
 	}
 

@@ -139,10 +139,12 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 				"value.object.column.bitmask.enabled.com.liferay.commerce.model.CommerceCountry"),
 			true);
 	public static final long ACTIVE_COLUMN_BITMASK = 1L;
-	public static final long COMPANYID_COLUMN_BITMASK = 2L;
-	public static final long GROUPID_COLUMN_BITMASK = 4L;
-	public static final long UUID_COLUMN_BITMASK = 8L;
-	public static final long PRIORITY_COLUMN_BITMASK = 16L;
+	public static final long BILLINGALLOWED_COLUMN_BITMASK = 2L;
+	public static final long COMPANYID_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
+	public static final long SHIPPINGALLOWED_COLUMN_BITMASK = 16L;
+	public static final long UUID_COLUMN_BITMASK = 32L;
+	public static final long PRIORITY_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -642,7 +644,19 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 
 	@Override
 	public void setBillingAllowed(boolean billingAllowed) {
+		_columnBitmask |= BILLINGALLOWED_COLUMN_BITMASK;
+
+		if (!_setOriginalBillingAllowed) {
+			_setOriginalBillingAllowed = true;
+
+			_originalBillingAllowed = _billingAllowed;
+		}
+
 		_billingAllowed = billingAllowed;
+	}
+
+	public boolean getOriginalBillingAllowed() {
+		return _originalBillingAllowed;
 	}
 
 	@JSON
@@ -659,7 +673,19 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 
 	@Override
 	public void setShippingAllowed(boolean shippingAllowed) {
+		_columnBitmask |= SHIPPINGALLOWED_COLUMN_BITMASK;
+
+		if (!_setOriginalShippingAllowed) {
+			_setOriginalShippingAllowed = true;
+
+			_originalShippingAllowed = _shippingAllowed;
+		}
+
 		_shippingAllowed = shippingAllowed;
+	}
+
+	public boolean getOriginalShippingAllowed() {
+		return _originalShippingAllowed;
 	}
 
 	@JSON
@@ -971,6 +997,14 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 
 		commerceCountryModelImpl._setModifiedDate = false;
 
+		commerceCountryModelImpl._originalBillingAllowed = commerceCountryModelImpl._billingAllowed;
+
+		commerceCountryModelImpl._setOriginalBillingAllowed = false;
+
+		commerceCountryModelImpl._originalShippingAllowed = commerceCountryModelImpl._shippingAllowed;
+
+		commerceCountryModelImpl._setOriginalShippingAllowed = false;
+
 		commerceCountryModelImpl._originalActive = commerceCountryModelImpl._active;
 
 		commerceCountryModelImpl._setOriginalActive = false;
@@ -1225,7 +1259,11 @@ public class CommerceCountryModelImpl extends BaseModelImpl<CommerceCountry>
 	private String _name;
 	private String _nameCurrentLanguageId;
 	private boolean _billingAllowed;
+	private boolean _originalBillingAllowed;
+	private boolean _setOriginalBillingAllowed;
 	private boolean _shippingAllowed;
+	private boolean _originalShippingAllowed;
+	private boolean _setOriginalShippingAllowed;
 	private String _twoLettersISOCode;
 	private String _threeLettersISOCode;
 	private int _numericISOCode;

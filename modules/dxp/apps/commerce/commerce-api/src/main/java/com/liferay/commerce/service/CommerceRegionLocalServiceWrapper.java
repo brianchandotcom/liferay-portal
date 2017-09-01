@@ -73,10 +73,12 @@ public class CommerceRegionLocalServiceWrapper
 	*
 	* @param commerceRegion the commerce region
 	* @return the commerce region that was removed
+	* @throws PortalException
 	*/
 	@Override
 	public com.liferay.commerce.model.CommerceRegion deleteCommerceRegion(
-		com.liferay.commerce.model.CommerceRegion commerceRegion) {
+		com.liferay.commerce.model.CommerceRegion commerceRegion)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceRegionLocalService.deleteCommerceRegion(commerceRegion);
 	}
 
@@ -95,7 +97,8 @@ public class CommerceRegionLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCommerceRegions(long commerceCountryId) {
+	public void deleteCommerceRegions(long commerceCountryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_commerceRegionLocalService.deleteCommerceRegions(commerceCountryId);
 	}
 

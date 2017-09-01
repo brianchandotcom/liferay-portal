@@ -248,6 +248,24 @@ public class CommerceCountryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_B_A() throws Exception {
+		_persistence.countByG_B_A(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_B_A(0L, RandomTestUtil.randomBoolean(),
+			RandomTestUtil.randomBoolean());
+	}
+
+	@Test
+	public void testCountByG_S_A() throws Exception {
+		_persistence.countByG_S_A(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_S_A(0L, RandomTestUtil.randomBoolean(),
+			RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CommerceCountry newCommerceCountry = addCommerceCountry();
 

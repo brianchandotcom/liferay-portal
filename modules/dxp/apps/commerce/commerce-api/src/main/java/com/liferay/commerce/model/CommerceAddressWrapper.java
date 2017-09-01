@@ -255,6 +255,12 @@ public class CommerceAddressWrapper implements CommerceAddress,
 		return _commerceAddress.getCommerceAddressId();
 	}
 
+	@Override
+	public CommerceCountry getCommerceCountry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceAddress.getCommerceCountry();
+	}
+
 	/**
 	* Returns the commerce country ID of this commerce address.
 	*

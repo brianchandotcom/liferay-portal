@@ -93,18 +93,19 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 	*/
 	public CommerceCountry createCommerceCountry(long commerceCountryId);
 
-	public void deleteCommerceCountries(long groupId);
+	public void deleteCommerceCountries(long groupId) throws PortalException;
 
 	/**
 	* Deletes the commerce country from the database. Also notifies the appropriate model listeners.
 	*
 	* @param commerceCountry the commerce country
 	* @return the commerce country that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceCountry deleteCommerceCountry(
-		CommerceCountry commerceCountry);
+		CommerceCountry commerceCountry) throws PortalException;
 
 	/**
 	* Deletes the commerce country with the primary key from the database. Also notifies the appropriate model listeners.
@@ -199,6 +200,10 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceCountry> getBillingCommerceCountries(long groupId,
+		boolean billingAllowed, boolean active);
 
 	/**
 	* Returns a range of all the commerce countries.
@@ -308,6 +313,10 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceCountry> getShippingCommerceCountries(long groupId,
+		boolean shippingAllowed, boolean active);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceCountry> getWarehouseCommerceCountries(long groupId);

@@ -2539,6 +2539,1195 @@ public class CommerceCountryPersistenceImpl extends BasePersistenceImpl<Commerce
 
 	private static final String _FINDER_COLUMN_G_A_GROUPID_2 = "commerceCountry.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_A_ACTIVE_2 = "commerceCountry.active = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_B_A = new FinderPath(CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceCountryModelImpl.FINDER_CACHE_ENABLED,
+			CommerceCountryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByG_B_A",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_B_A = new FinderPath(CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceCountryModelImpl.FINDER_CACHE_ENABLED,
+			CommerceCountryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_B_A",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName()
+			},
+			CommerceCountryModelImpl.GROUPID_COLUMN_BITMASK |
+			CommerceCountryModelImpl.BILLINGALLOWED_COLUMN_BITMASK |
+			CommerceCountryModelImpl.ACTIVE_COLUMN_BITMASK |
+			CommerceCountryModelImpl.PRIORITY_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_B_A = new FinderPath(CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceCountryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_B_A",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName()
+			});
+
+	/**
+	 * Returns all the commerce countries where groupId = &#63; and billingAllowed = &#63; and active = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param billingAllowed the billing allowed
+	 * @param active the active
+	 * @return the matching commerce countries
+	 */
+	@Override
+	public List<CommerceCountry> findByG_B_A(long groupId,
+		boolean billingAllowed, boolean active) {
+		return findByG_B_A(groupId, billingAllowed, active, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce countries where groupId = &#63; and billingAllowed = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCountryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param billingAllowed the billing allowed
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce countries
+	 * @param end the upper bound of the range of commerce countries (not inclusive)
+	 * @return the range of matching commerce countries
+	 */
+	@Override
+	public List<CommerceCountry> findByG_B_A(long groupId,
+		boolean billingAllowed, boolean active, int start, int end) {
+		return findByG_B_A(groupId, billingAllowed, active, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce countries where groupId = &#63; and billingAllowed = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCountryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param billingAllowed the billing allowed
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce countries
+	 * @param end the upper bound of the range of commerce countries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce countries
+	 */
+	@Override
+	public List<CommerceCountry> findByG_B_A(long groupId,
+		boolean billingAllowed, boolean active, int start, int end,
+		OrderByComparator<CommerceCountry> orderByComparator) {
+		return findByG_B_A(groupId, billingAllowed, active, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce countries where groupId = &#63; and billingAllowed = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCountryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param billingAllowed the billing allowed
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce countries
+	 * @param end the upper bound of the range of commerce countries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching commerce countries
+	 */
+	@Override
+	public List<CommerceCountry> findByG_B_A(long groupId,
+		boolean billingAllowed, boolean active, int start, int end,
+		OrderByComparator<CommerceCountry> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_B_A;
+			finderArgs = new Object[] { groupId, billingAllowed, active };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_B_A;
+			finderArgs = new Object[] {
+					groupId, billingAllowed, active,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<CommerceCountry> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<CommerceCountry>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CommerceCountry commerceCountry : list) {
+					if ((groupId != commerceCountry.getGroupId()) ||
+							(billingAllowed != commerceCountry.getBillingAllowed()) ||
+							(active != commerceCountry.getActive())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(5 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_COMMERCECOUNTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_B_A_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_B_A_BILLINGALLOWED_2);
+
+			query.append(_FINDER_COLUMN_G_B_A_ACTIVE_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CommerceCountryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(billingAllowed);
+
+				qPos.add(active);
+
+				if (!pagination) {
+					list = (List<CommerceCountry>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<CommerceCountry>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first commerce country in the ordered set where groupId = &#63; and billingAllowed = &#63; and active = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param billingAllowed the billing allowed
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce country
+	 * @throws NoSuchCountryException if a matching commerce country could not be found
+	 */
+	@Override
+	public CommerceCountry findByG_B_A_First(long groupId,
+		boolean billingAllowed, boolean active,
+		OrderByComparator<CommerceCountry> orderByComparator)
+		throws NoSuchCountryException {
+		CommerceCountry commerceCountry = fetchByG_B_A_First(groupId,
+				billingAllowed, active, orderByComparator);
+
+		if (commerceCountry != null) {
+			return commerceCountry;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", billingAllowed=");
+		msg.append(billingAllowed);
+
+		msg.append(", active=");
+		msg.append(active);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCountryException(msg.toString());
+	}
+
+	/**
+	 * Returns the first commerce country in the ordered set where groupId = &#63; and billingAllowed = &#63; and active = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param billingAllowed the billing allowed
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce country, or <code>null</code> if a matching commerce country could not be found
+	 */
+	@Override
+	public CommerceCountry fetchByG_B_A_First(long groupId,
+		boolean billingAllowed, boolean active,
+		OrderByComparator<CommerceCountry> orderByComparator) {
+		List<CommerceCountry> list = findByG_B_A(groupId, billingAllowed,
+				active, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last commerce country in the ordered set where groupId = &#63; and billingAllowed = &#63; and active = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param billingAllowed the billing allowed
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce country
+	 * @throws NoSuchCountryException if a matching commerce country could not be found
+	 */
+	@Override
+	public CommerceCountry findByG_B_A_Last(long groupId,
+		boolean billingAllowed, boolean active,
+		OrderByComparator<CommerceCountry> orderByComparator)
+		throws NoSuchCountryException {
+		CommerceCountry commerceCountry = fetchByG_B_A_Last(groupId,
+				billingAllowed, active, orderByComparator);
+
+		if (commerceCountry != null) {
+			return commerceCountry;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", billingAllowed=");
+		msg.append(billingAllowed);
+
+		msg.append(", active=");
+		msg.append(active);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCountryException(msg.toString());
+	}
+
+	/**
+	 * Returns the last commerce country in the ordered set where groupId = &#63; and billingAllowed = &#63; and active = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param billingAllowed the billing allowed
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce country, or <code>null</code> if a matching commerce country could not be found
+	 */
+	@Override
+	public CommerceCountry fetchByG_B_A_Last(long groupId,
+		boolean billingAllowed, boolean active,
+		OrderByComparator<CommerceCountry> orderByComparator) {
+		int count = countByG_B_A(groupId, billingAllowed, active);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CommerceCountry> list = findByG_B_A(groupId, billingAllowed,
+				active, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the commerce countries before and after the current commerce country in the ordered set where groupId = &#63; and billingAllowed = &#63; and active = &#63;.
+	 *
+	 * @param commerceCountryId the primary key of the current commerce country
+	 * @param groupId the group ID
+	 * @param billingAllowed the billing allowed
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce country
+	 * @throws NoSuchCountryException if a commerce country with the primary key could not be found
+	 */
+	@Override
+	public CommerceCountry[] findByG_B_A_PrevAndNext(long commerceCountryId,
+		long groupId, boolean billingAllowed, boolean active,
+		OrderByComparator<CommerceCountry> orderByComparator)
+		throws NoSuchCountryException {
+		CommerceCountry commerceCountry = findByPrimaryKey(commerceCountryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceCountry[] array = new CommerceCountryImpl[3];
+
+			array[0] = getByG_B_A_PrevAndNext(session, commerceCountry,
+					groupId, billingAllowed, active, orderByComparator, true);
+
+			array[1] = commerceCountry;
+
+			array[2] = getByG_B_A_PrevAndNext(session, commerceCountry,
+					groupId, billingAllowed, active, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommerceCountry getByG_B_A_PrevAndNext(Session session,
+		CommerceCountry commerceCountry, long groupId, boolean billingAllowed,
+		boolean active, OrderByComparator<CommerceCountry> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		query.append(_SQL_SELECT_COMMERCECOUNTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_G_B_A_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_B_A_BILLINGALLOWED_2);
+
+		query.append(_FINDER_COLUMN_G_B_A_ACTIVE_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CommerceCountryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(billingAllowed);
+
+		qPos.add(active);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(commerceCountry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CommerceCountry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the commerce countries where groupId = &#63; and billingAllowed = &#63; and active = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param billingAllowed the billing allowed
+	 * @param active the active
+	 */
+	@Override
+	public void removeByG_B_A(long groupId, boolean billingAllowed,
+		boolean active) {
+		for (CommerceCountry commerceCountry : findByG_B_A(groupId,
+				billingAllowed, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null)) {
+			remove(commerceCountry);
+		}
+	}
+
+	/**
+	 * Returns the number of commerce countries where groupId = &#63; and billingAllowed = &#63; and active = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param billingAllowed the billing allowed
+	 * @param active the active
+	 * @return the number of matching commerce countries
+	 */
+	@Override
+	public int countByG_B_A(long groupId, boolean billingAllowed, boolean active) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_B_A;
+
+		Object[] finderArgs = new Object[] { groupId, billingAllowed, active };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_COMMERCECOUNTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_B_A_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_B_A_BILLINGALLOWED_2);
+
+			query.append(_FINDER_COLUMN_G_B_A_ACTIVE_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(billingAllowed);
+
+				qPos.add(active);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_B_A_GROUPID_2 = "commerceCountry.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_B_A_BILLINGALLOWED_2 = "commerceCountry.billingAllowed = ? AND ";
+	private static final String _FINDER_COLUMN_G_B_A_ACTIVE_2 = "commerceCountry.active = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_S_A = new FinderPath(CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceCountryModelImpl.FINDER_CACHE_ENABLED,
+			CommerceCountryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByG_S_A",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S_A = new FinderPath(CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceCountryModelImpl.FINDER_CACHE_ENABLED,
+			CommerceCountryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S_A",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName()
+			},
+			CommerceCountryModelImpl.GROUPID_COLUMN_BITMASK |
+			CommerceCountryModelImpl.SHIPPINGALLOWED_COLUMN_BITMASK |
+			CommerceCountryModelImpl.ACTIVE_COLUMN_BITMASK |
+			CommerceCountryModelImpl.PRIORITY_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_S_A = new FinderPath(CommerceCountryModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceCountryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S_A",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName()
+			});
+
+	/**
+	 * Returns all the commerce countries where groupId = &#63; and shippingAllowed = &#63; and active = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param shippingAllowed the shipping allowed
+	 * @param active the active
+	 * @return the matching commerce countries
+	 */
+	@Override
+	public List<CommerceCountry> findByG_S_A(long groupId,
+		boolean shippingAllowed, boolean active) {
+		return findByG_S_A(groupId, shippingAllowed, active, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce countries where groupId = &#63; and shippingAllowed = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCountryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param shippingAllowed the shipping allowed
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce countries
+	 * @param end the upper bound of the range of commerce countries (not inclusive)
+	 * @return the range of matching commerce countries
+	 */
+	@Override
+	public List<CommerceCountry> findByG_S_A(long groupId,
+		boolean shippingAllowed, boolean active, int start, int end) {
+		return findByG_S_A(groupId, shippingAllowed, active, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce countries where groupId = &#63; and shippingAllowed = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCountryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param shippingAllowed the shipping allowed
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce countries
+	 * @param end the upper bound of the range of commerce countries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce countries
+	 */
+	@Override
+	public List<CommerceCountry> findByG_S_A(long groupId,
+		boolean shippingAllowed, boolean active, int start, int end,
+		OrderByComparator<CommerceCountry> orderByComparator) {
+		return findByG_S_A(groupId, shippingAllowed, active, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce countries where groupId = &#63; and shippingAllowed = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceCountryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param shippingAllowed the shipping allowed
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce countries
+	 * @param end the upper bound of the range of commerce countries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching commerce countries
+	 */
+	@Override
+	public List<CommerceCountry> findByG_S_A(long groupId,
+		boolean shippingAllowed, boolean active, int start, int end,
+		OrderByComparator<CommerceCountry> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S_A;
+			finderArgs = new Object[] { groupId, shippingAllowed, active };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_S_A;
+			finderArgs = new Object[] {
+					groupId, shippingAllowed, active,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<CommerceCountry> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<CommerceCountry>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CommerceCountry commerceCountry : list) {
+					if ((groupId != commerceCountry.getGroupId()) ||
+							(shippingAllowed != commerceCountry.getShippingAllowed()) ||
+							(active != commerceCountry.getActive())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(5 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_COMMERCECOUNTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_S_A_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_S_A_SHIPPINGALLOWED_2);
+
+			query.append(_FINDER_COLUMN_G_S_A_ACTIVE_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CommerceCountryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(shippingAllowed);
+
+				qPos.add(active);
+
+				if (!pagination) {
+					list = (List<CommerceCountry>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<CommerceCountry>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first commerce country in the ordered set where groupId = &#63; and shippingAllowed = &#63; and active = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param shippingAllowed the shipping allowed
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce country
+	 * @throws NoSuchCountryException if a matching commerce country could not be found
+	 */
+	@Override
+	public CommerceCountry findByG_S_A_First(long groupId,
+		boolean shippingAllowed, boolean active,
+		OrderByComparator<CommerceCountry> orderByComparator)
+		throws NoSuchCountryException {
+		CommerceCountry commerceCountry = fetchByG_S_A_First(groupId,
+				shippingAllowed, active, orderByComparator);
+
+		if (commerceCountry != null) {
+			return commerceCountry;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", shippingAllowed=");
+		msg.append(shippingAllowed);
+
+		msg.append(", active=");
+		msg.append(active);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCountryException(msg.toString());
+	}
+
+	/**
+	 * Returns the first commerce country in the ordered set where groupId = &#63; and shippingAllowed = &#63; and active = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param shippingAllowed the shipping allowed
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce country, or <code>null</code> if a matching commerce country could not be found
+	 */
+	@Override
+	public CommerceCountry fetchByG_S_A_First(long groupId,
+		boolean shippingAllowed, boolean active,
+		OrderByComparator<CommerceCountry> orderByComparator) {
+		List<CommerceCountry> list = findByG_S_A(groupId, shippingAllowed,
+				active, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last commerce country in the ordered set where groupId = &#63; and shippingAllowed = &#63; and active = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param shippingAllowed the shipping allowed
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce country
+	 * @throws NoSuchCountryException if a matching commerce country could not be found
+	 */
+	@Override
+	public CommerceCountry findByG_S_A_Last(long groupId,
+		boolean shippingAllowed, boolean active,
+		OrderByComparator<CommerceCountry> orderByComparator)
+		throws NoSuchCountryException {
+		CommerceCountry commerceCountry = fetchByG_S_A_Last(groupId,
+				shippingAllowed, active, orderByComparator);
+
+		if (commerceCountry != null) {
+			return commerceCountry;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", shippingAllowed=");
+		msg.append(shippingAllowed);
+
+		msg.append(", active=");
+		msg.append(active);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCountryException(msg.toString());
+	}
+
+	/**
+	 * Returns the last commerce country in the ordered set where groupId = &#63; and shippingAllowed = &#63; and active = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param shippingAllowed the shipping allowed
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce country, or <code>null</code> if a matching commerce country could not be found
+	 */
+	@Override
+	public CommerceCountry fetchByG_S_A_Last(long groupId,
+		boolean shippingAllowed, boolean active,
+		OrderByComparator<CommerceCountry> orderByComparator) {
+		int count = countByG_S_A(groupId, shippingAllowed, active);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CommerceCountry> list = findByG_S_A(groupId, shippingAllowed,
+				active, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the commerce countries before and after the current commerce country in the ordered set where groupId = &#63; and shippingAllowed = &#63; and active = &#63;.
+	 *
+	 * @param commerceCountryId the primary key of the current commerce country
+	 * @param groupId the group ID
+	 * @param shippingAllowed the shipping allowed
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce country
+	 * @throws NoSuchCountryException if a commerce country with the primary key could not be found
+	 */
+	@Override
+	public CommerceCountry[] findByG_S_A_PrevAndNext(long commerceCountryId,
+		long groupId, boolean shippingAllowed, boolean active,
+		OrderByComparator<CommerceCountry> orderByComparator)
+		throws NoSuchCountryException {
+		CommerceCountry commerceCountry = findByPrimaryKey(commerceCountryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceCountry[] array = new CommerceCountryImpl[3];
+
+			array[0] = getByG_S_A_PrevAndNext(session, commerceCountry,
+					groupId, shippingAllowed, active, orderByComparator, true);
+
+			array[1] = commerceCountry;
+
+			array[2] = getByG_S_A_PrevAndNext(session, commerceCountry,
+					groupId, shippingAllowed, active, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommerceCountry getByG_S_A_PrevAndNext(Session session,
+		CommerceCountry commerceCountry, long groupId, boolean shippingAllowed,
+		boolean active, OrderByComparator<CommerceCountry> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		query.append(_SQL_SELECT_COMMERCECOUNTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_G_S_A_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_S_A_SHIPPINGALLOWED_2);
+
+		query.append(_FINDER_COLUMN_G_S_A_ACTIVE_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CommerceCountryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(shippingAllowed);
+
+		qPos.add(active);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(commerceCountry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CommerceCountry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the commerce countries where groupId = &#63; and shippingAllowed = &#63; and active = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param shippingAllowed the shipping allowed
+	 * @param active the active
+	 */
+	@Override
+	public void removeByG_S_A(long groupId, boolean shippingAllowed,
+		boolean active) {
+		for (CommerceCountry commerceCountry : findByG_S_A(groupId,
+				shippingAllowed, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null)) {
+			remove(commerceCountry);
+		}
+	}
+
+	/**
+	 * Returns the number of commerce countries where groupId = &#63; and shippingAllowed = &#63; and active = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param shippingAllowed the shipping allowed
+	 * @param active the active
+	 * @return the number of matching commerce countries
+	 */
+	@Override
+	public int countByG_S_A(long groupId, boolean shippingAllowed,
+		boolean active) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_S_A;
+
+		Object[] finderArgs = new Object[] { groupId, shippingAllowed, active };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_COMMERCECOUNTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_S_A_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_S_A_SHIPPINGALLOWED_2);
+
+			query.append(_FINDER_COLUMN_G_S_A_ACTIVE_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(shippingAllowed);
+
+				qPos.add(active);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_S_A_GROUPID_2 = "commerceCountry.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_S_A_SHIPPINGALLOWED_2 = "commerceCountry.shippingAllowed = ? AND ";
+	private static final String _FINDER_COLUMN_G_S_A_ACTIVE_2 = "commerceCountry.active = ?";
 
 	public CommerceCountryPersistenceImpl() {
 		setModelClass(CommerceCountry.class);
@@ -2886,6 +4075,26 @@ public class CommerceCountryPersistenceImpl extends BasePersistenceImpl<Commerce
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A,
 				args);
 
+			args = new Object[] {
+					commerceCountryModelImpl.getGroupId(),
+					commerceCountryModelImpl.getBillingAllowed(),
+					commerceCountryModelImpl.getActive()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_B_A, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_B_A,
+				args);
+
+			args = new Object[] {
+					commerceCountryModelImpl.getGroupId(),
+					commerceCountryModelImpl.getShippingAllowed(),
+					commerceCountryModelImpl.getActive()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_S_A, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S_A,
+				args);
+
 			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
 				FINDER_ARGS_EMPTY);
@@ -2965,6 +4174,52 @@ public class CommerceCountryPersistenceImpl extends BasePersistenceImpl<Commerce
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_A, args);
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A,
+					args);
+			}
+
+			if ((commerceCountryModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_B_A.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						commerceCountryModelImpl.getOriginalGroupId(),
+						commerceCountryModelImpl.getOriginalBillingAllowed(),
+						commerceCountryModelImpl.getOriginalActive()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_B_A, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_B_A,
+					args);
+
+				args = new Object[] {
+						commerceCountryModelImpl.getGroupId(),
+						commerceCountryModelImpl.getBillingAllowed(),
+						commerceCountryModelImpl.getActive()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_B_A, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_B_A,
+					args);
+			}
+
+			if ((commerceCountryModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S_A.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						commerceCountryModelImpl.getOriginalGroupId(),
+						commerceCountryModelImpl.getOriginalShippingAllowed(),
+						commerceCountryModelImpl.getOriginalActive()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_S_A, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S_A,
+					args);
+
+				args = new Object[] {
+						commerceCountryModelImpl.getGroupId(),
+						commerceCountryModelImpl.getShippingAllowed(),
+						commerceCountryModelImpl.getActive()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_S_A, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S_A,
 					args);
 			}
 		}

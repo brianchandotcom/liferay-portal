@@ -130,11 +130,12 @@ public abstract class CommerceAddressLocalServiceBaseImpl
 	 *
 	 * @param commerceAddress the commerce address
 	 * @return the commerce address that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CommerceAddress deleteCommerceAddress(
-		CommerceAddress commerceAddress) {
+		CommerceAddress commerceAddress) throws PortalException {
 		return commerceAddressPersistence.remove(commerceAddress);
 	}
 

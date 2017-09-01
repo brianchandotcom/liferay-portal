@@ -94,10 +94,12 @@ public interface CommerceRegionLocalService extends BaseLocalService,
 	*
 	* @param commerceRegion the commerce region
 	* @return the commerce region that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public CommerceRegion deleteCommerceRegion(CommerceRegion commerceRegion);
+	public CommerceRegion deleteCommerceRegion(CommerceRegion commerceRegion)
+		throws PortalException;
 
 	/**
 	* Deletes the commerce region with the primary key from the database. Also notifies the appropriate model listeners.
@@ -110,7 +112,8 @@ public interface CommerceRegionLocalService extends BaseLocalService,
 	public CommerceRegion deleteCommerceRegion(long commerceRegionId)
 		throws PortalException;
 
-	public void deleteCommerceRegions(long commerceCountryId);
+	public void deleteCommerceRegions(long commerceCountryId)
+		throws PortalException;
 
 	/**
 	* @throws PortalException

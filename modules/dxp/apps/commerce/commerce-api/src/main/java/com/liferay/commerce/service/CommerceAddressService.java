@@ -16,14 +16,20 @@ package com.liferay.commerce.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.model.CommerceAddress;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for CommerceAddress. Methods of this
@@ -49,6 +55,25 @@ public interface CommerceAddressService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceAddressServiceUtil} to access the commerce address remote service. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceAddressServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public CommerceAddress addCommerceAddress(long addressUserId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String street1, java.lang.String street2,
+		java.lang.String street3, java.lang.String city, java.lang.String zip,
+		long commerceRegionId, long commerceCountryId,
+		java.lang.String phoneNumber, boolean defaultBilling,
+		boolean defaultShipping, ServiceContext serviceContext)
+		throws PortalException;
+
+	public void deleteCommerceAddress(long commerceAddressId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceAddress getCommerceAddress(long commerceAddressId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceAddress> getCommerceAddresses(long groupId,
+		long addressUserId) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -56,4 +81,13 @@ public interface CommerceAddressService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	public CommerceAddress updateCommerceAddress(long commerceAddressId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String street1, java.lang.String street2,
+		java.lang.String street3, java.lang.String city, java.lang.String zip,
+		long commerceRegionId, long commerceCountryId,
+		java.lang.String phoneNumber, boolean defaultBilling,
+		boolean defaultShipping, ServiceContext serviceContext)
+		throws PortalException;
 }

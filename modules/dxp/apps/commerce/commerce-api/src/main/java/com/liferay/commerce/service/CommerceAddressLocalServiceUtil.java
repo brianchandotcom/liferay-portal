@@ -53,6 +53,22 @@ public class CommerceAddressLocalServiceUtil {
 		return getService().addCommerceAddress(commerceAddress);
 	}
 
+	public static com.liferay.commerce.model.CommerceAddress addCommerceAddress(
+		long addressUserId, java.lang.String name,
+		java.lang.String description, java.lang.String street1,
+		java.lang.String street2, java.lang.String street3,
+		java.lang.String city, java.lang.String zip, long commerceRegionId,
+		long commerceCountryId, java.lang.String phoneNumber,
+		boolean defaultBilling, boolean defaultShipping,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCommerceAddress(addressUserId, name, description,
+			street1, street2, street3, city, zip, commerceRegionId,
+			commerceCountryId, phoneNumber, defaultBilling, defaultShipping,
+			serviceContext);
+	}
+
 	/**
 	* Creates a new commerce address with the primary key. Does not add the commerce address to the database.
 	*
@@ -69,9 +85,11 @@ public class CommerceAddressLocalServiceUtil {
 	*
 	* @param commerceAddress the commerce address
 	* @return the commerce address that was removed
+	* @throws PortalException
 	*/
 	public static com.liferay.commerce.model.CommerceAddress deleteCommerceAddress(
-		com.liferay.commerce.model.CommerceAddress commerceAddress) {
+		com.liferay.commerce.model.CommerceAddress commerceAddress)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteCommerceAddress(commerceAddress);
 	}
 
@@ -88,6 +106,11 @@ public class CommerceAddressLocalServiceUtil {
 		return getService().deleteCommerceAddress(commerceAddressId);
 	}
 
+	public static void deleteCountryCommerceAddresses(long commerceCountryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCountryCommerceAddresses(commerceCountryId);
+	}
+
 	/**
 	* @throws PortalException
 	*/
@@ -95,6 +118,16 @@ public class CommerceAddressLocalServiceUtil {
 		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static void deleteRegionCommerceAddresses(long commerceRegionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteRegionCommerceAddresses(commerceRegionId);
+	}
+
+	public static void deleteUserCommerceAddresses(long addressUserId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteUserCommerceAddresses(addressUserId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -213,6 +246,11 @@ public class CommerceAddressLocalServiceUtil {
 		return getService().getCommerceAddresses(start, end);
 	}
 
+	public static java.util.List<com.liferay.commerce.model.CommerceAddress> getCommerceAddresses(
+		long groupId, long addressUserId) {
+		return getService().getCommerceAddresses(groupId, addressUserId);
+	}
+
 	/**
 	* Returns the number of commerce addresses.
 	*
@@ -250,6 +288,22 @@ public class CommerceAddressLocalServiceUtil {
 	public static com.liferay.commerce.model.CommerceAddress updateCommerceAddress(
 		com.liferay.commerce.model.CommerceAddress commerceAddress) {
 		return getService().updateCommerceAddress(commerceAddress);
+	}
+
+	public static com.liferay.commerce.model.CommerceAddress updateCommerceAddress(
+		long commerceAddressId, java.lang.String name,
+		java.lang.String description, java.lang.String street1,
+		java.lang.String street2, java.lang.String street3,
+		java.lang.String city, java.lang.String zip, long commerceRegionId,
+		long commerceCountryId, java.lang.String phoneNumber,
+		boolean defaultBilling, boolean defaultShipping,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCommerceAddress(commerceAddressId, name, description,
+			street1, street2, street3, city, zip, commerceRegionId,
+			commerceCountryId, phoneNumber, defaultBilling, defaultShipping,
+			serviceContext);
 	}
 
 	public static CommerceAddressLocalService getService() {

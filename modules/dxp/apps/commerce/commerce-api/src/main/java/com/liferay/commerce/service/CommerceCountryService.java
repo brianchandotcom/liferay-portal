@@ -69,6 +69,10 @@ public interface CommerceCountryService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceCountry> getBillingCommerceCountries(long groupId,
+		boolean billingAllowed, boolean active);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceCountry> getCommerceCountries(long groupId,
 		boolean active);
 
@@ -97,6 +101,10 @@ public interface CommerceCountryService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceCountry> getShippingCommerceCountries(long groupId,
+		boolean shippingAllowed, boolean active);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceCountry> getWarehouseCommerceCountries(long groupId)

@@ -78,7 +78,8 @@ public class CommerceCountryLocalServiceUtil {
 		return getService().createCommerceCountry(commerceCountryId);
 	}
 
-	public static void deleteCommerceCountries(long groupId) {
+	public static void deleteCommerceCountries(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteCommerceCountries(groupId);
 	}
 
@@ -87,9 +88,11 @@ public class CommerceCountryLocalServiceUtil {
 	*
 	* @param commerceCountry the commerce country
 	* @return the commerce country that was removed
+	* @throws PortalException
 	*/
 	public static com.liferay.commerce.model.CommerceCountry deleteCommerceCountry(
-		com.liferay.commerce.model.CommerceCountry commerceCountry) {
+		com.liferay.commerce.model.CommerceCountry commerceCountry)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteCommerceCountry(commerceCountry);
 	}
 
@@ -212,6 +215,12 @@ public class CommerceCountryLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
+	}
+
+	public static java.util.List<com.liferay.commerce.model.CommerceCountry> getBillingCommerceCountries(
+		long groupId, boolean billingAllowed, boolean active) {
+		return getService()
+				   .getBillingCommerceCountries(groupId, billingAllowed, active);
 	}
 
 	/**
@@ -347,6 +356,13 @@ public class CommerceCountryLocalServiceUtil {
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static java.util.List<com.liferay.commerce.model.CommerceCountry> getShippingCommerceCountries(
+		long groupId, boolean shippingAllowed, boolean active) {
+		return getService()
+				   .getShippingCommerceCountries(groupId, shippingAllowed,
+			active);
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceCountry> getWarehouseCommerceCountries(

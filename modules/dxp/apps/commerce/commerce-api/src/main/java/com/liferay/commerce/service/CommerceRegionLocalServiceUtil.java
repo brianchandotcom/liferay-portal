@@ -79,9 +79,11 @@ public class CommerceRegionLocalServiceUtil {
 	*
 	* @param commerceRegion the commerce region
 	* @return the commerce region that was removed
+	* @throws PortalException
 	*/
 	public static com.liferay.commerce.model.CommerceRegion deleteCommerceRegion(
-		com.liferay.commerce.model.CommerceRegion commerceRegion) {
+		com.liferay.commerce.model.CommerceRegion commerceRegion)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteCommerceRegion(commerceRegion);
 	}
 
@@ -98,7 +100,8 @@ public class CommerceRegionLocalServiceUtil {
 		return getService().deleteCommerceRegion(commerceRegionId);
 	}
 
-	public static void deleteCommerceRegions(long commerceCountryId) {
+	public static void deleteCommerceRegions(long commerceCountryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteCommerceRegions(commerceCountryId);
 	}
 

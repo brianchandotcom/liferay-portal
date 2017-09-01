@@ -8,7 +8,7 @@ create table CommerceAddress (
 	modifiedDate DATE null,
 	addressUserId LONG,
 	name VARCHAR(75) null,
-	description VARCHAR(75) null,
+	description STRING null,
 	street1 VARCHAR(75) null,
 	street2 VARCHAR(75) null,
 	street3 VARCHAR(75) null,

@@ -54,4 +54,7 @@ public interface CommerceAddress extends CommerceAddressModel, PersistedModel {
 				return CommerceAddress.class;
 			}
 		};
+
+	public CommerceCountry getCommerceCountry()
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

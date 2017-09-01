@@ -137,11 +137,12 @@ public abstract class CommerceCountryLocalServiceBaseImpl
 	 *
 	 * @param commerceCountry the commerce country
 	 * @return the commerce country that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CommerceCountry deleteCommerceCountry(
-		CommerceCountry commerceCountry) {
+		CommerceCountry commerceCountry) throws PortalException {
 		return commerceCountryPersistence.remove(commerceCountry);
 	}
 

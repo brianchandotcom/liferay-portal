@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -70,6 +71,15 @@ public interface CommerceAddressLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceAddress addCommerceAddress(CommerceAddress commerceAddress);
 
+	public CommerceAddress addCommerceAddress(long addressUserId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String street1, java.lang.String street2,
+		java.lang.String street3, java.lang.String city, java.lang.String zip,
+		long commerceRegionId, long commerceCountryId,
+		java.lang.String phoneNumber, boolean defaultBilling,
+		boolean defaultShipping, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Creates a new commerce address with the primary key. Does not add the commerce address to the database.
 	*
@@ -83,10 +93,11 @@ public interface CommerceAddressLocalService extends BaseLocalService,
 	*
 	* @param commerceAddress the commerce address
 	* @return the commerce address that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public CommerceAddress deleteCommerceAddress(
-		CommerceAddress commerceAddress);
+		CommerceAddress commerceAddress) throws PortalException;
 
 	/**
 	* Deletes the commerce address with the primary key from the database. Also notifies the appropriate model listeners.
@@ -99,11 +110,20 @@ public interface CommerceAddressLocalService extends BaseLocalService,
 	public CommerceAddress deleteCommerceAddress(long commerceAddressId)
 		throws PortalException;
 
+	public void deleteCountryCommerceAddresses(long commerceCountryId)
+		throws PortalException;
+
 	/**
 	* @throws PortalException
 	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	public void deleteRegionCommerceAddresses(long commerceRegionId)
+		throws PortalException;
+
+	public void deleteUserCommerceAddresses(long addressUserId)
 		throws PortalException;
 
 	public DynamicQuery dynamicQuery();
@@ -196,6 +216,10 @@ public interface CommerceAddressLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceAddress> getCommerceAddresses(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceAddress> getCommerceAddresses(long groupId,
+		long addressUserId);
+
 	/**
 	* Returns the number of commerce addresses.
 	*
@@ -228,4 +252,13 @@ public interface CommerceAddressLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceAddress updateCommerceAddress(
 		CommerceAddress commerceAddress);
+
+	public CommerceAddress updateCommerceAddress(long commerceAddressId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String street1, java.lang.String street2,
+		java.lang.String street3, java.lang.String city, java.lang.String zip,
+		long commerceRegionId, long commerceCountryId,
+		java.lang.String phoneNumber, boolean defaultBilling,
+		boolean defaultShipping, ServiceContext serviceContext)
+		throws PortalException;
 }

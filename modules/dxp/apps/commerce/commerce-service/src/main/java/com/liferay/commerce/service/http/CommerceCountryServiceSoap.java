@@ -107,6 +107,23 @@ public class CommerceCountryServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceCountrySoap[] getBillingCommerceCountries(
+		long groupId, boolean billingAllowed, boolean active)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.model.CommerceCountry> returnValue =
+				CommerceCountryServiceUtil.getBillingCommerceCountries(groupId,
+					billingAllowed, active);
+
+			return com.liferay.commerce.model.CommerceCountrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.model.CommerceCountrySoap[] getCommerceCountries(
 		long groupId, boolean active) throws RemoteException {
 		try {
@@ -193,6 +210,23 @@ public class CommerceCountryServiceSoap {
 			com.liferay.commerce.model.CommerceCountry returnValue = CommerceCountryServiceUtil.getCommerceCountry(commerceCountryId);
 
 			return com.liferay.commerce.model.CommerceCountrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceCountrySoap[] getShippingCommerceCountries(
+		long groupId, boolean shippingAllowed, boolean active)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.model.CommerceCountry> returnValue =
+				CommerceCountryServiceUtil.getShippingCommerceCountries(groupId,
+					shippingAllowed, active);
+
+			return com.liferay.commerce.model.CommerceCountrySoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

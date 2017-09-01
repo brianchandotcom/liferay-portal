@@ -166,6 +166,96 @@ class EffectsComponent extends Component {
 	}
 
 	/**
+	 * Makes the caousel scroll left to reveal options off the visible area
+	 * 
+	 * @return void
+	 */ 
+	scrollLeft() {
+		const carousel = this.getCarouselElement();
+		if (!carousel) {
+			return;
+		}
+		const itemWidth = this.getCarouselItemElement().offsetWidth || 0;
+		const marginLeft = parseInt(carousel.style.marginLeft || 0, 10);
+		if (marginLeft < 0) {
+			const newMarginValue = Math.min(marginLeft + itemWidth, 0);
+			carousel.style.marginLeft =  newMarginValue + 'px';
+		}
+	}
+
+	/**
+	 * Makes the caousel scroll right to reveal options off the visible area
+	 * 
+	 * @return void
+	 */ 
+	scrollRight() {
+		const carousel = this.getCarouselElement();
+		if (!carousel) {
+			return;
+		}
+		if (!this.canScrollForward()) {
+			return;
+		}
+		const itemWidth = this.getCarouselItemElement().offsetWidth || 0;
+		const marginLeft = parseInt(carousel.style.marginLeft || 0, 10);
+		carousel.style.marginLeft = (marginLeft - itemWidth) + 'px';
+	}
+
+	/**
+	 * Returns the carousel element with lazy search
+	 * 
+	 * @return {DOMElement} element that incorporates content of the carousel
+	 */ 
+	getCarouselElement() {
+		if (!this.cache_.carouselElm) {
+			this.cache_.carouselElm = this.element.querySelector('#' + this.ref + '_carousel');
+		}
+		return this.cache_.carouselElm;
+	}
+
+	/**
+	 * Returns the first carousel item element with lazy search
+	 * 
+	 * @return {DOMElement} first child element of the carousel item. 
+	 * This is mainly fetched to get informations about the items the carousel
+	 * takes in.
+	 */ 
+	getCarouselItemElement() {
+		if (!this.cache_.carouselItemElm) {
+			const carousel = this.getCarouselElement() || {};
+			this.cache_.carouselItemElm = carousel.querySelector('li.item') || {};
+		}
+		return this.cache_.carouselItemElm;
+	}
+
+	/**
+	 * Returns the parent element of the carousel with lazy search
+	 * 
+	 * @return {DOMElement} element that incorporates the carousel
+	 */ 
+	getCarouselContainerElement() { 
+		if (!this.cache_.carouselContainerElm) {
+			const carousel = this.getCarouselElement();
+			this.cache_.carouselContainerElm = carousel.parentNode || carousel.parentElement;
+		}
+		return this.cache_.carouselContainerElm;
+	}
+
+	/**
+	 * Returns whether the carousel can be scrolled towards the right
+	 *
+	 * @return {boolean} returns true if the carousel can be scrolled, false otherwise
+	 */
+	canScrollForward() {
+		const carousel = this.getCarouselElement();
+		const continer = this.getCarouselContainerElement();
+		const offset = Math.abs(parseInt(carousel.style.marginLeft || 0, 10));
+		const viewportWidth = parseInt(continer.offsetWidth, 10);
+		const maxContentWidth = parseInt(carousel.offsetWidth, 10);
+		return offset + viewportWidth < maxContentWidth;
+	}
+
+	/**
 	 * Spawns the a webworker to do the image processing in a different thread.
 	 *
 	 * @param  {String} workerURI URI of the worker to spawn.

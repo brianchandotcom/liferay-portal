@@ -7,20 +7,37 @@
  * @param ref
  * @param thumbnailSize
  * @param? currentEffect_
+ * @param? pathThemeImages
  */
 {template .render}
-	<div id="{$ref}">
-		<ul class="carousel list-unstyled list-table">
-			{foreach $effect in $effects}
-				<li class="item">
-					<a data-onclick="previewEffect" data-effect="{$effect}" class="{$currentEffect_ == $effect ? 'active' : ''}">
-						<div id="{$ref}{$effect}" style="position: relative;">
-							<canvas width="{$thumbnailSize}" height="{$thumbnailSize}"></canvas>
-						</div>
-						<span>{$effect}</span>
-					</a>
-				</li>
-			{/foreach}
-		</ul>
+	<div class="carousel-wrapper" id="{$ref}">
+		<div class="carousel-left-arrow">
+			<a class="btn btn-link icon-monospaced" data-onclick="scrollLeft" href="javascript:;">
+				<svg class="lexicon-icon">
+					<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#angle-left"></use>
+				</svg>
+			</a>
+		</div>
+		<div class="carousel-container">
+			<ul class="carousel list-unstyled list-table" id="{$ref}_carousel">
+				{foreach $effect in $effects}
+					<li class="item">
+						<a data-onclick="previewEffect" data-effect="{$effect}" class="{$currentEffect_ == $effect ? 'active' : ''}">
+							<div id="{$ref}{$effect}" style="position: relative;">
+								<canvas width="{$thumbnailSize}" height="{$thumbnailSize}"></canvas>
+							</div>
+							<span>{$effect}</span>
+						</a>
+					</li>
+				{/foreach}
+			</ul>
+		</div>
+		<div class="carousel-right-arrow">
+			<a class="btn btn-link icon-monospaced" data-onclick="scrollRight" href="javascript:;">
+				<svg class="lexicon-icon">
+					<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#angle-right"></use>
+				</svg>
+			</a>
+		</div>
 	</div>
 {/template}

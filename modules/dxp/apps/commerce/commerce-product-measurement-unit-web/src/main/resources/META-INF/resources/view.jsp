@@ -129,7 +129,7 @@ boolean hasManageCPMeasurementUnitsPermission = CPMeasurementUnitPermission.cont
 	</aui:form>
 </div>
 
-<c:if test="<%= CPMeasurementUnitPermission.contains(permissionChecker, scopeGroupId, CPActionKeys.MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS) %>">
+<c:if test="<%= hasManageCPMeasurementUnitsPermission %>">
 	<portlet:renderURL var="addCPMeasurementUnitURL">
 		<portlet:param name="mvcRenderCommandName" value="editCPMeasurementUnit" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />

@@ -128,7 +128,7 @@ boolean hasManageCommerceCurrenciesPermission = CommerceCurrencyPermission.conta
 	</aui:form>
 </div>
 
-<c:if test="<%= CommerceCurrencyPermission.contains(permissionChecker, scopeGroupId, CommerceCurrencyActionKeys.MANAGE_COMMERCE_CURRENCIES) %>">
+<c:if test="<%= hasManageCommerceCurrenciesPermission %>">
 	<portlet:renderURL var="addCommerceCurrencyURL">
 		<portlet:param name="mvcRenderCommandName" value="editCommerceCurrency" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />

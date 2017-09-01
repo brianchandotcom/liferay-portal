@@ -44,6 +44,10 @@ public class WhitespaceCheck extends BaseFileCheck {
 
 		content = StringUtil.replace(content, "\n\n\n", "\n\n");
 
+		if (content.startsWith(StringPool.NEW_LINE)) {
+			content = content.substring(1);
+		}
+
 		if (content.endsWith(StringPool.RETURN)) {
 			content = content.substring(0, content.length() - 1);
 		}

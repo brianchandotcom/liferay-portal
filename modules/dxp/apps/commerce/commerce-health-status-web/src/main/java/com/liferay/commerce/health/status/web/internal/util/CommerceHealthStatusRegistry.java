@@ -107,10 +107,11 @@ public class CommerceHealthStatusRegistry {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceHealthStatusRegistry.class);
 
-	private ServiceTrackerMap<String, ServiceWrapper<CommerceHealthStatus>>
-		_commerceHealthStatusRegistryMap;
-	private final Comparator<ServiceWrapper<CommerceHealthStatus>>
+	private static final Comparator<ServiceWrapper<CommerceHealthStatus>>
 		_commerceHealthStatusServiceWrapperDisplayOrderComparator =
 			new CommerceHealthStatusServiceWrapperDisplayOrderComparator();
+
+	private ServiceTrackerMap<String, ServiceWrapper<CommerceHealthStatus>>
+		_commerceHealthStatusRegistryMap;
 
 }

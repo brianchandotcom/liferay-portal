@@ -25,11 +25,11 @@ import java.net.URISyntaxException;
 import java.util.Dictionary;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Matthew Tambara
@@ -39,13 +39,7 @@ public class ConfigurationResetter {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) throws Exception {
-		ServiceReference<ConfigurationAdmin> serviceReference =
-			bundleContext.getServiceReference(ConfigurationAdmin.class);
-
-		ConfigurationAdmin configurationAdmin = bundleContext.getService(
-			serviceReference);
-
-		Configuration[] configurations = configurationAdmin.listConfigurations(
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			null);
 
 		for (Configuration configuration : configurations) {
@@ -82,5 +76,8 @@ public class ConfigurationResetter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ConfigurationResetter.class);
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
 
 }

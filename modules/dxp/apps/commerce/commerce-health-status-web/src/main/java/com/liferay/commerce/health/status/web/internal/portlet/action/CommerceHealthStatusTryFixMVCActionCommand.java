@@ -15,8 +15,8 @@
 package com.liferay.commerce.health.status.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.health.status.web.internal.util.CommerceHealthStatusRegistry;
 import com.liferay.commerce.health.status.web.util.CommerceHealthStatus;
-import com.liferay.commerce.health.status.web.util.CommerceHealthStatusServiceTracker;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -70,8 +70,7 @@ public class CommerceHealthStatusTryFixMVCActionCommand
 
 		try {
 			CommerceHealthStatus commerceHealthStatus =
-				_commerceHealthStatusServiceTracker.getCommerceHealthStatus(
-					key);
+				_commerceHealthStatusRegistry.getCommerceHealthStatus(key);
 
 			if (commerceHealthStatus != null) {
 				commerceHealthStatus.tryFix(httpServletRequest);
@@ -117,8 +116,7 @@ public class CommerceHealthStatusTryFixMVCActionCommand
 		CommerceHealthStatusTryFixMVCActionCommand.class);
 
 	@Reference
-	private CommerceHealthStatusServiceTracker
-		_commerceHealthStatusServiceTracker;
+	private CommerceHealthStatusRegistry _commerceHealthStatusRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

@@ -16,7 +16,6 @@ package com.liferay.commerce.health.status.web.internal.util;
 
 import com.liferay.commerce.admin.web.util.CommerceAdminModule;
 import com.liferay.commerce.health.status.web.internal.display.context.CommerceHealthStatusDisplayContext;
-import com.liferay.commerce.health.status.web.util.CommerceHealthStatusServiceTracker;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
@@ -108,8 +107,7 @@ public class HealthStatusCommerceAdminModule implements CommerceAdminModule {
 
 		CommerceHealthStatusDisplayContext commerceHealthStatusDisplayContext =
 			new CommerceHealthStatusDisplayContext(
-				_commerceHealthStatusServiceTracker, renderRequest,
-				renderResponse);
+				_commerceHealthStatusRegistry, renderRequest, renderResponse);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -126,8 +124,7 @@ public class HealthStatusCommerceAdminModule implements CommerceAdminModule {
 	}
 
 	@Reference
-	private CommerceHealthStatusServiceTracker
-		_commerceHealthStatusServiceTracker;
+	private CommerceHealthStatusRegistry _commerceHealthStatusRegistry;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.health.status.web.internal.display.context;
 
+import com.liferay.commerce.health.status.web.internal.util.CommerceHealthStatusRegistry;
 import com.liferay.commerce.health.status.web.internal.util.HealthStatusCommerceAdminModule;
 import com.liferay.commerce.health.status.web.util.CommerceHealthStatus;
-import com.liferay.commerce.health.status.web.util.CommerceHealthStatusServiceTracker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 
 import java.util.List;
@@ -31,17 +31,16 @@ import javax.portlet.RenderResponse;
 public class CommerceHealthStatusDisplayContext {
 
 	public CommerceHealthStatusDisplayContext(
-		CommerceHealthStatusServiceTracker commerceHealthStatusServiceTracker,
+		CommerceHealthStatusRegistry commerceHealthStatusRegistry,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		_commerceHealthStatusServiceTracker =
-			commerceHealthStatusServiceTracker;
+		_commerceHealthStatusRegistry = commerceHealthStatusRegistry;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 	}
 
 	public List<CommerceHealthStatus> getCommerceHealthStatuses() {
-		return _commerceHealthStatusServiceTracker.getCommerceHealthStatuses();
+		return _commerceHealthStatusRegistry.getCommerceHealthStatuses();
 	}
 
 	public PortletURL getPortletURL() {
@@ -69,8 +68,7 @@ public class CommerceHealthStatusDisplayContext {
 		return _searchContainer;
 	}
 
-	private final CommerceHealthStatusServiceTracker
-		_commerceHealthStatusServiceTracker;
+	private final CommerceHealthStatusRegistry _commerceHealthStatusRegistry;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private SearchContainer<CommerceHealthStatus> _searchContainer;

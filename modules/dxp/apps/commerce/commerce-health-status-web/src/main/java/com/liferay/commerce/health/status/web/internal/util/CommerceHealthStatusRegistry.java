@@ -16,7 +16,6 @@ package com.liferay.commerce.health.status.web.internal.util;
 
 import com.liferay.commerce.health.status.web.internal.util.comparator.CommerceHealthStatusServiceWrapperDisplayOrderComparator;
 import com.liferay.commerce.health.status.web.util.CommerceHealthStatus;
-import com.liferay.commerce.health.status.web.util.CommerceHealthStatusServiceTracker;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -40,11 +39,9 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(immediate = true)
-public class CommerceHealthStatusServiceTrackerImpl
-	implements CommerceHealthStatusServiceTracker {
+@Component(immediate = true, service = CommerceHealthStatusRegistry.class)
+public class CommerceHealthStatusRegistry {
 
-	@Override
 	public CommerceHealthStatus getCommerceHealthStatus(String key) {
 		if (Validator.isNull(key)) {
 			return null;
@@ -52,7 +49,7 @@ public class CommerceHealthStatusServiceTrackerImpl
 
 		ServiceWrapper<CommerceHealthStatus>
 			commerceHealthStatusServiceWrapper =
-				_commerceHealthStatusServiceTrackerMap.getService(key);
+				_commerceHealthStatusRegistryMap.getService(key);
 
 		if (commerceHealthStatusServiceWrapper == null) {
 			if (_log.isDebugEnabled()) {
@@ -66,13 +63,12 @@ public class CommerceHealthStatusServiceTrackerImpl
 		return commerceHealthStatusServiceWrapper.getService();
 	}
 
-	@Override
 	public List<CommerceHealthStatus> getCommerceHealthStatuses() {
 		List<CommerceHealthStatus> commerceHealthStatuses = new ArrayList<>();
 
 		List<ServiceWrapper<CommerceHealthStatus>>
 			commerceHealthStatusServiceWrappers = ListUtil.fromCollection(
-				_commerceHealthStatusServiceTrackerMap.values());
+				_commerceHealthStatusRegistryMap.values());
 
 		Collections.sort(
 			commerceHealthStatusServiceWrappers,
@@ -89,14 +85,13 @@ public class CommerceHealthStatusServiceTrackerImpl
 		return Collections.unmodifiableList(commerceHealthStatuses);
 	}
 
-	@Override
 	public Set<String> getCommerceHealthStatusKeys() {
-		return _commerceHealthStatusServiceTrackerMap.keySet();
+		return _commerceHealthStatusRegistryMap.keySet();
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_commerceHealthStatusServiceTrackerMap =
+		_commerceHealthStatusRegistryMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, CommerceHealthStatus.class,
 				"commerce.health.status.key",
@@ -106,14 +101,14 @@ public class CommerceHealthStatusServiceTrackerImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_commerceHealthStatusServiceTrackerMap.close();
+		_commerceHealthStatusRegistryMap.close();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceHealthStatusServiceTrackerImpl.class);
+		CommerceHealthStatusRegistry.class);
 
 	private ServiceTrackerMap<String, ServiceWrapper<CommerceHealthStatus>>
-		_commerceHealthStatusServiceTrackerMap;
+		_commerceHealthStatusRegistryMap;
 	private final Comparator<ServiceWrapper<CommerceHealthStatus>>
 		_commerceHealthStatusServiceWrapperDisplayOrderComparator =
 			new CommerceHealthStatusServiceWrapperDisplayOrderComparator();

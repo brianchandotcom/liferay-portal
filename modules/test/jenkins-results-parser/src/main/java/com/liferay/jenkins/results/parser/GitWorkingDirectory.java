@@ -411,12 +411,24 @@ public class GitWorkingDirectory {
 	public void deleteLocalBranch(String localBranchName) {
 		System.out.println("Deleting local branch " + localBranchName);
 
-		DeleteBranchCommand deleteBranchCommand = _git.branchDelete();
+		try {
+			Process process = JenkinsResultsParserUtil.executeBashCommands(
+				true, _workingDirectory, 1000 * 5,
+				"git branch -f -D" + localBranchName);
 
-		deleteBranchCommand.setBranchNames(localBranchName);
-		deleteBranchCommand.setForce(true);
+			if (process.exitValue() != 0) {
+				String errorMessage = JenkinsResultsParserUtil.combine(
+					"Unable to delete branch ", localBranchName, "\n",
+					JenkinsResultsParserUtil.readInputStream(
+						process.getErrorStream()));
 
-		deleteBranchCommand.call();
+				throw new RuntimeException(errorMessage);
+			}
+		}
+		catch (InterruptedException | IOException e) {
+			throw new RuntimeException(
+				"Unable to delete branch " + localBranchName);
+		}
 	}
 
 	public void deleteRemoteBranch(

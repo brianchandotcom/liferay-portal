@@ -17,13 +17,20 @@
 <%@ include file="/facets/init.jsp" %>
 
 <%
+long searchScopeGroupId = searchDisplayContext.getSearchScopeGroupId();
+
 if (Validator.isNull(fieldParam)) {
-	fieldParam = String.valueOf(searchDisplayContext.getSearchScopeGroupId());
+	fieldParam = String.valueOf(searchScopeGroupId);
 }
 
 ScopeSearchFacetDisplayBuilder scopeSearchFacetDisplayBuilder = new ScopeSearchFacetDisplayBuilder();
 
 scopeSearchFacetDisplayBuilder.setFacet(facet);
+
+if (searchScopeGroupId != 0) {
+	scopeSearchFacetDisplayBuilder.setFilteredGroupIds(new long[] {searchScopeGroupId});
+}
+
 scopeSearchFacetDisplayBuilder.setFrequenciesVisible(dataJSONObject.getBoolean("showAssetCount", true));
 scopeSearchFacetDisplayBuilder.setFrequencyThreshold(dataJSONObject.getInt("frequencyThreshold"));
 scopeSearchFacetDisplayBuilder.setGroupLocalService(GroupLocalServiceUtil.getService());

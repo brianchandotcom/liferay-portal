@@ -37,8 +37,9 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 PortletURL productOptionRelsURL = renderResponse.createRenderURL();
 
-productOptionRelsURL.setParameter("mvcRenderCommandName", "viewProductDefinitionOptionRels");
-productOptionRelsURL.setParameter("cpDefinitionId", String.valueOf(cpDefinitionOptionRel.getCPDefinitionId()));
+productOptionRelsURL.setParameter("mvcRenderCommandName", "editProductDefinition");
+productOptionRelsURL.setParameter("cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
+productOptionRelsURL.setParameter("screenNavigationCategoryKey", cpDefinitionOptionValueRelDisplayContext.getScreenNavigationCategoryKey());
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(productOptionRelsURL.toString());

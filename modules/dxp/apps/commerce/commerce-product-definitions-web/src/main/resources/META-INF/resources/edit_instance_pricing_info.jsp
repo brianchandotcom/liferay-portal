@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "edit-product-instance-pricing-info");
-
 CPInstancePricingInfoDisplayContext cpInstancePricingInfoDisplayContext = (CPInstancePricingInfoDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CPDefinition cpDefinition = cpInstancePricingInfoDisplayContext.getCPDefinition();
@@ -29,19 +27,15 @@ long cpInstanceId = cpInstancePricingInfoDisplayContext.getCPInstanceId();
 
 PortletURL productSkusURL = renderResponse.createRenderURL();
 
-productSkusURL.setParameter("mvcRenderCommandName", "viewProductInstances");
+productSkusURL.setParameter("mvcRenderCommandName", "editProductDefinition");
 productSkusURL.setParameter("cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
+productSkusURL.setParameter("screenNavigationCategoryKey", cpInstancePricingInfoDisplayContext.getScreenNavigationCategoryKey());
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(productSkusURL.toString());
 
 renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpInstance.getSku());
-
-request.setAttribute("view.jsp-cpInstance", cpInstance);
-request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 %>
-
-<liferay-util:include page="/instance_navbar.jsp" servletContext="<%= application %>" />
 
 <portlet:actionURL name="editProductInstance" var="editProductInstancePricingInfoActionURL" />
 

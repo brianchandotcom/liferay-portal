@@ -27,23 +27,19 @@ SearchContainer<CPDefinitionOptionRel> cpDefinitionOptionRelSearchContainer = cp
 
 PortletURL portletURL = cpDefinitionOptionRelDisplayContext.getPortletURL();
 
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-product-definition-options");
-
-portletURL.setParameter("toolbarItem", toolbarItem);
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(catalogURL);
 
 renderResponse.setTitle(cpDefinition.getTitle(languageId));
-
-request.setAttribute("view.jsp-cpDefinition", cpDefinition);
-request.setAttribute("view.jsp-cpType", cpDefinitionOptionRelDisplayContext.getCPType());
-request.setAttribute("view.jsp-portletURL", portletURL);
-request.setAttribute("view.jsp-showSearch", true);
-request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 %>
 
-<liferay-util:include page="/definition_navbar.jsp" servletContext="<%= application %>" />
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+		<aui:nav-bar-search>
+			<liferay-ui:input-search markupView="lexicon" />
+		</aui:nav-bar-search>
+	</aui:form>
+</aui:nav-bar>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"

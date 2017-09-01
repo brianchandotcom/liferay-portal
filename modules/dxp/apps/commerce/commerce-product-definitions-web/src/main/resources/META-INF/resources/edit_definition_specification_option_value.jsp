@@ -27,8 +27,9 @@ portletURL.setParameter("mvcRenderCommandName", "editProductDefinitionSpecificat
 
 PortletURL productSpecificationOptionValueURL = renderResponse.createRenderURL();
 
-productSpecificationOptionValueURL.setParameter("mvcRenderCommandName", "viewProductDefinitionSpecificationOptionValues");
+productSpecificationOptionValueURL.setParameter("mvcRenderCommandName", "editProductDefinition");
 productSpecificationOptionValueURL.setParameter("cpDefinitionId", String.valueOf(cpDefinitionSpecificationOptionValue.getCPDefinitionId()));
+productSpecificationOptionValueURL.setParameter("screenNavigationCategoryKey", cpDefinitionSpecificationOptionValueDisplayContext.getScreenNavigationCategoryKey());
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(productSpecificationOptionValueURL.toString());

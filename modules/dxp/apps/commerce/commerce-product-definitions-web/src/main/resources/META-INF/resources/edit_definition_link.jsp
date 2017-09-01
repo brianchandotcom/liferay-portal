@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String toolbarItem = ParamUtil.getString(request, "toolbarItem");
-
 CPDefinitionLinkDisplayContext cpDefinitionLinkDisplayContext = (CPDefinitionLinkDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CPDefinition cpDefinition = cpDefinitionLinkDisplayContext.getCPDefinition();
@@ -35,9 +33,9 @@ portletURL.setParameter("mvcRenderCommandName", "editCPDefinitionLink");
 
 PortletURL relatedProductsURL = renderResponse.createRenderURL();
 
-relatedProductsURL.setParameter("mvcRenderCommandName", "viewCPDefinitionLinks");
+relatedProductsURL.setParameter("mvcRenderCommandName", "editProductDefinition");
 relatedProductsURL.setParameter("cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
-relatedProductsURL.setParameter("toolbarItem", toolbarItem);
+relatedProductsURL.setParameter("screenNavigationCategoryKey", cpDefinitionLinkDisplayContext.getScreenNavigationCategoryKey());
 relatedProductsURL.setParameter("type", String.valueOf(cpDefinitionLink.getType()));
 
 portletDisplay.setShowBackIcon(true);
@@ -53,6 +51,7 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpDefinition
 	<aui:input name="redirect" type="hidden" value="<%= relatedProductsURL %>" />
 	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinition.getCPDefinitionId() %>" />
 	<aui:input name="cpDefinitionLinkId" type="hidden" value="<%= cpDefinitionLinkId %>" />
+	<aui:input name="type" type="hidden" value="<%= cpDefinitionLink.getType() %>" />
 
 	<aui:model-context bean="<%= cpDefinitionLink %>" model="<%= CPDefinitionLink.class %>" />
 

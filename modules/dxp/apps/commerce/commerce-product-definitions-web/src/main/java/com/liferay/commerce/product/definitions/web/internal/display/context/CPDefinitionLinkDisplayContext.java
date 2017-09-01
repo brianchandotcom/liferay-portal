@@ -16,6 +16,7 @@ package com.liferay.commerce.product.definitions.web.internal.display.context;
 
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsSearchContainerDisplayContext;
+import com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.definitions.web.internal.util.CPDefinitionsPortletUtil;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.item.selector.criterion.CPDefinitionItemSelectorCriterion;
@@ -35,13 +36,11 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import javax.portlet.PortletURL;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import javax.portlet.PortletURL;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Alessio Antonio Rendina
@@ -128,10 +127,38 @@ public class CPDefinitionLinkDisplayContext
 		PortletURL portletURL = super.getPortletURL();
 
 		portletURL.setParameter(
-			"mvcRenderCommandName", "viewCPDefinitionLinks");
+			"mvcRenderCommandName", "editProductDefinition");
+		portletURL.setParameter(
+			"screenNavigationCategoryKey", getScreenNavigationCategoryKey());
 		portletURL.setParameter("type", String.valueOf(getType()));
 
 		return portletURL;
+	}
+
+	@Override
+	public String getScreenNavigationCategoryKey() throws PortalException {
+		String screenNavigationCategoryKey =
+			super.getScreenNavigationCategoryKey();
+
+		int type = getType();
+
+		if (type == CPConstants.DEFINITION_LINK_TYPE_RELATED) {
+			screenNavigationCategoryKey =
+				CPDefinitionScreenNavigationConstants.
+					CATEGORY_KEY_RELATED_PRODUCTS;
+		}
+		else if (type == CPConstants.DEFINITION_LINK_TYPE_UP_SELL) {
+			screenNavigationCategoryKey =
+				CPDefinitionScreenNavigationConstants.
+					CATEGORY_KEY_UP_SELL_PRODUCTS;
+		}
+		else if (type == CPConstants.DEFINITION_LINK_TYPE_CROSS_SELL) {
+			screenNavigationCategoryKey =
+				CPDefinitionScreenNavigationConstants.
+					CATEGORY_KEY_CROSS_SELL_PRODUCTS;
+		}
+
+		return screenNavigationCategoryKey;
 	}
 
 	@Override
@@ -172,9 +199,18 @@ public class CPDefinitionLinkDisplayContext
 	}
 
 	public int getType() {
-		return ParamUtil.getInteger(
-			httpServletRequest, "type",
-			CPConstants.DEFINITION_LINK_TYPE_RELATED);
+		int type;
+
+		try {
+			type = (int)httpServletRequest.getAttribute("type");
+		}
+		catch (Exception e) {
+			type = ParamUtil.getInteger(
+				httpServletRequest, "type",
+				CPConstants.DEFINITION_LINK_TYPE_RELATED);
+		}
+
+		return type;
 	}
 
 	protected long[] getCheckedCPDefinitionIds(long cpDefinitionId, int type)

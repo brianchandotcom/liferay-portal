@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.definitions.web.internal.display.context;
 
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsSearchContainerDisplayContext;
+import com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.definitions.web.internal.util.CPDefinitionsPortletUtil;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
@@ -114,6 +115,11 @@ public class CPDefinitionOptionValueRelDisplayContext extends
 			String.valueOf(getCPDefinitionOptionRelId()));
 
 		return portletURL;
+	}
+
+	@Override
+	public String getScreenNavigationCategoryKey() throws PortalException {
+		return CPDefinitionScreenNavigationConstants.CATEGORY_KEY_OPTIONS;
 	}
 
 	@Override

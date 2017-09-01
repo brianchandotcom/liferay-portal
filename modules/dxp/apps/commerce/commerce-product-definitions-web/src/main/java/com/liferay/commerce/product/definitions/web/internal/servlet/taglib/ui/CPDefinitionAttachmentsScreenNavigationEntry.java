@@ -12,32 +12,40 @@
  * details.
  */
 
-package com.liferay.commerce.product.definitions.web.internal.portlet.action;
+package com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui;
 
-import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.definitions.web.configuration.AttachmentsConfiguration;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPAttachmentFileEntriesDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
+import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.io.IOException;
+
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -45,28 +53,64 @@ import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	configurationPid = "com.liferay.commerce.product.definitions.web.configuration.AttachmentsConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	configurationPolicy = ConfigurationPolicy.OPTIONAL,
 	property = {
-		"javax.portlet.name=" + CPPortletKeys.CP_DEFINITIONS,
-		"mvc.command.name=viewAttachmentFileEntries"
+		"screen.navigation.category.order:Integer=100",
+		"screen.navigation.entry.order:Integer=100"
 	},
-	service = MVCRenderCommand.class
+	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
-public class ViewCPAttachmentFileEntriesMVCRenderCommand
-	implements MVCRenderCommand {
+public class CPDefinitionAttachmentsScreenNavigationEntry
+	implements ScreenNavigationCategory, ScreenNavigationEntry<CPDefinition> {
 
 	@Override
-	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortletException {
+	public String getCategoryKey() {
+		return CPDefinitionScreenNavigationConstants.CATEGORY_KEY_ATTACHMENTS;
+	}
+
+	@Override
+	public String getEntryKey() {
+		return CPDefinitionScreenNavigationConstants.CATEGORY_KEY_ATTACHMENTS;
+	}
+
+	@Override
+	public String getLabel(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
+		return LanguageUtil.get(
+			resourceBundle,
+			CPDefinitionScreenNavigationConstants.CATEGORY_KEY_ATTACHMENTS);
+	}
+
+	@Override
+	public String getScreenNavigationKey() {
+		return CPDefinitionScreenNavigationConstants.
+			SCREEN_NAVIGATION_KEY_CP_DEFINITION_GENERAL;
+	}
+
+	@Override
+	public boolean isVisible(User user, CPDefinition cpDefinition) {
+		if (cpDefinition == null) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
+	public void render(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws IOException {
 
 		try {
-			HttpServletRequest httpServletRequest =
-				_portal.getHttpServletRequest(renderRequest);
+			httpServletRequest.setAttribute(
+				"type", CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_OTHER);
 
 			CPAttachmentFileEntriesDisplayContext
 				cpAttachmentFileEntriesDisplayContext =
@@ -78,15 +122,17 @@ public class ViewCPAttachmentFileEntriesMVCRenderCommand
 						_itemSelector, _portal,
 						_workflowDefinitionLinkLocalService);
 
-			renderRequest.setAttribute(
+			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				cpAttachmentFileEntriesDisplayContext);
 		}
-		catch (PortalException pe) {
-			SessionErrors.add(renderRequest, pe.getClass());
+		catch (Exception e) {
+			_log.error(e, e);
 		}
 
-		return "/attachment_file_entries.jsp";
+		_jspRenderer.renderJSP(
+			_setServletContext, httpServletRequest, httpServletResponse,
+			"/attachment_file_entries.jsp");
 	}
 
 	@Activate
@@ -94,6 +140,9 @@ public class ViewCPAttachmentFileEntriesMVCRenderCommand
 		_attachmentsConfiguration = ConfigurableUtil.createConfigurable(
 			AttachmentsConfiguration.class, properties);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CPDefinitionAttachmentsScreenNavigationEntry.class);
 
 	@Reference
 	private ActionHelper _actionHelper;
@@ -116,7 +165,15 @@ public class ViewCPAttachmentFileEntriesMVCRenderCommand
 	private ItemSelector _itemSelector;
 
 	@Reference
+	private JSPRenderer _jspRenderer;
+
+	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.product.definitions.web)"
+	)
+	private ServletContext _setServletContext;
 
 	@Reference
 	private WorkflowDefinitionLinkLocalService

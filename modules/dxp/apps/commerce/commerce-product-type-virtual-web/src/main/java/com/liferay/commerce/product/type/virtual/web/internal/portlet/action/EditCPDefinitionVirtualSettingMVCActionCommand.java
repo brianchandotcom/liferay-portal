@@ -15,7 +15,6 @@
 package com.liferay.commerce.product.type.virtual.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingException;
 import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingFileEntryIdException;
 import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingSampleException;
@@ -28,28 +27,22 @@ import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSe
 import com.liferay.commerce.product.type.virtual.exception.NoSuchCPDefinitionVirtualSettingException;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingService;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -75,15 +68,10 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		String redirect = getSaveAndContinueRedirect(
-			actionRequest, actionResponse);
-
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				updateCPDefinitionVirtualSetting(actionRequest);
 			}
-
-			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 		catch (Exception e) {
 			if (e instanceof CPDefinitionVirtualSettingException ||
@@ -106,51 +94,15 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				actionResponse.setRenderParameter(
-					"mvcRenderCommandName",
-					"editProductDefinitionVirtualSetting");
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
 
-				SessionErrors.add(actionRequest, e.getClass());
+				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
 				throw e;
 			}
 		}
-	}
-
-	protected String getSaveAndContinueRedirect(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			actionRequest, themeDisplay.getScopeGroup(),
-			CPDefinition.class.getName(), PortletProvider.Action.EDIT);
-
-		long cpDefinitionId = ParamUtil.getLong(
-			actionRequest, "cpDefinitionId");
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "editProductDefinitionVirtualSetting");
-		portletURL.setParameter(
-			"cpDefinitionId", String.valueOf(cpDefinitionId));
-		portletURL.setWindowState(actionRequest.getWindowState());
-
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		if (Validator.isNotNull(redirect)) {
-			portletURL.setParameter("redirect", redirect);
-		}
-
-		String backURL = ParamUtil.getString(actionRequest, "backURL");
-
-		if (Validator.isNotNull(backURL)) {
-			portletURL.setParameter("backURL", backURL);
-		}
-
-		return portletURL.toString();
 	}
 
 	protected CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(

@@ -17,13 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String toolbarItem = ParamUtil.getString(request, "toolbarItem");
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("toolbarItem", toolbarItem);
-portletURL.setParameter("mvcRenderCommandName", "editCPAttachmentFileEntry");
-
 CPAttachmentFileEntriesDisplayContext cpAttachmentFileEntriesDisplayContext = (CPAttachmentFileEntriesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CPDefinition cpDefinition = cpAttachmentFileEntriesDisplayContext.getCPDefinition();
@@ -37,16 +30,18 @@ long cpAttachmentFileEntryId = cpAttachmentFileEntriesDisplayContext.getCPAttach
 int type = CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE;
 String addMenuTitle = LanguageUtil.get(request, "add-image");
 
-if (toolbarItem.equals("view-product-definition-attachments")) {
+String screenNavigationCategoryKey = cpAttachmentFileEntriesDisplayContext.getScreenNavigationCategoryKey();
+
+if (screenNavigationCategoryKey.equals("attachments")) {
 	type = CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_OTHER;
 	addMenuTitle = LanguageUtil.get(request, "add-attachment");
 }
 
 PortletURL productAttachmentsURL = renderResponse.createRenderURL();
 
-productAttachmentsURL.setParameter("mvcRenderCommandName", "viewAttachmentFileEntries");
+productAttachmentsURL.setParameter("mvcRenderCommandName", "editProductDefinition");
 productAttachmentsURL.setParameter("cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
-productAttachmentsURL.setParameter("toolbarItem", toolbarItem);
+productAttachmentsURL.setParameter("screenNavigationCategoryKey", screenNavigationCategoryKey);
 productAttachmentsURL.setParameter("type", String.valueOf(type));
 
 portletDisplay.setShowBackIcon(true);
@@ -63,7 +58,7 @@ renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, addMe
 		<aui:input name="redirect" type="hidden" value="<%= productAttachmentsURL %>" />
 		<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinitionId %>" />
 		<aui:input name="cpAttachmentFileEntryId" type="hidden" value="<%= cpAttachmentFileEntryId %>" />
-		<aui:input name="toolbarItem" type="hidden" value="<%= toolbarItem %>" />
+		<aui:input name="screenNavigationCategoryKey" type="hidden" value="<%= screenNavigationCategoryKey %>" />
 		<aui:input name="type" type="hidden" value="<%= type %>" />
 		<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 

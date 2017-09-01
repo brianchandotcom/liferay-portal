@@ -23,24 +23,11 @@ CPDefinition cpDefinition = cpDefinitionPricingInfoDisplayContext.getCPDefinitio
 
 long cpDefinitionId = cpDefinitionPricingInfoDisplayContext.getCPDefinitionId();
 
-PortletURL portletURL = cpDefinitionPricingInfoDisplayContext.getPortletURL();
-
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "edit-product-definition-pricing-info");
-
-portletURL.setParameter("toolbarItem", toolbarItem);
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(catalogURL);
 
 renderResponse.setTitle(cpDefinition.getTitle(languageId));
-
-request.setAttribute("view.jsp-cpDefinition", cpDefinition);
-request.setAttribute("view.jsp-cpType", cpDefinitionPricingInfoDisplayContext.getCPType());
-request.setAttribute("view.jsp-portletURL", portletURL);
-request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 %>
-
-<liferay-util:include page="/definition_navbar.jsp" servletContext="<%= application %>" />
 
 <portlet:actionURL name="editProductDefinition" var="editProductDefinitionPricingInfoActionURL" />
 

@@ -23,17 +23,17 @@ CPDefinition cpDefinition = cpAttachmentFileEntriesDisplayContext.getCPDefinitio
 
 long cpDefinitionId = cpAttachmentFileEntriesDisplayContext.getCPDefinitionId();
 
+int type = cpAttachmentFileEntriesDisplayContext.getType();
+
 List<CPDefinitionOptionRel> cpDefinitionOptionRels = cpAttachmentFileEntriesDisplayContext.getCPDefinitionOptionRels();
 
 String displayStyle = cpAttachmentFileEntriesDisplayContext.getDisplayStyle();
 
 SearchContainer<CPAttachmentFileEntry> cpAttachmentFileEntrySearchContainer = cpAttachmentFileEntriesDisplayContext.getSearchContainer();
 
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-product-definition-images");
-
 String addMenuTitle = LanguageUtil.get(request, "add-image");
 
-if (toolbarItem.equals("view-product-definition-attachments")) {
+if (type == CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_OTHER) {
 	addMenuTitle = LanguageUtil.get(request, "add-attachment");
 }
 
@@ -43,15 +43,7 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(catalogURL);
 
 renderResponse.setTitle(cpDefinition.getTitle(languageId));
-
-request.setAttribute("view.jsp-cpDefinition", cpDefinition);
-request.setAttribute("view.jsp-cpType", cpAttachmentFileEntriesDisplayContext.getCPType());
-request.setAttribute("view.jsp-portletURL", portletURL);
-request.setAttribute("view.jsp-showSearch", false);
-request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 %>
-
-<liferay-util:include page="/definition_navbar.jsp" servletContext="<%= application %>" />
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"
@@ -154,7 +146,6 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 							rowURL.setParameter("mvcRenderCommandName", "editCPAttachmentFileEntry");
 							rowURL.setParameter("cpDefinitionId", String.valueOf(cpDefinitionId));
 							rowURL.setParameter("cpAttachmentFileEntryId", String.valueOf(cpAttachmentFileEntry.getCPAttachmentFileEntryId()));
-							rowURL.setParameter("toolbarItem", toolbarItem);
 
 							FileEntry fileEntry = cpAttachmentFileEntry.getFileEntry();
 
@@ -221,7 +212,7 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 <liferay-portlet:renderURL var="addAttachmentFileEntryURL">
 	<portlet:param name="mvcRenderCommandName" value="editCPAttachmentFileEntry" />
 	<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionId) %>" />
-	<portlet:param name="toolbarItem" value="<%= toolbarItem %>" />
+	<portlet:param name="type" value="<%= String.valueOf(type) %>" />
 </liferay-portlet:renderURL>
 
 <liferay-frontend:add-menu>

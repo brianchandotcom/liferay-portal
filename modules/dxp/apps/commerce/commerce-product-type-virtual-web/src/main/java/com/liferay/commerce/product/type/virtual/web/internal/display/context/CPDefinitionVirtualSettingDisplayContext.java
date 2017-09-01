@@ -16,6 +16,7 @@ package com.liferay.commerce.product.type.virtual.web.internal.display.context;
 
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
+import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
 import com.liferay.commerce.product.type.virtual.web.internal.portlet.action.CPDefinitionVirtualSettingActionHelper;
 import com.liferay.document.library.kernel.service.DLAppService;
@@ -183,16 +184,6 @@ public class CPDefinitionVirtualSettingDisplayContext
 		return null;
 	}
 
-	@Override
-	public PortletURL getPortletURL() throws PortalException {
-		PortletURL portletURL = super.getPortletURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "editProductDefinitionVirtualSetting");
-
-		return portletURL;
-	}
-
 	public FileEntry getSampleFileEntry() throws PortalException {
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
 			getCPDefinitionVirtualSetting();
@@ -207,6 +198,17 @@ public class CPDefinitionVirtualSettingDisplayContext
 		}
 
 		return null;
+	}
+
+	@Override
+	public String getScreenNavigationCategoryKey() throws PortalException {
+		CPType cpType = getCPType();
+
+		if (cpType != null) {
+			return cpType.getName();
+		}
+
+		return super.getScreenNavigationCategoryKey();
 	}
 
 	public String getTermsOfUseJournalArticleBrowserURL() throws Exception {

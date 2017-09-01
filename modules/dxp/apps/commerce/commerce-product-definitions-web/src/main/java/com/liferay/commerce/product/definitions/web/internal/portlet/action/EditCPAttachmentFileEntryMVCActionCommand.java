@@ -123,6 +123,9 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
+			else {
+				throw e;
+			}
 		}
 	}
 

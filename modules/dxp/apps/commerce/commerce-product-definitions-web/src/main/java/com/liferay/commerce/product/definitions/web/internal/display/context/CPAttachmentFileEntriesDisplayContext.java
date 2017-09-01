@@ -17,6 +17,7 @@ package com.liferay.commerce.product.definitions.web.internal.display.context;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.definitions.web.configuration.AttachmentsConfiguration;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsSearchContainerDisplayContext;
+import com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.definitions.web.internal.util.CPDefinitionsPortletUtil;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
@@ -94,9 +95,7 @@ public class CPAttachmentFileEntriesDisplayContext extends
 		_workflowDefinitionLinkLocalService =
 			workflowDefinitionLinkLocalService;
 
-		_type = ParamUtil.get(
-			httpServletRequest, "type",
-			CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE);
+		_type = getType();
 	}
 
 	public String getAttachmentItemSelectorUrl() {
@@ -242,18 +241,30 @@ public class CPAttachmentFileEntriesDisplayContext extends
 	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = super.getPortletURL();
 
-		String toolbarItem = ParamUtil.getString(
-			httpServletRequest, "toolbarItem");
-		int type = ParamUtil.getInteger(httpServletRequest, "type");
-
 		portletURL.setParameter(
-			"mvcRenderCommandName", "viewAttachmentFileEntries");
+			"mvcRenderCommandName", "editProductDefinition");
 		portletURL.setParameter(
-			"cpDefinitionId", String.valueOf(getCPDefinitionId()));
-		portletURL.setParameter("toolbarItem", toolbarItem);
-		portletURL.setParameter("type", String.valueOf(type));
+			"screenNavigationCategoryKey", getScreenNavigationCategoryKey());
+		portletURL.setParameter("type", String.valueOf(_type));
 
 		return portletURL;
+	}
+
+	@Override
+	public String getScreenNavigationCategoryKey() throws PortalException {
+		String screenNavigationCategoryKey =
+			super.getScreenNavigationCategoryKey();
+
+		if (_type == CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE) {
+			screenNavigationCategoryKey =
+				CPDefinitionScreenNavigationConstants.CATEGORY_KEY_IMAGES;
+		}
+		else if (_type == CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_OTHER) {
+			screenNavigationCategoryKey =
+				CPDefinitionScreenNavigationConstants.CATEGORY_KEY_ATTACHMENTS;
+		}
+
+		return screenNavigationCategoryKey;
 	}
 
 	@Override
@@ -297,6 +308,21 @@ public class CPAttachmentFileEntriesDisplayContext extends
 		}
 
 		return searchContainer;
+	}
+
+	public int getType() {
+		int type;
+
+		try {
+			type = (int)httpServletRequest.getAttribute("type");
+		}
+		catch (Exception e) {
+			type = ParamUtil.getInteger(
+				httpServletRequest, "type",
+				CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE);
+		}
+
+		return type;
 	}
 
 	public boolean hasOptions() throws PortalException {

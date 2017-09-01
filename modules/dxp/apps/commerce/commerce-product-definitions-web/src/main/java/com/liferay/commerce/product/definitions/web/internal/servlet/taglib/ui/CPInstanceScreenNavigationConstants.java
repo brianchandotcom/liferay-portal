@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,18 +11,23 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui;
 
-<%
-PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
-%>
+/**
+ * @author Alessio Antonio Rendina
+ */
+public class CPInstanceScreenNavigationConstants {
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-		<aui:nav-bar-search>
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:nav-bar-search>
-	</aui:form>
-</aui:nav-bar>
+	public static final String CATEGORY_KEY_DETAILS = "details";
+
+	public static final String CATEGORY_KEY_PRICING_ADJUSTMENT =
+		"pricing-adjustment";
+
+	public static final String CATEGORY_KEY_SHIPPING_ADJUSTMENT =
+		"shipping-adjustment";
+
+	public static final String SCREEN_NAVIGATION_KEY_CP_INSTANCE_GENERAL =
+		"cp.instance.general";
+
+}

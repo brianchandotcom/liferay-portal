@@ -17,10 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", GroupedCPTypeConstants.NAME);
-
-ServletContext cpDefinitionServletContext = (ServletContext)request.getAttribute("cpDefinitionServletContext");
-
 CPDefinitionGroupedEntriesDisplayContext cpDefinitionGroupedEntriesDisplayContext = (CPDefinitionGroupedEntriesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CPDefinition cpDefinition = cpDefinitionGroupedEntriesDisplayContext.getCPDefinition();
@@ -32,17 +28,9 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(catalogURL);
 
 renderResponse.setTitle(cpDefinition.getTitle(themeDisplay.getLanguageId()));
-
-request.setAttribute("view.jsp-cpDefinition", cpDefinition);
-request.setAttribute("view.jsp-cpType", cpDefinitionGroupedEntriesDisplayContext.getCPType());
-request.setAttribute("view.jsp-portletURL", portletURL);
-request.setAttribute("view.jsp-showSearch", false);
-request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 %>
 
 <liferay-ui:error exception="<%= NoSuchCPDefinitionException.class %>" message="please-select-a-valid-product" />
-
-<liferay-util:include page="/definition_navbar.jsp" servletContext="<%= cpDefinitionServletContext %>" />
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"

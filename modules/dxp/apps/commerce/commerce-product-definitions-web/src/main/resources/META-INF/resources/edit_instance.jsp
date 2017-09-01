@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "edit-product-instance-details");
-
 CPInstanceDisplayContext cpInstanceDisplayContext = (CPInstanceDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CPDefinition cpDefinition = cpInstanceDisplayContext.getCPDefinition();
@@ -29,25 +27,21 @@ long cpInstanceId = cpInstanceDisplayContext.getCPInstanceId();
 
 PortletURL productSkusURL = renderResponse.createRenderURL();
 
-productSkusURL.setParameter("mvcRenderCommandName", "viewProductInstances");
+productSkusURL.setParameter("mvcRenderCommandName", "editProductDefinition");
 productSkusURL.setParameter("cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
+productSkusURL.setParameter("screenNavigationCategoryKey", cpInstanceDisplayContext.getScreenNavigationCategoryKey());
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(productSkusURL.toString());
 
 renderResponse.setTitle((cpInstance == null) ? LanguageUtil.get(request, "add-sku") : cpDefinition.getTitle(languageId) + " - " + cpInstance.getSku());
-
-request.setAttribute("view.jsp-cpInstance", cpInstance);
-request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 %>
-
-<liferay-util:include page="/instance_navbar.jsp" servletContext="<%= application %>" />
 
 <portlet:actionURL name="editProductInstance" var="editProductInstanceActionURL" />
 
 <aui:form action="<%= editProductInstanceActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveInstance();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpInstance == null) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= productSkusURL %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinition.getCPDefinitionId() %>" />
 	<aui:input name="cpInstanceId" type="hidden" value="<%= String.valueOf(cpInstanceId) %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />

@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.definitions.web.internal.display.context;
 
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsSearchContainerDisplayContext;
+import com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.definitions.web.internal.util.CPDefinitionsPortletUtil;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -151,9 +152,17 @@ public class CPInstanceDisplayContext
 	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = super.getPortletURL();
 
-		portletURL.setParameter("mvcRenderCommandName", "viewProductInstances");
+		portletURL.setParameter(
+			"mvcRenderCommandName", "editProductDefinition");
+		portletURL.setParameter(
+			"screenNavigationCategoryKey", getScreenNavigationCategoryKey());
 
 		return portletURL;
+	}
+
+	@Override
+	public String getScreenNavigationCategoryKey() throws PortalException {
+		return CPDefinitionScreenNavigationConstants.CATEGORY_KEY_SKUS;
 	}
 
 	@Override

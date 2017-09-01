@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.definitions.web.internal.display.context;
 
+import com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
@@ -81,6 +82,11 @@ public class CPInstanceShippingInfoDisplayContext
 		}
 
 		return StringPool.BLANK;
+	}
+
+	@Override
+	public String getScreenNavigationCategoryKey() throws PortalException {
+		return CPDefinitionScreenNavigationConstants.CATEGORY_KEY_SKUS;
 	}
 
 	private CPInstance _cpInstance;

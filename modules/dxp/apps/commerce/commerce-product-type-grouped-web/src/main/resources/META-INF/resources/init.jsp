@@ -30,7 +30,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.commerce.product.exception.NoSuchCPDefinitionException" %><%@
 page import="com.liferay.commerce.product.model.CPAttachmentFileEntry" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
-page import="com.liferay.commerce.product.type.grouped.constants.GroupedCPTypeConstants" %><%@
 page import="com.liferay.commerce.product.type.grouped.exception.CPDefinitionGroupedEntryQuantityException" %><%@
 page import="com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry" %><%@
 page import="com.liferay.commerce.product.type.grouped.web.internal.GroupedCPType" %><%@

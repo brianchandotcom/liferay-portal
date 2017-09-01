@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String toolbarItem = ParamUtil.getString(request, "toolbarItem");
-
 CPAttachmentFileEntriesDisplayContext cpAttachmentFileEntriesDisplayContext = (CPAttachmentFileEntriesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CPAttachmentFileEntry cpAttachmentFileEntry = cpAttachmentFileEntriesDisplayContext.getCPAttachmentFileEntry();
@@ -26,6 +24,8 @@ CPAttachmentFileEntry cpAttachmentFileEntry = cpAttachmentFileEntriesDisplayCont
 long cpDefinitionId = cpAttachmentFileEntriesDisplayContext.getCPDefinitionId();
 
 long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEntryId");
+
+int type = cpAttachmentFileEntriesDisplayContext.getType();
 %>
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />
@@ -39,7 +39,7 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 </portlet:actionURL>
 
 <c:choose>
-	<c:when test='<%= toolbarItem.equals("view-product-definition-images") %>'>
+	<c:when test="<%= type == CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE %>">
 		<div class="lfr-attachment-cover-image-selector">
 			<liferay-item-selector:image-selector
 				draggableImage="vertical"
@@ -53,7 +53,7 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 			/>
 		</div>
 	</c:when>
-	<c:when test='<%= toolbarItem.equals("view-product-definition-attachments") %>'>
+	<c:when test="<%= type == CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_OTHER %>">
 		<aui:input name="fileEntryId" type="hidden" />
 
 		<div id="<portlet:namespace />fileEntryContainer">

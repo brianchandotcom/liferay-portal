@@ -38,23 +38,11 @@ else if (type == CPConstants.DEFINITION_LINK_TYPE_CROSS_SELL) {
 
 PortletURL portletURL = cpDefinitionLinkDisplayContext.getPortletURL();
 
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-product-definition-related-products");
-
-portletURL.setParameter("toolbarItem", toolbarItem);
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(catalogURL);
 
 renderResponse.setTitle(cpDefinition.getTitle(languageId));
-
-request.setAttribute("view.jsp-cpDefinition", cpDefinition);
-request.setAttribute("view.jsp-cpType", cpDefinitionLinkDisplayContext.getCPType());
-request.setAttribute("view.jsp-portletURL", portletURL);
-request.setAttribute("view.jsp-showSearch", false);
-request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 %>
-
-<liferay-util:include page="/definition_navbar.jsp" servletContext="<%= application %>" />
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"
@@ -123,7 +111,7 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 				<aui:input name="<%= Constants.CMD %>" type="hidden" />
 				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 				<aui:input name="deleteCPDefinitionLinkIds" type="hidden" />
-				<aui:input name="toolbarItem" type="hidden" value="<%= toolbarItem %>" />
+				<aui:input name="screenNavigationCategoryKey" type="hidden" value="<%= cpDefinitionLinkDisplayContext.getScreenNavigationCategoryKey() %>" />
 				<aui:input name="type" type="hidden" value="<%= type %>" />
 
 				<div class="product-definition-links-container" id="<portlet:namespace />entriesContainer">
@@ -144,7 +132,7 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 
 							rowURL.setParameter("mvcRenderCommandName", "editCPDefinitionLink");
 							rowURL.setParameter("cpDefinitionLinkId", String.valueOf(cpDefinitionLink.getCPDefinitionLinkId()));
-							rowURL.setParameter("toolbarItem", toolbarItem);
+							rowURL.setParameter("type", String.valueOf(cpDefinitionLink.getType()));
 
 							CPDefinition cpDefinition2 = cpDefinitionLink.getCPDefinition2();
 							%>
@@ -185,9 +173,10 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 
 <aui:form action="<%= addCPDefinitionLinkURL %>" cssClass="hide" name="addCPDefinitionLinkFm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinitionId %>" />
 	<aui:input name="cpDefinitionIds" type="hidden" value="" />
-	<aui:input name="toolbarItem" type="hidden" value="<%= toolbarItem %>" />
+	<aui:input name="screenNavigationCategoryKey" type="hidden" value="<%= cpDefinitionLinkDisplayContext.getScreenNavigationCategoryKey() %>" />
 	<aui:input name="type" type="hidden" value="<%= type %>" />
 </aui:form>
 

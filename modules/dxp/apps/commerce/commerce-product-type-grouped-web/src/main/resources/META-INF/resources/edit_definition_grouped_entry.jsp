@@ -26,8 +26,9 @@ CPDefinition entryCPDefinition = cpDefinitionGroupedEntry.getEntryCPDefinition()
 
 PortletURL groupedProductsURL = renderResponse.createRenderURL();
 
-groupedProductsURL.setParameter("mvcRenderCommandName", "viewCPDefinitionGroupedEntries");
+groupedProductsURL.setParameter("mvcRenderCommandName", "editProductDefinition");
 groupedProductsURL.setParameter("cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
+groupedProductsURL.setParameter("screenNavigationCategoryKey", cpDefinitionGroupedEntriesDisplayContext.getScreenNavigationCategoryKey());
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(groupedProductsURL.toString());

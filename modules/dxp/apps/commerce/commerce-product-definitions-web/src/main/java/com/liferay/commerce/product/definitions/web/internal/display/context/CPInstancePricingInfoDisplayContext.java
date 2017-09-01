@@ -16,6 +16,7 @@ package com.liferay.commerce.product.definitions.web.internal.display.context;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionService;
@@ -81,6 +82,11 @@ public class CPInstancePricingInfoDisplayContext
 		}
 
 		return cpInstance.getCPInstanceId();
+	}
+
+	@Override
+	public String getScreenNavigationCategoryKey() throws PortalException {
+		return CPDefinitionScreenNavigationConstants.CATEGORY_KEY_SKUS;
 	}
 
 	private final CommerceCurrencyService _commerceCurrencyService;

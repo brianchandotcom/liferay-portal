@@ -17,6 +17,7 @@ package com.liferay.commerce.product.type.grouped.web.internal.display.context;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsSearchContainerDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.item.selector.criterion.CPDefinitionItemSelectorCriterion;
+import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry;
 import com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryService;
 import com.liferay.commerce.product.type.grouped.web.internal.util.GroupedCPTypeUtil;
@@ -131,9 +132,22 @@ public class CPDefinitionGroupedEntriesDisplayContext
 		PortletURL portletURL = super.getPortletURL();
 
 		portletURL.setParameter(
-			"mvcRenderCommandName", "viewCPDefinitionGroupedEntries");
+			"mvcRenderCommandName", "editProductDefinition");
+		portletURL.setParameter(
+			"screenNavigationCategoryKey", getScreenNavigationCategoryKey());
 
 		return portletURL;
+	}
+
+	@Override
+	public String getScreenNavigationCategoryKey() throws PortalException {
+		CPType cpType = getCPType();
+
+		if (cpType != null) {
+			return cpType.getName();
+		}
+
+		return super.getScreenNavigationCategoryKey();
 	}
 
 	@Override

@@ -30,6 +30,8 @@ if (cpDefinitionSpecificationOptionValues == null) {
 		<%
 		CPDefinitionSpecificationOptionValue cpDefinitionSpecificationOptionValue = cpDefinitionSpecificationOptionValues.get(0);
 
+		CPSpecificationOption cpSpecificationOption = cpDefinitionSpecificationOptionValue.getCPSpecificationOption();
+
 		request.setAttribute("info_panel.jsp-entry", cpDefinitionSpecificationOptionValue);
 		%>
 
@@ -42,6 +44,8 @@ if (cpDefinitionSpecificationOptionValues == null) {
 					/>
 				</li>
 			</ul>
+
+			<h4><%= HtmlUtil.escape(cpSpecificationOption.getTitle(languageId)) %></h4>
 		</div>
 
 		<aui:nav-bar markupView="lexicon">

@@ -17,13 +17,18 @@
 <%@ include file="/init.jsp" %>
 
 <%
-PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
+CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(catalogURL);
+
+renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, "add-product") : cpDefinition.getTitle(languageId));
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-		<aui:nav-bar-search>
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:nav-bar-search>
-	</aui:form>
-</aui:nav-bar>
+<liferay-frontend:screen-navigation
+	key="<%= CPDefinitionScreenNavigationConstants.SCREEN_NAVIGATION_KEY_CP_DEFINITION_GENERAL %>"
+	modelBean="<%= cpDefinition %>"
+	portletURL="<%= currentURLObj %>"
+/>

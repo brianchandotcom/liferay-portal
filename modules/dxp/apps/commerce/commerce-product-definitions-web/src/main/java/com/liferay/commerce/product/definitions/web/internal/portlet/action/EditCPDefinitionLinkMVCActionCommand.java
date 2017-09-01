@@ -16,29 +16,22 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException;
-import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.service.CPDefinitionLinkService;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.WebKeys;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletURL;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -53,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditCPDefinitionLinkMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void addCPDefinitionLinks(ActionRequest actionRequest, int type)
+	protected void addCPDefinitionLinks(ActionRequest actionRequest)
 		throws Exception {
 
 		long[] cpDefinitionIds2 = null;
@@ -62,6 +55,8 @@ public class EditCPDefinitionLinkMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "cpDefinitionId");
 		long cpDefinitionLinkId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionLinkId");
+
+		int type = ParamUtil.getInteger(actionRequest, "type");
 
 		if (cpDefinitionLinkId > 0) {
 			cpDefinitionIds2 = new long[] {cpDefinitionLinkId};
@@ -108,27 +103,15 @@ public class EditCPDefinitionLinkMVCActionCommand extends BaseMVCActionCommand {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		long cpDefinitionId = ParamUtil.getLong(
-			actionRequest, "cpDefinitionId");
-
-		int type = ParamUtil.getInteger(actionRequest, "type");
-
-		String redirect = getSaveAndContinueRedirect(
-			actionRequest, cpDefinitionId, type);
-
 		try {
 			if (cmd.equals(Constants.ADD)) {
-				addCPDefinitionLinks(actionRequest, type);
-
-				sendRedirect(actionRequest, actionResponse, redirect);
+				addCPDefinitionLinks(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteCPDefinitionLinks(actionRequest);
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
 				updateCPDefinitionLink(actionRequest);
-
-				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 		}
 		catch (Exception e) {
@@ -143,30 +126,6 @@ public class EditCPDefinitionLinkMVCActionCommand extends BaseMVCActionCommand {
 				throw e;
 			}
 		}
-	}
-
-	protected String getSaveAndContinueRedirect(
-			ActionRequest actionRequest, long cpDefinitionId, int type)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			actionRequest, themeDisplay.getScopeGroup(),
-			CPDefinition.class.getName(), PortletProvider.Action.EDIT);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "viewCPDefinitionLinks");
-		portletURL.setParameter(
-			"cpDefinitionId", String.valueOf(cpDefinitionId));
-		portletURL.setParameter("type", String.valueOf(type));
-
-		String toolbarItem = ParamUtil.getString(actionRequest, "toolbarItem");
-
-		portletURL.setParameter("toolbarItem", toolbarItem);
-
-		return portletURL.toString();
 	}
 
 	protected CPDefinitionLink updateCPDefinitionLink(

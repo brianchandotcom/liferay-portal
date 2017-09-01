@@ -17,10 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", VirtualCPTypeConstants.NAME);
-
-ServletContext cpDefinitionServletContext = (ServletContext)request.getAttribute("cpDefinitionServletContext");
-
 CPDefinitionVirtualSettingDisplayContext cpDefinitionVirtualSettingDisplayContext = (CPDefinitionVirtualSettingDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CPDefinitionVirtualSetting cpDefinitionVirtualSetting = cpDefinitionVirtualSettingDisplayContext.getCPDefinitionVirtualSetting();
@@ -29,21 +25,11 @@ CPDefinition cpDefinition = cpDefinitionVirtualSettingDisplayContext.getCPDefini
 
 long cpDefinitionId = cpDefinitionVirtualSettingDisplayContext.getCPDefinitionId();
 
-PortletURL portletURL = cpDefinitionVirtualSettingDisplayContext.getPortletURL();
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(catalogURL);
 
 renderResponse.setTitle(cpDefinition.getTitle(languageId));
-
-request.setAttribute("view.jsp-cpDefinition", cpDefinition);
-request.setAttribute("view.jsp-cpType", cpDefinitionVirtualSettingDisplayContext.getCPType());
-request.setAttribute("view.jsp-portletURL", portletURL);
-request.setAttribute("view.jsp-showSearch", false);
-request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 %>
-
-<liferay-util:include page="/definition_navbar.jsp" servletContext="<%= cpDefinitionServletContext %>" />
 
 <portlet:actionURL name="editProductDefinitionVirtualSetting" var="editProductDefinitionVirtualSettingActionURL" />
 

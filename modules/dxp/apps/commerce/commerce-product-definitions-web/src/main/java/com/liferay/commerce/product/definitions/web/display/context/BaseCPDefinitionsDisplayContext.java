@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.definitions.web.display.context;
 
+import com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -140,6 +141,10 @@ public abstract class BaseCPDefinitionsDisplayContext {
 				WebKeys.THEME_DISPLAY);
 
 		return themeDisplay.getScopeGroupId();
+	}
+
+	public String getScreenNavigationCategoryKey() throws PortalException {
+		return CPDefinitionScreenNavigationConstants.CATEGORY_KEY_DETAILS;
 	}
 
 	protected final ActionHelper actionHelper;

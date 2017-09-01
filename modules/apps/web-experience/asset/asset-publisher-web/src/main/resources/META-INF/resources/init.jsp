@@ -55,7 +55,6 @@ page import="com.liferay.asset.publisher.web.display.context.ItemSelectorViewDis
 page import="com.liferay.asset.publisher.web.util.AssetPublisherCustomizer" %><%@
 page import="com.liferay.asset.publisher.web.util.AssetPublisherHelper" %><%@
 page import="com.liferay.asset.publisher.web.util.AssetPublisherUtil" %><%@
-page import="com.liferay.asset.util.AssetEntryQueryProcessor" %><%@
 page import="com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator" %><%@
 page import="com.liferay.asset.util.impl.AssetPublisherAddItemHolder" %><%@
 page import="com.liferay.asset.util.impl.AssetUtil" %><%@

@@ -22,7 +22,7 @@
 								'liferay-store',
 								'liferay-util-window'
 							]
-						},
+						}
 					},
 					root: MODULE_PATH + '/'
 				}

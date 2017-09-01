@@ -31,26 +31,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface AssetEntryQueryProcessor {
 
-	/**
-	 * @deprecated As of 1.0.0
-	 */
-	@Deprecated
-	public String getKey();
-
-	/**
-	 * @deprecated As of 7.0.0
-	 */
-	@Deprecated
-	public String getTitle(Locale locale);
-
-	/**
-	 * @deprecated As of 7.0.0
-	 */
-	@Deprecated
-	public void include(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException;
-
 	public void processAssetEntryQuery(
 			User user, PortletPreferences portletPreferences,
 			AssetEntryQuery assetEntryQuery)

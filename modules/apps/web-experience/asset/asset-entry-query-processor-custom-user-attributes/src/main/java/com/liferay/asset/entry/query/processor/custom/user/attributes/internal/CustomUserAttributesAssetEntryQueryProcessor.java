@@ -49,23 +49,6 @@ public class CustomUserAttributesAssetEntryQueryProcessor
 	implements AssetEntryQueryProcessor {
 
 	@Override
-	public String getKey() {
-		return null;
-	}
-
-	@Override
-	public String getTitle(Locale locale) {
-		return null;
-	}
-
-	@Override
-	public void include(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
-	}
-
-	@Override
 	public void processAssetEntryQuery(
 			User user, PortletPreferences preferences,
 			AssetEntryQuery assetEntryQuery)

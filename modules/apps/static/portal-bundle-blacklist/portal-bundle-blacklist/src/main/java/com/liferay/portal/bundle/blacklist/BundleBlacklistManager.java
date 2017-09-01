@@ -141,54 +141,44 @@ public class BundleBlacklistManager {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		ServiceReference<ConfigurationAdmin> serviceReference =
-			bundleContext.getServiceReference(ConfigurationAdmin.class);
+		Configuration configuration = _configurationAdmin.getConfiguration(
+			BundleBlacklistConfiguration.class.getName(), StringPool.QUESTION);
 
-		try {
-			ConfigurationAdmin configurationAdmin = bundleContext.getService(
-				serviceReference);
+		Dictionary<String, Object> properties = configuration.getProperties();
 
-			Configuration configuration = configurationAdmin.getConfiguration(
-				BundleBlacklistConfiguration.class.getName(),
-				StringPool.QUESTION);
+		String[] blacklistBundleSymbolicNames = null;
 
-			Dictionary<String, Object> properties =
-				configuration.getProperties();
+		if (properties == null) {
+			properties = new HashMapDictionary<>();
+		}
+		else {
+			Object value = properties.get("blacklistBundleSymbolicNames");
 
-			String[] blacklistBundleSymbolicNames = null;
-
-			if (properties == null) {
-				properties = new HashMapDictionary<>();
+			if (value instanceof String) {
+				blacklistBundleSymbolicNames = new String[] {(String)value};
 			}
 			else {
-				Object value = properties.get("blacklistBundleSymbolicNames");
-
-				if (value instanceof String) {
-					blacklistBundleSymbolicNames = new String[] {(String)value};
-				}
-				else {
-					blacklistBundleSymbolicNames = (String[])value;
-				}
+				blacklistBundleSymbolicNames = (String[])value;
 			}
-
-			blacklistBundleSymbolicNames = updateFunction.apply(
-				blacklistBundleSymbolicNames);
-
-			if (blacklistBundleSymbolicNames == null) {
-				return;
-			}
-
-			properties.put(
-				"blacklistBundleSymbolicNames", blacklistBundleSymbolicNames);
-
-			_updateConfiguration(bundleContext, configuration, properties);
 		}
-		finally {
-			bundleContext.ungetService(serviceReference);
+
+		blacklistBundleSymbolicNames = updateFunction.apply(
+			blacklistBundleSymbolicNames);
+
+		if (blacklistBundleSymbolicNames == null) {
+			return;
 		}
+
+		properties.put(
+			"blacklistBundleSymbolicNames", blacklistBundleSymbolicNames);
+
+		_updateConfiguration(bundleContext, configuration, properties);
 	}
 
 	@Reference
 	private BundleBlacklist _bundleBlacklist;
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
 
 }

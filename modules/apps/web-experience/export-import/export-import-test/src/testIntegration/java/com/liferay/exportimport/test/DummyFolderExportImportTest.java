@@ -19,6 +19,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryRegistryUtil;
 import com.liferay.exportimport.test.util.constants.DummyFolderPortletKeys;
+import com.liferay.exportimport.test.util.lar.BasePortletExportImportTestCase;
 import com.liferay.exportimport.test.util.model.DummyFolder;
 import com.liferay.exportimport.test.util.model.util.DummyFolderTestUtil;
 import com.liferay.portal.dao.orm.hibernate.DynamicQueryFactoryImpl;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.lar.test.BasePortletExportImportTestCase;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.lcs.messaging.echo.sample1.web.messaging;
+package com.liferay.lcs.messaging.echo.sample1.web.internal.messaging;
 
 import com.liferay.lcs.messaging.LCSMessageBusService;
 import com.liferay.lcs.messaging.LCSMessageListener;

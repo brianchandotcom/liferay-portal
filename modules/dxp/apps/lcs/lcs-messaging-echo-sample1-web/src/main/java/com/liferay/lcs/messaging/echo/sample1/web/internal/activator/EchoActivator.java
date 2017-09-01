@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.lcs.messaging.echo.sample1.web.activator;
+package com.liferay.lcs.messaging.echo.sample1.web.internal.activator;
 
 import com.liferay.lcs.messaging.LCSMessageBusService;
 import com.liferay.lcs.messaging.LCSMessageListener;
-import com.liferay.lcs.messaging.echo.sample1.web.messaging.EchoLCSMessageListener;
+import com.liferay.lcs.messaging.echo.sample1.web.internal.messaging.EchoLCSMessageListener;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;

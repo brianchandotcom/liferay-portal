@@ -37,6 +37,6 @@ public class JSSourceProcessor extends BaseSourceProcessor {
 		return _INCLUDES;
 	}
 
-	private static final String[] _INCLUDES = {"**/*.js"};
+	private static final String[] _INCLUDES = {"**/*.js", "**/*.jsx"};
 
 }

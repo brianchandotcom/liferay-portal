@@ -80,7 +80,9 @@ public class PositionTagSupport extends BaseBodyTagSupport implements BodyTag {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-			if (themeDisplay.isStateExclusive() || themeDisplay.isIsolated()) {
+			if (themeDisplay.isStateExclusive() || themeDisplay.isIsolated() ||
+				themeDisplay.isLifecycleResource()) {
+
 				position = _POSITION_INLINE;
 			}
 			else {

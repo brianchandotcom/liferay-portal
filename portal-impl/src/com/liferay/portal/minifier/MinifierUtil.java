@@ -20,13 +20,18 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PropsValues;
 
 import com.yahoo.platform.yui.compressor.CssCompressor;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
+ * @author Roberto Díaz
  */
 public class MinifierUtil {
 
@@ -75,23 +80,54 @@ public class MinifierUtil {
 
 			cssCompressor.compress(
 				unsyncStringWriter, PropsValues.YUI_COMPRESSOR_CSS_LINE_BREAK);
+
+			return _processMinifiedCss(unsyncStringWriter.toString());
 		}
 		catch (Exception e) {
 			_log.error("Unable to minify CSS:\n" + content, e);
 
 			unsyncStringWriter.append(content);
-		}
 
-		return unsyncStringWriter.toString();
+			return unsyncStringWriter.toString();
+		}
 	}
 
 	private String _minifyJavaScript(String resourceName, String content) {
 		return _javaScriptMinifierInstance.compress(resourceName, content);
 	}
 
+	private String _processMinifiedCss(String minifiedCss) {
+		Matcher matcher = _calcFunctionPattern.matcher(minifiedCss);
+
+		while (matcher.find()) {
+			int firstOperatorEnd = matcher.end(1);
+
+			String s1 = minifiedCss.substring(0, firstOperatorEnd);
+			String s2 = minifiedCss.substring(
+				firstOperatorEnd, minifiedCss.length());
+
+			minifiedCss = s1 + StringPool.SPACE + s2;
+
+			int secondOperatorStart = matcher.start(2);
+
+			s1 = minifiedCss.substring(0, secondOperatorStart + 1);
+			s2 = minifiedCss.substring(
+				secondOperatorStart + 1, minifiedCss.length());
+
+			minifiedCss = s1 + StringPool.SPACE + s2;
+
+			matcher = _calcFunctionPattern.matcher(minifiedCss);
+		}
+
+		return minifiedCss;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(MinifierUtil.class);
 
 	private static final MinifierUtil _instance = new MinifierUtil();
+
+	private static final Pattern _calcFunctionPattern = Pattern.compile(
+		"calc\\(([^\\s\\+\\-]+)[+-]([^\\s\\+\\-]+)\\)");
 
 	private final JavaScriptMinifier _javaScriptMinifierInstance;
 

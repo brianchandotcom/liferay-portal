@@ -110,8 +110,6 @@ public class EditCommerceWarehouseMVCActionCommand
 
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName", "editCommerceWarehouse");
-
-				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;

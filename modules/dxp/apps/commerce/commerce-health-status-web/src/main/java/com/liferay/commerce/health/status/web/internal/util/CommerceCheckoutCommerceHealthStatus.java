@@ -15,7 +15,7 @@
 package com.liferay.commerce.health.status.web.internal.util;
 
 import com.liferay.commerce.checkout.web.constants.CommerceCheckoutPortletKeys;
-import com.liferay.commerce.health.status.web.constants.CommerceHealthStatusConstants;
+import com.liferay.commerce.health.status.web.internal.constants.CommerceHealthStatusConstants;
 import com.liferay.commerce.health.status.web.util.CommerceHealthStatus;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;

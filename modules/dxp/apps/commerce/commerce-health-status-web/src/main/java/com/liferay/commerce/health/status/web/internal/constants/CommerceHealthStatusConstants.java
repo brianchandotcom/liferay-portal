@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.health.status.web.constants;
+package com.liferay.commerce.health.status.web.internal.constants;
 
 /**
  * @author Alessio Antonio Rendina

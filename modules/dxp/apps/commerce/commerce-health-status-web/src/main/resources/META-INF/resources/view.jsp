@@ -45,7 +45,7 @@ SearchContainer<CommerceHealthStatus> commerceHealthStatusSearchContainer = comm
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
-				name="check-status"
+				name="status"
 			>
 
 				<%

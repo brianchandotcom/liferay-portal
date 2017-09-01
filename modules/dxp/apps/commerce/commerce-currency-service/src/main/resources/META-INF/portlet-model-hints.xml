@@ -17,8 +17,8 @@
 			<validator name="required" />
 		</field>
 		<field name="rate" type="double">
-			<validator name="number" />
 			<validator name="min">[0]</validator>
+			<validator name="number" />
 		</field>
 		<field name="roundingType" type="String" />
 		<field name="primary" type="boolean" />

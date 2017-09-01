@@ -46,11 +46,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CommerceAdminPortletKeys.COMMERCE_ADMIN,
-		"mvc.command.name=commerceHealthStatusFixIssue"
+		"mvc.command.name=fixCommerceHealthStatusIssue"
 	},
 	service = MVCActionCommand.class
 )
-public class CommerceHealthStatusFixIssueMVCActionCommand
+public class FixCommerceHealthStatusIssueMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override
@@ -113,7 +113,7 @@ public class CommerceHealthStatusFixIssueMVCActionCommand
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceHealthStatusFixIssueMVCActionCommand.class);
+		FixCommerceHealthStatusIssueMVCActionCommand.class);
 
 	@Reference
 	private CommerceHealthStatusRegistry _commerceHealthStatusRegistry;

@@ -47,7 +47,7 @@ String fixIssueButton = "fixIssueButton" + row.getRowId();
 			iconTimesContainer.addClass('hide');
 
 			A.io.request(
-				'<liferay-portlet:actionURL name="commerceHealthStatusFixIssue" portletName="<%= CommerceAdminPortletKeys.COMMERCE_ADMIN %>" />',
+				'<liferay-portlet:actionURL name="fixCommerceHealthStatusIssue" portletName="<%= CommerceAdminPortletKeys.COMMERCE_ADMIN %>" />',
 				{
 					data: data,
 					on: {

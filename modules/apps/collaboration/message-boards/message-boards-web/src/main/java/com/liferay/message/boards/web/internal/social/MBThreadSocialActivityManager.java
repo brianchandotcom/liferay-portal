@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.web.social;
+package com.liferay.message.boards.web.internal.social;
 
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBThread;
@@ -21,16 +21,20 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.social.BaseSocialActivityManager;
+import com.liferay.portal.kernel.social.SocialActivityManager;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.social.kernel.service.SocialActivityLocalService;
 
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
- * @deprecated As of 1.3.0, with no direct replacement
  */
-@Deprecated
+@Component(
+	property = "model.class.name=com.liferay.message.boards.kernel.model.MBThread",
+	service = SocialActivityManager.class
+)
 public class MBThreadSocialActivityManager
 	extends BaseSocialActivityManager<MBThread> {
 
@@ -62,7 +66,7 @@ public class MBThreadSocialActivityManager
 
 		extraDataJSONObject.put("threadId", thread.getThreadId());
 
-		socialActivityLocalService.addActivity(
+		_socialActivityLocalService.addActivity(
 			userId, groupId, MBMessage.class.getName(),
 			thread.getRootMessageId(), SocialActivityConstants.TYPE_SUBSCRIBE,
 			extraDataJSONObject.toString(), 0);
@@ -77,34 +81,23 @@ public class MBThreadSocialActivityManager
 			return;
 		}
 
-		MBMessage rootMessage = mbMessageLocalService.getMessage(
+		MBMessage rootMessage = _mbMessageLocalService.getMessage(
 			thread.getRootMessageId());
 
-		socialActivityLocalService.addActivity(
+		_socialActivityLocalService.addActivity(
 			userId, rootMessage.getGroupId(), MBMessage.class.getName(),
 			rootMessage.getMessageId(), type, extraData, receiverUserId);
 	}
 
 	@Override
 	protected SocialActivityLocalService getSocialActivityLocalService() {
-		return socialActivityLocalService;
+		return _socialActivityLocalService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
+	@Reference
+	private MBMessageLocalService _mbMessageLocalService;
 
-		this.mbMessageLocalService = mbMessageLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSocialActivityLocalService(
-		SocialActivityLocalService socialActivityLocalService) {
-
-		this.socialActivityLocalService = socialActivityLocalService;
-	}
-
-	protected MBMessageLocalService mbMessageLocalService;
-	protected SocialActivityLocalService socialActivityLocalService;
+	@Reference
+	private SocialActivityLocalService _socialActivityLocalService;
 
 }

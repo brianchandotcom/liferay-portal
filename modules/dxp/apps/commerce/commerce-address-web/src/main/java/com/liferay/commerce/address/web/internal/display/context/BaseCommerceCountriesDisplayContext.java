@@ -95,13 +95,9 @@ public abstract class BaseCommerceCountriesDisplayContext<T> {
 	}
 
 	public RowChecker getRowChecker() {
-		if (_rowChecker != null) {
-			return _rowChecker;
+		if (_rowChecker == null) {
+			_rowChecker = new EmptyOnClickRowChecker(renderResponse);
 		}
-
-		RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
-
-		_rowChecker = rowChecker;
 
 		return _rowChecker;
 	}

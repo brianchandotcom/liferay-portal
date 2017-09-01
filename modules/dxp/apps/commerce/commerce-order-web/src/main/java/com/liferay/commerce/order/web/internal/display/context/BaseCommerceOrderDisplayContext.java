@@ -196,14 +196,9 @@ public abstract class BaseCommerceOrderDisplayContext<T> {
 	}
 
 	public RowChecker getRowChecker() {
-		if (_rowChecker != null) {
-			return _rowChecker;
+		if (_rowChecker == null) {
+			_rowChecker = new EmptyOnClickRowChecker(liferayPortletResponse);
 		}
-
-		RowChecker rowChecker = new EmptyOnClickRowChecker(
-			liferayPortletResponse);
-
-		_rowChecker = rowChecker;
 
 		return _rowChecker;
 	}

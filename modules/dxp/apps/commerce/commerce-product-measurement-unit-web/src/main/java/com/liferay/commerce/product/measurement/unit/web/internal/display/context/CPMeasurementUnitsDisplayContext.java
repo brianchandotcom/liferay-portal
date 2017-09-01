@@ -157,13 +157,9 @@ public class CPMeasurementUnitsDisplayContext {
 	}
 
 	protected RowChecker getRowChecker() {
-		if (_rowChecker != null) {
-			return _rowChecker;
+		if (_rowChecker == null) {
+			_rowChecker = new EmptyOnClickRowChecker(_renderResponse);
 		}
-
-		RowChecker rowChecker = new EmptyOnClickRowChecker(_renderResponse);
-
-		_rowChecker = rowChecker;
 
 		return _rowChecker;
 	}

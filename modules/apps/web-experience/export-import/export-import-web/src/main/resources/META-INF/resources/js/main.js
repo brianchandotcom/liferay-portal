@@ -253,9 +253,11 @@ AUI.add(
 											);
 
 											var portletId = id.replace(instance.ns('PORTLET_DATA') + '_', '');
+
 											instance._setContentLabels(portletId);
 
 											var contentNode = instance.byId('content_' + portletId);
+
 											instance._storeNodeInputStates(contentNode);
 										}
 									}
@@ -1124,22 +1126,24 @@ AUI.add(
 							inputNodes = node.getElementsByTagName('input');
 						}
 
-						inputNodes.each(function(node) {
-							var hiddenList = node.ancestorsByClassName(STR_HIDE);
+						inputNodes.each(
+							function(node) {
+								var hiddenList = node.ancestorsByClassName(STR_HIDE);
 
-							var id = node.get('id');
+								var id = node.get('id');
 
-							var val = node.get('checked');
+								var val = node.get('checked');
 
-							if (hiddenList.size() === 0) {
-								hiddenList = null;
+								if (hiddenList.size() === 0) {
+									hiddenList = null;
+								}
+
+								inputStates[id] = {
+									hiddenList: hiddenList,
+									value: val
+								};
 							}
-
-							inputStates[id] = {
-								'value': val,
-								'hiddenList': hiddenList
-							};
-						});
+						);
 					},
 
 					_updateDateRange: function(event) {

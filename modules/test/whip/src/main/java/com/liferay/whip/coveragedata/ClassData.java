@@ -28,8 +28,11 @@ public class ClassData
 		_name = name;
 	}
 
-	public LineData addLine(int lineNumber) {
-		LineData lineData = new LineData(_name, lineNumber);
+	public LineData addLine(
+		String methodName, String methodDescriptor, int lineNumber) {
+
+		LineData lineData = new LineData(
+			_name, methodName, methodDescriptor, lineNumber);
 
 		LineData previousLineData = children.putIfAbsent(
 			lineData.getLineNumber(), lineData);

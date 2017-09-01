@@ -26,9 +26,12 @@ import java.io.IOException;
 import java.lang.instrument.ClassDefinition;
 import java.lang.instrument.Instrumentation;
 import java.lang.instrument.UnmodifiableClassException;
+import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.objectweb.asm.Type;
 
 /**
  * @author Shuyang Zhou
@@ -36,7 +39,8 @@ import java.util.List;
 public class InstrumentationAgent {
 
 	public static synchronized void assertCoverage(
-		boolean includeInnerClasses, Class<?>... classes) {
+		boolean includeInnerClasses, List<Class<?>> classes,
+		List<Method> methods) {
 
 		if (!_dynamicallyInstrumented) {
 			return;
@@ -82,6 +86,14 @@ public class InstrumentationAgent {
 						_assertClassDataCoverage(assertionErrors, classData);
 					}
 				}
+			}
+
+			for (Method method : methods) {
+				Class<?> clazz = method.getDeclaringClass();
+
+				ClassData classData = projectData.getClassData(clazz.getName());
+
+				_assertMethodCoverage(assertionErrors, classData, method);
 			}
 
 			if (!assertionErrors.isEmpty()) {
@@ -335,6 +347,42 @@ public class InstrumentationAgent {
 		}
 
 		System.out.printf("[Whip] %s is fully covered.%n", classData.getName());
+	}
+
+	private static void _assertMethodCoverage(
+		List<AssertionError> assertionErrors, ClassData classData,
+		Method method) {
+
+		boolean hasUncoveredLines = false;
+
+		for (LineData lineData : classData.getLines()) {
+			if (lineData.isCovered()) {
+				continue;
+			}
+
+			String methodName = lineData.getMethodName();
+
+			if (!methodName.equals(method.getName())) {
+				continue;
+			}
+
+			String methodDescriptor = Type.getMethodDescriptor(method);
+
+			if (!methodDescriptor.equals(lineData.getMethodDescriptor())) {
+				continue;
+			}
+
+			hasUncoveredLines = true;
+
+			System.out.printf(
+				"[Whip] %s line %d is not covered %n", method,
+				lineData.getLineNumber());
+		}
+
+		if (hasUncoveredLines) {
+			assertionErrors.add(
+				new AssertionError(method + " is not fully covered"));
+		}
 	}
 
 	private static final File _dataFile;

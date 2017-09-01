@@ -42,6 +42,8 @@ public class OutlineMethodVisitor extends MethodVisitor {
 
 		_classData = classData;
 		_methodVisitor = methodVisitor;
+		_name = name;
+		_desc = desc;
 
 		_methodNode = (MethodNode)mv;
 	}
@@ -80,7 +82,7 @@ public class OutlineMethodVisitor extends MethodVisitor {
 		_currentJump = 0;
 		_currentSwitch = 0;
 
-		_classData.addLine(_currentLine);
+		_classData.addLine(_name, _desc, _currentLine);
 
 		_lineLabels.put(start, line);
 	}
@@ -127,10 +129,12 @@ public class OutlineMethodVisitor extends MethodVisitor {
 	private int _currentJump;
 	private int _currentLine;
 	private int _currentSwitch;
+	private final String _desc;
 	private final Set<Label> _jumpLabels = new HashSet<>();
 	private final Map<Label, Integer> _lineLabels = new HashMap<>();
 	private final MethodNode _methodNode;
 	private final MethodVisitor _methodVisitor;
+	private final String _name;
 	private final Map<Label, SwitchHolder> _switchLabels = new HashMap<>();
 
 }

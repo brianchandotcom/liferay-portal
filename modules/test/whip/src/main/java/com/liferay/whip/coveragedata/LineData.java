@@ -25,8 +25,13 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class LineData implements CoverageData<LineData>, Serializable {
 
-	public LineData(String className, int lineNumber) {
+	public LineData(
+		String className, String methodName, String methodDescriptor,
+		int lineNumber) {
+
 		_className = className;
+		_methodName = methodName;
+		_methodDescriptor = methodDescriptor;
 		_lineNumber = lineNumber;
 	}
 
@@ -70,6 +75,14 @@ public class LineData implements CoverageData<LineData>, Serializable {
 
 	public int getLineNumber() {
 		return _lineNumber;
+	}
+
+	public String getMethodDescriptor() {
+		return _methodDescriptor;
+	}
+
+	public String getMethodName() {
+		return _methodName;
 	}
 
 	@Override
@@ -212,6 +225,8 @@ public class LineData implements CoverageData<LineData>, Serializable {
 	private final ConcurrentMap<Integer, JumpData> _jumpDatas =
 		new ConcurrentHashMap<>();
 	private final int _lineNumber;
+	private final String _methodDescriptor;
+	private final String _methodName;
 	private final ConcurrentMap<Integer, SwitchData> _switchDatas =
 		new ConcurrentHashMap<>();
 

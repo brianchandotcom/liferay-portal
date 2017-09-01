@@ -80,7 +80,7 @@ public class CommerceHealthStatusFixIssueMVCActionCommand
 				long groupId = _portal.getScopeGroupId(httpServletRequest);
 
 				jsonObject.put(
-					"success", commerceHealthStatus.checkStatus(groupId));
+					"success", commerceHealthStatus.isFixed(groupId));
 			}
 		}
 		catch (Exception e) {

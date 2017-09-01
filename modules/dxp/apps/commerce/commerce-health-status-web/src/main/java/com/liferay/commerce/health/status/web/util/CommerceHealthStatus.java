@@ -25,7 +25,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface CommerceHealthStatus {
 
-	public boolean checkStatus(long groupId) throws PortalException;
+	public void fixIssue(HttpServletRequest httpServletRequest)
+		throws PortalException;
 
 	public String getDescription(Locale locale);
 
@@ -33,7 +34,6 @@ public interface CommerceHealthStatus {
 
 	public String getLabel(Locale locale);
 
-	public void fixIssue(HttpServletRequest httpServletRequest)
-		throws PortalException;
+	public boolean isFixed(long groupId) throws PortalException;
 
 }

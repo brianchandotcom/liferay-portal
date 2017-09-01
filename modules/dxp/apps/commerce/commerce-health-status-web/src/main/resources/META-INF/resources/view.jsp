@@ -53,7 +53,7 @@ SearchContainer<CommerceHealthStatus> commerceHealthStatusSearchContainer = comm
 				String iconSpinnerCssClass = "hide icon-spinner icon-spin commerce-health-status-check-row-icon-spinner" + row.getRowId();
 				String iconTimesCssClass = "commerce-health-status-check-row-icon-times" + row.getRowId() + StringPool.SPACE;
 
-				if (commerceHealthStatus.checkStatus(themeDisplay.getScopeGroupId())) {
+				if (commerceHealthStatus.isFixed(themeDisplay.getScopeGroupId())) {
 					iconTimesCssClass += "hide";
 				}
 				else {

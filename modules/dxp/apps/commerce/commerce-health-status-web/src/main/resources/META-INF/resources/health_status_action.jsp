@@ -24,7 +24,7 @@ CommerceHealthStatus commerceHealthStatus = (CommerceHealthStatus)row.getObject(
 String fixIssueButton = "fixIssueButton" + row.getRowId();
 %>
 
-<aui:button disabled="<%= commerceHealthStatus.checkStatus(themeDisplay.getScopeGroupId()) %>" name="<%= fixIssueButton %>" value="fix-issue" />
+<aui:button disabled="<%= commerceHealthStatus.isFixed(themeDisplay.getScopeGroupId()) %>" name="<%= fixIssueButton %>" value="fix-issue" />
 
 <aui:script use="aui-io-request,aui-parse-content,liferay-notification">
 	A.one('#<portlet:namespace /><%= fixIssueButton %>').on(

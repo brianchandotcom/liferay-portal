@@ -52,15 +52,36 @@ import org.osgi.service.component.annotations.Reference;
 public class CPContentCommerceHealthStatus implements CommerceHealthStatus {
 
 	@Override
-	public boolean checkStatus(long groupId) throws PortalException {
-		long plid = _portal.getPlidFromPortletId(
-			groupId, CPPortletKeys.CP_CONTENT_WEB);
+	public void fixIssue(HttpServletRequest httpServletRequest)
+		throws PortalException {
 
-		if (plid > 0) {
-			return true;
+		long groupId = _portal.getScopeGroupId(httpServletRequest);
+
+		if (!isFixed(groupId)) {
+			String name = "Product";
+
+			String friendlyURL =
+				StringPool.FORWARD_SLASH + StringUtil.toLowerCase(name);
+
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				Layout.class.getName(), httpServletRequest);
+
+			Layout layout = _layoutService.addLayout(
+				groupId, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, name,
+				name, null, LayoutConstants.TYPE_PORTLET, true, friendlyURL,
+				serviceContext);
+
+			LayoutTypePortlet layoutTypePortlet =
+				(LayoutTypePortlet)layout.getLayoutType();
+
+			layoutTypePortlet.addPortletId(
+				_portal.getUserId(httpServletRequest),
+				CPPortletKeys.CP_CONTENT_WEB);
+
+			_layoutService.updateLayout(
+				layout.getGroupId(), layout.getPrivateLayout(),
+				layout.getLayoutId(), layout.getTypeSettings());
 		}
-
-		return false;
 	}
 
 	@Override
@@ -92,36 +113,15 @@ public class CPContentCommerceHealthStatus implements CommerceHealthStatus {
 	}
 
 	@Override
-	public void fixIssue(HttpServletRequest httpServletRequest)
-		throws PortalException {
+	public boolean isFixed(long groupId) throws PortalException {
+		long plid = _portal.getPlidFromPortletId(
+			groupId, CPPortletKeys.CP_CONTENT_WEB);
 
-		long groupId = _portal.getScopeGroupId(httpServletRequest);
-
-		if (!checkStatus(groupId)) {
-			String name = "Product";
-
-			String friendlyURL =
-				StringPool.FORWARD_SLASH + StringUtil.toLowerCase(name);
-
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				Layout.class.getName(), httpServletRequest);
-
-			Layout layout = _layoutService.addLayout(
-				groupId, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, name,
-				name, null, LayoutConstants.TYPE_PORTLET, true, friendlyURL,
-				serviceContext);
-
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)layout.getLayoutType();
-
-			layoutTypePortlet.addPortletId(
-				_portal.getUserId(httpServletRequest),
-				CPPortletKeys.CP_CONTENT_WEB);
-
-			_layoutService.updateLayout(
-				layout.getGroupId(), layout.getPrivateLayout(),
-				layout.getLayoutId(), layout.getTypeSettings());
+		if (plid > 0) {
+			return true;
 		}
+
+		return false;
 	}
 
 	@Reference

@@ -92,9 +92,12 @@ public class BundleBlacklistManager {
 	}
 
 	private void _updateConfiguration(
-			BundleContext bundleContext, Configuration configuration,
-			Dictionary<String, Object> properties)
+			Configuration configuration, Dictionary<String, Object> properties)
 		throws IOException {
+
+		Bundle bundle = FrameworkUtil.getBundle(BundleBlacklistManager.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
 
 		CountDownLatch countDownLatch = new CountDownLatch(1);
 
@@ -137,10 +140,6 @@ public class BundleBlacklistManager {
 	private void _updateProperties(Function<String[], String[]> updateFunction)
 		throws IOException {
 
-		Bundle bundle = FrameworkUtil.getBundle(BundleBlacklistManager.class);
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
 		Configuration configuration = _configurationAdmin.getConfiguration(
 			BundleBlacklistConfiguration.class.getName(), StringPool.QUESTION);
 
@@ -172,7 +171,7 @@ public class BundleBlacklistManager {
 		properties.put(
 			"blacklistBundleSymbolicNames", blacklistBundleSymbolicNames);
 
-		_updateConfiguration(bundleContext, configuration, properties);
+		_updateConfiguration(configuration, properties);
 	}
 
 	@Reference

@@ -27,6 +27,7 @@ page import="com.liferay.commerce.health.status.web.internal.display.context.Com
 page import="com.liferay.commerce.health.status.web.util.CommerceHealthStatus" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
+page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 

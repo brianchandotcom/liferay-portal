@@ -33,7 +33,7 @@ String fixIssueButton = "fixIssueButton" + row.getRowId();
 			var commerceHealthStatusKey = '<%= commerceHealthStatus.getKey() %>';
 
 			var data = {
-				'_<%= CommerceAdminPortletKeys.COMMERCE_ADMIN %>_commerceHealthStatusKey' : commerceHealthStatusKey
+				'<%= PortalUtil.getPortletNamespace(CommerceAdminPortletKeys.COMMERCE_ADMIN) %>commerceHealthStatusKey' : commerceHealthStatusKey
 			};
 
 			this.attr('disabled', true);

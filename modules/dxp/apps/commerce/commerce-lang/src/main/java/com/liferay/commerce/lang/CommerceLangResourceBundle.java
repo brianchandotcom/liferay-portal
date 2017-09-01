@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.lang;
 
-import com.liferay.portal.kernel.language.UTF8Control;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Enumeration;
@@ -33,15 +33,18 @@ public class CommerceLangResourceBundle extends ResourceBundle {
 
 	@Override
 	public Enumeration<String> getKeys() {
-		return _resourceBundle.getKeys();
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", getClass());
+
+		return resourceBundle.getKeys();
 	}
 
 	@Override
 	protected Object handleGetObject(String key) {
-		return _resourceBundle.getObject(key);
-	}
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", getClass());
 
-	private final ResourceBundle _resourceBundle = ResourceBundle.getBundle(
-		"content.Language", UTF8Control.INSTANCE);
+		return resourceBundle.getObject(key);
+	}
 
 }

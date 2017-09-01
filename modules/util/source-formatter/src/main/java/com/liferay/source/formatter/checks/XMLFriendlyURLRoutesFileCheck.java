@@ -16,12 +16,12 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -37,15 +37,34 @@ public class XMLFriendlyURLRoutesFileCheck extends BaseFileCheck {
 		throws Exception {
 
 		if (fileName.endsWith("routes.xml")) {
-			content = _formatFriendlyURLRoutesXML(fileName, content);
+			_checkDTDVersion(fileName, content);
+			_checkOrder(fileName, content);
 		}
 
 		return content;
 	}
 
-	private String _formatFriendlyURLRoutesXML(String fileName, String content)
-		throws Exception {
+	private void _checkDTDVersion(String fileName, String content) {
+		Matcher matcher = _doctypePattern.matcher(content);
 
+		if (!matcher.find()) {
+			return;
+		}
+
+		String mainMajorReleaseVersion = _getMainMajorReleaseVersion();
+
+		if (!mainMajorReleaseVersion.equals(matcher.group(1)) ||
+			!mainMajorReleaseVersion.equals(matcher.group(2))) {
+
+			addMessage(
+				fileName,
+				"Major version for dtd should be '" + mainMajorReleaseVersion +
+					"'",
+				getLineCount(content, matcher.start()));
+		}
+	}
+
+	private void _checkOrder(String fileName, String content) throws Exception {
 		Document document = SourceUtil.readXML(content);
 
 		Element rootElement = document.getRootElement();
@@ -65,38 +84,19 @@ public class XMLFriendlyURLRoutesFileCheck extends BaseFileCheck {
 				fileName, routeElement, "overridden-parameter", null,
 				elementComparator);
 		}
-
-		int pos = content.indexOf("<routes>\n");
-
-		if (pos == -1) {
-			return content;
-		}
-
-		StringBundler sb = new StringBundler(9);
-
-		String mainReleaseVersion = _getMainReleaseVersion();
-
-		sb.append("<?xml version=\"1.0\"?>\n");
-		sb.append("<!DOCTYPE routes PUBLIC \"-//Liferay//DTD Friendly URL ");
-		sb.append("Routes ");
-		sb.append(mainReleaseVersion);
-		sb.append("//EN\" \"http://www.liferay.com/dtd/");
-		sb.append("liferay-friendly-url-routes_");
-		sb.append(
-			StringUtil.replace(
-				mainReleaseVersion, CharPool.PERIOD, CharPool.UNDERLINE));
-		sb.append(".dtd\">\n\n");
-		sb.append(content.substring(pos));
-
-		return sb.toString();
 	}
 
-	private String _getMainReleaseVersion() {
+	private String _getMainMajorReleaseVersion() {
 		String releaseVersion = ReleaseInfo.getVersion();
 
-		int pos = releaseVersion.lastIndexOf(CharPool.PERIOD);
+		int pos = releaseVersion.indexOf(CharPool.PERIOD);
 
-		return releaseVersion.substring(0, pos) + ".0";
+		return releaseVersion.substring(0, pos);
 	}
+
+	private final Pattern _doctypePattern = Pattern.compile(
+		"DOCTYPE routes PUBLIC \"-//Liferay//DTD Friendly URL Routes " +
+			"([0-9]+)\\.[0-9]+\\.[0-9]+//EN\" \"http://www.liferay.com/dtd/" +
+				"liferay-friendly-url-routes_([0-9]+)_[0-9]+_[0-9]+\\.dtd");
 
 }

@@ -223,6 +223,16 @@
 			<finder-column name="groupId" />
 			<finder-column name="active" />
 		</finder>
+		<finder name="G_B_A" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="billingAllowed" />
+			<finder-column name="active" />
+		</finder>
+		<finder name="G_S_A" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="shippingAllowed" />
+			<finder-column name="active" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="CommerceOrder" remote-service="true">
 

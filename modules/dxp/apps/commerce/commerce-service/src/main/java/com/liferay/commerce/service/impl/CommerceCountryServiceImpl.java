@@ -66,6 +66,14 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 	}
 
 	@Override
+	public List<CommerceCountry> getBillingCommerceCountries(
+		long groupId, boolean billingAllowed, boolean active) {
+
+		return commerceCountryLocalService.getBillingCommerceCountries(
+			groupId, billingAllowed, active);
+	}
+
+	@Override
 	public List<CommerceCountry> getCommerceCountries(
 		long groupId, boolean active) {
 
@@ -108,6 +116,14 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 
 		return commerceCountryLocalService.getCommerceCountry(
 			commerceCountryId);
+	}
+
+	@Override
+	public List<CommerceCountry> getShippingCommerceCountries(
+		long groupId, boolean shippingAllowed, boolean active) {
+
+		return commerceCountryLocalService.getShippingCommerceCountries(
+			groupId, shippingAllowed, active);
 	}
 
 	@Override

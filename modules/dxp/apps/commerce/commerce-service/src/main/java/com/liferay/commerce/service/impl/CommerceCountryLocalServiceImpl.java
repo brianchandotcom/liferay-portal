@@ -123,6 +123,14 @@ public class CommerceCountryLocalServiceImpl
 	}
 
 	@Override
+	public List<CommerceCountry> getBillingCommerceCountries(
+		long groupId, boolean billingAllowed, boolean active) {
+
+		return commerceCountryPersistence.findByG_B_A(
+			groupId, billingAllowed, active);
+	}
+
+	@Override
 	public List<CommerceCountry> getCommerceCountries(
 		long groupId, boolean active) {
 
@@ -155,6 +163,14 @@ public class CommerceCountryLocalServiceImpl
 	@Override
 	public int getCommerceCountriesCount(long groupId, boolean active) {
 		return commerceCountryPersistence.countByG_A(groupId, active);
+	}
+
+	@Override
+	public List<CommerceCountry> getShippingCommerceCountries(
+		long groupId, boolean shippingAllowed, boolean active) {
+
+		return commerceCountryPersistence.findByG_S_A(
+			groupId, shippingAllowed, active);
 	}
 
 	@Override

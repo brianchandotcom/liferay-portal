@@ -168,8 +168,13 @@ public class BundleBlacklistManager {
 			return;
 		}
 
-		properties.put(
-			"blacklistBundleSymbolicNames", blacklistBundleSymbolicNames);
+		if (blacklistBundleSymbolicNames.length == 0) {
+			properties.remove("blacklistBundleSymbolicNames");
+		}
+		else {
+			properties.put(
+				"blacklistBundleSymbolicNames", blacklistBundleSymbolicNames);
+		}
 
 		_updateConfiguration(configuration, properties);
 	}

@@ -16,7 +16,6 @@ package com.liferay.portal.security.sso.openid.internal.verify;
 
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.security.sso.openid.constants.LegacyOpenIdPropsKeys;
@@ -25,7 +24,6 @@ import com.liferay.portal.security.sso.openid.constants.OpenIdConstants;
 import com.liferay.portal.verify.BaseCompanySettingsVerifyProcess;
 import com.liferay.portal.verify.VerifyProcess;
 
-import java.util.Dictionary;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -53,17 +51,13 @@ public class OpenIdCompanySettingsVerifyProcess
 	}
 
 	@Override
-	protected Dictionary<String, String> getPropertyValues(long companyId) {
-		Dictionary<String, String> dictionary = new HashMapDictionary<>();
-
-		String enabled = _prefsProps.getString(
-			companyId, LegacyOpenIdPropsKeys.OPENID_AUTH_ENABLED);
-
-		if (enabled != null) {
-			dictionary.put(OpenIdConfigurationKeys.AUTH_ENABLED, enabled);
-		}
-
-		return dictionary;
+	protected String[][] getRenamePropertyKeysArray() {
+		return new String[][] {
+			new String[] {
+				LegacyOpenIdPropsKeys.OPENID_AUTH_ENABLED,
+				OpenIdConfigurationKeys.AUTH_ENABLED
+			}
+		};
 	}
 
 	@Override
@@ -83,6 +77,10 @@ public class OpenIdCompanySettingsVerifyProcess
 		_companyLocalService = companyLocalService;
 	}
 
+	/**
+	 * @deprecated As of 3.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Reference(unbind = "-")
 	protected void setPrefsProps(PrefsProps prefsProps) {
 		_prefsProps = prefsProps;

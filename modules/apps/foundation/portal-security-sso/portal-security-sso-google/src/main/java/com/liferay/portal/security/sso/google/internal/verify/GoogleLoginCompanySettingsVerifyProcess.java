@@ -16,7 +16,6 @@ package com.liferay.portal.security.sso.google.internal.verify;
 
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.security.sso.google.constants.GoogleAuthorizationConfigurationKeys;
@@ -25,7 +24,6 @@ import com.liferay.portal.security.sso.google.constants.LegacyGoogleLoginPropsKe
 import com.liferay.portal.verify.BaseCompanySettingsVerifyProcess;
 import com.liferay.portal.verify.VerifyProcess;
 
-import java.util.Dictionary;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -53,35 +51,21 @@ public class GoogleLoginCompanySettingsVerifyProcess
 	}
 
 	@Override
-	protected Dictionary<String, String> getPropertyValues(long companyId) {
-		Dictionary<String, String> dictionary = new HashMapDictionary<>();
-
-		String enabled = _prefsProps.getString(
-			companyId, LegacyGoogleLoginPropsKeys.AUTH_ENABLED);
-
-		if (enabled != null) {
-			dictionary.put(
-				GoogleAuthorizationConfigurationKeys.AUTH_ENABLED, enabled);
-		}
-
-		String clientId = _prefsProps.getString(
-			companyId, LegacyGoogleLoginPropsKeys.CLIENT_ID);
-
-		if (clientId != null) {
-			dictionary.put(
-				GoogleAuthorizationConfigurationKeys.CLIENT_ID, clientId);
-		}
-
-		String clientSecret = _prefsProps.getString(
-			companyId, LegacyGoogleLoginPropsKeys.CLIENT_SECRET);
-
-		if (clientSecret != null) {
-			dictionary.put(
-				GoogleAuthorizationConfigurationKeys.CLIENT_SECRET,
-				clientSecret);
-		}
-
-		return dictionary;
+	protected String[][] getRenamePropertyKeysArray() {
+		return new String[][] {
+			new String[] {
+				LegacyGoogleLoginPropsKeys.AUTH_ENABLED,
+				GoogleAuthorizationConfigurationKeys.AUTH_ENABLED
+			},
+			new String[] {
+				LegacyGoogleLoginPropsKeys.CLIENT_ID,
+				GoogleAuthorizationConfigurationKeys.CLIENT_ID
+			},
+			new String[] {
+				LegacyGoogleLoginPropsKeys.CLIENT_SECRET,
+				GoogleAuthorizationConfigurationKeys.CLIENT_SECRET
+			}
+		};
 	}
 
 	@Override
@@ -97,6 +81,10 @@ public class GoogleLoginCompanySettingsVerifyProcess
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
+	/**
+	 * @deprecated As of 2.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Reference
 	private PrefsProps _prefsProps;
 

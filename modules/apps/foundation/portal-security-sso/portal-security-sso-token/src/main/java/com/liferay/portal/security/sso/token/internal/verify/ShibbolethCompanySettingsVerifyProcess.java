@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.security.sso.token.constants.LegacyTokenPropsKeys;
@@ -27,7 +26,6 @@ import com.liferay.portal.security.sso.token.constants.TokenConstants;
 import com.liferay.portal.verify.BaseCompanySettingsVerifyProcess;
 import com.liferay.portal.verify.VerifyProcess;
 
-import java.util.Dictionary;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -55,46 +53,25 @@ public class ShibbolethCompanySettingsVerifyProcess
 	}
 
 	@Override
-	protected Dictionary<String, String> getPropertyValues(long companyId) {
-		Dictionary<String, String> dictionary = new HashMapDictionary<>();
-
-		String enabled = _prefsProps.getString(
-			companyId, LegacyTokenPropsKeys.SHIBBOLETH_AUTH_ENABLED);
-
-		if (enabled != null) {
-			dictionary.put(TokenConfigurationKeys.AUTH_ENABLED, enabled);
-		}
-
-		String importFromLDAP = _prefsProps.getString(
-			companyId, LegacyTokenPropsKeys.SHIBBOLETH_IMPORT_FROM_LDAP);
-
-		if (importFromLDAP != null) {
-			dictionary.put(
-				TokenConfigurationKeys.IMPORT_FROM_LDAP, importFromLDAP);
-		}
-
-		String logoutRedirectURL = _prefsProps.getString(
-			companyId, LegacyTokenPropsKeys.SHIBBOLETH_LOGOUT_URL);
-
-		if (logoutRedirectURL != null) {
-			dictionary.put(
-				TokenConfigurationKeys.LOGOUT_REDIRECT_URL, logoutRedirectURL);
-		}
-
-		String userTokenName = _prefsProps.getString(
-			companyId, LegacyTokenPropsKeys.SHIBBOLETH_USER_HEADER);
-
-		if (userTokenName != null) {
-			dictionary.put(TokenConfigurationKeys.USER_HEADER, userTokenName);
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Adding Shibboleth token configuration for company " +
-					companyId + " with properties: " + dictionary);
-		}
-
-		return dictionary;
+	protected String[][] getRenamePropertyKeysArray() {
+		return new String[][] {
+			new String[] {
+				LegacyTokenPropsKeys.SHIBBOLETH_AUTH_ENABLED,
+				TokenConfigurationKeys.AUTH_ENABLED
+			},
+			new String[] {
+				LegacyTokenPropsKeys.SHIBBOLETH_IMPORT_FROM_LDAP,
+				TokenConfigurationKeys.IMPORT_FROM_LDAP
+			},
+			new String[] {
+				LegacyTokenPropsKeys.SHIBBOLETH_LOGOUT_URL,
+				TokenConfigurationKeys.LOGOUT_REDIRECT_URL
+			},
+			new String[] {
+				LegacyTokenPropsKeys.SHIBBOLETH_USER_HEADER,
+				TokenConfigurationKeys.USER_HEADER
+			}
+		};
 	}
 
 	@Override
@@ -114,6 +91,10 @@ public class ShibbolethCompanySettingsVerifyProcess
 		_companyLocalService = companyLocalService;
 	}
 
+	/**
+	 * @deprecated As of 3.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Reference(unbind = "-")
 	protected void setPrefsProps(PrefsProps prefsProps) {
 		_prefsProps = prefsProps;

@@ -24,7 +24,9 @@ import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsDescriptor;
 import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 
 import java.io.IOException;
 
@@ -48,8 +50,29 @@ public abstract class BaseCompanySettingsVerifyProcess extends VerifyProcess {
 
 	protected abstract Set<String> getLegacyPropertyKeys();
 
-	protected abstract Dictionary<String, String> getPropertyValues(
-		long companyId);
+	protected Dictionary<String, String> getPropertyValues(long companyId) {
+		Dictionary<String, String> dictionary = new HashMapDictionary<>();
+
+		String[][] renamePropertykeysArray = getRenamePropertyKeysArray();
+
+		for (String[] renamePropertykeys : renamePropertykeysArray) {
+			String oldPropertyKey = renamePropertykeys[0];
+			String newPropertyKey = renamePropertykeys[1];
+
+			String oldPropertyValue = PrefsPropsUtil.getString(
+				companyId, oldPropertyKey);
+
+			if (oldPropertyValue != null) {
+				dictionary.put(newPropertyKey, oldPropertyValue);
+			}
+		}
+
+		return dictionary;
+	}
+
+	protected String[][] getRenamePropertyKeysArray() {
+		return new String[0][0];
+	}
 
 	protected abstract SettingsFactory getSettingsFactory();
 

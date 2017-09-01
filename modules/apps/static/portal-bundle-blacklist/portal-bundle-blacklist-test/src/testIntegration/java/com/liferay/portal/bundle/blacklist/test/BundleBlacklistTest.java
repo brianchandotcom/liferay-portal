@@ -383,7 +383,12 @@ public class BundleBlacklistTest {
 		_bundleContext.addServiceListener(serviceListener);
 
 		try {
-			_bundleBlacklistConfiguration.update(dictionary);
+			if (dictionary == null) {
+				_bundleBlacklistConfiguration.delete();
+			}
+			else {
+				_bundleBlacklistConfiguration.update(dictionary);
+			}
 
 			countDownLatch.await();
 		}

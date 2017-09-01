@@ -21,7 +21,7 @@ CPSpecificationOptionDisplayContext cpSpecificationOptionDisplayContext = (CPSpe
 
 CPSpecificationOption cpSpecificationOption = (CPSpecificationOption)request.getAttribute(CPWebKeys.CP_SPECIFICATION_OPTION);
 
-long cpSpecificationOptionId = BeanParamUtil.getLong(cpSpecificationOption, request, "cpSpecificationOptionId");
+long cpSpecificationOptionId = BeanParamUtil.getLong(cpSpecificationOption, request, "CPSpecificationOptionId");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(specificationOptionsURL);

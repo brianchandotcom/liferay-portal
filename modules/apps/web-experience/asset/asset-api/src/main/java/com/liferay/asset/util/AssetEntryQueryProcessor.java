@@ -17,39 +17,12 @@ package com.liferay.asset.util;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.portal.kernel.model.User;
 
-import java.io.IOException;
-
-import java.util.Locale;
-
 import javax.portlet.PortletPreferences;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Jorge Ferrer
  */
 public interface AssetEntryQueryProcessor {
-
-	/**
-	 * @deprecated As of 1.0.0
-	 */
-	@Deprecated
-	public String getKey();
-
-	/**
-	 * @deprecated As of 7.0.0
-	 */
-	@Deprecated
-	public String getTitle(Locale locale);
-
-	/**
-	 * @deprecated As of 7.0.0
-	 */
-	@Deprecated
-	public void include(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException;
 
 	public void processAssetEntryQuery(
 			User user, PortletPreferences portletPreferences,

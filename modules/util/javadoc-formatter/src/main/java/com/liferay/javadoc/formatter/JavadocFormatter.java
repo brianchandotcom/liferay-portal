@@ -320,6 +320,7 @@ public class JavadocFormatter {
 		_addDocletElements(parentElement, javaClass, "since");
 		_addDocletElements(parentElement, javaClass, "serial");
 		_addDocletElements(parentElement, javaClass, "deprecated");
+		_addDocletElements(parentElement, javaClass, "review");
 	}
 
 	private void _addClassElement(
@@ -522,6 +523,7 @@ public class JavadocFormatter {
 		_addDocletElements(constructorElement, javaConstructor, "see");
 		_addDocletElements(constructorElement, javaConstructor, "since");
 		_addDocletElements(constructorElement, javaConstructor, "deprecated");
+		_addDocletElements(constructorElement, javaConstructor, "review");
 	}
 
 	private String _addDeprecatedTag(
@@ -787,6 +789,7 @@ public class JavadocFormatter {
 		_addDocletElements(fieldElement, javaField, "see");
 		_addDocletElements(fieldElement, javaField, "since");
 		_addDocletElements(fieldElement, javaField, "deprecated");
+		_addDocletElements(fieldElement, javaField, "review");
 	}
 
 	private void _addMethodElement(Element parentElement, JavaMethod javaMethod)
@@ -813,6 +816,7 @@ public class JavadocFormatter {
 		_addDocletElements(methodElement, javaMethod, "see");
 		_addDocletElements(methodElement, javaMethod, "since");
 		_addDocletElements(methodElement, javaMethod, "deprecated");
+		_addDocletElements(methodElement, javaMethod, "review");
 	}
 
 	private void _addParamElement(
@@ -1425,7 +1429,8 @@ public class JavadocFormatter {
 		String docletTags = _addDocletTags(
 			rootElement,
 			new String[] {
-				"author", "version", "see", "since", "serial", "deprecated"
+				"author", "version", "see", "since", "serial", "deprecated",
+				"review"
 			},
 			indent + " * ", _hasPublicModifier(javaClass));
 
@@ -1601,12 +1606,13 @@ public class JavadocFormatter {
 		if (javaExecutable instanceof JavaMethod) {
 			tags = new String[] {
 				"version", "param", "return", "throws", "see", "since",
-				"deprecated"
+				"deprecated", "review"
 			};
 		}
 		else {
 			tags = new String[] {
-				"version", "param", "throws", "see", "since", "deprecated"
+				"version", "param", "throws", "see", "since", "deprecated",
+				"review"
 			};
 		}
 
@@ -1670,7 +1676,7 @@ public class JavadocFormatter {
 
 		String docletTags = _addDocletTags(
 			fieldElement,
-			new String[] {"version", "see", "since", "deprecated"},
+			new String[] {"version", "see", "since", "deprecated", "review"},
 			indent + " * ", _hasPublicModifier(javaField));
 
 		if (Validator.isNotNull(docletTags)) {

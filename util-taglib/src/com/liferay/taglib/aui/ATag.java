@@ -55,6 +55,7 @@ public class ATag extends BaseATag {
 
 				ResourceBundle resourceBundle =
 					TagResourceBundleUtil.getResourceBundle(pageContext);
+
 				String opensNewWindowLabel = LanguageUtil.get(
 					resourceBundle, "opens-new-window");
 

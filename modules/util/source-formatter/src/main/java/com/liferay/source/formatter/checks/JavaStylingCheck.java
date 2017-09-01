@@ -45,8 +45,14 @@ public class JavaStylingCheck extends BaseFileCheck {
 
 		content = StringUtil.replace(
 			content,
-			new String[] {";\n/**", "\t/*\n\t *", ";;\n", "\n/**\n *\n *"},
-			new String[] {";\n\n/**", "\t/**\n\t *", ";\n", "\n/**\n *"});
+			new String[] {
+				";\n/**", "\t/*\n\t *", ";;\n", "\n/**\n *\n *",
+				"\n */\npackage "
+			},
+			new String[] {
+				";\n\n/**", "\t/**\n\t *", ";\n", "\n/**\n *",
+				"\n */\n\npackage "
+			});
 
 		content = StringUtil.replace(
 			content,

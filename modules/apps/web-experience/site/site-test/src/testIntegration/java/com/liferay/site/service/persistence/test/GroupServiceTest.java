@@ -17,6 +17,7 @@ package com.liferay.site.service.persistence.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.GroupFriendlyURLException;
 import com.liferay.portal.kernel.exception.GroupParentException;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.NoSuchResourcePermissionException;
@@ -945,6 +946,14 @@ public class GroupServiceTest {
 		Assert.assertEquals(
 			LocaleUtil.SPAIN,
 			PortalUtil.getSiteDefaultLocale(group.getGroupId()));
+	}
+
+	@Test(expected = GroupFriendlyURLException.class)
+	public void testUpdateFriendlyURLToGroupId() throws Exception {
+		String friendlyURL = "/" + _group.getGroupId();
+
+		GroupLocalServiceUtil.updateFriendlyURL(
+			_group.getGroupId(), friendlyURL);
 	}
 
 	@Test

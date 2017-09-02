@@ -136,6 +136,20 @@ public class FriendlyURLServletTest {
 			new FriendlyURLServlet.Redirect(getURL(_layout)));
 	}
 
+	@Test(expected = NoSuchGroupException.class)
+	public void testGetRedirectWithGroupId() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setPathInfo(StringPool.SLASH);
+
+		String path = "/" + _group.getGroupId() + _layout.getFriendlyURL();
+
+		testGetRedirect(
+			mockHttpServletRequest, path, Portal.PATH_MAIN,
+			new FriendlyURLServlet.Redirect(getURL(_layout)));
+	}
+
 	@Test
 	public void testGetRedirectWithI18nPath() throws Exception {
 		testGetI18nRedirect("/fr", "/en");

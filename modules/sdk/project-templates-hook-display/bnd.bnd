@@ -1,0 +1,8 @@
+Bundle-Description: Creates a Liferay hook display project.
+Bundle-Name: Liferay Project Templates Hook Display
+Bundle-SymbolicName: com.liferay.project.templates.hook.display
+Bundle-Version: 1.0.0
+-removeheaders:\
+	Import-Package,\
+	Private-Package,\
+	Require-Capability

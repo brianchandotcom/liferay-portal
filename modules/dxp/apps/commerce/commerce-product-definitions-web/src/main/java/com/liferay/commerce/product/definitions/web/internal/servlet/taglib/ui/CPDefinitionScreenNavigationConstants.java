@@ -35,6 +35,8 @@ public class CPDefinitionScreenNavigationConstants {
 	public static final String CATEGORY_KEY_RELATED_PRODUCTS =
 		"related-products";
 
+	public static final String CATEGORY_KEY_SEO = "seo";
+
 	public static final String CATEGORY_KEY_SHIPPING = "shipping";
 
 	public static final String CATEGORY_KEY_SKUS = "skus";

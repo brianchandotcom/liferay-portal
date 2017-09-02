@@ -17,17 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CPDefinitionsSEOInfoDisplayContext cpDefinitionsSEOInfoDisplayContext = (CPDefinitionsSEOInfoDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
+CPDefinition cpDefinition = cpDefinitionsSEOInfoDisplayContext.getCPDefinition();
 
-long cpDefinitionId = cpDefinitionsDisplayContext.getCPDefinitionId();
-
-PortletURL portletURL = cpDefinitionsDisplayContext.getPortletURL();
-
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "edit-product-definition-seo-info");
-
-portletURL.setParameter("toolbarItem", toolbarItem);
+long cpDefinitionId = cpDefinitionsSEOInfoDisplayContext.getCPDefinitionId();
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(catalogURL);
@@ -41,17 +35,10 @@ String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
 Set<Locale> availableLocalesSet = new HashSet<>();
 
 availableLocalesSet.add(LocaleUtil.fromLanguageId(defaultLanguageId));
-availableLocalesSet.addAll(cpDefinitionsDisplayContext.getAvailableLocales());
+availableLocalesSet.addAll(cpDefinitionsSEOInfoDisplayContext.getAvailableLocales());
 
 Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLocalesSet.size()]);
-
-request.setAttribute("view.jsp-cpDefinition", cpDefinition);
-request.setAttribute("view.jsp-cpType", cpDefinitionsDisplayContext.getCPType());
-request.setAttribute("view.jsp-portletURL", portletURL);
-request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 %>
-
-<liferay-util:include page="/definition_navbar.jsp" servletContext="<%= application %>" />
 
 <portlet:actionURL name="editProductDefinition" var="editProductDefinitionShippingInfoActionURL" />
 
@@ -88,7 +75,7 @@ request.setAttribute("view.jsp-toolbarItem", toolbarItem);
 					<span class="input-group-constrain"><liferay-ui:message key="<%= StringUtil.shorten(friendlyURLBase.toString(), 40) %>" /></span>
 				</span>
 
-				<liferay-ui:input-localized cssClass="form-control" defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" name="urlTitleMapAsXML" xml="<%= HttpUtil.decodeURL(cpDefinitionsDisplayContext.getUrlTitleMapAsXML()) %>" />
+				<liferay-ui:input-localized cssClass="form-control" defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" name="urlTitleMapAsXML" xml="<%= HttpUtil.decodeURL(cpDefinitionsSEOInfoDisplayContext.getUrlTitleMapAsXML()) %>" />
 
 				<c:if test="<%= cpDefinition != null %>">
 

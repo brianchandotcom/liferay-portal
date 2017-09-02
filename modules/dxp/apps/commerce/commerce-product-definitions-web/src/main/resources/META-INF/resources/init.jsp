@@ -30,7 +30,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.asset.kernel.model.AssetRenderer" %><%@
 page import="com.liferay.commerce.product.constants.CPConstants" %><%@
-page import="com.liferay.commerce.product.constants.CPPortletKeys" %><%@
+page import="com.liferay.commerce.product.constants.CPPortletKeys" %><%@ page import="com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionsSEOInfoDisplayContext" %><%@
 page import="com.liferay.commerce.product.constants.CPWebKeys" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.display.context.CPAttachmentFileEntriesDisplayContext" %><%@
 page import="com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionLinkDisplayContext" %><%@

@@ -21,8 +21,7 @@ public class CPInstanceScreenNavigationConstants {
 
 	public static final String CATEGORY_KEY_DETAILS = "details";
 
-	public static final String CATEGORY_KEY_PRICING_ADJUSTMENT =
-		"pricing-adjustment";
+	public static final String CATEGORY_KEY_PRICING = "pricing";
 
 	public static final String CATEGORY_KEY_SHIPPING_ADJUSTMENT =
 		"shipping-adjustment";

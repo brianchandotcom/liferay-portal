@@ -93,7 +93,7 @@ if (!assetPublisherDisplayContext.isPaginationTypeNone()) {
 %>
 
 <c:if test="<%= assetPublisherDisplayContext.isShowMetadataDescriptions() %>">
-	<liferay-ui:categorization-filter
+	<liferay-asset:categorization-filter
 		assetType="content"
 		portletURL="<%= portletURL %>"
 	/>

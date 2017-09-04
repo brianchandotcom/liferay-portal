@@ -17,6 +17,7 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.exception.CPDefinitionStatusException;
 import com.liferay.commerce.product.exception.CPFriendlyURLEntryException;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -118,12 +119,6 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		long cpDefinitionId = ParamUtil.getLong(
-			actionRequest, "cpDefinitionId");
-
-		CPDefinition cpDefinition = _cpDefinitionService.fetchCPDefinition(
-			cpDefinitionId);
-
 		try {
 			if (cmd.equals(Constants.DELETE)) {
 				deleteCPDefinitions(actionRequest, false);
@@ -131,39 +126,18 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.UPDATE)) {
 
-				cpDefinition = updateCPDefinition(actionRequest);
+				CPDefinition cpDefinition = updateCPDefinition(actionRequest);
 
 				String redirect = getSaveAndContinueRedirect(
-					actionRequest, cpDefinition, "editProductDefinition");
-
-				sendRedirect(actionRequest, actionResponse, redirect);
-			}
-			else if (cmd.equals("updatePricingInfo")) {
-				cpDefinition = updatePricingInfo(actionRequest);
-
-				String redirect = getSaveAndContinueRedirect(
-					actionRequest, cpDefinition,
-					"editProductDefinitionPricingInfo");
+					actionRequest, cpDefinition);
 
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else if (cmd.equals("updateSEOInfo")) {
-				cpDefinition = updateSEOInfo(actionRequest);
-
-				String redirect = getSaveAndContinueRedirect(
-					actionRequest, cpDefinition,
-					"editProductDefinitionSEOInfo");
-
-				sendRedirect(actionRequest, actionResponse, redirect);
+				updateSEOInfo(actionRequest);
 			}
 			else if (cmd.equals("updateShippingInfo")) {
-				cpDefinition = updateShippingInfo(actionRequest);
-
-				String redirect = getSaveAndContinueRedirect(
-					actionRequest, cpDefinition,
-					"editProductDefinitionShippingInfo");
-
-				sendRedirect(actionRequest, actionResponse, redirect);
+				updateShippingInfo(actionRequest);
 			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
 				deleteCPDefinitions(actionRequest, true);
@@ -181,21 +155,14 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else if (e instanceof AssetCategoryException ||
-					 e instanceof AssetTagException) {
+					 e instanceof AssetTagException ||
+					 e instanceof CPDefinitionStatusException ||
+					 e instanceof CPFriendlyURLEntryException) {
 
 				SessionErrors.add(actionRequest, e.getClass(), e);
 
-				String redirect = getSaveAndContinueRedirect(
-					actionRequest, cpDefinition, "editProductDefinition");
-
-				sendRedirect(actionRequest, actionResponse, redirect);
-			}
-			else if (e instanceof CPFriendlyURLEntryException) {
-				SessionErrors.add(actionRequest, e.getClass(), e);
-
-				String redirect = getSaveAndContinueRedirect(
-					actionRequest, cpDefinition,
-					"editProductDefinitionSEOInfo");
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
 
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
@@ -206,28 +173,22 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected String getSaveAndContinueRedirect(
-			ActionRequest actionRequest, CPDefinition cpDefinition,
-			String mvcRenderCommandName)
+			ActionRequest actionRequest, CPDefinition cpDefinition)
 		throws Exception {
 
-		if (cpDefinition != null) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-			PortletURL portletURL = PortletProviderUtil.getPortletURL(
-				actionRequest, themeDisplay.getScopeGroup(),
-				CPDefinition.class.getName(), PortletProvider.Action.EDIT);
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			actionRequest, themeDisplay.getScopeGroup(),
+			CPDefinition.class.getName(), PortletProvider.Action.EDIT);
 
-			portletURL.setParameter(
-				"mvcRenderCommandName", mvcRenderCommandName);
-			portletURL.setParameter(
-				"cpDefinitionId",
-				String.valueOf(cpDefinition.getCPDefinitionId()));
+		portletURL.setParameter(
+			"mvcRenderCommandName", "editProductDefinition");
+		portletURL.setParameter(
+			"cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
 
-			return portletURL.toString();
-		}
-
-		return ParamUtil.getString(actionRequest, "redirect");
+		return portletURL.toString();
 	}
 
 	protected void restoreTrashEntries(ActionRequest actionRequest)
@@ -257,10 +218,6 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, "descriptionMapAsXML");
 		String productTypeName = ParamUtil.getString(
 			actionRequest, "productTypeName");
-		String baseSKU = ParamUtil.getString(actionRequest, "baseSKU");
-		String gtin = ParamUtil.getString(actionRequest, "gtin");
-		String manufacturerPartNumber = ParamUtil.getString(
-			actionRequest, "manufacturerPartNumber");
 		String layoutUuid = ParamUtil.getString(actionRequest, "layoutUuid");
 		int minCartQuantity = ParamUtil.getInteger(
 			actionRequest, "minCartQuantity");
@@ -318,47 +275,32 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			// Add commerce product definition
 
 			cpDefinition = _cpDefinitionService.addCPDefinition(
-				baseSKU, titleMap, shortDescriptionMap, descriptionMap,
-				layoutUuid, productTypeName, gtin, manufacturerPartNumber,
-				minCartQuantity, maxCartQuantity, allowedCartQuantities,
-				multipleCartQuantity, null, displayDateMonth, displayDateDay,
-				displayDateYear, displayDateHour, displayDateMinute,
-				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, neverExpire,
-				serviceContext);
+				titleMap, shortDescriptionMap, descriptionMap, layoutUuid,
+				productTypeName, minCartQuantity, maxCartQuantity,
+				allowedCartQuantities, multipleCartQuantity, null,
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, expirationDateMonth,
+				expirationDateDay, expirationDateYear, expirationDateHour,
+				expirationDateMinute, neverExpire, serviceContext);
 		}
 		else {
 
 			// Update commerce product definition
 
 			cpDefinition = _cpDefinitionService.updateCPDefinition(
-				cpDefinitionId, baseSKU, titleMap, shortDescriptionMap,
-				descriptionMap, layoutUuid, gtin, manufacturerPartNumber,
-				minCartQuantity, maxCartQuantity, allowedCartQuantities,
-				multipleCartQuantity, null, displayDateMonth, displayDateDay,
-				displayDateYear, displayDateHour, displayDateMinute,
-				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, neverExpire,
-				serviceContext);
+				cpDefinitionId, titleMap, shortDescriptionMap, descriptionMap,
+				layoutUuid, minCartQuantity, maxCartQuantity,
+				allowedCartQuantities, multipleCartQuantity, null,
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, expirationDateMonth,
+				expirationDateDay, expirationDateYear, expirationDateHour,
+				expirationDateMinute, neverExpire, serviceContext);
 		}
 
 		return cpDefinition;
 	}
 
-	protected CPDefinition updatePricingInfo(ActionRequest actionRequest)
-		throws PortalException {
-
-		long cpDefinitionId = ParamUtil.getLong(
-			actionRequest, "cpDefinitionId");
-
-		double cost = ParamUtil.getDouble(actionRequest, "cost");
-		double price = ParamUtil.getDouble(actionRequest, "price");
-
-		return _cpDefinitionService.updatePricingInfo(
-			cpDefinitionId, cost, price);
-	}
-
-	protected CPDefinition updateSEOInfo(ActionRequest actionRequest)
+	protected void updateSEOInfo(ActionRequest actionRequest)
 		throws PortalException {
 
 		long cpDefinitionId = ParamUtil.getLong(
@@ -375,12 +317,12 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			LocalizationUtil.getLocalizationMap(
 				actionRequest, "metaDescriptionMapAsXML");
 
-		return _cpDefinitionService.updateSEOInfo(
+		_cpDefinitionService.updateSEOInfo(
 			cpDefinitionId, urlTitleMap, metaTitleMap, metaKeywordsMap,
 			metaDescriptionMap);
 	}
 
-	protected CPDefinition updateShippingInfo(ActionRequest actionRequest)
+	protected void updateShippingInfo(ActionRequest actionRequest)
 		throws PortalException {
 
 		long cpDefinitionId = ParamUtil.getLong(
@@ -391,7 +333,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		double depth = ParamUtil.getDouble(actionRequest, "depth");
 		double weight = ParamUtil.getDouble(actionRequest, "weight");
 
-		return _cpDefinitionService.updateShippingInfo(
+		_cpDefinitionService.updateShippingInfo(
 			cpDefinitionId, width, height, depth, weight);
 	}
 

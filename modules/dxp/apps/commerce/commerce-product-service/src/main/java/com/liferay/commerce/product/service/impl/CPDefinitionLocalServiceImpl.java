@@ -180,7 +180,7 @@ public class CPDefinitionLocalServiceImpl
 		// Commerce product instance
 
 		cpInstanceLocalService.addCPInstance(
-			cpDefinitionId, CPConstants.INSTANCE_SKU_DEFAULT, null, null, null,
+			cpDefinitionId, CPConstants.INSTANCE_DEFAULT_SKU, null, null, null,
 			false, minCartQuantity, maxCartQuantity, allowedCartQuantities,
 			multipleCartQuantity, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,

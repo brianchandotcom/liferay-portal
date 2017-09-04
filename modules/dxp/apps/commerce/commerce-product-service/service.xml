@@ -93,10 +93,7 @@
 
 		<!-- Other fields -->
 
-		<column name="baseSKU" type="String" />
 		<column name="productTypeName" type="String" />
-		<column name="gtin" type="String" />
-		<column name="manufacturerPartNumber" type="String" />
 		<column name="availableIndividually" type="boolean" />
 		<column name="minCartQuantity" type="int" />
 		<column name="maxCartQuantity" type="int" />
@@ -106,8 +103,6 @@
 		<column name="height" type="double" />
 		<column name="depth" type="double" />
 		<column name="weight" type="double" />
-		<column name="cost" type="double" />
-		<column name="price" type="double" />
 		<column name="DDMStructureKey" type="String" />
 		<column name="displayDate" type="Date" />
 		<column name="expirationDate" type="Date" />
@@ -517,6 +512,11 @@
 		<column name="gtin" type="String" />
 		<column name="manufacturerPartNumber" type="String" />
 		<column name="DDMContent" type="String" />
+		<column name="overrideInventory" type="boolean" />
+		<column name="minCartQuantity" type="int" />
+		<column name="maxCartQuantity" type="int" />
+		<column name="allowedCartQuantities" type="String" />
+		<column name="multipleCartQuantity" type="int" />
 		<column name="width" type="double" />
 		<column name="height" type="double" />
 		<column name="depth" type="double" />
@@ -834,6 +834,7 @@
 		<exception>CPDefinitionExpirationDate</exception>
 		<exception>CPDefinitionOptionValueRelKey</exception>
 		<exception>CPDefinitionProductTypeName</exception>
+		<exception>CPDefinitionStatus</exception>
 		<exception>CPFriendlyURLEntry</exception>
 		<exception>CPInstanceDisplayDate</exception>
 		<exception>CPInstanceExpirationDate</exception>

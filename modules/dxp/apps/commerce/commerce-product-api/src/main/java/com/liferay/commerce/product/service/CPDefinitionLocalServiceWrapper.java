@@ -107,6 +107,12 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		_cpDefinitionLocalService.checkCPDefinitions();
 	}
 
+	@Override
+	public void checkCPDefinitionStatus(long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_cpDefinitionLocalService.checkCPDefinitionStatus(cpDefinitionId);
+	}
+
 	/**
 	* Creates a new cp definition with the primary key. Does not add the cp definition to the database.
 	*

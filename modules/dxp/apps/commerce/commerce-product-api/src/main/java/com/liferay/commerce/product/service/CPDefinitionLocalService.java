@@ -120,6 +120,9 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 
 	public void checkCPDefinitions() throws PortalException;
 
+	public void checkCPDefinitionStatus(long cpDefinitionId)
+		throws PortalException;
+
 	/**
 	* Creates a new cp definition with the primary key. Does not add the cp definition to the database.
 	*

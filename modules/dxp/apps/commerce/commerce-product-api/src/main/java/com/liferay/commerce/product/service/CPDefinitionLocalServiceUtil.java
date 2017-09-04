@@ -113,6 +113,11 @@ public class CPDefinitionLocalServiceUtil {
 		getService().checkCPDefinitions();
 	}
 
+	public static void checkCPDefinitionStatus(long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().checkCPDefinitionStatus(cpDefinitionId);
+	}
+
 	/**
 	* Creates a new cp definition with the primary key. Does not add the cp definition to the database.
 	*

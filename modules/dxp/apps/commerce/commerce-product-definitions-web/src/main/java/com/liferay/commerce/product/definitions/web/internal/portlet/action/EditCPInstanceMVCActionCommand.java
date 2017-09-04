@@ -98,14 +98,14 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 			else if (cmd.equals(Constants.ADD_MULTIPLE)) {
 				buildCPInstances(actionRequest);
 			}
+			else if (cmd.equals(Constants.DELETE)) {
+				deleteCPInstances(actionRequest);
+			}
 			else if (cmd.equals("updatePricingInfo")) {
 				updatePricingInfo(actionRequest);
 			}
 			else if (cmd.equals("updateShippingInfo")) {
 				updateShippingInfo(actionRequest);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
-				deleteCPInstances(actionRequest);
 			}
 		}
 		catch (Exception e) {
@@ -224,16 +224,23 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 	protected void updatePricingInfo(ActionRequest actionRequest)
 		throws PortalException {
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CPInstance.class.getName(), actionRequest);
+
 		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
 
 		double cost = ParamUtil.getDouble(actionRequest, "cost");
 		double price = ParamUtil.getDouble(actionRequest, "price");
 
-		_cpInstanceService.updatePricingInfo(cpInstanceId, cost, price);
+		_cpInstanceService.updatePricingInfo(
+			cpInstanceId, cost, price, serviceContext);
 	}
 
 	protected void updateShippingInfo(ActionRequest actionRequest)
 		throws PortalException {
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CPInstance.class.getName(), actionRequest);
 
 		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
 
@@ -243,7 +250,7 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		double weight = ParamUtil.getDouble(actionRequest, "weight");
 
 		_cpInstanceService.updateShippingInfo(
-			cpInstanceId, width, height, depth, weight);
+			cpInstanceId, width, height, depth, weight, serviceContext);
 	}
 
 	@Reference

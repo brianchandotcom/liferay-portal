@@ -262,7 +262,8 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 
 	@Override
 	public CPInstance updatePricingInfo(
-			long cpInstanceId, double cost, double price)
+			long cpInstanceId, double cost, double price,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinitionPermission.checkCPInstance(
@@ -270,13 +271,13 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			CPActionKeys.UPDATE_COMMERCE_PRODUCT_INSTANCE);
 
 		return cpInstanceLocalService.updatePricingInfo(
-			cpInstanceId, cost, price);
+			cpInstanceId, cost, price, serviceContext);
 	}
 
 	@Override
 	public CPInstance updateShippingInfo(
 			long cpInstanceId, double width, double height, double depth,
-			double weight)
+			double weight, ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinitionPermission.checkCPInstance(
@@ -284,7 +285,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			CPActionKeys.UPDATE_COMMERCE_PRODUCT_INSTANCE);
 
 		return cpInstanceLocalService.updateShippingInfo(
-			cpInstanceId, width, height, depth, weight);
+			cpInstanceId, width, height, depth, weight, serviceContext);
 	}
 
 	@Override

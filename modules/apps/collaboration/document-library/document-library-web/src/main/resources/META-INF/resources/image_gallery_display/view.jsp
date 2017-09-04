@@ -105,7 +105,7 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 
 	<c:choose>
 		<c:when test="<%= useAssetEntryQuery %>">
-			<liferay-ui:categorization-filter
+			<liferay-asset:categorization-filter
 				assetType="images"
 				portletURL="<%= portletURL %>"
 			/>

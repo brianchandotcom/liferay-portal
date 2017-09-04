@@ -14,13 +14,11 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
-
-<portlet:defineObjects />
+<%@ include file="/categorization_filter/init.jsp" %>
 
 <%
-String assetType = GetterUtil.getString((String)request.getAttribute("liferay-ui:categorization-filter:assetType"), "content");
-PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:categorization-filter:portletURL");
+String assetType = GetterUtil.getString((String)request.getAttribute("liferay-asset:categorization-filter:assetType"), "content");
+PortletURL portletURL = (PortletURL)request.getAttribute("liferay-asset:categorization-filter:portletURL");
 
 if (portletURL == null) {
 	portletURL = renderResponse.createRenderURL();

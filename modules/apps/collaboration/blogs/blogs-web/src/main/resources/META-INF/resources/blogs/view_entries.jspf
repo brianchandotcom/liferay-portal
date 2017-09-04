@@ -67,7 +67,7 @@
 	</c:if>
 </div>
 
-<liferay-ui:categorization-filter
+<liferay-asset:categorization-filter
 	assetType="entries"
 	portletURL="<%= portletURL %>"
 />

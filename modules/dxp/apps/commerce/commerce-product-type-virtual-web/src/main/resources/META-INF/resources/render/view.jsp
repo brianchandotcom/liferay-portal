@@ -70,8 +70,6 @@ CPDefinition cpDefinition = virtualCPTypeDisplayContext.getCPDefinition();
 			<div class="col-lg-6 col-md-5">
 				<h1><%= cpDefinition.getTitle(languageId) %></h1>
 
-				<h4>Code: <%= cpDefinition.getBaseSKU() %></h4>
-
 				<div class="row-fluid">
 					<div class="col-md-12">
 						<c:if test="<%= virtualCPTypeDisplayContext.hasSampleURL() %>">

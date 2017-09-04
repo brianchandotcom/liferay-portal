@@ -31,8 +31,6 @@
 		<div class="col-lg-6 col-md-5">
 			<h1>${cpDefinition.getTitle()}</h1>
 
-			<h4>Code: ${cpDefinition.getBaseSKU()}</h4>
-
 			<div class="row">
 				<div class="col-lg-12">
 					<#assign cpDefinitionGroupedEntries = groupedCPTypeDisplayContext.getCPDefinitionGroupedEntry() />

@@ -560,9 +560,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		cpInstance.setCost(cost);
 		cpInstance.setPrice(price);
 
-		cpInstancePersistence.update(cpInstance);
-
-		return cpInstance;
+		return cpInstancePersistence.update(cpInstance);
 	}
 
 	@Override
@@ -579,9 +577,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		cpInstance.setDepth(depth);
 		cpInstance.setWeight(weight);
 
-		cpInstancePersistence.update(cpInstance);
-
-		return cpInstance;
+		return cpInstancePersistence.update(cpInstance);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

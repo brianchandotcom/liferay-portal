@@ -26,8 +26,10 @@ import com.liferay.document.library.repository.external.ExtRepositoryObjectType;
 import com.liferay.document.library.repository.external.ExtRepositorySearchResult;
 import com.liferay.document.library.repository.external.search.ExtRepositoryQueryMapper;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -120,7 +122,7 @@ public class SharepointExtRepository implements ExtRepository {
 
 	@Override
 	public String getAuthType() {
-		throw new UnsupportedOperationException();
+		return CompanyConstants.AUTH_TYPE_ID;
 	}
 
 	@Override
@@ -210,7 +212,7 @@ public class SharepointExtRepository implements ExtRepository {
 
 	@Override
 	public String getLiferayLogin(String extRepositoryLogin) {
-		throw new UnsupportedOperationException();
+		return String.valueOf(PrincipalThreadLocal.getUserId());
 	}
 
 	@Override

@@ -335,6 +335,9 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			Map<Locale, String> metaDescriptionMap)
 		throws PortalException {
 
+		CPDefinitionPermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
+
 		return cpDefinitionLocalService.updateSEOInfo(
 			cpDefinitionId, urlTitleMap, metaTitleMap, metaKeywordsMap,
 			metaDescriptionMap);

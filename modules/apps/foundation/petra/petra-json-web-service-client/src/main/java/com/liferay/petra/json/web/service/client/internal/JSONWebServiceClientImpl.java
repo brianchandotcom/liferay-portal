@@ -50,6 +50,7 @@ import org.apache.http.StatusLine;
 import org.apache.http.auth.AuthScheme;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.ChallengeState;
+import org.apache.http.auth.Credentials;
 import org.apache.http.auth.NTCredentials;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.AuthCache;
@@ -148,53 +149,10 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 		httpAsyncClientBuilder.setConnectionManager(
 			nHttpClientConnectionManager);
 
-		if ((!isNull(_login) && !isNull(_password)) ||
-			(!isNull(_proxyLogin) && !isNull(_proxyPassword))) {
-
-			CredentialsProvider credentialsProvider =
-				new BasicCredentialsProvider();
-
-			if (!isNull(_login)) {
-				credentialsProvider.setCredentials(
-					new AuthScope(_hostName, _hostPort),
-					new UsernamePasswordCredentials(_login, _password));
-			}
-			else {
-				if (_logger.isInfoEnabled()) {
-					_logger.info("No credentials are used");
-				}
-			}
-
-			if (!isNull(_proxyLogin)) {
-				if (!isNull(_proxyAuthType) &&
-					_proxyAuthType.equalsIgnoreCase("ntlm")) {
-
-					credentialsProvider.setCredentials(
-						new AuthScope(_proxyHostName, _proxyHostPort),
-						new NTCredentials(
-							_proxyLogin, _proxyPassword, _proxyWorkstation,
-							_proxyDomain));
-				}
-				else {
-					credentialsProvider.setCredentials(
-						new AuthScope(_proxyHostName, _proxyHostPort),
-						new UsernamePasswordCredentials(
-							_proxyLogin, _proxyPassword));
-				}
-
-				HttpHost proxy = new HttpHost(
-					_proxyHostName, _proxyHostPort, _protocol);
-
-				RequestConfig.Builder builder = RequestConfig.custom();
-
-				builder.setProxy(proxy);
-
-				httpAsyncClientBuilder.setDefaultRequestConfig(builder.build());
-			}
-
-			httpAsyncClientBuilder.setDefaultCredentialsProvider(
-				credentialsProvider);
-		}
+		httpAsyncClientBuilder.setDefaultCredentialsProvider(
+			_getCredentialsProvider());
+		httpAsyncClientBuilder.setDefaultRequestConfig(
+			_getProxyRequestConfig());
 
 		try {
 			_closeableHttpAsyncClient = httpAsyncClientBuilder.build();
@@ -207,8 +165,16 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 			_idleConnectionMonitorThread.start();
 
 			if (_logger.isDebugEnabled()) {
-				_logger.debug(
-					"Configured client for " + _protocol + "://" + _hostName);
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("Configured client for ");
+				sb.append(_protocol);
+				sb.append("://");
+				sb.append(_hostName);
+				sb.append(":");
+				sb.append(_hostPort);
+
+				_logger.debug(sb.toString());
 			}
 		}
 		catch (Exception e) {
@@ -774,6 +740,77 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 		}
 
 		return nameValuePairs;
+	}
+
+	private CredentialsProvider _getCredentialsProvider() {
+		if ((isNull(_login) || isNull(_password)) &&
+			(isNull(_proxyLogin) || isNull(_proxyPassword))) {
+
+			return null;
+		}
+
+		CredentialsProvider credentialsProvider =
+			new BasicCredentialsProvider();
+
+		if (!isNull(_login)) {
+			credentialsProvider.setCredentials(
+				new AuthScope(_hostName, _hostPort),
+				new UsernamePasswordCredentials(_login, _password));
+
+			if (_logger.isDebugEnabled()) {
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("Basic credentials are used for ");
+				sb.append(_hostName);
+				sb.append(":");
+				sb.append(_hostPort);
+
+				_logger.debug(sb.toString());
+			}
+		}
+
+		if (isNull(_proxyLogin)) {
+			return credentialsProvider;
+		}
+
+		credentialsProvider.setCredentials(
+			new AuthScope(_proxyHostName, _proxyHostPort),
+			_getProxyCredentials());
+
+		if (_logger.isDebugEnabled()) {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("Proxy credentials are used for ");
+			sb.append(_hostName);
+			sb.append(":");
+			sb.append(_hostPort);
+
+			_logger.debug(sb.toString());
+		}
+
+		return credentialsProvider;
+	}
+
+	private Credentials _getProxyCredentials() {
+		if ("ntlm".equalsIgnoreCase(_proxyAuthType)) {
+			return new NTCredentials(
+				_proxyLogin, _proxyPassword, _proxyWorkstation, _proxyDomain);
+		}
+
+		return new UsernamePasswordCredentials(_proxyLogin, _proxyPassword);
+	}
+
+	private RequestConfig _getProxyRequestConfig() {
+		if (isNull(_proxyLogin) || isNull(_proxyPassword)) {
+			return null;
+		}
+
+		RequestConfig.Builder builder = RequestConfig.custom();
+
+		builder.setProxy(
+			new HttpHost(_proxyHostName, _proxyHostPort, _protocol));
+
+		return builder.build();
 	}
 
 	private void _setHeaders(String headersString) {

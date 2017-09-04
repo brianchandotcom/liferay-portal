@@ -90,7 +90,6 @@ public class CommerceOrderLocalServiceImpl
 
 		for (CommerceCartItem commerceCartItem : commerceCartItems) {
 			double price = _commercePriceCalculationHelper.getPrice(
-				commerceCartItem.getCPDefinitionId(),
 				commerceCartItem.getCPInstanceId(),
 				commerceCartItem.getQuantity());
 

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sharepoint.repository.internal.configuration.SharepointRepositoryConfiguration;
 import com.liferay.sharepoint.repository.internal.document.library.repository.external.model.SharepointFileEntry;
 import com.liferay.sharepoint.repository.internal.document.library.repository.external.model.SharepointModel;
@@ -183,7 +184,23 @@ public class SharepointExtRepository implements ExtRepository {
 			String newTitle)
 		throws PortalException {
 
-		throw new UnsupportedOperationException();
+		try {
+			if (extRepositoryObjectType != ExtRepositoryObjectType.FILE) {
+				throw new UnsupportedOperationException();
+			}
+
+			String url = _sharepointURLHelper.getCopyFileURL(
+				extRepositoryFileEntryKey, newExtRepositoryFolderKey, newTitle);
+
+			_post(url);
+
+			return getExtRepositoryObject(
+				extRepositoryObjectType,
+				newExtRepositoryFolderKey + StringPool.SLASH + newTitle);
+		}
+		catch (UnirestException ue) {
+			throw new PortalException(ue);
+		}
 	}
 
 	@Override
@@ -462,7 +479,29 @@ public class SharepointExtRepository implements ExtRepository {
 			String newTitle)
 		throws PortalException {
 
-		throw new UnsupportedOperationException();
+		if (extRepositoryObjectType != ExtRepositoryObjectType.FILE) {
+			ExtRepositoryFolder extRepositoryFolder = _copyExtRepositoryFolder(
+				extRepositoryObjectKey, newExtRepositoryFolderKey, newTitle);
+
+			deleteExtRepositoryObject(
+				ExtRepositoryObjectType.FOLDER, extRepositoryObjectKey);
+
+			return (T)extRepositoryFolder;
+		}
+
+		try {
+			String url = _sharepointURLHelper.getMoveFileURL(
+				extRepositoryObjectKey, newExtRepositoryFolderKey, newTitle);
+
+			_post(url);
+
+			return getExtRepositoryObject(
+				extRepositoryObjectType,
+				newExtRepositoryFolderKey + StringPool.SLASH + newTitle);
+		}
+		catch (UnirestException ue) {
+			throw new PortalException(ue);
+		}
 	}
 
 	@Override
@@ -492,6 +531,52 @@ public class SharepointExtRepository implements ExtRepository {
 		catch (IOException | UnirestException e) {
 			throw new PortalException(e);
 		}
+	}
+
+	private ExtRepositoryFolder _copyExtRepositoryFolder(
+			String extRepositoryFolderKey, String newExtRepositoryFolderKey,
+			String newTitle)
+		throws PortalException {
+
+		ExtRepositoryFolder originalExtRepositoryFolder =
+			getExtRepositoryObject(
+				ExtRepositoryObjectType.FOLDER, extRepositoryFolderKey);
+
+		if (Validator.isNull(newTitle)) {
+			newTitle = originalExtRepositoryFolder.getName();
+		}
+
+		ExtRepositoryFolder newExtRepositoryFolder = addExtRepositoryFolder(
+			newExtRepositoryFolderKey, newTitle,
+			originalExtRepositoryFolder.getDescription());
+
+		List<ExtRepositoryFolder> extRepositoryFolders =
+			getExtRepositoryObjects(
+				ExtRepositoryObjectType.FOLDER,
+				originalExtRepositoryFolder.getExtRepositoryModelKey());
+
+		for (ExtRepositoryFolder extRepositoryFolder : extRepositoryFolders) {
+			_copyExtRepositoryFolder(
+				extRepositoryFolder.getExtRepositoryModelKey(),
+				newExtRepositoryFolder.getExtRepositoryModelKey(), null);
+		}
+
+		List<ExtRepositoryFileEntry> extRepositoryFileEntries =
+			getExtRepositoryObjects(
+				ExtRepositoryObjectType.FILE,
+				originalExtRepositoryFolder.getExtRepositoryModelKey());
+
+		for (ExtRepositoryFileEntry extRepositoryFileEntry :
+				extRepositoryFileEntries) {
+
+			copyExtRepositoryObject(
+				ExtRepositoryObjectType.FILE,
+				extRepositoryFileEntry.getExtRepositoryModelKey(),
+				newExtRepositoryFolder.getExtRepositoryModelKey(),
+				extRepositoryFileEntry.getTitle());
+		}
+
+		return newExtRepositoryFolder;
 	}
 
 	private void _delete(String url) throws PortalException, UnirestException {

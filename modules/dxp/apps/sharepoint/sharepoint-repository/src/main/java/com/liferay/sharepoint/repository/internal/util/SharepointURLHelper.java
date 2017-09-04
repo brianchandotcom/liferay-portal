@@ -83,6 +83,17 @@ public class SharepointURLHelper {
 			_siteAbsoluteURL, extRepositoryFileEntryKey);
 	}
 
+	public String getCopyFileURL(
+		String extRepositoryFileEntryKey, String newExtRepositoryFolderKey,
+		String newTitle) {
+
+		return String.format(
+			"%s/_api/web/GetFileByServerRelativeUrl('%s')/CopyTo(strnewurl=" +
+				"'%s',boverwrite=false)",
+			_siteAbsoluteURL, extRepositoryFileEntryKey,
+			newExtRepositoryFolderKey + StringPool.SLASH + newTitle);
+	}
+
 	public <T extends ExtRepositoryObject> String getDeleteObjectURL(
 		ExtRepositoryObjectType<T> extRepositoryObjectType,
 		String extRepositoryObjectKey) {
@@ -130,6 +141,17 @@ public class SharepointURLHelper {
 				"%s&$expand=%s",
 			_siteAbsoluteURL, extRepositoryFolderKey, _FIELDS_SELECTED_FOLDER,
 			_FIELDS_EXPANDED_FOLDER);
+	}
+
+	public String getMoveFileURL(
+		String extRepositoryFileEntryKey, String extRepositoryFolderKey,
+		String title) {
+
+		return String.format(
+			"%s/_api/web/GetFileByServerRelativeUrl('%s')/MoveTo(newurl='%s'," +
+				"flags=1)",
+			_siteAbsoluteURL, extRepositoryFileEntryKey,
+			extRepositoryFolderKey + StringPool.SLASH + title);
 	}
 
 	public <T extends ExtRepositoryObject> String getObjectsCountURL(

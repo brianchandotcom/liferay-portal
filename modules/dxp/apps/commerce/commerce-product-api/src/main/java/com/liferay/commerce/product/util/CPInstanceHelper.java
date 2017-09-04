@@ -37,8 +37,9 @@ import javax.portlet.RenderResponse;
 public interface CPInstanceHelper {
 
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
-			long cpDefinitionId, Locale locale, String serializedDDMFormValues)
-		throws PortalException;
+			long cpDefinitionId, Locale locale, String serializedDDMFormValues,
+			int type)
+		throws Exception;
 
 	public DDMForm getDDMForm(
 			long cpDefinitionId, Locale locale, boolean required)
@@ -59,8 +60,5 @@ public interface CPInstanceHelper {
 			long cpDefinitionId, String json, boolean required,
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException;
-
-	public String toJSON(
-		long cpDefinitionId, Locale locale, String serializedDDMFormValues);
 
 }

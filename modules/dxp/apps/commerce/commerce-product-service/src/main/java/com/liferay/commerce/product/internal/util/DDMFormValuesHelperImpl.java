@@ -26,8 +26,6 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -44,15 +42,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class DDMFormValuesHelperImpl implements DDMFormValuesHelper {
-
-	public static final String FIELD_CP_DEFINITION_OPTION_REL_ID =
-		"cpDefinitionOptionRelId";
-
-	public static final String FIELD_CP_DEFINITION_OPTION_VALUE_REL_ID =
-		"cpDefinitionOptionValueRelId";
-
-	public static final String FIELD_VALUE_PREFIX =
-		"_cpDefinitionOptionValueRelId_";
 
 	@Override
 	public DDMFormValues deserialize(
@@ -122,15 +111,12 @@ public class DDMFormValuesHelperImpl implements DDMFormValuesHelper {
 	protected DDMFormFieldValue getDDMFormFieldValue(JSONObject jsonObject) {
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
-		ddmFormFieldValue.setName(
-			jsonObject.getString(FIELD_CP_DEFINITION_OPTION_REL_ID));
+		ddmFormFieldValue.setName(jsonObject.getString("key"));
 
-		String cpDefinitionOptionValueRelId = jsonObject.getString(
-			FIELD_CP_DEFINITION_OPTION_VALUE_REL_ID);
+		String cpDefinitionOptionValueRelId = jsonObject.getString("value");
 
 		if (Validator.isNotNull(cpDefinitionOptionValueRelId)) {
-			String ddmFormFieldValueValue =
-				FIELD_VALUE_PREFIX + cpDefinitionOptionValueRelId;
+			String ddmFormFieldValueValue = cpDefinitionOptionValueRelId;
 
 			ddmFormFieldValue.setValue(
 				new UnlocalizedValue(ddmFormFieldValueValue));
@@ -142,17 +128,13 @@ public class DDMFormValuesHelperImpl implements DDMFormValuesHelper {
 	private JSONObject _toJSONObject(DDMFormFieldValue ddmFormFieldValue) {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		jsonObject.put(
-			FIELD_CP_DEFINITION_OPTION_REL_ID, ddmFormFieldValue.getName());
+		jsonObject.put("key", ddmFormFieldValue.getName());
 
 		Value value = ddmFormFieldValue.getValue();
 
 		String valueString = value.getString(LocaleUtil.ROOT);
 
-		valueString = StringUtil.replace(
-			valueString, FIELD_VALUE_PREFIX, StringPool.BLANK);
-
-		jsonObject.put(FIELD_CP_DEFINITION_OPTION_VALUE_REL_ID, valueString);
+		jsonObject.put("value", valueString);
 
 		return jsonObject;
 	}
@@ -163,10 +145,8 @@ public class DDMFormValuesHelperImpl implements DDMFormValuesHelper {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
-			String key = jsonObject1.getString(
-				FIELD_CP_DEFINITION_OPTION_REL_ID);
-			String value = jsonObject1.getString(
-				FIELD_CP_DEFINITION_OPTION_VALUE_REL_ID);
+			String key = jsonObject1.getString("key");
+			String value = jsonObject1.getString("value");
 
 			set.add(new KeyValuePair(key, value));
 		}

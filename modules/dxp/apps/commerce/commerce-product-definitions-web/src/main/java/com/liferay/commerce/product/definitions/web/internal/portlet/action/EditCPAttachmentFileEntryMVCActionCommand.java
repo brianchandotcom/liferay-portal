@@ -215,8 +215,6 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 			actionRequest, "ddmFormValues");
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "title");
-		String json = _cpInstanceHelper.toJSON(
-			cpDefinitionId, locale, ddmFormValues);
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
 		int type = ParamUtil.getInteger(actionRequest, "type");
 
@@ -229,7 +227,8 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, expirationDateMonth, expirationDateDay,
 				expirationDateYear, expirationDateHour, expirationDateMinute,
-				neverExpire, titleMap, json, priority, type, serviceContext);
+				neverExpire, titleMap, ddmFormValues, priority, type,
+				serviceContext);
 		}
 		else {
 			long classNameId = _portal.getClassNameId(CPDefinition.class);
@@ -239,7 +238,8 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, expirationDateMonth, expirationDateDay,
 				expirationDateYear, expirationDateHour, expirationDateMinute,
-				neverExpire, titleMap, json, priority, type, serviceContext);
+				neverExpire, titleMap, ddmFormValues, priority, type,
+				serviceContext);
 		}
 	}
 

@@ -98,10 +98,25 @@ renderResponse.setTitle((cpInstance == null) ? LanguageUtil.get(request, "add-sk
 	function <portlet:namespace />saveInstance(forceDisable) {
 		var form = AUI.$(document.<portlet:namespace />fm);
 
-		var cpDefinitionOptionsRenderDDMForm = Liferay.component("<%= cpDefinition.getCPDefinitionId() %>DDMForm");
+		var ddmForm = Liferay.component("<%= cpDefinition.getCPDefinitionId() %>DDMForm");
 
-		if (cpDefinitionOptionsRenderDDMForm) {
-			form.fm('ddmFormValues').val(JSON.stringify(cpDefinitionOptionsRenderDDMForm.toJSON()));
+		if (ddmForm) {
+			var fields = ddmForm.getImmediateFields();
+
+			var fieldValues = [];
+
+			fields.forEach(
+				function(field) {
+					var fieldValue = {};
+
+					fieldValue.key = field.get('fieldName');
+					fieldValue.value = field.getValue();
+
+					fieldValues.push(fieldValue);
+				}
+			);
+
+			form.fm('ddmFormValues').val(JSON.stringify(fieldValues));
 		}
 
 		submitForm(form);

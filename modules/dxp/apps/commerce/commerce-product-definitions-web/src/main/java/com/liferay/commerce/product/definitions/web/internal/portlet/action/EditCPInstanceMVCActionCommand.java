@@ -207,11 +207,8 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 			String ddmFormValues = ParamUtil.getString(
 				actionRequest, "ddmFormValues");
 
-			String ddmContent = _cpInstanceHelper.toJSON(
-				cpDefinitionId, locale, ddmFormValues);
-
 			_cpInstanceService.addCPInstance(
-				cpDefinitionId, sku, gtin, manufacturerPartNumber, ddmContent,
+				cpDefinitionId, sku, gtin, manufacturerPartNumber, ddmFormValues,
 				overrideInventory, minCartQuantity, maxCartQuantity,
 				allowedCartQuantities, multipleCartQuantity, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,

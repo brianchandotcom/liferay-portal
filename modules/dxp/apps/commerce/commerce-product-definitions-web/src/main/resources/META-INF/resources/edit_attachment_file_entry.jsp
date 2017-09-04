@@ -128,10 +128,25 @@ renderResponse.setTitle((cpDefinition == null) ? LanguageUtil.get(request, addMe
 	function <portlet:namespace />saveAttachmentFileEntry(forceDisable) {
 		var form = AUI.$(document.<portlet:namespace />fm);
 
-		var cpDefinitionOptionsRenderDDMForm = Liferay.component("<%= cpDefinitionId %>DDMForm");
+		var ddmForm = Liferay.component("<%= cpDefinitionId %>DDMForm");
 
-		if (cpDefinitionOptionsRenderDDMForm) {
-			form.fm('ddmFormValues').val(JSON.stringify(cpDefinitionOptionsRenderDDMForm.toJSON()));
+		if (ddmForm) {
+			var fields = ddmForm.getImmediateFields();
+
+			var fieldValues = [];
+
+			fields.forEach(
+				function(field) {
+					var fieldValue = {};
+
+					fieldValue.key = field.get('fieldName');
+					fieldValue.value = field.getValue();
+
+					fieldValues.push(fieldValue);
+				}
+			);
+
+			form.fm('ddmFormValues').val(JSON.stringify(fieldValues));
 		}
 
 		submitForm(form);

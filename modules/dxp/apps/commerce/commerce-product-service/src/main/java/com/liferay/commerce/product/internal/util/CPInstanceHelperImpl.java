@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
@@ -84,8 +85,9 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 	@Override
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
-			long cpDefinitionId, Locale locale, String serializedDDMFormValues)
-		throws PortalException {
+			long cpDefinitionId, Locale locale, String serializedDDMFormValues,
+			int type)
+		throws Exception {
 
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries = new ArrayList<>();
 
@@ -95,8 +97,8 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		long cpDefinitionClassNameId = _portal.getClassNameId(
 			CPDefinition.class);
 
-		DDMFormValues ddmFormValues = getDDMFormValues(
-			cpDefinitionId, locale, serializedDDMFormValues);
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+			serializedDDMFormValues);
 
 		Indexer<CPAttachmentFileEntry> indexer =
 			IndexerRegistryUtil.nullSafeGetIndexer(CPAttachmentFileEntry.class);
@@ -112,6 +114,32 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			CPAttachmentFileEntryIndexer.FIELD_RELATED_ENTITY_CLASS_PK,
 			cpDefinitionId);
 		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
+		attributes.put(Field.TYPE, type);
+
+		List<String> optionsKeys = new ArrayList<>();
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			String key = jsonObject.getString("key");
+
+			String fieldName = "ATTRIBUTE_" + key + "_VALUES_IDS";
+
+			optionsKeys.add(fieldName);
+
+			JSONArray valuesJSONArray = JSONFactoryUtil.createJSONArray(
+				jsonObject.getString("value"));
+
+			String[] values = new String[valuesJSONArray.length()];
+
+			for (int ii = 0; ii < valuesJSONArray.length(); ii++) {
+				values[ii] = valuesJSONArray.getString(ii);
+			}
+
+			attributes.put(fieldName, values);
+		}
+
+		attributes.put("OPTIONS", ArrayUtil.toStringArray(optionsKeys));
 
 		searchContext.setAttributes(attributes);
 
@@ -170,29 +198,29 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 				continue;
 			}
 
+			CPOption cpOption = cpDefinitionOptionRel.getCPOption();
+
 			DDMFormField ddmFormField = new DDMFormField(
-				String.valueOf(cpDefinitionOptionRel.
-					getCPDefinitionOptionRelId()),
+				String.valueOf(
+					cpDefinitionOptionRel.getCPDefinitionOptionRelId()),
 				cpDefinitionOptionRel.getDDMFormFieldTypeName());
 
-			ddmFormField.setProperty(
-				"cpOption", cpDefinitionOptionRel.getCPOption());
+			ddmFormField.setProperty("cpOption", cpOption);
 
 			if (!cpDefinitionOptionValueRels.isEmpty()) {
 				DDMFormFieldOptions ddmFormFieldOptions =
 					new DDMFormFieldOptions();
 
-				ddmFormFieldOptions.addOptionLabel(
-					"_cpDefinitionOptionValueRelId_", locale, StringPool.BLANK);
-
 				for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
 						cpDefinitionOptionValueRels) {
 
+					String optionLabel = String.valueOf(
+						cpDefinitionOptionValueRel.
+							getCPDefinitionOptionValueRelId());
+
 					ddmFormFieldOptions.addOptionLabel(
-						"_cpDefinitionOptionValueRelId_" +
-							cpDefinitionOptionValueRel.
-								getCPDefinitionOptionValueRelId(),
-						locale, cpDefinitionOptionValueRel.getTitle(locale));
+						optionLabel, locale,
+						cpDefinitionOptionValueRel.getTitle(locale));
 				}
 
 				ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
@@ -251,10 +279,9 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			long cpDefinitionOptionRelId = jsonObject.getLong(
-				"cpDefinitionOptionRelId");
-			long cpDefinitionOptionValueRelId = jsonObject.getLong(
-				"cpDefinitionOptionValueRelId");
+			long cpDefinitionOptionRelId = GetterUtil.getLong(
+				jsonObject.getString("key"));
+			JSONArray valueJSONArray = jsonObject.getJSONArray("value");
 
 			CPDefinitionOptionRel cpDefinitionOptionRel =
 				_cpDefinitionOptionRelLocalService.fetchCPDefinitionOptionRel(
@@ -264,26 +291,31 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 				continue;
 			}
 
-			CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-				_cpDefinitionOptionValueRelLocalService.
-					fetchCPDefinitionOptionValueRel(
-						cpDefinitionOptionValueRelId);
+			for (int j = 0; j < valueJSONArray.length(); j++) {
+				long cpDefinitionOptionValueRelId = GetterUtil.getLong(
+					valueJSONArray.getString(j));
 
-			if (cpDefinitionOptionValueRel == null) {
-				continue;
+				CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+					_cpDefinitionOptionValueRelLocalService.
+						fetchCPDefinitionOptionValueRel(
+							cpDefinitionOptionValueRelId);
+
+				if (cpDefinitionOptionValueRel == null) {
+					continue;
+				}
+
+				List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+					cpDefinitionOptionRelListMap.get(cpDefinitionOptionRel);
+
+				if (cpDefinitionOptionValueRels == null) {
+					cpDefinitionOptionValueRels = new ArrayList<>();
+
+					cpDefinitionOptionRelListMap.put(
+						cpDefinitionOptionRel, cpDefinitionOptionValueRels);
+				}
+
+				cpDefinitionOptionValueRels.add(cpDefinitionOptionValueRel);
 			}
-
-			List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
-				cpDefinitionOptionRelListMap.get(cpDefinitionOptionRel);
-
-			if (cpDefinitionOptionValueRels == null) {
-				cpDefinitionOptionValueRels = new ArrayList<>();
-
-				cpDefinitionOptionRelListMap.put(
-					cpDefinitionOptionRel, cpDefinitionOptionValueRels);
-			}
-
-			cpDefinitionOptionValueRels.add(cpDefinitionOptionValueRel);
 		}
 
 		return cpDefinitionOptionRelListMap;
@@ -335,16 +367,6 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		}
 
 		return _ddmFormRenderer.render(ddmForm, ddmFormRenderingContext);
-	}
-
-	@Override
-	public String toJSON(
-		long cpDefinitionId, Locale locale, String serializedDDMFormValues) {
-
-		DDMFormValues ddmFormValues = getDDMFormValues(
-			cpDefinitionId, locale, serializedDDMFormValues);
-
-		return _ddmFormValuesHelper.serialize(ddmFormValues);
 	}
 
 	protected DDMFormRule createDDMFormRule(

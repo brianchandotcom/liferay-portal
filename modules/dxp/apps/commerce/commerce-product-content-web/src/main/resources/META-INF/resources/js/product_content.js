@@ -36,8 +36,34 @@ AUI.add(
 
 						(new A.EventHandle(instance._eventHandles)).detach();
 					},
-					_renderUI: function() {
+					getFormValues: function() {
 						var instance = this;
+
+						var cpDefinitionId = instance.get('cpDefinitionId');
+
+						var ddmForm = Liferay.component(cpDefinitionId + 'DDMForm');
+
+						if (!ddmForm) {
+							return {};
+						}
+
+						var fields = ddmForm.getImmediateFields();
+
+						var fieldValues = [];
+
+						fields.forEach(
+							function(field) {
+								var fieldValue = {};
+
+								fieldValue.key = field.get('fieldName');
+								fieldValue.value = field.getValue();
+
+								fieldValues.push(fieldValue);
+
+							}
+						);
+
+						return fieldValues;
 					},
 					_bindUI: function() {
 						var instance = this;

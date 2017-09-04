@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.sharepoint.repository.internal.configuration.SharepointRepositoryConfiguration;
+import com.liferay.sharepoint.repository.internal.document.library.repository.external.model.SharepointModel;
 import com.liferay.sharepoint.repository.internal.document.library.repository.external.model.SharepointRootFolder;
 import com.liferay.sharepoint.repository.internal.util.SharepointServerResponseConverter;
 import com.liferay.sharepoint.repository.internal.util.SharepointURLHelper;
@@ -210,7 +211,13 @@ public class SharepointExtRepository implements ExtRepository {
 			ExtRepositoryFileEntry extRepositoryFileEntry)
 		throws PortalException {
 
-		throw new UnsupportedOperationException();
+		try {
+			return _requestModelInputStream(
+				(SharepointModel)extRepositoryFileEntry);
+		}
+		catch (UnirestException ue) {
+			throw new PortalException(ue);
+		}
 	}
 
 	@Override
@@ -218,7 +225,13 @@ public class SharepointExtRepository implements ExtRepository {
 			ExtRepositoryFileVersion extRepositoryFileVersion)
 		throws PortalException {
 
-		throw new UnsupportedOperationException();
+		try {
+			return _requestModelInputStream(
+				(SharepointModel)extRepositoryFileVersion);
+		}
+		catch (UnirestException ue) {
+			throw new PortalException(ue);
+		}
 	}
 
 	@Override
@@ -491,6 +504,25 @@ public class SharepointExtRepository implements ExtRepository {
 		return JSONFactoryUtil.createJSONObject(httpResponse.getBody());
 	}
 
+	private InputStream _requestInputStream(String url)
+		throws PortalException, UnirestException {
+
+		GetRequest getRequest = Unirest.get(url);
+
+		getRequest.header("Authorization", "Bearer " + _getAccessToken());
+
+		HttpResponse<InputStream> httpResponse = getRequest.asBinary();
+
+		if (httpResponse.getStatus() >= 300) {
+			throw new PrincipalException(
+				String.format(
+					"Error while getting resource %s: %d %s", url,
+					httpResponse.getStatus(), httpResponse.getStatusText()));
+		}
+
+		return httpResponse.getBody();
+	}
+
 	private JSONObject _requestJSONObject(String url)
 		throws PortalException, UnirestException {
 
@@ -509,6 +541,13 @@ public class SharepointExtRepository implements ExtRepository {
 		}
 
 		return JSONFactoryUtil.createJSONObject(httpResponse.getBody());
+	}
+
+	private InputStream _requestModelInputStream(
+			SharepointModel sharepointModel)
+		throws PortalException, UnirestException {
+
+		return _requestInputStream(sharepointModel.getCanonicalContentURL());
 	}
 
 	private String _libraryPath;

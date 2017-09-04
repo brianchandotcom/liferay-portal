@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.asset.service.persistence.test.AssetEntryQueryTestUtil;
 
 import java.text.DateFormat;
 

@@ -931,7 +931,8 @@ public class CPDefinitionLocalServiceImpl
 			long cpDefinitionId, Map<Locale, String> urlTitleMap,
 			Map<Locale, String> metaTitleMap,
 			Map<Locale, String> metaKeywordsMap,
-			Map<Locale, String> metaDescriptionMap)
+			Map<Locale, String> metaDescriptionMap,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinition cpDefinition = cpDefinitionPersistence.findByPrimaryKey(
@@ -962,7 +963,7 @@ public class CPDefinitionLocalServiceImpl
 	@Override
 	public CPDefinition updateShippingInfo(
 			long cpDefinitionId, double width, double height, double depth,
-			double weight)
+			double weight, ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinition cpDefinition = cpDefinitionPersistence.findByPrimaryKey(

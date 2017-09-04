@@ -332,7 +332,8 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			long cpDefinitionId, Map<Locale, String> urlTitleMap,
 			Map<Locale, String> metaTitleMap,
 			Map<Locale, String> metaKeywordsMap,
-			Map<Locale, String> metaDescriptionMap)
+			Map<Locale, String> metaDescriptionMap,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinitionPermission.check(
@@ -340,20 +341,20 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 		return cpDefinitionLocalService.updateSEOInfo(
 			cpDefinitionId, urlTitleMap, metaTitleMap, metaKeywordsMap,
-			metaDescriptionMap);
+			metaDescriptionMap, serviceContext);
 	}
 
 	@Override
 	public CPDefinition updateShippingInfo(
 			long cpDefinitionId, double width, double height, double depth,
-			double weight)
+			double weight, ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinitionPermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionLocalService.updateShippingInfo(
-			cpDefinitionId, width, height, depth, weight);
+			cpDefinitionId, width, height, depth, weight, serviceContext);
 	}
 
 	@Override

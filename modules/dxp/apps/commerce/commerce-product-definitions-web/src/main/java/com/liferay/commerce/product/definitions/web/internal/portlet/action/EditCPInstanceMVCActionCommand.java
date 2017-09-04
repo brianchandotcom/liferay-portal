@@ -142,6 +142,16 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		String gtin = ParamUtil.getString(actionRequest, "gtin");
 		String manufacturerPartNumber = ParamUtil.getString(
 			actionRequest, "manufacturerPartNumber");
+		boolean overrideInventory = ParamUtil.getBoolean(
+			actionRequest, "overrideInventory");
+		int minCartQuantity = ParamUtil.getInteger(
+			actionRequest, "minCartQuantity");
+		int maxCartQuantity = ParamUtil.getInteger(
+			actionRequest, "maxCartQuantity");
+		String allowedCartQuantities = ParamUtil.getString(
+			actionRequest, "allowedCartQuantities");
+		int multipleCartQuantity = ParamUtil.getInteger(
+			actionRequest, "multipleCartQuantity");
 
 		int displayDateMonth = ParamUtil.getInteger(
 			actionRequest, "displayDateMonth");
@@ -186,10 +196,12 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		if (cpInstanceId > 0) {
 			_cpInstanceService.updateCPInstance(
 				cpInstanceId, sku, gtin, manufacturerPartNumber,
-				displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, expirationDateMonth,
-				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, serviceContext);
+				overrideInventory, minCartQuantity, maxCartQuantity,
+				allowedCartQuantities, multipleCartQuantity, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, expirationDateMonth, expirationDateDay,
+				expirationDateYear, expirationDateHour, expirationDateMinute,
+				neverExpire, serviceContext);
 		}
 		else {
 			String ddmFormValues = ParamUtil.getString(
@@ -200,10 +212,12 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 			_cpInstanceService.addCPInstance(
 				cpDefinitionId, sku, gtin, manufacturerPartNumber, ddmContent,
-				displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, expirationDateMonth,
-				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, serviceContext);
+				overrideInventory, minCartQuantity, maxCartQuantity,
+				allowedCartQuantities, multipleCartQuantity, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, expirationDateMonth, expirationDateDay,
+				expirationDateYear, expirationDateHour, expirationDateMinute,
+				neverExpire, serviceContext);
 		}
 	}
 

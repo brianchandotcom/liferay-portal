@@ -140,13 +140,7 @@ public class CPDefinitionPersistenceTest {
 
 		newCPDefinition.setModifiedDate(RandomTestUtil.nextDate());
 
-		newCPDefinition.setBaseSKU(RandomTestUtil.randomString());
-
 		newCPDefinition.setProductTypeName(RandomTestUtil.randomString());
-
-		newCPDefinition.setGtin(RandomTestUtil.randomString());
-
-		newCPDefinition.setManufacturerPartNumber(RandomTestUtil.randomString());
 
 		newCPDefinition.setAvailableIndividually(RandomTestUtil.randomBoolean());
 
@@ -165,10 +159,6 @@ public class CPDefinitionPersistenceTest {
 		newCPDefinition.setDepth(RandomTestUtil.nextDouble());
 
 		newCPDefinition.setWeight(RandomTestUtil.nextDouble());
-
-		newCPDefinition.setCost(RandomTestUtil.nextDouble());
-
-		newCPDefinition.setPrice(RandomTestUtil.nextDouble());
 
 		newCPDefinition.setDDMStructureKey(RandomTestUtil.randomString());
 
@@ -210,14 +200,8 @@ public class CPDefinitionPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCPDefinition.getModifiedDate()),
 			Time.getShortTimestamp(newCPDefinition.getModifiedDate()));
-		Assert.assertEquals(existingCPDefinition.getBaseSKU(),
-			newCPDefinition.getBaseSKU());
 		Assert.assertEquals(existingCPDefinition.getProductTypeName(),
 			newCPDefinition.getProductTypeName());
-		Assert.assertEquals(existingCPDefinition.getGtin(),
-			newCPDefinition.getGtin());
-		Assert.assertEquals(existingCPDefinition.getManufacturerPartNumber(),
-			newCPDefinition.getManufacturerPartNumber());
 		Assert.assertEquals(existingCPDefinition.getAvailableIndividually(),
 			newCPDefinition.getAvailableIndividually());
 		Assert.assertEquals(existingCPDefinition.getMinCartQuantity(),
@@ -236,10 +220,6 @@ public class CPDefinitionPersistenceTest {
 			newCPDefinition.getDepth());
 		AssertUtils.assertEquals(existingCPDefinition.getWeight(),
 			newCPDefinition.getWeight());
-		AssertUtils.assertEquals(existingCPDefinition.getCost(),
-			newCPDefinition.getCost());
-		AssertUtils.assertEquals(existingCPDefinition.getPrice(),
-			newCPDefinition.getPrice());
 		Assert.assertEquals(existingCPDefinition.getDDMStructureKey(),
 			newCPDefinition.getDDMStructureKey());
 		Assert.assertEquals(Time.getShortTimestamp(
@@ -361,16 +341,14 @@ public class CPDefinitionPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CPDefinition", "uuid",
 			true, "CPDefinitionId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "baseSKU", true, "productTypeName", true,
-			"gtin", true, "manufacturerPartNumber", true,
+			"modifiedDate", true, "productTypeName", true,
 			"availableIndividually", true, "minCartQuantity", true,
 			"maxCartQuantity", true, "allowedCartQuantities", true,
 			"multipleCartQuantity", true, "width", true, "height", true,
-			"depth", true, "weight", true, "cost", true, "price", true,
-			"DDMStructureKey", true, "displayDate", true, "expirationDate",
-			true, "lastPublishDate", true, "status", true, "statusByUserId",
-			true, "statusByUserName", true, "statusDate", true,
-			"defaultLanguageId", true);
+			"depth", true, "weight", true, "DDMStructureKey", true,
+			"displayDate", true, "expirationDate", true, "lastPublishDate",
+			true, "status", true, "statusByUserId", true, "statusByUserName",
+			true, "statusDate", true, "defaultLanguageId", true);
 	}
 
 	@Test
@@ -602,13 +580,7 @@ public class CPDefinitionPersistenceTest {
 
 		cpDefinition.setModifiedDate(RandomTestUtil.nextDate());
 
-		cpDefinition.setBaseSKU(RandomTestUtil.randomString());
-
 		cpDefinition.setProductTypeName(RandomTestUtil.randomString());
-
-		cpDefinition.setGtin(RandomTestUtil.randomString());
-
-		cpDefinition.setManufacturerPartNumber(RandomTestUtil.randomString());
 
 		cpDefinition.setAvailableIndividually(RandomTestUtil.randomBoolean());
 
@@ -627,10 +599,6 @@ public class CPDefinitionPersistenceTest {
 		cpDefinition.setDepth(RandomTestUtil.nextDouble());
 
 		cpDefinition.setWeight(RandomTestUtil.nextDouble());
-
-		cpDefinition.setCost(RandomTestUtil.nextDouble());
-
-		cpDefinition.setPrice(RandomTestUtil.nextDouble());
 
 		cpDefinition.setDDMStructureKey(RandomTestUtil.randomString());
 

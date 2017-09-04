@@ -66,8 +66,6 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 	public static final String CLASS_NAME = CPDefinition.class.getName();
 
-	public static final String FIELD_BASE_SKU = "baseSKU";
-
 	public static final String FIELD_DEFAULT_IMAGE_FILE_ENTRY_ID =
 		"defaultImageFileEntryId";
 
@@ -128,7 +126,6 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 			SearchContext searchContext)
 		throws Exception {
 
-		addSearchTerm(searchQuery, searchContext, FIELD_BASE_SKU, false);
 		addSearchLocalizedTerm(
 			searchQuery, searchContext, Field.CONTENT, false);
 		addSearchLocalizedTerm(
@@ -209,7 +206,6 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 		}
 
 		document.addText(Field.TITLE, cpDefinition.getTitle());
-		document.addText(FIELD_BASE_SKU, cpDefinition.getBaseSKU());
 
 		List<String> optionNames = new ArrayList<>();
 		List<Long> optionIds = new ArrayList<>();

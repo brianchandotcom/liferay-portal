@@ -150,6 +150,16 @@ public class CPInstancePersistenceTest {
 
 		newCPInstance.setDDMContent(RandomTestUtil.randomString());
 
+		newCPInstance.setOverrideInventory(RandomTestUtil.randomBoolean());
+
+		newCPInstance.setMinCartQuantity(RandomTestUtil.nextInt());
+
+		newCPInstance.setMaxCartQuantity(RandomTestUtil.nextInt());
+
+		newCPInstance.setAllowedCartQuantities(RandomTestUtil.randomString());
+
+		newCPInstance.setMultipleCartQuantity(RandomTestUtil.nextInt());
+
 		newCPInstance.setWidth(RandomTestUtil.nextDouble());
 
 		newCPInstance.setHeight(RandomTestUtil.nextDouble());
@@ -207,6 +217,16 @@ public class CPInstancePersistenceTest {
 			newCPInstance.getManufacturerPartNumber());
 		Assert.assertEquals(existingCPInstance.getDDMContent(),
 			newCPInstance.getDDMContent());
+		Assert.assertEquals(existingCPInstance.getOverrideInventory(),
+			newCPInstance.getOverrideInventory());
+		Assert.assertEquals(existingCPInstance.getMinCartQuantity(),
+			newCPInstance.getMinCartQuantity());
+		Assert.assertEquals(existingCPInstance.getMaxCartQuantity(),
+			newCPInstance.getMaxCartQuantity());
+		Assert.assertEquals(existingCPInstance.getAllowedCartQuantities(),
+			newCPInstance.getAllowedCartQuantities());
+		Assert.assertEquals(existingCPInstance.getMultipleCartQuantity(),
+			newCPInstance.getMultipleCartQuantity());
 		AssertUtils.assertEquals(existingCPInstance.getWidth(),
 			newCPInstance.getWidth());
 		AssertUtils.assertEquals(existingCPInstance.getHeight(),
@@ -347,11 +367,13 @@ public class CPInstancePersistenceTest {
 			"CPInstanceId", true, "groupId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"CPDefinitionId", true, "sku", true, "gtin", true,
-			"manufacturerPartNumber", true, "width", true, "height", true,
-			"depth", true, "weight", true, "cost", true, "price", true,
-			"displayDate", true, "expirationDate", true, "lastPublishDate",
-			true, "status", true, "statusByUserId", true, "statusByUserName",
-			true, "statusDate", true);
+			"manufacturerPartNumber", true, "overrideInventory", true,
+			"minCartQuantity", true, "maxCartQuantity", true,
+			"allowedCartQuantities", true, "multipleCartQuantity", true,
+			"width", true, "height", true, "depth", true, "weight", true,
+			"cost", true, "price", true, "displayDate", true, "expirationDate",
+			true, "lastPublishDate", true, "status", true, "statusByUserId",
+			true, "statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -599,6 +621,16 @@ public class CPInstancePersistenceTest {
 		cpInstance.setManufacturerPartNumber(RandomTestUtil.randomString());
 
 		cpInstance.setDDMContent(RandomTestUtil.randomString());
+
+		cpInstance.setOverrideInventory(RandomTestUtil.randomBoolean());
+
+		cpInstance.setMinCartQuantity(RandomTestUtil.nextInt());
+
+		cpInstance.setMaxCartQuantity(RandomTestUtil.nextInt());
+
+		cpInstance.setAllowedCartQuantities(RandomTestUtil.randomString());
+
+		cpInstance.setMultipleCartQuantity(RandomTestUtil.nextInt());
 
 		cpInstance.setWidth(RandomTestUtil.nextDouble());
 

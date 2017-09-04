@@ -16,7 +16,6 @@ package com.liferay.commerce.internal.util;
 
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
-import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPInstanceService;
@@ -58,12 +57,6 @@ public class CommercePriceCalculationHelperImpl
 				cpInstanceId);
 
 			price = cpInstance.getPrice();
-		}
-		else {
-			CPDefinition cpDefinition = _cpDefinitionService.fetchCPDefinition(
-				cpDefinitionId);
-
-			price = cpDefinition.getPrice();
 		}
 
 		return price * quantity;

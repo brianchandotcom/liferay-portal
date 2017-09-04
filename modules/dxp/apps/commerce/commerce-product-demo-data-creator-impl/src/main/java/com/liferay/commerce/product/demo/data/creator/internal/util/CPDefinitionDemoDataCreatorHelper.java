@@ -62,13 +62,11 @@ public class CPDefinitionDemoDataCreatorHelper
 		for (int i = 0; i < catalogJSONArray.length(); i++) {
 			JSONObject productJSONObject = catalogJSONArray.getJSONObject(i);
 
-			String baseSKU = productJSONObject.getString("baseSKU");
 			String title = productJSONObject.getString("title");
 			String description = productJSONObject.getString("description");
 			String urlTitle = productJSONObject.getString("urlTitle");
 			String productTypeName = productJSONObject.getString(
 				"productTypeName");
-			double price = productJSONObject.getDouble("price");
 
 			// Layout
 
@@ -88,8 +86,8 @@ public class CPDefinitionDemoDataCreatorHelper
 			// Commerce product definition
 
 			CPDefinition cpDefinition = createCPDefinition(
-				userId, groupId, baseSKU, title, description, urlTitle,
-				layoutUuid, productTypeName, price, assetCategoryIds);
+				userId, groupId, title, description, urlTitle, layoutUuid,
+				productTypeName, assetCategoryIds);
 
 			// Commerce product option categories
 
@@ -174,9 +172,9 @@ public class CPDefinitionDemoDataCreatorHelper
 	}
 
 	protected CPDefinition createCPDefinition(
-			long userId, long groupId, String baseSKU, String title,
-			String description, String urlTitle, String layoutUuid,
-			String productTypeName, double price, long[] assetCategoryIds)
+			long userId, long groupId, String title, String description,
+			String urlTitle, String layoutUuid, String productTypeName,
+			long[] assetCategoryIds)
 		throws PortalException {
 
 		CPDefinition cpDefinition = getCPDefinitionByTitle(title);
@@ -229,12 +227,12 @@ public class CPDefinitionDemoDataCreatorHelper
 			Locale.US, urlTitle);
 
 		cpDefinition = _cpDefinitionLocalService.addCPDefinition(
-			baseSKU, titleMap, null, descriptionMap, urlTitleMap, null, null,
-			null, layoutUuid, productTypeName, null, null, 1, 10000, null, 1, 0,
-			0, 0, 0, 0, price, null, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, true, serviceContext);
+			titleMap, null, descriptionMap, urlTitleMap, null, null, null,
+			layoutUuid, productTypeName, 1, 10000, null, 1, 0, 0, 0, 0, null,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute, true,
+			serviceContext);
 
 		_cpDefinitions.put(title, cpDefinition);
 

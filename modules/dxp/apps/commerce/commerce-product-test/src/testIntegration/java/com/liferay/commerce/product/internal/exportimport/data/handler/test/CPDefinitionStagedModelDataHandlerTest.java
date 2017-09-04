@@ -124,10 +124,6 @@ public class CPDefinitionStagedModelDataHandlerTest
 		Assert.assertEquals(
 			cpDefinition.isAvailableIndividually(),
 			importedCPDefinition.isAvailableIndividually());
-		Assert.assertEquals(
-			cpDefinition.getBaseSKU(), importedCPDefinition.getBaseSKU());
-		Assert.assertEquals(
-			cpDefinition.getBaseSKU(), importedCPDefinition.getBaseSKU());
 		CPTestUtil.assertDateEquals(
 			cpDefinition.getDisplayDate(),
 			importedCPDefinition.getDisplayDate());

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
@@ -69,7 +70,7 @@ public class CommerceOrderItemLocalServiceImpl
 
 		commerceOrderItem.setTitleMap(cpDefinition.getTitleMap());
 
-		commerceOrderItem.setSku(_getSku(cpDefinitionId, cpInstanceId));
+		commerceOrderItem.setSku(_getSku(cpInstanceId));
 		commerceOrderItem.setExpandoBridgeAttributes(serviceContext);
 
 		commerceOrderItemPersistence.update(commerceOrderItem);
@@ -204,21 +205,15 @@ public class CommerceOrderItemLocalServiceImpl
 		}
 	}
 
-	private String _getSku(long cpDefinitionId, long cpInstanceId)
-		throws PortalException {
-
+	private String _getSku(long cpInstanceId) throws PortalException {
 		if (cpInstanceId > 0) {
 			CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
 				cpInstanceId);
 
 			return cpInstance.getSku();
 		}
-		else {
-			CPDefinition cpDefinition =
-				_cpDefinitionLocalService.getCPDefinition(cpDefinitionId);
 
-			return cpDefinition.getBaseSKU();
-		}
+		return StringPool.BLANK;
 	}
 
 	@ServiceReference(type = CPDefinitionLocalService.class)

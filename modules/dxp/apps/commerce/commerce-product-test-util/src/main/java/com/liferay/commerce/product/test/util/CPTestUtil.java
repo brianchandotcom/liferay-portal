@@ -281,10 +281,13 @@ public class CPTestUtil {
 		return CPInstanceLocalServiceUtil.addCPInstance(
 			cpDefinitionId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			ddmContent, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, false, serviceContext);
+			ddmContent, RandomTestUtil.randomBoolean(),
+			RandomTestUtil.randomInt(), RandomTestUtil.randomInt(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomInt(),
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute, false,
+			serviceContext);
 	}
 
 	public static CPOption addCPOption(long groupId) throws Exception {
@@ -417,7 +420,6 @@ public class CPTestUtil {
 		}
 
 		return CPDefinitionLocalServiceUtil.addCPDefinition(
-			RandomTestUtil.randomString(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
@@ -425,11 +427,9 @@ public class CPTestUtil {
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), PortalUUIDUtil.generate(),
-			productTypeName, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomInt(),
+			productTypeName, RandomTestUtil.randomInt(),
 			RandomTestUtil.randomInt(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomInt(), RandomTestUtil.randomDouble(),
-			RandomTestUtil.randomDouble(), RandomTestUtil.randomDouble(),
 			RandomTestUtil.randomDouble(), RandomTestUtil.randomDouble(),
 			RandomTestUtil.randomDouble(), null, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,

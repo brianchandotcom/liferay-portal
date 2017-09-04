@@ -27,10 +27,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = "form.navigator.entry.order:Integer=70",
+	property = "form.navigator.entry.order:Integer=80",
 	service = FormNavigatorEntry.class
 )
-public class CPInstanceDetailsScheduleFormNavigatorEntry
+public class CPInstanceDetailsInventoryFormNavigatorEntry
 	extends BaseJSPFormNavigatorEntry<CPInstance> {
 
 	@Override
@@ -47,17 +47,17 @@ public class CPInstanceDetailsScheduleFormNavigatorEntry
 
 	@Override
 	public String getKey() {
-		return "schedule";
+		return "inventory";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "schedule");
+		return LanguageUtil.get(locale, "inventory");
 	}
 
 	@Override
 	protected String getJspPath() {
-		return "/instance/schedule.jsp";
+		return "/instance/inventory.jsp";
 	}
 
 }

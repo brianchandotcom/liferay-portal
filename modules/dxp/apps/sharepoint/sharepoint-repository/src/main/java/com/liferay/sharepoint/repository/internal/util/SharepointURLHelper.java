@@ -107,6 +107,14 @@ public class SharepointURLHelper {
 			extRepositoryFileEntry.getExtRepositoryModelKey());
 	}
 
+	public String getFilesURL(String extRepositoryFolderKey) {
+		return String.format(
+			"%s/_api/web/GetFolderByServerRelativeUrl('%s')/Files?$select=%s&" +
+				"$expand=%s",
+			_siteAbsoluteURL, extRepositoryFolderKey, _FIELDS_SELECTED_FILE,
+			_FIELDS_EXPANDED_FILE);
+	}
+
 	public String getFileVersionsURL(
 		ExtRepositoryFileEntry extRepositoryFileEntry) {
 
@@ -114,6 +122,36 @@ public class SharepointURLHelper {
 			"%s/_api/web/GetFileByServerRelativeUrl('%s')/Versions",
 			_siteAbsoluteURL,
 			extRepositoryFileEntry.getExtRepositoryModelKey());
+	}
+
+	public String getFoldersURL(String extRepositoryFolderKey) {
+		return String.format(
+			"%s/_api/web/GetFolderByServerRelativeUrl('%s')/Folders?$select=" +
+				"%s&$expand=%s",
+			_siteAbsoluteURL, extRepositoryFolderKey, _FIELDS_SELECTED_FOLDER,
+			_FIELDS_EXPANDED_FOLDER);
+	}
+
+	public <T extends ExtRepositoryObject> String getObjectsCountURL(
+		ExtRepositoryObjectType<T> extRepositoryObjectType,
+		String extRepositoryFolderKey) {
+
+		if (extRepositoryObjectType == ExtRepositoryObjectType.OBJECT) {
+			return String.format(
+				"%s/_api/web/GetFolderByServerRelativeUrl('%s')/ItemCount",
+				_siteAbsoluteURL, extRepositoryFolderKey);
+		}
+
+		if (extRepositoryObjectType == ExtRepositoryObjectType.FOLDER) {
+			return String.format(
+				"%s/_api/web/GetFolderByServerRelativeUrl('%s')/Folders" +
+					"/ItemCount",
+				_siteAbsoluteURL, extRepositoryFolderKey);
+		}
+
+		return String.format(
+			"%s/_api/web/GetFolderByServerRelativeUrl('%s')/Files/ItemCount",
+			_siteAbsoluteURL, extRepositoryFolderKey);
 	}
 
 	public <T extends ExtRepositoryObject> String getObjectURL(

@@ -51,6 +51,23 @@ public class SharepointServerResponseConverter {
 		_siteAbsoluteURL = siteAbsoluteURL;
 	}
 
+	public <T extends ExtRepositoryObject> List<T> getExtRepositoryFileEntries(
+		JSONObject jsonObject) {
+
+		JSONObject dJSONObject = jsonObject.getJSONObject("d");
+
+		JSONArray resultsJSONArray = dJSONObject.getJSONArray("results");
+
+		List<T> extRepositoryFileEntries = new ArrayList<>();
+
+		for (int i = 0; i < resultsJSONArray.length(); i++) {
+			extRepositoryFileEntries.add(
+				(T)_createFileEntry(resultsJSONArray.getJSONObject(i)));
+		}
+
+		return extRepositoryFileEntries;
+	}
+
 	public <T extends ExtRepositoryFileEntry & ExtRepositoryObject> T
 		getExtRepositoryFileEntry(JSONObject jsonObject) {
 
@@ -84,6 +101,23 @@ public class SharepointServerResponseConverter {
 		return _createFolder(jsonObject.getJSONObject("d"));
 	}
 
+	public <T extends ExtRepositoryObject> List<T>
+		getExtRepositoryFolders(JSONObject jsonObject) {
+
+		JSONObject dJSONObject = jsonObject.getJSONObject("d");
+
+		JSONArray resultsJSONArray = dJSONObject.getJSONArray("results");
+
+		List<T> extRepositoryFolders = new ArrayList<>();
+
+		for (int i = 0; i < resultsJSONArray.length(); i++) {
+			extRepositoryFolders.add(
+				_createFolder(resultsJSONArray.getJSONObject(i)));
+		}
+
+		return extRepositoryFolders;
+	}
+
 	public <T extends ExtRepositoryObject> T getExtRepositoryObject(
 		ExtRepositoryObjectType extRepositoryObjectType,
 		JSONObject jsonObject) {
@@ -93,6 +127,10 @@ public class SharepointServerResponseConverter {
 		}
 
 		return getExtRepositoryFolder(jsonObject);
+	}
+
+	public int getExtRepositoryObjectsCount(JSONObject jsonObject) {
+		return jsonObject.getInt("value");
 	}
 
 	private SharepointFileEntry _createFileEntry(JSONObject jsonObject) {

@@ -956,7 +956,7 @@ public class CalendarBookingLocalServiceTest {
 	}
 
 	@Test
-	public void testInviteStagingCalendarCreatesPendingLiveCalendarBookingAfterPublish()
+	public void testInviteStagingCalendarShouldNotCreatesPendingLiveCalendarBookingAfterPublish()
 		throws Exception {
 
 		_liveGroup = GroupTestUtil.addGroup();
@@ -984,16 +984,9 @@ public class CalendarBookingLocalServiceTest {
 
 		CalendarStagingTestUtil.publishLayouts(_liveGroup, true);
 
-		assertCalendarBookingsCount(liveCalendar, 1);
+		assertCalendarBookingsCount(liveCalendar, 0);
 
 		assertCalendarBookingsCount(stagingCalendar, 1);
-
-		CalendarBooking liveChildCalendarBooking =
-			CalendarBookingLocalServiceUtil.fetchCalendarBooking(
-				childCalendarBooking.getUuid(), _liveGroup.getGroupId());
-
-		assertStatus(
-			liveChildCalendarBooking, WorkflowConstants.STATUS_PENDING);
 	}
 
 	@Test

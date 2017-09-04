@@ -486,6 +486,76 @@
 		<execute macro="WebContent#viewAudioViaWCD" />
 	</command>
 
+	<command name="AddCreatedStructureForImportedTemplate" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoManageStructures" />
+
+		<execute macro="WebContentStructures#addCP">
+			<var name="structureName" value="Content List" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Web Content" />
+			<var name="fieldFieldLabel" value="Web Content" />
+			<var name="fieldName" value="contents" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#editFieldTip">
+			<var name="fieldFieldLabel" value="Web Content" />
+			<var name="fieldTip" value="Choose as many content pieces as you would like to feature." />
+		</execute>
+
+		<execute macro="DynamicDataMapping#editFieldRepeatable">
+			<var name="fieldFieldLabel" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentStructures#saveCP">
+			<var name="structureName" value="Content List" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="LAR#importPortlet">
+			<var name="larFileName" value="content-display-templates.lar" />
+			<var name="uploadFrom" value="dependencies" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoManageTemplates" />
+
+		<for list="Carousel Display,Thumbnail Display,Content List Display" param="templateName">
+			<execute macro="WebContentNavigator#gotoViewTemplate">
+				<var name="templateName" value="${templateName}" />
+			</execute>
+
+			<execute macro="WebContentTemplates#addStructure">
+				<var name="structureName" value="Content List" />
+			</execute>
+
+			<execute macro="WebContentTemplates#save" />
+		</for>
+
+		<for list="Carousel Display,Thumbnail Display,Content List Display" param="templateName">
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Web Content" />
+			</execute>
+
+			<execute macro="WebContentTemplates#viewCP">
+				<var name="structureName" value="Content List" />
+				<var name="templateDescription" value="" />
+				<var name="templateLanguage" value="ftl" />
+				<var name="templateName" value="${templateName}" />
+			</execute>
+		</for>
+	</command>
+
 	<command name="AddEmbeddedPortletFreemarkerTemplate" priority="3">
 		<property name="osgi.app.includes" value="currency-converter" />
 		<property name="testray.component.names" value="Web Content Administration" />

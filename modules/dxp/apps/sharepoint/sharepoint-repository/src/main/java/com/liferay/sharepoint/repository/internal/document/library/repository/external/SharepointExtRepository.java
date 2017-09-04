@@ -22,6 +22,7 @@ import com.liferay.document.library.repository.external.ExtRepositoryFileEntry;
 import com.liferay.document.library.repository.external.ExtRepositoryFileVersion;
 import com.liferay.document.library.repository.external.ExtRepositoryFileVersionDescriptor;
 import com.liferay.document.library.repository.external.ExtRepositoryFolder;
+import com.liferay.document.library.repository.external.ExtRepositoryModel;
 import com.liferay.document.library.repository.external.ExtRepositoryObject;
 import com.liferay.document.library.repository.external.ExtRepositoryObjectType;
 import com.liferay.document.library.repository.external.ExtRepositorySearchResult;
@@ -59,6 +60,8 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Adolfo Pérez
@@ -417,7 +420,27 @@ public class SharepointExtRepository implements ExtRepository {
 			ExtRepositoryObject extRepositoryObject)
 		throws PortalException {
 
-		throw new UnsupportedOperationException();
+		String extRepositoryModelKey =
+			extRepositoryObject.getExtRepositoryModelKey();
+
+		if (extRepositoryModelKey.equals(
+				_rootFolder.getExtRepositoryModelKey())) {
+
+			return null;
+		}
+
+		int pos = extRepositoryModelKey.lastIndexOf(CharPool.SLASH);
+
+		String parentFolderPath = extRepositoryModelKey.substring(0, pos);
+
+		if (parentFolderPath.equals(_libraryPath) ||
+			Validator.isNull(parentFolderPath)) {
+
+			return _rootFolder;
+		}
+
+		return getExtRepositoryObject(
+			ExtRepositoryObjectType.FOLDER, parentFolderPath);
 	}
 
 	@Override
@@ -435,7 +458,26 @@ public class SharepointExtRepository implements ExtRepository {
 			String extRepositoryFolderKey, boolean recurse)
 		throws PortalException {
 
-		throw new UnsupportedOperationException();
+		if (!recurse) {
+			List<ExtRepositoryFolder> extRepositoryObjects =
+				getExtRepositoryObjects(
+					ExtRepositoryObjectType.FOLDER, extRepositoryFolderKey);
+
+			Stream<ExtRepositoryFolder> extRepositoryFolderStream =
+				extRepositoryObjects.stream();
+
+			return extRepositoryFolderStream.map(
+				ExtRepositoryModel::getExtRepositoryModelKey
+			).collect(
+				Collectors.toList()
+			);
+		}
+
+		List<String> subfolderKeys = new ArrayList<>();
+
+		_collectSubfolderKeys(extRepositoryFolderKey, subfolderKeys);
+
+		return subfolderKeys;
 	}
 
 	@Override
@@ -530,6 +572,24 @@ public class SharepointExtRepository implements ExtRepository {
 		}
 		catch (IOException | UnirestException e) {
 			throw new PortalException(e);
+		}
+	}
+
+	private void _collectSubfolderKeys(
+			String extRepositoryFolderKey, List<String> subfolderKeys)
+		throws PortalException {
+
+		List<ExtRepositoryFolder> extRepositoryFolders =
+			getExtRepositoryObjects(
+				ExtRepositoryObjectType.FOLDER, extRepositoryFolderKey);
+
+		for (ExtRepositoryFolder extRepositoryFolder : extRepositoryFolders) {
+			String subfolderKey =
+				extRepositoryFolder.getExtRepositoryModelKey();
+
+			subfolderKeys.add(subfolderKey);
+
+			_collectSubfolderKeys(subfolderKey, subfolderKeys);
 		}
 	}
 

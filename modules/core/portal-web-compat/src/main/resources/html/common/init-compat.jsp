@@ -14,11 +14,15 @@
  */
 --%>
 
-<%@ page import="com.liferay.asset.kernel.model.AssetEntry" %><%@
+<%@ page import="com.liferay.asset.kernel.model.AssetCategory" %><%@
+page import="com.liferay.asset.kernel.model.AssetEntry" %><%@
 page import="com.liferay.asset.kernel.model.AssetTag" %><%@
+page import="com.liferay.asset.kernel.model.AssetVocabulary" %><%@
+page import="com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil" %><%@
 page import="com.liferay.asset.kernel.service.AssetCategoryServiceUtil" %><%@
 page import="com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil" %><%@
 page import="com.liferay.asset.kernel.service.AssetTagServiceUtil" %><%@
+page import="com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil" %><%@
 page import="com.liferay.asset.kernel.service.AssetVocabularyServiceUtil" %><%@
 page import="com.liferay.expando.kernel.model.ExpandoBridge" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayPortletRequest" %><%@

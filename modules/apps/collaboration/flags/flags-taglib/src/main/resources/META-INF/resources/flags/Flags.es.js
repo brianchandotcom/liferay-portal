@@ -32,6 +32,8 @@ class Flags extends PortletBase {
 	attached() {
 		this.reportDialogOpen = false;
 		this.rootNode = this.one('.taglib-flags');
+		this.showConfirmationMessage_ = false;
+		this.showErrorMessage_ = false;
 	}
 
 	/**
@@ -47,6 +49,8 @@ class Flags extends PortletBase {
 	 */
 	closeReportDialog() {
 		this.reportDialogOpen = false;
+		this.showConfirmationMessage_ = false;
+		this.showErrorMessage_ = false;
 	}
 
 	/**
@@ -117,6 +121,14 @@ class Flags extends PortletBase {
 			body: formData,
 			credentials: 'include',
 		 	method: 'post'
+		})
+		.then((xhr) => {
+			if (xhr.status === Liferay.STATUS_CODE.OK) {
+				this.showConfirmationMessage_ = true;
+			}
+		})
+		.catch(() => {
+			this.showErrorMessage_ = true;
 		});
 	}
 

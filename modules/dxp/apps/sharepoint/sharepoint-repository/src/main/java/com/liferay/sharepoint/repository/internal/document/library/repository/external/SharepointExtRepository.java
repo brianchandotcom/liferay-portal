@@ -14,6 +14,7 @@
 
 package com.liferay.sharepoint.repository.internal.document.library.repository.external;
 
+import com.liferay.document.library.repository.authorization.oauth2.Token;
 import com.liferay.document.library.repository.authorization.oauth2.TokenStore;
 import com.liferay.document.library.repository.external.CredentialsProvider;
 import com.liferay.document.library.repository.external.ExtRepository;
@@ -26,11 +27,15 @@ import com.liferay.document.library.repository.external.ExtRepositoryObjectType;
 import com.liferay.document.library.repository.external.ExtRepositorySearchResult;
 import com.liferay.document.library.repository.external.search.ExtRepositoryQueryMapper;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -39,6 +44,12 @@ import com.liferay.sharepoint.repository.internal.document.library.repository.ex
 import com.liferay.sharepoint.repository.internal.util.SharepointServerResponseConverter;
 import com.liferay.sharepoint.repository.internal.util.SharepointURLHelper;
 
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
+import com.mashape.unirest.request.HttpRequestWithBody;
+
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Collections;
@@ -63,7 +74,18 @@ public class SharepointExtRepository implements ExtRepository {
 			String description, String changeLog, InputStream inputStream)
 		throws PortalException {
 
-		throw new UnsupportedOperationException();
+		try {
+			String url = _sharepointURLHelper.getAddFileURL(
+				extRepositoryParentFolderKey, title);
+
+			JSONObject jsonObject = _post(url, inputStream);
+
+			return _sharepointServerResponseConverter.getExtRepositoryFileEntry(
+				jsonObject);
+		}
+		catch (IOException | UnirestException e) {
+			throw new PortalException(e);
+		}
 	}
 
 	@Override
@@ -72,7 +94,27 @@ public class SharepointExtRepository implements ExtRepository {
 			String description)
 		throws PortalException {
 
-		throw new UnsupportedOperationException();
+		try {
+			String url = _sharepointURLHelper.getAddFolderURL(
+				extRepositoryParentFolderKey);
+
+			JSONObject metadata = JSONFactoryUtil.createJSONObject();
+
+			metadata.put("type", "SP.Folder");
+
+			JSONObject body = JSONFactoryUtil.createJSONObject();
+
+			body.put("__metadata", metadata);
+			body.put("ServerRelativeUrl", name);
+
+			JSONObject jsonObject = _post(url, body);
+
+			return _sharepointServerResponseConverter.getExtRepositoryFolder(
+				jsonObject);
+		}
+		catch (IOException | UnirestException e) {
+			throw new PortalException(e);
+		}
 	}
 
 	@Override
@@ -308,6 +350,64 @@ public class SharepointExtRepository implements ExtRepository {
 		}
 
 		return s;
+	}
+
+	private String _getAccessToken() throws PortalException {
+		Token token = _tokenStore.get(
+			_sharepointRepositoryConfiguration.name(),
+			PrincipalThreadLocal.getUserId());
+
+		if ((token == null) || token.isExpired()) {
+			throw new PrincipalException();
+		}
+
+		return token.getAccessToken();
+	}
+
+	private JSONObject _post(String url, InputStream inputStream)
+		throws IOException, PortalException, UnirestException {
+
+		HttpRequestWithBody httpRequestWithBody = Unirest.post(url);
+
+		httpRequestWithBody.header("accept", "application/json; odata=verbose");
+		httpRequestWithBody.header(
+			"Authorization", "Bearer " + _getAccessToken());
+		httpRequestWithBody.body(FileUtil.getBytes(inputStream));
+
+		HttpResponse<String> httpResponse = httpRequestWithBody.asString();
+
+		if (httpResponse.getStatus() >= 300) {
+			throw new PrincipalException(
+				String.format(
+					"Error while getting resource %s: %d %s", url,
+					httpResponse.getStatus(), httpResponse.getStatusText()));
+		}
+
+		return JSONFactoryUtil.createJSONObject(httpResponse.getBody());
+	}
+
+	private JSONObject _post(String url, JSONObject jsonObject)
+		throws IOException, PortalException, UnirestException {
+
+		HttpRequestWithBody httpRequestWithBody = Unirest.post(url);
+
+		httpRequestWithBody.header("accept", "application/json; odata=verbose");
+		httpRequestWithBody.header(
+			"Authorization", "Bearer " + _getAccessToken());
+		httpRequestWithBody.header(
+			"Content-Type", "application/json; odata=verbose");
+		httpRequestWithBody.body(jsonObject.toJSONString());
+
+		HttpResponse<String> httpResponse = httpRequestWithBody.asString();
+
+		if (httpResponse.getStatus() >= 300) {
+			throw new PrincipalException(
+				String.format(
+					"Error while getting resource %s: %d %s", url,
+					httpResponse.getStatus(), httpResponse.getStatusText()));
+		}
+
+		return JSONFactoryUtil.createJSONObject(httpResponse.getBody());
 	}
 
 	private String _libraryPath;

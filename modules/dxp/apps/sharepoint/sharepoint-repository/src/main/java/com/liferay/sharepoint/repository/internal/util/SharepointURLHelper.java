@@ -25,6 +25,19 @@ public class SharepointURLHelper {
 		_siteAbsoluteUrl = siteAbsoluteUrl;
 	}
 
+	public String getAddFileURL(String extRepositoryFolderKey, String name) {
+		return String.format(
+			"%s/_api/web/GetFolderByServerRelativeUrl('%s')/Files/Add" +
+				"(overwrite=true,url='%s')",
+			_siteAbsoluteUrl, extRepositoryFolderKey, name);
+	}
+
+	public String getAddFolderURL(String extRepositoryFolderKey) {
+		return String.format(
+			"%s/_api/web/GetFolderByServerRelativeUrl('%s')/Folders",
+			_siteAbsoluteUrl, extRepositoryFolderKey);
+	}
+
 	public String getFileEntryContentURL(
 		ExtRepositoryFileEntry extRepositoryFileEntry) {
 

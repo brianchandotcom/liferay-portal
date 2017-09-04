@@ -51,19 +51,17 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
-public class CPInstancePricingInfoScreenNavigationEntry
+public class CPInstancePricingScreenNavigationEntry
 	implements ScreenNavigationCategory, ScreenNavigationEntry<CPInstance> {
 
 	@Override
 	public String getCategoryKey() {
-		return
-			CPInstanceScreenNavigationConstants.CATEGORY_KEY_PRICING_ADJUSTMENT;
+		return CPInstanceScreenNavigationConstants.CATEGORY_KEY_PRICING;
 	}
 
 	@Override
 	public String getEntryKey() {
-		return
-			CPInstanceScreenNavigationConstants.CATEGORY_KEY_PRICING_ADJUSTMENT;
+		return CPInstanceScreenNavigationConstants.CATEGORY_KEY_PRICING;
 	}
 
 	@Override
@@ -73,8 +71,7 @@ public class CPInstancePricingInfoScreenNavigationEntry
 
 		return LanguageUtil.get(
 			resourceBundle,
-			CPInstanceScreenNavigationConstants.
-				CATEGORY_KEY_PRICING_ADJUSTMENT);
+			CPInstanceScreenNavigationConstants.CATEGORY_KEY_PRICING);
 	}
 
 	@Override
@@ -110,7 +107,7 @@ public class CPInstancePricingInfoScreenNavigationEntry
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CPInstancePricingInfoScreenNavigationEntry.class);
+		CPInstancePricingScreenNavigationEntry.class);
 
 	@Reference
 	private ActionHelper _actionHelper;

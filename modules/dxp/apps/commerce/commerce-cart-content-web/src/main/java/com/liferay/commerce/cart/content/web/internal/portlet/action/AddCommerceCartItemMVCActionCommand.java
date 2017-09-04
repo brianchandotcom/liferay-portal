@@ -166,9 +166,6 @@ public class AddCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
 	private CommerceCartService _commerceCartService;
 
 	@Reference
-	private CPInstanceHelper _cpInstanceHelper;
-
-	@Reference
 	private JSONFactory _jsonFactory;
 
 	@Reference

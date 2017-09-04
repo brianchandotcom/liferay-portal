@@ -250,6 +250,12 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 				sb = new StringBundler();
 			}
 		}
+
+		if(sb.length()>0) {
+			sb.append("\" type = \"text/javascript\"></script>");
+
+			printWriter.println(sb.toString());
+		}
 	}
 
 	private void _renderBundleURLs(

@@ -251,6 +251,27 @@ public class CPDefinitionLocalServiceImpl
 		checkCPDefinitionsByExpirationDate();
 	}
 
+	public void checkCPDefinitionStatus(long cpDefinitionId)
+		throws PortalException {
+
+		CPDefinition cpDefinition = cpDefinitionLocalService.fetchCPDefinition(
+			cpDefinitionId);
+
+		if (cpDefinition == null) {
+			return;
+		}
+
+		List<CPInstance> cpInstances = cpInstanceLocalService.getCPInstances(
+			cpDefinitionId);
+
+		if (cpInstances.isEmpty()) {
+			cpDefinitionLocalService.updateStatus(
+				cpDefinition.getUserId(), cpDefinitionId,
+				WorkflowConstants.STATUS_INCOMPLETE, new ServiceContext(),
+				new HashMap<>());
+		}
+	}
+
 	@Override
 	public void deleteAssetCategoryCPDefinition(
 			long cpDefinitionId, long categoryId)
@@ -975,12 +996,12 @@ public class CPDefinitionLocalServiceImpl
 		CPDefinition cpDefinition = cpDefinitionPersistence.findByPrimaryKey(
 			cpDefinitionId);
 
-
 		Date now = new Date();
 
 		Date modifiedDate = serviceContext.getModifiedDate(now);
 
 		cpDefinition.setModifiedDate(modifiedDate);
+
 		cpDefinition.setWidth(width);
 		cpDefinition.setHeight(height);
 		cpDefinition.setDepth(depth);
@@ -1336,28 +1357,6 @@ public class CPDefinitionLocalServiceImpl
 		}
 
 		return cpDefinitionLocalizations;
-	}
-
-	public void checkCPDefinitionStatus(long cpDefinitionId)
-		throws PortalException {
-
-		CPDefinition cpDefinition =
-			cpDefinitionLocalService.fetchCPDefinition(cpDefinitionId);
-
-		if(cpDefinition == null){
-			return;
-		}
-
-		List<CPInstance> cpInstances = cpInstanceLocalService.getCPInstances(
-			cpDefinitionId);
-
-		if (cpInstances.isEmpty()) {
-
-			cpDefinitionLocalService.updateStatus(
-				cpDefinition.getUserId(), cpDefinitionId,
-				WorkflowConstants.STATUS_INCOMPLETE, new ServiceContext(),
-				new HashMap<>());
-		}
 	}
 
 	private CPDefinitionLocalization _addCPDefinitionLocalizedFields(

@@ -120,9 +120,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			if (cmd.equals(Constants.ADD) ||
-				cmd.equals(Constants.UPDATE)) {
-
+			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				CPDefinition cpDefinition = updateCPDefinition(actionRequest);
 
 				String redirect = getSaveAndContinueRedirect(

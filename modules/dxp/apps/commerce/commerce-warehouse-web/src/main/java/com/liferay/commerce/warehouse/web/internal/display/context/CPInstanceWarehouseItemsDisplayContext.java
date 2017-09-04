@@ -68,6 +68,7 @@ public class CPInstanceWarehouseItemsDisplayContext
 
 		portletURL.setParameter(
 			"cpDefinitionId", String.valueOf(cpInstance.getCPDefinitionId()));
+
 		portletURL.setParameter("screenNavigationCategoryKey", "skus");
 
 		return portletURL.toString();
@@ -97,6 +98,7 @@ public class CPInstanceWarehouseItemsDisplayContext
 			"cpDefinitionId", String.valueOf(cpInstance.getCPDefinitionId()));
 		portletURL.setParameter(
 			"cpInstanceId", String.valueOf(cpInstance.getCPInstanceId()));
+
 		portletURL.setParameter("screenNavigationCategoryKey", "warehouses");
 
 		return portletURL;

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.asset.model;
+package com.liferay.asset.model.test;
 
-import com.liferay.asset.kernel.model.AssetVocabularyDisplay;
+import com.liferay.asset.kernel.model.AssetTagDisplay;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -22,26 +22,25 @@ import org.junit.Test;
 /**
  * @author Igor Spasic
  */
-public class AssetVocabularyDisplayTest {
+public class AssetTagDisplayTest {
 
 	@Test
 	public void testGetPage() {
-		AssetVocabularyDisplay assetVocabularyDisplay =
-			new AssetVocabularyDisplay();
+		AssetTagDisplay assetTagDisplay = new AssetTagDisplay();
 
-		assetVocabularyDisplay.setStart(0);
-		assetVocabularyDisplay.setEnd(20);
+		assetTagDisplay.setStart(0);
+		assetTagDisplay.setEnd(20);
 
-		Assert.assertEquals(1, assetVocabularyDisplay.getPage());
+		Assert.assertEquals(1, assetTagDisplay.getPage());
 
-		assetVocabularyDisplay.setStart(20);
-		assetVocabularyDisplay.setEnd(40);
+		assetTagDisplay.setStart(20);
+		assetTagDisplay.setEnd(40);
 
-		Assert.assertEquals(2, assetVocabularyDisplay.getPage());
+		Assert.assertEquals(2, assetTagDisplay.getPage());
 
-		assetVocabularyDisplay.setEnd(0);
+		assetTagDisplay.setEnd(0);
 
-		Assert.assertEquals(0, assetVocabularyDisplay.getPage());
+		Assert.assertEquals(0, assetTagDisplay.getPage());
 	}
 
 }

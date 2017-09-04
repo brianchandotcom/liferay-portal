@@ -956,7 +956,13 @@ public class CPDefinitionLocalServiceImpl
 			cpDefinition.getGroupId(), cpDefinition.getCompanyId(),
 			CPDefinition.class, cpDefinitionId, urlTitleMap);
 
-		return cpDefinition;
+		Date now = new Date();
+
+		Date modifiedDate = serviceContext.getModifiedDate(now);
+
+		cpDefinition.setModifiedDate(modifiedDate);
+
+		return cpDefinitionPersistence.update(cpDefinition);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -969,14 +975,18 @@ public class CPDefinitionLocalServiceImpl
 		CPDefinition cpDefinition = cpDefinitionPersistence.findByPrimaryKey(
 			cpDefinitionId);
 
+
+		Date now = new Date();
+
+		Date modifiedDate = serviceContext.getModifiedDate(now);
+
+		cpDefinition.setModifiedDate(modifiedDate);
 		cpDefinition.setWidth(width);
 		cpDefinition.setHeight(height);
 		cpDefinition.setDepth(depth);
 		cpDefinition.setWeight(weight);
 
-		cpDefinitionPersistence.update(cpDefinition);
-
-		return cpDefinition;
+		return cpDefinitionPersistence.update(cpDefinition);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

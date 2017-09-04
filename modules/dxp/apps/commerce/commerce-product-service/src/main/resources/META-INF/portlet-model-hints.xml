@@ -38,10 +38,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="baseSKU" type="String" />
 		<field name="productTypeName" type="String" />
-		<field name="gtin" type="String" />
-		<field name="manufacturerPartNumber" type="String" />
 		<field name="availableIndividually" type="boolean" />
 		<field name="minCartQuantity" type="int">
 			<hint name="default-value">1</hint>
@@ -68,12 +65,6 @@
 			<validator name="number" />
 		</field>
 		<field name="weight" type="double">
-			<validator name="number" />
-		</field>
-		<field name="cost" type="double">
-			<validator name="number" />
-		</field>
-		<field name="price" type="double">
 			<validator name="number" />
 		</field>
 		<field name="DDMStructureKey" type="String" />
@@ -230,6 +221,11 @@
 		<field name="DDMContent" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="overrideInventory" type="boolean" />
+		<field name="minCartQuantity" type="int" />
+		<field name="maxCartQuantity" type="int" />
+		<field name="allowedCartQuantities" type="String" />
+		<field name="multipleCartQuantity" type="int" />
 		<field name="width" type="double">
 			<validator name="number" />
 		</field>

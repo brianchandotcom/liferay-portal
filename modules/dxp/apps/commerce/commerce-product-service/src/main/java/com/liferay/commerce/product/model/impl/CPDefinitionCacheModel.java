@@ -66,7 +66,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(65);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -84,14 +84,8 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", baseSKU=");
-		sb.append(baseSKU);
 		sb.append(", productTypeName=");
 		sb.append(productTypeName);
-		sb.append(", gtin=");
-		sb.append(gtin);
-		sb.append(", manufacturerPartNumber=");
-		sb.append(manufacturerPartNumber);
 		sb.append(", availableIndividually=");
 		sb.append(availableIndividually);
 		sb.append(", minCartQuantity=");
@@ -110,10 +104,6 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		sb.append(depth);
 		sb.append(", weight=");
 		sb.append(weight);
-		sb.append(", cost=");
-		sb.append(cost);
-		sb.append(", price=");
-		sb.append(price);
 		sb.append(", DDMStructureKey=");
 		sb.append(DDMStructureKey);
 		sb.append(", displayDate=");
@@ -174,32 +164,11 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 			cpDefinitionImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		if (baseSKU == null) {
-			cpDefinitionImpl.setBaseSKU(StringPool.BLANK);
-		}
-		else {
-			cpDefinitionImpl.setBaseSKU(baseSKU);
-		}
-
 		if (productTypeName == null) {
 			cpDefinitionImpl.setProductTypeName(StringPool.BLANK);
 		}
 		else {
 			cpDefinitionImpl.setProductTypeName(productTypeName);
-		}
-
-		if (gtin == null) {
-			cpDefinitionImpl.setGtin(StringPool.BLANK);
-		}
-		else {
-			cpDefinitionImpl.setGtin(gtin);
-		}
-
-		if (manufacturerPartNumber == null) {
-			cpDefinitionImpl.setManufacturerPartNumber(StringPool.BLANK);
-		}
-		else {
-			cpDefinitionImpl.setManufacturerPartNumber(manufacturerPartNumber);
 		}
 
 		cpDefinitionImpl.setAvailableIndividually(availableIndividually);
@@ -218,8 +187,6 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		cpDefinitionImpl.setHeight(height);
 		cpDefinitionImpl.setDepth(depth);
 		cpDefinitionImpl.setWeight(weight);
-		cpDefinitionImpl.setCost(cost);
-		cpDefinitionImpl.setPrice(price);
 
 		if (DDMStructureKey == null) {
 			cpDefinitionImpl.setDDMStructureKey(StringPool.BLANK);
@@ -292,10 +259,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		baseSKU = objectInput.readUTF();
 		productTypeName = objectInput.readUTF();
-		gtin = objectInput.readUTF();
-		manufacturerPartNumber = objectInput.readUTF();
 
 		availableIndividually = objectInput.readBoolean();
 
@@ -313,10 +277,6 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		depth = objectInput.readDouble();
 
 		weight = objectInput.readDouble();
-
-		cost = objectInput.readDouble();
-
-		price = objectInput.readDouble();
 		DDMStructureKey = objectInput.readUTF();
 		displayDate = objectInput.readLong();
 		expirationDate = objectInput.readLong();
@@ -358,32 +318,11 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		if (baseSKU == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(baseSKU);
-		}
-
 		if (productTypeName == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
 			objectOutput.writeUTF(productTypeName);
-		}
-
-		if (gtin == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(gtin);
-		}
-
-		if (manufacturerPartNumber == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(manufacturerPartNumber);
 		}
 
 		objectOutput.writeBoolean(availableIndividually);
@@ -408,10 +347,6 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		objectOutput.writeDouble(depth);
 
 		objectOutput.writeDouble(weight);
-
-		objectOutput.writeDouble(cost);
-
-		objectOutput.writeDouble(price);
 
 		if (DDMStructureKey == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -453,10 +388,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public String baseSKU;
 	public String productTypeName;
-	public String gtin;
-	public String manufacturerPartNumber;
 	public boolean availableIndividually;
 	public int minCartQuantity;
 	public int maxCartQuantity;
@@ -466,8 +398,6 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 	public double height;
 	public double depth;
 	public double weight;
-	public double cost;
-	public double price;
 	public String DDMStructureKey;
 	public long displayDate;
 	public long expirationDate;

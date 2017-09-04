@@ -84,20 +84,25 @@ public interface CPInstanceLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CPInstance addCPInstance(long cpDefinitionId, java.lang.String sku,
 		java.lang.String gtin, java.lang.String manufacturerPartNumber,
-		java.lang.String ddmContent, double width, double height, double depth,
-		double weight, double cost, double price, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
+		java.lang.String ddmContent, boolean overrideInventory,
+		int minCartQuantity, int maxCartQuantity,
+		java.lang.String allowedCartQuantities, int multipleCartQuantity,
+		double width, double height, double depth, double weight, double cost,
+		double price, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
 	public CPInstance addCPInstance(long cpDefinitionId, java.lang.String sku,
 		java.lang.String gtin, java.lang.String manufacturerPartNumber,
-		java.lang.String ddmContent, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		java.lang.String ddmContent, boolean overrideInventory,
+		int minCartQuantity, int maxCartQuantity,
+		java.lang.String allowedCartQuantities, int multipleCartQuantity,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
 	public void buildCPInstances(long cpDefinitionId,
@@ -260,6 +265,9 @@ public interface CPInstanceLocalService extends BaseLocalService,
 	public List<CPInstance> getCPInstances(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPInstance> getCPInstances(long cpDefinitionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPInstance> getCPInstances(long cpDefinitionId, int start,
 		int end);
 
@@ -346,6 +354,8 @@ public interface CPInstanceLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CPInstance updateCPInstance(long cpInstanceId, java.lang.String sku,
 		java.lang.String gtin, java.lang.String manufacturerPartNumber,
+		boolean overrideInventory, int minCartQuantity, int maxCartQuantity,
+		java.lang.String allowedCartQuantities, int multipleCartQuantity,
 		double width, double height, double depth, double weight, double cost,
 		double price, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,
@@ -355,6 +365,8 @@ public interface CPInstanceLocalService extends BaseLocalService,
 
 	public CPInstance updateCPInstance(long cpInstanceId, java.lang.String sku,
 		java.lang.String gtin, java.lang.String manufacturerPartNumber,
+		boolean overrideInventory, int minCartQuantity, int maxCartQuantity,
+		java.lang.String allowedCartQuantities, int multipleCartQuantity,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,

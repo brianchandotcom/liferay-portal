@@ -66,7 +66,7 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(53);
+		StringBundler sb = new StringBundler(63);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -94,6 +94,16 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 		sb.append(manufacturerPartNumber);
 		sb.append(", DDMContent=");
 		sb.append(DDMContent);
+		sb.append(", overrideInventory=");
+		sb.append(overrideInventory);
+		sb.append(", minCartQuantity=");
+		sb.append(minCartQuantity);
+		sb.append(", maxCartQuantity=");
+		sb.append(maxCartQuantity);
+		sb.append(", allowedCartQuantities=");
+		sb.append(allowedCartQuantities);
+		sb.append(", multipleCartQuantity=");
+		sb.append(multipleCartQuantity);
 		sb.append(", width=");
 		sb.append(width);
 		sb.append(", height=");
@@ -192,6 +202,18 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 			cpInstanceImpl.setDDMContent(DDMContent);
 		}
 
+		cpInstanceImpl.setOverrideInventory(overrideInventory);
+		cpInstanceImpl.setMinCartQuantity(minCartQuantity);
+		cpInstanceImpl.setMaxCartQuantity(maxCartQuantity);
+
+		if (allowedCartQuantities == null) {
+			cpInstanceImpl.setAllowedCartQuantities(StringPool.BLANK);
+		}
+		else {
+			cpInstanceImpl.setAllowedCartQuantities(allowedCartQuantities);
+		}
+
+		cpInstanceImpl.setMultipleCartQuantity(multipleCartQuantity);
 		cpInstanceImpl.setWidth(width);
 		cpInstanceImpl.setHeight(height);
 		cpInstanceImpl.setDepth(depth);
@@ -262,6 +284,15 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 		gtin = objectInput.readUTF();
 		manufacturerPartNumber = objectInput.readUTF();
 		DDMContent = objectInput.readUTF();
+
+		overrideInventory = objectInput.readBoolean();
+
+		minCartQuantity = objectInput.readInt();
+
+		maxCartQuantity = objectInput.readInt();
+		allowedCartQuantities = objectInput.readUTF();
+
+		multipleCartQuantity = objectInput.readInt();
 
 		width = objectInput.readDouble();
 
@@ -343,6 +374,21 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 			objectOutput.writeUTF(DDMContent);
 		}
 
+		objectOutput.writeBoolean(overrideInventory);
+
+		objectOutput.writeInt(minCartQuantity);
+
+		objectOutput.writeInt(maxCartQuantity);
+
+		if (allowedCartQuantities == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(allowedCartQuantities);
+		}
+
+		objectOutput.writeInt(multipleCartQuantity);
+
 		objectOutput.writeDouble(width);
 
 		objectOutput.writeDouble(height);
@@ -385,6 +431,11 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 	public String gtin;
 	public String manufacturerPartNumber;
 	public String DDMContent;
+	public boolean overrideInventory;
+	public int minCartQuantity;
+	public int maxCartQuantity;
+	public String allowedCartQuantities;
+	public int multipleCartQuantity;
 	public double width;
 	public double height;
 	public double depth;

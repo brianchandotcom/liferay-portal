@@ -58,12 +58,14 @@ public class CPInstanceServiceHttp {
 	public static com.liferay.commerce.product.model.CPInstance addCPInstance(
 		HttpPrincipal httpPrincipal, long cpDefinitionId, java.lang.String sku,
 		java.lang.String gtin, java.lang.String manufacturerPartNumber,
-		java.lang.String ddmContent, double width, double height, double depth,
-		double weight, double cost, double price, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
+		java.lang.String ddmContent, boolean overrideInventory,
+		int minCartQuantity, int maxCartQuantity,
+		java.lang.String allowedCartQuantities, int multipleCartQuantity,
+		double width, double height, double depth, double weight, double cost,
+		double price, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -72,8 +74,10 @@ public class CPInstanceServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpDefinitionId, sku, gtin, manufacturerPartNumber,
-					ddmContent, width, height, depth, weight, cost, price,
-					displayDateMonth, displayDateDay, displayDateYear,
+					ddmContent, overrideInventory, minCartQuantity,
+					maxCartQuantity, allowedCartQuantities,
+					multipleCartQuantity, width, height, depth, weight, cost,
+					price, displayDateMonth, displayDateDay, displayDateYear,
 					displayDateHour, displayDateMinute, expirationDateMonth,
 					expirationDateDay, expirationDateYear, expirationDateHour,
 					expirationDateMinute, neverExpire, serviceContext);
@@ -103,10 +107,13 @@ public class CPInstanceServiceHttp {
 	public static com.liferay.commerce.product.model.CPInstance addCPInstance(
 		HttpPrincipal httpPrincipal, long cpDefinitionId, java.lang.String sku,
 		java.lang.String gtin, java.lang.String manufacturerPartNumber,
-		java.lang.String ddmContent, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		java.lang.String ddmContent, boolean overrideInventory,
+		int minCartQuantity, int maxCartQuantity,
+		java.lang.String allowedCartQuantities, int multipleCartQuantity,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -115,7 +122,9 @@ public class CPInstanceServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpDefinitionId, sku, gtin, manufacturerPartNumber,
-					ddmContent, displayDateMonth, displayDateDay,
+					ddmContent, overrideInventory, minCartQuantity,
+					maxCartQuantity, allowedCartQuantities,
+					multipleCartQuantity, displayDateMonth, displayDateDay,
 					displayDateYear, displayDateHour, displayDateMinute,
 					expirationDateMonth, expirationDateDay, expirationDateYear,
 					expirationDateHour, expirationDateMinute, neverExpire,
@@ -465,6 +474,8 @@ public class CPInstanceServiceHttp {
 	public static com.liferay.commerce.product.model.CPInstance updateCPInstance(
 		HttpPrincipal httpPrincipal, long cpInstanceId, java.lang.String sku,
 		java.lang.String gtin, java.lang.String manufacturerPartNumber,
+		boolean overrideInventory, int minCartQuantity, int maxCartQuantity,
+		java.lang.String allowedCartQuantities, int multipleCartQuantity,
 		double width, double height, double depth, double weight, double cost,
 		double price, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,
@@ -477,8 +488,10 @@ public class CPInstanceServiceHttp {
 					"updateCPInstance", _updateCPInstanceParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpInstanceId, sku, gtin, manufacturerPartNumber, width,
-					height, depth, weight, cost, price, displayDateMonth,
+					cpInstanceId, sku, gtin, manufacturerPartNumber,
+					overrideInventory, minCartQuantity, maxCartQuantity,
+					allowedCartQuantities, multipleCartQuantity, width, height,
+					depth, weight, cost, price, displayDateMonth,
 					displayDateDay, displayDateYear, displayDateHour,
 					displayDateMinute, expirationDateMonth, expirationDateDay,
 					expirationDateYear, expirationDateHour,
@@ -509,6 +522,8 @@ public class CPInstanceServiceHttp {
 	public static com.liferay.commerce.product.model.CPInstance updateCPInstance(
 		HttpPrincipal httpPrincipal, long cpInstanceId, java.lang.String sku,
 		java.lang.String gtin, java.lang.String manufacturerPartNumber,
+		boolean overrideInventory, int minCartQuantity, int maxCartQuantity,
+		java.lang.String allowedCartQuantities, int multipleCartQuantity,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,
@@ -521,6 +536,8 @@ public class CPInstanceServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpInstanceId, sku, gtin, manufacturerPartNumber,
+					overrideInventory, minCartQuantity, maxCartQuantity,
+					allowedCartQuantities, multipleCartQuantity,
 					displayDateMonth, displayDateDay, displayDateYear,
 					displayDateHour, displayDateMinute, expirationDateMonth,
 					expirationDateDay, expirationDateYear, expirationDateHour,
@@ -652,17 +669,19 @@ public class CPInstanceServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(CPInstanceServiceHttp.class);
 	private static final Class<?>[] _addCPInstanceParameterTypes0 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, double.class,
+			java.lang.String.class, java.lang.String.class, boolean.class,
+			int.class, int.class, java.lang.String.class, int.class,
 			double.class, double.class, double.class, double.class, double.class,
-			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, int.class, int.class, boolean.class,
+			double.class, int.class, int.class, int.class, int.class, int.class,
+			int.class, int.class, int.class, int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addCPInstanceParameterTypes1 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, int.class, int.class,
+			java.lang.String.class, java.lang.String.class, boolean.class,
+			int.class, int.class, java.lang.String.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, boolean.class,
+			int.class, int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _buildCPInstancesParameterTypes2 = new Class[] {
@@ -700,17 +719,19 @@ public class CPInstanceServiceHttp {
 		};
 	private static final Class<?>[] _updateCPInstanceParameterTypes12 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, double.class, double.class, double.class,
-			double.class, double.class, double.class, int.class, int.class,
+			java.lang.String.class, boolean.class, int.class, int.class,
+			java.lang.String.class, int.class, double.class, double.class,
+			double.class, double.class, double.class, double.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, boolean.class,
+			int.class, int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateCPInstanceParameterTypes13 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
+			java.lang.String.class, boolean.class, int.class, int.class,
 			java.lang.String.class, int.class, int.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			boolean.class,
+			int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updatePricingInfoParameterTypes14 = new Class[] {

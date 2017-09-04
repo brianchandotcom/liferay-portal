@@ -287,6 +287,84 @@ public interface CPInstanceModel extends BaseModel<CPInstance>, ShardedModel,
 	public void setDDMContent(String DDMContent);
 
 	/**
+	 * Returns the override inventory of this cp instance.
+	 *
+	 * @return the override inventory of this cp instance
+	 */
+	public boolean getOverrideInventory();
+
+	/**
+	 * Returns <code>true</code> if this cp instance is override inventory.
+	 *
+	 * @return <code>true</code> if this cp instance is override inventory; <code>false</code> otherwise
+	 */
+	public boolean isOverrideInventory();
+
+	/**
+	 * Sets whether this cp instance is override inventory.
+	 *
+	 * @param overrideInventory the override inventory of this cp instance
+	 */
+	public void setOverrideInventory(boolean overrideInventory);
+
+	/**
+	 * Returns the min cart quantity of this cp instance.
+	 *
+	 * @return the min cart quantity of this cp instance
+	 */
+	public int getMinCartQuantity();
+
+	/**
+	 * Sets the min cart quantity of this cp instance.
+	 *
+	 * @param minCartQuantity the min cart quantity of this cp instance
+	 */
+	public void setMinCartQuantity(int minCartQuantity);
+
+	/**
+	 * Returns the max cart quantity of this cp instance.
+	 *
+	 * @return the max cart quantity of this cp instance
+	 */
+	public int getMaxCartQuantity();
+
+	/**
+	 * Sets the max cart quantity of this cp instance.
+	 *
+	 * @param maxCartQuantity the max cart quantity of this cp instance
+	 */
+	public void setMaxCartQuantity(int maxCartQuantity);
+
+	/**
+	 * Returns the allowed cart quantities of this cp instance.
+	 *
+	 * @return the allowed cart quantities of this cp instance
+	 */
+	@AutoEscape
+	public String getAllowedCartQuantities();
+
+	/**
+	 * Sets the allowed cart quantities of this cp instance.
+	 *
+	 * @param allowedCartQuantities the allowed cart quantities of this cp instance
+	 */
+	public void setAllowedCartQuantities(String allowedCartQuantities);
+
+	/**
+	 * Returns the multiple cart quantity of this cp instance.
+	 *
+	 * @return the multiple cart quantity of this cp instance
+	 */
+	public int getMultipleCartQuantity();
+
+	/**
+	 * Sets the multiple cart quantity of this cp instance.
+	 *
+	 * @param multipleCartQuantity the multiple cart quantity of this cp instance
+	 */
+	public void setMultipleCartQuantity(int multipleCartQuantity);
+
+	/**
 	 * Returns the width of this cp instance.
 	 *
 	 * @return the width of this cp instance

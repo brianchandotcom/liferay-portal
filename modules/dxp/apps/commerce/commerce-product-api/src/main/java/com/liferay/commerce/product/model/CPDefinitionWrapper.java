@@ -68,10 +68,7 @@ public class CPDefinitionWrapper implements CPDefinition,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("baseSKU", getBaseSKU());
 		attributes.put("productTypeName", getProductTypeName());
-		attributes.put("gtin", getGtin());
-		attributes.put("manufacturerPartNumber", getManufacturerPartNumber());
 		attributes.put("availableIndividually", getAvailableIndividually());
 		attributes.put("minCartQuantity", getMinCartQuantity());
 		attributes.put("maxCartQuantity", getMaxCartQuantity());
@@ -81,8 +78,6 @@ public class CPDefinitionWrapper implements CPDefinition,
 		attributes.put("height", getHeight());
 		attributes.put("depth", getDepth());
 		attributes.put("weight", getWeight());
-		attributes.put("cost", getCost());
-		attributes.put("price", getPrice());
 		attributes.put("DDMStructureKey", getDDMStructureKey());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
@@ -146,29 +141,10 @@ public class CPDefinitionWrapper implements CPDefinition,
 			setModifiedDate(modifiedDate);
 		}
 
-		String baseSKU = (String)attributes.get("baseSKU");
-
-		if (baseSKU != null) {
-			setBaseSKU(baseSKU);
-		}
-
 		String productTypeName = (String)attributes.get("productTypeName");
 
 		if (productTypeName != null) {
 			setProductTypeName(productTypeName);
-		}
-
-		String gtin = (String)attributes.get("gtin");
-
-		if (gtin != null) {
-			setGtin(gtin);
-		}
-
-		String manufacturerPartNumber = (String)attributes.get(
-				"manufacturerPartNumber");
-
-		if (manufacturerPartNumber != null) {
-			setManufacturerPartNumber(manufacturerPartNumber);
 		}
 
 		Boolean availableIndividually = (Boolean)attributes.get(
@@ -226,18 +202,6 @@ public class CPDefinitionWrapper implements CPDefinition,
 
 		if (weight != null) {
 			setWeight(weight);
-		}
-
-		Double cost = (Double)attributes.get("cost");
-
-		if (cost != null) {
-			setCost(cost);
-		}
-
-		Double price = (Double)attributes.get("price");
-
-		if (price != null) {
-			setPrice(price);
 		}
 
 		String DDMStructureKey = (String)attributes.get("DDMStructureKey");
@@ -331,16 +295,6 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	/**
-	* Returns the base sku of this cp definition.
-	*
-	* @return the base sku of this cp definition
-	*/
-	@Override
-	public java.lang.String getBaseSKU() {
-		return _cpDefinition.getBaseSKU();
-	}
-
-	/**
 	* Returns the company ID of this cp definition.
 	*
 	* @return the company ID of this cp definition
@@ -348,16 +302,6 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public long getCompanyId() {
 		return _cpDefinition.getCompanyId();
-	}
-
-	/**
-	* Returns the cost of this cp definition.
-	*
-	* @return the cost of this cp definition
-	*/
-	@Override
-	public double getCost() {
-		return _cpDefinition.getCost();
 	}
 
 	/**
@@ -489,16 +433,6 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	/**
-	* Returns the gtin of this cp definition.
-	*
-	* @return the gtin of this cp definition
-	*/
-	@Override
-	public java.lang.String getGtin() {
-		return _cpDefinition.getGtin();
-	}
-
-	/**
 	* Returns the height of this cp definition.
 	*
 	* @return the height of this cp definition
@@ -551,16 +485,6 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public java.lang.String getLayoutUuid() {
 		return _cpDefinition.getLayoutUuid();
-	}
-
-	/**
-	* Returns the manufacturer part number of this cp definition.
-	*
-	* @return the manufacturer part number of this cp definition
-	*/
-	@Override
-	public java.lang.String getManufacturerPartNumber() {
-		return _cpDefinition.getManufacturerPartNumber();
 	}
 
 	/**
@@ -679,16 +603,6 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public int getMultipleCartQuantity() {
 		return _cpDefinition.getMultipleCartQuantity();
-	}
-
-	/**
-	* Returns the price of this cp definition.
-	*
-	* @return the price of this cp definition
-	*/
-	@Override
-	public double getPrice() {
-		return _cpDefinition.getPrice();
 	}
 
 	/**
@@ -1086,16 +1000,6 @@ public class CPDefinitionWrapper implements CPDefinition,
 		_cpDefinition.setAvailableIndividually(availableIndividually);
 	}
 
-	/**
-	* Sets the base sku of this cp definition.
-	*
-	* @param baseSKU the base sku of this cp definition
-	*/
-	@Override
-	public void setBaseSKU(java.lang.String baseSKU) {
-		_cpDefinition.setBaseSKU(baseSKU);
-	}
-
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_cpDefinition.setCachedModel(cachedModel);
@@ -1109,16 +1013,6 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public void setCompanyId(long companyId) {
 		_cpDefinition.setCompanyId(companyId);
-	}
-
-	/**
-	* Sets the cost of this cp definition.
-	*
-	* @param cost the cost of this cp definition
-	*/
-	@Override
-	public void setCost(double cost) {
-		_cpDefinition.setCost(cost);
 	}
 
 	/**
@@ -1224,16 +1118,6 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	/**
-	* Sets the gtin of this cp definition.
-	*
-	* @param gtin the gtin of this cp definition
-	*/
-	@Override
-	public void setGtin(java.lang.String gtin) {
-		_cpDefinition.setGtin(gtin);
-	}
-
-	/**
 	* Sets the height of this cp definition.
 	*
 	* @param height the height of this cp definition
@@ -1256,17 +1140,6 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public void setLayoutUuid(java.lang.String layoutUuid) {
 		_cpDefinition.setLayoutUuid(layoutUuid);
-	}
-
-	/**
-	* Sets the manufacturer part number of this cp definition.
-	*
-	* @param manufacturerPartNumber the manufacturer part number of this cp definition
-	*/
-	@Override
-	public void setManufacturerPartNumber(
-		java.lang.String manufacturerPartNumber) {
-		_cpDefinition.setManufacturerPartNumber(manufacturerPartNumber);
 	}
 
 	/**
@@ -1312,16 +1185,6 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public void setNew(boolean n) {
 		_cpDefinition.setNew(n);
-	}
-
-	/**
-	* Sets the price of this cp definition.
-	*
-	* @param price the price of this cp definition
-	*/
-	@Override
-	public void setPrice(double price) {
-		_cpDefinition.setPrice(price);
 	}
 
 	/**

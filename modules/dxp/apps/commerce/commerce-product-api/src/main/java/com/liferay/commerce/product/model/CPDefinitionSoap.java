@@ -42,10 +42,7 @@ public class CPDefinitionSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setBaseSKU(model.getBaseSKU());
 		soapModel.setProductTypeName(model.getProductTypeName());
-		soapModel.setGtin(model.getGtin());
-		soapModel.setManufacturerPartNumber(model.getManufacturerPartNumber());
 		soapModel.setAvailableIndividually(model.getAvailableIndividually());
 		soapModel.setMinCartQuantity(model.getMinCartQuantity());
 		soapModel.setMaxCartQuantity(model.getMaxCartQuantity());
@@ -55,8 +52,6 @@ public class CPDefinitionSoap implements Serializable {
 		soapModel.setHeight(model.getHeight());
 		soapModel.setDepth(model.getDepth());
 		soapModel.setWeight(model.getWeight());
-		soapModel.setCost(model.getCost());
-		soapModel.setPrice(model.getPrice());
 		soapModel.setDDMStructureKey(model.getDDMStructureKey());
 		soapModel.setDisplayDate(model.getDisplayDate());
 		soapModel.setExpirationDate(model.getExpirationDate());
@@ -182,36 +177,12 @@ public class CPDefinitionSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public String getBaseSKU() {
-		return _baseSKU;
-	}
-
-	public void setBaseSKU(String baseSKU) {
-		_baseSKU = baseSKU;
-	}
-
 	public String getProductTypeName() {
 		return _productTypeName;
 	}
 
 	public void setProductTypeName(String productTypeName) {
 		_productTypeName = productTypeName;
-	}
-
-	public String getGtin() {
-		return _gtin;
-	}
-
-	public void setGtin(String gtin) {
-		_gtin = gtin;
-	}
-
-	public String getManufacturerPartNumber() {
-		return _manufacturerPartNumber;
-	}
-
-	public void setManufacturerPartNumber(String manufacturerPartNumber) {
-		_manufacturerPartNumber = manufacturerPartNumber;
 	}
 
 	public boolean getAvailableIndividually() {
@@ -288,22 +259,6 @@ public class CPDefinitionSoap implements Serializable {
 
 	public void setWeight(double weight) {
 		_weight = weight;
-	}
-
-	public double getCost() {
-		return _cost;
-	}
-
-	public void setCost(double cost) {
-		_cost = cost;
-	}
-
-	public double getPrice() {
-		return _price;
-	}
-
-	public void setPrice(double price) {
-		_price = price;
 	}
 
 	public String getDDMStructureKey() {
@@ -386,10 +341,7 @@ public class CPDefinitionSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private String _baseSKU;
 	private String _productTypeName;
-	private String _gtin;
-	private String _manufacturerPartNumber;
 	private boolean _availableIndividually;
 	private int _minCartQuantity;
 	private int _maxCartQuantity;
@@ -399,8 +351,6 @@ public class CPDefinitionSoap implements Serializable {
 	private double _height;
 	private double _depth;
 	private double _weight;
-	private double _cost;
-	private double _price;
 	private String _DDMStructureKey;
 	private Date _displayDate;
 	private Date _expirationDate;

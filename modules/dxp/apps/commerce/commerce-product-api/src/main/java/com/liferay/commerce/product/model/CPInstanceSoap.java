@@ -47,6 +47,11 @@ public class CPInstanceSoap implements Serializable {
 		soapModel.setGtin(model.getGtin());
 		soapModel.setManufacturerPartNumber(model.getManufacturerPartNumber());
 		soapModel.setDDMContent(model.getDDMContent());
+		soapModel.setOverrideInventory(model.getOverrideInventory());
+		soapModel.setMinCartQuantity(model.getMinCartQuantity());
+		soapModel.setMaxCartQuantity(model.getMaxCartQuantity());
+		soapModel.setAllowedCartQuantities(model.getAllowedCartQuantities());
+		soapModel.setMultipleCartQuantity(model.getMultipleCartQuantity());
 		soapModel.setWidth(model.getWidth());
 		soapModel.setHeight(model.getHeight());
 		soapModel.setDepth(model.getDepth());
@@ -216,6 +221,50 @@ public class CPInstanceSoap implements Serializable {
 		_DDMContent = DDMContent;
 	}
 
+	public boolean getOverrideInventory() {
+		return _overrideInventory;
+	}
+
+	public boolean isOverrideInventory() {
+		return _overrideInventory;
+	}
+
+	public void setOverrideInventory(boolean overrideInventory) {
+		_overrideInventory = overrideInventory;
+	}
+
+	public int getMinCartQuantity() {
+		return _minCartQuantity;
+	}
+
+	public void setMinCartQuantity(int minCartQuantity) {
+		_minCartQuantity = minCartQuantity;
+	}
+
+	public int getMaxCartQuantity() {
+		return _maxCartQuantity;
+	}
+
+	public void setMaxCartQuantity(int maxCartQuantity) {
+		_maxCartQuantity = maxCartQuantity;
+	}
+
+	public String getAllowedCartQuantities() {
+		return _allowedCartQuantities;
+	}
+
+	public void setAllowedCartQuantities(String allowedCartQuantities) {
+		_allowedCartQuantities = allowedCartQuantities;
+	}
+
+	public int getMultipleCartQuantity() {
+		return _multipleCartQuantity;
+	}
+
+	public void setMultipleCartQuantity(int multipleCartQuantity) {
+		_multipleCartQuantity = multipleCartQuantity;
+	}
+
 	public double getWidth() {
 		return _width;
 	}
@@ -333,6 +382,11 @@ public class CPInstanceSoap implements Serializable {
 	private String _gtin;
 	private String _manufacturerPartNumber;
 	private String _DDMContent;
+	private boolean _overrideInventory;
+	private int _minCartQuantity;
+	private int _maxCartQuantity;
+	private String _allowedCartQuantities;
+	private int _multipleCartQuantity;
 	private double _width;
 	private double _height;
 	private double _depth;

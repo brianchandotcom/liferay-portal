@@ -92,6 +92,11 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 			{ "gtin", Types.VARCHAR },
 			{ "manufacturerPartNumber", Types.VARCHAR },
 			{ "DDMContent", Types.CLOB },
+			{ "overrideInventory", Types.BOOLEAN },
+			{ "minCartQuantity", Types.INTEGER },
+			{ "maxCartQuantity", Types.INTEGER },
+			{ "allowedCartQuantities", Types.VARCHAR },
+			{ "multipleCartQuantity", Types.INTEGER },
 			{ "width", Types.DOUBLE },
 			{ "height", Types.DOUBLE },
 			{ "depth", Types.DOUBLE },
@@ -122,6 +127,11 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		TABLE_COLUMNS_MAP.put("gtin", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("manufacturerPartNumber", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("DDMContent", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("overrideInventory", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("minCartQuantity", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("maxCartQuantity", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("allowedCartQuantities", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("multipleCartQuantity", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("width", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("height", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("depth", Types.DOUBLE);
@@ -137,7 +147,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPInstance (uuid_ VARCHAR(75) null,CPInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,sku VARCHAR(75) null,gtin VARCHAR(75) null,manufacturerPartNumber VARCHAR(75) null,DDMContent TEXT null,width DOUBLE,height DOUBLE,depth DOUBLE,weight DOUBLE,cost DOUBLE,price DOUBLE,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CPInstance (uuid_ VARCHAR(75) null,CPInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,sku VARCHAR(75) null,gtin VARCHAR(75) null,manufacturerPartNumber VARCHAR(75) null,DDMContent TEXT null,overrideInventory BOOLEAN,minCartQuantity INTEGER,maxCartQuantity INTEGER,allowedCartQuantities VARCHAR(75) null,multipleCartQuantity INTEGER,width DOUBLE,height DOUBLE,depth DOUBLE,weight DOUBLE,cost DOUBLE,price DOUBLE,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CPInstance";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpInstance.displayDate DESC, cpInstance.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPInstance.displayDate DESC, CPInstance.createDate DESC";
@@ -188,6 +198,11 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		model.setGtin(soapModel.getGtin());
 		model.setManufacturerPartNumber(soapModel.getManufacturerPartNumber());
 		model.setDDMContent(soapModel.getDDMContent());
+		model.setOverrideInventory(soapModel.getOverrideInventory());
+		model.setMinCartQuantity(soapModel.getMinCartQuantity());
+		model.setMaxCartQuantity(soapModel.getMaxCartQuantity());
+		model.setAllowedCartQuantities(soapModel.getAllowedCartQuantities());
+		model.setMultipleCartQuantity(soapModel.getMultipleCartQuantity());
 		model.setWidth(soapModel.getWidth());
 		model.setHeight(soapModel.getHeight());
 		model.setDepth(soapModel.getDepth());
@@ -278,6 +293,11 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		attributes.put("gtin", getGtin());
 		attributes.put("manufacturerPartNumber", getManufacturerPartNumber());
 		attributes.put("DDMContent", getDDMContent());
+		attributes.put("overrideInventory", getOverrideInventory());
+		attributes.put("minCartQuantity", getMinCartQuantity());
+		attributes.put("maxCartQuantity", getMaxCartQuantity());
+		attributes.put("allowedCartQuantities", getAllowedCartQuantities());
+		attributes.put("multipleCartQuantity", getMultipleCartQuantity());
 		attributes.put("width", getWidth());
 		attributes.put("height", getHeight());
 		attributes.put("depth", getDepth());
@@ -377,6 +397,38 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 
 		if (DDMContent != null) {
 			setDDMContent(DDMContent);
+		}
+
+		Boolean overrideInventory = (Boolean)attributes.get("overrideInventory");
+
+		if (overrideInventory != null) {
+			setOverrideInventory(overrideInventory);
+		}
+
+		Integer minCartQuantity = (Integer)attributes.get("minCartQuantity");
+
+		if (minCartQuantity != null) {
+			setMinCartQuantity(minCartQuantity);
+		}
+
+		Integer maxCartQuantity = (Integer)attributes.get("maxCartQuantity");
+
+		if (maxCartQuantity != null) {
+			setMaxCartQuantity(maxCartQuantity);
+		}
+
+		String allowedCartQuantities = (String)attributes.get(
+				"allowedCartQuantities");
+
+		if (allowedCartQuantities != null) {
+			setAllowedCartQuantities(allowedCartQuantities);
+		}
+
+		Integer multipleCartQuantity = (Integer)attributes.get(
+				"multipleCartQuantity");
+
+		if (multipleCartQuantity != null) {
+			setMultipleCartQuantity(multipleCartQuantity);
 		}
 
 		Double width = (Double)attributes.get("width");
@@ -707,6 +759,72 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 	@Override
 	public void setDDMContent(String DDMContent) {
 		_DDMContent = DDMContent;
+	}
+
+	@JSON
+	@Override
+	public boolean getOverrideInventory() {
+		return _overrideInventory;
+	}
+
+	@JSON
+	@Override
+	public boolean isOverrideInventory() {
+		return _overrideInventory;
+	}
+
+	@Override
+	public void setOverrideInventory(boolean overrideInventory) {
+		_overrideInventory = overrideInventory;
+	}
+
+	@JSON
+	@Override
+	public int getMinCartQuantity() {
+		return _minCartQuantity;
+	}
+
+	@Override
+	public void setMinCartQuantity(int minCartQuantity) {
+		_minCartQuantity = minCartQuantity;
+	}
+
+	@JSON
+	@Override
+	public int getMaxCartQuantity() {
+		return _maxCartQuantity;
+	}
+
+	@Override
+	public void setMaxCartQuantity(int maxCartQuantity) {
+		_maxCartQuantity = maxCartQuantity;
+	}
+
+	@JSON
+	@Override
+	public String getAllowedCartQuantities() {
+		if (_allowedCartQuantities == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _allowedCartQuantities;
+		}
+	}
+
+	@Override
+	public void setAllowedCartQuantities(String allowedCartQuantities) {
+		_allowedCartQuantities = allowedCartQuantities;
+	}
+
+	@JSON
+	@Override
+	public int getMultipleCartQuantity() {
+		return _multipleCartQuantity;
+	}
+
+	@Override
+	public void setMultipleCartQuantity(int multipleCartQuantity) {
+		_multipleCartQuantity = multipleCartQuantity;
 	}
 
 	@JSON
@@ -1156,6 +1274,11 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		cpInstanceImpl.setGtin(getGtin());
 		cpInstanceImpl.setManufacturerPartNumber(getManufacturerPartNumber());
 		cpInstanceImpl.setDDMContent(getDDMContent());
+		cpInstanceImpl.setOverrideInventory(getOverrideInventory());
+		cpInstanceImpl.setMinCartQuantity(getMinCartQuantity());
+		cpInstanceImpl.setMaxCartQuantity(getMaxCartQuantity());
+		cpInstanceImpl.setAllowedCartQuantities(getAllowedCartQuantities());
+		cpInstanceImpl.setMultipleCartQuantity(getMultipleCartQuantity());
 		cpInstanceImpl.setWidth(getWidth());
 		cpInstanceImpl.setHeight(getHeight());
 		cpInstanceImpl.setDepth(getDepth());
@@ -1347,6 +1470,23 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 			cpInstanceCacheModel.DDMContent = null;
 		}
 
+		cpInstanceCacheModel.overrideInventory = getOverrideInventory();
+
+		cpInstanceCacheModel.minCartQuantity = getMinCartQuantity();
+
+		cpInstanceCacheModel.maxCartQuantity = getMaxCartQuantity();
+
+		cpInstanceCacheModel.allowedCartQuantities = getAllowedCartQuantities();
+
+		String allowedCartQuantities = cpInstanceCacheModel.allowedCartQuantities;
+
+		if ((allowedCartQuantities != null) &&
+				(allowedCartQuantities.length() == 0)) {
+			cpInstanceCacheModel.allowedCartQuantities = null;
+		}
+
+		cpInstanceCacheModel.multipleCartQuantity = getMultipleCartQuantity();
+
 		cpInstanceCacheModel.width = getWidth();
 
 		cpInstanceCacheModel.height = getHeight();
@@ -1412,7 +1552,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(53);
+		StringBundler sb = new StringBundler(63);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1440,6 +1580,16 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		sb.append(getManufacturerPartNumber());
 		sb.append(", DDMContent=");
 		sb.append(getDDMContent());
+		sb.append(", overrideInventory=");
+		sb.append(getOverrideInventory());
+		sb.append(", minCartQuantity=");
+		sb.append(getMinCartQuantity());
+		sb.append(", maxCartQuantity=");
+		sb.append(getMaxCartQuantity());
+		sb.append(", allowedCartQuantities=");
+		sb.append(getAllowedCartQuantities());
+		sb.append(", multipleCartQuantity=");
+		sb.append(getMultipleCartQuantity());
 		sb.append(", width=");
 		sb.append(getWidth());
 		sb.append(", height=");
@@ -1473,7 +1623,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(82);
+		StringBundler sb = new StringBundler(97);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.product.model.CPInstance");
@@ -1530,6 +1680,26 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		sb.append(
 			"<column><column-name>DDMContent</column-name><column-value><![CDATA[");
 		sb.append(getDDMContent());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>overrideInventory</column-name><column-value><![CDATA[");
+		sb.append(getOverrideInventory());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>minCartQuantity</column-name><column-value><![CDATA[");
+		sb.append(getMinCartQuantity());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>maxCartQuantity</column-name><column-value><![CDATA[");
+		sb.append(getMaxCartQuantity());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>allowedCartQuantities</column-name><column-value><![CDATA[");
+		sb.append(getAllowedCartQuantities());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>multipleCartQuantity</column-name><column-value><![CDATA[");
+		sb.append(getMultipleCartQuantity());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>width</column-name><column-value><![CDATA[");
@@ -1615,6 +1785,11 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 	private String _gtin;
 	private String _manufacturerPartNumber;
 	private String _DDMContent;
+	private boolean _overrideInventory;
+	private int _minCartQuantity;
+	private int _maxCartQuantity;
+	private String _allowedCartQuantities;
+	private int _multipleCartQuantity;
 	private double _width;
 	private double _height;
 	private double _depth;

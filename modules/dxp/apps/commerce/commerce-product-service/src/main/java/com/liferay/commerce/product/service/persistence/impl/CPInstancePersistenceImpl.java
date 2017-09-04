@@ -5434,6 +5434,11 @@ public class CPInstancePersistenceImpl extends BasePersistenceImpl<CPInstance>
 		cpInstanceImpl.setGtin(cpInstance.getGtin());
 		cpInstanceImpl.setManufacturerPartNumber(cpInstance.getManufacturerPartNumber());
 		cpInstanceImpl.setDDMContent(cpInstance.getDDMContent());
+		cpInstanceImpl.setOverrideInventory(cpInstance.isOverrideInventory());
+		cpInstanceImpl.setMinCartQuantity(cpInstance.getMinCartQuantity());
+		cpInstanceImpl.setMaxCartQuantity(cpInstance.getMaxCartQuantity());
+		cpInstanceImpl.setAllowedCartQuantities(cpInstance.getAllowedCartQuantities());
+		cpInstanceImpl.setMultipleCartQuantity(cpInstance.getMultipleCartQuantity());
 		cpInstanceImpl.setWidth(cpInstance.getWidth());
 		cpInstanceImpl.setHeight(cpInstance.getHeight());
 		cpInstanceImpl.setDepth(cpInstance.getDepth());

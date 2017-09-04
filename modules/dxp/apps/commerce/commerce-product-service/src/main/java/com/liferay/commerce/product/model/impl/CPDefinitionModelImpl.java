@@ -91,10 +91,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
-			{ "baseSKU", Types.VARCHAR },
 			{ "productTypeName", Types.VARCHAR },
-			{ "gtin", Types.VARCHAR },
-			{ "manufacturerPartNumber", Types.VARCHAR },
 			{ "availableIndividually", Types.BOOLEAN },
 			{ "minCartQuantity", Types.INTEGER },
 			{ "maxCartQuantity", Types.INTEGER },
@@ -104,8 +101,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 			{ "height", Types.DOUBLE },
 			{ "depth", Types.DOUBLE },
 			{ "weight", Types.DOUBLE },
-			{ "cost", Types.DOUBLE },
-			{ "price", Types.DOUBLE },
 			{ "DDMStructureKey", Types.VARCHAR },
 			{ "displayDate", Types.TIMESTAMP },
 			{ "expirationDate", Types.TIMESTAMP },
@@ -127,10 +122,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("baseSKU", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("productTypeName", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("gtin", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("manufacturerPartNumber", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("availableIndividually", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("minCartQuantity", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("maxCartQuantity", Types.INTEGER);
@@ -140,8 +132,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		TABLE_COLUMNS_MAP.put("height", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("depth", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("weight", Types.DOUBLE);
-		TABLE_COLUMNS_MAP.put("cost", Types.DOUBLE);
-		TABLE_COLUMNS_MAP.put("price", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("DDMStructureKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("displayDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
@@ -153,7 +143,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		TABLE_COLUMNS_MAP.put("defaultLanguageId", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPDefinition (uuid_ VARCHAR(75) null,CPDefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,baseSKU VARCHAR(75) null,productTypeName VARCHAR(75) null,gtin VARCHAR(75) null,manufacturerPartNumber VARCHAR(75) null,availableIndividually BOOLEAN,minCartQuantity INTEGER,maxCartQuantity INTEGER,allowedCartQuantities VARCHAR(255) null,multipleCartQuantity INTEGER,width DOUBLE,height DOUBLE,depth DOUBLE,weight DOUBLE,cost DOUBLE,price DOUBLE,DDMStructureKey VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,defaultLanguageId VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table CPDefinition (uuid_ VARCHAR(75) null,CPDefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,productTypeName VARCHAR(75) null,availableIndividually BOOLEAN,minCartQuantity INTEGER,maxCartQuantity INTEGER,allowedCartQuantities VARCHAR(255) null,multipleCartQuantity INTEGER,width DOUBLE,height DOUBLE,depth DOUBLE,weight DOUBLE,DDMStructureKey VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,defaultLanguageId VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table CPDefinition";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpDefinition.displayDate DESC, cpDefinition.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPDefinition.displayDate DESC, CPDefinition.createDate DESC";
@@ -197,10 +187,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setBaseSKU(soapModel.getBaseSKU());
 		model.setProductTypeName(soapModel.getProductTypeName());
-		model.setGtin(soapModel.getGtin());
-		model.setManufacturerPartNumber(soapModel.getManufacturerPartNumber());
 		model.setAvailableIndividually(soapModel.getAvailableIndividually());
 		model.setMinCartQuantity(soapModel.getMinCartQuantity());
 		model.setMaxCartQuantity(soapModel.getMaxCartQuantity());
@@ -210,8 +197,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		model.setHeight(soapModel.getHeight());
 		model.setDepth(soapModel.getDepth());
 		model.setWeight(soapModel.getWeight());
-		model.setCost(soapModel.getCost());
-		model.setPrice(soapModel.getPrice());
 		model.setDDMStructureKey(soapModel.getDDMStructureKey());
 		model.setDisplayDate(soapModel.getDisplayDate());
 		model.setExpirationDate(soapModel.getExpirationDate());
@@ -293,10 +278,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("baseSKU", getBaseSKU());
 		attributes.put("productTypeName", getProductTypeName());
-		attributes.put("gtin", getGtin());
-		attributes.put("manufacturerPartNumber", getManufacturerPartNumber());
 		attributes.put("availableIndividually", getAvailableIndividually());
 		attributes.put("minCartQuantity", getMinCartQuantity());
 		attributes.put("maxCartQuantity", getMaxCartQuantity());
@@ -306,8 +288,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		attributes.put("height", getHeight());
 		attributes.put("depth", getDepth());
 		attributes.put("weight", getWeight());
-		attributes.put("cost", getCost());
-		attributes.put("price", getPrice());
 		attributes.put("DDMStructureKey", getDDMStructureKey());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
@@ -374,29 +354,10 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 			setModifiedDate(modifiedDate);
 		}
 
-		String baseSKU = (String)attributes.get("baseSKU");
-
-		if (baseSKU != null) {
-			setBaseSKU(baseSKU);
-		}
-
 		String productTypeName = (String)attributes.get("productTypeName");
 
 		if (productTypeName != null) {
 			setProductTypeName(productTypeName);
-		}
-
-		String gtin = (String)attributes.get("gtin");
-
-		if (gtin != null) {
-			setGtin(gtin);
-		}
-
-		String manufacturerPartNumber = (String)attributes.get(
-				"manufacturerPartNumber");
-
-		if (manufacturerPartNumber != null) {
-			setManufacturerPartNumber(manufacturerPartNumber);
 		}
 
 		Boolean availableIndividually = (Boolean)attributes.get(
@@ -454,18 +415,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 		if (weight != null) {
 			setWeight(weight);
-		}
-
-		Double cost = (Double)attributes.get("cost");
-
-		if (cost != null) {
-			setCost(cost);
-		}
-
-		Double price = (Double)attributes.get("price");
-
-		if (price != null) {
-			setPrice(price);
 		}
 
 		String DDMStructureKey = (String)attributes.get("DDMStructureKey");
@@ -1024,22 +973,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 	@JSON
 	@Override
-	public String getBaseSKU() {
-		if (_baseSKU == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _baseSKU;
-		}
-	}
-
-	@Override
-	public void setBaseSKU(String baseSKU) {
-		_baseSKU = baseSKU;
-	}
-
-	@JSON
-	@Override
 	public String getProductTypeName() {
 		if (_productTypeName == null) {
 			return StringPool.BLANK;
@@ -1052,38 +985,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 	@Override
 	public void setProductTypeName(String productTypeName) {
 		_productTypeName = productTypeName;
-	}
-
-	@JSON
-	@Override
-	public String getGtin() {
-		if (_gtin == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _gtin;
-		}
-	}
-
-	@Override
-	public void setGtin(String gtin) {
-		_gtin = gtin;
-	}
-
-	@JSON
-	@Override
-	public String getManufacturerPartNumber() {
-		if (_manufacturerPartNumber == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _manufacturerPartNumber;
-		}
-	}
-
-	@Override
-	public void setManufacturerPartNumber(String manufacturerPartNumber) {
-		_manufacturerPartNumber = manufacturerPartNumber;
 	}
 
 	@JSON
@@ -1194,28 +1095,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 	@Override
 	public void setWeight(double weight) {
 		_weight = weight;
-	}
-
-	@JSON
-	@Override
-	public double getCost() {
-		return _cost;
-	}
-
-	@Override
-	public void setCost(double cost) {
-		_cost = cost;
-	}
-
-	@JSON
-	@Override
-	public double getPrice() {
-		return _price;
-	}
-
-	@Override
-	public void setPrice(double price) {
-		_price = price;
 	}
 
 	@JSON
@@ -1626,10 +1505,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		cpDefinitionImpl.setUserName(getUserName());
 		cpDefinitionImpl.setCreateDate(getCreateDate());
 		cpDefinitionImpl.setModifiedDate(getModifiedDate());
-		cpDefinitionImpl.setBaseSKU(getBaseSKU());
 		cpDefinitionImpl.setProductTypeName(getProductTypeName());
-		cpDefinitionImpl.setGtin(getGtin());
-		cpDefinitionImpl.setManufacturerPartNumber(getManufacturerPartNumber());
 		cpDefinitionImpl.setAvailableIndividually(getAvailableIndividually());
 		cpDefinitionImpl.setMinCartQuantity(getMinCartQuantity());
 		cpDefinitionImpl.setMaxCartQuantity(getMaxCartQuantity());
@@ -1639,8 +1515,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		cpDefinitionImpl.setHeight(getHeight());
 		cpDefinitionImpl.setDepth(getDepth());
 		cpDefinitionImpl.setWeight(getWeight());
-		cpDefinitionImpl.setCost(getCost());
-		cpDefinitionImpl.setPrice(getPrice());
 		cpDefinitionImpl.setDDMStructureKey(getDDMStructureKey());
 		cpDefinitionImpl.setDisplayDate(getDisplayDate());
 		cpDefinitionImpl.setExpirationDate(getExpirationDate());
@@ -1788,37 +1662,12 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 			cpDefinitionCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		cpDefinitionCacheModel.baseSKU = getBaseSKU();
-
-		String baseSKU = cpDefinitionCacheModel.baseSKU;
-
-		if ((baseSKU != null) && (baseSKU.length() == 0)) {
-			cpDefinitionCacheModel.baseSKU = null;
-		}
-
 		cpDefinitionCacheModel.productTypeName = getProductTypeName();
 
 		String productTypeName = cpDefinitionCacheModel.productTypeName;
 
 		if ((productTypeName != null) && (productTypeName.length() == 0)) {
 			cpDefinitionCacheModel.productTypeName = null;
-		}
-
-		cpDefinitionCacheModel.gtin = getGtin();
-
-		String gtin = cpDefinitionCacheModel.gtin;
-
-		if ((gtin != null) && (gtin.length() == 0)) {
-			cpDefinitionCacheModel.gtin = null;
-		}
-
-		cpDefinitionCacheModel.manufacturerPartNumber = getManufacturerPartNumber();
-
-		String manufacturerPartNumber = cpDefinitionCacheModel.manufacturerPartNumber;
-
-		if ((manufacturerPartNumber != null) &&
-				(manufacturerPartNumber.length() == 0)) {
-			cpDefinitionCacheModel.manufacturerPartNumber = null;
 		}
 
 		cpDefinitionCacheModel.availableIndividually = getAvailableIndividually();
@@ -1845,10 +1694,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		cpDefinitionCacheModel.depth = getDepth();
 
 		cpDefinitionCacheModel.weight = getWeight();
-
-		cpDefinitionCacheModel.cost = getCost();
-
-		cpDefinitionCacheModel.price = getPrice();
 
 		cpDefinitionCacheModel.DDMStructureKey = getDDMStructureKey();
 
@@ -1919,7 +1764,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(65);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1937,14 +1782,8 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
-		sb.append(", baseSKU=");
-		sb.append(getBaseSKU());
 		sb.append(", productTypeName=");
 		sb.append(getProductTypeName());
-		sb.append(", gtin=");
-		sb.append(getGtin());
-		sb.append(", manufacturerPartNumber=");
-		sb.append(getManufacturerPartNumber());
 		sb.append(", availableIndividually=");
 		sb.append(getAvailableIndividually());
 		sb.append(", minCartQuantity=");
@@ -1963,10 +1802,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		sb.append(getDepth());
 		sb.append(", weight=");
 		sb.append(getWeight());
-		sb.append(", cost=");
-		sb.append(getCost());
-		sb.append(", price=");
-		sb.append(getPrice());
 		sb.append(", DDMStructureKey=");
 		sb.append(getDDMStructureKey());
 		sb.append(", displayDate=");
@@ -1992,7 +1827,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(100);
+		StringBundler sb = new StringBundler(85);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.product.model.CPDefinition");
@@ -2031,20 +1866,8 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>baseSKU</column-name><column-value><![CDATA[");
-		sb.append(getBaseSKU());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>productTypeName</column-name><column-value><![CDATA[");
 		sb.append(getProductTypeName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>gtin</column-name><column-value><![CDATA[");
-		sb.append(getGtin());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>manufacturerPartNumber</column-name><column-value><![CDATA[");
-		sb.append(getManufacturerPartNumber());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>availableIndividually</column-name><column-value><![CDATA[");
@@ -2081,14 +1904,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		sb.append(
 			"<column><column-name>weight</column-name><column-value><![CDATA[");
 		sb.append(getWeight());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>cost</column-name><column-value><![CDATA[");
-		sb.append(getCost());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>price</column-name><column-value><![CDATA[");
-		sb.append(getPrice());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>DDMStructureKey</column-name><column-value><![CDATA[");
@@ -2150,10 +1965,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private String _baseSKU;
 	private String _productTypeName;
-	private String _gtin;
-	private String _manufacturerPartNumber;
 	private boolean _availableIndividually;
 	private int _minCartQuantity;
 	private int _maxCartQuantity;
@@ -2163,8 +1975,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 	private double _height;
 	private double _depth;
 	private double _weight;
-	private double _cost;
-	private double _price;
 	private String _DDMStructureKey;
 	private Date _displayDate;
 	private Date _originalDisplayDate;

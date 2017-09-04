@@ -5715,10 +5715,7 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 		cpDefinitionImpl.setUserName(cpDefinition.getUserName());
 		cpDefinitionImpl.setCreateDate(cpDefinition.getCreateDate());
 		cpDefinitionImpl.setModifiedDate(cpDefinition.getModifiedDate());
-		cpDefinitionImpl.setBaseSKU(cpDefinition.getBaseSKU());
 		cpDefinitionImpl.setProductTypeName(cpDefinition.getProductTypeName());
-		cpDefinitionImpl.setGtin(cpDefinition.getGtin());
-		cpDefinitionImpl.setManufacturerPartNumber(cpDefinition.getManufacturerPartNumber());
 		cpDefinitionImpl.setAvailableIndividually(cpDefinition.isAvailableIndividually());
 		cpDefinitionImpl.setMinCartQuantity(cpDefinition.getMinCartQuantity());
 		cpDefinitionImpl.setMaxCartQuantity(cpDefinition.getMaxCartQuantity());
@@ -5728,8 +5725,6 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 		cpDefinitionImpl.setHeight(cpDefinition.getHeight());
 		cpDefinitionImpl.setDepth(cpDefinition.getDepth());
 		cpDefinitionImpl.setWeight(cpDefinition.getWeight());
-		cpDefinitionImpl.setCost(cpDefinition.getCost());
-		cpDefinitionImpl.setPrice(cpDefinition.getPrice());
 		cpDefinitionImpl.setDDMStructureKey(cpDefinition.getDDMStructureKey());
 		cpDefinitionImpl.setDisplayDate(cpDefinition.getDisplayDate());
 		cpDefinitionImpl.setExpirationDate(cpDefinition.getExpirationDate());

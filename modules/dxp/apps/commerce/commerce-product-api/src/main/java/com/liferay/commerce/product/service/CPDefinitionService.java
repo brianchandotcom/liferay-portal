@@ -65,7 +65,7 @@ public interface CPDefinitionService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionServiceUtil} to access the cp definition remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPDefinitionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public CPDefinition addCPDefinition(java.lang.String baseSKU,
+	public CPDefinition addCPDefinition(
 		Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> shortDescriptionMap,
 		Map<Locale, java.lang.String> descriptionMap,
@@ -74,23 +74,21 @@ public interface CPDefinitionService extends BaseService {
 		Map<Locale, java.lang.String> metaKeywordsMap,
 		Map<Locale, java.lang.String> metaDescriptionMap,
 		java.lang.String layoutUuid, java.lang.String productTypeName,
-		java.lang.String gtin, java.lang.String manufacturerPartNumber,
 		int minCartQuantity, int maxCartQuantity,
 		java.lang.String allowedCartQuantities, int multipleCartQuantity,
-		double width, double height, double depth, double weight, double cost,
-		double price, java.lang.String ddmStructureKey, int displayDateMonth,
+		double width, double height, double depth, double weight,
+		java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
-	public CPDefinition addCPDefinition(java.lang.String baseSKU,
+	public CPDefinition addCPDefinition(
 		Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> shortDescriptionMap,
 		Map<Locale, java.lang.String> descriptionMap,
 		java.lang.String layoutUuid, java.lang.String productTypeName,
-		java.lang.String gtin, java.lang.String manufacturerPartNumber,
 		int minCartQuantity, int maxCartQuantity,
 		java.lang.String allowedCartQuantities, int multipleCartQuantity,
 		java.lang.String ddmStructureKey, int displayDateMonth,
@@ -167,18 +165,16 @@ public interface CPDefinitionService extends BaseService {
 		int start, int end, Sort sort) throws PortalException;
 
 	public CPDefinition updateCPDefinition(long cpDefinitionId,
-		java.lang.String baseSKU, Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> shortDescriptionMap,
 		Map<Locale, java.lang.String> descriptionMap,
 		Map<Locale, java.lang.String> urlTitleMap,
 		Map<Locale, java.lang.String> metaTitleMap,
 		Map<Locale, java.lang.String> metaKeywordsMap,
 		Map<Locale, java.lang.String> metaDescriptionMap,
-		java.lang.String layoutUuid, java.lang.String gtin,
-		java.lang.String manufacturerPartNumber, int minCartQuantity,
-		int maxCartQuantity, java.lang.String allowedCartQuantities,
-		int multipleCartQuantity, double width, double height, double depth,
-		double weight, double cost, double price,
+		java.lang.String layoutUuid, int minCartQuantity, int maxCartQuantity,
+		java.lang.String allowedCartQuantities, int multipleCartQuantity,
+		double width, double height, double depth, double weight,
 		java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
@@ -187,21 +183,17 @@ public interface CPDefinitionService extends BaseService {
 		ServiceContext serviceContext) throws PortalException;
 
 	public CPDefinition updateCPDefinition(long cpDefinitionId,
-		java.lang.String baseSKU, Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> shortDescriptionMap,
 		Map<Locale, java.lang.String> descriptionMap,
-		java.lang.String layoutUuid, java.lang.String gtin,
-		java.lang.String manufacturerPartNumber, int minCartQuantity,
-		int maxCartQuantity, java.lang.String allowedCartQuantities,
-		int multipleCartQuantity, java.lang.String ddmStructureKey,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		java.lang.String layoutUuid, int minCartQuantity, int maxCartQuantity,
+		java.lang.String allowedCartQuantities, int multipleCartQuantity,
+		java.lang.String ddmStructureKey, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
-
-	public CPDefinition updatePricingInfo(long cpDefinitionId, double cost,
-		double price) throws PortalException;
 
 	public CPDefinition updateSEOInfo(long cpDefinitionId,
 		Map<Locale, java.lang.String> urlTitleMap,

@@ -214,21 +214,6 @@ public interface CPDefinitionModel extends BaseModel<CPDefinition>, ShardedModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the base sku of this cp definition.
-	 *
-	 * @return the base sku of this cp definition
-	 */
-	@AutoEscape
-	public String getBaseSKU();
-
-	/**
-	 * Sets the base sku of this cp definition.
-	 *
-	 * @param baseSKU the base sku of this cp definition
-	 */
-	public void setBaseSKU(String baseSKU);
-
-	/**
 	 * Returns the product type name of this cp definition.
 	 *
 	 * @return the product type name of this cp definition
@@ -242,36 +227,6 @@ public interface CPDefinitionModel extends BaseModel<CPDefinition>, ShardedModel
 	 * @param productTypeName the product type name of this cp definition
 	 */
 	public void setProductTypeName(String productTypeName);
-
-	/**
-	 * Returns the gtin of this cp definition.
-	 *
-	 * @return the gtin of this cp definition
-	 */
-	@AutoEscape
-	public String getGtin();
-
-	/**
-	 * Sets the gtin of this cp definition.
-	 *
-	 * @param gtin the gtin of this cp definition
-	 */
-	public void setGtin(String gtin);
-
-	/**
-	 * Returns the manufacturer part number of this cp definition.
-	 *
-	 * @return the manufacturer part number of this cp definition
-	 */
-	@AutoEscape
-	public String getManufacturerPartNumber();
-
-	/**
-	 * Sets the manufacturer part number of this cp definition.
-	 *
-	 * @param manufacturerPartNumber the manufacturer part number of this cp definition
-	 */
-	public void setManufacturerPartNumber(String manufacturerPartNumber);
 
 	/**
 	 * Returns the available individually of this cp definition.
@@ -406,34 +361,6 @@ public interface CPDefinitionModel extends BaseModel<CPDefinition>, ShardedModel
 	 * @param weight the weight of this cp definition
 	 */
 	public void setWeight(double weight);
-
-	/**
-	 * Returns the cost of this cp definition.
-	 *
-	 * @return the cost of this cp definition
-	 */
-	public double getCost();
-
-	/**
-	 * Sets the cost of this cp definition.
-	 *
-	 * @param cost the cost of this cp definition
-	 */
-	public void setCost(double cost);
-
-	/**
-	 * Returns the price of this cp definition.
-	 *
-	 * @return the price of this cp definition
-	 */
-	public double getPrice();
-
-	/**
-	 * Sets the price of this cp definition.
-	 *
-	 * @param price the price of this cp definition
-	 */
-	public void setPrice(double price);
 
 	/**
 	 * Returns the ddm structure key of this cp definition.

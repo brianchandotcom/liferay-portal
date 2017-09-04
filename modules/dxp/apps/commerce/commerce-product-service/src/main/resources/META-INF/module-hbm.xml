@@ -54,10 +54,7 @@
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="baseSKU" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="productTypeName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="gtin" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="manufacturerPartNumber" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="availableIndividually" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="minCartQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="maxCartQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
@@ -67,8 +64,6 @@
 		<property name="height" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="depth" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="weight" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
-		<property name="cost" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
-		<property name="price" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="DDMStructureKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="displayDate" type="org.hibernate.type.TimestampType" />
 		<property name="expirationDate" type="org.hibernate.type.TimestampType" />
@@ -213,6 +208,11 @@
 		<property name="gtin" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="manufacturerPartNumber" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="DDMContent" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property name="overrideInventory" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="minCartQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="maxCartQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="allowedCartQuantities" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="multipleCartQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="width" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="height" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="depth" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />

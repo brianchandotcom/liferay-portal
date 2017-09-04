@@ -20,13 +20,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PropsValues;
 
 import com.yahoo.platform.yui.compressor.CssCompressor;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Brian Wing Shun Chan
@@ -97,26 +94,49 @@ public class MinifierUtil {
 	}
 
 	private String _processMinifiedCss(String minifiedCss) {
-		Matcher matcher = _calcFunctionPattern.matcher(minifiedCss);
+		int index = 0;
 
-		while (matcher.find()) {
-			int firstOperatorEnd = matcher.end(1);
+		while ((index = minifiedCss.indexOf("calc(", index)) != -1) {
+			index += 5;
 
-			String s1 = minifiedCss.substring(0, firstOperatorEnd);
-			String s2 = minifiedCss.substring(
-				firstOperatorEnd, minifiedCss.length());
+			int startIndex = index;
 
-			minifiedCss = s1 + StringPool.SPACE + s2;
+			int parensCount;
 
-			int secondOperatorStart = matcher.start(2);
+			for (parensCount = 1;
+				parensCount != 0 && index < minifiedCss.length();
+				index++) {
 
-			s1 = minifiedCss.substring(0, secondOperatorStart + 1);
-			s2 = minifiedCss.substring(
-				secondOperatorStart + 1, minifiedCss.length());
+				switch (minifiedCss.charAt(index)) {
+					case '(':
+						parensCount++;
+						break;
 
-			minifiedCss = s1 + StringPool.SPACE + s2;
+					case ')':
+						parensCount--;
+						break;
+				}
+			}
 
-			matcher = _calcFunctionPattern.matcher(minifiedCss);
+			if (parensCount == 0) {
+				String replacement = minifiedCss.substring(
+					startIndex, index - 1);
+
+				replacement = replacement.replaceAll("\\+", " + ");
+				replacement = replacement.replaceAll("-", " - ");
+				replacement = replacement.replaceAll("\\*", " * ");
+				replacement = replacement.replaceAll("/", " / ");
+
+				StringBundler sb = new StringBundler(3);
+
+				sb.append(minifiedCss.substring(0, startIndex));
+				sb.append(replacement);
+				sb.append(minifiedCss.substring(index - 1));
+
+				index += replacement.length() - (index - startIndex);
+
+				minifiedCss = sb.toString();
+			}
 		}
 
 		return minifiedCss;
@@ -125,9 +145,6 @@ public class MinifierUtil {
 	private static final Log _log = LogFactoryUtil.getLog(MinifierUtil.class);
 
 	private static final MinifierUtil _instance = new MinifierUtil();
-
-	private static final Pattern _calcFunctionPattern = Pattern.compile(
-		"calc\\(([^\\s\\+\\-]+)[+-]([^\\s\\+\\-]+)\\)");
 
 	private final JavaScriptMinifier _javaScriptMinifierInstance;
 

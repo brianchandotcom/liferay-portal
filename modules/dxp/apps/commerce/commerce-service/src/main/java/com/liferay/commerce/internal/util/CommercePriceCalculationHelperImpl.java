@@ -42,12 +42,11 @@ public class CommercePriceCalculationHelperImpl
 			_commerceCartItemService.getCommerceCartItem(commerceCartItemId);
 
 		return getPrice(
-			commerceCartItem.getCPDefinitionId(),
 			commerceCartItem.getCPInstanceId(), commerceCartItem.getQuantity());
 	}
 
 	@Override
-	public double getPrice(long cpDefinitionId, long cpInstanceId, int quantity)
+	public double getPrice(long cpInstanceId, int quantity)
 		throws PortalException {
 
 		double price = 0;

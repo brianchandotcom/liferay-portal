@@ -26,7 +26,7 @@ public interface CommercePriceCalculationHelper {
 
 	public double getPrice(long commerceCartItemId) throws PortalException;
 
-	public double getPrice(long cpDefinitionId, long cpInstanceId, int quantity)
+	public double getPrice(long cpInstanceId, int quantity)
 		throws PortalException;
 
 	public double getTotal(long commerceCartId) throws PortalException;

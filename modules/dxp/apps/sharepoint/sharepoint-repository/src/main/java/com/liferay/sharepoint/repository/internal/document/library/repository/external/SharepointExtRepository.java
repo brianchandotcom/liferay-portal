@@ -47,6 +47,7 @@ import com.liferay.sharepoint.repository.internal.util.SharepointURLHelper;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import com.mashape.unirest.request.GetRequest;
 import com.mashape.unirest.request.HttpRequestWithBody;
 
 import java.io.IOException;
@@ -122,7 +123,17 @@ public class SharepointExtRepository implements ExtRepository {
 			String extRepositoryFileEntryKey)
 		throws PortalException {
 
-		throw new UnsupportedOperationException();
+		try {
+			String url = _sharepointURLHelper.getCancelCheckedOutFileURL(
+				extRepositoryFileEntryKey);
+
+			_post(url);
+
+			return null;
+		}
+		catch (UnirestException ue) {
+			throw new PortalException(ue);
+		}
 	}
 
 	@Override
@@ -131,7 +142,15 @@ public class SharepointExtRepository implements ExtRepository {
 			String changeLog)
 		throws PortalException {
 
-		throw new UnsupportedOperationException();
+		try {
+			String url = _sharepointURLHelper.getCheckInFileURL(
+				extRepositoryFileEntryKey, createMajorVersion, changeLog);
+
+			_post(url);
+		}
+		catch (UnirestException ue) {
+			throw new PortalException(ue);
+		}
 	}
 
 	@Override
@@ -139,7 +158,18 @@ public class SharepointExtRepository implements ExtRepository {
 			String extRepositoryFileEntryKey)
 		throws PortalException {
 
-		throw new UnsupportedOperationException();
+		try {
+			String url = _sharepointURLHelper.getCheckOutFileURL(
+				extRepositoryFileEntryKey);
+
+			_post(url);
+
+			return getExtRepositoryObject(
+				ExtRepositoryObjectType.FILE, extRepositoryFileEntryKey);
+		}
+		catch (UnirestException ue) {
+			throw new PortalException(ue);
+		}
 	}
 
 	@Override
@@ -213,7 +243,18 @@ public class SharepointExtRepository implements ExtRepository {
 			String extRepositoryObjectKey)
 		throws PortalException {
 
-		throw new UnsupportedOperationException();
+		try {
+			String url = _sharepointURLHelper.getObjectURL(
+				extRepositoryObjectType, extRepositoryObjectKey);
+
+			JSONObject jsonObject = _requestJSONObject(url);
+
+			return _sharepointServerResponseConverter.getExtRepositoryObject(
+				extRepositoryObjectType, jsonObject);
+		}
+		catch (UnirestException ue) {
+			throw new PortalException(ue);
+		}
 	}
 
 	@Override
@@ -364,6 +405,22 @@ public class SharepointExtRepository implements ExtRepository {
 		return token.getAccessToken();
 	}
 
+	private void _post(String url) throws PortalException, UnirestException {
+		HttpRequestWithBody httpRequestWithBody = Unirest.post(url);
+
+		httpRequestWithBody.header(
+			"Authorization", "Bearer " + _getAccessToken());
+
+		HttpResponse<InputStream> httpResponse = httpRequestWithBody.asBinary();
+
+		if (httpResponse.getStatus() >= 300) {
+			throw new PrincipalException(
+				String.format(
+					"Error while posting to resource %s: %d %s", url,
+					httpResponse.getStatus(), httpResponse.getStatusText()));
+		}
+	}
+
 	private JSONObject _post(String url, InputStream inputStream)
 		throws IOException, PortalException, UnirestException {
 
@@ -399,6 +456,26 @@ public class SharepointExtRepository implements ExtRepository {
 		httpRequestWithBody.body(jsonObject.toJSONString());
 
 		HttpResponse<String> httpResponse = httpRequestWithBody.asString();
+
+		if (httpResponse.getStatus() >= 300) {
+			throw new PrincipalException(
+				String.format(
+					"Error while getting resource %s: %d %s", url,
+					httpResponse.getStatus(), httpResponse.getStatusText()));
+		}
+
+		return JSONFactoryUtil.createJSONObject(httpResponse.getBody());
+	}
+
+	private JSONObject _requestJSONObject(String url)
+		throws PortalException, UnirestException {
+
+		GetRequest getRequest = Unirest.get(url);
+
+		getRequest.header("Accept", "application/json;odata=verbose");
+		getRequest.header("Authorization", "Bearer " + _getAccessToken());
+
+		HttpResponse<String> httpResponse = getRequest.asString();
 
 		if (httpResponse.getStatus() >= 300) {
 			throw new PrincipalException(

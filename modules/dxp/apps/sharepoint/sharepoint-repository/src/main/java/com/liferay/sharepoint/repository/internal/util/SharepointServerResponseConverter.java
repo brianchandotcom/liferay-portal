@@ -18,6 +18,7 @@ import com.liferay.document.library.repository.external.ExtRepository;
 import com.liferay.document.library.repository.external.ExtRepositoryFileEntry;
 import com.liferay.document.library.repository.external.ExtRepositoryFolder;
 import com.liferay.document.library.repository.external.ExtRepositoryObject;
+import com.liferay.document.library.repository.external.ExtRepositoryObjectType;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -53,6 +54,17 @@ public class SharepointServerResponseConverter {
 		getExtRepositoryFolder(JSONObject jsonObject) {
 
 		return _createFolder(jsonObject.getJSONObject("d"));
+	}
+
+	public <T extends ExtRepositoryObject> T getExtRepositoryObject(
+		ExtRepositoryObjectType extRepositoryObjectType,
+		JSONObject jsonObject) {
+
+		if (extRepositoryObjectType == ExtRepositoryObjectType.FILE) {
+			return getExtRepositoryFileEntry(jsonObject);
+		}
+
+		return getExtRepositoryFolder(jsonObject);
 	}
 
 	private SharepointFileEntry _createFileEntry(JSONObject jsonObject) {

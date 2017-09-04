@@ -15,6 +15,11 @@
 package com.liferay.sharepoint.repository.internal.util;
 
 import com.liferay.document.library.repository.external.ExtRepositoryFileEntry;
+import com.liferay.document.library.repository.external.ExtRepositoryObject;
+import com.liferay.document.library.repository.external.ExtRepositoryObjectType;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.util.Arrays;
 
 /**
  * @author Adolfo Pérez
@@ -38,6 +43,35 @@ public class SharepointURLHelper {
 			_siteAbsoluteUrl, extRepositoryFolderKey);
 	}
 
+	public String getCancelCheckedOutFileURL(String extRepositoryFileEntryKey) {
+		return String.format(
+			"%s/_api/web/GetFileByServerRelativeUrl('%s')/UndoCheckOut",
+			_siteAbsoluteUrl, extRepositoryFileEntryKey);
+	}
+
+	public String getCheckInFileURL(
+		String extRepositoryFileEntryKey, boolean createMajorVersion,
+		String changeLog) {
+
+		int checkInType = 0;
+
+		if (createMajorVersion) {
+			checkInType = 1;
+		}
+
+		return String.format(
+			"%s/_api/web/GetFileByServerRelativeUrl('%s')/CheckIn(comment=" +
+				"'%s',checkintype=%d)",
+			_siteAbsoluteUrl, extRepositoryFileEntryKey, changeLog,
+			checkInType);
+	}
+
+	public String getCheckOutFileURL(String extRepositoryFileEntryKey) {
+		return String.format(
+			"%s/_api/web/GetFileByServerRelativeUrl('%s')/CheckOut",
+			_siteAbsoluteUrl, extRepositoryFileEntryKey);
+	}
+
 	public String getFileEntryContentURL(
 		ExtRepositoryFileEntry extRepositoryFileEntry) {
 
@@ -46,6 +80,42 @@ public class SharepointURLHelper {
 			_siteAbsoluteUrl,
 			extRepositoryFileEntry.getExtRepositoryModelKey());
 	}
+
+	public <T extends ExtRepositoryObject> String getObjectURL(
+		ExtRepositoryObjectType<T> extRepositoryObjectType,
+		String extRepositoryObjectKey) {
+
+		if (extRepositoryObjectType == ExtRepositoryObjectType.FILE) {
+			return String.format(
+				"%s/_api/web/GetFileByServerRelativeUrl('%s')?$select=%s&" +
+					"$expand=%s",
+				_siteAbsoluteUrl, extRepositoryObjectKey, _SELECTED_FILE_FIELDS,
+				_EXPANDED_FILE_FIELDS);
+		}
+
+		return String.format(
+			"%s/_api/web/GetFolderByServerRelativeUrl('%s')?$select=%s&" +
+				"$expand=%s",
+			_siteAbsoluteUrl, extRepositoryObjectKey, _SELECTED_FOLDER_FIELDS,
+			_EXPANDED_FOLDER_FIELDS);
+	}
+
+	private static final String _EXPANDED_FILE_FIELDS = StringUtil.merge(
+		Arrays.asList("Author", "CheckedOutByUser", "ListItemAllFields"));
+
+	private static final String _EXPANDED_FOLDER_FIELDS = "ListItemAllFields";
+
+	private static final String _SELECTED_FILE_FIELDS = StringUtil.merge(
+		Arrays.asList(
+			"Author/Title", "CheckedOutByUser/Title", "Length",
+			"ListItemAllFields/EffectiveBasePermissions", "Name",
+			"ServerRelativeUrl", "TimeCreated", "TimeLastModified", "Title",
+			"UIVersion", "UIVersionLabel"));
+
+	private static final String _SELECTED_FOLDER_FIELDS = StringUtil.merge(
+		Arrays.asList(
+			"Name", "ListItemAllFields/EffectiveBasePermissions",
+			"ServerRelativeUrl", "TimeCreated", "TimeLastModified"));
 
 	private final String _siteAbsoluteUrl;
 

@@ -282,6 +282,10 @@ public class CalendarBookingStagedModelDataHandler
 					calendarBooking.getSecondReminderType(), serviceContext);
 		}
 
+		_calendarBookingLocalService.updateStatus(
+			userId, importedCalendarBooking, calendarBooking.getStatus(),
+			serviceContext);
+
 		// The root discussion message is not automatically imported when
 		// importing a calendar booking
 

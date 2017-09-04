@@ -453,8 +453,6 @@
 			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
-		<execute macro="MessageboardsThread#assertAlertNotPresent" />
-
 		<execute macro="MessageboardsThread#viewBBCodeNoXSS">
 			<var name="threadBody"><![CDATA[<script>alert(2)</script>]]></var>
 			<var name="threadSubject"><![CDATA[<script>alert(1)</script>]]></var>

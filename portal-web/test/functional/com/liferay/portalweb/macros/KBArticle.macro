@@ -1502,6 +1502,22 @@
 		<execute function="AssertElementPresent" locator1="SocialBookmarks#SOCIAL_BOOKMARKS_SITE_LINK" />
 	</command>
 
+	<command name="viewFriendlyURLCP">
+		<var name="key_rowEntry" value="${kbArticleTitle}" />
+
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS_2" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Configuration" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#EDIT_FRIENDLY_URL_FIELD" value1="${kbArticleFriendlyURL}" />
+	</command>
+
 	<command name="viewImageCaptionViaContentCmd">
 		<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#CONTENT_IMAGE" value1="${kbImageCaption}" />
 	</command>

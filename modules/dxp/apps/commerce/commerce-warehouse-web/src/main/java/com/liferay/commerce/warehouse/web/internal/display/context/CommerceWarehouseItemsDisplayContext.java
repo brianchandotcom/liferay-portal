@@ -56,7 +56,7 @@ public abstract class CommerceWarehouseItemsDisplayContext
 		cpRequestHelper = new CPRequestHelper(httpServletRequest);
 	}
 
-	public abstract String getBackURL();
+	public abstract String getBackURL() throws PortalException;
 
 	public String getItemSelectorUrl() throws PortalException {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =

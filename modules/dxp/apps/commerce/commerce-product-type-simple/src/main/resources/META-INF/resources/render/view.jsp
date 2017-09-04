@@ -1,8 +1,3 @@
-<%@ page import="com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue" %><%@
-page import="com.liferay.commerce.product.model.CPSpecificationOption" %>
-
-<%@ page import="java.util.List" %>
-
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.

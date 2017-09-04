@@ -145,11 +145,11 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 
 		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
 			cpDefinitionOptionRelListMap = _cpInstanceHelper.parseJSONString(
-			cpInstance.getDDMContent());
+				cpInstance.getDDMContent());
 
 		for (Map.Entry<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-			cpDefinitionOptionRelListMapEntry :
-			cpDefinitionOptionRelListMap.entrySet()) {
+				cpDefinitionOptionRelListMapEntry :
+					cpDefinitionOptionRelListMap.entrySet()) {
 
 			CPDefinitionOptionRel cpDefinitionOptionRel =
 				cpDefinitionOptionRelListMapEntry.getKey();
@@ -160,7 +160,7 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 			List<Long> optionValueIds = new ArrayList<>();
 
 			for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
-				cpDefinitionOptionRelListMapEntry.getValue()) {
+					cpDefinitionOptionRelListMapEntry.getValue()) {
 
 				optionValueNames.add(
 					StringUtil.toLowerCase(

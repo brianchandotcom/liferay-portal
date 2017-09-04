@@ -208,13 +208,13 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, "ddmFormValues");
 
 			_cpInstanceService.addCPInstance(
-				cpDefinitionId, sku, gtin, manufacturerPartNumber, ddmFormValues,
-				overrideInventory, minCartQuantity, maxCartQuantity,
-				allowedCartQuantities, multipleCartQuantity, displayDateMonth,
-				displayDateDay, displayDateYear, displayDateHour,
-				displayDateMinute, expirationDateMonth, expirationDateDay,
-				expirationDateYear, expirationDateHour, expirationDateMinute,
-				neverExpire, serviceContext);
+				cpDefinitionId, sku, gtin, manufacturerPartNumber,
+				ddmFormValues, overrideInventory, minCartQuantity,
+				maxCartQuantity, allowedCartQuantities, multipleCartQuantity,
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, expirationDateMonth,
+				expirationDateDay, expirationDateYear, expirationDateHour,
+				expirationDateMinute, neverExpire, serviceContext);
 		}
 	}
 

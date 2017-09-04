@@ -391,7 +391,18 @@ public class SharepointExtRepository implements ExtRepository {
 			InputStream inputStream)
 		throws PortalException {
 
-		throw new UnsupportedOperationException();
+		try {
+			String url = _sharepointURLHelper.getUpdateFileURL(
+				extRepositoryFileEntryKey);
+
+			JSONObject jsonObject = _post(url, inputStream);
+
+			return _sharepointServerResponseConverter.getExtRepositoryFileEntry(
+				jsonObject);
+		}
+		catch (IOException | UnirestException e) {
+			throw new PortalException(e);
+		}
 	}
 
 	private static final String _strip(String s) {

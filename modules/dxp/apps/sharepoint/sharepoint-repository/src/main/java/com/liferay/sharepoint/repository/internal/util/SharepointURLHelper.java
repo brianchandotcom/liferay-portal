@@ -115,6 +115,12 @@ public class SharepointURLHelper {
 			_EXPANDED_FOLDER_FIELDS);
 	}
 
+	public String getUpdateFileURL(String extRepositoryFileEntryKey) {
+		return String.format(
+			"%s/_api/web/GetFileByServerRelativeUrl('%s')/$value",
+			_siteAbsoluteUrl, extRepositoryFileEntryKey);
+	}
+
 	private static final String _EXPANDED_FILE_FIELDS = StringUtil.merge(
 		Arrays.asList("Author", "CheckedOutByUser", "ListItemAllFields"));
 

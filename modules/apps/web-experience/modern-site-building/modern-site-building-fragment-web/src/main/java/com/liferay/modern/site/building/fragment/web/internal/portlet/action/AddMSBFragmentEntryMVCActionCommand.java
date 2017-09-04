@@ -15,11 +15,14 @@
 package com.liferay.modern.site.building.fragment.web.internal.portlet.action;
 
 import com.liferay.modern.site.building.fragment.constants.MSBFragmentPortletKeys;
+import com.liferay.modern.site.building.fragment.exception.DuplicateMSBFragmentEntryException;
+import com.liferay.modern.site.building.fragment.exception.MSBFragmentEntryNameException;
 import com.liferay.modern.site.building.fragment.model.MSBFragmentEntry;
 import com.liferay.modern.site.building.fragment.service.MSBFragmentEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -28,9 +31,12 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -80,7 +86,25 @@ public class AddMSBFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 				_log.debug(pe, pe);
 			}
 
-			jsonObject.put("exception", pe.getClass());
+			HttpServletRequest request = _portal.getHttpServletRequest(
+				actionRequest);
+
+			if (pe instanceof MSBFragmentEntryNameException) {
+				jsonObject.put(
+					"error",
+					LanguageUtil.get(request, "this-field-is-required"));
+			}
+			else if (pe instanceof DuplicateMSBFragmentEntryException) {
+				jsonObject.put(
+					"error",
+					LanguageUtil.get(
+						request,
+						"this-name-already-exists-please-try-another-one"));
+			}
+			else {
+				jsonObject.put(
+					"error", LanguageUtil.get(request, "unknown-error"));
+			}
 		}
 
 		JSONPortletResponseUtil.writeJSON(
@@ -92,5 +116,8 @@ public class AddMSBFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private MSBFragmentEntryService _msbFragmentEntryService;
+
+	@Reference
+	private Portal _portal;
 
 }

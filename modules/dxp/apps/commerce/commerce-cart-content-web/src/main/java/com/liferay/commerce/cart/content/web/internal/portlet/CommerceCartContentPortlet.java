@@ -83,7 +83,8 @@ public class CommerceCartContentPortlet extends MVCPortlet {
 			new CommerceCartContentDisplayContext(
 				httpServletRequest, httpServletResponse, _commerceCartHelper,
 				_commerceCartItemService, _commercePriceCalculationHelper,
-				_cpDefinitionHelper, _cpInstanceHelper);
+				_commercePriceFormatter, _cpDefinitionHelper,
+				_cpInstanceHelper);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceCartContentDisplayContext);

@@ -87,9 +87,9 @@ public class CommerceCartContentMiniPortlet extends MVCPortlet {
 				commerceCartContentDisplayContext =
 					new CommerceCartContentMiniDisplayContext(
 						httpServletRequest, httpServletResponse,
-						 _commercePriceFormatter,
 						_commerceCartHelper, _commerceCartItemService,
-						_commercePriceCalculationHelper, _cpDefinitionHelper,
+						_commercePriceCalculationHelper,
+						_commercePriceFormatter, _cpDefinitionHelper,
 						_cpInstanceHelper);
 
 			renderRequest.setAttribute(

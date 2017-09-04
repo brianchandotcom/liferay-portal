@@ -67,7 +67,8 @@ public class CommerceCartContentMiniConfigurationAction
 					new CommerceCartContentMiniDisplayContext(
 						request, response, _commerceCartHelper,
 						_commerceCartItemService,
-						_commercePriceCalculationHelper, _cpDefinitionHelper,
+						_commercePriceCalculationHelper,
+						_commercePriceFormatter, _cpDefinitionHelper,
 						_cpInstanceHelper);
 
 			request.setAttribute(

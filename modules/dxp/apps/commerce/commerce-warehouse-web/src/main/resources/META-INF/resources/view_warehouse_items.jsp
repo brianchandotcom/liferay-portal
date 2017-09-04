@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ServletContext cpDefinitionServletContext = (ServletContext)request.getAttribute("cpDefinitionServletContext");
-
 CommerceWarehouseItemsDisplayContext<?> commerceWarehouseItemsDisplayContext = (CommerceWarehouseItemsDisplayContext<?>)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 GroupedModel groupedModel = commerceWarehouseItemsDisplayContext.getModel();
 PortletURL portletURL = commerceWarehouseItemsDisplayContext.getPortletURL();
@@ -33,21 +31,6 @@ if (Validator.isNotNull(backURL)) {
 
 renderResponse.setTitle(title);
 %>
-
-<c:if test="<%= commerceWarehouseItemsDisplayContext instanceof CPDefinitionWarehouseItemsDisplayContext %>">
-
-	<%
-	CPDefinitionWarehouseItemsDisplayContext cpDefinitionWarehouseItemsDisplayContext = (CPDefinitionWarehouseItemsDisplayContext)commerceWarehouseItemsDisplayContext;
-
-	request.setAttribute("view.jsp-cpDefinition", cpDefinitionWarehouseItemsDisplayContext.getModel());
-	request.setAttribute("view.jsp-cpType", cpDefinitionWarehouseItemsDisplayContext.getCPType());
-	request.setAttribute("view.jsp-portletURL", cpDefinitionWarehouseItemsDisplayContext.getPortletURL());
-	request.setAttribute("view.jsp-showSearch", false);
-	request.setAttribute("view.jsp-toolbarItem", "view-product-definition-warehouse-items");
-	%>
-
-	<liferay-util:include page="/definition_navbar.jsp" servletContext="<%= cpDefinitionWarehouseItemsDisplayContext.getCPDefinitionServletContext() %>" />
-</c:if>
 
 <liferay-frontend:management-bar
 	searchContainerId="commerceWarehouseItems"

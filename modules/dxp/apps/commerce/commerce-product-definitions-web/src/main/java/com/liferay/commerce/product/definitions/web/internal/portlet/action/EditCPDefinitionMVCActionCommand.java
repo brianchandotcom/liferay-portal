@@ -120,11 +120,8 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			if (cmd.equals(Constants.DELETE)) {
-				deleteCPDefinitions(actionRequest, false);
-			}
-			else if (cmd.equals(Constants.ADD) ||
-					 cmd.equals(Constants.UPDATE)) {
+			if (cmd.equals(Constants.ADD) ||
+				cmd.equals(Constants.UPDATE)) {
 
 				CPDefinition cpDefinition = updateCPDefinition(actionRequest);
 
@@ -133,14 +130,17 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
+			else if (cmd.equals(Constants.DELETE)) {
+				deleteCPDefinitions(actionRequest, false);
+			}
+			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
+				deleteCPDefinitions(actionRequest, true);
+			}
 			else if (cmd.equals("updateSEOInfo")) {
 				updateSEOInfo(actionRequest);
 			}
 			else if (cmd.equals("updateShippingInfo")) {
 				updateShippingInfo(actionRequest);
-			}
-			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
-				deleteCPDefinitions(actionRequest, true);
 			}
 			else if (cmd.equals(Constants.RESTORE)) {
 				restoreTrashEntries(actionRequest);
@@ -303,6 +303,9 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 	protected void updateSEOInfo(ActionRequest actionRequest)
 		throws PortalException {
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CPDefinition.class.getName(), actionRequest);
+
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
 
@@ -319,11 +322,14 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 		_cpDefinitionService.updateSEOInfo(
 			cpDefinitionId, urlTitleMap, metaTitleMap, metaKeywordsMap,
-			metaDescriptionMap);
+			metaDescriptionMap, serviceContext);
 	}
 
 	protected void updateShippingInfo(ActionRequest actionRequest)
 		throws PortalException {
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CPDefinition.class.getName(), actionRequest);
 
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
@@ -334,7 +340,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		double weight = ParamUtil.getDouble(actionRequest, "weight");
 
 		_cpDefinitionService.updateShippingInfo(
-			cpDefinitionId, width, height, depth, weight);
+			cpDefinitionId, width, height, depth, weight, serviceContext);
 	}
 
 	@Reference

@@ -14,8 +14,12 @@
 
 package com.liferay.commerce.product.search;
 
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,12 +34,17 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -134,6 +143,52 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 		document.addKeyword(
 			FIELD_CP_DEFINITION_ID, cpInstance.getCPDefinitionId());
 
+		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
+			cpDefinitionOptionRelListMap = _cpInstanceHelper.parseJSONString(
+			cpInstance.getDDMContent());
+
+		for (Map.Entry<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
+			cpDefinitionOptionRelListMapEntry :
+			cpDefinitionOptionRelListMap.entrySet()) {
+
+			CPDefinitionOptionRel cpDefinitionOptionRel =
+				cpDefinitionOptionRelListMapEntry.getKey();
+
+			CPOption cpOption = cpDefinitionOptionRel.getCPOption();
+
+			List<String> optionValueNames = new ArrayList<>();
+			List<Long> optionValueIds = new ArrayList<>();
+
+			for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
+				cpDefinitionOptionRelListMapEntry.getValue()) {
+
+				optionValueNames.add(
+					StringUtil.toLowerCase(
+						cpDefinitionOptionValueRel.getKey()));
+				optionValueIds.add(
+					cpDefinitionOptionValueRel.
+						getCPDefinitionOptionValueRelId());
+			}
+
+			document.addText(
+				"ATTRIBUTE_" + cpOption.getKey() +
+					"_VALUES_NAMES",
+				ArrayUtil.toStringArray(optionValueNames));
+			document.addNumber(
+				"ATTRIBUTE_" + cpOption.getKey() +
+					"_VALUES_IDS",
+				ArrayUtil.toLongArray(optionValueIds));
+
+			document.addText(
+				"ATTRIBUTE_" + cpDefinitionOptionRel.getCPOptionId() +
+					"_VALUES_NAMES",
+				ArrayUtil.toStringArray(optionValueNames));
+			document.addNumber(
+				"ATTRIBUTE_" + cpDefinitionOptionRel.getCPOptionId() +
+					"_VALUES_IDS",
+				ArrayUtil.toLongArray(optionValueIds));
+		}
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Document " + cpInstance + " indexed successfully");
 		}
@@ -209,6 +264,9 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPInstanceIndexer.class);
+
+	@Reference
+	private CPInstanceHelper _cpInstanceHelper;
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;

@@ -257,20 +257,22 @@ public class CPDefinitionServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
-		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap)
+		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateSEOInfo(cpDefinitionId, urlTitleMap, metaTitleMap,
-			metaKeywordsMap, metaDescriptionMap);
+			metaKeywordsMap, metaDescriptionMap, serviceContext);
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinition updateShippingInfo(
 		long cpDefinitionId, double width, double height, double depth,
-		double weight)
+		double weight,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateShippingInfo(cpDefinitionId, width, height, depth,
-			weight);
+			weight, serviceContext);
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinition updateStatus(

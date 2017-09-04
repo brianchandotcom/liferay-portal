@@ -476,7 +476,9 @@ public class CPDefinitionServiceSoap {
 		java.lang.String[] metaKeywordsMapLanguageIds,
 		java.lang.String[] metaKeywordsMapValues,
 		java.lang.String[] metaDescriptionMapLanguageIds,
-		java.lang.String[] metaDescriptionMapValues) throws RemoteException {
+		java.lang.String[] metaDescriptionMapValues,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
 		try {
 			Map<Locale, String> urlTitleMap = LocalizationUtil.getLocalizationMap(urlTitleMapLanguageIds,
 					urlTitleMapValues);
@@ -489,7 +491,7 @@ public class CPDefinitionServiceSoap {
 
 			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.updateSEOInfo(cpDefinitionId,
 					urlTitleMap, metaTitleMap, metaKeywordsMap,
-					metaDescriptionMap);
+					metaDescriptionMap, serviceContext);
 
 			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModel(returnValue);
 		}
@@ -502,10 +504,12 @@ public class CPDefinitionServiceSoap {
 
 	public static com.liferay.commerce.product.model.CPDefinitionSoap updateShippingInfo(
 		long cpDefinitionId, double width, double height, double depth,
-		double weight) throws RemoteException {
+		double weight,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
 		try {
 			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.updateShippingInfo(cpDefinitionId,
-					width, height, depth, weight);
+					width, height, depth, weight, serviceContext);
 
 			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModel(returnValue);
 		}

@@ -742,7 +742,8 @@ public class CPDefinitionServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
-		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap)
+		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionServiceUtil.class,
@@ -750,7 +751,7 @@ public class CPDefinitionServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpDefinitionId, urlTitleMap, metaTitleMap, metaKeywordsMap,
-					metaDescriptionMap);
+					metaDescriptionMap, serviceContext);
 
 			Object returnObj = null;
 
@@ -776,14 +777,15 @@ public class CPDefinitionServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPDefinition updateShippingInfo(
 		HttpPrincipal httpPrincipal, long cpDefinitionId, double width,
-		double height, double depth, double weight)
+		double height, double depth, double weight,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionServiceUtil.class,
 					"updateShippingInfo", _updateShippingInfoParameterTypes20);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpDefinitionId, width, height, depth, weight);
+					cpDefinitionId, width, height, depth, weight, serviceContext);
 
 			Object returnObj = null;
 
@@ -928,10 +930,12 @@ public class CPDefinitionServiceHttp {
 		};
 	private static final Class<?>[] _updateSEOInfoParameterTypes19 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class,
-			java.util.Map.class, java.util.Map.class
+			java.util.Map.class, java.util.Map.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateShippingInfoParameterTypes20 = new Class[] {
-			long.class, double.class, double.class, double.class, double.class
+			long.class, double.class, double.class, double.class, double.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateStatusParameterTypes21 = new Class[] {
 			long.class, long.class, int.class,

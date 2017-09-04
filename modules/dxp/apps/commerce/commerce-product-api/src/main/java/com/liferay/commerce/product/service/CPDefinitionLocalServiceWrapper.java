@@ -648,19 +648,22 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
-		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap)
+		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionLocalService.updateSEOInfo(cpDefinitionId,
-			urlTitleMap, metaTitleMap, metaKeywordsMap, metaDescriptionMap);
+			urlTitleMap, metaTitleMap, metaKeywordsMap, metaDescriptionMap,
+			serviceContext);
 	}
 
 	@Override
 	public com.liferay.commerce.product.model.CPDefinition updateShippingInfo(
 		long cpDefinitionId, double width, double height, double depth,
-		double weight)
+		double weight,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionLocalService.updateShippingInfo(cpDefinitionId,
-			width, height, depth, weight);
+			width, height, depth, weight, serviceContext);
 	}
 
 	@Override

@@ -484,12 +484,13 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 		Map<Locale, java.lang.String> urlTitleMap,
 		Map<Locale, java.lang.String> metaTitleMap,
 		Map<Locale, java.lang.String> metaKeywordsMap,
-		Map<Locale, java.lang.String> metaDescriptionMap)
-		throws PortalException;
+		Map<Locale, java.lang.String> metaDescriptionMap,
+		ServiceContext serviceContext) throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinition updateShippingInfo(long cpDefinitionId, double width,
-		double height, double depth, double weight) throws PortalException;
+		double height, double depth, double weight,
+		ServiceContext serviceContext) throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinition updateStatus(long userId, long cpDefinitionId,

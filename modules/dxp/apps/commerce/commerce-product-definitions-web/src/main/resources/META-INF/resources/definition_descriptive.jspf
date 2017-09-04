@@ -49,10 +49,6 @@
 		</a>
 	</h5>
 
-	<h6>
-		<%= HtmlUtil.escape(String.valueOf(cpDefinition.getPrice())) %>
-	</h6>
-
 	<h6 class="text-default">
 		<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= cpDefinition.getStatus() %>" />
 	</h6>

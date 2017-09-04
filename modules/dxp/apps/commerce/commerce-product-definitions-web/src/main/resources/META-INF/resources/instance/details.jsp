@@ -18,10 +18,6 @@
 
 <%
 CPInstance cpInstance = (CPInstance)request.getAttribute(CPWebKeys.CP_INSTANCE);
-
-CPInstanceDisplayContext cpInstanceDisplayContext = (CPInstanceDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-CPDefinition cpDefinition = cpInstanceDisplayContext.getCPDefinition();
 %>
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />
@@ -29,7 +25,7 @@ CPDefinition cpDefinition = cpInstanceDisplayContext.getCPDefinition();
 <aui:model-context bean="<%= cpInstance %>" model="<%= CPInstance.class %>" />
 
 <aui:fieldset>
-	<aui:input name="sku" prefix="<%= cpDefinition.getBaseSKU() %>" />
+	<aui:input name="sku" />
 
 	<aui:input helpMessage="gtin-help" label="global-trade-item-number" name="gtin" />
 

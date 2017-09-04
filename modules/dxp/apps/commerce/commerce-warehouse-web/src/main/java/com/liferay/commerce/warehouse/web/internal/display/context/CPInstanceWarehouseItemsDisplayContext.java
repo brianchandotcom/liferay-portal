@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -88,8 +89,7 @@ public class CPInstanceWarehouseItemsDisplayContext
 	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = super.getPortletURL();
 
-		portletURL.setParameter(
-			"mvcRenderCommandName", "editProductInstance");
+		portletURL.setParameter("mvcRenderCommandName", "editProductInstance");
 
 		CPInstance cpInstance = getModel();
 

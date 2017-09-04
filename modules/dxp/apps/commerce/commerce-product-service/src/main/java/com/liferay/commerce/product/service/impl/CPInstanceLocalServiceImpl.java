@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -71,6 +72,7 @@ import java.util.Map;
 
 /**
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
@@ -78,9 +80,11 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	@Override
 	public CPInstance addCPInstance(
 			long cpDefinitionId, String sku, String gtin,
-			String manufacturerPartNumber, String ddmContent, double width,
-			double height, double depth, double weight, double cost,
-			double price, int displayDateMonth, int displayDateDay,
+			String manufacturerPartNumber, String ddmContent,
+			boolean overrideInventory, int minCartQuantity, int maxCartQuantity,
+			String allowedCartQuantities, int multipleCartQuantity,
+			double width, double height, double depth, double weight,
+			double cost, double price, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
 			int expirationDateMonth, int expirationDateDay,
 			int expirationDateYear, int expirationDateHour,
@@ -123,6 +127,22 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		cpInstance.setGtin(gtin);
 		cpInstance.setManufacturerPartNumber(manufacturerPartNumber);
 		cpInstance.setDDMContent(ddmContent);
+		cpInstance.setOverrideInventory(overrideInventory);
+
+		if (!overrideInventory) {
+			CPDefinition cpDefinition =
+				cpDefinitionLocalService.fetchCPDefinition(cpDefinitionId);
+
+			minCartQuantity = cpDefinition.getMinCartQuantity();
+			maxCartQuantity = cpDefinition.getMaxCartQuantity();
+			allowedCartQuantities = cpDefinition.getAllowedCartQuantities();
+			multipleCartQuantity = cpDefinition.getMultipleCartQuantity();
+		}
+
+		cpInstance.setMinCartQuantity(minCartQuantity);
+		cpInstance.setMaxCartQuantity(maxCartQuantity);
+		cpInstance.setAllowedCartQuantities(allowedCartQuantities);
+		cpInstance.setMultipleCartQuantity(multipleCartQuantity);
 		cpInstance.setWidth(width);
 		cpInstance.setHeight(height);
 		cpInstance.setDepth(depth);
@@ -157,6 +177,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	public CPInstance addCPInstance(
 			long cpDefinitionId, String sku, String gtin,
 			String manufacturerPartNumber, String ddmContent,
+			boolean overrideInventory, int minCartQuantity, int maxCartQuantity,
+			String allowedCartQuantities, int multipleCartQuantity,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -169,13 +191,14 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		return addCPInstance(
 			cpDefinitionId, sku, gtin, manufacturerPartNumber, ddmContent,
+			overrideInventory, minCartQuantity, maxCartQuantity,
+			allowedCartQuantities, multipleCartQuantity,
 			cpDefinition.getWidth(), cpDefinition.getHeight(),
-			cpDefinition.getDepth(), cpDefinition.getWeight(),
-			cpDefinition.getCost(), cpDefinition.getPrice(), displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			cpDefinition.getDepth(), cpDefinition.getWeight(), 0, 0,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	@Override
@@ -233,8 +256,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			StringBundler sku = new StringBundler(
 				cpDefinitionOptionValueRels.length + 1);
 
-			sku.append(cpDefinition.getBaseSKU());
-
 			for (CPDefinitionOptionValueRel
 					cpDefinitionOptionValueRel :
 						cpDefinitionOptionValueRels) {
@@ -265,13 +286,15 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			}
 
 			addCPInstance(
-				cpDefinitionId, sku.toString(), cpDefinition.getGtin(),
-				cpDefinition.getManufacturerPartNumber(), jsonArray.toString(),
-				cpDefinition.getWidth(), cpDefinition.getHeight(),
-				cpDefinition.getDepth(), cpDefinition.getWeight(),
-				cpDefinition.getCost(), cpDefinition.getPrice(),
-				cpDefinition.getDisplayDate(), cpDefinition.getExpirationDate(),
-				neverExpire, serviceContext);
+				cpDefinitionId, sku.toString(), StringPool.BLANK,
+				StringPool.BLANK, jsonArray.toString(), false,
+				cpDefinition.getMinCartQuantity(),
+				cpDefinition.getMaxCartQuantity(),
+				cpDefinition.getAllowedCartQuantities(),
+				cpDefinition.getMultipleCartQuantity(), cpDefinition.getWidth(),
+				cpDefinition.getHeight(), cpDefinition.getDepth(),
+				cpDefinition.getWeight(), 0, 0, cpDefinition.getDisplayDate(),
+				cpDefinition.getExpirationDate(), neverExpire, serviceContext);
 		}
 	}
 
@@ -303,6 +326,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		reindexCPDefinition(cpInstance.getCPDefinitionId());
 
+		checkCPDefinitionStatus(cpInstance.getCPDefinitionId());
+
 		return cpInstance;
 	}
 
@@ -324,6 +349,10 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		for (CPInstance cpInstance : cpInstances) {
 			cpInstanceLocalService.deleteCPInstance(cpInstance);
 		}
+	}
+
+	public List<CPInstance> getCPInstances(long cpDefinitionId) {
+		return cpInstancePersistence.findByCPDefinitionId(cpDefinitionId);
 	}
 
 	@Override
@@ -407,13 +436,16 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	@Override
 	public CPInstance updateCPInstance(
 			long cpInstanceId, String sku, String gtin,
-			String manufacturerPartNumber, double width, double height,
-			double depth, double weight, double cost, double price,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
+			String manufacturerPartNumber, boolean overrideInventory,
+			int minCartQuantity, int maxCartQuantity,
+			String allowedCartQuantities, int multipleCartQuantity,
+			double width, double height, double depth, double weight,
+			double cost, double price, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product instance
@@ -441,6 +473,23 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		cpInstance.setSku(sku);
 		cpInstance.setGtin(gtin);
 		cpInstance.setManufacturerPartNumber(manufacturerPartNumber);
+		cpInstance.setOverrideInventory(overrideInventory);
+
+		if (!overrideInventory) {
+			CPDefinition cpDefinition =
+				cpDefinitionLocalService.fetchCPDefinition(
+					cpInstance.getCPDefinitionId());
+
+			minCartQuantity = cpDefinition.getMinCartQuantity();
+			maxCartQuantity = cpDefinition.getMaxCartQuantity();
+			allowedCartQuantities = cpDefinition.getAllowedCartQuantities();
+			multipleCartQuantity = cpDefinition.getMultipleCartQuantity();
+		}
+
+		cpInstance.setMinCartQuantity(minCartQuantity);
+		cpInstance.setMaxCartQuantity(maxCartQuantity);
+		cpInstance.setAllowedCartQuantities(allowedCartQuantities);
+		cpInstance.setMultipleCartQuantity(multipleCartQuantity);
 		cpInstance.setWidth(width);
 		cpInstance.setHeight(height);
 		cpInstance.setDepth(depth);
@@ -474,9 +523,11 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	@Override
 	public CPInstance updateCPInstance(
 			long cpInstanceId, String sku, String gtin,
-			String manufacturerPartNumber, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, int expirationDateMonth,
+			String manufacturerPartNumber, boolean overrideInventory,
+			int minCartQuantity, int maxCartQuantity,
+			String allowedCartQuantities, int multipleCartQuantity,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, ServiceContext serviceContext)
@@ -486,8 +537,9 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			cpInstanceId);
 
 		return updateCPInstance(
-			cpInstanceId, sku, gtin, manufacturerPartNumber,
-			cpInstance.getWidth(), cpInstance.getHeight(),
+			cpInstanceId, sku, gtin, manufacturerPartNumber, overrideInventory,
+			minCartQuantity, maxCartQuantity, allowedCartQuantities,
+			multipleCartQuantity, cpInstance.getWidth(), cpInstance.getHeight(),
 			cpInstance.getDepth(), cpInstance.getWeight(), cpInstance.getCost(),
 			cpInstance.getPrice(), displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
@@ -582,9 +634,11 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 	protected CPInstance addCPInstance(
 			long cpDefinitionId, String sku, String gtin,
-			String manufacturerPartNumber, String ddmContent, double width,
-			double height, double depth, double weight, double cost,
-			double price, Date displayDate, Date expirationDate,
+			String manufacturerPartNumber, String ddmContent,
+			boolean overrideInventory, int minCartQuantity, int maxCartQuantity,
+			String allowedCartQuantities, int multipleCartQuantity,
+			double width, double height, double depth, double weight,
+			double cost, double price, Date displayDate, Date expirationDate,
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -619,8 +673,10 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		return cpInstanceLocalService.addCPInstance(
 			cpDefinitionId, sku, gtin, manufacturerPartNumber, ddmContent,
-			width, height, depth, weight, cost, price, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			overrideInventory, minCartQuantity, maxCartQuantity,
+			allowedCartQuantities, multipleCartQuantity, width, height, depth,
+			weight, cost, price, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			serviceContext);
@@ -666,6 +722,24 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		}
 
 		return searchContext;
+	}
+
+	protected void checkCPDefinitionStatus(long cpDefinitionId)
+		throws PortalException {
+
+		List<CPInstance> cpInstances = getCPInstances(cpDefinitionId);
+
+		if (cpInstances.isEmpty()) {
+			CPDefinition cpDefinition =
+				cpDefinitionLocalService.fetchCPDefinition(cpDefinitionId);
+
+			if (cpDefinition != null) {
+				cpDefinitionLocalService.updateStatus(
+					cpDefinition.getUserId(), cpDefinitionId,
+					WorkflowConstants.STATUS_DRAFT, new ServiceContext(),
+					new HashMap<>());
+			}
+		}
 	}
 
 	protected void checkCPInstancesByDisplayDate() throws PortalException {

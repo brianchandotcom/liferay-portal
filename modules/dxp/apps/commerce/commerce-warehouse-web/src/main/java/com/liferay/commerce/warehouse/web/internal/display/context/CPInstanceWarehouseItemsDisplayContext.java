@@ -16,10 +16,9 @@ package com.liferay.commerce.warehouse.web.internal.display.context;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.service.permission.CPDefinitionPermission;
-import com.liferay.commerce.product.type.CPType;
-import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.service.CommerceWarehouseItemService;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -31,33 +30,28 @@ import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
-
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
-public class CPDefinitionWarehouseItemsDisplayContext
-	extends CommerceWarehouseItemsDisplayContext<CPDefinition> {
+public class CPInstanceWarehouseItemsDisplayContext
+	extends CommerceWarehouseItemsDisplayContext<CPInstance> {
 
-	public CPDefinitionWarehouseItemsDisplayContext(
+	public CPInstanceWarehouseItemsDisplayContext(
 		CommerceWarehouseItemService commerceWarehouseItemService,
-		CPDefinitionService cpDefinitionService,
-		ServletContext cpDefinitionServletContext,
-		CPTypeServicesTracker cpTypeServicesTracker, ItemSelector itemSelector,
+		CPInstanceService cpInstanceService, ItemSelector itemSelector,
 		HttpServletRequest httpServletRequest, Portal portal) {
 
 		super(commerceWarehouseItemService, itemSelector, httpServletRequest);
 
-		_cpDefinitionService = cpDefinitionService;
-		_cpDefinitionServletContext = cpDefinitionServletContext;
-		_cpTypeServicesTracker = cpTypeServicesTracker;
+		_cpInstanceService = cpInstanceService;
 		_portal = portal;
 	}
 
 	@Override
-	public String getBackURL() {
+	public String getBackURL() throws PortalException {
 		RenderRequest renderRequest = cpRequestHelper.getRenderRequest();
 
 		String lifecycle = (String)renderRequest.getAttribute(
@@ -66,68 +60,76 @@ public class CPDefinitionWarehouseItemsDisplayContext
 		PortletURL portletURL = _portal.getControlPanelPortletURL(
 			renderRequest, CPPortletKeys.CP_DEFINITIONS, lifecycle);
 
+		portletURL.setParameter(
+			"mvcRenderCommandName", "editProductDefinition");
+
+		CPInstance cpInstance = getModel();
+
+		portletURL.setParameter(
+			"cpDefinitionId", String.valueOf(cpInstance.getCPDefinitionId()));
+		portletURL.setParameter("screenNavigationCategoryKey", "skus");
+
 		return portletURL.toString();
 	}
 
-	public ServletContext getCPDefinitionServletContext() {
-		return _cpDefinitionServletContext;
-	}
-
-	public CPType getCPType() throws PortalException {
-		CPDefinition cpDefinition = getModel();
-
-		return _cpTypeServicesTracker.getCPType(
-			cpDefinition.getProductTypeName());
-	}
-
 	@Override
-	public CPDefinition getModel() throws PortalException {
-		if (_cpDefinition == null) {
-			long cpDefinitionId = ParamUtil.getLong(
-				cpRequestHelper.getRenderRequest(), "cpDefinitionId");
+	public CPInstance getModel() throws PortalException {
+		if (_cpInstance == null) {
+			long cpInstanceId = ParamUtil.getLong(
+				cpRequestHelper.getRenderRequest(), "cpInstanceId");
 
-			_cpDefinition = _cpDefinitionService.getCPDefinition(
-				cpDefinitionId);
+			_cpInstance = _cpInstanceService.getCPInstance(cpInstanceId);
 		}
 
-		return _cpDefinition;
+		return _cpInstance;
 	}
 
 	@Override
 	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = super.getPortletURL();
 
-		CPDefinition cpDefinition = getModel();
+		portletURL.setParameter(
+			"mvcRenderCommandName", "editProductInstance");
+
+		CPInstance cpInstance = getModel();
 
 		portletURL.setParameter(
-			"cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
-
+			"cpDefinitionId", String.valueOf(cpInstance.getCPDefinitionId()));
 		portletURL.setParameter(
-			"mvcRenderCommandName", "viewCPDefinitionWarehouseItems");
+			"cpInstanceId", String.valueOf(cpInstance.getCPInstanceId()));
+		portletURL.setParameter("screenNavigationCategoryKey", "warehouses");
 
 		return portletURL;
 	}
 
 	@Override
 	public String getTitle() throws PortalException {
-		CPDefinition cpDefinition = getModel();
+		CPInstance cpInstance = getModel();
+
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
 		ThemeDisplay themeDisplay = cpRequestHelper.getThemeDisplay();
 
-		return cpDefinition.getTitle(themeDisplay.getLanguageId());
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(cpDefinition.getTitle(themeDisplay.getLanguageId()));
+		sb.append(" - ");
+		sb.append(cpInstance.getSku());
+
+		return sb.toString();
 	}
 
 	@Override
 	public boolean isShowAddButton() throws PortalException {
+		CPInstance cpInstance = getModel();
+
 		return CPDefinitionPermission.contains(
-			cpRequestHelper.getPermissionChecker(), getModel(),
-			ActionKeys.UPDATE);
+			cpRequestHelper.getPermissionChecker(),
+			cpInstance.getCPDefinitionId(), ActionKeys.UPDATE);
 	}
 
-	private CPDefinition _cpDefinition;
-	private final CPDefinitionService _cpDefinitionService;
-	private final ServletContext _cpDefinitionServletContext;
-	private final CPTypeServicesTracker _cpTypeServicesTracker;
+	private CPInstance _cpInstance;
+	private final CPInstanceService _cpInstanceService;
 	private final Portal _portal;
 
 }

@@ -29,12 +29,8 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <%@ page import="com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil" %><%@
-page import="com.liferay.asset.kernel.model.AssetCategory" %><%@
 page import="com.liferay.asset.kernel.model.AssetRenderer" %><%@
 page import="com.liferay.asset.kernel.model.AssetRendererFactory" %><%@
-page import="com.liferay.asset.kernel.model.AssetVocabulary" %><%@
-page import="com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil" %><%@
-page import="com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil" %><%@
 page import="com.liferay.document.library.kernel.model.DLFileEntry" %><%@
 page import="com.liferay.document.library.kernel.util.DLUtil" %><%@
 page import="com.liferay.exportimport.kernel.staging.LayoutStagingUtil" %><%@
@@ -177,7 +173,6 @@ page import="com.liferay.portlet.RenderRequestFactory" %><%@
 page import="com.liferay.portlet.RenderRequestImpl" %><%@
 page import="com.liferay.portlet.RenderResponseFactory" %><%@
 page import="com.liferay.portlet.RenderResponseImpl" %><%@
-page import="com.liferay.portlet.asset.util.AssetUtil" %><%@
 page import="com.liferay.portlet.configuration.kernel.util.PortletConfigurationUtil" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupDisplayTerms" %><%@
 page import="com.liferay.portlet.usersadmin.search.OrganizationDisplayTerms" %><%@

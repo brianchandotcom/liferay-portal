@@ -46,6 +46,8 @@ import com.liferay.sharepoint.repository.internal.configuration.SharepointReposi
 import com.liferay.sharepoint.repository.internal.document.library.repository.external.model.SharepointFileEntry;
 import com.liferay.sharepoint.repository.internal.document.library.repository.external.model.SharepointModel;
 import com.liferay.sharepoint.repository.internal.document.library.repository.external.model.SharepointRootFolder;
+import com.liferay.sharepoint.repository.internal.search.kql.KQLQuery;
+import com.liferay.sharepoint.repository.internal.search.kql.KQLQueryVisitor;
 import com.liferay.sharepoint.repository.internal.util.SharepointServerResponseConverter;
 import com.liferay.sharepoint.repository.internal.util.SharepointURLHelper;
 
@@ -552,7 +554,24 @@ public class SharepointExtRepository implements ExtRepository {
 			ExtRepositoryQueryMapper extRepositoryQueryMapper)
 		throws PortalException {
 
-		throw new UnsupportedOperationException();
+		try {
+			KQLQueryVisitor queryVisitor = new KQLQueryVisitor(
+				extRepositoryQueryMapper, _siteAbsoluteURL);
+
+			KQLQuery kqlQuery = query.accept(queryVisitor);
+
+			String url = _sharepointURLHelper.getSearchURL(
+				kqlQuery.toString(), searchContext.getStart(),
+				searchContext.getEnd());
+
+			JSONObject jsonObject = _getJSONObject(url);
+
+			return (List)_sharepointServerResponseConverter.getSearchResults(
+				jsonObject);
+		}
+		catch (UnirestException ue) {
+			throw new PortalException(ue);
+		}
 	}
 
 	@Override

@@ -17,6 +17,7 @@ package com.liferay.sharepoint.repository.internal.util;
 import com.liferay.document.library.repository.external.ExtRepositoryFileEntry;
 import com.liferay.document.library.repository.external.ExtRepositoryObject;
 import com.liferay.document.library.repository.external.ExtRepositoryObjectType;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -195,11 +196,22 @@ public class SharepointURLHelper {
 			_FIELDS_EXPANDED_FOLDER);
 	}
 
+	public String getSearchURL(String queryText, int start, int end) {
+		return String.format(
+			"%s/_api/search/query?QueryText='%s'&SourceID='%s'&StartRow=%d&" +
+				"RowsPerPage=%d",
+			_siteAbsoluteURL, HtmlUtil.escapeURL(queryText),
+			_DOCUMENTS_SOURCE_ID, start, end - start);
+	}
+
 	public String getUpdateFileURL(String extRepositoryFileEntryKey) {
 		return String.format(
 			"%s/_api/web/GetFileByServerRelativeUrl('%s')/$value",
 			_siteAbsoluteURL, extRepositoryFileEntryKey);
 	}
+
+	private static final String _DOCUMENTS_SOURCE_ID =
+		"e7ec8cee-ded8-43c9-beb5-436b54b31e84";
 
 	private static final String _FIELDS_EXPANDED_FILE = StringUtil.merge(
 		Arrays.asList("Author", "CheckedOutByUser", "ListItemAllFields"));

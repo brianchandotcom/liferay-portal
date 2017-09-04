@@ -20,11 +20,15 @@ import com.liferay.document.library.repository.external.ExtRepositoryFileVersion
 import com.liferay.document.library.repository.external.ExtRepositoryFolder;
 import com.liferay.document.library.repository.external.ExtRepositoryObject;
 import com.liferay.document.library.repository.external.ExtRepositoryObjectType;
+import com.liferay.document.library.repository.external.ExtRepositorySearchResult;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sharepoint.repository.internal.document.library.repository.external.model.SharepointFileEntry;
 import com.liferay.sharepoint.repository.internal.document.library.repository.external.model.SharepointFileVersion;
 import com.liferay.sharepoint.repository.internal.document.library.repository.external.model.SharepointFolder;
@@ -131,6 +135,77 @@ public class SharepointServerResponseConverter {
 
 	public int getExtRepositoryObjectsCount(JSONObject jsonObject) {
 		return jsonObject.getInt("value");
+	}
+
+	public <T extends ExtRepositoryObject> List<ExtRepositorySearchResult<T>>
+		getSearchResults(JSONObject jsonObject) throws PortalException {
+
+		JSONObject dJSONObject = jsonObject.getJSONObject("d");
+
+		JSONObject queryJSONObject = dJSONObject.getJSONObject("query");
+
+		JSONObject primaryQueryResultJSONObject = queryJSONObject.getJSONObject(
+			"PrimaryQueryResult");
+
+		JSONObject relevantResultsJSONObject =
+			primaryQueryResultJSONObject.getJSONObject("RelevantResults");
+
+		JSONObject tableJSONObject = relevantResultsJSONObject.getJSONObject(
+			"Table");
+
+		JSONObject rowsJSONObject = tableJSONObject.getJSONObject("Rows");
+
+		JSONArray rowsResultsJSONArray = rowsJSONObject.getJSONArray("results");
+
+		List<ExtRepositorySearchResult<T>> searchResults = new ArrayList<>();
+
+		for (int i = 0; i < rowsResultsJSONArray.length(); i++) {
+			JSONObject rowResultJSONObject = rowsResultsJSONArray.getJSONObject(
+				i);
+
+			JSONObject cellsJSONObject = rowResultJSONObject.getJSONObject(
+				"Cells");
+
+			JSONArray cellsResultsJSONArray = cellsJSONObject.getJSONArray(
+				"results");
+
+			String path = null;
+			double score = 0;
+			String snippet = null;
+
+			for (int j = 0; j < cellsResultsJSONArray.length(); j++) {
+				JSONObject cellsResultJSONObject =
+					cellsResultsJSONArray.getJSONObject(j);
+
+				String key = cellsResultJSONObject.getString("Key");
+
+				if (key.equals("Description")) {
+					snippet = GetterUtil.getString(
+						cellsResultJSONObject.getString("Value"));
+				}
+				else if (key.equals("Path")) {
+					path = cellsResultJSONObject.getString("Value");
+				}
+				else if (key.equals("Rank")) {
+					score = cellsResultJSONObject.getDouble("Rank");
+				}
+			}
+
+			if (Validator.isNull(path)) {
+				continue;
+			}
+
+			ExtRepositoryObject extRepositoryObject =
+				_extRepository.getExtRepositoryObject(
+					ExtRepositoryObjectType.FILE,
+					path.substring(_siteAbsoluteURL.length()));
+
+			searchResults.add(
+				new ExtRepositorySearchResult(
+					extRepositoryObject, (float)score, snippet));
+		}
+
+		return searchResults;
 	}
 
 	private SharepointFileEntry _createFileEntry(JSONObject jsonObject) {

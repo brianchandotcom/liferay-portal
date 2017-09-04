@@ -22,7 +22,10 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Julio Camarero
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.asset.taglib.servlet.taglib.CategorizationFilterTag}
  */
+@Deprecated
 public class CategorizationFilterTag extends IncludeTag {
 
 	public void setAssetType(String assetType) {

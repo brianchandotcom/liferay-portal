@@ -478,6 +478,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-asset:categorization-filter</code>]]>.</description>
 		<name>categorization-filter</name>
 		<tag-class>com.liferay.taglib.ui.CategorizationFilterTag</tag-class>
 		<body-content>JSP</body-content>

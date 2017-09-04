@@ -1,9 +1,6 @@
 AUI.add(
 	'liferay-commerce-product-content',
 	function(A) {
-		var AArray = A.Array;
-
-		var Lang = A.Lang;
 
 		var STR_DDM_FORM_EVENT = 'DDMForm:render';
 
@@ -11,6 +8,10 @@ AUI.add(
 			{
 				ATTRS: {
 					cpDefinitionId: {
+					},
+					fullImageSelector: {
+					},
+					thumbsContainerSelector: {
 					},
 					viewAttachmentURL: {
 					}
@@ -28,7 +29,6 @@ AUI.add(
 
 						instance._bindUI();
 						instance._renderUI();
-						console.log("Inizialized");
 					},
 
 					destructor: function() {
@@ -73,17 +73,10 @@ AUI.add(
 						var cpDefinitionId = instance.get('cpDefinitionId');
 
 						eventHandles.push(
-							Liferay.on( cpDefinitionId + STR_DDM_FORM_EVENT, instance._ddmFormRender, instance)
+							Liferay.on(cpDefinitionId + STR_DDM_FORM_EVENT, instance._ddmFormRender, instance)
 						);
 
 						instance._eventHandles = eventHandles;
-					},
-					_ddmFormRender: function(event) {
-						var instance = this;
-
-						var form = event.form;
-
-						form.after("*:valueChange", instance._ddmFormChange, instance);
 					},
 					_ddmFormChange: function(valueChangeEvent) {
 
@@ -91,31 +84,77 @@ AUI.add(
 
 						instance._renderImages();
 					},
+					_ddmFormRender: function(event) {
+						var instance = this;
+
+						var form = event.form;
+
+						form.after('*:valueChange', instance._ddmFormChange, instance);
+					},
+					_getThumbsContainer: function() {
+						var instance = this;
+
+						return A.one(instance.get('thumbsContainerSelector'));
+					},
 					_renderImages: function() {
 						var instance = this;
 
-						var cpDefinitionId = instance.get('cpDefinitionId');
+						var ddmFormValues = JSON.stringify(instance.getFormValues());
 
-						var ddmForm = Liferay.component(cpDefinitionId + "DDMForm");
-						var ddmFormValues = "";
+						var data = {};
 
-						if (ddmForm) {
-							ddmFormValues = JSON.stringify(ddmForm.toJSON());
-						}
+						data[instance.get('namespace') + 'ddmFormValues'] = ddmFormValues;
 
 						A.io.request(
-							instance.get("viewAttachmentURL"),
+							instance.get('viewAttachmentURL'),
 							{
-								data: {
-									'_com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet_ddmFormValues' : ddmFormValues
-								},
+								data: data,
 								on: {
 									success: function(event, id, obj) {
 										var response = JSON.parse(obj.response);
 
-										console.log(response);
+										instance._renderThumbsImages(response);
 									}
 								}
+							}
+						);
+					},
+					_renderThumbsImages: function(images) {
+						var instance = this;
+
+						var thumbsContainer = instance._getThumbsContainer();
+
+						thumbsContainer.setHTML('');
+
+						images.forEach(
+							function(image) {
+								var thumbContainer = A.Node.create('<div class="card thumb" />');
+
+								thumbContainer.setAttribute('data-url', image.url);
+
+								var imageNode = A.Node.create('<img class="center-block img-responsive" />');
+
+								imageNode.setAttribute('src', image.url);
+
+								imageNode.appendTo(thumbContainer);
+
+								thumbContainer.appendTo(thumbsContainer);
+
+							}
+						);
+
+						if (images.length > 0) {
+							var fullImage = A.one(instance.get('fullImageSelector'));
+
+							fullImage.setAttribute('src', images[0].url);
+						}
+					},
+					_renderUI: function() {
+						var instance = this;
+
+						A.all('[data-cp-definition-id]').each(
+							function(node) {
+								node.setAttribute('data-cp-definition-id', instance.get('cpDefinitionId'))
 							}
 						);
 					}
@@ -127,6 +166,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'liferay-portlet-base', 'aui-io-request' , 'aui-parse-content']
+		requires: ['aui-base', 'aui-io-request', 'aui-parse-content', 'liferay-portlet-base']
 	}
 );

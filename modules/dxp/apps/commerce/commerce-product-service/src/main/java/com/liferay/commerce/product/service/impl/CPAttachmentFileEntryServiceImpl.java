@@ -96,7 +96,19 @@ public class CPAttachmentFileEntryServiceImpl
 				cpAttachmentFileEntryId);
 
 		if (cpAttachmentFileEntry != null) {
-			checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntry);
+			long cpDefinitionClassNameId = _portal.getClassNameId(
+				CPDefinition.class);
+
+			if (cpDefinitionClassNameId ==
+					cpAttachmentFileEntry.getClassNameId()) {
+
+				CPDefinitionPermission.check(
+					getPermissionChecker(), cpAttachmentFileEntry.getClassPK(),
+					ActionKeys.VIEW);
+			}
+			else {
+				checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntryId);
+			}
 		}
 
 		return cpAttachmentFileEntry;
@@ -140,7 +152,21 @@ public class CPAttachmentFileEntryServiceImpl
 			cpAttachmentFileEntryLocalService.getCPAttachmentFileEntry(
 				cpAttachmentFileEntryId);
 
-		checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntry);
+		if (cpAttachmentFileEntry != null) {
+			long cpDefinitionClassNameId = _portal.getClassNameId(
+				CPDefinition.class);
+
+			if (cpDefinitionClassNameId ==
+					cpAttachmentFileEntry.getClassNameId()) {
+
+				CPDefinitionPermission.check(
+					getPermissionChecker(), cpAttachmentFileEntry.getClassPK(),
+					ActionKeys.VIEW);
+			}
+			else {
+				checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntryId);
+			}
+		}
 
 		return cpAttachmentFileEntry;
 	}

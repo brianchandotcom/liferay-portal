@@ -14,9 +14,11 @@
 
 package com.liferay.commerce.product.content.web.internal.portlet.action;
 
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.util.CPInstanceHelper;
+import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -25,8 +27,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 import java.util.Locale;
@@ -57,9 +62,16 @@ public class ViewCPAttachmentsMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws PortletException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		Locale locale = resourceRequest.getLocale();
+
+		int type = ParamUtil.getInteger(
+			resourceRequest, "type",
+			CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE);
 
 		String ddmFormValues = ParamUtil.getString(
 			resourceRequest, "ddmFormValues");
@@ -70,7 +82,7 @@ public class ViewCPAttachmentsMVCResourceCommand
 		try {
 			List<CPAttachmentFileEntry> cpAttachmentFileEntries =
 				_cpInstanceHelper.getCPAttachmentFileEntries(
-					cpDefinitionId, locale, ddmFormValues);
+					cpDefinitionId, locale, ddmFormValues, type);
 
 			for (CPAttachmentFileEntry cpAttachmentFileEntry :
 					cpAttachmentFileEntries) {
@@ -80,6 +92,13 @@ public class ViewCPAttachmentsMVCResourceCommand
 				jsonObject.put(
 					"cpAttachmentFileEntryId",
 					cpAttachmentFileEntry.getCPAttachmentFileEntryId());
+
+				FileEntry fileEntry = cpAttachmentFileEntry.getFileEntry();
+
+				String attachmentURL = DLUtil.getDownloadURL(
+					fileEntry, fileEntry.getFileVersion(), themeDisplay, "");
+
+				jsonObject.put("url", attachmentURL);
 
 				jsonArray.put(jsonObject);
 			}

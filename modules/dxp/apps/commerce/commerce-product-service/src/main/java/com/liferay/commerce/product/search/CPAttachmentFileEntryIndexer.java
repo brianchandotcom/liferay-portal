@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -34,6 +35,9 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.ExistsFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -102,6 +106,13 @@ public class CPAttachmentFileEntryIndexer
 		long classNameId = GetterUtil.getLong(
 			searchContext.getAttribute(FIELD_RELATED_ENTITY_CLASS_NAME_ID));
 
+		int type = GetterUtil.getInteger(
+			searchContext.getAttribute(Field.TYPE), -1);
+
+		if (type >= 0) {
+			contextBooleanFilter.addRequiredTerm(Field.TYPE, type);
+		}
+
 		if (classNameId > 0) {
 			contextBooleanFilter.addRequiredTerm(
 				FIELD_RELATED_ENTITY_CLASS_NAME_ID, classNameId);
@@ -113,6 +124,36 @@ public class CPAttachmentFileEntryIndexer
 		if (classPK > 0) {
 			contextBooleanFilter.addRequiredTerm(
 				FIELD_RELATED_ENTITY_CLASS_PK, classPK);
+		}
+
+		String[] fieldNames = (String[])searchContext.getAttribute("OPTIONS");
+
+		if (fieldNames == null) {
+			return;
+		}
+
+		for (String fieldName : fieldNames) {
+			String[] fieldValues = (String[])searchContext.getAttribute(
+				fieldName);
+
+			TermsFilter termFilter = new TermsFilter(fieldName);
+
+			termFilter.addValues(fieldValues);
+
+			Filter existFilter = new ExistsFilter(fieldName);
+
+			BooleanFilter existBooleanFilter = new BooleanFilter();
+
+			existBooleanFilter.add(existFilter, BooleanClauseOccur.MUST_NOT);
+
+			BooleanFilter fieldBooleanFilter = new BooleanFilter();
+
+			fieldBooleanFilter.add(
+				existBooleanFilter, BooleanClauseOccur.SHOULD);
+			fieldBooleanFilter.add(termFilter, BooleanClauseOccur.SHOULD);
+
+			contextBooleanFilter.add(
+				fieldBooleanFilter, BooleanClauseOccur.MUST);
 		}
 	}
 
@@ -169,6 +210,8 @@ public class CPAttachmentFileEntryIndexer
 		document.addText(Field.CONTENT, StringPool.BLANK);
 
 		document.addNumber(Field.PRIORITY, cpAttachmentFileEntry.getPriority());
+
+		document.addNumber(Field.TYPE, cpAttachmentFileEntry.getType());
 
 		document.addNumber(
 			FIELD_RELATED_ENTITY_CLASS_NAME_ID,

@@ -189,7 +189,15 @@ public class SharepointExtRepository implements ExtRepository {
 			String extRepositoryObjectKey)
 		throws PortalException {
 
-		throw new UnsupportedOperationException();
+		try {
+			String url = _sharepointURLHelper.getDeleteObjectURL(
+				extRepositoryObjectType, extRepositoryObjectKey);
+
+			_delete(url);
+		}
+		catch (UnirestException ue) {
+			throw new PortalException(ue);
+		}
 	}
 
 	@Override
@@ -391,6 +399,22 @@ public class SharepointExtRepository implements ExtRepository {
 		}
 
 		return s;
+	}
+
+	private void _delete(String url) throws PortalException, UnirestException {
+		HttpRequestWithBody httpRequestWithBody = Unirest.delete(url);
+
+		httpRequestWithBody.header(
+			"Authorization", "Bearer " + _getAccessToken());
+
+		HttpResponse<InputStream> httpResponse = httpRequestWithBody.asBinary();
+
+		if (httpResponse.getStatus() >= 300) {
+			throw new PrincipalException(
+				String.format(
+					"Error while deleting resource %s: %d %s", url,
+					httpResponse.getStatus(), httpResponse.getStatusText()));
+		}
 	}
 
 	private String _getAccessToken() throws PortalException {

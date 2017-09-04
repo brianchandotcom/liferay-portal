@@ -72,6 +72,21 @@ public class SharepointURLHelper {
 			_siteAbsoluteUrl, extRepositoryFileEntryKey);
 	}
 
+	public <T extends ExtRepositoryObject> String getDeleteObjectURL(
+		ExtRepositoryObjectType<T> extRepositoryObjectType,
+		String extRepositoryObjectKey) {
+
+		if (extRepositoryObjectType == ExtRepositoryObjectType.FILE) {
+			return String.format(
+				"%s/_api/web/GetFileByServerRelativeUrl('%s')",
+				_siteAbsoluteUrl, extRepositoryObjectKey);
+		}
+
+		return String.format(
+			"%s/_api/web/GetFolderByServerRelativeUrl('%s')", _siteAbsoluteUrl,
+			extRepositoryObjectKey);
+	}
+
 	public String getFileEntryContentURL(
 		ExtRepositoryFileEntry extRepositoryFileEntry) {
 

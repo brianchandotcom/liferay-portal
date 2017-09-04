@@ -15,7 +15,6 @@
 package com.liferay.lcs.license.messaging;
 
 import com.liferay.lcs.advisor.LCSPortletStateAdvisor;
-import com.liferay.lcs.util.LCSUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.license.messaging.LCSPortletState;
 import com.liferay.portal.kernel.license.messaging.LicenseManagerMessageType;
@@ -55,8 +54,6 @@ public class LicenseManagerValidateSubscriptionMessageListener
 		if (_log.isTraceEnabled()) {
 			_log.trace("LCS portlet state: " + lcsPortletState);
 		}
-
-		LCSUtil.processLCSPortletState(lcsPortletState);
 
 		return licenseManagerMessageType.createMessage(lcsPortletState);
 	}

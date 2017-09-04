@@ -35,7 +35,7 @@ SearchContainer<CommercePaymentMethod> commercePaymentMethodSearchContainer = co
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= renderResponse.createRenderURL() %>"
+			portletURL="<%= commercePaymentMethodsDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="list"
 		/>
 	</liferay-frontend:management-bar-buttons>

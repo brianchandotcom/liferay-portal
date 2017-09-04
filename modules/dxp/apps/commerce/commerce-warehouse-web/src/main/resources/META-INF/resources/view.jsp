@@ -54,7 +54,7 @@ for (ManagementBarFilterItem managementBarFilterItem : managementBarFilterItems)
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= renderResponse.createRenderURL() %>"
+			portletURL="<%= commerceWarehousesDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="list"
 		/>
 	</liferay-frontend:management-bar-buttons>

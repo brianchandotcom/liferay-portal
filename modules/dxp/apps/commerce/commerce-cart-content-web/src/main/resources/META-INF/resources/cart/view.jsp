@@ -48,6 +48,18 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				CPDefinition cpDefinition = commerceCartItem.getCPDefinition();
 
 				String thumbnailSrc = cpDefinition.getDefaultImageThumbnailSrc(themeDisplay);
+
+				Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>> cpDefinitionOptionRelMap = commerceCartContentDisplayContext.parseJSONString(commerceCartItem.getJson());
+
+				StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
+
+				for (Map.Entry<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>> cpDefinitionOptionRelEntry : cpDefinitionOptionRelMap.entrySet()) {
+					List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels = cpDefinitionOptionRelEntry.getValue();
+
+					for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel : cpDefinitionOptionValueRels) {
+						stringJoiner.add(cpDefinitionOptionValueRel.getTitle(languageId));
+					}
+				}
 				%>
 
 				<liferay-ui:search-container-column-image
@@ -63,6 +75,10 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 					<a href="<%= commerceCartContentDisplayContext.getCPDefinitionURL(cpDefinition.getCPDefinitionId(), themeDisplay) %>">
 						<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>
 					</a>
+
+					<h6 class="text-default">
+						<%= HtmlUtil.escape(stringJoiner.toString()) %>
+					</h6>
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text

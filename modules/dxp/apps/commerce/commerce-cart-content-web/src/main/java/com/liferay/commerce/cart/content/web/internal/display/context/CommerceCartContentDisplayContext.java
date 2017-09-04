@@ -18,7 +18,10 @@ import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceCartItemService;
 import com.liferay.commerce.util.CommerceCartHelper;
 import com.liferay.commerce.util.CommercePriceCalculationHelper;
@@ -32,6 +35,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletURL;
 
@@ -49,17 +53,19 @@ public class CommerceCartContentDisplayContext {
 		HttpServletResponse httpServletResponse,
 		CommerceCartHelper commerceCartHelper,
 		CommerceCartItemService commerceCartItemService,
-		CPDefinitionHelper cpDefinitionHelper,
 		CommercePriceCalculationHelper commercePriceCalculationHelper,
-		CommercePriceFormatter commercePriceFormatter) {
+		CommercePriceFormatter commercePriceFormatter,
+		CPDefinitionHelper cpDefinitionHelper,
+		CPInstanceHelper cpInstanceHelper) {
 
 		this.httpServletRequest = httpServletRequest;
 		this.httpServletResponse = httpServletResponse;
 		_commerceCartHelper = commerceCartHelper;
 		_commerceCartItemService = commerceCartItemService;
-		this.cpDefinitionHelper = cpDefinitionHelper;
 		_commercePriceCalculationHelper = commercePriceCalculationHelper;
 		_commercePriceFormatter = commercePriceFormatter;
+		this.cpDefinitionHelper = cpDefinitionHelper;
+		this.cpInstanceHelper = cpInstanceHelper;
 
 		CPRequestHelper cpRequestHelper = new CPRequestHelper(
 			httpServletRequest);
@@ -164,7 +170,15 @@ public class CommerceCartContentDisplayContext {
 		return _searchContainer;
 	}
 
+	public Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
+			parseJSONString(String json)
+		throws PortalException {
+
+		return cpInstanceHelper.parseJSONString(json);
+	}
+
 	protected final CPDefinitionHelper cpDefinitionHelper;
+	protected final CPInstanceHelper cpInstanceHelper;
 	protected final HttpServletRequest httpServletRequest;
 	protected final HttpServletResponse httpServletResponse;
 	protected final LiferayPortletRequest liferayPortletRequest;

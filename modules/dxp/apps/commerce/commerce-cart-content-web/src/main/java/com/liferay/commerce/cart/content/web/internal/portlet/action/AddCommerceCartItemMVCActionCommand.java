@@ -89,9 +89,6 @@ public class AddCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
 		String ddmFormValues = ParamUtil.getString(
 			actionRequest, "ddmFormValues");
 
-		String json = _cpInstanceHelper.toJSON(
-			cpDefinitionId, locale, ddmFormValues);
-
 		try {
 			CommerceCart commerceCart =
 				_commerceCartHelper.getCurrentCommerceCart(
@@ -118,7 +115,7 @@ public class AddCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
 			CommerceCartItem commerceCartItem =
 				_commerceCartItemService.addCommerceCartItem(
 					commerceCart.getCommerceCartId(), cpDefinitionId,
-					cpInstanceId, quantity, json, serviceContext);
+					cpInstanceId, quantity, ddmFormValues, serviceContext);
 
 			int commerceCartItemsCount =
 				_commerceCartItemService.getCommerceCartItemsCount(

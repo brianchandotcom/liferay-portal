@@ -60,6 +60,8 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				CPDefinition cpDefinition = commerceCartItem.getCPDefinition();
 
 				String thumbnailSrc = cpDefinition.getDefaultImageThumbnailSrc(themeDisplay);
+
+				Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>> cpDefinitionOptionRelMap = commerceCartContentMiniDisplayContext.parseJSONString(commerceCartItem.getJson());
 				%>
 
 				<liferay-ui:search-container-column-image
@@ -68,19 +70,41 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
-					href="<%= commerceCartContentMiniDisplayContext.getCPDefinitionURL(cpDefinition.getCPDefinitionId(), themeDisplay) %>"
-					value="<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>"
-				/>
+					colspan="<%= 2 %>"
+				>
+					<h5>
+						<a href="<%= commerceCartContentMiniDisplayContext.getCPDefinitionURL(cpDefinition.getCPDefinitionId(), themeDisplay) %>">
+							<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>
+						</a>
+					</h5>
 
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
-					name="price"
-					value="<%= commerceCartContentMiniDisplayContext.getFormattedPrice(commerceCartItem.getCommerceCartItemId()) %>"
-				/>
+					<%
+					StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
+
+					for (Map.Entry<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>> cpDefinitionOptionRelEntry : cpDefinitionOptionRelMap.entrySet()) {
+						List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels = cpDefinitionOptionRelEntry.getValue();
+
+						for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel : cpDefinitionOptionValueRels) {
+							stringJoiner.add(cpDefinitionOptionValueRel.getTitle(languageId));
+						}
+					}
+					%>
+
+					<h6 class="text-default">
+						<%= HtmlUtil.escape(stringJoiner.toString()) %>
+					</h6>
+
+					<h6 class="text-default">
+						<liferay-ui:message arguments="<%= commerceCartItem.getQuantity() %>" key="quantity-x" />
+					</h6>
+
+					<h6>
+						<%= commerceCartContentMiniDisplayContext.getFormattedPrice(commerceCartItem.getCommerceCartItemId()) %>
+					</h6>
+				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" searchContainer="<%= commerceCartItemSearchContainer %>" />
+			<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" paginate="<%= false %>" searchContainer="<%= commerceCartItemSearchContainer %>" />
 		</liferay-ui:search-container>
 	</div>
 </liferay-ddm:template-renderer>

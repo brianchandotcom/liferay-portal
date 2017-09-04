@@ -16,7 +16,12 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:button cssClass="btn-lg btn-primary" name="add-to-cart" value="add-to-cart" />
+<%
+HashMap<String, String> dataMap = new HashMap<>();
+dataMap.put("cp-definition-id", "");
+%>
+
+<aui:button cssClass="btn-lg btn-primary" data="<%= dataMap %>" name="add-to-cart" value="add-to-cart" />
 
 <aui:script use="aui-io-request,aui-parse-content,liferay-notification">
 	A.one('#<portlet:namespace />add-to-cart').on(
@@ -24,12 +29,15 @@
 		function(event) {
 			var currentTarget = event.currentTarget;
 
-			var productDetail = currentTarget.ancestor(".product-detail");
+			var cpDefinitionId = currentTarget.getAttribute('data-cp-definition-id')
 
-			var cpDefinitionId = productDetail.attr("data-cp-definition-id");
+			var productContent = Liferay.component('<portlet:namespace />' + cpDefinitionId + 'ProductContent');
+
+			var ddmFormValues = JSON.stringify(productContent.getFormValues());
 
 			var data = {
 				'_<%= CommercePortletKeys.COMMERCE_CART_CONTENT %>_cpDefinitionId' : cpDefinitionId ,
+				'_<%= CommercePortletKeys.COMMERCE_CART_CONTENT %>_ddmFormValues' : ddmFormValues ,
 				'_<%= CommercePortletKeys.COMMERCE_CART_CONTENT %>_quantity' : 1
 			};
 

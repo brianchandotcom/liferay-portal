@@ -18,6 +18,7 @@ import com.liferay.commerce.product.content.web.configuration.CPContentConfigura
 import com.liferay.commerce.product.content.web.display.context.CPTypeDisplayContext;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
+import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
 import com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry;
 import com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryService;
 import com.liferay.commerce.product.type.grouped.util.comparator.CPDefinitionGroupedEntryPriorityComparator;
@@ -46,12 +47,16 @@ public class GroupedCPTypeDisplayContext extends CPTypeDisplayContext {
 			CPDefinition cpDefinition,
 			CPDefinitionGroupedEntryService cpDefinitionGroupedEntryService,
 			CPInstanceHelper cpInstanceHelper,
+			CPDefinitionSpecificationOptionValueService
+				cpDefinitionSpecificationOptionValueService,
 			HttpServletRequest httpServletRequest, Portal portal)
 		throws ConfigurationException {
 
 		super(
 			cpAttachmentFileEntryService, cpContentConfigurationHelper,
-			cpDefinition, cpInstanceHelper, httpServletRequest, portal);
+			cpDefinition, cpInstanceHelper,
+			cpDefinitionSpecificationOptionValueService, httpServletRequest,
+			portal);
 
 		_cpDefinitionGroupedEntryService = cpDefinitionGroupedEntryService;
 	}

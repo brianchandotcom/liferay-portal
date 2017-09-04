@@ -17,6 +17,7 @@ package com.liferay.commerce.product.type.virtual.web.internal;
 import com.liferay.commerce.product.content.web.configuration.CPContentConfigurationHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
+import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
 import com.liferay.commerce.product.type.CPTypeRenderer;
 import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingLocalService;
@@ -55,7 +56,9 @@ public class VirtualCPTypeRenderer implements CPTypeRenderer {
 			new VirtualCPTypeDisplayContext(
 				_cpAttachmentFileEntryService, _cpContentConfigurationHelper,
 				cpDefinition, _cpDefinitionVirtualSettingLocalService,
-				_dlAppService, _cpInstanceHelper, httpServletRequest, _portal);
+				_dlAppService, _cpInstanceHelper,
+				_cpDefinitionSpecificationOptionValueService,
+				httpServletRequest, _portal);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, virtualCPTypeDisplayContext);
@@ -70,6 +73,10 @@ public class VirtualCPTypeRenderer implements CPTypeRenderer {
 
 	@Reference
 	private CPContentConfigurationHelper _cpContentConfigurationHelper;
+
+	@Reference
+	private CPDefinitionSpecificationOptionValueService
+		_cpDefinitionSpecificationOptionValueService;
 
 	@Reference
 	private CPDefinitionVirtualSettingLocalService

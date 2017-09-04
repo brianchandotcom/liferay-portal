@@ -20,7 +20,9 @@ import com.liferay.commerce.product.content.web.configuration.CPContentPortletIn
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
+import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -52,6 +54,8 @@ public class CPTypeDisplayContext {
 			CPAttachmentFileEntryService cpAttachmentFileEntryService,
 			CPContentConfigurationHelper cpContentConfigurationHelper,
 			CPDefinition cpDefinition, CPInstanceHelper cpInstanceHelper,
+			CPDefinitionSpecificationOptionValueService
+				cpDefinitionSpecificationOptionValueService,
 			HttpServletRequest httpServletRequest, Portal portal)
 		throws ConfigurationException {
 
@@ -59,6 +63,8 @@ public class CPTypeDisplayContext {
 		this.cpContentConfigurationHelper = cpContentConfigurationHelper;
 		this.cpDefinition = cpDefinition;
 		this.cpInstanceHelper = cpInstanceHelper;
+		this.cpDefinitionSpecificationOptionValueService =
+			cpDefinitionSpecificationOptionValueService;
 		this.httpServletRequest = httpServletRequest;
 		this.portal = portal;
 
@@ -84,6 +90,15 @@ public class CPTypeDisplayContext {
 
 	public long getCPDefinitionId() {
 		return cpDefinition.getCPDefinitionId();
+	}
+
+	public List<CPDefinitionSpecificationOptionValue>
+		getCPDefinitionSpecificationOptionValues() throws PortalException
+	{
+
+		return cpDefinitionSpecificationOptionValueService.
+			getCPDefinitionSpecificationOptionValues(
+				cpDefinition.getCPDefinitionId());
 	}
 
 	public CPAttachmentFileEntry getDefaultImage() throws PortalException {
@@ -165,6 +180,8 @@ public class CPTypeDisplayContext {
 	protected final CPContentPortletInstanceConfiguration
 		cpContentPortletInstanceConfiguration;
 	protected final CPDefinition cpDefinition;
+	protected final CPDefinitionSpecificationOptionValueService
+		cpDefinitionSpecificationOptionValueService;
 	protected final CPInstanceHelper cpInstanceHelper;
 	protected final HttpServletRequest httpServletRequest;
 	protected final LiferayPortletResponse liferayPortletResponse;

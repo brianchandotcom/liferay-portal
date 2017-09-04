@@ -128,17 +128,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		cpInstance.setManufacturerPartNumber(manufacturerPartNumber);
 		cpInstance.setDDMContent(ddmContent);
 		cpInstance.setOverrideInventory(overrideInventory);
-
-		if (!overrideInventory) {
-			CPDefinition cpDefinition =
-				cpDefinitionLocalService.fetchCPDefinition(cpDefinitionId);
-
-			minCartQuantity = cpDefinition.getMinCartQuantity();
-			maxCartQuantity = cpDefinition.getMaxCartQuantity();
-			allowedCartQuantities = cpDefinition.getAllowedCartQuantities();
-			multipleCartQuantity = cpDefinition.getMultipleCartQuantity();
-		}
-
 		cpInstance.setMinCartQuantity(minCartQuantity);
 		cpInstance.setMaxCartQuantity(maxCartQuantity);
 		cpInstance.setAllowedCartQuantities(allowedCartQuantities);
@@ -475,18 +464,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		cpInstance.setGtin(gtin);
 		cpInstance.setManufacturerPartNumber(manufacturerPartNumber);
 		cpInstance.setOverrideInventory(overrideInventory);
-
-		if (!overrideInventory) {
-			CPDefinition cpDefinition =
-				cpDefinitionLocalService.fetchCPDefinition(
-					cpInstance.getCPDefinitionId());
-
-			minCartQuantity = cpDefinition.getMinCartQuantity();
-			maxCartQuantity = cpDefinition.getMaxCartQuantity();
-			allowedCartQuantities = cpDefinition.getAllowedCartQuantities();
-			multipleCartQuantity = cpDefinition.getMultipleCartQuantity();
-		}
-
 		cpInstance.setMinCartQuantity(minCartQuantity);
 		cpInstance.setMaxCartQuantity(maxCartQuantity);
 		cpInstance.setAllowedCartQuantities(allowedCartQuantities);

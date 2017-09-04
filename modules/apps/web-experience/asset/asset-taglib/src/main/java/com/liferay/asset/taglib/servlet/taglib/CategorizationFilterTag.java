@@ -52,8 +52,7 @@ public class CategorizationFilterTag extends IncludeTag {
 			"liferay-ui:categorization-filter:portletURL", _portletURL);
 	}
 
-	private static final String _PAGE =
-		"/html/taglib/ui/categorization_filter/page.jsp";
+	private static final String _PAGE = "/categorization_filter/page.jsp";
 
 	private String _assetType;
 	private PortletURL _portletURL;

@@ -1338,6 +1338,28 @@ public class CPDefinitionLocalServiceImpl
 		return cpDefinitionLocalizations;
 	}
 
+	public void checkCPDefinitionStatus(long cpDefinitionId)
+		throws PortalException {
+
+		CPDefinition cpDefinition =
+			cpDefinitionLocalService.fetchCPDefinition(cpDefinitionId);
+
+		if(cpDefinition == null){
+			return;
+		}
+
+		List<CPInstance> cpInstances = cpInstanceLocalService.getCPInstances(
+			cpDefinitionId);
+
+		if (cpInstances.isEmpty()) {
+
+			cpDefinitionLocalService.updateStatus(
+				cpDefinition.getUserId(), cpDefinitionId,
+				WorkflowConstants.STATUS_INCOMPLETE, new ServiceContext(),
+				new HashMap<>());
+		}
+	}
+
 	private CPDefinitionLocalization _addCPDefinitionLocalizedFields(
 			long companyId, long cpDefinitionId, String title,
 			String shortDescription, String description, String metaTitle,

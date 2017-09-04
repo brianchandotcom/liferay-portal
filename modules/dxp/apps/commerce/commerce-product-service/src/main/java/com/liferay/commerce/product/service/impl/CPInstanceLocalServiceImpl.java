@@ -324,9 +324,10 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			cpInstance.getCompanyId(), cpInstance.getGroupId(),
 			CPInstance.class.getName(), cpInstance.getCPInstanceId());
 
-		reindexCPDefinition(cpInstance.getCPDefinitionId());
+		cpDefinitionLocalService.checkCPDefinitionStatus(
+			cpInstance.getCPDefinitionId());
 
-		checkCPDefinitionStatus(cpInstance.getCPDefinitionId());
+		reindexCPDefinition(cpInstance.getCPDefinitionId());
 
 		return cpInstance;
 	}
@@ -729,24 +730,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		}
 
 		return searchContext;
-	}
-
-	protected void checkCPDefinitionStatus(long cpDefinitionId)
-		throws PortalException {
-
-		List<CPInstance> cpInstances = getCPInstances(cpDefinitionId);
-
-		if (cpInstances.isEmpty()) {
-			CPDefinition cpDefinition =
-				cpDefinitionLocalService.fetchCPDefinition(cpDefinitionId);
-
-			if (cpDefinition != null) {
-				cpDefinitionLocalService.updateStatus(
-					cpDefinition.getUserId(), cpDefinitionId,
-					WorkflowConstants.STATUS_DRAFT, new ServiceContext(),
-					new HashMap<>());
-			}
-		}
 	}
 
 	protected void checkCPInstancesByDisplayDate() throws PortalException {

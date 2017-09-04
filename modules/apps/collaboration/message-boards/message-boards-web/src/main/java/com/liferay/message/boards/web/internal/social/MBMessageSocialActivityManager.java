@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.web.social;
+package com.liferay.message.boards.web.internal.social;
 
 import com.liferay.message.boards.kernel.model.MBDiscussion;
 import com.liferay.message.boards.kernel.model.MBMessage;
@@ -24,19 +24,23 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.social.BaseSocialActivityManager;
+import com.liferay.portal.kernel.social.SocialActivityManager;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.service.SocialActivityLocalService;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
- * @deprecated As of 1.3.0, with no direct replacement
  */
-@Deprecated
+@Component(
+	property = "model.class.name=com.liferay.message.boards.kernel.model.MBMessage",
+	service = SocialActivityManager.class
+)
 public class MBMessageSocialActivityManager
 	extends BaseSocialActivityManager<MBMessage> {
 
@@ -85,37 +89,16 @@ public class MBMessageSocialActivityManager
 		return _socialActivityLocalService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setClassNameLocalService(
-		ClassNameLocalService classNameLocalService) {
-
-		_classNameLocalService = classNameLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBDiscussionLocalService(
-		MBDiscussionLocalService mbDiscussionLocalService) {
-
-		_mbDiscussionLocalService = mbDiscussionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
-
-		_mbMessageLocalService = mbMessageLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSocialActivityLocalService(
-		SocialActivityLocalService socialActivityLocalService) {
-
-		_socialActivityLocalService = socialActivityLocalService;
-	}
-
+	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private MBDiscussionLocalService _mbDiscussionLocalService;
+
+	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
+
+	@Reference
 	private SocialActivityLocalService _socialActivityLocalService;
 
 }

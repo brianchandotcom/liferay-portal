@@ -12,37 +12,47 @@
  * details.
  */
 
-package com.liferay.message.boards.web.trash;
+package com.liferay.message.boards.web.internal.trash;
 
-import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.service.MBCategoryLocalService;
+import com.liferay.message.boards.kernel.model.MBThread;
+import com.liferay.message.boards.kernel.service.MBThreadLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.trash.TrashRendererFactory;
 
+import javax.servlet.ServletContext;
+
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
- * @deprecated As of 1.3.0, with no direct replacement
  */
-@Deprecated
-public class MBCategoryTrashRendererFactory implements TrashRendererFactory {
+@Component(
+	immediate = true,
+	property = {"model.class.name=com.liferay.message.boards.kernel.model.MBThread"},
+	service = TrashRendererFactory.class
+)
+public class MBThreadTrashRendererFactory implements TrashRendererFactory {
 
 	@Override
 	public TrashRenderer getTrashRenderer(long classPK) throws PortalException {
-		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
+		MBThread thread = _mbThreadLocalService.getThread(classPK);
 
-		return new MBCategoryTrashRenderer(category);
+		MBThreadTrashRenderer mbThreadTrashRenderer = new MBThreadTrashRenderer(
+			thread);
+
+		mbThreadTrashRenderer.setServletContext(_servletContext);
+
+		return mbThreadTrashRenderer;
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBCategoryLocalService(
-		MBCategoryLocalService mbCategoryLocalService) {
+	@Reference
+	private MBThreadLocalService _mbThreadLocalService;
 
-		_mbCategoryLocalService = mbCategoryLocalService;
-	}
-
-	private MBCategoryLocalService _mbCategoryLocalService;
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.message.boards.web)"
+	)
+	private ServletContext _servletContext;
 
 }

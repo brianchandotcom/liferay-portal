@@ -17,10 +17,10 @@ package com.liferay.message.boards.web.social;
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.service.MBMessageLocalService;
-import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -30,26 +30,34 @@ import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.portlet.messageboards.social.MBActivityKeys;
 import com.liferay.social.kernel.model.BaseSocialActivityInterpreter;
 import com.liferay.social.kernel.model.SocialActivity;
-import com.liferay.social.kernel.model.SocialActivityInterpreter;
 
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Ryan Park
  * @author Zsolt Berentey
+ * @deprecated As of 1.3.0, with no direct replacement
  */
-@Component(
-	property = {"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS},
-	service = SocialActivityInterpreter.class
-)
+@Deprecated
 public class MBMessageActivityInterpreter
 	extends BaseSocialActivityInterpreter {
 
 	@Override
 	public String[] getClassNames() {
 		return _CLASS_NAMES;
+	}
+
+	@Override
+	protected String addNoSuchEntryRedirect(
+			String url, String className, long classPK,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		String viewEntryURL = getViewEntryURL(
+			className, classPK, serviceContext);
+
+		return _http.setParameter(url, "noSuchEntryRedirect", viewEntryURL);
 	}
 
 	@Override
@@ -184,6 +192,9 @@ public class MBMessageActivityInterpreter
 	}
 
 	private static final String[] _CLASS_NAMES = {MBMessage.class.getName()};
+
+	@Reference
+	private Http _http;
 
 	private MBMessageLocalService _mbMessageLocalService;
 	private ResourceBundleLoader _resourceBundleLoader;

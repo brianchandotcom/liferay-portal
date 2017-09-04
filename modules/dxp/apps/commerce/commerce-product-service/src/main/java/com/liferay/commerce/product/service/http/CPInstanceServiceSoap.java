@@ -309,10 +309,12 @@ public class CPInstanceServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPInstanceSoap updatePricingInfo(
-		long cpInstanceId, double cost, double price) throws RemoteException {
+		long cpInstanceId, double cost, double price,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
 		try {
 			com.liferay.commerce.product.model.CPInstance returnValue = CPInstanceServiceUtil.updatePricingInfo(cpInstanceId,
-					cost, price);
+					cost, price, serviceContext);
 
 			return com.liferay.commerce.product.model.CPInstanceSoap.toSoapModel(returnValue);
 		}
@@ -325,10 +327,12 @@ public class CPInstanceServiceSoap {
 
 	public static com.liferay.commerce.product.model.CPInstanceSoap updateShippingInfo(
 		long cpInstanceId, double width, double height, double depth,
-		double weight) throws RemoteException {
+		double weight,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
 		try {
 			com.liferay.commerce.product.model.CPInstance returnValue = CPInstanceServiceUtil.updateShippingInfo(cpInstanceId,
-					width, height, depth, weight);
+					width, height, depth, weight, serviceContext);
 
 			return com.liferay.commerce.product.model.CPInstanceSoap.toSoapModel(returnValue);
 		}

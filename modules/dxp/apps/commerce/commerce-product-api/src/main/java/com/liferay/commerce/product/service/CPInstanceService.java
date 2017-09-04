@@ -153,10 +153,11 @@ public interface CPInstanceService extends BaseService {
 		ServiceContext serviceContext) throws PortalException;
 
 	public CPInstance updatePricingInfo(long cpInstanceId, double cost,
-		double price) throws PortalException;
+		double price, ServiceContext serviceContext) throws PortalException;
 
 	public CPInstance updateShippingInfo(long cpInstanceId, double width,
-		double height, double depth, double weight) throws PortalException;
+		double height, double depth, double weight,
+		ServiceContext serviceContext) throws PortalException;
 
 	public CPInstance updateStatus(long userId, long cpInstanceId, int status,
 		ServiceContext serviceContext,

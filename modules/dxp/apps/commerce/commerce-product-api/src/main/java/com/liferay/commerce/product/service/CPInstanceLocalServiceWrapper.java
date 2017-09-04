@@ -491,19 +491,21 @@ public class CPInstanceLocalServiceWrapper implements CPInstanceLocalService,
 
 	@Override
 	public com.liferay.commerce.product.model.CPInstance updatePricingInfo(
-		long cpInstanceId, double cost, double price)
+		long cpInstanceId, double cost, double price,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpInstanceLocalService.updatePricingInfo(cpInstanceId, cost,
-			price);
+			price, serviceContext);
 	}
 
 	@Override
 	public com.liferay.commerce.product.model.CPInstance updateShippingInfo(
 		long cpInstanceId, double width, double height, double depth,
-		double weight)
+		double weight,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpInstanceLocalService.updateShippingInfo(cpInstanceId, width,
-			height, depth, weight);
+			height, depth, weight, serviceContext);
 	}
 
 	@Override

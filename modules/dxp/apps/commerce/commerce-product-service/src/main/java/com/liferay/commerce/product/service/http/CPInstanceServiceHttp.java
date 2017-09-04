@@ -567,14 +567,15 @@ public class CPInstanceServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPInstance updatePricingInfo(
 		HttpPrincipal httpPrincipal, long cpInstanceId, double cost,
-		double price)
+		double price,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPInstanceServiceUtil.class,
 					"updatePricingInfo", _updatePricingInfoParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpInstanceId, cost, price);
+					cpInstanceId, cost, price, serviceContext);
 
 			Object returnObj = null;
 
@@ -600,14 +601,15 @@ public class CPInstanceServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPInstance updateShippingInfo(
 		HttpPrincipal httpPrincipal, long cpInstanceId, double width,
-		double height, double depth, double weight)
+		double height, double depth, double weight,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPInstanceServiceUtil.class,
 					"updateShippingInfo", _updateShippingInfoParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpInstanceId, width, height, depth, weight);
+					cpInstanceId, width, height, depth, weight, serviceContext);
 
 			Object returnObj = null;
 
@@ -735,10 +737,12 @@ public class CPInstanceServiceHttp {
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updatePricingInfoParameterTypes14 = new Class[] {
-			long.class, double.class, double.class
+			long.class, double.class, double.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateShippingInfoParameterTypes15 = new Class[] {
-			long.class, double.class, double.class, double.class, double.class
+			long.class, double.class, double.class, double.class, double.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateStatusParameterTypes16 = new Class[] {
 			long.class, long.class, int.class,

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.sharepoint.repository.internal.configuration.SharepointRepositoryConfiguration;
+import com.liferay.sharepoint.repository.internal.document.library.repository.external.model.SharepointFileEntry;
 import com.liferay.sharepoint.repository.internal.document.library.repository.external.model.SharepointModel;
 import com.liferay.sharepoint.repository.internal.document.library.repository.external.model.SharepointRootFolder;
 import com.liferay.sharepoint.repository.internal.util.SharepointServerResponseConverter;
@@ -238,7 +239,18 @@ public class SharepointExtRepository implements ExtRepository {
 			ExtRepositoryFileEntry extRepositoryFileEntry, String version)
 		throws PortalException {
 
-		throw new UnsupportedOperationException();
+		List<ExtRepositoryFileVersion> extRepositoryFileVersions =
+			getExtRepositoryFileVersions(extRepositoryFileEntry);
+
+		for (ExtRepositoryFileVersion extRepositoryFileVersion :
+				extRepositoryFileVersions) {
+
+			if (version.equals(extRepositoryFileVersion.getVersion())) {
+				return extRepositoryFileVersion;
+			}
+		}
+
+		return null;
 	}
 
 	@Override
@@ -246,7 +258,9 @@ public class SharepointExtRepository implements ExtRepository {
 		getExtRepositoryFileVersionDescriptor(
 			String extRepositoryFileVersionKey) {
 
-		throw new UnsupportedOperationException();
+		String[] parts = extRepositoryFileVersionKey.split(StringPool.COLON);
+
+		return new ExtRepositoryFileVersionDescriptor(parts[0], parts[1]);
 	}
 
 	@Override
@@ -254,7 +268,19 @@ public class SharepointExtRepository implements ExtRepository {
 			ExtRepositoryFileEntry extRepositoryFileEntry)
 		throws PortalException {
 
-		throw new UnsupportedOperationException();
+		try {
+			String url = _sharepointURLHelper.getFileVersionsURL(
+				extRepositoryFileEntry);
+
+			JSONObject jsonObject = _getJSONObject(url);
+
+			return _sharepointServerResponseConverter.
+				getExtRepositoryFileVersions(
+					(SharepointFileEntry)extRepositoryFileEntry, jsonObject);
+		}
+		catch (UnirestException ue) {
+			throw new PortalException(ue);
+		}
 	}
 
 	@Override

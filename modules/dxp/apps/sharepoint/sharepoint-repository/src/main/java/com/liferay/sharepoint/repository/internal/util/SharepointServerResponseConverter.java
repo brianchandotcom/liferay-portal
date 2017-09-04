@@ -16,19 +16,26 @@ package com.liferay.sharepoint.repository.internal.util;
 
 import com.liferay.document.library.repository.external.ExtRepository;
 import com.liferay.document.library.repository.external.ExtRepositoryFileEntry;
+import com.liferay.document.library.repository.external.ExtRepositoryFileVersion;
 import com.liferay.document.library.repository.external.ExtRepositoryFolder;
 import com.liferay.document.library.repository.external.ExtRepositoryObject;
 import com.liferay.document.library.repository.external.ExtRepositoryObjectType;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.sharepoint.repository.internal.document.library.repository.external.model.SharepointFileEntry;
+import com.liferay.sharepoint.repository.internal.document.library.repository.external.model.SharepointFileVersion;
 import com.liferay.sharepoint.repository.internal.document.library.repository.external.model.SharepointFolder;
+import com.liferay.sharepoint.repository.internal.document.library.repository.external.model.SharepointModel;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Adolfo Pérez
@@ -48,6 +55,27 @@ public class SharepointServerResponseConverter {
 		getExtRepositoryFileEntry(JSONObject jsonObject) {
 
 		return (T)_createFileEntry(jsonObject.getJSONObject("d"));
+	}
+
+	public <T extends ExtRepositoryFileEntry & SharepointModel>
+		List<ExtRepositoryFileVersion> getExtRepositoryFileVersions(
+			T extRepositoryFileEntry, JSONObject jsonObject) {
+
+		JSONObject dJSONObject = jsonObject.getJSONObject("d");
+
+		JSONArray resultsJSONArray = dJSONObject.getJSONArray("results");
+
+		List<ExtRepositoryFileVersion> extRepositoryObjects = new ArrayList<>();
+
+		extRepositoryObjects.add(extRepositoryFileEntry.asFileVersion());
+
+		for (int i = 0; i < resultsJSONArray.length(); i++) {
+			extRepositoryObjects.add(
+				_createFileVersion(
+					extRepositoryFileEntry, resultsJSONArray.getJSONObject(i)));
+		}
+
+		return extRepositoryObjects;
 	}
 
 	public <T extends ExtRepositoryFolder & ExtRepositoryObject> T
@@ -103,6 +131,30 @@ public class SharepointServerResponseConverter {
 			extRepositoryModelKey, name, title, createDate, modifiedDate, size,
 			fileVersionExtRepositoryModelKey, version, owner, checkedOutBy,
 			effectiveBasePermissionsBits, _sharepointURLHelper);
+	}
+
+	private <T extends ExtRepositoryFileEntry & SharepointModel>
+		SharepointFileVersion _createFileVersion(
+			T extRepositoryFileEntry, JSONObject jsonObject) {
+
+		String id = jsonObject.getString("Id");
+
+		String extRepositoryModelKey =
+			extRepositoryFileEntry.getExtRepositoryModelKey() +
+				StringPool.COLON + id;
+
+		String version = jsonObject.getString("VersionLabel");
+		String contentURL = _sharepointURLHelper.getAbsoluteURL(
+			jsonObject.getString("Url"));
+		Date createDate = _parseDate(jsonObject.getString("Created"));
+		String changeLog = jsonObject.getString("CheckInComment");
+		String mimeType = MimeTypesUtil.getContentType(
+			jsonObject.getString("Url"));
+		long size = jsonObject.getLong("Size");
+
+		return new SharepointFileVersion(
+			extRepositoryModelKey, version, contentURL, createDate, changeLog,
+			mimeType, size, extRepositoryFileEntry);
 	}
 
 	private <T extends ExtRepositoryFolder> T _createFolder(

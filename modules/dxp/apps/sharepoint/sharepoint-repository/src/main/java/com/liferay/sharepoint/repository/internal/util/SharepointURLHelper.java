@@ -17,6 +17,7 @@ package com.liferay.sharepoint.repository.internal.util;
 import com.liferay.document.library.repository.external.ExtRepositoryFileEntry;
 import com.liferay.document.library.repository.external.ExtRepositoryObject;
 import com.liferay.document.library.repository.external.ExtRepositoryObjectType;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
@@ -28,6 +29,16 @@ public class SharepointURLHelper {
 
 	public SharepointURLHelper(String siteAbsoluteURL) {
 		_siteAbsoluteURL = siteAbsoluteURL;
+	}
+
+	public String getAbsoluteURL(String relativeURL) {
+		if (_siteAbsoluteURL.endsWith(StringPool.SLASH) ||
+			relativeURL.startsWith(StringPool.SLASH)) {
+
+			return _siteAbsoluteURL + relativeURL;
+		}
+
+		return _siteAbsoluteURL + StringPool.SLASH + relativeURL;
 	}
 
 	public String getAddFileURL(String extRepositoryFolderKey, String name) {
@@ -92,6 +103,15 @@ public class SharepointURLHelper {
 
 		return String.format(
 			"%s/_api/web/GetFileByServerRelativeUrl('%s')/OpenBinaryStream",
+			_siteAbsoluteURL,
+			extRepositoryFileEntry.getExtRepositoryModelKey());
+	}
+
+	public String getFileVersionsURL(
+		ExtRepositoryFileEntry extRepositoryFileEntry) {
+
+		return String.format(
+			"%s/_api/web/GetFileByServerRelativeUrl('%s')/Versions",
 			_siteAbsoluteURL,
 			extRepositoryFileEntry.getExtRepositoryModelKey());
 	}

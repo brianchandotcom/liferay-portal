@@ -18,7 +18,6 @@ import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
-import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceCartItemService;
 import com.liferay.commerce.service.CommerceCartService;
 import com.liferay.commerce.util.CommerceCartHelper;
@@ -36,8 +35,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
-
-import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -69,8 +66,6 @@ public class AddCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
-
-		Locale locale = actionRequest.getLocale();
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			actionRequest);

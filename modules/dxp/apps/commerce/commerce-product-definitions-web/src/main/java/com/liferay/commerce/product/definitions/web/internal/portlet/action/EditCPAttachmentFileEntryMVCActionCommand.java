@@ -166,8 +166,6 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 	protected void updateCPAttachmentFileEntry(ActionRequest actionRequest)
 		throws Exception {
 
-		Locale locale = actionRequest.getLocale();
-
 		long cpAttachmentFileEntryId = ParamUtil.getLong(
 			actionRequest, "cpAttachmentFileEntryId");
 

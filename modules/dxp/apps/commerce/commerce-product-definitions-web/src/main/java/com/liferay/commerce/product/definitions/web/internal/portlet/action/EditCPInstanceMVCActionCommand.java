@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Calendar;
-import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -130,8 +129,6 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void updateCPInstance(ActionRequest actionRequest)
 		throws Exception {
-
-		Locale locale = actionRequest.getLocale();
 
 		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
 

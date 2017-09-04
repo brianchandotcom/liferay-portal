@@ -50,6 +50,9 @@ public class CommerceOrderItemLocalServiceImpl
 
 		validate(cpDefinitionId, cpInstanceId);
 
+		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
+			cpInstanceId);
+
 		long commerceOrderItemId = counterLocalService.increment();
 
 		CommerceOrderItem commerceOrderItem =
@@ -70,7 +73,7 @@ public class CommerceOrderItemLocalServiceImpl
 
 		commerceOrderItem.setTitleMap(cpDefinition.getTitleMap());
 
-		commerceOrderItem.setSku(_getSku(cpInstanceId));
+		commerceOrderItem.setSku(cpInstance.getSku());
 		commerceOrderItem.setExpandoBridgeAttributes(serviceContext);
 
 		commerceOrderItemPersistence.update(commerceOrderItem);
@@ -203,17 +206,6 @@ public class CommerceOrderItemLocalServiceImpl
 							cpDefinition.getCPDefinitionId());
 			}
 		}
-	}
-
-	private String _getSku(long cpInstanceId) throws PortalException {
-		if (cpInstanceId > 0) {
-			CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
-				cpInstanceId);
-
-			return cpInstance.getSku();
-		}
-
-		return StringPool.BLANK;
 	}
 
 	@ServiceReference(type = CPDefinitionLocalService.class)

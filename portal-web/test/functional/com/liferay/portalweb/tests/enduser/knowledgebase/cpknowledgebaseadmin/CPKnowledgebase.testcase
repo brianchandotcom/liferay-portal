@@ -907,7 +907,25 @@
 
 		<execute macro="KBArticle#addCP">
 			<var name="kbArticleContent" value="Knowledge Base Article Content" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+		</execute>
+
+		<execute macro="KBArticle#viewFriendlyURLCP">
+			<var name="kbArticleContent" value="Knowledge Base Article Content" />
+			<var name="kbArticleFriendlyURL" value="knowledge-base-article-title-1" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="Knowledge Base Article Content" />
 			<var name="kbArticleDuplicateFriendlyURL" value="true" />
+			<var name="kbArticleFriendlyURL" value="knowledge-base-article-title" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
 	</command>

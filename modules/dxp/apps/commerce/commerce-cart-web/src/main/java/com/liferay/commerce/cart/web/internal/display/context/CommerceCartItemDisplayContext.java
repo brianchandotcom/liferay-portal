@@ -19,6 +19,7 @@ import com.liferay.commerce.cart.web.internal.util.CommerceCartPortletUtil;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.service.CommerceCartItemService;
 import com.liferay.commerce.util.CommercePriceCalculationHelper;
+import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -39,7 +40,8 @@ public class CommerceCartItemDisplayContext
 	public CommerceCartItemDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
 			CommerceCartItemService commerceCartItemService,
-			CommercePriceCalculationHelper commercePriceCalculationHelper)
+			CommercePriceCalculationHelper commercePriceCalculationHelper,
+			CommercePriceFormatter commercePriceFormatter)
 		throws PortalException {
 
 		super(
@@ -48,12 +50,16 @@ public class CommerceCartItemDisplayContext
 
 		_commerceCartItemService = commerceCartItemService;
 		_commercePriceCalculationHelper = commercePriceCalculationHelper;
+		_commercePriceFormatter = commercePriceFormatter;
 	}
 
-	public double getCommerceCartItemPrice(long commerceCartItemId)
+	public String getFormattedPrice(long commerceCartItemId)
 		throws PortalException {
 
-		return _commercePriceCalculationHelper.getPrice(commerceCartItemId);
+		double price = _commercePriceCalculationHelper.getPrice(
+			commerceCartItemId);
+
+		return _commercePriceFormatter.format(httpServletRequest, price);
 	}
 
 	@Override
@@ -113,5 +119,6 @@ public class CommerceCartItemDisplayContext
 	private final CommerceCartItemService _commerceCartItemService;
 	private final CommercePriceCalculationHelper
 		_commercePriceCalculationHelper;
+	private final CommercePriceFormatter _commercePriceFormatter;
 
 }

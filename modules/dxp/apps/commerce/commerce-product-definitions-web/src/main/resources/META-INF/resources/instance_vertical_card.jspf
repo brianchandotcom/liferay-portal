@@ -59,7 +59,7 @@
 	%>
 
 	<h6>
-		<%= HtmlUtil.escape(String.valueOf(cpInstance.getPrice())) %>
+		<%= HtmlUtil.escape(cpInstanceDisplayContext.getFormattedPrice(cpInstance.getCPInstanceId())) %>
 	</h6>
 
 	<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= cpInstance.getStatus() %>" />

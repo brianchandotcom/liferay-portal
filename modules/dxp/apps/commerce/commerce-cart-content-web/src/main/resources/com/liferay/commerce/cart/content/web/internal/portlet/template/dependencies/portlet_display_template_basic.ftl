@@ -18,7 +18,7 @@
 
 				title = cpDefinition.getTitle(locale)
 
-				price = commerceCartContentMiniDisplayContext.getCommerceCartItemPrice(curCommerceCartItem.getCommerceCartItemId)
+				price = commerceCartContentMiniDisplayContext.getFormattedPrice(curCommerceCartItem.getCommerceCartItemId)
 			/>
 
 			<div class="col-md-6">

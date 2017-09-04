@@ -18,6 +18,7 @@ import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.order.web.internal.display.context.CommerceOrderDisplayContext;
 import com.liferay.commerce.order.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -75,7 +76,7 @@ public class CommerceOrderPortlet extends MVCPortlet {
 			CommerceOrderDisplayContext commerceOrderDisplayContext =
 				new CommerceOrderDisplayContext(
 					_actionHelper, httpServletRequest,
-					_commerceOrderLocalService);
+					_commerceOrderLocalService, _commercePriceFormatter);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, commerceOrderDisplayContext);
@@ -92,6 +93,9 @@ public class CommerceOrderPortlet extends MVCPortlet {
 
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
 	private Portal _portal;

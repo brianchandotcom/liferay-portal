@@ -54,6 +54,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-content"
 					name="total"
+					value="<%= commerceOrderContentDisplayContext.getCommerceOrderTotal(commerceOrder.getCommerceOrderId()) %>"
 				/>
 
 				<liferay-ui:search-container-column-status

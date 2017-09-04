@@ -16,6 +16,7 @@ package com.liferay.commerce.order.content.web.internal.display.context;
 
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -34,10 +35,23 @@ public class CommerceOrderContentDisplayContext
 
 	public CommerceOrderContentDisplayContext(
 			HttpServletRequest httpServletRequest,
-			CommerceOrderLocalService commerceOrderLocalService)
+			CommerceOrderLocalService commerceOrderLocalService,
+			CommercePriceFormatter commercePriceFormatter)
 		throws ConfigurationException {
 
 		super(httpServletRequest, commerceOrderLocalService);
+
+		_commercePriceFormatter = commercePriceFormatter;
+	}
+
+	public String getCommerceOrderTotal(long commerceOrderId)
+		throws PortalException {
+
+		CommerceOrder commerceOrder =
+			commerceOrderLocalService.fetchCommerceOrder(commerceOrderId);
+
+		return _commercePriceFormatter.format(
+			httpServletRequest, commerceOrder.getTotal());
 	}
 
 	@Override
@@ -72,6 +86,7 @@ public class CommerceOrderContentDisplayContext
 		return _searchContainer;
 	}
 
+	private final CommercePriceFormatter _commercePriceFormatter;
 	private SearchContainer<CommerceOrder> _searchContainer;
 
 }

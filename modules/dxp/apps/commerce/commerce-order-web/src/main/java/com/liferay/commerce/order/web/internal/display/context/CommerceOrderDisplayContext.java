@@ -18,6 +18,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.order.web.internal.util.CommerceOrderPortletUtil;
 import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -36,7 +37,8 @@ public class CommerceOrderDisplayContext
 
 	public CommerceOrderDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
-			CommerceOrderLocalService commerceOrderLocalService)
+			CommerceOrderLocalService commerceOrderLocalService,
+			CommercePriceFormatter commercePriceFormatter)
 		throws PortalException {
 
 		super(
@@ -44,6 +46,17 @@ public class CommerceOrderDisplayContext
 			CommerceOrder.class.getSimpleName());
 
 		_commerceOrderLocalService = commerceOrderLocalService;
+		_commercePriceFormatter = commercePriceFormatter;
+	}
+
+	public String getCommerceOrderTotal(long commerceOrderId)
+		throws PortalException {
+
+		CommerceOrder commerceOrder =
+			_commerceOrderLocalService.fetchCommerceOrder(commerceOrderId);
+
+		return _commercePriceFormatter.format(
+			httpServletRequest, commerceOrder.getTotal());
 	}
 
 	@Override
@@ -87,5 +100,6 @@ public class CommerceOrderDisplayContext
 	}
 
 	private final CommerceOrderLocalService _commerceOrderLocalService;
+	private final CommercePriceFormatter _commercePriceFormatter;
 
 }

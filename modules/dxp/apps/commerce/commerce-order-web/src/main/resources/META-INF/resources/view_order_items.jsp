@@ -153,6 +153,7 @@ renderResponse.setTitle(String.valueOf(commerceOrderId));
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-content"
 						name="price"
+						value="<%= commerceOrderItemDisplayContext.getFormattedPrice(commerceOrderItem.getCommerceOrderItemId()) %>"
 					/>
 
 					<liferay-ui:search-container-column-text

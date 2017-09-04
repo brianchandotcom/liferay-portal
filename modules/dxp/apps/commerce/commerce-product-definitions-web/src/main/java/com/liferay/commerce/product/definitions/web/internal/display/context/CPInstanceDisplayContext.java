@@ -25,6 +25,7 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
+import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -56,6 +57,7 @@ public class CPInstanceDisplayContext
 
 	public CPInstanceDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
+			CommercePriceFormatter commercePriceFormatter,
 			CPDefinitionOptionRelService cpDefinitionOptionRelService,
 			CPInstanceService cpInstanceService,
 			CPInstanceHelper cpInstanceHelper)
@@ -66,6 +68,7 @@ public class CPInstanceDisplayContext
 
 		setDefaultOrderByCol("sku");
 
+		_commercePriceFormatter = commercePriceFormatter;
 		_cpDefinitionOptionRelService = cpDefinitionOptionRelService;
 		_cpInstanceService = cpInstanceService;
 		_cpInstanceHelper = cpInstanceHelper;
@@ -110,6 +113,14 @@ public class CPInstanceDisplayContext
 		}
 
 		return cpInstance.getCPInstanceId();
+	}
+
+	public String getFormattedPrice(long cpInstanceId) throws PortalException {
+		CPInstance cpInstance = _cpInstanceService.fetchCPInstance(
+			cpInstanceId);
+
+		return _commercePriceFormatter.format(
+			httpServletRequest, cpInstance.getPrice());
 	}
 
 	@Override
@@ -262,6 +273,7 @@ public class CPInstanceDisplayContext
 			getCPDefinitionId(), renderRequest, renderResponse);
 	}
 
+	private final CommercePriceFormatter _commercePriceFormatter;
 	private final CPDefinitionOptionRelService _cpDefinitionOptionRelService;
 	private CPInstance _cpInstance;
 	private final CPInstanceHelper _cpInstanceHelper;

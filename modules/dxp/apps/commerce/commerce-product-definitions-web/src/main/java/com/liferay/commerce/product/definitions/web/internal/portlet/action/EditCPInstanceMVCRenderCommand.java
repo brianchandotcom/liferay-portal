@@ -21,6 +21,7 @@ import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
+import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -60,7 +61,7 @@ public class EditCPInstanceMVCRenderCommand implements MVCRenderCommand {
 
 			CPInstanceDisplayContext cpInstanceDisplayContext =
 				new CPInstanceDisplayContext(
-					_actionHelper, httpServletRequest,
+					_actionHelper, httpServletRequest, _commercePriceFormatter,
 					_cpDefinitionOptionRelService, _cpInstanceService,
 					_cpInstanceHelper);
 
@@ -85,6 +86,9 @@ public class EditCPInstanceMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private ActionHelper _actionHelper;
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
 	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;

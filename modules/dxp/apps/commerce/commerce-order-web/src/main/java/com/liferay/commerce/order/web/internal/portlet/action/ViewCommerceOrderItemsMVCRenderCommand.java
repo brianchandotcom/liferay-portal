@@ -18,6 +18,7 @@ import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.order.web.internal.display.context.CommerceOrderItemDisplayContext;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
+import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -59,7 +60,8 @@ public class ViewCommerceOrderItemsMVCRenderCommand
 			CommerceOrderItemDisplayContext commerceOrderItemDisplayContext =
 				new CommerceOrderItemDisplayContext(
 					_actionHelper, httpServletRequest,
-					_commerceOrderItemLocalService, _cpDefinitionHelper);
+					_commerceOrderItemLocalService, _commercePriceFormatter,
+					_cpDefinitionHelper);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -77,6 +79,9 @@ public class ViewCommerceOrderItemsMVCRenderCommand
 
 	@Reference
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
 	private CPDefinitionHelper _cpDefinitionHelper;

@@ -68,7 +68,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-content"
 					name="price"
-					value="<%= String.valueOf(commerceCartContentDisplayContext.getCommerceCartItemPrice(commerceCartItem.getCommerceCartItemId())) %>"
+					value="<%= commerceCartContentDisplayContext.getFormattedPrice(commerceCartItem.getCommerceCartItemId()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
@@ -99,6 +99,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	</div>
 
 	<div class="col-md-3">
-		<h4><strong><liferay-ui:message key="total" /> <%= HtmlUtil.escape(String.valueOf(commerceCartContentDisplayContext.getCommerceCartTotal())) %></strong></h4>
+		<h4><strong><liferay-ui:message key="total" /> <%= HtmlUtil.escape(commerceCartContentDisplayContext.getCommerceCartTotal()) %></strong></h4>
 	</div>
 </div>

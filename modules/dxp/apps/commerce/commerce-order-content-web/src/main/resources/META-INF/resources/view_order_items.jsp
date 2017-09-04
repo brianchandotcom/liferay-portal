@@ -84,6 +84,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-content"
 					name="price"
+					value="<%= commerceOrderItemContentDisplayContext.getFormattedPrice(commerceOrderItem.getCommerceOrderItemId()) %>"
 				/>
 			</liferay-ui:search-container-row>
 

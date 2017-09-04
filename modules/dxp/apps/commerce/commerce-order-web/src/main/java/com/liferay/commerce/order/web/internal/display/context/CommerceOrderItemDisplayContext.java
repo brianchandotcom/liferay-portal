@@ -19,6 +19,7 @@ import com.liferay.commerce.order.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.order.web.internal.util.CommerceOrderPortletUtil;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
+import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -39,6 +40,7 @@ public class CommerceOrderItemDisplayContext
 	public CommerceOrderItemDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
 			CommerceOrderItemLocalService commerceOrderItemLocalService,
+			CommercePriceFormatter commercePriceFormatter,
 			CPDefinitionHelper cpDefinitionHelper)
 		throws PortalException {
 
@@ -47,6 +49,7 @@ public class CommerceOrderItemDisplayContext
 			CommerceOrderItem.class.getSimpleName());
 
 		_commerceOrderItemLocalService = commerceOrderItemLocalService;
+		_commercePriceFormatter = commercePriceFormatter;
 		_cpDefinitionHelper = cpDefinitionHelper;
 	}
 
@@ -55,6 +58,17 @@ public class CommerceOrderItemDisplayContext
 		throws PortalException {
 
 		return _cpDefinitionHelper.getFriendlyURL(cpDefinitionId, themeDisplay);
+	}
+
+	public String getFormattedPrice(long commerceOrderItemId)
+		throws PortalException {
+
+		CommerceOrderItem commerceOrderItem =
+			_commerceOrderItemLocalService.fetchCommerceOrderItem(
+				commerceOrderItemId);
+
+		return _commercePriceFormatter.format(
+			httpServletRequest, commerceOrderItem.getPrice());
 	}
 
 	@Override
@@ -107,6 +121,7 @@ public class CommerceOrderItemDisplayContext
 
 	private CommerceOrderItem _commerceOrderItem;
 	private final CommerceOrderItemLocalService _commerceOrderItemLocalService;
+	private final CommercePriceFormatter _commercePriceFormatter;
 	private final CPDefinitionHelper _cpDefinitionHelper;
 
 }

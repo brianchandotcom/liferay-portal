@@ -14,9 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
-
-<portlet:defineObjects />
+<%@ include file="/categorization_filter/init.jsp" %>
 
 <%
 String assetType = GetterUtil.getString((String)request.getAttribute("liferay-ui:categorization-filter:assetType"), "content");

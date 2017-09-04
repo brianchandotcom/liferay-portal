@@ -41,7 +41,7 @@ public class CommerceCartContentMiniDisplayContext
 			CommerceCartHelper commerceCartHelper,
 			CommerceCartItemService commerceCartItemService,
 			CommercePriceCalculationHelper commercePriceCalculationHelper,
-			CommercePriceFormatter commercePriceFormatter,			
+			CommercePriceFormatter commercePriceFormatter,
 			CPDefinitionHelper cpDefinitionHelper,
 			CPInstanceHelper cpInstanceHelper)
 		throws ConfigurationException {

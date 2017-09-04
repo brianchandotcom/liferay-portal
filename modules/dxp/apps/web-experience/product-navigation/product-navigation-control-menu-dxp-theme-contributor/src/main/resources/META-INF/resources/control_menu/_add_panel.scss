@@ -47,11 +47,19 @@ body.open-admin-panel, body.sidenav-transition {
 	}
 }
 
-.lfr-add-panel, .lfr-simulation-panel {
+.lfr-add-panel {
 	.add-content-menu .add-portlet-message {
 		background-color: $product-menu-panel-title-active-bg;
-	}
+		margin: 20px;
+		padding: 5px 20px;
 
+		.info-message {
+			margin: 20px 0;
+		}
+	}
+}
+
+.lfr-simulation-panel {
 	.lfr-device-item.selected {
 		color: $control-menu-level-2-bg;
 
@@ -61,19 +69,6 @@ body.open-admin-panel, body.sidenav-transition {
 		}
 	}
 
-	.product-menu .sidebar-header {
-		background-color: $control-menu-level-2-bg;
-		padding: 16px 24px;
-	}
-
-	.sidebar-inverse {
-		.nav > li > a:hover {
-			color: $control-menu-level-1-bg;
-		}
-	}
-}
-
-.lfr-simulation-panel {
 	.custom-devices {
 		background-color: $control-menu-level-2-color;
 	}

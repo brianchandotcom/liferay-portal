@@ -42,4 +42,5 @@ public class CPDefinitionsSEOInfoDisplayContext
 	public String getScreenNavigationCategoryKey() throws PortalException {
 		return CPDefinitionScreenNavigationConstants.CATEGORY_KEY_SEO;
 	}
+
 }

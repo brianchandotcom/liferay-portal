@@ -7,18 +7,6 @@
 		<execute macro="CommerceEntry#addFullDescriptionViaAlloyEditor">
 			<var name="entryFullDescription" value="${productFullDescription}" />
 		</execute>
-
-		<if>
-			<condition function="IsElementNotPresent" locator1="CommerceEntry#BASE_SKU_FIELD" />
-			<then>
-				<execute function="Click" locator1="CommerceEntry#BASE_INFORMATION_TITLE_BAR" />
-
-				<execute function="Type" locator1="CommerceEntry#BASE_SKU_FIELD" value1="${baseSku}" />
-			</then>
-			<else>
-				<execute function="Type" locator1="CommerceEntry#BASE_SKU_FIELD" value1="${baseSku}" />
-			</else>
-		</if>
 	</command>
 
 	<command name="addFullDescriptionViaAlloyEditor">
@@ -41,20 +29,6 @@
 		<execute function="Type" locator1="CommerceEntry#PRIORITY_FIELD" value1="${valuePriority}" />
 
 		<execute function="AssertTextEquals" locator1="CommerceEntry#KEY_FIELD" value1="${valueTitle}" />
-	</command>
-
-	<command name="editEntryBaseSKU">
-		<if>
-			<condition function="IsElementNotPresent" locator1="CommerceEntry#BASE_INFORMATION_TITLE_BAR" />
-			<then>
-				<execute function="Click" locator1="CommerceEntry#BASE_INFORMATION_TITLE_BAR" />
-
-				<execute function="Type" locator1="CommerceEntry#BASE_SKU_FIELD" value1="${baseSku}" />
-			</then>
-			<else>
-				<execute function="Type" locator1="CommerceEntry#BASE_SKU_FIELD" value1="${baseSku}" />
-			</else>
-		</if>
 	</command>
 
 	<command name="editEntryFullDescription">
@@ -141,8 +115,6 @@
 		<execute function="AssertTextEquals" locator1="CommerceEntry#SHORT_DESCRIPTION_FIELD" value1="${productShortDescription}" />
 
 		<execute function="AssertTextEquals" locator1="CommerceEntry#FULL_DESCRIPTION_FIELD" value1="${productFullDescription}" />
-
-		<execute function="AssertTextEquals" locator1="CommerceEntry#BASE_SKU_FIELD" value1="${baseSku}" />
 	</command>
 
 	<command name="viewOptionsEntry">

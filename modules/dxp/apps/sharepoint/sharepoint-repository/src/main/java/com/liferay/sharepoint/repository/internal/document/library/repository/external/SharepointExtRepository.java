@@ -437,7 +437,7 @@ public class SharepointExtRepository implements ExtRepository {
 		if (httpResponse.getStatus() >= 300) {
 			throw new PrincipalException(
 				String.format(
-					"Error while deleting resource %s: %d %s", url,
+					"Unable to delete resource %s: %d %s", url,
 					httpResponse.getStatus(), httpResponse.getStatusText()));
 		}
 	}

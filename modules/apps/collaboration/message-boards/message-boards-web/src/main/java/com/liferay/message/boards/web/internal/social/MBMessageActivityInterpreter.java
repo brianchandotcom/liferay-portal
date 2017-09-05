@@ -12,34 +12,41 @@
  * details.
  */
 
-package com.liferay.message.boards.web.social;
+package com.liferay.message.boards.web.internal.social;
 
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.kernel.service.MBMessageLocalService;
-import com.liferay.message.boards.kernel.service.MBThreadLocalService;
+import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
+import com.liferay.portlet.messageboards.social.MBActivityKeys;
 import com.liferay.social.kernel.model.BaseSocialActivityInterpreter;
 import com.liferay.social.kernel.model.SocialActivity;
-import com.liferay.social.kernel.model.SocialActivityConstants;
+import com.liferay.social.kernel.model.SocialActivityInterpreter;
 
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * @author Brian Wing Shun Chan
+ * @author Ryan Park
  * @author Zsolt Berentey
- * @deprecated As of 1.3.0, with no direct replacement
  */
-@Deprecated
-public class MBThreadActivityInterpreter extends BaseSocialActivityInterpreter {
+@Component(
+	property = {"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS},
+	service = SocialActivityInterpreter.class
+)
+public class MBMessageActivityInterpreter
+	extends BaseSocialActivityInterpreter {
 
 	@Override
 	public String[] getClassNames() {
@@ -47,11 +54,24 @@ public class MBThreadActivityInterpreter extends BaseSocialActivityInterpreter {
 	}
 
 	@Override
+	protected String addNoSuchEntryRedirect(
+			String url, String className, long classPK,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		String viewEntryURL = super.getViewEntryURL(
+			className, classPK, serviceContext);
+
+		return _http.setParameter(url, "noSuchEntryRedirect", viewEntryURL);
+	}
+
+	@Override
 	protected String getBody(
 			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
 
-		MBMessage message = getMessage(activity);
+		MBMessage message = _mbMessageLocalService.getMessage(
+			activity.getClassPK());
 
 		if (message.getCategoryId() <= 0) {
 			return StringPool.BLANK;
@@ -73,23 +93,12 @@ public class MBThreadActivityInterpreter extends BaseSocialActivityInterpreter {
 		return wrapLink(categoryLink, "go-to-category", serviceContext);
 	}
 
-	protected MBMessage getMessage(SocialActivity activity) throws Exception {
-		MBThread thread = _mbThreadLocalService.getThread(
-			activity.getClassPK());
-
-		return _mbMessageLocalService.getMessage(thread.getRootMessageId());
-	}
-
 	@Override
 	protected String getPath(
-			SocialActivity activity, ServiceContext serviceContext)
-		throws Exception {
-
-		MBThread thread = _mbThreadLocalService.getThread(
-			activity.getClassPK());
+		SocialActivity activity, ServiceContext serviceContext) {
 
 		return "/message_boards/find_message?messageId=" +
-			thread.getRootMessageId();
+			activity.getClassPK();
 	}
 
 	@Override
@@ -121,22 +130,34 @@ public class MBThreadActivityInterpreter extends BaseSocialActivityInterpreter {
 
 		int activityType = activity.getType();
 
-		if (activityType == SocialActivityConstants.TYPE_MOVE_TO_TRASH) {
-			if (Validator.isNull(groupName)) {
-				return "activity-message-boards-thread-move-to-trash";
+		long receiverUserId = activity.getReceiverUserId();
+
+		if (activityType == MBActivityKeys.ADD_MESSAGE) {
+			if (receiverUserId == 0) {
+				if (Validator.isNull(groupName)) {
+					return "activity-message-boards-message-add-message";
+				}
+				else {
+					return "activity-message-boards-message-add-message-in";
+				}
 			}
 			else {
-				return "activity-message-boards-thread-move-to-trash-in";
+				if (Validator.isNull(groupName)) {
+					return "activity-message-boards-message-reply-message";
+				}
+				else {
+					return "activity-message-boards-message-reply-message-in";
+				}
 			}
 		}
-		else if (activityType ==
-					SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) {
+		else if ((activityType == MBActivityKeys.REPLY_MESSAGE) &&
+				 (receiverUserId > 0)) {
 
 			if (Validator.isNull(groupName)) {
-				return "activity-message-boards-thread-restore-from-trash";
+				return "activity-message-boards-message-reply-message";
 			}
 			else {
-				return "activity-message-boards-thread-restore-from-trash-in";
+				return "activity-message-boards-message-reply-message-in";
 			}
 		}
 
@@ -149,24 +170,11 @@ public class MBThreadActivityInterpreter extends BaseSocialActivityInterpreter {
 			String actionId, ServiceContext serviceContext)
 		throws Exception {
 
-		MBMessage message = getMessage(activity);
+		MBMessage message = _mbMessageLocalService.getMessage(
+			activity.getClassPK());
 
 		return MBMessagePermission.contains(
 			permissionChecker, message.getMessageId(), actionId);
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
-
-		_mbMessageLocalService = mbMessageLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBThreadLocalService(
-		MBThreadLocalService mbThreadLocalService) {
-
-		_mbThreadLocalService = mbThreadLocalService;
 	}
 
 	@Reference(
@@ -181,10 +189,14 @@ public class MBThreadActivityInterpreter extends BaseSocialActivityInterpreter {
 			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 	}
 
-	private static final String[] _CLASS_NAMES = {MBThread.class.getName()};
+	private static final String[] _CLASS_NAMES = {MBMessage.class.getName()};
 
+	@Reference
+	private Http _http;
+
+	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
-	private MBThreadLocalService _mbThreadLocalService;
+
 	private ResourceBundleLoader _resourceBundleLoader;
 
 }

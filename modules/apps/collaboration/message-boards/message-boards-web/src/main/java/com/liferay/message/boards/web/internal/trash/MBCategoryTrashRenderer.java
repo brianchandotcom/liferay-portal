@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.web.trash;
+package com.liferay.message.boards.web.internal.trash;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
@@ -30,9 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Eduardo Garcia
- * @deprecated As of 1.3.0, with no direct replacement
  */
-@Deprecated
 public class MBCategoryTrashRenderer extends BaseTrashRenderer {
 
 	public static final String TYPE = "category";

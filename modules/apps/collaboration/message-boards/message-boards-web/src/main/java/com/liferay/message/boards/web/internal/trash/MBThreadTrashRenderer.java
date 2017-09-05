@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.web.trash;
+package com.liferay.message.boards.web.internal.trash;
 
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBMessageDisplay;
@@ -37,9 +37,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Zsolt Berentey
- * @deprecated As of 1.3.0, with no direct replacement
  */
-@Deprecated
 public class MBThreadTrashRenderer extends BaseJSPTrashRenderer {
 
 	public static final String TYPE = "message_thread";

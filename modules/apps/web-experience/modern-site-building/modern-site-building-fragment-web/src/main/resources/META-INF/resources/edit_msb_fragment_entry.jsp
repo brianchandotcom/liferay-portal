@@ -27,11 +27,7 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentEntryTitle());
 %>
 
-<portlet:actionURL name="editMSBFragmentEntry" var="editMSBFragmentEntryURL">
-	<portlet:param name="mvcPath" value="/edit_msb_fragment_entry.jsp" />
-</portlet:actionURL>
-
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+<aui:nav-bar markupView="lexicon">
 	<portlet:renderURL var="mainURL" />
 
 	<aui:nav cssClass="navbar-nav">
@@ -39,12 +35,16 @@ renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentEntryTitle());
 	</aui:nav>
 </aui:nav-bar>
 
-<aui:form action="<%= editMSBFragmentEntryURL %>" enctype="multipart/form-data" method="post" name="fm">
+<portlet:actionURL name="editMSBFragmentEntry" var="editMSBFragmentEntryURL">
+	<portlet:param name="mvcPath" value="/edit_msb_fragment_entry.jsp" />
+</portlet:actionURL>
+
+<aui:form action="<%= editMSBFragmentEntryURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="msbFragmentEntryId" type="hidden" value="<%= msbFragmentDisplayContext.getMSBFragmentEntryId() %>" />
 	<aui:input name="msbFragmentCollectionId" type="hidden" value="<%= msbFragmentDisplayContext.getMSBFragmentCollectionId() %>" />
-	<aui:input name="htmlContent" type="hidden" value="" />
 	<aui:input name="cssContent" type="hidden" value="" />
+	<aui:input name="htmlContent" type="hidden" value="" />
 	<aui:input name="jsContent" type="hidden" value="" />
 
 	<aui:model-context bean="<%= msbFragmentEntry %>" model="<%= MSBFragmentEntry.class %>" />
@@ -56,39 +56,31 @@ renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentEntryTitle());
 	<div id="<portlet:namespace />msbFragmentEditor"></div>
 
 	<aui:button-row cssClass="msb-fragment-submit-buttons">
-		<aui:button cssClass="btn" type="submit" />
+		<aui:button cssClass="btn btn-lg" type="submit" />
 	</aui:button-row>
 </aui:form>
 
 <aui:script require="modern-site-building-fragment-web/js/MSBFragmentEditor.es">
-	var MSBFragmentEditor = modernSiteBuildingFragmentWebJsMSBFragmentEditorEs.default;
-
+	var cssInput = document.getElementById('<portlet:namespace />cssContent');
+	var htmlInput = document.getElementById('<portlet:namespace />htmlContent');
+	var jsInput = document.getElementById('<portlet:namespace />jsContent');
 	var wrapper = document.getElementById('<portlet:namespace />msbFragmentEditor');
 
-	var namespace = '<portlet:namespace />';
-	var initialHTML = '<%= HtmlUtil.escapeJS(msbFragmentEntry != null ? msbFragmentEntry.getHtml() : StringPool.BLANK) %>';
-	var initialCSS = '<%= HtmlUtil.escapeJS(msbFragmentEntry != null ? msbFragmentEntry.getCss() : StringPool.BLANK) %>';
-	var initialJS = '<%= HtmlUtil.escapeJS(msbFragmentEntry != null ? msbFragmentEntry.getJs() : StringPool.BLANK) %>';
-
-	var htmlInput = document.getElementById('<portlet:namespace />htmlContent');
-	var cssInput = document.getElementById('<portlet:namespace />cssContent');
-	var jsInput = document.getElementById('<portlet:namespace />jsContent');
-
-	var editor = new MSBFragmentEditor({
-		events: {
-			contentChanged: function(event) {
-				htmlInput.value = event.html;
-				cssInput.value = event.css;
-				jsInput.value = event.js;
-			}
+	new modernSiteBuildingFragmentWebJsMSBFragmentEditorEs.default(
+		{
+			events: {
+				contentChanged: function(event) {
+					cssInput.value = event.css;
+					htmlInput.value = event.html;
+					jsInput.value = event.js;
+				}
+			},
+			initialCSS: '<%= HtmlUtil.escapeJS((msbFragmentEntry != null) ? msbFragmentEntry.getCss() : StringPool.BLANK) %>',
+			initialHTML: '<%= HtmlUtil.escapeJS((msbFragmentEntry != null) ? msbFragmentEntry.getHtml() : StringPool.BLANK) %>',
+			initialJS: '<%= HtmlUtil.escapeJS((msbFragmentEntry != null) ? msbFragmentEntry.getJs() : StringPool.BLANK) %>',
+			namespace: '<portlet:namespace />',
+			spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
 		},
-
-		namespace: namespace,
-
-		initialHTML: initialHTML,
-		initialCSS: initialCSS,
-		initialJS: initialJS,
-
-		spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
-	}, wrapper);
+		wrapper
+	);
 </aui:script>

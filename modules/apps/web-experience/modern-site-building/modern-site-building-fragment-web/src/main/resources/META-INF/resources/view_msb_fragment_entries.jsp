@@ -124,35 +124,31 @@ renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentCollectionTitle(
 		<portlet:param name="msbFragmentCollectionId" value="<%= String.valueOf(msbFragmentDisplayContext.getMSBFragmentCollectionId()) %>" />
 	</portlet:actionURL>
 
-	<portlet:renderURL var="editMSBFragmentEntryURL">
-		<portlet:param name="mvcPath" value="/edit_msb_fragment_entry.jsp" />
-		<portlet:param name="msbFragmentCollectionId" value="<%= String.valueOf(msbFragmentDisplayContext.getMSBFragmentCollectionId()) %>" />
-	</portlet:renderURL>
-
 	<liferay-frontend:add-menu>
 		<liferay-frontend:add-menu-item id="addMSBFragmentEntryMenuItem" title='<%= LanguageUtil.get(request, "add-fragment") %>' url="<%= addMSBFragmentEntryURL.toString() %>" />
 	</liferay-frontend:add-menu>
 
 	<aui:script require="modern-site-building-fragment-web/js/MSBFragmentNameEditor.es">
-		var MSBFragmentNameEditor = modernSiteBuildingFragmentWebJsMSBFragmentNameEditorEs.default;
-		var addMenuItemButton = document.getElementById('<portlet:namespace />addMSBFragmentEntryMenuItem');
+		var addMSBFragmentEntryMenuItem = document.getElementById('<portlet:namespace />addMSBFragmentEntryMenuItem');
 
-		addMenuItemButton.addEventListener(
+		addMSBFragmentEntryMenuItem.addEventListener(
 			'click',
 			function(event) {
 				event.preventDefault();
 
-				var msbFragmentNameEditor = new MSBFragmentNameEditor({
-					addMSBFragmentEntryURL: '<%= addMSBFragmentEntryURL.toString() %>',
-					editMSBFragmentEntryURL: '<%= editMSBFragmentEntryURL.toString() %>',
-					events: {
-						hide: function() {
-							msbFragmentNameEditor.disposeInternal();
-						}
-					},
-					namespace: '<portlet:namespace />',
-					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
-				});
+				var msbFragmentNameEditor = new modernSiteBuildingFragmentWebJsMSBFragmentNameEditorEs.default(
+					{
+						addMSBFragmentEntryURL: '<%= addMSBFragmentEntryURL.toString() %>',
+						editMSBFragmentEntryURL: '<portlet:renderURL><portlet:param name="mvcPath" value="/edit_msb_fragment_entry.jsp" /><portlet:param name="msbFragmentCollectionId" value="<%= String.valueOf(msbFragmentDisplayContext.getMSBFragmentCollectionId()) %>" /></portlet:renderURL>',
+						events: {
+							hide: function() {
+								msbFragmentNameEditor.disposeInternal();
+							}
+						},
+						namespace: '<portlet:namespace />',
+						spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+					}
+				);
 			}
 		);
 	</aui:script>

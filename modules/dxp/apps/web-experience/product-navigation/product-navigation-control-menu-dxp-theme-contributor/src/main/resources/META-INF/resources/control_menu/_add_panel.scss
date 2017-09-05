@@ -73,3 +73,16 @@ body.open-admin-panel, body.sidenav-transition {
 		background-color: $control-menu-level-2-color;
 	}
 }
+
+.lfr-add-panel, .lfr-simulation-panel {
+	.product-menu .sidebar-header {
+		background-color: $control-menu-level-2-bg;
+		padding: 16px 24px;
+	}
+
+	.sidebar-inverse {
+		.nav > li > a:hover {
+			color: $control-menu-level-1-bg;
+		}
+	}
+}

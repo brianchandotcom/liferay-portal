@@ -91,10 +91,10 @@ public class AddMSBFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		String errorMessage = "unknown-error";
+		String errorMessage = "an-unexpected-error-occurred";
 
 		if (pe instanceof DuplicateMSBFragmentEntryException) {
-			errorMessage = "this-name-already-exists-please-try-another-one";
+			errorMessage = "a-fragment-entry-with-that-name-already-exists";
 		}
 		else if (pe instanceof MSBFragmentEntryNameException) {
 			errorMessage = "this-field-is-required";

@@ -32,8 +32,9 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_modern_si
 	<%= msbFragmentEntry.getHtml() %>
 </div>
 
-<liferay-util:html-bottom outputKey="<%= randomNamespace %>">
-	<script type="text/javascript">
+<aui:script>
+	(function() {
+		var fragment = document.getElementById("<%= randomNamespace %>");
 		<%= msbFragmentEntry.getJs() %>
-	</script>
-</liferay-util:html-bottom>
+	}());
+</aui:script>

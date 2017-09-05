@@ -12,25 +12,25 @@
  * details.
  */
 
-package com.liferay.lcs.rest;
+package com.liferay.lcs.rest.exception;
 
 /**
- * @author Mladen Cikara
+ * @author Igor Beslic
  */
-public class NoSuchLCSSubscriptionEntryException extends RuntimeException {
+public class RequiredLCSClusterEntryNameException extends RuntimeException {
 
-	public NoSuchLCSSubscriptionEntryException() {
+	public RequiredLCSClusterEntryNameException() {
 	}
 
-	public NoSuchLCSSubscriptionEntryException(String msg) {
+	public RequiredLCSClusterEntryNameException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchLCSSubscriptionEntryException(String msg, Throwable cause) {
+	public RequiredLCSClusterEntryNameException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoSuchLCSSubscriptionEntryException(Throwable cause) {
+	public RequiredLCSClusterEntryNameException(Throwable cause) {
 		super(cause);
 	}
 

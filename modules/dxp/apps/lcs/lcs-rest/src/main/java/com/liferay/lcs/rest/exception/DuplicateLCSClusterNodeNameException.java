@@ -12,25 +12,25 @@
  * details.
  */
 
-package com.liferay.lcs.rest;
+package com.liferay.lcs.rest.exception;
 
 /**
  * @author Igor Beslic
  */
-public class DuplicateLCSClusterEntryNameException extends RuntimeException {
+public class DuplicateLCSClusterNodeNameException extends RuntimeException {
 
-	public DuplicateLCSClusterEntryNameException() {
+	public DuplicateLCSClusterNodeNameException() {
 	}
 
-	public DuplicateLCSClusterEntryNameException(String msg) {
+	public DuplicateLCSClusterNodeNameException(String msg) {
 		super(msg);
 	}
 
-	public DuplicateLCSClusterEntryNameException(String msg, Throwable cause) {
+	public DuplicateLCSClusterNodeNameException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public DuplicateLCSClusterEntryNameException(Throwable cause) {
+	public DuplicateLCSClusterNodeNameException(Throwable cause) {
 		super(cause);
 	}
 

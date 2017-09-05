@@ -1,0 +1,66 @@
+@import "mixins";
+
+.msb-fragment-preview {
+	border: solid 4px #EEE;
+	box-sizing: border-box;
+	height: 40vh;
+	min-height: 20ch;
+	position: relative;
+	width: 100%;
+
+	@include sm {
+		float: left;
+		height: 50%;
+		text-align: center;
+		width: 50%;
+	}
+
+	&__frame {
+		background-color: white;
+		border: none;
+		border-top: solid thin #DDD;
+		height: calc(100% - 2.5em);
+		left: 0;
+		margin-top: calc(2em - 1px);
+		position: absolute;
+		top: 0;
+		width: 100%;
+		z-index: -1;
+
+		&--resized {
+			border-top: none;
+			box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+			left: 50%;
+			margin-top: 0;
+			top: 50%;
+			transform: translateX(-50%) translateY(-50%);
+
+			transition:
+				width ease 0.2s,
+				height ease 0.3s
+			;
+		}
+	}
+
+	&__syntax {
+		color: #AAA;
+		position: absolute;
+		right: 0;
+		text-transform: uppercase;
+		top: 0;
+		z-index: 1;
+	}
+
+	&__toolbar {
+		margin: 0 auto;
+
+		.btn {
+			background-color: transparent;
+			opacity: 0.5;
+		}
+
+		.btn.active {
+			opacity: 1;
+		}
+	}
+}

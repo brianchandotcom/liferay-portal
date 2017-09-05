@@ -54,7 +54,7 @@ MSBFragmentEntry msbFragmentEntry = (MSBFragmentEntry)row.getObject();
 	</c:if>
 
 	<c:if test="<%= MSBFragmentEntryPermission.contains(permissionChecker, msbFragmentEntry, ActionKeys.DELETE) %>">
-		<portlet:actionURL name="deleteMSBFragmentCollection" var="deleteMSBFragmentEntryURL">
+		<portlet:actionURL name="deleteMSBFragmentEntries" var="deleteMSBFragmentEntryURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="msbFragmentEntryId" value="<%= String.valueOf(msbFragmentEntry.getMsbFragmentEntryId()) %>" />
 		</portlet:actionURL>

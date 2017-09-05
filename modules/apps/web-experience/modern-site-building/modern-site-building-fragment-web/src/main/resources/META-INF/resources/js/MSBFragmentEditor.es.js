@@ -1,0 +1,140 @@
+import Component from 'metal-component';
+import Soy from 'metal-soy';
+import {Config} from 'metal-state';
+
+import templates from './MSBFragmentEditor.soy';
+import './MSBFragmentPreview.es';
+import './SourceEditor.es';
+
+/**
+ * Component that allows editing an existing or new Fragment
+ * It integrates three <SourceEditor /> components for each part of
+ * the fragment and a <FragmentPreview /> component for the preview
+ */
+class MSBFragmentEditor extends Component {
+	/** @inheritdoc */
+	shouldUpdate(changes) {
+		return changes._html || changes._js || changes._css;
+	}
+
+	/**
+	 * Event handler executed when any content is changed
+	 */
+	_handleContentChanged() {
+		this.emit('contentChanged', {
+			css: this._css,
+			html: this._html,
+			js: this._js,
+		});
+	}
+
+	/**
+	 * Callback executed when the css editor changes
+	 * @param {string} content
+	 * @private
+	 */
+	_handleCSSChanged({content}) {
+		this._css = content;
+		this._handleContentChanged();
+	}
+
+	/**
+	 * Callback executed when the html editor changes
+	 * @param {string} content
+	 * @private
+	 */
+	_handleHTMLChanged({content}) {
+		this._html = content;
+		this._handleContentChanged();
+	}
+
+	/**
+	 * Callback executed when the js editor changes
+	 * @param {string} content
+	 * @private
+	 */
+	_handleJSChanged({content}) {
+		this._js = content;
+		this._handleContentChanged();
+	}
+}
+
+MSBFragmentEditor.STATE = {
+	/**
+	 * Initial HTML sent to the editor
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @type {!string}
+	 */
+	initialHTML: Config.string().required(),
+
+	/**
+	 * Initial CSS sent to the editor
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @type {!string}
+	 */
+	initialCSS: Config.string().required(),
+
+	/**
+	 * Initial JS sent to the editor
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @type {!string}
+	 */
+	initialJS: Config.string().required(),
+
+	/**
+	 * Namespace of the portlet being used.
+	 * Necesary for getting the real inputs which interact with the server.
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @type {!string}
+	 */
+	namespace: Config.string().required(),
+
+	/**
+	 * Path of the available icons.
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @type {!string}
+	 */
+	spritemap: Config.string().required(),
+
+	/**
+	 * Property that contains the updated CSS content of
+	 * the editor. This value will be propagated to the preview.
+	 * @default ''
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @private
+	 * @type {?string}
+	 */
+	_css: Config.string().internal().value(''),
+
+	/**
+	 * Property that contains the updated HTML content of
+	 * the editor. This value will be propagated to the preview.
+	 * @default ''
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @private
+	 * @type {?string}
+	 */
+	_html: Config.string().internal().value(''),
+
+	/**
+	 * Property that contains the updated JS content of
+	 * the editor. This value will be propagated to the preview.
+	 * @default ''
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @private
+	 * @type {?string}
+	 */
+	_js: Config.string().internal().value(''),
+};
+
+Soy.register(MSBFragmentEditor, templates);
+
+export default MSBFragmentEditor;

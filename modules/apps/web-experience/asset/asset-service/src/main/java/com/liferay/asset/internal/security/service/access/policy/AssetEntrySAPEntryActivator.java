@@ -14,7 +14,7 @@
 
 package com.liferay.asset.internal.security.service.access.policy;
 
-import com.liferay.calendar.service.CalendarBookingService;
+import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -23,15 +23,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.language.LanguageResources;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -52,7 +48,7 @@ public class AssetEntrySAPEntryActivator {
 	protected void activate(BundleContext bundleContext) {
 		_serviceRegistration = bundleContext.registerService(
 			PortalInstanceLifecycleListener.class,
-			new CalendarPortalInstanceLifecycleListener(), null);
+			new AssetEntryPortalInstanceLifecycleListener(), null);
 	}
 
 	protected void addSAPEntry(long companyId) throws PortalException {
@@ -63,26 +59,12 @@ public class AssetEntrySAPEntryActivator {
 			return;
 		}
 
-		StringBundler sb = new StringBundler(5);
+		String allowedServiceSignatures =
+			AssetEntryService.class.getName() + "#incrementViewCounter";
 
-		sb.append(CalendarBookingService.class.getName());
-		sb.append("#search");
-		sb.append(StringPool.NEW_LINE);
-		sb.append(CalendarBookingService.class.getName());
-		sb.append("#searchCount");
+		Map<Locale, String> titleMap = new HashMap<>();
 
-		String allowedServiceSignatures = sb.toString();
-
-		ResourceBundleLoader resourceBundleLoader =
-			new AggregateResourceBundleLoader(
-				ResourceBundleUtil.getResourceBundleLoader(
-					"content.Language",
-					CalendarSAPEntryActivator.class.getClassLoader()),
-				LanguageResources.RESOURCE_BUNDLE_LOADER);
-
-		Map<Locale, String> titleMap = ResourceBundleUtil.getLocalizationMap(
-			resourceBundleLoader,
-			"service-access-policy-entry-default-calendar-title");
+		titleMap.put(LocaleUtil.getDefault(), _SAP_ENTRY_NAME);
 
 		_sapEntryLocalService.addSAPEntry(
 			_userLocalService.getDefaultUserId(companyId),
@@ -97,7 +79,7 @@ public class AssetEntrySAPEntryActivator {
 		}
 	}
 
-	private static final String _SAP_ENTRY_NAME = "CALENDAR_DEFAULT";
+	private static final String _SAP_ENTRY_NAME = "ASSET_ENTRY_DEFAULT";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetEntrySAPEntryActivator.class);
@@ -111,7 +93,7 @@ public class AssetEntrySAPEntryActivator {
 	@Reference(unbind = "-")
 	private UserLocalService _userLocalService;
 
-	private class CalendarPortalInstanceLifecycleListener
+	private class AssetEntryPortalInstanceLifecycleListener
 		extends BasePortalInstanceLifecycleListener {
 
 		public void portalInstanceRegistered(Company company) throws Exception {

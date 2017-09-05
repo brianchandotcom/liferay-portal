@@ -98,6 +98,11 @@ public class JournalFolderLocalServiceUtil {
 		return getService().deleteFolder(folderId, includeTrashedEntries);
 	}
 
+	public static void deleteFolders(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteFolders(groupId);
+	}
+
 	/**
 	* Deletes the journal folder from the database. Also notifies the appropriate model listeners.
 	*
@@ -122,151 +127,6 @@ public class JournalFolderLocalServiceUtil {
 		return getService().deleteJournalFolder(folderId);
 	}
 
-	public static com.liferay.journal.model.JournalFolder fetchFolder(
-		long folderId) {
-		return getService().fetchFolder(folderId);
-	}
-
-	public static com.liferay.journal.model.JournalFolder fetchFolder(
-		long groupId, java.lang.String name) {
-		return getService().fetchFolder(groupId, name);
-	}
-
-	public static com.liferay.journal.model.JournalFolder fetchFolder(
-		long groupId, long parentFolderId, java.lang.String name) {
-		return getService().fetchFolder(groupId, parentFolderId, name);
-	}
-
-	public static com.liferay.journal.model.JournalFolder fetchJournalFolder(
-		long folderId) {
-		return getService().fetchJournalFolder(folderId);
-	}
-
-	/**
-	* Returns the journal folder matching the UUID and group.
-	*
-	* @param uuid the journal folder's UUID
-	* @param groupId the primary key of the group
-	* @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	*/
-	public static com.liferay.journal.model.JournalFolder fetchJournalFolderByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return getService().fetchJournalFolderByUuidAndGroupId(uuid, groupId);
-	}
-
-	public static com.liferay.journal.model.JournalFolder getFolder(
-		long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getFolder(folderId);
-	}
-
-	/**
-	* Returns the journal folder with the primary key.
-	*
-	* @param folderId the primary key of the journal folder
-	* @return the journal folder
-	* @throws PortalException if a journal folder with the primary key could not be found
-	*/
-	public static com.liferay.journal.model.JournalFolder getJournalFolder(
-		long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getJournalFolder(folderId);
-	}
-
-	/**
-	* Returns the journal folder matching the UUID and group.
-	*
-	* @param uuid the journal folder's UUID
-	* @param groupId the primary key of the group
-	* @return the matching journal folder
-	* @throws PortalException if a matching journal folder could not be found
-	*/
-	public static com.liferay.journal.model.JournalFolder getJournalFolderByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getJournalFolderByUuidAndGroupId(uuid, groupId);
-	}
-
-	public static com.liferay.journal.model.JournalFolder moveFolder(
-		long folderId, long parentFolderId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().moveFolder(folderId, parentFolderId, serviceContext);
-	}
-
-	public static com.liferay.journal.model.JournalFolder moveFolderFromTrash(
-		long userId, long folderId, long parentFolderId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .moveFolderFromTrash(userId, folderId, parentFolderId,
-			serviceContext);
-	}
-
-	public static com.liferay.journal.model.JournalFolder moveFolderToTrash(
-		long userId, long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().moveFolderToTrash(userId, folderId);
-	}
-
-	public static com.liferay.journal.model.JournalFolder updateFolder(
-		long userId, long groupId, long folderId, long parentFolderId,
-		java.lang.String name, java.lang.String description,
-		boolean mergeWithParentFolder,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateFolder(userId, groupId, folderId, parentFolderId,
-			name, description, mergeWithParentFolder, serviceContext);
-	}
-
-	public static com.liferay.journal.model.JournalFolder updateFolder(
-		long userId, long groupId, long folderId, long parentFolderId,
-		java.lang.String name, java.lang.String description,
-		long[] ddmStructureIds, int restrictionType,
-		boolean mergeWithParentFolder,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateFolder(userId, groupId, folderId, parentFolderId,
-			name, description, ddmStructureIds, restrictionType,
-			mergeWithParentFolder, serviceContext);
-	}
-
-	/**
-	* Updates the journal folder in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param journalFolder the journal folder
-	* @return the journal folder that was updated
-	*/
-	public static com.liferay.journal.model.JournalFolder updateJournalFolder(
-		com.liferay.journal.model.JournalFolder journalFolder) {
-		return getService().updateJournalFolder(journalFolder);
-	}
-
-	public static com.liferay.journal.model.JournalFolder updateStatus(
-		long userId, com.liferay.journal.model.JournalFolder folder, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateStatus(userId, folder, status);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
 	/**
 	* @throws PortalException
 	*/
@@ -276,64 +136,8 @@ public class JournalFolderLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* @deprecated As of 4.0.0, with no direct replacement
-	*/
-	@Deprecated
-	public static com.liferay.portal.kernel.service.SubscriptionLocalService getSubscriptionLocalService() {
-		return getService().getSubscriptionLocalService();
-	}
-
-	public static int getCompanyFoldersCount(long companyId) {
-		return getService().getCompanyFoldersCount(companyId);
-	}
-
-	public static int getFoldersAndArticlesCount(long groupId,
-		java.util.List<java.lang.Long> folderIds, int status) {
-		return getService()
-				   .getFoldersAndArticlesCount(groupId, folderIds, status);
-	}
-
-	public static int getFoldersAndArticlesCount(long groupId, long folderId) {
-		return getService().getFoldersAndArticlesCount(groupId, folderId);
-	}
-
-	public static int getFoldersAndArticlesCount(long groupId, long folderId,
-		int status) {
-		return getService().getFoldersAndArticlesCount(groupId, folderId, status);
-	}
-
-	public static int getFoldersCount(long groupId, long parentFolderId) {
-		return getService().getFoldersCount(groupId, parentFolderId);
-	}
-
-	public static int getFoldersCount(long groupId, long parentFolderId,
-		int status) {
-		return getService().getFoldersCount(groupId, parentFolderId, status);
-	}
-
-	/**
-	* Returns the number of journal folders.
-	*
-	* @return the number of journal folders
-	*/
-	public static int getJournalFoldersCount() {
-		return getService().getJournalFoldersCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -386,15 +190,90 @@ public class JournalFolderLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static com.liferay.journal.model.JournalFolder fetchFolder(
+		long folderId) {
+		return getService().fetchFolder(folderId);
+	}
+
+	public static com.liferay.journal.model.JournalFolder fetchFolder(
+		long groupId, long parentFolderId, java.lang.String name) {
+		return getService().fetchFolder(groupId, parentFolderId, name);
+	}
+
+	public static com.liferay.journal.model.JournalFolder fetchFolder(
+		long groupId, java.lang.String name) {
+		return getService().fetchFolder(groupId, name);
+	}
+
+	public static com.liferay.journal.model.JournalFolder fetchJournalFolder(
+		long folderId) {
+		return getService().fetchJournalFolder(folderId);
+	}
+
+	/**
+	* Returns the journal folder matching the UUID and group.
+	*
+	* @param uuid the journal folder's UUID
+	* @param groupId the primary key of the group
+	* @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
+	*/
+	public static com.liferay.journal.model.JournalFolder fetchJournalFolderByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return getService().fetchJournalFolderByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
 	public static java.util.List<com.liferay.journal.model.JournalFolder> getCompanyFolders(
 		long companyId, int start, int end) {
 		return getService().getCompanyFolders(companyId, start, end);
+	}
+
+	public static int getCompanyFoldersCount(long companyId) {
+		return getService().getCompanyFoldersCount(companyId);
 	}
 
 	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> getDDMStructures(
 		long[] groupIds, long folderId, int restrictionType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDDMStructures(groupIds, folderId, restrictionType);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.journal.model.JournalFolder getFolder(
+		long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getFolder(folderId);
 	}
 
 	public static java.util.List<com.liferay.journal.model.JournalFolder> getFolders(
@@ -408,13 +287,13 @@ public class JournalFolderLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.journal.model.JournalFolder> getFolders(
-		long groupId, long parentFolderId, int start, int end) {
-		return getService().getFolders(groupId, parentFolderId, start, end);
+		long groupId, long parentFolderId, int status) {
+		return getService().getFolders(groupId, parentFolderId, status);
 	}
 
 	public static java.util.List<com.liferay.journal.model.JournalFolder> getFolders(
-		long groupId, long parentFolderId, int status) {
-		return getService().getFolders(groupId, parentFolderId, status);
+		long groupId, long parentFolderId, int start, int end) {
+		return getService().getFolders(groupId, parentFolderId, start, end);
 	}
 
 	public static java.util.List<com.liferay.journal.model.JournalFolder> getFolders(
@@ -429,13 +308,6 @@ public class JournalFolderLocalServiceUtil {
 	}
 
 	public static java.util.List<java.lang.Object> getFoldersAndArticles(
-		long groupId, long folderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<?> obc) {
-		return getService()
-				   .getFoldersAndArticles(groupId, folderId, start, end, obc);
-	}
-
-	public static java.util.List<java.lang.Object> getFoldersAndArticles(
 		long groupId, long folderId, int status) {
 		return getService().getFoldersAndArticles(groupId, folderId, status);
 	}
@@ -446,6 +318,73 @@ public class JournalFolderLocalServiceUtil {
 		return getService()
 				   .getFoldersAndArticles(groupId, folderId, status, start,
 			end, obc);
+	}
+
+	public static java.util.List<java.lang.Object> getFoldersAndArticles(
+		long groupId, long folderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<?> obc) {
+		return getService()
+				   .getFoldersAndArticles(groupId, folderId, start, end, obc);
+	}
+
+	public static int getFoldersAndArticlesCount(long groupId,
+		java.util.List<java.lang.Long> folderIds, int status) {
+		return getService()
+				   .getFoldersAndArticlesCount(groupId, folderIds, status);
+	}
+
+	public static int getFoldersAndArticlesCount(long groupId, long folderId) {
+		return getService().getFoldersAndArticlesCount(groupId, folderId);
+	}
+
+	public static int getFoldersAndArticlesCount(long groupId, long folderId,
+		int status) {
+		return getService().getFoldersAndArticlesCount(groupId, folderId, status);
+	}
+
+	public static int getFoldersCount(long groupId, long parentFolderId) {
+		return getService().getFoldersCount(groupId, parentFolderId);
+	}
+
+	public static int getFoldersCount(long groupId, long parentFolderId,
+		int status) {
+		return getService().getFoldersCount(groupId, parentFolderId, status);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	public static long getInheritedWorkflowFolderId(long folderId)
+		throws com.liferay.journal.exception.NoSuchFolderException {
+		return getService().getInheritedWorkflowFolderId(folderId);
+	}
+
+	/**
+	* Returns the journal folder with the primary key.
+	*
+	* @param folderId the primary key of the journal folder
+	* @return the journal folder
+	* @throws PortalException if a journal folder with the primary key could not be found
+	*/
+	public static com.liferay.journal.model.JournalFolder getJournalFolder(
+		long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getJournalFolder(folderId);
+	}
+
+	/**
+	* Returns the journal folder matching the UUID and group.
+	*
+	* @param uuid the journal folder's UUID
+	* @param groupId the primary key of the group
+	* @return the matching journal folder
+	* @throws PortalException if a matching journal folder could not be found
+	*/
+	public static com.liferay.journal.model.JournalFolder getJournalFolderByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getJournalFolderByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -494,47 +433,26 @@ public class JournalFolderLocalServiceUtil {
 			end, orderByComparator);
 	}
 
+	/**
+	* Returns the number of journal folders.
+	*
+	* @return the number of journal folders
+	*/
+	public static int getJournalFoldersCount() {
+		return getService().getJournalFoldersCount();
+	}
+
 	public static java.util.List<com.liferay.journal.model.JournalFolder> getNoAssetFolders() {
 		return getService().getNoAssetFolders();
 	}
 
-	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> searchDDMStructures(
-		long companyId, long[] groupIds, long folderId, int restrictionType,
-		java.lang.String keywords, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMStructure> obc)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .searchDDMStructures(companyId, groupIds, folderId,
-			restrictionType, keywords, start, end, obc);
-	}
-
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	public static long getInheritedWorkflowFolderId(long folderId)
-		throws com.liferay.journal.exception.NoSuchFolderException {
-		return getService().getInheritedWorkflowFolderId(folderId);
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static long getOverridedDDMStructuresFolderId(long folderId)
@@ -542,14 +460,45 @@ public class JournalFolderLocalServiceUtil {
 		return getService().getOverridedDDMStructuresFolderId(folderId);
 	}
 
-	public static void deleteFolders(long groupId)
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteFolders(groupId);
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	public static void getSubfolderIds(
 		java.util.List<java.lang.Long> folderIds, long groupId, long folderId) {
 		getService().getSubfolderIds(folderIds, groupId, folderId);
+	}
+
+	/**
+	* @deprecated As of 4.0.0, with no direct replacement
+	*/
+	@Deprecated
+	public static com.liferay.portal.kernel.service.SubscriptionLocalService getSubscriptionLocalService() {
+		return getService().getSubscriptionLocalService();
+	}
+
+	public static com.liferay.journal.model.JournalFolder moveFolder(
+		long folderId, long parentFolderId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().moveFolder(folderId, parentFolderId, serviceContext);
+	}
+
+	public static com.liferay.journal.model.JournalFolder moveFolderFromTrash(
+		long userId, long folderId, long parentFolderId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .moveFolderFromTrash(userId, folderId, parentFolderId,
+			serviceContext);
+	}
+
+	public static com.liferay.journal.model.JournalFolder moveFolderToTrash(
+		long userId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().moveFolderToTrash(userId, folderId);
 	}
 
 	public static void rebuildTree(long companyId)
@@ -567,6 +516,16 @@ public class JournalFolderLocalServiceUtil {
 	public static void restoreFolderFromTrash(long userId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().restoreFolderFromTrash(userId, folderId);
+	}
+
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> searchDDMStructures(
+		long companyId, long[] groupIds, long folderId, int restrictionType,
+		java.lang.String keywords, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMStructure> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchDDMStructures(companyId, groupIds, folderId,
+			restrictionType, keywords, start, end, obc);
 	}
 
 	/**
@@ -598,11 +557,52 @@ public class JournalFolderLocalServiceUtil {
 			assetLinkEntryIds, priority);
 	}
 
+	public static com.liferay.journal.model.JournalFolder updateFolder(
+		long userId, long groupId, long folderId, long parentFolderId,
+		java.lang.String name, java.lang.String description,
+		boolean mergeWithParentFolder,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateFolder(userId, groupId, folderId, parentFolderId,
+			name, description, mergeWithParentFolder, serviceContext);
+	}
+
+	public static com.liferay.journal.model.JournalFolder updateFolder(
+		long userId, long groupId, long folderId, long parentFolderId,
+		java.lang.String name, java.lang.String description,
+		long[] ddmStructureIds, int restrictionType,
+		boolean mergeWithParentFolder,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateFolder(userId, groupId, folderId, parentFolderId,
+			name, description, ddmStructureIds, restrictionType,
+			mergeWithParentFolder, serviceContext);
+	}
+
 	public static void updateFolderDDMStructures(
 		com.liferay.journal.model.JournalFolder folder,
 		long[] ddmStructureIdsArray)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().updateFolderDDMStructures(folder, ddmStructureIdsArray);
+	}
+
+	/**
+	* Updates the journal folder in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param journalFolder the journal folder
+	* @return the journal folder that was updated
+	*/
+	public static com.liferay.journal.model.JournalFolder updateJournalFolder(
+		com.liferay.journal.model.JournalFolder journalFolder) {
+		return getService().updateJournalFolder(journalFolder);
+	}
+
+	public static com.liferay.journal.model.JournalFolder updateStatus(
+		long userId, com.liferay.journal.model.JournalFolder folder, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateStatus(userId, folder, status);
 	}
 
 	public static void validateFolderDDMStructures(long folderId,

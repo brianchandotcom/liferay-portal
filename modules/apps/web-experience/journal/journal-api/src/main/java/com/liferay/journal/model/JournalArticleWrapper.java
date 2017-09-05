@@ -299,13 +299,41 @@ public class JournalArticleWrapper implements JournalArticle,
 	}
 
 	@Override
-	public JournalArticle toEscapedModel() {
-		return new JournalArticleWrapper(_journalArticle.toEscapedModel());
+	public com.liferay.portal.kernel.repository.model.Folder addImagesFolder()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _journalArticle.addImagesFolder();
 	}
 
 	@Override
-	public JournalArticle toUnescapedModel() {
-		return new JournalArticleWrapper(_journalArticle.toUnescapedModel());
+	public java.lang.String buildTreePath()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _journalArticle.buildTreePath();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new JournalArticleWrapper((JournalArticle)_journalArticle.clone());
+	}
+
+	@Override
+	public int compareTo(JournalArticle journalArticle) {
+		return _journalArticle.compareTo(journalArticle);
+	}
+
+	/**
+	* Returns the article ID of this journal article.
+	*
+	* @return the article ID of this journal article
+	*/
+	@Override
+	public java.lang.String getArticleId() {
+		return _journalArticle.getArticleId();
+	}
+
+	@Override
+	public java.lang.String getArticleImageURL(
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
+		return _journalArticle.getArticleImageURL(themeDisplay);
 	}
 
 	@Override
@@ -315,9 +343,253 @@ public class JournalArticleWrapper implements JournalArticle,
 	}
 
 	@Override
+	public java.lang.String getArticleResourceUuid()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _journalArticle.getArticleResourceUuid();
+	}
+
+	@Override
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _journalArticle.getAvailableLanguageIds();
+	}
+
+	/**
+	* Returns the fully qualified class name of this journal article.
+	*
+	* @return the fully qualified class name of this journal article
+	*/
+	@Override
+	public java.lang.String getClassName() {
+		return _journalArticle.getClassName();
+	}
+
+	/**
+	* Returns the class name ID of this journal article.
+	*
+	* @return the class name ID of this journal article
+	*/
+	@Override
+	public long getClassNameId() {
+		return _journalArticle.getClassNameId();
+	}
+
+	/**
+	* Returns the class pk of this journal article.
+	*
+	* @return the class pk of this journal article
+	*/
+	@Override
+	public long getClassPK() {
+		return _journalArticle.getClassPK();
+	}
+
+	/**
+	* Returns the company ID of this journal article.
+	*
+	* @return the company ID of this journal article
+	*/
+	@Override
+	public long getCompanyId() {
+		return _journalArticle.getCompanyId();
+	}
+
+	/**
+	* Returns the content of this journal article.
+	*
+	* @return the content of this journal article
+	*/
+	@Override
+	public java.lang.String getContent() {
+		return _journalArticle.getContent();
+	}
+
+	@Override
+	public java.lang.String getContentByLocale(java.lang.String languageId) {
+		return _journalArticle.getContentByLocale(languageId);
+	}
+
+	/**
+	* Returns the create date of this journal article.
+	*
+	* @return the create date of this journal article
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _journalArticle.getCreateDate();
+	}
+
+	@Override
+	public com.liferay.dynamic.data.mapping.model.DDMStructure getDDMStructure() {
+		return _journalArticle.getDDMStructure();
+	}
+
+	/**
+	* Returns the ddm structure key of this journal article.
+	*
+	* @return the ddm structure key of this journal article
+	*/
+	@Override
+	public java.lang.String getDDMStructureKey() {
+		return _journalArticle.getDDMStructureKey();
+	}
+
+	@Override
+	public com.liferay.dynamic.data.mapping.model.DDMTemplate getDDMTemplate() {
+		return _journalArticle.getDDMTemplate();
+	}
+
+	/**
+	* Returns the ddm template key of this journal article.
+	*
+	* @return the ddm template key of this journal article
+	*/
+	@Override
+	public java.lang.String getDDMTemplateKey() {
+		return _journalArticle.getDDMTemplateKey();
+	}
+
+	/**
+	* Returns the default language ID of this journal article.
+	*
+	* @return the default language ID of this journal article
+	*/
+	@Override
+	public java.lang.String getDefaultLanguageId() {
+		return _journalArticle.getDefaultLanguageId();
+	}
+
+	@Override
+	public java.lang.String getDescription() {
+		return _journalArticle.getDescription();
+	}
+
+	@Override
+	public java.lang.String getDescription(java.util.Locale locale) {
+		return _journalArticle.getDescription(locale);
+	}
+
+	@Override
+	public java.lang.String getDescription(java.util.Locale locale,
+		boolean useDefault) {
+		return _journalArticle.getDescription(locale, useDefault);
+	}
+
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId) {
+		return _journalArticle.getDescription(languageId);
+	}
+
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId,
+		boolean useDefault) {
+		return _journalArticle.getDescription(languageId, useDefault);
+	}
+
+	@Override
+	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+		return _journalArticle.getDescriptionMap();
+	}
+
+	@Override
+	public java.lang.String getDescriptionMapAsXML() {
+		return _journalArticle.getDescriptionMapAsXML();
+	}
+
+	/**
+	* Returns the display date of this journal article.
+	*
+	* @return the display date of this journal article
+	*/
+	@Override
+	public Date getDisplayDate() {
+		return _journalArticle.getDisplayDate();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.xml.Document getDocument() {
+		return _journalArticle.getDocument();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _journalArticle.getExpandoBridge();
+	}
+
+	/**
+	* Returns the expiration date of this journal article.
+	*
+	* @return the expiration date of this journal article
+	*/
+	@Override
+	public Date getExpirationDate() {
+		return _journalArticle.getExpirationDate();
+	}
+
+	@Override
 	public JournalFolder getFolder()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalArticle.getFolder();
+	}
+
+	/**
+	* Returns the folder ID of this journal article.
+	*
+	* @return the folder ID of this journal article
+	*/
+	@Override
+	public long getFolderId() {
+		return _journalArticle.getFolderId();
+	}
+
+	/**
+	* Returns the group ID of this journal article.
+	*
+	* @return the group ID of this journal article
+	*/
+	@Override
+	public long getGroupId() {
+		return _journalArticle.getGroupId();
+	}
+
+	/**
+	* Returns the ID of this journal article.
+	*
+	* @return the ID of this journal article
+	*/
+	@Override
+	public long getId() {
+		return _journalArticle.getId();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getImagesFileEntries()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _journalArticle.getImagesFileEntries();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getImagesFileEntries(
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _journalArticle.getImagesFileEntries(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getImagesFileEntries(
+		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _journalArticle.getImagesFileEntries(start, end, obc);
+	}
+
+	@Override
+	public int getImagesFileEntriesCount()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _journalArticle.getImagesFileEntriesCount();
+	}
+
+	@Override
+	public long getImagesFolderId() {
+		return _journalArticle.getImagesFolderId();
 	}
 
 	/**
@@ -331,6 +603,94 @@ public class JournalArticleWrapper implements JournalArticle,
 	}
 
 	/**
+	* Returns the last publish date of this journal article.
+	*
+	* @return the last publish date of this journal article
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _journalArticle.getLastPublishDate();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Layout getLayout() {
+		return _journalArticle.getLayout();
+	}
+
+	/**
+	* Returns the layout uuid of this journal article.
+	*
+	* @return the layout uuid of this journal article
+	*/
+	@Override
+	public java.lang.String getLayoutUuid() {
+		return _journalArticle.getLayoutUuid();
+	}
+
+	/**
+	* @deprecated As of 4.0.0
+	*/
+	@Deprecated
+	@Override
+	public java.lang.String getLegacyDescription() {
+		return _journalArticle.getLegacyDescription();
+	}
+
+	/**
+	* @deprecated As of 4.0.0
+	*/
+	@Deprecated
+	@Override
+	public java.lang.String getLegacyTitle() {
+		return _journalArticle.getLegacyTitle();
+	}
+
+	/**
+	* Returns the modified date of this journal article.
+	*
+	* @return the modified date of this journal article
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _journalArticle.getModifiedDate();
+	}
+
+	/**
+	* Returns the primary key of this journal article.
+	*
+	* @return the primary key of this journal article
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _journalArticle.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _journalArticle.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the resource prim key of this journal article.
+	*
+	* @return the resource prim key of this journal article
+	*/
+	@Override
+	public long getResourcePrimKey() {
+		return _journalArticle.getResourcePrimKey();
+	}
+
+	/**
+	* Returns the review date of this journal article.
+	*
+	* @return the review date of this journal article
+	*/
+	@Override
+	public Date getReviewDate() {
+		return _journalArticle.getReviewDate();
+	}
+
+	/**
 	* Returns the small image of this journal article.
 	*
 	* @return the small image of this journal article
@@ -340,9 +700,252 @@ public class JournalArticleWrapper implements JournalArticle,
 		return _journalArticle.getSmallImage();
 	}
 
+	/**
+	* Returns the small image ID of this journal article.
+	*
+	* @return the small image ID of this journal article
+	*/
+	@Override
+	public long getSmallImageId() {
+		return _journalArticle.getSmallImageId();
+	}
+
+	@Override
+	public java.lang.String getSmallImageType()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _journalArticle.getSmallImageType();
+	}
+
+	/**
+	* Returns the small image url of this journal article.
+	*
+	* @return the small image url of this journal article
+	*/
+	@Override
+	public java.lang.String getSmallImageURL() {
+		return _journalArticle.getSmallImageURL();
+	}
+
+	/**
+	* Returns the status of this journal article.
+	*
+	* @return the status of this journal article
+	*/
+	@Override
+	public int getStatus() {
+		return _journalArticle.getStatus();
+	}
+
+	/**
+	* Returns the status by user ID of this journal article.
+	*
+	* @return the status by user ID of this journal article
+	*/
+	@Override
+	public long getStatusByUserId() {
+		return _journalArticle.getStatusByUserId();
+	}
+
+	/**
+	* Returns the status by user name of this journal article.
+	*
+	* @return the status by user name of this journal article
+	*/
+	@Override
+	public java.lang.String getStatusByUserName() {
+		return _journalArticle.getStatusByUserName();
+	}
+
+	/**
+	* Returns the status by user uuid of this journal article.
+	*
+	* @return the status by user uuid of this journal article
+	*/
+	@Override
+	public java.lang.String getStatusByUserUuid() {
+		return _journalArticle.getStatusByUserUuid();
+	}
+
+	/**
+	* Returns the status date of this journal article.
+	*
+	* @return the status date of this journal article
+	*/
+	@Override
+	public Date getStatusDate() {
+		return _journalArticle.getStatusDate();
+	}
+
+	/**
+	* @deprecated As of 4.0.0, replaced by {@link #getDDMStructureKey()}
+	*/
+	@Deprecated
+	@Override
+	public java.lang.String getStructureId() {
+		return _journalArticle.getStructureId();
+	}
+
+	/**
+	* @deprecated As of 4.0.0, replaced by {@link #getDDMTemplateKey()}
+	*/
+	@Deprecated
+	@Override
+	public java.lang.String getTemplateId() {
+		return _journalArticle.getTemplateId();
+	}
+
+	@Override
+	public java.lang.String getTitle() {
+		return _journalArticle.getTitle();
+	}
+
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale) {
+		return _journalArticle.getTitle(locale);
+	}
+
+	@Override
+	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
+		return _journalArticle.getTitle(locale, useDefault);
+	}
+
+	@Override
+	public java.lang.String getTitle(java.lang.String languageId) {
+		return _journalArticle.getTitle(languageId);
+	}
+
+	@Override
+	public java.lang.String getTitle(java.lang.String languageId,
+		boolean useDefault) {
+		return _journalArticle.getTitle(languageId, useDefault);
+	}
+
+	@Override
+	public java.lang.String getTitleCurrentValue() {
+		return _journalArticle.getTitleCurrentValue();
+	}
+
+	@Override
+	public Map<java.util.Locale, java.lang.String> getTitleMap() {
+		return _journalArticle.getTitleMap();
+	}
+
+	@Override
+	public java.lang.String getTitleMapAsXML() {
+		return _journalArticle.getTitleMapAsXML();
+	}
+
+	/**
+	* Returns the trash entry created when this journal article was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this journal article.
+	*
+	* @return the trash entry created when this journal article was moved to the Recycle Bin
+	*/
+	@Override
+	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _journalArticle.getTrashEntry();
+	}
+
+	/**
+	* Returns the class primary key of the trash entry for this journal article.
+	*
+	* @return the class primary key of the trash entry for this journal article
+	*/
+	@Override
+	public long getTrashEntryClassPK() {
+		return _journalArticle.getTrashEntryClassPK();
+	}
+
+	/**
+	* Returns the trash handler for this journal article.
+	*
+	* @return the trash handler for this journal article
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
+		return _journalArticle.getTrashHandler();
+	}
+
+	/**
+	* Returns the tree path of this journal article.
+	*
+	* @return the tree path of this journal article
+	*/
+	@Override
+	public java.lang.String getTreePath() {
+		return _journalArticle.getTreePath();
+	}
+
+	/**
+	* Returns the url title of this journal article.
+	*
+	* @return the url title of this journal article
+	*/
+	@Override
+	public java.lang.String getUrlTitle() {
+		return _journalArticle.getUrlTitle();
+	}
+
+	/**
+	* Returns the user ID of this journal article.
+	*
+	* @return the user ID of this journal article
+	*/
+	@Override
+	public long getUserId() {
+		return _journalArticle.getUserId();
+	}
+
+	/**
+	* Returns the user name of this journal article.
+	*
+	* @return the user name of this journal article
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _journalArticle.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this journal article.
+	*
+	* @return the user uuid of this journal article
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _journalArticle.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this journal article.
+	*
+	* @return the uuid of this journal article
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _journalArticle.getUuid();
+	}
+
+	/**
+	* Returns the version of this journal article.
+	*
+	* @return the version of this journal article
+	*/
+	@Override
+	public double getVersion() {
+		return _journalArticle.getVersion();
+	}
+
 	@Override
 	public boolean hasApprovedVersion() {
 		return _journalArticle.hasApprovedVersion();
+	}
+
+	@Override
+	public int hashCode() {
+		return _journalArticle.hashCode();
 	}
 
 	/**
@@ -396,36 +999,6 @@ public class JournalArticleWrapper implements JournalArticle,
 	}
 
 	/**
-	* Returns <code>true</code> if this journal article is in the Recycle Bin.
-	*
-	* @return <code>true</code> if this journal article is in the Recycle Bin; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isInTrash() {
-		return _journalArticle.isInTrash();
-	}
-
-	/**
-	* Returns <code>true</code> if the parent of this journal article is in the Recycle Bin.
-	*
-	* @return <code>true</code> if the parent of this journal article is in the Recycle Bin; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isInTrashContainer() {
-		return _journalArticle.isInTrashContainer();
-	}
-
-	@Override
-	public boolean isInTrashExplicitly() {
-		return _journalArticle.isInTrashExplicitly();
-	}
-
-	@Override
-	public boolean isInTrashImplicitly() {
-		return _journalArticle.isInTrashImplicitly();
-	}
-
-	/**
 	* Returns <code>true</code> if this journal article is inactive.
 	*
 	* @return <code>true</code> if this journal article is inactive; <code>false</code> otherwise
@@ -453,6 +1026,36 @@ public class JournalArticleWrapper implements JournalArticle,
 	@Override
 	public boolean isIndexable() {
 		return _journalArticle.isIndexable();
+	}
+
+	/**
+	* Returns <code>true</code> if this journal article is in the Recycle Bin.
+	*
+	* @return <code>true</code> if this journal article is in the Recycle Bin; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInTrash() {
+		return _journalArticle.isInTrash();
+	}
+
+	/**
+	* Returns <code>true</code> if the parent of this journal article is in the Recycle Bin.
+	*
+	* @return <code>true</code> if the parent of this journal article is in the Recycle Bin; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInTrashContainer() {
+		return _journalArticle.isInTrashContainer();
+	}
+
+	@Override
+	public boolean isInTrashExplicitly() {
+		return _journalArticle.isInTrashExplicitly();
+	}
+
+	@Override
+	public boolean isInTrashImplicitly() {
+		return _journalArticle.isInTrashImplicitly();
 	}
 
 	@Override
@@ -502,634 +1105,6 @@ public class JournalArticleWrapper implements JournalArticle,
 	@Override
 	public boolean isTemplateDriven() {
 		return _journalArticle.isTemplateDriven();
-	}
-
-	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMStructure getDDMStructure() {
-		return _journalArticle.getDDMStructure();
-	}
-
-	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMTemplate getDDMTemplate() {
-		return _journalArticle.getDDMTemplate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _journalArticle.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<JournalArticle> toCacheModel() {
-		return _journalArticle.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Layout getLayout() {
-		return _journalArticle.getLayout();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.repository.model.Folder addImagesFolder()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalArticle.addImagesFolder();
-	}
-
-	/**
-	* Returns the trash handler for this journal article.
-	*
-	* @return the trash handler for this journal article
-	* @deprecated As of 7.0.0, with no direct replacement
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return _journalArticle.getTrashHandler();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.xml.Document getDocument() {
-		return _journalArticle.getDocument();
-	}
-
-	/**
-	* Returns the trash entry created when this journal article was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this journal article.
-	*
-	* @return the trash entry created when this journal article was moved to the Recycle Bin
-	*/
-	@Override
-	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalArticle.getTrashEntry();
-	}
-
-	/**
-	* Returns the version of this journal article.
-	*
-	* @return the version of this journal article
-	*/
-	@Override
-	public double getVersion() {
-		return _journalArticle.getVersion();
-	}
-
-	@Override
-	public int compareTo(JournalArticle journalArticle) {
-		return _journalArticle.compareTo(journalArticle);
-	}
-
-	@Override
-	public int getImagesFileEntriesCount()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalArticle.getImagesFileEntriesCount();
-	}
-
-	/**
-	* Returns the status of this journal article.
-	*
-	* @return the status of this journal article
-	*/
-	@Override
-	public int getStatus() {
-		return _journalArticle.getStatus();
-	}
-
-	@Override
-	public int hashCode() {
-		return _journalArticle.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _journalArticle.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new JournalArticleWrapper((JournalArticle)_journalArticle.clone());
-	}
-
-	@Override
-	public java.lang.String buildTreePath()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalArticle.buildTreePath();
-	}
-
-	/**
-	* Returns the article ID of this journal article.
-	*
-	* @return the article ID of this journal article
-	*/
-	@Override
-	public java.lang.String getArticleId() {
-		return _journalArticle.getArticleId();
-	}
-
-	@Override
-	public java.lang.String getArticleImageURL(
-		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
-		return _journalArticle.getArticleImageURL(themeDisplay);
-	}
-
-	@Override
-	public java.lang.String getArticleResourceUuid()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalArticle.getArticleResourceUuid();
-	}
-
-	/**
-	* Returns the fully qualified class name of this journal article.
-	*
-	* @return the fully qualified class name of this journal article
-	*/
-	@Override
-	public java.lang.String getClassName() {
-		return _journalArticle.getClassName();
-	}
-
-	/**
-	* Returns the content of this journal article.
-	*
-	* @return the content of this journal article
-	*/
-	@Override
-	public java.lang.String getContent() {
-		return _journalArticle.getContent();
-	}
-
-	@Override
-	public java.lang.String getContentByLocale(java.lang.String languageId) {
-		return _journalArticle.getContentByLocale(languageId);
-	}
-
-	/**
-	* Returns the ddm structure key of this journal article.
-	*
-	* @return the ddm structure key of this journal article
-	*/
-	@Override
-	public java.lang.String getDDMStructureKey() {
-		return _journalArticle.getDDMStructureKey();
-	}
-
-	/**
-	* Returns the ddm template key of this journal article.
-	*
-	* @return the ddm template key of this journal article
-	*/
-	@Override
-	public java.lang.String getDDMTemplateKey() {
-		return _journalArticle.getDDMTemplateKey();
-	}
-
-	/**
-	* Returns the default language ID of this journal article.
-	*
-	* @return the default language ID of this journal article
-	*/
-	@Override
-	public java.lang.String getDefaultLanguageId() {
-		return _journalArticle.getDefaultLanguageId();
-	}
-
-	@Override
-	public java.lang.String getDescription() {
-		return _journalArticle.getDescription();
-	}
-
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId) {
-		return _journalArticle.getDescription(languageId);
-	}
-
-	@Override
-	public java.lang.String getDescription(java.lang.String languageId,
-		boolean useDefault) {
-		return _journalArticle.getDescription(languageId, useDefault);
-	}
-
-	@Override
-	public java.lang.String getDescription(java.util.Locale locale) {
-		return _journalArticle.getDescription(locale);
-	}
-
-	@Override
-	public java.lang.String getDescription(java.util.Locale locale,
-		boolean useDefault) {
-		return _journalArticle.getDescription(locale, useDefault);
-	}
-
-	@Override
-	public java.lang.String getDescriptionMapAsXML() {
-		return _journalArticle.getDescriptionMapAsXML();
-	}
-
-	/**
-	* Returns the layout uuid of this journal article.
-	*
-	* @return the layout uuid of this journal article
-	*/
-	@Override
-	public java.lang.String getLayoutUuid() {
-		return _journalArticle.getLayoutUuid();
-	}
-
-	/**
-	* @deprecated As of 4.0.0
-	*/
-	@Deprecated
-	@Override
-	public java.lang.String getLegacyDescription() {
-		return _journalArticle.getLegacyDescription();
-	}
-
-	/**
-	* @deprecated As of 4.0.0
-	*/
-	@Deprecated
-	@Override
-	public java.lang.String getLegacyTitle() {
-		return _journalArticle.getLegacyTitle();
-	}
-
-	@Override
-	public java.lang.String getSmallImageType()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalArticle.getSmallImageType();
-	}
-
-	/**
-	* Returns the small image url of this journal article.
-	*
-	* @return the small image url of this journal article
-	*/
-	@Override
-	public java.lang.String getSmallImageURL() {
-		return _journalArticle.getSmallImageURL();
-	}
-
-	/**
-	* Returns the status by user name of this journal article.
-	*
-	* @return the status by user name of this journal article
-	*/
-	@Override
-	public java.lang.String getStatusByUserName() {
-		return _journalArticle.getStatusByUserName();
-	}
-
-	/**
-	* Returns the status by user uuid of this journal article.
-	*
-	* @return the status by user uuid of this journal article
-	*/
-	@Override
-	public java.lang.String getStatusByUserUuid() {
-		return _journalArticle.getStatusByUserUuid();
-	}
-
-	/**
-	* @deprecated As of 4.0.0, replaced by {@link #getDDMStructureKey()}
-	*/
-	@Deprecated
-	@Override
-	public java.lang.String getStructureId() {
-		return _journalArticle.getStructureId();
-	}
-
-	/**
-	* @deprecated As of 4.0.0, replaced by {@link #getDDMTemplateKey()}
-	*/
-	@Deprecated
-	@Override
-	public java.lang.String getTemplateId() {
-		return _journalArticle.getTemplateId();
-	}
-
-	@Override
-	public java.lang.String getTitle() {
-		return _journalArticle.getTitle();
-	}
-
-	@Override
-	public java.lang.String getTitle(java.lang.String languageId) {
-		return _journalArticle.getTitle(languageId);
-	}
-
-	@Override
-	public java.lang.String getTitle(java.lang.String languageId,
-		boolean useDefault) {
-		return _journalArticle.getTitle(languageId, useDefault);
-	}
-
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale) {
-		return _journalArticle.getTitle(locale);
-	}
-
-	@Override
-	public java.lang.String getTitle(java.util.Locale locale, boolean useDefault) {
-		return _journalArticle.getTitle(locale, useDefault);
-	}
-
-	@Override
-	public java.lang.String getTitleCurrentValue() {
-		return _journalArticle.getTitleCurrentValue();
-	}
-
-	@Override
-	public java.lang.String getTitleMapAsXML() {
-		return _journalArticle.getTitleMapAsXML();
-	}
-
-	/**
-	* Returns the tree path of this journal article.
-	*
-	* @return the tree path of this journal article
-	*/
-	@Override
-	public java.lang.String getTreePath() {
-		return _journalArticle.getTreePath();
-	}
-
-	/**
-	* Returns the url title of this journal article.
-	*
-	* @return the url title of this journal article
-	*/
-	@Override
-	public java.lang.String getUrlTitle() {
-		return _journalArticle.getUrlTitle();
-	}
-
-	/**
-	* Returns the user name of this journal article.
-	*
-	* @return the user name of this journal article
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _journalArticle.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this journal article.
-	*
-	* @return the user uuid of this journal article
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _journalArticle.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this journal article.
-	*
-	* @return the uuid of this journal article
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _journalArticle.getUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _journalArticle.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _journalArticle.toXmlString();
-	}
-
-	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
-		return _journalArticle.getAvailableLanguageIds();
-	}
-
-	/**
-	* Returns the create date of this journal article.
-	*
-	* @return the create date of this journal article
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _journalArticle.getCreateDate();
-	}
-
-	/**
-	* Returns the display date of this journal article.
-	*
-	* @return the display date of this journal article
-	*/
-	@Override
-	public Date getDisplayDate() {
-		return _journalArticle.getDisplayDate();
-	}
-
-	/**
-	* Returns the expiration date of this journal article.
-	*
-	* @return the expiration date of this journal article
-	*/
-	@Override
-	public Date getExpirationDate() {
-		return _journalArticle.getExpirationDate();
-	}
-
-	/**
-	* Returns the last publish date of this journal article.
-	*
-	* @return the last publish date of this journal article
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _journalArticle.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this journal article.
-	*
-	* @return the modified date of this journal article
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _journalArticle.getModifiedDate();
-	}
-
-	/**
-	* Returns the review date of this journal article.
-	*
-	* @return the review date of this journal article
-	*/
-	@Override
-	public Date getReviewDate() {
-		return _journalArticle.getReviewDate();
-	}
-
-	/**
-	* Returns the status date of this journal article.
-	*
-	* @return the status date of this journal article
-	*/
-	@Override
-	public Date getStatusDate() {
-		return _journalArticle.getStatusDate();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getImagesFileEntries()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalArticle.getImagesFileEntries();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getImagesFileEntries(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalArticle.getImagesFileEntries(start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getImagesFileEntries(
-		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalArticle.getImagesFileEntries(start, end, obc);
-	}
-
-	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
-		return _journalArticle.getDescriptionMap();
-	}
-
-	@Override
-	public Map<java.util.Locale, java.lang.String> getTitleMap() {
-		return _journalArticle.getTitleMap();
-	}
-
-	/**
-	* Returns the class name ID of this journal article.
-	*
-	* @return the class name ID of this journal article
-	*/
-	@Override
-	public long getClassNameId() {
-		return _journalArticle.getClassNameId();
-	}
-
-	/**
-	* Returns the class pk of this journal article.
-	*
-	* @return the class pk of this journal article
-	*/
-	@Override
-	public long getClassPK() {
-		return _journalArticle.getClassPK();
-	}
-
-	/**
-	* Returns the company ID of this journal article.
-	*
-	* @return the company ID of this journal article
-	*/
-	@Override
-	public long getCompanyId() {
-		return _journalArticle.getCompanyId();
-	}
-
-	/**
-	* Returns the folder ID of this journal article.
-	*
-	* @return the folder ID of this journal article
-	*/
-	@Override
-	public long getFolderId() {
-		return _journalArticle.getFolderId();
-	}
-
-	/**
-	* Returns the group ID of this journal article.
-	*
-	* @return the group ID of this journal article
-	*/
-	@Override
-	public long getGroupId() {
-		return _journalArticle.getGroupId();
-	}
-
-	/**
-	* Returns the ID of this journal article.
-	*
-	* @return the ID of this journal article
-	*/
-	@Override
-	public long getId() {
-		return _journalArticle.getId();
-	}
-
-	@Override
-	public long getImagesFolderId() {
-		return _journalArticle.getImagesFolderId();
-	}
-
-	/**
-	* Returns the primary key of this journal article.
-	*
-	* @return the primary key of this journal article
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _journalArticle.getPrimaryKey();
-	}
-
-	/**
-	* Returns the resource prim key of this journal article.
-	*
-	* @return the resource prim key of this journal article
-	*/
-	@Override
-	public long getResourcePrimKey() {
-		return _journalArticle.getResourcePrimKey();
-	}
-
-	/**
-	* Returns the small image ID of this journal article.
-	*
-	* @return the small image ID of this journal article
-	*/
-	@Override
-	public long getSmallImageId() {
-		return _journalArticle.getSmallImageId();
-	}
-
-	/**
-	* Returns the status by user ID of this journal article.
-	*
-	* @return the status by user ID of this journal article
-	*/
-	@Override
-	public long getStatusByUserId() {
-		return _journalArticle.getStatusByUserId();
-	}
-
-	/**
-	* Returns the class primary key of the trash entry for this journal article.
-	*
-	* @return the class primary key of the trash entry for this journal article
-	*/
-	@Override
-	public long getTrashEntryClassPK() {
-		return _journalArticle.getTrashEntryClassPK();
-	}
-
-	/**
-	* Returns the user ID of this journal article.
-	*
-	* @return the user ID of this journal article
-	*/
-	@Override
-	public long getUserId() {
-		return _journalArticle.getUserId();
 	}
 
 	@Override
@@ -1268,14 +1243,14 @@ public class JournalArticleWrapper implements JournalArticle,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_journalArticle.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_journalArticle.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_journalArticle.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -1593,6 +1568,31 @@ public class JournalArticleWrapper implements JournalArticle,
 	@Override
 	public void setVersion(double version) {
 		_journalArticle.setVersion(version);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<JournalArticle> toCacheModel() {
+		return _journalArticle.toCacheModel();
+	}
+
+	@Override
+	public JournalArticle toEscapedModel() {
+		return new JournalArticleWrapper(_journalArticle.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _journalArticle.toString();
+	}
+
+	@Override
+	public JournalArticle toUnescapedModel() {
+		return new JournalArticleWrapper(_journalArticle.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _journalArticle.toXmlString();
 	}
 
 	@Override

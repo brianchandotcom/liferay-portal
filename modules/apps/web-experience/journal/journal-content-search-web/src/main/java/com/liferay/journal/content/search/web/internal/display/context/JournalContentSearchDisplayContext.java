@@ -41,8 +41,6 @@ import com.liferay.portal.search.summary.Summary;
 import com.liferay.portal.search.summary.SummaryBuilder;
 import com.liferay.portal.search.summary.SummaryBuilderFactory;
 
-import java.util.List;
-
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,8 +51,7 @@ import javax.servlet.http.HttpServletRequest;
 public class JournalContentSearchDisplayContext {
 
 	public JournalContentSearchDisplayContext(
-		HttpServletRequest request,
-		LiferayPortletRequest liferayPortletRequest,
+		HttpServletRequest request, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		JournalContentSearchPortletInstanceConfiguration
 			journalContentSearchPortletInstanceConfiguration) {
@@ -160,10 +157,9 @@ public class JournalContentSearchDisplayContext {
 		Indexer<JournalArticle> indexer = IndexerRegistryUtil.getIndexer(
 			JournalArticle.class);
 
-		com.liferay.portal.kernel.search.Summary summary =
-			indexer.getSummary(
-				document, StringPool.BLANK, _liferayPortletRequest,
-				_liferayPortletResponse);
+		com.liferay.portal.kernel.search.Summary summary = indexer.getSummary(
+			document, StringPool.BLANK, _liferayPortletRequest,
+			_liferayPortletResponse);
 
 		SummaryBuilder summaryBuilder = _summaryBuilderFactory.newInstance();
 

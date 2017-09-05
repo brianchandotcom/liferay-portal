@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.search.solr.internal;
+package com.liferay.portal.search.solr.internal.suggest;
 
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.solr.connection.SolrClientManager;
+import com.liferay.portal.search.solr.internal.SolrQuerySuggester;
 
 import java.util.Arrays;
 
@@ -28,7 +29,7 @@ import org.mockito.Mockito;
 /**
  * @author André de Oliveira
  */
-public class SolrQuerySuggesterTest {
+public class SolrQuerySuggesterSafeguardsTest {
 
 	@Test
 	public void testErrorReturnsEmptyResults() throws Exception {

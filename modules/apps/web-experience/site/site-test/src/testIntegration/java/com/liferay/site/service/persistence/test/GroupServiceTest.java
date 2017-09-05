@@ -898,6 +898,14 @@ public class GroupServiceTest {
 		}
 	}
 
+	@Test(expected = GroupFriendlyURLException.class)
+	public void testSetNumericFriendlyURL() throws Exception {
+		String friendlyURL = "/" + _group.getGroupId();
+
+		GroupLocalServiceUtil.updateFriendlyURL(
+			_group.getGroupId(), friendlyURL);
+	}
+
 	@Test
 	public void testSubsites() throws Exception {
 		Group group1 = GroupTestUtil.addGroup();
@@ -946,14 +954,6 @@ public class GroupServiceTest {
 		Assert.assertEquals(
 			LocaleUtil.SPAIN,
 			PortalUtil.getSiteDefaultLocale(group.getGroupId()));
-	}
-
-	@Test(expected = GroupFriendlyURLException.class)
-	public void testUpdateFriendlyURLToGroupId() throws Exception {
-		String friendlyURL = "/" + _group.getGroupId();
-
-		GroupLocalServiceUtil.updateFriendlyURL(
-			_group.getGroupId(), friendlyURL);
 	}
 
 	@Test

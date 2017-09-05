@@ -22,7 +22,7 @@
 		<div class="carousel-container" ref="carouselContainer">
 			<ul class="carousel list-unstyled list-table" ref="carousel" style="margin-left: {$carouselOffset}">
 				{foreach $effect in $effects}
-					<li class="item" {if isFirst($effect)}ref="carouselItem"{/if}>
+					<li class="item" {if isFirst($effect)}ref="carouselFirstItem"{/if}>
 						<a data-onclick="previewEffect" data-effect="{$effect}" class="{$currentEffect_ == $effect ? 'active' : ''}">
 							<div id="{$ref}{$effect}" style="position: relative;">
 								<canvas width="{$thumbnailSize}" height="{$thumbnailSize}"></canvas>

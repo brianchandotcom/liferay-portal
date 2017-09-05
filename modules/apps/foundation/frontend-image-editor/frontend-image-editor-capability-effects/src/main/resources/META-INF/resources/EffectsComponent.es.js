@@ -187,7 +187,7 @@ class EffectsComponent extends Component {
 	 */ 
 	scrollLeft() {
 		const carousel = this.refs.carousel;
-		const itemWidth = this.res.carouselItem.offsetWidth || 0;
+		const itemWidth = this.res.carouselFirstItem.offsetWidth || 0;
 		const marginLeft = parseInt(carousel.style.marginLeft || 0, 10);
 		if (marginLeft < 0) {
 			const newMarginValue = Math.min(marginLeft + itemWidth, 0);
@@ -205,7 +205,7 @@ class EffectsComponent extends Component {
 		if (!canScrollForward.call(this)) {
 			return;
 		}
-		const itemWidth = this.refs.carouselItem.offsetWidth || 0;
+		const itemWidth = this.refs.carouselFirstItem.offsetWidth || 0;
 		const marginLeft = parseInt(carousel.style.marginLeft || 0, 10);
 		this.carouselOffset = (marginLeft - itemWidth) + 'px';
 	}
@@ -241,6 +241,15 @@ EffectsComponent.STATE = {
 	effects: {
 		validator: core.isArray,
 		value: ['none', 'ruby', 'absinthe', 'chroma', 'atari', 'tripel', 'ailis', 'flatfoot', 'pyrexia', 'umbra', 'rouge', 'idyll', 'glimmer', 'elysium', 'nucleus', 'amber', 'paella', 'aureus', 'expanse', 'orchid']
+	},
+
+	/**
+	 * Offset to the carousel item with the 'px' postfix 
+	 * @type {String}
+	 */
+	carouselOffset: {
+		validator: core.isString,
+		value: '0'		
 	},
 
 	/**

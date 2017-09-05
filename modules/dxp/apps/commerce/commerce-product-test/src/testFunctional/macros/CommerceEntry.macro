@@ -66,7 +66,7 @@
 				<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="CommerceEntry#WORKFLOW_STATUS">
+				<execute function="AssertTextEquals" locator1="CommerceEntry#WORKFLOW_STATUS" value1="${status}">
 					<var name="key_status" value="${status}" />
 				</execute>
 			</else>
@@ -88,7 +88,7 @@
 				<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="CommerceEntry#WORKFLOW_STATUS">
+				<execute function="AssertTextEquals" locator1="CommerceEntry#WORKFLOW_STATUS" value1="${status}">
 					<var name="key_status" value="${status}" />
 				</execute>
 			</else>

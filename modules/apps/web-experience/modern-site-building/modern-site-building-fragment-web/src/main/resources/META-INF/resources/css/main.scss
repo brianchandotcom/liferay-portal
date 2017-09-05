@@ -16,12 +16,7 @@
 }
 
 .msb-fragment-submit-buttons {
-	margin: 5px;
 	position: absolute;
-	right: 0;
-	top: 0;
-
-	@include sm {
-		margin: 10px;
-	}
+	right: 18px;
+	top: -74px;
 }

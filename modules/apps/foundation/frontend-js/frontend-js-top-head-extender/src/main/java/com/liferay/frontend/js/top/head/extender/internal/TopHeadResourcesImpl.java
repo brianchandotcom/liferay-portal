@@ -32,13 +32,13 @@ public class TopHeadResourcesImpl implements TopHeadResources {
 	}
 
 	@Override
-	public Collection<String> getJsResourcePaths() {
-		return _jsResourcePaths;
+	public Collection<String> getAuthenticatedJsResourcePaths() {
+		return _authenticatedJsResourcePaths;
 	}
 
 	@Override
-	public Collection<String> getAuthenticatedJsResourcePaths() {
-		return _authenticatedJsResourcePaths;
+	public Collection<String> getJsResourcePaths() {
+		return _jsResourcePaths;
 	}
 
 	@Override
@@ -50,8 +50,8 @@ public class TopHeadResourcesImpl implements TopHeadResources {
 		_servletContextPath = servletContextPath;
 	}
 
-	private final Collection<String> _jsResourcePaths;
 	private final Collection<String> _authenticatedJsResourcePaths;
+	private final Collection<String> _jsResourcePaths;
 	private String _servletContextPath;
 
 }

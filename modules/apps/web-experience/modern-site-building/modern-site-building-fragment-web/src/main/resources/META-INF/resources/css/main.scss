@@ -5,16 +5,6 @@
 @import "./MSBFragmentPreview";
 @import "./SourceEditor";
 
-#wrapper .portlet-layout.row,
-#wrapper .portlet {
-	margin-bottom: 0;
-}
-
-#wrapper .portlet-layout,
-.portlet {
-	margin-bottom: 0;
-}
-
 .msb-fragment-submit-buttons {
 	position: absolute;
 	right: 18px;

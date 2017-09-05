@@ -256,13 +256,15 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+				JSONArray valueJSONArray = JSONFactoryUtil.createJSONArray();
+
+				valueJSONArray.put(String.valueOf(cpDefinitionOptionValueRel.
+					getCPDefinitionOptionValueRelId()));
+
 				jsonObject.put(
 					"key",
 					cpDefinitionOptionValueRel.getCPDefinitionOptionRelId());
-				jsonObject.put(
-					"value",
-					cpDefinitionOptionValueRel.
-						getCPDefinitionOptionValueRelId());
+				jsonObject.put("value", valueJSONArray);
 
 				jsonArray.put(jsonObject);
 			}

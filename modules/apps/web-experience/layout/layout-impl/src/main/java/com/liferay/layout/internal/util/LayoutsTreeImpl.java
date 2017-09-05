@@ -570,7 +570,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 		boolean mobile = false;
 
-		if (request.getHeader("User-Agent").indexOf("Mobile") != -1) {
+		String userAgent = request.getHeader("User-Agent");
+
+		if (userAgent.indexOf("Mobile") != -1) {
 			mobile = true;
 		}
 

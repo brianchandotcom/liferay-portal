@@ -23,10 +23,10 @@
 					{/let}
 
 					<button
-						type="button"
 						class="{$buttonClasses}"
-						data-preview-size="{$size}"
 						data-onclick="{$_handlePreviewSizeButtonClick}"
+						data-preview-size="{$size}"
+						type="button"
 					>
 						<span class="sr-only">{$size}</span>
 						<svg class="lexicon-icon">
@@ -45,12 +45,13 @@
 			{/let}
 
 			<button
-				type="button"
 				class="{$buttonClasses}"
-				data-preview-size=""
 				data-onclick="{$_handlePreviewSizeButtonClick}"
+				data-preview-size=""
+				type="button"
 			>
 				<span class="sr-only">full size</span>
+
 				<svg class="lexicon-icon">
 					<use xlink:href="{$spritemap}#full-size"></use>
 				</svg>
@@ -69,6 +70,7 @@
 			ref="preview"
 			sandbox="allow-scripts"
 			src="{$_previewContent}"
-		></iframe>
+		>
+		</iframe>
 	</div>
 {/template}

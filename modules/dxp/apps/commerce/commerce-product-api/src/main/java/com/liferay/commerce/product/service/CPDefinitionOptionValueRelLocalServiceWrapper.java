@@ -297,6 +297,13 @@ public class CPDefinitionOptionValueRelLocalServiceWrapper
 			start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
+		long[] cpDefinitionOptionValueRelsId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionOptionValueRelLocalService.getCPDefinitionOptionValueRels(cpDefinitionOptionValueRelsId);
+	}
+
 	/**
 	* Returns all the cp definition option value rels matching the UUID and company.
 	*

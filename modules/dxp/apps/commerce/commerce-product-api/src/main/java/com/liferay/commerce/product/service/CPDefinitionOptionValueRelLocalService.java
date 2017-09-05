@@ -261,6 +261,10 @@ public interface CPDefinitionOptionValueRelLocalService extends BaseLocalService
 		long cpDefinitionOptionRelId, int start, int end,
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
+		long[] cpDefinitionOptionValueRelsId) throws PortalException;
+
 	/**
 	* Returns all the cp definition option value rels matching the UUID and company.
 	*

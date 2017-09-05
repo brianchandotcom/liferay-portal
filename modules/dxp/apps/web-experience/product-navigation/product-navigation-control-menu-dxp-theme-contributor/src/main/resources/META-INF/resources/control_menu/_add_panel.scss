@@ -70,13 +70,23 @@ body.open-admin-panel, body.sidenav-transition {
 		z-index: 4;
 	}
 
-	.add-content-menu .add-portlet-message {
-		background-color: $product-menu-panel-title-active-bg;
-		margin: 20px;
-		padding: 5px 20px;
+	.add-content-menu {
+		.add-portlet-message {
+			background-color: $product-menu-panel-title-active-bg;
+			margin: 20px;
+			padding: 5px 20px;
 
-		.info-message {
-			margin: 20px 0;
+			.info-message {
+				margin: 20px 0;
+			}
+		}
+
+		.display-style-bar {
+			margin: 10px;
+
+			.display-style {
+				padding: 5px;
+			}
 		}
 	}
 }

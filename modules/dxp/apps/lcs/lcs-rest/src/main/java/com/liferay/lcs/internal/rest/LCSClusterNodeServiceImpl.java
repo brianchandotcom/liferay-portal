@@ -14,7 +14,6 @@
 
 package com.liferay.lcs.internal.rest;
 
-import com.liferay.lcs.internal.rest.BaseLCSServiceImpl;
 import com.liferay.lcs.rest.LCSClusterNode;
 import com.liferay.lcs.rest.LCSClusterNodeService;
 import com.liferay.lcs.rest.RESTError;

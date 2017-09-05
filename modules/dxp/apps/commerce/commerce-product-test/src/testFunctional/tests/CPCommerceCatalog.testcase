@@ -49,7 +49,6 @@
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="CommerceCatalog#addEntry">
-			<var name="baseSku" value="Grouped Product 1 SKU" />
 			<var name="plusMenu" value="Grouped" />
 			<var name="productFullDescription" value="Grouped Product 1 Full Description" />
 			<var name="productShortDescription" value="Grouped Product 1 Short Description" />
@@ -77,7 +76,6 @@
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="CommerceCatalog#addEntry">
-			<var name="baseSku" value="Grouped Product 1 SKU" />
 			<var name="plusMenu" value="Grouped" />
 			<var name="productFullDescription" value="Grouped Product 1 Full Description" />
 			<var name="productShortDescription" value="Grouped Product 1 Short Description" />
@@ -93,7 +91,6 @@
 		<property name="portal.acceptance" value="quarantine" />
 
 		<execute macro="CommerceCatalog#addEntry">
-			<var name="baseSku" value="Simple Product 1 SKU" />
 			<var name="plusMenu" value="Simple" />
 			<var name="productFullDescription" value="Simple Product 1 Full Description" />
 			<var name="productShortDescription" value="Simple Product 1 Short Description" />
@@ -121,7 +118,6 @@
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="CommerceCatalog#addEntry">
-			<var name="baseSku" value="Simple Product 1 SKU" />
 			<var name="plusMenu" value="Simple" />
 			<var name="productFullDescription" value="Simple Product 1 Full Description" />
 			<var name="productShortDescription" value="Simple Product 1 Short Description" />
@@ -137,7 +133,6 @@
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="CommerceCatalog#addEntry">
-			<var name="baseSku" value="Virtual Product 1 SKU" />
 			<var name="plusMenu" value="Virtual" />
 			<var name="productFullDescription" value="Virtual Product 1 Full Description" />
 			<var name="productShortDescription" value="Virtual Product 1 Short Description" />
@@ -165,7 +160,6 @@
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="CommerceCatalog#addEntry">
-			<var name="baseSku" value="Virtual Product 1 SKU" />
 			<var name="plusMenu" value="Virtual" />
 			<var name="productFullDescription" value="Virtual Product 1 Full Description" />
 			<var name="productShortDescription" value="Virtual Product 1 Short Description" />
@@ -186,7 +180,6 @@
 		</execute>
 
 		<execute macro="CommerceEntry#viewCatalogEntry">
-			<var name="baseSku" value="Grouped Product 1 SKU" />
 			<var name="productFullDescription" value="Grouped Product 1 Full Description" />
 			<var name="productShortDescription" value="Grouped Product 1 Short Description" />
 			<var name="productTitle" value="Grouped Product 1 Title" />
@@ -202,7 +195,6 @@
 		</execute>
 
 		<execute macro="CommerceEntry#viewCatalogEntry">
-			<var name="baseSku" value="Grouped Product 1 SKU" />
 			<var name="productFullDescription" value="Grouped Product 1 Full Description" />
 			<var name="productShortDescription" value="Grouped Product 1 Short Description" />
 			<var name="productTitle" value="Grouped Product 1 Title" />
@@ -218,7 +210,6 @@
 		</execute>
 
 		<execute macro="CommerceEntry#viewCatalogEntry">
-			<var name="baseSku" value="Simple Product 1 SKU" />
 			<var name="productFullDescription" value="Simple Product 1 Full Description" />
 			<var name="productShortDescription" value="Simple Product 1 Short Description" />
 			<var name="productTitle" value="Simple Product 1 Title" />
@@ -234,7 +225,6 @@
 		</execute>
 
 		<execute macro="CommerceEntry#viewCatalogEntry">
-			<var name="baseSku" value="Virtual Product 1 SKU" />
 			<var name="productFullDescription" value="Virtual Product 1 Full Description" />
 			<var name="productShortDescription" value="Virtual Product 1 Short Description" />
 			<var name="productTitle" value="Virtual Product 1 Title" />
@@ -250,7 +240,6 @@
 		</execute>
 
 		<execute macro="CommerceEntry#viewCatalogEntry">
-			<var name="baseSku" value="Simple Product 1 SKU" />
 			<var name="productFullDescription" value="Simple Product 1 Full Description" />
 			<var name="productShortDescription" value="Simple Product 1 Short Description" />
 			<var name="productTitle" value="Simple Product 1 Title" />
@@ -266,7 +255,6 @@
 		</execute>
 
 		<execute macro="CommerceEntry#viewCatalogEntry">
-			<var name="baseSku" value="Virtual Product 1 SKU" />
 			<var name="productFullDescription" value="Virtual Product 1 Full Description" />
 			<var name="productShortDescription" value="Virtual Product 1 Short Description" />
 			<var name="productTitle" value="Virtual Product 1 Title" />
@@ -278,7 +266,6 @@
 
 		<for list="1,2,3" param="entryNumber">
 			<execute macro="CommerceCatalog#addEntry">
-				<var name="baseSku" value="Product${entryNumber}SKU" />
 				<var name="plusMenu" value="Simple" />
 				<var name="productFullDescription" value="Product ${entryNumber} Full Description" />
 				<var name="productShortDescription" value="Product ${entryNumber} Short Description" />
@@ -321,7 +308,6 @@
 
 	<command ignore="true" name="EditCatalogEntry" priority="5">
 		<execute macro="CommerceCatalog#addEntry">
-			<var name="baseSku" value="Product 1 SKU" />
 			<var name="plusMenu" value="Simple" />
 			<var name="productFullDescription" value="Product Full Description" />
 			<var name="productShortDescription" value="Product Short Description" />
@@ -349,10 +335,6 @@
 			<var name="newEntryFullDescription" value="New Product Full Description" />
 		</execute>
 
-		<execute macro="CommerceEntry#editEntryBaseSKU">
-			<var name="baseSku" value="New Product BaseSKU" />
-		</execute>
-
 		<execute macro="CommerceEntry#publishEntry">
 			<var name="status" value="Approved" />
 		</execute>
@@ -377,7 +359,6 @@
 		</execute>
 
 		<execute macro="CommerceEntry#viewCatalogEntry">
-			<var name="baseSku" value="New Product BaseSKU" />
 			<var name="productFullDescription" value="New Product Full Description" />
 			<var name="productShortDescription" value="New Product Short Description" />
 			<var name="productTitle" value="New Product Title" />

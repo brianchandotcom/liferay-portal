@@ -103,7 +103,7 @@ public class SyncDeviceModelImpl extends BaseModelImpl<SyncDevice>
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SyncDevice (uuid_ VARCHAR(75) null,syncDeviceId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,type_ VARCHAR(75) null,buildNumber LONG,featureSet INTEGER,hostname VARCHAR(75) null,status INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table SyncDevice (uuid_ VARCHAR(75) null,syncDeviceId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,type_ VARCHAR(75) null,buildNumber LONG,featureSet INTEGER,hostname VARCHAR(200) null,status INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table SyncDevice";
 	public static final String ORDER_BY_JPQL = " ORDER BY syncDevice.syncDeviceId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY SyncDevice.syncDeviceId ASC";

@@ -266,6 +266,6 @@ public class LCSClusterNodeServiceImpl
 	}
 
 	private static final String _URL_LCS_CLUSTER_NODE =
-		"/osb-lcs-portlet/lcs/jsonws/v1_4/LCSClusterNode";
+		"/o/osb-lcs-rest/LCSClusterNode";
 
 }

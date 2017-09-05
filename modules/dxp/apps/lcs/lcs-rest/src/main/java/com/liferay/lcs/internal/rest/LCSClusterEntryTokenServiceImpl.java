@@ -48,6 +48,6 @@ public class LCSClusterEntryTokenServiceImpl
 	}
 
 	private static final String _URL_LCS_CLUSTER_ENTRY_TOKEN =
-		"/osb-lcs-portlet/lcs/jsonws/v1_4/LCSClusterEntryToken";
+		"/o/osb-lcs-rest/LCSClusterEntryToken";
 
 }

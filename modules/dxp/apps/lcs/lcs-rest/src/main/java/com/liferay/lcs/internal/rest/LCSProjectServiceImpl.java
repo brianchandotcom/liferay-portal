@@ -58,7 +58,6 @@ public class LCSProjectServiceImpl
 		return lcsProjects;
 	}
 
-	private static final String _URL_LCS_PROJECT =
-		"/osb-lcs-portlet/lcs/jsonws/v1_4/LCSProject";
+	private static final String _URL_LCS_PROJECT = "/o/osb-lcs-rest/LCSProject";
 
 }

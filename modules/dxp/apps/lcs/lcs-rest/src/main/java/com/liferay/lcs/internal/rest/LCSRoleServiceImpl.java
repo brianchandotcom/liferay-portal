@@ -45,7 +45,6 @@ public class LCSRoleServiceImpl
 		}
 	}
 
-	private static final String _URL_LCS_ROLE =
-		"/osb-lcs-portlet/lcs/jsonws/v1_4/LCSRole";
+	private static final String _URL_LCS_ROLE = "/o/osb-lcs-rest/LCSRole";
 
 }

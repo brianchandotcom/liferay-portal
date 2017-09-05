@@ -46,6 +46,6 @@ public class LCSPatchingAdvisorServiceImpl
 	}
 
 	private static final String _URL_PATCHING_ADVISOR =
-		"/osb-lcs-portlet/lcs/jsonws/v1_4/LCSPatchingAdvisor";
+		"/o/osb-lcs-rest/LCSPatchingAdvisor";
 
 }

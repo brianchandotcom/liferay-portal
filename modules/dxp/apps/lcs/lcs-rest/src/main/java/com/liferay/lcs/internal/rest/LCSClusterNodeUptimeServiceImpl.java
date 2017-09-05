@@ -52,6 +52,6 @@ public class LCSClusterNodeUptimeServiceImpl
 	}
 
 	private static final String _URL_LCS_CLUSTER_NODE_UPTIME =
-		"/osb-lcs-portlet/lcs/jsonws/v1_4/LCSClusterNodeUptime";
+		"/o/osb-lcs-rest/LCSClusterNodeUptime";
 
 }

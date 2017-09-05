@@ -49,7 +49,6 @@ public class LCSMessageServiceImpl
 		}
 	}
 
-	private static final String _URL_LCS_MESSAGE =
-		"/osb-lcs-portlet/lcs/jsonws/v1_4/LCSMessage";
+	private static final String _URL_LCS_MESSAGE = "/o/osb-lcs-rest/LCSMessage";
 
 }

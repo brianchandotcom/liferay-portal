@@ -70,8 +70,7 @@ public class LCSMembersServiceImpl
 		}
 	}
 
-	private static final String _URL_LCS_MEMBERS =
-		"/osb-lcs-portlet/lcs/jsonws/v1_4/LCSMembers";
+	private static final String _URL_LCS_MEMBERS = "/o/osb-lcs-rest/LCSMembers";
 
 	private static final String
 		_URL_LCS_MEMBERS_SEND_MONITORING_UNAVAILABLE_EMAIL =

@@ -86,7 +86,7 @@ public class LCSMetadataServiceImpl
 	}
 
 	private static final String _URL_LCS_METADATA =
-		"/osb-lcs-portlet/lcs/jsonws/v1_4/LCSMetadata";
+		"/o/osb-lcs-rest/LCSMetadata";
 
 	private static final Map<String, Integer> _supportedLCSPortletMap =
 		new HashMap<String, Integer>();

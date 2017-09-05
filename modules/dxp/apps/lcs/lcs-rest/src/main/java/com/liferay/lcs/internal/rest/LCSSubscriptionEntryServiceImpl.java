@@ -75,7 +75,7 @@ public class LCSSubscriptionEntryServiceImpl
 	}
 
 	private static final String _URL_LCS_SUBSCRIPTION_ENTRY =
-		"/osb-lcs-portlet/lcs/jsonws/v1_4/LCSSubscriptionEntry";
+		"/o/osb-lcs-rest/LCSSubscriptionEntry";
 
 	private static final Logger _logger = LoggerFactory.getLogger(
 		LCSSubscriptionEntryServiceImpl.class);

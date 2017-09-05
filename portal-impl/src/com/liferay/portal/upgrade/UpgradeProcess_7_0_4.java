@@ -23,6 +23,7 @@ import com.liferay.portal.upgrade.v7_0_4.UpgradeGroup;
 import com.liferay.portal.upgrade.v7_0_4.UpgradeMBMailingList;
 import com.liferay.portal.upgrade.v7_0_4.UpgradeModules;
 import com.liferay.portal.upgrade.v7_0_4.UpgradeUser;
+import com.liferay.portal.upgrade.v7_0_4.UpgradeVirtualHost;
 
 /**
  * @author Roberto Díaz
@@ -44,6 +45,7 @@ public class UpgradeProcess_7_0_4 extends UpgradeProcess {
 		upgrade(UpgradeMBMailingList.class);
 		upgrade(UpgradeModules.class);
 		upgrade(UpgradeUser.class);
+		upgrade(UpgradeVirtualHost.class);
 
 		clearIndexesCache();
 	}

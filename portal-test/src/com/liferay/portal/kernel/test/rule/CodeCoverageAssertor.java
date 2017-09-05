@@ -100,6 +100,10 @@ public class CodeCoverageAssertor implements TestRule {
 		};
 	}
 
+	public List<Method> getAssertMethods() throws ReflectiveOperationException {
+		return Collections.emptyList();
+	}
+
 	protected void afterClass(Description description, String className)
 		throws Throwable {
 
@@ -117,8 +121,7 @@ public class CodeCoverageAssertor implements TestRule {
 
 		try {
 			_ASSERT_COVERAGE_METHOD.invoke(
-				null, _includeInnerClasses,
-				assertClasses.toArray(new Class<?>[assertClasses.size()]));
+				null, _includeInnerClasses, assertClasses, getAssertMethods());
 		}
 		catch (InvocationTargetException ite) {
 			throw ite.getCause();
@@ -201,6 +204,22 @@ public class CodeCoverageAssertor implements TestRule {
 			Object reloadedObject = constructor.newInstance();
 
 			appendAssertClassesMethod.invoke(reloadedObject, assertClasses);
+
+			Method getAssertMethodsMethod = reloadedClass.getMethod(
+				"getAssertMethods");
+
+			getAssertMethodsMethod.setAccessible(true);
+
+			List<Method> methods = (List<Method>)getAssertMethodsMethod.invoke(
+				reloadedObject);
+
+			for (Method method : methods) {
+				Class<?> declaringClass = method.getDeclaringClass();
+
+				if (!assertClasses.contains(declaringClass)) {
+					assertClasses.add(declaringClass);
+				}
+			}
 		}
 
 		String[] includes = new String[assertClasses.size()];
@@ -228,7 +247,7 @@ public class CodeCoverageAssertor implements TestRule {
 				"com.liferay.whip.agent.InstrumentationAgent");
 
 			_ASSERT_COVERAGE_METHOD = instrumentationAgentClass.getMethod(
-				"assertCoverage", boolean.class, Class[].class);
+				"assertCoverage", boolean.class, List.class, List.class);
 			_DYNAMICALLY_INSTRUMENT_METHOD =
 				instrumentationAgentClass.getMethod(
 					"dynamicallyInstrument", String[].class, String[].class);

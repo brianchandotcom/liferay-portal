@@ -37,11 +37,11 @@ public class SharepointServerResponseConverter {
 
 	public SharepointServerResponseConverter(
 		SharepointURLHelper sharepointURLHelper, ExtRepository extRepository,
-		String siteAbsoluteUrl) {
+		String siteAbsoluteURL) {
 
 		_sharepointURLHelper = sharepointURLHelper;
 		_extRepository = extRepository;
-		_siteAbsoluteUrl = siteAbsoluteUrl;
+		_siteAbsoluteURL = siteAbsoluteURL;
 	}
 
 	public <T extends ExtRepositoryFileEntry & ExtRepositoryObject> T
@@ -155,6 +155,6 @@ public class SharepointServerResponseConverter {
 
 	private final ExtRepository _extRepository;
 	private final SharepointURLHelper _sharepointURLHelper;
-	private final String _siteAbsoluteUrl;
+	private final String _siteAbsoluteURL;
 
 }

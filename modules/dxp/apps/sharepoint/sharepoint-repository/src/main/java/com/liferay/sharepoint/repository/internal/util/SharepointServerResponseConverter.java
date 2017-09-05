@@ -114,7 +114,6 @@ public class SharepointServerResponseConverter {
 		Date createDate = _parseDate(jsonObject.getString("TimeCreated"));
 		Date modifiedDate = _parseDate(
 			jsonObject.getString("TimeLastModified"));
-
 		long effectiveBasePermissionsBits = _getEffectiveBasePermissionsBits(
 			jsonObject);
 

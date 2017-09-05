@@ -60,7 +60,6 @@ public class UpdateGeneralMVCActionCommand extends BaseMVCActionCommand {
 		boolean enabled = GetterUtil.getBoolean(
 			properties.getProperty(PortletPropsKeys.SAML_ENABLED),
 			_samlProviderConfigurationHelper.isEnabled());
-
 		String samlEntityId = properties.getProperty(
 			PortletPropsKeys.SAML_ENTITY_ID);
 

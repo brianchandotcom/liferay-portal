@@ -5420,51 +5420,33 @@ go]]></replacevalue>
 			<then>
 				<echo file="tools/sdk/build.${user.name}.properties">auto.deploy.dir=${liferay.home}/deploy</echo>
 
-				<local name="osgi.module.dir" />
+				<property name="osgi.module.pattern" value="**/apps/**" />
 
-				<property name="osgi.module.dir" value="modules/apps">
+				<antelope:stringutil property="osgi.modules.includes.pattern" string="${osgi.module.pattern}/${osgi.modules.includes}">
+					<antelope:replace regex="," replacement=",${osgi.module.pattern}/" />
+				</antelope:stringutil>
 
-				<for list="${osgi.modules.includes}" parallel="true" param="osgi.module">
+				<pathconvert pathsep="," property="osgi.modules.paths">
+					<dirset dir="modules" includes="${osgi.modules.includes.pattern}">
+						<or>
+							<present targetdir="modules">
+								<mapper type="glob" from="*" to="*/build.gradle" />
+							</present>
+							<present targetdir="modules">
+								<mapper type="glob" from="*" to="*/build.xml" />
+							</present>
+						</or>
+					</dirset>
+				</pathconvert>
+
+				<for list="${osgi.modules.paths}" param="osgi.modules.path">
 					<sequential>
+						<local name="osgi.modules.gradle.dir">
+
+						<dirname file="@{osgi.modules.path}" property="osgi.modules.gradle.dir" />
+
 						<if>
-							<os family="unix" />
-							<then>
-								<exec executable="/bin/bash" outputproperty="@{osgi.module}.paths">
-									<arg value="-c" />
-									<arg value="find ${osgi.module.dir} -name @{osgi.module}" />
-								</exec>
-							</then>
-							<else>
-								<exec executable="cmd" outputproperty="@{osgi.module}.paths">
-									<arg value="/c" />
-									<arg value="dir /b /s /on /ad @{osgi.module} 2>nul" />
-								</exec>
-							</else>
-						</if>
-
-						<for delimiter="${line.separator}" list="${@{osgi.module}.paths}" param="osgi.module.path">
-							<sequential>
-								<if>
-									<or>
-										<available file="@{osgi.module.path}/build.gradle" />
-										<available file="@{osgi.module.path}/build.xml" />
-									</or>
-									<then>
-										<property name="@{osgi.module}.path" value="@{osgi.module.path}" />
-
-										<echo message="Found: ${@{osgi.module}.path}" />
-									</then>
-								</if>
-							</sequential>
-						</for>
-					</sequential>
-				</for>
-
-				<for list="${osgi.modules.includes}" param="osgi.module">
-					<sequential>
-						<dirname file="${@{osgi.module}.path}" property="@{osgi.module}.gradle.dir" />
-						<if>
-							<available file="${@{osgi.module}.gradle.dir}/settings.gradle" />
+							<available file="${osgi.modules.gradle.dir}/settings.gradle" />
 							<then>
 								<move file="${@{osgi.module}.gradle.dir}/settings.gradle" tofile="${@{osgi.module}.gradle.dir}/settings" />
 							</then>
@@ -5472,18 +5454,22 @@ go]]></replacevalue>
 					</sequential>
 				</for>
 
-				<for list="${osgi.modules.includes}" parallel="true" param="osgi.module">
+				<for list="${osgi.modules.paths}" parallel="true" param="osgi.module.path">
 					<sequential>
-						<gradle-execute dir="${@{osgi.module}.path}" task="deploy">
+						<gradle-execute dir="@{osgi.module.path}" task="deploy">
 							<arg value="clean" />
 						</gradle-execute>
 					</sequential>
 				</for>
 
-				<for list="${osgi.modules.includes}" param="osgi.module">
+				<for list="${osgi.modules.paths}" param="osgi.module.path">
 					<sequential>
+						<local name="osgi.modules.gradle.dir">
+
+						<dirname file="@{osgi.modules.path}" property="osgi.modules.gradle.dir" />
+
 						<if>
-							<available file="${@{osgi.module}.gradle.dir}/settings" />
+							<available file="${osgi.modules.gradle.dir}/settings" />
 							<then>
 								<move file="${@{osgi.module}.gradle.dir}/settings" tofile="${@{osgi.module}.gradle.dir}/settings.gradle" />
 							</then>

@@ -55,7 +55,6 @@ page import="com.liferay.asset.publisher.web.display.context.ItemSelectorViewDis
 page import="com.liferay.asset.publisher.web.util.AssetPublisherCustomizer" %><%@
 page import="com.liferay.asset.publisher.web.util.AssetPublisherHelper" %><%@
 page import="com.liferay.asset.publisher.web.util.AssetPublisherUtil" %><%@
-page import="com.liferay.asset.util.AssetEntryQueryProcessor" %><%@
 page import="com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator" %><%@
 page import="com.liferay.asset.util.impl.AssetPublisherAddItemHolder" %><%@
 page import="com.liferay.asset.util.impl.AssetUtil" %><%@
@@ -114,8 +113,7 @@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portlet.usersadmin.search.GroupSearch" %><%@
 page import="com.liferay.site.item.selector.criteria.SiteItemSelectorReturnType" %><%@
-page import="com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion" %><%@
-page import="com.liferay.taglib.servlet.PipingServletResponse" %>
+page import="com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion" %>
 
 <%@ page import="java.io.Serializable" %>
 

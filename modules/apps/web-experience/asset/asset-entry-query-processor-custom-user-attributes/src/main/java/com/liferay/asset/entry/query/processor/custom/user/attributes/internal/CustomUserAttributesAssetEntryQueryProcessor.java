@@ -23,14 +23,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.io.IOException;
-
-import java.util.Locale;
-
 import javax.portlet.PortletPreferences;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -47,23 +40,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CustomUserAttributesAssetEntryQueryProcessor
 	implements AssetEntryQueryProcessor {
-
-	@Override
-	public String getKey() {
-		return null;
-	}
-
-	@Override
-	public String getTitle(Locale locale) {
-		return null;
-	}
-
-	@Override
-	public void include(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
-	}
 
 	@Override
 	public void processAssetEntryQuery(

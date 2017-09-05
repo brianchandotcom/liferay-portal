@@ -29,7 +29,8 @@ class MSBFragmentNameEditor extends Component {
 	_handleSubmitForm(event) {
 		event.preventDefault();
 
-		const formData = new FormData(event.target);
+		const form = document.getElementById(this.namespace + "addForm");
+		const formData = new FormData(form);
 
 		fetch(
 			this.addMSBFragmentEntryURL,

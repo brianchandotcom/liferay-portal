@@ -12,7 +12,7 @@
 
 	{call Modal.render}
 		{param body kind="html"}
-			<form class="form" method="post" data-onsubmit="{$_handleSubmitForm}">
+			<form class="form" id="{$namespace}addForm" method="post" data-onsubmit="{$_handleSubmitForm}">
 				<div class="form-group input-text-wrapper">
 					<label class="control-label">
 						{msg desc=""}name{/msg}
@@ -32,18 +32,6 @@
 						</div>
 					{/if}
 				</div>
-				<div class="pull-right">
-					<button class="btn btn btn-cancel btn-default btn-link" type="button" data-onclick="hide">
-						<span class="lfr-btn-label">
-							{msg desc=""}cancel{/msg}
-						</span>
-					</button>
-					<button class="btn btn btn-primary btn-default" type="submit">
-						<span class="lfr-btn-label">
-							{msg desc=""}save{/msg}
-						</span>
-					</button>
-				</div>
 			</form>
 		{/param}
 		{param dialogClasses: 'msb-fragment-name-editor__dialog' /}
@@ -52,6 +40,18 @@
 		]/}
 		{param header kind="html"}
 			<h3 class="modal-title">{msg desc=""}add-fragment{/msg}</h3>
+		{/param}
+		{param footer kind="html"}
+			<button class="btn btn-primary btn-default btn-lg" data-onclick="{$_handleSubmitForm}" type="button">
+				<span class="lfr-btn-label">
+					{msg desc=""}save{/msg}
+				</span>
+			</button>
+			<button class="btn btn-cancel btn-default btn-lg btn-link" data-onclick="hide" type="button">
+				<span class="lfr-btn-label">
+					{msg desc=""}cancel{/msg}
+				</span>
+			</button>
 		{/param}
 	{/call}
 {/template}

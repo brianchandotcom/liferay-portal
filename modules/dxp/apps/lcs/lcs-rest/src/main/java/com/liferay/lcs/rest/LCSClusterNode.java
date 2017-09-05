@@ -20,7 +20,7 @@ import java.util.Date;
  * @author Ivica Cardic
  * @author Igor Beslic
  */
-public class LCSClusterNodeImpl {
+public class LCSClusterNode {
 
 	public boolean getArchived() {
 		return _archived;

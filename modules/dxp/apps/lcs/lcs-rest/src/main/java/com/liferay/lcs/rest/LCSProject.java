@@ -17,7 +17,7 @@ package com.liferay.lcs.rest;
 /**
  * @author Ivica Cardic
  */
-public class LCSProjectImpl {
+public class LCSProject {
 
 	public long getAccountEntryId() {
 		return _accountEntryId;

@@ -18,7 +18,7 @@ package com.liferay.lcs.rest;
  * @author Igor Beslic
  * @author Ivica Cardic
  */
-public class LCSClusterEntryImpl {
+public class LCSClusterEntry {
 
 	public boolean getArchived() {
 		return _archived;

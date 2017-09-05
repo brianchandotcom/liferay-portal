@@ -14,7 +14,7 @@
 
 package com.liferay.lcs.internal.rest;
 
-import com.liferay.lcs.rest.LCSRoleImpl;
+import com.liferay.lcs.rest.LCSRole;
 import com.liferay.lcs.rest.LCSRoleService;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 
@@ -29,8 +29,8 @@ public class LCSRoleServiceImpl
 	@Override
 	public boolean hasUserLCSAdministratorLCSRole(long lcsProjectId) {
 		try {
-			List<LCSRoleImpl> lcsRoles = doGetToList(
-				LCSRoleImpl.class, _URL_LCS_ROLE, "lcsProjectId",
+			List<LCSRole> lcsRoles = doGetToList(
+				LCSRole.class, _URL_LCS_ROLE, "lcsProjectId",
 				String.valueOf(lcsProjectId), "lcsAdministrator", "true",
 				"lcsEnvironmentManager", "false");
 

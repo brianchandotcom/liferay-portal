@@ -17,7 +17,7 @@ package com.liferay.lcs.rest;
 /**
  * @author Riccardo Ferrari
  */
-public class LCSMetadataImpl {
+public class LCSMetadata {
 
 	public long getAvailabilityIndex() {
 		return _availabilityIndex;

@@ -14,57 +14,55 @@
 
 package com.liferay.lcs.rest;
 
-import java.util.Date;
-
 /**
- * @author Igor Beslic
+ * @author Ivica Cardic
  */
-public class LCSClusterEntryTokenImpl {
-
-	public String getContent() {
-		return _content;
-	}
-
-	public Date getCreateDate() {
-		return _createDate;
-	}
+public class LCSRole {
 
 	public long getLcsClusterEntryId() {
 		return _lcsClusterEntryId;
 	}
 
-	public long getLcsClusterEntryTokenId() {
-		return _lcsClusterEntryTokenId;
+	public long getLcsProjectId() {
+		return _lcsProjectId;
+	}
+
+	public long getLcsRoleId() {
+		return _lcsRoleId;
+	}
+
+	public int getRole() {
+		return _role;
 	}
 
 	public long getUserId() {
 		return _userId;
 	}
 
-	public void setContent(String content) {
-		_content = content;
-	}
-
-	public void setCreateDate(Date createDate) {
-		_createDate = createDate;
-	}
-
 	public void setLcsClusterEntryId(long lcsClusterEntryId) {
 		_lcsClusterEntryId = lcsClusterEntryId;
 	}
 
-	public void setLcsClusterEntryTokenId(long lcsClusterEntryTokenId) {
-		_lcsClusterEntryTokenId = lcsClusterEntryTokenId;
+	public void setLcsProjectId(long lcsProjectId) {
+		_lcsProjectId = lcsProjectId;
+	}
+
+	public void setLcsRoleId(long lcsRoleId) {
+		_lcsRoleId = lcsRoleId;
+	}
+
+	public void setRole(int role) {
+		_role = role;
 	}
 
 	public void setUserId(long userId) {
 		_userId = userId;
 	}
 
-	private String _content;
-	private Date _createDate;
 	private long _lcsClusterEntryId;
-	private long _lcsClusterEntryTokenId;
+	private long _lcsProjectId;
+	private long _lcsRoleId;
+	private int _role;
 	private long _userId;
 
 }

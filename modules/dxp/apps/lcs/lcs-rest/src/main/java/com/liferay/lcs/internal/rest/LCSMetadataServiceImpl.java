@@ -15,7 +15,6 @@
 package com.liferay.lcs.internal.rest;
 
 import com.liferay.lcs.rest.LCSMetadata;
-import com.liferay.lcs.rest.LCSMetadataImpl;
 import com.liferay.lcs.rest.LCSMetadataService;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
@@ -49,7 +48,7 @@ public class LCSMetadataServiceImpl
 		if (supportedLCSPortlet == null) {
 			try {
 				LCSMetadata lcsMetadata = doGetToObject(
-					LCSMetadataImpl.class, _URL_LCS_METADATA, "buildNumber",
+					LCSMetadata.class, _URL_LCS_METADATA, "buildNumber",
 					buildNumber, "portalEdition", portalEdition);
 
 				_supportedLCSPortletMap.put(

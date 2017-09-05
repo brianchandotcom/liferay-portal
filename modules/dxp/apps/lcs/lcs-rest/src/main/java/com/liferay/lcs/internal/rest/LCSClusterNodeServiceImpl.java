@@ -16,7 +16,6 @@ package com.liferay.lcs.internal.rest;
 
 import com.liferay.lcs.internal.rest.BaseLCSServiceImpl;
 import com.liferay.lcs.rest.LCSClusterNode;
-import com.liferay.lcs.rest.LCSClusterNodeImpl;
 import com.liferay.lcs.rest.LCSClusterNodeService;
 import com.liferay.lcs.rest.RESTError;
 import com.liferay.lcs.rest.exception.DuplicateLCSClusterNodeNameException;
@@ -56,7 +55,7 @@ public class LCSClusterNodeServiceImpl
 
 		try {
 			return doPostToObject(
-				LCSClusterNodeImpl.class, _URL_LCS_CLUSTER_NODE, "buildNumber",
+				LCSClusterNode.class, _URL_LCS_CLUSTER_NODE, "buildNumber",
 				String.valueOf(buildNumber), "name", name, "description",
 				description, "heartbeatInterval",
 				String.valueOf(heartbeatInterval), "lastHeartbeat",
@@ -95,7 +94,7 @@ public class LCSClusterNodeServiceImpl
 
 		try {
 			return doPostToObject(
-				LCSClusterNodeImpl.class, _URL_LCS_CLUSTER_NODE, "buildNumber",
+				LCSClusterNode.class, _URL_LCS_CLUSTER_NODE, "buildNumber",
 				String.valueOf(buildNumber), "name", name, "description",
 				description, "key", key, "lcsClusterEntryId",
 				String.valueOf(lcsClusterEntryId), "location", location,
@@ -116,7 +115,7 @@ public class LCSClusterNodeServiceImpl
 	public LCSClusterNode fetchLCSClusterNode(String key) {
 		try {
 			return doGetToObject(
-				LCSClusterNodeImpl.class, _URL_LCS_CLUSTER_NODE, "key", key);
+				LCSClusterNode.class, _URL_LCS_CLUSTER_NODE, "key", key);
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
 			if (jsonwsie.getStatus() == HttpServletResponse.SC_NOT_FOUND) {
@@ -134,11 +133,11 @@ public class LCSClusterNodeServiceImpl
 	public List<LCSClusterNode> getLCSClusterEntryLCSClusterNodes(
 		long lcsClusterEntryId) {
 
-		List<LCSClusterNodeImpl> remoteLCSClusterNodes = null;
+		List<LCSClusterNode> remoteLCSClusterNodes = null;
 
 		try {
 			remoteLCSClusterNodes = doGetToList(
-				LCSClusterNodeImpl.class, _URL_LCS_CLUSTER_NODE,
+				LCSClusterNode.class, _URL_LCS_CLUSTER_NODE,
 				"lcsClusterEntryId", String.valueOf(lcsClusterEntryId));
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
@@ -158,11 +157,11 @@ public class LCSClusterNodeServiceImpl
 	public List<LCSClusterNode> getLCSClusterNodes(
 		int status, int start, int end) {
 
-		List<LCSClusterNodeImpl> remoteLCSClusterNodes = null;
+		List<LCSClusterNode> remoteLCSClusterNodes = null;
 
 		try {
 			remoteLCSClusterNodes = doGetToList(
-				LCSClusterNodeImpl.class, _URL_LCS_CLUSTER_NODE, "status",
+				LCSClusterNode.class, _URL_LCS_CLUSTER_NODE, "status",
 				String.valueOf(status), "start", String.valueOf(start), "end",
 				String.valueOf(end));
 		}

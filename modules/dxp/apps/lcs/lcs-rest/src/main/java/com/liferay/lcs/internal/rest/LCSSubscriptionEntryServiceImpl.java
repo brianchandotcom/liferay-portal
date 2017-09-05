@@ -15,7 +15,6 @@
 package com.liferay.lcs.internal.rest;
 
 import com.liferay.lcs.rest.LCSSubscriptionEntry;
-import com.liferay.lcs.rest.LCSSubscriptionEntryImpl;
 import com.liferay.lcs.rest.LCSSubscriptionEntryService;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 
@@ -56,7 +55,7 @@ public class LCSSubscriptionEntryServiceImpl
 	public LCSSubscriptionEntry fetchLCSSubscriptionEntry(String key) {
 		try {
 			return doGetToObject(
-				LCSSubscriptionEntryImpl.class, _URL_LCS_SUBSCRIPTION_ENTRY,
+				LCSSubscriptionEntry.class, _URL_LCS_SUBSCRIPTION_ENTRY,
 				"key", key);
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {

@@ -19,7 +19,7 @@ import java.util.Date;
 /**
  * @author Igor Beslic
  */
-public class LCSSubscriptionEntryImpl {
+public class LCSSubscriptionEntry {
 
 	public int getInstanceSize() {
 		return _instanceSize;

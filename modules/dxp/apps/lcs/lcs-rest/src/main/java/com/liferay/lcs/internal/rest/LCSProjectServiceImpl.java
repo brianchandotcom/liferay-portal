@@ -15,7 +15,6 @@
 package com.liferay.lcs.internal.rest;
 
 import com.liferay.lcs.rest.LCSProject;
-import com.liferay.lcs.rest.LCSProjectImpl;
 import com.liferay.lcs.rest.LCSProjectService;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 
@@ -31,7 +30,7 @@ public class LCSProjectServiceImpl
 	@Override
 	public LCSProject addDefaultLCSProject() {
 		try {
-			return doPostToObject(LCSProjectImpl.class, _URL_LCS_PROJECT);
+			return doPostToObject(LCSProject.class, _URL_LCS_PROJECT);
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
 			throw new RuntimeException(jsonwsie);
@@ -40,11 +39,11 @@ public class LCSProjectServiceImpl
 
 	@Override
 	public List<LCSProject> getUserManageableLCSProjects() {
-		List<LCSProjectImpl> remoteLCSProjects = null;
+		List<LCSProject> remoteLCSProjects = null;
 
 		try {
 			remoteLCSProjects = doGetToList(
-				LCSProjectImpl.class, _URL_LCS_PROJECT, "manage", "true");
+				LCSProject.class, _URL_LCS_PROJECT, "manage", "true");
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
 			throw new RuntimeException(jsonwsie);

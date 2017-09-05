@@ -61,7 +61,9 @@ public class DDMFormValuesHelperImpl implements DDMFormValuesHelper {
 			DDMFormFieldValue ddmFormFieldValue = getDDMFormFieldValue(
 				jsonArray.getJSONObject(i));
 
-			ddmFormFieldValues.add(ddmFormFieldValue);
+			if (ddmFormFieldValue != null) {
+				ddmFormFieldValues.add(ddmFormFieldValue);
+			}
 		}
 
 		if (ddmFormFieldValues.isEmpty()) {
@@ -111,7 +113,13 @@ public class DDMFormValuesHelperImpl implements DDMFormValuesHelper {
 	protected DDMFormFieldValue getDDMFormFieldValue(JSONObject jsonObject) {
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
-		ddmFormFieldValue.setName(jsonObject.getString("key"));
+		String key = jsonObject.getString("key");
+
+		if (Validator.isNull(key)) {
+			return null;
+		}
+
+		ddmFormFieldValue.setName(key);
 
 		String cpDefinitionOptionValueRelId = jsonObject.getString("value");
 

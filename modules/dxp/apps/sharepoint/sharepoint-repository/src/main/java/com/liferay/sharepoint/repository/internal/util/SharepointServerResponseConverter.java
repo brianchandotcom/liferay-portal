@@ -78,10 +78,10 @@ public class SharepointServerResponseConverter {
 		Date modifiedDate = _parseDate(
 			jsonObject.getString("TimeLastModified"));
 		long size = jsonObject.getLong("Length");
-		String version = jsonObject.getString("UIVersionLabel");
 		String fileVersionExtRepositoryModelKey =
 			extRepositoryModelKey + StringPool.COLON +
 				jsonObject.getString("UIVersion");
+		String version = jsonObject.getString("UIVersionLabel");
 
 		JSONObject author = jsonObject.getJSONObject("Author");
 

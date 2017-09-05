@@ -19,11 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BASE_SKU_FIELD</td>
-	<td>//div/input[contains(@id, 'baseSKU')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DESCRIPTION_FIELD</td>
 	<td>//textarea[contains (@id,'description')]</td>
 	<td></td>

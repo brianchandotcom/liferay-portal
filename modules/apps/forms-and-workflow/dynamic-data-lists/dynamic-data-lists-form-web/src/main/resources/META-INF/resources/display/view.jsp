@@ -117,6 +117,8 @@ long recordSetId = ddlFormDisplayContext.getRecordSetId();
 
 						<div class="container-fluid-1280 ddl-form-builder-app">
 							<%= ddlFormDisplayContext.getDDMFormHTML() %>
+
+							<aui:input name="empty" type="hidden" value="" />
 						</div>
 					</aui:form>
 				</div>

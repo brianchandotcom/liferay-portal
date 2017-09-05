@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PropsValues;
 
 import com.yahoo.platform.yui.compressor.CssCompressor;
@@ -27,6 +28,7 @@ import com.yahoo.platform.yui.compressor.CssCompressor;
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
+ * @author Roberto Díaz
  */
 public class MinifierUtil {
 
@@ -75,18 +77,69 @@ public class MinifierUtil {
 
 			cssCompressor.compress(
 				unsyncStringWriter, PropsValues.YUI_COMPRESSOR_CSS_LINE_BREAK);
+
+			return _processMinifiedCss(unsyncStringWriter.toString());
 		}
 		catch (Exception e) {
 			_log.error("Unable to minify CSS:\n" + content, e);
 
 			unsyncStringWriter.append(content);
-		}
 
-		return unsyncStringWriter.toString();
+			return unsyncStringWriter.toString();
+		}
 	}
 
 	private String _minifyJavaScript(String resourceName, String content) {
 		return _javaScriptMinifierInstance.compress(resourceName, content);
+	}
+
+	private String _processMinifiedCss(String minifiedCss) {
+		int index = 0;
+
+		while ((index = minifiedCss.indexOf("calc(", index)) != -1) {
+			index += 5;
+
+			int startIndex = index;
+
+			int parensCount;
+
+			for (parensCount = 1;
+				parensCount != 0 && index < minifiedCss.length();
+				index++) {
+
+				switch (minifiedCss.charAt(index)) {
+					case '(':
+						parensCount++;
+						break;
+
+					case ')':
+						parensCount--;
+						break;
+				}
+			}
+
+			if (parensCount == 0) {
+				String replacement = minifiedCss.substring(
+					startIndex, index - 1);
+
+				replacement = replacement.replaceAll("\\+", " + ");
+				replacement = replacement.replaceAll("-", " - ");
+				replacement = replacement.replaceAll("\\*", " * ");
+				replacement = replacement.replaceAll("/", " / ");
+
+				StringBundler sb = new StringBundler(3);
+
+				sb.append(minifiedCss.substring(0, startIndex));
+				sb.append(replacement);
+				sb.append(minifiedCss.substring(index - 1));
+
+				index += replacement.length() - (index - startIndex);
+
+				minifiedCss = sb.toString();
+			}
+		}
+
+		return minifiedCss;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(MinifierUtil.class);

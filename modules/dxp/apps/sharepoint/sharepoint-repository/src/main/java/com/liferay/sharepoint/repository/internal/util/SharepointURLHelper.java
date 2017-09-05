@@ -104,15 +104,15 @@ public class SharepointURLHelper {
 			return String.format(
 				"%s/_api/web/GetFileByServerRelativeUrl('%s')?$select=%s&" +
 					"$expand=%s",
-				_siteAbsoluteURL, extRepositoryObjectKey, _SELECTED_FILE_FIELDS,
-				_EXPANDED_FILE_FIELDS);
+				_siteAbsoluteURL, extRepositoryObjectKey, _FIELDS_SELECTED_FILE,
+				_FIELDS_EXPANDED_FILE);
 		}
 
 		return String.format(
 			"%s/_api/web/GetFolderByServerRelativeUrl('%s')?$select=%s&" +
 				"$expand=%s",
-			_siteAbsoluteURL, extRepositoryObjectKey, _SELECTED_FOLDER_FIELDS,
-			_EXPANDED_FOLDER_FIELDS);
+			_siteAbsoluteURL, extRepositoryObjectKey, _FIELDS_SELECTED_FOLDER,
+			_FIELDS_EXPANDED_FOLDER);
 	}
 
 	public String getUpdateFileURL(String extRepositoryFileEntryKey) {
@@ -121,19 +121,19 @@ public class SharepointURLHelper {
 			_siteAbsoluteURL, extRepositoryFileEntryKey);
 	}
 
-	private static final String _EXPANDED_FILE_FIELDS = StringUtil.merge(
+	private static final String _FIELDS_EXPANDED_FILE = StringUtil.merge(
 		Arrays.asList("Author", "CheckedOutByUser", "ListItemAllFields"));
 
-	private static final String _EXPANDED_FOLDER_FIELDS = "ListItemAllFields";
+	private static final String _FIELDS_EXPANDED_FOLDER = "ListItemAllFields";
 
-	private static final String _SELECTED_FILE_FIELDS = StringUtil.merge(
+	private static final String _FIELDS_SELECTED_FILE = StringUtil.merge(
 		Arrays.asList(
 			"Author/Title", "CheckedOutByUser/Title", "Length",
 			"ListItemAllFields/EffectiveBasePermissions", "Name",
 			"ServerRelativeUrl", "TimeCreated", "TimeLastModified", "Title",
 			"UIVersion", "UIVersionLabel"));
 
-	private static final String _SELECTED_FOLDER_FIELDS = StringUtil.merge(
+	private static final String _FIELDS_SELECTED_FOLDER = StringUtil.merge(
 		Arrays.asList(
 			"Name", "ListItemAllFields/EffectiveBasePermissions",
 			"ServerRelativeUrl", "TimeCreated", "TimeLastModified"));

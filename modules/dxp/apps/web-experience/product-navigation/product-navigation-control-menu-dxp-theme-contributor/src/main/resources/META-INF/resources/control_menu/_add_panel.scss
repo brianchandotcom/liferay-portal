@@ -3,7 +3,9 @@
 
 body.open-admin-panel {
 	@include sm() {
-		padding-right: $admin-panel-width;
+		&, .control-menu {
+			padding-right: $admin-panel-width;
+		}
 	}
 
 	.control-menu-level-2 {

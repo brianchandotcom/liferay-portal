@@ -49,9 +49,7 @@ renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentEntryTitle());
 
 	<aui:model-context bean="<%= msbFragmentEntry %>" model="<%= MSBFragmentEntry.class %>" />
 
-	<div class="msb-fragment-name">
-		<aui:input autoFocus="<%= false %>" label="name" name="name" placeholder="name" />
-	</div>
+	<aui:input autoFocus="<%= false %>" name="name" placeholder="name" type="hidden" />
 
 	<div id="<portlet:namespace />msbFragmentEditor"></div>
 

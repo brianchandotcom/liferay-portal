@@ -791,6 +791,32 @@ public interface LayoutLocalService extends BaseLocalService,
 		long parentLayoutId, boolean incomplete, int start, int end);
 
 	/**
+	* Returns a range of all the layouts belonging to the group that are
+	* children of the parent layout.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout is private to the group
+	* @param parentLayoutId the primary key of the parent layout
+	* @param start the lower bound of the range of layouts
+	* @param end the upper bound of the range of layouts (not inclusive)
+	* @param obc the comparator to order the layouts
+	* @return the matching layouts, or <code>null</code> if no matches were
+	found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Layout> getLayouts(long groupId, boolean privateLayout,
+		long parentLayoutId, int start, int end, OrderByComparator<Layout> obc);
+
+	/**
 	* Returns all the layouts that match the layout IDs and belong to the
 	* group.
 	*

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.StringPool;
@@ -145,6 +146,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			getGuestOrUserId(), assetEntry);
 	}
 
+	@AccessControlled(guestAccessEnabled = true)
 	@Override
 	public AssetEntry incrementViewCounter(String className, long classPK)
 		throws PortalException {

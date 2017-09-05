@@ -100,13 +100,14 @@ public class SharepointExtRepository implements ExtRepository {
 			String url = _sharepointURLHelper.getAddFolderURL(
 				extRepositoryParentFolderKey);
 
+			JSONObject bodyJSONObject = JSONFactoryUtil.createJSONObject();
+
 			JSONObject metadataJSONObject = JSONFactoryUtil.createJSONObject();
 
 			metadataJSONObject.put("type", "SP.Folder");
 
-			JSONObject bodyJSONObject = JSONFactoryUtil.createJSONObject();
-
 			bodyJSONObject.put("__metadata", metadataJSONObject);
+
 			bodyJSONObject.put("ServerRelativeUrl", name);
 
 			JSONObject jsonObject = _post(url, bodyJSONObject);

@@ -48,6 +48,26 @@ body.open-admin-panel, body.sidenav-transition {
 }
 
 .lfr-add-panel {
+	.search-bar {
+		display: block;
+		margin: 10px;
+
+		.form-control {
+			display: block;
+			float: none;
+			padding-right: 32px;
+		}
+	}
+
+	.input-group-btn {
+		display: block;
+		margin-top: -8px;
+		position: absolute;
+		right: 20px;
+		top: 50%;
+		z-index: 4;
+	}
+
 	.add-content-menu .add-portlet-message {
 		background-color: $product-menu-panel-title-active-bg;
 		margin: 20px;

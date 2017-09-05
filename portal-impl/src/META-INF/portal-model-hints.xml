@@ -25,6 +25,9 @@
 	<hint-collection name="URL">
 		<hint name="max-length">4000</hint>
 	</hint-collection>
+	<hint-collection name="HOSTNAME">
+		<hint name="max-length">200</hint>
+	</hint-collection>
 	<model name="com.liferay.announcements.kernel.model.AnnouncementsDelivery">
 		<field name="deliveryId" type="long" />
 		<field name="companyId" type="long" />
@@ -712,6 +715,7 @@
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="mx" type="String">
+			<hint-collection name="HOSTNAME" />
 			<validator name="required" />
 		</field>
 		<field name="homeURL" type="String">
@@ -1706,6 +1710,7 @@
 		<field name="companyId" type="long" />
 		<field name="layoutSetId" type="long" />
 		<field name="hostname" type="String">
+			<hint-collection name="HOSTNAME" />
 			<validator name="required" />
 		</field>
 	</model>

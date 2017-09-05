@@ -54,12 +54,9 @@ public class SharepointRepositoryTokenBroker {
 			multipartBody = multipartBody.field(
 				"client_secret",
 				_sharepointRepositoryConfiguration.clientSecret());
-
 			multipartBody = multipartBody.field(
 				"refresh_token", token.getRefreshToken());
-
 			multipartBody = multipartBody.field("grant_type", "refresh_token");
-
 			multipartBody = multipartBody.field(
 				"resource", _sharepointRepositoryConfiguration.resource());
 
@@ -89,14 +86,10 @@ public class SharepointRepositoryTokenBroker {
 			multipartBody = multipartBody.field(
 				"client_secret",
 				_sharepointRepositoryConfiguration.clientSecret());
-
 			multipartBody = multipartBody.field("code", code);
-
 			multipartBody = multipartBody.field(
 				"grant_type", "authorization_code");
-
 			multipartBody = multipartBody.field("redirect_uri", redirectURL);
-
 			multipartBody = multipartBody.field(
 				"resource", _sharepointRepositoryConfiguration.resource());
 

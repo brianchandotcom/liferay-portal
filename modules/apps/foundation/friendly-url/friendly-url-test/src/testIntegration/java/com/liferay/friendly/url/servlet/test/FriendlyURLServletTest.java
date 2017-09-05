@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -181,9 +182,9 @@ public class FriendlyURLServletTest {
 
 		mockHttpServletRequest.setPathInfo(StringPool.SLASH);
 
-		String numericScreenName = "12345";
+		long numericScreenName = RandomTestUtil.nextLong();
 
-		_user = UserTestUtil.addUser(numericScreenName);
+		_user = UserTestUtil.addUser(String.valueOf(numericScreenName));
 
 		Group userGroup = _user.getGroup();
 

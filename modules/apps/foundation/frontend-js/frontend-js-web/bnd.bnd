@@ -3,7 +3,7 @@ Bundle-SymbolicName: com.liferay.frontend.js.web
 Bundle-Version: 1.0.61
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Frontend Infrastructure
-Liferay-Top-Head-Barebone-JS-Resources:\
+Liferay-Top-Head-JS-Resources:\
 	/jquery/jquery.js,\
 	/lexicon/bootstrap.js,\
 	/loader/config.js,\
@@ -112,7 +112,7 @@ Liferay-Top-Head-Barebone-JS-Resources:\
 	/liferay/menu.js,\
 	/liferay/notice.js,\
 	/liferay/poller.js
-Liferay-Top-Head-JS-Resources:\
+Liferay-Top-Head-Authenticated-JS-Resources:\
 	/aui/async-queue/async-queue.js,\
 	/aui/base-build/base-build.js,\
 	/aui/cookie/cookie.js,\

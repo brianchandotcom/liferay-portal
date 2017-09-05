@@ -61,27 +61,27 @@ public class TopHeadExtender extends AbstractExtender {
 		String liferayTopHeadJsResources = headers.get(
 			"Liferay-Top-Head-JS-Resources");
 
-		String liferayTopHeadBareboneJsResources = headers.get(
-			"Liferay-Top-Head-Barebone-JS-Resources");
+		String liferayTopHeadAuthenticatedJsResources = headers.get(
+			"Liferay-Top-Head-Authenticated-JS-Resources");
 
 		if (Validator.isBlank(liferayTopHeadJsResources) &&
-			Validator.isBlank(liferayTopHeadBareboneJsResources)) {
+			Validator.isBlank(liferayTopHeadAuthenticatedJsResources)) {
 
 			return null;
-		}
-
-		if (Validator.isNull(liferayTopHeadBareboneJsResources)) {
-			liferayTopHeadBareboneJsResources = StringPool.BLANK;
 		}
 
 		if (Validator.isNull(liferayTopHeadJsResources)) {
 			liferayTopHeadJsResources = StringPool.BLANK;
 		}
 
+		if (Validator.isNull(liferayTopHeadAuthenticatedJsResources)) {
+			liferayTopHeadAuthenticatedJsResources = StringPool.BLANK;
+		}
+
 		TopHeadResourcesImpl topHeadResourcesImpl = new TopHeadResourcesImpl(
-			Arrays.asList(
-				liferayTopHeadBareboneJsResources.split(StringPool.COMMA)),
-			Arrays.asList(liferayTopHeadJsResources.split(StringPool.COMMA)));
+			Arrays.asList(liferayTopHeadJsResources.split(StringPool.COMMA)),
+			Arrays.asList(liferayTopHeadAuthenticatedJsResources.split(
+				StringPool.COMMA)));
 
 		int liferayTopHeadWeight = GetterUtil.getInteger(
 			headers.get("Liferay-Top-Head-Weight"));

@@ -62,19 +62,19 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 
 		if (themeDisplay.isThemeJsFastLoad()) {
 			if (themeDisplay.isThemeJsBarebone()) {
-				_renderBundleComboURLs(
-					request, response, _bareboneJsResourceURLs);
+				_renderBundleComboURLs(request, response, _jsResourceURLs);
 			}
 			else {
-				_renderBundleComboURLs(request, response, _jsResourceURLs);
+				_renderBundleComboURLs(
+					request, response, _allJsResourceURLs);
 			}
 		}
 		else {
 			if (themeDisplay.isThemeJsBarebone()) {
-				_renderBundleURLs(response, _bareboneJsResourceURLs);
+				_renderBundleURLs(response, _jsResourceURLs);
 			}
 			else {
-				_renderBundleURLs(response, _jsResourceURLs);
+				_renderBundleURLs(response, _allJsResourceURLs);
 			}
 		}
 	}
@@ -173,13 +173,14 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 			_portalWebResources.getContextPath());
 
 		_jsResourceURLs.clear();
-		_bareboneJsResourceURLs.clear();
+		_allJsResourceURLs.clear();
 
 		_addPortalBundles(
-			_jsResourceURLs, PropsKeys.JAVASCRIPT_EVERYTHING_FILES);
+			_jsResourceURLs, PropsKeys.JAVASCRIPT_BAREBONE_FILES);
 
 		_addPortalBundles(
-			_bareboneJsResourceURLs, PropsKeys.JAVASCRIPT_BAREBONE_FILES);
+			_allJsResourceURLs,
+			PropsKeys.JAVASCRIPT_EVERYTHING_FILES);
 
 		synchronized (_topHeadResourcesServiceReferences) {
 			for (ServiceReference<TopHeadResources>
@@ -194,16 +195,19 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 						topHeadResources.getServletContextPath();
 
 					for (String jsResourcePath :
-							topHeadResources.getJsResourcePaths()) {
+						topHeadResources.getJsResourcePaths()) {
 
-						_jsResourceURLs.add(
-							servletContextPath.concat(jsResourcePath));
+						String url = servletContextPath.concat(jsResourcePath);
+
+						_jsResourceURLs.add(url);
+						_allJsResourceURLs.add(url);
 					}
 
 					for (String jsResourcePath :
-							topHeadResources.getJsResourcePaths()) {
+							topHeadResources.
+								getAuthenticatedJsResourcePaths()) {
 
-						_bareboneJsResourceURLs.add(
+						_allJsResourceURLs.add(
 							servletContextPath.concat(jsResourcePath));
 					}
 				}
@@ -271,7 +275,7 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 		}
 	}
 
-	private volatile List<String> _bareboneJsResourceURLs = new ArrayList<>();
+	private volatile List<String> _allJsResourceURLs = new ArrayList<>();
 	private BundleContext _bundleContext;
 	private String _comboContextPath;
 	private String _jsContextPath = StringPool.BLANK;

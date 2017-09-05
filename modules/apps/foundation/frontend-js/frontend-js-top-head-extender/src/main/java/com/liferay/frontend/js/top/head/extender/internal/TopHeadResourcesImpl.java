@@ -24,21 +24,21 @@ import java.util.Collection;
 public class TopHeadResourcesImpl implements TopHeadResources {
 
 	public TopHeadResourcesImpl(
-		Collection<String> bareboneJsResourcePaths,
-		Collection<String> jsResourcePaths) {
+		Collection<String> jsResourcePaths,
+		Collection<String> authenticatedJsResourcePaths) {
 
-		_bareboneJsResourcePaths = bareboneJsResourcePaths;
 		_jsResourcePaths = jsResourcePaths;
-	}
-
-	@Override
-	public Collection<String> getBareboneJsResourcePaths() {
-		return _bareboneJsResourcePaths;
+		_authenticatedJsResourcePaths = authenticatedJsResourcePaths;
 	}
 
 	@Override
 	public Collection<String> getJsResourcePaths() {
 		return _jsResourcePaths;
+	}
+
+	@Override
+	public Collection<String> getAuthenticatedJsResourcePaths() {
+		return _authenticatedJsResourcePaths;
 	}
 
 	@Override
@@ -50,8 +50,8 @@ public class TopHeadResourcesImpl implements TopHeadResources {
 		_servletContextPath = servletContextPath;
 	}
 
-	private final Collection<String> _bareboneJsResourcePaths;
 	private final Collection<String> _jsResourcePaths;
+	private final Collection<String> _authenticatedJsResourcePaths;
 	private String _servletContextPath;
 
 }

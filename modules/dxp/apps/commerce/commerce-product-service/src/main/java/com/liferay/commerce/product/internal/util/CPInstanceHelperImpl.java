@@ -18,8 +18,10 @@ import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.search.CPAttachmentFileEntryIndexer;
+import com.liferay.commerce.product.search.CPInstanceIndexer;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
@@ -176,6 +178,70 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 	}
 
 	@Override
+	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRel(
+			long cpDefinitionId, String optionFieldName,
+			Map<String, String> optionMap)
+		throws Exception {
+
+		Indexer<CPInstance> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			CPInstance.class);
+
+		SearchContext searchContext = new SearchContext();
+
+		Map<String, Serializable> attributes = new HashMap<>();
+
+		attributes.put(
+			CPInstanceIndexer.FIELD_CP_DEFINITION_ID, cpDefinitionId);
+		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
+
+		List<String> optionsKeys = new ArrayList<>();
+
+		for (Map.Entry<String, String> optionEntry : optionMap.entrySet()) {
+			String fieldName =
+				"ATTRIBUTE_" + optionEntry.getKey() + "_VALUE_ID";
+
+			optionsKeys.add(fieldName);
+
+			attributes.put(fieldName, optionEntry.getValue());
+		}
+
+		attributes.put("OPTIONS", ArrayUtil.toStringArray(optionsKeys));
+
+		searchContext.setAttributes(attributes);
+
+		QueryConfig queryConfig = new QueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+		queryConfig.addSelectedFieldNames(optionFieldName);
+
+		searchContext.setQueryConfig(queryConfig);
+
+		Hits hits = indexer.search(searchContext);
+
+		Document[] documents = hits.getDocs();
+
+		List<Long> cpDefinitionOptionValueRelIsList = new ArrayList<>();
+
+		for (Document document : documents) {
+			long classPK = GetterUtil.getLong(document.get(optionFieldName));
+
+			if (classPK > 0) {
+				cpDefinitionOptionValueRelIsList.add(classPK);
+			}
+		}
+
+		Stream<Long> stream = cpDefinitionOptionValueRelIsList.stream();
+
+		long[] cpDefinitionOptionValueRelIds = stream.mapToLong(
+			l -> l
+		).toArray();
+
+		return _cpDefinitionOptionValueRelLocalService.
+			getCPDefinitionOptionValueRels(cpDefinitionOptionValueRelIds);
+	}
+
+	@Override
 	public DDMForm getDDMForm(
 			long cpDefinitionId, Locale locale, boolean required)
 		throws PortalException {
@@ -238,7 +304,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			ddmForm.addDDMFormField(ddmFormField);
 		}
 
-		//ddmForm.addDDMFormRule(createDDMFormRule(ddmForm, cpDefinitionId));
+		ddmForm.addDDMFormRule(createDDMFormRule(ddmForm, cpDefinitionId));
 		ddmForm.addAvailableLocale(locale);
 		ddmForm.setDefaultLocale(locale);
 
@@ -460,10 +526,8 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 		Stream<String> outputMappingStatementStream = stream.map(
 			field -> {
-				CPOption cpOption = (CPOption)field.getProperty("cpOption");
-
 				return String.format(
-					outputMappingStatement, field.getName(), cpOption.getKey());
+					outputMappingStatement, field.getName(), field.getName());
 			});
 
 		return outputMappingStatementStream.collect(

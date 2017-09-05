@@ -36,6 +36,11 @@ import javax.portlet.RenderResponse;
 @ProviderType
 public interface CPInstanceHelper {
 
+	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRel(
+		long cpDefinitionId, String optionFieldName,
+		Map<String, String> optionMap)
+		throws Exception;
+
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
 			long cpDefinitionId, Locale locale, String serializedDDMFormValues,
 			int type)

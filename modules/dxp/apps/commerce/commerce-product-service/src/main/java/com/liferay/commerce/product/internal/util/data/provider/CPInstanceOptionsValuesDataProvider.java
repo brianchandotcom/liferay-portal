@@ -15,8 +15,10 @@
 package com.liferay.commerce.product.internal.util.data.provider;
 
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
+import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderException;
@@ -33,7 +35,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -59,6 +64,11 @@ public class CPInstanceOptionsValuesDataProvider implements DDMDataProvider {
 	public DDMDataProviderResponse getData(
 			DDMDataProviderRequest ddmDataProviderRequest)
 		throws DDMDataProviderException {
+
+		HttpServletRequest httpServletRequest =
+			ddmDataProviderRequest.getHttpServletRequest();
+
+		Locale locale = httpServletRequest.getLocale();
 
 		long cpDefinitionId = GetterUtil.getLong(
 			ddmDataProviderRequest.getParameter("cpDefinitionId"));
@@ -125,36 +135,49 @@ public class CPInstanceOptionsValuesDataProvider implements DDMDataProvider {
 				return DDMDataProviderResponse.of();
 			}
 
-			/*
-			 * Do search
-			 * Example how can be the return.
-			 * For now, it's fixed just for the example
-			 */
-			List<KeyValuePair> data = new ArrayList<>();
+			List<DDMDataProviderResponseOutput> ddmDataProviderResponseOutputs =
+				new ArrayList<>();
 
-			String color = outputParameterNames.get("color");
+			for (Map.Entry<String, String> outputParameterNameEntry :
+					outputParameterNames.entrySet()) {
 
-			if (Validator.isNotNull(color)) {
-				data.add(new KeyValuePair("red_value", "Red"));
-				data.add(new KeyValuePair("green_value", "Green"));
-				data.add(new KeyValuePair("yellow_value", "Yellow"));
-				data.add(new KeyValuePair("black_value", "Black"));
+				String fieldName =
+					"ATTRIBUTE_" + outputParameterNameEntry.getKey() +
+						"_VALUE_ID";
 
-				return DDMDataProviderResponse.of(
-					DDMDataProviderResponseOutput.of("color", "list", data));
+				List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+					_cpInstanceHelper.getCPDefinitionOptionValueRel(
+						cpDefinitionId, fieldName, filters);
+
+				List<KeyValuePair> data = new ArrayList<>();
+
+				for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
+						cpDefinitionOptionValueRels) {
+
+					String key = String.valueOf(
+						cpDefinitionOptionValueRel.
+							getCPDefinitionOptionValueRelId());
+
+					data.add(
+						new KeyValuePair(
+							key, cpDefinitionOptionValueRel.getTitle(locale)));
+				}
+
+				ddmDataProviderResponseOutputs.add(
+					DDMDataProviderResponseOutput.of(
+						outputParameterNameEntry.getValue(), "list", data));
 			}
 
-			String size = outputParameterNames.get("size");
+			DDMDataProviderResponseOutput[] ddmDataProviderResponseOutputArray =
+				new DDMDataProviderResponseOutput[
+					ddmDataProviderResponseOutputs.size()];
 
-			if (Validator.isNotNull(size)) {
-				data.add(new KeyValuePair("51_value", "51"));
-				data.add(new KeyValuePair("52_value", "52"));
-				data.add(new KeyValuePair("53_value", "53"));
-				data.add(new KeyValuePair("54_value", "54"));
+			ddmDataProviderResponseOutputArray =
+				ddmDataProviderResponseOutputs.toArray(
+					ddmDataProviderResponseOutputArray);
 
-				return DDMDataProviderResponse.of(
-					DDMDataProviderResponseOutput.of("size", "list", data));
-			}
+			return DDMDataProviderResponse.of(
+				ddmDataProviderResponseOutputArray);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -173,5 +196,8 @@ public class CPInstanceOptionsValuesDataProvider implements DDMDataProvider {
 
 	@Reference
 	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;
+
+	@Reference
+	private CPInstanceHelper _cpInstanceHelper;
 
 }

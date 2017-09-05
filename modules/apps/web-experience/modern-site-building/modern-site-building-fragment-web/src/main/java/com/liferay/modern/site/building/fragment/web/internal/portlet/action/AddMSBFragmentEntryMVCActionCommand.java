@@ -28,7 +28,12 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -89,6 +94,9 @@ public class AddMSBFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 			PortalException pe)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		String errorMessage = "an-unexpected-error-occurred";
@@ -100,8 +108,10 @@ public class AddMSBFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 			errorMessage = "this-field-is-required";
 		}
 
-		jsonObject.put(
-			"error", LanguageUtil.get(actionRequest.getLocale(), errorMessage));
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(themeDisplay.getLocale());
+
+		jsonObject.put("error", LanguageUtil.get(resourceBundle, errorMessage));
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
@@ -109,5 +119,11 @@ public class AddMSBFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private MSBFragmentEntryService _msbFragmentEntryService;
+
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.modern.site.building.fragment.web)",
+		unbind = "-"
+	)
+	private ResourceBundleLoader _resourceBundleLoader;
 
 }

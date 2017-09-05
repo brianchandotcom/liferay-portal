@@ -80,8 +80,9 @@ public class TopHeadExtender extends AbstractExtender {
 
 		TopHeadResourcesImpl topHeadResourcesImpl = new TopHeadResourcesImpl(
 			Arrays.asList(liferayTopHeadJsResources.split(StringPool.COMMA)),
-			Arrays.asList(liferayTopHeadAuthenticatedJsResources.split(
-				StringPool.COMMA)));
+			Arrays.asList(
+				liferayTopHeadAuthenticatedJsResources.split(
+					StringPool.COMMA)));
 
 		int liferayTopHeadWeight = GetterUtil.getInteger(
 			headers.get("Liferay-Top-Head-Weight"));

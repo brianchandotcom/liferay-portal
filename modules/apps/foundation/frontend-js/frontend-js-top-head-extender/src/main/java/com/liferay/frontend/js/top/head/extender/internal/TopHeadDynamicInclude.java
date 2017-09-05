@@ -65,8 +65,7 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 				_renderBundleComboURLs(request, response, _jsResourceURLs);
 			}
 			else {
-				_renderBundleComboURLs(
-					request, response, _allJsResourceURLs);
+				_renderBundleComboURLs(request, response, _allJsResourceURLs);
 			}
 		}
 		else {
@@ -175,12 +174,10 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 		_jsResourceURLs.clear();
 		_allJsResourceURLs.clear();
 
-		_addPortalBundles(
-			_jsResourceURLs, PropsKeys.JAVASCRIPT_BAREBONE_FILES);
+		_addPortalBundles(_jsResourceURLs, PropsKeys.JAVASCRIPT_BAREBONE_FILES);
 
 		_addPortalBundles(
-			_allJsResourceURLs,
-			PropsKeys.JAVASCRIPT_EVERYTHING_FILES);
+			_allJsResourceURLs, PropsKeys.JAVASCRIPT_EVERYTHING_FILES);
 
 		synchronized (_topHeadResourcesServiceReferences) {
 			for (ServiceReference<TopHeadResources>
@@ -195,7 +192,7 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 						topHeadResources.getServletContextPath();
 
 					for (String jsResourcePath :
-						topHeadResources.getJsResourcePaths()) {
+							topHeadResources.getJsResourcePaths()) {
 
 						String url = servletContextPath.concat(jsResourcePath);
 
@@ -255,7 +252,7 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 			}
 		}
 
-		if(sb.length()>0) {
+		if (sb.length() > 0) {
 			sb.append("\" type = \"text/javascript\"></script>");
 
 			printWriter.println(sb.toString());

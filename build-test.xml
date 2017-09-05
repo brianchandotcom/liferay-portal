@@ -5420,7 +5420,9 @@ go]]></replacevalue>
 			<then>
 				<echo file="tools/sdk/build.${user.name}.properties">auto.deploy.dir=${liferay.home}/deploy</echo>
 
-				<var name="osgi.module.dir" value="modules/apps" />
+				<local name="osgi.module.dir" />
+
+				<property name="osgi.module.dir" value="modules/apps">
 
 				<for list="${osgi.modules.includes}" parallel="true" param="osgi.module">
 					<sequential>

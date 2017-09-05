@@ -123,18 +123,19 @@ public class SharepointServerResponseConverter {
 	}
 
 	private long _getEffectiveBasePermissionsBits(JSONObject jsonObject) {
-		JSONObject listAllItemFields = jsonObject.getJSONObject(
+		JSONObject listAllItemFieldsJSONObject = jsonObject.getJSONObject(
 			"ListItemAllFields");
 
-		if (listAllItemFields.has("__deferred")) {
+		if (listAllItemFieldsJSONObject.has("__deferred")) {
 			return 0;
 		}
 
-		JSONObject effectiveBasePermissions = listAllItemFields.getJSONObject(
-			"EffectiveBasePermissions");
+		JSONObject effectiveBasePermissionsJSONObject =
+			listAllItemFieldsJSONObject.getJSONObject(
+				"EffectiveBasePermissions");
 
-		long low = effectiveBasePermissions.getLong("Low");
-		long high = effectiveBasePermissions.getLong("High");
+		long low = effectiveBasePermissionsJSONObject.getLong("Low");
+		long high = effectiveBasePermissionsJSONObject.getLong("High");
 
 		return low | (high << 32);
 	}

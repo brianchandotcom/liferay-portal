@@ -183,6 +183,9 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			Map<String, String> optionMap)
 		throws Exception {
 
+		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
+			cpDefinitionId);
+
 		Indexer<CPInstance> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			CPInstance.class);
 
@@ -213,11 +216,13 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 		queryConfig.setHighlightEnabled(false);
 		queryConfig.setScoreEnabled(false);
-		queryConfig.addSelectedFieldNames(optionFieldName);
 
 		searchContext.setQueryConfig(queryConfig);
 
-		Hits hits = indexer.search(searchContext);
+		searchContext.setCompanyId(cpDefinition.getCompanyId());
+		searchContext.setGroupIds(new long[] {cpDefinition.getGroupId()});
+
+		Hits hits = indexer.search(searchContext, optionFieldName);
 
 		Document[] documents = hits.getDocs();
 

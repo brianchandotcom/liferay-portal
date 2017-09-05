@@ -406,7 +406,7 @@ public class SharepointExtRepository implements ExtRepository {
 		}
 	}
 
-	private static final String _strip(String s) {
+	private String _strip(String s) {
 		int i = 0;
 
 		while (s.charAt(i) == CharPool.SLASH) {

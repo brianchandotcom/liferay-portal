@@ -14,9 +14,17 @@
 		<div class="msb-fragment-preview__toolbar btn-group">
 			{if $_previewSizes}
 				{foreach $size in $_previewSizes}
+					{let $buttonClasses kind="text"}
+						btn
+						{sp}btn-sm
+						{if $_currentPreviewSize == $size}
+							{sp}active
+						{/if}
+					{/let}
+
 					<button
 						type="button"
-						class="btn btn-sm {if $_currentPreviewSize == $size}active{/if}"
+						class="{$buttonClasses}"
 						data-preview-size="{$size}"
 						data-onclick="{$_handlePreviewSizeButtonClick}"
 					>
@@ -27,9 +35,18 @@
 					</button>
 				{/foreach}
 			{/if}
+
+			{let $buttonClasses kind="text"}
+				btn
+				{sp}btn-sm
+				{if $_currentPreviewSize}
+					{sp}active
+				{/if}
+			{/let}
+
 			<button
 				type="button"
-				class="btn btn-sm {if not $_currentPreviewSize}active{/if}"
+				class="{$buttonClasses}"
 				data-preview-size=""
 				data-onclick="{$_handlePreviewSizeButtonClick}"
 			>
@@ -39,8 +56,16 @@
 				</svg>
 			</button>
 		</div>
+
+		{let $iframeClasses kind="text"}
+			msb-fragment-preview__frame
+			{if $_currentPreviewSize}
+				{sp}msb-fragment-preview__frame--resized
+			{/if}
+		{/let}
+
 		<iframe
-			class="msb-fragment-preview__frame {if $_currentPreviewSize}msb-fragment-preview__frame--resized{/if}"
+			class="{$iframeClasses}"
 			ref="preview"
 			sandbox="allow-scripts"
 			src="{$_previewContent}"

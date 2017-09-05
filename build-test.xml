@@ -5451,6 +5451,7 @@ go]]></replacevalue>
 									</or>
 									<then>
 										<property name="@{osgi.module}.path" value="@{osgi.module.path}" />
+
 										<echo message="Found: ${@{osgi.module}.path}" />
 									</then>
 								</if>

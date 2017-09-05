@@ -17,6 +17,8 @@ package com.liferay.petra.json.web.service.client.internal;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.http.nio.reactor.IOReactorException;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -37,27 +39,34 @@ public class JSONWebServiceClientImplTest {
 		properties.put("proxyLogin", "proxylogin");
 		properties.put("proxyPassword", "proxypass");
 
-		jsonWebServiceClientImpl.activate(properties);
+		try {
+			jsonWebServiceClientImpl.activate(properties);
 
-		Assert.assertEquals(
-			properties.get("hostName"), jsonWebServiceClientImpl.getHostName());
-		Assert.assertEquals(
-			properties.get("protocol"), jsonWebServiceClientImpl.getProtocol());
+			Assert.assertEquals(
+				properties.get("hostName"),
+				jsonWebServiceClientImpl.getHostName());
+			Assert.assertEquals(
+				properties.get("protocol"),
+				jsonWebServiceClientImpl.getProtocol());
 
-		Assert.assertNull(jsonWebServiceClientImpl.getProxyAuthType());
+			Assert.assertNull(jsonWebServiceClientImpl.getProxyAuthType());
 
-		Assert.assertEquals(
-			properties.get("proxyHostName"),
-			jsonWebServiceClientImpl.getProxyHostName());
-		Assert.assertEquals(
-			Integer.parseInt(String.valueOf(properties.get("proxyHostPort"))),
-			jsonWebServiceClientImpl.getProxyHostPort());
-		Assert.assertEquals(
-			properties.get("proxyLogin"),
-			jsonWebServiceClientImpl.getProxyLogin());
-		Assert.assertEquals(
-			properties.get("proxyPassword"),
-			jsonWebServiceClientImpl.getProxyPassword());
+			Assert.assertEquals(
+				properties.get("proxyHostName"),
+				jsonWebServiceClientImpl.getProxyHostName());
+			Assert.assertEquals(
+				Integer.parseInt(String.valueOf(properties.get("proxyHostPort"))),
+				jsonWebServiceClientImpl.getProxyHostPort());
+			Assert.assertEquals(
+				properties.get("proxyLogin"),
+				jsonWebServiceClientImpl.getProxyLogin());
+			Assert.assertEquals(
+				properties.get("proxyPassword"),
+				jsonWebServiceClientImpl.getProxyPassword());
+		}
+		catch (IOReactorException iore) {
+			Assert.fail();
+		}
 	}
 
 	@Test
@@ -71,17 +80,22 @@ public class JSONWebServiceClientImplTest {
 		properties.put("proxyDomain", "liferay.com");
 		properties.put("proxyWorkstation", "lrdcom2003");
 
-		jsonWebServiceClientImpl.activate(properties);
+		try {
+			jsonWebServiceClientImpl.activate(properties);
 
-		Assert.assertEquals(
-			properties.get("proxyAuthType"),
-			jsonWebServiceClientImpl.getProxyAuthType());
-		Assert.assertEquals(
-			properties.get("proxyDomain"),
-			jsonWebServiceClientImpl.getProxyDomain());
-		Assert.assertEquals(
-			properties.get("proxyWorkstation"),
-			jsonWebServiceClientImpl.getProxyWorkstation());
+			Assert.assertEquals(
+				properties.get("proxyAuthType"),
+				jsonWebServiceClientImpl.getProxyAuthType());
+			Assert.assertEquals(
+				properties.get("proxyDomain"),
+				jsonWebServiceClientImpl.getProxyDomain());
+			Assert.assertEquals(
+				properties.get("proxyWorkstation"),
+				jsonWebServiceClientImpl.getProxyWorkstation());
+		}
+		catch (IOReactorException iore) {
+			Assert.fail();
+		}
 	}
 
 	@Test
@@ -94,11 +108,16 @@ public class JSONWebServiceClientImplTest {
 		properties.put(
 			"headers", "headerKey1=headerValue1;headerKey2=headerValue2");
 
-		jsonWebServiceClientImpl.activate(properties);
+		try {
+			jsonWebServiceClientImpl.activate(properties);
 
-		Map<String, String> headers = jsonWebServiceClientImpl.getHeaders();
+			Map<String, String> headers = jsonWebServiceClientImpl.getHeaders();
 
-		Assert.assertTrue(headers.containsKey("headerKey1"));
+			Assert.assertTrue(headers.containsKey("headerKey1"));
+		}
+		catch (IOReactorException iore) {
+			Assert.fail();
+		}
 	}
 
 	private Map<String, Object> _getBaseProperties() {

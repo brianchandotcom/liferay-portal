@@ -6,6 +6,7 @@
  * @param effects
  * @param ref
  * @param thumbnailSize
+ * @param carouselOffset
  * @param? currentEffect_
  * @param? pathThemeImages
  */
@@ -18,10 +19,10 @@
 				</svg>
 			</a>
 		</div>
-		<div class="carousel-container">
-			<ul class="carousel list-unstyled list-table" id="{$ref}_carousel">
+		<div class="carousel-container" ref="carouselContainer">
+			<ul class="carousel list-unstyled list-table" ref="carousel" style="margin-left: {$carouselOffset}">
 				{foreach $effect in $effects}
-					<li class="item">
+					<li class="item" {if isFirst($effect)}ref="carouselItem"{/if}>
 						<a data-onclick="previewEffect" data-effect="{$effect}" class="{$currentEffect_ == $effect ? 'active' : ''}">
 							<div id="{$ref}{$effect}" style="position: relative;">
 								<canvas width="{$thumbnailSize}" height="{$thumbnailSize}"></canvas>

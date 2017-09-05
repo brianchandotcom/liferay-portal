@@ -148,11 +148,13 @@ $gray-lighter: lighten($gray-base, 93.5%) !default; // #EEE
 
 					.carousel-left-arrow {
 						left: 0;
+
 						@include transform(translate(-100%, -50%));
 					}
 
 					.carousel-right-arrow {
 						right: 0;
+						
 						@include transform(translate(100%, -50%));
 					}
 

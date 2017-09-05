@@ -111,7 +111,7 @@ public class DLFileEntryDDMFormValuesReaderTest {
 			ddmStructures.get(0));
 
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
-			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE));
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.TEXT_PLAIN));
 
 		return DLFileEntryLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(),

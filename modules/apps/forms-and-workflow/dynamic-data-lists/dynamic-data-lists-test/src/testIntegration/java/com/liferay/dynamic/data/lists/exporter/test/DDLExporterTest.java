@@ -660,7 +660,7 @@ public class DDLExporterTest {
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "file.txt",
 			ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.TEXT_PLAIN),
 			serviceContext);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();

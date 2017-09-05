@@ -63,32 +63,60 @@ public interface JournalFolderService extends BaseService {
 		java.lang.String name, java.lang.String description,
 		ServiceContext serviceContext) throws PortalException;
 
+	public void deleteFolder(long folderId) throws PortalException;
+
+	public void deleteFolder(long folderId, boolean includeTrashedEntries)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalFolder fetchFolder(long folderId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDMStructure> getDDMStructures(long[] groupIds, long folderId,
+		int restrictionType) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalFolder getFolder(long folderId) throws PortalException;
 
-	public JournalFolder moveFolder(long folderId, long parentFolderId,
-		ServiceContext serviceContext) throws PortalException;
-
-	public JournalFolder moveFolderFromTrash(long folderId,
-		long parentFolderId, ServiceContext serviceContext)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<java.lang.Long> getFolderIds(long groupId, long folderId)
 		throws PortalException;
 
-	public JournalFolder moveFolderToTrash(long folderId)
-		throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalFolder> getFolders(long groupId);
 
-	public JournalFolder updateFolder(long groupId, long folderId,
-		long parentFolderId, java.lang.String name,
-		java.lang.String description, boolean mergeWithParentFolder,
-		ServiceContext serviceContext) throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalFolder> getFolders(long groupId, long parentFolderId);
 
-	public JournalFolder updateFolder(long groupId, long folderId,
-		long parentFolderId, java.lang.String name,
-		java.lang.String description, long[] ddmStructureIds,
-		int restrictionType, boolean mergeWithParentFolder,
-		ServiceContext serviceContext) throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalFolder> getFolders(long groupId, long parentFolderId,
+		int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalFolder> getFolders(long groupId, long parentFolderId,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalFolder> getFolders(long groupId, long parentFolderId,
+		int status, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<java.lang.Object> getFoldersAndArticles(long groupId,
+		long folderId, int status, int start, int end, OrderByComparator<?> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<java.lang.Object> getFoldersAndArticles(long groupId,
+		long folderId, int start, int end, OrderByComparator<?> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<java.lang.Object> getFoldersAndArticles(long groupId,
+		long userId, long folderId, int status, int start, int end,
+		OrderByComparator<?> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<java.lang.Object> getFoldersAndArticles(long groupId,
+		long userId, long folderId, int status, Locale locale, int start,
+		int end, OrderByComparator<?> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersAndArticlesCount(long groupId,
@@ -118,65 +146,6 @@ public interface JournalFolderService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DDMStructure> getDDMStructures(long[] groupIds, long folderId,
-		int restrictionType) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Long> getFolderIds(long groupId, long folderId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<JournalFolder> getFolders(long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<JournalFolder> getFolders(long groupId, long parentFolderId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<JournalFolder> getFolders(long groupId, long parentFolderId,
-		int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<JournalFolder> getFolders(long groupId, long parentFolderId,
-		int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<JournalFolder> getFolders(long groupId, long parentFolderId,
-		int status, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getFoldersAndArticles(long groupId,
-		long folderId, int start, int end, OrderByComparator<?> obc);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getFoldersAndArticles(long groupId,
-		long folderId, int status, int start, int end, OrderByComparator<?> obc);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getFoldersAndArticles(long groupId,
-		long userId, long folderId, int status, int start, int end,
-		OrderByComparator<?> obc);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Object> getFoldersAndArticles(long groupId,
-		long userId, long folderId, int status, Locale locale, int start,
-		int end, OrderByComparator<?> obc);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.Long> getSubfolderIds(long groupId, long folderId,
-		boolean recurse);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DDMStructure> searchDDMStructures(long companyId,
-		long[] groupIds, long folderId, int restrictionType,
-		java.lang.String keywords, int start, int end,
-		OrderByComparator<DDMStructure> obc) throws PortalException;
-
-	public void deleteFolder(long folderId) throws PortalException;
-
-	public void deleteFolder(long folderId, boolean includeTrashedEntries)
-		throws PortalException;
-
 	/**
 	* @deprecated As of 4.0.0, replaced by {@link #getSubfolderIds(List, long,
 	long, boolean)}
@@ -190,11 +159,42 @@ public interface JournalFolderService extends BaseService {
 	public void getSubfolderIds(List<java.lang.Long> folderIds, long groupId,
 		long folderId, boolean recurse);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<java.lang.Long> getSubfolderIds(long groupId, long folderId,
+		boolean recurse);
+
+	public JournalFolder moveFolder(long folderId, long parentFolderId,
+		ServiceContext serviceContext) throws PortalException;
+
+	public JournalFolder moveFolderFromTrash(long folderId,
+		long parentFolderId, ServiceContext serviceContext)
+		throws PortalException;
+
+	public JournalFolder moveFolderToTrash(long folderId)
+		throws PortalException;
+
 	public void restoreFolderFromTrash(long folderId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDMStructure> searchDDMStructures(long companyId,
+		long[] groupIds, long folderId, int restrictionType,
+		java.lang.String keywords, int start, int end,
+		OrderByComparator<DDMStructure> obc) throws PortalException;
 
 	public void subscribe(long groupId, long folderId)
 		throws PortalException;
 
 	public void unsubscribe(long groupId, long folderId)
 		throws PortalException;
+
+	public JournalFolder updateFolder(long groupId, long folderId,
+		long parentFolderId, java.lang.String name,
+		java.lang.String description, boolean mergeWithParentFolder,
+		ServiceContext serviceContext) throws PortalException;
+
+	public JournalFolder updateFolder(long groupId, long folderId,
+		long parentFolderId, java.lang.String name,
+		java.lang.String description, long[] ddmStructureIds,
+		int restrictionType, boolean mergeWithParentFolder,
+		ServiceContext serviceContext) throws PortalException;
 }

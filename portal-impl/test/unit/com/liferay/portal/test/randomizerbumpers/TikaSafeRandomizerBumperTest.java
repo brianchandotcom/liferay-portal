@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 
@@ -79,7 +78,7 @@ public class TikaSafeRandomizerBumperTest {
 	@Test
 	public void testAcceptText() {
 		TikaSafeRandomizerBumper tikaSafeRandomizerBumper =
-			new TikaSafeRandomizerBumper(ContentTypes.TEXT_PLAIN);
+			TikaSafeRandomizerBumper.TEXT_PLAIN;
 
 		doAccept(tikaSafeRandomizerBumper, _TEXT_BYTE_ARRAY, true, Level.OFF);
 		doAccept(tikaSafeRandomizerBumper, _EXE_BYTE_ARRAY, false, Level.OFF);

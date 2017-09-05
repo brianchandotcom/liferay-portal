@@ -837,6 +837,21 @@ public class JournalUtil {
 		return false;
 	}
 
+	public static boolean isLatestArticle(JournalArticle article) {
+		JournalArticle latestArticle =
+			JournalArticleLocalServiceUtil.fetchLatestArticle(
+				article.getResourcePrimKey(), WorkflowConstants.STATUS_ANY,
+				false);
+
+		if ((latestArticle != null) &&
+			(article.getId() == latestArticle.getId())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public static boolean isSubscribedToArticle(
 		long companyId, long groupId, long userId, long articleId) {
 

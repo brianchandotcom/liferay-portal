@@ -110,98 +110,13 @@ public class JournalArticleLocalizationWrapper
 	}
 
 	@Override
-	public JournalArticleLocalization toEscapedModel() {
-		return new JournalArticleLocalizationWrapper(_journalArticleLocalization.toEscapedModel());
-	}
-
-	@Override
-	public JournalArticleLocalization toUnescapedModel() {
-		return new JournalArticleLocalizationWrapper(_journalArticleLocalization.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _journalArticleLocalization.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _journalArticleLocalization.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _journalArticleLocalization.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _journalArticleLocalization.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<JournalArticleLocalization> toCacheModel() {
-		return _journalArticleLocalization.toCacheModel();
+	public java.lang.Object clone() {
+		return new JournalArticleLocalizationWrapper((JournalArticleLocalization)_journalArticleLocalization.clone());
 	}
 
 	@Override
 	public int compareTo(JournalArticleLocalization journalArticleLocalization) {
 		return _journalArticleLocalization.compareTo(journalArticleLocalization);
-	}
-
-	@Override
-	public int hashCode() {
-		return _journalArticleLocalization.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _journalArticleLocalization.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new JournalArticleLocalizationWrapper((JournalArticleLocalization)_journalArticleLocalization.clone());
-	}
-
-	/**
-	* Returns the description of this journal article localization.
-	*
-	* @return the description of this journal article localization
-	*/
-	@Override
-	public java.lang.String getDescription() {
-		return _journalArticleLocalization.getDescription();
-	}
-
-	/**
-	* Returns the language ID of this journal article localization.
-	*
-	* @return the language ID of this journal article localization
-	*/
-	@Override
-	public java.lang.String getLanguageId() {
-		return _journalArticleLocalization.getLanguageId();
-	}
-
-	/**
-	* Returns the title of this journal article localization.
-	*
-	* @return the title of this journal article localization
-	*/
-	@Override
-	public java.lang.String getTitle() {
-		return _journalArticleLocalization.getTitle();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _journalArticleLocalization.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _journalArticleLocalization.toXmlString();
 	}
 
 	/**
@@ -235,6 +150,31 @@ public class JournalArticleLocalizationWrapper
 	}
 
 	/**
+	* Returns the description of this journal article localization.
+	*
+	* @return the description of this journal article localization
+	*/
+	@Override
+	public java.lang.String getDescription() {
+		return _journalArticleLocalization.getDescription();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _journalArticleLocalization.getExpandoBridge();
+	}
+
+	/**
+	* Returns the language ID of this journal article localization.
+	*
+	* @return the language ID of this journal article localization
+	*/
+	@Override
+	public java.lang.String getLanguageId() {
+		return _journalArticleLocalization.getLanguageId();
+	}
+
+	/**
 	* Returns the primary key of this journal article localization.
 	*
 	* @return the primary key of this journal article localization
@@ -242,6 +182,41 @@ public class JournalArticleLocalizationWrapper
 	@Override
 	public long getPrimaryKey() {
 		return _journalArticleLocalization.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _journalArticleLocalization.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the title of this journal article localization.
+	*
+	* @return the title of this journal article localization
+	*/
+	@Override
+	public java.lang.String getTitle() {
+		return _journalArticleLocalization.getTitle();
+	}
+
+	@Override
+	public int hashCode() {
+		return _journalArticleLocalization.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _journalArticleLocalization.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _journalArticleLocalization.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _journalArticleLocalization.isNew();
 	}
 
 	/**
@@ -290,14 +265,14 @@ public class JournalArticleLocalizationWrapper
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_journalArticleLocalization.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_journalArticleLocalization.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_journalArticleLocalization.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -343,6 +318,31 @@ public class JournalArticleLocalizationWrapper
 	@Override
 	public void setTitle(java.lang.String title) {
 		_journalArticleLocalization.setTitle(title);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<JournalArticleLocalization> toCacheModel() {
+		return _journalArticleLocalization.toCacheModel();
+	}
+
+	@Override
+	public JournalArticleLocalization toEscapedModel() {
+		return new JournalArticleLocalizationWrapper(_journalArticleLocalization.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _journalArticleLocalization.toString();
+	}
+
+	@Override
+	public JournalArticleLocalization toUnescapedModel() {
+		return new JournalArticleLocalizationWrapper(_journalArticleLocalization.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _journalArticleLocalization.toXmlString();
 	}
 
 	@Override

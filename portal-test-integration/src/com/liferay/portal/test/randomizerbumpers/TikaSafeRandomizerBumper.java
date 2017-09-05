@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.randomizerbumpers.RandomizerBumper;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.FileImpl;
@@ -38,6 +39,9 @@ public class TikaSafeRandomizerBumper implements RandomizerBumper<byte[]> {
 
 	public static final TikaSafeRandomizerBumper INSTANCE =
 		new TikaSafeRandomizerBumper(null);
+
+	public static final TikaSafeRandomizerBumper TEXT_PLAIN =
+		new TikaSafeRandomizerBumper(ContentTypes.TEXT_PLAIN);
 
 	public TikaSafeRandomizerBumper(String contentType) {
 		_contentType = contentType;

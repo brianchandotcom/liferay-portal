@@ -77,7 +77,7 @@ public class DLFileEntryActivityInterpreterTest
 			TestPropsValues.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.TEXT_PLAIN),
 			serviceContext);
 	}
 
@@ -111,7 +111,7 @@ public class DLFileEntryActivityInterpreterTest
 			_fileEntry.getFileEntryId(), RandomTestUtil.randomString(),
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, false,
-			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.TEXT_PLAIN),
 			serviceContext);
 	}
 

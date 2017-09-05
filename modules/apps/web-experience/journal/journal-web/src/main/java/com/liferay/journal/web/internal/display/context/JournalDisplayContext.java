@@ -1284,6 +1284,7 @@ public class JournalDisplayContext {
 		}
 
 		searchContext.setAttribute("head", !showVersions);
+		searchContext.setAttribute("latest", !showVersions);
 		searchContext.setAttribute("params", params);
 
 		if (!showVersions) {

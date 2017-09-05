@@ -83,17 +83,17 @@ public class SharepointServerResponseConverter {
 				jsonObject.getString("UIVersion");
 		String version = jsonObject.getString("UIVersionLabel");
 
-		JSONObject author = jsonObject.getJSONObject("Author");
+		JSONObject authorJSONObject = jsonObject.getJSONObject("Author");
 
-		String owner = author.getString("Title");
+		String owner = authorJSONObject.getString("Title");
 
-		JSONObject checkedOutByUser = jsonObject.getJSONObject(
+		JSONObject checkedOutByUserJSONObject = jsonObject.getJSONObject(
 			"CheckedOutByUser");
 
 		String checkedOutBy = StringPool.BLANK;
 
-		if (!checkedOutByUser.has("__deferred")) {
-			checkedOutBy = checkedOutByUser.getString("Title");
+		if (!checkedOutByUserJSONObject.has("__deferred")) {
+			checkedOutBy = checkedOutByUserJSONObject.getString("Title");
 		}
 
 		long effectiveBasePermissionsBits = _getEffectiveBasePermissionsBits(

@@ -44,3 +44,7 @@
 	background-color: $nav-pills-link-active-bg;
 	color: $nav-pills-link-active-color;
 }
+
+.nav-tabs {
+	flex-direction: row;
+}

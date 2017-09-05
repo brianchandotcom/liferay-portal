@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectConfigurationKeys;
 import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectConstants;
@@ -59,49 +58,72 @@ public class FacebookConnectCompanySettingsVerifyProcess
 	protected Dictionary<String, String> getPropertyValues(long companyId) {
 		Dictionary<String, String> dictionary = new HashMapDictionary<>();
 
-		dictionary.put(
-			FacebookConnectConfigurationKeys.AUTH_ENABLED,
-			_prefsProps.getString(
-				companyId, LegacyFacebookConnectPropsKeys.AUTH_ENABLED,
-				StringPool.FALSE));
-		dictionary.put(
-			FacebookConnectConfigurationKeys.APP_ID,
-			_prefsProps.getString(
-				companyId, LegacyFacebookConnectPropsKeys.APP_ID,
-				StringPool.BLANK));
-		dictionary.put(
-			FacebookConnectConfigurationKeys.APP_SECRET,
-			_prefsProps.getString(
-				companyId, LegacyFacebookConnectPropsKeys.APP_SECRET,
-				StringPool.BLANK));
-		dictionary.put(
-			FacebookConnectConfigurationKeys.GRAPH_URL,
-			_prefsProps.getString(
-				companyId, LegacyFacebookConnectPropsKeys.GRAPH_URL,
-				StringPool.BLANK));
-		dictionary.put(
-			FacebookConnectConfigurationKeys.OAUTH_AUTH_URL,
-			_prefsProps.getString(
-				companyId, LegacyFacebookConnectPropsKeys.OAUTH_AUTH_URL,
-				StringPool.BLANK));
-		dictionary.put(
-			FacebookConnectConfigurationKeys.OAUTH_REDIRECT_URL,
-			upgradeLegacyRedirectURI(
-				_prefsProps.getString(
-					companyId,
-					LegacyFacebookConnectPropsKeys.OAUTH_REDIRECT_URL,
-					StringPool.BLANK)));
-		dictionary.put(
-			FacebookConnectConfigurationKeys.OAUTH_TOKEN_URL,
-			_prefsProps.getString(
-				companyId, LegacyFacebookConnectPropsKeys.OAUTH_TOKEN_URL,
-				StringPool.BLANK));
-		dictionary.put(
-			FacebookConnectConfigurationKeys.VERIFIED_ACCOUNT_REQUIRED,
-			_prefsProps.getString(
-				companyId,
-				LegacyFacebookConnectPropsKeys.VERIFIED_ACCOUNT_REQUIRED,
-				StringPool.FALSE));
+		String enabled = _prefsProps.getString(
+			companyId, LegacyFacebookConnectPropsKeys.AUTH_ENABLED);
+
+		if (enabled != null) {
+			dictionary.put(
+				FacebookConnectConfigurationKeys.AUTH_ENABLED, enabled);
+		}
+
+		String appId = _prefsProps.getString(
+			companyId, LegacyFacebookConnectPropsKeys.APP_ID);
+
+		if (appId != null) {
+			dictionary.put(FacebookConnectConfigurationKeys.APP_ID, appId);
+		}
+
+		String appSecret = _prefsProps.getString(
+			companyId, LegacyFacebookConnectPropsKeys.APP_SECRET);
+
+		if (appSecret != null) {
+			dictionary.put(
+				FacebookConnectConfigurationKeys.APP_SECRET, appSecret);
+		}
+
+		String graphURL = _prefsProps.getString(
+			companyId, LegacyFacebookConnectPropsKeys.GRAPH_URL);
+
+		if (graphURL != null) {
+			dictionary.put(
+				FacebookConnectConfigurationKeys.GRAPH_URL, graphURL);
+		}
+
+		String oauthAuthURL = _prefsProps.getString(
+			companyId, LegacyFacebookConnectPropsKeys.OAUTH_AUTH_URL);
+
+		if (oauthAuthURL != null) {
+			dictionary.put(
+				FacebookConnectConfigurationKeys.OAUTH_AUTH_URL, oauthAuthURL);
+		}
+
+		String oauthRedirectURL = _prefsProps.getString(
+			companyId, LegacyFacebookConnectPropsKeys.OAUTH_REDIRECT_URL);
+
+		if (oauthRedirectURL != null) {
+			dictionary.put(
+				FacebookConnectConfigurationKeys.OAUTH_REDIRECT_URL,
+				upgradeLegacyRedirectURI(oauthRedirectURL));
+		}
+
+		String oauthTokenURL = _prefsProps.getString(
+			companyId, LegacyFacebookConnectPropsKeys.OAUTH_TOKEN_URL);
+
+		if (oauthTokenURL != null) {
+			dictionary.put(
+				FacebookConnectConfigurationKeys.OAUTH_TOKEN_URL,
+				oauthTokenURL);
+		}
+
+		String verifiedAccountRequired = _prefsProps.getString(
+			companyId,
+			LegacyFacebookConnectPropsKeys.VERIFIED_ACCOUNT_REQUIRED);
+
+		if (verifiedAccountRequired != null) {
+			dictionary.put(
+				FacebookConnectConfigurationKeys.VERIFIED_ACCOUNT_REQUIRED,
+				verifiedAccountRequired);
+		}
 
 		return dictionary;
 	}

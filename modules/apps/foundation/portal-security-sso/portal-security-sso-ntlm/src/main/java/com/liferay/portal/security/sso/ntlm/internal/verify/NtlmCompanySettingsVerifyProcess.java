@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.sso.ntlm.constants.LegacyNtlmPropsKeys;
 import com.liferay.portal.security.sso.ntlm.constants.NtlmConfigurationKeys;
 import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;
@@ -57,40 +56,60 @@ public class NtlmCompanySettingsVerifyProcess
 	protected Dictionary<String, String> getPropertyValues(long companyId) {
 		Dictionary<String, String> dictionary = new HashMapDictionary<>();
 
-		dictionary.put(
-			NtlmConfigurationKeys.AUTH_DOMAIN,
-			_prefsProps.getString(
-				companyId, LegacyNtlmPropsKeys.NTLM_AUTH_DOMAIN, "EXAMPLE"));
-		dictionary.put(
-			NtlmConfigurationKeys.AUTH_DOMAIN_CONTROLLER,
-			_prefsProps.getString(
-				companyId, LegacyNtlmPropsKeys.NTLM_AUTH_DOMAIN_CONTROLLER,
-				"127.0.0.1"));
-		dictionary.put(
-			NtlmConfigurationKeys.AUTH_DOMAIN_CONTROLLER_NAME,
-			_prefsProps.getString(
-				companyId, LegacyNtlmPropsKeys.NTLM_AUTH_DOMAIN_CONTROLLER_NAME,
-				"EXAMPLE"));
-		dictionary.put(
-			NtlmConfigurationKeys.AUTH_ENABLED,
-			_prefsProps.getString(
-				companyId, LegacyNtlmPropsKeys.NTLM_AUTH_ENABLED,
-				StringPool.FALSE));
-		dictionary.put(
-			NtlmConfigurationKeys.AUTH_NEGOTIATE_FLAGS,
-			_prefsProps.getString(
-				companyId, LegacyNtlmPropsKeys.NTLM_AUTH_NEGOTIATE_FLAGS,
-				"0x600FFFFF"));
-		dictionary.put(
-			NtlmConfigurationKeys.AUTH_SERVICE_ACCOUNT,
-			_prefsProps.getString(
-				companyId, LegacyNtlmPropsKeys.NTLM_AUTH_SERVICE_ACCOUNT,
-				"LIFERAY$@EXAMPLE.COM"));
-		dictionary.put(
-			NtlmConfigurationKeys.AUTH_SERVICE_PASSWORD,
-			_prefsProps.getString(
-				companyId, LegacyNtlmPropsKeys.NTLM_AUTH_SERVICE_PASSWORD,
-				"test"));
+		String domain = _prefsProps.getString(
+			companyId, LegacyNtlmPropsKeys.NTLM_AUTH_DOMAIN);
+
+		if (domain != null) {
+			dictionary.put(NtlmConfigurationKeys.AUTH_DOMAIN, domain);
+		}
+
+		String domainController = _prefsProps.getString(
+			companyId, LegacyNtlmPropsKeys.NTLM_AUTH_DOMAIN_CONTROLLER);
+
+		if (domainController != null) {
+			dictionary.put(
+				NtlmConfigurationKeys.AUTH_DOMAIN_CONTROLLER, domainController);
+		}
+
+		String domainControllerName = _prefsProps.getString(
+			companyId, LegacyNtlmPropsKeys.NTLM_AUTH_DOMAIN_CONTROLLER_NAME);
+
+		if (domainControllerName != null) {
+			dictionary.put(
+				NtlmConfigurationKeys.AUTH_DOMAIN_CONTROLLER_NAME,
+				domainControllerName);
+		}
+
+		String enabled = _prefsProps.getString(
+			companyId, LegacyNtlmPropsKeys.NTLM_AUTH_ENABLED);
+
+		if (enabled != null) {
+			dictionary.put(NtlmConfigurationKeys.AUTH_ENABLED, enabled);
+		}
+
+		String negotiateFlags = _prefsProps.getString(
+			companyId, LegacyNtlmPropsKeys.NTLM_AUTH_NEGOTIATE_FLAGS);
+
+		if (negotiateFlags != null) {
+			dictionary.put(
+				NtlmConfigurationKeys.AUTH_NEGOTIATE_FLAGS, negotiateFlags);
+		}
+
+		String serviceAccount = _prefsProps.getString(
+			companyId, LegacyNtlmPropsKeys.NTLM_AUTH_SERVICE_ACCOUNT);
+
+		if (serviceAccount != null) {
+			dictionary.put(
+				NtlmConfigurationKeys.AUTH_SERVICE_ACCOUNT, serviceAccount);
+		}
+
+		String servicePassword = _prefsProps.getString(
+			companyId, LegacyNtlmPropsKeys.NTLM_AUTH_SERVICE_PASSWORD);
+
+		if (servicePassword != null) {
+			dictionary.put(
+				NtlmConfigurationKeys.AUTH_SERVICE_PASSWORD, servicePassword);
+		}
 
 		return dictionary;
 	}

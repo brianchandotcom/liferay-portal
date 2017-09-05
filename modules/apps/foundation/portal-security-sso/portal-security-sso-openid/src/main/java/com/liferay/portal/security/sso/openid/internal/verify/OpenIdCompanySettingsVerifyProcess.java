@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.sso.openid.constants.LegacyOpenIdPropsKeys;
 import com.liferay.portal.security.sso.openid.constants.OpenIdConfigurationKeys;
 import com.liferay.portal.security.sso.openid.constants.OpenIdConstants;
@@ -57,11 +56,12 @@ public class OpenIdCompanySettingsVerifyProcess
 	protected Dictionary<String, String> getPropertyValues(long companyId) {
 		Dictionary<String, String> dictionary = new HashMapDictionary<>();
 
-		dictionary.put(
-			OpenIdConfigurationKeys.AUTH_ENABLED,
-			_prefsProps.getString(
-				companyId, LegacyOpenIdPropsKeys.OPENID_AUTH_ENABLED,
-				StringPool.FALSE));
+		String enabled = _prefsProps.getString(
+			companyId, LegacyOpenIdPropsKeys.OPENID_AUTH_ENABLED);
+
+		if (enabled != null) {
+			dictionary.put(OpenIdConfigurationKeys.AUTH_ENABLED, enabled);
+		}
 
 		return dictionary;
 	}

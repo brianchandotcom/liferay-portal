@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.sso.google.constants.GoogleAuthorizationConfigurationKeys;
 import com.liferay.portal.security.sso.google.constants.GoogleConstants;
 import com.liferay.portal.security.sso.google.constants.LegacyGoogleLoginPropsKeys;
@@ -57,21 +56,30 @@ public class GoogleLoginCompanySettingsVerifyProcess
 	protected Dictionary<String, String> getPropertyValues(long companyId) {
 		Dictionary<String, String> dictionary = new HashMapDictionary<>();
 
-		dictionary.put(
-			GoogleAuthorizationConfigurationKeys.AUTH_ENABLED,
-			_prefsProps.getString(
-				companyId, LegacyGoogleLoginPropsKeys.AUTH_ENABLED,
-				StringPool.FALSE));
-		dictionary.put(
-			GoogleAuthorizationConfigurationKeys.CLIENT_ID,
-			_prefsProps.getString(
-				companyId, LegacyGoogleLoginPropsKeys.CLIENT_ID,
-				StringPool.BLANK));
-		dictionary.put(
-			GoogleAuthorizationConfigurationKeys.CLIENT_SECRET,
-			_prefsProps.getString(
-				companyId, LegacyGoogleLoginPropsKeys.CLIENT_SECRET,
-				StringPool.BLANK));
+		String enabled = _prefsProps.getString(
+			companyId, LegacyGoogleLoginPropsKeys.AUTH_ENABLED);
+
+		if (enabled != null) {
+			dictionary.put(
+				GoogleAuthorizationConfigurationKeys.AUTH_ENABLED, enabled);
+		}
+
+		String clientId = _prefsProps.getString(
+			companyId, LegacyGoogleLoginPropsKeys.CLIENT_ID);
+
+		if (clientId != null) {
+			dictionary.put(
+				GoogleAuthorizationConfigurationKeys.CLIENT_ID, clientId);
+		}
+
+		String clientSecret = _prefsProps.getString(
+			companyId, LegacyGoogleLoginPropsKeys.CLIENT_SECRET);
+
+		if (clientSecret != null) {
+			dictionary.put(
+				GoogleAuthorizationConfigurationKeys.CLIENT_SECRET,
+				clientSecret);
+		}
 
 		return dictionary;
 	}

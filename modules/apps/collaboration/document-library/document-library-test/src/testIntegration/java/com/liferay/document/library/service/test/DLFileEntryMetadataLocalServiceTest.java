@@ -111,7 +111,7 @@ public class DLFileEntryMetadataLocalServiceTest {
 			_ddmStructure.getStructureKey(), user.getLocale());
 
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
-			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE));
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.TEXT_PLAIN));
 
 		_dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(),

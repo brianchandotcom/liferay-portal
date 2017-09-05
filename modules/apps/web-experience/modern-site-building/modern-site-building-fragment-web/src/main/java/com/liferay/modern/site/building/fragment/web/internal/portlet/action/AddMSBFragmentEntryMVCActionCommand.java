@@ -23,20 +23,15 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -67,8 +62,6 @@ public class AddMSBFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 		String js = ParamUtil.getString(actionRequest, "jsContent");
 		String html = ParamUtil.getString(actionRequest, "htmlContent");
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				actionRequest);
@@ -78,46 +71,43 @@ public class AddMSBFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 					serviceContext.getScopeGroupId(), msbFragmentCollectionId,
 					name, css, html, js, serviceContext);
 
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
 			jsonObject.put(
 				"msbFragmentEntryId", msbFragmentEntry.getMsbFragmentEntryId());
+
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse, jsonObject);
 		}
 		catch (PortalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
-
-			HttpServletRequest request = _portal.getHttpServletRequest(
-				actionRequest);
-
-			if (pe instanceof MSBFragmentEntryNameException) {
-				jsonObject.put(
-					"error",
-					LanguageUtil.get(request, "this-field-is-required"));
-			}
-			else if (pe instanceof DuplicateMSBFragmentEntryException) {
-				jsonObject.put(
-					"error",
-					LanguageUtil.get(
-						request,
-						"this-name-already-exists-please-try-another-one"));
-			}
-			else {
-				jsonObject.put(
-					"error", LanguageUtil.get(request, "unknown-error"));
-			}
+			handlePortalException(actionRequest, actionResponse, pe);
 		}
+	}
+
+	protected void handlePortalException(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			PortalException pe)
+		throws Exception {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		String errorMessage = "unknown-error";
+
+		if (pe instanceof DuplicateMSBFragmentEntryException) {
+			errorMessage = "this-name-already-exists-please-try-another-one";
+		}
+		else if (pe instanceof MSBFragmentEntryNameException) {
+			errorMessage = "this-field-is-required";
+		}
+
+		jsonObject.put(
+			"error", LanguageUtil.get(actionRequest.getLocale(), errorMessage));
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		AddMSBFragmentEntryMVCActionCommand.class);
-
 	@Reference
 	private MSBFragmentEntryService _msbFragmentEntryService;
-
-	@Reference
-	private Portal _portal;
 
 }

@@ -26,7 +26,7 @@ import org.junit.Test;
 public class JSONWebServiceClientImplTest {
 
 	@Test
-	public void testActivateForBasicProxy() {
+	public void testActivateForBasicProxy() throws Exception {
 		JSONWebServiceClientImpl jsonWebServiceClientImpl =
 			new JSONWebServiceClientImpl();
 
@@ -61,7 +61,7 @@ public class JSONWebServiceClientImplTest {
 	}
 
 	@Test
-	public void testActivateForNTLMProxy() {
+	public void testActivateForNTLMProxy() throws Exception {
 		JSONWebServiceClientImpl jsonWebServiceClientImpl =
 			new JSONWebServiceClientImpl();
 
@@ -85,7 +85,7 @@ public class JSONWebServiceClientImplTest {
 	}
 
 	@Test
-	public void testActivateWithHeaders() {
+	public void testActivateWithHeaders() throws Exception {
 		JSONWebServiceClientImpl jsonWebServiceClientImpl =
 			new JSONWebServiceClientImpl();
 

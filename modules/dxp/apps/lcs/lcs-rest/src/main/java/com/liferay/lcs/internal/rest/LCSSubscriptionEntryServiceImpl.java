@@ -55,8 +55,8 @@ public class LCSSubscriptionEntryServiceImpl
 	public LCSSubscriptionEntry fetchLCSSubscriptionEntry(String key) {
 		try {
 			return doGetToObject(
-				LCSSubscriptionEntry.class, _URL_LCS_SUBSCRIPTION_ENTRY,
-				"key", key);
+				LCSSubscriptionEntry.class, _URL_LCS_SUBSCRIPTION_ENTRY, "key",
+				key);
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
 			if (jsonwsie.getStatus() == HttpServletResponse.SC_NOT_FOUND) {

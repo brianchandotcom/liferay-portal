@@ -47,11 +47,10 @@ public class LCSClusterEntryServiceImpl
 
 		try {
 			return doPostToObject(
-				LCSClusterEntry.class, _URL_LCS_CLUSTER_ENTRY,
-				"lcsProjectId", String.valueOf(lcsProjectId), "name", name,
-				"description", description, "location", location,
-				"subscriptionType", subscriptionType, "type",
-				String.valueOf(type));
+				LCSClusterEntry.class, _URL_LCS_CLUSTER_ENTRY, "lcsProjectId",
+				String.valueOf(lcsProjectId), "name", name, "description",
+				description, "location", location, "subscriptionType",
+				subscriptionType, "type", String.valueOf(type));
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
 			throw new RuntimeException(jsonwsie);
@@ -78,8 +77,8 @@ public class LCSClusterEntryServiceImpl
 
 		try {
 			remoteLcsClusterEntries = doGetToList(
-				LCSClusterEntry.class, _URL_LCS_CLUSTER_ENTRY,
-				"lcsProjectId", String.valueOf(lcsProjectId), "manage", "true");
+				LCSClusterEntry.class, _URL_LCS_CLUSTER_ENTRY, "lcsProjectId",
+				String.valueOf(lcsProjectId), "manage", "true");
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
 			throw new RuntimeException(jsonwsie);
@@ -123,8 +122,8 @@ public class LCSClusterEntryServiceImpl
 
 		try {
 			remoteLcsClusterEntries = doGetToList(
-				LCSClusterEntry.class, _URL_LCS_CLUSTER_ENTRY,
-				"lcsProjectId", String.valueOf(lcsProjectId));
+				LCSClusterEntry.class, _URL_LCS_CLUSTER_ENTRY, "lcsProjectId",
+				String.valueOf(lcsProjectId));
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
 			throw new RuntimeException(jsonwsie);

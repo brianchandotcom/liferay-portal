@@ -28,18 +28,22 @@ public class PatternCache {
 	}
 
 	public static Pattern get(String regex, Integer flags) {
-		Pattern pattern = _patterns.get(_getKey(regex, flags));
+		String key = _getKey(regex, flags);
 
-		if (pattern == null) {
-			if (flags == null) {
-				pattern = Pattern.compile(regex);
-			}
-			else {
-				pattern = Pattern.compile(regex, flags);
-			}
+		Pattern pattern = _patterns.get(key);
 
-			_patterns.put(_getKey(regex, flags), pattern);
+		if (pattern != null) {
+			return pattern;
 		}
+
+		if (flags != null) {
+			pattern = Pattern.compile(regex, flags);
+		}
+		else {
+			pattern = Pattern.compile(regex);
+		}
+
+		_patterns.put(key, pattern);
 
 		return pattern;
 	}

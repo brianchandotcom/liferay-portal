@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.lcs.rest;
+package com.liferay.lcs.internal.rest;
 
 import com.liferay.petra.json.web.service.client.BaseJSONWebServiceClientHandler;
 import com.liferay.petra.json.web.service.client.JSONWebServiceClient;

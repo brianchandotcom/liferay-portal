@@ -12,8 +12,13 @@
  * details.
  */
 
-package com.liferay.lcs.rest;
+package com.liferay.lcs.internal.rest;
 
+import com.liferay.lcs.rest.exception.DuplicateLCSClusterEntryNameException;
+import com.liferay.lcs.rest.LCSClusterEntry;
+import com.liferay.lcs.rest.LCSClusterEntryImpl;
+import com.liferay.lcs.rest.LCSClusterEntryService;
+import com.liferay.lcs.rest.exception.RequiredLCSClusterEntryNameException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 
 import java.util.ArrayList;

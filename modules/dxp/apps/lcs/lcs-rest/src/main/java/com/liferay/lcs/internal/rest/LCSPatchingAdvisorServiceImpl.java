@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.lcs.rest;
+package com.liferay.lcs.internal.rest;
+
+import com.liferay.lcs.rest.LCSPatchingAdvisorService;
 
 import java.util.List;
 

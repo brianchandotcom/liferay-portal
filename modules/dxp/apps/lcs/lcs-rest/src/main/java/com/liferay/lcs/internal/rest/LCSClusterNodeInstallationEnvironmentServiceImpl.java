@@ -12,8 +12,11 @@
  * details.
  */
 
-package com.liferay.lcs.rest;
+package com.liferay.lcs.internal.rest;
 
+import com.liferay.lcs.rest.LCSClusterNodeInstallationEnvironment;
+import com.liferay.lcs.rest.LCSClusterNodeInstallationEnvironmentImpl;
+import com.liferay.lcs.rest.LCSClusterNodeInstallationEnvironmentService;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 

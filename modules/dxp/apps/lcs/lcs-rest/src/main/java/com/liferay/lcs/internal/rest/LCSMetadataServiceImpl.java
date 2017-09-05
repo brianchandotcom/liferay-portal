@@ -12,8 +12,11 @@
  * details.
  */
 
-package com.liferay.lcs.rest;
+package com.liferay.lcs.internal.rest;
 
+import com.liferay.lcs.rest.LCSMetadata;
+import com.liferay.lcs.rest.LCSMetadataImpl;
+import com.liferay.lcs.rest.LCSMetadataService;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 

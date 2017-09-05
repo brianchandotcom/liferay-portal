@@ -12,8 +12,16 @@
  * details.
  */
 
-package com.liferay.lcs.rest;
+package com.liferay.lcs.internal.rest;
 
+import com.liferay.lcs.internal.rest.BaseLCSServiceImpl;
+import com.liferay.lcs.rest.LCSClusterNode;
+import com.liferay.lcs.rest.LCSClusterNodeImpl;
+import com.liferay.lcs.rest.LCSClusterNodeService;
+import com.liferay.lcs.rest.RESTError;
+import com.liferay.lcs.rest.exception.DuplicateLCSClusterNodeNameException;
+import com.liferay.lcs.rest.exception.NoSuchLCSSubscriptionEntryException;
+import com.liferay.lcs.rest.exception.RequiredLCSClusterNodeNameException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 

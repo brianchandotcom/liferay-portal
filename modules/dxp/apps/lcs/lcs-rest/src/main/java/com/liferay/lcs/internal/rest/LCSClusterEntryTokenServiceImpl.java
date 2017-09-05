@@ -12,8 +12,11 @@
  * details.
  */
 
-package com.liferay.lcs.rest;
+package com.liferay.lcs.internal.rest;
 
+import com.liferay.lcs.rest.LCSClusterEntryToken;
+import com.liferay.lcs.rest.LCSClusterEntryTokenImpl;
+import com.liferay.lcs.rest.LCSClusterEntryTokenService;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 
 import javax.servlet.http.HttpServletResponse;

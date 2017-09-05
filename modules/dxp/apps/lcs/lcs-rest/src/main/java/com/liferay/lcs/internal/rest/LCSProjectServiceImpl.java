@@ -12,45 +12,54 @@
  * details.
  */
 
-package com.liferay.lcs.rest;
+package com.liferay.lcs.internal.rest;
 
+import com.liferay.lcs.rest.LCSProject;
+import com.liferay.lcs.rest.LCSProjectImpl;
+import com.liferay.lcs.rest.LCSProjectService;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 
-import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * @author Riccardo Ferrari
+ * @author Igor Beslic
  */
-public class LCSClusterNodeUptimeServiceImpl
-	extends BaseLCSServiceImpl implements LCSClusterNodeUptimeService {
+public class LCSProjectServiceImpl
+	extends BaseLCSServiceImpl implements LCSProjectService {
 
 	@Override
-	public void updateLCSClusterNodeUptime(String key) {
+	public LCSProject addDefaultLCSProject() {
 		try {
-			doPut(_URL_LCS_CLUSTER_NODE_UPTIME, "key", key);
-		}
-		catch (JSONWebServiceInvocationException jsonwsie) {
-			if (jsonwsie.getStatus() == HttpServletResponse.SC_NOT_FOUND) {
-				return;
-			}
-
-			throw new RuntimeException(jsonwsie);
-		}
-	}
-
-	@Override
-	public void updateLCSClusterNodeUptimes(String key, String uptimesJSON) {
-		try {
-			doPut(
-				_URL_LCS_CLUSTER_NODE_UPTIME, "key", key, "uptimesJSON",
-				uptimesJSON);
+			return doPostToObject(LCSProjectImpl.class, _URL_LCS_PROJECT);
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
 			throw new RuntimeException(jsonwsie);
 		}
 	}
 
-	private static final String _URL_LCS_CLUSTER_NODE_UPTIME =
-		"/osb-lcs-portlet/lcs/jsonws/v1_4/LCSClusterNodeUptime";
+	@Override
+	public List<LCSProject> getUserManageableLCSProjects() {
+		List<LCSProjectImpl> remoteLCSProjects = null;
+
+		try {
+			remoteLCSProjects = doGetToList(
+				LCSProjectImpl.class, _URL_LCS_PROJECT, "manage", "true");
+		}
+		catch (JSONWebServiceInvocationException jsonwsie) {
+			throw new RuntimeException(jsonwsie);
+		}
+
+		List<LCSProject> lcsProjects = new ArrayList<LCSProject>();
+
+		for (LCSProject lcsProject : remoteLCSProjects) {
+			lcsProjects.add(lcsProject);
+		}
+
+		return lcsProjects;
+	}
+
+	private static final String _URL_LCS_PROJECT =
+		"/osb-lcs-portlet/lcs/jsonws/v1_4/LCSProject";
 
 }

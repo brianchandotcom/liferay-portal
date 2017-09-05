@@ -12,43 +12,46 @@
  * details.
  */
 
-package com.liferay.lcs.rest;
+package com.liferay.lcs.internal.rest;
 
+import com.liferay.lcs.rest.LCSClusterNodeUptimeService;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Riccardo Ferrari
  */
-public class LCSMessageServiceImpl
-	extends BaseLCSServiceImpl implements LCSMessageService {
+public class LCSClusterNodeUptimeServiceImpl
+	extends BaseLCSServiceImpl implements LCSClusterNodeUptimeService {
 
 	@Override
-	public void addCorpProjectLCSMessage(
-			long corpProjectId, long sourceMessageId, String content, int type)
-		throws JSONWebServiceInvocationException {
+	public void updateLCSClusterNodeUptime(String key) {
+		try {
+			doPut(_URL_LCS_CLUSTER_NODE_UPTIME, "key", key);
+		}
+		catch (JSONWebServiceInvocationException jsonwsie) {
+			if (jsonwsie.getStatus() == HttpServletResponse.SC_NOT_FOUND) {
+				return;
+			}
 
-		doPost(
-			_URL_LCS_MESSAGE, "corpProjectId", String.valueOf(corpProjectId),
-			"sourceMessageId", String.valueOf(sourceMessageId), "content",
-			content, "type", String.valueOf(type));
+			throw new RuntimeException(jsonwsie);
+		}
 	}
 
 	@Override
-	public void deleteCorpProjectLCSMessage(
-		long corpProjectId, long sourceMessageId) {
-
+	public void updateLCSClusterNodeUptimes(String key, String uptimesJSON) {
 		try {
-			doDelete(
-				_URL_LCS_MESSAGE, "corpProjectId",
-				String.valueOf(corpProjectId), "sourceMessageId",
-				String.valueOf(sourceMessageId));
+			doPut(
+				_URL_LCS_CLUSTER_NODE_UPTIME, "key", key, "uptimesJSON",
+				uptimesJSON);
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
 			throw new RuntimeException(jsonwsie);
 		}
 	}
 
-	private static final String _URL_LCS_MESSAGE =
-		"/osb-lcs-portlet/lcs/jsonws/v1_4/LCSMessage";
+	private static final String _URL_LCS_CLUSTER_NODE_UPTIME =
+		"/osb-lcs-portlet/lcs/jsonws/v1_4/LCSClusterNodeUptime";
 
 }

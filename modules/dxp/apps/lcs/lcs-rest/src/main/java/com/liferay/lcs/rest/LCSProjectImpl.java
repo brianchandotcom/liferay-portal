@@ -17,129 +17,104 @@ package com.liferay.lcs.rest;
 /**
  * @author Ivica Cardic
  */
-public class LCSProjectImpl implements LCSProject {
+public class LCSProjectImpl {
 
-	@Override
 	public long getAccountEntryId() {
 		return _accountEntryId;
 	}
 
-	@Override
 	public long getAddressId() {
 		return _addressId;
 	}
 
-	@Override
 	public boolean getArchived() {
 		return _archived;
 	}
 
-	@Override
 	public String getContactEmailAddress() {
 		return _contactEmailAddress;
 	}
 
-	@Override
 	public long getCorpProjectId() {
 		return _corpProjectId;
 	}
 
-	@Override
 	public long getCreateTime() {
 		return _createTime;
 	}
 
-	@Override
 	public long getLcsProjectId() {
 		return _lcsProjectId;
 	}
 
-	@Override
 	public long getModifiedTime() {
 		return _modifiedTime;
 	}
 
-	@Override
 	public String getName() {
 		return _name;
 	}
 
-	@Override
 	public long getOrganizationId() {
 		return _organizationId;
 	}
 
-	@Override
 	public String getPhoneNumber() {
 		return _phoneNumber;
 	}
 
-	@Override
 	public String getSourceSystemName() {
 		return _sourceSystemName;
 	}
 
-	@Override
 	public boolean isArchived() {
 		return _archived;
 	}
 
-	@Override
 	public void setAccountEntryId(long accountEntryId) {
 		_accountEntryId = accountEntryId;
 	}
 
-	@Override
 	public void setAddressId(long addressId) {
 		_addressId = addressId;
 	}
 
-	@Override
 	public void setArchived(boolean archived) {
 		_archived = archived;
 	}
 
-	@Override
 	public void setContactEmailAddress(String contactEmailAddress) {
 		_contactEmailAddress = contactEmailAddress;
 	}
 
-	@Override
 	public void setCorpProjectId(long corpProjectId) {
 		_corpProjectId = corpProjectId;
 	}
 
-	@Override
 	public void setCreateTime(long createTime) {
 		_createTime = createTime;
 	}
 
-	@Override
 	public void setLcsProjectId(long lcsProjectId) {
 		_lcsProjectId = lcsProjectId;
 	}
 
-	@Override
 	public void setModifiedTime(long modifiedTime) {
 		_modifiedTime = modifiedTime;
 	}
 
-	@Override
 	public void setName(String name) {
 		_name = name;
 	}
 
-	@Override
 	public void setOrganizationId(long organizationId) {
 		_organizationId = organizationId;
 	}
 
-	@Override
 	public void setPhoneNumber(String phoneNumber) {
 		_phoneNumber = phoneNumber;
 	}
 
-	@Override
 	public void setSourceSystemName(String sourceSystemName) {
 		_sourceSystemName = sourceSystemName;
 	}

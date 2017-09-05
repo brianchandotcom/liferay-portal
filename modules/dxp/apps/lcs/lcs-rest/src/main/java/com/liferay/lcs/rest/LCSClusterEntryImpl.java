@@ -14,128 +14,88 @@
 
 package com.liferay.lcs.rest;
 
-import com.liferay.lcs.util.LCSConstants;
-
 /**
  * @author Igor Beslic
  * @author Ivica Cardic
  */
-public class LCSClusterEntryImpl implements LCSClusterEntry {
+public class LCSClusterEntryImpl {
 
-	@Override
 	public boolean getArchived() {
 		return _archived;
 	}
 
-	@Override
 	public String getDescription() {
 		return _description;
 	}
 
-	@Override
 	public boolean getElastic() {
 		return _elastic;
 	}
 
-	@Override
 	public long getLcsClusterEntryId() {
 		return _lcsClusterEntryId;
 	}
 
-	@Override
 	public long getLcsProjectId() {
 		return _lcsProjectId;
 	}
 
-	@Override
 	public String getLocation() {
 		return _location;
 	}
 
-	@Override
 	public String getName() {
 		return _name;
 	}
 
-	@Override
 	public String getSubscriptionType() {
 		return _subscriptionType;
 	}
 
-	@Override
 	public int getType() {
 		return _type;
 	}
 
-	@Override
 	public boolean isArchived() {
 		return _archived;
 	}
 
-	@Override
-	public boolean isCluster() {
-		if (getType() == LCSConstants.LCS_CLUSTER_ENTRY_TYPE_CLUSTER) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
 	public boolean isElastic() {
 		return _elastic;
 	}
 
-	@Override
-	public boolean isEnvironment() {
-		if (getType() == LCSConstants.LCS_CLUSTER_ENTRY_TYPE_ENVIRONMENT) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
 	public void setArchived(boolean archived) {
 		_archived = archived;
 	}
 
-	@Override
 	public void setDescription(String description) {
 		_description = description;
 	}
 
-	@Override
 	public void setElastic(boolean elastic) {
 		_elastic = elastic;
 	}
 
-	@Override
 	public void setLcsClusterEntryId(long lcsClusterEntryId) {
 		_lcsClusterEntryId = lcsClusterEntryId;
 	}
 
-	@Override
 	public void setLcsProjectId(long lcsProjectId) {
 		_lcsProjectId = lcsProjectId;
 	}
 
-	@Override
 	public void setLocation(String location) {
 		_location = location;
 	}
 
-	@Override
 	public void setName(String name) {
 		_name = name;
 	}
 
-	@Override
 	public void setSubscriptionType(String subscriptionType) {
 		_subscriptionType = subscriptionType;
 	}
 
-	@Override
 	public void setType(int type) {
 		_type = type;
 	}

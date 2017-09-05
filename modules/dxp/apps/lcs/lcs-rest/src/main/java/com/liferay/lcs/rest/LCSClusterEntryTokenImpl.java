@@ -19,54 +19,44 @@ import java.util.Date;
 /**
  * @author Igor Beslic
  */
-public class LCSClusterEntryTokenImpl implements LCSClusterEntryToken {
+public class LCSClusterEntryTokenImpl {
 
-	@Override
 	public String getContent() {
 		return _content;
 	}
 
-	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
 
-	@Override
 	public long getLcsClusterEntryId() {
 		return _lcsClusterEntryId;
 	}
 
-	@Override
 	public long getLcsClusterEntryTokenId() {
 		return _lcsClusterEntryTokenId;
 	}
 
-	@Override
 	public long getUserId() {
 		return _userId;
 	}
 
-	@Override
 	public void setContent(String content) {
 		_content = content;
 	}
 
-	@Override
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
 	}
 
-	@Override
 	public void setLcsClusterEntryId(long lcsClusterEntryId) {
 		_lcsClusterEntryId = lcsClusterEntryId;
 	}
 
-	@Override
 	public void setLcsClusterEntryTokenId(long lcsClusterEntryTokenId) {
 		_lcsClusterEntryTokenId = lcsClusterEntryTokenId;
 	}
 
-	@Override
 	public void setUserId(long userId) {
 		_userId = userId;
 	}

@@ -17,74 +17,60 @@ package com.liferay.lcs.rest;
 /**
  * @author Riccardo Ferrari
  */
-public class LCSMetadataImpl implements LCSMetadata {
+public class LCSMetadataImpl {
 
-	@Override
 	public long getAvailabilityIndex() {
 		return _availabilityIndex;
 	}
 
-	@Override
 	public int getBuildNumber() {
 		return _buildNumber;
 	}
 
-	@Override
 	public String getGitTag() {
 		return _gitTag;
 	}
 
-	@Override
 	public long getLCSMetadataId() {
 		return _lcsMetadataId;
 	}
 
-	@Override
 	public String getPortalEdition() {
 		return _portalEdition;
 	}
 
-	@Override
 	public int getSupportedLCSPortlet() {
 		return _supportedLCSPortlet;
 	}
 
-	@Override
 	public int getSupportedPatchingTool() {
 		return _supportedPatchingTool;
 	}
 
-	@Override
 	public void setAvailabilityIndex(long availabilityIndex) {
 		_availabilityIndex = availabilityIndex;
 	}
 
-	@Override
 	public void setBuildNumber(int buildNumber) {
 		_buildNumber = buildNumber;
 	}
 
-	@Override
 	public void setGitTag(String gitTag) {
 		_gitTag = gitTag;
 	}
 
-	@Override
 	public void setLCSMetadataId(long lcsMetadataId) {
 		_lcsMetadataId = lcsMetadataId;
 	}
 
-	@Override
 	public void setPortalEdition(String portalEdition) {
 		_portalEdition = portalEdition;
 	}
 
-	@Override
 	public void setSupportedLCSPortlet(int supportedLCSPortlet) {
 		_supportedLCSPortlet = supportedLCSPortlet;
 	}
 
-	@Override
 	public void setSupportedPatchingTool(int supportedPatchingTool) {
 		_supportedPatchingTool = supportedPatchingTool;
 	}

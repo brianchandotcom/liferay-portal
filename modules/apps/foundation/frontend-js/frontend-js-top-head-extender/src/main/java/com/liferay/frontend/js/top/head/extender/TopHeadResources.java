@@ -21,9 +21,9 @@ import java.util.Collection;
  */
 public interface TopHeadResources {
 
-	public Collection<String> getJsResourcePaths();
-
 	public Collection<String> getAuthenticatedJsResourcePaths();
+
+	public Collection<String> getJsResourcePaths();
 
 	public String getServletContextPath();
 

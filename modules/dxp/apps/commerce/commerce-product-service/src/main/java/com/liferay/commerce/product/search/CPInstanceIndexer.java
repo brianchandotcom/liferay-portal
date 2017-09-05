@@ -18,6 +18,7 @@ import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPOption;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -34,13 +35,11 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -69,8 +68,8 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
 			Field.GROUP_ID, Field.MODIFIED_DATE, Field.SCOPE_GROUP_ID,
 			FIELD_SKU, Field.UID);
-		setFilterSearch(true);
-		setPermissionAware(true);
+		setFilterSearch(false);
+		setPermissionAware(false);
 	}
 
 	@Override
@@ -97,6 +96,18 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 		if (cpDefinitionId > 0) {
 			contextBooleanFilter.addRequiredTerm(
 				FIELD_CP_DEFINITION_ID, cpDefinitionId);
+		}
+
+		String[] fieldNames = (String[])searchContext.getAttribute("OPTIONS");
+
+		if (fieldNames == null) {
+			return;
+		}
+
+		for (String fieldName : fieldNames) {
+			String fieldValue = (String)searchContext.getAttribute(fieldName);
+
+			contextBooleanFilter.addRequiredTerm(fieldName, fieldValue);
 		}
 	}
 
@@ -143,6 +154,10 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 		document.addKeyword(
 			FIELD_CP_DEFINITION_ID, cpInstance.getCPDefinitionId());
 
+		List<String> languageIds =
+			_cpDefinitionLocalService.getCPDefinitionLocalizationLanguageIds(
+				cpInstance.getCPDefinitionId());
+
 		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
 			cpDefinitionOptionRelListMap = _cpInstanceHelper.parseJSONString(
 				cpInstance.getDDMContent());
@@ -156,37 +171,37 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 
 			CPOption cpOption = cpDefinitionOptionRel.getCPOption();
 
-			List<String> optionValueNames = new ArrayList<>();
-			List<Long> optionValueIds = new ArrayList<>();
+			List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+				cpDefinitionOptionRelListMapEntry.getValue();
 
-			for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
-					cpDefinitionOptionRelListMapEntry.getValue()) {
+			CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+				cpDefinitionOptionValueRels.get(0);
 
-				optionValueNames.add(
-					StringUtil.toLowerCase(
-						cpDefinitionOptionValueRel.getKey()));
-				optionValueIds.add(
-					cpDefinitionOptionValueRel.
-						getCPDefinitionOptionValueRelId());
+			for (String languageId : languageIds) {
+				document.addText(
+					LocalizationUtil.getLocalizedName(
+						"ATTRIBUTE_" + cpOption.getKey() + "_TITLE",
+						languageId),
+					cpDefinitionOptionValueRel.getTitle(languageId));
+
+				document.addText(
+					LocalizationUtil.getLocalizedName(
+						"ATTRIBUTE_" +
+							cpDefinitionOptionRel.getCPDefinitionOptionRelId() +
+								"_TITLE",
+						languageId),
+					cpDefinitionOptionValueRel.getTitle(languageId));
 			}
 
-			document.addText(
-				"ATTRIBUTE_" + cpOption.getKey() +
-					"_VALUES_NAMES",
-				ArrayUtil.toStringArray(optionValueNames));
 			document.addNumber(
-				"ATTRIBUTE_" + cpOption.getKey() +
-					"_VALUES_IDS",
-				ArrayUtil.toLongArray(optionValueIds));
+				"ATTRIBUTE_" + cpOption.getKey() + "_VALUE_ID",
+				cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId());
 
-			document.addText(
-				"ATTRIBUTE_" + cpDefinitionOptionRel.getCPOptionId() +
-					"_VALUES_NAMES",
-				ArrayUtil.toStringArray(optionValueNames));
 			document.addNumber(
-				"ATTRIBUTE_" + cpDefinitionOptionRel.getCPOptionId() +
-					"_VALUES_IDS",
-				ArrayUtil.toLongArray(optionValueIds));
+				"ATTRIBUTE_" +
+					cpDefinitionOptionRel.getCPDefinitionOptionRelId() +
+						"_VALUE_ID",
+				cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId());
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -264,6 +279,9 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPInstanceIndexer.class);
+
+	@Reference
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;

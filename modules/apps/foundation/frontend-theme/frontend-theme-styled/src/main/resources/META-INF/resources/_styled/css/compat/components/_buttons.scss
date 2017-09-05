@@ -2,6 +2,16 @@
 	@extend .btn-secondary;
 }
 
+.btn-bottom-right {
+	bottom: 20px;
+	position: fixed;
+	right: 20px;
+}
+
+.btn-action, .btn-action-secondary {
+	z-index: 950;
+}
+
 // .btn-default {
 // @include button-variant($btn-default-color, $btn-default-bg, $btn-default-border);
 // }

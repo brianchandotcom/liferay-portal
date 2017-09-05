@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -38,7 +39,7 @@ public class CSSPropertiesOrderCheck extends BaseFileCheck {
 	}
 
 	private String _sortProperties(String content) {
-		Matcher matcher = _propertiesPattern.matcher(content);
+		Matcher matcher = _PROPERTIES_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			String parameters = StringUtil.trimTrailing(matcher.group());
@@ -73,7 +74,7 @@ public class CSSPropertiesOrderCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _propertiesPattern = Pattern.compile(
+	private static final Pattern _PROPERTIES_PATTERN = RegexUtil.getPattern(
 		"(^(\t*)[a-z]\\S*: .+;\n)+", Pattern.MULTILINE);
 
 	private class PropertyComparator extends NaturalOrderStringComparator {

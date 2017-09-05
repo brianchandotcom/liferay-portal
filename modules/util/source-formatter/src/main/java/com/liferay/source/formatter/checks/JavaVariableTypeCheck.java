@@ -24,6 +24,7 @@ import com.liferay.source.formatter.parser.JavaConstructor;
 import com.liferay.source.formatter.parser.JavaMethod;
 import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.parser.JavaVariable;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,7 +121,7 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 	private boolean _containsNonAccessModifier(
 		JavaVariable javaVariable, String modifier) {
 
-		Pattern pattern = Pattern.compile(
+		Pattern pattern = RegexUtil.getPattern(
 			javaVariable.getAccessModifier() +
 				" (((final|static|synchronized|transient|volatile)(\n| ))*)");
 
@@ -149,7 +150,7 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 			defaultValue = StringPool.NULL;
 		}
 
-		Pattern isDefaultValuePattern = Pattern.compile(
+		Pattern isDefaultValuePattern = RegexUtil.getPattern(
 			" =\\s+" + defaultValue + ";(\\s+)$");
 
 		Matcher matcher = isDefaultValuePattern.matcher(
@@ -196,7 +197,7 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 		sb.append("((( )((=)|(\\+=)|(-=)|(\\*=)|(/=)|(%=)))");
 		sb.append("|(\\+\\+)|(--)|(( )((\\|=)|(&=)|(^=)))))");
 
-		Pattern pattern = Pattern.compile(sb.toString());
+		Pattern pattern = RegexUtil.getPattern(sb.toString());
 
 		if (!_isFinalableField(javaClass, pattern, allChildJavaTerms)) {
 			return classContent;
@@ -266,7 +267,7 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 		sb.append("([\\s\\S]*?)");
 		sb.append(javaVariable.getName());
 
-		Pattern pattern = Pattern.compile(sb.toString());
+		Pattern pattern = RegexUtil.getPattern(sb.toString());
 
 		Matcher matcher = pattern.matcher(javaVariable.getContent());
 

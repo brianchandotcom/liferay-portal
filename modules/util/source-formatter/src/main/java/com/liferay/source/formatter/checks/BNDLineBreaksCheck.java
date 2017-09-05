@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.BNDSourceUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -50,7 +51,7 @@ public class BNDLineBreaksCheck extends BaseFileCheck {
 		for (Map.Entry<String, String> entry : definitionsKeysMap.entrySet()) {
 			String definitionKey = entry.getValue();
 
-			Pattern pattern = Pattern.compile(" " + definitionKey + ":");
+			Pattern pattern = RegexUtil.getPattern(" " + definitionKey + ":");
 
 			Matcher matcher = pattern.matcher(content);
 

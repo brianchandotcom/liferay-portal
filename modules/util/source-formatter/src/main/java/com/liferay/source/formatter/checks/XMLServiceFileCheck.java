@@ -23,6 +23,7 @@ import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.io.File;
 
@@ -119,7 +120,7 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 
 		List<String> columnNames = new ArrayList<>();
 
-		Pattern pattern = Pattern.compile(
+		Pattern pattern = RegexUtil.getPattern(
 			"create table " + entityName + "_? \\(\n([\\s\\S]*?)\n\\);");
 
 		String tablesContent = _getTablesContent(fileName, absolutePath);

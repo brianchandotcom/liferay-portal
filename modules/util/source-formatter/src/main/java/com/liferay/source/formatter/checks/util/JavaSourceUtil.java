@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,7 @@ public class JavaSourceUtil extends SourceUtil {
 	}
 
 	public static String getPackagePath(String content) {
-		Matcher matcher = _packagePattern.matcher(content);
+		Matcher matcher = _PACKAGE_PATTERN.matcher(content);
 
 		if (matcher.find()) {
 			return matcher.group(2);
@@ -119,7 +120,7 @@ public class JavaSourceUtil extends SourceUtil {
 		}
 	}
 
-	private static final Pattern _packagePattern = Pattern.compile(
+	private static final Pattern _PACKAGE_PATTERN = RegexUtil.getPattern(
 		"(\n|^)\\s*package (.*);\n");
 
 }

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -69,7 +70,7 @@ public class BNDCapabilityCheck extends BaseFileCheck {
 	}
 
 	private String _formatCapabilities(String content, String definitionKey) {
-		Pattern pattern = Pattern.compile(
+		Pattern pattern = RegexUtil.getPattern(
 			"^" + definitionKey + ":([\\s\\S]*?([^\\\\]\n|\\Z))",
 			Pattern.MULTILINE);
 

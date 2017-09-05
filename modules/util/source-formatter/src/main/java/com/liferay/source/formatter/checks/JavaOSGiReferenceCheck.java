@@ -28,6 +28,7 @@ import com.liferay.source.formatter.parser.JavaConstructor;
 import com.liferay.source.formatter.parser.JavaMethod;
 import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.util.FileUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.io.File;
 
@@ -114,7 +115,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 				moduleSuperClassContent);
 		}
 
-		Matcher matcher = _referenceMethodPattern.matcher(content);
+		Matcher matcher = _REFERENCE_METHOD_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			String methodName = matcher.group(4);
@@ -142,7 +143,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 	private void _checkMissingReference(String fileName, String content) {
 		String moduleServicePackagePath = null;
 
-		Matcher matcher = _serviceUtilImportPattern.matcher(content);
+		Matcher matcher = _SERVICE_UTIL_IMPORT_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			String serviceUtilClassName = matcher.group(2);
@@ -223,7 +224,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 			return content;
 		}
 
-		Matcher matcher = _referenceMethodPattern.matcher(
+		Matcher matcher = _REFERENCE_METHOD_PATTERN.matcher(
 			moduleSuperClassContent);
 
 		boolean bndInheritRequired = false;
@@ -237,7 +238,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 				String referenceMethodContent = matcher.group(6);
 
 				Matcher referenceMethodContentMatcher =
-					_referenceMethodContentPattern.matcher(
+					_REFERENCE_METHOD_CONTENT_PATTERN.matcher(
 						referenceMethodContent);
 
 				if (referenceMethodContentMatcher.find()) {
@@ -262,7 +263,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 			else {
 				String referenceMethodModifierAndName = matcher.group(2);
 
-				Pattern duplicateReferenceMethodPattern = Pattern.compile(
+				Pattern duplicateReferenceMethodPattern = RegexUtil.getPattern(
 					referenceMethodModifierAndName +
 						"\\(\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)" +
 							"\\s*?\n\t\\}\n");
@@ -357,7 +358,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 	private String _formatVolatileReferenceVariable(
 		String content, String methodBody, String typeName) {
 
-		Matcher matcher = _referenceMethodContentPattern.matcher(methodBody);
+		Matcher matcher = _REFERENCE_METHOD_CONTENT_PATTERN.matcher(methodBody);
 
 		if (!matcher.find()) {
 			return content;
@@ -373,7 +374,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 		sb.append(variableName);
 		sb.append(StringPool.SEMICOLON);
 
-		Pattern privateVarPattern = Pattern.compile(sb.toString());
+		Pattern privateVarPattern = RegexUtil.getPattern(sb.toString());
 
 		matcher = privateVarPattern.matcher(content);
 
@@ -497,7 +498,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 			String content, String className, String packagePath)
 		throws Exception {
 
-		Pattern pattern = Pattern.compile(
+		Pattern pattern = RegexUtil.getPattern(
 			" class " + className + "\\s+extends\\s+([\\w.]+) ");
 
 		Matcher matcher = pattern.matcher(content);
@@ -518,7 +519,8 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 
 		String superClassPackagePath = packagePath;
 
-		pattern = Pattern.compile("\nimport (.+?)\\." + superClassName + ";");
+		pattern = RegexUtil.getPattern(
+			"\nimport (.+?)\\." + superClassName + ";");
 
 		matcher = pattern.matcher(content);
 
@@ -581,18 +583,24 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 		return Collections.emptyList();
 	}
 
+	private static final Pattern _REFERENCE_METHOD_CONTENT_PATTERN =
+		RegexUtil.getPattern("^(\\w+) =\\s+\\w+;$");
+
+	private static final Pattern _REFERENCE_METHOD_PATTERN =
+		RegexUtil.getPattern(
+			"\n\t@Reference([\\s\\S]*?)\\s+((protected|public) void (\\w+?))" +
+				"\\(\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)\\s*?\n\t" +
+					"\\}\n");
+
+	private static final Pattern _SERVICE_UTIL_IMPORT_PATTERN =
+		RegexUtil.getPattern(
+			"\nimport ([A-Za-z1-9\\.]*)\\.([A-Za-z1-9]*ServiceUtil);");
+
 	private final Set<String> _bndFileNames = new CopyOnWriteArraySet<>();
 	private final Map<String, String> _moduleFileContentsMap =
 		new ConcurrentHashMap<>();
 	private Map<String, String> _moduleFileNamesMap;
-	private final Pattern _referenceMethodContentPattern = Pattern.compile(
-		"^(\\w+) =\\s+\\w+;$");
-	private final Pattern _referenceMethodPattern = Pattern.compile(
-		"\n\t@Reference([\\s\\S]*?)\\s+((protected|public) void (\\w+?))\\(" +
-			"\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)\\s*?\n\t\\}\n");
 	private List<String> _serviceProxyFactoryUtilClassNames;
 	private String[] _serviceReferenceUtilClassNames = new String[0];
-	private final Pattern _serviceUtilImportPattern = Pattern.compile(
-		"\nimport ([A-Za-z1-9\\.]*)\\.([A-Za-z1-9]*ServiceUtil);");
 
 }

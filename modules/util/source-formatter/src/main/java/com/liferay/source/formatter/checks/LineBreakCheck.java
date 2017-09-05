@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -82,7 +83,7 @@ public abstract class LineBreakCheck extends BaseFileCheck {
 	}
 
 	protected String fixRedundantCommaInsideArray(String content) {
-		Matcher matcher = _redundantCommaPattern.matcher(content);
+		Matcher matcher = _REDUNDANT_COMMA_PATTERN.matcher(content);
 
 		if (matcher.find()) {
 			return StringUtil.replaceFirst(
@@ -92,6 +93,7 @@ public abstract class LineBreakCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _redundantCommaPattern = Pattern.compile(",\n\t+\\}");
+	private static final Pattern _REDUNDANT_COMMA_PATTERN =
+		RegexUtil.getPattern(",\n\t+\\}");
 
 }

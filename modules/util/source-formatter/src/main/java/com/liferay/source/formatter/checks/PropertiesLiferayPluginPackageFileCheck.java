@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -47,7 +48,7 @@ public class PropertiesLiferayPluginPackageFileCheck extends BaseFileCheck {
 			return content;
 		}
 
-		Matcher matcher = _licensesPattern.matcher(content);
+		Matcher matcher = _LICENSES_PATTERN.matcher(content);
 
 		if (!matcher.find()) {
 			return content;
@@ -78,7 +79,8 @@ public class PropertiesLiferayPluginPackageFileCheck extends BaseFileCheck {
 		content = StringUtil.replace(
 			content, StringPool.TAB, StringPool.FOUR_SPACES);
 
-		Matcher matcher = _singleValueOnMultipleLinesPattern.matcher(content);
+		Matcher matcher = _SINGLE_VALUE_ON_MULTIPLE_LINES_PATTERN.matcher(
+			content);
 
 		if (matcher.find()) {
 			content = StringUtil.replaceFirst(
@@ -88,10 +90,12 @@ public class PropertiesLiferayPluginPackageFileCheck extends BaseFileCheck {
 		return _fixIncorrectLicenses(absolutePath, content);
 	}
 
-	private final Pattern _licensesPattern = Pattern.compile(
+	private static final Pattern _LICENSES_PATTERN = RegexUtil.getPattern(
 		"\nlicenses=(\\w+)\n");
+
+	private static final Pattern _SINGLE_VALUE_ON_MULTIPLE_LINES_PATTERN =
+		RegexUtil.getPattern("\n.*=(\\\\\n *).*(\n[^ ]|\\Z)");
+
 	private String _projectPathPrefix;
-	private final Pattern _singleValueOnMultipleLinesPattern = Pattern.compile(
-		"\n.*=(\\\\\n *).*(\n[^ ]|\\Z)");
 
 }

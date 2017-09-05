@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -53,7 +54,7 @@ public class JSPWhitespaceCheck extends WhitespaceCheck {
 	}
 
 	private String _formatDirectivesWhitespace(String content) {
-		Matcher matcher = _directiveLinePattern.matcher(content);
+		Matcher matcher = _DIRECTIVE_LINE_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			String directiveLine = matcher.group();
@@ -83,7 +84,7 @@ public class JSPWhitespaceCheck extends WhitespaceCheck {
 			return line;
 		}
 
-		Matcher matcher = _javaSourceInsideJSPLinePattern.matcher(line);
+		Matcher matcher = _JAVA_SOURCE_INSIDE_JSP_LINE_PATTERN.matcher(line);
 
 		while (matcher.find()) {
 			String linePart = matcher.group(1);
@@ -200,8 +201,10 @@ public class JSPWhitespaceCheck extends WhitespaceCheck {
 		return content;
 	}
 
-	private final Pattern _directiveLinePattern = Pattern.compile("<%@\n?.*%>");
-	private final Pattern _javaSourceInsideJSPLinePattern = Pattern.compile(
-		"<%=(.+?)%>");
+	private static final Pattern _DIRECTIVE_LINE_PATTERN = RegexUtil.getPattern(
+		"<%@\n?.*%>");
+
+	private static final Pattern _JAVA_SOURCE_INSIDE_JSP_LINE_PATTERN =
+		RegexUtil.getPattern("<%=(.+?)%>");
 
 }

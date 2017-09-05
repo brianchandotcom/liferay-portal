@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -43,7 +44,7 @@ public class SessionKeysCheck extends BaseFileCheck {
 		return Arrays.asList(sessionKeyPattern);
 	}
 
-	protected final Pattern sessionKeyPattern = Pattern.compile(
+	protected final Pattern sessionKeyPattern = RegexUtil.getPattern(
 		"SessionErrors.(?:add|contains|get)\\([^;%&|!]+|" +
 			"SessionMessages.(?:add|contains|get)\\([^;%&|!]+",
 		Pattern.MULTILINE);

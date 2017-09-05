@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.io.File;
 
@@ -58,7 +59,7 @@ public class JavaModuleInternalImportsCheck extends BaseFileCheck {
 	private void _checkInternalImports(
 		String fileName, String absolutePath, String content) {
 
-		Matcher matcher = _internalImportPattern.matcher(content);
+		Matcher matcher = _INTERNAL_IMPORT_PATTERN.matcher(content);
 
 		int pos = -1;
 
@@ -82,8 +83,9 @@ public class JavaModuleInternalImportsCheck extends BaseFileCheck {
 		}
 	}
 
-	private final Pattern _internalImportPattern = Pattern.compile(
-		"\nimport com\\.liferay\\.(.*\\.internal\\.([a-z].*?\\.)?[A-Z].*?)" +
-			"[\\.|;]");
+	private static final Pattern _INTERNAL_IMPORT_PATTERN =
+		RegexUtil.getPattern(
+			"\nimport com\\.liferay\\.(.*\\.internal\\.([a-z].*?\\.)?" +
+				"[A-Z].*?)[\\.|;]");
 
 }

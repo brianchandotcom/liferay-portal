@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +68,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 
 				if (!line.startsWith("import ") &&
 					!line.startsWith("package ") &&
-					!line.matches("\\s*\\*.*") &&
+					!RegexUtil.matches(line, "\\s*\\*.*") &&
 					(lineLength <= getMaxLineLength())) {
 
 					_checkLineBreaks(line, previousLine, fileName, lineCount);
@@ -160,7 +161,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 
 		String strippedQuotesLine = stripQuotes(trimmedLine);
 
-		if (line.matches(".*(\\(|->( \\{)?)")) {
+		if (RegexUtil.matches(line, ".*(\\(|->( \\{)?)")) {
 			int x = line.lastIndexOf(" && ");
 			int y = line.lastIndexOf(" || ");
 
@@ -189,7 +190,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 			}
 		}
 
-		if (line.matches(".*(\\(|\\^|\\&|\\||->( \\{)?)")) {
+		if (RegexUtil.matches(line, ".*(\\(|\\^|\\&|\\||->( \\{)?)")) {
 			int x = trimmedLine.length() + 1;
 
 			while (true) {
@@ -222,7 +223,9 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 			}
 		}
 
-		if (trimmedLine.matches("^[^(].*\\+$") && (getLevel(trimmedLine) > 0)) {
+		if (RegexUtil.matches(trimmedLine, "^[^(].*\\+$") &&
+			(getLevel(trimmedLine) > 0)) {
+
 			addMessage(
 				fileName, "There should be a line break after '('", lineCount);
 		}
@@ -301,12 +304,12 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 				fileName, "There should be a line break after '='", lineCount);
 		}
 
-		if (trimmedLine.matches("^\\} (catch|else|finally) .*")) {
+		if (RegexUtil.matches(trimmedLine, "^\\} (catch|else|finally) .*")) {
 			addMessage(
 				fileName, "There should be a line break after '}'", lineCount);
 		}
 
-		Matcher matcher = _incorrectLineBreakPattern6.matcher(trimmedLine);
+		Matcher matcher = _INCORRECT_LINE_BREAK_PATTERN_6.matcher(trimmedLine);
 
 		if (matcher.find() && (getLevel(matcher.group(4)) > 1)) {
 			x = trimmedLine.indexOf("(", matcher.start(4));
@@ -319,7 +322,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 				lineCount);
 		}
 
-		if (trimmedLine.matches("for \\(.*[^;{]")) {
+		if (RegexUtil.matches(trimmedLine, "for \\(.*[^;{]")) {
 			x = trimmedLine.length();
 
 			while (true) {
@@ -341,7 +344,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 	}
 
 	private String _fixArrayLineBreaks(String content) {
-		Matcher matcher = _arrayPattern.matcher(content);
+		Matcher matcher = _ARRAY_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			String newLine =
@@ -359,7 +362,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 	}
 
 	private String _fixClassOrEnumLineLineBreaks(String content) {
-		Matcher matcher = _classOrEnumPattern.matcher(content);
+		Matcher matcher = _CLASS_OR_ENUM_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			String indent = matcher.group(2);
@@ -408,7 +411,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 
 	private String _fixIncorrectLineBreaks(String content, String fileName) {
 		while (true) {
-			Matcher matcher = _incorrectLineBreakPattern1.matcher(content);
+			Matcher matcher = _INCORRECT_LINE_BREAK_PATTERN_1.matcher(content);
 
 			while (matcher.find()) {
 				String matchingLine = matcher.group(2);
@@ -424,12 +427,12 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 				}
 			}
 
-			matcher = _incorrectLineBreakPattern2.matcher(content);
+			matcher = _INCORRECT_LINE_BREAK_PATTERN_2.matcher(content);
 
 			while (matcher.find()) {
 				String tabs = matcher.group(2);
 
-				Pattern pattern = Pattern.compile(
+				Pattern pattern = RegexUtil.getPattern(
 					"\n" + tabs + "([^\t]{2})(?!.*\n" + tabs + "[^\t])",
 					Pattern.DOTALL);
 
@@ -449,7 +452,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 				}
 			}
 
-			matcher = _incorrectLineBreakPattern3.matcher(content);
+			matcher = _INCORRECT_LINE_BREAK_PATTERN_3.matcher(content);
 
 			if (matcher.find()) {
 				content = StringUtil.replaceFirst(
@@ -457,7 +460,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 					matcher.start());
 			}
 
-			matcher = _incorrectLineBreakPattern4.matcher(content);
+			matcher = _INCORRECT_LINE_BREAK_PATTERN_4.matcher(content);
 
 			while (matcher.find()) {
 				if (content.charAt(matcher.end()) != CharPool.NEW_LINE) {
@@ -480,7 +483,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 			break;
 		}
 
-		Matcher matcher = _incorrectLineBreakPattern5.matcher(content);
+		Matcher matcher = _INCORRECT_LINE_BREAK_PATTERN_5.matcher(content);
 
 		while (matcher.find()) {
 			if (getLevel(matcher.group()) == 0) {
@@ -500,19 +503,19 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 	private String _fixIncorrectLineBreaksInsideChains(
 		String content, String fileName) {
 
-		Matcher matcher = _incorrectLineBreakInsideChainPattern1.matcher(
+		Matcher matcher = _INCORRECT_LINE_BREAK_INSIDE_CHAIN_PATTERN_1.matcher(
 			content);
 
 		while (matcher.find()) {
 			String linePart = matcher.group(2);
 
-			if (linePart.matches("\\)[^\\)]+[\\(;]")) {
+			if (RegexUtil.matches(linePart, "\\)[^\\)]+[\\(;]")) {
 				return StringUtil.insert(
 					content, "\n" + matcher.group(1), matcher.start(2));
 			}
 		}
 
-		matcher = _incorrectLineBreakInsideChainPattern2.matcher(content);
+		matcher = _INCORRECT_LINE_BREAK_INSIDE_CHAIN_PATTERN_2.matcher(content);
 
 		while (matcher.find()) {
 			int x = matcher.end();
@@ -552,7 +555,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 			}
 		}
 
-		matcher = _incorrectLineBreakInsideChainPattern3.matcher(content);
+		matcher = _INCORRECT_LINE_BREAK_INSIDE_CHAIN_PATTERN_3.matcher(content);
 
 		while (matcher.find()) {
 			if (getLevel(matcher.group(1)) <= 0) {
@@ -569,12 +572,12 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 			}
 		}
 
-		matcher = _incorrectLineBreakInsideChainPattern4.matcher(content);
+		matcher = _INCORRECT_LINE_BREAK_INSIDE_CHAIN_PATTERN_4.matcher(content);
 
 		while (matcher.find()) {
 			String s = matcher.group(2);
 
-			if (!s.matches("\\)+;?")) {
+			if (!RegexUtil.matches(s, "\\)+;?")) {
 				addMessage(
 					fileName,
 					"There should be a line break after '" + matcher.group(1) +
@@ -589,7 +592,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 	private String _fixLineStartingWithCloseParenthesis(
 		String content, String fileName) {
 
-		Matcher matcher = _lineStartingWithCloseParenthesisPattern.matcher(
+		Matcher matcher = _LINE_STARTING_WITH_CLOSE_PARENTHESIS_PATTERN.matcher(
 			content);
 
 		while (matcher.find()) {
@@ -635,7 +638,8 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 	}
 
 	private String _fixMultiLineComment(String content) {
-		Matcher matcher = _incorrectMultiLineCommentPattern.matcher(content);
+		Matcher matcher = _INCORRECT_MULTI_LINE_COMMENT_PATTERN.matcher(
+			content);
 
 		return matcher.replaceAll("$1$2$3");
 	}
@@ -759,35 +763,49 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 		return formattedClassLine;
 	}
 
-	private final Pattern _arrayPattern = Pattern.compile(
+	private static final Pattern _ARRAY_PATTERN = RegexUtil.getPattern(
 		"(\n\t*.* =) ((new \\w*\\[\\] )?\\{)\n(\t*)([^\t\\{].*)\n\t*(\\};?)\n");
-	private final Pattern _classOrEnumPattern = Pattern.compile(
+
+	private static final Pattern _CLASS_OR_ENUM_PATTERN = RegexUtil.getPattern(
 		"(\n(\t*)(private|protected|public) ((abstract|static) )*" +
 			"(class|enum|interface) ([\\s\\S]*?)\\{)((.*)\\})?" +
 				"(\\Z|\n(\\s*)(\\S))");
-	private final Pattern _incorrectLineBreakInsideChainPattern1 =
-		Pattern.compile("\n(\t*)\\).*?\\((.+)");
-	private final Pattern _incorrectLineBreakInsideChainPattern2 =
-		Pattern.compile("\t\\)\\..*\\(\n");
-	private final Pattern _incorrectLineBreakInsideChainPattern3 =
-		Pattern.compile("\n(.*\\S)\\)\\.(.*)\\(\n");
-	private final Pattern _incorrectLineBreakInsideChainPattern4 =
-		Pattern.compile("\t(\\)\\.[^\\)\\(]+\\()(.+)\n");
-	private final Pattern _incorrectLineBreakPattern1 = Pattern.compile(
-		"\n(\t*)(.*\\) \\{)([\t ]*\\}\n)");
-	private final Pattern _incorrectLineBreakPattern2 = Pattern.compile(
-		"\n(\t*).*\\}\n(\t*)\\);");
-	private final Pattern _incorrectLineBreakPattern3 = Pattern.compile(
-		"\n(\t*)\\{.+(?<!\\}\\){0,10}(,|;)?)\n");
-	private final Pattern _incorrectLineBreakPattern4 = Pattern.compile(
-		"\n(\t+\\{)\n(.*[^;])\n\t+(\\},?)");
-	private final Pattern _incorrectLineBreakPattern5 = Pattern.compile(
-		", (new .*\\(.*\\) \\{)\n");
-	private final Pattern _incorrectLineBreakPattern6 = Pattern.compile(
-		"^(((else )?if|for|try|while) \\()?\\(*(.*\\()$");
-	private final Pattern _incorrectMultiLineCommentPattern = Pattern.compile(
-		"(\n\t*/\\*)\n\t*(.*?)\n\t*(\\*/\n)", Pattern.DOTALL);
-	private final Pattern _lineStartingWithCloseParenthesisPattern =
-		Pattern.compile("(.)\n+(\t+)\\)[^.].*\n");
+
+	private static final Pattern _INCORRECT_LINE_BREAK_INSIDE_CHAIN_PATTERN_1 =
+		RegexUtil.getPattern("\n(\t*)\\).*?\\((.+)");
+
+	private static final Pattern _INCORRECT_LINE_BREAK_INSIDE_CHAIN_PATTERN_2 =
+		RegexUtil.getPattern("\t\\)\\..*\\(\n");
+
+	private static final Pattern _INCORRECT_LINE_BREAK_INSIDE_CHAIN_PATTERN_3 =
+		RegexUtil.getPattern("\n(.*\\S)\\)\\.(.*)\\(\n");
+
+	private static final Pattern _INCORRECT_LINE_BREAK_INSIDE_CHAIN_PATTERN_4 =
+		RegexUtil.getPattern("\t(\\)\\.[^\\)\\(]+\\()(.+)\n");
+
+	private static final Pattern _INCORRECT_LINE_BREAK_PATTERN_1 =
+		RegexUtil.getPattern("\n(\t*)(.*\\) \\{)([\t ]*\\}\n)");
+
+	private static final Pattern _INCORRECT_LINE_BREAK_PATTERN_2 =
+		RegexUtil.getPattern("\n(\t*).*\\}\n(\t*)\\);");
+
+	private static final Pattern _INCORRECT_LINE_BREAK_PATTERN_3 =
+		RegexUtil.getPattern("\n(\t*)\\{.+(?<!\\}\\){0,10}(,|;)?)\n");
+
+	private static final Pattern _INCORRECT_LINE_BREAK_PATTERN_4 =
+		RegexUtil.getPattern("\n(\t+\\{)\n(.*[^;])\n\t+(\\},?)");
+
+	private static final Pattern _INCORRECT_LINE_BREAK_PATTERN_5 =
+		RegexUtil.getPattern(", (new .*\\(.*\\) \\{)\n");
+
+	private static final Pattern _INCORRECT_LINE_BREAK_PATTERN_6 =
+		RegexUtil.getPattern("^(((else )?if|for|try|while) \\()?\\(*(.*\\()$");
+
+	private static final Pattern _INCORRECT_MULTI_LINE_COMMENT_PATTERN =
+		RegexUtil.getPattern(
+			"(\n\t*/\\*)\n\t*(.*?)\n\t*(\\*/\n)", Pattern.DOTALL);
+
+	private static final Pattern _LINE_STARTING_WITH_CLOSE_PARENTHESIS_PATTERN =
+		RegexUtil.getPattern("(.)\n+(\t+)\\)[^.].*\n");
 
 }

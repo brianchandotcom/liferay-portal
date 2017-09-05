@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +69,7 @@ public class JSPIndentationCheck extends BaseFileCheck {
 				});
 		}
 
-		if (text.matches("(--)?%>")) {
+		if (RegexUtil.matches(text, "(--)?%>")) {
 			return -1;
 		}
 
@@ -126,10 +127,10 @@ public class JSPIndentationCheck extends BaseFileCheck {
 			String trimmedLine = StringUtil.trimLeading(line);
 
 			if (insideUnformattedTextTag) {
-				if (trimmedLine.matches(".*</(pre|textarea)>")) {
+				if (RegexUtil.matches(trimmedLine, ".*</(pre|textarea)>")) {
 					insideUnformattedTextTag = false;
 
-					if (trimmedLine.matches(".+</(pre|textarea)>")) {
+					if (RegexUtil.matches(trimmedLine, ".+</(pre|textarea)>")) {
 						continue;
 					}
 				}
@@ -152,7 +153,7 @@ public class JSPIndentationCheck extends BaseFileCheck {
 			}
 
 			if (!insideUnformattedTextTag &&
-				trimmedLine.matches("<(pre|textarea).*")) {
+				RegexUtil.matches(trimmedLine, "<(pre|textarea).*")) {
 
 				insideUnformattedTextTag = true;
 			}
@@ -162,7 +163,7 @@ public class JSPIndentationCheck extends BaseFileCheck {
 	}
 
 	private String _fixTabsInJavaSource(String content) {
-		Matcher matcher = _javaSourcePattern.matcher(content);
+		Matcher matcher = _JAVA_SOURCE_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			String tabs = matcher.group(1);
@@ -287,10 +288,10 @@ public class JSPIndentationCheck extends BaseFileCheck {
 
 			String openTagLine = openTagJSPLine.getLine();
 
-			if (openTagLine.matches("\t*<%!?")) {
+			if (RegexUtil.matches(openTagLine, "\t*<%!?")) {
 				String line = jspLine.getLine();
 
-				if (line.matches("\t*%>")) {
+				if (RegexUtil.matches(line, "\t*%>")) {
 					return jspLine;
 				}
 
@@ -312,7 +313,7 @@ public class JSPIndentationCheck extends BaseFileCheck {
 
 		String startTagLine = startTagJSPLine.getLine();
 
-		if (!startTagLine.matches("\t*<%!?")) {
+		if (!RegexUtil.matches(startTagLine, "\t*<%!?")) {
 			return startTagJSPLine.getTabLevel();
 		}
 
@@ -391,10 +392,12 @@ public class JSPIndentationCheck extends BaseFileCheck {
 				}
 
 				if (insideUnformattedTextTag) {
-					if (trimmedLine.matches(".*</(pre|textarea)>")) {
+					if (RegexUtil.matches(trimmedLine, ".*</(pre|textarea)>")) {
 						insideUnformattedTextTag = false;
 
-						if (trimmedLine.matches(".+</(pre|textarea)>")) {
+						if (RegexUtil.matches(
+								trimmedLine, ".+</(pre|textarea)>")) {
+
 							continue;
 						}
 					}
@@ -404,7 +407,7 @@ public class JSPIndentationCheck extends BaseFileCheck {
 				}
 
 				if (scriptSource) {
-					if (trimmedLine.matches("</(aui:)?script>")) {
+					if (RegexUtil.matches(trimmedLine, "</(aui:)?script>")) {
 						scriptSource = false;
 					}
 					else {
@@ -427,11 +430,11 @@ public class JSPIndentationCheck extends BaseFileCheck {
 					jspLines.add(jspLine);
 				}
 
-				if (!javaSource && trimmedLine.matches("<%!?")) {
+				if (!javaSource && RegexUtil.matches(trimmedLine, "<%!?")) {
 					javaSource = true;
 				}
 				else if (!multiLineComment) {
-					if (trimmedLine.matches("<(aui:)?script.*") &&
+					if (RegexUtil.matches(trimmedLine, "<(aui:)?script.*") &&
 						(lineTabLevel > 0)) {
 
 						scriptSource = true;
@@ -441,8 +444,10 @@ public class JSPIndentationCheck extends BaseFileCheck {
 
 						multiLineComment = true;
 					}
-					else if (trimmedLine.matches("<(pre|textarea).*") &&
-							 !trimmedLine.matches(".*</(pre|textarea)>")) {
+					else if (RegexUtil.matches(
+								trimmedLine, "<(pre|textarea).*") &&
+							 !RegexUtil.matches(
+								 trimmedLine, ".*</(pre|textarea)>")) {
 
 						insideUnformattedTextTag = true;
 
@@ -501,8 +506,14 @@ public class JSPIndentationCheck extends BaseFileCheck {
 		}
 	}
 
-	private final Pattern _javaSourcePattern = Pattern.compile(
+	private static final Pattern _CLOSE_TAG_NAME_PATTERN = RegexUtil.getPattern(
+		"</([\\-:\\w]+?)>");
+
+	private static final Pattern _JAVA_SOURCE_PATTERN = RegexUtil.getPattern(
 		"\n(\t*)(<%\n(\t*[^\t%].*?))\n\t*%>\n", Pattern.DOTALL);
+
+	private static final Pattern _OPEN_TAG_NAME_PATTERN = RegexUtil.getPattern(
+		"<([\\-:\\w]+?)([ >\n].*|$)");
 
 	private class JSPLine {
 
@@ -541,10 +552,10 @@ public class JSPIndentationCheck extends BaseFileCheck {
 			Matcher matcher = null;
 
 			if (isCloseTag()) {
-				matcher = _closeTagNamePattern.matcher(_line);
+				matcher = _CLOSE_TAG_NAME_PATTERN.matcher(_line);
 			}
 			else if (isOpenTag()) {
-				matcher = _openTagNamePattern.matcher(_line);
+				matcher = _OPEN_TAG_NAME_PATTERN.matcher(_line);
 			}
 			else {
 				return null;
@@ -586,14 +597,10 @@ public class JSPIndentationCheck extends BaseFileCheck {
 		}
 
 		private boolean _closed;
-		private final Pattern _closeTagNamePattern = Pattern.compile(
-			"</([\\-:\\w]+?)>");
 		private final boolean _javaSource;
 		private final String _line;
 		private final int _lineCount;
 		private int _lineTabLevel;
-		private final Pattern _openTagNamePattern = Pattern.compile(
-			"<([\\-:\\w]+?)([ >\n].*|$)");
 		private final int _tabLevel;
 
 	}

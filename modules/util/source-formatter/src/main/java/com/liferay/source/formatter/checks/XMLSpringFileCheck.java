@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ImportPackage;
 import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -53,6 +54,18 @@ public class XMLSpringFileCheck extends BaseFileCheck {
 			fileName, document.getRootElement(), "bean", null,
 			new SpringBeanElementComparator("id"));
 	}
+
+	private static final Pattern _FINDER_PATTERN = RegexUtil.getPattern(
+		"\\.service\\.persistence\\.(\\w+)Finder");
+
+	private static final Pattern _LOCAL_SERVICE_PATTERN = RegexUtil.getPattern(
+		"\\.service\\.(\\w+)LocalService");
+
+	private static final Pattern _PERSISTENCE_PATTERN = RegexUtil.getPattern(
+		"\\.service\\.persistence\\.(\\w+)Persistence");
+
+	private static final Pattern _SERVICE_PATTERN = RegexUtil.getPattern(
+		"\\.service\\.(\\w+)Service");
 
 	private class SpringBeanElementComparator extends ElementComparator {
 
@@ -127,7 +140,7 @@ public class XMLSpringFileCheck extends BaseFileCheck {
 				_beanObjectName = StringPool.BLANK;
 				_type = -1;
 
-				Matcher matcher = _localServicePattern.matcher(name);
+				Matcher matcher = _LOCAL_SERVICE_PATTERN.matcher(name);
 
 				if (matcher.find()) {
 					_beanObjectName = matcher.group(1);
@@ -136,7 +149,7 @@ public class XMLSpringFileCheck extends BaseFileCheck {
 					return;
 				}
 
-				matcher = _servicePattern.matcher(name);
+				matcher = _SERVICE_PATTERN.matcher(name);
 
 				if (matcher.find()) {
 					_beanObjectName = matcher.group(1);
@@ -145,7 +158,7 @@ public class XMLSpringFileCheck extends BaseFileCheck {
 					return;
 				}
 
-				matcher = _persistencePattern.matcher(name);
+				matcher = _PERSISTENCE_PATTERN.matcher(name);
 
 				if (matcher.find()) {
 					_beanObjectName = matcher.group(1);
@@ -154,7 +167,7 @@ public class XMLSpringFileCheck extends BaseFileCheck {
 					return;
 				}
 
-				matcher = _finderPattern.matcher(name);
+				matcher = _FINDER_PATTERN.matcher(name);
 
 				if (matcher.find()) {
 					_beanObjectName = matcher.group(1);
@@ -197,14 +210,6 @@ public class XMLSpringFileCheck extends BaseFileCheck {
 			private static final int _SERVICE = 2;
 
 			private String _beanObjectName;
-			private final Pattern _finderPattern = Pattern.compile(
-				"\\.service\\.persistence\\.(\\w+)Finder");
-			private final Pattern _localServicePattern = Pattern.compile(
-				"\\.service\\.(\\w+)LocalService");
-			private final Pattern _persistencePattern = Pattern.compile(
-				"\\.service\\.persistence\\.(\\w+)Persistence");
-			private final Pattern _servicePattern = Pattern.compile(
-				"\\.service\\.(\\w+)Service");
 			private int _type;
 
 		}

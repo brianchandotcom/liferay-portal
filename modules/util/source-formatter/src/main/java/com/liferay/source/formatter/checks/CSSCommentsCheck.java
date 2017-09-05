@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,10 +35,10 @@ public class CSSCommentsCheck extends BaseFileCheck {
 	}
 
 	private String _formatComments(String content) {
-		Matcher commentMatcher = _commentPattern.matcher(content);
+		Matcher commentMatcher = _COMMENT_PATTERN.matcher(content);
 
 		while (commentMatcher.find()) {
-			Matcher commentFormatMatcher = _commentFormatPattern.matcher(
+			Matcher commentFormatMatcher = _COMMENT_FORMAT_PATTERN.matcher(
 				commentMatcher.group(1));
 
 			if (!commentFormatMatcher.find()) {
@@ -76,9 +77,10 @@ public class CSSCommentsCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _commentFormatPattern = Pattern.compile(
+	private static final Pattern _COMMENT_FORMAT_PATTERN = RegexUtil.getPattern(
 		"^-* ?(\\S.*?\\S) ?-*$");
-	private final Pattern _commentPattern = Pattern.compile(
+
+	private static final Pattern _COMMENT_PATTERN = RegexUtil.getPattern(
 		"/\\*[\n ](.*)[\n ]\\*/");
 
 }

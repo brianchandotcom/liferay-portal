@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.parser.JavaTerm;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -75,7 +76,7 @@ public class JavaBooleanStatementCheck extends BaseJavaTermCheck {
 	private String _formatBooleanStatements(JavaTerm javaTerm) {
 		String javaTermContent = javaTerm.getContent();
 
-		Matcher matcher1 = _booleanPattern.matcher(javaTermContent);
+		Matcher matcher1 = _BOOLEAN_PATTERN.matcher(javaTermContent);
 
 		while (matcher1.find()) {
 			String booleanStatement = matcher1.group();
@@ -112,7 +113,7 @@ public class JavaBooleanStatementCheck extends BaseJavaTermCheck {
 					matcher1.group(2), criteria, "true", "false");
 			}
 
-			Matcher matcher2 = _relationalOperatorPattern.matcher(
+			Matcher matcher2 = _RELATIONAL_OPERATOR_PATTERN.matcher(
 				strippedCriteria);
 
 			if (matcher2.find()) {
@@ -166,9 +167,10 @@ public class JavaBooleanStatementCheck extends BaseJavaTermCheck {
 		return s;
 	}
 
-	private final Pattern _booleanPattern = Pattern.compile(
+	private static final Pattern _BOOLEAN_PATTERN = RegexUtil.getPattern(
 		"\n(\t+)boolean (\\w+) =(.*?);\n", Pattern.DOTALL);
-	private final Pattern _relationalOperatorPattern = Pattern.compile(
-		".* (==|!=|<|>|>=|<=)[ \n].*");
+
+	private static final Pattern _RELATIONAL_OPERATOR_PATTERN =
+		RegexUtil.getPattern(".* (==|!=|<|>|>=|<=)[ \n].*");
 
 }

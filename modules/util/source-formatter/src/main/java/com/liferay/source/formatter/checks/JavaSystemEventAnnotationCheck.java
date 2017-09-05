@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.util.FileUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.io.File;
 
@@ -58,7 +59,7 @@ public class JavaSystemEventAnnotationCheck extends BaseFileCheck {
 		String deletionSystemEventStagedModelTypes = content.substring(
 			pos, content.indexOf(");", pos));
 
-		Matcher matcher = _stagedModelTypesPattern.matcher(
+		Matcher matcher = _STAGED_MODEL_TYPES_PATTERN.matcher(
 			deletionSystemEventStagedModelTypes);
 
 		while (matcher.find()) {
@@ -76,7 +77,7 @@ public class JavaSystemEventAnnotationCheck extends BaseFileCheck {
 
 			String className = stagedModelTypeClassName.substring(0, pos);
 
-			Pattern packageNamePattern = Pattern.compile(
+			Pattern packageNamePattern = RegexUtil.getPattern(
 				"import (com\\.liferay\\.[a-zA-Z\\.]*)\\.model\\." + className +
 					";");
 
@@ -115,7 +116,8 @@ public class JavaSystemEventAnnotationCheck extends BaseFileCheck {
 		}
 	}
 
-	private final Pattern _stagedModelTypesPattern = Pattern.compile(
-		"StagedModelType\\(([a-zA-Z.]*(class|getClassName[\\(\\)]*))\\)");
+	private static final Pattern _STAGED_MODEL_TYPES_PATTERN =
+		RegexUtil.getPattern(
+			"StagedModelType\\(([a-zA-Z.]*(class|getClassName[\\(\\)]*))\\)");
 
 }

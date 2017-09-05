@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -48,7 +49,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 				lineCount++;
 
 				if (line.startsWith("import ") || line.startsWith("package ") ||
-					line.matches("\\s*\\*.*")) {
+					RegexUtil.matches(line, "\\s*\\*.*")) {
 
 					previousLine = line;
 
@@ -171,18 +172,18 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 		}
 
 		content = _getCombinedLinesContent(content);
-		content = _getCombinedLinesContent(content, _combinedLinesPattern1);
-		content = _getCombinedLinesContent(content, _combinedLinesPattern2);
+		content = _getCombinedLinesContent(content, _COMBINED_LINES_PATTERN_1);
+		content = _getCombinedLinesContent(content, _COMBINED_LINES_PATTERN_2);
 
 		return content;
 	}
 
 	private String _getCombinedLinesContent(String content) {
-		Matcher matcher = _combinedLinesPattern3.matcher(content);
+		Matcher matcher = _COMBINED_LINES_PATTERN_3.matcher(content);
 
 		content = matcher.replaceAll("$1 $3");
 
-		matcher = _combinedLinesPattern4.matcher(content);
+		matcher = _COMBINED_LINES_PATTERN_4.matcher(content);
 
 		return matcher.replaceAll("$1 $3");
 	}
@@ -350,7 +351,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 		}
 
 		if (!trimmedPreviousLine.equals("return") &&
-			previousLine.matches(".*\\w") &&
+			RegexUtil.matches(previousLine, ".*\\w") &&
 			trimmedLine.startsWith(StringPool.OPEN_PARENTHESIS)) {
 
 			return _getCombinedLinesContent(
@@ -358,7 +359,9 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 				StringPool.OPEN_PARENTHESIS, true, false, 0);
 		}
 
-		if (trimmedPreviousLine.matches("((else )?if|for|try|while) \\(")) {
+		if (RegexUtil.matches(
+				trimmedPreviousLine, "((else )?if|for|try|while) \\(")) {
+
 			return _getCombinedLinesContent(
 				content, line, trimmedLine, lineLength, lineCount, previousLine,
 				null, false, false, 0);
@@ -518,7 +521,8 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 
 		if ((trimmedLine.length() + previousLineLength) <= getMaxLineLength()) {
 			if (previousLine.endsWith(StringPool.OPEN_PARENTHESIS) &&
-				line.matches(".*\\)( \\{)?") && (getLevel(line) < 0)) {
+				RegexUtil.matches(line, ".*\\)( \\{)?") &&
+				(getLevel(line) < 0)) {
 
 				return _getCombinedLinesContent(
 					content, line, trimmedLine, lineLength, lineCount,
@@ -627,7 +631,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 			}
 		}
 
-		if (trimmedPreviousLine.matches("for \\(.*;")) {
+		if (RegexUtil.matches(trimmedPreviousLine, "for \\(.*;")) {
 			int x = -1;
 
 			while (true) {
@@ -688,8 +692,8 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 
 		if (previousLine.endsWith(StringPool.COMMA) &&
 			(previousLineTabCount == lineTabCount) &&
-			!line.matches(".*[\\^\\|\\&]") &&
-			!trimmedPreviousLine.matches("[\\)\\}],")) {
+			!RegexUtil.matches(line, ".*[\\^\\|\\&]") &&
+			!RegexUtil.matches(trimmedPreviousLine, "[\\)\\}],")) {
 
 			String nextLine = getLine(content, lineCount + 1);
 
@@ -772,7 +776,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 			}
 		}
 
-		if (trimmedPreviousLine.matches("^[^<].*[\\w>]$") &&
+		if (RegexUtil.matches(trimmedPreviousLine, "^[^<].*[\\w>]$") &&
 			(previousLineTabCount == (lineTabCount - 1)) &&
 			(getLevel(previousLine, "<", ">") == 0)) {
 
@@ -826,7 +830,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 
 			String linePart2 = trimmedLine.substring(x + 2);
 
-			if (linePart2.matches("[!=<>\\+\\-\\*]+ .*")) {
+			if (RegexUtil.matches(linePart2, "[!=<>\\+\\-\\*]+ .*")) {
 				int y = trimmedLine.indexOf(StringPool.SPACE, x + 2);
 
 				if ((previousLineLength + y) <= getMaxLineLength()) {
@@ -866,7 +870,8 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 		}
 
 		if ((getLevel(trimmedLine) < 0) &&
-			(line.matches(".*[|&^]") || line.endsWith(StringPool.COMMA) ||
+			(RegexUtil.matches(line, ".*[|&^]") ||
+			 line.endsWith(StringPool.COMMA) ||
 			 (trimmedPreviousLine.startsWith("new ") &&
 			  line.endsWith(") {")))) {
 
@@ -878,16 +883,20 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 		return null;
 	}
 
+	private static final Pattern _COMBINED_LINES_PATTERN_1 =
+		RegexUtil.getPattern("\n(\t*).+(=|\\]) (\\{)\n");
+
+	private static final Pattern _COMBINED_LINES_PATTERN_2 =
+		RegexUtil.getPattern("\n(\t*)@.+(\\()\n");
+
+	private static final Pattern _COMBINED_LINES_PATTERN_3 =
+		RegexUtil.getPattern(
+			"(\n\t*(private|protected|public) void)\n\t+(\\w+\\(\\)( \\{)?\n)");
+
+	private static final Pattern _COMBINED_LINES_PATTERN_4 =
+		RegexUtil.getPattern("(\n\t*(extends|implements))\n\t+([\\w.]+ \\{\n)");
+
 	private static final String _FIT_ON_SINGLE_LINE_EXCLUDES =
 		"fit.on.single.line.excludes";
-
-	private final Pattern _combinedLinesPattern1 = Pattern.compile(
-		"\n(\t*).+(=|\\]) (\\{)\n");
-	private final Pattern _combinedLinesPattern2 = Pattern.compile(
-		"\n(\t*)@.+(\\()\n");
-	private final Pattern _combinedLinesPattern3 = Pattern.compile(
-		"(\n\t*(private|protected|public) void)\n\t+(\\w+\\(\\)( \\{)?\n)");
-	private final Pattern _combinedLinesPattern4 = Pattern.compile(
-		"(\n\t*(extends|implements))\n\t+([\\w.]+ \\{\n)");
 
 }

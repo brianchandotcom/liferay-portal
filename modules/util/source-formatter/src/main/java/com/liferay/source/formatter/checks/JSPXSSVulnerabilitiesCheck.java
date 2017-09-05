@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,7 +36,7 @@ public class JSPXSSVulnerabilitiesCheck extends BaseFileCheck {
 	}
 
 	private String _fixXSSVulnerability(String content) {
-		Matcher matcher1 = _xssPattern.matcher(content);
+		Matcher matcher1 = _XSS_PATTERN.matcher(content);
 
 		String jspVariable = null;
 		int vulnerabilityPos = -1;
@@ -54,7 +55,7 @@ public class JSPXSSVulnerabilitiesCheck extends BaseFileCheck {
 				break;
 			}
 
-			Pattern pattern = Pattern.compile(
+			Pattern pattern = RegexUtil.getPattern(
 				"('|\\(\"| \"|\\.)<%= " + jspVariable + " %>");
 
 			Matcher matcher2 = pattern.matcher(content);
@@ -120,7 +121,7 @@ public class JSPXSSVulnerabilitiesCheck extends BaseFileCheck {
 		}
 	}
 
-	private final Pattern _xssPattern = Pattern.compile(
+	private static final Pattern _XSS_PATTERN = RegexUtil.getPattern(
 		"\\s+([^\\s]+)\\s*=\\s*(Bean)?ParamUtil\\.getString\\(");
 
 }

@@ -21,6 +21,7 @@ import com.liferay.source.formatter.parser.JavaStaticBlock;
 import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.parser.comparator.JavaTermComparator;
 import com.liferay.source.formatter.util.FileUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.io.File;
 
@@ -84,7 +85,8 @@ public class JavaTermOrderCheck extends BaseJavaTermCheck {
 
 		String portalCustomSQLContent = FileUtil.read(portalCustomSQLFile);
 
-		Matcher matcher = _customSQLFilePattern.matcher(portalCustomSQLContent);
+		Matcher matcher = _CUSTOM_SQL_FILE_PATTERN.matcher(
+			portalCustomSQLContent);
 
 		while (matcher.find()) {
 			File customSQLFile = getFile(
@@ -193,8 +195,9 @@ public class JavaTermOrderCheck extends BaseJavaTermCheck {
 		return javaClass.getContent();
 	}
 
-	private final Pattern _customSQLFilePattern = Pattern.compile(
-		"<sql file=\"(.*)\" \\/>");
+	private static final Pattern _CUSTOM_SQL_FILE_PATTERN =
+		RegexUtil.getPattern("<sql file=\"(.*)\" \\/>");
+
 	private String _portalCustomSQLContent;
 
 }

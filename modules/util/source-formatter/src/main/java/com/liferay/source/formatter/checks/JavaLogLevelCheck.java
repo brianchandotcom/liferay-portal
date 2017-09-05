@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -38,7 +39,7 @@ public class JavaLogLevelCheck extends BaseFileCheck {
 	}
 
 	private void _checkLogLevel(String content, String fileName) {
-		Matcher matcher = _logLevelPattern.matcher(content);
+		Matcher matcher = _LOG_LEVEL_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			int pos = matcher.start();
@@ -74,7 +75,7 @@ public class JavaLogLevelCheck extends BaseFileCheck {
 		}
 	}
 
-	private final Pattern _logLevelPattern = Pattern.compile(
+	private static final Pattern _LOG_LEVEL_PATTERN = RegexUtil.getPattern(
 		"\n(\t+)_log.(debug|error|info|trace|warn)\\(");
 
 }

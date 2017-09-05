@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,12 +35,12 @@ public class TLDTypeCheck extends BaseFileCheck {
 	}
 
 	private String _formatTypes(String fileName, String content) {
-		Matcher matcher = _typePattern.matcher(content);
+		Matcher matcher = _TYPE_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			String typeName = matcher.group(1);
 
-			if (typeName.matches("[A-Z]\\w*")) {
+			if (RegexUtil.matches(typeName, "[A-Z]\\w*")) {
 				addMessage(
 					fileName, "Use fully qualified class name, see LPS-61841",
 					getLineCount(content, matcher.start(1)));
@@ -52,7 +53,7 @@ public class TLDTypeCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private static final Pattern _typePattern = Pattern.compile(
+	private static final Pattern _TYPE_PATTERN = RegexUtil.getPattern(
 		"\n\t*<type>(.*)</type>\n");
 
 }

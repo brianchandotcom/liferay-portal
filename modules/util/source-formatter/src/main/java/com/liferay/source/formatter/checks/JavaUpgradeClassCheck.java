@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -61,7 +62,7 @@ public class JavaUpgradeClassCheck extends BaseFileCheck {
 			return;
 		}
 
-		Matcher matcher = _componentAnnotationPattern.matcher(content);
+		Matcher matcher = _COMPONENT_ANNOTATION_PATTERN.matcher(content);
 
 		if (!matcher.find()) {
 			return;
@@ -93,7 +94,7 @@ public class JavaUpgradeClassCheck extends BaseFileCheck {
 
 		// LPS-65685
 
-		Matcher matcher1 = _registryRegisterPattern.matcher(content);
+		Matcher matcher1 = _REGISTRY_REGISTER_PATTERN.matcher(content);
 
 		while (matcher1.find()) {
 			if (ToolsUtil.isInsideQuotes(content, matcher1.start())) {
@@ -112,7 +113,8 @@ public class JavaUpgradeClassCheck extends BaseFileCheck {
 			for (int i = 3; i < parametersList.size(); i++) {
 				String parameter = parametersList.get(i);
 
-				Matcher matcher2 = _upgradeClassNamePattern.matcher(parameter);
+				Matcher matcher2 = _UPGRADE_CLASS_NAME_PATTERN.matcher(
+					parameter);
 
 				if (!matcher2.find()) {
 					break;
@@ -173,14 +175,17 @@ public class JavaUpgradeClassCheck extends BaseFileCheck {
 		}
 	}
 
+	private static final Pattern _COMPONENT_ANNOTATION_PATTERN =
+		RegexUtil.getPattern("@Component(\n|\\([\\s\\S]*?\\)\n)");
+
+	private static final Pattern _REGISTRY_REGISTER_PATTERN =
+		RegexUtil.getPattern(
+			"registry\\.register\\((.*?)\\);\n", Pattern.DOTALL);
+
+	private static final Pattern _UPGRADE_CLASS_NAME_PATTERN =
+		RegexUtil.getPattern("new .*?(\\w+)\\(", Pattern.DOTALL);
+
 	private static final String _UPGRADE_SERVICE_UTIL_EXCLUDES =
 		"upgrade.service.util.excludes";
-
-	private final Pattern _componentAnnotationPattern = Pattern.compile(
-		"@Component(\n|\\([\\s\\S]*?\\)\n)");
-	private final Pattern _registryRegisterPattern = Pattern.compile(
-		"registry\\.register\\((.*?)\\);\n", Pattern.DOTALL);
-	private final Pattern _upgradeClassNamePattern = Pattern.compile(
-		"new .*?(\\w+)\\(", Pattern.DOTALL);
 
 }

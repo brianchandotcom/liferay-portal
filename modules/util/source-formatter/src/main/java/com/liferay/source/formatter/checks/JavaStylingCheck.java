@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -63,14 +64,15 @@ public class JavaStylingCheck extends BaseFileCheck {
 			content, StringPool.TAB + "for (;;) {",
 			StringPool.TAB + "while (true) {");
 
-		Matcher matcher = _incorrectSynchronizedPattern.matcher(content);
+		Matcher matcher = _INCORRECT_SYNCHRONIZED_PATTERN.matcher(content);
 
 		content = matcher.replaceAll("$1$3 $2");
 
 		return content;
 	}
 
-	private final Pattern _incorrectSynchronizedPattern = Pattern.compile(
-		"([\n\t])(synchronized) (private|public|protected)");
+	private static final Pattern _INCORRECT_SYNCHRONIZED_PATTERN =
+		RegexUtil.getPattern(
+			"([\n\t])(synchronized) (private|public|protected)");
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checkstyle.util;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
@@ -250,7 +251,7 @@ public class DetailASTUtil {
 
 		String name = nameAST.getText();
 
-		if (name.matches(".*(Collection|List|Map|Set)")) {
+		if (RegexUtil.matches(name, ".*(Collection|List|Map|Set)")) {
 			return true;
 		}
 

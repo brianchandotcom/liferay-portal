@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,9 +34,10 @@ public class XMLEmptyLinesCheck extends EmptyLinesCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (fileName.matches(".*\\.(action|function|macro|testcase)") ||
+		if (RegexUtil.matches(
+				fileName, ".*\\.(action|function|macro|testcase)") ||
 			fileName.startsWith(getBaseDirName() + "build") ||
-			fileName.matches(".*/(build|tools/).*") ||
+			RegexUtil.matches(fileName, ".*/(build|tools/).*") ||
 			fileName.endsWith("/content.xml")) {
 
 			return content;
@@ -62,7 +64,7 @@ public class XMLEmptyLinesCheck extends EmptyLinesCheck {
 			return fixEmptyLinesBetweenTags(content);
 		}
 
-		Matcher matcher = _emptyLineBetweenTagsPattern.matcher(content);
+		Matcher matcher = _EMPTY_LINE_BETWEEN_TAGS_PATTERN.matcher(content);
 
 		if (matcher.find()) {
 			return StringUtil.replaceFirst(
@@ -73,14 +75,15 @@ public class XMLEmptyLinesCheck extends EmptyLinesCheck {
 	}
 
 	private String _fixMissingEmptyLinesAroundComments(String content) {
-		Matcher matcher = _missingEmptyLineAfterCommentPattern.matcher(content);
+		Matcher matcher = _MISSING_EMPTY_LINE_AFTER_COMMENT_PATTERN.matcher(
+			content);
 
 		if (matcher.find()) {
 			return StringUtil.replaceFirst(
 				content, "-->\n", "-->\n\n", matcher.start());
 		}
 
-		matcher = _missingEmptyLineBeforeCommentPattern.matcher(content);
+		matcher = _MISSING_EMPTY_LINE_BEFORE_COMMENT_PATTERN.matcher(content);
 
 		if (matcher.find()) {
 			return StringUtil.replaceFirst(
@@ -90,11 +93,13 @@ public class XMLEmptyLinesCheck extends EmptyLinesCheck {
 		return content;
 	}
 
-	private final Pattern _emptyLineBetweenTagsPattern = Pattern.compile(
-		"\n(\t*)<[\\w/].*[^-]>(\n\n)(\t*)<(\\w)");
-	private final Pattern _missingEmptyLineAfterCommentPattern =
-		Pattern.compile("[\t ]-->\n[\t<]");
-	private final Pattern _missingEmptyLineBeforeCommentPattern =
-		Pattern.compile(">\n\t+<!--[\n ]");
+	private static final Pattern _EMPTY_LINE_BETWEEN_TAGS_PATTERN =
+		RegexUtil.getPattern("\n(\t*)<[\\w/].*[^-]>(\n\n)(\t*)<(\\w)");
+
+	private static final Pattern _MISSING_EMPTY_LINE_AFTER_COMMENT_PATTERN =
+		RegexUtil.getPattern("[\t ]-->\n[\t<]");
+
+	private static final Pattern _MISSING_EMPTY_LINE_BEFORE_COMMENT_PATTERN =
+		RegexUtil.getPattern(">\n\t+<!--[\n ]");
 
 }

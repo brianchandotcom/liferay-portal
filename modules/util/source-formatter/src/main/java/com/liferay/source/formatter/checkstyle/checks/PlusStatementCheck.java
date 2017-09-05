@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checkstyle.checks;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -86,7 +87,7 @@ public class PlusStatementCheck extends AbstractCheck {
 
 		if (literalString2.startsWith(StringPool.SPACE) ||
 			(!literalString1.endsWith(StringPool.SPACE) &&
-			 literalString2.matches("^[-:;.].*"))) {
+			 RegexUtil.matches(literalString2, "^[-:;.].*"))) {
 
 			log(
 				lastChild.getLineNo(), _MSG_INVALID_START_CHARACTER,

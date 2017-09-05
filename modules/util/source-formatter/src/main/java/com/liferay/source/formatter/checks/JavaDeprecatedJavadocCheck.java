@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.BNDSettings;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -52,7 +53,7 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 			return content;
 		}
 
-		Matcher matcher = _deprecatedPattern.matcher(content);
+		Matcher matcher = _DEPRECATED_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			if (matcher.group(2) == null) {
@@ -89,7 +90,8 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 			}
 
 			if (deprecatedInfo.endsWith(StringPool.PERIOD) &&
-				!deprecatedInfo.matches("[\\S\\s]*\\.[ \n][\\S\\s]*")) {
+				!RegexUtil.matches(
+					deprecatedInfo, "[\\S\\s]*\\.[ \n][\\S\\s]*")) {
 
 				return StringUtil.replaceFirst(
 					content, StringPool.PERIOD, StringPool.BLANK,
@@ -149,9 +151,10 @@ public class JavaDeprecatedJavadocCheck extends BaseFileCheck {
 		return mainReleaseComparableVersion;
 	}
 
-	private final Pattern _deprecatedPattern = Pattern.compile(
+	private static final Pattern _DEPRECATED_PATTERN = RegexUtil.getPattern(
 		"(\n\\s*\\* @deprecated)( As of ([0-9\\.]+)(.*?)\n\\s*\\*( @|/))?",
 		Pattern.DOTALL);
+
 	private ComparableVersion _mainReleaseComparableVersion;
 
 }

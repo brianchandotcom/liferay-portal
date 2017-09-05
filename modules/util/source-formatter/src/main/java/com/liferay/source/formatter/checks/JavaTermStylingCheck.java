@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.parser.JavaTerm;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,7 +31,7 @@ public class JavaTermStylingCheck extends BaseJavaTermCheck {
 		String fileName, String absolutePath, JavaTerm javaTerm,
 		String fileContent) {
 
-		Matcher matcher = _lineBreakPattern.matcher(javaTerm.getContent());
+		Matcher matcher = _LINE_BREAK_PATTERN.matcher(javaTerm.getContent());
 
 		while (matcher.find()) {
 			if (getLevel(matcher.group(2)) >= 0) {
@@ -56,7 +57,7 @@ public class JavaTermStylingCheck extends BaseJavaTermCheck {
 		return new String[] {JAVA_CONSTRUCTOR, JAVA_METHOD};
 	}
 
-	private final Pattern _lineBreakPattern = Pattern.compile(
+	private static final Pattern _LINE_BREAK_PATTERN = RegexUtil.getPattern(
 		"\n(.*)\\(\n((.+,\n)*.*\\)) \\+\n");
 
 }

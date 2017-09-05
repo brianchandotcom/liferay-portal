@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.BaseImportsFormatter;
 import com.liferay.portal.tools.ImportPackage;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.io.IOException;
 
@@ -34,7 +35,7 @@ public class FTLImportsFormatter extends BaseImportsFormatter {
 	protected static List<String> getImportsList(String content) {
 		List<String> importsList = new ArrayList<>();
 
-		Matcher matcher = _importsPattern.matcher(content);
+		Matcher matcher = _IMPORTS_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			importsList.add(matcher.group());
@@ -87,7 +88,7 @@ public class FTLImportsFormatter extends BaseImportsFormatter {
 		return content;
 	}
 
-	private static final Pattern _importsPattern = Pattern.compile(
+	private static final Pattern _IMPORTS_PATTERN = RegexUtil.getPattern(
 		"(^[ \t]*import\\s+[^$].*;\n+)+", Pattern.MULTILINE);
 
 }

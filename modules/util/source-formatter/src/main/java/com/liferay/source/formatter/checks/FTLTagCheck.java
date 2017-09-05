@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -40,11 +41,11 @@ public class FTLTagCheck extends BaseFileCheck {
 	}
 
 	private String _formatAssignTags(String content) {
-		Matcher matcher = _incorrectAssignTagPattern.matcher(content);
+		Matcher matcher = _INCORRECT_ASSIGN_TAG_PATTERN.matcher(content);
 
 		content = matcher.replaceAll("$1 />\n");
 
-		matcher = _assignTagsBlockPattern.matcher(content);
+		matcher = _ASSIGN_TAGS_BLOCK_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			String match = matcher.group();
@@ -80,7 +81,7 @@ public class FTLTagCheck extends BaseFileCheck {
 	}
 
 	private String _formatTags(String content) {
-		Matcher matcher = _tagPattern.matcher(content);
+		Matcher matcher = _TAG_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			String match = matcher.group(3);
@@ -142,7 +143,7 @@ public class FTLTagCheck extends BaseFileCheck {
 		while (true) {
 			boolean match = false;
 
-			Matcher matcher = _tagAttributePattern.matcher(s);
+			Matcher matcher = _TAG_ATTRIBUTE_PATTERN.matcher(s);
 
 			while (matcher.find()) {
 				if (ToolsUtil.isInsideQuotes(s, matcher.end() - 1)) {
@@ -190,13 +191,17 @@ public class FTLTagCheck extends BaseFileCheck {
 		return sb.toString();
 	}
 
-	private final Pattern _assignTagsBlockPattern = Pattern.compile(
-		"((\t*)<#assign[^<#/>]*=[^<#/>]*/>(\n|$)+){2,}", Pattern.MULTILINE);
-	private final Pattern _incorrectAssignTagPattern = Pattern.compile(
-		"(<#assign .*=.*[^/])>(\n|$)");
-	private final Pattern _tagAttributePattern = Pattern.compile(
+	private static final Pattern _ASSIGN_TAGS_BLOCK_PATTERN =
+		RegexUtil.getPattern(
+			"((\t*)<#assign[^<#/>]*=[^<#/>]*/>(\n|$)+){2,}", Pattern.MULTILINE);
+
+	private static final Pattern _INCORRECT_ASSIGN_TAG_PATTERN =
+		RegexUtil.getPattern("(<#assign .*=.*[^/])>(\n|$)");
+
+	private static final Pattern _TAG_ATTRIBUTE_PATTERN = RegexUtil.getPattern(
 		"\\s(\\S+)\\s*=");
-	private final Pattern _tagPattern = Pattern.compile(
+
+	private static final Pattern _TAG_PATTERN = RegexUtil.getPattern(
 		"(\\A|\n)(\t*)<@(\\S[^>]*?)(/?>)(\n|\\Z)", Pattern.DOTALL);
 
 }

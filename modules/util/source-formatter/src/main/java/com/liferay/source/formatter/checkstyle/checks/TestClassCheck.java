@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -55,7 +56,7 @@ public class TestClassCheck extends AbstractCheck {
 
 		String name = nameAST.getText();
 
-		if (!name.matches(".*Test(Case)?")) {
+		if (!RegexUtil.matches(name, ".*Test(Case)?")) {
 			return;
 		}
 

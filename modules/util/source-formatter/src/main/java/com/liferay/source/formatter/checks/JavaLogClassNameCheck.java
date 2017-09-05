@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,7 +30,7 @@ public class JavaLogClassNameCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		Matcher matcher = _logPattern.matcher(content);
+		Matcher matcher = _LOG_PATTERN.matcher(content);
 
 		if (matcher.find()) {
 			String className = JavaSourceUtil.getClassName(fileName);
@@ -44,7 +45,7 @@ public class JavaLogClassNameCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _logPattern = Pattern.compile(
+	private static final Pattern _LOG_PATTERN = RegexUtil.getPattern(
 		"\n\tprivate static final Log _log = LogFactoryUtil.getLog\\(\n*" +
 			"\t*(.+)\\.class\\)");
 

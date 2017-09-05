@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -47,7 +48,7 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 				lineCount++;
 
 				if (line.startsWith("import ") || line.startsWith("package ") ||
-					line.matches("\\s*\\*.*") ||
+					RegexUtil.matches(line, "\\s*\\*.*") ||
 					(fileName.endsWith("Table.java") &&
 					 (line.contains("final String TABLE_") ||
 					  line.contains("\"create index ")))) {
@@ -64,8 +65,10 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 				// Allow lines with long method names or long
 				// extended/implemented class names
 
-				if (line.matches("\t*(extends|implements) [\\w.]+ \\{") ||
-					line.matches(
+				if (RegexUtil.matches(
+						line, "\t*(extends|implements) [\\w.]+ \\{") ||
+					RegexUtil.matches(
+						line,
 						"\t*(private|protected|public) void \\w+\\(\\)" +
 							"( \\{)?")) {
 
@@ -368,7 +371,7 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 			}
 		}
 
-		Matcher matcher = _annotationPattern.matcher(content);
+		Matcher matcher = _ANNOTATION_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			x = matcher.end();
@@ -396,9 +399,9 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 		return false;
 	}
 
-	private static final String _LINE_LENGTH_EXCLUDES = "line.length.excludes";
-
-	private final Pattern _annotationPattern = Pattern.compile(
+	private static final Pattern _ANNOTATION_PATTERN = RegexUtil.getPattern(
 		"\n\t*@(.+)\\(\n");
+
+	private static final String _LINE_LENGTH_EXCLUDES = "line.length.excludes";
 
 }

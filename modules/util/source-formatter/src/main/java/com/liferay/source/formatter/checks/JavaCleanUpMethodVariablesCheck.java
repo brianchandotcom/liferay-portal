@@ -22,6 +22,7 @@ import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaMethod;
 import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.parser.JavaVariable;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -84,7 +85,7 @@ public class JavaCleanUpMethodVariablesCheck extends BaseJavaTermCheck {
 				continue;
 			}
 
-			Pattern pattern = Pattern.compile(
+			Pattern pattern = RegexUtil.getPattern(
 				"\t(private|protected|public)\\s+" +
 					"(((final|static|transient|volatile)( |\n))*)([\\s\\S]*?)" +
 						variableName);
@@ -106,7 +107,7 @@ public class JavaCleanUpMethodVariablesCheck extends BaseJavaTermCheck {
 
 			String javaFieldType = StringUtil.trim(matcher.group(6));
 
-			pattern = Pattern.compile(
+			pattern = RegexUtil.getPattern(
 				javaTerm.getName() + " =\\s+[a-z]\\w*\\.");
 
 			matcher = pattern.matcher(cleanUpMethodContent);
@@ -140,7 +141,7 @@ public class JavaCleanUpMethodVariablesCheck extends BaseJavaTermCheck {
 				},
 				new String[] {"\\)", "\\(", "\\s*", "0(\\.0)?"});
 
-			pattern = Pattern.compile(setVariableCommandRegex);
+			pattern = RegexUtil.getPattern(setVariableCommandRegex);
 
 			matcher = pattern.matcher(cleanUpMethodContent);
 

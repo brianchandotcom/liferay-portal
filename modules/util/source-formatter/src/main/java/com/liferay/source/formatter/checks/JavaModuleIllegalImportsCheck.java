@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -57,7 +58,7 @@ public class JavaModuleIllegalImportsCheck extends BaseFileCheck {
 			 (!absolutePath.contains("/test/") &&
 			  !absolutePath.contains("/testIntegration/")))) {
 
-			Matcher matcher = _registryImportPattern.matcher(content);
+			Matcher matcher = _REGISTRY_IMPORT_PATTERN.matcher(content);
 
 			if (matcher.find()) {
 				addMessage(
@@ -88,8 +89,9 @@ public class JavaModuleIllegalImportsCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private static final Pattern _REGISTRY_IMPORT_PATTERN =
+		RegexUtil.getPattern("\nimport (com\\.liferay\\.registry\\..+);");
+
 	private boolean _checkRegistryInTestClasses;
-	private final Pattern _registryImportPattern = Pattern.compile(
-		"\nimport (com\\.liferay\\.registry\\..+);");
 
 }

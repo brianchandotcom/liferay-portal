@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.BNDSettings;
 import com.liferay.source.formatter.util.FileUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -69,7 +70,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 		return Arrays.asList(languageKeyPattern);
 	}
 
-	protected final Pattern languageKeyPattern = Pattern.compile(
+	protected final Pattern languageKeyPattern = RegexUtil.getPattern(
 		"LanguageUtil.(?:get|format)\\([^;%]+|Liferay.Language.get\\('([^']+)");
 
 	private void _checkLanguageKeys(
@@ -230,7 +231,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 
 		List<String> moduleLangDirNames = new ArrayList<>();
 
-		Matcher matcher = _mergeLangPattern.matcher(buildGradleContent);
+		Matcher matcher = _MERGE_LANG_PATTERN.matcher(buildGradleContent);
 
 		if (matcher.find()) {
 			String[] sourceDirs = StringUtil.split(matcher.group(1));
@@ -308,7 +309,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 				buildGradleFileLocation, CharPool.SLASH, StringPool.BLANK);
 		}
 
-		Matcher matcher = _applyLangMergerPluginPattern.matcher(
+		Matcher matcher = _APPLY_LANG_MERGER_PLUGIN_PATTERN.matcher(
 			buildGradleContent);
 
 		if (!matcher.find()) {
@@ -391,11 +392,14 @@ public class LanguageKeysCheck extends BaseFileCheck {
 		return null;
 	}
 
-	private final Pattern _applyLangMergerPluginPattern = Pattern.compile(
-		"^apply[ \t]+plugin[ \t]*:[ \t]+\"com.liferay.lang.merger\"$",
-		Pattern.MULTILINE);
-	private final Pattern _mergeLangPattern = Pattern.compile(
+	private static final Pattern _APPLY_LANG_MERGER_PLUGIN_PATTERN =
+		RegexUtil.getPattern(
+			"^apply[ \t]+plugin[ \t]*:[ \t]+\"com.liferay.lang.merger\"$",
+			Pattern.MULTILINE);
+
+	private static final Pattern _MERGE_LANG_PATTERN = RegexUtil.getPattern(
 		"mergeLang \\{\\s*sourceDirs = \\[(.*?)\\]", Pattern.DOTALL);
+
 	private final Map<String, Properties> _moduleLangLanguagePropertiesMap =
 		new HashMap<>();
 	private final Map<String, Properties> _moduleLanguagePropertiesMap =

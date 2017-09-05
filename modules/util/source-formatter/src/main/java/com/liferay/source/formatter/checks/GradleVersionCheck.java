@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.source.formatter.util.RegexUtil;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,7 +34,7 @@ public class GradleVersionCheck extends BaseFileCheck {
 	}
 
 	private void _checkDefaultVersion(String fileName, String content) {
-		Matcher matcher = _defaultVersionPattern.matcher(content);
+		Matcher matcher = _DEFAULT_VERSION_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			String name = matcher.group(1);
@@ -49,7 +51,7 @@ public class GradleVersionCheck extends BaseFileCheck {
 		}
 	}
 
-	private final Pattern _defaultVersionPattern = Pattern.compile(
-		"name: \"(.*?)\", version: \"default\"");
+	private static final Pattern _DEFAULT_VERSION_PATTERN =
+		RegexUtil.getPattern("name: \"(.*?)\", version: \"default\"");
 
 }

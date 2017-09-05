@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,12 +34,12 @@ public class FTLLiferayVariableOrderCheck extends BaseFileCheck {
 	}
 
 	private String _sortLiferayVariables(String content) {
-		Matcher matcher = _liferayVariablesPattern.matcher(content);
+		Matcher matcher = _LIFERAY_VARIABLES_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			String match = matcher.group();
 
-			Matcher matcher2 = _liferayVariablePattern.matcher(match);
+			Matcher matcher2 = _LIFERAY_VARIABLE_PATTERN.matcher(match);
 
 			String previousVariable = null;
 
@@ -63,9 +64,11 @@ public class FTLLiferayVariableOrderCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _liferayVariablePattern = Pattern.compile(
-		"^\t*<#assign liferay_.*>\n", Pattern.MULTILINE);
-	private final Pattern _liferayVariablesPattern = Pattern.compile(
-		"(^\t*<#assign liferay_.*>\n)+", Pattern.MULTILINE);
+	private static final Pattern _LIFERAY_VARIABLE_PATTERN =
+		RegexUtil.getPattern("^\t*<#assign liferay_.*>\n", Pattern.MULTILINE);
+
+	private static final Pattern _LIFERAY_VARIABLES_PATTERN =
+		RegexUtil.getPattern(
+			"(^\t*<#assign liferay_.*>\n)+", Pattern.MULTILINE);
 
 }

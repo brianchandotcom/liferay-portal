@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checkstyle.checks;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -49,7 +50,7 @@ public class VariableNameCheck extends AbstractCheck {
 
 	private void _checkCaps(DetailAST detailAST, String name) {
 		for (String[] array : _ALL_CAPS_STRINGS) {
-			Pattern pattern = Pattern.compile(
+			Pattern pattern = RegexUtil.getPattern(
 				"(.*)" + array[1] + "([A-Z].*|$)");
 
 			Matcher matcher = pattern.matcher(name);
@@ -67,7 +68,7 @@ public class VariableNameCheck extends AbstractCheck {
 			return;
 		}
 
-		Matcher matcher = _isVariableNamePattern.matcher(name);
+		Matcher matcher = _IS_VARIABLE_NAME_PATTERN.matcher(name);
 
 		if (!matcher.find()) {
 			return;
@@ -166,9 +167,9 @@ public class VariableNameCheck extends AbstractCheck {
 		new String[] {"DL", "Dl"}, new String[] {"PK", "Pk"}
 	};
 
-	private static final String _MSG_RENAME_VARIABLE = "variable.rename";
+	private static final Pattern _IS_VARIABLE_NAME_PATTERN =
+		RegexUtil.getPattern("(_?)(is|IS_)([A-Z])(.*)");
 
-	private static final Pattern _isVariableNamePattern = Pattern.compile(
-		"(_?)(is|IS_)([A-Z])(.*)");
+	private static final String _MSG_RENAME_VARIABLE = "variable.rename";
 
 }

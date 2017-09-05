@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,7 +40,8 @@ public class JSStylingCheck extends BaseFileCheck {
 
 	private String _formatMultipleVarsOnSingleLine(String content) {
 		while (true) {
-			Matcher matcher = _multipleVarsOnSingleLinePattern.matcher(content);
+			Matcher matcher = _MULTIPLE_VARS_ON_SINGLE_LINE_PATTERN.matcher(
+				content);
 
 			if (!matcher.find()) {
 				break;
@@ -62,7 +64,7 @@ public class JSStylingCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _multipleVarsOnSingleLinePattern = Pattern.compile(
-		"\t+var \\w+\\, ");
+	private static final Pattern _MULTIPLE_VARS_ON_SINGLE_LINE_PATTERN =
+		RegexUtil.getPattern("\t+var \\w+\\, ");
 
 }

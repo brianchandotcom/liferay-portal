@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.source.formatter.checks.util.BNDSourceUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 /**
  * @author Hugo Huijser
@@ -44,7 +45,7 @@ public class BNDDirectoryNameCheck extends BaseFileCheck {
 	private void _checkDirectoryName(String fileName, String absolutePath) {
 		String moduleName = BNDSourceUtil.getModuleName(absolutePath);
 
-		if (absolutePath.matches(".*/apps(/.*){3,}")) {
+		if (RegexUtil.matches(absolutePath, ".*/apps(/.*){3,}")) {
 			int x = absolutePath.lastIndexOf(StringPool.SLASH);
 
 			int y = absolutePath.lastIndexOf(StringPool.SLASH, x - 1);

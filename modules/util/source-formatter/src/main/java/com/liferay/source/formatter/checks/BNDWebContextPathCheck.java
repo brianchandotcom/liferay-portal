@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.source.formatter.checks.util.BNDSourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -95,7 +96,7 @@ public class BNDWebContextPathCheck extends BaseFileCheck {
 
 		String content = FileUtil.read(file);
 
-		Matcher matcher = _jsonNamePattern.matcher(content);
+		Matcher matcher = _JSON_NAME_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			if (getLevel(content.substring(0, matcher.start()), "{", "}") ==
@@ -108,7 +109,7 @@ public class BNDWebContextPathCheck extends BaseFileCheck {
 		return false;
 	}
 
-	private final Pattern _jsonNamePattern = Pattern.compile(
+	private static final Pattern _JSON_NAME_PATTERN = RegexUtil.getPattern(
 		"\n\\s*['\"]name['\"]:");
 
 }

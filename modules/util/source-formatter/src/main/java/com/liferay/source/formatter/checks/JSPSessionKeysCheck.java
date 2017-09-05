@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.source.formatter.util.RegexUtil;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -25,11 +27,12 @@ public class JSPSessionKeysCheck extends SessionKeysCheck {
 
 	@Override
 	protected List<Pattern> getPatterns() {
-		return Arrays.asList(sessionKeyPattern, _taglibSessionKeyPattern);
+		return Arrays.asList(sessionKeyPattern, _TAGLIB_SESSION_KEY_PATTERN);
 	}
 
-	private final Pattern _taglibSessionKeyPattern = Pattern.compile(
-		"<liferay-ui:error [^>]+>|<liferay-ui:success [^>]+>",
-		Pattern.MULTILINE);
+	private static final Pattern _TAGLIB_SESSION_KEY_PATTERN =
+		RegexUtil.getPattern(
+			"<liferay-ui:error [^>]+>|<liferay-ui:success [^>]+>",
+			Pattern.MULTILINE);
 
 }

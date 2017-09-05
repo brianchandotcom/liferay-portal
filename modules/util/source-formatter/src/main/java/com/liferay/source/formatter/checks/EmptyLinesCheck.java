@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,7 +29,7 @@ import java.util.regex.Pattern;
 public abstract class EmptyLinesCheck extends BaseFileCheck {
 
 	protected String fixEmptyLinesBetweenTags(String content) {
-		Matcher matcher = _emptyLineBetweenTagsPattern.matcher(content);
+		Matcher matcher = _EMPTY_LINE_BETWEEN_TAGS_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			String tabs1 = matcher.group(1);
@@ -43,8 +44,8 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 			String tagName2 = matcher.group(5);
 
 			if (tagName1.endsWith(":when") ||
-				(tagName1.matches("dd|dt|li|span|td|th|tr") &&
-				 tagName2.matches("dd|dt|li|span|td|th|tr"))) {
+				(RegexUtil.matches(tagName1, "dd|dt|li|span|td|th|tr") &&
+				 RegexUtil.matches(tagName2, "dd|dt|li|span|td|th|tr"))) {
 
 				if (lineBreaks.equals("\n\n")) {
 					return StringUtil.replaceFirst(
@@ -57,7 +58,7 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 			}
 		}
 
-		matcher = _missingEmptyLineBetweenTagsPattern1.matcher(content);
+		matcher = _MISSING_EMPTY_LINE_BETWEEN_TAGS_PATTERN_1.matcher(content);
 
 		while (matcher.find()) {
 			String tabs1 = matcher.group(1);
@@ -69,7 +70,7 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 			}
 		}
 
-		matcher = _missingEmptyLineBetweenTagsPattern2.matcher(content);
+		matcher = _MISSING_EMPTY_LINE_BETWEEN_TAGS_PATTERN_2.matcher(content);
 
 		while (matcher.find()) {
 			String tabs1 = matcher.group(1);
@@ -85,7 +86,8 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 	}
 
 	protected String fixEmptyLinesInMultiLineTags(String content) {
-		Matcher matcher = _emptyLineInMultiLineTagsPattern.matcher(content);
+		Matcher matcher = _EMPTY_LINE_IN_MULTI_LINE_TAGS_PATTERN.matcher(
+			content);
 
 		if (matcher.find()) {
 			return StringUtil.replaceFirst(
@@ -97,10 +99,10 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 
 	protected String fixEmptyLinesInNestedTags(String content) {
 		content = fixEmptyLinesInNestedTags(
-			content, _emptyLineInNestedTagsPattern1, true);
+			content, _EMPTY_LINE_IN_NESTED_TAGS_PATTERN_1, true);
 
 		return fixEmptyLinesInNestedTags(
-			content, _emptyLineInNestedTagsPattern2, false);
+			content, _EMPTY_LINE_IN_NESTED_TAGS_PATTERN_2, false);
 	}
 
 	protected String fixEmptyLinesInNestedTags(
@@ -149,7 +151,8 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 	protected String fixIncorrectEmptyLineBeforeCloseCurlyBrace(
 		String content) {
 
-		Matcher matcher1 = _incorrectCloseCurlyBracePattern1.matcher(content);
+		Matcher matcher1 = _INCORRECT_CLOSE_CURLY_BRACE_PATTERN_1.matcher(
+			content);
 
 		while (matcher1.find()) {
 			if (!isJavaSource(content, matcher1.end())) {
@@ -180,8 +183,8 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 				String firstLine = codeBlock.substring(
 					0, codeBlock.indexOf(CharPool.NEW_LINE) + 1);
 
-				Matcher matcher2 = _incorrectCloseCurlyBracePattern2.matcher(
-					firstLine);
+				Matcher matcher2 =
+					_INCORRECT_CLOSE_CURLY_BRACE_PATTERN_2.matcher(firstLine);
 
 				if (matcher2.find()) {
 					break;
@@ -196,7 +199,7 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 	}
 
 	protected String fixMissingEmptyLineAfterSettingVariable(String content) {
-		Matcher matcher = _setVariablePattern.matcher(content);
+		Matcher matcher = _SET_VARIABLE_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			if (!isJavaSource(content, matcher.start())) {
@@ -216,14 +219,15 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 			String nextCommand = content.substring(matcher.end(), x + 1);
 
 			if (nextCommand.contains("{\n") ||
-				nextCommand.matches("\t*%>[\\S\\s]*")) {
+				RegexUtil.matches(nextCommand, "\t*%>[\\S\\s]*")) {
 
 				continue;
 			}
 
 			String variableName = matcher.group(1);
 
-			Pattern pattern2 = Pattern.compile("\\W(" + variableName + ")\\.");
+			Pattern pattern2 = RegexUtil.getPattern(
+				"\\W(" + variableName + ")\\.");
 
 			Matcher matcher2 = pattern2.matcher(nextCommand);
 
@@ -259,7 +263,7 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 	protected String fixMissingEmptyLines(String content) {
 		outerLoop:
 		while (true) {
-			Matcher matcher = _missingEmptyLinePattern1.matcher(content);
+			Matcher matcher = _MISSING_EMPTY_LINE_PATTERN_1.matcher(content);
 
 			while (matcher.find()) {
 				if (!isJavaSource(content, matcher.start())) {
@@ -274,7 +278,7 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 				}
 			}
 
-			matcher = _missingEmptyLinePattern2.matcher(content);
+			matcher = _MISSING_EMPTY_LINE_PATTERN_2.matcher(content);
 
 			while (matcher.find()) {
 				if (!isJavaSource(content, matcher.start())) {
@@ -304,7 +308,7 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 				}
 			}
 
-			matcher = _missingEmptyLinePattern3.matcher(content);
+			matcher = _MISSING_EMPTY_LINE_PATTERN_3.matcher(content);
 
 			while (matcher.find()) {
 				if (!isJavaSource(content, matcher.start())) {
@@ -321,7 +325,7 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 				}
 			}
 
-			matcher = _missingEmptyLinePattern4.matcher(content);
+			matcher = _MISSING_EMPTY_LINE_PATTERN_4.matcher(content);
 
 			while (matcher.find()) {
 				if (!isJavaSource(content, matcher.start())) {
@@ -334,7 +338,7 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 				continue outerLoop;
 			}
 
-			matcher = _missingEmptyLinePattern5.matcher(content);
+			matcher = _MISSING_EMPTY_LINE_PATTERN_5.matcher(content);
 
 			while (matcher.find()) {
 				if (!isJavaSource(content, matcher.start())) {
@@ -347,7 +351,7 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 				continue outerLoop;
 			}
 
-			matcher = _missingEmptyLinePattern6.matcher(content);
+			matcher = _MISSING_EMPTY_LINE_PATTERN_6.matcher(content);
 
 			while (matcher.find()) {
 				if (!isJavaSource(content, matcher.start())) {
@@ -360,7 +364,7 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 				continue outerLoop;
 			}
 
-			matcher = _missingEmptyLinePattern7.matcher(content);
+			matcher = _MISSING_EMPTY_LINE_PATTERN_7.matcher(content);
 
 			while (matcher.find()) {
 				if (!isJavaSource(content, matcher.start())) {
@@ -373,7 +377,7 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 				continue outerLoop;
 			}
 
-			matcher = _missingEmptyLinePattern8.matcher(content);
+			matcher = _MISSING_EMPTY_LINE_PATTERN_8.matcher(content);
 
 			while (matcher.find()) {
 				if (!isJavaSource(content, matcher.start())) {
@@ -395,7 +399,7 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 	protected String fixRedundantEmptyLines(String content) {
 		outerLoop:
 		while (true) {
-			Matcher matcher = _redundantEmptyLinePattern1.matcher(content);
+			Matcher matcher = _REDUNDANT_EMPTY_LINE_PATTERN_1.matcher(content);
 
 			while (matcher.find()) {
 				if (!isJavaSource(content, matcher.start())) {
@@ -416,7 +420,7 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 				continue outerLoop;
 			}
 
-			matcher = _redundantEmptyLinePattern2.matcher(content);
+			matcher = _REDUNDANT_EMPTY_LINE_PATTERN_2.matcher(content);
 
 			while (matcher.find()) {
 				if (!isJavaSource(content, matcher.start())) {
@@ -429,7 +433,7 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 				continue outerLoop;
 			}
 
-			matcher = _redundantEmptyLinePattern3.matcher(content);
+			matcher = _REDUNDANT_EMPTY_LINE_PATTERN_3.matcher(content);
 
 			while (matcher.find()) {
 				if (!isJavaSource(content, matcher.start())) {
@@ -442,7 +446,7 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 				continue outerLoop;
 			}
 
-			matcher = _redundantEmptyLinePattern4.matcher(content);
+			matcher = _REDUNDANT_EMPTY_LINE_PATTERN_4.matcher(content);
 
 			while (matcher.find()) {
 				if (!isJavaSource(content, matcher.start())) {
@@ -455,7 +459,7 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 				continue outerLoop;
 			}
 
-			matcher = _redundantEmptyLinePattern5.matcher(content);
+			matcher = _REDUNDANT_EMPTY_LINE_PATTERN_5.matcher(content);
 
 			while (matcher.find()) {
 				if (!isJavaSource(content, matcher.start())) {
@@ -478,51 +482,77 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 		return true;
 	}
 
-	private final Pattern _emptyLineBetweenTagsPattern = Pattern.compile(
-		"\n(\t*)</([-\\w:]+)>(\n*)(\t*)<([-\\w:]+)[> \n]");
-	private final Pattern _emptyLineInMultiLineTagsPattern = Pattern.compile(
-		"\n\t*<[-\\w:#]+\n\n\t*\\w");
-	private final Pattern _emptyLineInNestedTagsPattern1 = Pattern.compile(
-		"\n(\t*)(?:<\\w.*[^/])?>\n\n(\t*)(<.*)\n");
-	private final Pattern _emptyLineInNestedTagsPattern2 = Pattern.compile(
-		"\n(\t*)(.*>)\n\n(\t*)</.*(\n|$)");
-	private final Pattern _incorrectCloseCurlyBracePattern1 = Pattern.compile(
-		"\n(.+)\n\n(\t+)}\n");
-	private final Pattern _incorrectCloseCurlyBracePattern2 = Pattern.compile(
-		"(\t| )@?(class|enum|interface|new)\\s");
-	private final Pattern _missingEmptyLineBetweenTagsPattern1 =
-		Pattern.compile("\n(\t*)/>\n(\t*)<[-\\w:]+[> \n]");
-	private final Pattern _missingEmptyLineBetweenTagsPattern2 =
-		Pattern.compile(
+	private static final Pattern _EMPTY_LINE_BETWEEN_TAGS_PATTERN =
+		RegexUtil.getPattern("\n(\t*)</([-\\w:]+)>(\n*)(\t*)<([-\\w:]+)[> \n]");
+
+	private static final Pattern _EMPTY_LINE_IN_MULTI_LINE_TAGS_PATTERN =
+		RegexUtil.getPattern("\n\t*<[-\\w:#]+\n\n\t*\\w");
+
+	private static final Pattern _EMPTY_LINE_IN_NESTED_TAGS_PATTERN_1 =
+		RegexUtil.getPattern("\n(\t*)(?:<\\w.*[^/])?>\n\n(\t*)(<.*)\n");
+
+	private static final Pattern _EMPTY_LINE_IN_NESTED_TAGS_PATTERN_2 =
+		RegexUtil.getPattern("\n(\t*)(.*>)\n\n(\t*)</.*(\n|$)");
+
+	private static final Pattern _INCORRECT_CLOSE_CURLY_BRACE_PATTERN_1 =
+		RegexUtil.getPattern("\n(.+)\n\n(\t+)}\n");
+
+	private static final Pattern _INCORRECT_CLOSE_CURLY_BRACE_PATTERN_2 =
+		RegexUtil.getPattern("(\t| )@?(class|enum|interface|new)\\s");
+
+	private static final Pattern _MISSING_EMPTY_LINE_BETWEEN_TAGS_PATTERN_1 =
+		RegexUtil.getPattern("\n(\t*)/>\n(\t*)<[-\\w:]+[> \n]");
+
+	private static final Pattern _MISSING_EMPTY_LINE_BETWEEN_TAGS_PATTERN_2 =
+		RegexUtil.getPattern(
 			"\n(\t*)<.* />\n(\t*)<([-\\w:]+|\\w((?!</| />).)*[^/]>)\n");
-	private final Pattern _missingEmptyLinePattern1 = Pattern.compile(
-		"(\t| = | -> |return )new .*\\(.*\\) \\{\n\t+[^{\t]");
-	private final Pattern _missingEmptyLinePattern2 = Pattern.compile(
-		"(\n\t*)(public|private|protected) [^;]+? \\{");
-	private final Pattern _missingEmptyLinePattern3 = Pattern.compile(
-		"\n.*\\) \\{\n");
-	private final Pattern _missingEmptyLinePattern4 = Pattern.compile(
-		"\n\t*// .*\n[\t ]*(?!// )\\S");
-	private final Pattern _missingEmptyLinePattern5 = Pattern.compile(
-		"\n[\t ]*(?!// )\\S.*\n\t*// ");
-	private final Pattern _missingEmptyLinePattern6 = Pattern.compile(
-		"[^{:/\n]\n\t*(for|if|try) \\(");
-	private final Pattern _missingEmptyLinePattern7 = Pattern.compile(
-		"[\t\n]\\}\n[\t ]*(?!(/\\*|\\}|\\)|//|catch |else |finally |while ))" +
-			"\\S");
-	private final Pattern _missingEmptyLinePattern8 = Pattern.compile(
-		"[^:\\{\n]\n\t*return ");
-	private final Pattern _redundantEmptyLinePattern1 = Pattern.compile(
-		"\n(.*)\n\npublic ((abstract|static) )*(class|enum|interface) ");
-	private final Pattern _redundantEmptyLinePattern2 = Pattern.compile(
-		" \\* @author .*\n \\*\\/\n\n");
-	private final Pattern _redundantEmptyLinePattern3 = Pattern.compile(
-		"[\n\t](catch |else |finally |for |if |try |while ).*\\{\n\n\t+\\w");
-	private final Pattern _redundantEmptyLinePattern4 = Pattern.compile(
-		"\\{\n\n\t*\\}");
-	private final Pattern _redundantEmptyLinePattern5 = Pattern.compile(
-		"\\}\n\n\t*(catch|else( if)?|finally) [\\(\\{]");
-	private final Pattern _setVariablePattern = Pattern.compile(
+
+	private static final Pattern _MISSING_EMPTY_LINE_PATTERN_1 =
+		RegexUtil.getPattern(
+			"(\t| = | -> |return )new .*\\(.*\\) \\{\n\t+[^{\t]");
+
+	private static final Pattern _MISSING_EMPTY_LINE_PATTERN_2 =
+		RegexUtil.getPattern("(\n\t*)(public|private|protected) [^;]+? \\{");
+
+	private static final Pattern _MISSING_EMPTY_LINE_PATTERN_3 =
+		RegexUtil.getPattern("\n.*\\) \\{\n");
+
+	private static final Pattern _MISSING_EMPTY_LINE_PATTERN_4 =
+		RegexUtil.getPattern("\n\t*// .*\n[\t ]*(?!// )\\S");
+
+	private static final Pattern _MISSING_EMPTY_LINE_PATTERN_5 =
+		RegexUtil.getPattern("\n[\t ]*(?!// )\\S.*\n\t*// ");
+
+	private static final Pattern _MISSING_EMPTY_LINE_PATTERN_6 =
+		RegexUtil.getPattern("[^{:/\n]\n\t*(for|if|try) \\(");
+
+	private static final Pattern _MISSING_EMPTY_LINE_PATTERN_7 =
+		RegexUtil.getPattern(
+			"[\t\n]\\}\n[\t ]*" +
+				"(?!(/\\*|\\}|\\)|//|catch |else |finally |while ))\\S");
+
+	private static final Pattern _MISSING_EMPTY_LINE_PATTERN_8 =
+		RegexUtil.getPattern("[^:\\{\n]\n\t*return ");
+
+	private static final Pattern _REDUNDANT_EMPTY_LINE_PATTERN_1 =
+		RegexUtil.getPattern(
+			"\n(.*)\n\npublic ((abstract|static) )*(class|enum|interface) ");
+
+	private static final Pattern _REDUNDANT_EMPTY_LINE_PATTERN_2 =
+		RegexUtil.getPattern(" \\* @author .*\n \\*\\/\n\n");
+
+	private static final Pattern _REDUNDANT_EMPTY_LINE_PATTERN_3 =
+		RegexUtil.getPattern(
+			"[\n\t](catch |else |finally |for |if |try |while ).*\\{\n\n\t+" +
+				"\\w");
+
+	private static final Pattern _REDUNDANT_EMPTY_LINE_PATTERN_4 =
+		RegexUtil.getPattern("\\{\n\n\t*\\}");
+
+	private static final Pattern _REDUNDANT_EMPTY_LINE_PATTERN_5 =
+		RegexUtil.getPattern("\\}\n\n\t*(catch|else( if)?|finally) [\\(\\{]");
+
+	private static final Pattern _SET_VARIABLE_PATTERN = RegexUtil.getPattern(
 		"\t[A-Z]\\w+ (\\w+) =\\s+((?!\\{\n).)*?;\n", Pattern.DOTALL);
 
 }

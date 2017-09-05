@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,7 +33,7 @@ public class JavaDiamondOperatorCheck extends BaseFileCheck {
 	}
 
 	private String _applyDiamondOperator(String content) {
-		Matcher matcher = _diamondOperatorPattern.matcher(content);
+		Matcher matcher = _DIAMOND_OPERATOR_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			String match = matcher.group();
@@ -65,9 +66,10 @@ public class JavaDiamondOperatorCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _diamondOperatorPattern = Pattern.compile(
-		"(return|=)\n?(\t+| )new ([A-Za-z]+)(\\s*)<([^>][^;]*?)>" +
-			"\\(\n*\t*.*?\\);\n",
-		Pattern.DOTALL);
+	private static final Pattern _DIAMOND_OPERATOR_PATTERN =
+		RegexUtil.getPattern(
+			"(return|=)\n?(\t+| )new ([A-Za-z]+)(\\s*)<([^>][^;]*?)>" +
+				"\\(\n*\t*.*?\\);\n",
+			Pattern.DOTALL);
 
 }

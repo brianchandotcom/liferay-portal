@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -46,7 +47,7 @@ public class BNDStylingCheck extends BaseFileCheck {
 	}
 
 	private String _fixIncorrectIndent(String content) {
-		Matcher matcher = _incorrectIndentPattern.matcher(content);
+		Matcher matcher = _INCORRECT_INDEX_PATTERN.matcher(content);
 
 		if (matcher.find()) {
 			return StringUtil.replaceFirst(
@@ -57,7 +58,7 @@ public class BNDStylingCheck extends BaseFileCheck {
 	}
 
 	private String _fixTrailingSemiColon(String content) {
-		Matcher matcher = _trailingSemiColonPattern.matcher(content);
+		Matcher matcher = _TRAILING_SEMI_COLON_PATTERN.matcher(content);
 
 		if (matcher.find()) {
 			return StringUtil.replaceFirst(
@@ -69,7 +70,8 @@ public class BNDStylingCheck extends BaseFileCheck {
 	}
 
 	private String _formatMultipleValuesOnSingleLine(String content) {
-		Matcher matcher = _multipleValuesOnSingleLinePattern.matcher(content);
+		Matcher matcher = _MULTIPLE_VALUES_ON_SINGLE_LINE_PATTERN.matcher(
+			content);
 
 		while (matcher.find()) {
 			if (ToolsUtil.isInsideQuotes(content, matcher.start())) {
@@ -104,7 +106,8 @@ public class BNDStylingCheck extends BaseFileCheck {
 	}
 
 	private String _formatSingleValueOnMultipleLines(String content) {
-		Matcher matcher = _singleValueOnMultipleLinesPattern.matcher(content);
+		Matcher matcher = _SINGLE_VALUE_ON_MULTIPLE_LINES_PATTERN.matcher(
+			content);
 
 		if (matcher.find()) {
 			content = StringUtil.replaceFirst(
@@ -114,13 +117,16 @@ public class BNDStylingCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _incorrectIndentPattern = Pattern.compile(
-		"\n[^\t].*:\\\\\n(\t{2,})[^\t]");
-	private final Pattern _multipleValuesOnSingleLinePattern = Pattern.compile(
-		",(?!\\\\(\n|\\Z)).");
-	private final Pattern _singleValueOnMultipleLinesPattern = Pattern.compile(
-		"\n.*:(\\\\\n\t).*(\n[^\t]|\\Z)");
-	private final Pattern _trailingSemiColonPattern = Pattern.compile(
-		";(\n|\\Z)");
+	private static final Pattern _INCORRECT_INDEX_PATTERN =
+		RegexUtil.getPattern("\n[^\t].*:\\\\\n(\t{2,})[^\t]");
+
+	private static final Pattern _MULTIPLE_VALUES_ON_SINGLE_LINE_PATTERN =
+		RegexUtil.getPattern(",(?!\\\\(\n|\\Z)).");
+
+	private static final Pattern _SINGLE_VALUE_ON_MULTIPLE_LINES_PATTERN =
+		RegexUtil.getPattern("\n.*:(\\\\\n\t).*(\n[^\t]|\\Z)");
+
+	private static final Pattern _TRAILING_SEMI_COLON_PATTERN =
+		RegexUtil.getPattern(";(\n|\\Z)");
 
 }

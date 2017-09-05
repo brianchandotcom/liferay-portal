@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,14 +35,15 @@ public class UnparameterizedClassCheck extends BaseFileCheck {
 	}
 
 	private String _fixUnparameterizedClassType(String content) {
-		Matcher matcher = _unparameterizedClassTypePattern1.matcher(content);
+		Matcher matcher = _UNPARAMETERIZED_CLASS_TYPE_PATTERN_1.matcher(
+			content);
 
 		if (matcher.find()) {
 			return StringUtil.replaceFirst(
 				content, "Class", "Class<?>", matcher.start());
 		}
 
-		matcher = _unparameterizedClassTypePattern2.matcher(content);
+		matcher = _UNPARAMETERIZED_CLASS_TYPE_PATTERN_2.matcher(content);
 
 		if (matcher.find()) {
 			return StringUtil.replaceFirst(
@@ -51,9 +53,10 @@ public class UnparameterizedClassCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _unparameterizedClassTypePattern1 = Pattern.compile(
-		"\\Wnew Class[^<\\w]");
-	private final Pattern _unparameterizedClassTypePattern2 = Pattern.compile(
-		"\\WClass[\\[\\]]* \\w+ =");
+	private static final Pattern _UNPARAMETERIZED_CLASS_TYPE_PATTERN_1 =
+		RegexUtil.getPattern("\\Wnew Class[^<\\w]");
+
+	private static final Pattern _UNPARAMETERIZED_CLASS_TYPE_PATTERN_2 =
+		RegexUtil.getPattern("\\WClass[\\[\\]]* \\w+ =");
 
 }

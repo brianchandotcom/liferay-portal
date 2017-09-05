@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.BNDSourceUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.Comparator;
 import java.util.List;
@@ -67,7 +68,7 @@ public class BNDDefinitionKeysCheck extends DefinitionKeysCheck {
 				definition.substring(0, definition.length() - 2));
 		}
 
-		Matcher matcher = _definitionKeyPattern.matcher(definition);
+		Matcher matcher = _DEFINITION_KEY_PATTERN.matcher(definition);
 
 		if (!matcher.find()) {
 			return content;
@@ -120,7 +121,7 @@ public class BNDDefinitionKeysCheck extends DefinitionKeysCheck {
 			content, "\n" + definitionKey + ":", "\n" + correctKey + ":");
 	}
 
-	private final Pattern _definitionKeyPattern = Pattern.compile(
+	private static final Pattern _DEFINITION_KEY_PATTERN = RegexUtil.getPattern(
 		"([A-Za-z-]+?)[:=]");
 
 	private static class DefinitionComparator implements Comparator<String> {

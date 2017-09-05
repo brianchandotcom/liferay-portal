@@ -19,6 +19,7 @@ import aQute.bnd.osgi.Constants;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,7 +39,7 @@ public class BNDSourceUtil {
 	}
 
 	public static String getDefinitionValue(String content, String key) {
-		Pattern pattern = Pattern.compile(
+		Pattern pattern = RegexUtil.getPattern(
 			"^" + key + ": (.*)(\n|\\Z)", Pattern.MULTILINE);
 
 		Matcher matcher = pattern.matcher(content);

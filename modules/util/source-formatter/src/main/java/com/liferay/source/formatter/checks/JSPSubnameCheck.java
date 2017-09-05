@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.source.formatter.util.RegexUtil;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,7 +28,7 @@ public class JSPSubnameCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		Matcher matcher = _subnamePattern.matcher(content);
+		Matcher matcher = _SUBNAME_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			addMessage(
@@ -38,7 +40,7 @@ public class JSPSubnameCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _subnamePattern = Pattern.compile(
+	private static final Pattern _SUBNAME_PATTERN = RegexUtil.getPattern(
 		"\\s(_?sub[A-Z]\\w+)[; ]");
 
 }

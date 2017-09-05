@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.util.RegexUtil;
 
 /**
  * @author Peter Shin
@@ -47,7 +48,7 @@ public class GradleIndentationCheck extends BaseFileCheck {
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				if (!insideQuotes &&
-					!line.matches("^\\s*['\"].*['\"].*[\\)\\+]$")) {
+					!RegexUtil.matches(line, "^\\s*['\"].*['\"].*[\\)\\+]$")) {
 
 					line = _checkIndentation(line, tabCount);
 				}
@@ -78,7 +79,7 @@ public class GradleIndentationCheck extends BaseFileCheck {
 
 		int leadingTabCount = getLeadingTabCount(line);
 
-		if (line.matches("\t*[\\}\\]\\)].*")) {
+		if (RegexUtil.matches(line, "\t*[\\}\\]\\)].*")) {
 			expectedTabCount = expectedTabCount - 1;
 		}
 
@@ -124,8 +125,8 @@ public class GradleIndentationCheck extends BaseFileCheck {
 			return tabCount;
 		}
 
-		if (text.matches("^\\s*Matcher\\s+.*") ||
-			text.matches("^\\s*Pattern\\s+.*")) {
+		if (RegexUtil.matches(text, "^\\s*Matcher\\s+.*") ||
+			RegexUtil.matches(text, "^\\s*Pattern\\s+.*")) {
 
 			return tabCount;
 		}

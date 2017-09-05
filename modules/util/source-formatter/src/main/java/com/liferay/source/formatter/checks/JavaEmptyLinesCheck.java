@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -42,7 +43,7 @@ public class JavaEmptyLinesCheck extends EmptyLinesCheck {
 	}
 
 	private String _fixRedundantEmptyLineInLambdaExpression(String content) {
-		Matcher matcher = _redundantEmptyLinePattern.matcher(content);
+		Matcher matcher = _REDUNDANT_EMPTY_LINES_PATTERN.matcher(content);
 
 		if (matcher.find()) {
 			return StringUtil.replaceFirst(
@@ -52,7 +53,7 @@ public class JavaEmptyLinesCheck extends EmptyLinesCheck {
 		return content;
 	}
 
-	private final Pattern _redundantEmptyLinePattern = Pattern.compile(
-		"-> \\{\n\n[\t ]*(?!// )\\S");
+	private static final Pattern _REDUNDANT_EMPTY_LINES_PATTERN =
+		RegexUtil.getPattern("-> \\{\n\n[\t ]*(?!// )\\S");
 
 }

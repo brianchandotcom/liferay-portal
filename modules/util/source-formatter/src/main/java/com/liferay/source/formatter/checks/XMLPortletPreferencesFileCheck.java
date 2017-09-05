@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -49,8 +50,8 @@ public class XMLPortletPreferencesFileCheck extends BaseFileCheck {
 			fileName, document.getRootElement(), "preference", null,
 			new PortletPreferenceElementComparator());
 
-		Matcher matcher = _incorrectDefaultPreferencesFileName.matcher(
-			fileName);
+		Matcher matcher =
+			_INCORRECT_DEFAULT_PREFERENCES_FILE_NAME_PATTERN.matcher(fileName);
 
 		if (matcher.find()) {
 			String correctFileName =
@@ -60,8 +61,9 @@ public class XMLPortletPreferencesFileCheck extends BaseFileCheck {
 		}
 	}
 
-	private final Pattern _incorrectDefaultPreferencesFileName =
-		Pattern.compile("/default-([\\w-]+)-portlet-preferences\\.xml$");
+	private static final Pattern
+		_INCORRECT_DEFAULT_PREFERENCES_FILE_NAME_PATTERN = RegexUtil.getPattern(
+			"/default-([\\w-]+)-portlet-preferences\\.xml$");
 
 	private class PortletPreferenceElementComparator extends ElementComparator {
 

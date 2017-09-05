@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -38,7 +39,7 @@ public class JavaSystemExceptionCheck extends BaseFileCheck {
 	}
 
 	private String _fixSystemExceptions(String content) {
-		Matcher matcher = _throwsSystemExceptionPattern.matcher(content);
+		Matcher matcher = _THROWS_SYSTEM_EXCEPTION_PATTERN.matcher(content);
 
 		if (!matcher.find()) {
 			return content;
@@ -78,7 +79,8 @@ public class JavaSystemExceptionCheck extends BaseFileCheck {
 			StringUtil.replaceFirst(content, match, replacement));
 	}
 
-	private final Pattern _throwsSystemExceptionPattern = Pattern.compile(
-		"(\n\t+.*)throws(.*) SystemException(.*)( \\{|;\n)");
+	private static final Pattern _THROWS_SYSTEM_EXCEPTION_PATTERN =
+		RegexUtil.getPattern(
+			"(\n\t+.*)throws(.*) SystemException(.*)( \\{|;\n)");
 
 }

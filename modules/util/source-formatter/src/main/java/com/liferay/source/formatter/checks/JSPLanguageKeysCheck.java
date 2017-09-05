@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.source.formatter.util.RegexUtil;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -26,20 +28,25 @@ public class JSPLanguageKeysCheck extends LanguageKeysCheck {
 	@Override
 	protected List<Pattern> getPatterns() {
 		return Arrays.asList(
-			languageKeyPattern, _taglibLanguageKeyPattern1,
-			_taglibLanguageKeyPattern2, _taglibLanguageKeyPattern3);
+			languageKeyPattern, _TAGLIB_LANGUAGE_KEY_PATTERN_1,
+			_TAGLIB_LANGUAGE_KEY_PATTERN_2, _TAGLIB_LANGUAGE_KEY_PATTERN_3);
 	}
 
-	private final Pattern _taglibLanguageKeyPattern1 = Pattern.compile(
-		"(?:confirmation|label|(?:M|m)essage|message key|names|title)=\"[^A-Z" +
-			"<=%\\[\\s]+\"");
-	private final Pattern _taglibLanguageKeyPattern2 = Pattern.compile(
-		"(aui:)(?:input|select|field-wrapper) (?!.*label=(?:'|\").*(?:'|\").*" +
-			"name=\"[^<=%\\[\\s]+\")(?!.*name=\"[^<=%\\[\\s]+\".*title=" +
-				"(?:'|\").+(?:'|\"))(?!.*name=\"[^<=%\\[\\s]+\".*type=\"" +
-					"hidden\").*name=\"([^<=%\\[\\s]+)\"");
-	private final Pattern _taglibLanguageKeyPattern3 = Pattern.compile(
-		"(liferay-ui:)(?:input-resource) .*id=\"([^<=%\\[\\s]+)\"(?!.*title=" +
-			"(?:'|\").+(?:'|\"))");
+	private static final Pattern _TAGLIB_LANGUAGE_KEY_PATTERN_1 =
+		RegexUtil.getPattern(
+			"(?:confirmation|label|(?:M|m)essage|message key|names|title)=" +
+				"\"[^A-Z<=%\\[\\s]+\"");
+
+	private static final Pattern _TAGLIB_LANGUAGE_KEY_PATTERN_2 =
+		RegexUtil.getPattern(
+			"(aui:)(?:input|select|field-wrapper) (?!.*label=(?:'|\").*" +
+				"(?:'|\").*name=\"[^<=%\\[\\s]+\")(?!.*name=\"[^<=%\\[\\s]+" +
+					"\".*title=(?:'|\").+(?:'|\"))(?!.*name=\"[^<=%\\[\\s]+" +
+						"\".*type=\"hidden\").*name=\"([^<=%\\[\\s]+)\"");
+
+	private static final Pattern _TAGLIB_LANGUAGE_KEY_PATTERN_3 =
+		RegexUtil.getPattern(
+			"(liferay-ui:)(?:input-resource) .*id=\"([^<=%\\[\\s]+)\"(?!.*" +
+				"title=(?:'|\").+(?:'|\"))");
 
 }

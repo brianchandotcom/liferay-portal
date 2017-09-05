@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.source.formatter.JSPImportsFormatter;
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,11 +36,11 @@ public class JSPImportsCheck extends BaseFileCheck {
 		throws Exception {
 
 		content = _formatJSPImportsOrTaglibs(
-			fileName, content, _compressedJSPImportPattern,
-			_uncompressedJSPImportPattern);
+			fileName, content, _COMPRESSED_JSP_IMPORT_PATTERN,
+			_UNCOMPRESSED_JSP_IMPORT_PATTERN);
 		content = _formatJSPImportsOrTaglibs(
-			fileName, content, _compressedJSPTaglibPattern,
-			_uncompressedJSPTaglibPattern);
+			fileName, content, _COMPRESSED_JSP_TAGLIB_PATTERN,
+			_UNCOMPRESSED_JSP_TAGLIB_PATTERN);
 
 		if ((isPortalSource() || isSubrepository()) &&
 			content.contains("page import=") &&
@@ -59,7 +60,7 @@ public class JSPImportsCheck extends BaseFileCheck {
 		content = JSPSourceUtil.compressImportsOrTaglibs(
 			fileName, content, "<%@ taglib uri=");
 
-		Matcher matcher = _incorrectTaglibPattern.matcher(content);
+		Matcher matcher = _INCORRECT_TAGLIB_PATTERN.matcher(content);
 
 		return matcher.replaceAll("$1$3 $2");
 	}
@@ -105,15 +106,21 @@ public class JSPImportsCheck extends BaseFileCheck {
 		return importsFormatter.format(content, uncompressedPattern);
 	}
 
-	private final Pattern _compressedJSPImportPattern = Pattern.compile(
-		"(<.*\n*(?:page|tag) import=\".*>\n*)+", Pattern.MULTILINE);
-	private final Pattern _compressedJSPTaglibPattern = Pattern.compile(
-		"(<.*\n*taglib uri=\".*>\n*)+", Pattern.MULTILINE);
-	private final Pattern _incorrectTaglibPattern = Pattern.compile(
-		"(taglib )(prefix=\".+\") (uri=\".*\")");
-	private final Pattern _uncompressedJSPImportPattern = Pattern.compile(
-		"(<.*(?:page|tag) import=\".*>\n*)+", Pattern.MULTILINE);
-	private final Pattern _uncompressedJSPTaglibPattern = Pattern.compile(
-		"(<.*taglib uri=\".*>\n*)+", Pattern.MULTILINE);
+	private static final Pattern _COMPRESSED_JSP_IMPORT_PATTERN =
+		RegexUtil.getPattern(
+			"(<.*\n*(?:page|tag) import=\".*>\n*)+", Pattern.MULTILINE);
+
+	private static final Pattern _COMPRESSED_JSP_TAGLIB_PATTERN =
+		RegexUtil.getPattern("(<.*\n*taglib uri=\".*>\n*)+", Pattern.MULTILINE);
+
+	private static final Pattern _INCORRECT_TAGLIB_PATTERN =
+		RegexUtil.getPattern("(taglib )(prefix=\".+\") (uri=\".*\")");
+
+	private static final Pattern _UNCOMPRESSED_JSP_IMPORT_PATTERN =
+		RegexUtil.getPattern(
+			"(<.*(?:page|tag) import=\".*>\n*)+", Pattern.MULTILINE);
+
+	private static final Pattern _UNCOMPRESSED_JSP_TAGLIB_PATTERN =
+		RegexUtil.getPattern("(<.*taglib uri=\".*>\n*)+", Pattern.MULTILINE);
 
 }

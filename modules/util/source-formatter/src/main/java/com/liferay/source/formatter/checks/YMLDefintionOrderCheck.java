@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.io.Serializable;
 
@@ -41,7 +42,7 @@ public class YMLDefintionOrderCheck extends BaseFileCheck {
 	private List<String> _getDefinitions(String content) {
 		List<String> definitions = new ArrayList<>();
 
-		Matcher matcher = _definitionPattern.matcher(content);
+		Matcher matcher = _DEFINITION_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			definitions.add(matcher.group());
@@ -78,7 +79,7 @@ public class YMLDefintionOrderCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _definitionPattern = Pattern.compile(
+	private static final Pattern _DEFINITION_PATTERN = RegexUtil.getPattern(
 		"^[a-z].*:.*(\n|\\Z)(([^a-z\n].*)?(\n|\\Z))*", Pattern.MULTILINE);
 
 	private static class DefinitionComparator
@@ -106,7 +107,7 @@ public class YMLDefintionOrderCheck extends BaseFileCheck {
 		}
 
 		private String _getDefinitionKey(String definition) {
-			Matcher matcher = _definitionKeyPattern.matcher(definition);
+			Matcher matcher = _DEFINITION_KEY_PATTERN.matcher(definition);
 
 			if (matcher.find()) {
 				return matcher.group(1);
@@ -122,6 +123,9 @@ public class YMLDefintionOrderCheck extends BaseFileCheck {
 
 			return -1;
 		}
+
+		private static final Pattern _DEFINITION_KEY_PATTERN =
+			RegexUtil.getPattern("(.*?):");
 
 		private static final Map<String, Integer>
 			_travisDefinitionKeyWeightMap = new HashMap<>();
@@ -141,7 +145,6 @@ public class YMLDefintionOrderCheck extends BaseFileCheck {
 			_travisDefinitionKeyWeightMap.put("script", 4);
 		}
 
-		private final Pattern _definitionKeyPattern = Pattern.compile("(.*?):");
 		private final String _fileName;
 
 	}

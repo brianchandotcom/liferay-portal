@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.portal.tools.JavaImportsFormatter;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -42,7 +43,7 @@ public class JavaImportsCheck extends BaseFileCheck {
 
 		content = StringUtil.replace(content, ";\n/**", ";\n\n/**");
 
-		Matcher matcher = _importMethodPattern.matcher(content);
+		Matcher matcher = _IMPORT_METHOD_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			StringBundler sb = new StringBundler();
@@ -60,7 +61,7 @@ public class JavaImportsCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _importMethodPattern = Pattern.compile(
+	private static final Pattern _IMPORT_METHOD_PATTERN = RegexUtil.getPattern(
 		"\nimport static ((.*\\.(Assert|(Power)?Mockito))\\.[a-z]\\w*);");
 
 }

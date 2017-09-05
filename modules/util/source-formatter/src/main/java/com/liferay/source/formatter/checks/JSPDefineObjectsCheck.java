@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -98,8 +99,8 @@ public class JSPDefineObjectsCheck extends BaseFileCheck {
 	}
 
 	private String _formatDefineObjects(String content) {
-		Matcher matcher = _missingEmptyLineBetweenDefineOjbectsPattern.matcher(
-			content);
+		Matcher matcher =
+			_MISSING_EMPTY_LINE_BETWEEN_DEFINE_OJBECTS_PATTERN.matcher(content);
 
 		if (matcher.find()) {
 			content = StringUtil.replaceFirst(
@@ -108,7 +109,7 @@ public class JSPDefineObjectsCheck extends BaseFileCheck {
 
 		String previousDefineObjectsTag = null;
 
-		matcher = _defineObjectsPattern.matcher(content);
+		matcher = _DEFINE_OBJECTS_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			String defineObjectsTag = matcher.group(1);
@@ -129,6 +130,9 @@ public class JSPDefineObjectsCheck extends BaseFileCheck {
 
 		return content;
 	}
+
+	private static final Pattern _DEFINE_OBJECTS_PATTERN = RegexUtil.getPattern(
+		"\n\t*(<.*:defineObjects />)(\n|$)");
 
 	private static final String[][] _LIFERAY_FRONTEND_DEFINE_OBJECTS = {
 		new String[] {"String", "currentURL", "currentURLObj.toString()"},
@@ -184,6 +188,11 @@ public class JSPDefineObjectsCheck extends BaseFileCheck {
 			"long", "portletGroupId", "themeDisplay.getScopeGroupId()"
 		}
 	};
+
+	private static final Pattern
+		_MISSING_EMPTY_LINE_BETWEEN_DEFINE_OJBECTS_PATTERN =
+			RegexUtil.getPattern(
+				"<.*:defineObjects />\n<.*:defineObjects />\n");
 
 	private static final String[][] _PORTLET_DEFINE_OBJECTS = {
 		new String[] {
@@ -259,10 +268,5 @@ public class JSPDefineObjectsCheck extends BaseFileCheck {
 				"JAVAX_PORTLET_RESPONSE)"
 		}
 	};
-
-	private final Pattern _defineObjectsPattern = Pattern.compile(
-		"\n\t*(<.*:defineObjects />)(\n|$)");
-	private final Pattern _missingEmptyLineBetweenDefineOjbectsPattern =
-		Pattern.compile("<.*:defineObjects />\n<.*:defineObjects />\n");
 
 }

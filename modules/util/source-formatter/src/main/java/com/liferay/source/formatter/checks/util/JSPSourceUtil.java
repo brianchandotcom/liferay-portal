@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.util.FileUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.io.File;
 
@@ -144,7 +145,7 @@ public class JSPSourceUtil {
 				continue;
 			}
 
-			Matcher matcher = _includeFilePattern.matcher(content);
+			Matcher matcher = _INCLUDE_FILE_PATTERN.matcher(content);
 
 			while (matcher.find()) {
 				content = StringUtil.replaceFirst(
@@ -178,7 +179,7 @@ public class JSPSourceUtil {
 				break;
 			}
 
-			Matcher matcher = _javaCodeTagPattern.matcher(content);
+			Matcher matcher = _JAVA_CODE_TAG_PATTERN.matcher(content);
 
 			if (matcher.find() && (matcher.start() == x)) {
 				continue;
@@ -202,7 +203,7 @@ public class JSPSourceUtil {
 				includeFileName = StringPool.SLASH + includeFileName;
 			}
 
-			matcher = _jspIncludeFilePattern.matcher(includeFileName);
+			matcher = _JSP_INCLUDE_FILE_PATTERN.matcher(includeFileName);
 
 			if (!matcher.find()) {
 				throw new RuntimeException(
@@ -301,12 +302,12 @@ public class JSPSourceUtil {
 
 		String s = content.substring(pos);
 
-		Matcher matcher = _javaEndTagPattern.matcher(s);
+		Matcher matcher = _JAVA_END_TAG_PATTERN.matcher(s);
 
 		if (matcher.find()) {
 			s = s.substring(0, matcher.start());
 
-			matcher = _javaStartTagPattern.matcher(s);
+			matcher = _JAVA_START_TAG_PATTERN.matcher(s);
 
 			if (!matcher.find()) {
 				return true;
@@ -340,15 +341,19 @@ public class JSPSourceUtil {
 		return false;
 	}
 
-	private static final Pattern _includeFilePattern = Pattern.compile(
+	private static final Pattern _INCLUDE_FILE_PATTERN = RegexUtil.getPattern(
 		"\\s*@\\s*include\\s*file=['\"](.*)['\"]");
-	private static final Pattern _javaCodeTagPattern = Pattern.compile(
+
+	private static final Pattern _JAVA_CODE_TAG_PATTERN = RegexUtil.getPattern(
 		"<%\\s*[@=\n]");
-	private static final Pattern _javaEndTagPattern = Pattern.compile(
+
+	private static final Pattern _JAVA_END_TAG_PATTERN = RegexUtil.getPattern(
 		"[\n\t]%>(\n|\\Z)");
-	private static final Pattern _javaStartTagPattern = Pattern.compile(
+
+	private static final Pattern _JAVA_START_TAG_PATTERN = RegexUtil.getPattern(
 		"[\n\t]<%\\!?\n");
-	private static final Pattern _jspIncludeFilePattern = Pattern.compile(
-		"/.*\\.(jsp[f]?|svg|tag)");
+
+	private static final Pattern _JSP_INCLUDE_FILE_PATTERN =
+		RegexUtil.getPattern("/.*\\.(jsp[f]?|svg|tag)");
 
 }

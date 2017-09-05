@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -32,7 +33,7 @@ public abstract class DefinitionKeysCheck extends BaseFileCheck {
 	protected List<String> getDefinitions(String content) {
 		List<String> definitions = new ArrayList<>();
 
-		Matcher matcher = _definitionPattern.matcher(content);
+		Matcher matcher = _DEFINITION_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			String definition = matcher.group();
@@ -77,7 +78,7 @@ public abstract class DefinitionKeysCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _definitionPattern = Pattern.compile(
+	private static final Pattern _DEFINITION_PATTERN = RegexUtil.getPattern(
 		"^([A-Za-z-]+?)[:=](\n|[\\s\\S]*?)(?=(\n[A-Za-z-]+?[:=])|\\Z)",
 		Pattern.MULTILINE);
 

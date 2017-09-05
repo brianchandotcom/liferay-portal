@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -40,7 +41,7 @@ public class JavaAssertEqualsCheck extends BaseFileCheck {
 	}
 
 	private String _formatAssertEquals(String content) {
-		Matcher matcher = _assertEqualsPattern.matcher(content);
+		Matcher matcher = _ASSERT_EQUALS_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			String parameters = StringUtil.trim(matcher.group(1));
@@ -79,7 +80,7 @@ public class JavaAssertEqualsCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _assertEqualsPattern = Pattern.compile(
+	private static final Pattern _ASSERT_EQUALS_PATTERN = RegexUtil.getPattern(
 		"Assert\\.assertEquals\\((.*?)\\);\n", Pattern.DOTALL);
 
 }

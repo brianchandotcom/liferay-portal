@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.parser.JavaSignature;
 import com.liferay.source.formatter.parser.JavaTerm;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -74,7 +75,7 @@ public class JavaReturnStatementCheck extends BaseJavaTermCheck {
 
 		String returnType = signature.getReturnType();
 
-		Matcher matcher1 = _returnPattern.matcher(javaTermContent);
+		Matcher matcher1 = _RETURN_PATTERN.matcher(javaTermContent);
 
 		while (matcher1.find()) {
 			String returnStatement = matcher1.group();
@@ -113,7 +114,7 @@ public class JavaReturnStatementCheck extends BaseJavaTermCheck {
 					matcher1.group(2), "true", "false");
 			}
 
-			Matcher matcher2 = _relationalOperatorPattern.matcher(
+			Matcher matcher2 = _RELATIONAL_OPERATOR_PATTERN.matcher(
 				returnStatement);
 
 			if (matcher2.find() &&
@@ -128,9 +129,10 @@ public class JavaReturnStatementCheck extends BaseJavaTermCheck {
 		return javaTermContent;
 	}
 
-	private final Pattern _relationalOperatorPattern = Pattern.compile(
-		".* (==|!=|<|>|>=|<=)[ \n].*");
-	private final Pattern _returnPattern = Pattern.compile(
+	private static final Pattern _RELATIONAL_OPERATOR_PATTERN =
+		RegexUtil.getPattern(".* (==|!=|<|>|>=|<=)[ \n].*");
+
+	private static final Pattern _RETURN_PATTERN = RegexUtil.getPattern(
 		"\n(\t+)return (.*?);\n", Pattern.DOTALL);
 
 }

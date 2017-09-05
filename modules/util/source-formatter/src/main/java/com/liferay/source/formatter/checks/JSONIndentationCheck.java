@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.util.RegexUtil;
 
 /**
  * @author Hugo Huijser
@@ -74,7 +75,7 @@ public class JSONIndentationCheck extends BaseFileCheck {
 
 		int leadingTabCount = getLeadingTabCount(line);
 
-		if (line.matches("\t*[\\}\\]].*")) {
+		if (RegexUtil.matches(line, "\t*[\\}\\]].*")) {
 			expectedTabCount -= 1;
 		}
 

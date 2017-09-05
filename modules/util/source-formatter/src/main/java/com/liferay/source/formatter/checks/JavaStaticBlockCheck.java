@@ -20,6 +20,7 @@ import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaStaticBlock;
 import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.parser.JavaVariable;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.List;
 
@@ -129,7 +130,8 @@ public class JavaStaticBlockCheck extends BaseJavaTermCheck {
 			if (javaTerm.isStatic() &&
 				((javaTerm instanceof JavaClass) ||
 				 (javaTerm instanceof JavaVariable)) &&
-				staticBlockContent.matches(
+				RegexUtil.matches(
+					staticBlockContent,
 					"[\\s\\S]*\\W" + javaTerm.getName() + "\\W[\\s\\S]*")) {
 
 				return javaTerm;

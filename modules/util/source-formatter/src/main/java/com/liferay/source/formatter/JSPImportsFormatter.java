@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.BaseImportsFormatter;
 import com.liferay.portal.tools.ImportPackage;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.io.IOException;
 
@@ -33,13 +34,13 @@ public class JSPImportsFormatter extends BaseImportsFormatter {
 
 	@Override
 	protected ImportPackage createImportPackage(String line) {
-		Matcher matcher = _jspImportPattern.matcher(line);
+		Matcher matcher = _JSP_IMPORT_PATTERN.matcher(line);
 
 		if (matcher.find()) {
 			return new ImportPackage(matcher.group(1), false, line);
 		}
 
-		matcher = _jspTaglibPattern.matcher(line);
+		matcher = _JSP_TAGLIB_PATTERN.matcher(line);
 
 		if (matcher.find()) {
 			return new ImportPackage(matcher.group(1), false, line);
@@ -77,9 +78,10 @@ public class JSPImportsFormatter extends BaseImportsFormatter {
 		return null;
 	}
 
-	private static final Pattern _jspImportPattern = Pattern.compile(
+	private static final Pattern _JSP_IMPORT_PATTERN = RegexUtil.getPattern(
 		"import=\"([^\\s\"]+)\"");
-	private static final Pattern _jspTaglibPattern = Pattern.compile(
+
+	private static final Pattern _JSP_TAGLIB_PATTERN = RegexUtil.getPattern(
 		"uri=\"http://([^\\s\"]+)\"");
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.source.formatter.util.RegexUtil;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,18 +32,19 @@ public class MarkdownStylingCheck extends BaseFileCheck {
 	}
 
 	private String _formatHeaders(String content) {
-		Matcher matcher = _incorrectHeaderNotationPattern.matcher(content);
+		Matcher matcher = _INCORRECT_HEADER_NOTATION_PATTERN.matcher(content);
 
 		content = matcher.replaceAll("$1$2$4");
 
-		matcher = _boldHeaderPattern.matcher(content);
+		matcher = _BOLD_HEADER_PATTERN.matcher(content);
 
 		return matcher.replaceAll("$1$2$4$6");
 	}
 
-	private final Pattern _boldHeaderPattern = Pattern.compile(
+	private static final Pattern _BOLD_HEADER_PATTERN = RegexUtil.getPattern(
 		"(\\A|\n)(#+ ?)(\\*+)([^\\*\n]+)(\\*+)(\n)");
-	private final Pattern _incorrectHeaderNotationPattern = Pattern.compile(
-		"(\\A|\n)(#+[^#\n]+)(#+)(\n)");
+
+	private static final Pattern _INCORRECT_HEADER_NOTATION_PATTERN =
+		RegexUtil.getPattern("(\\A|\n)(#+[^#\n]+)(#+)(\n)");
 
 }

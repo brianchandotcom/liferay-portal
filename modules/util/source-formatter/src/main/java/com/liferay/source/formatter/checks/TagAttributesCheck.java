@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -228,12 +229,12 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 			return false;
 		}
 
-		Matcher matcher = _attributeNamePattern.matcher(attributeName);
+		Matcher matcher = _ATTRIBUTE_NAME_PATTERN.matcher(attributeName);
 
 		return matcher.matches();
 	}
 
-	private static final Pattern _attributeNamePattern = Pattern.compile(
+	private static final Pattern _ATTRIBUTE_NAME_PATTERN = RegexUtil.getPattern(
 		"[a-z]+[-_a-zA-Z0-9]*");
 
 }

@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -58,7 +59,7 @@ public class JSPEmptyLinesCheck extends EmptyLinesCheck {
 
 	private String _fixMissingEmptyLines(String content) {
 		while (true) {
-			Matcher matcher = _missingEmptyLinePattern1.matcher(content);
+			Matcher matcher = _MISSING_EMPTY_LINE_PATTERN_1.matcher(content);
 
 			if (matcher.find()) {
 				content = StringUtil.replaceFirst(
@@ -67,7 +68,7 @@ public class JSPEmptyLinesCheck extends EmptyLinesCheck {
 				continue;
 			}
 
-			matcher = _missingEmptyLinePattern2.matcher(content);
+			matcher = _MISSING_EMPTY_LINE_PATTERN_2.matcher(content);
 
 			if (matcher.find()) {
 				content = StringUtil.replaceFirst(
@@ -76,7 +77,7 @@ public class JSPEmptyLinesCheck extends EmptyLinesCheck {
 				continue;
 			}
 
-			matcher = _missingEmptyLinePattern3.matcher(content);
+			matcher = _MISSING_EMPTY_LINE_PATTERN_3.matcher(content);
 
 			if (matcher.find()) {
 				content = StringUtil.replaceFirst(
@@ -85,7 +86,7 @@ public class JSPEmptyLinesCheck extends EmptyLinesCheck {
 				continue;
 			}
 
-			matcher = _missingEmptyLinePattern4.matcher(content);
+			matcher = _MISSING_EMPTY_LINE_PATTERN_4.matcher(content);
 
 			if (matcher.find()) {
 				content = StringUtil.replaceFirst(
@@ -102,7 +103,7 @@ public class JSPEmptyLinesCheck extends EmptyLinesCheck {
 
 	private String _fixRedundantEmptyLines(String content) {
 		while (true) {
-			Matcher matcher = _redundantEmptyLinePattern1.matcher(content);
+			Matcher matcher = _REDUNDANT_EMPTY_LINE_PATTERN_1.matcher(content);
 
 			if (matcher.find()) {
 				content = StringUtil.replaceFirst(
@@ -111,7 +112,7 @@ public class JSPEmptyLinesCheck extends EmptyLinesCheck {
 				continue;
 			}
 
-			matcher = _redundantEmptyLinePattern2.matcher(content);
+			matcher = _REDUNDANT_EMPTY_LINE_PATTERN_2.matcher(content);
 
 			if (matcher.find()) {
 				content = StringUtil.replaceFirst(
@@ -126,17 +127,22 @@ public class JSPEmptyLinesCheck extends EmptyLinesCheck {
 		return content;
 	}
 
-	private final Pattern _missingEmptyLinePattern1 = Pattern.compile(
-		"[\t\n](--)?%>\n\t*(?!-->)\\S");
-	private final Pattern _missingEmptyLinePattern2 = Pattern.compile(
-		"\\S(?!<\\!--)\n\t*<%(--)?\n");
-	private final Pattern _missingEmptyLinePattern3 = Pattern.compile(
-		"[\t\n]<%\n\t*//");
-	private final Pattern _missingEmptyLinePattern4 = Pattern.compile(
-		"[\t\n]//.*\n\t*%>\n");
-	private final Pattern _redundantEmptyLinePattern1 = Pattern.compile(
-		"[\n\t]<%\n\n(\t*)[^/\n\t]");
-	private final Pattern _redundantEmptyLinePattern2 = Pattern.compile(
-		"[\n\t][^/\n\t].*\n\n\t*%>");
+	private static final Pattern _MISSING_EMPTY_LINE_PATTERN_1 =
+		RegexUtil.getPattern("[\t\n](--)?%>\n\t*(?!-->)\\S");
+
+	private static final Pattern _MISSING_EMPTY_LINE_PATTERN_2 =
+		RegexUtil.getPattern("\\S(?!<\\!--)\n\t*<%(--)?\n");
+
+	private static final Pattern _MISSING_EMPTY_LINE_PATTERN_3 =
+		RegexUtil.getPattern("[\t\n]<%\n\t*//");
+
+	private static final Pattern _MISSING_EMPTY_LINE_PATTERN_4 =
+		RegexUtil.getPattern("[\t\n]//.*\n\t*%>\n");
+
+	private static final Pattern _REDUNDANT_EMPTY_LINE_PATTERN_1 =
+		RegexUtil.getPattern("[\n\t]<%\n\n(\t*)[^/\n\t]");
+
+	private static final Pattern _REDUNDANT_EMPTY_LINE_PATTERN_2 =
+		RegexUtil.getPattern("[\n\t][^/\n\t].*\n\n\t*%>");
 
 }

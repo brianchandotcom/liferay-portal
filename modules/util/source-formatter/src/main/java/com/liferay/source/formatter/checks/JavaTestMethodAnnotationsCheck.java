@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaTerm;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -75,7 +76,7 @@ public class JavaTestMethodAnnotationsCheck extends BaseJavaTermCheck {
 
 		String methodName = javaTerm.getName();
 
-		Pattern pattern = Pattern.compile(requiredMethodNameRegex);
+		Pattern pattern = RegexUtil.getPattern(requiredMethodNameRegex);
 
 		Matcher matcher = pattern.matcher(methodName);
 

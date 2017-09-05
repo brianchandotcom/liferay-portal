@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -45,7 +46,7 @@ public class XMLFriendlyURLRoutesFileCheck extends BaseFileCheck {
 	}
 
 	private void _checkDTDVersion(String fileName, String content) {
-		Matcher matcher = _doctypePattern.matcher(content);
+		Matcher matcher = _DOCTYPE_PATTERN.matcher(content);
 
 		if (!matcher.find()) {
 			return;
@@ -94,9 +95,9 @@ public class XMLFriendlyURLRoutesFileCheck extends BaseFileCheck {
 		return releaseVersion.substring(0, pos);
 	}
 
-	private final Pattern _doctypePattern = Pattern.compile(
-		"DOCTYPE routes PUBLIC \"-//Liferay//DTD Friendly URL Routes " +
-			"([0-9]+)\\.[0-9]+\\.[0-9]+//EN\" \"http://www.liferay.com/dtd/" +
-				"liferay-friendly-url-routes_([0-9]+)_[0-9]+_[0-9]+\\.dtd");
+	private static final Pattern _DOCTYPE_PATTERN = RegexUtil.getPattern(
+		"DOCTYPE routes PUBLIC \"-//Liferay//DTD Friendly URL Routes ([0-9]+)" +
+			"\\.[0-9]+\\.[0-9]+//EN\" \"http://www.liferay.com/dtd/liferay-" +
+				"friendly-url-routes_([0-9]+)_[0-9]+_[0-9]+\\.dtd");
 
 }

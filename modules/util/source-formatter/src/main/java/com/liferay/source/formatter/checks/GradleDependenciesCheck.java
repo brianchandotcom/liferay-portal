@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.io.File;
 import java.io.Serializable;
@@ -49,7 +50,7 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 	}
 
 	private String _formatDependencies(String absolutePath, String content) {
-		Matcher matcher = _dependenciesPattern.matcher(content);
+		Matcher matcher = _DEPENDENCIES_PATTERN.matcher(content);
 
 		if (!matcher.find()) {
 			return content;
@@ -57,7 +58,7 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 
 		String dependencies = matcher.group(1);
 
-		matcher = _incorrectWhitespacePattern.matcher(dependencies);
+		matcher = _INCORRECT_WHITESPACE_PATTERN.matcher(dependencies);
 
 		while (matcher.find()) {
 			if (!ToolsUtil.isInsideQuotes(dependencies, matcher.start())) {
@@ -86,7 +87,7 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 				continue;
 			}
 
-			matcher = _incorrectGroupNameVersionPattern.matcher(dependency);
+			matcher = _INCORRECT_GROUP_NAME_VERSION_PATTERN.matcher(dependency);
 
 			if (matcher.find()) {
 				StringBundler sb = new StringBundler(9);
@@ -161,13 +162,18 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 		return file.exists();
 	}
 
-	private final Pattern _dependenciesPattern = Pattern.compile(
+	private static final Pattern _DEPENDENCIES_PATTERN = RegexUtil.getPattern(
 		"^dependencies \\{(((?![\\{\\}]).)+?\n)\\}",
 		Pattern.DOTALL | Pattern.MULTILINE);
-	private final Pattern _incorrectGroupNameVersionPattern = Pattern.compile(
-		"(^[^\\s]+)\\s+\"([^:]+?):([^:]+?):([^\"]+?)\"(.*?)", Pattern.DOTALL);
-	private final Pattern _incorrectWhitespacePattern = Pattern.compile(
-		":[^ \n]");
+
+	private static final Pattern _INCORRECT_GROUP_NAME_VERSION_PATTERN =
+		RegexUtil.getPattern(
+			"(^[^\\s]+)\\s+\"([^:]+?):([^:]+?):([^\"]+?)\"(.*?)",
+			Pattern.DOTALL);
+
+	private static final Pattern _INCORRECT_WHITESPACE_PATTERN =
+		RegexUtil.getPattern(":[^ \n]");
+
 	private String _projectPathPrefix;
 
 	private class GradleDependencyComparator
@@ -200,7 +206,7 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 		private String _getPropertyValue(
 			String dependency, String propertyName) {
 
-			Pattern pattern = Pattern.compile(
+			Pattern pattern = RegexUtil.getPattern(
 				".* " + propertyName + ": \"(.+?)\"");
 
 			Matcher matcher = pattern.matcher(dependency);

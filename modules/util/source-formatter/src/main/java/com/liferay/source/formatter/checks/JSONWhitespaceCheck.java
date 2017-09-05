@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -43,7 +44,7 @@ public class JSONWhitespaceCheck extends WhitespaceCheck {
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				while (true) {
-					Matcher matcher = _leadingSpacesPattern.matcher(line);
+					Matcher matcher = _LEADING_SPACES_PATTERN.matcher(line);
 
 					if (!matcher.find()) {
 						break;
@@ -67,7 +68,7 @@ public class JSONWhitespaceCheck extends WhitespaceCheck {
 			content = content.substring(0, content.length() - 1);
 		}
 
-		Matcher matcher = _missingWhitespacePattern.matcher(content);
+		Matcher matcher = _MISSING_WHITESPACE_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			if (!ToolsUtil.isInsideQuotes(content, matcher.start())) {
@@ -79,8 +80,10 @@ public class JSONWhitespaceCheck extends WhitespaceCheck {
 		return super.doProcess(fileName, absolutePath, content);
 	}
 
-	private final Pattern _leadingSpacesPattern = Pattern.compile(
+	private static final Pattern _LEADING_SPACES_PATTERN = RegexUtil.getPattern(
 		"(^[\t ]*)(  )([^ ])");
-	private final Pattern _missingWhitespacePattern = Pattern.compile(":\\S");
+
+	private static final Pattern _MISSING_WHITESPACE_PATTERN =
+		RegexUtil.getPattern(":\\S");
 
 }

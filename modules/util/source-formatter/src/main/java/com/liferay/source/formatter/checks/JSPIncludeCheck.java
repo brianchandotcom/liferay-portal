@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -64,7 +65,7 @@ public class JSPIncludeCheck extends BaseFileCheck {
 			}
 		}
 
-		Matcher matcher = _includeFilePattern.matcher(content);
+		Matcher matcher = _INCLUDE_FILE_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			content = StringUtil.replaceFirst(
@@ -75,7 +76,7 @@ public class JSPIncludeCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _includeFilePattern = Pattern.compile(
+	private static final Pattern _INCLUDE_FILE_PATTERN = RegexUtil.getPattern(
 		"\\s*@\\s*include\\s*file=['\"](.*)['\"]");
 
 }

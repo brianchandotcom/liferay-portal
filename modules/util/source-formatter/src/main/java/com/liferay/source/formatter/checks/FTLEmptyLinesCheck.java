@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -40,14 +41,15 @@ public class FTLEmptyLinesCheck extends EmptyLinesCheck {
 	}
 
 	private String _fixMissingEmptyLinesAroundComments(String content) {
-		Matcher matcher = _missingEmptyLineAfterCommentPattern.matcher(content);
+		Matcher matcher = _MISSING_EMPTY_LINE_AFTER_COMMENT_PATTERN.matcher(
+			content);
 
 		if (matcher.find()) {
 			return StringUtil.replaceFirst(
 				content, "\n", "\n\n", matcher.start());
 		}
 
-		matcher = _missingEmptyLineBeforeCommentPattern.matcher(content);
+		matcher = _MISSING_EMPTY_LINE_BEFORE_COMMENT_PATTERN.matcher(content);
 
 		if (matcher.find()) {
 			return StringUtil.replaceFirst(
@@ -57,9 +59,10 @@ public class FTLEmptyLinesCheck extends EmptyLinesCheck {
 		return content;
 	}
 
-	private final Pattern _missingEmptyLineAfterCommentPattern =
-		Pattern.compile("-->\n[^\n]");
-	private final Pattern _missingEmptyLineBeforeCommentPattern =
-		Pattern.compile("[^\n]\n\t*<#--");
+	private static final Pattern _MISSING_EMPTY_LINE_AFTER_COMMENT_PATTERN =
+		RegexUtil.getPattern("-->\n[^\n]");
+
+	private static final Pattern _MISSING_EMPTY_LINE_BEFORE_COMMENT_PATTERN =
+		RegexUtil.getPattern("[^\n]\n\t*<#--");
 
 }

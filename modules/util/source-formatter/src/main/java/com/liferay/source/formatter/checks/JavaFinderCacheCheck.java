@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -48,7 +49,8 @@ public class JavaFinderCacheCheck extends BaseFileCheck {
 	private void _checkFinderCacheInterfaceMethod(
 		String fileName, String content) {
 
-		Matcher matcher = _fetchByPrimaryKeysMethodPattern.matcher(content);
+		Matcher matcher = _FETCH_BY_PRIMARY_KEYS_METHOD_PATTERN.matcher(
+			content);
 
 		if (!matcher.find()) {
 			addMessage(
@@ -73,7 +75,8 @@ public class JavaFinderCacheCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _fetchByPrimaryKeysMethodPattern = Pattern.compile(
-		"@Override\n\tpublic Map<(.+)> fetchByPrimaryKeys\\(");
+	private static final Pattern _FETCH_BY_PRIMARY_KEYS_METHOD_PATTERN =
+		RegexUtil.getPattern(
+			"@Override\n\tpublic Map<(.+)> fetchByPrimaryKeys\\(");
 
 }

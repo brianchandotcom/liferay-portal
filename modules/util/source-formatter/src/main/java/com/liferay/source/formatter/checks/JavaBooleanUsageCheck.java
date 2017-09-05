@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -37,7 +38,7 @@ public class JavaBooleanUsageCheck extends BaseFileCheck {
 	}
 
 	private String _fixIncorrectBooleanUse(String content, String methodName) {
-		Pattern pattern = Pattern.compile(
+		Pattern pattern = RegexUtil.getPattern(
 			"\\." + methodName + "\\((.*?)\\);\n", Pattern.DOTALL);
 
 		Matcher matcher = pattern.matcher(content);

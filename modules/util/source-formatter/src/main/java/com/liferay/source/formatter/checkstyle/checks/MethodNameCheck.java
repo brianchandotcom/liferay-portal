@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
@@ -58,7 +59,7 @@ public class MethodNameCheck
 	private void _checkDoMethodName(DetailAST detailAST) {
 		String name = _getMethodName(detailAST);
 
-		Matcher matcher = _doMethodNamePattern.matcher(name);
+		Matcher matcher = _DO_METHOD_NAME_PATTERN.matcher(name);
 
 		if (!matcher.find()) {
 			return;
@@ -92,10 +93,11 @@ public class MethodNameCheck
 		return nameAST.getText();
 	}
 
+	private static final Pattern _DO_METHOD_NAME_PATTERN = RegexUtil.getPattern(
+		"^_do([A-Z])(.*)$");
+
 	private static final String _MSG_RENAME_METHOD = "method.rename";
 
 	private boolean _checkDoMethodName;
-	private final Pattern _doMethodNamePattern = Pattern.compile(
-		"^_do([A-Z])(.*)$");
 
 }

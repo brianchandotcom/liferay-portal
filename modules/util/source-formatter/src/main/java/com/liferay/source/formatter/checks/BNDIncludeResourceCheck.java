@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ImportPackage;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.Comparator;
 import java.util.regex.Matcher;
@@ -44,7 +45,7 @@ public class BNDIncludeResourceCheck extends BaseFileCheck {
 	}
 
 	private String _formatIncludeResource(String content) {
-		Matcher matcher = _includeResourcePattern.matcher(content);
+		Matcher matcher = _INCLUDE_RESOURCE_PATTERN.matcher(content);
 
 		if (!matcher.find()) {
 			return content;
@@ -52,7 +53,7 @@ public class BNDIncludeResourceCheck extends BaseFileCheck {
 
 		String includeResources = matcher.group();
 
-		matcher = _includeResourceJarPattern.matcher(includeResources);
+		matcher = _INCLUDE_RESOURCE_JAR_PATTERN.matcher(includeResources);
 
 		if (matcher.find()) {
 			String replacement = StringUtil.replace(
@@ -62,7 +63,7 @@ public class BNDIncludeResourceCheck extends BaseFileCheck {
 		}
 
 		for (String includeResourceDir : _INCLUDE_RESOURCE_DIRS_BLACKLIST) {
-			Pattern includeResourceDirPattern = Pattern.compile(
+			Pattern includeResourceDirPattern = RegexUtil.getPattern(
 				"(\t|: )" + includeResourceDir + "(,\\\\\n|\n||\\Z)");
 
 			Matcher matcher2 = includeResourceDirPattern.matcher(
@@ -150,11 +151,13 @@ public class BNDIncludeResourceCheck extends BaseFileCheck {
 		"WEB-INF=src/main/resources/WEB-INF"
 	};
 
-	private final Pattern _includeResourceJarPattern = Pattern.compile(
-		"-[0-9\\.]+\\.jar");
-	private final Pattern _includeResourcePattern = Pattern.compile(
-		"^(-includeresource|Include-Resource):[\\s\\S]*?([^\\\\]\n|\\Z)",
-		Pattern.MULTILINE);
+	private static final Pattern _INCLUDE_RESOURCE_JAR_PATTERN =
+		RegexUtil.getPattern("-[0-9\\.]+\\.jar");
+
+	private static final Pattern _INCLUDE_RESOURCE_PATTERN =
+		RegexUtil.getPattern(
+			"^(-includeresource|Include-Resource):[\\s\\S]*?([^\\\\]\n|\\Z)",
+			Pattern.MULTILINE);
 
 	private static class IncludeResourceComparator
 		implements Comparator<String> {

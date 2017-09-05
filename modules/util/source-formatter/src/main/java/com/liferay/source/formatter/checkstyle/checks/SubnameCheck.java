@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
+import com.liferay.source.formatter.util.RegexUtil;
+
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
@@ -39,13 +41,13 @@ public class SubnameCheck extends AbstractCheck {
 		String name = nameAST.getText();
 
 		if (detailAST.getType() == TokenTypes.METHOD_DEF) {
-			if (name.matches("(^_?sub|.*Sub)[A-Z].*") &&
+			if (RegexUtil.matches(name, "(^_?sub|.*Sub)[A-Z].*") &&
 				!AnnotationUtility.containsAnnotation(detailAST, "Override")) {
 
 				log(detailAST.getLineNo(), _MSG_METHOD_INVALID_NAME, name);
 			}
 		}
-		else if (name.matches("^_?sub[A-Z].*")) {
+		else if (RegexUtil.matches(name, "^_?sub[A-Z].*")) {
 			if (detailAST.getType() == TokenTypes.PARAMETER_DEF) {
 				log(detailAST.getLineNo(), _MSG_PARAMETER_INVALID_NAME, name);
 			}

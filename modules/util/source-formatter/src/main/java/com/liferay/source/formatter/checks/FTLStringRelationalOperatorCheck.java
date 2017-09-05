@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,7 +36,7 @@ public class FTLStringRelationalOperatorCheck extends BaseFileCheck {
 	}
 
 	private String _formatStringRelationalOperations(String content) {
-		Matcher matcher = _stringRelationalOperationPattern.matcher(content);
+		Matcher matcher = _STRING_RELATIONAL_OPERATION_PATTERN.matcher(content);
 
 		if (!matcher.find()) {
 			return content;
@@ -86,7 +87,7 @@ public class FTLStringRelationalOperatorCheck extends BaseFileCheck {
 			content, match, replacement, matcher.start());
 	}
 
-	private final Pattern _stringRelationalOperationPattern = Pattern.compile(
-		"(\\W)([\\w.]+) ([!=]=) \"(\\w*)\"(.)");
+	private static final Pattern _STRING_RELATIONAL_OPERATION_PATTERN =
+		RegexUtil.getPattern("(\\W)([\\w.]+) ([!=]=) \"(\\w*)\"(.)");
 
 }

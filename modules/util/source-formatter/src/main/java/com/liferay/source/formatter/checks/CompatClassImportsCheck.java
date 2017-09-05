@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.source.formatter.util.RegexUtil;
+
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -49,7 +51,7 @@ public class CompatClassImportsCheck extends BaseFileCheck {
 			String compatClassName = entry.getKey();
 			String extendedClassName = entry.getValue();
 
-			Pattern pattern = Pattern.compile(extendedClassName + "\\W");
+			Pattern pattern = RegexUtil.getPattern(extendedClassName + "\\W");
 
 			while (true) {
 				Matcher matcher = pattern.matcher(content);

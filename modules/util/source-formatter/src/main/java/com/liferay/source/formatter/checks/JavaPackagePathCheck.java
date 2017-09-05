@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.BNDSettings;
 import com.liferay.source.formatter.checks.util.BNDSourceUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 /**
  * @author Hugo Huijser
@@ -106,7 +107,9 @@ public class JavaPackagePathCheck extends BaseFileCheck {
 			return;
 		}
 
-		if (packagePath.matches(".*\\.internal\\.([\\w.]+\\.)?impl")) {
+		if (RegexUtil.matches(
+				packagePath, ".*\\.internal\\.([\\w.]+\\.)?impl")) {
+
 			addMessage(
 				fileName, "Do not use 'impl' inside 'internal', see LPS-70113");
 		}

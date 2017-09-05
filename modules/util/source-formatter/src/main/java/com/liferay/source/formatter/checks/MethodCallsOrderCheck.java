@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -53,7 +54,7 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 			sb.append(variableName);
 			sb.append("\\W[\\s\\S]*");
 
-			if (content.matches(sb.toString())) {
+			if (RegexUtil.matches(content, sb.toString())) {
 				return true;
 			}
 
@@ -65,7 +66,7 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 			sb.append(variableTypeRegex);
 			sb.append("[\\s\\S]*");
 
-			if (content.matches(sb.toString())) {
+			if (RegexUtil.matches(content, sb.toString())) {
 				return true;
 			}
 		}
@@ -76,7 +77,7 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 	private String _sortMethodCall(
 		String content, String methodName, String... variableTypeRegexStrings) {
 
-		Pattern codeBlockPattern = Pattern.compile(
+		Pattern codeBlockPattern = RegexUtil.getPattern(
 			"(\t+(\\w*)\\." + methodName + "\\(\\s*\".*?\\);\n)+",
 			Pattern.DOTALL);
 
@@ -95,7 +96,7 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 
 			String codeBlock = codeBlockMatcher.group();
 
-			Pattern singleLineMethodCallPattern = Pattern.compile(
+			Pattern singleLineMethodCallPattern = RegexUtil.getPattern(
 				"\t*\\w*\\." + methodName + "\\((.*?)\\);\n", Pattern.DOTALL);
 
 			Matcher singleLineMatcher = singleLineMethodCallPattern.matcher(
@@ -145,6 +146,9 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private static final Pattern _MULTIPLE_LINE_PARAMETER_NAME_PATTERN =
+		RegexUtil.getPattern("\" \\+\n\t+\"");
+
 	private class PutOrSetParameterNameComparator
 		extends NaturalOrderStringComparator {
 
@@ -161,22 +165,22 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 				return 0;
 			}
 
-			Matcher matcher = _multipleLineParameterNamePattern.matcher(
+			Matcher matcher = _MULTIPLE_LINE_PARAMETER_NAME_PATTERN.matcher(
 				putOrSetParameterName1);
 
 			if (matcher.find()) {
 				putOrSetParameterName1 = matcher.replaceAll(StringPool.BLANK);
 			}
 
-			matcher = _multipleLineParameterNamePattern.matcher(
+			matcher = _MULTIPLE_LINE_PARAMETER_NAME_PATTERN.matcher(
 				putOrSetParameterName2);
 
 			if (matcher.find()) {
 				putOrSetParameterName2 = matcher.replaceAll(StringPool.BLANK);
 			}
 
-			if (putOrSetParameterName1.matches("\".*\"") &&
-				putOrSetParameterName2.matches("\".*\"")) {
+			if (RegexUtil.matches(putOrSetParameterName1, "\".*\"") &&
+				RegexUtil.matches(putOrSetParameterName2, "\".*\"")) {
 
 				String strippedQuotes1 = putOrSetParameterName1.substring(
 					1, putOrSetParameterName1.length() - 1);
@@ -197,9 +201,6 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 
 			return value;
 		}
-
-		private final Pattern _multipleLineParameterNamePattern =
-			Pattern.compile("\" \\+\n\t+\"");
 
 	}
 

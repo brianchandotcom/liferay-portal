@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,28 +33,29 @@ public class CSSEmptyLinesCheck extends BaseFileCheck {
 	}
 
 	private String _fixEmptyLines(String content) {
-		Matcher matcher = _emptyLineAfterOpenCurlyBrace.matcher(content);
+		Matcher matcher = _EMPTY_LINE_AFTER_OPEN_CURLY_BRACE_PATTERN.matcher(
+			content);
 
 		if (matcher.find()) {
 			return StringUtil.replaceFirst(
 				content, "\n\n", "\n", matcher.start());
 		}
 
-		matcher = _emptyLineBeforeCloseCurlyBrace.matcher(content);
+		matcher = _EMPTY_LINE_BEFORE_CLOSE_CURLY_BRACE_PATTERN.matcher(content);
 
 		if (matcher.find()) {
 			return StringUtil.replaceFirst(
 				content, "\n\n", "\n", matcher.start());
 		}
 
-		matcher = _missingEmptyLineAfterComment.matcher(content);
+		matcher = _MISSING_EMPTY_LINE_AFTER_COMMENT_PATTERN.matcher(content);
 
 		if (matcher.find()) {
 			return StringUtil.replaceFirst(
 				content, "\n", "\n\n", matcher.start());
 		}
 
-		matcher = _missingEmptyLineBeforeComment.matcher(content);
+		matcher = _MISSING_EMPTY_LINE_BEFORE_COMMENT_PATTERN.matcher(content);
 
 		if (matcher.find()) {
 			return StringUtil.replaceFirst(
@@ -63,13 +65,16 @@ public class CSSEmptyLinesCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _emptyLineAfterOpenCurlyBrace = Pattern.compile(
-		"\\{\n\n\t*(?!/\\* --)\\S");
-	private final Pattern _emptyLineBeforeCloseCurlyBrace = Pattern.compile(
-		"\n\n\t*\\}");
-	private final Pattern _missingEmptyLineAfterComment = Pattern.compile(
-		"-- \\*/\n.");
-	private final Pattern _missingEmptyLineBeforeComment = Pattern.compile(
-		".\n\t*/\\* --");
+	private static final Pattern _EMPTY_LINE_AFTER_OPEN_CURLY_BRACE_PATTERN =
+		RegexUtil.getPattern("\\{\n\n\t*(?!/\\* --)\\S");
+
+	private static final Pattern _EMPTY_LINE_BEFORE_CLOSE_CURLY_BRACE_PATTERN =
+		RegexUtil.getPattern("\n\n\t*\\}");
+
+	private static final Pattern _MISSING_EMPTY_LINE_AFTER_COMMENT_PATTERN =
+		RegexUtil.getPattern("-- \\*/\n.");
+
+	private static final Pattern _MISSING_EMPTY_LINE_BEFORE_COMMENT_PATTERN =
+		RegexUtil.getPattern(".\n\t*/\\* --");
 
 }

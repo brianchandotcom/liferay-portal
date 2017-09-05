@@ -22,6 +22,7 @@ import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaConstructor;
 import com.liferay.source.formatter.parser.JavaTerm;
+import com.liferay.source.formatter.util.RegexUtil;
 import com.liferay.source.formatter.util.ThreadSafeSortedClassLibraryBuilder;
 
 import com.thoughtworks.qdox.JavaProjectBuilder;
@@ -69,7 +70,7 @@ public class JavaRedundantConstructorCheck extends BaseJavaTermCheck {
 			return constructorContent;
 		}
 
-		Pattern pattern = Pattern.compile(
+		Pattern pattern = RegexUtil.getPattern(
 			"class " + javaClass.getName() + "[ \t\n]+extends");
 
 		Matcher matcher = pattern.matcher(javaClass.getContent());

@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -40,7 +41,7 @@ public class JSPLogFileNameCheck extends BaseFileCheck {
 	}
 
 	private String _formatLogFileName(String absolutePath, String content) {
-		Matcher matcher = _logPattern.matcher(content);
+		Matcher matcher = _LOG_PATTERN.matcher(content);
 
 		if (!matcher.find()) {
 			return content;
@@ -94,7 +95,7 @@ public class JSPLogFileNameCheck extends BaseFileCheck {
 			"Log _log = LogFactoryUtil.getLog(\"" + logFileName + "\")");
 	}
 
-	private final Pattern _logPattern = Pattern.compile(
+	private static final Pattern _LOG_PATTERN = RegexUtil.getPattern(
 		"Log _log = LogFactoryUtil\\.getLog\\(\"(.*?)\"\\)");
 
 }

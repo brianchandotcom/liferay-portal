@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.source.formatter.BNDImportsFormatter;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,18 +33,20 @@ public class BNDImportsCheck extends BaseFileCheck {
 		throws Exception {
 
 		_checkWildcardImports(
-			fileName, absolutePath, content, _conditionalPackagePattern);
+			fileName, absolutePath, content, _CONDITIONAL_PACKAGE_PATTERN);
 		_checkWildcardImports(
-			fileName, absolutePath, content, _exportContentsPattern);
-		_checkWildcardImports(fileName, absolutePath, content, _exportsPattern);
+			fileName, absolutePath, content, _EXPORT_CONTENTS_PATTERN);
+		_checkWildcardImports(
+			fileName, absolutePath, content, _EXPORTS_PATTERN);
 
 		ImportsFormatter importsFormatter = new BNDImportsFormatter();
 
-		content = importsFormatter.format(content, _conditionalPackagePattern);
-		content = importsFormatter.format(content, _exportContentsPattern);
-		content = importsFormatter.format(content, _exportsPattern);
-		content = importsFormatter.format(content, _importsPattern);
-		content = importsFormatter.format(content, _privatePackagesPattern);
+		content = importsFormatter.format(
+			content, _CONDITIONAL_PACKAGE_PATTERN);
+		content = importsFormatter.format(content, _EXPORT_CONTENTS_PATTERN);
+		content = importsFormatter.format(content, _EXPORTS_PATTERN);
+		content = importsFormatter.format(content, _IMPORTS_PATTERN);
+		content = importsFormatter.format(content, _PRIVATE_PACKAGES_PATTERN);
 
 		if (!absolutePath.contains("-test/")) {
 			content = _removeInternalPrivatePackages(content);
@@ -73,7 +76,7 @@ public class BNDImportsCheck extends BaseFileCheck {
 
 		String imports = matcher.group(3);
 
-		matcher = _wilcardImportPattern.matcher(imports);
+		matcher = _WILDCARD_IMPORT_PATTERN.matcher(imports);
 
 		while (matcher.find()) {
 			String wildcardImport = matcher.group(1);
@@ -88,7 +91,7 @@ public class BNDImportsCheck extends BaseFileCheck {
 	}
 
 	private String _removeInternalPrivatePackages(String content) {
-		Matcher matcher = _privatePackagesPattern.matcher(content);
+		Matcher matcher = _PRIVATE_PACKAGES_PATTERN.matcher(content);
 
 		if (!matcher.find()) {
 			return content;
@@ -96,7 +99,7 @@ public class BNDImportsCheck extends BaseFileCheck {
 
 		String match = matcher.group();
 
-		matcher = _internalPrivatePackagePattern.matcher(match);
+		matcher = _INTERNAL_PRIVATE_PACKAGE_PATTERN.matcher(match);
 
 		if (!matcher.find()) {
 			return content;
@@ -108,24 +111,33 @@ public class BNDImportsCheck extends BaseFileCheck {
 		return StringUtil.replace(content, match, replacement);
 	}
 
-	private final Pattern _conditionalPackagePattern = Pattern.compile(
-		"\n-conditionalpackage:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
-		Pattern.DOTALL | Pattern.MULTILINE);
-	private final Pattern _exportContentsPattern = Pattern.compile(
-		"\n-exportcontents:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
-		Pattern.DOTALL | Pattern.MULTILINE);
-	private final Pattern _exportsPattern = Pattern.compile(
+	private static final Pattern _CONDITIONAL_PACKAGE_PATTERN =
+		RegexUtil.getPattern(
+			"\n-conditionalpackage:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
+			Pattern.DOTALL | Pattern.MULTILINE);
+
+	private static final Pattern _EXPORT_CONTENTS_PATTERN =
+		RegexUtil.getPattern(
+			"\n-exportcontents:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
+			Pattern.DOTALL | Pattern.MULTILINE);
+
+	private static final Pattern _EXPORTS_PATTERN = RegexUtil.getPattern(
 		"\nExport-Package:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
 		Pattern.DOTALL | Pattern.MULTILINE);
-	private final Pattern _importsPattern = Pattern.compile(
+
+	private static final Pattern _IMPORTS_PATTERN = RegexUtil.getPattern(
 		"\nImport-Package:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
 		Pattern.DOTALL | Pattern.MULTILINE);
-	private final Pattern _internalPrivatePackagePattern = Pattern.compile(
-		"(,\\\\\n\t|: )(.*\\.internal.*)(\n|\\Z)");
-	private final Pattern _privatePackagesPattern = Pattern.compile(
-		"\nPrivate-Package:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
-		Pattern.DOTALL | Pattern.MULTILINE);
-	private final Pattern _wilcardImportPattern = Pattern.compile(
-		"(\\S+\\*)(,\\\\\n|\n|\\Z)");
+
+	private static final Pattern _INTERNAL_PRIVATE_PACKAGE_PATTERN =
+		RegexUtil.getPattern("(,\\\\\n\t|: )(.*\\.internal.*)(\n|\\Z)");
+
+	private static final Pattern _PRIVATE_PACKAGES_PATTERN =
+		RegexUtil.getPattern(
+			"\nPrivate-Package:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
+			Pattern.DOTALL | Pattern.MULTILINE);
+
+	private static final Pattern _WILDCARD_IMPORT_PATTERN =
+		RegexUtil.getPattern("(\\S+\\*)(,\\\\\n|\n|\\Z)");
 
 }

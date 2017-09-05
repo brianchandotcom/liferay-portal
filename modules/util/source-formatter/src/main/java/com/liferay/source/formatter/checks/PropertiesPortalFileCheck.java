@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.PropertiesSourceProcessor;
 import com.liferay.source.formatter.util.FileUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.io.File;
 
@@ -45,7 +46,7 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 		throws Exception {
 
 		if (((isPortalSource() || isSubrepository()) &&
-			 fileName.matches(".*portal-legacy-.*\\.properties")) ||
+			 RegexUtil.matches(fileName, ".*portal-legacy-.*\\.properties")) ||
 			(!isPortalSource() && !isSubrepository() &&
 			 fileName.endsWith("portal.properties"))) {
 

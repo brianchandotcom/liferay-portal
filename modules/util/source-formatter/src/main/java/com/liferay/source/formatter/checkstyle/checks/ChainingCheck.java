@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -180,12 +181,12 @@ public class ChainingCheck extends AbstractCheck {
 	private String _getVariableType(DetailAST detailAST, String variableName) {
 		List<DetailAST> definitionASTList = new ArrayList<>();
 
-		if (variableName.matches("_[a-z].*")) {
+		if (RegexUtil.matches(variableName, "_[a-z].*")) {
 			definitionASTList = DetailASTUtil.getAllChildTokens(
 				_getClassAST(detailAST), true, TokenTypes.PARAMETER_DEF,
 				TokenTypes.VARIABLE_DEF);
 		}
-		else if (variableName.matches("[a-z].*")) {
+		else if (RegexUtil.matches(variableName, "[a-z].*")) {
 			definitionASTList = DetailASTUtil.getAllChildTokens(
 				detailAST, true, TokenTypes.PARAMETER_DEF,
 				TokenTypes.VARIABLE_DEF);
@@ -248,7 +249,7 @@ public class ChainingCheck extends AbstractCheck {
 		String classOrVariableName = nameAST.getText();
 
 		for (String allowedClassName : _allowedClassNames) {
-			if (classOrVariableName.matches(allowedClassName)) {
+			if (RegexUtil.matches(classOrVariableName, allowedClassName)) {
 				return true;
 			}
 		}
@@ -257,7 +258,7 @@ public class ChainingCheck extends AbstractCheck {
 
 		if (variableType != null) {
 			for (String allowedVariableTypeName : _allowedVariableTypeNames) {
-				if (variableType.matches(allowedVariableTypeName)) {
+				if (RegexUtil.matches(variableType, allowedVariableTypeName)) {
 					return true;
 				}
 			}

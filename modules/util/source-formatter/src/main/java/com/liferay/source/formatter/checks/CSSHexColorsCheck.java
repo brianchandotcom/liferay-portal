@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,7 +34,7 @@ public class CSSHexColorsCheck extends BaseFileCheck {
 	}
 
 	private String _fixHexColors(String content) {
-		Matcher matcher = _hexColorPattern.matcher(content);
+		Matcher matcher = _HEX_COLOR_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			String hexColor = matcher.group(1);
@@ -49,7 +50,7 @@ public class CSSHexColorsCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _hexColorPattern = Pattern.compile(
+	private static final Pattern _HEX_COLOR_PATTERN = RegexUtil.getPattern(
 		"#([0-9a-f]+)[\\( ;,]");
 
 }

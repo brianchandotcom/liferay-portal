@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.util.ArrayList;
@@ -312,7 +313,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 			return false;
 		}
 
-		Pattern pattern = Pattern.compile(regex);
+		Pattern pattern = RegexUtil.getPattern(regex);
 
 		Matcher matcher = pattern.matcher(content);
 
@@ -358,7 +359,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 			return content;
 		}
 
-		Matcher matcher = _compressedJSPImportPattern.matcher(content);
+		Matcher matcher = _COMPRESSED_JSP_IMPORT_PATTERN.matcher(content);
 
 		if (!matcher.find()) {
 			return content;
@@ -432,7 +433,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 		String fileName, String content, Set<String> checkedFileNames,
 		Set<String> includeFileNames) {
 
-		Matcher matcher = _taglibURIPattern.matcher(content);
+		Matcher matcher = _TAGLIB_URI_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			String regex =
@@ -501,6 +502,10 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private static final Pattern _COMPRESSED_JSP_IMPORT_PATTERN =
+		RegexUtil.getPattern(
+			"(<.*\n*(?:page|tag) import=\".*>\n*)+", Pattern.MULTILINE);
+
 	private static final String[] _PORTLET_DEFINE_OBJECTS_PROPERTIES = {
 		"actionRequest", "actionResponse", "eventRequest", "eventResponse",
 		"liferayPortletRequest", "liferayPortletResponse", "portletConfig",
@@ -509,14 +514,13 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 		"renderRequest", "resourceRequest", "resourceResponse"
 	};
 
+	private static final Pattern _TAGLIB_URI_PATTERN = RegexUtil.getPattern(
+		"<%@\\s+taglib uri=.* prefix=\"(.*?)\" %>");
+
 	private static final String _UNUSED_VARIABLES_EXCLUDES =
 		"jsp.unused.variables.excludes";
 
 	private List<String> _allFileNames;
-	private final Pattern _compressedJSPImportPattern = Pattern.compile(
-		"(<.*\n*(?:page|tag) import=\".*>\n*)+", Pattern.MULTILINE);
 	private Map<String, String> _contentsMap;
-	private final Pattern _taglibURIPattern = Pattern.compile(
-		"<%@\\s+taglib uri=.* prefix=\"(.*?)\" %>");
 
 }

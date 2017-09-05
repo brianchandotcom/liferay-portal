@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.lang.reflect.Field;
 
@@ -45,7 +46,7 @@ public class StringUtilCheck extends BaseFileCheck {
 	private void _checkReplaceCalls(String fileName, String content)
 		throws Exception {
 
-		Matcher matcher = _stringUtilReplacePattern.matcher(content);
+		Matcher matcher = _STRING_UTIL_REPLACE_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			if (ToolsUtil.isInsideQuotes(content, matcher.start())) {
@@ -61,7 +62,7 @@ public class StringUtilCheck extends BaseFileCheck {
 
 			String secondParameter = parametersList.get(1);
 
-			Matcher singleLengthMatcher = _singleLengthStringPattern.matcher(
+			Matcher singleLengthMatcher = _SINGLE_LENGTH_STRING_PATTERN.matcher(
 				secondParameter);
 
 			if (!singleLengthMatcher.find()) {
@@ -96,9 +97,12 @@ public class StringUtilCheck extends BaseFileCheck {
 		}
 	}
 
-	private final Pattern _singleLengthStringPattern = Pattern.compile(
-		"^(\".\"|StringPool\\.([A-Z_]+))$");
-	private final Pattern _stringUtilReplacePattern = Pattern.compile(
-		"StringUtil\\.(replace(First|Last)?)\\((.*?)\\);\n", Pattern.DOTALL);
+	private static final Pattern _SINGLE_LENGTH_STRING_PATTERN =
+		RegexUtil.getPattern("^(\".\"|StringPool\\.([A-Z_]+))$");
+
+	private static final Pattern _STRING_UTIL_REPLACE_PATTERN =
+		RegexUtil.getPattern(
+			"StringUtil\\.(replace(First|Last)?)\\((.*?)\\);\n",
+			Pattern.DOTALL);
 
 }

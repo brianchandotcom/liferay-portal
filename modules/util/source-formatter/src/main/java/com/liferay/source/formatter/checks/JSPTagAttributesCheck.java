@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 import com.liferay.source.formatter.util.ThreadSafeSortedClassLibraryBuilder;
 
@@ -82,8 +83,8 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 			String line, String tagName, String attributeAndValue)
 		throws Exception {
 
-		if (attributeAndValue.matches(
-				".*=\"<%= Boolean\\.(FALSE|TRUE) %>\".*")) {
+		if (RegexUtil.matches(
+				attributeAndValue, ".*=\"<%= Boolean\\.(FALSE|TRUE) %>\".*")) {
 
 			String newAttributeAndValue = StringUtil.replace(
 				attributeAndValue,
@@ -155,7 +156,7 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 			}
 		}
 
-		if (!attributeAndValue.matches(".*=\"(false|true)\".*")) {
+		if (!RegexUtil.matches(attributeAndValue, ".*=\"(false|true)\".*")) {
 			return line;
 		}
 
@@ -181,7 +182,7 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 	protected String sortHTMLTagAttributes(
 		String line, String value, String attributeAndValue) {
 
-		if (!value.matches("([-a-z0-9]+ )+[-a-z0-9]+")) {
+		if (!RegexUtil.matches(value, "([-a-z0-9]+ )+[-a-z0-9]+")) {
 			return line;
 		}
 
@@ -207,7 +208,7 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 			String fileName, String content)
 		throws Exception {
 
-		Matcher matcher = _multilineTagPattern.matcher(content);
+		Matcher matcher = _MULTILINE_TAG_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			char beforeClosingTagChar = content.charAt(matcher.start(2) - 1);
@@ -265,12 +266,12 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 
 				String trimmedLine = StringUtil.trimLeading(line);
 
-				if (trimmedLine.matches("<\\w+ .*>.*")) {
+				if (RegexUtil.matches(trimmedLine, "<\\w+ .*>.*")) {
 					line = formatTagAttributes(
 						fileName, line, trimmedLine, lineCount, false);
 				}
 
-				Matcher matcher = _jspTaglibPattern.matcher(line);
+				Matcher matcher = _JSP_TAGLIB_PATTERN.matcher(line);
 
 				while (matcher.find()) {
 					line = formatTagAttributes(
@@ -496,11 +497,13 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 		return false;
 	}
 
-	private List<String> _allFileNames;
-	private final Pattern _jspTaglibPattern = Pattern.compile(
+	private static final Pattern _JSP_TAGLIB_PATTERN = RegexUtil.getPattern(
 		"<[-\\w]+:[-\\w]+ .");
-	private final Pattern _multilineTagPattern = Pattern.compile(
+
+	private static final Pattern _MULTILINE_TAG_PATTERN = RegexUtil.getPattern(
 		"(\\s+)<[-\\w]+:[-\\w]+\n.*?(/?>)(\n|$)", Pattern.DOTALL);
+
+	private List<String> _allFileNames;
 	private Set<String> _primitiveTagAttributeDataTypes;
 	private Map<String, JavaClass> _tagJavaClassesMap;
 

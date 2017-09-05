@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.io.File;
 
@@ -50,7 +51,7 @@ public class XMLBuildFileCheck extends BaseFileCheck {
 	}
 
 	private void _checkBuildProjectName(String fileName, Document document) {
-		Matcher matcher = _projectNamePattern.matcher(fileName);
+		Matcher matcher = _PROJECT_NAME_PATTERN.matcher(fileName);
 
 		if (!matcher.find()) {
 			return;
@@ -112,7 +113,7 @@ public class XMLBuildFileCheck extends BaseFileCheck {
 
 		String dirPath = fileName.substring(0, pos + 1);
 
-		Matcher matcher = _importFilePattern.matcher(content);
+		Matcher matcher = _IMPORT_FILE_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			String importFileName = matcher.group(1);
@@ -286,9 +287,10 @@ public class XMLBuildFileCheck extends BaseFileCheck {
 		return targetNames;
 	}
 
-	private final Pattern _importFilePattern = Pattern.compile(
+	private static final Pattern _IMPORT_FILE_PATTERN = RegexUtil.getPattern(
 		"<import file=\"(.*)\"");
-	private final Pattern _projectNamePattern = Pattern.compile(
+
+	private static final Pattern _PROJECT_NAME_PATTERN = RegexUtil.getPattern(
 		"/(\\w*-(ext|hooks|layouttpl|portlet|theme|web))/build\\.xml$");
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.source.formatter.util.RegexUtil;
+
 /**
  * @author Hugo Huijser
  */
@@ -24,7 +26,8 @@ public class IncorrectFileLocationCheck extends BaseFileCheck {
 		String fileName, String absolutePath, String content) {
 
 		if (!fileName.endsWith(".java") &&
-			absolutePath.matches(".*\\/modules\\/.*\\/src\\/.*\\/java\\/.*")) {
+			RegexUtil.matches(
+				absolutePath, ".*\\/modules\\/.*\\/src\\/.*\\/java\\/.*")) {
 
 			addMessage(
 				fileName, "Only *.java files are allowed in /src/*/java/");

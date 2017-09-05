@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,7 +31,7 @@ public class JSONPropertyOrderCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		Matcher matcher = _incorrectLineBreakPattern.matcher(content);
+		Matcher matcher = _INCORRECT_LINE_BREAK_PATTERN.matcher(content);
 
 		if (matcher.find()) {
 			addMessage(
@@ -56,14 +57,14 @@ public class JSONPropertyOrderCheck extends BaseFileCheck {
 				break;
 			}
 
-			Pattern pattern2 = Pattern.compile(
+			Pattern pattern2 = RegexUtil.getPattern(
 				"((\n|^)" + tabs + "[^\n\t]*\\{\n" + tabs +
 					"\t[^\n\t][\\s\\S]*?)\n" + tabs + "\\}");
 
 			Matcher matcher2 = pattern2.matcher(content);
 
 			while (matcher2.find()) {
-				Pattern pattern3 = Pattern.compile(
+				Pattern pattern3 = RegexUtil.getPattern(
 					"(" + tabs + "\t[^\n\t]*?([^\\{\\[]|([\\{\\[]\n[\\s\\S]*?" +
 						"\n" + tabs + "\t[\\}\\]]))),?(\n|$)");
 
@@ -97,7 +98,7 @@ public class JSONPropertyOrderCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _incorrectLineBreakPattern = Pattern.compile(
-		"\t[\\}\\]]{2}");
+	private static final Pattern _INCORRECT_LINE_BREAK_PATTERN =
+		RegexUtil.getPattern("\t[\\}\\]]{2}");
 
 }

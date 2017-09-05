@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,14 +33,14 @@ public class JavaExceptionCheck extends BaseFileCheck {
 
 		content = _renameVariableNames(content);
 		content = _sortExceptions(
-			content, _throwsExceptionsPattern, StringPool.COMMA_AND_SPACE);
-		content = _sortExceptions(content, _catchExceptionsPattern, " |");
+			content, _THROWS_EXCEPTIONS_PATTERN, StringPool.COMMA_AND_SPACE);
+		content = _sortExceptions(content, _CATCH_EXCEPTIONS_PATTERN, " |");
 
 		return content;
 	}
 
 	private String _renameVariableNames(String content) {
-		Matcher matcher = _catchExceptionPattern.matcher(content);
+		Matcher matcher = _CATCH_EXCEPTION_PATTERN.matcher(content);
 
 		int skipVariableNameCheckEndPos = -1;
 
@@ -57,14 +58,15 @@ public class JavaExceptionCheck extends BaseFileCheck {
 
 			if (!exceptionClassName.contains(" |")) {
 				Matcher lowerCaseNumberOrPeriodMatcher =
-					_lowerCaseNumberOrPeriodPattern.matcher(exceptionClassName);
+					_LOWER_CASE_NUMBER_OR_PERIOD_PATTERN.matcher(
+						exceptionClassName);
 
 				expectedExceptionVariableName = StringUtil.toLowerCase(
 					lowerCaseNumberOrPeriodMatcher.replaceAll(
 						StringPool.BLANK));
 			}
 
-			Pattern exceptionVariablePattern = Pattern.compile(
+			Pattern exceptionVariablePattern = RegexUtil.getPattern(
 				"(\\W)" + exceptionVariableName + "(\\W)");
 
 			int pos = content.indexOf(
@@ -140,14 +142,19 @@ public class JavaExceptionCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _catchExceptionPattern = Pattern.compile(
-		"\n(\t+)catch \\((final )?(.+Exception) (.+)\\) \\{\n");
-	private final Pattern _catchExceptionsPattern = Pattern.compile(
-		"\n\t+catch \\((?:final )?((\\w+Exception \\|\\s+)+" +
-			"(\\w+Exception\\s+))\\w+\\)");
-	private final Pattern _lowerCaseNumberOrPeriodPattern = Pattern.compile(
-		"[a-z0-9.]");
-	private final Pattern _throwsExceptionsPattern = Pattern.compile(
-		"\\sthrows ([\\s\\w,]*)[;{]\n");
+	private static final Pattern _CATCH_EXCEPTION_PATTERN =
+		RegexUtil.getPattern(
+			"\n(\t+)catch \\((final )?(.+Exception) (.+)\\) \\{\n");
+
+	private static final Pattern _CATCH_EXCEPTIONS_PATTERN =
+		RegexUtil.getPattern(
+			"\n\t+catch \\((?:final )?((\\w+Exception \\|\\s+)+" +
+				"(\\w+Exception\\s+))\\w+\\)");
+
+	private static final Pattern _LOWER_CASE_NUMBER_OR_PERIOD_PATTERN =
+		RegexUtil.getPattern("[a-z0-9.]");
+
+	private static final Pattern _THROWS_EXCEPTIONS_PATTERN =
+		RegexUtil.getPattern("\\sthrows ([\\s\\w,]*)[;{]\n");
 
 }

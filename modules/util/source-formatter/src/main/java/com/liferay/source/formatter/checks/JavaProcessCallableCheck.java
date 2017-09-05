@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.source.formatter.util.RegexUtil;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,7 +30,7 @@ public class JavaProcessCallableCheck extends BaseFileCheck {
 
 		// LPS-33070
 
-		Matcher matcher = _processCallablePattern.matcher(content);
+		Matcher matcher = _PROCESS_CALLABLE_PATTERN.matcher(content);
 
 		if (!matcher.find() ||
 			content.contains("private static final long serialVersionUID")) {
@@ -43,7 +45,7 @@ public class JavaProcessCallableCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _processCallablePattern = Pattern.compile(
-		"implements ProcessCallable\\b");
+	private static final Pattern _PROCESS_CALLABLE_PATTERN =
+		RegexUtil.getPattern("implements ProcessCallable\\b");
 
 }

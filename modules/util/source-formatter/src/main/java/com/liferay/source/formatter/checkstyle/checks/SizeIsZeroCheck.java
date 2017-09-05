@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -92,7 +93,7 @@ public class SizeIsZeroCheck extends AbstractCheck {
 
 			String typeName = typeNameAST.getText();
 
-			if (typeName.matches(".*(Collection|List|Map|Set)")) {
+			if (RegexUtil.matches(typeName, ".*(Collection|List|Map|Set)")) {
 				log(
 					methodCallAST.getLineNo(), _MSG_USE_METHOD,
 					variableName + ".isEmpty()");

@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,7 +35,7 @@ public class StringBundlerCheck extends BaseFileCheck {
 	}
 
 	private String _formatStringBundler(String fileName, String content) {
-		Matcher matcher = _sbAppendPattern.matcher(content);
+		Matcher matcher = _SB_APPEND_PATTERN.matcher(content);
 
 		matcherIteration:
 		while (matcher.find()) {
@@ -61,7 +62,7 @@ public class StringBundlerCheck extends BaseFileCheck {
 				getLineCount(content, matcher.start(1)));
 		}
 
-		matcher = _sbAppendWithStartingSpacePattern.matcher(content);
+		matcher = _SB_APPEND_WITH_STARTING_SPACE_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			String firstLine = matcher.group(1);
@@ -89,10 +90,12 @@ public class StringBundlerCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _sbAppendPattern = Pattern.compile(
+	private static final Pattern _SB_APPEND_PATTERN = RegexUtil.getPattern(
 		"\\s*\\w*(sb|SB)[0-9]?\\.append\\(\\s*(\\S.*?)\\);\n", Pattern.DOTALL);
-	private final Pattern _sbAppendWithStartingSpacePattern = Pattern.compile(
-		"\n(\t*\\w*(sb|SB)[0-9]?\\.append\\(\".*\"\\);)\n\\s*\\w*(sb|SB)" +
-			"[0-9]?\\.append\\(\" .*\"\\);\n");
+
+	private static final Pattern _SB_APPEND_WITH_STARTING_SPACE_PATTERN =
+		RegexUtil.getPattern(
+			"\n(\t*\\w*(sb|SB)[0-9]?\\.append\\(\".*\"\\);)\n\\s*\\w*(sb|SB)" +
+				"[0-9]?\\.append\\(\" .*\"\\);\n");
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -43,7 +44,7 @@ public class JavaServiceUtilCheck extends BaseFileCheck {
 			return content;
 		}
 
-		Matcher matcher = _serviceUtilPattern.matcher(content);
+		Matcher matcher = _SERVICE_UTIL_PATTERN.matcher(content);
 
 		if (matcher.find()) {
 			addMessage(
@@ -55,7 +56,7 @@ public class JavaServiceUtilCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _serviceUtilPattern = Pattern.compile(
+	private static final Pattern _SERVICE_UTIL_PATTERN = RegexUtil.getPattern(
 		"import com\\.liferay\\.[a-z]+\\.kernel\\..*ServiceUtil;");
 
 }

@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -31,7 +32,7 @@ public class JavaAggregateTestRuleParameterOrder extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		Matcher matcher = _aggregateTestRulePattern.matcher(content);
+		Matcher matcher = _AGGREGATE_TEST_RULE_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			List<String> parametersList = JavaSourceUtil.getParameterList(
@@ -68,7 +69,7 @@ public class JavaAggregateTestRuleParameterOrder extends BaseFileCheck {
 	}
 
 	private String _getClassName(String parameterName) {
-		Matcher matcher = _classNamePattern.matcher(parameterName);
+		Matcher matcher = _CLASS_NAME_PATTERN.matcher(parameterName);
 
 		if (matcher.find()) {
 			return matcher.group(2);
@@ -77,9 +78,10 @@ public class JavaAggregateTestRuleParameterOrder extends BaseFileCheck {
 		return null;
 	}
 
-	private final Pattern _aggregateTestRulePattern = Pattern.compile(
-		"new AggregateTestRule\\(");
-	private final Pattern _classNamePattern = Pattern.compile(
+	private static final Pattern _AGGREGATE_TEST_RULE_PATTERN =
+		RegexUtil.getPattern("new AggregateTestRule\\(");
+
+	private static final Pattern _CLASS_NAME_PATTERN = RegexUtil.getPattern(
 		"(new )?([A-Z]\\w*?)[\\.\\(]");
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,7 +33,7 @@ public class PrincipalExceptionCheck extends BaseFileCheck {
 	}
 
 	private String _formatPrincipalException(String content) {
-		Matcher matcher = _principalExceptionPattern.matcher(content);
+		Matcher matcher = _PRINCIPAL_EXCEPTION_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			String match = matcher.group();
@@ -46,8 +47,9 @@ public class PrincipalExceptionCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _principalExceptionPattern = Pattern.compile(
-		"SessionErrors\\.contains\\(\n?\t*(renderR|r)equest, " +
-			"PrincipalException\\.class\\.getName\\(\\)");
+	private static final Pattern _PRINCIPAL_EXCEPTION_PATTERN =
+		RegexUtil.getPattern(
+			"SessionErrors\\.contains\\(\n?\t*(renderR|r)equest, " +
+				"PrincipalException\\.class\\.getName\\(\\)");
 
 }

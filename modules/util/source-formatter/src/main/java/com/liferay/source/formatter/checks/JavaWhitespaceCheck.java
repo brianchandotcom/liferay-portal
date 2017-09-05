@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 /**
  * @author Hugo Huijser
@@ -65,7 +66,8 @@ public class JavaWhitespaceCheck extends WhitespaceCheck {
 					continue;
 				}
 
-				if (line.contains("\t ") && !previousLine.matches(".*[&|^]") &&
+				if (line.contains("\t ") &&
+					!RegexUtil.matches(previousLine, ".*[&|^]") &&
 					!previousLine.contains("\t((") &&
 					!previousLine.contains("\t<") &&
 					!previousLine.contains("\t ") &&

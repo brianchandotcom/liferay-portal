@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -54,7 +55,7 @@ public class JavaModuleServiceReferenceCheck extends BaseFileCheck {
 		String fileName, String content, String packagePath,
 		String servicePackagePath) {
 
-		Matcher matcher = _serviceReferencePattern.matcher(content);
+		Matcher matcher = _SERVICE_REFERENCE_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			String className = _getFullClassName(
@@ -75,7 +76,7 @@ public class JavaModuleServiceReferenceCheck extends BaseFileCheck {
 			return className;
 		}
 
-		Pattern pattern = Pattern.compile("import (.*" + className + ");");
+		Pattern pattern = RegexUtil.getPattern("import (.*" + className + ");");
 
 		Matcher matcher = pattern.matcher(content);
 
@@ -86,7 +87,8 @@ public class JavaModuleServiceReferenceCheck extends BaseFileCheck {
 		return packagePath + StringPool.PERIOD + className;
 	}
 
-	private final Pattern _serviceReferencePattern = Pattern.compile(
-		"@ServiceReference\\(\\s*type = ([\\w.]+)\\.class\\)\n");
+	private static final Pattern _SERVICE_REFERENCE_PATTERN =
+		RegexUtil.getPattern(
+			"@ServiceReference\\(\\s*type = ([\\w.]+)\\.class\\)\n");
 
 }

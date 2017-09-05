@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -56,7 +57,7 @@ public class WhitespaceCheck extends BaseFileCheck {
 	}
 
 	protected String formatIncorrectSyntax(String line, String regex) {
-		Pattern pattern = Pattern.compile(regex);
+		Pattern pattern = RegexUtil.getPattern(regex);
 
 		Matcher matcher = pattern.matcher(line);
 
@@ -264,7 +265,9 @@ public class WhitespaceCheck extends BaseFileCheck {
 			return line;
 		}
 
-		while (line.matches("^\t*" + StringPool.FOUR_SPACES + ".*")) {
+		while (RegexUtil.matches(
+					line, "^\t*" + StringPool.FOUR_SPACES + ".*")) {
+
 			line = StringUtil.replaceFirst(
 				line, StringPool.FOUR_SPACES, StringPool.TAB);
 		}

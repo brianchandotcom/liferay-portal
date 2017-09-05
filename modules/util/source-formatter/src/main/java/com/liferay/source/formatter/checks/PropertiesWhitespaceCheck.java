@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.source.formatter.util.RegexUtil;
 
 /**
  * @author Hugo Huijser
@@ -53,7 +54,7 @@ public class PropertiesWhitespaceCheck extends WhitespaceCheck {
 				sb.append(line);
 				sb.append("\n");
 
-				if (!previousLine.matches("\\s+[^\\s#].*[,=]\\\\")) {
+				if (!RegexUtil.matches(previousLine, "\\s+[^\\s#].*[,=]\\\\")) {
 					previousLine = line;
 
 					continue;

@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.source.formatter.util.RegexUtil;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,7 +34,7 @@ public class ValidatorEqualsCheck extends BaseFileCheck {
 	}
 
 	private void _checkValidatorEquals(String fileName, String content) {
-		Matcher matcher = _validatorEqualsPattern.matcher(content);
+		Matcher matcher = _VALIDATOR_EQUALS_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			addMessage(
@@ -43,7 +45,7 @@ public class ValidatorEqualsCheck extends BaseFileCheck {
 		}
 	}
 
-	private final Pattern _validatorEqualsPattern = Pattern.compile(
-		"\\WValidator\\.equals\\(");
+	private static final Pattern _VALIDATOR_EQUALS_PATTERN =
+		RegexUtil.getPattern("\\WValidator\\.equals\\(");
 
 }

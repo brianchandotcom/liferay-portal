@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 import com.liferay.source.formatter.util.ThreadSafeSortedClassLibraryBuilder;
 
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
@@ -107,7 +108,7 @@ public class PersistenceCallCheck extends AbstractCheck {
 		JavaProjectBuilder javaProjectBuilder, JavaClass javaClass,
 		String content, String fileName) {
 
-		Pattern pattern = Pattern.compile(
+		Pattern pattern = RegexUtil.getPattern(
 			"\\s" + javaClass.getName() + "\\s+extends\\s+(\\S+)\\s");
 
 		Matcher matcher = pattern.matcher(content);
@@ -193,7 +194,7 @@ public class PersistenceCallCheck extends AbstractCheck {
 
 		String fieldName = childAST.getText();
 
-		if (fieldName.matches("[A-Z].*")) {
+		if (RegexUtil.matches(fieldName, "[A-Z].*")) {
 			_checkClass(
 				fieldName, importNames, packageName, methodCallAST.getLineNo());
 		}
@@ -307,7 +308,7 @@ public class PersistenceCallCheck extends AbstractCheck {
 					fieldTypeClassName = fieldTypeClass.getName();
 				}
 				catch (Throwable t) {
-					Pattern pattern = Pattern.compile(
+					Pattern pattern = RegexUtil.getPattern(
 						"\\s(\\S+)\\s+(\\S+\\.)?" + fieldName);
 
 					Matcher matcher = pattern.matcher(javaField.toString());

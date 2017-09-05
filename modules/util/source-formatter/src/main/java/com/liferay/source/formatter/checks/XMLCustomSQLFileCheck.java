@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -55,7 +56,7 @@ public class XMLCustomSQLFileCheck extends BaseFileCheck {
 			fileName, document.getRootElement(), "sql", null,
 			new CustomSQLElementComparator("id"));
 
-		Matcher matcher = _whereNotInSQLPattern.matcher(content);
+		Matcher matcher = _WHERE_NOT_IN_SQL_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			int x = content.lastIndexOf("<sql id=", matcher.start());
@@ -86,8 +87,8 @@ public class XMLCustomSQLFileCheck extends BaseFileCheck {
 	private static final String _CUSTOM_FINDER_SCALABILITY_EXCLUDES =
 		"custom.finder.scalability.excludes";
 
-	private final Pattern _whereNotInSQLPattern = Pattern.compile(
-		"WHERE[ \t\n]+\\(*[a-zA-z0-9.]+ NOT IN");
+	private static final Pattern _WHERE_NOT_IN_SQL_PATTERN =
+		RegexUtil.getPattern("WHERE[ \t\n]+\\(*[a-zA-z0-9.]+ NOT IN");
 
 	private class CustomSQLElementComparator extends ElementComparator {
 

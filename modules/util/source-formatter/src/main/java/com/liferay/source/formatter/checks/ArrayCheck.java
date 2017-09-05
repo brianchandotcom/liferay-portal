@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,9 +32,9 @@ public class ArrayCheck extends BaseFileCheck {
 		String fileName, String absolutePath, String content) {
 
 		_checkInefficientAddAllCalls(
-			fileName, content, _addAllArraysAsListPattern);
+			fileName, content, _ADD_ALL_ARRAYS_AS_LIST_PATTERN);
 		_checkInefficientAddAllCalls(
-			fileName, content, _addAllListUtilFromArrayPattern);
+			fileName, content, _ADD_ALL_LIST_UTIL_FROM_ARRAY_PATTERN);
 
 		content = _formatArrayInitializer(content);
 
@@ -55,7 +56,7 @@ public class ArrayCheck extends BaseFileCheck {
 	}
 
 	private String _formatArrayInitializer(String content) {
-		Matcher matcher = _arrayInitializationPattern.matcher(content);
+		Matcher matcher = _ARRAY_INITIALIZATION_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			String whitespace = matcher.group(6);
@@ -122,7 +123,7 @@ public class ArrayCheck extends BaseFileCheck {
 	}
 
 	private String _formatEmptyArray(String content) {
-		Matcher matcher = _emptyArrayPattern.matcher(content);
+		Matcher matcher = _EMPTY_ARRAY_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			if (ToolsUtil.isInsideQuotes(content, matcher.end(1))) {
@@ -139,13 +140,18 @@ public class ArrayCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _addAllArraysAsListPattern = Pattern.compile(
-		"\\.addAll\\(\\s*Arrays\\.asList\\(");
-	private final Pattern _addAllListUtilFromArrayPattern = Pattern.compile(
-		"\\.addAll\\(\\s*ListUtil\\.fromArray\\(");
-	private final Pattern _arrayInitializationPattern = Pattern.compile(
-		"(\\W\\w+(\\[\\])+)(\\s+)(\\w+ =)((\\s+)new \\w+(\\[\\])+)( \\{(\n)?)");
-	private final Pattern _emptyArrayPattern = Pattern.compile(
+	private static final Pattern _ADD_ALL_ARRAYS_AS_LIST_PATTERN =
+		RegexUtil.getPattern("\\.addAll\\(\\s*Arrays\\.asList\\(");
+
+	private static final Pattern _ADD_ALL_LIST_UTIL_FROM_ARRAY_PATTERN =
+		RegexUtil.getPattern("\\.addAll\\(\\s*ListUtil\\.fromArray\\(");
+
+	private static final Pattern _ARRAY_INITIALIZATION_PATTERN =
+		RegexUtil.getPattern(
+			"(\\W\\w+(\\[\\])+)(\\s+)(\\w+ =)((\\s+)new \\w+(\\[\\])+)( \\{" +
+				"(\n)?)");
+
+	private static final Pattern _EMPTY_ARRAY_PATTERN = RegexUtil.getPattern(
 		"((\\[\\])+) \\{\\}");
 
 }

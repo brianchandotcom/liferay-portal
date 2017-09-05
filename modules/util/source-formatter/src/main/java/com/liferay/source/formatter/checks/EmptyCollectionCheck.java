@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,7 +35,7 @@ public class EmptyCollectionCheck extends BaseFileCheck {
 	}
 
 	private void _checkEmptyCollection(String fileName, String content) {
-		Matcher matcher = _emptyCollectionPattern.matcher(content);
+		Matcher matcher = _EMPTY_COLLECTION_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			String collectionType = TextFormatter.format(
@@ -46,7 +47,7 @@ public class EmptyCollectionCheck extends BaseFileCheck {
 		}
 	}
 
-	private final Pattern _emptyCollectionPattern = Pattern.compile(
-		"Collections\\.EMPTY_(LIST|MAP|SET)");
+	private static final Pattern _EMPTY_COLLECTION_PATTERN =
+		RegexUtil.getPattern("Collections\\.EMPTY_(LIST|MAP|SET)");
 
 }

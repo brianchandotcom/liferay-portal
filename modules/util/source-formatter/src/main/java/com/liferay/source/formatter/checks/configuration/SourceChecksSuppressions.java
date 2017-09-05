@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.checks.configuration;
 
+import com.liferay.source.formatter.util.RegexUtil;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -69,7 +71,7 @@ public class SourceChecksSuppressions {
 			List<String> fileNames = entry.getValue();
 
 			for (String fileName : fileNames) {
-				if (absolutePath.matches(".*" + fileName)) {
+				if (RegexUtil.matches(absolutePath, ".*" + fileName)) {
 					return true;
 				}
 			}

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaTerm;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -37,7 +38,7 @@ public class JavaSignatureStylingCheck extends BaseJavaTermCheck {
 
 		String indent = SourceUtil.getIndent(javaTermContent);
 
-		Pattern pattern = Pattern.compile(
+		Pattern pattern = RegexUtil.getPattern(
 			"(" + indent + javaTerm.getAccessModifier() +
 				" .*?[;{]\n)((\n*)([^\n]+)\n)?",
 			Pattern.DOTALL);
@@ -160,7 +161,7 @@ public class JavaSignatureStylingCheck extends BaseJavaTermCheck {
 		String nextLine) {
 
 		if ((newLineChars != null) && (newLineChars.length() > 0) &&
-			!nextLine.matches("/[/*].*")) {
+			!RegexUtil.matches(nextLine, "/[/*].*")) {
 
 			return StringUtil.replace(
 				javaTermContent, signature + "\n", signature);

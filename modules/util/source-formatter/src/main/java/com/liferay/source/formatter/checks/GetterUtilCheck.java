@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.lang.reflect.Field;
 
@@ -47,7 +48,7 @@ public class GetterUtilCheck extends BaseFileCheck {
 	private void _checkGetterUtilGet(String fileName, String content)
 		throws Exception {
 
-		Matcher matcher = _getterUtilGetPattern.matcher(content);
+		Matcher matcher = _GETTER_UTIL_GET_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			if (ToolsUtil.isInsideQuotes(content, matcher.start())) {
@@ -85,9 +86,11 @@ public class GetterUtilCheck extends BaseFileCheck {
 		}
 	}
 
-	private final Pattern _getterUtilGetPattern = Pattern.compile(
-		"GetterUtil\\.get(Boolean|Double|Float|Integer|Number|Object|Short|" +
-			"String)\\((.*?)\\);\n",
-		Pattern.DOTALL);
+	private static final Pattern _GETTER_UTIL_GET_PATTERN =
+		RegexUtil.getPattern(
+			"GetterUtil\\.get" +
+				"(Boolean|Double|Float|Integer|Number|Object|Short|String)" +
+					"\\((.*?)\\);\n",
+			Pattern.DOTALL);
 
 }

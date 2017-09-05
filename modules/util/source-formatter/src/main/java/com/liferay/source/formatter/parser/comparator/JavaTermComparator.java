@@ -27,6 +27,7 @@ import com.liferay.source.formatter.parser.JavaSignature;
 import com.liferay.source.formatter.parser.JavaStaticBlock;
 import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.parser.JavaVariable;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.Comparator;
 import java.util.List;
@@ -124,13 +125,13 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 	private int _compareFinderJavaTerms(
 		JavaTerm javaTerm1, JavaTerm javaTerm2) {
 
-		Matcher matcher1 = _finderPattern.matcher(javaTerm1.getName());
+		Matcher matcher1 = _FINDER_PATTERN.matcher(javaTerm1.getName());
 
 		if (!matcher1.find()) {
 			return 0;
 		}
 
-		Matcher matcher2 = _finderPattern.matcher(javaTerm2.getName());
+		Matcher matcher2 = _FINDER_PATTERN.matcher(javaTerm2.getName());
 
 		if (!matcher2.find()) {
 			return 0;
@@ -246,8 +247,8 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 
 		String javaTermName = javaTerm.getName();
 
-		if (javaTermName.matches("(COUNT|FIND|JOIN)_.*")) {
-			Matcher matcher = _sqlKeyPattern.matcher(javaTerm.getContent());
+		if (RegexUtil.matches(javaTermName, "(COUNT|FIND|JOIN)_.*")) {
+			Matcher matcher = _SQL_KEY_PATTERN.matcher(javaTerm.getContent());
 
 			if (matcher.find()) {
 				return objectName + StringPool.PERIOD + matcher.group(1);
@@ -375,10 +376,12 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 		return -1;
 	}
 
-	private final String _customSQLContent;
-	private final Pattern _finderPattern = Pattern.compile(
+	private static final Pattern _FINDER_PATTERN = RegexUtil.getPattern(
 		"((COUNT|FIND|JOIN)_|(do|filter)?([Cc]ount|[Ff]ind)).*");
-	private final Pattern _sqlKeyPattern = Pattern.compile(
+
+	private static final Pattern _SQL_KEY_PATTERN = RegexUtil.getPattern(
 		"\"\\.([^\"]+)\";\n");
+
+	private final String _customSQLContent;
 
 }

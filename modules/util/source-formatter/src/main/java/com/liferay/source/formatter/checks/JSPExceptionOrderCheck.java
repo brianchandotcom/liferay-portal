@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,7 +34,7 @@ public class JSPExceptionOrderCheck extends BaseFileCheck {
 	}
 
 	private String _sortExceptions(String content) {
-		Matcher matcher = _exceptionsPattern.matcher(content);
+		Matcher matcher = _EXCEPTIONS_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			String match = matcher.group();
@@ -80,7 +81,7 @@ public class JSPExceptionOrderCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _exceptionsPattern = Pattern.compile(
+	private static final Pattern _EXCEPTIONS_PATTERN = RegexUtil.getPattern(
 		"(^[\t]*<liferay-ui:error exception=\"<%=.*\n)+", Pattern.MULTILINE);
 
 }

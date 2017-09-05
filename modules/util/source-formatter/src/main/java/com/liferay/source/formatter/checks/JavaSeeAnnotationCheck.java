@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.source.formatter.util.RegexUtil;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,7 +28,7 @@ public class JavaSeeAnnotationCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		Matcher matcher = _seeAnnotationPattern.matcher(content);
+		Matcher matcher = _SEE_ANNOTATION_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			addMessage(
@@ -37,7 +39,7 @@ public class JavaSeeAnnotationCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _seeAnnotationPattern = Pattern.compile(
+	private static final Pattern _SEE_ANNOTATION_PATTERN = RegexUtil.getPattern(
 		"[\n\t] ?\\* @see.*@");
 
 }

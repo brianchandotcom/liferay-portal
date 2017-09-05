@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 /**
  * @author Peter Shin
@@ -52,7 +53,7 @@ public class PropertiesLanguageKeysCheck extends BaseFileCheck {
 
 				String value = array[1];
 
-				if (value.matches("(?s).*<a\\b[^>]*>.*?</a>.*")) {
+				if (RegexUtil.matches(value, "(?s).*<a\\b[^>]*>.*?</a>.*")) {
 					addMessage(
 						fileName, "Remove HTML markup for '" + key + "'",
 						"language_keys.markdown",

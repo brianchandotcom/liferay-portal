@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -72,7 +73,7 @@ public class JSPStylingCheck extends BaseFileCheck {
 	}
 
 	private void _checkChaining(String fileName, String content) {
-		Matcher matcher = _chainingPattern.matcher(content);
+		Matcher matcher = _CHAINING_PATTERN.matcher(content);
 
 		if (matcher.find()) {
 			addMessage(
@@ -82,7 +83,7 @@ public class JSPStylingCheck extends BaseFileCheck {
 	}
 
 	private void _checkLineBreak(String fileName, String content) {
-		Matcher matcher = _incorrectLineBreakPattern.matcher(content);
+		Matcher matcher = _INCORRECT_LINE_BREAK_PATTERN.matcher(content);
 
 		if (matcher.find()) {
 			addMessage(
@@ -92,7 +93,7 @@ public class JSPStylingCheck extends BaseFileCheck {
 	}
 
 	private String _fixEmptyJavaSourceTag(String content) {
-		Matcher matcher = _emptyJavaSourceTagPattern.matcher(content);
+		Matcher matcher = _EMPTY_JAVA_SOURCE_TAG_PATTERN.matcher(content);
 
 		if (matcher.find()) {
 			return StringUtil.replace(
@@ -103,7 +104,7 @@ public class JSPStylingCheck extends BaseFileCheck {
 	}
 
 	private String _fixIncorrectClosingTag(String content) {
-		Matcher matcher = _incorrectClosingTagPattern.matcher(content);
+		Matcher matcher = _INCORRECT_CLOSING_TAG_PATTERN.matcher(content);
 
 		if (matcher.find()) {
 			return StringUtil.replaceFirst(
@@ -114,13 +115,16 @@ public class JSPStylingCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _chainingPattern = Pattern.compile(
+	private static final Pattern _CHAINING_PATTERN = RegexUtil.getPattern(
 		"\\WgetClass\\(\\)\\.");
-	private final Pattern _emptyJavaSourceTagPattern = Pattern.compile(
-		"\n\t*<%\n+\t*%>\n");
-	private final Pattern _incorrectClosingTagPattern = Pattern.compile(
-		"\n(\t*)\t((?!<\\w).)* />\n");
-	private final Pattern _incorrectLineBreakPattern = Pattern.compile(
-		"[\n\t]\\} ?(catch|else|finally) ");
+
+	private static final Pattern _EMPTY_JAVA_SOURCE_TAG_PATTERN =
+		RegexUtil.getPattern("\n\t*<%\n+\t*%>\n");
+
+	private static final Pattern _INCORRECT_CLOSING_TAG_PATTERN =
+		RegexUtil.getPattern("\n(\t*)\t((?!<\\w).)* />\n");
+
+	private static final Pattern _INCORRECT_LINE_BREAK_PATTERN =
+		RegexUtil.getPattern("[\n\t]\\} ?(catch|else|finally) ");
 
 }

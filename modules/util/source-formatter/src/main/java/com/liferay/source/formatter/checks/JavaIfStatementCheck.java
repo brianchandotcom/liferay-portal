@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,7 +36,7 @@ public class JavaIfStatementCheck extends IfStatementCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		Matcher matcher = _ifStatementPattern.matcher(content);
+		Matcher matcher = _IF_STATEMENT_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			String ifClause = matcher.group();
@@ -153,9 +154,10 @@ public class JavaIfStatementCheck extends IfStatementCheck {
 			}
 
 			if ((previousLineLength > 0) && previousLineIsStartCriteria &&
-				(previousLineLevel >= 0) && previousLine.matches(".*[|&^]")) {
+				(previousLineLevel >= 0) &&
+				RegexUtil.matches(previousLine, ".*[|&^]")) {
 
-				Matcher matcher = _ifStatementCriteriaPattern.matcher(
+				Matcher matcher = _IF_STATEMENT_CRITERIA_PATTERN.matcher(
 					trimmedLine);
 
 				while (matcher.find()) {
@@ -335,9 +337,10 @@ public class JavaIfStatementCheck extends IfStatementCheck {
 		}
 	}
 
-	private final Pattern _ifStatementCriteriaPattern = Pattern.compile(
-		".*?( [|&^]+( |\\Z)|\\) \\{\\Z)");
-	private final Pattern _ifStatementPattern = Pattern.compile(
+	private static final Pattern _IF_STATEMENT_CRITERIA_PATTERN =
+		RegexUtil.getPattern(".*?( [|&^]+( |\\Z)|\\) \\{\\Z)");
+
+	private static final Pattern _IF_STATEMENT_PATTERN = RegexUtil.getPattern(
 		"\t+(catch|(else )?if|while) \\(.*?(\\) \\{|;)\n", Pattern.DOTALL);
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
@@ -71,7 +72,7 @@ public class ConstantNameCheck
 
 		DetailAST nameAST = detailAST.findFirstToken(TokenTypes.IDENT);
 
-		Pattern pattern = Pattern.compile(regex);
+		Pattern pattern = RegexUtil.getPattern(regex);
 
 		Matcher matcher = pattern.matcher(nameAST.getText());
 

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.BNDSourceUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -43,8 +44,9 @@ public class BNDExportsCheck extends BaseFileCheck {
 			!absolutePath.contains("/third-party/")) {
 
 			_checkExports(
-				fileName, content, _exportContentsPattern, "-exportcontents");
-			_checkExports(fileName, content, _exportsPattern, "Export-Package");
+				fileName, content, _EXPORT_CONTENTS_PATTERN, "-exportcontents");
+			_checkExports(
+				fileName, content, _EXPORTS_PATTERN, "Export-Package");
 		}
 
 		return content;
@@ -63,7 +65,7 @@ public class BNDExportsCheck extends BaseFileCheck {
 			return;
 		}
 
-		Matcher matcher = _apiOrServiceBundleSymbolicNamePattern.matcher(
+		Matcher matcher = _API_OR_SERVICE_BUNDLE_SYMBOLIC_NAME_PATTERN.matcher(
 			bundleSymbolicName);
 
 		bundleSymbolicName = matcher.replaceAll(StringPool.BLANK);
@@ -101,12 +103,15 @@ public class BNDExportsCheck extends BaseFileCheck {
 		}
 	}
 
-	private final Pattern _apiOrServiceBundleSymbolicNamePattern =
-		Pattern.compile("\\.(api|service)$");
-	private final Pattern _exportContentsPattern = Pattern.compile(
-		"\n-exportcontents:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
-		Pattern.DOTALL | Pattern.MULTILINE);
-	private final Pattern _exportsPattern = Pattern.compile(
+	private static final Pattern _API_OR_SERVICE_BUNDLE_SYMBOLIC_NAME_PATTERN =
+		RegexUtil.getPattern("\\.(api|service)$");
+
+	private static final Pattern _EXPORT_CONTENTS_PATTERN =
+		RegexUtil.getPattern(
+			"\n-exportcontents:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
+			Pattern.DOTALL | Pattern.MULTILINE);
+
+	private static final Pattern _EXPORTS_PATTERN = RegexUtil.getPattern(
 		"\nExport-Package:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
 		Pattern.DOTALL | Pattern.MULTILINE);
 

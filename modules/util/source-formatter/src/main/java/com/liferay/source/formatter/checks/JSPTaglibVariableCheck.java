@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,7 +36,7 @@ public class JSPTaglibVariableCheck extends BaseFileCheck {
 	}
 
 	private String _formatTaglibVariable(String fileName, String content) {
-		Matcher matcher = _taglibVariablePattern.matcher(content);
+		Matcher matcher = _TAGLIB_VARIABLE_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			String taglibValue = matcher.group(3);
@@ -69,7 +70,8 @@ public class JSPTaglibVariableCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _taglibVariablePattern = Pattern.compile(
-		"(\n\t*String (taglib\\w+) = (.*);)\n\\s*%>\\s+(<[\\S\\s]*?>)\n");
+	private static final Pattern _TAGLIB_VARIABLE_PATTERN =
+		RegexUtil.getPattern(
+			"(\n\t*String (taglib\\w+) = (.*);)\n\\s*%>\\s+(<[\\S\\s]*?>)\n");
 
 }

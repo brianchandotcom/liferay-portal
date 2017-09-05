@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.source.formatter.parser.JavaParameter;
 import com.liferay.source.formatter.parser.JavaSignature;
 import com.liferay.source.formatter.parser.JavaTerm;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -58,7 +59,7 @@ public class JavaConstructorParameterOrder extends BaseJavaTermCheck {
 		for (JavaParameter parameter : parameters) {
 			String parameterName = parameter.getParameterName();
 
-			Pattern pattern = Pattern.compile(
+			Pattern pattern = RegexUtil.getPattern(
 				"\\{\n([\\s\\S]*?)(_" + parameterName + " =[ \t\n]+" +
 					parameterName + ";)");
 

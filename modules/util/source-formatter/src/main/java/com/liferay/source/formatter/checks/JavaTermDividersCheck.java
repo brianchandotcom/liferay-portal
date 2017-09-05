@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.parser.JavaVariable;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.List;
 
@@ -112,8 +113,8 @@ public class JavaTermDividersCheck extends BaseJavaTermCheck {
 			return _fixJavaTermDivider(classContent, javaTermContent, true);
 		}
 
-		if (javaTermContent.matches("\\s*[/@*][\\S\\s]*") ||
-			previousJavaTermContent.matches("\\s*[/@*][\\S\\s]*")) {
+		if (RegexUtil.matches(javaTermContent, "\\s*[/@*][\\S\\s]*") ||
+			RegexUtil.matches(previousJavaTermContent, "\\s*[/@*][\\S\\s]*")) {
 
 			return _fixJavaTermDivider(classContent, javaTermContent, true);
 		}

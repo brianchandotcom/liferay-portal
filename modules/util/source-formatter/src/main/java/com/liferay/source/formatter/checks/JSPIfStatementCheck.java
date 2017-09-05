@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,7 +29,7 @@ public class JSPIfStatementCheck extends IfStatementCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		Matcher matcher = _ifStatementPattern.matcher(content);
+		Matcher matcher = _IF_STATEMENT_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			if (JSPSourceUtil.isJavaSource(content, matcher.start())) {
@@ -38,7 +39,7 @@ public class JSPIfStatementCheck extends IfStatementCheck {
 			}
 		}
 
-		matcher = _testTagPattern.matcher(content);
+		matcher = _TEST_TAG_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			if (!JSPSourceUtil.isJavaSource(content, matcher.start())) {
@@ -53,9 +54,10 @@ public class JSPIfStatementCheck extends IfStatementCheck {
 		return content;
 	}
 
-	private final Pattern _ifStatementPattern = Pattern.compile(
+	private static final Pattern _IF_STATEMENT_PATTERN = RegexUtil.getPattern(
 		"[\t\n]((else )?if|while) .*\\) \\{\n");
-	private final Pattern _testTagPattern = Pattern.compile(
+
+	private static final Pattern _TEST_TAG_PATTERN = RegexUtil.getPattern(
 		"[\t\n]<c:(if|when) test=['\"]<%= (.+) %>['\"]>\n");
 
 }

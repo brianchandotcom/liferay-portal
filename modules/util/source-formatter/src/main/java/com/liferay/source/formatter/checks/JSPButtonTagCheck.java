@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.source.formatter.util.RegexUtil;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,7 +28,7 @@ public class JSPButtonTagCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		Matcher matcher = _buttonTypePattern.matcher(content);
+		Matcher matcher = _BUTTON_TYPE_PATTERN.matcher(content);
 
 		if (matcher.find()) {
 			addMessage(
@@ -37,7 +39,7 @@ public class JSPButtonTagCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _buttonTypePattern = Pattern.compile(
+	private static final Pattern _BUTTON_TYPE_PATTERN = RegexUtil.getPattern(
 		"<aui:button .*?type=\"button\"");
 
 }

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +81,8 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 			return;
 		}
 
-		Matcher matcher = _annotationMetaValueKeyPattern.matcher(annotation);
+		Matcher matcher = _ANNOTATION_META_VALUE_KEY_PATTERN.matcher(
+			annotation);
 
 		while (matcher.find()) {
 			_checkDelimeter(
@@ -96,7 +98,7 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 	}
 
 	private String _fixAnnotationLineBreaks(String annotation, String indent) {
-		Matcher matcher = _annotationLineBreakPattern1.matcher(annotation);
+		Matcher matcher = _ANNOTATION_LINE_BREAK_PATTERN_1.matcher(annotation);
 
 		if (matcher.find()) {
 			return StringUtil.replaceFirst(
@@ -104,7 +106,7 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 				matcher.start());
 		}
 
-		matcher = _annotationLineBreakPattern2.matcher(annotation);
+		matcher = _ANNOTATION_LINE_BREAK_PATTERN_2.matcher(annotation);
 
 		if (matcher.find()) {
 			return StringUtil.replaceFirst(
@@ -112,7 +114,7 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 				matcher.start());
 		}
 
-		if (annotation.matches(".*\\(\n[\\S\\s]*[^\t\n]\\)\n")) {
+		if (RegexUtil.matches(annotation, ".*\\(\n[\\S\\s]*[^\t\n]\\)\n")) {
 			return StringUtil.replaceLast(annotation, ")", "\n" + indent + ")");
 		}
 
@@ -124,7 +126,7 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 			return annotation;
 		}
 
-		Matcher matcher = _annotationMetaTypePattern.matcher(annotation);
+		Matcher matcher = _ANNOTATION_META_TYPE_PATTERN.matcher(annotation);
 
 		if (!matcher.find()) {
 			return annotation;
@@ -201,7 +203,7 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 	private List<String> _getAnnotationsBlocks(String content) {
 		List<String> annotationsBlocks = new ArrayList<>();
 
-		Matcher matcher = _modifierPattern.matcher(content);
+		Matcher matcher = _MODIFIER_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			int lineCount = getLineCount(content, matcher.end());
@@ -212,7 +214,8 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 				String line = getLine(content, i);
 
 				if (Validator.isNull(line) ||
-					line.matches("\t*(private|public|protected| \\*/).*")) {
+					RegexUtil.matches(
+						line, "\t*(private|public|protected| \\*/).*")) {
 
 					if (Validator.isNotNull(annotationsBlock)) {
 						annotationsBlocks.add(annotationsBlock);
@@ -247,7 +250,7 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 			return annotation;
 		}
 
-		Matcher matcher = _annotationParameterPropertyPattern.matcher(
+		Matcher matcher = _ANNOTATION_PARAMETER_PROPERTY_PATTERN.matcher(
 			annotation);
 
 		while (matcher.find()) {
@@ -355,17 +358,22 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 		return annotations;
 	}
 
-	private final Pattern _annotationLineBreakPattern1 = Pattern.compile(
-		"[{=]\n.*(\" \\+\n\t*\")");
-	private final Pattern _annotationLineBreakPattern2 = Pattern.compile(
-		"=(\n\t*)\"");
-	private final Pattern _annotationMetaTypePattern = Pattern.compile(
-		"[\\s\\(](name|description) = \"%");
-	private final Pattern _annotationMetaValueKeyPattern = Pattern.compile(
-		"\\s(\\w+) = \"([\\w\\.\\-]+?)\"");
-	private final Pattern _annotationParameterPropertyPattern = Pattern.compile(
-		"\t(\\w+) = \\{");
-	private final Pattern _modifierPattern = Pattern.compile(
+	private static final Pattern _ANNOTATION_LINE_BREAK_PATTERN_1 =
+		RegexUtil.getPattern("[{=]\n.*(\" \\+\n\t*\")");
+
+	private static final Pattern _ANNOTATION_LINE_BREAK_PATTERN_2 =
+		RegexUtil.getPattern("=(\n\t*)\"");
+
+	private static final Pattern _ANNOTATION_META_TYPE_PATTERN =
+		RegexUtil.getPattern("[\\s\\(](name|description) = \"%");
+
+	private static final Pattern _ANNOTATION_META_VALUE_KEY_PATTERN =
+		RegexUtil.getPattern("\\s(\\w+) = \"([\\w\\.\\-]+?)\"");
+
+	private static final Pattern _ANNOTATION_PARAMETER_PROPERTY_PATTERN =
+		RegexUtil.getPattern("\t(\\w+) = \\{");
+
+	private static final Pattern _MODIFIER_PATTERN = RegexUtil.getPattern(
 		"[^\n]\n(\t*)(public|protected|private)");
 
 	private class AnnotationParameterPropertyComparator
@@ -375,6 +383,7 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 			_parameterName = parameterName;
 		}
 
+		@Override
 		public int compare(String property1, String property2) {
 			if (!_parameterName.equals("property")) {
 				return super.compare(property1, property2);

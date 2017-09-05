@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.source.formatter.util.RegexUtil;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,7 +28,7 @@ public class FTLIfStatementCheck extends IfStatementCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		Matcher matcher = _ifStatementPattern.matcher(content);
+		Matcher matcher = _IF_STATEMENT_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			String ifClause = "if (" + matcher.group(2) + ") {";
@@ -38,7 +40,7 @@ public class FTLIfStatementCheck extends IfStatementCheck {
 		return content;
 	}
 
-	private final Pattern _ifStatementPattern = Pattern.compile(
+	private static final Pattern _IF_STATEMENT_PATTERN = RegexUtil.getPattern(
 		"[\t\n]<#(else)?if ([^?\n]*)>\n");
 
 }

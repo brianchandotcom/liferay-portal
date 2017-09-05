@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -37,7 +38,7 @@ public class JavaConfigurationAdminCheck extends BaseFileCheck {
 			return content;
 		}
 
-		Matcher matcher = _getConfigurationPattern.matcher(content);
+		Matcher matcher = _GET_CONFIGURATION_PATTERN.matcher(content);
 
 		while (matcher.find()) {
 			List<String> parametersList = JavaSourceUtil.getParameterList(
@@ -69,8 +70,9 @@ public class JavaConfigurationAdminCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private final Pattern _getConfigurationPattern = Pattern.compile(
-		"\\W_?([cC]onfigurationAdmin)\\.\\s*((get|createFactory)" +
-			"Configuration)\\(");
+	private static final Pattern _GET_CONFIGURATION_PATTERN =
+		RegexUtil.getPattern(
+			"\\W_?([cC]onfigurationAdmin)\\.\\s*((get|createFactory)" +
+				"Configuration)\\(");
 
 }

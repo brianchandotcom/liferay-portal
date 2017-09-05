@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.BaseImportsFormatter;
 import com.liferay.portal.tools.ImportPackage;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.io.IOException;
 
@@ -31,7 +32,7 @@ public class GradleImportsFormatter extends BaseImportsFormatter {
 
 	@Override
 	protected ImportPackage createImportPackage(String line) {
-		Matcher matcher = _gradleImportPattern.matcher(line);
+		Matcher matcher = _GRADLE_IMPORT_PATTERN.matcher(line);
 
 		if (matcher.find()) {
 			return new ImportPackage(matcher.group(1), false, line);
@@ -68,7 +69,7 @@ public class GradleImportsFormatter extends BaseImportsFormatter {
 	}
 
 	private String _getImports(String content) {
-		Matcher matcher = _importsPattern.matcher(content);
+		Matcher matcher = _IMPORTS_PATTERN.matcher(content);
 
 		if (matcher.find()) {
 			String imports = matcher.group();
@@ -83,9 +84,10 @@ public class GradleImportsFormatter extends BaseImportsFormatter {
 		return null;
 	}
 
-	private static final Pattern _gradleImportPattern = Pattern.compile(
+	private static final Pattern _GRADLE_IMPORT_PATTERN = RegexUtil.getPattern(
 		"import (.*)");
-	private static final Pattern _importsPattern = Pattern.compile(
+
+	private static final Pattern _IMPORTS_PATTERN = RegexUtil.getPattern(
 		"(^[ \t]*import\\s+.*\n+)+", Pattern.MULTILINE);
 
 }

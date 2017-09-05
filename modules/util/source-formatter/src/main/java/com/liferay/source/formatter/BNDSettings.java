@@ -15,6 +15,7 @@
 package com.liferay.source.formatter;
 
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -52,7 +53,8 @@ public class BNDSettings {
 			return _languageProperties;
 		}
 
-		if (_content.matches(
+		if (RegexUtil.matches(
+				_content,
 				"[\\s\\S]*Provide-Capability:[\\s\\S]*liferay\\.resource\\." +
 					"bundle[\\s\\S]*")) {
 
@@ -65,7 +67,7 @@ public class BNDSettings {
 
 		Properties languageProperties = new Properties();
 
-		Matcher matcher = _contentDirPattern.matcher(_content);
+		Matcher matcher = _CONTENT_DIR_PATTERN.matcher(_content);
 
 		if (matcher.find()) {
 			File file = new File(
@@ -86,7 +88,7 @@ public class BNDSettings {
 			return _releaseVersion;
 		}
 
-		Matcher matcher = _releaseVersionPattern.matcher(_content);
+		Matcher matcher = _RELEASE_VERSION_PATTERN.matcher(_content);
 
 		if (!matcher.find()) {
 			return null;
@@ -97,13 +99,15 @@ public class BNDSettings {
 		return _releaseVersion;
 	}
 
-	private final String _content;
-	private final Pattern _contentDirPattern = Pattern.compile(
+	private static final Pattern _CONTENT_DIR_PATTERN = RegexUtil.getPattern(
 		"\\scontent=(.*?)(,\\\\|\n|$)");
+
+	private static final Pattern _RELEASE_VERSION_PATTERN =
+		RegexUtil.getPattern("Bundle-Version: (.*)(\n|\\Z)");
+
+	private final String _content;
 	private final String _fileName;
 	private Properties _languageProperties;
 	private String _releaseVersion;
-	private final Pattern _releaseVersionPattern = Pattern.compile(
-		"Bundle-Version: (.*)(\n|\\Z)");
 
 }

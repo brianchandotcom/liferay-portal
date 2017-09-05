@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.util.RegexUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,7 +35,7 @@ public class JSPRedirectBackURLCheck extends BaseFileCheck {
 	}
 
 	private String _fixRedirectBackURL(String content) {
-		Matcher matcher = _redirectBackURLPattern.matcher(content);
+		Matcher matcher = _REDIRECT_BACK_URL_PATTERN.matcher(content);
 
 		String newContent = content;
 
@@ -47,9 +48,10 @@ public class JSPRedirectBackURLCheck extends BaseFileCheck {
 		return newContent;
 	}
 
-	private final Pattern _redirectBackURLPattern = Pattern.compile(
-		"(String redirect = ParamUtil\\.getString\\(request, \"redirect\".*" +
-			"\\);)\n(String backURL = ParamUtil\\.getString\\(request, \"" +
-				"backURL\", redirect\\);)");
+	private static final Pattern _REDIRECT_BACK_URL_PATTERN =
+		RegexUtil.getPattern(
+			"(String redirect = ParamUtil\\.getString\\(request, " +
+				"\"redirect\".*\\);)\n(String backURL = ParamUtil\\.getString" +
+					"\\(request, \"backURL\", redirect\\);)");
 
 }

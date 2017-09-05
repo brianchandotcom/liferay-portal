@@ -28,8 +28,14 @@ import com.liferay.document.library.repository.external.search.ExtRepositoryQuer
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.sharepoint.repository.internal.configuration.SharepointRepositoryConfiguration;
+import com.liferay.sharepoint.repository.internal.document.library.repository.external.model.SharepointRootFolder;
+import com.liferay.sharepoint.repository.internal.util.SharepointServerResponseConverter;
+import com.liferay.sharepoint.repository.internal.util.SharepointURLHelper;
 
 import java.io.InputStream;
 
@@ -209,7 +215,7 @@ public class SharepointExtRepository implements ExtRepository {
 
 	@Override
 	public String getRootFolderKey() throws PortalException {
-		return "-1";
+		return _libraryPath;
 	}
 
 	@Override
@@ -236,7 +242,22 @@ public class SharepointExtRepository implements ExtRepository {
 			CredentialsProvider credentialsProvider)
 		throws PortalException {
 
-		throw new UnsupportedOperationException();
+		_libraryPath = _strip(
+			GetterUtil.getString(
+				typeSettingsProperties.getProperty("library-path")));
+
+		_rootFolder = new SharepointRootFolder(_libraryPath);
+
+		_siteAbsoluteUrl = _strip(
+			GetterUtil.getString(
+				typeSettingsProperties.getProperty("site-absolute-url"),
+				StringPool.DASH));
+
+		_sharepointURLHelper = new SharepointURLHelper(_siteAbsoluteUrl);
+
+		_sharepointServerResponseConverter =
+			new SharepointServerResponseConverter(
+				_sharepointURLHelper, this, _siteAbsoluteUrl);
 	}
 
 	@Override
@@ -267,8 +288,34 @@ public class SharepointExtRepository implements ExtRepository {
 		throw new UnsupportedOperationException();
 	}
 
+	private static final String _strip(String s) {
+		int i = 0;
+
+		while (s.charAt(i) == CharPool.SLASH) {
+			i++;
+		}
+
+		int j = s.length() - 1;
+
+		while ((j > i) && (s.charAt(j) == CharPool.SLASH)) {
+			j--;
+		}
+
+		if (i < j) {
+			return s.substring(i, j + 1);
+		}
+
+		return s;
+	}
+
+	private String _libraryPath;
+	private ExtRepositoryFolder _rootFolder;
 	private final SharepointRepositoryConfiguration
 		_sharepointRepositoryConfiguration;
+	private SharepointServerResponseConverter
+		_sharepointServerResponseConverter;
+	private SharepointURLHelper _sharepointURLHelper;
+	private String _siteAbsoluteUrl;
 	private final TokenStore _tokenStore;
 
 }

@@ -121,10 +121,16 @@ public class GroupServiceTest {
 			companyGroup.getFriendlyURL(), false, companyGroup.isActive(),
 			serviceContext);
 
-		Assert.assertTrue(companyStagingGroup.isCompanyStagingGroup());
+		try {
+			Assert.assertTrue(companyStagingGroup.isCompanyStagingGroup());
 
-		Assert.assertEquals(
-			companyGroup.getGroupId(), companyStagingGroup.getLiveGroupId());
+			Assert.assertEquals(
+				companyGroup.getGroupId(),
+				companyStagingGroup.getLiveGroupId());
+		}
+		finally {
+			GroupLocalServiceUtil.deleteGroup(companyStagingGroup);
+		}
 	}
 
 	@Test
@@ -931,29 +937,37 @@ public class GroupServiceTest {
 	public void testUpdateAvailableLocales() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		List<Locale> availableLocales = Arrays.asList(
-			LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US);
+		try {
+			List<Locale> availableLocales = Arrays.asList(
+				LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US);
 
-		group = GroupTestUtil.updateDisplaySettings(
-			group.getGroupId(), availableLocales, null);
+			group = GroupTestUtil.updateDisplaySettings(
+				group.getGroupId(), availableLocales, null);
 
-		Assert.assertEquals(
-			new HashSet<>(availableLocales),
-			LanguageUtil.getAvailableLocales(group.getGroupId()));
-
-		GroupLocalServiceUtil.deleteGroup(group);
+			Assert.assertEquals(
+				new HashSet<>(availableLocales),
+				LanguageUtil.getAvailableLocales(group.getGroupId()));
+		}
+		finally {
+			GroupLocalServiceUtil.deleteGroup(group);
+		}
 	}
 
 	@Test
 	public void testUpdateDefaultLocale() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		group = GroupTestUtil.updateDisplaySettings(
-			group.getGroupId(), null, LocaleUtil.SPAIN);
+		try {
+			group = GroupTestUtil.updateDisplaySettings(
+				group.getGroupId(), null, LocaleUtil.SPAIN);
 
-		Assert.assertEquals(
-			LocaleUtil.SPAIN,
-			PortalUtil.getSiteDefaultLocale(group.getGroupId()));
+			Assert.assertEquals(
+				LocaleUtil.SPAIN,
+				PortalUtil.getSiteDefaultLocale(group.getGroupId()));
+		}
+		finally {
+			GroupLocalServiceUtil.deleteGroup(group);
+		}
 	}
 
 	@Test

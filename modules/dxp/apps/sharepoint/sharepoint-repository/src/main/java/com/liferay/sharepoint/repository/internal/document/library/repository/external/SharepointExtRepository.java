@@ -213,7 +213,7 @@ public class SharepointExtRepository implements ExtRepository {
 		throws PortalException {
 
 		try {
-			return _requestModelInputStream(
+			return _getInputStream(
 				(SharepointModel)extRepositoryFileEntry);
 		}
 		catch (UnirestException ue) {
@@ -227,7 +227,7 @@ public class SharepointExtRepository implements ExtRepository {
 		throws PortalException {
 
 		try {
-			return _requestModelInputStream(
+			return _getInputStream(
 				(SharepointModel)extRepositoryFileVersion);
 		}
 		catch (UnirestException ue) {
@@ -269,7 +269,7 @@ public class SharepointExtRepository implements ExtRepository {
 			String url = _sharepointURLHelper.getObjectURL(
 				extRepositoryObjectType, extRepositoryObjectKey);
 
-			JSONObject jsonObject = _requestJSONObject(url);
+			JSONObject jsonObject = _getJSONObject(url);
 
 			return _sharepointServerResponseConverter.getExtRepositoryObject(
 				extRepositoryObjectType, jsonObject);
@@ -535,7 +535,7 @@ public class SharepointExtRepository implements ExtRepository {
 		return httpResponse.getBody();
 	}
 
-	private JSONObject _requestJSONObject(String url)
+	private JSONObject _getJSONObject(String url)
 		throws PortalException, UnirestException {
 
 		GetRequest getRequest = Unirest.get(url);
@@ -555,7 +555,7 @@ public class SharepointExtRepository implements ExtRepository {
 		return JSONFactoryUtil.createJSONObject(httpResponse.getBody());
 	}
 
-	private InputStream _requestModelInputStream(
+	private InputStream _getInputStream(
 			SharepointModel sharepointModel)
 		throws PortalException, UnirestException {
 

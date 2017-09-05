@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.lcs.InvalidLCSClusterEntryTokenException;
 import com.liferay.lcs.NoLCSClusterEntryTokenException;
 import com.liferay.lcs.activation.LCSClusterEntryTokenContentAdvisor;
+import com.liferay.lcs.exception.MultipleLCSClusterEntryTokenException;
 import com.liferay.lcs.rest.LCSClusterEntryToken;
 import com.liferay.lcs.rest.LCSClusterEntryTokenImpl;
 import com.liferay.lcs.rest.LCSClusterEntryTokenService;
@@ -80,7 +81,7 @@ public class LCSClusterEntryTokenAdvisor {
 		deleteLCSCLusterEntryTokenFile();
 
 		throw new InvalidLCSClusterEntryTokenException(
-			"LCS cluster entry token mismatches LCS cluster node's LCS " +
+			"LCS activation token mismatches LCS cluster node's LCS " +
 				"cluster entry ID");
 	}
 
@@ -100,7 +101,7 @@ public class LCSClusterEntryTokenAdvisor {
 		_lcsAlertAdvisor.add(LCSAlert.ERROR_INVALID_TOKEN);
 
 		throw new InvalidLCSClusterEntryTokenException(
-			"LCS cluster entry token is invalid. Delete token file.");
+			"LCS activation token is invalid. Delete token file.");
 	}
 
 	public void checkLCSClusterEntryTokenPreferences(
@@ -146,7 +147,7 @@ public class LCSClusterEntryTokenAdvisor {
 		if (_log.isWarnEnabled()) {
 			_log.warn(
 				"LCS portlet will update credentials in portlet preferences " +
-					"to match the LCS cluster entry token");
+					"to match the LCS activation token");
 		}
 
 		LCSPortletPreferencesUtil.removeCredentials();
@@ -165,6 +166,11 @@ public class LCSClusterEntryTokenAdvisor {
 				_log.debug("LCS activation token file is not present");
 			}
 		}
+		catch (MultipleLCSClusterEntryTokenException mlcscete) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(mlcscete.getMessage());
+			}
+		}
 	}
 
 	public Set<LCSAlert> getLCSClusterEntryTokenAlerts() {
@@ -179,7 +185,7 @@ public class LCSClusterEntryTokenAdvisor {
 			_lcsAlertAdvisor.add(LCSAlert.WARNING_MISSING_TOKEN);
 
 			throw new NoLCSClusterEntryTokenException(
-				"Unable to find LCS cluster entry token");
+				"Unable to find LCS activation token");
 		}
 
 		LCSClusterEntryTokenContentAdvisor lcsClusterEntryTokenContentAdvisor =
@@ -193,13 +199,13 @@ public class LCSClusterEntryTokenAdvisor {
 				lcsClusterEntryToken.getLcsClusterEntryTokenId())) {
 
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to process LCS cluster entry token");
+				_log.warn("Unable to process LCS activation token");
 			}
 
 			_lcsAlertAdvisor.add(LCSAlert.ERROR_INVALID_TOKEN);
 
 			throw new NoLCSClusterEntryTokenException(
-				"Unable to find LCS cluster entry token");
+				"Unable to find LCS activation token");
 		}
 
 		storeLCSConfiguration(lcsClusterEntryTokenContentAdvisor);
@@ -232,11 +238,10 @@ public class LCSClusterEntryTokenAdvisor {
 		}
 		catch (Exception e) {
 			if (e instanceof IOException) {
-				_log.error("Unable to find the LCS cluster entry token file");
+				_log.error("Unable to find the LCS activation token file");
 			}
 			else {
-				_log.error(
-					"Unable to read the LCS cluster entry token file", e);
+				_log.error("Unable to read the LCS activation token file", e);
 			}
 
 			return null;
@@ -263,7 +268,7 @@ public class LCSClusterEntryTokenAdvisor {
 			_lcsAlertAdvisor.add(LCSAlert.WARNING_MISSING_TOKEN);
 
 			if (_log.isWarnEnabled()) {
-				_log.warn("The LCS cluster entry token file is missing");
+				_log.warn("The LCS activation token file is missing");
 			}
 
 			return lcsClusterEntryTokenId;
@@ -274,7 +279,7 @@ public class LCSClusterEntryTokenAdvisor {
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"The cached LCS cluster entry token ID does not match " +
+					"The cached LCS activation token ID does not match " +
 						"the file value");
 			}
 
@@ -340,7 +345,7 @@ public class LCSClusterEntryTokenAdvisor {
 	}
 
 	protected String getLCSClusterEntryTokenFileName()
-		throws FileNotFoundException {
+		throws FileNotFoundException, MultipleLCSClusterEntryTokenException {
 
 		StringBundler sb = new StringBundler(4);
 
@@ -358,12 +363,13 @@ public class LCSClusterEntryTokenAdvisor {
 						if (_log.isWarnEnabled()) {
 							StringBundler sb = new StringBundler();
 
-							sb.append("LCS token file name ");
+							sb.append("LCS activation token file name ");
 							sb.append(name);
 							sb.append(" is deprecated and will not be ");
 							sb.append("supported in the next version. Please ");
-							sb.append("download the LCS token file again and ");
-							sb.append("replace the old file with the new one.");
+							sb.append("download the LCS activation token");
+							sb.append("file again and replace the old file");
+							sb.append("with the new one.");
 
 							_log.warn(sb.toString());
 						}
@@ -385,6 +391,9 @@ public class LCSClusterEntryTokenAdvisor {
 		}
 		else if (lcsClusterEntryTokenFileNames.length > 1) {
 			_lcsAlertAdvisor.add(LCSAlert.WARNING_MULTIPLE_TOKENS);
+
+			throw new MultipleLCSClusterEntryTokenException(
+				"Only one LCS activation token file is allowed");
 		}
 
 		sb.append(StringPool.SLASH);

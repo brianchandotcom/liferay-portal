@@ -21,6 +21,11 @@ import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.base.CPDefinitionOptionValueRelLocalServiceBaseImpl;
+import com.liferay.portal.kernel.dao.orm.Criterion;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -48,6 +53,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -191,6 +197,32 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		return cpDefinitionOptionValueRelPersistence.
 			findByCPDefinitionOptionRelId(
 				cpDefinitionOptionRelId, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
+			long[] cpDefinitionOptionValueRelsId)
+		throws PortalException {
+
+		if ((cpDefinitionOptionValueRelsId == null) ||
+			(cpDefinitionOptionValueRelsId.length == 0)) {
+
+			return Collections.emptyList();
+		}
+
+		DynamicQuery dynamicQuery = dynamicQuery();
+
+		Property property = PropertyFactoryUtil.forName(
+			"CPDefinitionOptionValueRelId");
+
+		Criterion criterion = property.in(cpDefinitionOptionValueRelsId);
+
+		dynamicQuery.add(criterion);
+
+		dynamicQuery.addOrder(OrderFactoryUtil.asc("priority"));
+
+		return cpDefinitionOptionValueRelPersistence.findWithDynamicQuery(
+			dynamicQuery);
 	}
 
 	@Override

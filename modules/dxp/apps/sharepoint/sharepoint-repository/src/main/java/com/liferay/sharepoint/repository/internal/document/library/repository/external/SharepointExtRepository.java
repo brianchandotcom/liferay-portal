@@ -355,16 +355,16 @@ public class SharepointExtRepository implements ExtRepository {
 
 		_rootFolder = new SharepointRootFolder(_libraryPath);
 
-		_siteAbsoluteUrl = _strip(
+		_siteAbsoluteURL = _strip(
 			GetterUtil.getString(
 				typeSettingsProperties.getProperty("site-absolute-url"),
 				StringPool.DASH));
 
-		_sharepointURLHelper = new SharepointURLHelper(_siteAbsoluteUrl);
+		_sharepointURLHelper = new SharepointURLHelper(_siteAbsoluteURL);
 
 		_sharepointServerResponseConverter =
 			new SharepointServerResponseConverter(
-				_sharepointURLHelper, this, _siteAbsoluteUrl);
+				_sharepointURLHelper, this, _siteAbsoluteURL);
 	}
 
 	@Override
@@ -569,7 +569,7 @@ public class SharepointExtRepository implements ExtRepository {
 	private SharepointServerResponseConverter
 		_sharepointServerResponseConverter;
 	private SharepointURLHelper _sharepointURLHelper;
-	private String _siteAbsoluteUrl;
+	private String _siteAbsoluteURL;
 	private final TokenStore _tokenStore;
 
 }

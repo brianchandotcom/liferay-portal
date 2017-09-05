@@ -13,7 +13,15 @@
 	{call Modal.render}
 		{param body kind="html"}
 			<form class="form" id="{$namespace}addForm" method="post" data-onsubmit="{$_handleSubmitForm}">
-				<div class="form-group input-text-wrapper">
+				{let $classes kind="text"}
+					form-group
+					{sp}input-text-wrapper
+					{if $error}
+						{sp}has-error
+					{/if}
+				{/let}
+
+				<div class="{$classes}">
 					<label class="control-label">
 						{msg desc=""}name{/msg}
 						<span class="reference-mark text-warning">
@@ -25,10 +33,12 @@
 							{msg desc=""}required{/msg}
 						</span>
 					</label>
-					<input class="field form-control {if $error}error-field{/if}" name="{$namespace}name" type="text">
+					<input class="field form-control" name="{$namespace}name" type="text">
 					{if $error}
 						<div class="form-validator-stack help-block">
-							<div role="alert">{$error}</div>
+							<div role="alert">
+								{$error}
+							</div>
 						</div>
 					{/if}
 				</div>

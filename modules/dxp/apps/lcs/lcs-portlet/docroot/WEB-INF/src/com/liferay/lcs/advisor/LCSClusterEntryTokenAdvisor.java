@@ -81,8 +81,8 @@ public class LCSClusterEntryTokenAdvisor {
 		deleteLCSCLusterEntryTokenFile();
 
 		throw new InvalidLCSClusterEntryTokenException(
-			"LCS activation token mismatches LCS cluster node's LCS " +
-				"cluster entry ID");
+			"LCS activation token mismatches LCS cluster node's LCS cluster " +
+				"entry ID");
 	}
 
 	public void checkLCSClusterEntryTokenId(long lcsClusterEntryTokenId)
@@ -279,8 +279,8 @@ public class LCSClusterEntryTokenAdvisor {
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"The cached LCS activation token ID does not match " +
-						"the file value");
+					"The cached LCS activation token ID does not match the " +
+						"file value");
 			}
 
 			_lcsAlertAdvisor.add(LCSAlert.WARNING_TOKEN_MISMATCH);

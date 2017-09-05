@@ -14,7 +14,7 @@ import controlsTemplates from './EffectsControls.soy';
  * @private
  * @return {boolean} returns true if the carousel can be scrolled, false otherwise
  */
-canScrollForward() {
+function canScrollForward() {
 	const carousel = this.refs.carousel;
 	const continer = this.refs.carouselContainer;
 	const offset = Math.abs(parseInt(carousel.style.marginLeft || 0, 10));
@@ -187,9 +187,6 @@ class EffectsComponent extends Component {
 	 */ 
 	scrollLeft() {
 		const carousel = this.refs.carousel;
-		if (!carousel) {
-			return;
-		}
 		const itemWidth = this.res.carouselItem.offsetWidth || 0;
 		const marginLeft = parseInt(carousel.style.marginLeft || 0, 10);
 		if (marginLeft < 0) {

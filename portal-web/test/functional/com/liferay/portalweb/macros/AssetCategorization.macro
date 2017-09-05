@@ -105,6 +105,8 @@
 			</else>
 		</if>
 
+		<execute function="Pause" locator1="3000" />
+
 		<if>
 			<condition function="IsElementPresent" locator1="IFrame#MODAL_IFRAME" />
 			<then>

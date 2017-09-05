@@ -213,8 +213,7 @@ public class SharepointExtRepository implements ExtRepository {
 		throws PortalException {
 
 		try {
-			return _getInputStream(
-				(SharepointModel)extRepositoryFileEntry);
+			return _getInputStream((SharepointModel)extRepositoryFileEntry);
 		}
 		catch (UnirestException ue) {
 			throw new PortalException(ue);
@@ -227,8 +226,7 @@ public class SharepointExtRepository implements ExtRepository {
 		throws PortalException {
 
 		try {
-			return _getInputStream(
-				(SharepointModel)extRepositoryFileVersion);
+			return _getInputStream((SharepointModel)extRepositoryFileVersion);
 		}
 		catch (UnirestException ue) {
 			throw new PortalException(ue);
@@ -406,26 +404,6 @@ public class SharepointExtRepository implements ExtRepository {
 		}
 	}
 
-	private String _strip(String s) {
-		int i = 0;
-
-		while (s.charAt(i) == CharPool.SLASH) {
-			i++;
-		}
-
-		int j = s.length() - 1;
-
-		while ((j > i) && (s.charAt(j) == CharPool.SLASH)) {
-			j--;
-		}
-
-		if (i < j) {
-			return s.substring(i, j + 1);
-		}
-
-		return s;
-	}
-
 	private void _delete(String url) throws PortalException, UnirestException {
 		HttpRequestWithBody httpRequestWithBody = Unirest.delete(url);
 
@@ -437,8 +415,8 @@ public class SharepointExtRepository implements ExtRepository {
 		if (httpResponse.getStatus() >= 300) {
 			throw new PrincipalException(
 				String.format(
-					"Unable to delete %s: %d %s", url,
-					httpResponse.getStatus(), httpResponse.getStatusText()));
+					"Unable to delete %s: %d %s", url, httpResponse.getStatus(),
+					httpResponse.getStatusText()));
 		}
 	}
 
@@ -452,6 +430,51 @@ public class SharepointExtRepository implements ExtRepository {
 		}
 
 		return token.getAccessToken();
+	}
+
+	private InputStream _getInputStream(SharepointModel sharepointModel)
+		throws PortalException, UnirestException {
+
+		return _getInputStream(sharepointModel.getCanonicalContentURL());
+	}
+
+	private InputStream _getInputStream(String url)
+		throws PortalException, UnirestException {
+
+		GetRequest getRequest = Unirest.get(url);
+
+		getRequest.header("Authorization", "Bearer " + _getAccessToken());
+
+		HttpResponse<InputStream> httpResponse = getRequest.asBinary();
+
+		if (httpResponse.getStatus() >= 300) {
+			throw new PrincipalException(
+				String.format(
+					"Unable to get %s: %d %s", url, httpResponse.getStatus(),
+					httpResponse.getStatusText()));
+		}
+
+		return httpResponse.getBody();
+	}
+
+	private JSONObject _getJSONObject(String url)
+		throws PortalException, UnirestException {
+
+		GetRequest getRequest = Unirest.get(url);
+
+		getRequest.header("Accept", "application/json;odata=verbose");
+		getRequest.header("Authorization", "Bearer " + _getAccessToken());
+
+		HttpResponse<String> httpResponse = getRequest.asString();
+
+		if (httpResponse.getStatus() >= 300) {
+			throw new PrincipalException(
+				String.format(
+					"Unable to get %s: %d %s", url, httpResponse.getStatus(),
+					httpResponse.getStatusText()));
+		}
+
+		return JSONFactoryUtil.createJSONObject(httpResponse.getBody());
 	}
 
 	private void _post(String url) throws PortalException, UnirestException {
@@ -516,50 +539,24 @@ public class SharepointExtRepository implements ExtRepository {
 		return JSONFactoryUtil.createJSONObject(httpResponse.getBody());
 	}
 
-	private InputStream _getInputStream(String url)
-		throws PortalException, UnirestException {
+	private String _strip(String s) {
+		int i = 0;
 
-		GetRequest getRequest = Unirest.get(url);
-
-		getRequest.header("Authorization", "Bearer " + _getAccessToken());
-
-		HttpResponse<InputStream> httpResponse = getRequest.asBinary();
-
-		if (httpResponse.getStatus() >= 300) {
-			throw new PrincipalException(
-				String.format(
-					"Unable to get %s: %d %s", url,
-					httpResponse.getStatus(), httpResponse.getStatusText()));
+		while (s.charAt(i) == CharPool.SLASH) {
+			i++;
 		}
 
-		return httpResponse.getBody();
-	}
+		int j = s.length() - 1;
 
-	private JSONObject _getJSONObject(String url)
-		throws PortalException, UnirestException {
-
-		GetRequest getRequest = Unirest.get(url);
-
-		getRequest.header("Accept", "application/json;odata=verbose");
-		getRequest.header("Authorization", "Bearer " + _getAccessToken());
-
-		HttpResponse<String> httpResponse = getRequest.asString();
-
-		if (httpResponse.getStatus() >= 300) {
-			throw new PrincipalException(
-				String.format(
-					"Unable to get %s: %d %s", url,
-					httpResponse.getStatus(), httpResponse.getStatusText()));
+		while ((j > i) && (s.charAt(j) == CharPool.SLASH)) {
+			j--;
 		}
 
-		return JSONFactoryUtil.createJSONObject(httpResponse.getBody());
-	}
+		if (i < j) {
+			return s.substring(i, j + 1);
+		}
 
-	private InputStream _getInputStream(
-			SharepointModel sharepointModel)
-		throws PortalException, UnirestException {
-
-		return _getInputStream(sharepointModel.getCanonicalContentURL());
+		return s;
 	}
 
 	private String _libraryPath;

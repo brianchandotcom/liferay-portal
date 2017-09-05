@@ -437,7 +437,7 @@ public class SharepointExtRepository implements ExtRepository {
 		if (httpResponse.getStatus() >= 300) {
 			throw new PrincipalException(
 				String.format(
-					"Unable to delete resource %s: %d %s", url,
+					"Unable to delete %s: %d %s", url,
 					httpResponse.getStatus(), httpResponse.getStatusText()));
 		}
 	}
@@ -465,7 +465,7 @@ public class SharepointExtRepository implements ExtRepository {
 		if (httpResponse.getStatus() >= 300) {
 			throw new PrincipalException(
 				String.format(
-					"Error while posting to resource %s: %d %s", url,
+					"Unable to post to %s: %d %s", url,
 					httpResponse.getStatus(), httpResponse.getStatusText()));
 		}
 	}
@@ -485,7 +485,7 @@ public class SharepointExtRepository implements ExtRepository {
 		if (httpResponse.getStatus() >= 300) {
 			throw new PrincipalException(
 				String.format(
-					"Error while getting resource %s: %d %s", url,
+					"Unable to post to %s: %d %s", url,
 					httpResponse.getStatus(), httpResponse.getStatusText()));
 		}
 
@@ -509,7 +509,7 @@ public class SharepointExtRepository implements ExtRepository {
 		if (httpResponse.getStatus() >= 300) {
 			throw new PrincipalException(
 				String.format(
-					"Error while getting resource %s: %d %s", url,
+					"Unable to post to %s: %d %s", url,
 					httpResponse.getStatus(), httpResponse.getStatusText()));
 		}
 
@@ -528,7 +528,7 @@ public class SharepointExtRepository implements ExtRepository {
 		if (httpResponse.getStatus() >= 300) {
 			throw new PrincipalException(
 				String.format(
-					"Error while getting resource %s: %d %s", url,
+					"Unable to get %s: %d %s", url,
 					httpResponse.getStatus(), httpResponse.getStatusText()));
 		}
 
@@ -548,7 +548,7 @@ public class SharepointExtRepository implements ExtRepository {
 		if (httpResponse.getStatus() >= 300) {
 			throw new PrincipalException(
 				String.format(
-					"Error while getting resource %s: %d %s", url,
+					"Unable to get %s: %d %s", url,
 					httpResponse.getStatus(), httpResponse.getStatusText()));
 		}
 

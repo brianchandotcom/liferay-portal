@@ -179,11 +179,12 @@ public class UserServiceTest {
 
 		@Test
 		public void shouldAddUser() throws Exception {
-			String numericScreenName = "12345";
+			long numericScreenName = RandomTestUtil.nextLong();
 
-			_user = UserTestUtil.addUser(numericScreenName);
+			_user = UserTestUtil.addUser(String.valueOf(numericScreenName));
 
-			Assert.assertEquals(numericScreenName, _user.getScreenName());
+			Assert.assertEquals(
+				String.valueOf(numericScreenName), _user.getScreenName());
 		}
 
 		@Test

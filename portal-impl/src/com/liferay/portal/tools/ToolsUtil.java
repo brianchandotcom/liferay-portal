@@ -171,6 +171,12 @@ public class ToolsUtil {
 	}
 
 	public static boolean isInsideQuotes(String s, int pos) {
+		return isInsideQuotes(s, pos, true);
+	}
+
+	public static boolean isInsideQuotes(
+		String s, int pos, boolean allowEscapedQuotes) {
+
 		int start = s.lastIndexOf(CharPool.NEW_LINE, pos);
 
 		if (start == -1) {
@@ -195,21 +201,26 @@ public class ToolsUtil {
 
 			if (insideQuotes) {
 				if (c == delimeter) {
-					int precedingBackSlashCount = 0;
-
-					for (int j = i - 1; j >= 0; j--) {
-						if (line.charAt(j) == CharPool.BACK_SLASH) {
-							precedingBackSlashCount += 1;
-						}
-						else {
-							break;
-						}
-					}
-
-					if ((precedingBackSlashCount == 0) ||
-						((precedingBackSlashCount % 2) == 0)) {
-
+					if (!allowEscapedQuotes) {
 						insideQuotes = false;
+					}
+					else {
+						int precedingBackSlashCount = 0;
+
+						for (int j = i - 1; j >= 0; j--) {
+							if (line.charAt(j) == CharPool.BACK_SLASH) {
+								precedingBackSlashCount += 1;
+							}
+							else {
+								break;
+							}
+						}
+
+						if ((precedingBackSlashCount == 0) ||
+							((precedingBackSlashCount % 2) == 0)) {
+
+							insideQuotes = false;
+						}
 					}
 				}
 			}

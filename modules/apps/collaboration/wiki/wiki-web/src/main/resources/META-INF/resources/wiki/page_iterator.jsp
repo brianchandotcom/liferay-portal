@@ -254,7 +254,7 @@ for (int i = 0; i < pages.size(); i++) {
 	</aui:button-row>
 </c:if>
 
-<liferay-ui:categorization-filter
+<liferay-asset:categorization-filter
 	assetType="pages"
 	portletURL="<%= portletURL %>"
 />

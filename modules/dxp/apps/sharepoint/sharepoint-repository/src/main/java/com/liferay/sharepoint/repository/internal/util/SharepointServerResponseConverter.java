@@ -87,10 +87,10 @@ public class SharepointServerResponseConverter {
 
 		String owner = authorJSONObject.getString("Title");
 
+		String checkedOutBy = StringPool.BLANK;
+
 		JSONObject checkedOutByUserJSONObject = jsonObject.getJSONObject(
 			"CheckedOutByUser");
-
-		String checkedOutBy = StringPool.BLANK;
 
 		if (!checkedOutByUserJSONObject.has("__deferred")) {
 			checkedOutBy = checkedOutByUserJSONObject.getString("Title");

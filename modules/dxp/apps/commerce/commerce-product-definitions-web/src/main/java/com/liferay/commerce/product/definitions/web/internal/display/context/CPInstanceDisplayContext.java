@@ -240,18 +240,6 @@ public class CPInstanceDisplayContext
 			getCPDefinitionId());
 	}
 
-	public boolean hasSkuContributorOption() throws PortalException {
-		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
-			_cpDefinitionOptionRelService.
-				getSkuContributorCPDefinitionOptionRels(getCPDefinitionId());
-
-		if (cpDefinitionOptionRels.isEmpty()) {
-			return false;
-		}
-
-		return true;
-	}
-
 	public Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
 			parseCPInstanceDDMContent(long cpInstanceId)
 		throws PortalException {

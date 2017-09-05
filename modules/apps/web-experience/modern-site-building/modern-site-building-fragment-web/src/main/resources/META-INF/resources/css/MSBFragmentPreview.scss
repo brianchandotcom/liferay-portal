@@ -18,22 +18,22 @@
 	&__frame {
 		background-color: white;
 		border: none;
-		position: absolute;
-		z-index: -1;
-		margin-top: calc(2em - 1px);
 		border-top: solid thin #DDD;
-		width: 100%;
-		top: 0;
-		left: 0;
 		height: calc(100% - 2.5em);
+		left: 0;
+		margin-top: calc(2em - 1px);
+		position: absolute;
+		top: 0;
+		width: 100%;
+		z-index: -1;
 
 		&--resized {
+			border-top: none;
+			box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 			left: 50%;
+			margin-top: 0;
 			top: 50%;
 			transform: translateX(-50%) translateY(-50%);
-			box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-			margin-top: 0;
-			border-top: none;
 
 			transition:
 				width ease 0.2s,

@@ -713,7 +713,9 @@
 			<var name="nodeTypeDestination" value="start" />
 		</execute>
 
-		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP" />
+		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP">
+			<var name="errorMessage" value="The StartNode node cannot have an incoming transition." />
+		</execute>
 	</command>
 
 	<command name="PublishWorkflowDefinitionWithInvalidConditionNodeAndViewErrorMessage" priority="3">
@@ -751,7 +753,9 @@
 			<var name="nodeType" value="condition" />
 		</execute>
 
-		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP" />
+		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP">
+			<var name="errorMessage" value="The Condition node must have at least two outgoing transitions." />
+		</execute>
 	</command>
 
 	<command name="PublishWorkflowDefinitionWithInvalidConditionNodeSettingsAndViewErrorMessage" priority="3">
@@ -835,7 +839,9 @@
 			<var name="nodeType" value="condition" />
 		</execute>
 
-		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP" />
+		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP">
+			<var name="errorMessage" value="The Condition node must have at least two outgoing transitions." />
+		</execute>
 	</command>
 
 	<command name="PublishWorkflowDefinitionWithInvalidForkNodeAndViewErrorMessage" priority="3">
@@ -873,7 +879,9 @@
 			<var name="nodeType" value="fork" />
 		</execute>
 
-		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP" />
+		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP">
+			<var name="errorMessage" value="Each fork node requires a join node. Make sure all forks and joins are properly paired." />
+		</execute>
 	</command>
 
 	<command name="PublishWorkflowDefinitionWithInvalidJoinNodeAndViewErrorMessage" priority="3">
@@ -911,7 +919,9 @@
 			<var name="nodeType" value="join" />
 		</execute>
 
-		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP" />
+		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP">
+			<var name="errorMessage" value="Each fork node requires a join node. Make sure all forks and joins are properly paired." />
+		</execute>
 	</command>
 
 	<command name="PublishWorkflowDefinitionWithInvalidJoinXORNodeAndViewErrorMessage" priority="3">
@@ -949,7 +959,9 @@
 			<var name="nodeType" value="join-xor" />
 		</execute>
 
-		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP" />
+		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP">
+			<var name="errorMessage" value="Each fork node requires a join node. Make sure all forks and joins are properly paired." />
+		</execute>
 	</command>
 
 	<command name="PublishWorkflowDefinitionWithMultipleStartNodesAndViewErrorMessage" priority="4">
@@ -968,7 +980,9 @@
 			<var name="nodeType" value="start" />
 		</execute>
 
-		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP" />
+		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP">
+			<var name="errorMessage" value="The workflow has too many start nodes (state nodes StartNode and TestStartNode)." />
+		</execute>
 	</command>
 
 	<command name="PublishWorkflowDefinitionWithNoConnectorsAndViewErrorMessage" priority="4">
@@ -984,7 +998,9 @@
 			<var name="connectorLabel" value="connector" />
 		</execute>
 
-		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP" />
+		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP">
+			<var name="errorMessage" value="The StartNode node must have an outgoing transition." />
+		</execute>
 	</command>
 
 	<command name="PublishWorkflowDefinitionWithNoEndNodeAndViewErrorMessage" priority="4">
@@ -1004,7 +1020,9 @@
 			<var name="nodeNodeLabel" value="EndNode" />
 		</execute>
 
-		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP" />
+		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP">
+			<var name="errorMessage" value="The StartNode node must have an outgoing transition." />
+		</execute>
 	</command>
 
 	<command name="PublishWorkflowDefinitionWithNoStartNodeAndViewErrorMessage" priority="4">
@@ -1024,7 +1042,9 @@
 			<var name="nodeNodeLabel" value="StartNode" />
 		</execute>
 
-		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP" />
+		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP">
+			<var name="errorMessage" value="You must define a start node." />
+		</execute>
 	</command>
 
 	<command name="RedoDraftDefinition" priority="5">

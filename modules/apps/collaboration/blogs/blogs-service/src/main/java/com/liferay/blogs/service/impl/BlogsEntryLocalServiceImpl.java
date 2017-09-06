@@ -1794,7 +1794,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		portletId = PortletProviderUtil.getPortletId(
 			BlogsEntry.class.getName(), PortletProvider.Action.MANAGE);
 
-		if (Validator.isNull(portletId)) {
+		if (Validator.isNull(portletId) ||
+			(serviceContext.getThemeDisplay() == null)) {
+
 			return StringPool.BLANK;
 		}
 

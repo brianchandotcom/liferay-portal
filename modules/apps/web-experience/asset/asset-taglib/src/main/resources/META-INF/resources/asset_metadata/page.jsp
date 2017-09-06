@@ -29,7 +29,7 @@ String[] metadataFields = (String[])request.getAttribute("liferay-asset:asset-me
 			request.setAttribute("liferay-asset:asset-metadata:metadataField", metadataFields[0]);
 			%>
 
-			<liferay-util:include page="/asset_metadata/metadata_entry.jsp" />
+			<liferay-util:include page="/asset_metadata/metadata_entry.jsp" servletContext="<%= application %>" />
 		</c:when>
 		<c:otherwise>
 			<c:if test='<%= ArrayUtil.contains(metadataFields, String.valueOf("author")) %>'>
@@ -40,7 +40,7 @@ String[] metadataFields = (String[])request.getAttribute("liferay-asset:asset-me
 				metadataFields = ArrayUtil.remove(metadataFields, String.valueOf("author"));
 				%>
 
-				<liferay-util:include page="/asset_metadata/metadata_entry.jsp" />
+				<liferay-util:include page="/asset_metadata/metadata_entry.jsp" servletContext="<%= application %>" />
 			</c:if>
 
 			<liferay-util:buffer var="metadataPanelContent">
@@ -50,7 +50,7 @@ String[] metadataFields = (String[])request.getAttribute("liferay-asset:asset-me
 					request.setAttribute("liferay-asset:asset-metadata:metadataField", metadataField);
 				%>
 
-					<liferay-util:include page="/asset_metadata/metadata_entry.jsp" />
+					<liferay-util:include page="/asset_metadata/metadata_entry.jsp" servletContext="<%= application %>" />
 
 				<%
 				}

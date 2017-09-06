@@ -28,6 +28,7 @@ Export-Package:\
 	com.liferay.portal.spring.bean,\
 	com.liferay.portal.spring.context,\
 	com.liferay.portal.spring.hibernate,\
+	com.liferay.portal.spring.jndi,\
 	com.liferay.portal.spring.transaction,\
 	com.liferay.portal.systemevent,\
 	com.liferay.portal.template,\

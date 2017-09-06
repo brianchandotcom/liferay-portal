@@ -63,8 +63,8 @@ public class CommerceCartContentTotalDisplayContext
 	}
 
 	public String getDisplayStyle() {
-		return
-			_commerceCartContentTotalPortletInstanceConfiguration.displayStyle();
+		return _commerceCartContentTotalPortletInstanceConfiguration.
+			displayStyle();
 	}
 
 	public long getDisplayStyleGroupId() {

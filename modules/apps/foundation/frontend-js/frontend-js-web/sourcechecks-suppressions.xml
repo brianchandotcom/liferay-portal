@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<suppress checks="JSStylingCheck" files=".*\.es\.js" />
+	<suppress checks="JSWhitespaceCheck" files=".*\.es\.js" />
+</suppressions>

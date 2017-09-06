@@ -18,9 +18,7 @@ import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

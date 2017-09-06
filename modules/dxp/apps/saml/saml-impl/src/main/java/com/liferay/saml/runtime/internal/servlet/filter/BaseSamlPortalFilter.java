@@ -36,7 +36,19 @@ public abstract class BaseSamlPortalFilter extends BaseFilter {
 			FilterChain filterChain)
 		throws Exception {
 
-		doProcessFilter(request, response, filterChain);
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		try {
+			currentThread.setContextClassLoader(
+				BaseSamlPortalFilter.class.getClassLoader());
+
+			doProcessFilter(request, response, filterChain);
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
+		}
 	}
 
 }

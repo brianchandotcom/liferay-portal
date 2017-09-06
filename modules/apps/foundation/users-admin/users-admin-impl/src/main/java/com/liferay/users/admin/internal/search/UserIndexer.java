@@ -260,7 +260,7 @@ public class UserIndexer extends BaseIndexer<User> {
 		document.addKeyword(Field.SCOPE_GROUP_ID, user.getGroupIds());
 		document.addKeyword(Field.STATUS, user.getStatus());
 		document.addKeyword(Field.USER_ID, user.getUserId());
-		document.addKeyword(Field.USER_NAME, user.getFullName());
+		document.addKeyword(Field.USER_NAME, user.getFullName(), true);
 		document.addKeyword(
 			"ancestorOrganizationIds",
 			getAncestorOrganizationIds(user.getOrganizationIds()));

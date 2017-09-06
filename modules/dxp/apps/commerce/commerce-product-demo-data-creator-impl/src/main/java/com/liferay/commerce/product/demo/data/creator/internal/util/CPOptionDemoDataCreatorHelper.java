@@ -25,8 +25,11 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -34,11 +37,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -81,8 +79,6 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 					ddmFormFieldTypeName, priority, facetable, required,
 					skuContributor, false, serviceContext);
 
-			_cpDefinitionOptionRels.add(cpDefinitionOptionRel);
-
 			JSONArray cpDefinitionOptionValueRelsJSONArray =
 				jsonObject.getJSONArray("values");
 
@@ -91,6 +87,12 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 					locale, userId, groupId, cpDefinitionOptionRel,
 					cpDefinitionOptionValueRelsJSONArray);
 		}
+
+		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
+			_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
+				cpDefinitionId);
+
+		_cpDefinitionOptionRels.put(cpDefinitionId, cpDefinitionOptionRels);
 	}
 
 	public void deleteCPOptions() throws PortalException {
@@ -114,12 +116,12 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 		}
 	}
 
-	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels() {
+	public Map<Long, List<CPDefinitionOptionRel>> getCPDefinitionOptionRels() {
 		return _cpDefinitionOptionRels;
 	}
 
 	public void init() {
-		_cpDefinitionOptionRels = new ArrayList<>();
+		_cpDefinitionOptionRels = new HashMap<>();
 		_cpOptions = new HashMap<>();
 	}
 
@@ -176,7 +178,7 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 	private CPDefinitionOptionRelLocalService
 		_cpDefinitionOptionRelLocalService;
 
-	private List<CPDefinitionOptionRel> _cpDefinitionOptionRels;
+	private Map<Long, List<CPDefinitionOptionRel>> _cpDefinitionOptionRels;
 
 	@Reference
 	private CPDefinitionOptionValueRelDemoDataCreatorHelper

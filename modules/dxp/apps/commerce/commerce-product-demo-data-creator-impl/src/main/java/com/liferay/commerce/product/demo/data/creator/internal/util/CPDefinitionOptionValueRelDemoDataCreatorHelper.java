@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -57,22 +58,30 @@ public class CPDefinitionOptionValueRelDemoDataCreatorHelper
 
 			ServiceContext serviceContext = getServiceContext(userId, groupId);
 
-			CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-				_cpDefinitionOptionValueRelLocalService.
-					addCPDefinitionOptionValueRel(
-						cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
-						titleMap, priority, key, serviceContext);
-
-			_cpDefinitionOptionValueRels.add(cpDefinitionOptionValueRel);
+			_cpDefinitionOptionValueRelLocalService.
+				addCPDefinitionOptionValueRel(
+					cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
+					titleMap, priority, key, serviceContext);
 		}
+
+		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+			_cpDefinitionOptionValueRelLocalService.
+				getCPDefinitionOptionValueRels(
+					cpDefinitionOptionRel.getCPDefinitionOptionRelId());
+
+		_cpDefinitionOptionValueRels.put(
+			cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
+			cpDefinitionOptionValueRels);
 	}
 
-	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels() {
+	public Map<Long, List<CPDefinitionOptionValueRel>>
+		getCPDefinitionOptionValueRels() {
+
 		return _cpDefinitionOptionValueRels;
 	}
 
 	public void init() {
-		_cpDefinitionOptionValueRels = new ArrayList<>();
+		_cpDefinitionOptionValueRels = new HashMap<>();
 	}
 
 	@Activate
@@ -89,6 +98,7 @@ public class CPDefinitionOptionValueRelDemoDataCreatorHelper
 	private CPDefinitionOptionValueRelLocalService
 		_cpDefinitionOptionValueRelLocalService;
 
-	private List<CPDefinitionOptionValueRel> _cpDefinitionOptionValueRels;
+	private Map<Long, List<CPDefinitionOptionValueRel>>
+		_cpDefinitionOptionValueRels;
 
 }

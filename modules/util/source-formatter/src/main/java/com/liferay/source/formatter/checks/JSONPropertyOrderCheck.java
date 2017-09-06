@@ -30,6 +30,10 @@ public class JSONPropertyOrderCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
+		if (fileName.endsWith("/package-lock.json")) {
+			return content;
+		}
+
 		Matcher matcher = _incorrectLineBreakPattern.matcher(content);
 
 		if (matcher.find()) {

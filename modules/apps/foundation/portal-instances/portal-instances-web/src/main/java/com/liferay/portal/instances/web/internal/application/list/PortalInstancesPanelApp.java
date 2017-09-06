@@ -44,11 +44,6 @@ public class PortalInstancesPanelApp extends BasePanelApp {
 	}
 
 	@Override
-	public boolean isShow(PermissionChecker permissionChecker, Group group) {
-		return permissionChecker.isOmniadmin();
-	}
-
-	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + PortalInstancesPortletKeys.PORTAL_INSTANCES + ")",
 		unbind = "-"

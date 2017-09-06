@@ -43,11 +43,6 @@ public class PushNotificationsPanelApp extends BasePanelApp {
 	}
 
 	@Override
-	public boolean isShow(PermissionChecker permissionChecker, Group group) {
-		return permissionChecker.isOmniadmin();
-	}
-
-	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + PushNotificationsPortletKeys.PUSH_NOTIFICATIONS + ")",
 		unbind = "-"

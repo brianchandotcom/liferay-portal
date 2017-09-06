@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
+import com.liferay.portal.kernel.model.PortletURLListener;
 import com.liferay.portal.kernel.model.PublicRenderParameter;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
@@ -71,11 +72,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSecurityException;
 import javax.portlet.PortletURL;
+import javax.portlet.PortletURLGenerationListener;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceURL;
 import javax.portlet.WindowState;
@@ -1320,6 +1323,32 @@ public class PortletURLImpl
 		sb.append(URLCodec.encodeURL(name));
 	}
 
+	private void _callPortletURLGenerationListener() {
+		PortletApp portletApp = _portlet.getPortletApp();
+
+		for (PortletURLListener portletURLListener :
+				portletApp.getPortletURLListeners()) {
+
+			try {
+				PortletURLGenerationListener portletURLGenerationListener =
+					PortletURLListenerFactory.create(portletURLListener);
+
+				if (_lifecycle.equals(PortletRequest.ACTION_PHASE)) {
+					portletURLGenerationListener.filterActionURL(this);
+				}
+				else if (_lifecycle.equals(PortletRequest.RENDER_PHASE)) {
+					portletURLGenerationListener.filterRenderURL(this);
+				}
+				else if (_lifecycle.equals(PortletRequest.RESOURCE_PHASE)) {
+					portletURLGenerationListener.filterResourceURL(this);
+				}
+			}
+			catch (PortletException pe) {
+				_log.error(pe, pe);
+			}
+		}
+	}
+
 	private Key _getKey() {
 		try {
 			if (_encrypt) {
@@ -1428,6 +1457,8 @@ public class PortletURLImpl
 
 		@Override
 		public String run() {
+			_callPortletURLGenerationListener();
+
 			if (_wsrp) {
 				return generateWSRPToString();
 			}

@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.PortletApp;
-import com.liferay.portal.kernel.model.PortletURLListener;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -53,17 +51,14 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.MimeResponse;
-import javax.portlet.PortletException;
 import javax.portlet.PortletModeException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
-import javax.portlet.PortletURLGenerationListener;
 import javax.portlet.ResourceURL;
 import javax.portlet.WindowStateException;
 import javax.portlet.filter.PortletResponseWrapper;
@@ -679,31 +674,6 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 			else {
 				portletURL = PortletURLFactoryUtil.create(
 					portletRequestImpl, portletName, plid, lifecycle);
-			}
-		}
-
-		PortletApp portletApp = portlet.getPortletApp();
-
-		Set<PortletURLListener> portletURLListeners =
-			portletApp.getPortletURLListeners();
-
-		for (PortletURLListener portletURLListener : portletURLListeners) {
-			try {
-				PortletURLGenerationListener portletURLGenerationListener =
-					PortletURLListenerFactory.create(portletURLListener);
-
-				if (lifecycle.equals(PortletRequest.ACTION_PHASE)) {
-					portletURLGenerationListener.filterActionURL(portletURL);
-				}
-				else if (lifecycle.equals(PortletRequest.RENDER_PHASE)) {
-					portletURLGenerationListener.filterRenderURL(portletURL);
-				}
-				else if (lifecycle.equals(PortletRequest.RESOURCE_PHASE)) {
-					portletURLGenerationListener.filterResourceURL(portletURL);
-				}
-			}
-			catch (PortletException pe) {
-				_log.error(pe, pe);
 			}
 		}
 

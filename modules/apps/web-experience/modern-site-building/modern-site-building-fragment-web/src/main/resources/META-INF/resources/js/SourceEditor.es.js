@@ -13,6 +13,7 @@ class SourceEditor extends Component {
 	/**
 	 * Callback executed when the internal Ace editor has been
 	 * modified. It simply propagates the event.
+	 *
 	 * @param {{content:string}} Updated editor content.
 	 */
 	_handleContentChanged({content}) {
@@ -20,6 +21,11 @@ class SourceEditor extends Component {
 	}
 }
 
+/**
+ * State definition.
+ * @type {!Object}
+ * @static
+ */
 SourceEditor.STATE = {
 	/**
 	 * Initial content sent to the editor
@@ -39,6 +45,7 @@ SourceEditor.STATE = {
 	syntax: Config.oneOf(['html', 'css', 'javascript']).required(),
 };
 
+// Register component
 Soy.register(SourceEditor, templates);
 
 export default SourceEditor;

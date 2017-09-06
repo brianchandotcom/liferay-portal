@@ -1,5 +1,3 @@
-/* global Liferay */
-
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import Uri from 'metal-uri';
@@ -14,7 +12,8 @@ import templates from './MSBFragmentNameEditor.soy';
 class MSBFragmentNameEditor extends Component {
 	/**
 	 * Callback executed when the modal is hidden.
-	 * @private
+	 *
+	 * @protected
 	 */
 	_handleModalHidden() {
 		this.emit('hide');
@@ -24,12 +23,13 @@ class MSBFragmentNameEditor extends Component {
 	 * Callback executed when the generated form is submited.
 	 * If the user has written a Fragment name, it closes the dialog,
 	 * otherwise it does nothing.
-	 * @param  {Event} event Submit event that is prevented.
+	 *
+	 * @param {Event} event Submit event that is prevented.
 	 */
 	_handleSubmitForm(event) {
 		event.preventDefault();
 
-		const form = document.getElementById(this.namespace + "addForm");
+		const form = document.getElementById(`${this.namespace}addForm`);
 		const formData = new FormData(form);
 
 		fetch(
@@ -67,6 +67,11 @@ class MSBFragmentNameEditor extends Component {
 	}
 }
 
+/**
+ * State definition.
+ * @type {!Object}
+ * @static
+ */
 MSBFragmentNameEditor.STATE = {
 	/**
 	 * URL used for creating the fragment. The generated form
@@ -115,6 +120,7 @@ MSBFragmentNameEditor.STATE = {
 	spritemap: Config.string().required(),
 };
 
+// Register component
 Soy.register(MSBFragmentNameEditor, templates);
 
 export default MSBFragmentNameEditor;

@@ -1,5 +1,3 @@
-/* global AUI */
-
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
@@ -11,13 +9,14 @@ import templates from './AceEditor.soy';
  * to allow code editing.
  */
 class AceEditor extends Component {
-	/** @inheritdoc */
+	/**
+	 * @inheritDoc
+	 */
 	attached() {
-		// this._editor = null;
 		this._editorDocument = null;
 		this._handleDocumentChanged = this._handleDocumentChanged.bind(this);
 
-		AUI().use('aui-ace-editor', (A) => { // eslint-disable-line new-cap
+		AUI().use('aui-ace-editor', (A) => {
 			const editor = new A.AceEditor({
 				boundingBox: this.refs.wrapper,
 				mode: this.syntax,
@@ -40,7 +39,8 @@ class AceEditor extends Component {
 
 	/**
 	 * Return false so the ace editor does not break
-	 * @inheritdoc
+	 *
+	 * @inheritDoc
 	 * @return {boolean}
 	 */
 	shouldUpdate() {
@@ -58,6 +58,11 @@ class AceEditor extends Component {
 	}
 }
 
+/**
+ * State definition.
+ * @type {!Object}
+ * @static
+ */
 AceEditor.STATE = {
 	/**
 	 * Initial content sent to the editor
@@ -78,6 +83,7 @@ AceEditor.STATE = {
 	syntax: Config.oneOf(['html', 'css', 'javascript']).required(),
 };
 
+// Register component
 Soy.register(AceEditor, templates);
 
 export default AceEditor;

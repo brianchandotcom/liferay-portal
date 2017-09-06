@@ -12,7 +12,7 @@ import templates from './MSBFragmentPreview.soy';
 const SIZE_RATIO = {
 	'desktop': {width: 16, height: 9},
 	'tablet-portrait': {width: 4, height: 3},
-	'mobile-portrait': {width: 10, height: 16}
+	'mobile-portrait': {width: 10, height: 16},
 };
 
 /**
@@ -26,7 +26,9 @@ const PREVIEW_SIZES = Object.keys(SIZE_RATIO);
  * It allows modifying the preview with an update method.
  */
 class MSBFragmentPreview extends Component {
-	/** @inheritdoc */
+	/**
+	 * @inheritDoc
+	 */
 	attached() {
 		this._updatePreview = debounce(
 			this._updatePreview.bind(this),
@@ -45,7 +47,9 @@ class MSBFragmentPreview extends Component {
 		this.on('jsChanged', this._updatePreview);
 	}
 
-	/** @inheritdoc */
+	/**
+	 * @inheritDoc
+	 */
 	detached() {
 		window.removeEventListener('resize', this._updatePreviewSize);
 
@@ -54,13 +58,16 @@ class MSBFragmentPreview extends Component {
 		this.off('jsChanged', this._updatePreview);
 	}
 
-	/** @inheritdoc */
+	/**
+	 * @inheritDoc
+	 */
 	shouldUpdate(changes) {
 		return changes._currentPreviewSize || changes._previewContent;
 	}
 
 	/**
 	 * Changes the preview size
+	 *
 	 * @param {{delegateTarget: Element}} event
 	 */
 	_handlePreviewSizeButtonClick({delegateTarget}) {
@@ -69,9 +76,10 @@ class MSBFragmentPreview extends Component {
 
 	/**
 	 * Sets the previewSize property and queues an update
+	 *
 	 * @param {string} previewSize
+	 * @protected
 	 * @return {string}
-	 * @private
 	 */
 	_setPreviewSize(previewSize) {
 		this._updatePreviewSize();
@@ -127,6 +135,11 @@ class MSBFragmentPreview extends Component {
 	}
 }
 
+/**
+ * State definition.
+ * @type {!Object}
+ * @static
+ */
 MSBFragmentPreview.STATE = {
 	/**
 	 * CSS content of the preview
@@ -165,7 +178,7 @@ MSBFragmentPreview.STATE = {
 	 * @default ''
 	 * @instance
 	 * @memberOf MSBFragmentPreview
-	 * @private
+	 * @protected
 	 * @type {?string}
 	 */
 	_previewContent: Config.string().internal().value(''),
@@ -177,7 +190,7 @@ MSBFragmentPreview.STATE = {
 	 * @default 'full'
 	 * @instance
 	 * @memberOf MSBFragmentPreview
-	 * @private
+	 * @protected
 	 * @type {?string}
 	 */
 	_currentPreviewSize: Config
@@ -191,12 +204,13 @@ MSBFragmentPreview.STATE = {
 	 * @default PREVIEW_SIZES
 	 * @instance
 	 * @memberOf MSBFragmentPreview
-	 * @private
+	 * @protected
 	 * @type {?Array<string>}
 	 */
 	_previewSizes: Config.array().internal().value(PREVIEW_SIZES),
 };
 
+// Register component
 Soy.register(MSBFragmentPreview, templates);
 
 export default MSBFragmentPreview;

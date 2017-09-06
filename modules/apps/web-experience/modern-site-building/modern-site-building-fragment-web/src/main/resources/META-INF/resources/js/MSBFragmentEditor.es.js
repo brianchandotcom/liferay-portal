@@ -12,7 +12,9 @@ import './SourceEditor.es';
  * the fragment and a <FragmentPreview /> component for the preview
  */
 class MSBFragmentEditor extends Component {
-	/** @inheritdoc */
+	/**
+	 * @inheritDoc
+	 */
 	shouldUpdate(changes) {
 		return changes._html || changes._js || changes._css;
 	}
@@ -30,8 +32,9 @@ class MSBFragmentEditor extends Component {
 
 	/**
 	 * Callback executed when the css editor changes
+	 *
 	 * @param {string} content
-	 * @private
+	 * @protected
 	 */
 	_handleCSSChanged({content}) {
 		this._css = content;
@@ -40,8 +43,9 @@ class MSBFragmentEditor extends Component {
 
 	/**
 	 * Callback executed when the html editor changes
+	 *
 	 * @param {string} content
-	 * @private
+	 * @protected
 	 */
 	_handleHTMLChanged({content}) {
 		this._html = content;
@@ -51,7 +55,7 @@ class MSBFragmentEditor extends Component {
 	/**
 	 * Callback executed when the js editor changes
 	 * @param {string} content
-	 * @private
+	 * @protected
 	 */
 	_handleJSChanged({content}) {
 		this._js = content;
@@ -59,11 +63,16 @@ class MSBFragmentEditor extends Component {
 	}
 }
 
+/**
+ * State definition.
+ * @type {!Object}
+ * @static
+ */
 MSBFragmentEditor.STATE = {
 	/**
 	 * Initial HTML sent to the editor
 	 * @instance
-	 * @memberOf FragmentEditor
+	 * @memberOf MSBFragmentEditor
 	 * @type {!string}
 	 */
 	initialHTML: Config.string().required(),
@@ -71,7 +80,7 @@ MSBFragmentEditor.STATE = {
 	/**
 	 * Initial CSS sent to the editor
 	 * @instance
-	 * @memberOf FragmentEditor
+	 * @memberOf MSBFragmentEditor
 	 * @type {!string}
 	 */
 	initialCSS: Config.string().required(),
@@ -79,7 +88,7 @@ MSBFragmentEditor.STATE = {
 	/**
 	 * Initial JS sent to the editor
 	 * @instance
-	 * @memberOf FragmentEditor
+	 * @memberOf MSBFragmentEditor
 	 * @type {!string}
 	 */
 	initialJS: Config.string().required(),
@@ -88,7 +97,7 @@ MSBFragmentEditor.STATE = {
 	 * Namespace of the portlet being used.
 	 * Necesary for getting the real inputs which interact with the server.
 	 * @instance
-	 * @memberOf FragmentEditor
+	 * @memberOf MSBFragmentEditor
 	 * @type {!string}
 	 */
 	namespace: Config.string().required(),
@@ -96,7 +105,7 @@ MSBFragmentEditor.STATE = {
 	/**
 	 * Path of the available icons.
 	 * @instance
-	 * @memberOf FragmentEditor
+	 * @memberOf MSBFragmentEditor
 	 * @type {!string}
 	 */
 	spritemap: Config.string().required(),
@@ -106,8 +115,8 @@ MSBFragmentEditor.STATE = {
 	 * the editor. This value will be propagated to the preview.
 	 * @default ''
 	 * @instance
-	 * @memberOf FragmentEditor
-	 * @private
+	 * @memberOf MSBFragmentEditor
+	 * @protected
 	 * @type {?string}
 	 */
 	_css: Config.string().internal().value(''),
@@ -117,8 +126,8 @@ MSBFragmentEditor.STATE = {
 	 * the editor. This value will be propagated to the preview.
 	 * @default ''
 	 * @instance
-	 * @memberOf FragmentEditor
-	 * @private
+	 * @memberOf MSBFragmentEditor
+	 * @protected
 	 * @type {?string}
 	 */
 	_html: Config.string().internal().value(''),
@@ -128,13 +137,14 @@ MSBFragmentEditor.STATE = {
 	 * the editor. This value will be propagated to the preview.
 	 * @default ''
 	 * @instance
-	 * @memberOf FragmentEditor
-	 * @private
+	 * @memberOf MSBFragmentEditor
+	 * @protected
 	 * @type {?string}
 	 */
 	_js: Config.string().internal().value(''),
 };
 
+// Register component
 Soy.register(MSBFragmentEditor, templates);
 
 export default MSBFragmentEditor;

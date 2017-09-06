@@ -15,11 +15,15 @@
 package com.liferay.portal.bundle.blacklist.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.bundle.blacklist.BundleBlacklistManager;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.lpkg.deployer.test.util.LPKGTestUtil;
 import com.liferay.portal.osgi.util.test.OSGiServiceUtil;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -28,12 +32,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.util.Collection;
 import java.util.Dictionary;
 import java.util.concurrent.CountDownLatch;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -53,6 +60,11 @@ import org.osgi.util.tracker.BundleTracker;
  */
 @RunWith(Arquillian.class)
 public class BundleBlacklistTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Before
 	public void setUp() throws Exception {
@@ -140,6 +152,48 @@ public class BundleBlacklistTest {
 	}
 
 	@Test
+	public void testAddToAndRemoveFromBlacklist() throws Exception {
+		Bundle bundle = _findBundle(_SYMBOLIC_NAME);
+
+		Assert.assertEquals(Bundle.ACTIVE, bundle.getState());
+
+		Collection<String> blacklistBundleSymbolicNames =
+			_bundleBlacklistManager.getBlacklistBundleSymbolicNames();
+
+		Assert.assertFalse(
+			_SYMBOLIC_NAME + " should not be blacklisted",
+			blacklistBundleSymbolicNames.contains(_SYMBOLIC_NAME));
+
+		_bundleBlacklistManager.addToBlacklistAndUninstall(_SYMBOLIC_NAME);
+
+		for (Bundle curBundle : _bundleContext.getBundles()) {
+			Assert.assertFalse(
+				curBundle + " should not be installed",
+				_SYMBOLIC_NAME.equals(curBundle.getSymbolicName()));
+		}
+
+		blacklistBundleSymbolicNames =
+			_bundleBlacklistManager.getBlacklistBundleSymbolicNames();
+
+		Assert.assertTrue(
+			_SYMBOLIC_NAME + " should be blacklisted",
+			blacklistBundleSymbolicNames.contains(_SYMBOLIC_NAME));
+
+		_bundleBlacklistManager.removeFromBlacklistAndInstall(_SYMBOLIC_NAME);
+
+		bundle = _findBundle(_SYMBOLIC_NAME);
+
+		Assert.assertEquals(Bundle.ACTIVE, bundle.getState());
+
+		blacklistBundleSymbolicNames =
+			_bundleBlacklistManager.getBlacklistBundleSymbolicNames();
+
+		Assert.assertFalse(
+			_SYMBOLIC_NAME + " should not be blacklisted",
+			blacklistBundleSymbolicNames.contains(_SYMBOLIC_NAME));
+	}
+
+	@Test
 	public void testBundleBlacklist() throws Exception {
 		Bundle jarBundle = null;
 		Bundle lpkgBundle = null;
@@ -175,8 +229,7 @@ public class BundleBlacklistTest {
 
 		// Blacklist WAR wrapper
 
-		properties.put(
-			_PROP_KEY, new String[] {warWrapperBundle.getSymbolicName()});
+		properties.put(_PROP_KEY, warWrapperBundle.getSymbolicName());
 
 		_updateConfiguration(properties);
 
@@ -205,7 +258,7 @@ public class BundleBlacklistTest {
 
 		// Blacklist WAR
 
-		properties.put(_PROP_KEY, new String[] {warBundle.getSymbolicName()});
+		properties.put(_PROP_KEY, warBundle.getSymbolicName());
 
 		_updateConfiguration(properties);
 
@@ -224,7 +277,7 @@ public class BundleBlacklistTest {
 
 		// Blacklist JAR
 
-		properties.put(_PROP_KEY, new String[] {jarBundle.getSymbolicName()});
+		properties.put(_PROP_KEY, jarBundle.getSymbolicName());
 
 		_updateConfiguration(properties);
 
@@ -243,7 +296,7 @@ public class BundleBlacklistTest {
 
 		// Blacklist LPKG
 
-		properties.put(_PROP_KEY, new String[] {lpkgBundle.getSymbolicName()});
+		properties.put(_PROP_KEY, lpkgBundle.getSymbolicName());
 
 		_updateConfiguration(properties);
 
@@ -329,7 +382,12 @@ public class BundleBlacklistTest {
 		_bundleContext.addServiceListener(serviceListener);
 
 		try {
-			_bundleBlacklistConfiguration.update(dictionary);
+			if (dictionary == null) {
+				_bundleBlacklistConfiguration.delete();
+			}
+			else {
+				_bundleBlacklistConfiguration.update(dictionary);
+			}
 
 			countDownLatch.await();
 		}
@@ -351,6 +409,9 @@ public class BundleBlacklistTest {
 
 	private static final String _SYMBOLIC_NAME =
 		"com.liferay.portal.bundle.blacklist.test.bundle";
+
+	@Inject
+	private static BundleBlacklistManager _bundleBlacklistManager;
 
 	private Configuration _bundleBlacklistConfiguration;
 	private BundleContext _bundleContext;

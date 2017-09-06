@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -568,13 +569,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			themeDisplay.getPermissionChecker(), groupId,
 			ActionKeys.MANAGE_LAYOUTS);
 
-		boolean mobile = false;
-
-		String userAgent = request.getHeader("User-Agent");
-
-		if (userAgent.indexOf("Mobile") != -1) {
-			mobile = true;
-		}
+		boolean mobile = BrowserSnifferUtil.isMobile(request);
 
 		for (LayoutTreeNode layoutTreeNode : layoutTreeNodes) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();

@@ -143,7 +143,6 @@ $gray-lighter: lighten($gray-base, 93.5%) !default; // #EEE
 						.btn {
 							padding: 0;
 						}
-
 					}
 
 					.carousel-left-arrow {
@@ -154,10 +153,9 @@ $gray-lighter: lighten($gray-base, 93.5%) !default; // #EEE
 
 					.carousel-right-arrow {
 						right: 0;
-						
+
 						@include transform(translate(100%, -50%));
 					}
-
 				}
 
 				.carousel-container {

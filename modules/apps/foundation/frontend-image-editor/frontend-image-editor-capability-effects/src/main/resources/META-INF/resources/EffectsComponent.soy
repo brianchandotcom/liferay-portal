@@ -6,7 +6,7 @@
  * @param effects
  * @param ref
  * @param thumbnailSize
- * @param carouselOffset
+ * @param? carouselOffset
  * @param? currentEffect_
  * @param? pathThemeImages
  */
@@ -20,10 +20,33 @@
 			</a>
 		</div>
 		<div class="carousel-container" ref="carouselContainer">
-			<ul class="carousel list-unstyled list-table" ref="carousel" style="margin-left: {$carouselOffset}">
+			{let $listAttributes kind="attributes"}
+				class="carousel list-unstyled list-table"
+				ref="carousel"
+				style="margin-left: {$carouselOffset ?: 0}"
+			{/let}
+
+			<ul {$listAttributes}>
 				{foreach $effect in $effects}
-					<li class="item" {if isFirst($effect)}ref="carouselFirstItem"{/if}>
-						<a data-onclick="previewEffect" data-effect="{$effect}" class="{$currentEffect_ == $effect ? 'active' : ''}">
+					{let $itemAttributes kind="attributes"}
+						class="item"
+
+						{if isFirst($effect)}
+							ref="carouselFirstItem"
+						{/if}
+					{/let}
+
+					<li {$itemAttributes}>
+						{let $linkAttributes kind="attributes"}
+							{if $currentEffect_ == $effect}
+								class="active"
+							{/if}
+
+							data-effect="{$effect}"
+							data-onclick="previewEffect"
+						{/let}
+
+						<a {$linkAttributes}>
 							<div id="{$ref}{$effect}" style="position: relative;">
 								<canvas width="{$thumbnailSize}" height="{$thumbnailSize}"></canvas>
 							</div>

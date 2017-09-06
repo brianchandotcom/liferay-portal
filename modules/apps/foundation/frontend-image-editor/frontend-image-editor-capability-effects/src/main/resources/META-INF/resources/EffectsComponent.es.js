@@ -10,7 +10,7 @@ import controlsTemplates from './EffectsControls.soy';
 
 /**
  * Returns whether the carousel can be scrolled towards the right
- * 
+ *
  * @private
  * @return {boolean} returns true if the carousel can be scrolled, false otherwise
  */
@@ -182,12 +182,12 @@ class EffectsComponent extends Component {
 
 	/**
 	 * Makes the carousel scroll left to reveal options off the visible area
-	 * 
+	 *
 	 * @return void
-	 */ 
+	 */
 	scrollLeft() {
 		const carousel = this.refs.carousel;
-		const itemWidth = this.res.carouselFirstItem.offsetWidth || 0;
+		const itemWidth = this.refs.carouselFirstItem.offsetWidth || 0;
 		const marginLeft = parseInt(carousel.style.marginLeft || 0, 10);
 		if (marginLeft < 0) {
 			const newMarginValue = Math.min(marginLeft + itemWidth, 0);
@@ -197,9 +197,9 @@ class EffectsComponent extends Component {
 
 	/**
 	 * Makes the caousel scroll right to reveal options off the visible area
-	 * 
+	 *
 	 * @return void
-	 */ 
+	 */
 	scrollRight() {
 		const carousel = this.refs.carousel;
 		if (!canScrollForward.call(this)) {
@@ -244,12 +244,12 @@ EffectsComponent.STATE = {
 	},
 
 	/**
-	 * Offset to the carousel item with the 'px' postfix 
+	 * Offset to the carousel item with the 'px' postfix
 	 * @type {String}
 	 */
 	carouselOffset: {
 		validator: core.isString,
-		value: '0'		
+		value: '0'
 	},
 
 	/**

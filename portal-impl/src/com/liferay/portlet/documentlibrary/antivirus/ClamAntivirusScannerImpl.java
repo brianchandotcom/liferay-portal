@@ -16,6 +16,8 @@ package com.liferay.portlet.documentlibrary.antivirus;
 
 import com.liferay.document.library.kernel.antivirus.AntivirusScannerException;
 import com.liferay.document.library.kernel.antivirus.BaseFileAntivirusScanner;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,6 +35,10 @@ public class ClamAntivirusScannerImpl extends BaseFileAntivirusScanner {
 			exitValue = _scanProcess("clamdscan", file);
 		}
 		catch (InterruptedException | IOException e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Error executing clamdscan", e);
+			}
+
 			exitValue = -1;
 		}
 
@@ -52,6 +58,10 @@ public class ClamAntivirusScannerImpl extends BaseFileAntivirusScanner {
 			}
 		}
 		catch (InterruptedException | IOException e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Error executing clamscan", e);
+			}
+
 			throw new AntivirusScannerException(
 				AntivirusScannerException.PROCESS_FAILURE, e);
 		}
@@ -80,5 +90,8 @@ public class ClamAntivirusScannerImpl extends BaseFileAntivirusScanner {
 			}
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ClamAntivirusScannerImpl.class);
 
 }

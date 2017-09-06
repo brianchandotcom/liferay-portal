@@ -297,6 +297,12 @@ public class CPDefinitionOptionRelLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionRel> getCPDefinitionOptionRels(
+		long cpDefinitionId) {
+		return _cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(cpDefinitionId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionRel> getCPDefinitionOptionRels(
 		long cpDefinitionId, int start, int end) {
 		return _cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(cpDefinitionId,
 			start, end);

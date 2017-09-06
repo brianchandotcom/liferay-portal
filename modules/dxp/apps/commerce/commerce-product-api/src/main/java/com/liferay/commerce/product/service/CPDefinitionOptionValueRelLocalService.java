@@ -254,6 +254,10 @@ public interface CPDefinitionOptionValueRelLocalService extends BaseLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
+		long cpDefinitionOptionRelId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
 		long cpDefinitionOptionRelId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

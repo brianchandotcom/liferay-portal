@@ -283,6 +283,11 @@ public class CPDefinitionOptionRelLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionRel> getCPDefinitionOptionRels(
+		long cpDefinitionId) {
+		return getService().getCPDefinitionOptionRels(cpDefinitionId);
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionRel> getCPDefinitionOptionRels(
 		long cpDefinitionId, int start, int end) {
 		return getService().getCPDefinitionOptionRels(cpDefinitionId, start, end);
 	}

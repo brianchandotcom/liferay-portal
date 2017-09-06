@@ -8,3 +8,7 @@ dependencies {
 
 	soyCompile project(":apps:foundation:hello-soy:hello-soy-web")
 }
+
+node {
+	nodeVersion = "8.4.0"
+}

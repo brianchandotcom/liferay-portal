@@ -71,6 +71,7 @@
 /development/tlddoc.jar
 /development/tomcat-api.jar
 /development/tomcat-coyote.jar
+/development/tomcat-util.jar
 /development/velocity.jar
 /development/velocity-tools.jar
 /development/websocket-api.jar

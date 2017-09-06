@@ -3087,6 +3087,18 @@ go</echo>
 						<var name="app.server.tomcat.version" value="7.0.62" />
 					</then>
 				</elseif>
+				<elseif>
+					<or>
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.0.10" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.0.10.1" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.0.10.2" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.0.10.3" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.0.10.4" />
+					</or>
+					<then>
+						<var name="app.server.tomcat.version" value="8.0.32" />
+					</then>
+				</elseif>
 			</if>
 
 			<var name="app.server.tomcat.bin.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}/bin" />

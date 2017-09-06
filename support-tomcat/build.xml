@@ -9,7 +9,7 @@
 	<property name="javac.classpathref" value="web.classpath" />
 
 	<path id="web-lib.classpath">
-		<fileset dir="${project.dir}/lib/development" includes="catalina.jar,jasper.jar,tomcat-api.jar,tomcat-coyote.jar" />
+		<fileset dir="${project.dir}/lib/development" includes="catalina.jar,jasper.jar,tomcat-api.jar,tomcat-coyote.jar,tomcat-util.jar" />
 		<fileset dir="${project.dir}/lib/portal" includes="tomcat-juli.jar" />
 	</path>
 </project>

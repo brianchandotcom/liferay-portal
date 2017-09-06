@@ -23,6 +23,10 @@
 		}
 	}
 
+	.input-checkbox-wrapper {
+		position: static;
+	}
+
 	@if (variable-exists(atlas-theme)) {
 		.btn-link {
 			color: $nav-link-color;

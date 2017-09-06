@@ -85,7 +85,7 @@ public class CommerceCartContentMiniPortletDisplayTemplateHandler
 		templateVariableGroup.addVariable(
 			"commerce-cart-content-mini-display-context",
 			CommerceCartContentMiniDisplayContext.class,
-			"commerceCartContenMinitDisplayContext");
+			"commerceCartContentMiniDisplayContext");
 		templateVariableGroup.addCollectionVariable(
 			"commerce-cart-items", List.class,
 			PortletDisplayTemplateConstants.ENTRIES, "commerce-cart-item",
@@ -114,7 +114,7 @@ public class CommerceCartContentMiniPortletDisplayTemplateHandler
 	@Override
 	protected String getTemplatesConfigPath() {
 		return "com/liferay/commerce/cart/content/web/internal/portlet" +
-			"/template/dependencies/portlet-display-templates.xml";
+			"/template/dependencies/cart_mini/portlet-display-templates.xml";
 	}
 
 	@Reference

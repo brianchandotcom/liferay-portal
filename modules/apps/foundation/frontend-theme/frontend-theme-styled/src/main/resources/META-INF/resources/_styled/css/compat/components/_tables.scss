@@ -1,3 +1,19 @@
+div.splitter,
+.table.table-autofit .splitter td,
+.table.table-autofit .splitter th {
+	background-color: $table-divider-bg;
+	color: $table-divider-color;
+	font-size: $table-divider-font-size;
+	font-weight: $table-divider-font-weight;
+	padding: $table-divider-padding;
+	text-transform: $table-divider-text-transform;
+}
+
+.table .splitter {
+	box-shadow: none;
+	padding: 0;
+}
+
 .table > thead > tr,
 .table > tbody > tr,
 .table > tfoot > tr {

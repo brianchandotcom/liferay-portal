@@ -5420,6 +5420,8 @@ go]]></replacevalue>
 			<then>
 				<echo file="tools/sdk/build.${user.name}.properties">auto.deploy.dir=${liferay.home}/deploy</echo>
 
+				<local name="osgi.module.pattern" />
+
 				<property name="osgi.module.pattern" value="**/apps/**" />
 
 				<antelope:stringutil property="osgi.modules.includes.pattern" string="${osgi.module.pattern}/${osgi.modules.includes}">
@@ -5430,50 +5432,29 @@ go]]></replacevalue>
 					<dirset dir="modules" includes="${osgi.modules.includes.pattern}">
 						<or>
 							<present targetdir="modules">
-								<mapper type="glob" from="*" to="*/build.gradle" />
+								<mapper from="*" to="*/build.gradle" type="glob" />
 							</present>
 							<present targetdir="modules">
-								<mapper type="glob" from="*" to="*/build.xml" />
+								<mapper from="*" to="*/build.xml" type="glob" />
 							</present>
 						</or>
 					</dirset>
 				</pathconvert>
 
-				<for list="${osgi.modules.paths}" param="osgi.modules.path">
-					<sequential>
-						<local name="osgi.modules.gradle.dir">
-
-						<dirname file="@{osgi.modules.path}" property="osgi.modules.gradle.dir" />
-
-						<if>
-							<available file="${osgi.modules.gradle.dir}/settings.gradle" />
-							<then>
-								<move file="${@{osgi.module}.gradle.dir}/settings.gradle" tofile="${@{osgi.module}.gradle.dir}/settings" />
-							</then>
-						</if>
-					</sequential>
-				</for>
-
 				<for list="${osgi.modules.paths}" parallel="true" param="osgi.module.path">
 					<sequential>
-						<gradle-execute dir="@{osgi.module.path}" task="deploy">
+						<local name="module.base.dir" />
+						<local name="osgi.module.command.prefix" />
+
+						<dirname file="@{osgi.module.path}" property="module.base.dir" />
+
+						<move failonerror="false" file="${module.base.dir}/settings.gradle" tofile="${module.base.dir}/settings.gradle.temp" verbose="true" />
+
+						<gradle-execute dir="@{osgi.module.path}" forcedcacheenabled="false" task="deploy">
 							<arg value="clean" />
 						</gradle-execute>
-					</sequential>
-				</for>
 
-				<for list="${osgi.modules.paths}" param="osgi.module.path">
-					<sequential>
-						<local name="osgi.modules.gradle.dir">
-
-						<dirname file="@{osgi.modules.path}" property="osgi.modules.gradle.dir" />
-
-						<if>
-							<available file="${osgi.modules.gradle.dir}/settings" />
-							<then>
-								<move file="${@{osgi.module}.gradle.dir}/settings" tofile="${@{osgi.module}.gradle.dir}/settings.gradle" />
-							</then>
-						</if>
+						<move failonerror="false" file="${module.base.dir}/settings.gradle.temp" tofile="${module.base.dir}/settings.gradle" />
 					</sequential>
 				</for>
 			</then>

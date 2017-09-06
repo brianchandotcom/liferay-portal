@@ -183,6 +183,14 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 
 	@Override
 	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
+		long cpDefinitionOptionRelId) {
+
+		return cpDefinitionOptionValueRelPersistence.
+			findByCPDefinitionOptionRelId(cpDefinitionOptionRelId);
+	}
+
+	@Override
+	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
 		long cpDefinitionOptionRelId, int start, int end) {
 
 		return cpDefinitionOptionValueRelPersistence.

@@ -53,17 +53,12 @@ public abstract class BaseCompanySettingsVerifyProcess extends VerifyProcess {
 	protected Dictionary<String, String> getPropertyValues(long companyId) {
 		Dictionary<String, String> dictionary = new HashMapDictionary<>();
 
-		String[][] renamePropertykeysArray = getRenamePropertyKeysArray();
+		for (String[] renamePropertykeys : getRenamePropertyKeysArray()) {
+			String propertyValue = PrefsPropsUtil.getString(
+				companyId, renamePropertykeys[0]);
 
-		for (String[] renamePropertykeys : renamePropertykeysArray) {
-			String oldPropertyKey = renamePropertykeys[0];
-			String newPropertyKey = renamePropertykeys[1];
-
-			String oldPropertyValue = PrefsPropsUtil.getString(
-				companyId, oldPropertyKey);
-
-			if (oldPropertyValue != null) {
-				dictionary.put(newPropertyKey, oldPropertyValue);
+			if (propertyValue != null) {
+				dictionary.put(renamePropertykeys[1], propertyValue);
 			}
 		}
 

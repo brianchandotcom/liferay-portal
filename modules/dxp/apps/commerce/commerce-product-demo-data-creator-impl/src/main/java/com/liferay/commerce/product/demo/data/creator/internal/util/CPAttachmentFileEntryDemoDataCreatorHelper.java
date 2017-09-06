@@ -23,26 +23,23 @@ import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import java.io.InputStream;
-
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -90,7 +87,8 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 	}
 
 	public void addCPDefinitionAttachmentFileEntries(
-			long userId, long groupId, long cpDefinitionId, JSONArray jsonArray)
+			long userId, long groupId, long cpDefinitionId,
+			JSONArray cpAttachmentFileEntriesJSONArray)
 		throws Exception {
 
 		Class<?> clazz = getClass();
@@ -102,8 +100,8 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 		Folder folder = _cpAttachmentFileEntryLocalService.getAttachmentsFolder(
 			userId, groupId, CPDefinition.class.getName(), cpDefinitionId);
 
-		for (int i = 0; i < jsonArray.length(); i++) {
-			String fileName = jsonArray.getString(i);
+		for (int i = 0; i < cpAttachmentFileEntriesJSONArray.length(); i++) {
+			String fileName = cpAttachmentFileEntriesJSONArray.getString(i);
 
 			Map<Locale, String> titleMap = Collections.singletonMap(
 				Locale.US, fileName);
@@ -122,66 +120,61 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 				CPConstants.SERVICE_NAME, folder.getFolderId(), inputStream,
 				uniqueFileName, "image/jpeg", true);
 
-			List<CPDefinitionOptionRel> cpDefinitionOptionRels =
+			Map<Long, List<CPDefinitionOptionRel>> cpDefinitionOptionRelsMap =
 				_cpOptionDemoDataCreatorHelper.getCPDefinitionOptionRels();
-			List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
-				_cpDefinitionOptionValueRelDemoDataCreatorHelper.
-					getCPDefinitionOptionValueRels();
+			Map<Long, List<CPDefinitionOptionValueRel>>
+				cpDefinitionOptionValueRelsMap =
+					_cpDefinitionOptionValueRelDemoDataCreatorHelper.
+						getCPDefinitionOptionValueRels();
 
-			JSONArray optionIdsJSONArray = JSONFactoryUtil.createJSONArray();
+			List<CPDefinitionOptionRel> cpDefinitionOptionRels =
+				cpDefinitionOptionRelsMap.get(cpDefinitionId);
 
-			StringBundler sb = new StringBundler();
+			JSONArray optionIdsJSONArray = _jsonFactory.createJSONArray();
+			JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 			for (CPDefinitionOptionRel cpDefinitionOptionRel :
 					cpDefinitionOptionRels) {
 
-				if (cpDefinitionOptionRel.getCPDefinitionId() ==
-						cpDefinitionId) {
+				long cpDefinitionOptionRelId =
+					cpDefinitionOptionRel.getCPDefinitionOptionRelId();
 
-					long cpDefinitionOptionRelId =
-						cpDefinitionOptionRel.getCPDefinitionOptionRelId();
+				optionIdsJSONArray.put(cpDefinitionOptionRelId);
 
-					optionIdsJSONArray.put(cpDefinitionOptionRelId);
+				List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+					cpDefinitionOptionValueRelsMap.get(cpDefinitionOptionRelId);
 
-					for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
-							cpDefinitionOptionValueRels) {
+				for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
+						cpDefinitionOptionValueRels) {
 
-						if (cpDefinitionOptionValueRel.
-								getCPDefinitionOptionRelId() ==
-									cpDefinitionOptionRelId) {
+					if (fileName.contains(
+							cpDefinitionOptionValueRel.getKey())) {
 
-							if (fileName.contains(
-									cpDefinitionOptionValueRel.getKey())) {
+						optionIdsJSONArray.put(
+							cpDefinitionOptionValueRel.
+								getCPDefinitionOptionValueRelId());
 
-								optionIdsJSONArray.put(
-									cpDefinitionOptionValueRel.
-										getCPDefinitionOptionValueRelId());
+						JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-								sb.append("[{\"cpDefinitionOptionRelId\":\"");
-								sb.append(optionIdsJSONArray.get(0));
-								sb.append(StringPool.QUOTE);
-								sb.append(StringPool.COMMA);
-								sb.append("\"cpDefinitionOptionValueRelId\"");
-								sb.append(StringPool.COLON);
-								sb.append(StringPool.QUOTE);
-								sb.append(optionIdsJSONArray.get(1));
-								sb.append("\"}]");
-							}
-						}
-						else {
-							continue;
-						}
+						jsonObject.put("key", optionIdsJSONArray.get(0));
+
+						JSONArray valueJSONArray =
+							_jsonFactory.createJSONArray();
+
+						valueJSONArray.put(
+							optionIdsJSONArray.get(1).toString());
+
+						jsonObject.put("value", valueJSONArray);
+
+						jsonArray.put(jsonObject);
 					}
-				}
-				else {
-					continue;
 				}
 			}
 
 			createCPAttachmentFileEntry(
 				userId, groupId, classeNameId, cpDefinitionId,
-				fileEntry.getFileEntryId(), titleMap, sb.toString(), priority,
-				CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE);
+				fileEntry.getFileEntryId(), titleMap, jsonArray.toString(),
+				priority, CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE);
 		}
 	}
 
@@ -243,6 +236,9 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 
 	@Reference
 	private CPOptionDemoDataCreatorHelper _cpOptionDemoDataCreatorHelper;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;

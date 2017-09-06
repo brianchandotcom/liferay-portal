@@ -1039,8 +1039,10 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="AssertClick" locator1="WC#FOLDER_TABLE_CHOOSE" value1="Choose">
-			<var name="key_folderName" value="${folderName}" />
+		<execute macro="Portlet#expandTree" />
+
+		<execute macro="Portlet#selectTreeNode">
+			<var name="nodeName" value="${folderName}" />
 		</execute>
 
 		<execute function="SelectFrameTop" />

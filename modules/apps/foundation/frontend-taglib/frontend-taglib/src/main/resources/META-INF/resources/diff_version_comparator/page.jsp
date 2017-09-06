@@ -55,30 +55,40 @@ if (Validator.isNotNull(languageId)) {
 								<liferay-ui:icon label="<%= true %>" message='<%= LanguageUtil.format(request, "version-x", sourceVersion) %>' />
 							</c:when>
 							<c:otherwise>
-								<liferay-ui:icon-menu direction="down" extended="<%= false %>" message='<%= LanguageUtil.format(request, "version-x", sourceVersion) %>' showArrow="<%= true %>" showWhenSingleIcon="<%= true %>" useIconCaret="<%= true %>">
+								<div class="dropdown">
+									<a aria-expanded="true" class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
+										<span class="management-bar-item-title">
+											<liferay-ui:message key='<%= LanguageUtil.format(request, "version-x", sourceVersion) %>' />
+										</span>
 
-									<%
-									PortletURL sourceURL = PortletURLUtil.clone(portletURL, renderResponse);
+										<aui:icon image="caret-double-l" markupView="lexicon" />
+									</a>
 
-									sourceURL.setParameter("targetVersion", String.valueOf(targetVersion));
+									<ul class="dropdown-menu">
 
-									for (DiffVersion diffVersion : diffVersions) {
-										sourceURL.setParameter("sourceVersion", String.valueOf(diffVersion.getVersion()));
-									%>
+										<%
+										PortletURL sourceURL = PortletURLUtil.clone(portletURL, renderResponse);
 
-										<c:if test="<%= (sourceVersion != diffVersion.getVersion()) && (targetVersion != diffVersion.getVersion()) %>">
-											<liferay-ui:icon
-												label="<%= true %>"
-												message='<%= LanguageUtil.format(request, "version-x", diffVersion.getVersion()) %>'
-												url="<%= sourceURL.toString() %>"
-											/>
-										</c:if>
+										sourceURL.setParameter("targetVersion", String.valueOf(targetVersion));
 
-									<%
-									}
-									%>
+										for (DiffVersion diffVersion : diffVersions) {
+											sourceURL.setParameter("sourceVersion", String.valueOf(diffVersion.getVersion()));
+										%>
 
-								</liferay-ui:icon-menu>
+											<c:if test="<%= (sourceVersion != diffVersion.getVersion()) && (targetVersion != diffVersion.getVersion()) %>">
+												<li>
+													<a href="<%= sourceURL.toString() %>">
+														<liferay-ui:message key='<%= LanguageUtil.format(request, "version-x", diffVersion.getVersion()) %>' />
+													</a>
+												</li>
+											</c:if>
+
+										<%
+										}
+										%>
+
+									</ul>
+								</div>
 							</c:otherwise>
 						</c:choose>
 
@@ -96,30 +106,40 @@ if (Validator.isNotNull(languageId)) {
 							<liferay-ui:icon label="<%= true %>" message='<%= LanguageUtil.format(request, "version-x", targetVersion) %>' />
 						</c:when>
 						<c:otherwise>
-							<liferay-ui:icon-menu direction="down" extended="<%= false %>" message='<%= LanguageUtil.format(request, "version-x", targetVersion) %>' showArrow="<%= true %>" showWhenSingleIcon="<%= true %>" useIconCaret="<%= true %>">
+							<div class="dropdown">
+								<a aria-expanded="true" class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
+									<span class="management-bar-item-title">
+										<liferay-ui:message key='<%= LanguageUtil.format(request, "version-x", targetVersion) %>' />
+									</span>
 
-								<%
-								PortletURL targetURL = PortletURLUtil.clone(portletURL, renderResponse);
+									<aui:icon image="caret-double-l" markupView="lexicon" />
+								</a>
 
-								targetURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
+								<ul class="dropdown-menu">
 
-								for (DiffVersion diffVersion : diffVersions) {
-									targetURL.setParameter("targetVersion", String.valueOf(diffVersion.getVersion()));
-								%>
+									<%
+									PortletURL targetURL = PortletURLUtil.clone(portletURL, renderResponse);
 
-									<c:if test="<%= (sourceVersion != diffVersion.getVersion()) && (targetVersion != diffVersion.getVersion()) %>">
-										<liferay-ui:icon
-											label="<%= true %>"
-											message='<%= LanguageUtil.format(request, "version-x", diffVersion.getVersion()) %>'
-											url="<%= targetURL.toString() %>"
-										/>
-									</c:if>
+									targetURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
 
-								<%
-								}
-								%>
+									for (DiffVersion diffVersion : diffVersions) {
+										targetURL.setParameter("targetVersion", String.valueOf(diffVersion.getVersion()));
+									%>
 
-							</liferay-ui:icon-menu>
+										<c:if test="<%= (sourceVersion != diffVersion.getVersion()) && (targetVersion != diffVersion.getVersion()) %>">
+											<li>
+												<a href="<%= targetURL.toString() %>">
+													<liferay-ui:message key='<%= LanguageUtil.format(request, "version-x", diffVersion.getVersion()) %>' />
+												</a>
+											</li>
+										</c:if>
+
+									<%
+									}
+									%>
+
+								</ul>
+							</div>
 						</c:otherwise>
 					</c:choose>
 

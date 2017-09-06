@@ -263,9 +263,7 @@ public class AssetPublisherPortletToolbarContributor
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (layout.isLayoutPrototypeLinkActive() &&
-			!assetPublisherDisplayContext.isShowAddContentButton()) {
-
+		if (layout.isLayoutPrototypeLinkActive()) {
 			return false;
 		}
 

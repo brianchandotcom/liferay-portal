@@ -81,31 +81,37 @@ public abstract class BaseDB implements DB {
 			_log.info("Adding indexes");
 		}
 
-		for (String sql : StringUtil.splitLines(indexesSQL)) {
-			if (Validator.isNull(sql)) {
-				continue;
-			}
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(indexesSQL))) {
 
-			int y = sql.indexOf(" on ");
+			String sql = null;
 
-			int x = sql.lastIndexOf(" ", y - 1);
+			while ((sql = unsyncBufferedReader.readLine()) != null) {
+				if (Validator.isNull(sql)) {
+					continue;
+				}
 
-			String indexName = sql.substring(x + 1, y);
+				int y = sql.indexOf(" on ");
 
-			if (validIndexNames.contains(indexName)) {
-				continue;
-			}
+				int x = sql.lastIndexOf(" ", y - 1);
 
-			if (_log.isInfoEnabled()) {
-				_log.info(sql);
-			}
+				String indexName = sql.substring(x + 1, y);
 
-			try {
-				runSQL(con, sql);
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(e.getMessage() + ": " + sql);
+				if (validIndexNames.contains(indexName)) {
+					continue;
+				}
+
+				if (_log.isInfoEnabled()) {
+					_log.info(sql);
+				}
+
+				try {
+					runSQL(con, sql);
+				}
+				catch (Exception e) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(e.getMessage() + ": " + sql);
+					}
 				}
 			}
 		}

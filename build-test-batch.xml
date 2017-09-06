@@ -2127,31 +2127,35 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test app.server.type="tcserver" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat80-db2105-jdk8">
+	<target name="functional-smoke-tomcat80-mysql56-jdk8">
+		<run-functional-test app.server.type="tomcat" app.server.version="8.0.32" database.type="mysql" test.portal.log.assert="true" />
+	</target>
+
+	<target name="functional-smoke-tomcat85-db2105-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="db2" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat80-mariadb100-jdk8">
+	<target name="functional-smoke-tomcat85-mariadb100-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="mariadb" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat80-mysql55-jdk8">
+	<target name="functional-smoke-tomcat85-mysql55-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat80-mysql56-jdk8">
+	<target name="functional-smoke-tomcat85-mysql56-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat80-oracle121-jdk8">
+	<target name="functional-smoke-tomcat85-oracle121-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="oracle" test.portal.log.assert="false" />
 	</target>
 
-	<target name="functional-smoke-tomcat80-postgresql94-jdk8">
+	<target name="functional-smoke-tomcat85-postgresql94-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat80-sybase160-jdk8">
+	<target name="functional-smoke-tomcat85-sybase160-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="sybase" test.portal.log.assert="true" />
 	</target>
 
@@ -2167,27 +2171,39 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test app.server.type="wildfly" database.type="mariadb" test.portal.log.assert="false" />
 	</target>
 
-	<target name="functional-tomcat80-hypersonic20-jdk8">
-		<run-functional-test app.server.type="tomcat" database.type="hypersonic" />
-	</target>
-
-	<target name="functional-tomcat80-mysql55-jdk8">
-		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.5" />
-	</target>
-
 	<target name="functional-tomcat80-mysql56-jdk8">
-		<run-functional-test app.server.type="tomcat" database.type="mysql" />
-	</target>
-
-	<target name="functional-tomcat80-mysql56-jdk8-quarantine">
-		<antcall target="functional-tomcat80-mysql56-jdk8" />
+		<run-functional-test app.server.type="tomcat" app.server.version="8.0.32" database.type="mysql" />
 	</target>
 
 	<target name="functional-tomcat80-postgresql94-jdk8">
-		<run-functional-test app.server.type="tomcat" database.type="postgresql" />
+		<run-functional-test app.server.type="tomcat" app.server.version="8.0.32" database.type="postgresql" />
 	</target>
 
 	<target name="functional-tomcat80-sybase160-jdk8">
+		<run-functional-test app.server.type="tomcat" app.server.version="8.0.32" database.type="sybase" />
+	</target>
+
+	<target name="functional-tomcat85-hypersonic20-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="hypersonic" />
+	</target>
+
+	<target name="functional-tomcat85-mysql55-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.5" />
+	</target>
+
+	<target name="functional-tomcat85-mysql56-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="mysql" />
+	</target>
+
+	<target name="functional-tomcat85-mysql56-jdk8-quarantine">
+		<antcall target="functional-tomcat85-mysql56-jdk8" />
+	</target>
+
+	<target name="functional-tomcat85-postgresql94-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="postgresql" />
+	</target>
+
+	<target name="functional-tomcat85-sybase160-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="sybase" />
 	</target>
 
@@ -2199,27 +2215,27 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test app.server.type="tcserver" database.type="mysql" />
 	</target>
 
-	<target name="functional-upgrade-tomcat80-mariadb100-jdk8">
+	<target name="functional-upgrade-tomcat85-mariadb100-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="mariadb" />
 	</target>
 
-	<target name="functional-upgrade-tomcat80-mysql56-jdk8">
+	<target name="functional-upgrade-tomcat85-mysql56-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" />
 	</target>
 
-	<target name="functional-upgrade-tomcat80-oracle121-jdk8">
+	<target name="functional-upgrade-tomcat85-oracle121-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="oracle" />
 	</target>
 
-	<target name="functional-upgrade-tomcat80-postgresql94-jdk8">
+	<target name="functional-upgrade-tomcat85-postgresql94-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" />
 	</target>
 
-	<target name="functional-upgrade-tomcat80-postgresql94-jdk8-quarantine">
-		<antcall target="functional-upgrade-tomcat80-postgresql94-jdk8" />
+	<target name="functional-upgrade-tomcat85-postgresql94-jdk8-quarantine">
+		<antcall target="functional-upgrade-tomcat85-postgresql94-jdk8" />
 	</target>
 
-	<target name="functional-upgrade-tomcat80-sybase160-jdk8">
+	<target name="functional-upgrade-tomcat85-sybase160-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="sybase" />
 	</target>
 
@@ -2414,7 +2430,7 @@ app.server.type=@{app.server.type}]]></echo>
 		</run-batch-test>
 	</target>
 
-	<target name="modules-functional-tomcat80-mysql56-jdk8">
+	<target name="modules-functional-tomcat85-mysql56-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" />
 	</target>
 
@@ -2553,6 +2569,10 @@ ${output.content}</echo>
 	</target>
 
 	<target name="plugins-functional-tomcat80-mysql56-jdk8">
+		<run-functional-test app.server.type="tomcat" app.server.version="8.0.32" database.type="mysql" />
+	</target>
+
+	<target name="plugins-functional-tomcat85-mysql56-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" />
 	</target>
 
@@ -3098,6 +3118,10 @@ information. Make sure to commit in all build services results.
 	</target>
 
 	<target name="subrepository-functional-tomcat80-mysql56-jdk8">
+		<run-functional-test app.server.type="tomcat" app.server.version="8.0.32" database.type="mysql" />
+	</target>
+
+	<target name="subrepository-functional-tomcat85-mysql56-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" />
 	</target>
 

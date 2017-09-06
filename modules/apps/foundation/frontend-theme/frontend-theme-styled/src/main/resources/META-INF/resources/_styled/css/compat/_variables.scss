@@ -60,6 +60,8 @@ $management-bar-default-btn-default-active-color: $management-bar-default-btn-de
 
 // Grid
 
+$screen-lg: 1200px !default;
+
 $screen-xs-min: map-get($grid-breakpoints, sm) !default;
 $screen-sm-min: map-get($grid-breakpoints, md) !default;
 $screen-md-min: map-get($grid-breakpoints, lg) !default;

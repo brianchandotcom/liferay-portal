@@ -14,11 +14,11 @@
 
 package com.liferay.portal.tools;
 
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -82,32 +82,38 @@ public abstract class BaseImportsFormatter implements ImportsFormatter {
 
 		Set<ImportPackage> importPackages = new TreeSet<>();
 
-		for (String line : StringUtil.splitLines(imports)) {
-			ImportPackage importPackage = createImportPackage(line);
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(imports))) {
 
-			if (importPackage != null) {
-				importPackages.add(importPackage);
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				ImportPackage importPackage = createImportPackage(line);
+
+				if (importPackage != null) {
+					importPackages.add(importPackage);
+				}
 			}
-		}
 
-		StringBundler sb = new StringBundler(3 * importPackages.size());
+			StringBundler sb = new StringBundler(3 * importPackages.size());
 
-		ImportPackage previousImportPackage = null;
+			ImportPackage previousImportPackage = null;
 
-		for (ImportPackage importPackage : importPackages) {
-			if ((previousImportPackage != null) &&
-				!importPackage.isGroupedWith(previousImportPackage)) {
+			for (ImportPackage importPackage : importPackages) {
+				if ((previousImportPackage != null) &&
+					!importPackage.isGroupedWith(previousImportPackage)) {
 
+					sb.append("\n");
+				}
+
+				sb.append(importPackage.getLine());
 				sb.append("\n");
+
+				previousImportPackage = importPackage;
 			}
 
-			sb.append(importPackage.getLine());
-			sb.append("\n");
-
-			previousImportPackage = importPackage;
+			return sb.toString();
 		}
-
-		return sb.toString();
 	}
 
 	protected String stripUnusedImports(
@@ -120,34 +126,40 @@ public abstract class BaseImportsFormatter implements ImportsFormatter {
 
 		StringBundler sb = new StringBundler();
 
-		for (String line : StringUtil.splitLines(imports)) {
-			int x = line.indexOf("import ");
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(imports))) {
 
-			if (x == -1) {
-				continue;
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				int x = line.indexOf("import ");
+
+				if (x == -1) {
+					continue;
+				}
+
+				int y = line.lastIndexOf(CharPool.PERIOD);
+
+				String importPackage = line.substring(x + 7, y);
+
+				if (importPackage.equals(packagePath) ||
+					importPackage.equals("java.lang")) {
+
+					continue;
+				}
+
+				String importClass = line.substring(y + 1, line.length() - 1);
+
+				if (importClass.matches(classNameExceptionRegex) ||
+					classes.contains(importClass)) {
+
+					sb.append(line);
+					sb.append("\n");
+				}
 			}
 
-			int y = line.lastIndexOf(CharPool.PERIOD);
-
-			String importPackage = line.substring(x + 7, y);
-
-			if (importPackage.equals(packagePath) ||
-				importPackage.equals("java.lang")) {
-
-				continue;
-			}
-
-			String importClass = line.substring(y + 1, line.length() - 1);
-
-			if (importClass.matches(classNameExceptionRegex) ||
-				classes.contains(importClass)) {
-
-				sb.append(line);
-				sb.append("\n");
-			}
+			return sb.toString();
 		}
-
-		return sb.toString();
 	}
 
 	private static final Pattern _javaImportPattern = Pattern.compile(

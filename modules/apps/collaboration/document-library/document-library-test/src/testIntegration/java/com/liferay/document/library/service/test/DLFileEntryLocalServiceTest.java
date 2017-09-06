@@ -149,7 +149,7 @@ public class DLFileEntryLocalServiceTest {
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				folder.getFolderId(), RandomTestUtil.randomString(),
 				ContentTypes.TEXT_PLAIN,
-				RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
+				RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.TEXT_PLAIN),
 				serviceContext);
 
 			serviceContext = ServiceContextTestUtil.getServiceContext(
@@ -224,7 +224,7 @@ public class DLFileEntryLocalServiceTest {
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				folder.getFolderId(), RandomTestUtil.randomString(),
 				ContentTypes.TEXT_PLAIN,
-				RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
+				RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.TEXT_PLAIN),
 				serviceContext);
 
 			LocalRepository localRepository =
@@ -241,7 +241,7 @@ public class DLFileEntryLocalServiceTest {
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				folder.getFolderId(), RandomTestUtil.randomString(),
 				ContentTypes.TEXT_PLAIN,
-				RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
+				RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.TEXT_PLAIN),
 				serviceContext);
 		}
 
@@ -312,7 +312,7 @@ public class DLFileEntryLocalServiceTest {
 		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
 		byte[] bytes = RandomTestUtil.randomBytes(
-			TikaSafeRandomizerBumper.INSTANCE);
+			TikaSafeRandomizerBumper.TEXT_PLAIN);
 
 		InputStream is = new ByteArrayInputStream(bytes);
 
@@ -365,7 +365,7 @@ public class DLFileEntryLocalServiceTest {
 		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
 		byte[] bytes = RandomTestUtil.randomBytes(
-			TikaSafeRandomizerBumper.INSTANCE);
+			TikaSafeRandomizerBumper.TEXT_PLAIN);
 
 		InputStream is = new ByteArrayInputStream(bytes);
 
@@ -411,7 +411,7 @@ public class DLFileEntryLocalServiceTest {
 		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
 		byte[] bytes = RandomTestUtil.randomBytes(
-			TikaSafeRandomizerBumper.INSTANCE);
+			TikaSafeRandomizerBumper.TEXT_PLAIN);
 
 		InputStream is = new ByteArrayInputStream(bytes);
 

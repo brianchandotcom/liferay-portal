@@ -302,7 +302,7 @@ public class FileEntryStagedModelDataHandlerTest
 			TestPropsValues.getUserId(), group.getGroupId(),
 			folder.getFolderId(), RandomTestUtil.randomString() + ".txt",
 			ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.TEXT_PLAIN),
 			serviceContext);
 	}
 

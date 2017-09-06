@@ -15,7 +15,6 @@
 package com.liferay.portal.spring.extender.internal.context;
 
 import com.liferay.osgi.felix.util.AbstractExtender;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -31,13 +30,10 @@ import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.spring.extender.internal.classloader.BundleResolverClassLoader;
-import com.liferay.portal.spring.extender.internal.configuration.SpringExtenderConfiguration;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistratorTracker;
 
 import java.io.IOException;
@@ -47,16 +43,11 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.sql.DataSource;
 
-import org.apache.felix.dm.ComponentDeclaration;
-import org.apache.felix.dm.ComponentDependencyDeclaration;
 import org.apache.felix.dm.DependencyManager;
 import org.apache.felix.dm.ServiceDependency;
 import org.apache.felix.utils.extender.Extension;
@@ -72,43 +63,16 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Miguel Pastor
  */
-@Component(
-	configurationPid = "com.liferay.portal.spring.extender.internal.configuration.SpringExtenderConfiguration",
-	immediate = true
-)
+@Component(immediate = true)
 public class ModuleApplicationContextExtender extends AbstractExtender {
 
 	@Activate
-	protected void activate(
-			BundleContext bundleContext, Map<String, Object> properties)
-		throws Exception {
-
+	protected void activate(BundleContext bundleContext) throws Exception {
 		start(bundleContext);
-
-		SpringExtenderConfiguration springExtenderConfiguration =
-			ConfigurableUtil.createConfigurable(
-				SpringExtenderConfiguration.class, properties);
-
-		long scanningInterval =
-			springExtenderConfiguration.unavailableComponentScanningInterval();
-
-		if (scanningInterval > 0) {
-			_unavailableComponentScanningThread =
-				new UnavailableComponentScanningThread(
-					scanningInterval * Time.SECOND);
-
-			_unavailableComponentScanningThread.start();
-		}
 	}
 
 	@Deactivate
 	protected void deactivate(BundleContext bundleContext) throws Exception {
-		if (_unavailableComponentScanningThread != null) {
-			_unavailableComponentScanningThread.interrupt();
-
-			_unavailableComponentScanningThread.join();
-		}
-
 		stop(bundleContext);
 	}
 
@@ -170,134 +134,10 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 		}
 	}
 
-	private static void _scanUnavailableComponents() {
-		StringBundler sb = new StringBundler();
-
-		for (DependencyManager dependencyManager :
-				(List<DependencyManager>)
-					DependencyManager.getDependencyManagers()) {
-
-			BundleContext bundleContext = dependencyManager.getBundleContext();
-
-			Bundle bundle = bundleContext.getBundle();
-
-			Map<ComponentDeclaration, List<ComponentDependencyDeclaration>>
-				unavailableComponentDeclarations = new HashMap<>();
-
-			for (ComponentDeclaration componentDeclaration :
-					(List<ComponentDeclaration>)
-						dependencyManager.getComponents()) {
-
-				if (componentDeclaration.getState() !=
-						ComponentDeclaration.STATE_UNREGISTERED) {
-
-					continue;
-				}
-
-				List<ComponentDependencyDeclaration>
-					componentDependencyDeclarations =
-						unavailableComponentDeclarations.computeIfAbsent(
-							componentDeclaration, key -> new ArrayList<>());
-
-				for (ComponentDependencyDeclaration
-						componentDependencyDeclaration :
-							componentDeclaration.getComponentDependencies()) {
-
-					if (componentDependencyDeclaration.getState() ==
-							ComponentDependencyDeclaration.
-								STATE_UNAVAILABLE_REQUIRED) {
-
-						componentDependencyDeclarations.add(
-							componentDependencyDeclaration);
-					}
-				}
-			}
-
-			if (!unavailableComponentDeclarations.isEmpty()) {
-				sb.append("Found unavailable component in bundle ");
-				sb.append(bundle);
-				sb.append(".\n");
-
-				for (Entry<
-						ComponentDeclaration,
-						List<ComponentDependencyDeclaration>> entry :
-							unavailableComponentDeclarations.entrySet()) {
-
-					sb.append("\tComponent ");
-					sb.append(entry.getKey());
-					sb.append(" is unavailable due to missing required ");
-					sb.append("dependencies: ");
-
-					List<ComponentDependencyDeclaration>
-						componentDependencyDeclarations = entry.getValue();
-
-					for (int i = 0; i < componentDependencyDeclarations.size();
-						i++) {
-
-						if (i != 0) {
-							sb.append(", ");
-						}
-
-						ComponentDependencyDeclaration
-							componentDependencyDeclaration =
-								componentDependencyDeclarations.get(i);
-
-						sb.append(componentDependencyDeclaration);
-					}
-
-					sb.append(".");
-				}
-			}
-		}
-
-		if (sb.index() == 0) {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"All Spring extender dependency manager components are " +
-						"registered");
-			}
-		}
-		else {
-			if (_log.isWarnEnabled()) {
-				_log.warn(sb.toString());
-			}
-		}
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ModuleApplicationContextExtender.class);
 
 	private ServiceConfigurator _serviceConfigurator;
-	private Thread _unavailableComponentScanningThread;
-
-	private static class UnavailableComponentScanningThread extends Thread {
-
-		@Override
-		public void run() {
-			try {
-				while (true) {
-					sleep(_scanningInterval);
-
-					_scanUnavailableComponents();
-				}
-			}
-			catch (InterruptedException ie) {
-				if (_log.isInfoEnabled()) {
-					_log.info("Stopped scanning for unavailable components");
-				}
-			}
-		}
-
-		private UnavailableComponentScanningThread(long scanningInterval) {
-			_scanningInterval = scanningInterval;
-
-			setDaemon(true);
-			setName("Spring Extender Unavailable Component Scanner");
-		}
-
-		private final long _scanningInterval;
-
-	}
 
 	private class ModuleApplicationContextExtension implements Extension {
 

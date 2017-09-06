@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Portal OSGi Debug Spring Extender
+Bundle-SymbolicName: com.liferay.portal.osgi.debug.spring.extender
+Bundle-Version: 1.0.0

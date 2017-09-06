@@ -2,32 +2,55 @@ label {
 	max-width: 100%;
 }
 
-.control-label {
-	@extend .form-control-label;
-}
+// Checkboxes and radios
+//
+// Indent the labels to position radios/checkboxes as hanging controls.
 
-.checkbox,
-.radio {
-	@extend .form-check;
+.radio,
+.checkbox {
+	position: relative;
+	display: block;
+	margin-top: 10px;
+	margin-bottom: 10px;
 
-	> label {
-		min-height: 20px;
-
-		@extend .form-check-label;
-	}
-
-	input[type="checkbox"],
-	input[type="radio"] {
-		@extend .form-check-input;
-
-		&:only-child {
-			position: absolute;
-		}
+	label {
+		min-height: 24px; // Ensure the input doesn't jump when there is no text
+		padding-left: 20px;
+		margin-bottom: 0;
+		font-weight: normal;
+		cursor: pointer;
 	}
 }
+.radio input[type="radio"],
+.radio-inline input[type="radio"],
+.checkbox input[type="checkbox"],
+.checkbox-inline input[type="checkbox"] {
+	position: absolute;
+	margin-left: -20px;
+	margin-top: 4px \9;
+}
 
-.form-control {
-	border-color: $input-border-color;
+.radio + .radio,
+.checkbox + .checkbox {
+	margin-top: -5px; // Move up sibling radios or checkboxes for tighter spacing
+}
+
+// Radios and checkboxes on same line
+.radio-inline,
+.checkbox-inline {
+	position: relative;
+	display: inline-block;
+	padding-left: 20px;
+	margin-bottom: 0;
+	vertical-align: middle;
+	font-weight: normal;
+	cursor: pointer;
+}
+
+.radio-inline + .radio-inline,
+.checkbox-inline + .checkbox-inline {
+	margin-top: 0;
+	margin-left: 10px; // space out consecutive inline controls
 }
 
 @if (variable-exists(atlas-theme)) {

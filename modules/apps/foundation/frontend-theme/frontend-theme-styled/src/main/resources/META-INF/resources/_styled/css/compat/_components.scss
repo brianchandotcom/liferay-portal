@@ -5,12 +5,12 @@
 @import "components/breadcrumbs";
 @import "components/button-groups";
 @import "components/buttons";
-@import "components/cards";
 @import "components/component-animations";
 @import "components/dropdowns";
 @import "components/figures";
 @import "components/form-validation";
 @import "components/forms";
+@import "components/cards"; // Needs to win over forms
 @import "components/grid";
 @import "components/input-groups";
 @import "components/labels";

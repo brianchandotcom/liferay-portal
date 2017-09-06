@@ -89,7 +89,13 @@ public class FolderStagedModelDataHandler
 
 	@Override
 	public Folder fetchStagedModelByUuidAndGroupId(String uuid, long groupId) {
-		return FolderUtil.fetchByUUID_R(uuid, groupId);
+		DLFolder folder = _dlFolderLocalService.fetchFolder(uuid, groupId);
+
+		if (folder != null) {
+			return new LiferayFolder(folder);
+		}
+
+		return null;
 	}
 
 	@Override
@@ -220,6 +226,14 @@ public class FolderStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Folder.class);
 
+		Map<Long, Long> repositoryIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Repository.class);
+
+		long repositoryId = MapUtil.getLong(
+			repositoryIds, folder.getRepositoryId(),
+			portletDataContext.getScopeGroupId());
+
 		long parentFolderId = MapUtil.getLong(
 			folderIds, folder.getParentFolderId(), folder.getParentFolderId());
 
@@ -242,9 +256,8 @@ public class FolderStagedModelDataHandler
 				serviceContext.setUuid(folder.getUuid());
 
 				importedFolder = _dlAppLocalService.addFolder(
-					userId, portletDataContext.getScopeGroupId(),
-					parentFolderId, name, folder.getDescription(),
-					serviceContext);
+					userId, repositoryId, parentFolderId, name,
+					folder.getDescription(), serviceContext);
 			}
 			else {
 				String name = getFolderName(
@@ -262,8 +275,8 @@ public class FolderStagedModelDataHandler
 				folder.getName(), 2);
 
 			importedFolder = _dlAppLocalService.addFolder(
-				userId, portletDataContext.getScopeGroupId(), parentFolderId,
-				name, folder.getDescription(), serviceContext);
+				userId, repositoryId, parentFolderId, name,
+				folder.getDescription(), serviceContext);
 		}
 
 		Element folderElement = portletDataContext.getImportDataElement(folder);
@@ -366,9 +379,10 @@ public class FolderStagedModelDataHandler
 			int count)
 		throws Exception {
 
-		Folder folder = FolderUtil.fetchByR_P_N(groupId, parentFolderId, name);
+		DLFolder dlFolder = _dlFolderLocalService.fetchFolder(
+			groupId, parentFolderId, name);
 
-		if (folder == null) {
+		if (dlFolder == null) {
 			FileEntry fileEntry = FileEntryUtil.fetchByR_F_T(
 				groupId, parentFolderId, name);
 
@@ -376,7 +390,7 @@ public class FolderStagedModelDataHandler
 				return name;
 			}
 		}
-		else if (Validator.isNotNull(uuid) && uuid.equals(folder.getUuid())) {
+		else if (Validator.isNotNull(uuid) && uuid.equals(dlFolder.getUuid())) {
 			return name;
 		}
 

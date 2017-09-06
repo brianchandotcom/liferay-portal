@@ -1,6 +1,6 @@
-
-
-		  <definition component-name="portal-calendar">
+abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789
+					
+         <definition component-name="portal-calendar">
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 

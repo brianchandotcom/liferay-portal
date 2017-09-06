@@ -15,6 +15,7 @@
 package com.liferay.commerce.internal.util;
 
 import com.liferay.commerce.constants.CommerceConstants;
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.service.CommerceCartItemService;
@@ -22,6 +23,7 @@ import com.liferay.commerce.service.CommerceCartService;
 import com.liferay.commerce.util.CommerceCartHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.CookieKeys;
@@ -29,6 +31,9 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -42,6 +47,56 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class CommerceCartHelperImpl implements CommerceCartHelper {
+
+	public PortletURL getCommerceCartPortletURL(
+			HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		PortletURL portletURL = null;
+
+		long groupId = _portal.getScopeGroupId(httpServletRequest);
+
+		long plid = _portal.getPlidFromPortletId(
+			groupId, CommercePortletKeys.COMMERCE_CART);
+
+		if (plid > 0) {
+			portletURL = _portletURLFactory.create(
+				httpServletRequest, CommercePortletKeys.COMMERCE_CART, plid,
+				PortletRequest.RENDER_PHASE);
+		}
+		else {
+			portletURL = _portletURLFactory.create(
+				httpServletRequest, CommercePortletKeys.COMMERCE_CART,
+				PortletRequest.RENDER_PHASE);
+		}
+
+		return portletURL;
+	}
+
+	public PortletURL getCommerceCheckutPortletURL(
+			HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		PortletURL portletURL = null;
+
+		long groupId = _portal.getScopeGroupId(httpServletRequest);
+
+		long plid = _portal.getPlidFromPortletId(
+			groupId, CommercePortletKeys.COMMERCE_CHECKOUT);
+
+		if (plid > 0) {
+			portletURL = _portletURLFactory.create(
+				httpServletRequest, CommercePortletKeys.COMMERCE_CHECKOUT, plid,
+				PortletRequest.RENDER_PHASE);
+		}
+		else {
+			portletURL = _portletURLFactory.create(
+				httpServletRequest, CommercePortletKeys.COMMERCE_CHECKOUT,
+				PortletRequest.RENDER_PHASE);
+		}
+
+		return portletURL;
+	}
 
 	@Override
 	public CommerceCart getCurrentCommerceCart(
@@ -244,5 +299,8 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletURLFactory _portletURLFactory;
 
 }

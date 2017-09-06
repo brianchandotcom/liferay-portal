@@ -19,6 +19,8 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import javax.portlet.PortletURL;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,6 +29,14 @@ import javax.servlet.http.HttpServletResponse;
  */
 @ProviderType
 public interface CommerceCartHelper {
+
+	public PortletURL getCommerceCartPortletURL(
+			HttpServletRequest httpServletRequest)
+		throws PortalException;
+
+	public PortletURL getCommerceCheckutPortletURL(
+			HttpServletRequest httpServletRequest)
+		throws PortalException;
 
 	public CommerceCart getCurrentCommerceCart(
 			HttpServletRequest httpServletRequest,

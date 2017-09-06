@@ -416,3 +416,19 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 		</liferay-ui:tabs>
 	</c:otherwise>
 </c:choose>
+
+<aui:script sandbox="<%= true %>">
+	$('#<portlet:namespace />url').on(
+		'click',
+		function(event) {
+			this.setSelectionRange(0, 9999);
+		}
+	);
+
+	$('#<portlet:namespace />webDavURL').on(
+		'click',
+		function(event) {
+			this.setSelectionRange(0, 9999);
+		}
+	);
+</aui:script>

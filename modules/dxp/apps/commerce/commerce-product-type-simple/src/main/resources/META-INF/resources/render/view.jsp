@@ -85,6 +85,12 @@ CPDefinition cpDefinition = cpTypeDisplayContext.getCPDefinition();
 						<liferay-util:dynamic-include key="com.liferay.commerce.product.content.web#/add_to_cart#" />
 					</div>
 				</div>
+
+				<div class="row">
+					<div class="col-md-12">
+						<liferay-util:dynamic-include key="com.liferay.commerce.product.content.web#/add_to_wish_list#" />
+					</div>
+				</div>
 			</div>
 		</div>
 

@@ -69,11 +69,24 @@ CPDefinition cpDefinition = groupedCPTypeDisplayContext.getCPDefinition();
 
 			<div class="col-lg-6 col-md-5">
 				<h1><%= cpDefinition.getTitle(languageId) %></h1>
+
 				<div class="row">
 					<div class="col-md-12">
 						<div class="options">
 							<%= groupedCPTypeDisplayContext.renderOptions(renderRequest, renderResponse) %>
 						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12">
+						<liferay-util:dynamic-include key="com.liferay.commerce.product.content.web#/add_to_cart#" />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12">
+						<liferay-util:dynamic-include key="com.liferay.commerce.product.content.web#/add_to_wish_list#" />
 					</div>
 				</div>
 			</div>

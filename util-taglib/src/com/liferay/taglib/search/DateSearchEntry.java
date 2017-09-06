@@ -17,6 +17,7 @@ package com.liferay.taglib.search;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -55,24 +56,15 @@ public class DateSearchEntry extends TextSearchEntry {
 			sb.append(dateFormatDateTime.format(_date));
 			sb.append("')\">");
 
-			if (_date.before(new Date())) {
-				sb.append(
-					LanguageUtil.format(
-						locale, "x-ago",
+			sb.append(
+				LanguageUtil.format(
+					locale, _getMask(),
+					new Object[] {
 						LanguageUtil.getTimeDescription(
-							locale,
-							System.currentTimeMillis() - _date.getTime(), true),
-						false));
-			}
-			else {
-				sb.append(
-					LanguageUtil.format(
-						locale, "within-x",
-						LanguageUtil.getTimeDescription(
-							locale,
-							_date.getTime() - System.currentTimeMillis(), true),
-						false));
-			}
+							locale, _getTimeDelta(), true),
+						HtmlUtil.escape(_userName)
+					},
+					false));
 
 			sb.append("</span>");
 
@@ -85,6 +77,10 @@ public class DateSearchEntry extends TextSearchEntry {
 
 	public void setDate(Date date) {
 		_date = date;
+	}
+
+	public void setUserName(String userName) {
+		_userName = userName;
 	}
 
 	protected Object[] getLocaleAndTimeZone(HttpServletRequest request) {
@@ -101,8 +97,37 @@ public class DateSearchEntry extends TextSearchEntry {
 		return new Object[] {_locale, _timeZone};
 	}
 
+	private String _getMask() {
+		if (_date.before(new Date())) {
+			if (_userName == null) {
+				return "x-ago";
+			}
+			else {
+				return "x-ago-by-x";
+			}
+		}
+		else {
+			if (_userName == null) {
+				return "within-x";
+			}
+			else {
+				return "within-x-by-x";
+			}
+		}
+	}
+
+	private long _getTimeDelta() {
+		if (_date.before(new Date())) {
+			return System.currentTimeMillis() - _date.getTime();
+		}
+		else {
+			return _date.getTime() - System.currentTimeMillis();
+		}
+	}
+
 	private Date _date;
 	private Locale _locale;
 	private TimeZone _timeZone;
+	private String _userName;
 
 }

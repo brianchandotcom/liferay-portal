@@ -30,6 +30,10 @@ public class CommercePortletKeys {
 		"com_liferay_commerce_cart_content_web_internal_portlet_" +
 			"CommerceCartContentMiniPortlet";
 
+	public static final String COMMERCE_CART_CONTENT_TOTAL =
+		"com_liferay_commerce_cart_content_web_internal_portlet_" +
+			"CommerceCartContentTotalPortlet";
+
 	public static final String COMMERCE_CHECKOUT =
 		"com_liferay_commerce_checkout_web_internal_portlet_" +
 			"CommerceCheckoutPortlet";

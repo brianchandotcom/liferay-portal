@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.health.status.web.internal.util;
 
-import com.liferay.commerce.checkout.web.constants.CommerceCheckoutPortletKeys;
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.health.status.web.internal.constants.CommerceHealthStatusConstants;
 import com.liferay.commerce.health.status.web.util.CommerceHealthStatus;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -80,7 +80,7 @@ public class CommerceCheckoutCommerceHealthStatus
 
 		layoutTypePortlet.addPortletId(
 			_portal.getUserId(httpServletRequest),
-			CommerceCheckoutPortletKeys.COMMERCE_CHECKOUT);
+			CommercePortletKeys.COMMERCE_CHECKOUT);
 
 		_layoutService.updateLayout(
 			layout.getGroupId(), layout.getPrivateLayout(),
@@ -118,7 +118,7 @@ public class CommerceCheckoutCommerceHealthStatus
 	@Override
 	public boolean isFixed(long groupId) throws PortalException {
 		long plid = _portal.getPlidFromPortletId(
-			groupId, CommerceCheckoutPortletKeys.COMMERCE_CHECKOUT);
+			groupId, CommercePortletKeys.COMMERCE_CHECKOUT);
 
 		if (plid > 0) {
 			return true;

@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.checkout.web.internal.portlet.action;
 
-import com.liferay.commerce.checkout.web.constants.CommerceCheckoutPortletKeys;
 import com.liferay.commerce.checkout.web.constants.CommerceCheckoutWebKeys;
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CommerceCheckoutPortletKeys.COMMERCE_CHECKOUT,
+		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_CHECKOUT,
 		"mvc.command.name=viewCheckoutStatus"
 	},
 	service = MVCRenderCommand.class

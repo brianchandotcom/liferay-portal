@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.checkout.web.internal.portlet.action;
 
-import com.liferay.commerce.checkout.web.constants.CommerceCheckoutPortletKeys;
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import javax.portlet.PortletException;
@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"commerce.checkout.step.order:Integer=" + Integer.MAX_VALUE,
-		"javax.portlet.name=" + CommerceCheckoutPortletKeys.COMMERCE_CHECKOUT,
+		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_CHECKOUT,
 		"mvc.command.name=viewCheckoutStepSummary"
 	},
 	service = MVCRenderCommand.class

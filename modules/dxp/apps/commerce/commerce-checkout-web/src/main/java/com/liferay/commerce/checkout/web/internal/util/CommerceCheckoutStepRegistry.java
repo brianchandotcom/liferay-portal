@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.checkout.web.internal.util;
 
-import com.liferay.commerce.checkout.web.constants.CommerceCheckoutPortletKeys;
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -88,7 +88,7 @@ public class CommerceCheckoutStepRegistry {
 		StringBundler sb = new StringBundler();
 
 		sb.append("(&(commerce.checkout.step.order=*)(javax.portlet.name=");
-		sb.append(CommerceCheckoutPortletKeys.COMMERCE_CHECKOUT);
+		sb.append(CommercePortletKeys.COMMERCE_CHECKOUT);
 		sb.append(")(mvc.command.name=*)(objectClass=");
 		sb.append(MVCRenderCommand.class.getName());
 		sb.append("))");

@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -57,7 +56,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Filter.class
 )
-public class SamlSpSsoFilter extends BaseFilter {
+public class SamlSpSsoFilter extends BaseSamlPortalFilter {
 
 	@Override
 	public boolean isFilterEnabled() {
@@ -106,6 +105,44 @@ public class SamlSpSsoFilter extends BaseFilter {
 	}
 
 	@Override
+	protected void doProcessFilter(
+			HttpServletRequest request, HttpServletResponse response,
+			FilterChain filterChain)
+		throws Exception {
+
+		String requestPath = _samlHttpRequestUtil.getRequestPath(request);
+
+		SamlSpSession samlSpSession = _singleLogoutProfile.getSamlSpSession(
+			request);
+
+		if ((samlSpSession != null) && samlSpSession.isTerminated()) {
+			_singleLogoutProfile.terminateSpSession(request, response);
+
+			_singleLogoutProfile.logout(request, response);
+
+			response.sendRedirect(_portal.getCurrentCompleteURL(request));
+		}
+		else if (requestPath.equals("/c/portal/login")) {
+			login(request, response);
+		}
+		else if (requestPath.equals("/c/portal/logout") &&
+				 _singleLogoutProfile.isSingleLogoutSupported(request)) {
+
+			if (samlSpSession != null) {
+				_singleLogoutProfile.processSpLogout(request, response);
+			}
+			else {
+				filterChain.doFilter(request, response);
+			}
+		}
+		else {
+			_webSsoProfile.updateSamlSpSession(request, response);
+
+			filterChain.doFilter(request, response);
+		}
+	}
+
+	@Override
 	protected Log getLog() {
 		return _log;
 	}
@@ -142,44 +179,6 @@ public class SamlSpSsoFilter extends BaseFilter {
 		}
 
 		_webSsoProfile.sendAuthnRequest(request, response, relayState);
-	}
-
-	@Override
-	protected void processFilter(
-			HttpServletRequest request, HttpServletResponse response,
-			FilterChain filterChain)
-		throws Exception {
-
-		String requestPath = _samlHttpRequestUtil.getRequestPath(request);
-
-		SamlSpSession samlSpSession = _singleLogoutProfile.getSamlSpSession(
-			request);
-
-		if ((samlSpSession != null) && samlSpSession.isTerminated()) {
-			_singleLogoutProfile.terminateSpSession(request, response);
-
-			_singleLogoutProfile.logout(request, response);
-
-			response.sendRedirect(_portal.getCurrentCompleteURL(request));
-		}
-		else if (requestPath.equals("/c/portal/login")) {
-			login(request, response);
-		}
-		else if (requestPath.equals("/c/portal/logout") &&
-				 _singleLogoutProfile.isSingleLogoutSupported(request)) {
-
-			if (samlSpSession != null) {
-				_singleLogoutProfile.processSpLogout(request, response);
-			}
-			else {
-				filterChain.doFilter(request, response);
-			}
-		}
-		else {
-			_webSsoProfile.updateSamlSpSession(request, response);
-
-			filterChain.doFilter(request, response);
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

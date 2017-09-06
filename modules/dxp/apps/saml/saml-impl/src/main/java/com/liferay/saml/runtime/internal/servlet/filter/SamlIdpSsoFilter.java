@@ -17,7 +17,6 @@ package com.liferay.saml.runtime.internal.servlet.filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -47,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Filter.class
 )
-public class SamlIdpSsoFilter extends BaseFilter {
+public class SamlIdpSsoFilter extends BaseSamlPortalFilter {
 
 	@Override
 	public boolean isFilterEnabled() {
@@ -94,12 +93,7 @@ public class SamlIdpSsoFilter extends BaseFilter {
 	}
 
 	@Override
-	protected Log getLog() {
-		return _log;
-	}
-
-	@Override
-	protected void processFilter(
+	protected void doProcessFilter(
 			HttpServletRequest request, HttpServletResponse response,
 			FilterChain filterChain)
 		throws Exception {
@@ -120,6 +114,11 @@ public class SamlIdpSsoFilter extends BaseFilter {
 		else {
 			filterChain.doFilter(request, response);
 		}
+	}
+
+	@Override
+	protected Log getLog() {
+		return _log;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -12,13 +12,15 @@
  * details.
  */
 
-package com.liferay.taglib.ui;
+package com.liferay.asset.taglib.servlet.taglib;
 
+import com.liferay.asset.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Julio Camarero
@@ -27,6 +29,13 @@ public class CategorizationFilterTag extends IncludeTag {
 
 	public void setAssetType(String assetType) {
 		_assetType = assetType;
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		servletContext = ServletContextUtil.getServletContext();
 	}
 
 	public void setPortletURL(PortletURL portletURL) {
@@ -47,13 +56,12 @@ public class CategorizationFilterTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-ui:categorization-filter:assetType", _assetType);
+			"liferay-asset:categorization-filter:assetType", _assetType);
 		request.setAttribute(
-			"liferay-ui:categorization-filter:portletURL", _portletURL);
+			"liferay-asset:categorization-filter:portletURL", _portletURL);
 	}
 
-	private static final String _PAGE =
-		"/html/taglib/ui/categorization_filter/page.jsp";
+	private static final String _PAGE = "/categorization_filter/page.jsp";
 
 	private String _assetType;
 	private PortletURL _portletURL;

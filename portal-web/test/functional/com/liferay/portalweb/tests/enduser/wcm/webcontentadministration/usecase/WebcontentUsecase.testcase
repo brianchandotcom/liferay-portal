@@ -1829,8 +1829,8 @@
 			<var name="siteName" value="S.P.A.C.E." />
 		</execute>
 
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="S.P.A.C.E." />
+		<execute macro="Page#add">
+			<var name="pageName" value="Test Page Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesContent">

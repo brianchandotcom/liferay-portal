@@ -66,6 +66,7 @@ public class SearchContainerColumnDateTag<R> extends SearchContainerColumnTag {
 			dateSearchEntry.setCssClass(getCssClass());
 			dateSearchEntry.setDate(_value);
 			dateSearchEntry.setHref(String.valueOf(getHref()));
+			dateSearchEntry.setUserName(_userName);
 			dateSearchEntry.setValign(getValign());
 
 			resultRow.addSearchEntry(index, dateSearchEntry);
@@ -151,6 +152,10 @@ public class SearchContainerColumnDateTag<R> extends SearchContainerColumnTag {
 		return _property;
 	}
 
+	public String getUserName() {
+		return _userName;
+	}
+
 	public Date getValue() {
 		return _value;
 	}
@@ -175,6 +180,10 @@ public class SearchContainerColumnDateTag<R> extends SearchContainerColumnTag {
 		_property = property;
 	}
 
+	public void setUserName(String userName) {
+		_userName = userName;
+	}
+
 	public void setValue(Date value) {
 		_value = value;
 	}
@@ -183,6 +192,7 @@ public class SearchContainerColumnDateTag<R> extends SearchContainerColumnTag {
 	private boolean _orderable;
 	private String _orderableProperty;
 	private String _property;
+	private String _userName;
 	private Date _value;
 
 }

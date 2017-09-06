@@ -2993,6 +2993,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>A user name to be displayed alongside with the time description.</description>
+			<name>userName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>A vertical alignment for the column contents. The default value is <![CDATA[<code>middle</code>]]>.</description>
 			<name>valign</name>
 			<required>false</required>

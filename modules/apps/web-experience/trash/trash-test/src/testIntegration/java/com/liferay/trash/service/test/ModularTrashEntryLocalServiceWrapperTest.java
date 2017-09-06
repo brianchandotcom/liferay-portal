@@ -28,7 +28,7 @@ import org.junit.runner.RunWith;
  * @author Alejandro Tardín
  */
 @RunWith(Arquillian.class)
-public class OldTrashEntryLocalServiceTest {
+public class ModularTrashEntryLocalServiceWrapperTest {
 
 	@ClassRule
 	@Rule
@@ -36,7 +36,7 @@ public class OldTrashEntryLocalServiceTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testTheOldServiceCanGetADynamicQuery() {
+	public void testDynamicQuery() {
 		TrashEntryLocalServiceUtil.dynamicQuery();
 	}
 

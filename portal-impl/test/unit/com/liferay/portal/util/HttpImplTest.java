@@ -16,10 +16,14 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.URLCodec;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,21 +33,30 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Miguel Pastor
  */
-@PowerMockIgnore({"javax.net.ssl.*", "javax.xml.datatype.*"})
-@PrepareForTest(PortalUtil.class)
-@RunWith(PowerMockRunner.class)
 public class HttpImplTest extends PowerMockito {
+
+	@BeforeClass
+	public static void setUpClass() {
+		PortalUtil portalUtil = new PortalUtil();
+
+		portalUtil.setPortal(
+			new PortalImpl() {
+
+				@Override
+				public String[] stripURLAnchor(String url, String separator) {
+					return new String[] {url, StringPool.BLANK};
+				}
+
+			});
+	}
 
 	@Test
 	public void testAddBooleanParameter() {
@@ -330,6 +343,143 @@ public class HttpImplTest extends PowerMockito {
 			_httpImpl.removeProtocol("http://www.google.com/://localhost"));
 	}
 
+	@Test
+	public void testShortenURL() {
+
+		// No change
+
+		Assert.assertSame(
+			"www.liferay.com", _httpImpl.shortenURL("www.liferay.com"));
+		Assert.assertSame(
+			"www.liferay.com?", _httpImpl.shortenURL("www.liferay.com?"));
+		Assert.assertSame(
+			"www.liferay.com?key1=value1",
+			_httpImpl.shortenURL("www.liferay.com?key1=value1"));
+		Assert.assertSame(
+			"www.liferay.com?key1=value1&redirect=test",
+			_httpImpl.shortenURL("www.liferay.com?key1=value1&redirect=test"));
+
+		String paramValue = RandomTestUtil.randomString(
+			Http.URL_MAXIMUM_LENGTH, NumericStringRandomizerBumper.INSTANCE);
+
+		// Cannot safely remove anything
+
+		Assert.assertSame(paramValue, _httpImpl.shortenURL(paramValue));
+
+		String url = "www.liferay.com?key=" + paramValue;
+
+		Assert.assertEquals(url, _httpImpl.shortenURL(url));
+
+		// Bad parameter format
+
+		url = "www.liferay.com?redirectX" + paramValue;
+
+		Assert.assertEquals(url, _httpImpl.shortenURL(url));
+
+		// Remove redirect one deep
+
+		Assert.assertEquals(
+			"www.liferay.com",
+			_httpImpl.shortenURL("www.liferay.com?_backURL=" + paramValue));
+		Assert.assertEquals(
+			"www.liferay.com?key1=value1",
+			_httpImpl.shortenURL(
+				"www.liferay.com?key1=value1&_redirect=" + paramValue));
+		Assert.assertEquals(
+			"www.liferay.com?key1=value1",
+			_httpImpl.shortenURL(
+				"www.liferay.com?redirect=" + paramValue + "&key1=value1"));
+
+		// Remove redirect and keep _returnToFullPageURL
+
+		Assert.assertEquals(
+			"www.liferay.com?key1=value1&_returnToFullPageURL=test",
+			_httpImpl.shortenURL(
+				"www.liferay.com?_returnToFullPageURL=test&redirect=" +
+					paramValue + "&key1=value1"));
+
+		// Remove redirect two deep
+
+		String encodedURL = URLCodec.encodeURL(
+			"www.liferay.com?key1=value1&redirect=" + paramValue);
+
+		Assert.assertEquals(
+			"www.liferay.com?key1=value1&redirect=" +
+				URLCodec.encodeURL("www.liferay.com?key1=value1"),
+			_httpImpl.shortenURL(
+				"www.liferay.com?key1=value1&redirect=" + encodedURL));
+
+		// Remove redirect three deep
+
+		String encodedURL2 = URLCodec.encodeURL(
+			"www.liferay.com?key1=value1&redirect=" + encodedURL);
+
+		Assert.assertEquals(
+			"www.liferay.com?key1=value1&redirect=" +
+				URLCodec.encodeURL(
+					"www.liferay.com?key1=value1&redirect=" +
+						URLCodec.encodeURL("www.liferay.com?key1=value1")),
+			_httpImpl.shortenURL(
+				"www.liferay.com?redirect=" + encodedURL2 + "&key1=value1"));
+
+		// Remove redirect three deep and keep _returnToFullPageURL two deep
+
+		String encodedURL3 = URLCodec.encodeURL(
+			"www.liferay.com?_returnToFullPageURL=test&key1=value1&redirect=" +
+				encodedURL);
+
+		Assert.assertEquals(
+			"www.liferay.com?key1=value1&redirect=" +
+				URLCodec.encodeURL(
+					"www.liferay.com?key1=value1&_returnToFullPageURL=test" +
+						"&redirect=" +
+							URLCodec.encodeURL("www.liferay.com?key1=value1")),
+			_httpImpl.shortenURL(
+				"www.liferay.com?redirect=" + encodedURL3 + "&key1=value1"));
+
+		// Undecodable parameter
+
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					HttpImpl.class.getName(), Level.FINE)) {
+
+			Assert.assertEquals(
+				"www.google.com",
+				_httpImpl.shortenURL(
+					"www.google.com?redirect=%xy" + paramValue));
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"Skipping undecodable parameter redirect=%xy" + paramValue,
+				logRecord.getMessage());
+
+			Throwable throwable = logRecord.getThrown();
+
+			Assert.assertSame(
+				IllegalArgumentException.class, throwable.getClass());
+			Assert.assertEquals("x is not a hex char", throwable.getMessage());
+		}
+
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					HttpImpl.class.getName(), Level.OFF)) {
+
+			Assert.assertEquals(
+				"www.google.com",
+				_httpImpl.shortenURL(
+					"www.google.com?redirect=%xy" + paramValue));
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
+		}
+	}
+
 	protected void testDecodeURLWithInvalidURLEncoding(String url) {
 		_testDecodeURL(url, "Invalid URL encoding " + url);
 	}
@@ -341,18 +491,8 @@ public class HttpImplTest extends PowerMockito {
 	private void _addParameter(
 		String url, String parameterName, String parameterValue) {
 
-		mockStatic(PortalUtil.class);
-
-		when(
-			PortalUtil.stripURLAnchor(url, StringPool.POUND)
-		).thenReturn(
-			new String[] {url, StringPool.BLANK}
-		);
-
 		String newURL = _httpImpl.addParameter(
 			url, parameterName, parameterValue);
-
-		verifyStatic();
 
 		StringBundler sb = new StringBundler(5);
 

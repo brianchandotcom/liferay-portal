@@ -18,17 +18,14 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.sso.cas.constants.CASConfigurationKeys;
 import com.liferay.portal.security.sso.cas.constants.CASConstants;
 import com.liferay.portal.security.sso.cas.constants.LegacyCASPropsKeys;
 import com.liferay.portal.verify.BaseCompanySettingsVerifyProcess;
 import com.liferay.portal.verify.VerifyProcess;
 
-import java.util.Dictionary;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -56,62 +53,44 @@ public class CASCompanySettingsVerifyProcess
 	}
 
 	@Override
-	protected Dictionary<String, String> getPropertyValues(long companyId) {
-		Dictionary<String, String> dictionary = new HashMapDictionary<>();
-
-		dictionary.put(
-			CASConfigurationKeys.AUTH_ENABLED,
-			_prefsProps.getString(
-				companyId, LegacyCASPropsKeys.CAS_AUTH_ENABLED,
-				StringPool.FALSE));
-		dictionary.put(
-			CASConfigurationKeys.IMPORT_FROM_LDAP,
-			_prefsProps.getString(
-				companyId, LegacyCASPropsKeys.CAS_IMPORT_FROM_LDAP,
-				StringPool.FALSE));
-		dictionary.put(
-			CASConfigurationKeys.LOGIN_URL,
-			_prefsProps.getString(
-				companyId, LegacyCASPropsKeys.CAS_LOGIN_URL,
-				"https://localhost:8443/cas-web/login"));
-		dictionary.put(
-			CASConfigurationKeys.LOGOUT_ON_SESSION_EXPIRATION,
-			_prefsProps.getString(
-				companyId, LegacyCASPropsKeys.CAS_LOGOUT_ON_SESSION_EXPIRATION,
-				StringPool.FALSE));
-		dictionary.put(
-			CASConfigurationKeys.LOGOUT_URL,
-			_prefsProps.getString(
-				companyId, LegacyCASPropsKeys.CAS_LOGOUT_URL,
-				"https://localhost:8443/cas-web/logout"));
-		dictionary.put(
-			CASConfigurationKeys.NO_SUCH_USER_REDIRECT_URL,
-			_prefsProps.getString(
-				companyId, LegacyCASPropsKeys.CAS_NO_SUCH_USER_REDIRECT_URL,
-				"http://localhost:8080"));
-		dictionary.put(
-			CASConfigurationKeys.SERVER_NAME,
-			_prefsProps.getString(
-				companyId, LegacyCASPropsKeys.CAS_SERVER_NAME,
-				"https://localhost:8080"));
-		dictionary.put(
-			CASConfigurationKeys.SERVER_URL,
-			_prefsProps.getString(
-				companyId, LegacyCASPropsKeys.CAS_SERVER_URL,
-				"https://localhost:8443/cas-web/"));
-		dictionary.put(
-			CASConfigurationKeys.SERVICE_URL,
-			_prefsProps.getString(
-				companyId, LegacyCASPropsKeys.CAS_SERVICE_URL,
-				"https://localhost:8080"));
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Adding CAS configuration for company " + companyId +
-					" with properties: " + dictionary);
-		}
-
-		return dictionary;
+	protected String[][] getRenamePropertyKeysArray() {
+		return new String[][] {
+			new String[] {
+				LegacyCASPropsKeys.CAS_AUTH_ENABLED,
+				CASConfigurationKeys.AUTH_ENABLED
+			},
+			new String[] {
+				LegacyCASPropsKeys.CAS_IMPORT_FROM_LDAP,
+				CASConfigurationKeys.IMPORT_FROM_LDAP
+			},
+			new String[] {
+				LegacyCASPropsKeys.CAS_LOGIN_URL, CASConfigurationKeys.LOGIN_URL
+			},
+			new String[] {
+				LegacyCASPropsKeys.CAS_LOGOUT_ON_SESSION_EXPIRATION,
+				CASConfigurationKeys.LOGOUT_ON_SESSION_EXPIRATION
+			},
+			new String[] {
+				LegacyCASPropsKeys.CAS_LOGOUT_URL,
+				CASConfigurationKeys.LOGOUT_URL
+			},
+			new String[] {
+				LegacyCASPropsKeys.CAS_NO_SUCH_USER_REDIRECT_URL,
+				CASConfigurationKeys.NO_SUCH_USER_REDIRECT_URL
+			},
+			new String[] {
+				LegacyCASPropsKeys.CAS_SERVER_NAME,
+				CASConfigurationKeys.SERVER_NAME
+			},
+			new String[] {
+				LegacyCASPropsKeys.CAS_SERVER_URL,
+				CASConfigurationKeys.SERVER_URL
+			},
+			new String[] {
+				LegacyCASPropsKeys.CAS_SERVICE_URL,
+				CASConfigurationKeys.SERVICE_URL
+			}
+		};
 	}
 
 	@Override
@@ -131,6 +110,10 @@ public class CASCompanySettingsVerifyProcess
 		_companyLocalService = companyLocalService;
 	}
 
+	/**
+	 * @deprecated As of 3.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Reference(unbind = "-")
 	protected void setPrefsProps(PrefsProps prefsProps) {
 		_prefsProps = prefsProps;

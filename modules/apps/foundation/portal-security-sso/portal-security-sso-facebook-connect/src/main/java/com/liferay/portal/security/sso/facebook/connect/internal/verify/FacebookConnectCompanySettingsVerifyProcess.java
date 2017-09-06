@@ -16,10 +16,8 @@ package com.liferay.portal.security.sso.facebook.connect.internal.verify;
 
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectConfigurationKeys;
 import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectConstants;
@@ -57,53 +55,53 @@ public class FacebookConnectCompanySettingsVerifyProcess
 
 	@Override
 	protected Dictionary<String, String> getPropertyValues(long companyId) {
-		Dictionary<String, String> dictionary = new HashMapDictionary<>();
+		Dictionary<String, String> dictionary = super.getPropertyValues(
+			companyId);
 
-		dictionary.put(
-			FacebookConnectConfigurationKeys.AUTH_ENABLED,
-			_prefsProps.getString(
-				companyId, LegacyFacebookConnectPropsKeys.AUTH_ENABLED,
-				StringPool.FALSE));
-		dictionary.put(
-			FacebookConnectConfigurationKeys.APP_ID,
-			_prefsProps.getString(
-				companyId, LegacyFacebookConnectPropsKeys.APP_ID,
-				StringPool.BLANK));
-		dictionary.put(
-			FacebookConnectConfigurationKeys.APP_SECRET,
-			_prefsProps.getString(
-				companyId, LegacyFacebookConnectPropsKeys.APP_SECRET,
-				StringPool.BLANK));
-		dictionary.put(
-			FacebookConnectConfigurationKeys.GRAPH_URL,
-			_prefsProps.getString(
-				companyId, LegacyFacebookConnectPropsKeys.GRAPH_URL,
-				StringPool.BLANK));
-		dictionary.put(
-			FacebookConnectConfigurationKeys.OAUTH_AUTH_URL,
-			_prefsProps.getString(
-				companyId, LegacyFacebookConnectPropsKeys.OAUTH_AUTH_URL,
-				StringPool.BLANK));
-		dictionary.put(
-			FacebookConnectConfigurationKeys.OAUTH_REDIRECT_URL,
-			upgradeLegacyRedirectURI(
-				_prefsProps.getString(
-					companyId,
-					LegacyFacebookConnectPropsKeys.OAUTH_REDIRECT_URL,
-					StringPool.BLANK)));
-		dictionary.put(
-			FacebookConnectConfigurationKeys.OAUTH_TOKEN_URL,
-			_prefsProps.getString(
-				companyId, LegacyFacebookConnectPropsKeys.OAUTH_TOKEN_URL,
-				StringPool.BLANK));
-		dictionary.put(
-			FacebookConnectConfigurationKeys.VERIFIED_ACCOUNT_REQUIRED,
-			_prefsProps.getString(
-				companyId,
-				LegacyFacebookConnectPropsKeys.VERIFIED_ACCOUNT_REQUIRED,
-				StringPool.FALSE));
+		String oauthRedirectURL = _prefsProps.getString(
+			companyId, LegacyFacebookConnectPropsKeys.OAUTH_REDIRECT_URL);
+
+		if (oauthRedirectURL != null) {
+			dictionary.put(
+				FacebookConnectConfigurationKeys.OAUTH_REDIRECT_URL,
+				upgradeLegacyRedirectURI(oauthRedirectURL));
+		}
 
 		return dictionary;
+	}
+
+	@Override
+	protected String[][] getRenamePropertyKeysArray() {
+		return new String[][] {
+			new String[] {
+				LegacyFacebookConnectPropsKeys.AUTH_ENABLED,
+				FacebookConnectConfigurationKeys.AUTH_ENABLED
+			},
+			new String[] {
+				LegacyFacebookConnectPropsKeys.APP_ID,
+				FacebookConnectConfigurationKeys.APP_ID
+			},
+			new String[] {
+				LegacyFacebookConnectPropsKeys.APP_SECRET,
+				FacebookConnectConfigurationKeys.APP_SECRET
+			},
+			new String[] {
+				LegacyFacebookConnectPropsKeys.GRAPH_URL,
+				FacebookConnectConfigurationKeys.GRAPH_URL
+			},
+			new String[] {
+				LegacyFacebookConnectPropsKeys.OAUTH_AUTH_URL,
+				FacebookConnectConfigurationKeys.OAUTH_AUTH_URL
+			},
+			new String[] {
+				LegacyFacebookConnectPropsKeys.OAUTH_TOKEN_URL,
+				FacebookConnectConfigurationKeys.OAUTH_TOKEN_URL
+			},
+			new String[] {
+				LegacyFacebookConnectPropsKeys.VERIFIED_ACCOUNT_REQUIRED,
+				FacebookConnectConfigurationKeys.VERIFIED_ACCOUNT_REQUIRED
+			}
+		};
 	}
 
 	@Override

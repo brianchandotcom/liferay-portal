@@ -16,17 +16,14 @@ package com.liferay.portal.security.sso.opensso.internal.verify;
 
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.sso.opensso.constants.LegacyOpenSSOPropsKeys;
 import com.liferay.portal.security.sso.opensso.constants.OpenSSOConfigurationKeys;
 import com.liferay.portal.security.sso.opensso.constants.OpenSSOConstants;
 import com.liferay.portal.verify.BaseCompanySettingsVerifyProcess;
 import com.liferay.portal.verify.VerifyProcess;
 
-import java.util.Dictionary;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -54,64 +51,49 @@ public class OpenSSOCompanySettingsVerifyProcess
 	}
 
 	@Override
-	protected Dictionary<String, String> getPropertyValues(long companyId) {
-		Dictionary<String, String> dictionary = new HashMapDictionary<>();
-
-		dictionary.put(
-			OpenSSOConfigurationKeys.EMAIL_ADDRESS_ATTR,
-			_prefsProps.getString(
-				companyId, LegacyOpenSSOPropsKeys.OPENSSO_EMAIL_ADDRESS_ATTR,
-				"mail"));
-		dictionary.put(
-			OpenSSOConfigurationKeys.AUTH_ENABLED,
-			_prefsProps.getString(
-				companyId, LegacyOpenSSOPropsKeys.OPENSSO_AUTH_ENABLED,
-				StringPool.FALSE));
-		dictionary.put(
-			OpenSSOConfigurationKeys.FIRST_NAME_ATTR,
-			_prefsProps.getString(
-				companyId, LegacyOpenSSOPropsKeys.OPENSSO_FIRST_NAME_ATTR,
-				"givenname"));
-		dictionary.put(
-			OpenSSOConfigurationKeys.IMPORT_FROM_LDAP,
-			_prefsProps.getString(
-				companyId, LegacyOpenSSOPropsKeys.OPENSSO_IMPORT_FROM_LDAP,
-				StringPool.FALSE));
-		dictionary.put(
-			OpenSSOConfigurationKeys.LAST_NAME_ATTR,
-			_prefsProps.getString(
-				companyId, LegacyOpenSSOPropsKeys.OPENSSO_LAST_NAME_ATTR,
-				"sn"));
-		dictionary.put(
-			OpenSSOConfigurationKeys.LOGIN_URL,
-			_prefsProps.getString(
-				companyId, LegacyOpenSSOPropsKeys.OPENSSO_LOGIN_URL,
-				"http://openssohost.example.com:8080/opensso/UI/Login?goto=" +
-					"http://portalhost.example.com:8080/c/portal/login"));
-		dictionary.put(
-			OpenSSOConfigurationKeys.LOGOUT_ON_SESSION_EXPIRATION,
-			_prefsProps.getString(
-				companyId,
+	protected String[][] getRenamePropertyKeysArray() {
+		return new String[][] {
+			new String[] {
+				LegacyOpenSSOPropsKeys.OPENSSO_EMAIL_ADDRESS_ATTR,
+				OpenSSOConfigurationKeys.EMAIL_ADDRESS_ATTR
+			},
+			new String[] {
+				LegacyOpenSSOPropsKeys.OPENSSO_AUTH_ENABLED,
+				OpenSSOConfigurationKeys.AUTH_ENABLED
+			},
+			new String[] {
+				LegacyOpenSSOPropsKeys.OPENSSO_FIRST_NAME_ATTR,
+				OpenSSOConfigurationKeys.FIRST_NAME_ATTR
+			},
+			new String[] {
+				LegacyOpenSSOPropsKeys.OPENSSO_IMPORT_FROM_LDAP,
+				OpenSSOConfigurationKeys.IMPORT_FROM_LDAP
+			},
+			new String[] {
+				LegacyOpenSSOPropsKeys.OPENSSO_LAST_NAME_ATTR,
+				OpenSSOConfigurationKeys.LAST_NAME_ATTR
+			},
+			new String[] {
+				LegacyOpenSSOPropsKeys.OPENSSO_LOGIN_URL,
+				OpenSSOConfigurationKeys.LOGIN_URL
+			},
+			new String[] {
 				LegacyOpenSSOPropsKeys.OPENSSO_LOGOUT_ON_SESSION_EXPIRATION,
-				StringPool.FALSE));
-		dictionary.put(
-			OpenSSOConfigurationKeys.LOGOUT_URL,
-			_prefsProps.getString(
-				companyId, LegacyOpenSSOPropsKeys.OPENSSO_LOGOUT_URL,
-				"http://openssohost.example.com:8080/opensso/UI/Logout?goto=" +
-					"http://portalhost.example.com:8080/web/guest/home"));
-		dictionary.put(
-			OpenSSOConfigurationKeys.SCREEN_NAME_ATTR,
-			_prefsProps.getString(
-				companyId, LegacyOpenSSOPropsKeys.OPENSSO_SCREEN_NAME_ATTR,
-				"uid"));
-		dictionary.put(
-			OpenSSOConfigurationKeys.SERVICE_URL,
-			_prefsProps.getString(
-				companyId, LegacyOpenSSOPropsKeys.OPENSSO_SERVICE_URL,
-				"http://openssohost.example.com:8080/opensso"));
-
-		return dictionary;
+				OpenSSOConfigurationKeys.LOGOUT_ON_SESSION_EXPIRATION
+			},
+			new String[] {
+				LegacyOpenSSOPropsKeys.OPENSSO_LOGOUT_URL,
+				OpenSSOConfigurationKeys.LOGOUT_URL
+			},
+			new String[] {
+				LegacyOpenSSOPropsKeys.OPENSSO_SCREEN_NAME_ATTR,
+				OpenSSOConfigurationKeys.SCREEN_NAME_ATTR
+			},
+			new String[] {
+				LegacyOpenSSOPropsKeys.OPENSSO_SERVICE_URL,
+				OpenSSOConfigurationKeys.SERVICE_URL
+			}
+		};
 	}
 
 	@Override
@@ -131,6 +113,10 @@ public class OpenSSOCompanySettingsVerifyProcess
 		_companyLocalService = companyLocalService;
 	}
 
+	/**
+	 * @deprecated As of 3.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Reference(unbind = "-")
 	protected void setPrefsProps(PrefsProps prefsProps) {
 		_prefsProps = prefsProps;

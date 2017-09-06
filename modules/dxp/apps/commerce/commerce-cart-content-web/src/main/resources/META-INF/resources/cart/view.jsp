@@ -31,7 +31,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 %>
 
 <div class="container-fluid-1280" id="<portlet:namespace />cartItemsContainer">
-	<div class="col-md-9 commerce-cart-items-container" id="<portlet:namespace />entriesContainer">
+	<div class="commerce-cart-items-container" id="<portlet:namespace />entriesContainer">
 		<liferay-ui:search-container
 			id="commerceCartItems"
 			iteratorURL="<%= portletURL %>"
@@ -112,9 +112,5 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 			<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" searchContainer="<%= commerceCartItemSearchContainer %>" />
 		</liferay-ui:search-container>
-	</div>
-
-	<div class="col-md-3">
-		<h4><strong><liferay-ui:message key="total" /> <%= HtmlUtil.escape(commerceCartContentDisplayContext.getCommerceCartTotal()) %></strong></h4>
 	</div>
 </div>

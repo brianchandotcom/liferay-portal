@@ -3,13 +3,23 @@
 }
 
 .btn-bottom-right {
-	bottom: 20px;
+	bottom: 30px;
 	position: fixed;
 	right: 20px;
 }
 
 .btn-action, .btn-action-secondary {
 	z-index: 950;
+}
+
+.btn-action, .btn-action-secondary > .btn {
+	@include monospace(2.5rem);
+
+	overflow: hidden;
+	padding: 0;
+	text-align: center;
+	white-space: normal;
+	word-wrap: break-word;
 }
 
 // .btn-default {

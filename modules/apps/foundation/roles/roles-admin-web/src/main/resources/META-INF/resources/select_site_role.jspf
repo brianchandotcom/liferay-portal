@@ -53,10 +53,6 @@ if (step == 1) {
 	}
 }
 
-long groupId = ParamUtil.getLong(request, "groupId", uniqueGroupId);
-
-portletURL.setParameter("groupId", String.valueOf(groupId));
-
 portletURL.setParameter("step", String.valueOf(step));
 %>
 
@@ -160,29 +156,32 @@ portletURL.setParameter("step", String.valueOf(step));
 			</aui:script>
 		</c:when>
 		<c:when test="<%= step == 2 %>">
-			<aui:input name="step" type="hidden" value="2" />
-			<aui:input name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
 
 			<%
+			long groupId = ParamUtil.getLong(request, "groupId", uniqueGroupId);
+
 			Group group = GroupServiceUtil.getGroup(groupId);
 
-			portletURL.setParameter("step", "1");
+			portletURL.setParameter("groupId", String.valueOf(groupId));
 			%>
+
+			<aui:input name="step" type="hidden" value="<%= step %>" />
+			<aui:input name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
 
 			<c:if test="<%= selUser != null %>">
 
 				<%
+				portletURL.setParameter("step", "1");
+
 				String breadcrumbs = "<a href=\"" + portletURL.toString() + "\">" + LanguageUtil.get(request, "sites") + "</a> &raquo; " + HtmlUtil.escape(group.getDescriptiveName(locale));
+
+				portletURL.setParameter("step", String.valueOf(step));
 				%>
 
 				<div class="breadcrumbs">
 					<%= breadcrumbs %>
 				</div>
 			</c:if>
-
-			<%
-			portletURL.setParameter("step", "2");
-			%>
 
 			<liferay-ui:search-container
 				headerNames="name"

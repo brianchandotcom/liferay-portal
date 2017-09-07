@@ -612,9 +612,9 @@ username=&quot;liferay&quot;</echo>
 				<sleep seconds="30" />
 
 				<exec executable="curl" outputproperty="curl.output">
-				    <arg value="https://localhost:9200" />
-				    <arg value="-ku" />
-				    <arg value="liferay:liferay" />
+					<arg value="https://localhost:9200" />
+					<arg value="-ku" />
+					<arg value="liferay:liferay" />
 				</exec>
 
 				<echo>${curl.output}</echo>

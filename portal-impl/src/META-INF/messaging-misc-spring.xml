@@ -149,7 +149,7 @@
 						<ref bean="messageListener.document_library_pdf_processor" />
 					</list>
 				</entry>
-				 <entry key="liferay/document_library_raw_metadata_processor">
+				<entry key="liferay/document_library_raw_metadata_processor">
 					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
 						<ref bean="messageListener.document_library_raw_metadata_processor" />
 					</list>

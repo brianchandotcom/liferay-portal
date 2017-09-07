@@ -345,8 +345,8 @@ mariadb.executable=${mariadb.executable}]]></echo>
 					<include name="**/com/liferay/**" />
 				</patternset>
 				<fileset dir="@{portal.bundle.dir}">
-					 <include name="**/*.jar" />
-					 <include name="**/*.war" />
+					<include name="**/*.jar" />
+					<include name="**/*.war" />
 				</fileset>
 			</unzip>
 
@@ -2659,18 +2659,18 @@ ${output.content}</echo>
 
 			<test-tear-down>
 				<if>
-				 	<available file="${project.dir}/git.diff" />
-			 		<then>
+					<available file="${project.dir}/git.diff" />
+					<then>
 						<delete file="${project.dir}/git.diff" />
-			 		</then>
-			 	</if>
+					</then>
+				</if>
 
-			 	<if>
-				 	<available file="${release.tool.dir}/git.diff" />
-			 		<then>
+				<if>
+					<available file="${release.tool.dir}/git.diff" />
+					<then>
 						<delete file="${release.tool.dir}/git.diff" />
-			 		</then>
-			 	</if>
+					</then>
+				</if>
 			</test-tear-down>
 		</run-batch-test>
 	</target>
@@ -2699,8 +2699,7 @@ ${output.content}</echo>
 								</try>
 							</trycatch>
 
-								<antcall inheritall="false" target="stop-app-server" />
-
+							<antcall inheritall="false" target="stop-app-server" />
 						</test-action>
 					</database-test-run-test>
 				</test-action>

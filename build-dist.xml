@@ -1678,7 +1678,7 @@ this task.
 						<tree-loader path="cloud:/resin-inf" />
 					</class-loader>
 				 ]]>
-				</replacevalue>
+			</replacevalue>
 		</replace>
 
 		<copy
@@ -2533,25 +2533,23 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 
 		<echoxml file="${tstamp.value}/was/liferay-responseFile.xml">
 			<agent-input clean="true" temporary="false">
-
-			<install modify="false">
-			 	<offering
+				<install modify="false">
+					<offering
 			  		id='com.ibm.websphere.DEVELOPERSILAN.v85'
 			  		profile='IBM Websphere 8.5.5.0'
-			 	>
-			  	</offering>
-			</install>
+					>
+					</offering>
+				</install>
 
-			<profile
+				<profile
 				id="IBM Websphere 8.5.5.0"
 				installLocation="${app.server.websphere.dir}"
-			>
-			</profile>
+				>
+				</profile>
 
-			<server>
-				<repository location="${project.dir}/${tstamp.value}/was/repository.config" />
-			</server>
-
+				<server>
+					<repository location="${project.dir}/${tstamp.value}/was/repository.config" />
+				</server>
 			</agent-input>
 		</echoxml>
 
@@ -2660,32 +2658,30 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 
 		<echoxml file="${tstamp.value}/was_fixpack/liferay-responseFile.xml">
 			<agent-input clean="true" temporary="false">
-
-			<install modify="false">
-			 	<offering
+				<install modify="false">
+					<offering
 			  		id='com.ibm.websphere.DEVELOPERSILAN.v85'
 			  		profile='IBM Websphere 8.5.5.0'
-			 	>
-			  	</offering>
+					>
+					</offering>
 
-			 	<offering
+					<offering
 			  		id='com.ibm.websphere.IBMJAVA.v80'
 			  		profile='IBM Websphere 8.5.5.0'
-			 	>
-			  	</offering>
-			</install>
+					>
+					</offering>
+				</install>
 
-			<profile
+				<profile
 				id="IBM Websphere 8.5.5.0"
 				installLocation="${app.server.websphere.dir}"
-			>
-			</profile>
+				>
+				</profile>
 
-			<server>
-				<repository location="${project.dir}/${tstamp.value}/was_fixpack/repository.config" />
-				<repository location="${project.dir}/${tstamp.value}/was_fixpack_jdk/repository.config" />
-			</server>
-
+				<server>
+					<repository location="${project.dir}/${tstamp.value}/was_fixpack/repository.config" />
+					<repository location="${project.dir}/${tstamp.value}/was_fixpack_jdk/repository.config" />
+				</server>
 			</agent-input>
 		</echoxml>
 

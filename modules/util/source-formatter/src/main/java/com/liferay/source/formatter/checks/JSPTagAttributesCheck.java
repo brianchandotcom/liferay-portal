@@ -72,7 +72,7 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 
 		content = _formatSingleLineTagAttributes(fileName, content);
 
-		content = _formatMultiLinesTagAttributes(fileName, content);
+		content = formatMultiLinesTagAttributes(fileName, content);
 
 		return content;
 	}
@@ -201,54 +201,6 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 
 		return StringUtil.replace(
 			line, attributeAndValue, newAttributeAndValue);
-	}
-
-	private String _formatMultiLinesTagAttributes(
-			String fileName, String content)
-		throws Exception {
-
-		Matcher matcher = _multilineTagPattern.matcher(content);
-
-		while (matcher.find()) {
-			String tag = matcher.group();
-
-			if (getLevel(tag, "<", ">") != 0) {
-				continue;
-			}
-
-			String beforeClosingTagChar = matcher.group(2);
-
-			if (!beforeClosingTagChar.equals(StringPool.NEW_LINE) &&
-				!beforeClosingTagChar.equals(StringPool.TAB)) {
-
-				String closingTag = matcher.group(3);
-
-				String whitespace = matcher.group(1);
-
-				String tabs = StringUtil.removeChar(
-					whitespace, CharPool.NEW_LINE);
-
-				return StringUtil.replaceFirst(
-					content, closingTag, "\n" + tabs + closingTag,
-					matcher.start(2));
-			}
-
-			String singlelineTag = StringUtil.removeChar(
-				StringUtil.trim(tag), CharPool.TAB);
-
-			singlelineTag = StringUtil.replace(
-				singlelineTag, CharPool.NEW_LINE, CharPool.SPACE);
-
-			String newTag = formatTagAttributes(
-				fileName, tag, singlelineTag,
-				getLineCount(content, matcher.end(1)), false);
-
-			if (!tag.equals(newTag)) {
-				return StringUtil.replace(content, tag, newTag);
-			}
-		}
-
-		return content;
 	}
 
 	private String _formatSingleLineTagAttributes(
@@ -503,8 +455,6 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 	private List<String> _allFileNames;
 	private final Pattern _jspTaglibPattern = Pattern.compile(
 		"<[-\\w]+:[-\\w]+ .");
-	private final Pattern _multilineTagPattern = Pattern.compile(
-		"(\\s+)<[-\\w:]+\n.*?([^%])(/?>)(\n|$)", Pattern.DOTALL);
 	private Set<String> _primitiveTagAttributeDataTypes;
 	private Map<String, JavaClass> _tagJavaClassesMap;
 

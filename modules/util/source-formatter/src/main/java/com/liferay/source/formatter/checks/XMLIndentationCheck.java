@@ -62,6 +62,48 @@ public class XMLIndentationCheck extends BaseFileCheck {
 			content, line, newLine, getLineStartPos(content, lineNumber));
 	}
 
+	private String _fixMultiLineTagAttributesIndentation(
+		String content, String[] lines, TokenOccurrence previousTokenOccurrence,
+		TokenOccurrence tokenOccurrence, int expectedTabCount) {
+
+		if ((previousTokenOccurrence == null) ||
+			(tokenOccurrence.getLineNumber() ==
+				previousTokenOccurrence.getLineNumber())) {
+
+			return content;
+		}
+
+		String previousToken = previousTokenOccurrence.getToken();
+
+		if (!previousToken.equals(_TAG_OPEN)) {
+			return content;
+		}
+
+		String token = tokenOccurrence.getToken();
+
+		if (!token.equals(_MULTI_LINE_TAG_CLOSE) && !token.equals(_TAG_CLOSE)) {
+			return content;
+		}
+
+		String startLine = lines[previousTokenOccurrence.getLineNumber() - 1];
+
+		if (!startLine.matches("\\s*<[-\\w:]+")) {
+			return content;
+		}
+
+		for (int i = previousTokenOccurrence.getLineNumber() + 1;
+			 i < tokenOccurrence.getLineNumber(); i++) {
+
+			String line = lines[i - 1];
+
+			if (line.matches("\\s*[\\w-]+=.*")) {
+				content = _fixIndentation(content, line, expectedTabCount, i);
+			}
+		}
+
+		return content;
+	}
+
 	private String _fixTagIndentation(
 		String content, String line, TokenOccurrence tokenOccurrence,
 		int expectedTabCount) {
@@ -108,6 +150,10 @@ public class XMLIndentationCheck extends BaseFileCheck {
 			String newContent = _fixTagIndentation(
 				content, lines[tokenOccurrence.getLineNumber() - 1],
 				tokenOccurrence, level);
+
+			newContent = _fixMultiLineTagAttributesIndentation(
+				newContent, lines, previousTokenOccurrence, tokenOccurrence,
+				level);
 
 			if (!newContent.equals(content)) {
 				return newContent;

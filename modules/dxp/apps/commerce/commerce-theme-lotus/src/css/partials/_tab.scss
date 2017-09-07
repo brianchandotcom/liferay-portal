@@ -1,4 +1,7 @@
 .nav-tabs-centered {
+	background-color: $brand-color-extra-light;
+	color: $brand-text-color;
+
 	.nav-tabs > li {
 		display: table-cell;
 		float: none;
@@ -7,16 +10,35 @@
 
 		> a {
 			border-width: 0;
+			font-weight: 600;
 			line-height: 80px;
 		}
 
 		&.active {
 			& > a, & > a:hover, & > a:focus {
+				background-color: transparent;
 				border-bottom-color: $brand-color;
 				border-style: solid;
 				border-width: 0 0 3px 0;
 				color: $brand-text-color;
 			}
+		}
+	}
+
+	.table-striped > tbody > tr:nth-of-type(odd) > td {
+		background-color: #FFF;
+	}
+
+	.tab-pane {
+		padding: 20px;
+	}
+
+	p {
+		@include sm {
+			font-size: 18px;
+			line-height: 2;
+			padding: 20px 16%;
+			text-align: center;
 		}
 	}
 }

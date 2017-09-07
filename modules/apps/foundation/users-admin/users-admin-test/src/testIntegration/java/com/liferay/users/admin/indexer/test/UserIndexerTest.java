@@ -21,7 +21,11 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -31,6 +35,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -40,6 +45,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -299,6 +306,41 @@ public class UserIndexerTest {
 		Assert.assertEquals("open4life", actualUser.getScreenName());
 	}
 
+	@Test
+	public void testSummaryHighlight() throws Exception {
+		String firstName = "First";
+		String lastName = "Last";
+
+		_expectedUser = UserTestUtil.addUser();
+
+		_expectedUser.setFirstName(firstName);
+		_expectedUser.setLastName(lastName);
+
+		_expectedUser = _userLocalService.updateUser(_expectedUser);
+
+		assertSummary(
+			firstName,
+			concat(
+				HighlightUtil.HIGHLIGHT_TAG_OPEN, firstName,
+				HighlightUtil.HIGHLIGHT_TAG_CLOSE, StringPool.SPACE, lastName));
+
+		assertSummary(
+			StringUtil.toLowerCase(firstName + " " + lastName),
+			concat(
+				HighlightUtil.HIGHLIGHT_TAG_OPEN, firstName,
+				HighlightUtil.HIGHLIGHT_TAG_CLOSE, StringPool.SPACE,
+				HighlightUtil.HIGHLIGHT_TAG_OPEN, lastName,
+				HighlightUtil.HIGHLIGHT_TAG_CLOSE));
+
+		assertSummary(
+			lastName + " " + firstName,
+			concat(
+				HighlightUtil.HIGHLIGHT_TAG_OPEN, firstName,
+				HighlightUtil.HIGHLIGHT_TAG_CLOSE, StringPool.SPACE,
+				HighlightUtil.HIGHLIGHT_TAG_OPEN, lastName,
+				HighlightUtil.HIGHLIGHT_TAG_CLOSE));
+	}
+
 	protected void assertLength(Hits hits, int length) {
 		Assert.assertEquals(hits.toString(), length, hits.getLength());
 	}
@@ -357,6 +399,46 @@ public class UserIndexerTest {
 		List<User> actualUsers = assertSearch(keywords, user);
 
 		return findByUserId(actualUsers, user.getUserId());
+	}
+
+	protected void assertSummary(String keywords, String title)
+		throws Exception, SearchException {
+
+		SearchContext searchContext = getSearchContext();
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setHighlightEnabled(true);
+
+		searchContext.setKeywords(keywords);
+
+		Hits hits = search(searchContext);
+
+		Document document = findByUserId(
+			hits.getDocs(), _expectedUser.getUserId());
+
+		Summary summary = _indexer.getSummary(document, null, null, null);
+
+		Assert.assertEquals(StringPool.BLANK, summary.getContent());
+		Assert.assertEquals(title, summary.getTitle());
+	}
+
+	protected String concat(String... stringArray) {
+		StringBundler sb = new StringBundler(stringArray);
+
+		return sb.toString();
+	}
+
+	protected Document findByUserId(Document[] documents, long userId) {
+		String userIdString = String.valueOf(userId);
+
+		Stream<Document> documentsStream = Stream.of(documents);
+
+		Optional<Document> documentOptional = documentsStream.filter(
+			document -> userIdString.equals(document.get("userId"))
+		).findAny();
+
+		return documentOptional.get();
 	}
 
 	protected User findByUserId(List<User> users, long userId) {

@@ -46,13 +46,15 @@ public class BndDeploymentScenarioGenerator
 
 	@Override
 	public List<DeploymentDescription> generate(TestClass testClass) {
+		File bndFile = new File("bnd.bnd");
+
 		List<DeploymentDescription> deployments = new ArrayList<>();
 
 		try (Analyzer analyzer = new Analyzer()) {
 			BndProjectBuilder bndProjectBuilder = ShrinkWrap.create(
 				BndProjectBuilder.class);
 
-			bndProjectBuilder.setBndFile(_bndFile);
+			bndProjectBuilder.setBndFile(bndFile);
 			bndProjectBuilder.generateManifest(true);
 
 			String javaClassPathString = System.getProperty("java.class.path");
@@ -75,7 +77,7 @@ public class BndDeploymentScenarioGenerator
 
 			Properties analyzerProperties = new Properties();
 
-			analyzerProperties.putAll(analyzer.loadProperties(_bndFile));
+			analyzerProperties.putAll(analyzer.loadProperties(bndFile));
 
 			analyzer.setProperties(analyzerProperties);
 
@@ -126,7 +128,5 @@ public class BndDeploymentScenarioGenerator
 	}
 
 	private static final String _MANIFEST_PATH = "META-INF/MANIFEST.MF";
-
-	private File _bndFile = new File("bnd.bnd");
 
 }

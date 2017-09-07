@@ -14,11 +14,14 @@
 
 package com.liferay.arquillian.extension.junit.bridge.deployment;
 
+import aQute.bnd.build.Project;
+import aQute.bnd.build.ProjectBuilder;
+import aQute.bnd.build.Workspace;
 import aQute.bnd.osgi.Analyzer;
 import aQute.bnd.osgi.Jar;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.shrinkwrap.osgi.api.BndProjectBuilder;
+import com.liferay.shrinkwrap.osgi.api.BndArchive;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -32,7 +35,6 @@ import java.util.jar.Manifest;
 import org.jboss.arquillian.container.spi.client.deployment.DeploymentDescription;
 import org.jboss.arquillian.container.test.spi.client.deployment.DeploymentScenarioGenerator;
 import org.jboss.arquillian.test.spi.TestClass;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.Asset;
 import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
 import org.jboss.shrinkwrap.api.exporter.ZipExporter;
@@ -49,10 +51,23 @@ public class BndDeploymentScenarioGenerator
 		File bndFile = new File("bnd.bnd");
 
 		try (Analyzer analyzer = new Analyzer()) {
-			BndProjectBuilder bndProjectBuilder = ShrinkWrap.create(
-				BndProjectBuilder.class);
+			File absoluteBndFile = bndFile.getAbsoluteFile();
 
-			bndProjectBuilder.setBndFile(bndFile);
+			File parentBndDir = absoluteBndFile.getParentFile();
+
+			Workspace workspace = new Workspace(parentBndDir);
+
+			Project project = new Project(workspace, parentBndDir);
+
+			Properties properties = new Properties();
+
+			properties.putAll(project.loadProperties(bndFile));
+
+			project.setProperties(properties);
+
+			ProjectBuilder projectBuilder = new ProjectBuilder(project);
+
+			projectBuilder.setBase(parentBndDir);
 
 			String javaClassPathString = System.getProperty("java.class.path");
 
@@ -66,11 +81,13 @@ public class BndDeploymentScenarioGenerator
 					StringUtil.endsWith(javaClassPath, ".zip") ||
 					StringUtil.endsWith(javaClassPath, ".jar")) {
 
-					bndProjectBuilder.addClassPath(file);
+					projectBuilder.addClasspath(file);
 				}
 			}
 
-			JavaArchive javaArchive = bndProjectBuilder.as(JavaArchive.class);
+			BndArchive bndArchive = new BndArchive(projectBuilder.build());
+
+			JavaArchive javaArchive = bndArchive.as(JavaArchive.class);
 
 			Properties analyzerProperties = new Properties();
 

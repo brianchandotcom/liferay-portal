@@ -70,7 +70,7 @@ CPDefinition cpDefinition = virtualCPTypeDisplayContext.getCPDefinition();
 			<div class="col-lg-6 col-md-5">
 				<h1><%= cpDefinition.getTitle(languageId) %></h1>
 
-				<div class="row-fluid">
+				<div class="row">
 					<div class="col-md-12">
 						<c:if test="<%= virtualCPTypeDisplayContext.hasSampleURL() %>">
 							<a href="<%= virtualCPTypeDisplayContext.getSampleURL(themeDisplay) %>">

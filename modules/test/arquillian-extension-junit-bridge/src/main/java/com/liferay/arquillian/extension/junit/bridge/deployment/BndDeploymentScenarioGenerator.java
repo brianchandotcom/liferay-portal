@@ -30,7 +30,6 @@ import java.util.jar.Attributes.Name;
 import java.util.jar.Manifest;
 
 import org.jboss.arquillian.container.spi.client.deployment.DeploymentDescription;
-import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.container.test.impl.client.deployment.AnnotationDeploymentScenarioGenerator;
 import org.jboss.arquillian.container.test.spi.client.deployment.DeploymentScenarioGenerator;
 import org.jboss.arquillian.core.api.Injector;
@@ -99,11 +98,7 @@ public class BndDeploymentScenarioGenerator
 
 			analyzer.setProperties(analyzerProperties);
 
-			boolean testable = _isTestable(testClass);
-
-			if (testable) {
-				_addTestClass(testClass, javaArchive);
-			}
+			_addTestClass(testClass, javaArchive);
 
 			ZipExporter zipExporter = javaArchive.as(ZipExporter.class);
 
@@ -115,8 +110,8 @@ public class BndDeploymentScenarioGenerator
 			DeploymentDescription deploymentDescription =
 				new DeploymentDescription(javaArchive.getName(), javaArchive);
 
-			deploymentDescription.shouldBeTestable(testable).shouldBeManaged(
-				true);
+			deploymentDescription.shouldBeTestable(true);
+			deploymentDescription.shouldBeManaged(true);
 
 			deployments.add(deploymentDescription);
 
@@ -163,10 +158,6 @@ public class BndDeploymentScenarioGenerator
 
 	private void _addTestClass(TestClass testClass, JavaArchive javaArchive) {
 		javaArchive.addClass(testClass.getJavaClass());
-	}
-
-	private boolean _isTestable(TestClass testClass) {
-		return !testClass.isAnnotationPresent(RunAsClient.class);
 	}
 
 	private void _replaceManifest(

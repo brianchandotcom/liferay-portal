@@ -42,7 +42,6 @@ public class CPAvailabilityRangeSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setCPDefinitionId(model.getCPDefinitionId());
 		soapModel.setTitle(model.getTitle());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 
@@ -164,14 +163,6 @@ public class CPAvailabilityRangeSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public long getCPDefinitionId() {
-		return _CPDefinitionId;
-	}
-
-	public void setCPDefinitionId(long CPDefinitionId) {
-		_CPDefinitionId = CPDefinitionId;
-	}
-
 	public String getTitle() {
 		return _title;
 	}
@@ -196,7 +187,6 @@ public class CPAvailabilityRangeSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private long _CPDefinitionId;
 	private String _title;
 	private Date _lastPublishDate;
 }

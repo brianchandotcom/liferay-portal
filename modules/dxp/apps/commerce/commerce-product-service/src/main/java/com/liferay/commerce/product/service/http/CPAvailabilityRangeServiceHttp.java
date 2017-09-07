@@ -56,7 +56,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class CPAvailabilityRangeServiceHttp {
 	public static com.liferay.commerce.product.model.CPAvailabilityRange addCPAvailabilityRange(
-		HttpPrincipal httpPrincipal, long cpDefinitionId,
+		HttpPrincipal httpPrincipal,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -66,7 +66,7 @@ public class CPAvailabilityRangeServiceHttp {
 					_addCPAvailabilityRangeParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpDefinitionId, titleMap, serviceContext);
+					titleMap, serviceContext);
 
 			Object returnObj = null;
 
@@ -245,7 +245,7 @@ public class CPAvailabilityRangeServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CPAvailabilityRangeServiceHttp.class);
 	private static final Class<?>[] _addCPAvailabilityRangeParameterTypes0 = new Class[] {
-			long.class, java.util.Map.class,
+			java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCPAvailabilityRangeParameterTypes1 = new Class[] {

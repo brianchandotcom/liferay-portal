@@ -2439,7 +2439,6 @@ public class CPAvailabilityRangePersistenceImpl extends BasePersistenceImpl<CPAv
 		cpAvailabilityRangeImpl.setUserName(cpAvailabilityRange.getUserName());
 		cpAvailabilityRangeImpl.setCreateDate(cpAvailabilityRange.getCreateDate());
 		cpAvailabilityRangeImpl.setModifiedDate(cpAvailabilityRange.getModifiedDate());
-		cpAvailabilityRangeImpl.setCPDefinitionId(cpAvailabilityRange.getCPDefinitionId());
 		cpAvailabilityRangeImpl.setTitle(cpAvailabilityRange.getTitle());
 		cpAvailabilityRangeImpl.setLastPublishDate(cpAvailabilityRange.getLastPublishDate());
 

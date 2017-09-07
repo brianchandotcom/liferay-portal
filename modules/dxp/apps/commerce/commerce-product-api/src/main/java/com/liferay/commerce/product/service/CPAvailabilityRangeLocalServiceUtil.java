@@ -54,13 +54,10 @@ public class CPAvailabilityRangeLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPAvailabilityRange addCPAvailabilityRange(
-		long cpDefinitionId,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addCPAvailabilityRange(cpDefinitionId, titleMap,
-			serviceContext);
+		return getService().addCPAvailabilityRange(titleMap, serviceContext);
 	}
 
 	/**

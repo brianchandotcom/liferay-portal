@@ -214,20 +214,6 @@ public interface CPAvailabilityRangeModel extends BaseModel<CPAvailabilityRange>
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the cp definition ID of this cp availability range.
-	 *
-	 * @return the cp definition ID of this cp availability range
-	 */
-	public long getCPDefinitionId();
-
-	/**
-	 * Sets the cp definition ID of this cp availability range.
-	 *
-	 * @param CPDefinitionId the cp definition ID of this cp availability range
-	 */
-	public void setCPDefinitionId(long CPDefinitionId);
-
-	/**
 	 * Returns the title of this cp availability range.
 	 *
 	 * @return the title of this cp availability range

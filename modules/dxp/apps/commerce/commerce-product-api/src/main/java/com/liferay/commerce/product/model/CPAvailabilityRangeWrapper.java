@@ -68,7 +68,6 @@ public class CPAvailabilityRangeWrapper implements CPAvailabilityRange,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("CPDefinitionId", getCPDefinitionId());
 		attributes.put("title", getTitle());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
@@ -126,12 +125,6 @@ public class CPAvailabilityRangeWrapper implements CPAvailabilityRange,
 			setModifiedDate(modifiedDate);
 		}
 
-		Long CPDefinitionId = (Long)attributes.get("CPDefinitionId");
-
-		if (CPDefinitionId != null) {
-			setCPDefinitionId(CPDefinitionId);
-		}
-
 		String title = (String)attributes.get("title");
 
 		if (title != null) {
@@ -178,16 +171,6 @@ public class CPAvailabilityRangeWrapper implements CPAvailabilityRange,
 	@Override
 	public long getCPAvailabilityRangeId() {
 		return _cpAvailabilityRange.getCPAvailabilityRangeId();
-	}
-
-	/**
-	* Returns the cp definition ID of this cp availability range.
-	*
-	* @return the cp definition ID of this cp availability range
-	*/
-	@Override
-	public long getCPDefinitionId() {
-		return _cpAvailabilityRange.getCPDefinitionId();
 	}
 
 	/**
@@ -433,16 +416,6 @@ public class CPAvailabilityRangeWrapper implements CPAvailabilityRange,
 	@Override
 	public void setCPAvailabilityRangeId(long CPAvailabilityRangeId) {
 		_cpAvailabilityRange.setCPAvailabilityRangeId(CPAvailabilityRangeId);
-	}
-
-	/**
-	* Sets the cp definition ID of this cp availability range.
-	*
-	* @param CPDefinitionId the cp definition ID of this cp availability range
-	*/
-	@Override
-	public void setCPDefinitionId(long CPDefinitionId) {
-		_cpAvailabilityRange.setCPDefinitionId(CPDefinitionId);
 	}
 
 	/**

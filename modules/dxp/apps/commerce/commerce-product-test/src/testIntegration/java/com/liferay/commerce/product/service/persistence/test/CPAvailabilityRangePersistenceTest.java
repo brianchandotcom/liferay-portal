@@ -139,8 +139,6 @@ public class CPAvailabilityRangePersistenceTest {
 
 		newCPAvailabilityRange.setModifiedDate(RandomTestUtil.nextDate());
 
-		newCPAvailabilityRange.setCPDefinitionId(RandomTestUtil.nextLong());
-
 		newCPAvailabilityRange.setTitle(RandomTestUtil.randomString());
 
 		newCPAvailabilityRange.setLastPublishDate(RandomTestUtil.nextDate());
@@ -167,8 +165,6 @@ public class CPAvailabilityRangePersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCPAvailabilityRange.getModifiedDate()),
 			Time.getShortTimestamp(newCPAvailabilityRange.getModifiedDate()));
-		Assert.assertEquals(existingCPAvailabilityRange.getCPDefinitionId(),
-			newCPAvailabilityRange.getCPDefinitionId());
 		Assert.assertEquals(existingCPAvailabilityRange.getTitle(),
 			newCPAvailabilityRange.getTitle());
 		Assert.assertEquals(Time.getShortTimestamp(
@@ -236,8 +232,7 @@ public class CPAvailabilityRangePersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CPAvailabilityRange",
 			"uuid", true, "CPAvailabilityRangeId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "CPDefinitionId", true, "title", true,
-			"lastPublishDate", true);
+			true, "modifiedDate", true, "title", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -473,8 +468,6 @@ public class CPAvailabilityRangePersistenceTest {
 		cpAvailabilityRange.setCreateDate(RandomTestUtil.nextDate());
 
 		cpAvailabilityRange.setModifiedDate(RandomTestUtil.nextDate());
-
-		cpAvailabilityRange.setCPDefinitionId(RandomTestUtil.nextLong());
 
 		cpAvailabilityRange.setTitle(RandomTestUtil.randomString());
 

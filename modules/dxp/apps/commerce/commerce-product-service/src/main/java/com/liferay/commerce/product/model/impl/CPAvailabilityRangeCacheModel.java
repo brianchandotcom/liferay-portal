@@ -66,7 +66,7 @@ public class CPAvailabilityRangeCacheModel implements CacheModel<CPAvailabilityR
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -84,8 +84,6 @@ public class CPAvailabilityRangeCacheModel implements CacheModel<CPAvailabilityR
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", CPDefinitionId=");
-		sb.append(CPDefinitionId);
 		sb.append(", title=");
 		sb.append(title);
 		sb.append(", lastPublishDate=");
@@ -132,8 +130,6 @@ public class CPAvailabilityRangeCacheModel implements CacheModel<CPAvailabilityR
 			cpAvailabilityRangeImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		cpAvailabilityRangeImpl.setCPDefinitionId(CPDefinitionId);
-
 		if (title == null) {
 			cpAvailabilityRangeImpl.setTitle(StringPool.BLANK);
 		}
@@ -167,8 +163,6 @@ public class CPAvailabilityRangeCacheModel implements CacheModel<CPAvailabilityR
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-
-		CPDefinitionId = objectInput.readLong();
 		title = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
 	}
@@ -201,8 +195,6 @@ public class CPAvailabilityRangeCacheModel implements CacheModel<CPAvailabilityR
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		objectOutput.writeLong(CPDefinitionId);
-
 		if (title == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -221,7 +213,6 @@ public class CPAvailabilityRangeCacheModel implements CacheModel<CPAvailabilityR
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public long CPDefinitionId;
 	public String title;
 	public long lastPublishDate;
 }

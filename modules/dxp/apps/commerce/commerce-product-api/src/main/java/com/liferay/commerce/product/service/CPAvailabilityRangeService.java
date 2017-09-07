@@ -58,7 +58,7 @@ public interface CPAvailabilityRangeService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPAvailabilityRangeServiceUtil} to access the cp availability range remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPAvailabilityRangeServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public CPAvailabilityRange addCPAvailabilityRange(long cpDefinitionId,
+	public CPAvailabilityRange addCPAvailabilityRange(
 		Map<Locale, java.lang.String> titleMap, ServiceContext serviceContext)
 		throws PortalException;
 

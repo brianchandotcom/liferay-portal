@@ -88,7 +88,6 @@ public class CPAvailabilityRangeModelImpl extends BaseModelImpl<CPAvailabilityRa
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
-			{ "CPDefinitionId", Types.BIGINT },
 			{ "title", Types.VARCHAR },
 			{ "lastPublishDate", Types.TIMESTAMP }
 		};
@@ -103,12 +102,11 @@ public class CPAvailabilityRangeModelImpl extends BaseModelImpl<CPAvailabilityRa
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("CPDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPAvailabilityRange (uuid_ VARCHAR(75) null,CPAvailabilityRangeId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,title STRING null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CPAvailabilityRange (uuid_ VARCHAR(75) null,CPAvailabilityRangeId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title STRING null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CPAvailabilityRange";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpAvailabilityRange.title ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPAvailabilityRange.title ASC";
@@ -150,7 +148,6 @@ public class CPAvailabilityRangeModelImpl extends BaseModelImpl<CPAvailabilityRa
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setCPDefinitionId(soapModel.getCPDefinitionId());
 		model.setTitle(soapModel.getTitle());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 
@@ -226,7 +223,6 @@ public class CPAvailabilityRangeModelImpl extends BaseModelImpl<CPAvailabilityRa
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("CPDefinitionId", getCPDefinitionId());
 		attributes.put("title", getTitle());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
@@ -285,12 +281,6 @@ public class CPAvailabilityRangeModelImpl extends BaseModelImpl<CPAvailabilityRa
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
-		}
-
-		Long CPDefinitionId = (Long)attributes.get("CPDefinitionId");
-
-		if (CPDefinitionId != null) {
-			setCPDefinitionId(CPDefinitionId);
 		}
 
 		String title = (String)attributes.get("title");
@@ -456,17 +446,6 @@ public class CPAvailabilityRangeModelImpl extends BaseModelImpl<CPAvailabilityRa
 		_setModifiedDate = true;
 
 		_modifiedDate = modifiedDate;
-	}
-
-	@JSON
-	@Override
-	public long getCPDefinitionId() {
-		return _CPDefinitionId;
-	}
-
-	@Override
-	public void setCPDefinitionId(long CPDefinitionId) {
-		_CPDefinitionId = CPDefinitionId;
 	}
 
 	@JSON
@@ -687,7 +666,6 @@ public class CPAvailabilityRangeModelImpl extends BaseModelImpl<CPAvailabilityRa
 		cpAvailabilityRangeImpl.setUserName(getUserName());
 		cpAvailabilityRangeImpl.setCreateDate(getCreateDate());
 		cpAvailabilityRangeImpl.setModifiedDate(getModifiedDate());
-		cpAvailabilityRangeImpl.setCPDefinitionId(getCPDefinitionId());
 		cpAvailabilityRangeImpl.setTitle(getTitle());
 		cpAvailabilityRangeImpl.setLastPublishDate(getLastPublishDate());
 
@@ -811,8 +789,6 @@ public class CPAvailabilityRangeModelImpl extends BaseModelImpl<CPAvailabilityRa
 			cpAvailabilityRangeCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		cpAvailabilityRangeCacheModel.CPDefinitionId = getCPDefinitionId();
-
 		cpAvailabilityRangeCacheModel.title = getTitle();
 
 		String title = cpAvailabilityRangeCacheModel.title;
@@ -835,7 +811,7 @@ public class CPAvailabilityRangeModelImpl extends BaseModelImpl<CPAvailabilityRa
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -853,8 +829,6 @@ public class CPAvailabilityRangeModelImpl extends BaseModelImpl<CPAvailabilityRa
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
-		sb.append(", CPDefinitionId=");
-		sb.append(getCPDefinitionId());
 		sb.append(", title=");
 		sb.append(getTitle());
 		sb.append(", lastPublishDate=");
@@ -866,7 +840,7 @@ public class CPAvailabilityRangeModelImpl extends BaseModelImpl<CPAvailabilityRa
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(34);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.product.model.CPAvailabilityRange");
@@ -905,10 +879,6 @@ public class CPAvailabilityRangeModelImpl extends BaseModelImpl<CPAvailabilityRa
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>CPDefinitionId</column-name><column-value><![CDATA[");
-		sb.append(getCPDefinitionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>title</column-name><column-value><![CDATA[");
 		sb.append(getTitle());
 		sb.append("]]></column-value></column>");
@@ -940,7 +910,6 @@ public class CPAvailabilityRangeModelImpl extends BaseModelImpl<CPAvailabilityRa
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private long _CPDefinitionId;
 	private String _title;
 	private String _titleCurrentLanguageId;
 	private Date _lastPublishDate;

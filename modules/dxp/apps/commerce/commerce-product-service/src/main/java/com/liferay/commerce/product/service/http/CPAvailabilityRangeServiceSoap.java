@@ -70,7 +70,7 @@ import java.util.Map;
 @ProviderType
 public class CPAvailabilityRangeServiceSoap {
 	public static com.liferay.commerce.product.model.CPAvailabilityRangeSoap addCPAvailabilityRange(
-		long cpDefinitionId, java.lang.String[] titleMapLanguageIds,
+		java.lang.String[] titleMapLanguageIds,
 		java.lang.String[] titleMapValues,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -78,8 +78,8 @@ public class CPAvailabilityRangeServiceSoap {
 			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
 					titleMapValues);
 
-			com.liferay.commerce.product.model.CPAvailabilityRange returnValue = CPAvailabilityRangeServiceUtil.addCPAvailabilityRange(cpDefinitionId,
-					titleMap, serviceContext);
+			com.liferay.commerce.product.model.CPAvailabilityRange returnValue = CPAvailabilityRangeServiceUtil.addCPAvailabilityRange(titleMap,
+					serviceContext);
 
 			return com.liferay.commerce.product.model.CPAvailabilityRangeSoap.toSoapModel(returnValue);
 		}

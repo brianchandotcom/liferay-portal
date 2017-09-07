@@ -32,7 +32,6 @@ create table CPAvailabilityRange (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	CPDefinitionId LONG,
 	title STRING null,
 	lastPublishDate DATE null
 );

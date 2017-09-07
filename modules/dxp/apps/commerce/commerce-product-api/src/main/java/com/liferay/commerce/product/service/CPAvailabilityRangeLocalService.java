@@ -79,7 +79,7 @@ public interface CPAvailabilityRangeLocalService extends BaseLocalService,
 	public CPAvailabilityRange addCPAvailabilityRange(
 		CPAvailabilityRange cpAvailabilityRange);
 
-	public CPAvailabilityRange addCPAvailabilityRange(long cpDefinitionId,
+	public CPAvailabilityRange addCPAvailabilityRange(
 		Map<Locale, java.lang.String> titleMap, ServiceContext serviceContext)
 		throws PortalException;
 

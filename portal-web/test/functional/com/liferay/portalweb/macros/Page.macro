@@ -280,7 +280,6 @@
 		</execute>
 
 		<execute macro="SitePageNavigator#gotoAddPage">
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
 			<var name="siteTemplateName" value="${siteTemplateName}" />
 		</execute>
 

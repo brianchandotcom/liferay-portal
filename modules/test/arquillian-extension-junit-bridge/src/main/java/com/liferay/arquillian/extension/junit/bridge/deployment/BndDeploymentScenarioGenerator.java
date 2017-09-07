@@ -56,8 +56,8 @@ public class BndDeploymentScenarioGenerator
 
 			String javaClassPathString = System.getProperty("java.class.path");
 
-			String[] javaClassPaths = javaClassPathString.split(
-				File.pathSeparator);
+			String[] javaClassPaths = StringUtil.split(
+				javaClassPathString, File.pathSeparatorChar);
 
 			for (String javaClassPath : javaClassPaths) {
 				File file = new File(javaClassPath);

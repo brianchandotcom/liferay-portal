@@ -24,5 +24,5 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <p>
 	<portlet:actionURL name="sendMessage" var="sendMessageURL" />
 
-	<aui:button name="sendMessageBtn" onClick="<%= sendMessageURL %>" value="sendMessage" />
+	<aui:button name="sendMessageBtn" onClick="<%= sendMessageURL %>" value="send-message" />
 </p>

@@ -43,6 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.mime-type=text/html",
 		"javax.portlet.name=com_liferay_lcs_messaging_echo_sample1_web_portlet_EchoPortlet",
+		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user"
 	},
 	service = Portlet.class

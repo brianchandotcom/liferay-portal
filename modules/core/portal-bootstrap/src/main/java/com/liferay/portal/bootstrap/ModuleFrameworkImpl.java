@@ -1188,6 +1188,20 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 			});
 
+		for (String staticJarFileName :
+				PropsValues.MODULE_FRAMEWORK_STATIC_JARS) {
+
+			File staticJarFile = new File(
+				PropsValues.LIFERAY_LIB_PORTAL_DIR, staticJarFileName);
+
+			if (staticJarFile.exists()) {
+				jarPaths.add(staticJarFile.toPath());
+			}
+			else {
+				_log.error("Missing " + staticJarFile);
+			}
+		}
+
 		Collections.sort(jarPaths);
 
 		String prefix = "reference:".concat(_STATIC_JAR);
@@ -1223,20 +1237,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		_refreshBundles(refreshBundles);
 
 		refreshBundles.clear();
-
-		for (String staticJarFileName :
-				PropsValues.MODULE_FRAMEWORK_STATIC_JARS) {
-
-			File staticJarFile = new File(
-				PropsValues.LIFERAY_LIB_PORTAL_DIR, staticJarFileName);
-
-			if (staticJarFile.exists()) {
-				jarPaths.add(staticJarFile.toPath());
-			}
-			else {
-				_log.error("Missing " + staticJarFile);
-			}
-		}
 
 		Set<String> overrideStaticFileNames = new HashSet<>();
 

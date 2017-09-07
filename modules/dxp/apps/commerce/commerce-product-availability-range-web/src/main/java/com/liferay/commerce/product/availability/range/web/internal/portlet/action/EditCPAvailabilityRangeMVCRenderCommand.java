@@ -24,16 +24,18 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -45,7 +47,8 @@ import javax.servlet.http.HttpServletResponse;
 	},
 	service = MVCRenderCommand.class
 )
-public class EditCPAvailabilityRangeMVCRenderCommand implements MVCRenderCommand {
+public class EditCPAvailabilityRangeMVCRenderCommand
+	implements MVCRenderCommand {
 
 	@Override
 	public String render(

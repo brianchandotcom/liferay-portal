@@ -64,7 +64,7 @@
 
 					<br /><br />
 
-					<liferay-ui:asset-display
+					<liferay-asset:asset-display
 						assetRenderer="<%= assetRenderer %>"
 						template="<%= AssetRenderer.TEMPLATE_FULL_CONTENT %>"
 					/>

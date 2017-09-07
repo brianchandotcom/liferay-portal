@@ -14,16 +14,17 @@
 
 package com.liferay.portal.osgi.debug.declarative.service.internal;
 
+import static java.lang.Thread.sleep;
+
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.osgi.debug.declarative.service.internal.configuration.UnsatisfiedComponentScannerConfiguration;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -54,44 +55,78 @@ public class UnsatisfiedComponentScanner {
 				unsatisfiedComponentScanningInterval();
 
 		if (scanningInterval > 0) {
-			BundleContext bundleContext = componentContext.getBundleContext();
+			_unsatisfiedComponentScanningThread =
+				new UnsatisfiedComponentScanningThread(
+					scanningInterval * Time.SECOND, _serviceComponentRuntime);
 
-			_scheduledExecutorService = Executors.newScheduledThreadPool(1);
-
-			Runnable runnable = new Runnable() {
-
-				@Override
-				public void run() {
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							UnsatisfiedComponentUtil.listUnsatisfiedComponents(
-								_serviceComponentRuntime,
-								bundleContext.getBundles()));
-					}
-				}
-
-			};
-
-			_scheduledExecutorService.scheduleAtFixedRate(
-				runnable, 0, scanningInterval, TimeUnit.SECONDS);
+			_unsatisfiedComponentScanningThread.start();
 		}
 	}
 
 	@Deactivate
-	protected void deactivate() {
-		if (_scheduledExecutorService != null) {
-			_scheduledExecutorService.shutdown();
+	protected void deactivate() throws InterruptedException {
+		if (_unsatisfiedComponentScanningThread != null) {
+			_unsatisfiedComponentScanningThread.interrupt();
 
-			_scheduledExecutorService = null;
+			_unsatisfiedComponentScanningThread.join();
+		}
+	}
+
+	private static void _scanUnsatisfiedComponents(
+		ServiceComponentRuntime serviceComponentRuntime) {
+
+		if (_log.isInfoEnabled()) {
+			Bundle bundle = FrameworkUtil.getBundle(
+				UnsatisfiedComponentScanner.class);
+
+			BundleContext bundleContext = bundle.getBundleContext();
+
+			_log.info(
+				UnsatisfiedComponentUtil.listUnsatisfiedComponents(
+					serviceComponentRuntime, bundleContext.getBundles()));
 		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UnsatisfiedComponentScanner.class);
 
-	private ScheduledExecutorService _scheduledExecutorService;
-
 	@Reference
 	private ServiceComponentRuntime _serviceComponentRuntime;
+
+	private Thread _unsatisfiedComponentScanningThread;
+
+	private static class UnsatisfiedComponentScanningThread extends Thread {
+
+		@Override
+		public void run() {
+			try {
+				while (true) {
+					sleep(_scanningInterval);
+
+					_scanUnsatisfiedComponents(_serviceComponentRuntime);
+				}
+			}
+			catch (InterruptedException ie) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Stopped scanning for unsatisfied components");
+				}
+			}
+		}
+
+		private UnsatisfiedComponentScanningThread(
+			long scanningInterval,
+			ServiceComponentRuntime serviceComponentRuntime) {
+
+			_scanningInterval = scanningInterval;
+			_serviceComponentRuntime = serviceComponentRuntime;
+
+			setDaemon(true);
+			setName("Declarative Service Unsatisfied Component Scanner");
+		}
+
+		private final long _scanningInterval;
+		private final ServiceComponentRuntime _serviceComponentRuntime;
+
+	}
 
 }

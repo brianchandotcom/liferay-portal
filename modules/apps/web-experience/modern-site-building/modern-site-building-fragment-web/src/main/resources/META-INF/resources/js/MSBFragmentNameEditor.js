@@ -1,8 +1,8 @@
+import 'metal-modal';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import Uri from 'metal-uri';
-import {Config} from 'metal-state';
-import 'metal-modal';
+import { Config } from 'metal-state';
 
 import templates from './MSBFragmentNameEditor.soy';
 
@@ -12,7 +12,6 @@ import templates from './MSBFragmentNameEditor.soy';
 class MSBFragmentNameEditor extends Component {
 	/**
 	 * Callback executed when the modal is hidden.
-	 *
 	 * @protected
 	 */
 	_handleModalHidden() {
@@ -23,8 +22,8 @@ class MSBFragmentNameEditor extends Component {
 	 * Callback executed when the generated form is submited.
 	 * If the user has written a Fragment name, it closes the dialog,
 	 * otherwise it does nothing.
-	 *
 	 * @param {Event} event Submit event that is prevented.
+	 * @protected
 	 */
 	_handleSubmitForm(event) {
 		event.preventDefault();
@@ -40,9 +39,7 @@ class MSBFragmentNameEditor extends Component {
 				method: 'POST',
 			}
 		)
-		.then((response) => {
-			return response.json();
-		})
+		.then(response => response.json())
 		.then(({error = null, msbFragmentEntryId = null}) => {
 			this.error = error;
 
@@ -117,10 +114,10 @@ MSBFragmentNameEditor.STATE = {
 	 * @memberOf MSBFragmentEditor
 	 * @type {!string}
 	 */
-	spritemap: Config.string().required(),
+	spritemap: Config.string().required()
 };
 
-// Register component
 Soy.register(MSBFragmentNameEditor, templates);
 
+export { MSBFragmentNameEditor };
 export default MSBFragmentNameEditor;

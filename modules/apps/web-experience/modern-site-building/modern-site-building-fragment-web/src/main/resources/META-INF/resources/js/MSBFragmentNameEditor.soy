@@ -6,9 +6,9 @@
 {template .render}
 	{@param namespace: string}
 	{@param spritemap: string}
-	{@param? error: string}
 	{@param? _handleModalHidden: any}
 	{@param? _handleSubmitForm: any}
+	{@param? error: string}
 
 	{call Modal.render}
 		{param body kind="html"}
@@ -45,15 +45,10 @@
 				</div>
 			</form>
 		{/param}
+
 		{param dialogClasses: 'msb-fragment-name-editor__dialog' /}
-		{param events: [
-			'hide': $_handleModalHidden,
-		]/}
-		{param header kind="html"}
-			<h3 class="modal-title">
-				{msg desc=""}add-fragment{/msg}
-			</h3>
-		{/param}
+		{param events: ['hide': $_handleModalHidden] /}
+
 		{param footer kind="html"}
 			<button class="btn btn-primary btn-default btn-lg" data-onclick="{$_handleSubmitForm}" type="button">
 				<span class="lfr-btn-label">
@@ -66,6 +61,12 @@
 					{msg desc=""}cancel{/msg}
 				</span>
 			</button>
+		{/param}
+
+		{param header kind="html"}
+			<h3 class="modal-title">
+				{msg desc=""}add-fragment{/msg}
+			</h3>
 		{/param}
 	{/call}
 {/template}

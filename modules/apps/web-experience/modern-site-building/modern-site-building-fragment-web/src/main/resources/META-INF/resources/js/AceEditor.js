@@ -1,6 +1,6 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import {Config} from 'metal-state';
+import { Config } from 'metal-state';
 
 import templates from './AceEditor.soy';
 
@@ -38,10 +38,7 @@ class AceEditor extends Component {
 	}
 
 	/**
-	 * Return false so the ace editor does not break
-	 *
 	 * @inheritDoc
-	 * @return {boolean}
 	 */
 	shouldUpdate() {
 		return false;
@@ -50,6 +47,7 @@ class AceEditor extends Component {
 	/**
 	 * Callback executed when the internal Ace editor has been
 	 * modified. It simply propagates the event.
+	 * @protected
 	 */
 	_handleDocumentChanged() {
 		this.emit('contentChanged', {
@@ -83,7 +81,7 @@ AceEditor.STATE = {
 	syntax: Config.oneOf(['html', 'css', 'javascript']).required(),
 };
 
-// Register component
 Soy.register(AceEditor, templates);
 
+export { AceEditor };
 export default AceEditor;

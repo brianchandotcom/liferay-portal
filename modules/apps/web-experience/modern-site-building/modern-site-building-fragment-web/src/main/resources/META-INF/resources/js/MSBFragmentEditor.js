@@ -1,10 +1,10 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import {Config} from 'metal-state';
+import { Config } from 'metal-state';
 
 import templates from './MSBFragmentEditor.soy';
-import './MSBFragmentPreview.es';
-import './SourceEditor.es';
+import './MSBFragmentPreview';
+import './SourceEditor';
 
 /**
  * Component that allows editing an existing or new Fragment
@@ -21,6 +21,7 @@ class MSBFragmentEditor extends Component {
 
 	/**
 	 * Event handler executed when any content is changed
+	 * @protected
 	 */
 	_handleContentChanged() {
 		this.emit('contentChanged', {
@@ -32,7 +33,6 @@ class MSBFragmentEditor extends Component {
 
 	/**
 	 * Callback executed when the css editor changes
-	 *
 	 * @param {string} content
 	 * @protected
 	 */
@@ -43,7 +43,6 @@ class MSBFragmentEditor extends Component {
 
 	/**
 	 * Callback executed when the html editor changes
-	 *
 	 * @param {string} content
 	 * @protected
 	 */
@@ -144,7 +143,7 @@ MSBFragmentEditor.STATE = {
 	_js: Config.string().internal().value(''),
 };
 
-// Register component
 Soy.register(MSBFragmentEditor, templates);
 
+export { MSBFragmentEditor };
 export default MSBFragmentEditor;

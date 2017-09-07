@@ -4,15 +4,13 @@
  * SourceEditor
  */
 {template .render}
-	{@param syntax: string}
 	{@param initialContent: string}
+	{@param syntax: string}
 	{@param? _handleContentChanged: any}
 
 	<div class="source-editor">
 		{call AceEditor.render}
-			{param events: [
-				'contentChanged': $_handleContentChanged
-			]/}
+			{param events: ['contentChanged': $_handleContentChanged] /}
 			{param initialContent: $initialContent /}
 			{param syntax: $syntax /}
 		{/call}

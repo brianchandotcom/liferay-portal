@@ -1,9 +1,9 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import {Config} from 'metal-state';
+import { Config } from 'metal-state';
 
 import templates from './SourceEditor.soy';
-import './AceEditor.es';
+import './AceEditor';
 
 /**
  * Component that creates an instance of Ace editor
@@ -13,7 +13,6 @@ class SourceEditor extends Component {
 	/**
 	 * Callback executed when the internal Ace editor has been
 	 * modified. It simply propagates the event.
-	 *
 	 * @param {{content:string}} Updated editor content.
 	 */
 	_handleContentChanged({content}) {
@@ -45,7 +44,7 @@ SourceEditor.STATE = {
 	syntax: Config.oneOf(['html', 'css', 'javascript']).required(),
 };
 
-// Register component
 Soy.register(SourceEditor, templates);
 
+export { SourceEditor };
 export default SourceEditor;

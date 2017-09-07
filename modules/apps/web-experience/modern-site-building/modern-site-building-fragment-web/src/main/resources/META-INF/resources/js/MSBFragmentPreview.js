@@ -1,7 +1,7 @@
 import Component from 'metal-component';
-import debounce from 'metal-debounce';
 import Soy from 'metal-soy';
-import {Config} from 'metal-state';
+import debounce from 'metal-debounce';
+import { Config } from 'metal-state';
 
 import templates from './MSBFragmentPreview.soy';
 
@@ -67,8 +67,8 @@ class MSBFragmentPreview extends Component {
 
 	/**
 	 * Changes the preview size
-	 *
 	 * @param {{delegateTarget: Element}} event
+	 * @protected
 	 */
 	_handlePreviewSizeButtonClick({delegateTarget}) {
 		this._currentPreviewSize = delegateTarget.dataset.previewSize || null;
@@ -76,7 +76,6 @@ class MSBFragmentPreview extends Component {
 
 	/**
 	 * Sets the previewSize property and queues an update
-	 *
 	 * @param {string} previewSize
 	 * @protected
 	 * @return {string}
@@ -89,6 +88,7 @@ class MSBFragmentPreview extends Component {
 	/**
 	 * Updates the rendered preview with the given content.
 	 * Encapsulates the given code inside a frame and renders it.
+	 * @protected
 	 */
 	_updatePreview() {
 		this._previewContent = 'data:text/html;charset=utf-8,' + encodeURI(`
@@ -109,6 +109,7 @@ class MSBFragmentPreview extends Component {
 
 	/**
 	 * Updates the preview size using the corresponding ratio
+	 * @protected
 	 */
 	_updatePreviewSize() {
 		const preview = this.refs.preview;
@@ -210,7 +211,7 @@ MSBFragmentPreview.STATE = {
 	_previewSizes: Config.array().internal().value(PREVIEW_SIZES),
 };
 
-// Register component
 Soy.register(MSBFragmentPreview, templates);
 
+export { MSBFragmentPreview };
 export default MSBFragmentPreview;

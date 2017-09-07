@@ -93,7 +93,6 @@
 
 		<!-- Other fields -->
 
-		<column name="CPDefinitionId" type="long" />
 		<column localized="true" name="title" type="String" />
 		<column name="lastPublishDate" type="Date" />
 

@@ -5442,16 +5442,16 @@ go]]></replacevalue>
 					<available file="${liferay.home}/osgi/configs/${osgi.module.configuration.file.names.index}" />
 					<then>
 						<move
-								file="${liferay.home}/osgi/configs/${osgi.module.configuration.file.names.index}"
-								tofile="${liferay.home}/osgi/configs/@{file.names}"
+							file="${liferay.home}/osgi/configs/${osgi.module.configuration.file.names.index}"
+							tofile="${liferay.home}/osgi/configs/@{file.names}"
 						/>
 
 						<math
-								datatype="int"
-								operand1="${osgi.module.configuration.file.names.index}"
-								operand2="1"
-								operation="+"
-								result="osgi.module.configuration.file.names.index"
+							datatype="int"
+							operand1="${osgi.module.configuration.file.names.index}"
+							operand2="1"
+							operation="+"
+							result="osgi.module.configuration.file.names.index"
 						/>
 					</then>
 				</if>

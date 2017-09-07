@@ -504,7 +504,7 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 	private final Pattern _jspTaglibPattern = Pattern.compile(
 		"<[-\\w]+:[-\\w]+ .");
 	private final Pattern _multilineTagPattern = Pattern.compile(
-		"(\\s+)<[-\\w]+:[-\\w]+\n.*?([^%])(/?>)(\n|$)", Pattern.DOTALL);
+		"(\\s+)<[-\\w:]+\n.*?([^%])(/?>)(\n|$)", Pattern.DOTALL);
 	private Set<String> _primitiveTagAttributeDataTypes;
 	private Map<String, JavaClass> _tagJavaClassesMap;
 

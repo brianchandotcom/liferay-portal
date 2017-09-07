@@ -66,6 +66,8 @@ public class SourceFormatter {
 				ExcludeSyntax.GLOB, "**/liferay-theme.json"),
 			new ExcludeSyntaxPattern(
 				ExcludeSyntax.GLOB, "**/npm-shrinkwrap.json"),
+			new ExcludeSyntaxPattern(
+				ExcludeSyntax.GLOB, "**/package-lock.json"),
 			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/test-classes/**"),
 			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/test-coverage/**"),
 			new ExcludeSyntaxPattern(ExcludeSyntax.GLOB, "**/test-results/**"),

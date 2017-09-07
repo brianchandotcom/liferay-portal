@@ -13,10 +13,10 @@ class SourceEditor extends Component {
 	/**
 	 * Callback executed when the internal Ace editor has been
 	 * modified. It simply propagates the event.
-	 * @param {{content:string}} Updated editor content.
+	 * @param {Event} event
 	 */
-	_handleContentChanged({ content }) {
-		this.emit('contentChanged', { content });
+	_handleContentChanged(event) {
+		this.emit('contentChanged', { content: event.content });
 	}
 }
 

@@ -33,31 +33,31 @@ class MSBFragmentEditor extends Component {
 
 	/**
 	 * Callback executed when the css editor changes
-	 * @param {string} content
+	 * @param {Event} event
 	 * @protected
 	 */
-	_handleCSSChanged({ content }) {
-		this._css = content;
+	_handleCSSChanged(event) {
+		this._css = event.content;
 		this._handleContentChanged();
 	}
 
 	/**
 	 * Callback executed when the html editor changes
-	 * @param {string} content
+	 * @param {Event} event
 	 * @protected
 	 */
-	_handleHTMLChanged({ content }) {
-		this._html = content;
+	_handleHTMLChanged(event) {
+		this._html = event.content;
 		this._handleContentChanged();
 	}
 
 	/**
 	 * Callback executed when the js editor changes
-	 * @param {string} content
+	 * @param {Event} event
 	 * @protected
 	 */
-	_handleJSChanged({ content }) {
-		this._js = content;
+	_handleJSChanged(event) {
+		this._js = event.content;
 		this._handleContentChanged();
 	}
 }

@@ -64,11 +64,12 @@ class MSBFragmentPreview extends Component {
 
 	/**
 	 * Changes the preview size
-	 * @param {{delegateTarget: Element}} event
+	 * @param {Event} event
 	 * @protected
 	 */
-	_handlePreviewSizeButtonClick({ delegateTarget }) {
-		this._currentPreviewSize = delegateTarget.dataset.previewSize || null;
+	_handlePreviewSizeButtonClick(Event) {
+		this._currentPreviewSize =
+			event.delegateTarget.dataset.previewSize || null;
 	}
 
 	/**
@@ -119,10 +120,10 @@ class MSBFragmentPreview extends Component {
 				const wrapper = this.refs.wrapper;
 
 				if (ratio && wrapper) {
-					const { width, height } = wrapper.getBoundingClientRect();
+					const wrapperRect = wrapper.getBoundingClientRect();
 					const scale = Math.min(
-						width * 0.9 / ratio.width,
-						height * 0.8 / ratio.height,
+						wrapperRect.width * 0.9 / ratio.width,
+						wrapperRect.height * 0.8 / ratio.height,
 					);
 					preview.style.width = `${ratio.width * scale}px`;
 					preview.style.height = `${ratio.height * scale}px`;

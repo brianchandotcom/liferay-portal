@@ -37,15 +37,15 @@ class MSBFragmentNameEditor extends Component {
 			method: 'POST',
 		})
 			.then(response => response.json())
-			.then(({ error = null, msbFragmentEntryId = null }) => {
-				this.error = error;
+			.then((jsonResponse) => {
+				this.error = jsonResponse.error;
 
-				if (!error) {
+				if (jsonResponse.msbFragmentEntryId) {
 					const uri = new Uri(this.editMSBFragmentEntryURL);
 
 					uri.addParameterValue(
 						`${this.namespace}msbFragmentEntryId`,
-						msbFragmentEntryId,
+						jsonResponse.msbFragmentEntryId,
 					);
 
 					const uriString = uri.toString();

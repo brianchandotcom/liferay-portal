@@ -75,7 +75,7 @@ public class UnsatisfiedComponentUtil {
 		ComponentDescriptionDTO componentDescriptionDTO,
 		ComponentConfigurationDTO componentConfigurationDTO, StringBundler sb) {
 
-		sb.append("\n    Declarative Service: id=");
+		sb.append("\n\tDeclarative Service: id=");
 		sb.append(componentConfigurationDTO.id);
 		sb.append(",name=");
 		sb.append(componentDescriptionDTO.name);

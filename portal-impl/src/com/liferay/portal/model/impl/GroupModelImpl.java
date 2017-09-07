@@ -152,9 +152,10 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	public static final long LIVEGROUPID_COLUMN_BITMASK = 256L;
 	public static final long PARENTGROUPID_COLUMN_BITMASK = 512L;
 	public static final long SITE_COLUMN_BITMASK = 1024L;
-	public static final long TYPE_COLUMN_BITMASK = 2048L;
-	public static final long UUID_COLUMN_BITMASK = 4096L;
-	public static final long NAME_COLUMN_BITMASK = 8192L;
+	public static final long TREEPATH_COLUMN_BITMASK = 2048L;
+	public static final long TYPE_COLUMN_BITMASK = 4096L;
+	public static final long UUID_COLUMN_BITMASK = 8192L;
+	public static final long NAME_COLUMN_BITMASK = 16384L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -690,7 +691,17 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 	@Override
 	public void setTreePath(String treePath) {
+		_columnBitmask |= TREEPATH_COLUMN_BITMASK;
+
+		if (_originalTreePath == null) {
+			_originalTreePath = _treePath;
+		}
+
 		_treePath = treePath;
+	}
+
+	public String getOriginalTreePath() {
+		return GetterUtil.getString(_originalTreePath);
 	}
 
 	@JSON
@@ -1335,6 +1346,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 		groupModelImpl._setOriginalLiveGroupId = false;
 
+		groupModelImpl._originalTreePath = groupModelImpl._treePath;
+
 		groupModelImpl._originalGroupKey = groupModelImpl._groupKey;
 
 		groupModelImpl._originalType = groupModelImpl._type;
@@ -1633,6 +1646,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	private long _originalLiveGroupId;
 	private boolean _setOriginalLiveGroupId;
 	private String _treePath;
+	private String _originalTreePath;
 	private String _groupKey;
 	private String _originalGroupKey;
 	private String _name;

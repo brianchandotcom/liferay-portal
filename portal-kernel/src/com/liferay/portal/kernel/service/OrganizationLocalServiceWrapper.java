@@ -611,6 +611,12 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 			parentOrganizationId, start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Organization> getOrganizations(
+		long companyId, java.lang.String treePath) {
+		return _organizationLocalService.getOrganizations(companyId, treePath);
+	}
+
 	/**
 	* Returns the organizations with the primary keys.
 	*

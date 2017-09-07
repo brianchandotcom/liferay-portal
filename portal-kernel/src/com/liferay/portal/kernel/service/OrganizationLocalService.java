@@ -458,6 +458,10 @@ public interface OrganizationLocalService extends BaseLocalService,
 	public List<Organization> getOrganizations(long companyId,
 		long parentOrganizationId, int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Organization> getOrganizations(long companyId,
+		java.lang.String treePath);
+
 	/**
 	* Returns the organizations with the primary keys.
 	*

@@ -21,11 +21,10 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.xml.Element;
-
-import java.util.Map;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
+import java.util.Map;
 
 /**
  * @author Alessio Antonio Rendina
@@ -64,7 +63,7 @@ public class CPMeasurementUnitStagedModelDataHandler
 	@Override
 	protected void doImportMissingReference(
 			PortletDataContext portletDataContext, String uuid, long groupId,
-			long commerceCurrencyId)
+			long cpMeasurementUnitId)
 		throws Exception {
 
 		CPMeasurementUnit existingCPMeasurementUnit = fetchMissingReference(
@@ -75,7 +74,7 @@ public class CPMeasurementUnitStagedModelDataHandler
 				CPMeasurementUnit.class);
 
 		cpMeasurementUnitIds.put(
-			commerceCurrencyId,
+			cpMeasurementUnitId,
 			existingCPMeasurementUnit.getCPMeasurementUnitId());
 	}
 

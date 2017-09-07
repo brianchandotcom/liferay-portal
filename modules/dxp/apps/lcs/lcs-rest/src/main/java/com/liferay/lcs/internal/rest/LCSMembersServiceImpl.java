@@ -17,9 +17,12 @@ package com.liferay.lcs.internal.rest;
 import com.liferay.lcs.rest.LCSMembersService;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Riccardo Ferrari
  */
+@Component(immediate = true, service = LCSMembersService.class)
 public class LCSMembersServiceImpl
 	extends BaseLCSServiceImpl implements LCSMembersService {
 

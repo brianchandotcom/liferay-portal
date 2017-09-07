@@ -23,10 +23,13 @@ import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationExcepti
 import java.util.ArrayList;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Ivica Cardic
  * @author Igor Beslic
  */
+@Component(immediate = true, service = LCSClusterEntryService.class)
 public class LCSClusterEntryServiceImpl
 	extends BaseLCSServiceImpl implements LCSClusterEntryService {
 

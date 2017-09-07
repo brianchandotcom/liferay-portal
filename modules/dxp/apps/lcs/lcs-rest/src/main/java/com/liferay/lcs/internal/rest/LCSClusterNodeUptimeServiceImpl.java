@@ -19,9 +19,12 @@ import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationExcepti
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Riccardo Ferrari
  */
+@Component(immediate = true, service = LCSClusterNodeUptimeService.class)
 public class LCSClusterNodeUptimeServiceImpl
 	extends BaseLCSServiceImpl implements LCSClusterNodeUptimeService {
 

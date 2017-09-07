@@ -18,9 +18,12 @@ import com.liferay.lcs.rest.LCSPatchingAdvisorService;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Riccardo Ferrari
  */
+@Component(immediate = true, service = LCSPatchingAdvisorService.class)
 public class LCSPatchingAdvisorServiceImpl
 	extends BaseLCSServiceImpl implements LCSPatchingAdvisorService {
 

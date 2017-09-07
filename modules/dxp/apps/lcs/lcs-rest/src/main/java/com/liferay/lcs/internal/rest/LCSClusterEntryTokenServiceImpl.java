@@ -20,9 +20,12 @@ import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationExcepti
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Igor Beslic
  */
+@Component(immediate = true, service = LCSClusterEntryTokenService.class)
 public class LCSClusterEntryTokenServiceImpl
 	extends BaseLCSServiceImpl implements LCSClusterEntryTokenService {
 

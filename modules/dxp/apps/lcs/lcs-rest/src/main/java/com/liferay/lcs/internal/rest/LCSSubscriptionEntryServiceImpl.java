@@ -20,12 +20,15 @@ import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationExcepti
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * @author Igor Beslic
  */
+@Component(immediate = true, service = LCSSubscriptionEntryService.class)
 public class LCSSubscriptionEntryServiceImpl
 	extends BaseLCSServiceImpl implements LCSSubscriptionEntryService {
 

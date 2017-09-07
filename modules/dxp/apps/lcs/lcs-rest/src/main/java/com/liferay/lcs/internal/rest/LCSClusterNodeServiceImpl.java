@@ -28,10 +28,13 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Ivica Cardic
  * @author Igor Beslic
  */
+@Component(immediate = true, service = LCSClusterNodeService.class)
 public class LCSClusterNodeServiceImpl
 	extends BaseLCSServiceImpl implements LCSClusterNodeService {
 

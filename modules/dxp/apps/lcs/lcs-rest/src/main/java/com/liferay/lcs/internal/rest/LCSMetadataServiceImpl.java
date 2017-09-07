@@ -24,9 +24,12 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Riccardo Ferrari
  */
+@Component(immediate = true, service = LCSMetadataService.class)
 public class LCSMetadataServiceImpl
 	extends BaseLCSServiceImpl implements LCSMetadataService {
 

@@ -20,9 +20,12 @@ import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationExcepti
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Igor Beslic
  */
+@Component(immediate = true, service = LCSRoleService.class)
 public class LCSRoleServiceImpl
 	extends BaseLCSServiceImpl implements LCSRoleService {
 

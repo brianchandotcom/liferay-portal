@@ -21,9 +21,12 @@ import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationExcepti
 import java.util.ArrayList;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Igor Beslic
  */
+@Component(immediate = true, service = LCSProjectService.class)
 public class LCSProjectServiceImpl
 	extends BaseLCSServiceImpl implements LCSProjectService {
 

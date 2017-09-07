@@ -216,12 +216,12 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 				continue;
 			}
 
-			char beforeClosingTagChar = content.charAt(matcher.start(2) - 1);
+			String beforeClosingTagChar = matcher.group(2);
 
-			if ((beforeClosingTagChar != CharPool.NEW_LINE) &&
-				(beforeClosingTagChar != CharPool.TAB)) {
+			if (!beforeClosingTagChar.equals(StringPool.NEW_LINE) &&
+				!beforeClosingTagChar.equals(StringPool.TAB)) {
 
-				String closingTag = matcher.group(2);
+				String closingTag = matcher.group(3);
 
 				String whitespace = matcher.group(1);
 
@@ -504,7 +504,7 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 	private final Pattern _jspTaglibPattern = Pattern.compile(
 		"<[-\\w]+:[-\\w]+ .");
 	private final Pattern _multilineTagPattern = Pattern.compile(
-		"(\\s+)<[-\\w]+:[-\\w]+\n.*?(/?>)(\n|$)", Pattern.DOTALL);
+		"(\\s+)<[-\\w]+:[-\\w]+\n.*?([^%])(/?>)(\n|$)", Pattern.DOTALL);
 	private Set<String> _primitiveTagAttributeDataTypes;
 	private Map<String, JavaClass> _tagJavaClassesMap;
 

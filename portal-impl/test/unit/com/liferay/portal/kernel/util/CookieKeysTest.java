@@ -50,7 +50,7 @@ public class CookieKeysTest {
 
 		String domain = CookieKeys.getDomain(mockHttpServletRequest);
 
-		Assert.assertEquals(StringPool.BLANK, domain);
+		Assert.assertEquals(".liferay.com", domain);
 	}
 
 	@Test

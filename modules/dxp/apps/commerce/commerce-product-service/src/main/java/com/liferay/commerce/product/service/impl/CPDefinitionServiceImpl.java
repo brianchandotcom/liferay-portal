@@ -47,11 +47,13 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	public CPDefinition addCPDefinition(
 			Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
-			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
+			Map<Locale, String> descriptionMap,
 			Map<Locale, String> metaTitleMap,
 			Map<Locale, String> metaKeywordsMap,
 			Map<Locale, String> metaDescriptionMap, String layoutUuid,
-			String productTypeName, int minCartQuantity, int maxCartQuantity,
+			String productTypeName, boolean canSellWithoutOptions,
+			boolean displayAvailability, boolean displayStockQuantity,
+			int minCartQuantity, int maxCartQuantity,
 			String allowedCartQuantities, int multipleCartQuantity,
 			double width, double height, double depth, double weight,
 			String ddmStructureKey, int displayDateMonth, int displayDateDay,
@@ -67,15 +69,15 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			CPActionKeys.ADD_COMMERCE_PRODUCT_DEFINITION);
 
 		return cpDefinitionLocalService.addCPDefinition(
-			titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
-			metaTitleMap, metaKeywordsMap, metaDescriptionMap, layoutUuid,
-			productTypeName, minCartQuantity, maxCartQuantity,
-			allowedCartQuantities, multipleCartQuantity, width, height, depth,
-			weight, ddmStructureKey, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			titleMap, shortDescriptionMap, descriptionMap, metaTitleMap,
+			metaKeywordsMap, metaDescriptionMap, layoutUuid, productTypeName,
+			canSellWithoutOptions, displayAvailability, displayStockQuantity,
+			minCartQuantity, maxCartQuantity, allowedCartQuantities,
+			multipleCartQuantity, width, height, depth, weight, ddmStructureKey,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	@Override
@@ -83,7 +85,9 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, String layoutUuid,
-			String productTypeName, int minCartQuantity, int maxCartQuantity,
+			String productTypeName, boolean canSellWithoutOptions,
+			boolean displayAvailability, boolean displayStockQuantity,
+			int minCartQuantity, int maxCartQuantity,
 			String allowedCartQuantities, int multipleCartQuantity,
 			String ddmStructureKey, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
@@ -99,7 +103,8 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 		return cpDefinitionLocalService.addCPDefinition(
 			titleMap, shortDescriptionMap, descriptionMap, layoutUuid,
-			productTypeName, minCartQuantity, maxCartQuantity,
+			productTypeName, canSellWithoutOptions, displayAvailability,
+			displayStockQuantity, minCartQuantity, maxCartQuantity,
 			allowedCartQuantities, multipleCartQuantity, ddmStructureKey,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
@@ -274,15 +279,16 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			Map<Locale, String> metaTitleMap,
 			Map<Locale, String> metaKeywordsMap,
 			Map<Locale, String> metaDescriptionMap, String layoutUuid,
-			int minCartQuantity, int maxCartQuantity,
-			String allowedCartQuantities, int multipleCartQuantity,
-			double width, double height, double depth, double weight,
-			String ddmStructureKey, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			ServiceContext serviceContext)
+			boolean canSellWithoutOptions, boolean displayAvailability,
+			boolean displayStockQuantity, int minCartQuantity,
+			int maxCartQuantity, String allowedCartQuantities,
+			int multipleCartQuantity, double width, double height, double depth,
+			double weight, String ddmStructureKey, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinitionPermission.check(
@@ -291,12 +297,14 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 		return cpDefinitionLocalService.updateCPDefinition(
 			cpDefinitionId, titleMap, shortDescriptionMap, descriptionMap,
 			urlTitleMap, metaTitleMap, metaKeywordsMap, metaDescriptionMap,
-			layoutUuid, minCartQuantity, maxCartQuantity, allowedCartQuantities,
-			multipleCartQuantity, width, height, depth, weight, ddmStructureKey,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, serviceContext);
+			layoutUuid, canSellWithoutOptions, displayAvailability,
+			displayStockQuantity, minCartQuantity, maxCartQuantity,
+			allowedCartQuantities, multipleCartQuantity, width, height, depth,
+			weight, ddmStructureKey, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
 
 	@Override
@@ -304,14 +312,15 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			long cpDefinitionId, Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, String layoutUuid,
-			int minCartQuantity, int maxCartQuantity,
-			String allowedCartQuantities, int multipleCartQuantity,
-			String ddmStructureKey, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			ServiceContext serviceContext)
+			boolean canSellWithoutOptions, boolean displayAvailability,
+			boolean displayStockQuantity, int minCartQuantity,
+			int maxCartQuantity, String allowedCartQuantities,
+			int multipleCartQuantity, String ddmStructureKey,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinitionPermission.check(
@@ -319,12 +328,13 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 		return cpDefinitionLocalService.updateCPDefinition(
 			cpDefinitionId, titleMap, shortDescriptionMap, descriptionMap,
-			layoutUuid, minCartQuantity, maxCartQuantity, allowedCartQuantities,
-			multipleCartQuantity, ddmStructureKey, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			layoutUuid, canSellWithoutOptions, displayAvailability,
+			displayStockQuantity, minCartQuantity, maxCartQuantity,
+			allowedCartQuantities, multipleCartQuantity, ddmStructureKey,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	@Override

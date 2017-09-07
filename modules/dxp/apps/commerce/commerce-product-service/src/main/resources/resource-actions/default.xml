@@ -20,6 +20,7 @@
 				<action-key>ADD_COMMERCE_PRODUCT_OPTION_CATEGORY</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_SPECIFICATION_OPTION</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_ATTACHMENTS</action-key>
+				<action-key>MANAGE_COMMERCE_PRODUCT_AVAILABILITY_RANGES</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_IMAGES</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS</action-key>
 				<action-key>PERMISSIONS</action-key>
@@ -33,6 +34,7 @@
 				<action-key>ADD_COMMERCE_PRODUCT_OPTION_CATEGORY</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_SPECIFICATION_OPTION</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_ATTACHMENTS</action-key>
+				<action-key>MANAGE_COMMERCE_PRODUCT_AVAILABILITY_RANGES</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_IMAGES</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS</action-key>
 				<action-key>PERMISSIONS</action-key>

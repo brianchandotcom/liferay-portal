@@ -85,7 +85,7 @@ public class SpringExtenderDependencyManagerTest {
 		_unavailableComponentScannerConfiguration =
 			_configurationAdmin.getConfiguration(
 				"com.liferay.portal.osgi.debug.spring.extender.internal." +
-					"UnavailableComponentScannerConfiguration",
+					"configuration.UnavailableComponentScannerConfiguration",
 				null);
 
 		_properties = _unavailableComponentScannerConfiguration.getProperties();

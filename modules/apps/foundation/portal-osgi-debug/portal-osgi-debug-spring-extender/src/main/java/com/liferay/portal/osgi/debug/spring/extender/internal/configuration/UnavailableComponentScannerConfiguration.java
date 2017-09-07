@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.osgi.debug.spring.extender.internal;
+package com.liferay.portal.osgi.debug.spring.extender.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "foundation")
 @Meta.OCD(
-	id = "com.liferay.portal.osgi.debug.spring.extender.internal.UnavailableComponentScannerConfiguration",
+	id = "com.liferay.portal.osgi.debug.spring.extender.internal.configuration.UnavailableComponentScannerConfiguration",
 	localization = "content/Language",
 	name = "unavailable-component-scanner-configuration-name"
 )

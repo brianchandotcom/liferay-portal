@@ -1192,7 +1192,6 @@ this task.
 				from="(jboss-eap-)\d\.\d[\.]?[\d]?(/.*)"
 				to="\1${app.server.jboss.version}\2"
 				type="regexp"
-
 			/>
 		</unzip>
 

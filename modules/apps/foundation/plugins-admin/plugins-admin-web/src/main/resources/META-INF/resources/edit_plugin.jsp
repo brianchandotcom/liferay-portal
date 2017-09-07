@@ -111,7 +111,6 @@ renderResponse.setTitle(title);
 											className="com.liferay.portal.kernel.model.Role"
 											keyProperty="name"
 											modelVar="role"
-
 										>
 											<liferay-ui:search-container-column-text
 												name="role"

@@ -972,6 +972,47 @@
 
 		<execute function="Type" locator1="StagingPublishToLive#DATE_SCHEDULE_TIME_INPUT" value1="${displayDate}" />
 
+		<if>
+			<isset var="endByDate" />
+			<then>
+				<execute function="Check" locator1="StagingPublishToLive#DATE_SCHEDULE_END_DATE_END_BY_RADIO" />
+
+				<var attribute="value" locator="//input[contains(@id,'schedulerEndDateDay')]" name="endByDateDay" />
+
+				<if>
+					<equals arg1="${endByDateDayLength}" arg2="1" />
+					<then>
+						<var name="endByDateDay" value="0${endByDateDay}" />
+					</then>
+				</if>
+
+				<var attribute="value" locator="//input[contains(@id,'schedulerEndDateMonth')]" name="endByDateMonth" />
+
+				<if>
+					<equals arg1="${endByDateMonthLength}" arg2="1" />
+					<then>
+						<var name="endByDateMonth" value="0${endByDateMonth}" />
+					</then>
+				</if>
+
+				<var attribute="value" locator="//input[contains(@id,'schedulerEndDateYear')]" name="endByDateYear" />
+
+				<var method="MathUtil#sum('${endByDateYear}', '5')" name="endByDateYearFuture" />
+				<var name="endByDay" value="${endByDateMonth}/${endByDateDay}/${endByDateYearFuture}" />
+
+				<execute function="Type" locator1="StagingPublishToLive#DATE_SCHEDULE_END_DATE_INPUT" value1="${endByDay}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="frequency" />
+			<then>
+				<execute function="Check" locator1="StagingPublishToLive#DATE_SCHEDULE_REPEAT_RADIO">
+					<var name="key_frequency" value="${frequency}" />
+				</execute>
+			</then>
+		</if>
+
 		<execute function="AssertClick" locator1="StagingPublishToLive#ADD_EVENT_BUTTON" value1="Add Event" />
 
 		<execute macro="Alert#viewSuccessMessage" />

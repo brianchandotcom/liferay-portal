@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.Reference;
 public class KeyStoreCredentialResolver
 	extends AbstractCriteriaFilteringCredentialResolver {
 
-	@Reference(name = "KeyStoreManager", unbind = "-")
+	@Reference(name = "KeyStoreManager", target="(default=true)", unbind = "-")
 	public void setKeyStoreManager(KeyStoreManager keyStoreManager) {
 		_keyStoreManager = keyStoreManager;
 	}

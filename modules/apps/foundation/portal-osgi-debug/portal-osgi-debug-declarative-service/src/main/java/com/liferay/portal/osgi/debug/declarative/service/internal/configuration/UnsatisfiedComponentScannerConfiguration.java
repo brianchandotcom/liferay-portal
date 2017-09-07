@@ -23,11 +23,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "other")
 @Meta.OCD(
-	id = "com.liferay.portal.osgi.debug.declarative.service.internal.configuration.UnsatisfiedDeclarativeServicesScannerConfiguration"
+	id = "com.liferay.portal.osgi.debug.declarative.service.internal.configuration.UnsatisfiedComponentScannerConfiguration"
 )
-public interface UnsatisfiedDeclarativeServicesScannerConfiguration {
+public interface UnsatisfiedComponentScannerConfiguration {
 
 	@Meta.AD(deflt = "60", required = false)
-	public int interval();
+	public int unsatisfiedComponentScanningInterval();
 
 }

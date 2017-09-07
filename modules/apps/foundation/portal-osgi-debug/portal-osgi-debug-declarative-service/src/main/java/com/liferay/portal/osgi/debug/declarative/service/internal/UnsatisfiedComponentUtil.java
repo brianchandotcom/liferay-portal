@@ -28,20 +28,19 @@ import org.osgi.service.component.runtime.dto.UnsatisfiedReferenceDTO;
 /**
  * @author Tina Tian
  */
-public class DeclarativeServiceUtil {
+public class UnsatisfiedComponentUtil {
 
-	public static String listUnsatisfiedDeclarativeServices(
+	public static String listUnsatisfiedComponents(
 		ServiceComponentRuntime serviceComponentRuntime, Bundle... bundles) {
 
 		StringBundler sb = new StringBundler();
 
 		for (Bundle bundle : bundles) {
-			String unsatisfiedDeclarativeServices =
-				_listUnsatisfiedDeclarativeServices(
-					serviceComponentRuntime, bundle);
+			String unsatisfiedComponents = _listUnsatisfiedComponents(
+				serviceComponentRuntime, bundle);
 
-			if (!unsatisfiedDeclarativeServices.isEmpty()) {
-				sb.append(unsatisfiedDeclarativeServices);
+			if (!unsatisfiedComponents.isEmpty()) {
+				sb.append(unsatisfiedComponents);
 			}
 		}
 
@@ -99,7 +98,7 @@ public class DeclarativeServiceUtil {
 		}
 	}
 
-	private static String _listUnsatisfiedDeclarativeServices(
+	private static String _listUnsatisfiedComponents(
 		ServiceComponentRuntime serviceComponentRuntime, Bundle bundle) {
 
 		if (bundle.getState() != Bundle.ACTIVE) {

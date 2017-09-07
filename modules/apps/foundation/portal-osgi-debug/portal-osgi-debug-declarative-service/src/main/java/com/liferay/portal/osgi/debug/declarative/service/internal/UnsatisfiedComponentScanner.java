@@ -17,7 +17,7 @@ package com.liferay.portal.osgi.debug.declarative.service.internal;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.osgi.debug.declarative.service.internal.configuration.UnsatisfiedDeclarativeServicesScannerConfiguration;
+import com.liferay.portal.osgi.debug.declarative.service.internal.configuration.UnsatisfiedComponentScannerConfiguration;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -36,10 +36,10 @@ import org.osgi.service.component.runtime.ServiceComponentRuntime;
  * @author Tina Tian
  */
 @Component(
-	configurationPid = "com.liferay.portal.osgi.debug.declarative.service.internal.configuration.UnsatisfiedDeclarativeServicesScannerConfiguration",
+	configurationPid = "com.liferay.portal.osgi.debug.declarative.service.internal.configuration.UnsatisfiedComponentScannerConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true
 )
-public class UnsatisfiedDeclarativeServicesScanner {
+public class UnsatisfiedComponentScanner {
 
 	@Activate
 	protected void activate(ComponentContext componentContext) {
@@ -47,10 +47,10 @@ public class UnsatisfiedDeclarativeServicesScanner {
 			return;
 		}
 
-		UnsatisfiedDeclarativeServicesScannerConfiguration
-			unsatisfiedDeclarativeServicesScannerConfiguration =
+		UnsatisfiedComponentScannerConfiguration
+			unsatisfiedComponentScannerConfiguration =
 				ConfigurableUtil.createConfigurable(
-					UnsatisfiedDeclarativeServicesScannerConfiguration.class,
+					UnsatisfiedComponentScannerConfiguration.class,
 					componentContext.getProperties());
 
 		final BundleContext bundleContext = componentContext.getBundleContext();
@@ -62,7 +62,7 @@ public class UnsatisfiedDeclarativeServicesScanner {
 			@Override
 			public void run() {
 				_log.info(
-					DeclarativeServiceUtil.listUnsatisfiedDeclarativeServices(
+					UnsatisfiedComponentUtil.listUnsatisfiedComponents(
 						_serviceComponentRuntime, bundleContext.getBundles()));
 			}
 
@@ -70,7 +70,8 @@ public class UnsatisfiedDeclarativeServicesScanner {
 
 		_scheduledExecutorService.scheduleAtFixedRate(
 			runnable, 0,
-			unsatisfiedDeclarativeServicesScannerConfiguration.interval(),
+			unsatisfiedComponentScannerConfiguration.
+				unsatisfiedComponentScanningInterval(),
 			TimeUnit.SECONDS);
 	}
 
@@ -84,7 +85,7 @@ public class UnsatisfiedDeclarativeServicesScanner {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UnsatisfiedDeclarativeServicesScanner.class);
+		UnsatisfiedComponentScanner.class);
 
 	private ScheduledExecutorService _scheduledExecutorService;
 

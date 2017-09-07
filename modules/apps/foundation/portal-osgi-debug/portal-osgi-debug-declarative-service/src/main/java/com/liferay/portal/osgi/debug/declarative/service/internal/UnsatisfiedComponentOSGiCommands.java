@@ -26,19 +26,19 @@ import org.osgi.service.component.runtime.ServiceComponentRuntime;
 @Component(
 	immediate = true,
 	property = {"osgi.command.function=unsatisfied", "osgi.command.scope=ds"},
-	service = DeclarativeServiceOSGiCommands.class
+	service = UnsatisfiedComponentOSGiCommands.class
 )
-public class DeclarativeServiceOSGiCommands {
+public class UnsatisfiedComponentOSGiCommands {
 
 	public void unsatisfied() {
 		System.out.println(
-			DeclarativeServiceUtil.listUnsatisfiedDeclarativeServices(
+			UnsatisfiedComponentUtil.listUnsatisfiedComponents(
 				_serviceComponentRuntime, _bundleContext.getBundles()));
 	}
 
 	public void unsatisfied(long bundleId) {
 		System.out.println(
-			DeclarativeServiceUtil.listUnsatisfiedDeclarativeServices(
+			UnsatisfiedComponentUtil.listUnsatisfiedComponents(
 				_serviceComponentRuntime, _bundleContext.getBundle(bundleId)));
 	}
 

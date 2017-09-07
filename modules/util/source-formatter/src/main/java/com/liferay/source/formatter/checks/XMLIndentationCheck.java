@@ -210,7 +210,7 @@ public class XMLIndentationCheck extends BaseFileCheck {
 
 			int i = Math.max(0, startPos);
 
-			if (!ToolsUtil.isInsideQuotes(line.substring(i), (pos - i), false)) {
+			if (!ToolsUtil.isInsideQuotes(line.substring(i), pos - i, false)) {
 				return pos;
 			}
 		}

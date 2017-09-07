@@ -25,6 +25,16 @@
 					<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
 				</execute>
 			</then>
+			<elseif>
+				<isset var="siteTemplateName" />
+				<then>
+					<execute function="Click" locator1="ProductMenu#PAGES_ICON" />
+
+					<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Add Page">
+						<var name="key_menuItem" value="Add Page" />
+					</execute>
+				</then>
+			</elseif>
 			<else>
 				<if>
 					<condition function="IsElementNotPresent" locator1="ProductMenu#LAYOUT_SET_2" />

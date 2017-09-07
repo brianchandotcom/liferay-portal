@@ -57,12 +57,12 @@ public class CPDefinitionLocalServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.util.Map<java.util.Locale, java.lang.String> urlTitleMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
 		java.lang.String layoutUuid, java.lang.String productTypeName,
-		int minCartQuantity, int maxCartQuantity,
+		boolean canSellWithoutOptions, boolean displayAvailability,
+		boolean displayStockQuantity, int minCartQuantity, int maxCartQuantity,
 		java.lang.String allowedCartQuantities, int multipleCartQuantity,
 		double width, double height, double depth, double weight,
 		java.lang.String ddmStructureKey, int displayDateMonth,
@@ -74,8 +74,9 @@ public class CPDefinitionLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCPDefinition(titleMap, shortDescriptionMap,
-			descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
-			metaDescriptionMap, layoutUuid, productTypeName, minCartQuantity,
+			descriptionMap, metaTitleMap, metaKeywordsMap, metaDescriptionMap,
+			layoutUuid, productTypeName, canSellWithoutOptions,
+			displayAvailability, displayStockQuantity, minCartQuantity,
 			maxCartQuantity, allowedCartQuantities, multipleCartQuantity,
 			width, height, depth, weight, ddmStructureKey, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour,
@@ -89,7 +90,8 @@ public class CPDefinitionLocalServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String layoutUuid, java.lang.String productTypeName,
-		int minCartQuantity, int maxCartQuantity,
+		boolean canSellWithoutOptions, boolean displayAvailability,
+		boolean displayStockQuantity, int minCartQuantity, int maxCartQuantity,
 		java.lang.String allowedCartQuantities, int multipleCartQuantity,
 		java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
@@ -100,7 +102,8 @@ public class CPDefinitionLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCPDefinition(titleMap, shortDescriptionMap,
-			descriptionMap, layoutUuid, productTypeName, minCartQuantity,
+			descriptionMap, layoutUuid, productTypeName, canSellWithoutOptions,
+			displayAvailability, displayStockQuantity, minCartQuantity,
 			maxCartQuantity, allowedCartQuantities, multipleCartQuantity,
 			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, expirationDateMonth,
@@ -552,7 +555,9 @@ public class CPDefinitionLocalServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
-		java.lang.String layoutUuid, int minCartQuantity, int maxCartQuantity,
+		java.lang.String layoutUuid, boolean canSellWithoutOptions,
+		boolean displayAvailability, boolean displayStockQuantity,
+		int minCartQuantity, int maxCartQuantity,
 		java.lang.String allowedCartQuantities, int multipleCartQuantity,
 		double width, double height, double depth, double weight,
 		java.lang.String ddmStructureKey, int displayDateMonth,
@@ -565,13 +570,14 @@ public class CPDefinitionLocalServiceUtil {
 		return getService()
 				   .updateCPDefinition(cpDefinitionId, titleMap,
 			shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap,
-			metaKeywordsMap, metaDescriptionMap, layoutUuid, minCartQuantity,
-			maxCartQuantity, allowedCartQuantities, multipleCartQuantity,
-			width, height, depth, weight, ddmStructureKey, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, serviceContext);
+			metaKeywordsMap, metaDescriptionMap, layoutUuid,
+			canSellWithoutOptions, displayAvailability, displayStockQuantity,
+			minCartQuantity, maxCartQuantity, allowedCartQuantities,
+			multipleCartQuantity, width, height, depth, weight,
+			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinition updateCPDefinition(
@@ -579,7 +585,9 @@ public class CPDefinitionLocalServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String layoutUuid, int minCartQuantity, int maxCartQuantity,
+		java.lang.String layoutUuid, boolean canSellWithoutOptions,
+		boolean displayAvailability, boolean displayStockQuantity,
+		int minCartQuantity, int maxCartQuantity,
 		java.lang.String allowedCartQuantities, int multipleCartQuantity,
 		java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
@@ -590,12 +598,14 @@ public class CPDefinitionLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCPDefinition(cpDefinitionId, titleMap,
-			shortDescriptionMap, descriptionMap, layoutUuid, minCartQuantity,
-			maxCartQuantity, allowedCartQuantities, multipleCartQuantity,
-			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, serviceContext);
+			shortDescriptionMap, descriptionMap, layoutUuid,
+			canSellWithoutOptions, displayAvailability, displayStockQuantity,
+			minCartQuantity, maxCartQuantity, allowedCartQuantities,
+			multipleCartQuantity, ddmStructureKey, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinition updateSEOInfo(

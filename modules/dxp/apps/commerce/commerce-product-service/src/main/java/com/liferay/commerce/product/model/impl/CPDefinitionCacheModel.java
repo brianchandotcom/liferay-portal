@@ -66,7 +66,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -88,6 +88,12 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		sb.append(productTypeName);
 		sb.append(", availableIndividually=");
 		sb.append(availableIndividually);
+		sb.append(", canSellWithoutOptions=");
+		sb.append(canSellWithoutOptions);
+		sb.append(", displayAvailability=");
+		sb.append(displayAvailability);
+		sb.append(", displayStockQuantity=");
+		sb.append(displayStockQuantity);
 		sb.append(", minCartQuantity=");
 		sb.append(minCartQuantity);
 		sb.append(", maxCartQuantity=");
@@ -172,6 +178,9 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		}
 
 		cpDefinitionImpl.setAvailableIndividually(availableIndividually);
+		cpDefinitionImpl.setCanSellWithoutOptions(canSellWithoutOptions);
+		cpDefinitionImpl.setDisplayAvailability(displayAvailability);
+		cpDefinitionImpl.setDisplayStockQuantity(displayStockQuantity);
 		cpDefinitionImpl.setMinCartQuantity(minCartQuantity);
 		cpDefinitionImpl.setMaxCartQuantity(maxCartQuantity);
 
@@ -263,6 +272,12 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 
 		availableIndividually = objectInput.readBoolean();
 
+		canSellWithoutOptions = objectInput.readBoolean();
+
+		displayAvailability = objectInput.readBoolean();
+
+		displayStockQuantity = objectInput.readBoolean();
+
 		minCartQuantity = objectInput.readInt();
 
 		maxCartQuantity = objectInput.readInt();
@@ -327,6 +342,12 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 
 		objectOutput.writeBoolean(availableIndividually);
 
+		objectOutput.writeBoolean(canSellWithoutOptions);
+
+		objectOutput.writeBoolean(displayAvailability);
+
+		objectOutput.writeBoolean(displayStockQuantity);
+
 		objectOutput.writeInt(minCartQuantity);
 
 		objectOutput.writeInt(maxCartQuantity);
@@ -390,6 +411,9 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 	public long modifiedDate;
 	public String productTypeName;
 	public boolean availableIndividually;
+	public boolean canSellWithoutOptions;
+	public boolean displayAvailability;
+	public boolean displayStockQuantity;
 	public int minCartQuantity;
 	public int maxCartQuantity;
 	public String allowedCartQuantities;

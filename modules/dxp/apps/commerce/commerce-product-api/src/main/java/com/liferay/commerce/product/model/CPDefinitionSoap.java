@@ -44,6 +44,9 @@ public class CPDefinitionSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setProductTypeName(model.getProductTypeName());
 		soapModel.setAvailableIndividually(model.getAvailableIndividually());
+		soapModel.setCanSellWithoutOptions(model.getCanSellWithoutOptions());
+		soapModel.setDisplayAvailability(model.getDisplayAvailability());
+		soapModel.setDisplayStockQuantity(model.getDisplayStockQuantity());
 		soapModel.setMinCartQuantity(model.getMinCartQuantity());
 		soapModel.setMaxCartQuantity(model.getMaxCartQuantity());
 		soapModel.setAllowedCartQuantities(model.getAllowedCartQuantities());
@@ -197,6 +200,42 @@ public class CPDefinitionSoap implements Serializable {
 		_availableIndividually = availableIndividually;
 	}
 
+	public boolean getCanSellWithoutOptions() {
+		return _canSellWithoutOptions;
+	}
+
+	public boolean isCanSellWithoutOptions() {
+		return _canSellWithoutOptions;
+	}
+
+	public void setCanSellWithoutOptions(boolean canSellWithoutOptions) {
+		_canSellWithoutOptions = canSellWithoutOptions;
+	}
+
+	public boolean getDisplayAvailability() {
+		return _displayAvailability;
+	}
+
+	public boolean isDisplayAvailability() {
+		return _displayAvailability;
+	}
+
+	public void setDisplayAvailability(boolean displayAvailability) {
+		_displayAvailability = displayAvailability;
+	}
+
+	public boolean getDisplayStockQuantity() {
+		return _displayStockQuantity;
+	}
+
+	public boolean isDisplayStockQuantity() {
+		return _displayStockQuantity;
+	}
+
+	public void setDisplayStockQuantity(boolean displayStockQuantity) {
+		_displayStockQuantity = displayStockQuantity;
+	}
+
 	public int getMinCartQuantity() {
 		return _minCartQuantity;
 	}
@@ -343,6 +382,9 @@ public class CPDefinitionSoap implements Serializable {
 	private Date _modifiedDate;
 	private String _productTypeName;
 	private boolean _availableIndividually;
+	private boolean _canSellWithoutOptions;
+	private boolean _displayAvailability;
+	private boolean _displayStockQuantity;
 	private int _minCartQuantity;
 	private int _maxCartQuantity;
 	private String _allowedCartQuantities;

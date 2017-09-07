@@ -70,6 +70,9 @@ public class CPDefinitionWrapper implements CPDefinition,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("productTypeName", getProductTypeName());
 		attributes.put("availableIndividually", getAvailableIndividually());
+		attributes.put("canSellWithoutOptions", getCanSellWithoutOptions());
+		attributes.put("displayAvailability", getDisplayAvailability());
+		attributes.put("displayStockQuantity", getDisplayStockQuantity());
 		attributes.put("minCartQuantity", getMinCartQuantity());
 		attributes.put("maxCartQuantity", getMaxCartQuantity());
 		attributes.put("allowedCartQuantities", getAllowedCartQuantities());
@@ -152,6 +155,27 @@ public class CPDefinitionWrapper implements CPDefinition,
 
 		if (availableIndividually != null) {
 			setAvailableIndividually(availableIndividually);
+		}
+
+		Boolean canSellWithoutOptions = (Boolean)attributes.get(
+				"canSellWithoutOptions");
+
+		if (canSellWithoutOptions != null) {
+			setCanSellWithoutOptions(canSellWithoutOptions);
+		}
+
+		Boolean displayAvailability = (Boolean)attributes.get(
+				"displayAvailability");
+
+		if (displayAvailability != null) {
+			setDisplayAvailability(displayAvailability);
+		}
+
+		Boolean displayStockQuantity = (Boolean)attributes.get(
+				"displayStockQuantity");
+
+		if (displayStockQuantity != null) {
+			setDisplayStockQuantity(displayStockQuantity);
 		}
 
 		Integer minCartQuantity = (Integer)attributes.get("minCartQuantity");
@@ -295,6 +319,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	/**
+	* Returns the can sell without options of this cp definition.
+	*
+	* @return the can sell without options of this cp definition
+	*/
+	@Override
+	public boolean getCanSellWithoutOptions() {
+		return _cpDefinition.getCanSellWithoutOptions();
+	}
+
+	/**
 	* Returns the company ID of this cp definition.
 	*
 	* @return the company ID of this cp definition
@@ -398,6 +432,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	/**
+	* Returns the display availability of this cp definition.
+	*
+	* @return the display availability of this cp definition
+	*/
+	@Override
+	public boolean getDisplayAvailability() {
+		return _cpDefinition.getDisplayAvailability();
+	}
+
+	/**
 	* Returns the display date of this cp definition.
 	*
 	* @return the display date of this cp definition
@@ -405,6 +449,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public Date getDisplayDate() {
 		return _cpDefinition.getDisplayDate();
+	}
+
+	/**
+	* Returns the display stock quantity of this cp definition.
+	*
+	* @return the display stock quantity of this cp definition
+	*/
+	@Override
+	public boolean getDisplayStockQuantity() {
+		return _cpDefinition.getDisplayStockQuantity();
 	}
 
 	@Override
@@ -866,6 +920,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	/**
+	* Returns <code>true</code> if this cp definition is can sell without options.
+	*
+	* @return <code>true</code> if this cp definition is can sell without options; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isCanSellWithoutOptions() {
+		return _cpDefinition.isCanSellWithoutOptions();
+	}
+
+	/**
 	* Returns <code>true</code> if this cp definition is denied.
 	*
 	* @return <code>true</code> if this cp definition is denied; <code>false</code> otherwise
@@ -873,6 +937,26 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public boolean isDenied() {
 		return _cpDefinition.isDenied();
+	}
+
+	/**
+	* Returns <code>true</code> if this cp definition is display availability.
+	*
+	* @return <code>true</code> if this cp definition is display availability; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isDisplayAvailability() {
+		return _cpDefinition.isDisplayAvailability();
+	}
+
+	/**
+	* Returns <code>true</code> if this cp definition is display stock quantity.
+	*
+	* @return <code>true</code> if this cp definition is display stock quantity; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isDisplayStockQuantity() {
+		return _cpDefinition.isDisplayStockQuantity();
 	}
 
 	/**
@@ -1006,6 +1090,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	/**
+	* Sets whether this cp definition is can sell without options.
+	*
+	* @param canSellWithoutOptions the can sell without options of this cp definition
+	*/
+	@Override
+	public void setCanSellWithoutOptions(boolean canSellWithoutOptions) {
+		_cpDefinition.setCanSellWithoutOptions(canSellWithoutOptions);
+	}
+
+	/**
 	* Sets the company ID of this cp definition.
 	*
 	* @param companyId the company ID of this cp definition
@@ -1072,6 +1166,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	/**
+	* Sets whether this cp definition is display availability.
+	*
+	* @param displayAvailability the display availability of this cp definition
+	*/
+	@Override
+	public void setDisplayAvailability(boolean displayAvailability) {
+		_cpDefinition.setDisplayAvailability(displayAvailability);
+	}
+
+	/**
 	* Sets the display date of this cp definition.
 	*
 	* @param displayDate the display date of this cp definition
@@ -1079,6 +1183,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public void setDisplayDate(Date displayDate) {
 		_cpDefinition.setDisplayDate(displayDate);
+	}
+
+	/**
+	* Sets whether this cp definition is display stock quantity.
+	*
+	* @param displayStockQuantity the display stock quantity of this cp definition
+	*/
+	@Override
+	public void setDisplayStockQuantity(boolean displayStockQuantity) {
+		_cpDefinition.setDisplayStockQuantity(displayStockQuantity);
 	}
 
 	@Override

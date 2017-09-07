@@ -23,6 +23,20 @@ create table CPAttachmentFileEntry (
 	statusDate DATE null
 );
 
+create table CPAvailabilityRange (
+	uuid_ VARCHAR(75) null,
+	CPAvailabilityRangeId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	CPDefinitionId LONG,
+	title STRING null,
+	lastPublishDate DATE null
+);
+
 create table CPDSpecificationOptionValue (
 	uuid_ VARCHAR(75) null,
 	CPDSpecificationOptionValueId LONG not null primary key,
@@ -51,6 +65,9 @@ create table CPDefinition (
 	modifiedDate DATE null,
 	productTypeName VARCHAR(75) null,
 	availableIndividually BOOLEAN,
+	canSellWithoutOptions BOOLEAN,
+	displayAvailability BOOLEAN,
+	displayStockQuantity BOOLEAN,
 	minCartQuantity INTEGER,
 	maxCartQuantity INTEGER,
 	allowedCartQuantities VARCHAR(255) null,

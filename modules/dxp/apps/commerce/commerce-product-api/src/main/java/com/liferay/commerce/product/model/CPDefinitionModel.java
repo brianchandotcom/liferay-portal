@@ -250,6 +250,69 @@ public interface CPDefinitionModel extends BaseModel<CPDefinition>, ShardedModel
 	public void setAvailableIndividually(boolean availableIndividually);
 
 	/**
+	 * Returns the can sell without options of this cp definition.
+	 *
+	 * @return the can sell without options of this cp definition
+	 */
+	public boolean getCanSellWithoutOptions();
+
+	/**
+	 * Returns <code>true</code> if this cp definition is can sell without options.
+	 *
+	 * @return <code>true</code> if this cp definition is can sell without options; <code>false</code> otherwise
+	 */
+	public boolean isCanSellWithoutOptions();
+
+	/**
+	 * Sets whether this cp definition is can sell without options.
+	 *
+	 * @param canSellWithoutOptions the can sell without options of this cp definition
+	 */
+	public void setCanSellWithoutOptions(boolean canSellWithoutOptions);
+
+	/**
+	 * Returns the display availability of this cp definition.
+	 *
+	 * @return the display availability of this cp definition
+	 */
+	public boolean getDisplayAvailability();
+
+	/**
+	 * Returns <code>true</code> if this cp definition is display availability.
+	 *
+	 * @return <code>true</code> if this cp definition is display availability; <code>false</code> otherwise
+	 */
+	public boolean isDisplayAvailability();
+
+	/**
+	 * Sets whether this cp definition is display availability.
+	 *
+	 * @param displayAvailability the display availability of this cp definition
+	 */
+	public void setDisplayAvailability(boolean displayAvailability);
+
+	/**
+	 * Returns the display stock quantity of this cp definition.
+	 *
+	 * @return the display stock quantity of this cp definition
+	 */
+	public boolean getDisplayStockQuantity();
+
+	/**
+	 * Returns <code>true</code> if this cp definition is display stock quantity.
+	 *
+	 * @return <code>true</code> if this cp definition is display stock quantity; <code>false</code> otherwise
+	 */
+	public boolean isDisplayStockQuantity();
+
+	/**
+	 * Sets whether this cp definition is display stock quantity.
+	 *
+	 * @param displayStockQuantity the display stock quantity of this cp definition
+	 */
+	public void setDisplayStockQuantity(boolean displayStockQuantity);
+
+	/**
 	 * Returns the min cart quantity of this cp definition.
 	 *
 	 * @return the min cart quantity of this cp definition

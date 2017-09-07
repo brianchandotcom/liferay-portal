@@ -55,7 +55,6 @@ public class CPAvailabilityRangeStagedModelRepository
 		}
 
 		return _cpAvailabilityRangeLocalService.addCPAvailabilityRange(
-			cpAvailabilityRange.getCPDefinitionId(),
 			cpAvailabilityRange.getTitleMap(), serviceContext);
 	}
 

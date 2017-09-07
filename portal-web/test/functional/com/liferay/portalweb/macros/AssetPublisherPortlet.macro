@@ -177,7 +177,31 @@
 
 		<execute function="Select" locator1="APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT" value1="${selectedAsset}" />
 
-		<execute function="Select" locator1="APConfiguration#SOURCE_SCOPE_ASSET_SUBTYPE_SELECT" value1="${assetSubtype}" />
+		<if>
+			<equals arg1="${selectMoreThanOneSubtype}" arg2="true" />
+			<then>
+				<execute function="Select" locator1="APConfiguration#SOURCE_SCOPE_ASSET_SUBTYPE_SELECT" value1="Select More Than One..." />
+
+				<for list="${selectContent}" param="contentName">
+					<var name="key_contentName" value="${contentName}" />
+
+					<execute function="Click" locator1="APConfiguration#SELECT_MORE_THAN_ONE_ASSET_TYPE_CONTENT" />
+
+					<if>
+						<equals arg1="${moveSelected}" arg2="true" />
+						<then>
+							<execute function="Click" locator1="APConfiguration#SELECT_MORE_THAN_ONE_ASSET_SUBTYPE_MOVE_SELECTED" />
+						</then>
+						<else>
+							<execute function="Click" locator1="APConfiguration#SELECT_MORE_THAN_ONE_ASSET_SUBTYPE_MOVE_AVAILABLE" />
+						</else>
+					</if>
+				</for>
+			</then>
+			<else>
+				<execute function="Select" locator1="APConfiguration#SOURCE_SCOPE_ASSET_SUBTYPE_SELECT" value1="${assetSubtype}" />
+			</else>
+		</if>
 
 		<execute macro="PortletEntry#save" />
 	</command>

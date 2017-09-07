@@ -186,7 +186,7 @@ renderResponse.setTitle(commerceCart.getName());
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
 								name="price"
-								value="<%= commerceCartItemDisplayContext.getFormattedPrice(commerceCartItem.getCommerceCartItemId()) %>"
+								value="<%= commerceCartItemDisplayContext.getFormattedPrice(commerceCartItem) %>"
 							/>
 
 							<liferay-ui:search-container-column-text

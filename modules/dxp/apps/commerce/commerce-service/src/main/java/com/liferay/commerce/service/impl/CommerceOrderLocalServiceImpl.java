@@ -25,10 +25,9 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Andrea Di Giorgi
@@ -78,7 +77,7 @@ public class CommerceOrderLocalServiceImpl
 		CommerceOrder commerceOrder =
 			commerceOrderLocalService.addCommerceOrder(
 				commerceCart.getUserId(),
-				_commercePriceCalculationHelper.getTotal(commerceCartId),
+				_commercePriceCalculationHelper.getTotal(commerceCart),
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		// Commerce order items
@@ -160,7 +159,7 @@ public class CommerceOrderLocalServiceImpl
 		return commerceOrderPersistence.countByGroupId(groupId);
 	}
 
-	@Reference
+	@ServiceReference(type = CommercePriceCalculationHelper.class)
 	private CommercePriceCalculationHelper _commercePriceCalculationHelper;
 
 }

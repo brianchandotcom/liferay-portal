@@ -19,8 +19,6 @@ import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPInstanceService;
-import com.liferay.commerce.service.CommerceCartItemService;
-import com.liferay.commerce.service.CommerceCartService;
 import com.liferay.commerce.util.CommercePriceCalculationHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -32,14 +30,13 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(immediate = true)
+@Component(immediate = true, service = CommercePriceCalculationHelper.class)
 public class CommercePriceCalculationHelperImpl
 	implements CommercePriceCalculationHelper {
 
 	@Override
-	public double getPrice(long commerceCartItemId) throws PortalException {
-		CommerceCartItem commerceCartItem =
-			_commerceCartItemService.getCommerceCartItem(commerceCartItemId);
+	public double getPrice(CommerceCartItem commerceCartItem)
+		throws PortalException {
 
 		return getPrice(
 			commerceCartItem.getCPInstanceId(), commerceCartItem.getQuantity());
@@ -62,11 +59,8 @@ public class CommercePriceCalculationHelperImpl
 	}
 
 	@Override
-	public double getTotal(long commerceCartId) throws PortalException {
+	public double getTotal(CommerceCart commerceCart) throws PortalException {
 		double total = 0;
-
-		CommerceCart commerceCart = _commerceCartService.fetchCommerceCart(
-			commerceCartId);
 
 		if (commerceCart == null) {
 			return total;
@@ -76,19 +70,13 @@ public class CommercePriceCalculationHelperImpl
 			commerceCart.getCommerceCartItems();
 
 		for (CommerceCartItem commerceCartItem : commerceCartItems) {
-			double price = getPrice(commerceCartItem.getCommerceCartItemId());
+			double price = getPrice(commerceCartItem);
 
 			total += price;
 		}
 
 		return total;
 	}
-
-	@Reference
-	private CommerceCartItemService _commerceCartItemService;
-
-	@Reference
-	private CommerceCartService _commerceCartService;
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;

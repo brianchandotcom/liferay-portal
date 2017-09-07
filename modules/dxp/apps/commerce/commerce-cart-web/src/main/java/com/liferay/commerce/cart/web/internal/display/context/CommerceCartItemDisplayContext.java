@@ -53,11 +53,11 @@ public class CommerceCartItemDisplayContext
 		_commercePriceFormatter = commercePriceFormatter;
 	}
 
-	public String getFormattedPrice(long commerceCartItemId)
+	public String getFormattedPrice(CommerceCartItem commerceCartItem)
 		throws PortalException {
 
 		double price = _commercePriceCalculationHelper.getPrice(
-			commerceCartItemId);
+			commerceCartItem);
 
 		return _commercePriceFormatter.format(httpServletRequest, price);
 	}

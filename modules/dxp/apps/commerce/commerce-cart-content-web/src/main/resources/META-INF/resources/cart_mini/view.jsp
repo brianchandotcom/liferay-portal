@@ -99,7 +99,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 					</h6>
 
 					<h6>
-						<%= commerceCartContentMiniDisplayContext.getFormattedPrice(commerceCartItem.getCommerceCartItemId()) %>
+						<%= commerceCartContentMiniDisplayContext.getFormattedPrice(commerceCartItem)) %>
 					</h6>
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>

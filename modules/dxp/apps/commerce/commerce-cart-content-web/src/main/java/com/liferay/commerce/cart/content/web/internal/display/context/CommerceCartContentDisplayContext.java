@@ -96,8 +96,9 @@ public class CommerceCartContentDisplayContext {
 	}
 
 	public String getCommerceCartTotal() throws PortalException {
-		double total = _commercePriceCalculationHelper.getTotal(
-			getCommerceCartId());
+		CommerceCart commerceCart = getCommerceCart();
+
+		double total = _commercePriceCalculationHelper.getTotal(commerceCart);
 
 		return _commercePriceFormatter.format(httpServletRequest, total);
 	}
@@ -115,11 +116,11 @@ public class CommerceCartContentDisplayContext {
 		return cpDefinitionHelper.getFriendlyURL(cpDefinitionId, themeDisplay);
 	}
 
-	public String getFormattedPrice(long commerceCartItemId)
+	public String getFormattedPrice(CommerceCartItem commerceCartItem)
 		throws PortalException {
 
 		double price = _commercePriceCalculationHelper.getPrice(
-			commerceCartItemId);
+			commerceCartItem);
 
 		return _commercePriceFormatter.format(httpServletRequest, price);
 	}

@@ -14,21 +14,21 @@
 
 package com.liferay.commerce.util;
 
-import aQute.bnd.annotation.ProviderType;
-
+import com.liferay.commerce.model.CommerceCart;
+import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Alessio Antonio Rendina
  */
-@ProviderType
 public interface CommercePriceCalculationHelper {
 
-	public double getPrice(long commerceCartItemId) throws PortalException;
+	public double getPrice(CommerceCartItem commerceCartItemId)
+		throws PortalException;
 
 	public double getPrice(long cpInstanceId, int quantity)
 		throws PortalException;
 
-	public double getTotal(long commerceCartId) throws PortalException;
+	public double getTotal(CommerceCart commerceCartId) throws PortalException;
 
 }

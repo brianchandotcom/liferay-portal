@@ -58,10 +58,10 @@ public class CommerceCartDisplayContext
 		_commercePriceFormatter = commercePriceFormatter;
 	}
 
-	public String getCommerceCartTotal(long commerceCartId)
+	public String getCommerceCartTotal(CommerceCart commerceCart)
 		throws PortalException {
 
-		double total = _commercePriceCalculationHelper.getTotal(commerceCartId);
+		double total = _commercePriceCalculationHelper.getTotal(commerceCart);
 
 		return _commercePriceFormatter.format(httpServletRequest, total);
 	}

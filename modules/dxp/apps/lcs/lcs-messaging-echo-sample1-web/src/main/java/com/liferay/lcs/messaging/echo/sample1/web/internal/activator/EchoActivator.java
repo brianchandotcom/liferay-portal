@@ -31,8 +31,7 @@ public class EchoActivator {
 
 	@Activate
 	public void start() {
-		_lcsMessageListener = new EchoLCSMessageListener(
-			_lcsMessageBusService);
+		_lcsMessageListener = new EchoLCSMessageListener(_lcsMessageBusService);
 
 		_lcsMessageBusService.registerLCSMessageListener(
 			"lcs_echo", _lcsMessageListener);
@@ -44,9 +43,9 @@ public class EchoActivator {
 			"lcs_echo", _lcsMessageListener);
 	}
 
-	private LCSMessageListener _lcsMessageListener;
-
 	@Reference
 	private LCSMessageBusService _lcsMessageBusService;
+
+	private LCSMessageListener _lcsMessageListener;
 
 }

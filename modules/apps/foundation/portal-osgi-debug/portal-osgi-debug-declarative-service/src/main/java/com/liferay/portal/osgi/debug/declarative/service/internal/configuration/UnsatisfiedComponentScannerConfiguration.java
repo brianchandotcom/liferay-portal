@@ -21,13 +21,19 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Tina Tian
  */
-@ExtendedObjectClassDefinition(category = "other")
+@ExtendedObjectClassDefinition(category = "foundation")
 @Meta.OCD(
-	id = "com.liferay.portal.osgi.debug.declarative.service.internal.configuration.UnsatisfiedComponentScannerConfiguration"
+	id = "com.liferay.portal.osgi.debug.declarative.service.internal.configuration.UnsatisfiedComponentScannerConfiguration",
+	localization = "content/Language",
+	name = "unsatisfied-component-scanner-configuration-name"
 )
 public interface UnsatisfiedComponentScannerConfiguration {
 
-	@Meta.AD(deflt = "60", required = false)
+	@Meta.AD(
+		deflt = "-1",
+		description = "unsatisfied-component-scanning-interval-help",
+		required = false
+	)
 	public int unsatisfiedComponentScanningInterval();
 
 }

@@ -98,7 +98,7 @@ public class BndDeploymentScenarioGenerator
 
 			analyzer.setProperties(analyzerProperties);
 
-			_addTestClass(testClass, javaArchive);
+			javaArchive.addClass(testClass.getJavaClass());
 
 			ZipExporter zipExporter = javaArchive.as(ZipExporter.class);
 
@@ -155,10 +155,6 @@ public class BndDeploymentScenarioGenerator
 
 	@Inject
 	protected Instance<Injector> injector;
-
-	private void _addTestClass(TestClass testClass, JavaArchive javaArchive) {
-		javaArchive.addClass(testClass.getJavaClass());
-	}
 
 	private void _replaceManifest(
 		Archive<?> archive, ByteArrayAsset byteArrayAsset) {

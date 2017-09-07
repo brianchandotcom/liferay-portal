@@ -133,7 +133,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 														</div>
 
 														<div class="lfr-discussion-reply-user-name">
-															<%= parentDiscussionComment.getUserName() %>
+															<%= HtmlUtil.escape(parentDiscussionComment.getUserName()) %>
 														</div>
 
 														<div class="lfr-discussion-reply-creation-date">

@@ -21,8 +21,8 @@ import aQute.bnd.osgi.Analyzer;
 import aQute.bnd.osgi.Jar;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.shrinkwrap.osgi.api.BndArchive;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 
@@ -35,9 +35,11 @@ import java.util.jar.Manifest;
 import org.jboss.arquillian.container.spi.client.deployment.DeploymentDescription;
 import org.jboss.arquillian.container.test.spi.client.deployment.DeploymentScenarioGenerator;
 import org.jboss.arquillian.test.spi.TestClass;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.Asset;
 import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
 import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+import org.jboss.shrinkwrap.api.importer.ZipImporter;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 
 /**
@@ -85,9 +87,19 @@ public class BndDeploymentScenarioGenerator
 				}
 			}
 
-			BndArchive bndArchive = new BndArchive(projectBuilder.build());
+			Jar jar = projectBuilder.build();
 
-			JavaArchive javaArchive = bndArchive.as(JavaArchive.class);
+			ByteArrayOutputStream byteArrayOutputStream =
+				new ByteArrayOutputStream();
+
+			jar.write(byteArrayOutputStream);
+
+			ZipImporter zipImporter = ShrinkWrap.create(ZipImporter.class);
+
+			zipImporter.importFrom(
+				new ByteArrayInputStream(byteArrayOutputStream.toByteArray()));
+
+			JavaArchive javaArchive = zipImporter.as(JavaArchive.class);
 
 			Properties analyzerProperties = new Properties();
 
@@ -99,7 +111,7 @@ public class BndDeploymentScenarioGenerator
 
 			ZipExporter zipExporter = javaArchive.as(ZipExporter.class);
 
-			Jar jar = new Jar(
+			jar = new Jar(
 				javaArchive.getName(), zipExporter.exportAsInputStream());
 
 			analyzer.setJar(jar);

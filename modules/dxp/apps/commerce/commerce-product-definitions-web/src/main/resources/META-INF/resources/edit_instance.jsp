@@ -110,7 +110,19 @@ renderResponse.setTitle((cpInstance == null) ? LanguageUtil.get(request, "add-sk
 					var fieldValue = {};
 
 					fieldValue.key = field.get('fieldName');
-					fieldValue.value = field.getValue();
+
+					var value = field.getValue();
+
+					var arrValue = [];
+
+					if (value instanceof Array) {
+						arrValue = value;
+					}
+					else {
+						arrValue.push(value);
+					}
+
+					fieldValue.value = arrValue;
 
 					fieldValues.push(fieldValue);
 				}

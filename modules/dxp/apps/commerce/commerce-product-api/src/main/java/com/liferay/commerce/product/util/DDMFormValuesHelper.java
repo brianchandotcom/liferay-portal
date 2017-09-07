@@ -28,6 +28,8 @@ import java.util.Locale;
 @ProviderType
 public interface DDMFormValuesHelper {
 
+	public String cleanDDMFormValuesJSONON(String json) throws PortalException;
+
 	public DDMFormValues deserialize(
 			DDMForm ddmForm, String json, Locale locale)
 		throws PortalException;

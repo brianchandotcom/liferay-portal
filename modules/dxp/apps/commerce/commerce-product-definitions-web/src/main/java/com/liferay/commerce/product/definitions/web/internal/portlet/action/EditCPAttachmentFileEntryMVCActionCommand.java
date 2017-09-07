@@ -21,6 +21,7 @@ import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
+import com.liferay.commerce.product.util.DDMFormValuesHelper;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -216,6 +217,9 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
 		int type = ParamUtil.getInteger(actionRequest, "type");
 
+		ddmFormValues = _ddmFormValuesHelper.cleanDDMFormValuesJSONON(
+			ddmFormValues);
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPAttachmentFileEntry.class.getName(), actionRequest);
 
@@ -246,6 +250,9 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;
+
+	@Reference
+	private DDMFormValuesHelper _ddmFormValuesHelper;
 
 	@Reference
 	private Portal _portal;

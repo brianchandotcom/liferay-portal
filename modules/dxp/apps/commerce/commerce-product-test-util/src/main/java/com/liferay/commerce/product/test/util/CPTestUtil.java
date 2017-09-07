@@ -56,16 +56,14 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
+import org.junit.Assert;
 
 import java.io.Serializable;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.junit.Assert;
 
 /**
  * @author Andrea Di Giorgi
@@ -425,16 +423,17 @@ public class CPTestUtil {
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), PortalUUIDUtil.generate(),
-			productTypeName, RandomTestUtil.randomInt(),
-			RandomTestUtil.randomInt(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomInt(), RandomTestUtil.randomDouble(),
+			productTypeName, RandomTestUtil.randomBoolean(),
+			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.randomInt(), RandomTestUtil.randomInt(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomInt(),
 			RandomTestUtil.randomDouble(), RandomTestUtil.randomDouble(),
-			RandomTestUtil.randomDouble(), null, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, false, serviceContext);
+			RandomTestUtil.randomDouble(), RandomTestUtil.randomDouble(), null,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute, false,
+			serviceContext);
 	}
 
 	protected static String getJSON(

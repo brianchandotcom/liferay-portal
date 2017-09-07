@@ -29,13 +29,12 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Andrea Di Giorgi
@@ -119,10 +118,13 @@ public class CPDefinitionStagedModelRepository
 
 		return _cpDefinitionLocalService.addCPDefinition(
 			cpDefinition.getTitleMap(), cpDefinition.getShortDescriptionMap(),
-			cpDefinition.getDescriptionMap(), cpDefinition.getUrlTitleMap(),
-			cpDefinition.getMetaTitleMap(), cpDefinition.getMetaKeywordsMap(),
+			cpDefinition.getDescriptionMap(), cpDefinition.getMetaTitleMap(),
+			cpDefinition.getMetaKeywordsMap(),
 			cpDefinition.getMetaDescriptionMap(), cpDefinition.getLayoutUuid(),
 			cpDefinition.getProductTypeName(),
+			cpDefinition.getCanSellWithoutOptions(),
+			cpDefinition.getDisplayAvailability(),
+			cpDefinition.getDisplayStockQuantity(),
 			cpDefinition.getMinCartQuantity(),
 			cpDefinition.getMaxCartQuantity(),
 			cpDefinition.getAllowedCartQuantities(),
@@ -297,6 +299,9 @@ public class CPDefinitionStagedModelRepository
 			cpDefinition.getDescriptionMap(), cpDefinition.getUrlTitleMap(),
 			cpDefinition.getMetaTitleMap(), cpDefinition.getMetaKeywordsMap(),
 			cpDefinition.getMetaDescriptionMap(), cpDefinition.getLayoutUuid(),
+			cpDefinition.getCanSellWithoutOptions(),
+			cpDefinition.getDisplayAvailability(),
+			cpDefinition.getDisplayStockQuantity(),
 			cpDefinition.getMinCartQuantity(),
 			cpDefinition.getMaxCartQuantity(),
 			cpDefinition.getAllowedCartQuantities(),

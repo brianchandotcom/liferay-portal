@@ -27,6 +27,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -37,11 +41,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -223,16 +222,14 @@ public class CPDefinitionDemoDataCreatorHelper
 			Locale.US, title);
 		Map<Locale, String> descriptionMap = Collections.singletonMap(
 			Locale.US, description);
-		Map<Locale, String> urlTitleMap = Collections.singletonMap(
-			Locale.US, urlTitle);
 
 		cpDefinition = _cpDefinitionLocalService.addCPDefinition(
-			titleMap, null, descriptionMap, urlTitleMap, null, null, null,
-			layoutUuid, productTypeName, 1, 10000, null, 1, 0, 0, 0, 0, null,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute, true,
-			serviceContext);
+			titleMap, null, descriptionMap, null, null, null, layoutUuid,
+			productTypeName, false, false, false, 1, 10000, null, 1, 0, 0, 0, 0,
+			null, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, true, serviceContext);
 
 		_cpDefinitions.put(title, cpDefinition);
 

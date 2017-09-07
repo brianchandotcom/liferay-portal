@@ -41,8 +41,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.saml.runtime.configuration.SamlConfiguration",
-	immediate = true,
-	service = KeyStoreManager.class
+	immediate = true, service = KeyStoreManager.class
 )
 public class DLKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 

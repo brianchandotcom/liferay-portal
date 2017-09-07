@@ -173,7 +173,7 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private CertificateTool _certificateTool;
 
-	@Reference(target = "(default=true)")
+	@Reference(name = "KeyStoreManager", target = "(default=true)")
 	private KeyStoreManager _keyStoreManager;
 
 	@Reference

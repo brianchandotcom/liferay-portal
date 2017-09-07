@@ -1,0 +1,44 @@
+{namespace MSBFragmentEditor}
+
+/**
+ * MSBFragmentEditor
+ */
+{template .render}
+	{@param initialCSS: string}
+	{@param initialHTML: string}
+	{@param initialJS: string}
+	{@param spritemap: string}
+	{@param? _css: string}
+	{@param? _handleCSSChanged: any}
+	{@param? _handleHTMLChanged: any}
+	{@param? _handleJSChanged: any}
+	{@param? _html: string}
+	{@param? _js: string}
+
+	<div class="msb-fragment-editor">
+		{call SourceEditor.render}
+			{param events: ['contentChanged': $_handleHTMLChanged] /}
+			{param initialContent: $initialHTML /}
+			{param syntax: 'html' /}
+		{/call}
+
+		{call SourceEditor.render}
+			{param events: ['contentChanged': $_handleCSSChanged] /}
+			{param initialContent: $initialCSS /}
+			{param syntax: 'css' /}
+		{/call}
+
+		{call SourceEditor.render}
+			{param events: ['contentChanged': $_handleJSChanged] /}
+			{param initialContent: $initialJS /}
+			{param syntax: 'javascript' /}
+		{/call}
+
+		{call MSBFragmentPreview.render}
+			{param css: $_css /}
+			{param html: $_html /}
+			{param js: $_js /}
+			{param spritemap: $spritemap /}
+		{/call}
+	</div>
+{/template}

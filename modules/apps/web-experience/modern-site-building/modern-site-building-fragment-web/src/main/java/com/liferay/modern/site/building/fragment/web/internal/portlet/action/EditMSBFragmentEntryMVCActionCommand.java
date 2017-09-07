@@ -18,8 +18,6 @@ import com.liferay.modern.site.building.fragment.constants.MSBFragmentPortletKey
 import com.liferay.modern.site.building.fragment.service.MSBFragmentEntryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.ActionRequest;
@@ -46,9 +44,6 @@ public class EditMSBFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long msbFragmentCollectionId = ParamUtil.getLong(
-			actionRequest, "msbFragmentCollectionId");
-
 		long msbFragmentEntryId = ParamUtil.getLong(
 			actionRequest, "msbFragmentEntryId");
 
@@ -57,23 +52,8 @@ public class EditMSBFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 		String js = ParamUtil.getString(actionRequest, "jsContent");
 		String html = ParamUtil.getString(actionRequest, "htmlContent");
 
-		if (msbFragmentEntryId <= 0) {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				actionRequest);
-
-			// Add modern site building fragment entry
-
-			_msbFragmentEntryService.addMSBFragmentEntry(
-				serviceContext.getScopeGroupId(), msbFragmentCollectionId, name,
-				css, html, js, serviceContext);
-		}
-		else {
-
-			// Update modern site building fragment entry
-
-			_msbFragmentEntryService.updateMSBFragmentEntry(
-				msbFragmentEntryId, name, css, html, js);
-		}
+		_msbFragmentEntryService.updateMSBFragmentEntry(
+			msbFragmentEntryId, name, css, html, js);
 	}
 
 	@Reference

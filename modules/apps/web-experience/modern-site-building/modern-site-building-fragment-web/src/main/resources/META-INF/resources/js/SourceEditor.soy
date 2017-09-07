@@ -1,0 +1,18 @@
+{namespace SourceEditor}
+
+/**
+ * SourceEditor
+ */
+{template .render}
+	{@param initialContent: string}
+	{@param syntax: string}
+	{@param? _handleContentChanged: any}
+
+	<div class="source-editor">
+		{call AceEditor.render}
+			{param events: ['contentChanged': $_handleContentChanged] /}
+			{param initialContent: $initialContent /}
+			{param syntax: $syntax /}
+		{/call}
+	</div>
+{/template}

@@ -1,0 +1,76 @@
+{namespace MSBFragmentPreview}
+
+/**
+ * Renders a MSBFragmentPreview
+ */
+{template .render}
+	{@param spritemap: string}
+	{@param? _currentPreviewSize: string}
+	{@param? _handlePreviewSizeButtonClick: any}
+	{@param? _previewContent: string}
+	{@param? _previewSizes: list<string>}
+
+	<div class="msb-fragment-preview" ref="wrapper">
+		<div class="msb-fragment-preview__toolbar btn-group">
+			{if $_previewSizes}
+				{foreach $size in $_previewSizes}
+					{let $buttonClasses kind="text"}
+						btn
+						{sp}btn-sm
+						{if $_currentPreviewSize == $size}
+							{sp}active
+						{/if}
+					{/let}
+
+					<button
+						class="{$buttonClasses}"
+						data-onclick="{$_handlePreviewSizeButtonClick}"
+						data-preview-size="{$size}"
+						type="button"
+					>
+						<span class="sr-only">{$size}</span>
+						<svg class="lexicon-icon">
+							<use xlink:href="{$spritemap}#{$size}"></use>
+						</svg>
+					</button>
+				{/foreach}
+			{/if}
+
+			{let $buttonClasses kind="text"}
+				btn
+				{sp}btn-sm
+				{if $_currentPreviewSize}
+					{sp}active
+				{/if}
+			{/let}
+
+			<button
+				class="{$buttonClasses}"
+				data-onclick="{$_handlePreviewSizeButtonClick}"
+				data-preview-size=""
+				type="button"
+			>
+				<span class="sr-only">full size</span>
+
+				<svg class="lexicon-icon">
+					<use xlink:href="{$spritemap}#full-size"></use>
+				</svg>
+			</button>
+		</div>
+
+		{let $iframeClasses kind="text"}
+			msb-fragment-preview__frame
+			{if $_currentPreviewSize}
+				{sp}msb-fragment-preview__frame--resized
+			{/if}
+		{/let}
+
+		<iframe
+			class="{$iframeClasses}"
+			ref="preview"
+			sandbox="allow-scripts"
+			src="{$_previewContent}"
+		>
+		</iframe>
+	</div>
+{/template}

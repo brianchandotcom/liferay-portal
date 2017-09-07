@@ -119,14 +119,39 @@ renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentCollectionTitle(
 </aui:form>
 
 <c:if test="<%= msbFragmentDisplayContext.isShowAddButton(MSBFragmentActionKeys.ADD_MSB_FRAGMENT_ENTRY) %>">
-	<portlet:renderURL var="addMSBFragmentEntryURL">
+	<portlet:actionURL name="addMSBFragmentEntry" var="addMSBFragmentEntryURL">
 		<portlet:param name="mvcPath" value="/edit_msb_fragment_entry.jsp" />
 		<portlet:param name="msbFragmentCollectionId" value="<%= String.valueOf(msbFragmentDisplayContext.getMSBFragmentCollectionId()) %>" />
-	</portlet:renderURL>
+	</portlet:actionURL>
 
 	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-fragment") %>' url="<%= addMSBFragmentEntryURL.toString() %>" />
+		<liferay-frontend:add-menu-item id="addMSBFragmentEntryMenuItem" title='<%= LanguageUtil.get(request, "add-fragment") %>' url="<%= addMSBFragmentEntryURL.toString() %>" />
 	</liferay-frontend:add-menu>
+
+	<aui:script require="modern-site-building-fragment-web/js/MSBFragmentNameEditor">
+		var addMSBFragmentEntryMenuItem = document.getElementById('<portlet:namespace />addMSBFragmentEntryMenuItem');
+
+		addMSBFragmentEntryMenuItem.addEventListener(
+			'click',
+			function(event) {
+				event.preventDefault();
+
+				var msbFragmentNameEditor = new modernSiteBuildingFragmentWebJsMSBFragmentNameEditor.default(
+					{
+						addMSBFragmentEntryURL: '<%= addMSBFragmentEntryURL.toString() %>',
+						editMSBFragmentEntryURL: '<portlet:renderURL><portlet:param name="mvcPath" value="/edit_msb_fragment_entry.jsp" /><portlet:param name="msbFragmentCollectionId" value="<%= String.valueOf(msbFragmentDisplayContext.getMSBFragmentCollectionId()) %>" /></portlet:renderURL>',
+						events: {
+							hide: function() {
+								msbFragmentNameEditor.disposeInternal();
+							}
+						},
+						namespace: '<portlet:namespace />',
+						spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+					}
+				);
+			}
+		);
+	</aui:script>
 </c:if>
 
 <aui:script sandbox="<%= true %>">

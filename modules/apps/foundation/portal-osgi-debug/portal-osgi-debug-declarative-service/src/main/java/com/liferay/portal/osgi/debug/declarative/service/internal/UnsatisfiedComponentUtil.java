@@ -15,7 +15,6 @@
 package com.liferay.portal.osgi.debug.declarative.service.internal;
 
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Collection;
 
@@ -36,12 +35,7 @@ public class UnsatisfiedComponentUtil {
 		StringBundler sb = new StringBundler();
 
 		for (Bundle bundle : bundles) {
-			String unsatisfiedComponents = _listUnsatisfiedComponents(
-				serviceComponentRuntime, bundle);
-
-			if (!unsatisfiedComponents.isEmpty()) {
-				sb.append(unsatisfiedComponents);
-			}
+			_listUnsatisfiedComponents(serviceComponentRuntime, bundle, sb);
 		}
 
 		return sb.toString();
@@ -98,21 +92,20 @@ public class UnsatisfiedComponentUtil {
 		}
 	}
 
-	private static String _listUnsatisfiedComponents(
-		ServiceComponentRuntime serviceComponentRuntime, Bundle bundle) {
+	private static void _listUnsatisfiedComponents(
+		ServiceComponentRuntime serviceComponentRuntime, Bundle bundle,
+		StringBundler sb) {
 
 		if (bundle.getState() != Bundle.ACTIVE) {
-			return StringPool.BLANK;
+			return;
 		}
 
 		String unsatisfiedInformation = _collectUnsatisfiedInformation(
 			serviceComponentRuntime, bundle);
 
 		if (unsatisfiedInformation.isEmpty()) {
-			return StringPool.BLANK;
+			return;
 		}
-
-		StringBundler sb = new StringBundler();
 
 		sb.append("\nBundle: id=");
 		sb.append(bundle.getBundleId());
@@ -121,8 +114,6 @@ public class UnsatisfiedComponentUtil {
 		sb.append(",version=");
 		sb.append(bundle.getVersion());
 		sb.append(unsatisfiedInformation);
-
-		return sb.toString();
 	}
 
 }

@@ -6911,7 +6911,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					userId, screenName);
 			}
 
-			if (!screenName.equals(String.valueOf(userId))) {
+			if (PropsValues.SITES_FRIENDLY_URL_ALLOW_GROUP_ID &&
+				!screenName.equals(String.valueOf(userId))) {
+
 				Group group = groupPersistence.fetchByPrimaryKey(
 					GetterUtil.getLong(screenName));
 

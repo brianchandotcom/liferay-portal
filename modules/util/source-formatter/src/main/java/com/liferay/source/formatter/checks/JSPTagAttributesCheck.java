@@ -70,9 +70,9 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		content = _formatSingleLineTagAttribues(fileName, content);
+		content = _formatSingleLineTagAttributes(fileName, content);
 
-		content = _formatMultiLinesTagAttribues(fileName, content);
+		content = _formatMultiLinesTagAttributes(fileName, content);
 
 		return content;
 	}
@@ -203,7 +203,7 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 			line, attributeAndValue, newAttributeAndValue);
 	}
 
-	private String _formatMultiLinesTagAttribues(
+	private String _formatMultiLinesTagAttributes(
 			String fileName, String content)
 		throws Exception {
 
@@ -247,7 +247,7 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 		return content;
 	}
 
-	private String _formatSingleLineTagAttribues(
+	private String _formatSingleLineTagAttributes(
 			String fileName, String content)
 		throws Exception {
 

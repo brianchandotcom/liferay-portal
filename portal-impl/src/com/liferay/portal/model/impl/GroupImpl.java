@@ -71,11 +71,9 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Represents either a site or a generic resource container.
@@ -187,14 +185,8 @@ public class GroupImpl extends GroupBaseImpl {
 
 	@Override
 	public List<Group> getDescendants(boolean site) {
-		Set<Group> descendants = new LinkedHashSet<>();
-
-		for (Group group : getChildren(site)) {
-			descendants.add(group);
-			descendants.addAll(group.getDescendants(site));
-		}
-
-		return new ArrayList<>(descendants);
+		return GroupLocalServiceUtil.getGroups(
+			getCompanyId(), getTreePath(), site);
 	}
 
 	@JSON

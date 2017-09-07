@@ -1,0 +1,11 @@
+Bundle-Name: Liferay Modern Site Building Fragment Taglib
+Bundle-SymbolicName: com.liferay.modern.site.building.fragment.taglib
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Modern Site Building
+Provide-Capability:\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/modern-site-building-fragment";\
+		version:Version="${Bundle-Version}"
+Web-ContextPath: /modern-site-building-fragment-taglib

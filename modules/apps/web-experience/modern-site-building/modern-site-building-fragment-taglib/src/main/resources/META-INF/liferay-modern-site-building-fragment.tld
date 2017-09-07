@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd">
+	<description>Provides the Liferay Modern Site Building Fragment component tags, prefixed with <![CDATA[<code>liferay-modern-site-building-fragment:</code>]]>.</description>
+	<tlib-version>1.0</tlib-version>
+	<short-name>liferay-modern-site-building-fragment</short-name>
+	<uri>http://liferay.com/tld/modern-site-building-fragment</uri>
+	<tag>
+		<name>msb-fragment-entry-renderer</name>
+		<tag-class>com.liferay.modern.site.building.fragment.taglib.servlet.taglib.MSBFragmentEntryRendererTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>msbFragmentEntryId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+</taglib>

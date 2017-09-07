@@ -653,7 +653,6 @@ app.server.type=@{app.server.type}]]></echo>
 									</ant>
 								</finally>
 							</trycatch>
-
 						</test-action>
 					</database-test-run-test>
 				</test-action>
@@ -2711,7 +2710,6 @@ ${output.content}</echo>
 						<isset property="env.DIST_PATH" />
 						<then>
 							<sequential>
-
 								<propertyfile file="app.server.${env.HOSTNAME}.properties">
 									<entry key="app.server.parent.dir" value="${project.dir}/bun dles" />
 								</propertyfile>
@@ -2723,14 +2721,12 @@ ${output.content}</echo>
 								<prepare-test-environment />
 
 								<move file="bundles" tofile="bun dles" />
-
 							</sequential>
 						</then>
 						<else>
 							<prepare-test-build />
 						</else>
 					</if>
-
 				</test-set-up>
 			</run-batch-test>
 		</sequential>

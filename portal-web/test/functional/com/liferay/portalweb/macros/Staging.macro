@@ -130,7 +130,10 @@
 
 		<execute function="Type" locator1="StagingPublishToLive#DATE_SCHEDULE_TITLE_FIELD" value1="${scheduleTitleName}" />
 		<execute function="Check" locator1="StagingPublishToLive#DATE_SCHEDULE_END_DATE_NO_END_DATE_RADIO" />
-		<execute function="Check" locator1="StagingPublishToLive#DATE_SCHEDULE_REPEAT_DAILY_RADIO" />
+		<execute function="Check" locator1="StagingPublishToLive#DATE_SCHEDULE_REPEAT_RADIO">
+			<var name="key_frequency" value="Daily" />
+		</execute>
+
 		<execute function="Check" locator1="Select#CONTENT_ALL_CONTENT" />
 
 		<execute function="AssertClick" locator1="StagingPublishToLive#ADD_EVENT_BUTTON" value1="Add Event" />

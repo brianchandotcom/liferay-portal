@@ -23,6 +23,7 @@ import com.liferay.marketplace.app.manager.web.internal.util.BundleUtil;
 import com.liferay.marketplace.bundle.BundleManagerUtil;
 import com.liferay.marketplace.exception.FileExtensionException;
 import com.liferay.marketplace.service.AppService;
+import com.liferay.portal.bundle.blacklist.BundleBlacklistManager;
 import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.portal.kernel.model.Plugin;
@@ -62,6 +63,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -266,11 +268,16 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 
 		List<Bundle> bundles = BundleManagerUtil.getInstalledBundles();
 
+		List<String> symbolicNames = new ArrayList<>(bundleIds.length);
+
 		for (Bundle bundle : bundles) {
 			if (ArrayUtil.contains(bundleIds, bundle.getBundleId())) {
-				bundle.uninstall();
+				symbolicNames.add(bundle.getSymbolicName());
 			}
 		}
+
+		_bundleBlacklistManager.addToBlacklistAndUninstall(
+			symbolicNames.toArray(new String[symbolicNames.size()]));
 	}
 
 	public void updatePluginSetting(
@@ -531,6 +538,9 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 	private static final String _DEPLOY_TO_PREFIX = "DEPLOY_TO__";
 
 	private AppService _appService;
+
+	@Reference
+	private BundleBlacklistManager _bundleBlacklistManager;
 
 	@Reference
 	private Http _http;

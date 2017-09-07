@@ -503,7 +503,9 @@ AUI.add(
 						var ratingThumbDown = elements.item(1);
 						var ratingThumbUp = elements.item(0);
 
-						var ratingThumbDownCssClassOn = ratingThumbDown.hasClass(cssClassesOn);
+						if (ratingThumbDown) {
+							var ratingThumbDownCssClassOn = ratingThumbDown.hasClass(cssClassesOn);
+						}
 						var ratingThumbUpCssClassOn = ratingThumbUp.hasClass(cssClassesOn);
 
 						var thumbDownMessage = '';

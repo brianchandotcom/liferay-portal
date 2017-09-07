@@ -54,8 +54,7 @@ public class UnsatisfiedComponentScanner {
 				unsatisfiedComponentScanningInterval();
 
 		if (scanningInterval > 0) {
-			final BundleContext bundleContext =
-				componentContext.getBundleContext();
+			BundleContext bundleContext = componentContext.getBundleContext();
 
 			_scheduledExecutorService = Executors.newScheduledThreadPool(1);
 

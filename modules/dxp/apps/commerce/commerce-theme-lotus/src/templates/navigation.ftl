@@ -45,7 +45,6 @@
 						<svg class="lexicon-icon icon-heart-full" style="display: none">
 							<use xlink:href="${images_folder}/theme-icons.svg#icon-whislist-full" />
 						</svg>
-
 					</#if>
 				</a>
 

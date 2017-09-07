@@ -3101,13 +3101,19 @@ go</echo>
 				</elseif>
 			</if>
 
+			<var name="app.server.tomcat.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}" />
 			<var name="app.server.tomcat.bin.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}/bin" />
 			<var name="app.server.tomcat.lib.global.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}/lib/ext" />
+			<var name="app.server.tomcat.zip.name" value="apache-tomcat-${app.server.tomcat.version}.zip"/>
+			<var name="app.server.tomcat.zip.url" value="http://archive.apache.org/dist/tomcat/tomcat-8/v${app.server.tomcat.version}/bin/${app.server.tomcat.zip.name}" />
 
 			<echo append="true" file="app.server.${user.name}.properties">
+				app.server.tomcat.dir=${app.server.tomcat.dir}
 				app.server.tomcat.bin.dir=${app.server.tomcat.bin.dir}
 				app.server.tomcat.lib.global.dir=${app.server.tomcat.lib.global.dir}
 				app.server.tomcat.version=${app.server.tomcat.version}
+				app.server.tomcat.zip.name=${app.server.tomcat.zip.name}
+				app.server.tomcat.zip.url=${app.server.tomcat.zip.url}
 			</echo>
 		</sequential>
 	</macrodef>

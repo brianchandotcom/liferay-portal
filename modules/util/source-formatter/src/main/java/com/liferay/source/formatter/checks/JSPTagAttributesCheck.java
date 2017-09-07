@@ -210,6 +210,12 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 		Matcher matcher = _multilineTagPattern.matcher(content);
 
 		while (matcher.find()) {
+			String tag = matcher.group();
+
+			if (getLevel(tag, "<", ">") != 0) {
+				continue;
+			}
+
 			char beforeClosingTagChar = content.charAt(matcher.start(2) - 1);
 
 			if ((beforeClosingTagChar != CharPool.NEW_LINE) &&
@@ -226,8 +232,6 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 					content, closingTag, "\n" + tabs + closingTag,
 					matcher.start(2));
 			}
-
-			String tag = matcher.group();
 
 			String singlelineTag = StringUtil.removeChar(
 				StringUtil.trim(tag), CharPool.TAB);

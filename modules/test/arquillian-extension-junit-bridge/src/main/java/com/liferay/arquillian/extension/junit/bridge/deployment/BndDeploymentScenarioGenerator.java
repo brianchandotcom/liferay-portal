@@ -23,7 +23,7 @@ import com.liferay.shrinkwrap.osgi.api.BndProjectBuilder;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.util.jar.Attributes.Name;
@@ -47,8 +47,6 @@ public class BndDeploymentScenarioGenerator
 	@Override
 	public List<DeploymentDescription> generate(TestClass testClass) {
 		File bndFile = new File("bnd.bnd");
-
-		List<DeploymentDescription> deployments = new ArrayList<>();
 
 		try (Analyzer analyzer = new Analyzer()) {
 			BndProjectBuilder bndProjectBuilder = ShrinkWrap.create(
@@ -96,8 +94,6 @@ public class BndDeploymentScenarioGenerator
 			deploymentDescription.shouldBeTestable(true);
 			deploymentDescription.shouldBeManaged(true);
 
-			deployments.add(deploymentDescription);
-
 			Asset asset = javaArchive.get(_MANIFEST_PATH).getAsset();
 
 			Manifest firstPassManifest = new Manifest(asset.openStream());
@@ -120,7 +116,7 @@ public class BndDeploymentScenarioGenerator
 
 			javaArchive.add(byteArrayAsset, _MANIFEST_PATH);
 
-			return deployments;
+			return Collections.singletonList(deploymentDescription);
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

@@ -16,6 +16,8 @@ package com.liferay.portlet.documentlibrary.antivirus;
 
 import com.liferay.document.library.kernel.antivirus.AntivirusScannerException;
 import com.liferay.document.library.kernel.antivirus.BaseFileAntivirusScanner;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,19 +29,23 @@ public class ClamAntivirusScannerImpl extends BaseFileAntivirusScanner {
 
 	@Override
 	public void scan(File file) throws AntivirusScannerException {
-		Process process = null;
+		int exitValue = 0;
 
 		try {
-			ProcessBuilder processBuilder = new ProcessBuilder(
-				"clamscan", "--stdout", "--no-summary", file.getAbsolutePath());
+			exitValue = _scanProcess("clamdscan", file);
+		}
+		catch (InterruptedException | IOException e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Error executing clamdscan", e);
+			}
 
-			processBuilder.redirectErrorStream(true);
+			exitValue = -1;
+		}
 
-			process = processBuilder.start();
-
-			process.waitFor();
-
-			int exitValue = process.exitValue();
+		try {
+			if ((exitValue != 0) && (exitValue != 1)) {
+				exitValue = _scanProcess("clamscan", file);
+			}
 
 			if (exitValue == 1) {
 				throw new AntivirusScannerException(
@@ -52,8 +58,31 @@ public class ClamAntivirusScannerImpl extends BaseFileAntivirusScanner {
 			}
 		}
 		catch (InterruptedException | IOException e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Error executing clamscan", e);
+			}
+
 			throw new AntivirusScannerException(
 				AntivirusScannerException.PROCESS_FAILURE, e);
+		}
+	}
+
+	private int _scanProcess(String command, File file)
+		throws InterruptedException, IOException {
+
+		Process process = null;
+
+		try {
+			ProcessBuilder processBuilder = new ProcessBuilder(
+				command, "--stdout", "--no-summary", file.getAbsolutePath());
+
+			processBuilder.redirectErrorStream(true);
+
+			process = processBuilder.start();
+
+			process.waitFor();
+
+			return process.exitValue();
 		}
 		finally {
 			if (process != null) {
@@ -61,5 +90,8 @@ public class ClamAntivirusScannerImpl extends BaseFileAntivirusScanner {
 			}
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ClamAntivirusScannerImpl.class);
 
 }

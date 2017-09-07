@@ -105,7 +105,7 @@ public class UpdateGeneralMVCActionCommand extends BaseMVCActionCommand {
 		actionResponse.setRenderParameter("tabs1", "general");
 	}
 
-	@Reference(name = "KeyStoreManager", target = "(default=true)")
+	@Reference(target = "(default=true)")
 	private KeyStoreManager _keyStoreManager;
 
 	@Reference

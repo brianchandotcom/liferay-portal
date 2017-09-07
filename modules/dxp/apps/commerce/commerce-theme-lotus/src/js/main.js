@@ -4,7 +4,7 @@
 			var animateNodes = A.all('.animate');
 
 			var cartIcon = A.one('#cartIcon > a');
-			var wishListIcon = A.one('#wishListIcon > a');
+			var wishlistIcon = A.one('#wishlistIcon > a');
 
 			animateNodes.each(
 				function(node) {
@@ -45,8 +45,25 @@
 				function(event) {
 					Liferay.Portlet.refresh('#p_p_id_com_liferay_commerce_cart_content_web_internal_portlet_CommerceCartContentMiniPortlet_INSTANCE_commerceCartContentMiniPortlet_1_');
 
-					if (wishListIcon) {
-						wishListIcon.addClass('animBounce');
+					if (wishlistIcon) {
+						wishlistIcon.addClass('animBounce');
+
+						var wishlistIconCount = A.one('#wishlistIcon > a .sticker');
+
+						if (wishlistIconCount) {
+							var cartItemCount = event.commerceCartItemsCount;
+
+							wishlistIconCount.html(cartItemCount);
+						}
+						else {
+							var bagFullIcon = A.one('#wishlistIcon > a .icon-heart-full');
+							var bagIcon = A.one('#wishlistIcon > a .icon-heart');
+
+							bagFullIcon.show();
+							bagIcon.remove();
+
+							wishlistIcon.append('<span class="sticker sticker-outside">' + event.commerceCartItemsCount + '</span>');
+						}
 					}
 				}
 			);

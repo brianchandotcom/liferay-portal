@@ -32,15 +32,20 @@
 			<li class="collapse-hover" id="wishlistIcon">
 				<a class="btn hidden-xs animate" href="/wishlist">
 					<#if wishListItemsCount != 0>
-						<svg class="lexicon-icon">
+						<svg class="lexicon-icon icon-heart-full">
 							<use xlink:href="${images_folder}/theme-icons.svg#icon-whislist-full" />
 						</svg>
 
 						<span class="sticker sticker-outside">${wishListItemsCount}</span>
 					<#else>
-						<svg class="lexicon-icon">
+						<svg class="lexicon-icon icon-heart">
 							<use xlink:href="${images_folder}/theme-icons.svg#icon-whislist" />
 						</svg>
+
+						<svg class="lexicon-icon icon-heart-full" style="display: none">
+							<use xlink:href="${images_folder}/theme-icons.svg#icon-whislist-full" />
+						</svg>
+
 					</#if>
 				</a>
 

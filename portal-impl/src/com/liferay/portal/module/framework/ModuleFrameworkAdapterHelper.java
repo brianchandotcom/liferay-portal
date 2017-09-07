@@ -21,16 +21,19 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ReflectionUtil;
-import com.liferay.portal.kernel.util.ServiceLoader;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.util.FileImpl;
+import com.liferay.portal.util.PropsValues;
+
+import java.io.File;
+import java.io.IOException;
 
 import java.lang.reflect.Method;
 
+import java.net.URI;
 import java.net.URL;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -51,24 +54,17 @@ public class ModuleFrameworkAdapterHelper {
 				fileUtil.setFile(DoPrivilegedUtil.wrap(new FileImpl()));
 			}
 
-			List<ClassPathResolver> classPathResolvers = ServiceLoader.load(
-				ClassPathResolver.class);
-
-			ClassPathResolver classPathResolver = classPathResolvers.get(0);
-
-			URL[] classPathURLs = classPathResolver.getClassPathURLs();
-
 			_classLoader = new ModuleFrameworkClassLoader(
-				classPathURLs, ClassLoaderUtil.getPortalClassLoader());
+				_getClassPathURLs(), ClassLoaderUtil.getPortalClassLoader());
 
 			return _classLoader;
 		}
-		catch (Exception e) {
+		catch (IOException ioe) {
 			_log.error(
-				"Unable to configure the class loader for the module " +
-					"framework");
+				"Unable to configure the class loader for the module framework",
+				ioe);
 
-			throw new RuntimeException(e);
+			return ReflectionUtil.throwException(ioe);
 		}
 	}
 
@@ -122,6 +118,27 @@ public class ModuleFrameworkAdapterHelper {
 		_methods.put(methodKey, method);
 
 		return method;
+	}
+
+	private static URL[] _getClassPathURLs() throws IOException {
+		File coreDir = new File(PropsValues.MODULE_FRAMEWORK_BASE_DIR, "core");
+
+		File[] files = coreDir.listFiles();
+
+		if (files == null) {
+			throw new IllegalStateException(
+				"Missing " + coreDir.getCanonicalPath());
+		}
+
+		URL[] urls = new URL[files.length];
+
+		for (int i = 0; i < urls.length; i++) {
+			URI uri = files[i].toURI();
+
+			urls[i] = uri.toURL();
+		}
+
+		return urls;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

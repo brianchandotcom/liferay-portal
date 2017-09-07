@@ -37,7 +37,7 @@ import java.util.List;
 public class ServiceLoader {
 
 	public static <S> List<S> load(Class<S> clazz) throws Exception {
-		return load(clazz, _serviceLoaderCondition);
+		return load(clazz, null);
 	}
 
 	public static <S> List<S> load(
@@ -54,7 +54,7 @@ public class ServiceLoader {
 	public static <S> List<S> load(ClassLoader classLoader, Class<S> clazz)
 		throws Exception {
 
-		return load(classLoader, clazz, _serviceLoaderCondition);
+		return load(classLoader, clazz, null);
 	}
 
 	public static <S> List<S> load(
@@ -62,7 +62,15 @@ public class ServiceLoader {
 			ServiceLoaderCondition serviceLoaderCondition)
 		throws Exception {
 
-		Enumeration<URL> enu = classLoader.getResources(
+		return load(classLoader, classLoader, clazz, serviceLoaderCondition);
+	}
+
+	public static <S> List<S> load(
+			ClassLoader lookupClassLoader, ClassLoader defineClassLoader,
+			Class<S> clazz, ServiceLoaderCondition serviceLoaderCondition)
+		throws Exception {
+
+		Enumeration<URL> enu = lookupClassLoader.getResources(
 			"META-INF/services/" + clazz.getName());
 
 		List<S> services = new ArrayList<>();
@@ -70,16 +78,19 @@ public class ServiceLoader {
 		while (enu.hasMoreElements()) {
 			URL url = enu.nextElement();
 
-			if (!serviceLoaderCondition.isLoad(url)) {
+			if ((serviceLoaderCondition != null) &&
+				!serviceLoaderCondition.isLoad(url)) {
+
 				continue;
 			}
 
 			try {
-				_load(services, classLoader, clazz, url);
+				_load(services, defineClassLoader, clazz, url);
 			}
 			catch (Exception e) {
 				_log.error(
-					"Unable to load " + clazz + " with " + classLoader, e);
+					"Unable to load " + clazz + " with " + defineClassLoader,
+					e);
 			}
 		}
 
@@ -129,8 +140,5 @@ public class ServiceLoader {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(ServiceLoader.class);
-
-	private static final ServiceLoaderCondition _serviceLoaderCondition =
-		new DefaultServiceLoaderCondition();
 
 }

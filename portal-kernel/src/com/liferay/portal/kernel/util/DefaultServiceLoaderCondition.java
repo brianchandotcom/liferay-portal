@@ -19,7 +19,9 @@ import java.net.URL;
 /**
  * @author Brian Wing Shun Chan
  * @author Miguel Pastor
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class DefaultServiceLoaderCondition implements ServiceLoaderCondition {
 
 	@Override

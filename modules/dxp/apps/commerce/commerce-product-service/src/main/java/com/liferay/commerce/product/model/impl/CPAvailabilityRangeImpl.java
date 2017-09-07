@@ -27,11 +27,13 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class CPAvailabilityRangeImpl extends CPAvailabilityRangeBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a cp availability range model instance should use the {@link com.liferay.commerce.product.model.CPAvailabilityRange} interface instead.
 	 */
 	public CPAvailabilityRangeImpl() {
 	}
+
 }

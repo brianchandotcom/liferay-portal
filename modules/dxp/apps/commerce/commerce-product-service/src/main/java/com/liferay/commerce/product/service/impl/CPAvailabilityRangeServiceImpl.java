@@ -105,4 +105,5 @@ public class CPAvailabilityRangeServiceImpl
 		return cpAvailabilityRangeLocalService.updateCPAvailabilityRange(
 			cpAvailabilityRangeId, titleMap, serviceContext);
 	}
+
 }

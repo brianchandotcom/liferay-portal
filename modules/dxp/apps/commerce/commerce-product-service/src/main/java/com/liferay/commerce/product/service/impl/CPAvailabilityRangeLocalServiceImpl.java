@@ -117,4 +117,5 @@ public class CPAvailabilityRangeLocalServiceImpl
 
 		return cpAvailabilityRange;
 	}
+
 }

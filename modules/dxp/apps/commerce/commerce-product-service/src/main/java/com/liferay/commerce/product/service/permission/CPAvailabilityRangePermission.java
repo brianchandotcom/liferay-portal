@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourcePermissionChecker;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -29,7 +30,8 @@ import org.osgi.service.component.annotations.Component;
 	property = "resource.name=" + CPAvailabilityRangePermission.RESOURCE_NAME,
 	service = ResourcePermissionChecker.class
 )
-public class CPAvailabilityRangePermission extends BaseResourcePermissionChecker {
+public class CPAvailabilityRangePermission
+	extends BaseResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME = "com.liferay.commerce.product";
 

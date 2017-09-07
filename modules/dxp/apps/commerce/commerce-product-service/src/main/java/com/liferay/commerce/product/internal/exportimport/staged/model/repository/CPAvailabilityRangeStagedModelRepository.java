@@ -24,10 +24,11 @@ import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -71,8 +72,8 @@ public class CPAvailabilityRangeStagedModelRepository
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		CPAvailabilityRange cpAvailabilityRange = fetchStagedModelByUuidAndGroupId(
-			uuid, groupId);
+		CPAvailabilityRange cpAvailabilityRange =
+			fetchStagedModelByUuidAndGroupId(uuid, groupId);
 
 		if (cpAvailabilityRange != null) {
 			deleteStagedModel(cpAvailabilityRange);

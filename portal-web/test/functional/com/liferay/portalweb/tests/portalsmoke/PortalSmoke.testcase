@@ -49,6 +49,7 @@
 
 	<command name="SmokeWithSPADisabled" priority="5">
 		<property name="custom.properties" value="javascript.single.page.application.enabled=false" />
+		<property name="portal.smoke" value="false" />
 
 		<execute macro="Smoke#viewWelcomePage" />
 

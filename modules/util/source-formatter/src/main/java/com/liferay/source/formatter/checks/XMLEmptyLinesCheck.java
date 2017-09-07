@@ -34,8 +34,6 @@ public class XMLEmptyLinesCheck extends EmptyLinesCheck {
 		String fileName, String absolutePath, String content) {
 
 		if (fileName.matches(".*\\.(action|function|macro|testcase)") ||
-			fileName.startsWith(getBaseDirName() + "build") ||
-			fileName.matches(".*/(build|tools/).*") ||
 			fileName.endsWith("/content.xml")) {
 
 			return content;
@@ -53,6 +51,12 @@ public class XMLEmptyLinesCheck extends EmptyLinesCheck {
 	}
 
 	private String _fixEmptyLinesBetweenTags(String fileName, String content) {
+		if (fileName.startsWith(getBaseDirName() + "build") ||
+			fileName.matches(".*/(build|tools/).*")) {
+
+			return content;
+		}
+
 		if (fileName.endsWith("-log4j.xml") ||
 			fileName.endsWith("-logback.xml") ||
 			fileName.endsWith("/ivy.xml") ||

@@ -128,7 +128,7 @@ renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentCollectionTitle(
 		<liferay-frontend:add-menu-item id="addMSBFragmentEntryMenuItem" title='<%= LanguageUtil.get(request, "add-fragment") %>' url="<%= addMSBFragmentEntryURL.toString() %>" />
 	</liferay-frontend:add-menu>
 
-	<aui:script require="modern-site-building-fragment-web/js/MSBFragmentNameEditor.es">
+	<aui:script require="modern-site-building-fragment-web/js/MSBFragmentNameEditor">
 		var addMSBFragmentEntryMenuItem = document.getElementById('<portlet:namespace />addMSBFragmentEntryMenuItem');
 
 		addMSBFragmentEntryMenuItem.addEventListener(
@@ -136,7 +136,7 @@ renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentCollectionTitle(
 			function(event) {
 				event.preventDefault();
 
-				var msbFragmentNameEditor = new modernSiteBuildingFragmentWebJsMSBFragmentNameEditorEs.default(
+				var msbFragmentNameEditor = new modernSiteBuildingFragmentWebJsMSBFragmentNameEditor.default(
 					{
 						addMSBFragmentEntryURL: '<%= addMSBFragmentEntryURL.toString() %>',
 						editMSBFragmentEntryURL: '<portlet:renderURL><portlet:param name="mvcPath" value="/edit_msb_fragment_entry.jsp" /><portlet:param name="msbFragmentCollectionId" value="<%= String.valueOf(msbFragmentDisplayContext.getMSBFragmentCollectionId()) %>" /></portlet:renderURL>',

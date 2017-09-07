@@ -58,13 +58,13 @@ renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentEntryTitle());
 	</aui:button-row>
 </aui:form>
 
-<aui:script require="modern-site-building-fragment-web/js/MSBFragmentEditor.es">
+<aui:script require="modern-site-building-fragment-web/js/MSBFragmentEditor">
 	var cssInput = document.getElementById('<portlet:namespace />cssContent');
 	var htmlInput = document.getElementById('<portlet:namespace />htmlContent');
 	var jsInput = document.getElementById('<portlet:namespace />jsContent');
 	var wrapper = document.getElementById('<portlet:namespace />msbFragmentEditor');
 
-	new modernSiteBuildingFragmentWebJsMSBFragmentEditorEs.default(
+	new modernSiteBuildingFragmentWebJsMSBFragmentEditor.default(
 		{
 			events: {
 				contentChanged: function(event) {

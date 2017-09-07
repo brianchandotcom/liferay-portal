@@ -16,15 +16,20 @@ package com.liferay.arquillian.extension.junit.bridge.deployment;
 
 import aQute.bnd.osgi.Analyzer;
 import aQute.bnd.osgi.Jar;
+
 import com.liferay.arquillian.deploymentscenario.annotations.BndFile;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.shrinkwrap.osgi.api.BndProjectBuilder;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import java.util.jar.Manifest;
 import java.util.jar.Attributes.Name;
+import java.util.jar.Manifest;
+
 import org.jboss.arquillian.container.spi.client.deployment.DeploymentDescription;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.container.test.impl.client.deployment.AnnotationDeploymentScenarioGenerator;
@@ -35,6 +40,7 @@ import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.Asset;
 import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
 import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
@@ -45,19 +51,11 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 public class BndDeploymentScenarioGenerator
 	implements DeploymentScenarioGenerator {
 
-	public static final String MANIFEST_PATH = "META-INF/MANIFEST.MF";
-
-	@Inject
-	protected Instance<Injector> injector;
-
-	private File bndFile = new File("bnd.bnd");
-	private File commonBndFile;
-
 	public BndDeploymentScenarioGenerator() {
 		String sdkDir = System.getProperty("sdk.dir");
 
 		if ((sdkDir != null) && !sdkDir.isEmpty()) {
-			commonBndFile = new File(sdkDir, "common.bnd");
+			_commonBndFile = new File(sdkDir, "common.bnd");
 		}
 	}
 
@@ -66,7 +64,7 @@ public class BndDeploymentScenarioGenerator
 		List<DeploymentDescription> deployments = new ArrayList<>();
 
 		DeploymentScenarioGenerator defaultDeploymentScenarioGenerator =
-			getDefaultDeploymentScenarioGenerator();
+			getDeploymentScenarioGenerator();
 
 		if (defaultDeploymentScenarioGenerator != null) {
 			List<DeploymentDescription> annotationDeployments =
@@ -80,20 +78,20 @@ public class BndDeploymentScenarioGenerator
 		}
 
 		try (Analyzer analyzer = new Analyzer()) {
-			bndFile = getBndFile(testClass);
+			_bndFile = getBndFile(testClass);
 
 			BndProjectBuilder bndProjectBuilder = ShrinkWrap.create(
 				BndProjectBuilder.class);
 
-			bndProjectBuilder.setBndFile(bndFile);
+			bndProjectBuilder.setBndFile(_bndFile);
 			bndProjectBuilder.generateManifest(true);
 
-			if (commonBndFile != null) {
-				bndProjectBuilder.addProjectPropertiesFile(commonBndFile);
+			if (_commonBndFile != null) {
+				bndProjectBuilder.addProjectPropertiesFile(_commonBndFile);
 			}
 
-			String javaClassPathString = System.getProperty(
-				"java.class.path");
+			String javaClassPathString = System.getProperty("java.class.path");
+
 			String[] javaClassPaths = javaClassPathString.split(
 				File.pathSeparator);
 
@@ -101,40 +99,38 @@ public class BndDeploymentScenarioGenerator
 				File file = new File(javaClassPath);
 
 				if (file.isDirectory() ||
-					javaClassPath.toLowerCase().endsWith(".zip") ||
-					javaClassPath.toLowerCase().endsWith(".jar")) {
+					StringUtil.endsWith(javaClassPath, ".zip") ||
+					StringUtil.endsWith(javaClassPath, ".jar")) {
 
 					bndProjectBuilder.addClassPath(file);
 				}
 			}
 
-			JavaArchive javaArchive = bndProjectBuilder.as(
-				JavaArchive.class);
+			JavaArchive javaArchive = bndProjectBuilder.as(JavaArchive.class);
 
 			javaArchive.addClass(BndFile.class);
 
 			Properties analyzerProperties = new Properties();
 
-			if (commonBndFile != null) {
+			if (_commonBndFile != null) {
 				analyzerProperties.putAll(
-					analyzer.loadProperties(commonBndFile));
+					analyzer.loadProperties(_commonBndFile));
 			}
 
-			analyzerProperties.putAll(analyzer.loadProperties(bndFile));
+			analyzerProperties.putAll(analyzer.loadProperties(_bndFile));
 
 			analyzer.setProperties(analyzerProperties);
 
-			boolean testable = isTestable(testClass);
+			boolean testable = _isTestable(testClass);
 
 			if (testable) {
-				addTestClass(testClass, javaArchive);
+				_addTestClass(testClass, javaArchive);
 			}
 
 			ZipExporter zipExporter = javaArchive.as(ZipExporter.class);
 
 			Jar jar = new Jar(
-				javaArchive.getName(),
-				zipExporter.exportAsInputStream());
+				javaArchive.getName(), zipExporter.exportAsInputStream());
 
 			analyzer.setJar(jar);
 
@@ -146,8 +142,9 @@ public class BndDeploymentScenarioGenerator
 
 			deployments.add(deploymentDescription);
 
-			Manifest firstPassManifest = new Manifest(
-				javaArchive.get(MANIFEST_PATH).getAsset().openStream());
+			Asset asset = javaArchive.get(_MANIFEST_PATH).getAsset();
+
+			Manifest firstPassManifest = new Manifest(asset.openStream());
 
 			firstPassManifest.getMainAttributes().remove(
 				new Name("Import-Package"));
@@ -163,7 +160,7 @@ public class BndDeploymentScenarioGenerator
 			ByteArrayAsset byteArrayAsset = new ByteArrayAsset(
 				baos.toByteArray());
 
-			replaceManifest(javaArchive, byteArrayAsset);
+			_replaceManifest(javaArchive, byteArrayAsset);
 
 			return deployments;
 		}
@@ -179,19 +176,19 @@ public class BndDeploymentScenarioGenerator
 			return new File(annotation.value());
 		}
 		else {
-			return this.bndFile;
+			return _bndFile;
 		}
 	}
 
 	public void setBndFile(File bndFile) {
-		this.bndFile = bndFile;
+		_bndFile = bndFile;
 	}
 
 	public void setCommonBndFile(File commonBndFile) {
-		this.commonBndFile = commonBndFile;
+		_commonBndFile = commonBndFile;
 	}
 
-	protected DeploymentScenarioGenerator getDefaultDeploymentScenarioGenerator() {
+	protected DeploymentScenarioGenerator getDeploymentScenarioGenerator() {
 		AnnotationDeploymentScenarioGenerator
 			annotationDeploymentScenarioGenerator =
 				new AnnotationDeploymentScenarioGenerator();
@@ -202,20 +199,28 @@ public class BndDeploymentScenarioGenerator
 		return annotationDeploymentScenarioGenerator;
 	}
 
-	private void addTestClass(TestClass testClass, JavaArchive javaArchive) {
+	@Inject
+	protected Instance<Injector> injector;
+
+	private void _addTestClass(TestClass testClass, JavaArchive javaArchive) {
 		javaArchive.addClass(testClass.getJavaClass());
 	}
 
-	private boolean isTestable(TestClass testClass) {
+	private boolean _isTestable(TestClass testClass) {
 		return !testClass.isAnnotationPresent(RunAsClient.class);
 	}
 
-	private void replaceManifest(
+	private void _replaceManifest(
 		Archive<?> archive, ByteArrayAsset byteArrayAsset) {
 
-		archive.delete(MANIFEST_PATH);
+		archive.delete(_MANIFEST_PATH);
 
-		archive.add(byteArrayAsset, MANIFEST_PATH);
+		archive.add(byteArrayAsset, _MANIFEST_PATH);
 	}
+
+	private static final String _MANIFEST_PATH = "META-INF/MANIFEST.MF";
+
+	private File _bndFile = new File("bnd.bnd");
+	private File _commonBndFile;
 
 }

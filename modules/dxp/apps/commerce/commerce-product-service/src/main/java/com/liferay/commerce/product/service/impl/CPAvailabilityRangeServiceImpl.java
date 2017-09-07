@@ -36,8 +36,7 @@ public class CPAvailabilityRangeServiceImpl
 
 	@Override
 	public CPAvailabilityRange addCPAvailabilityRange(
-			long cpDefinitionId, Map<Locale, String> titleMap,
-			ServiceContext serviceContext)
+			Map<Locale, String> titleMap, ServiceContext serviceContext)
 		throws PortalException {
 
 		CPAvailabilityRangePermission.check(
@@ -45,7 +44,7 @@ public class CPAvailabilityRangeServiceImpl
 			CPActionKeys.MANAGE_COMMERCE_PRODUCT_AVAILABILITY_RANGES);
 
 		return cpAvailabilityRangeLocalService.addCPAvailabilityRange(
-			cpDefinitionId, titleMap, serviceContext);
+			titleMap, serviceContext);
 	}
 
 	@Override

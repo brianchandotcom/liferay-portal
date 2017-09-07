@@ -36,8 +36,7 @@ public class CPAvailabilityRangeLocalServiceImpl
 
 	@Override
 	public CPAvailabilityRange addCPAvailabilityRange(
-			long cpDefinitionId, Map<Locale, String> titleMap,
-			ServiceContext serviceContext)
+			Map<Locale, String> titleMap, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
@@ -53,7 +52,6 @@ public class CPAvailabilityRangeLocalServiceImpl
 		cpAvailabilityRange.setCompanyId(user.getCompanyId());
 		cpAvailabilityRange.setUserId(user.getUserId());
 		cpAvailabilityRange.setUserName(user.getFullName());
-		cpAvailabilityRange.setCPDefinitionId(cpDefinitionId);
 		cpAvailabilityRange.setTitleMap(titleMap);
 
 		cpAvailabilityRangePersistence.update(cpAvailabilityRange);

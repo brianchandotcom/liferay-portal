@@ -58,11 +58,11 @@ public class SharepointServerResponseConverter {
 	public <T extends ExtRepositoryObject> List<T> getExtRepositoryFileEntries(
 		JSONObject jsonObject) {
 
+		List<T> extRepositoryFileEntries = new ArrayList<>();
+
 		JSONObject dJSONObject = jsonObject.getJSONObject("d");
 
 		JSONArray resultsJSONArray = dJSONObject.getJSONArray("results");
-
-		List<T> extRepositoryFileEntries = new ArrayList<>();
 
 		for (int i = 0; i < resultsJSONArray.length(); i++) {
 			extRepositoryFileEntries.add(
@@ -82,11 +82,11 @@ public class SharepointServerResponseConverter {
 		List<ExtRepositoryFileVersion> getExtRepositoryFileVersions(
 			T extRepositoryFileEntry, JSONObject jsonObject) {
 
+		List<ExtRepositoryFileVersion> extRepositoryObjects = new ArrayList<>();
+
 		JSONObject dJSONObject = jsonObject.getJSONObject("d");
 
 		JSONArray resultsJSONArray = dJSONObject.getJSONArray("results");
-
-		List<ExtRepositoryFileVersion> extRepositoryObjects = new ArrayList<>();
 
 		extRepositoryObjects.add(extRepositoryFileEntry.asFileVersion());
 
@@ -108,11 +108,11 @@ public class SharepointServerResponseConverter {
 	public <T extends ExtRepositoryObject> List<T>
 		getExtRepositoryFolders(JSONObject jsonObject) {
 
+		List<T> extRepositoryFolders = new ArrayList<>();
+
 		JSONObject dJSONObject = jsonObject.getJSONObject("d");
 
 		JSONArray resultsJSONArray = dJSONObject.getJSONArray("results");
-
-		List<T> extRepositoryFolders = new ArrayList<>();
 
 		for (int i = 0; i < resultsJSONArray.length(); i++) {
 			extRepositoryFolders.add(
@@ -140,6 +140,8 @@ public class SharepointServerResponseConverter {
 	public <T extends ExtRepositoryObject> List<ExtRepositorySearchResult<T>>
 		getSearchResults(JSONObject jsonObject) throws PortalException {
 
+		List<ExtRepositorySearchResult<T>> searchResults = new ArrayList<>();
+
 		JSONObject dJSONObject = jsonObject.getJSONObject("d");
 
 		JSONObject queryJSONObject = dJSONObject.getJSONObject("query");
@@ -156,8 +158,6 @@ public class SharepointServerResponseConverter {
 		JSONObject rowsJSONObject = tableJSONObject.getJSONObject("Rows");
 
 		JSONArray rowsResultsJSONArray = rowsJSONObject.getJSONArray("results");
-
-		List<ExtRepositorySearchResult<T>> searchResults = new ArrayList<>();
 
 		for (int i = 0; i < rowsResultsJSONArray.length(); i++) {
 			JSONObject rowResultJSONObject = rowsResultsJSONArray.getJSONObject(

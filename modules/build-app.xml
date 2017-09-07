@@ -521,11 +521,11 @@
 		<echo message="app.version = ${app.version}" />
 
 		<replaceregexp
+			byline="true"
 			file="${releng.app.dir}/app.properties"
 			flags="m"
 			match="app.marketplace.version=.*$"
 			replace="app.marketplace.version=${app.version}"
-			byline="true"
 		/>
 	</target>
 

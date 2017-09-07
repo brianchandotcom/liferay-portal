@@ -1121,9 +1121,9 @@ information.
 						src="${sdk.zip.dir}/com.liferay.portal.plugins.sdk-${build.sdk.version}.zip"
 					>
 						<mapper
-							type="glob"
 							from="com.liferay.portal.plugins.sdk-${build.sdk.version}/*"
 							to="sdk/*"
+							type="glob"
 						/>
 					</unzip>
 

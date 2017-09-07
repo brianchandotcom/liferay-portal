@@ -14,7 +14,7 @@
 
 package com.liferay.arquillian.extension.junit.bridge;
 
-import com.liferay.arquillian.deploymentscenario.BndDeploymentScenarioGenerator;
+import com.liferay.arquillian.extension.junit.bridge.deployment.BndDeploymentScenarioGenerator;
 import com.liferay.arquillian.extension.junit.bridge.deployment.JUnitBridgeAuxiliaryArchiveAppender;
 import com.liferay.arquillian.extension.junit.bridge.observer.JUnitBridgeObserver;
 

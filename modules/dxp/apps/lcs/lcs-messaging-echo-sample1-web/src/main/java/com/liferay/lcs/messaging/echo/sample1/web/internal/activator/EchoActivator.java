@@ -31,20 +31,20 @@ public class EchoActivator {
 
 	@Activate
 	public void start() {
-		_echoLCSMessageListener = new EchoLCSMessageListener(
+		_lcsMessageListener = new EchoLCSMessageListener(
 			_lcsMessageBusService);
 
 		_lcsMessageBusService.registerLCSMessageListener(
-			"lcs_echo", _echoLCSMessageListener);
+			"lcs_echo", _lcsMessageListener);
 	}
 
 	@Deactivate
 	public void stop() {
 		_lcsMessageBusService.unregisterLCSMessageListener(
-			"lcs_echo", _echoLCSMessageListener);
+			"lcs_echo", _lcsMessageListener);
 	}
 
-	private LCSMessageListener _echoLCSMessageListener;
+	private LCSMessageListener _lcsMessageListener;
 
 	@Reference
 	private LCSMessageBusService _lcsMessageBusService;

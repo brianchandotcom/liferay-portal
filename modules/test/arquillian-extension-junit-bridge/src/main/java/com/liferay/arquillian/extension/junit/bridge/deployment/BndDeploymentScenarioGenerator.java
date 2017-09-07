@@ -36,7 +36,6 @@ import org.jboss.arquillian.core.api.Injector;
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.test.spi.TestClass;
-import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.Asset;
 import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
@@ -133,7 +132,9 @@ public class BndDeploymentScenarioGenerator
 			ByteArrayAsset byteArrayAsset = new ByteArrayAsset(
 				baos.toByteArray());
 
-			_replaceManifest(javaArchive, byteArrayAsset);
+			javaArchive.delete(_MANIFEST_PATH);
+
+			javaArchive.add(byteArrayAsset, _MANIFEST_PATH);
 
 			return deployments;
 		}
@@ -155,14 +156,6 @@ public class BndDeploymentScenarioGenerator
 
 	@Inject
 	protected Instance<Injector> injector;
-
-	private void _replaceManifest(
-		Archive<?> archive, ByteArrayAsset byteArrayAsset) {
-
-		archive.delete(_MANIFEST_PATH);
-
-		archive.add(byteArrayAsset, _MANIFEST_PATH);
-	}
 
 	private static final String _MANIFEST_PATH = "META-INF/MANIFEST.MF";
 

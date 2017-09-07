@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -55,8 +56,7 @@ public class CPInstanceExportImportContentProcessor
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			long cpDefinitionOptionRelId = jsonObject.getLong(
-				"cpDefinitionOptionRelId");
+			long cpDefinitionOptionRelId = jsonObject.getLong("key");
 
 			CPDefinitionOptionRel cpDefinitionOptionRel =
 				_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRel(
@@ -66,23 +66,28 @@ public class CPInstanceExportImportContentProcessor
 				portletDataContext, stagedModel, cpDefinitionOptionRel,
 				PortletDataContext.REFERENCE_TYPE_STRONG);
 
-			jsonObject.put(
-				"cpDefinitionOptionRelId", cpDefinitionOptionRel.getUuid());
+			jsonObject.put("key", cpDefinitionOptionRel.getUuid());
 
-			long cpDefinitionOptionValueRelId = jsonObject.getLong(
-				"cpDefinitionOptionValueRelId");
+			JSONArray newValueJSONArray = _jsonFactory.createJSONArray();
+			JSONArray valueJSONArray = jsonObject.getJSONArray("value");
 
-			CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-				_cpDefinitionOptionValueRelLocalService.
-					getCPDefinitionOptionValueRel(cpDefinitionOptionValueRelId);
+			for (int j = 0; j < valueJSONArray.length(); j++) {
+				long cpDefinitionOptionValueRelId = GetterUtil.getLong(
+					valueJSONArray.getString(j));
 
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, stagedModel, cpDefinitionOptionValueRel,
-				PortletDataContext.REFERENCE_TYPE_STRONG);
+				CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+					_cpDefinitionOptionValueRelLocalService.
+						getCPDefinitionOptionValueRel(
+							cpDefinitionOptionValueRelId);
 
-			jsonObject.put(
-				"cpDefinitionOptionValueRelId",
-				cpDefinitionOptionValueRel.getUuid());
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, stagedModel, cpDefinitionOptionValueRel,
+					PortletDataContext.REFERENCE_TYPE_STRONG);
+
+				newValueJSONArray.put(cpDefinitionOptionValueRel.getUuid());
+			}
+
+			jsonObject.put("value", newValueJSONArray);
 		}
 
 		return jsonArray.toJSONString();
@@ -99,8 +104,7 @@ public class CPInstanceExportImportContentProcessor
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			String cpDefinitionOptionRelUuid = jsonObject.getString(
-				"cpDefinitionOptionRelId");
+			String cpDefinitionOptionRelUuid = jsonObject.getString("key");
 
 			CPDefinitionOptionRel cpDefinitionOptionRel =
 				_cpDefinitionOptionRelLocalService.
@@ -109,21 +113,27 @@ public class CPInstanceExportImportContentProcessor
 						portletDataContext.getScopeGroupId());
 
 			jsonObject.put(
-				"cpDefinitionOptionRelId",
-				cpDefinitionOptionRel.getCPDefinitionOptionRelId());
+				"key", cpDefinitionOptionRel.getCPDefinitionOptionRelId());
 
-			String cpDefinitionOptionValueRelUuid = jsonObject.getString(
-				"cpDefinitionOptionValueRelId");
+			JSONArray newValueJSONArray = _jsonFactory.createJSONArray();
+			JSONArray valueJSONArray = jsonObject.getJSONArray("value");
 
-			CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-				_cpDefinitionOptionValueRelLocalService.
-					getCPDefinitionOptionValueRelByUuidAndGroupId(
-						cpDefinitionOptionValueRelUuid,
-						portletDataContext.getScopeGroupId());
+			for (int j = 0; j < valueJSONArray.length(); j++) {
+				String cpDefinitionOptionValueRelUuid = GetterUtil.getString(
+					valueJSONArray.getString(j));
 
-			jsonObject.put(
-				"cpDefinitionOptionValueRelId",
-				cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId());
+				CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+					_cpDefinitionOptionValueRelLocalService.
+						getCPDefinitionOptionValueRelByUuidAndGroupId(
+							cpDefinitionOptionValueRelUuid,
+							portletDataContext.getScopeGroupId());
+
+				newValueJSONArray.put(
+					cpDefinitionOptionValueRel.
+						getCPDefinitionOptionValueRelId());
+			}
+
+			jsonObject.put("value", newValueJSONArray);
 		}
 
 		return jsonArray.toJSONString();

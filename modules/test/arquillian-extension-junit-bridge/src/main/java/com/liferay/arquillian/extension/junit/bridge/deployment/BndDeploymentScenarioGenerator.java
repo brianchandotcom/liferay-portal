@@ -30,11 +30,7 @@ import java.util.jar.Attributes.Name;
 import java.util.jar.Manifest;
 
 import org.jboss.arquillian.container.spi.client.deployment.DeploymentDescription;
-import org.jboss.arquillian.container.test.impl.client.deployment.AnnotationDeploymentScenarioGenerator;
 import org.jboss.arquillian.container.test.spi.client.deployment.DeploymentScenarioGenerator;
-import org.jboss.arquillian.core.api.Injector;
-import org.jboss.arquillian.core.api.Instance;
-import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.Asset;
@@ -51,20 +47,6 @@ public class BndDeploymentScenarioGenerator
 	@Override
 	public List<DeploymentDescription> generate(TestClass testClass) {
 		List<DeploymentDescription> deployments = new ArrayList<>();
-
-		DeploymentScenarioGenerator defaultDeploymentScenarioGenerator =
-			getDeploymentScenarioGenerator();
-
-		if (defaultDeploymentScenarioGenerator != null) {
-			List<DeploymentDescription> annotationDeployments =
-				defaultDeploymentScenarioGenerator.generate(testClass);
-
-			if ((annotationDeployments != null) &&
-				!annotationDeployments.isEmpty()) {
-
-				return annotationDeployments;
-			}
-		}
 
 		try (Analyzer analyzer = new Analyzer()) {
 			BndProjectBuilder bndProjectBuilder = ShrinkWrap.create(
@@ -142,20 +124,6 @@ public class BndDeploymentScenarioGenerator
 			throw new RuntimeException(e);
 		}
 	}
-
-	protected DeploymentScenarioGenerator getDeploymentScenarioGenerator() {
-		AnnotationDeploymentScenarioGenerator
-			annotationDeploymentScenarioGenerator =
-				new AnnotationDeploymentScenarioGenerator();
-
-		annotationDeploymentScenarioGenerator = injector.get().inject(
-			annotationDeploymentScenarioGenerator);
-
-		return annotationDeploymentScenarioGenerator;
-	}
-
-	@Inject
-	protected Instance<Injector> injector;
 
 	private static final String _MANIFEST_PATH = "META-INF/MANIFEST.MF";
 

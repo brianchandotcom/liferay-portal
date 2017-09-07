@@ -40,7 +40,8 @@ public class MSBFragmentEntryRendererTag extends IncludeTag {
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to get fragment entry", pe);
+				_log.debug(
+					"Unable to get modern site building fragment entry", pe);
 			}
 
 			return SKIP_BODY;

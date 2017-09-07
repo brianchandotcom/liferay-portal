@@ -35,6 +35,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_modern_si
 <aui:script>
 	(function() {
 		var fragment = document.getElementById("<%= randomNamespace %>");
+
 		<%= msbFragmentEntry.getJs() %>
 	}());
 </aui:script>

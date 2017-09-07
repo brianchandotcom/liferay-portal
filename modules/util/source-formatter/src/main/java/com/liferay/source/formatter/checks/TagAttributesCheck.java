@@ -28,6 +28,54 @@ import java.util.regex.Pattern;
  */
 public abstract class TagAttributesCheck extends BaseFileCheck {
 
+	protected String formatMultiLinesTagAttributes(
+			String fileName, String content)
+		throws Exception {
+
+		Matcher matcher = _multilineTagPattern.matcher(content);
+
+		while (matcher.find()) {
+			String tag = matcher.group();
+
+			if (getLevel(tag, "<", ">") != 0) {
+				continue;
+			}
+
+			String beforeClosingTagChar = matcher.group(2);
+
+			if (!beforeClosingTagChar.equals(StringPool.NEW_LINE) &&
+				!beforeClosingTagChar.equals(StringPool.TAB)) {
+
+				String closingTag = matcher.group(3);
+
+				String whitespace = matcher.group(1);
+
+				String tabs = StringUtil.removeChar(
+					whitespace, CharPool.NEW_LINE);
+
+				return StringUtil.replaceFirst(
+					content, closingTag, "\n" + tabs + closingTag,
+					matcher.start(2));
+			}
+
+			String singlelineTag = StringUtil.removeChar(
+				StringUtil.trim(tag), CharPool.TAB);
+
+			singlelineTag = StringUtil.replace(
+				singlelineTag, CharPool.NEW_LINE, CharPool.SPACE);
+
+			String newTag = formatTagAttributes(
+				fileName, tag, singlelineTag,
+				getLineCount(content, matcher.end(1)), false);
+
+			if (!tag.equals(newTag)) {
+				return StringUtil.replace(content, tag, newTag);
+			}
+		}
+
+		return content;
+	}
+
 	protected String formatTagAttributes(
 			String fileName, String line, String tag, int lineCount,
 			boolean escapeQuotes)
@@ -235,5 +283,7 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 
 	private static final Pattern _attributeNamePattern = Pattern.compile(
 		"[a-z]+[-_a-zA-Z0-9]*");
+	private static final Pattern _multilineTagPattern = Pattern.compile(
+		"(\\s+)<[-\\w:]+\n.*?([^%])(/?>)(\n|$)", Pattern.DOTALL);
 
 }

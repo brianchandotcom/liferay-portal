@@ -637,7 +637,7 @@ message.
 
 		<DTDDoc
 			destDir="${doc.definitions.dir}"
-			docTitle = "Liferay ${lp.version} Definitions"
+			docTitle="Liferay ${lp.version} Definitions"
 			showFixmeTags="false"
 			showHiddenTags="false"
 			sourceDir="${definitions.dir}"
@@ -731,8 +731,8 @@ message.
 			noqualifier="java.*"
 			overview="${module.dir}/src/overview.html"
 			stylesheetfile="${project.dir}/tools/styles/javadoc.css"
-			useexternalfile="yes"
 			use="yes"
+			useexternalfile="yes"
 			windowtitle="Liferay ${lp.version} ${module.dir} API"
 		>
 			<link href="http://docs.liferay.com/portlet-api/2.0/javadocs" />
@@ -761,8 +761,8 @@ message.
 			noqualifier="java.*"
 			overview="${module.dir}/src/overview.html"
 			stylesheetfile="${project.dir}/tools/styles/javadoc.css"
-			useexternalfile="yes"
 			use="yes"
+			useexternalfile="yes"
 			windowtitle="Liferay ${lp.version} ${module.dir} API"
 		>
 			<group packages="com.liferay.portal.*:com.liferay.counter.*:com.liferay.mail.*" title="Portal Services" />
@@ -954,8 +954,8 @@ message.
 					<then>
 						<copy
 							file="tools/servers/tomcat/conf/Catalina/localhost/ROOT.xml"
-							tofile="${app.server.dir}/conf/Catalina/localhost/${app.server.tomcat.portal.context}.xml"
 							overwrite="true"
+							tofile="${app.server.dir}/conf/Catalina/localhost/${app.server.tomcat.portal.context}.xml"
 						/>
 					</then>
 				</if>

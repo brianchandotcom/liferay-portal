@@ -140,90 +140,6 @@ public class XMLPoshiFileCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private String _fixPoshiXMLNumberOfTabs(String content) {
-		Matcher matcher = _poshiTabsPattern.matcher(content);
-
-		int tabCount = 0;
-
-		boolean ignoredCdataBlock = false;
-		boolean ignoredCommentBlock = false;
-
-		while (matcher.find()) {
-			String statement = matcher.group();
-
-			Matcher quoteWithSlashMatcher = _poshiQuoteWithSlashPattern.matcher(
-				statement);
-
-			String fixedQuoteStatement = statement;
-
-			if (quoteWithSlashMatcher.find()) {
-				fixedQuoteStatement = StringUtil.replace(
-					statement, quoteWithSlashMatcher.group(), "\"\"");
-			}
-
-			Matcher closingTagMatcher = _poshiClosingTagPattern.matcher(
-				fixedQuoteStatement);
-			Matcher openingTagMatcher = _poshiOpeningTagPattern.matcher(
-				fixedQuoteStatement);
-			Matcher wholeTagMatcher = _poshiWholeTagPattern.matcher(
-				fixedQuoteStatement);
-
-			if (closingTagMatcher.find() && !openingTagMatcher.find() &&
-				!wholeTagMatcher.find() && !statement.contains("<!--") &&
-				!statement.contains("-->") &&
-				!statement.contains("<![CDATA[") &&
-				!statement.contains("]]>")) {
-
-				tabCount--;
-			}
-
-			if (statement.contains("]]>")) {
-				ignoredCdataBlock = false;
-			}
-			else if (statement.contains("<![CDATA[")) {
-				ignoredCdataBlock = true;
-			}
-
-			if (statement.contains("-->")) {
-				ignoredCommentBlock = false;
-			}
-			else if (statement.contains("<!--")) {
-				ignoredCommentBlock = true;
-			}
-
-			if (!ignoredCommentBlock && !ignoredCdataBlock) {
-				StringBundler sb = new StringBundler(tabCount + 1);
-
-				for (int i = 0; i < tabCount; i++) {
-					sb.append(StringPool.TAB);
-				}
-
-				sb.append(StringPool.LESS_THAN);
-
-				String replacement = sb.toString();
-
-				if (!replacement.equals(matcher.group(1))) {
-					String newStatement = StringUtil.replace(
-						statement, matcher.group(1), replacement);
-
-					return StringUtil.replaceFirst(
-						content, statement, newStatement, matcher.start());
-				}
-			}
-
-			if (openingTagMatcher.find() && !closingTagMatcher.find() &&
-				!wholeTagMatcher.find() && !statement.contains("<!--") &&
-				!statement.contains("-->") &&
-				!statement.contains("<![CDATA[") &&
-				!statement.contains("]]>")) {
-
-				tabCount++;
-			}
-		}
-
-		return content;
-	}
-
 	private String _formatPoshiXML(String fileName, String content)
 		throws Exception {
 
@@ -255,9 +171,7 @@ public class XMLPoshiFileCheck extends BaseFileCheck {
 
 		content = _fixPoshiXMLEndLinesBeforeClosingElement(content);
 
-		content = _fixPoshiXMLEndLines(content);
-
-		return _fixPoshiXMLNumberOfTabs(content);
+		return _fixPoshiXMLEndLines(content);
 	}
 
 	private String _sortPoshiCommands(String content) {

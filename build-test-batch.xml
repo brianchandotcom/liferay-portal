@@ -345,8 +345,8 @@ mariadb.executable=${mariadb.executable}]]></echo>
 					<include name="**/com/liferay/**" />
 				</patternset>
 				<fileset dir="@{portal.bundle.dir}">
-					 <include name="**/*.jar" />
-					 <include name="**/*.war" />
+					<include name="**/*.jar" />
+					<include name="**/*.war" />
 				</fileset>
 			</unzip>
 
@@ -653,7 +653,6 @@ app.server.type=@{app.server.type}]]></echo>
 									</ant>
 								</finally>
 							</trycatch>
-
 						</test-action>
 					</database-test-run-test>
 				</test-action>
@@ -2660,18 +2659,18 @@ ${output.content}</echo>
 
 			<test-tear-down>
 				<if>
-				 	<available file="${project.dir}/git.diff" />
-			 		<then>
+					<available file="${project.dir}/git.diff" />
+					<then>
 						<delete file="${project.dir}/git.diff" />
-			 		</then>
-			 	</if>
+					</then>
+				</if>
 
-			 	<if>
-				 	<available file="${release.tool.dir}/git.diff" />
-			 		<then>
+				<if>
+					<available file="${release.tool.dir}/git.diff" />
+					<then>
 						<delete file="${release.tool.dir}/git.diff" />
-			 		</then>
-			 	</if>
+					</then>
+				</if>
 			</test-tear-down>
 		</run-batch-test>
 	</target>
@@ -2700,8 +2699,7 @@ ${output.content}</echo>
 								</try>
 							</trycatch>
 
-								<antcall inheritall="false" target="stop-app-server" />
-
+							<antcall inheritall="false" target="stop-app-server" />
 						</test-action>
 					</database-test-run-test>
 				</test-action>
@@ -2711,7 +2709,6 @@ ${output.content}</echo>
 						<isset property="env.DIST_PATH" />
 						<then>
 							<sequential>
-
 								<propertyfile file="app.server.${env.HOSTNAME}.properties">
 									<entry key="app.server.parent.dir" value="${project.dir}/bun dles" />
 								</propertyfile>
@@ -2723,14 +2720,12 @@ ${output.content}</echo>
 								<prepare-test-environment />
 
 								<move file="bundles" tofile="bun dles" />
-
 							</sequential>
 						</then>
 						<else>
 							<prepare-test-build />
 						</else>
 					</if>
-
 				</test-set-up>
 			</run-batch-test>
 		</sequential>

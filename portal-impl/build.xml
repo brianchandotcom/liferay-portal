@@ -785,8 +785,8 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		<java
 			classname="com.liferay.portal.tools.PluginsGitSvnSyncer"
 			classpathref="project.classpath"
-			newenvironment="true"
 			fork="true"
+			newenvironment="true"
 		>
 			<jvmarg value="-Dgit.plugins.dir=L:/projects/github/liferay-plugins" />
 			<jvmarg value="-Dsvn.plugins.dir=L:/projects/liferay.public/plugins/trunk" />
@@ -860,8 +860,8 @@ import java.util.HashMap;]]></replacevalue>
 		</replace>
 
 		<replaceregexp
-			flags="s"
 			file="test/integration/com/liferay/portal/security/pacl/test/messaging/TestPACLMessageListener.java"
+			flags="s"
 			match="long userId = (.*)"
 			replace="${line.separator}}"
 		/>
@@ -888,8 +888,8 @@ import java.util.HashMap;]]></replacevalue>
 		</replace>
 
 		<replaceregexp
-			flags="g"
 			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties"
+			flags="g"
 			match="(portal-dependency-jars|portal-dependency-tlds|required-deployment-contexts)=(\\\n[^\\\n]+)*\n\n"
 			replace=""
 		/>
@@ -903,8 +903,8 @@ security-manager-awt-operations=\
 		</replace>
 
 		<replaceregexp
-			flags="g"
 			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties"
+			flags="g"
 			match="security-manager-files-(delete|execute|write)=(\\\n[^\\\n]+)*(?=\n\n)"
 			replace="security-manager-files-\1="
 		/>
@@ -916,8 +916,8 @@ security-manager-awt-operations=\
 		</replace>
 
 		<replaceregexp
-			flags="g"
 			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties"
+			flags="g"
 			match="security-manager-files-read=(\\\n[^\\\n]+)*(\\\n\s*\\)(?=\n[ ]{4}/bin/bash)"
 			replace="security-manager-files-read=\2"
 		/>
@@ -945,8 +945,8 @@ security-manager-awt-operations=\
 		</replace>
 
 		<replaceregexp
-			flags="g"
 			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties"
+			flags="g"
 			match="(security-manager-get-bean-property=)([\s\S]*?)(,\\\n[ ]{4})(?=com.liferay.portal.kernel.util.PortalUtil)"
 			replace="\1\2\3com.liferay.portal.kernel.util.InfrastructureUtil\3"
 		/>
@@ -963,8 +963,8 @@ security-manager-hook-custom-jsp-dir-enabled=false</replacevalue>
 		</replace>
 
 		<replaceregexp
-			flags="g"
 			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/liferay-plugin-package.properties"
+			flags="g"
 			match="(security-manager-services\[portal\]=)([\s\S]*?)(,\\\n[ ]{4})(?=com.liferay.portal.kernel.service.ResourceLocalService)"
 			replace="\1\2\3com.liferay.portal.kernel.service.PortletPreferencesLocalService#getStrictPreferences\3com.liferay.portal.kernel.service.UserLocalService#getDefaultUser\3"
 		/>
@@ -1001,8 +1001,8 @@ security-manager-sockets-accept=\</replacevalue>
 		</replace>
 
 		<replaceregexp
-			flags="s"
 			file="test/integration/com/liferay/portal/security/pacl/test/dependencies/WEB-INF/classes/META-INF/hibernate-spring.xml"
+			flags="s"
 			match="&lt;/bean(.*)&lt;bean id=&quot;liferaySessionFactory"
 			replace="&lt;/bean>${line.separator}&#x9;&lt;bean id=&quot;liferaySessionFactory"
 		/>

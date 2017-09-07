@@ -5441,18 +5441,18 @@ go]]></replacevalue>
 				<if>
 					<available file="${liferay.home}/osgi/configs/${osgi.module.configuration.file.names.index}" />
 					<then>
-							<move
-								file="${liferay.home}/osgi/configs/${osgi.module.configuration.file.names.index}"
-								tofile="${liferay.home}/osgi/configs/@{file.names}"
-							/>
+						<move
+							file="${liferay.home}/osgi/configs/${osgi.module.configuration.file.names.index}"
+							tofile="${liferay.home}/osgi/configs/@{file.names}"
+						/>
 
-							<math
-								datatype="int"
-								operand1="${osgi.module.configuration.file.names.index}"
-								operand2="1"
-								operation="+"
-								result="osgi.module.configuration.file.names.index"
-							/>
+						<math
+							datatype="int"
+							operand1="${osgi.module.configuration.file.names.index}"
+							operand2="1"
+							operation="+"
+							result="osgi.module.configuration.file.names.index"
+						/>
 					</then>
 				</if>
 			</sequential>
@@ -6194,7 +6194,7 @@ go]]></replacevalue>
 
 	<target name="prepare-clustering-ce">
 		<delete>
-		    <fileset dir="${liferay.home}/osgi/portal" includes="*.single.jar" />
+			<fileset dir="${liferay.home}/osgi/portal" includes="*.single.jar" />
 		</delete>
 
 		<var name="foundation.modules.dir" value="modules/apps/foundation" />
@@ -8497,8 +8497,8 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 							<replacetoken><![CDATA[</Context>]]></replacetoken>
 							<replacevalue><![CDATA[	<Resources>
 		<PreResources
-			className="com.liferay.support.tomcat.webresources.ExtResourceSet"
 			base="${catalina.base}/lib/ext/portal"
+			className="com.liferay.support.tomcat.webresources.ExtResourceSet"
 			webAppMount="/WEB-INF/lib"
 		/>
 	</Resources>

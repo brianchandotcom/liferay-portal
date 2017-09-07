@@ -67,7 +67,7 @@ ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext = (ScopeSearchFace
 											data-term-id="<%= scopeSearchFacetTermDisplayContext.getGroupId() %>"
 											id="<portlet:namespace />term_<%= i %>"
 											name="<portlet:namespace />term_<%= i %>"
-											onChange='Liferay.Search.FacetUtil.changeSelection(event);'
+											onChange="Liferay.Search.FacetUtil.changeSelection(event);"
 											type="checkbox"
 											<%= scopeSearchFacetTermDisplayContext.isSelected() ? "checked" : StringPool.BLANK %>
 										/>

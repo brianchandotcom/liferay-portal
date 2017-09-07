@@ -67,7 +67,7 @@ AssetCategoriesSearchFacetDisplayContext assetCategoriesSearchFacetDisplayContex
 											data-term-id="<%= assetCategoriesSearchFacetTermDisplayContext.getAssetCategoryId() %>"
 											id="<portlet:namespace />term_<%= i %>"
 											name="<portlet:namespace />term_<%= i %>"
-											onChange='Liferay.Search.FacetUtil.changeSelection(event);'
+											onChange="Liferay.Search.FacetUtil.changeSelection(event);"
 											type="checkbox"
 											<%= assetCategoriesSearchFacetTermDisplayContext.isSelected() ? "checked" : StringPool.BLANK %>
 										/>

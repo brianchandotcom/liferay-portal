@@ -48,7 +48,7 @@ clientType=CLOUD</echo>
 	<macrodef name="configure-liferay-solr-ssl-adapter-properties">
 		<sequential>
 			<replace file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr.configuration.SolrConfiguration.cfg" value="https://">
-			 	<replacetoken>http://</replacetoken>
+				<replacetoken>http://</replacetoken>
 			</replace>
 
 			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr.configuration.SolrConfiguration.cfg">

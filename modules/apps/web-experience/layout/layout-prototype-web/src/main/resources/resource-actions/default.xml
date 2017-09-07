@@ -2,7 +2,7 @@
 <!DOCTYPE resource-action-mapping PUBLIC "-//Liferay//DTD Resource Action Mapping 7.0.0//EN" "http://www.liferay.com/dtd/liferay-resource-action-mapping_7_0_0.dtd">
 
 <resource-action-mapping>
-		<portlet-resource>
+	<portlet-resource>
 		<portlet-name>com_liferay_layout_prototype_web_portlet_LayoutPrototypePortlet</portlet-name>
 		<permissions>
 			<supports>

@@ -85,11 +85,23 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 	}
 
 	protected String fixEmptyLinesInMultiLineTags(String content) {
-		Matcher matcher = _emptyLineInMultiLineTagsPattern.matcher(content);
+		Matcher matcher = _emptyLineInMultiLineTagsPattern1.matcher(content);
 
 		if (matcher.find()) {
 			return StringUtil.replaceFirst(
 				content, "\n\n", "\n", matcher.start());
+		}
+
+		matcher = _emptyLineInMultiLineTagsPattern2.matcher(content);
+
+		while (matcher.find()) {
+			String tabs1 = matcher.group(1);
+			String tabs2 = matcher.group(2);
+
+			if (tabs1.length() == (tabs2.length() + 1)) {
+				return StringUtil.replaceFirst(
+					content, "\n\n", "\n", matcher.start());
+			}
 		}
 
 		return content;
@@ -480,8 +492,10 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 
 	private final Pattern _emptyLineBetweenTagsPattern = Pattern.compile(
 		"\n(\t*)</([-\\w:]+)>(\n*)(\t*)<([-\\w:]+)[> \n]");
-	private final Pattern _emptyLineInMultiLineTagsPattern = Pattern.compile(
+	private final Pattern _emptyLineInMultiLineTagsPattern1 = Pattern.compile(
 		"\n\t*<[-\\w:#]+\n\n\t*\\w");
+	private final Pattern _emptyLineInMultiLineTagsPattern2 = Pattern.compile(
+		"\n(\t*)\\S*[^>]\n\n(\t*)(/?)>\n");
 	private final Pattern _emptyLineInNestedTagsPattern1 = Pattern.compile(
 		"\n(\t*)(?:<\\w.*[^/])?>\n\n(\t*)(<.*)\n");
 	private final Pattern _emptyLineInNestedTagsPattern2 = Pattern.compile(

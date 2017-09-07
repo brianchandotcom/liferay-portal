@@ -67,7 +67,7 @@ AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext = (AssetTa
 											data-term-id="<%= assetTagsSearchFacetTermDisplayContext.getValue() %>"
 											id="<portlet:namespace />term_<%= i %>"
 											name="<portlet:namespace />term_<%= i %>"
-											onChange='Liferay.Search.FacetUtil.changeSelection(event);'
+											onChange="Liferay.Search.FacetUtil.changeSelection(event);"
 											type="checkbox"
 											<%= assetTagsSearchFacetTermDisplayContext.isSelected() ? "checked" : StringPool.BLANK %>
 										/>

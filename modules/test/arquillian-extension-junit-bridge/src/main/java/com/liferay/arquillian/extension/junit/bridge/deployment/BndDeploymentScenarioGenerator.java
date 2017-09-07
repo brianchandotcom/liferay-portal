@@ -53,7 +53,6 @@ public class BndDeploymentScenarioGenerator
 				BndProjectBuilder.class);
 
 			bndProjectBuilder.setBndFile(bndFile);
-			bndProjectBuilder.generateManifest(true);
 
 			String javaClassPathString = System.getProperty("java.class.path");
 
@@ -90,9 +89,6 @@ public class BndDeploymentScenarioGenerator
 
 			DeploymentDescription deploymentDescription =
 				new DeploymentDescription(javaArchive.getName(), javaArchive);
-
-			deploymentDescription.shouldBeTestable(true);
-			deploymentDescription.shouldBeManaged(true);
 
 			Asset asset = javaArchive.get(_MANIFEST_PATH).getAsset();
 

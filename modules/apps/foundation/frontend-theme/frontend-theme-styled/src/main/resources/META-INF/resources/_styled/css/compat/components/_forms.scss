@@ -8,26 +8,26 @@ label {
 
 .radio,
 .checkbox {
-	position: relative;
 	display: block;
-	margin-top: 10px;
 	margin-bottom: 10px;
+	margin-top: 10px;
+	position: relative;
 
 	label {
 		min-height: 24px; // Ensure the input doesn't jump when there is no text
-		padding-left: 20px;
-		margin-bottom: 0;
-		font-weight: normal;
 		cursor: pointer;
+		font-weight: normal;
+		margin-bottom: 0;
+		padding-left: 20px;
 	}
 }
 .radio input[type="radio"],
 .radio-inline input[type="radio"],
 .checkbox input[type="checkbox"],
 .checkbox-inline input[type="checkbox"] {
-	position: absolute;
 	margin-left: -20px;
 	margin-top: 4px \9;
+	position: absolute;
 }
 
 .radio + .radio,
@@ -38,13 +38,13 @@ label {
 // Radios and checkboxes on same line
 .radio-inline,
 .checkbox-inline {
-	position: relative;
-	display: inline-block;
-	padding-left: 20px;
-	margin-bottom: 0;
-	vertical-align: middle;
-	font-weight: normal;
 	cursor: pointer;
+	display: inline-block;
+	font-weight: normal;
+	margin-bottom: 0;
+	padding-left: 20px;
+	position: relative;
+	vertical-align: middle;
 }
 
 .radio-inline + .radio-inline,

@@ -43,10 +43,6 @@ public class UnsatisfiedComponentScanner {
 
 	@Activate
 	protected void activate(ComponentContext componentContext) {
-		if (!_log.isInfoEnabled()) {
-			return;
-		}
-
 		UnsatisfiedComponentScannerConfiguration
 			unsatisfiedComponentScannerConfiguration =
 				ConfigurableUtil.createConfigurable(
@@ -61,9 +57,12 @@ public class UnsatisfiedComponentScanner {
 
 			@Override
 			public void run() {
-				_log.info(
-					UnsatisfiedComponentUtil.listUnsatisfiedComponents(
-						_serviceComponentRuntime, bundleContext.getBundles()));
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						UnsatisfiedComponentUtil.listUnsatisfiedComponents(
+							_serviceComponentRuntime,
+							bundleContext.getBundles()));
+				}
 			}
 
 		};

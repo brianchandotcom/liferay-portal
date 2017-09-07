@@ -11,6 +11,7 @@
 	//margin-top: (($navbar-height - 34px) / 2);
 	padding: 9px 10px;
 	position: relative;
+	z-index: 1;
 
 	@include media-breakpoint-up(md) {
 		display: none;
@@ -21,6 +22,7 @@
 	}
 
 	.icon-bar {
+		background-color: $body-color;
 		border-radius: 1px;
 		display: block;
 		height: 2px;
@@ -31,91 +33,129 @@
 	}
 }
 
-#navigation.site-navigation, // liferay portal specific
-.bs3-navbar,
+.navbar-toggle-left {
+	float: left;
+}
+
+.navbar-toggle-page-name {
+	border-width: 0;
+	padding: 13px 16px;
+}
+
+.navbar-header-right {
+	margin-left: auto;
+}
+
+.taglib-search-toggle-advanced-wrapper {
+	left: auto;
+	position: absolute;
+	right: 0;
+	z-index: $zindex-dropdown;
+}
+
+#navigation.site-navigation,
 .navbar-default,
 .navbar-inverse {
-	border: 1px solid transparent;
-
-	@include clearfix;
-
-	display: block;
-	// margin-bottom: $navbar-margin-bottom;
-	// min-height: $navbar-height;
-	padding: 0;
-	position: relative;
+	min-height: map-get($navbar-size, height-mobile);
 
 	@include media-breakpoint-up(md) {
-		//border-radius: $navbar-border-radius;
+		min-height: map-get($navbar-size, height);
+	}
+
+	.container-fluid-1280 {
+		@include media-breakpoint-up(md) {
+			display: flex;
+		}
+	}
+
+	.basic-search {
+		padding: 3.5px 16px;
+
+		@include media-breakpoint-up(md) {
+			padding: 10px 0;
+		}
 	}
 
 	.navbar-collapse {
-		flex-basis: auto;
-		padding-left: $navbar-padding-x;
-		padding-right: $navbar-padding-x;
-
 		@include media-breakpoint-up(md) {
 			display: block;
+		}
+
+		+ .form {
+			margin-left: auto;
 		}
 	}
 
 	.navbar-nav {
-		display: block;
-		flex-direction: row;
-		flex-wrap: nowrap;
+		@include media-breakpoint-up(md) {
+			flex-direction: row;
+		}
 
-		> li {
+		> li > a {
+			padding-bottom: 11.5px;
+			padding-top: 11.5px;
+
 			@include media-breakpoint-up(md) {
-				float: left;
-			}
-		}
-	}
-
-	.navbar-brand {
-		float: left;
-		font-size: $font-size-lg;
-		padding-left: $navbar-padding-x;
-		padding-right: $navbar-padding-x;
-
-		@include media-breakpoint-down(sm) {
-			padding-bottom: $navbar-padding-y;
-			padding-top: $navbar-padding-y;
-		}
-
-		&:hover,
-		&:focus {
-			text-decoration: none;
-		}
-
-		> img {
-			display: block;
-		}
-	}
-
-	.navbar-form {
-		margin-left: -$navbar-padding-x;
-		margin-right: -$navbar-padding-x;
-
-		.form-group {
-			@include media-breakpoint-down(sm) {
-				margin-bottom: 5px;
-
-				&:last-child {
-					margin-bottom: 0;
-				}
+				padding: 18px 16px;
 			}
 		}
 	}
 }
 
 .navbar-default {
-	// background-color: $navbar-default-bg;
-	// border-color: $navbar-default-border;
+	background-color: $navbar-light-bg;
+	border-color: $navbar-light-border-color;
+
+	.navbar-nav > li > a {
+		color: $navbar-light-color;
+
+		&:focus, &:hover {
+			color: $navbar-light-hover-color;
+		}
+	}
+
+	.navbar-nav > .active > a {
+		color: $navbar-light-active-color;
+
+		&:after {
+			background-color: $navbar-light-active-highlight;
+			bottom: -1px;
+			content: '';
+			display: block;
+			height: 2px;
+			left: 0;
+			position: absolute;
+			right: 0;
+		}
+	}
 }
 
 .navbar-inverse {
-	// background-color: $navbar-inverse-bg;
-	// border-color: $navbar-inverse-border;
+	background-color: $navbar-dark-bg;
+	border-color: $navbar-dark-border-color;
+
+	.navbar-nav > li > a {
+		color: $navbar-dark-color;
+
+		&:focus, &:hover {
+			color: $navbar-dark-hover-color;
+		}
+	}
+
+	.navbar-nav > .active > a {
+		color: $navbar-dark-active-color;
+
+		&:after {
+			background-color: $navbar-dark-active-highlight;
+			bottom: -1px;
+			content: '';
+			display: block;
+			height: 2px;
+			left: 0;
+			position: absolute;
+			right: 0;
+		}
+	}
 }
 
 .navbar-form {

@@ -524,6 +524,12 @@ public class TopLevelBuild extends BaseBuild {
 
 		int successCount = getDownstreamBuildCountByResult("SUCCESS");
 
+		String result = getResult();
+
+		if ((result != null) && result.equals("SUCCESS")) {
+			successCount++;
+		}
+
 		return Dom4JUtil.getNewElement(
 			"details", null,
 			Dom4JUtil.getNewElement(
@@ -560,10 +566,16 @@ public class TopLevelBuild extends BaseBuild {
 			Dom4JUtil.getNewElement("h4", null, "Base Branch:"),
 			getBaseBranchDetailsElement());
 
+		int successCount = getDownstreamBuildCountByResult("SUCCESS");
+
+		String result = getResult();
+
+		if ((result != null) && result.equals("SUCCESS")) {
+			successCount++;
+		}
+
 		Dom4JUtil.addToElement(
-			rootElement,
-			Integer.toString(getDownstreamBuildCountByResult("SUCCESS")),
-			" out of ",
+			rootElement, Integer.toString(successCount), " out of ",
 			Integer.toString(getDownstreamBuildCountByResult(null) + 1),
 			" jobs PASSED");
 
@@ -577,8 +589,6 @@ public class TopLevelBuild extends BaseBuild {
 		}
 
 		Dom4JUtil.addToElement(rootElement, getMoreDetailsElement());
-
-		String result = getResult();
 
 		if (!result.equals("SUCCESS")) {
 			if (isCompareToUpstream()) {

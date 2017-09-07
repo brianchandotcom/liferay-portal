@@ -31,6 +31,7 @@ public class UpgradeVirtualHost extends UpgradeProcess {
 			new AlterColumnType("hostname", "VARCHAR(200) null"));
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(UpgradeVirtualHost.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeVirtualHost.class);
 
 }

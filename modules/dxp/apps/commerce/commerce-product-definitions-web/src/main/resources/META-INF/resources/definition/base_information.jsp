@@ -77,6 +77,12 @@ if (Validator.isNotNull(layoutUuid)) {
 	</aui:field-wrapper>
 
 	<aui:button name="chooseDisplayPage" value="choose" />
+
+	<aui:input name="canSellWithoutOptions" />
+
+	<aui:input name="displayAvailability" />
+
+	<aui:input name="displayStockQuantity" />
 </aui:fieldset>
 
 <aui:script use="liferay-item-selector-dialog">

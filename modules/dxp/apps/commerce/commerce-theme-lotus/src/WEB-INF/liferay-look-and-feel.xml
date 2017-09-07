@@ -17,7 +17,7 @@
 		</settings>
 		<layout-templates>
 			<custom>
-				<layout-template id="commerce_1_2_columns_width_limited" name="Commerce 1-2 columns (20/80) width limited">
+				<layout-template id="commerce_1_2_columns_width_limited" name="Commerce 1-2 columns (100 / 30/70) width limited">
 					<template-path>/layoutttpl/custom/commerce_1_2_columns_width_limited.tpl</template-path>
 					<thumbnail-path>/layoutttpl/custom/commerce_1_2_columns_width_limited.png</thumbnail-path>
 				</layout-template>

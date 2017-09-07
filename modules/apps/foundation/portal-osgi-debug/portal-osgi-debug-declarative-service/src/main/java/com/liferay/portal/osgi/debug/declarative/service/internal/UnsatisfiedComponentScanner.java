@@ -49,29 +49,33 @@ public class UnsatisfiedComponentScanner {
 					UnsatisfiedComponentScannerConfiguration.class,
 					componentContext.getProperties());
 
-		final BundleContext bundleContext = componentContext.getBundleContext();
-
-		_scheduledExecutorService = Executors.newScheduledThreadPool(1);
-
-		Runnable runnable = new Runnable() {
-
-			@Override
-			public void run() {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						UnsatisfiedComponentUtil.listUnsatisfiedComponents(
-							_serviceComponentRuntime,
-							bundleContext.getBundles()));
-				}
-			}
-
-		};
-
-		_scheduledExecutorService.scheduleAtFixedRate(
-			runnable, 0,
+		long scanningInterval =
 			unsatisfiedComponentScannerConfiguration.
-				unsatisfiedComponentScanningInterval(),
-			TimeUnit.SECONDS);
+				unsatisfiedComponentScanningInterval();
+
+		if (scanningInterval > 0) {
+			final BundleContext bundleContext =
+				componentContext.getBundleContext();
+
+			_scheduledExecutorService = Executors.newScheduledThreadPool(1);
+
+			Runnable runnable = new Runnable() {
+
+				@Override
+				public void run() {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							UnsatisfiedComponentUtil.listUnsatisfiedComponents(
+								_serviceComponentRuntime,
+								bundleContext.getBundles()));
+					}
+				}
+
+			};
+
+			_scheduledExecutorService.scheduleAtFixedRate(
+				runnable, 0, scanningInterval, TimeUnit.SECONDS);
+		}
 	}
 
 	@Deactivate

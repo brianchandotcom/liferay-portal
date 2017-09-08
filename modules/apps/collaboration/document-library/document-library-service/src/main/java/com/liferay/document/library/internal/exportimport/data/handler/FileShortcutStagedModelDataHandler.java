@@ -175,7 +175,7 @@ public class FileShortcutStagedModelDataHandler
 		long groupId = portletDataContext.getScopeGroupId();
 
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			DLFolder dlFolder = _dlFolderLocalService.fetchFolder(folderId);
+			DLFolder dlFolder = _dlFolderLocalService.getFolder(folderId);
 
 			groupId = dlFolder.getRepositoryId();
 		}

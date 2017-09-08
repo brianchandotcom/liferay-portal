@@ -1,6 +1,6 @@
-create table AdaptiveMediaImageEntry (
+create table AMImageEntry (
 	uuid_ VARCHAR(75) null,
-	adaptiveMediaImageEntryId LONG not null primary key,
+	amImageEntryId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	createDate DATE null,

@@ -14,8 +14,8 @@
 
 package com.liferay.adaptive.media.document.library.internal.repository;
 
-import com.liferay.adaptive.media.processor.AdaptiveMediaAsyncProcessor;
-import com.liferay.adaptive.media.processor.AdaptiveMediaAsyncProcessorLocator;
+import com.liferay.adaptive.media.processor.AMAsyncProcessor;
+import com.liferay.adaptive.media.processor.AMAsyncProcessorLocator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.repository.DocumentRepository;
@@ -99,10 +99,10 @@ public abstract class BaseOverridingRepositoryDefiner
 	}
 
 	@Reference(unbind = "-")
-	public void setAdaptiveMediaAsyncProcessorLocator(
-		AdaptiveMediaAsyncProcessorLocator asyncProcessorLocator) {
+	public void setAMAsyncProcessorLocator(
+		AMAsyncProcessorLocator amAsyncProcessorLocator) {
 
-		_asyncProcessorLocator = asyncProcessorLocator;
+		_amAsyncProcessorLocator = amAsyncProcessorLocator;
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -141,14 +141,14 @@ public abstract class BaseOverridingRepositoryDefiner
 
 	private void _deleteAdaptiveMedia(FileEntry fileEntry) {
 		try {
-			AdaptiveMediaAsyncProcessor<FileVersion, ?> processor =
-				_asyncProcessorLocator.locateForClass(FileVersion.class);
+			AMAsyncProcessor<FileVersion, ?> amAsyncProcessor =
+				_amAsyncProcessorLocator.locateForClass(FileVersion.class);
 
 			List<FileVersion> fileVersions = fileEntry.getFileVersions(
 				WorkflowConstants.STATUS_ANY);
 
 			for (FileVersion fileVersion : fileVersions) {
-				processor.triggerCleanUp(
+				amAsyncProcessor.triggerCleanUp(
 					fileVersion,
 					String.valueOf(fileVersion.getFileVersionId()));
 			}
@@ -182,13 +182,13 @@ public abstract class BaseOverridingRepositoryDefiner
 
 	private void _updateAdaptiveMedia(FileEntry fileEntry) {
 		try {
-			AdaptiveMediaAsyncProcessor<FileVersion, ?> asyncProcessor =
-				_asyncProcessorLocator.locateForClass(FileVersion.class);
+			AMAsyncProcessor<FileVersion, ?> amAsyncProcessor =
+				_amAsyncProcessorLocator.locateForClass(FileVersion.class);
 
 			FileVersion latestFileVersion = fileEntry.getLatestFileVersion(
 				true);
 
-			asyncProcessor.triggerProcess(
+			amAsyncProcessor.triggerProcess(
 				latestFileVersion,
 				String.valueOf(latestFileVersion.getFileVersionId()));
 		}
@@ -197,7 +197,7 @@ public abstract class BaseOverridingRepositoryDefiner
 		}
 	}
 
-	private AdaptiveMediaAsyncProcessorLocator _asyncProcessorLocator;
+	private AMAsyncProcessorLocator _amAsyncProcessorLocator;
 	private RepositoryDefiner _overridenRepositoryDefiner;
 
 	private class AdaptiveMediaCapabiliy

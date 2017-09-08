@@ -14,11 +14,11 @@
 
 package com.liferay.adaptive.media.web.internal.portlet.action;
 
-import com.liferay.adaptive.media.image.configuration.AdaptiveMediaImageConfigurationEntry;
-import com.liferay.adaptive.media.image.configuration.AdaptiveMediaImageConfigurationHelper;
-import com.liferay.adaptive.media.image.service.AdaptiveMediaImageEntryLocalService;
-import com.liferay.adaptive.media.web.constants.AdaptiveMediaPortletKeys;
-import com.liferay.adaptive.media.web.internal.constants.AdaptiveMediaWebKeys;
+import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
+import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper;
+import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
+import com.liferay.adaptive.media.web.constants.AMPortletKeys;
+import com.liferay.adaptive.media.web.internal.constants.AMWebKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + AdaptiveMediaPortletKeys.ADAPTIVE_MEDIA,
+		"javax.portlet.name=" + AMPortletKeys.ADAPTIVE_MEDIA,
 		"mvc.command.name=/adaptive_media/edit_image_configuration_entry"
 	},
 	service = MVCRenderCommand.class
@@ -55,23 +55,19 @@ public class EditImageConfigurationEntryMVCRenderCommand
 
 		String entryUuid = ParamUtil.getString(renderRequest, "entryUuid");
 
-		Optional<AdaptiveMediaImageConfigurationEntry>
-			configurationEntryOptional =
-				_adaptiveMediaImageConfigurationHelper.
-					getAdaptiveMediaImageConfigurationEntry(
-						themeDisplay.getCompanyId(), entryUuid);
+		Optional<AMImageConfigurationEntry> amImageConfigurationEntryOptional =
+			_amImageConfigurationHelper.getAMImageConfigurationEntry(
+				themeDisplay.getCompanyId(), entryUuid);
 
 		boolean configurationEntryEditable = true;
 
-		if (configurationEntryOptional.isPresent()) {
-			AdaptiveMediaImageConfigurationEntry configurationEntry =
-				configurationEntryOptional.get();
+		if (amImageConfigurationEntryOptional.isPresent()) {
+			AMImageConfigurationEntry amImageConfigurationEntry =
+				amImageConfigurationEntryOptional.get();
 
-			int entriesCount =
-				_adaptiveMediaImageEntryLocalService.
-					getAdaptiveMediaImageEntriesCount(
-						themeDisplay.getCompanyId(),
-						configurationEntry.getUUID());
+			int entriesCount = _amImageEntryLocalService.getAMImageEntriesCount(
+				themeDisplay.getCompanyId(),
+				amImageConfigurationEntry.getUUID());
 
 			if (entriesCount != 0) {
 				configurationEntryEditable = false;
@@ -79,22 +75,19 @@ public class EditImageConfigurationEntryMVCRenderCommand
 		}
 
 		renderRequest.setAttribute(
-			AdaptiveMediaWebKeys.CONFIGURATION_ENTRY,
-			configurationEntryOptional.orElse(null));
+			AMWebKeys.CONFIGURATION_ENTRY,
+			amImageConfigurationEntryOptional.orElse(null));
 
 		renderRequest.setAttribute(
-			AdaptiveMediaWebKeys.CONFIGURATION_ENTRY_EDITABLE,
-			configurationEntryEditable);
+			AMWebKeys.CONFIGURATION_ENTRY_EDITABLE, configurationEntryEditable);
 
 		return "/adaptive_media/edit_image_configuration_entry.jsp";
 	}
 
 	@Reference
-	private AdaptiveMediaImageConfigurationHelper
-		_adaptiveMediaImageConfigurationHelper;
+	private AMImageConfigurationHelper _amImageConfigurationHelper;
 
 	@Reference
-	private AdaptiveMediaImageEntryLocalService
-		_adaptiveMediaImageEntryLocalService;
+	private AMImageEntryLocalService _amImageEntryLocalService;
 
 }

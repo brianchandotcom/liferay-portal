@@ -14,21 +14,21 @@
 
 package com.liferay.adaptive.media.image.internal.mediaquery;
 
+import com.liferay.adaptive.media.AMAttribute;
 import com.liferay.adaptive.media.AdaptiveMedia;
-import com.liferay.adaptive.media.AdaptiveMediaAttribute;
-import com.liferay.adaptive.media.finder.AdaptiveMediaQuery;
-import com.liferay.adaptive.media.image.configuration.AdaptiveMediaImageConfigurationEntry;
-import com.liferay.adaptive.media.image.configuration.AdaptiveMediaImageConfigurationHelper;
-import com.liferay.adaptive.media.image.finder.AdaptiveMediaImageFinder;
-import com.liferay.adaptive.media.image.finder.AdaptiveMediaImageQueryBuilder;
-import com.liferay.adaptive.media.image.internal.configuration.AdaptiveMediaImageAttributeMapping;
-import com.liferay.adaptive.media.image.internal.finder.AdaptiveMediaImageQueryBuilderImpl;
-import com.liferay.adaptive.media.image.internal.processor.AdaptiveMediaImage;
+import com.liferay.adaptive.media.finder.AMQuery;
+import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
+import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper;
+import com.liferay.adaptive.media.image.finder.AMImageFinder;
+import com.liferay.adaptive.media.image.finder.AMImageQueryBuilder;
+import com.liferay.adaptive.media.image.internal.configuration.AMImageAttributeMapping;
+import com.liferay.adaptive.media.image.internal.finder.AMImageQueryBuilderImpl;
+import com.liferay.adaptive.media.image.internal.processor.AMImage;
 import com.liferay.adaptive.media.image.mediaquery.Condition;
 import com.liferay.adaptive.media.image.mediaquery.MediaQuery;
-import com.liferay.adaptive.media.image.processor.AdaptiveMediaImageAttribute;
-import com.liferay.adaptive.media.image.processor.AdaptiveMediaImageProcessor;
-import com.liferay.adaptive.media.image.url.AdaptiveMediaImageURLFactory;
+import com.liferay.adaptive.media.image.processor.AMImageAttribute;
+import com.liferay.adaptive.media.image.processor.AMImageProcessor;
+import com.liferay.adaptive.media.image.url.AMImageURLFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -73,20 +73,17 @@ public class MediaQueryProviderImplTest {
 		);
 
 		Mockito.when(
-			_adaptiveMediaImageFinder.getAdaptiveMediaStream(
-				Mockito.any(Function.class))
+			_amImageFinder.getAdaptiveMediaStream(Mockito.any(Function.class))
 		).thenAnswer(
 			invocation -> Stream.empty()
 		);
 
-		_mediaQueryProvider.setAdaptiveMediaImageURLFactory(
-			_adaptiveMediaURLFactory);
+		_mediaQueryProvider.setAMImageURLFactory(_amURLFactory);
 
-		_mediaQueryProvider.setAdaptiveMediaImageConfigurationHelper(
-			_adaptiveMediaImageConfigurationHelper);
+		_mediaQueryProvider.setAMImageConfigurationHelper(
+			_amImageConfigurationHelper);
 
-		_mediaQueryProvider.setAdaptiveMediaImageFinder(
-			_adaptiveMediaImageFinder);
+		_mediaQueryProvider.setAMImageFinder(_amImageFinder);
 	}
 
 	@Test
@@ -606,36 +603,37 @@ public class MediaQueryProviderImplTest {
 
 	private void _addAdaptiveMedias(
 			FileEntry fileEntry,
-			AdaptiveMedia<AdaptiveMediaImageProcessor>...adaptiveMedias)
+			AdaptiveMedia<AMImageProcessor>...adaptiveMedias)
 		throws PortalException {
 
 		Mockito.when(
-			_adaptiveMediaImageFinder.getAdaptiveMediaStream(
-				Mockito.any(Function.class))
+			_amImageFinder.getAdaptiveMediaStream(Mockito.any(Function.class))
 		).thenAnswer(
 			invocation -> {
-				Function<AdaptiveMediaImageQueryBuilder, AdaptiveMediaQuery>
-					function = invocation.getArgumentAt(0, Function.class);
+				Function<AMImageQueryBuilder, AMQuery>
+					amImageQueryBuilderFunction = invocation.getArgumentAt(
+						0, Function.class);
 
-				AdaptiveMediaImageQueryBuilderImpl queryBuilder =
-					new AdaptiveMediaImageQueryBuilderImpl();
+				AMImageQueryBuilderImpl amImageQueryBuilderImpl =
+					new AMImageQueryBuilderImpl();
 
-				AdaptiveMediaQuery query = function.apply(queryBuilder);
+				AMQuery amQuery = amImageQueryBuilderFunction.apply(
+					amImageQueryBuilderImpl);
 
-				if (!AdaptiveMediaImageQueryBuilderImpl.QUERY.equals(query)) {
+				if (!AMImageQueryBuilderImpl.AM_QUERY.equals(amQuery)) {
 					return Stream.empty();
 				}
 
-				for (AdaptiveMedia<AdaptiveMediaImageProcessor>
+				for (AdaptiveMedia<AMImageProcessor>
 						adaptiveMedia : adaptiveMedias) {
 
 					String configurationUuid = adaptiveMedia.getValueOptional(
-						AdaptiveMediaAttribute.getConfigurationUuid()).get();
+						AMAttribute.getConfigurationUuidAMAttribute()).get();
 
 					if (fileEntry.getFileVersion().equals(
-							queryBuilder.getFileVersion()) &&
+							amImageQueryBuilderImpl.getFileVersion()) &&
 						configurationUuid.equals(
-							queryBuilder.getConfigurationUuid())) {
+							amImageQueryBuilderImpl.getConfigurationUuid())) {
 
 						return Stream.of(adaptiveMedia);
 					}
@@ -647,15 +645,14 @@ public class MediaQueryProviderImplTest {
 	}
 
 	private void _addConfigs(
-			AdaptiveMediaImageConfigurationEntry...
-				adaptiveMediaImageConfigurationEntries)
+			AMImageConfigurationEntry... amImageConfigurationEntries)
 		throws Exception {
 
 		Mockito.when(
-			_adaptiveMediaImageConfigurationHelper.
-				getAdaptiveMediaImageConfigurationEntries(_COMPANY_ID)
+			_amImageConfigurationHelper.getAMImageConfigurationEntries(
+				_COMPANY_ID)
 		).thenReturn(
-			Arrays.asList(adaptiveMediaImageConfigurationEntries)
+			Arrays.asList(amImageConfigurationEntries)
 		);
 	}
 
@@ -691,37 +688,34 @@ public class MediaQueryProviderImplTest {
 		_assertCondition(conditions.get(1), "min-width", minWidth + "px");
 	}
 
-	private AdaptiveMedia<AdaptiveMediaImageProcessor> _createAdaptiveMedia(
-			String adaptiveMediaImageConfigurationEntryUuid, int height,
-			int width, String url)
+	private AdaptiveMedia<AMImageProcessor> _createAdaptiveMedia(
+			String amImageConfigurationEntryUuid, int height, int width,
+			String url)
 		throws Exception {
 
 		Map<String, String> properties = new HashMap<>();
 
 		properties.put(
-			AdaptiveMediaImageAttribute.IMAGE_HEIGHT.getName(),
-			String.valueOf(height));
+			AMImageAttribute.IMAGE_HEIGHT.getName(), String.valueOf(height));
 
 		properties.put(
-			AdaptiveMediaImageAttribute.IMAGE_WIDTH.getName(),
-			String.valueOf(width));
+			AMImageAttribute.IMAGE_WIDTH.getName(), String.valueOf(width));
 
 		properties.put(
-			AdaptiveMediaAttribute.getConfigurationUuid().getName(),
-			adaptiveMediaImageConfigurationEntryUuid);
+			AMAttribute.getConfigurationUuidAMAttribute().getName(),
+			amImageConfigurationEntryUuid);
 
-		return new AdaptiveMediaImage(
-			() -> null,
-			AdaptiveMediaImageAttributeMapping.fromProperties(properties),
+		return new AMImage(
+			() -> null, AMImageAttributeMapping.fromProperties(properties),
 			URI.create(url));
 	}
 
-	private AdaptiveMediaImageConfigurationEntry _createConfig(
+	private AMImageConfigurationEntry _createConfig(
 			final String uuid, final int height, final int width, String url)
 		throws Exception {
 
-		AdaptiveMediaImageConfigurationEntry configurationEntry =
-			new AdaptiveMediaImageConfigurationEntry() {
+		AMImageConfigurationEntry amImageConfigurationEntry =
+			new AMImageConfigurationEntry() {
 
 				@Override
 				public String getDescription() {
@@ -756,26 +750,25 @@ public class MediaQueryProviderImplTest {
 			};
 
 		Mockito.when(
-			_adaptiveMediaURLFactory.createFileEntryURL(
-				_fileEntry.getFileVersion(), configurationEntry)
+			_amURLFactory.createFileEntryURL(
+				_fileEntry.getFileVersion(), amImageConfigurationEntry)
 		).thenReturn(
 			URI.create(url)
 		);
 
-		return configurationEntry;
+		return amImageConfigurationEntry;
 	}
 
 	private static final long _COMPANY_ID = 1L;
 
 	@Mock
-	private AdaptiveMediaImageConfigurationHelper
-		_adaptiveMediaImageConfigurationHelper;
+	private AMImageConfigurationHelper _amImageConfigurationHelper;
 
 	@Mock
-	private AdaptiveMediaImageFinder _adaptiveMediaImageFinder;
+	private AMImageFinder _amImageFinder;
 
 	@Mock
-	private AdaptiveMediaImageURLFactory _adaptiveMediaURLFactory;
+	private AMImageURLFactory _amURLFactory;
 
 	@Mock
 	private FileEntry _fileEntry;

@@ -14,11 +14,11 @@
 
 package com.liferay.adaptive.media.web.internal.portlet.action;
 
-import com.liferay.adaptive.media.exception.AdaptiveMediaImageConfigurationException;
-import com.liferay.adaptive.media.image.configuration.AdaptiveMediaImageConfigurationEntry;
-import com.liferay.adaptive.media.image.configuration.AdaptiveMediaImageConfigurationHelper;
-import com.liferay.adaptive.media.image.service.AdaptiveMediaImageEntryLocalService;
-import com.liferay.adaptive.media.web.constants.AdaptiveMediaPortletKeys;
+import com.liferay.adaptive.media.exception.AMImageConfigurationException;
+import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
+import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper;
+import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
+import com.liferay.adaptive.media.web.constants.AMPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + AdaptiveMediaPortletKeys.ADAPTIVE_MEDIA,
+		"javax.portlet.name=" + AMPortletKeys.ADAPTIVE_MEDIA,
 		"mvc.command.name=/adaptive_media/edit_image_configuration_entry"
 	},
 	service = MVCActionCommand.class
@@ -76,11 +76,9 @@ public class EditImageConfigurationEntryMVCActionCommand
 		properties.put("max-height", maxHeight);
 		properties.put("max-width", maxWidth);
 
-		Optional<AdaptiveMediaImageConfigurationEntry>
-			configurationEntryOptional =
-				_adaptiveMediaImageConfigurationHelper.
-					getAdaptiveMediaImageConfigurationEntry(
-						themeDisplay.getCompanyId(), uuid);
+		Optional<AMImageConfigurationEntry> amImageConfigurationEntryOptional =
+			_amImageConfigurationHelper.getAMImageConfigurationEntry(
+				themeDisplay.getCompanyId(), uuid);
 
 		boolean automaticUuid = ParamUtil.getBoolean(
 			actionRequest, "automaticUuid");
@@ -104,60 +102,60 @@ public class EditImageConfigurationEntryMVCActionCommand
 		}
 
 		try {
-			if (configurationEntryOptional.isPresent()) {
-				AdaptiveMediaImageConfigurationEntry configurationEntry =
-					configurationEntryOptional.get();
+			if (amImageConfigurationEntryOptional.isPresent()) {
+				AMImageConfigurationEntry amImageConfigurationEntry =
+					amImageConfigurationEntryOptional.get();
 
 				if (!_isConfigurationEntryEditable(
 						themeDisplay.getCompanyId(),
-						configurationEntryOptional.get())) {
+						amImageConfigurationEntryOptional.get())) {
 
-					newUuid = configurationEntry.getUUID();
+					newUuid = amImageConfigurationEntry.getUUID();
 
-					properties = configurationEntry.getProperties();
+					properties = amImageConfigurationEntry.getProperties();
 
 					autoModifiedUuid = false;
 				}
 
-				configurationEntry =
-					_adaptiveMediaImageConfigurationHelper.
-						updateAdaptiveMediaImageConfigurationEntry(
-							themeDisplay.getCompanyId(), uuid, name,
-							description, newUuid, properties);
+				amImageConfigurationEntry =
+					_amImageConfigurationHelper.updateAMImageConfigurationEntry(
+						themeDisplay.getCompanyId(), uuid, name, description,
+						newUuid, properties);
 
 				if (autoModifiedUuid) {
 					SessionMessages.add(
 						actionRequest, "configurationEntryUpdatedAndIDRenamed",
-						configurationEntry);
+						amImageConfigurationEntry);
 				}
 				else {
 					SessionMessages.add(
 						actionRequest, "configurationEntryUpdated",
-						configurationEntry);
+						amImageConfigurationEntry);
 				}
 			}
 			else {
-				AdaptiveMediaImageConfigurationEntry configurationEntry =
-					_adaptiveMediaImageConfigurationHelper.
-						addAdaptiveMediaImageConfigurationEntry(
-							themeDisplay.getCompanyId(), name, description,
-							newUuid, properties);
+				AMImageConfigurationEntry amImageConfigurationEntry =
+					_amImageConfigurationHelper.addAMImageConfigurationEntry(
+						themeDisplay.getCompanyId(), name, description, newUuid,
+						properties);
 
 				boolean addHighResolution = ParamUtil.getBoolean(
 					actionRequest, "addHighResolution");
 
-				AdaptiveMediaImageConfigurationEntry
-					highResolutionConfigurationEntry = null;
+				AMImageConfigurationEntry
+					highResolutionAMImageConfigurationEntry = null;
 
 				if (addHighResolution) {
-					highResolutionConfigurationEntry =
+					highResolutionAMImageConfigurationEntry =
 						_addHighResolutionConfigurationEntry(
-							themeDisplay.getCompanyId(), configurationEntry);
+							themeDisplay.getCompanyId(),
+							amImageConfigurationEntry);
 
 					SessionMessages.add(
 						actionRequest, "highResolutionConfigurationEntryAdded",
-						new AdaptiveMediaImageConfigurationEntry[] {
-							configurationEntry, highResolutionConfigurationEntry
+						new AMImageConfigurationEntry[] {
+							amImageConfigurationEntry,
+							highResolutionAMImageConfigurationEntry
 						});
 				}
 				else {
@@ -165,28 +163,29 @@ public class EditImageConfigurationEntryMVCActionCommand
 						SessionMessages.add(
 							actionRequest,
 							"configurationEntryAddedAndIDRenamed",
-							configurationEntry);
+							amImageConfigurationEntry);
 					}
 					else {
 						SessionMessages.add(
 							actionRequest, "configurationEntryAdded",
-							configurationEntry);
+							amImageConfigurationEntry);
 					}
 				}
 			}
 		}
-		catch (AdaptiveMediaImageConfigurationException amice) {
+		catch (AMImageConfigurationException amice) {
 			SessionErrors.add(actionRequest, amice.getClass());
 		}
 	}
 
-	private AdaptiveMediaImageConfigurationEntry
+	private AMImageConfigurationEntry
 			_addHighResolutionConfigurationEntry(
 				long companyId,
-				AdaptiveMediaImageConfigurationEntry configurationEntry)
-		throws AdaptiveMediaImageConfigurationException, IOException {
+				AMImageConfigurationEntry amImageConfigurationEntry)
+		throws AMImageConfigurationException, IOException {
 
-		Map<String, String> properties = configurationEntry.getProperties();
+		Map<String, String> properties =
+			amImageConfigurationEntry.getProperties();
 
 		int doubleMaxHeight =
 			GetterUtil.getInteger(properties.get("max-height")) * 2;
@@ -196,14 +195,13 @@ public class EditImageConfigurationEntryMVCActionCommand
 		properties.put("max-height", String.valueOf(doubleMaxHeight));
 		properties.put("max-width", String.valueOf(doubleMaxWidth));
 
-		String name = configurationEntry.getName();
-		String description = configurationEntry.getDescription();
-		String uuid = configurationEntry.getUUID();
+		String name = amImageConfigurationEntry.getName();
+		String description = amImageConfigurationEntry.getDescription();
+		String uuid = amImageConfigurationEntry.getUUID();
 
-		return _adaptiveMediaImageConfigurationHelper.
-			addAdaptiveMediaImageConfigurationEntry(
-				companyId, name.concat("-2x"), "2x " + description,
-				uuid.concat("-2x"), properties);
+		return _amImageConfigurationHelper.addAMImageConfigurationEntry(
+			companyId, name.concat("-2x"), "2x " + description,
+			uuid.concat("-2x"), properties);
 	}
 
 	private String _getAutomaticUuid(
@@ -216,13 +214,12 @@ public class EditImageConfigurationEntryMVCActionCommand
 				break;
 			}
 
-			Optional<AdaptiveMediaImageConfigurationEntry>
-				adaptiveMediaImageConfigurationEntryOptional =
-					_adaptiveMediaImageConfigurationHelper.
-						getAdaptiveMediaImageConfigurationEntry(
-							companyId, curUuid);
+			Optional<AMImageConfigurationEntry>
+				amImageConfigurationEntryOptional =
+					_amImageConfigurationHelper.getAMImageConfigurationEntry(
+						companyId, curUuid);
 
-			if (!adaptiveMediaImageConfigurationEntryOptional.isPresent()) {
+			if (!amImageConfigurationEntryOptional.isPresent()) {
 				break;
 			}
 
@@ -236,13 +233,10 @@ public class EditImageConfigurationEntryMVCActionCommand
 	}
 
 	private boolean _isConfigurationEntryEditable(
-		long companyId,
-		AdaptiveMediaImageConfigurationEntry configurationEntry) {
+		long companyId, AMImageConfigurationEntry amImageConfigurationEntry) {
 
-		int entriesCount =
-			_adaptiveMediaImageEntryLocalService.
-				getAdaptiveMediaImageEntriesCount(
-					companyId, configurationEntry.getUUID());
+		int entriesCount = _amImageEntryLocalService.getAMImageEntriesCount(
+			companyId, amImageConfigurationEntry.getUUID());
 
 		if (entriesCount == 0) {
 			return true;
@@ -252,11 +246,9 @@ public class EditImageConfigurationEntryMVCActionCommand
 	}
 
 	@Reference
-	private AdaptiveMediaImageConfigurationHelper
-		_adaptiveMediaImageConfigurationHelper;
+	private AMImageConfigurationHelper _amImageConfigurationHelper;
 
 	@Reference
-	private AdaptiveMediaImageEntryLocalService
-		_adaptiveMediaImageEntryLocalService;
+	private AMImageEntryLocalService _amImageEntryLocalService;
 
 }

@@ -14,10 +14,10 @@
 
 package com.liferay.adaptive.media.web.internal.portlet.action;
 
-import com.liferay.adaptive.media.image.configuration.AdaptiveMediaImageConfigurationEntry;
-import com.liferay.adaptive.media.image.configuration.AdaptiveMediaImageConfigurationHelper;
-import com.liferay.adaptive.media.web.constants.AdaptiveMediaPortletKeys;
-import com.liferay.adaptive.media.web.internal.constants.AdaptiveMediaWebKeys;
+import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
+import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper;
+import com.liferay.adaptive.media.web.constants.AMPortletKeys;
+import com.liferay.adaptive.media.web.internal.constants.AMWebKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + AdaptiveMediaPortletKeys.ADAPTIVE_MEDIA,
+		"javax.portlet.name=" + AMPortletKeys.ADAPTIVE_MEDIA,
 		"mvc.command.name=/", "mvc.command.name=/adaptive_media/view"
 	},
 	service = MVCRenderCommand.class
@@ -50,19 +50,18 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		Collection<AdaptiveMediaImageConfigurationEntry> configurationEntries =
-			_getAdaptiveMediaImageConfigurationEntries(renderRequest);
+		Collection<AMImageConfigurationEntry> amImageConfigurationEntries =
+			_getAMImageConfigurationEntries(renderRequest);
 
 		renderRequest.setAttribute(
-			AdaptiveMediaWebKeys.CONFIGURATION_ENTRIES_LIST,
-			new ArrayList<>(configurationEntries));
+			AMWebKeys.CONFIGURATION_ENTRIES_LIST,
+			new ArrayList<>(amImageConfigurationEntries));
 
 		return "/adaptive_media/view.jsp";
 	}
 
-	private Collection<AdaptiveMediaImageConfigurationEntry>
-		_getAdaptiveMediaImageConfigurationEntries(
-			RenderRequest renderRequest) {
+	private Collection<AMImageConfigurationEntry>
+		_getAMImageConfigurationEntries(RenderRequest renderRequest) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -70,25 +69,27 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		String entriesNavigation = ParamUtil.getString(
 			renderRequest, "entriesNavigation", "all");
 
-		Predicate<AdaptiveMediaImageConfigurationEntry> predicate = null;
+		Predicate<AMImageConfigurationEntry> predicate = null;
 
 		if (entriesNavigation.equals("enabled")) {
-			predicate = configurationEntry -> configurationEntry.isEnabled();
+			predicate =
+				amImageConfigurationEntry ->
+					amImageConfigurationEntry.isEnabled();
 		}
 		else if (entriesNavigation.equals("disabled")) {
-			predicate = configurationEntry -> !configurationEntry.isEnabled();
+			predicate =
+				amImageConfigurationEntry ->
+					!amImageConfigurationEntry.isEnabled();
 		}
 		else {
-			predicate = configurationEntry -> true;
+			predicate = amImageConfigurationEntry -> true;
 		}
 
-		return _adaptiveMediaImageConfigurationHelper.
-			getAdaptiveMediaImageConfigurationEntries(
-				themeDisplay.getCompanyId(), predicate);
+		return _amImageConfigurationHelper.getAMImageConfigurationEntries(
+			themeDisplay.getCompanyId(), predicate);
 	}
 
 	@Reference
-	private AdaptiveMediaImageConfigurationHelper
-		_adaptiveMediaImageConfigurationHelper;
+	private AMImageConfigurationHelper _amImageConfigurationHelper;
 
 }

@@ -14,10 +14,10 @@
 
 package com.liferay.adaptive.media.image.internal.handler;
 
-import com.liferay.adaptive.media.AdaptiveMediaAttribute;
-import com.liferay.adaptive.media.exception.AdaptiveMediaRuntimeException;
-import com.liferay.adaptive.media.image.configuration.AdaptiveMediaImageConfigurationEntry;
-import com.liferay.adaptive.media.image.configuration.AdaptiveMediaImageConfigurationHelper;
+import com.liferay.adaptive.media.AMAttribute;
+import com.liferay.adaptive.media.exception.AMRuntimeException;
+import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
+import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper;
 import com.liferay.adaptive.media.image.internal.util.Tuple;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -63,43 +63,42 @@ public class PathInterpreter {
 
 			String configurationEntryUUID = _getConfigurationEntryUUID(matcher);
 
-			Optional<AdaptiveMediaImageConfigurationEntry>
-				configurationEntryOptional =
-					_configurationHelper.
-						getAdaptiveMediaImageConfigurationEntry(
-							fileVersion.getCompanyId(), configurationEntryUUID);
+			Optional<AMImageConfigurationEntry>
+				amImageConfigurationEntryOptional =
+					_amImageConfigurationHelper.getAMImageConfigurationEntry(
+						fileVersion.getCompanyId(), configurationEntryUUID);
 
-			Map<String, String> properties = configurationEntryOptional.map(
-				configurationEntry -> {
-					Map<String, String> curProperties =
-						configurationEntry.getProperties();
+			Map<String, String> properties =
+				amImageConfigurationEntryOptional.map(
+					amImageConfigurationEntry -> {
+						Map<String, String> curProperties =
+							amImageConfigurationEntry.getProperties();
 
-					AdaptiveMediaAttribute<?, String>
-						configurationUuidAdaptiveMediaAttribute =
-							AdaptiveMediaAttribute.getConfigurationUuid();
+						AMAttribute<?, String> configurationUuidAMAttribute =
+							AMAttribute.getConfigurationUuidAMAttribute();
 
-					curProperties.put(
-						configurationUuidAdaptiveMediaAttribute.getName(),
-						configurationEntry.getUUID());
+						curProperties.put(
+							configurationUuidAMAttribute.getName(),
+							amImageConfigurationEntry.getUUID());
 
-					return curProperties;
-				}
-			).orElse(
-				new HashMap<>()
-			);
+						return curProperties;
+					}
+				).orElse(
+					new HashMap<>()
+				);
 
 			return Optional.of(Tuple.of(fileVersion, properties));
 		}
 		catch (PortalException pe) {
-			throw new AdaptiveMediaRuntimeException(pe);
+			throw new AMRuntimeException(pe);
 		}
 	}
 
 	@Reference(unbind = "-")
-	public void setAdaptiveMediaImageConfigurationHelper(
-		AdaptiveMediaImageConfigurationHelper configurationHelper) {
+	public void setAMImageConfigurationHelper(
+		AMImageConfigurationHelper amImageConfigurationHelper) {
 
-		_configurationHelper = configurationHelper;
+		_amImageConfigurationHelper = amImageConfigurationHelper;
 	}
 
 	@Reference(unbind = "-")
@@ -132,7 +131,7 @@ public class PathInterpreter {
 	private static final Pattern _URL_PATTERN = Pattern.compile(
 		"/image/(\\d+)(?:/(\\d+))?/([^/]+)/(?:[^/]+)");
 
-	private AdaptiveMediaImageConfigurationHelper _configurationHelper;
+	private AMImageConfigurationHelper _amImageConfigurationHelper;
 	private DLAppService _dlAppService;
 
 }

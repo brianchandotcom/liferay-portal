@@ -15,7 +15,7 @@
 package com.liferay.adaptive.media.image.content.transformer.internal;
 
 import com.liferay.adaptive.media.content.transformer.constants.ContentTransformerContentTypes;
-import com.liferay.adaptive.media.image.html.AdaptiveMediaImageHTMLTagFactory;
+import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -49,8 +49,8 @@ public class HtmlContentTransformerImplTest {
 		);
 
 		_htmlContentTransformer.setDLAppLocalService(_dlAppLocalService);
-		_htmlContentTransformer.setAdaptiveMediaImageHTMLTagFactory(
-			_adaptiveMediaImageHTMLTagFactory);
+		_htmlContentTransformer.setAMImageHTMLTagFactory(
+			_amImageHTMLTagFactory);
 	}
 
 	@Test
@@ -58,7 +58,7 @@ public class HtmlContentTransformerImplTest {
 		throws Exception {
 
 		Mockito.when(
-			_adaptiveMediaImageHTMLTagFactory.create(
+			_amImageHTMLTagFactory.create(
 				"<img data-fileEntryId=\"1989\" src=\"adaptable\"/>",
 				_fileEntry)
 		).thenReturn(
@@ -96,7 +96,7 @@ public class HtmlContentTransformerImplTest {
 		throws Exception {
 
 		Mockito.when(
-			_adaptiveMediaImageHTMLTagFactory.create(
+			_amImageHTMLTagFactory.create(
 				"<img data-fileEntryId=\"1989\" src=\"adaptable\"/>",
 				_fileEntry)
 		).thenReturn(
@@ -115,7 +115,7 @@ public class HtmlContentTransformerImplTest {
 		throws Exception {
 
 		Mockito.when(
-			_adaptiveMediaImageHTMLTagFactory.create(
+			_amImageHTMLTagFactory.create(
 				"<img data-fileEntryId=\"1989\" src=\"adaptable\"/>",
 				_fileEntry)
 		).thenReturn(
@@ -131,7 +131,7 @@ public class HtmlContentTransformerImplTest {
 	@Test
 	public void testReplacesTwoConsecutiveImageTags() throws Exception {
 		Mockito.when(
-			_adaptiveMediaImageHTMLTagFactory.create(
+			_amImageHTMLTagFactory.create(
 				"<img data-fileEntryId=\"1989\" src=\"adaptable\"/>",
 				_fileEntry)
 		).thenReturn(
@@ -171,7 +171,7 @@ public class HtmlContentTransformerImplTest {
 	@Test
 	public void testSupportsImageTagsWithNewLineCharacters() throws Exception {
 		Mockito.when(
-			_adaptiveMediaImageHTMLTagFactory.create(
+			_amImageHTMLTagFactory.create(
 				"<img data-fileEntryId=\"1989\" \nsrc=\"adaptable\"/>",
 				_fileEntry)
 		).thenReturn(
@@ -192,7 +192,7 @@ public class HtmlContentTransformerImplTest {
 	@Test
 	public void testTheAttributeIsCaseInsensitive() throws Exception {
 		Mockito.when(
-			_adaptiveMediaImageHTMLTagFactory.create(
+			_amImageHTMLTagFactory.create(
 				"<img data-fileentryid=\"1989\" src=\"adaptable\"/>",
 				_fileEntry)
 		).thenReturn(
@@ -221,7 +221,7 @@ public class HtmlContentTransformerImplTest {
 	}
 
 	@Mock
-	private AdaptiveMediaImageHTMLTagFactory _adaptiveMediaImageHTMLTagFactory;
+	private AMImageHTMLTagFactory _amImageHTMLTagFactory;
 
 	@Mock
 	private DLAppLocalService _dlAppLocalService;

@@ -14,9 +14,9 @@
 
 package com.liferay.adaptive.media.image.internal.util;
 
-import com.liferay.adaptive.media.exception.AdaptiveMediaRuntimeException;
-import com.liferay.adaptive.media.image.configuration.AdaptiveMediaImageConfigurationEntry;
-import com.liferay.adaptive.media.image.constants.AdaptiveMediaImageConstants;
+import com.liferay.adaptive.media.exception.AMRuntimeException;
+import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
+import com.liferay.adaptive.media.image.constants.AMImageConstants;
 import com.liferay.adaptive.media.image.internal.processor.util.TiffOrientationTransformer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.ImageToolUtil;
@@ -41,20 +41,21 @@ public class ImageProcessor {
 
 	public boolean isMimeTypeSupported(String mimeType) {
 		Set<String> supportedMimeTypes =
-			AdaptiveMediaImageConstants.getSupportedMimeTypes();
+			AMImageConstants.getSupportedMimeTypes();
 
 		return supportedMimeTypes.contains(mimeType);
 	}
 
 	public RenderedImage scaleImage(
 		FileVersion fileVersion,
-		AdaptiveMediaImageConfigurationEntry configurationEntry) {
+		AMImageConfigurationEntry amImageConfigurationEntry) {
 
 		try {
 			RenderedImage renderedImage = _tiffOrientationTransformer.transform(
 				() -> _getInputStream(fileVersion));
 
-			Map<String, String> properties = configurationEntry.getProperties();
+			Map<String, String> properties =
+				amImageConfigurationEntry.getProperties();
 
 			int maxHeight = GetterUtil.getInteger(properties.get("max-height"));
 			int maxWidth = GetterUtil.getInteger(properties.get("max-width"));
@@ -62,7 +63,7 @@ public class ImageProcessor {
 			return ImageToolUtil.scale(renderedImage, maxHeight, maxWidth);
 		}
 		catch (PortalException pe) {
-			throw new AdaptiveMediaRuntimeException.IOException(pe);
+			throw new AMRuntimeException.IOException(pe);
 		}
 	}
 
@@ -71,7 +72,7 @@ public class ImageProcessor {
 			return fileVersion.getContentStream(false);
 		}
 		catch (PortalException pe) {
-			throw new AdaptiveMediaRuntimeException.IOException(pe);
+			throw new AMRuntimeException.IOException(pe);
 		}
 	}
 

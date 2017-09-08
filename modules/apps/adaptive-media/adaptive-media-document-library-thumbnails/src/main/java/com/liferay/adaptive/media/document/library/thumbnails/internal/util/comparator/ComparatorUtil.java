@@ -19,10 +19,10 @@ package com.liferay.adaptive.media.document.library.thumbnails.internal.util.com
  */
 public class ComparatorUtil {
 
-	public static final AdaptiveMediaConfigurationPropertiesComparator<Integer>
+	public static final AMConfigurationPropertiesComparator<Integer>
 		distanceTo(String attributeName, int value) {
 
-		return new AdaptiveMediaConfigurationPropertiesComparator<>(
+		return new AMConfigurationPropertiesComparator<>(
 			attributeName, (s) -> Math.abs(Integer.parseInt(s) - value),
 			Integer::compareTo);
 	}

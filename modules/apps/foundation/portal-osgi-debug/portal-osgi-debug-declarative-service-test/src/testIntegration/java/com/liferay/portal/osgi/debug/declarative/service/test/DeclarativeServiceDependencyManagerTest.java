@@ -152,7 +152,7 @@ public class DeclarativeServiceDependencyManagerTest {
 
 			LoggingEvent loggingEvent = loggingEvents.get(0);
 
-			Assert.assertEquals(Level.INFO, loggingEvent.getLevel());
+			Assert.assertEquals(Level.WARN, loggingEvent.getLevel());
 
 			String message = (String)loggingEvent.getMessage();
 

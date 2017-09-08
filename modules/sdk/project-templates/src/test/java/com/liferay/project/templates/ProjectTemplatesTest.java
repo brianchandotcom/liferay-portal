@@ -469,6 +469,37 @@ public class ProjectTemplatesTest {
 			gradleProjectDir, "src/main/resources/templates/view.ftl",
 			_FREEMARKER_PORTLET_VIEW_FTL_PREFIX);
 	}
+	
+	@Test
+	public void testBuildTemplateHookDisplay() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+				"hook-display", "HookDisplay");
+
+			_testExists(gradleProjectDir, "src/main/resources/hookdisplay/portal.properties");
+			_testExists(gradleProjectDir, "src/main/webapp/hookdisplay/WEB-INF/liferay-hook.xml");
+			_testExists(gradleProjectDir, "build.gradle");
+			
+			_testContains(
+				gradleProjectDir, 
+				"src/main/java/hookdisplay/HookDisplay.java",
+				"public class HookDisplay extends SimpleAction");
+			
+			_testContains(
+				gradleProjectDir,
+				"src/main/webapp/hookdisplay/WEB-INF/liferay-plugin-package.properties",
+				"name=HookDisplay");
+
+			File mavenProjectDir = _buildTemplateWithMaven(
+				"hook-display", "HookDisplay", "hookdisplay",
+				"-DclassName=HookDisplay", "-Dpackage=HookDisplay");
+
+			_testContains(
+				mavenProjectDir, "pom.xml");
+
+			_buildProjects(
+				gradleProjectDir, mavenProjectDir, "build/libs/HookDisplay.war",
+				"target/HookDisplay-1.0.0.war");
+		}
 
 	@Test
 	public void testBuildTemplateInWorkspace() throws Exception {

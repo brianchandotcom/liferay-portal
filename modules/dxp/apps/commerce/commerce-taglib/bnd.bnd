@@ -1,0 +1,12 @@
+Bundle-Name: Liferay Commerce Taglib
+Bundle-SymbolicName: com.liferay.commerce.taglib
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.commerce.taglib.servlet.taglib
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+Provide-Capability:\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/commerce";\
+		version:Version="${Bundle-Version}"
+Web-ContextPath: /commerce-taglib

@@ -12,30 +12,28 @@
  * details.
  */
 
-package com.liferay.commerce.product.availability.range.web.internal.portlet.action;
+package com.liferay.commerce.availability.range.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
-import com.liferay.commerce.product.availability.range.web.internal.display.context.CPAvailabilityRangeDisplayContext;
-import com.liferay.commerce.product.exception.NoSuchCPAvailabilityRangeException;
-import com.liferay.commerce.product.service.CPAvailabilityRangeService;
+import com.liferay.commerce.availability.range.web.internal.display.context.CommerceAvailabilityRangeDisplayContext;
+import com.liferay.commerce.exception.NoSuchAvailabilityRangeException;
+import com.liferay.commerce.service.CommerceAvailabilityRangeService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -43,11 +41,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + CommerceAdminPortletKeys.COMMERCE_ADMIN,
-		"mvc.command.name=editCPAvailabilityRange"
+		"mvc.command.name=editCommerceAvailabilityRange"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditCPAvailabilityRangeMVCRenderCommand
+public class EditCommerceAvailabilityRangeMVCRenderCommand
 	implements MVCRenderCommand {
 
 	@Override
@@ -60,15 +58,15 @@ public class EditCPAvailabilityRangeMVCRenderCommand
 				"/edit_availability_range.jsp");
 
 		try {
-			CPAvailabilityRangeDisplayContext
-				cpAvailabilityRangeDisplayContext =
-					new CPAvailabilityRangeDisplayContext(
-						_cpAvailabilityRangeService, renderRequest,
+			CommerceAvailabilityRangeDisplayContext
+				commerceAvailabilityRangeDisplayContext =
+					new CommerceAvailabilityRangeDisplayContext(
+						_commerceAvailabilityRangeService, renderRequest,
 						renderResponse);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				cpAvailabilityRangeDisplayContext);
+				commerceAvailabilityRangeDisplayContext);
 
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(renderRequest);
@@ -78,7 +76,7 @@ public class EditCPAvailabilityRangeMVCRenderCommand
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchCPAvailabilityRangeException ||
+			if (e instanceof NoSuchAvailabilityRangeException ||
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(renderRequest, e.getClass());
@@ -95,13 +93,13 @@ public class EditCPAvailabilityRangeMVCRenderCommand
 	}
 
 	@Reference
-	private CPAvailabilityRangeService _cpAvailabilityRangeService;
+	private CommerceAvailabilityRangeService _commerceAvailabilityRangeService;
 
 	@Reference
 	private Portal _portal;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.product.availability.range.web)"
+		target = "(osgi.web.symbolicname=com.liferay.commerce.availability.range.web)"
 	)
 	private ServletContext _servletContext;
 

@@ -153,7 +153,7 @@ public class SingleLogoutProfileImpl
 				HttpHeaders.PRAGMA, HttpHeaders.PRAGMA_NO_CACHE_VALUE);
 
 			if (requestPath.equals("/c/portal/logout")) {
-				initiateIdpSingleLogout(request, response, null);
+				initiateIdpSingleLogout(request, response);
 			}
 			else if (requestPath.equals("/c/portal/saml/slo_logout")) {
 				SamlSloContext samlSloContext = getSamlSloContext(
@@ -422,9 +422,7 @@ public class SingleLogoutProfileImpl
 	}
 
 	protected void initiateIdpSingleLogout(
-			HttpServletRequest request, HttpServletResponse response,
-			SAMLMessageContext<LogoutRequest, LogoutResponse, NameID>
-				samlMessageContext)
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		SamlSloContext samlSloContext = getSamlSloContext(request, null);
@@ -633,7 +631,7 @@ public class SingleLogoutProfileImpl
 					_samlIdpSpSessionLocalService, _userLocalService));
 		}
 		else if (!samlSloContext.getSamlSpEntityIds().isEmpty()) {
-			initiateIdpSingleLogout(request, response, samlMessageContext);
+			initiateIdpSingleLogout(request, response);
 		}
 		else {
 			sendIdpLogoutResponse(

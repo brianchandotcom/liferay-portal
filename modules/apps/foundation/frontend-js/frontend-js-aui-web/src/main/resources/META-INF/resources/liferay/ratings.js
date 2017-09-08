@@ -501,11 +501,15 @@ AUI.add(
 						var cssClassesOn = cssClasses.on;
 
 						var ratingThumbDown = elements.item(1);
-						var ratingThumbUp = elements.item(0);
+
+						var ratingThumbDownCssClassOn = false;
 
 						if (ratingThumbDown) {
-							var ratingThumbDownCssClassOn = ratingThumbDown.hasClass(cssClassesOn);
+							ratingThumbDownCssClassOn = ratingThumbDown.hasClass(cssClassesOn);
 						}
+
+						var ratingThumbUp = elements.item(0);
+
 						var ratingThumbUpCssClassOn = ratingThumbUp.hasClass(cssClassesOn);
 
 						var thumbDownMessage = '';

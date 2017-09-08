@@ -1,0 +1,16 @@
+<definition>
+	<command name="addEntry">
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertClick" locator1="CommerceEntry#PLUS_MENU" value1="${plusMenu}">
+			<var name="key_plusMenu" value="${plusMenu}" />
+		</execute>
+
+		<execute macro="CommerceEntry#addSKUsEntry">
+			<var name="optionText" value="${optionText}" />
+			<var name="optionValue" value="${optionValue}" />
+			<var name="productSKU" value="${productSKU}" />
+			<var name="selectValue" value="${selectValue}" />
+		</execute>
+	</command>
+</definition>

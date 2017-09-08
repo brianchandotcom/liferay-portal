@@ -399,10 +399,10 @@ public class FolderStagedModelDataHandler
 			int count)
 		throws Exception {
 
-		Folder folder = FolderUtil.fetchByR_P_N(
+		DLFolder dlFolder = _dlFolderLocalService.fetchFolder(
 			repositoryId, parentFolderId, name);
 
-		if (folder == null) {
+		if (dlFolder == null) {
 			FileEntry fileEntry = FileEntryUtil.fetchByR_F_T(
 				repositoryId, parentFolderId, name);
 
@@ -410,7 +410,7 @@ public class FolderStagedModelDataHandler
 				return name;
 			}
 		}
-		else if (Validator.isNotNull(uuid) && uuid.equals(folder.getUuid())) {
+		else if (Validator.isNotNull(uuid) && uuid.equals(dlFolder.getUuid())) {
 			return name;
 		}
 

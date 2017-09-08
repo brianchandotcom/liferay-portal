@@ -175,5 +175,5 @@ request.setAttribute("cpDefinitionId", cpDefinition.getCPDefinitionId());
 
 			Liferay.component('<portlet:namespace /><%= cpDefinition.getCPDefinitionId() %>ProductContent', productContent);
 		</aui:script>
-	</aui:form>	
+	</aui:form>
 </liferay-ddm:template-renderer>

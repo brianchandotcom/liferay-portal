@@ -28,7 +28,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 public class ComponentUtil {
 
-	public static <T> void tryEnableComponents(
+	public static <T> void enableComponents(
 		Class<T> referenceClass, String filterString,
 		ComponentContext componentContext, Class<?>... componentClasses) {
 

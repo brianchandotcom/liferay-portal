@@ -31,7 +31,7 @@ public class ComponentEnabler {
 
 	@Activate
 	protected void activate(ComponentContext componentContext) {
-		ComponentUtil.tryEnableComponents(
+		ComponentUtil.enableComponents(
 			ProxyMessageListener.class,
 			"(destination.name=" + RulesEngineConstants.DESTINATION_NAME + ")",
 			componentContext, RulesEngineProxyBeanConfigurator.class);

@@ -30,7 +30,7 @@ public class ComponentEnabler {
 
 	@Activate
 	protected void activate(ComponentContext componentContext) {
-		ComponentUtil.tryEnableComponents(
+		ComponentUtil.enableComponents(
 			Store.class,
 			"(store.type=com.liferay.portal.store.file.system." +
 				"AdvancedFileSystemStore)",

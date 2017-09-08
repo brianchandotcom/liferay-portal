@@ -32,7 +32,7 @@ public class ComponentEnabler {
 
 	@Activate
 	protected void activate(ComponentContext componentContext) {
-		ComponentUtil.tryEnableComponents(
+		ComponentUtil.enableComponents(
 			ProxyMessageListener.class,
 			"(destination.name=" + DestinationNames.AUDIT + ")",
 			componentContext, AuditMessagingConfigurator.class,

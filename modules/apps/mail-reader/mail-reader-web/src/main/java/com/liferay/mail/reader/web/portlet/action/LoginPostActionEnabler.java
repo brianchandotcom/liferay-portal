@@ -31,7 +31,7 @@ public class LoginPostActionEnabler {
 
 	@Activate
 	public void activate(ComponentContext componentContext) {
-		ComponentUtil.tryEnableComponents(
+		ComponentUtil.enableComponents(
 			MessageListener.class,
 			"(destination.name=" + DestinationNames.MAIL_SYNCHRONIZER + ")",
 			componentContext, LoginPostAction.class);

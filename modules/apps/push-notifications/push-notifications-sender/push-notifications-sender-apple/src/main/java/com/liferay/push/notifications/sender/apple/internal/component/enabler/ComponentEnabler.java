@@ -31,7 +31,7 @@ public class ComponentEnabler {
 
 	@Activate
 	protected void activate(ComponentContext componentContext) {
-		ComponentUtil.tryEnableComponents(
+		ComponentUtil.enableComponents(
 			Destination.class,
 			"(destination.name= " +
 				PushNotificationsDestinationNames.PUSH_NOTIFICATION_RESPONSE +

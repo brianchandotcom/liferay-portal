@@ -2296,8 +2296,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		typeKeys(locator, "");
 
-		Keyboard keyboard = new DesktopKeyboard();
-
 		Matcher matcher = _aceEditorPattern.matcher(value);
 
 		int x = 0;
@@ -2307,12 +2305,12 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 			String line = value.substring(x, y);
 
-			keyboard.type(line.trim());
+			webElement.sendKeys(line.trim());
 
 			String specialCharacter = matcher.group();
 
 			if (specialCharacter.equals("(")) {
-				keyboard.type("(");
+				webElement.sendKeys("(");
 			}
 			else if (specialCharacter.equals("${line.separator}")) {
 				keyPress(locator, "\\SPACE");
@@ -2324,7 +2322,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		String line = value.substring(x);
 
-		keyboard.type(line.trim());
+		webElement.sendKeys(line.trim());
 	}
 
 	@Override
@@ -2702,11 +2700,11 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	public void typeAceEditor(String locator, String value) throws Exception {
 		WebElement webElement = getWebElement(locator);
 
+		webElement.click();
+
 		webElement.sendKeys(Keys.chord(Keys.CONTROL, "a"));
 
-		typeKeys(locator, "");
-
-		Keyboard keyboard = new DesktopKeyboard();
+		webElement.sendKeys(Keys.DELETE);
 
 		Matcher matcher = _aceEditorPattern.matcher(value);
 
@@ -2717,12 +2715,12 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 			String line = value.substring(x, y);
 
-			keyboard.type(line.trim());
+			webElement.sendKeys(line.trim());
 
 			String specialCharacter = matcher.group();
 
 			if (specialCharacter.equals("(")) {
-				keyboard.type("(");
+				webElement.sendKeys("(");
 			}
 			else if (specialCharacter.equals("${line.separator}")) {
 				keyPress(locator, "\\SPACE");
@@ -2734,7 +2732,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		String line = value.substring(x);
 
-		keyboard.type(line.trim());
+		webElement.sendKeys(line.trim());
 
 		webElement.sendKeys(Keys.chord(Keys.CONTROL, Keys.SHIFT, Keys.END));
 

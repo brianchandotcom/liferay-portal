@@ -76,6 +76,22 @@
 	}
 }
 
+.product-detail-header {
+	.btn-lg + .btn-lg {
+    	margin-left: 20px;
+	}
+}
+
+.product-detail-header, .nav-tabs-centered .nav-tabs {
+	max-width: 1280px;
+
+	@include center-block();
+}
+
+.product-detail-body {
+	background-color: $brand-color-extra-light;
+}
+
 .collapse-login {
 	background-color: $bg-color-secondary;
 

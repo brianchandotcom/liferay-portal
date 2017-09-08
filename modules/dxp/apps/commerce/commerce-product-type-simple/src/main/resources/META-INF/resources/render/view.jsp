@@ -35,60 +35,58 @@ CPDefinition cpDefinition = cpTypeDisplayContext.getCPDefinition();
 >
 	<div class="container-fluid product-detail" data-cp-definition-id="<%= cpDefinition.getCPDefinitionId() %>">
 		<div class="row">
-			<div class="col-lg-6 col-md-7">
-				<div class="row">
-					<div class="col-lg-2 col-md-3 col-xs-2">
-						<div id="<portlet:namespace />thumbs-container">
+			<div class="product-detail-header">
+				<div class="col-lg-6 col-md-7">
+					<div class="row">
+						<div class="col-lg-2 col-md-3 col-xs-2">
+							<div id="<portlet:namespace />thumbs-container">
 
-							<%
-							for (CPAttachmentFileEntry cpAttachmentFileEntry : cpTypeDisplayContext.getImages()) {
-								String url = cpTypeDisplayContext.getImageURL(cpAttachmentFileEntry.getFileEntry(), themeDisplay);
-							%>
+								<%
+								for (CPAttachmentFileEntry cpAttachmentFileEntry : cpTypeDisplayContext.getImages()) {
+									String url = cpTypeDisplayContext.getImageURL(cpAttachmentFileEntry.getFileEntry(), themeDisplay);
+								%>
 
-								<div class="card thumb" data-url="<%= url %>">
-									<img class="center-block img-responsive" src="<%= url %>">
-								</div>
+									<div class="card thumb" data-url="<%= url %>">
+										<img class="center-block img-responsive" src="<%= url %>">
+									</div>
 
-							<%
-							}
-							%>
+								<%
+								}
+								%>
 
+							</div>
 						</div>
-					</div>
 
-					<div class="col-lg-10 col-md-9 col-xs-10 full-image">
+						<div class="col-lg-10 col-md-9 col-xs-10 full-image">
 
-						<%
-						CPAttachmentFileEntry cpAttachmentFileEntry = cpTypeDisplayContext.getDefaultImage();
-						%>
+							<%
+							CPAttachmentFileEntry cpAttachmentFileEntry = cpTypeDisplayContext.getDefaultImage();
+							%>
 
-						<c:if test="<%= cpAttachmentFileEntry != null %>">
-							<img class="center-block img-responsive" id="<portlet:namespace />full-image" src="<%= cpTypeDisplayContext.getImageURL(cpAttachmentFileEntry.getFileEntry(), themeDisplay) %>">
-						</c:if>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-lg-6 col-md-5">
-				<h1><%= cpDefinition.getTitle(languageId) %></h1>
-
-				<div class="row">
-					<div class="col-md-12">
-						<div class="options">
-							<%= cpTypeDisplayContext.renderOptions(renderRequest, renderResponse) %>
+							<c:if test="<%= cpAttachmentFileEntry != null %>">
+								<img class="center-block img-responsive" id="<portlet:namespace />full-image" src="<%= cpTypeDisplayContext.getImageURL(cpAttachmentFileEntry.getFileEntry(), themeDisplay) %>">
+							</c:if>
 						</div>
 					</div>
 				</div>
 
-				<div class="row">
-					<div class="col-md-12">
-						<liferay-util:dynamic-include key="com.liferay.commerce.product.content.web#/add_to_cart#" />
-					</div>
-				</div>
+				<div class="col-lg-6 col-md-5">
+					<h1><%= cpDefinition.getTitle(languageId) %></h1>
 
-				<div class="row">
-					<div class="col-md-12">
-						<liferay-util:dynamic-include key="com.liferay.commerce.product.content.web#/add_to_wish_list#" />
+					<div class="row">
+						<div class="col-md-12">
+							<div class="options">
+								<%= cpTypeDisplayContext.renderOptions(renderRequest, renderResponse) %>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12">
+							<liferay-util:dynamic-include key="com.liferay.commerce.product.content.web#/add_to_cart#" />
+
+							<liferay-util:dynamic-include key="com.liferay.commerce.product.content.web#/add_to_wish_list#" />
+						</div>
 					</div>
 				</div>
 			</div>
@@ -98,51 +96,55 @@ CPDefinition cpDefinition = cpTypeDisplayContext.getCPDefinition();
 			List<CPDefinitionSpecificationOptionValue> cpDefinitionSpecificationOptionValues = cpTypeDisplayContext.getCPDefinitionSpecificationOptionValues();
 		%>
 
-		<div class="nav-tabs-centered">
-			<ul class="nav nav-tabs" role="tablist">
-				<li class="active" role="presentation">
-					<a aria-controls="<portlet:namespace />description" aria-expanded="true" data-toggle="tab" href="#<portlet:namespace />description" role="tab">
-						<%= LanguageUtil.get(resourceBundle, "description") %>
-					</a>
-				</li>
+		<div class="row">
+			<div class="product-detail-body">
+				<div class="nav-tabs-centered">
+					<ul class="nav nav-tabs" role="tablist">
+						<li class="active" role="presentation">
+							<a aria-controls="<portlet:namespace />description" aria-expanded="true" data-toggle="tab" href="#<portlet:namespace />description" role="tab">
+								<%= LanguageUtil.get(resourceBundle, "description") %>
+							</a>
+						</li>
 
-				<c:if test="<%= !cpDefinitionSpecificationOptionValues.isEmpty() %>">
-					<li role="presentation">
-						<a aria-controls="<portlet:namespace />specification" aria-expanded="false" data-toggle="tab" href="#<portlet:namespace />specification" role="tab">
-							<%= LanguageUtil.get(resourceBundle, "specification-options") %>
-						</a>
-					</li>
-				</c:if>
-			</ul>
+						<c:if test="<%= !cpDefinitionSpecificationOptionValues.isEmpty() %>">
+							<li role="presentation">
+								<a aria-controls="<portlet:namespace />specification" aria-expanded="false" data-toggle="tab" href="#<portlet:namespace />specification" role="tab">
+									<%= LanguageUtil.get(resourceBundle, "specification-options") %>
+								</a>
+							</li>
+						</c:if>
+					</ul>
 
-			<div class="tab-content">
-				<div class="active tab-pane" id="<portlet:namespace />description">
-					<p><%= cpDefinition.getDescription(languageId) %></p>
-				</div>
-
-				<c:if test="<%= !cpDefinitionSpecificationOptionValues.isEmpty() %>">
-					<div class="tab-pane" id="<portlet:namespace />specification">
-						<div class="table-responsive">
-							<table class="table table-bordered table-striped">
-
-								<%
-								for (CPDefinitionSpecificationOptionValue cpDefinitionSpecificationOptionValue : cpDefinitionSpecificationOptionValues) {
-									CPSpecificationOption cpSpecificationOption = cpDefinitionSpecificationOptionValue.getCPSpecificationOption();
-								%>
-
-									<tr>
-										<td><%= cpSpecificationOption.getTitle(languageId) %></td>
-										<td><%= cpDefinitionSpecificationOptionValue.getValue(languageId) %></td>
-									</tr>
-
-								<%
-								}
-								%>
-
-							</table>
+					<div class="tab-content">
+						<div class="active tab-pane" id="<portlet:namespace />description">
+							<p><%= cpDefinition.getDescription(languageId) %></p>
 						</div>
+
+						<c:if test="<%= !cpDefinitionSpecificationOptionValues.isEmpty() %>">
+							<div class="tab-pane" id="<portlet:namespace />specification">
+								<div class="table-responsive">
+									<table class="table table-bordered table-striped">
+
+										<%
+										for (CPDefinitionSpecificationOptionValue cpDefinitionSpecificationOptionValue : cpDefinitionSpecificationOptionValues) {
+											CPSpecificationOption cpSpecificationOption = cpDefinitionSpecificationOptionValue.getCPSpecificationOption();
+										%>
+
+											<tr>
+												<td><%= cpSpecificationOption.getTitle(languageId) %></td>
+												<td><%= cpDefinitionSpecificationOptionValue.getValue(languageId) %></td>
+											</tr>
+
+										<%
+										}
+										%>
+
+									</table>
+								</div>
+							</div>
+						</c:if>
 					</div>
-				</c:if>
+				</div>
 			</div>
 		</div>
 	</div>

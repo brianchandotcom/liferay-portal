@@ -21,7 +21,7 @@ HashMap<String, String> dataMap = new HashMap<>();
 dataMap.put("cp-definition-id", "");
 %>
 
-<aui:button cssClass="btn-lg btn-primary" data="<%= dataMap %>" name="add-to-wish-list" value="add-to-wish-list" />
+<aui:button cssClass="btn-lg" data="<%= dataMap %>" name="add-to-wish-list" value="add-to-wish-list" />
 
 <aui:script use="aui-io-request,aui-parse-content,liferay-notification">
 	A.one('#<portlet:namespace />add-to-wish-list').on(

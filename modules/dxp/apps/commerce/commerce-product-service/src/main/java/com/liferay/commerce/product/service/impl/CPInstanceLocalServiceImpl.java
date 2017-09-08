@@ -80,11 +80,9 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	@Override
 	public CPInstance addCPInstance(
 			long cpDefinitionId, String sku, String gtin,
-			String manufacturerPartNumber, String ddmContent,
-			boolean overrideInventory, int minCartQuantity, int maxCartQuantity,
-			String allowedCartQuantities, int multipleCartQuantity,
-			double width, double height, double depth, double weight,
-			double cost, double price, int displayDateMonth, int displayDateDay,
+			String manufacturerPartNumber, String ddmContent, double width,
+			double height, double depth, double weight, double cost,
+			double price, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
 			int expirationDateMonth, int expirationDateDay,
 			int expirationDateYear, int expirationDateHour,
@@ -127,11 +125,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		cpInstance.setGtin(gtin);
 		cpInstance.setManufacturerPartNumber(manufacturerPartNumber);
 		cpInstance.setDDMContent(ddmContent);
-		cpInstance.setOverrideInventory(overrideInventory);
-		cpInstance.setMinCartQuantity(minCartQuantity);
-		cpInstance.setMaxCartQuantity(maxCartQuantity);
-		cpInstance.setAllowedCartQuantities(allowedCartQuantities);
-		cpInstance.setMultipleCartQuantity(multipleCartQuantity);
 		cpInstance.setWidth(width);
 		cpInstance.setHeight(height);
 		cpInstance.setDepth(depth);
@@ -166,8 +159,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	public CPInstance addCPInstance(
 			long cpDefinitionId, String sku, String gtin,
 			String manufacturerPartNumber, String ddmContent,
-			boolean overrideInventory, int minCartQuantity, int maxCartQuantity,
-			String allowedCartQuantities, int multipleCartQuantity,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -180,8 +171,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		return addCPInstance(
 			cpDefinitionId, sku, gtin, manufacturerPartNumber, ddmContent,
-			overrideInventory, minCartQuantity, maxCartQuantity,
-			allowedCartQuantities, multipleCartQuantity,
 			cpDefinition.getWidth(), cpDefinition.getHeight(),
 			cpDefinition.getDepth(), cpDefinition.getWeight(), 0, 0,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
@@ -278,11 +267,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 			addCPInstance(
 				cpDefinitionId, sku.toString(), StringPool.BLANK,
-				StringPool.BLANK, jsonArray.toString(), false,
-				cpDefinition.getMinCartQuantity(),
-				cpDefinition.getMaxCartQuantity(),
-				cpDefinition.getAllowedCartQuantities(),
-				cpDefinition.getMultipleCartQuantity(), cpDefinition.getWidth(),
+				StringPool.BLANK, jsonArray.toString(), cpDefinition.getWidth(),
 				cpDefinition.getHeight(), cpDefinition.getDepth(),
 				cpDefinition.getWeight(), 0, 0, cpDefinition.getDisplayDate(),
 				cpDefinition.getExpirationDate(), neverExpire, serviceContext);
@@ -428,16 +413,13 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	@Override
 	public CPInstance updateCPInstance(
 			long cpInstanceId, String sku, String gtin,
-			String manufacturerPartNumber, boolean overrideInventory,
-			int minCartQuantity, int maxCartQuantity,
-			String allowedCartQuantities, int multipleCartQuantity,
-			double width, double height, double depth, double weight,
-			double cost, double price, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			ServiceContext serviceContext)
+			String manufacturerPartNumber, double width, double height,
+			double depth, double weight, double cost, double price,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product instance
@@ -465,11 +447,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		cpInstance.setSku(sku);
 		cpInstance.setGtin(gtin);
 		cpInstance.setManufacturerPartNumber(manufacturerPartNumber);
-		cpInstance.setOverrideInventory(overrideInventory);
-		cpInstance.setMinCartQuantity(minCartQuantity);
-		cpInstance.setMaxCartQuantity(maxCartQuantity);
-		cpInstance.setAllowedCartQuantities(allowedCartQuantities);
-		cpInstance.setMultipleCartQuantity(multipleCartQuantity);
 		cpInstance.setWidth(width);
 		cpInstance.setHeight(height);
 		cpInstance.setDepth(depth);
@@ -503,11 +480,9 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	@Override
 	public CPInstance updateCPInstance(
 			long cpInstanceId, String sku, String gtin,
-			String manufacturerPartNumber, boolean overrideInventory,
-			int minCartQuantity, int maxCartQuantity,
-			String allowedCartQuantities, int multipleCartQuantity,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			String manufacturerPartNumber, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, ServiceContext serviceContext)
@@ -517,9 +492,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			cpInstanceId);
 
 		return updateCPInstance(
-			cpInstanceId, sku, gtin, manufacturerPartNumber, overrideInventory,
-			minCartQuantity, maxCartQuantity, allowedCartQuantities,
-			multipleCartQuantity, cpInstance.getWidth(), cpInstance.getHeight(),
+			cpInstanceId, sku, gtin, manufacturerPartNumber,
+			cpInstance.getWidth(), cpInstance.getHeight(),
 			cpInstance.getDepth(), cpInstance.getWeight(), cpInstance.getCost(),
 			cpInstance.getPrice(), displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
@@ -623,11 +597,9 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 	protected CPInstance addCPInstance(
 			long cpDefinitionId, String sku, String gtin,
-			String manufacturerPartNumber, String ddmContent,
-			boolean overrideInventory, int minCartQuantity, int maxCartQuantity,
-			String allowedCartQuantities, int multipleCartQuantity,
-			double width, double height, double depth, double weight,
-			double cost, double price, Date displayDate, Date expirationDate,
+			String manufacturerPartNumber, String ddmContent, double width,
+			double height, double depth, double weight, double cost,
+			double price, Date displayDate, Date expirationDate,
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -662,10 +634,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		return cpInstanceLocalService.addCPInstance(
 			cpDefinitionId, sku, gtin, manufacturerPartNumber, ddmContent,
-			overrideInventory, minCartQuantity, maxCartQuantity,
-			allowedCartQuantities, multipleCartQuantity, width, height, depth,
-			weight, cost, price, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
+			width, height, depth, weight, cost, price, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			serviceContext);

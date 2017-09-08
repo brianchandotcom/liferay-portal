@@ -98,17 +98,13 @@ public class CPDefinitionLocalServiceImpl
 			Map<Locale, String> metaTitleMap,
 			Map<Locale, String> metaKeywordsMap,
 			Map<Locale, String> metaDescriptionMap, String layoutUuid,
-			String productTypeName, boolean canSellWithoutOptions,
-			boolean displayAvailability, boolean displayStockQuantity,
-			int minCartQuantity, int maxCartQuantity,
-			String allowedCartQuantities, int multipleCartQuantity,
-			double width, double height, double depth, double weight,
-			String ddmStructureKey, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			ServiceContext serviceContext)
+			String productTypeName, boolean canSellWithoutOptions, double width,
+			double height, double depth, double weight, String ddmStructureKey,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition
@@ -148,12 +144,6 @@ public class CPDefinitionLocalServiceImpl
 		cpDefinition.setUserName(user.getFullName());
 		cpDefinition.setProductTypeName(productTypeName);
 		cpDefinition.setCanSellWithoutOptions(canSellWithoutOptions);
-		cpDefinition.setDisplayAvailability(displayAvailability);
-		cpDefinition.setDisplayStockQuantity(displayStockQuantity);
-		cpDefinition.setMinCartQuantity(minCartQuantity);
-		cpDefinition.setMaxCartQuantity(maxCartQuantity);
-		cpDefinition.setAllowedCartQuantities(allowedCartQuantities);
-		cpDefinition.setMultipleCartQuantity(multipleCartQuantity);
 		cpDefinition.setWidth(width);
 		cpDefinition.setHeight(height);
 		cpDefinition.setDepth(depth);
@@ -186,12 +176,10 @@ public class CPDefinitionLocalServiceImpl
 
 		cpInstanceLocalService.addCPInstance(
 			cpDefinitionId, CPConstants.INSTANCE_DEFAULT_SKU, null, null, null,
-			false, minCartQuantity, maxCartQuantity, allowedCartQuantities,
-			multipleCartQuantity, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 
 		// Commerce product friendly URL
 
@@ -232,9 +220,6 @@ public class CPDefinitionLocalServiceImpl
 			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, String layoutUuid,
 			String productTypeName, boolean canSellWithoutOptions,
-			boolean displayAvailability, boolean displayStockQuantity,
-			int minCartQuantity, int maxCartQuantity,
-			String allowedCartQuantities, int multipleCartQuantity,
 			String ddmStructureKey, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
 			int expirationDateMonth, int expirationDateDay,
@@ -245,14 +230,11 @@ public class CPDefinitionLocalServiceImpl
 
 		return addCPDefinition(
 			titleMap, shortDescriptionMap, descriptionMap, null, null, null,
-			layoutUuid, productTypeName, canSellWithoutOptions,
-			displayAvailability, displayStockQuantity, minCartQuantity,
-			maxCartQuantity, allowedCartQuantities, multipleCartQuantity, 0, 0,
-			0, 0, ddmStructureKey, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			layoutUuid, productTypeName, canSellWithoutOptions, 0, 0, 0, 0,
+			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
 	}
 
 	@Override
@@ -827,13 +809,10 @@ public class CPDefinitionLocalServiceImpl
 			Map<Locale, String> metaTitleMap,
 			Map<Locale, String> metaKeywordsMap,
 			Map<Locale, String> metaDescriptionMap, String layoutUuid,
-			boolean canSellWithoutOptions, boolean displayAvailability,
-			boolean displayStockQuantity, int minCartQuantity,
-			int maxCartQuantity, String allowedCartQuantities,
-			int multipleCartQuantity, double width, double height, double depth,
-			double weight, String ddmStructureKey, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, int expirationDateMonth,
+			boolean canSellWithoutOptions, double width, double height,
+			double depth, double weight, String ddmStructureKey,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, ServiceContext serviceContext)
@@ -865,12 +844,6 @@ public class CPDefinitionLocalServiceImpl
 		validate(groupId, ddmStructureKey, cpDefinition.getProductTypeName());
 
 		cpDefinition.setCanSellWithoutOptions(canSellWithoutOptions);
-		cpDefinition.setDisplayAvailability(displayAvailability);
-		cpDefinition.setDisplayStockQuantity(displayStockQuantity);
-		cpDefinition.setMinCartQuantity(minCartQuantity);
-		cpDefinition.setMaxCartQuantity(maxCartQuantity);
-		cpDefinition.setAllowedCartQuantities(allowedCartQuantities);
-		cpDefinition.setMultipleCartQuantity(multipleCartQuantity);
 		cpDefinition.setWidth(width);
 		cpDefinition.setHeight(height);
 		cpDefinition.setDepth(depth);
@@ -934,10 +907,7 @@ public class CPDefinitionLocalServiceImpl
 			long cpDefinitionId, Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, String layoutUuid,
-			boolean canSellWithoutOptions, boolean displayAvailability,
-			boolean displayStockQuantity, int minCartQuantity,
-			int maxCartQuantity, String allowedCartQuantities,
-			int multipleCartQuantity, String ddmStructureKey,
+			boolean canSellWithoutOptions, String ddmStructureKey,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -953,9 +923,7 @@ public class CPDefinitionLocalServiceImpl
 			cpDefinition.getUrlTitleMap(), cpDefinition.getMetaTitleMap(),
 			cpDefinition.getMetaKeywordsMap(),
 			cpDefinition.getMetaDescriptionMap(), layoutUuid,
-			canSellWithoutOptions, displayAvailability, displayStockQuantity,
-			minCartQuantity, maxCartQuantity, allowedCartQuantities,
-			multipleCartQuantity, cpDefinition.getWidth(),
+			canSellWithoutOptions, cpDefinition.getWidth(),
 			cpDefinition.getHeight(), cpDefinition.getDepth(),
 			cpDefinition.getWeight(), ddmStructureKey, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,

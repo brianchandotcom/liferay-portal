@@ -41,11 +41,9 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 	@Override
 	public CPInstance addCPInstance(
 			long cpDefinitionId, String sku, String gtin,
-			String manufacturerPartNumber, String ddmContent,
-			boolean overrideInventory, int minCartQuantity, int maxCartQuantity,
-			String allowedCartQuantities, int multipleCartQuantity,
-			double width, double height, double depth, double weight,
-			double cost, double price, int displayDateMonth, int displayDateDay,
+			String manufacturerPartNumber, String ddmContent, double width,
+			double height, double depth, double weight, double cost,
+			double price, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
 			int expirationDateMonth, int expirationDateDay,
 			int expirationDateYear, int expirationDateHour,
@@ -59,10 +57,8 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 
 		return cpInstanceLocalService.addCPInstance(
 			cpDefinitionId, sku, gtin, manufacturerPartNumber, ddmContent,
-			overrideInventory, minCartQuantity, maxCartQuantity,
-			allowedCartQuantities, multipleCartQuantity, width, height, depth,
-			weight, cost, price, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
+			width, height, depth, weight, cost, price, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			serviceContext);
@@ -72,8 +68,6 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 	public CPInstance addCPInstance(
 			long cpDefinitionId, String sku, String gtin,
 			String manufacturerPartNumber, String ddmContent,
-			boolean overrideInventory, int minCartQuantity, int maxCartQuantity,
-			String allowedCartQuantities, int multipleCartQuantity,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -87,12 +81,10 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 
 		return cpInstanceLocalService.addCPInstance(
 			cpDefinitionId, sku, gtin, manufacturerPartNumber, ddmContent,
-			overrideInventory, minCartQuantity, maxCartQuantity,
-			allowedCartQuantities, multipleCartQuantity, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	@Override
@@ -207,38 +199,8 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 	@Override
 	public CPInstance updateCPInstance(
 			long cpInstanceId, String sku, String gtin,
-			String manufacturerPartNumber, boolean overrideInventory,
-			int minCartQuantity, int maxCartQuantity,
-			String allowedCartQuantities, int multipleCartQuantity,
-			double width, double height, double depth, double weight,
-			double cost, double price, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		CPDefinitionPermission.checkCPInstance(
-			getPermissionChecker(), cpInstanceId,
-			CPActionKeys.UPDATE_COMMERCE_PRODUCT_INSTANCE);
-
-		return cpInstanceLocalService.updateCPInstance(
-			cpInstanceId, sku, gtin, manufacturerPartNumber, overrideInventory,
-			minCartQuantity, maxCartQuantity, allowedCartQuantities,
-			multipleCartQuantity, width, height, depth, weight, cost, price,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, serviceContext);
-	}
-
-	@Override
-	public CPInstance updateCPInstance(
-			long cpInstanceId, String sku, String gtin,
-			String manufacturerPartNumber, boolean overrideInventory,
-			int minCartQuantity, int maxCartQuantity,
-			String allowedCartQuantities, int multipleCartQuantity,
+			String manufacturerPartNumber, double width, double height,
+			double depth, double weight, double cost, double price,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -251,10 +213,32 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			CPActionKeys.UPDATE_COMMERCE_PRODUCT_INSTANCE);
 
 		return cpInstanceLocalService.updateCPInstance(
-			cpInstanceId, sku, gtin, manufacturerPartNumber, overrideInventory,
-			minCartQuantity, maxCartQuantity, allowedCartQuantities,
-			multipleCartQuantity, displayDateMonth, displayDateDay,
+			cpInstanceId, sku, gtin, manufacturerPartNumber, width, height,
+			depth, weight, cost, price, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
+	}
+
+	@Override
+	public CPInstance updateCPInstance(
+			long cpInstanceId, String sku, String gtin,
+			String manufacturerPartNumber, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
+		throws PortalException {
+
+		CPDefinitionPermission.checkCPInstance(
+			getPermissionChecker(), cpInstanceId,
+			CPActionKeys.UPDATE_COMMERCE_PRODUCT_INSTANCE);
+
+		return cpInstanceLocalService.updateCPInstance(
+			cpInstanceId, sku, gtin, manufacturerPartNumber, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			serviceContext);

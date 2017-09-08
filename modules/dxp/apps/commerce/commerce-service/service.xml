@@ -70,6 +70,42 @@
 			<finder-column name="defaultShipping" />
 		</finder>
 	</entity>
+	<entity local-service="true" name="CommerceAvailabilityRange" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceAvailabilityRangeId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column localized="true" name="title" type="String" />
+		<column name="priority" type="double" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="title" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="CommerceCart" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
@@ -232,6 +268,47 @@
 			<finder-column name="groupId" />
 			<finder-column name="shippingAllowed" />
 			<finder-column name="active" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="CommerceInventory" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceInventoryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="CPDefinitionId" type="long" />
+		<column name="commerceInventoryEngine" type="String" />
+		<column name="displayAvailability" type="boolean" />
+		<column name="displayStockQuantity" type="boolean" />
+		<column name="minStockQuantity" type="int" />
+		<column name="backOrders" type="boolean" />
+		<column name="minCartQuantity" type="int" />
+		<column name="maxCartQuantity" type="int" />
+		<column name="allowedCartQuantities" type="String" />
+		<column name="multipleCartQuantity" type="int" />
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId"></finder-column>
+		</finder>
+		<finder name="G_C" return-type="CommerceInventory" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="CPDefinitionId" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="CommerceOrder" remote-service="true">
@@ -544,6 +621,45 @@
 			<finder-column name="commerceWarehouseId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="CPDefinitionAvailabilityRange" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="CPDefinitionAvailabilityRangeId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="CPDefinitionId" type="long" />
+		<column name="commerceAvailabilityRangeId" type="long" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="G_C" return-type="CPDefinitionAvailabilityRange">
+			<finder-column name="groupId" />
+			<finder-column name="CPDefinitionId" />
+		</finder>
+		<finder name="G_C_C" return-type="CPDefinitionAvailabilityRange" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="CPDefinitionId" />
+			<finder-column name="commerceAvailabilityRangeId" />
 		</finder>
 	</entity>
 	<exceptions>

@@ -167,17 +167,17 @@ public class MergeCentralSubrepositoryUtil {
 
 		Properties properties = JenkinsResultsParserUtil.getBuildProperties();
 
-		String subrepositoryMentionList = properties.getProperty(
+		String subrepoMergePullMentionList = properties.getProperty(
 			"subrepo.merge.pull.mention.list[" + subrepositoryName + "]");
 
-		if (subrepositoryMentionList != null) {
+		if (subrepoMergePullMentionList != null) {
 			StringBuilder sb = new StringBuilder();
 
 			sb.append(body);
 			sb.append("\n\n");
 
 			List<String> subrepositoryMentions = Arrays.asList(
-				subrepositoryMentionList.split(","));
+				subrepoMergePullMentionList.split(","));
 
 			for (String subrepositoryMention : subrepositoryMentions) {
 				sb.append("@");

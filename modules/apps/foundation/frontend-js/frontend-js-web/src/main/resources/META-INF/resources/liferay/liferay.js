@@ -40,6 +40,22 @@ Liferay = window.Liferay || {};
 		return new jqueryInit(selector, context, root);
 	};
 
+	$(document).on(
+		'show.bs.collapse',
+		function(event) {
+			var target = $(event.target);
+
+			if (target.hasClass('in')) {
+				target.removeClass('in');
+				target.addClass('show');
+
+				target.collapse('hide');
+
+				return false;
+			}
+		}
+	);
+
 	/**
 	 * OPTIONS
 	 *

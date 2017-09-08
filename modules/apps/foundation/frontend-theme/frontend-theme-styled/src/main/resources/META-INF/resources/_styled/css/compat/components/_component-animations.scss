@@ -2,6 +2,14 @@
 	display: block;
 }
 
-.collapse.in.show {
-	display: none;
+tr.collapse.in {
+	display: table-row;
+}
+
+tbody.collapse.in {
+	display: table-row-group;
+}
+
+.fade.in {
+	opacity: 1;
 }

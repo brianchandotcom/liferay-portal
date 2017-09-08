@@ -17,9 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
+long cpDefinitionId = GetterUtil.getLong(request.getAttribute("cpDefinitionId"));
+
 HashMap<String, String> dataMap = new HashMap<>();
 dataMap.put("cp-definition-id", "");
 %>
+
+<liferay-commerce:quantity-input CPDefinitionId="<%= cpDefinitionId %>" useSelect="<%= true %>" />
 
 <aui:button cssClass="btn-lg btn-primary" data="<%= dataMap %>" name="add-to-cart" value="add-to-cart" />
 
@@ -35,10 +39,12 @@ dataMap.put("cp-definition-id", "");
 
 			var ddmFormValues = JSON.stringify(productContent.getFormValues());
 
+			var quantity = A.one('#<portlet:namespace /><%= cpDefinitionId + "Quantity" %>');
+
 			var data = {
 				'_<%= CommercePortletKeys.COMMERCE_CART_CONTENT %>_cpDefinitionId' : cpDefinitionId ,
 				'_<%= CommercePortletKeys.COMMERCE_CART_CONTENT %>_ddmFormValues' : ddmFormValues ,
-				'_<%= CommercePortletKeys.COMMERCE_CART_CONTENT %>_quantity' : 1
+				'_<%= CommercePortletKeys.COMMERCE_CART_CONTENT %>_quantity' : quantity.val()
 			};
 
 			A.io.request(

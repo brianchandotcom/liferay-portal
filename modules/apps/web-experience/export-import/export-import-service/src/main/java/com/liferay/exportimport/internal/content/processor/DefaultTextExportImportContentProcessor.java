@@ -722,12 +722,26 @@ public class DefaultTextExportImportContentProcessor
 					throw new NoSuchLayoutException();
 				}
 
-				if (urlGroup.getGroupId() == groupId) {
-					urlSB.append(_DATA_HANDLER_GROUP_FRIENDLY_URL);
+				urlSB.append(_DATA_HANDLER_GROUP_FRIENDLY_URL);
+
+				// Append uuid so we can resolve during import regardless of
+				// it's this group or a different one
+
+				urlSB.append(StringPool.AT);
+
+				if (urlGroup.isStagedRemotely()) {
+					String remoteGroupUuid = urlGroup.getTypeSettingsProperty(
+						"remoteGroupUUID");
+
+					if (Validator.isNotNull(remoteGroupUuid)) {
+						urlSB.append(remoteGroupUuid);
+					}
 				}
 				else {
-					urlSB.append(groupFriendlyURL);
+					urlSB.append(urlGroup.getUuid());
 				}
+
+				urlSB.append(StringPool.AT);
 
 				String siteAdminURL =
 					GroupConstants.CONTROL_PANEL_FRIENDLY_URL +

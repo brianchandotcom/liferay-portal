@@ -73,41 +73,6 @@
 		<reference entity="DLApp" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
-	<entity local-service="true" name="CPAvailabilityRange" remote-service="true" uuid="true">
-
-		<!-- PK fields -->
-
-		<column name="CPAvailabilityRangeId" primary="true" type="long" />
-
-		<!-- Group instance -->
-
-		<column name="groupId" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
-
-		<!-- Other fields -->
-
-		<column localized="true" name="title" type="String" />
-		<column name="lastPublishDate" type="Date" />
-
-		<!-- Order -->
-
-		<order by="asc">
-			<order-column name="title" />
-		</order>
-
-		<!-- Finder methods -->
-
-		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
-		</finder>
-	</entity>
 	<entity local-service="true" name="CPDefinition" remote-service="true" trash-enabled="true" uuid="true">
 
 		<!-- PK fields -->
@@ -131,12 +96,6 @@
 		<column name="productTypeName" type="String" />
 		<column name="availableIndividually" type="boolean" />
 		<column name="canSellWithoutOptions" type="boolean" />
-		<column name="displayAvailability" type="boolean" />
-		<column name="displayStockQuantity" type="boolean" />
-		<column name="minCartQuantity" type="int" />
-		<column name="maxCartQuantity" type="int" />
-		<column name="allowedCartQuantities" type="String" />
-		<column name="multipleCartQuantity" type="int" />
 		<column name="width" type="double" />
 		<column name="height" type="double" />
 		<column name="depth" type="double" />
@@ -550,11 +509,6 @@
 		<column name="gtin" type="String" />
 		<column name="manufacturerPartNumber" type="String" />
 		<column name="DDMContent" type="String" />
-		<column name="overrideInventory" type="boolean" />
-		<column name="minCartQuantity" type="int" />
-		<column name="maxCartQuantity" type="int" />
-		<column name="allowedCartQuantities" type="String" />
-		<column name="multipleCartQuantity" type="int" />
 		<column name="width" type="double" />
 		<column name="height" type="double" />
 		<column name="depth" type="double" />

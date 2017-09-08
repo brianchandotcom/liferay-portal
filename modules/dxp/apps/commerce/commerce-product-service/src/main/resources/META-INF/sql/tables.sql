@@ -23,19 +23,6 @@ create table CPAttachmentFileEntry (
 	statusDate DATE null
 );
 
-create table CPAvailabilityRange (
-	uuid_ VARCHAR(75) null,
-	CPAvailabilityRangeId LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	title STRING null,
-	lastPublishDate DATE null
-);
-
 create table CPDSpecificationOptionValue (
 	uuid_ VARCHAR(75) null,
 	CPDSpecificationOptionValueId LONG not null primary key,
@@ -65,12 +52,6 @@ create table CPDefinition (
 	productTypeName VARCHAR(75) null,
 	availableIndividually BOOLEAN,
 	canSellWithoutOptions BOOLEAN,
-	displayAvailability BOOLEAN,
-	displayStockQuantity BOOLEAN,
-	minCartQuantity INTEGER,
-	maxCartQuantity INTEGER,
-	allowedCartQuantities VARCHAR(255) null,
-	multipleCartQuantity INTEGER,
 	width DOUBLE,
 	height DOUBLE,
 	depth DOUBLE,
@@ -194,11 +175,6 @@ create table CPInstance (
 	gtin VARCHAR(75) null,
 	manufacturerPartNumber VARCHAR(75) null,
 	DDMContent TEXT null,
-	overrideInventory BOOLEAN,
-	minCartQuantity INTEGER,
-	maxCartQuantity INTEGER,
-	allowedCartQuantities VARCHAR(75) null,
-	multipleCartQuantity INTEGER,
 	width DOUBLE,
 	height DOUBLE,
 	depth DOUBLE,

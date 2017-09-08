@@ -29,18 +29,6 @@
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
 	</model>
-	<model name="com.liferay.commerce.product.model.CPAvailabilityRange">
-		<field name="uuid" type="String" />
-		<field name="CPAvailabilityRangeId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field localized="true" name="title" type="String" />
-		<field name="lastPublishDate" type="Date" />
-	</model>
 	<model name="com.liferay.commerce.product.model.CPDefinition">
 		<field name="uuid" type="String" />
 		<field name="CPDefinitionId" type="long" />
@@ -53,23 +41,6 @@
 		<field name="productTypeName" type="String" />
 		<field name="availableIndividually" type="boolean" />
 		<field name="canSellWithoutOptions" type="boolean" />
-		<field name="displayAvailability" type="boolean" />
-		<field name="displayStockQuantity" type="boolean" />
-		<field name="minCartQuantity" type="int">
-			<hint name="default-value">1</hint>
-			<validator name="number" />
-		</field>
-		<field name="maxCartQuantity" type="int">
-			<hint name="default-value">10000</hint>
-			<validator name="number" />
-		</field>
-		<field name="allowedCartQuantities" type="String">
-			<hint name="max-length">255</hint>
-		</field>
-		<field name="multipleCartQuantity" type="int">
-			<hint name="default-value">1</hint>
-			<validator name="number" />
-		</field>
 		<field name="width" type="double">
 			<validator name="number" />
 		</field>
@@ -103,7 +74,9 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="CPDefinitionId1" type="long" />
 		<field name="CPDefinitionId2" type="long" />
-		<field name="priority" type="double" />
+		<field name="priority" type="double">
+			<validator name="number" />
+		</field>
 		<field name="type" type="int" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPDefinitionLocalization">
@@ -185,7 +158,9 @@
 		<field localized="true" name="value" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
-		<field name="priority" type="double" />
+		<field name="priority" type="double">
+			<validator name="number" />
+		</field>
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPDisplayLayout">
@@ -236,11 +211,6 @@
 		<field name="DDMContent" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field name="overrideInventory" type="boolean" />
-		<field name="minCartQuantity" type="int" />
-		<field name="maxCartQuantity" type="int" />
-		<field name="allowedCartQuantities" type="String" />
-		<field name="multipleCartQuantity" type="int" />
 		<field name="width" type="double">
 			<validator name="number" />
 		</field>
@@ -284,7 +254,9 @@
 		</field>
 		<field name="rate" type="double" />
 		<field name="primary" type="boolean" />
-		<field name="priority" type="double" />
+		<field name="priority" type="double">
+			<validator name="number" />
+		</field>
 		<field name="type" type="int" />
 		<field name="lastPublishDate" type="Date" />
 	</model>

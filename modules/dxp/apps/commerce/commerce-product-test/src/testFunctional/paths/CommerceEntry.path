@@ -79,6 +79,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>OPTION_VALUE</td>
+	<td>//div[contains (@class, '${key_optionType}')]//span [contains (., '${key_optionValue}')]/../input | //div[contains (@class, '${key_optionType}')]//label[contains (., '${key_optionValue}')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTION_SELECT</td>
+	<td>//div[contains (@class, 'select-field-trigger')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIONS_SELECT_LIST</td>
+	<td>//div[@class='drop-chosen']//span[contains(., '${key_selectValue}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PLUS_MENU</td>
 	<td>//div[contains (@class, 'dropdown')]//li/a[contains (.,'${key_plusMenu}')]</td>
 	<td></td>
@@ -121,6 +136,11 @@
 <tr>
 	<td>SHORT_DESCRIPTION_FIELD</td>
 	<td>//textarea[contains (@id,'shortDescription')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SKU_FIELD</td>
+	<td>//div/input[contains(@id,'sku')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.commerce.product.service.permission;
+package com.liferay.commerce.service.permission;
 
-import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
@@ -27,13 +27,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = "resource.name=" + CPAvailabilityRangePermission.RESOURCE_NAME,
+	property = "resource.name=" + CommerceInventoryPermission.RESOURCE_NAME,
 	service = ResourcePermissionChecker.class
 )
-public class CPAvailabilityRangePermission
-	extends BaseResourcePermissionChecker {
+public class CommerceInventoryPermission extends BaseResourcePermissionChecker {
 
-	public static final String RESOURCE_NAME = "com.liferay.commerce.product";
+	public static final String RESOURCE_NAME = "com.liferay.commerce";
 
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String actionId)
@@ -50,8 +49,8 @@ public class CPAvailabilityRangePermission
 		PermissionChecker permissionChecker, long groupId, String actionId) {
 
 		return contains(
-			permissionChecker, RESOURCE_NAME,
-			CommerceAdminPortletKeys.COMMERCE_ADMIN, groupId, actionId);
+			permissionChecker, RESOURCE_NAME, CPPortletKeys.CP_DEFINITIONS,
+			groupId, actionId);
 	}
 
 	@Override

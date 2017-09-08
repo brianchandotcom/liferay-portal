@@ -21,10 +21,11 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.xml.Element;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -56,8 +57,7 @@ public class CommerceInventoryStagedModelDataHandler
 			commerceInventory);
 
 		portletDataContext.addClassedModel(
-			element,
-			ExportImportPathUtil.getModelPath(commerceInventory),
+			element, ExportImportPathUtil.getModelPath(commerceInventory),
 			commerceInventory);
 	}
 
@@ -67,7 +67,7 @@ public class CommerceInventoryStagedModelDataHandler
 			long commerceInventoryId)
 		throws Exception {
 
-		CommerceInventory existingCommerceInventory =fetchMissingReference(
+		CommerceInventory existingCommerceInventory = fetchMissingReference(
 			uuid, groupId);
 
 		Map<Long, Long> commerceInventoryIds =
@@ -99,9 +99,8 @@ public class CommerceInventoryStagedModelDataHandler
 		if ((existingCommerceInventory == null) ||
 			!portletDataContext.isDataStrategyMirror()) {
 
-			importedCommerceInventory =
-				_stagedModelRepository.addStagedModel(
-					portletDataContext, importedCommerceInventory);
+			importedCommerceInventory = _stagedModelRepository.addStagedModel(
+				portletDataContext, importedCommerceInventory);
 		}
 		else {
 			importedCommerceInventory.setCommerceInventoryId(
@@ -128,13 +127,11 @@ public class CommerceInventoryStagedModelDataHandler
 		unbind = "-"
 	)
 	protected void setStagedModelRepository(
-		StagedModelRepository<CommerceInventory>
-			stagedModelRepository) {
+		StagedModelRepository<CommerceInventory> stagedModelRepository) {
 
 		_stagedModelRepository = stagedModelRepository;
 	}
 
-	private StagedModelRepository<CommerceInventory>
-		_stagedModelRepository;
+	private StagedModelRepository<CommerceInventory> _stagedModelRepository;
 
 }

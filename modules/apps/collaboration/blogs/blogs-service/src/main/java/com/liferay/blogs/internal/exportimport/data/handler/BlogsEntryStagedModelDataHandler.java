@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -304,15 +305,23 @@ public class BlogsEntryStagedModelDataHandler
 			coverImageSelector = new ImageSelector(entry.getCoverImageURL());
 		}
 		else if (entry.getCoverImageFileEntryId() != 0) {
+			Map<Long, Long> fileEntryIds =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					FileEntry.class);
+
+			long coverImageFileEntryId = MapUtil.getLong(
+				fileEntryIds, entry.getCoverImageFileEntryId(), 0);
+
+			importedEntry.setCoverImageFileEntryId(coverImageFileEntryId);
+
+			_blogsEntryLocalService.updateBlogsEntry(importedEntry);
+
 			coverImageSelector = _getImageSelector(
 				portletDataContext, entry.getCoverImageFileEntryId(),
 				attachmentElements);
 		}
 
 		if (coverImageSelector != null) {
-			_blogsEntryLocalService.addCoverImage(
-				importedEntry.getEntryId(), coverImageSelector);
-
 			_blogsEntryLocalService.addOriginalImageFileEntry(
 				userId, importedEntry.getGroupId(), importedEntry.getEntryId(),
 				coverImageSelector);

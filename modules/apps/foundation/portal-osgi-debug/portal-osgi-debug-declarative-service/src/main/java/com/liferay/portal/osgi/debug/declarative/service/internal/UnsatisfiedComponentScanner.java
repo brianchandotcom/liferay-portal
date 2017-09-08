@@ -81,9 +81,15 @@ public class UnsatisfiedComponentScanner {
 
 			BundleContext bundleContext = bundle.getBundleContext();
 
-			_log.info(
-				UnsatisfiedComponentUtil.listUnsatisfiedComponents(
-					serviceComponentRuntime, bundleContext.getBundles()));
+			String message = UnsatisfiedComponentUtil.listUnsatisfiedComponents(
+				serviceComponentRuntime, bundleContext.getBundles());
+
+			if (message.isEmpty()) {
+				_log.info("All Declarative Service components are satisfied");
+			}
+			else if (_log.isWarnEnabled()) {
+				_log.warn(message);
+			}
 		}
 	}
 

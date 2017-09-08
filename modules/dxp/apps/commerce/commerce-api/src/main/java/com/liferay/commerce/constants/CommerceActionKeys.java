@@ -22,8 +22,14 @@ public class CommerceActionKeys {
 	public static final String MANAGE_COMMERCE_ADDRESSES =
 		"MANAGE_COMMERCE_ADDRESSES";
 
+	public static final String MANAGE_COMMERCE_AVAILABILITY_RANGES =
+		"MANAGE_COMMERCE_AVAILABILITY_RANGES";
+
 	public static final String MANAGE_COMMERCE_COUNTRIES =
 		"MANAGE_COMMERCE_COUNTRIES";
+
+	public static final String MANAGE_COMMERCE_INVENTORY =
+		"MANAGE_COMMERCE_INVENTORY";
 
 	public static final String MANAGE_COMMERCE_ORDERS =
 		"MANAGE_COMMERCE_ORDERS";

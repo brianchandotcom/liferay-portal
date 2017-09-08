@@ -57,7 +57,7 @@ public class NGramHolderBuilderImpl implements NGramHolderBuilder {
 		throws SearchException {
 
 		try (NGramTokenizer nGramTokenizer =
-				new NGramTokenizer(nGramMinLength, nGramMaxLength)) {
+				createNGramTokenizer(nGramMinLength, nGramMaxLength)) {
 
 			nGramTokenizer.setReader(new StringReader(input));
 
@@ -96,6 +96,23 @@ public class NGramHolderBuilderImpl implements NGramHolderBuilder {
 		catch (Exception e) {
 			throw new SearchException(e);
 		}
+	}
+
+	protected NGramTokenizer createNGramTokenizer(
+		int nGramMinLength, int nGramMaxLength) {
+
+		return new NGramTokenizer(nGramMinLength, nGramMaxLength) {
+
+			@Override
+			protected boolean isTokenChar(int chr) {
+				if (Character.isWhitespace(chr)) {
+					return false;
+				}
+
+				return true;
+			}
+
+		};
 	}
 
 	protected int getNGramMaxLength(int length) {

@@ -4021,68 +4021,15 @@ public class StringUtil {
 	}
 
 	/**
-	 * Splits string <code>s</code> around return and newline characters.
-	 *
-	 * <p>
-	 * Example:
-	 * </p>
-	 *
-	 * <p>
-	 * <pre>
-	 * <code>
-	 * splitLines("Red\rBlue\nGreen") returns {"Red","Blue","Green"}
-	 * </code>
-	 * </pre>
-	 * </p>
-	 *
-	 * @param  s the string to split
-	 * @return the array of strings resulting from splitting string
-	 *         <code>s</code> around return and newline characters, or an empty
-	 *         string array if string <code>s</code> is <code>null</code>
+	 * @deprecated As of 7.0.0, replaced by {@link #splitByLines(String)}
 	 */
+	@Deprecated
 	public static String[] splitLines(String s) {
 		if (Validator.isNull(s)) {
 			return _emptyStringArray;
 		}
 
-		s = s.trim();
-
-		List<String> lines = new ArrayList<>();
-
-		int lastIndex = 0;
-
-		while (true) {
-			int returnIndex = s.indexOf(CharPool.RETURN, lastIndex);
-
-			if (returnIndex == -1) {
-				_split(lines, s, lastIndex, CharPool.NEW_LINE);
-
-				return lines.toArray(new String[lines.size()]);
-			}
-
-			int newLineIndex = s.indexOf(CharPool.NEW_LINE, lastIndex);
-
-			if (newLineIndex == -1) {
-				_split(lines, s, lastIndex, CharPool.RETURN);
-
-				return lines.toArray(new String[lines.size()]);
-			}
-
-			if (newLineIndex < returnIndex) {
-				lines.add(s.substring(lastIndex, newLineIndex));
-
-				lastIndex = newLineIndex + 1;
-			}
-			else {
-				lines.add(s.substring(lastIndex, returnIndex));
-
-				lastIndex = returnIndex + 1;
-
-				if (lastIndex == newLineIndex) {
-					lastIndex++;
-				}
-			}
-		}
+		return splitByLines(s.trim());
 	}
 
 	/**

@@ -66,6 +66,7 @@ page import="com.liferay.portal.kernel.model.RoleConstants" %><%@
 page import="com.liferay.portal.kernel.model.User" %><%@
 page import="com.liferay.portal.kernel.model.UserGroupRole" %><%@
 page import="com.liferay.portal.kernel.model.UserPersonalSite" %><%@
+page import="com.liferay.portal.kernel.portlet.AdministratorControlPanelEntry" %><%@
 page import="com.liferay.portal.kernel.portlet.ControlPanelEntry" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.portlet.OmniadminControlPanelEntry" %><%@

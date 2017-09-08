@@ -145,9 +145,10 @@ PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.get
 											for (PanelApp panelApp : panelApps) {
 												Portlet panelAppPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), panelApp.getPortletId());
 
-												ControlPanelEntry controlPanelEntry = panelAppPortlet.getControlPanelEntryInstance();
+												String controlPanelEntryClassName = panelAppPortlet.getControlPanelEntryClass();
+												ControlPanelEntry controlPanelEntryInstance = panelAppPortlet.getControlPanelEntryInstance();
 
-												if (Objects.equals(panelAppPortlet.getControlPanelEntryClass(), OmniadminControlPanelEntry.class.getName()) || OmniadminControlPanelEntry.class.isAssignableFrom(controlPanelEntry.getClass())) {
+												if (Objects.equals(controlPanelEntryClassName, AdministratorControlPanelEntry.class.getName()) || Objects.equals(controlPanelEntryClassName, OmniadminControlPanelEntry.class.getName()) || AdministratorControlPanelEntry.class.isAssignableFrom(controlPanelEntryInstance.getClass()) || OmniadminControlPanelEntry.class.isAssignableFrom(controlPanelEntryInstance.getClass())) {
 													continue;
 												}
 

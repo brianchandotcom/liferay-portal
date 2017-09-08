@@ -1240,7 +1240,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		long companyId, String treePath, boolean site) {
 
 		if (!treePath.endsWith(StringPool.PERCENT)) {
-			treePath = treePath + StringPool.PERCENT;
+			treePath = treePath + StringPool.UNDERLINE + StringPool.PERCENT;
 		}
 
 		return groupPersistence.findByC_T_S(companyId, treePath, site);

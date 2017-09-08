@@ -45,10 +45,368 @@
 		</if>
 	</tear-down>
 
+	<command name="AssignCheckboxAndRadioOptionToGroupedCatalogEntry" priority="5">
+		<execute test-case="CPCommerceOptions#AddSKUContributorCheckboxOptionsEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Checkbox Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
+
+		<execute test-case="CPCommerceOptions#AddSKUContributorRadioOptionsEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Radio Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
+
+		<execute test-case="CPCommerceCatalog#AddGroupedCatalogEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Grouped Product 1 Title" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryTab">
+			<var name="menuTab" value="Options" />
+		</execute>
+
+		<for list="Checkbox,Radio" param="optionType">
+			<execute function="Click" locator1="Button#PLUS" />\
+
+			<execute macro="CommerceItemSelector#selectEntry">
+				<var name="entryTitle" value="${optionType} Option 1 Title" />
+			</execute>
+		</for>
+	</command>
+
+	<command name="AssignCheckboxAndRadioOptionToSimpleCatalogEntry" priority="5">
+		<execute test-case="CPCommerceOptions#AddSKUContributorCheckboxOptionsEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Checkbox Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
+
+		<execute test-case="CPCommerceOptions#AddSKUContributorRadioOptionsEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Radio Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
+
+		<execute test-case="CPCommerceCatalog#AddSimpleCatalogEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Simple Product 1 Title" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryTab">
+			<var name="menuTab" value="Options" />
+		</execute>
+
+		<for list="Checkbox,Radio" param="optionType">
+			<execute function="Click" locator1="Button#PLUS" />\
+
+			<execute macro="CommerceItemSelector#selectEntry">
+				<var name="entryTitle" value="${optionType} Option 1 Title" />
+			</execute>
+		</for>
+	</command>
+
+	<command name="AssignCheckboxAndRadioOptionToVirtualCatalogEntry" priority="5">
+		<execute test-case="CPCommerceOptions#AddSKUContributorCheckboxOptionsEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Checkbox Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
+
+		<execute test-case="CPCommerceOptions#AddSKUContributorRadioOptionsEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Radio Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
+
+		<execute test-case="CPCommerceCatalog#AddVirtualCatalogEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Virtual Product 1 Title" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryTab">
+			<var name="menuTab" value="Options" />
+		</execute>
+
+		<for list="Checkbox,Radio" param="optionType">
+			<execute function="Click" locator1="Button#PLUS" />\
+
+			<execute macro="CommerceItemSelector#selectEntry">
+				<var name="entryTitle" value="${optionType} Option 1 Title" />
+			</execute>
+		</for>
+	</command>
+
+	<command name="AssignCheckboxAndSelectOptionToGroupedCatalogEntry" priority="5">
+		<execute test-case="CPCommerceOptions#AddSKUContributorCheckboxOptionsEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Checkbox Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
+
+		<execute test-case="CPCommerceOptions#AddSKUContributorSelectOptionsEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Select Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
+
+		<execute test-case="CPCommerceCatalog#AddGroupedCatalogEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Grouped Product 1 Title" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryTab">
+			<var name="menuTab" value="Options" />
+		</execute>
+
+		<for list="Checkbox,Select" param="optionType">
+			<execute function="Click" locator1="Button#PLUS" />
+
+			<execute macro="CommerceItemSelector#selectEntry">
+				<var name="entryTitle" value="${optionType} Option 1 Title" />
+			</execute>
+		</for>
+	</command>
+
+	<command name="AssignCheckboxAndSelectOptionToSimpleCatalogEntry" priority="5">
+		<execute test-case="CPCommerceOptions#AddSKUContributorCheckboxOptionsEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Checkbox Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
+
+		<execute test-case="CPCommerceOptions#AddSKUContributorSelectOptionsEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Select Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
+
+		<execute test-case="CPCommerceCatalog#AddSimpleCatalogEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Simple Product 1 Title" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryTab">
+			<var name="menuTab" value="Options" />
+		</execute>
+
+		<for list="Checkbox,Select" param="optionType">
+			<execute function="Click" locator1="Button#PLUS" />
+
+			<execute macro="CommerceItemSelector#selectEntry">
+				<var name="entryTitle" value="${optionType} Option 1 Title" />
+			</execute>
+		</for>
+	</command>
+
+	<command name="AssignCheckboxAndSelectOptionToVirtualCatalogEntry" priority="5">
+		<execute test-case="CPCommerceOptions#AddSKUContributorCheckboxOptionsEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Checkbox Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
+
+		<execute test-case="CPCommerceOptions#AddSKUContributorSelectOptionsEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Select Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
+
+		<execute test-case="CPCommerceCatalog#AddVirtualCatalogEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Grouped Product 1 Title" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryTab">
+			<var name="menuTab" value="Options" />
+		</execute>
+
+		<for list="Checkbox,Select" param="optionType">
+			<execute function="Click" locator1="Button#PLUS" />
+
+			<execute macro="CommerceItemSelector#selectEntry">
+				<var name="entryTitle" value="${optionType} Option 1 Title" />
+			</execute>
+		</for>
+	</command>
+
 	<command name="AssignCheckboxOptionToGroupedCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorCheckboxOptionsEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Checkbox Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
 
 		<execute test-case="CPCommerceCatalog#AddGroupedCatalogEntry" />
 
@@ -73,6 +431,22 @@
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorCheckboxOptionsEntry" />
 
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Checkbox Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
+
 		<execute test-case="CPCommerceCatalog#AddSimpleCatalogEntry" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
@@ -95,6 +469,22 @@
 		<property name="portal.acceptance" value="quarantine" />
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorCheckboxOptionsEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Checkbox Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
 
 		<execute test-case="CPCommerceCatalog#AddVirtualCatalogEntry" />
 
@@ -119,6 +509,22 @@
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorDateOptionsEntry" />
 
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Date Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
+
 		<execute test-case="CPCommerceCatalog#AddGroupedCatalogEntry" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
@@ -141,6 +547,22 @@
 		<property name="portal.acceptance" value="quarantine" />
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorDateOptionsEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Date Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
 
 		<execute test-case="CPCommerceCatalog#AddSimpleCatalogEntry" />
 
@@ -165,6 +587,22 @@
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorDateOptionsEntry" />
 
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Date Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
+
 		<execute test-case="CPCommerceCatalog#AddVirtualCatalogEntry" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
@@ -187,6 +625,22 @@
 		<property name="portal.acceptance" value="quarantine" />
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorParagraphOptionsEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Paragraph Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
 
 		<execute test-case="CPCommerceCatalog#AddGroupedCatalogEntry" />
 
@@ -211,6 +665,22 @@
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorParagraphOptionsEntry" />
 
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Paragraph Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
+
 		<execute test-case="CPCommerceCatalog#AddSimpleCatalogEntry" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
@@ -234,6 +704,22 @@
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorParagraphOptionsEntry" />
 
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Paragraph Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
+
 		<execute test-case="CPCommerceCatalog#AddVirtualCatalogEntry" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
@@ -252,10 +738,197 @@
 		</execute>
 	</command>
 
+	<command name="AssignRadioAndSelectOptionToGroupedCatalogEntry" priority="5">
+		<execute test-case="CPCommerceOptions#AddSKUContributorRadioOptionsEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Radio Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
+
+		<execute test-case="CPCommerceOptions#AddSKUContributorSelectOptionsEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Select Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
+
+		<execute test-case="CPCommerceCatalog#AddGroupedCatalogEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Grouped Product 1 Title" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryTab">
+			<var name="menuTab" value="Options" />
+		</execute>
+
+		<for list="Radio,Select" param="optionType">
+			<execute function="Click" locator1="Button#PLUS" />
+
+			<execute macro="CommerceItemSelector#selectEntry">
+				<var name="entryTitle" value="${optionType} Option 1 Title" />
+			</execute>
+		</for>
+	</command>
+
+	<command name="AssignRadioAndSelectOptionToSimpleCatalogEntry" priority="5">
+		<execute test-case="CPCommerceOptions#AddSKUContributorRadioOptionsEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Radio Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
+
+		<execute test-case="CPCommerceOptions#AddSKUContributorSelectOptionsEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Select Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
+
+		<execute test-case="CPCommerceCatalog#AddSimpleCatalogEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Simple Product 1 Title" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryTab">
+			<var name="menuTab" value="Options" />
+		</execute>
+
+		<for list="Radio,Select" param="optionType">
+			<execute function="Click" locator1="Button#PLUS" />
+
+			<execute macro="CommerceItemSelector#selectEntry">
+				<var name="entryTitle" value="${optionType} Option 1 Title" />
+			</execute>
+		</for>
+	</command>
+
+	<command name="AssignRadioAndSelectOptionToVirtualCatalogEntry" priority="5">
+		<execute test-case="CPCommerceOptions#AddSKUContributorRadioOptionsEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Radio Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
+
+		<execute test-case="CPCommerceOptions#AddSKUContributorSelectOptionsEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Select Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
+
+		<execute test-case="CPCommerceCatalog#AddVirtualCatalogEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Grouped Product 1 Title" />
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryTab">
+			<var name="menuTab" value="Options" />
+		</execute>
+
+		<for list="Radio,Select" param="optionType">
+			<execute function="Click" locator1="Button#PLUS" />
+
+			<execute macro="CommerceItemSelector#selectEntry">
+				<var name="entryTitle" value="${optionType} Option 1 Title" />
+			</execute>
+		</for>
+	</command>
+
 	<command name="AssignRadioOptionToGroupedCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorRadioOptionsEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Radio Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
 
 		<execute test-case="CPCommerceCatalog#AddGroupedCatalogEntry" />
 
@@ -280,6 +953,22 @@
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorRadioOptionsEntry" />
 
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Radio Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
+
 		<execute test-case="CPCommerceCatalog#AddSimpleCatalogEntry" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
@@ -302,6 +991,22 @@
 		<property name="portal.acceptance" value="quarantine" />
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorRadioOptionsEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Radio Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
 
 		<execute test-case="CPCommerceCatalog#AddVirtualCatalogEntry" />
 
@@ -326,6 +1031,22 @@
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorSelectOptionsEntry" />
 
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Select Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
+
 		<execute test-case="CPCommerceCatalog#AddGroupedCatalogEntry" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
@@ -348,6 +1069,22 @@
 		<property name="portal.acceptance" value="quarantine" />
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorSelectOptionsEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Select Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
 
 		<execute test-case="CPCommerceCatalog#AddSimpleCatalogEntry" />
 
@@ -372,6 +1109,22 @@
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorSelectOptionsEntry" />
 
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Select Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
+
 		<execute test-case="CPCommerceCatalog#AddVirtualCatalogEntry" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
@@ -394,6 +1147,22 @@
 		<property name="portal.acceptance" value="quarantine" />
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorTextOptionsEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Text Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
 
 		<execute test-case="CPCommerceCatalog#AddGroupedCatalogEntry" />
 
@@ -418,6 +1187,22 @@
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorTextOptionsEntry" />
 
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Text Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
+
 		<execute test-case="CPCommerceCatalog#AddSimpleCatalogEntry" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
@@ -440,6 +1225,22 @@
 		<property name="portal.acceptance" value="quarantine" />
 
 		<execute test-case="CPCommerceOptions#AddSKUContributorTextOptionsEntry" />
+
+		<execute macro="CommerceNavigator#gotoEntry">
+			<var name="entryTitle" value="Text Option 1 Title" />
+			<var name="portlet" value="Options" />
+		</execute>
+
+		<execute macro="CommerceEntry#gotoEntryMenu">
+			<var name="menuTab" value="Values" />
+		</execute>
+
+		<for list="1,2,3" param="entryNumber">
+			<execute macro="CommerceOptions#addOptionValueEntry">
+				<var name="optionValuePriority" value="1" />
+				<var name="optionValueTitle" value="Value ${entryNumber} Title" />
+			</execute>
+		</for>
 
 		<execute test-case="CPCommerceCatalog#AddVirtualCatalogEntry" />
 

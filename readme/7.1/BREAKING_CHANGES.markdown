@@ -20,7 +20,7 @@ Here are some of the types of changes documented in this file:
   replaces an old API, in spite of the old API being kept in Liferay Portal for
   backwards compatibility.
 
-*This document has been reviewed through commit `868fe06cbf30`.*
+*This document has been reviewed through commit `0094c92840e2`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -379,7 +379,7 @@ Closure Template library.
 
 ---------------------------------------
 
-### Changed default value for browser cache properties
+### Changed Default Value for Browser Cache Properties
 - **Date:** 2017-Sep-05
 - **JIRA Ticket:** LPS-74452
 
@@ -390,31 +390,30 @@ The default values for the portal properties `browser.cache.disabled` and
 
 #### Who is affected?
 
-This affects everyone who was relying on proxies and load balancers to cache
-HTML content.
+This affects anyone relying on proxies and load balancers to cache HTML content.
 
 #### How should I update my code?
 
-As documented in `portal-legacy-7.0.properties`, you should set
-`browser.cache.disabled=false` and `browser.cache.signed.in.disabled=false`.
+You should set both properties `browser.cache.disabled` and
+`browser.cache.signed.in.disabled` to `false`, as documented in
+`portal-legacy-7.0.properties`.
 
 #### Why was this change made?
 
-How a load balancer or web proxy should behave when Cache-Control headers are
-missing is not defined. In the past, many preferred to err on the side of
-not caching the content for correctness, but it is increasingly common for them
-to err on the side of caching the content for performance.
+The load balancer and web proxy's behavior when Cache-Control headers are
+missing is not defined. In the past, many preferred to not cache the content for
+correctness; however, it is now common to cache the content for performance.
 
-As Liferay shifts towards use cases providing personalized experiences, then
-whenever an aggressively caching load balancer or web proxy appears in the
-network architecture, the default value may result in security problems such as
-personalized content for one user being seen by another user, including names or
-other personally identifiable information.
+When an aggressive caching load balancer or web proxy appears in the network
+architecture, the default value may result in security problems such as
+personalized content being mistakenly shared, including names or other
+personally identifiable information. As Liferay shifts towards use cases
+providing personalized experiences, this is becoming a serious problem.
 
-While this is ultimately a load balancer or web proxy configuration issue, it
-is perceived as a Liferay issue because it is Liferay content that is being
-cached, and is viewed very negatively because leaking sensitive information in a
-production environment is a very serious security issue.
+While this is ultimately a load balancer or web proxy configuration issue, it is
+perceived as a Liferay issue because it is Liferay content being cached, and is
+viewed negatively because leaking sensitive information in a production
+environment is a very serious security issue.
 
 A value of `true` will improve a portal administrator's experience, and a value
 of `false` can be considered during performance tuning, if needed.

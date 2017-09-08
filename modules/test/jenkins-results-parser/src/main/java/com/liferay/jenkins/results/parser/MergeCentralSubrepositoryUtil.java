@@ -17,7 +17,6 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -180,10 +179,9 @@ public class MergeCentralSubrepositoryUtil {
 		if (subrepoMergePullMentionList != null) {
 			sb.append("\n\n");
 
-			List<String> subrepositoryMentions = Arrays.asList(
-				subrepoMergePullMentionList.split(","));
+			for (String subrepositoryMention :
+					subrepoMergePullMentionList.split(",")) {
 
-			for (String subrepositoryMention : subrepositoryMentions) {
 				sb.append("@");
 				sb.append(subrepositoryMention);
 				sb.append(" ");

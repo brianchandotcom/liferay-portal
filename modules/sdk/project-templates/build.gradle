@@ -38,7 +38,6 @@ dependencies {
 	projectTemplates project(":sdk:project-templates-form-field")
 	projectTemplates project(":sdk:project-templates-fragment")
 	projectTemplates project(":sdk:project-templates-freemarker-portlet")
-	projectTemplates project(":sdk:project-templates-hook-display")
 	projectTemplates project(":sdk:project-templates-layout-template")
 	projectTemplates project(":sdk:project-templates-mvc-portlet")
 	projectTemplates project(":sdk:project-templates-panel-app")
@@ -57,6 +56,7 @@ dependencies {
 	projectTemplates project(":sdk:project-templates-theme")
 	projectTemplates project(":sdk:project-templates-theme-contributor")
 	projectTemplates project(":sdk:project-templates-war-mvc-portlet")
+	projectTemplates project(":sdk:project-templates-war-hook")
 	projectTemplates project(":sdk:project-templates-workspace")
 
 	provided group: "org.apache.maven.archetype", name: "archetype-common", version: "2.4"

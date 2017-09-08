@@ -70,7 +70,7 @@ public class IFrameConfigurationAction extends DefaultConfigurationAction {
 			setPreference(actionRequest, "src", src);
 		}
 
-		String[] htmlAttributes = StringUtil.splitLines(
+		String[] htmlAttributes = StringUtil.splitByLines(
 			getParameter(actionRequest, "htmlAttributes"));
 
 		for (String htmlAttribute : htmlAttributes) {

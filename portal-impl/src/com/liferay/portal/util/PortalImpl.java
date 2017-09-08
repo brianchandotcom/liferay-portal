@@ -2157,7 +2157,7 @@ public class PortalImpl implements Portal {
 					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) &&
 				!ArrayUtil.isEmpty(values)) {
 
-				values = StringUtil.splitLines(values[0]);
+				values = StringUtil.splitByLines(values[0]);
 			}
 
 			value = GetterUtil.getDoubleValues(values);
@@ -2172,7 +2172,7 @@ public class PortalImpl implements Portal {
 					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) &&
 				!ArrayUtil.isEmpty(values)) {
 
-				values = StringUtil.splitLines(values[0]);
+				values = StringUtil.splitByLines(values[0]);
 			}
 
 			value = GetterUtil.getFloatValues(values);
@@ -2187,7 +2187,7 @@ public class PortalImpl implements Portal {
 					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) &&
 				!ArrayUtil.isEmpty(values)) {
 
-				values = StringUtil.splitLines(values[0]);
+				values = StringUtil.splitByLines(values[0]);
 			}
 
 			value = GetterUtil.getIntegerValues(values);
@@ -2202,7 +2202,7 @@ public class PortalImpl implements Portal {
 					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) &&
 				!ArrayUtil.isEmpty(values)) {
 
-				values = StringUtil.splitLines(values[0]);
+				values = StringUtil.splitByLines(values[0]);
 			}
 
 			value = GetterUtil.getLongValues(values);
@@ -2217,7 +2217,7 @@ public class PortalImpl implements Portal {
 					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) &&
 				!ArrayUtil.isEmpty(values)) {
 
-				values = StringUtil.splitLines(values[0]);
+				values = StringUtil.splitByLines(values[0]);
 			}
 
 			value = GetterUtil.getNumberValues(values);
@@ -2232,7 +2232,7 @@ public class PortalImpl implements Portal {
 					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) &&
 				!ArrayUtil.isEmpty(values)) {
 
-				values = StringUtil.splitLines(values[0]);
+				values = StringUtil.splitByLines(values[0]);
 			}
 
 			value = GetterUtil.getShortValues(values);
@@ -2244,7 +2244,7 @@ public class PortalImpl implements Portal {
 					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) &&
 				!ArrayUtil.isEmpty(values)) {
 
-				values = StringUtil.splitLines(values[0]);
+				values = StringUtil.splitByLines(values[0]);
 			}
 
 			value = values;

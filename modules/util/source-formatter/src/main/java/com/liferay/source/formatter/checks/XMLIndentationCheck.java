@@ -131,7 +131,7 @@ public class XMLIndentationCheck extends BaseFileCheck {
 	}
 
 	private String _fixTagsIndentation(String content) {
-		String[] lines = StringUtil.splitLines(content);
+		String[] lines = StringUtil.splitByLines(content);
 
 		int level = 0;
 		String[] tokens =

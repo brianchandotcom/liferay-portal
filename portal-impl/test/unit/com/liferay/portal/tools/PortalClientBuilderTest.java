@@ -52,7 +52,7 @@ public class PortalClientBuilderTest {
 			String output = ConsoleTestUtil.restoreStdOut(
 				unsyncByteArrayOutputStream);
 
-			for (String line : StringUtil.splitLines(output)) {
+			for (String line : StringUtil.splitByLines(output)) {
 				line = line.trim();
 
 				Assert.assertTrue(

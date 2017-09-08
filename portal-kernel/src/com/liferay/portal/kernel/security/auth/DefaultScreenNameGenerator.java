@@ -110,7 +110,7 @@ public class DefaultScreenNameGenerator implements ScreenNameGenerator {
 	}
 
 	private static final String[] _ADMIN_RESERVED_SCREEN_NAMES =
-		StringUtil.splitLines(
+		StringUtil.splitByLines(
 			PropsUtil.get(PropsKeys.ADMIN_RESERVED_SCREEN_NAMES));
 
 	private static final String _NON_NUMERICAL_PREFIX = "user.";

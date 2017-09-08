@@ -30,7 +30,7 @@ if (sapEntryId > 0) {
 String[] allowedServiceSignaturesArray = {};
 
 if (sapEntry != null) {
-	allowedServiceSignaturesArray = StringUtil.splitLines(sapEntry.getAllowedServiceSignatures());
+	allowedServiceSignaturesArray = StringUtil.splitByLines(sapEntry.getAllowedServiceSignatures());
 }
 
 if (allowedServiceSignaturesArray.length == 0) {

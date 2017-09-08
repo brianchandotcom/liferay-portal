@@ -92,7 +92,7 @@ public class JavaClassParser {
 
 		javaClass.setPackageName(JavaSourceUtil.getPackageName(content));
 
-		String[] importLines = StringUtil.splitLines(
+		String[] importLines = StringUtil.splitByLines(
 			JavaImportsFormatter.getImports(content));
 
 		for (String importLine : importLines) {

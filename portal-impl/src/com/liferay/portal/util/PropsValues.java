@@ -27,15 +27,15 @@ import com.liferay.portal.kernel.util.Time;
  */
 public class PropsValues {
 
-	public static String[] ADMIN_ANALYTICS_TYPES = StringUtil.splitLines(PropsUtil.get(PropsKeys.ADMIN_ANALYTICS_TYPES));
+	public static String[] ADMIN_ANALYTICS_TYPES = StringUtil.splitByLines(PropsUtil.get(PropsKeys.ADMIN_ANALYTICS_TYPES));
 
-	public static String[] ADMIN_DEFAULT_GROUP_NAMES = StringUtil.splitLines(PropsUtil.get(PropsKeys.ADMIN_DEFAULT_GROUP_NAMES));
+	public static String[] ADMIN_DEFAULT_GROUP_NAMES = StringUtil.splitByLines(PropsUtil.get(PropsKeys.ADMIN_DEFAULT_GROUP_NAMES));
 
-	public static String[] ADMIN_DEFAULT_ORGANIZATION_GROUP_NAMES = StringUtil.splitLines(PropsUtil.get(PropsKeys.ADMIN_DEFAULT_ORGANIZATION_GROUP_NAMES));
+	public static String[] ADMIN_DEFAULT_ORGANIZATION_GROUP_NAMES = StringUtil.splitByLines(PropsUtil.get(PropsKeys.ADMIN_DEFAULT_ORGANIZATION_GROUP_NAMES));
 
-	public static String[] ADMIN_DEFAULT_ROLE_NAMES = StringUtil.splitLines(PropsUtil.get(PropsKeys.ADMIN_DEFAULT_ROLE_NAMES));
+	public static String[] ADMIN_DEFAULT_ROLE_NAMES = StringUtil.splitByLines(PropsUtil.get(PropsKeys.ADMIN_DEFAULT_ROLE_NAMES));
 
-	public static String[] ADMIN_DEFAULT_USER_GROUP_NAMES = StringUtil.splitLines(PropsUtil.get(PropsKeys.ADMIN_DEFAULT_USER_GROUP_NAMES));
+	public static String[] ADMIN_DEFAULT_USER_GROUP_NAMES = StringUtil.splitByLines(PropsUtil.get(PropsKeys.ADMIN_DEFAULT_USER_GROUP_NAMES));
 
 	public static String ADMIN_EMAIL_FROM_ADDRESS = PropsUtil.get(PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
 
@@ -59,13 +59,13 @@ public class PropsValues {
 
 	public static final String ADMIN_EMAIL_VERIFICATION_SUBJECT = PropsUtil.get(PropsKeys.ADMIN_EMAIL_VERIFICATION_SUBJECT);
 
-	public static final String[] ADMIN_MAIL_HOST_NAMES = StringUtil.splitLines(PropsUtil.get(PropsKeys.ADMIN_MAIL_HOST_NAMES));
+	public static final String[] ADMIN_MAIL_HOST_NAMES = StringUtil.splitByLines(PropsUtil.get(PropsKeys.ADMIN_MAIL_HOST_NAMES));
 
 	public static final String[] ADMIN_OBFUSCATED_PROPERTIES = PropsUtil.getArray(PropsKeys.ADMIN_OBFUSCATED_PROPERTIES);
 
-	public static final String[] ADMIN_RESERVED_EMAIL_ADDRESSES = StringUtil.splitLines(PropsUtil.get(PropsKeys.ADMIN_RESERVED_EMAIL_ADDRESSES));
+	public static final String[] ADMIN_RESERVED_EMAIL_ADDRESSES = StringUtil.splitByLines(PropsUtil.get(PropsKeys.ADMIN_RESERVED_EMAIL_ADDRESSES));
 
-	public static final String[] ADMIN_RESERVED_SCREEN_NAMES = StringUtil.splitLines(PropsUtil.get(PropsKeys.ADMIN_RESERVED_SCREEN_NAMES));
+	public static final String[] ADMIN_RESERVED_SCREEN_NAMES = StringUtil.splitByLines(PropsUtil.get(PropsKeys.ADMIN_RESERVED_SCREEN_NAMES));
 
 	public static final boolean ADMIN_SYNC_DEFAULT_ASSOCIATIONS = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.ADMIN_SYNC_DEFAULT_ASSOCIATIONS));
 
@@ -1272,11 +1272,11 @@ public class PropsValues {
 
 	public static final boolean PLUGIN_NOTIFICATIONS_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.PLUGIN_NOTIFICATIONS_ENABLED));
 
-	public static final String[] PLUGIN_NOTIFICATIONS_PACKAGES_IGNORED = StringUtil.splitLines(PropsUtil.get(PropsKeys.PLUGIN_NOTIFICATIONS_PACKAGES_IGNORED));
+	public static final String[] PLUGIN_NOTIFICATIONS_PACKAGES_IGNORED = StringUtil.splitByLines(PropsUtil.get(PropsKeys.PLUGIN_NOTIFICATIONS_PACKAGES_IGNORED));
 
-	public static final String[] PLUGIN_REPOSITORIES_TRUSTED = StringUtil.splitLines(PropsUtil.get(PropsKeys.PLUGIN_REPOSITORIES_TRUSTED));
+	public static final String[] PLUGIN_REPOSITORIES_TRUSTED = StringUtil.splitByLines(PropsUtil.get(PropsKeys.PLUGIN_REPOSITORIES_TRUSTED));
 
-	public static final String[] PLUGIN_REPOSITORIES_UNTRUSTED = StringUtil.splitLines(PropsUtil.get(PropsKeys.PLUGIN_REPOSITORIES_UNTRUSTED));
+	public static final String[] PLUGIN_REPOSITORIES_UNTRUSTED = StringUtil.splitByLines(PropsUtil.get(PropsKeys.PLUGIN_REPOSITORIES_UNTRUSTED));
 
 	public static final String[] PLUGIN_TYPES = PropsUtil.getArray(PropsKeys.PLUGIN_TYPES);
 

@@ -47,9 +47,11 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.repository.portletrepository.PortletRepository;
+import com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalogUtil;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -87,7 +89,13 @@ public class FolderStagedModelDataHandler
 
 	@Override
 	public Folder fetchStagedModelByUuidAndGroupId(String uuid, long groupId) {
-		return FolderUtil.fetchByUUID_R(uuid, groupId);
+		DLFolder folder = _dlFolderLocalService.fetchFolder(uuid, groupId);
+
+		if (folder != null) {
+			return new LiferayFolder(folder);
+		}
+
+		return null;
 	}
 
 	@Override
@@ -157,6 +165,15 @@ public class FolderStagedModelDataHandler
 			long portletRepositoryClassNameId = _portal.getClassNameId(
 				PortletRepository.class.getName());
 
+			boolean rootFolder = false;
+
+			if (folder.getFolderId() == repository.getDlFolderId()) {
+				rootFolder = true;
+			}
+
+			folderElement.addAttribute(
+				_IS_ROOT_FOLDER_ATTR, String.valueOf(rootFolder));
+
 			if (repository.getClassNameId() != portletRepositoryClassNameId) {
 				return;
 			}
@@ -200,7 +217,7 @@ public class FolderStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Folder.class + ".folderIdsAndRepositoryEntryIds");
 
-		if (!folder.isDefaultRepository()) {
+		if (_isExternalRepository(folder.getRepositoryId())) {
 			Map<Long, Long> repositoryEntryIds =
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 					RepositoryEntry.class);
@@ -218,6 +235,14 @@ public class FolderStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Folder.class);
 
+		Map<Long, Long> repositoryIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Repository.class);
+
+		long repositoryId = MapUtil.getLong(
+			repositoryIds, folder.getRepositoryId(),
+			portletDataContext.getScopeGroupId());
+
 		long parentFolderId = MapUtil.getLong(
 			folderIds, folder.getParentFolderId(), folder.getParentFolderId());
 
@@ -226,45 +251,55 @@ public class FolderStagedModelDataHandler
 
 		serviceContext.setUserId(userId);
 
+		Element folderElement = portletDataContext.getImportDataElement(folder);
+
+		boolean rootFolder = GetterUtil.getBoolean(
+			folderElement.attributeValue(_IS_ROOT_FOLDER_ATTR));
+
 		Folder importedFolder = null;
 
 		if (portletDataContext.isDataStrategyMirror()) {
-			Folder existingFolder = fetchStagedModelByUuidAndGroupId(
-				folder.getUuid(), portletDataContext.getScopeGroupId());
+			if (rootFolder) {
+				Repository repository = _repositoryLocalService.getRepository(
+					repositoryId);
 
-			if (existingFolder == null) {
-				String name = getFolderName(
-					null, portletDataContext.getScopeGroupId(), parentFolderId,
-					folder.getName(), 2);
-
-				serviceContext.setUuid(folder.getUuid());
-
-				importedFolder = _dlAppLocalService.addFolder(
-					userId, portletDataContext.getScopeGroupId(),
-					parentFolderId, name, folder.getDescription(),
-					serviceContext);
+				importedFolder = _dlAppLocalService.getFolder(
+					repository.getDlFolderId());
 			}
 			else {
-				String name = getFolderName(
-					folder.getUuid(), portletDataContext.getScopeGroupId(),
-					parentFolderId, folder.getName(), 2);
+				Folder existingFolder = fetchStagedModelByUuidAndGroupId(
+					folder.getUuid(), portletDataContext.getScopeGroupId());
 
-				importedFolder = _dlAppLocalService.updateFolder(
-					existingFolder.getFolderId(), parentFolderId, name,
-					folder.getDescription(), serviceContext);
+				if (existingFolder == null) {
+					String name = getFolderName(
+						null, repositoryId, parentFolderId, folder.getName(),
+						2);
+
+					serviceContext.setUuid(folder.getUuid());
+
+					importedFolder = _dlAppLocalService.addFolder(
+						userId, repositoryId, parentFolderId, name,
+						folder.getDescription(), serviceContext);
+				}
+				else {
+					String name = getFolderName(
+						folder.getUuid(), repositoryId, parentFolderId,
+						folder.getName(), 2);
+
+					importedFolder = _dlAppLocalService.updateFolder(
+						existingFolder.getFolderId(), parentFolderId, name,
+						folder.getDescription(), serviceContext);
+				}
 			}
 		}
 		else {
 			String name = getFolderName(
-				null, portletDataContext.getScopeGroupId(), parentFolderId,
-				folder.getName(), 2);
+				null, repositoryId, parentFolderId, folder.getName(), 2);
 
 			importedFolder = _dlAppLocalService.addFolder(
-				userId, portletDataContext.getScopeGroupId(), parentFolderId,
-				name, folder.getDescription(), serviceContext);
+				userId, repositoryId, parentFolderId, name,
+				folder.getDescription(), serviceContext);
 		}
-
-		Element folderElement = portletDataContext.getImportDataElement(folder);
 
 		importFolderFileEntryTypes(
 			portletDataContext, folderElement, folder, importedFolder,
@@ -360,27 +395,28 @@ public class FolderStagedModelDataHandler
 	}
 
 	protected String getFolderName(
-			String uuid, long groupId, long parentFolderId, String name,
+			String uuid, long repositoryId, long parentFolderId, String name,
 			int count)
 		throws Exception {
 
-		Folder folder = FolderUtil.fetchByR_P_N(groupId, parentFolderId, name);
+		DLFolder dlFolder = _dlFolderLocalService.fetchFolder(
+			repositoryId, parentFolderId, name);
 
-		if (folder == null) {
+		if (dlFolder == null) {
 			FileEntry fileEntry = FileEntryUtil.fetchByR_F_T(
-				groupId, parentFolderId, name);
+				repositoryId, parentFolderId, name);
 
 			if (fileEntry == null) {
 				return name;
 			}
 		}
-		else if (Validator.isNotNull(uuid) && uuid.equals(folder.getUuid())) {
+		else if (Validator.isNotNull(uuid) && uuid.equals(dlFolder.getUuid())) {
 			return name;
 		}
 
 		name = StringUtil.appendParentheticalSuffix(name, count);
 
-		return getFolderName(uuid, groupId, parentFolderId, name, ++count);
+		return getFolderName(uuid, repositoryId, parentFolderId, name, ++count);
 	}
 
 	protected void importFolderFileEntryTypes(
@@ -520,6 +556,25 @@ public class FolderStagedModelDataHandler
 			}
 		}
 	}
+
+	private boolean _isExternalRepository(long repositoryId)
+		throws PortalException {
+
+		Repository repository = _repositoryLocalService.fetchRepository(
+			repositoryId);
+
+		if (repository == null) {
+			return false;
+		}
+
+		Collection<String> externalRepositoryClassNames =
+			RepositoryClassDefinitionCatalogUtil.
+				getExternalRepositoryClassNames();
+
+		return externalRepositoryClassNames.contains(repository.getClassName());
+	}
+
+	private static final String _IS_ROOT_FOLDER_ATTR = "isRootFolder";
 
 	private DLAppLocalService _dlAppLocalService;
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;

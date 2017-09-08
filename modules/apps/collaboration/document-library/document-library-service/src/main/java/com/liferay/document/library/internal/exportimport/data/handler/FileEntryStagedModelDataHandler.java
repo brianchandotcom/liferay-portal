@@ -73,6 +73,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.portletrepository.PortletRepository;
+import com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalogUtil;
 import com.liferay.portal.verify.extender.marker.VerifyProcessCompletionMarker;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.trash.TrashHelper;
@@ -81,6 +82,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -337,12 +339,20 @@ public class FileEntryStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(fileEntry.getUserUuid());
 
-		if (!fileEntry.isDefaultRepository()) {
+		if (_isExternalRepository(fileEntry.getRepositoryId())) {
 
 			// References has been automatically imported, nothing to do here
 
 			return;
 		}
+
+		Map<Long, Long> repositoryIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Repository.class);
+
+		long repositoryId = MapUtil.getLong(
+			repositoryIds, fileEntry.getRepositoryId(),
+			portletDataContext.getScopeGroupId());
 
 		Map<Long, Long> folderIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -420,14 +430,13 @@ public class FileEntryStagedModelDataHandler
 
 						FileEntry existingTitleFileEntry =
 							FileEntryUtil.fetchByR_F_T(
-								portletDataContext.getScopeGroupId(), folderId,
-								fileEntry.getTitle());
+								repositoryId, folderId, fileEntry.getTitle());
 
 						if (existingTitleFileEntry == null) {
 							existingTitleFileEntry =
 								FileEntryUtil.fetchByR_F_FN(
-									portletDataContext.getScopeGroupId(),
-									folderId, fileEntry.getFileName());
+									repositoryId, folderId,
+									fileEntry.getFileName());
 						}
 
 						if (existingTitleFileEntry != null) {
@@ -446,9 +455,9 @@ public class FileEntryStagedModelDataHandler
 							fileEntry.getTitle(), fileEntry.getExtension());
 
 					importedFileEntry = _dlAppLocalService.addFileEntry(
-						userId, portletDataContext.getScopeGroupId(), folderId,
-						fileEntry.getFileName(), fileEntry.getMimeType(),
-						fileEntryTitle, fileEntry.getDescription(), null, is,
+						userId, repositoryId, folderId, fileEntry.getFileName(),
+						fileEntry.getMimeType(), fileEntryTitle,
+						fileEntry.getDescription(), null, is,
 						fileEntry.getSize(), serviceContext);
 
 					if (fileEntry.isInTrash()) {
@@ -591,10 +600,10 @@ public class FileEntryStagedModelDataHandler
 					fileEntry.getTitle(), fileEntry.getExtension());
 
 				importedFileEntry = _dlAppLocalService.addFileEntry(
-					userId, portletDataContext.getScopeGroupId(), folderId,
-					fileEntry.getFileName(), fileEntry.getMimeType(),
-					fileEntryTitle, fileEntry.getDescription(), null, is,
-					fileEntry.getSize(), serviceContext);
+					userId, repositoryId, folderId, fileEntry.getFileName(),
+					fileEntry.getMimeType(), fileEntryTitle,
+					fileEntry.getDescription(), null, is, fileEntry.getSize(),
+					serviceContext);
 			}
 
 			for (DLPluggableContentDataHandler dlPluggableContentDataHandler :
@@ -945,6 +954,23 @@ public class FileEntryStagedModelDataHandler
 
 			throw pde;
 		}
+	}
+
+	private boolean _isExternalRepository(long repositoryId)
+		throws PortalException {
+
+		Repository repository = _repositoryLocalService.fetchRepository(
+			repositoryId);
+
+		if (repository == null) {
+			return false;
+		}
+
+		Collection<String> externalRepositoryClassNames =
+			RepositoryClassDefinitionCatalogUtil.
+				getExternalRepositoryClassNames();
+
+		return externalRepositoryClassNames.contains(repository.getClassName());
 	}
 
 	private void _overrideFileVersion(

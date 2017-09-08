@@ -18,7 +18,7 @@ import com.drew.imaging.ImageMetadataReader;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.exif.ExifIFD0Directory;
 
-import com.liferay.adaptive.media.exception.AdaptiveMediaRuntimeException;
+import com.liferay.adaptive.media.exception.AMRuntimeException;
 import com.liferay.adaptive.media.image.internal.util.RenderedImageUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -63,7 +63,7 @@ public class TiffOrientationTransformer {
 			return RenderedImageUtil.readImage(inputStreamSupplier.get());
 		}
 		catch (IOException ioe) {
-			throw new AdaptiveMediaRuntimeException.IOException(ioe);
+			throw new AMRuntimeException.IOException(ioe);
 		}
 	}
 

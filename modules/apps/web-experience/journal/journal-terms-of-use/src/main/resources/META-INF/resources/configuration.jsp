@@ -22,7 +22,9 @@ String termsOfUseArticleId = PrefsPropsUtil.getString(themeDisplay.getCompanyId(
 %>
 
 <aui:field-wrapper helpMessage='<%= LanguageUtil.get(resourceBundle, "terms-of-use-web-content-help") %>' label='<%= LanguageUtil.get(resourceBundle, "terms-of-use-web-content") %>'>
-	<aui:input label='<%= LanguageUtil.get(resourceBundle, "group-id") %>' name='<%= "settings--" + JournalServiceConfigurationKeys.TERMS_OF_USE_JOURNAL_ARTICLE_GROUP_ID + "--" %>' type="text" value="<%= termsOfUseGroupId %>" />
+	<aui:fieldset>
+		<aui:input label='<%= LanguageUtil.get(resourceBundle, "group-id") %>' name='<%= "settings--" + JournalServiceConfigurationKeys.TERMS_OF_USE_JOURNAL_ARTICLE_GROUP_ID + "--" %>' type="text" value="<%= termsOfUseGroupId %>" />
 
-	<aui:input label='<%= LanguageUtil.get(resourceBundle, "article-id") %>' name='<%= "settings--" + JournalServiceConfigurationKeys.TERMS_OF_USE_JOURNAL_ARTICLE_ID + "--" %>' type="text" value="<%= termsOfUseArticleId %>" />
+		<aui:input label='<%= LanguageUtil.get(resourceBundle, "article-id") %>' name='<%= "settings--" + JournalServiceConfigurationKeys.TERMS_OF_USE_JOURNAL_ARTICLE_ID + "--" %>' type="text" value="<%= termsOfUseArticleId %>" />
+	</aui:fieldset>
 </aui:field-wrapper>

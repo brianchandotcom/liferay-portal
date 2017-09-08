@@ -17,7 +17,7 @@ package com.liferay.adaptive.media.image.content.transformer.internal;
 import com.liferay.adaptive.media.content.transformer.ContentTransformer;
 import com.liferay.adaptive.media.content.transformer.ContentTransformerContentType;
 import com.liferay.adaptive.media.content.transformer.constants.ContentTransformerContentTypes;
-import com.liferay.adaptive.media.image.html.AdaptiveMediaImageHTMLTagFactory;
+import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -66,7 +66,7 @@ public class HtmlContentTransformerImpl implements ContentTransformer<String> {
 
 			String imgTag = matcher.group(0);
 
-			String adaptiveTag = _adaptiveMediaImageHTMLTagFactory.create(
+			String adaptiveTag = _amImageHTMLTagFactory.create(
 				imgTag, fileEntry);
 
 			matcher.appendReplacement(
@@ -79,10 +79,10 @@ public class HtmlContentTransformerImpl implements ContentTransformer<String> {
 	}
 
 	@Reference(unbind = "-")
-	protected void setAdaptiveMediaImageHTMLTagFactory(
-		AdaptiveMediaImageHTMLTagFactory adaptiveMediaImageHTMLTagFactory) {
+	protected void setAMImageHTMLTagFactory(
+		AMImageHTMLTagFactory amImageHTMLTagFactory) {
 
-		_adaptiveMediaImageHTMLTagFactory = adaptiveMediaImageHTMLTagFactory;
+		_amImageHTMLTagFactory = amImageHTMLTagFactory;
 	}
 
 	@Reference(unbind = "-")
@@ -94,7 +94,7 @@ public class HtmlContentTransformerImpl implements ContentTransformer<String> {
 		"<img [^>]*?\\s*data-fileEntryId=\"(\\d+)\".*?/>",
 		Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 
-	private AdaptiveMediaImageHTMLTagFactory _adaptiveMediaImageHTMLTagFactory;
+	private AMImageHTMLTagFactory _amImageHTMLTagFactory;
 	private DLAppLocalService _dlAppLocalService;
 
 }

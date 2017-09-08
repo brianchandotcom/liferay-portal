@@ -14,7 +14,7 @@
 
 package com.liferay.adaptive.media.document.library.thumbnails.internal.commands;
 
-import com.liferay.adaptive.media.image.configuration.AdaptiveMediaImageConfigurationEntry;
+import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Collection;
@@ -46,9 +46,10 @@ public class ThumbnailConfiguration {
 	}
 
 	public boolean matches(
-		AdaptiveMediaImageConfigurationEntry configurationEntry) {
+		AMImageConfigurationEntry amImageConfigurationEntry) {
 
-		Map<String, String> properties = configurationEntry.getProperties();
+		Map<String, String> properties =
+			amImageConfigurationEntry.getProperties();
 
 		int maxWidth = GetterUtil.getInteger(properties.get("max-width"));
 		int maxHeight = GetterUtil.getInteger(properties.get("max-height"));
@@ -62,15 +63,13 @@ public class ThumbnailConfiguration {
 		return false;
 	}
 
-	public Optional<AdaptiveMediaImageConfigurationEntry>
-		selectMatchingConfigurationEntry(
-			Collection<AdaptiveMediaImageConfigurationEntry>
-				configurationEntries) {
+	public Optional<AMImageConfigurationEntry> selectMatchingConfigurationEntry(
+		Collection<AMImageConfigurationEntry> amImageConfigurationEntries) {
 
-		Stream<AdaptiveMediaImageConfigurationEntry> configurationEntryStream =
-			configurationEntries.stream();
+		Stream<AMImageConfigurationEntry> amImageConfigurationEntryStream =
+			amImageConfigurationEntries.stream();
 
-		return configurationEntryStream.filter(
+		return amImageConfigurationEntryStream.filter(
 			this::matches
 		).findFirst();
 	}

@@ -1,6 +1,0 @@
-<?xml version="1.0"?>
-<!DOCTYPE suppressions PUBLIC "-//Puppy Crawl//DTD Check Suppressions 1.1//EN" "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
-
-<suppressions>
-	<suppress checks="Indentation" files="adaptive-media-image-impl/src/main/java/com/liferay/adaptive/media/image/internal/finder/AdaptiveMediaImageFinderImpl\.java" />
-</suppressions>

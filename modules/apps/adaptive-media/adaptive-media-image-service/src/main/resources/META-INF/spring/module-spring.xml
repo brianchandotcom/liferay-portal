@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-	<bean class="com.liferay.adaptive.media.image.service.impl.AdaptiveMediaImageEntryLocalServiceImpl" id="com.liferay.adaptive.media.image.service.AdaptiveMediaImageEntryLocalService" />
-	<bean class="com.liferay.adaptive.media.image.service.persistence.impl.AdaptiveMediaImageEntryPersistenceImpl" id="com.liferay.adaptive.media.image.service.persistence.AdaptiveMediaImageEntryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.adaptive.media.image.service.impl.AMImageEntryLocalServiceImpl" id="com.liferay.adaptive.media.image.service.AMImageEntryLocalService" />
+	<bean class="com.liferay.adaptive.media.image.service.persistence.impl.AMImageEntryPersistenceImpl" id="com.liferay.adaptive.media.image.service.persistence.AMImageEntryPersistence" parent="basePersistence" />
 </beans>

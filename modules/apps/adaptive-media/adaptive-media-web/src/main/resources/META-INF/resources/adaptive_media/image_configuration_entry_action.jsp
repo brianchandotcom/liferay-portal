@@ -19,13 +19,13 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-AdaptiveMediaImageConfigurationEntry configurationEntry = null;
+AMImageConfigurationEntry amImageConfigurationEntry = null;
 
 if (row != null) {
-	configurationEntry = (AdaptiveMediaImageConfigurationEntry)row.getObject();
+	amImageConfigurationEntry = (AMImageConfigurationEntry)row.getObject();
 }
 else {
-	configurationEntry = (AdaptiveMediaImageConfigurationEntry)request.getAttribute("info_panel.jsp-configurationEntry");
+	amImageConfigurationEntry = (AMImageConfigurationEntry)request.getAttribute("info_panel.jsp-amImageConfigurationEntry");
 }
 
 boolean optimizeImagesEnabled = true;
@@ -38,7 +38,7 @@ if (optimizeImageSingleBackgroundTasks != null) {
 
 		String configurationEntryUuid = (String)taskContextMap.get("configurationEntryUuid");
 
-		if (configurationEntryUuid.equals(configurationEntry.getUUID())) {
+		if (configurationEntryUuid.equals(amImageConfigurationEntry.getUUID())) {
 			optimizeImagesEnabled = false;
 
 			break;
@@ -46,7 +46,7 @@ if (optimizeImageSingleBackgroundTasks != null) {
 	}
 }
 
-String entryUuid = String.valueOf(configurationEntry.getUUID());
+String entryUuid = String.valueOf(amImageConfigurationEntry.getUUID());
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
@@ -62,10 +62,10 @@ String entryUuid = String.valueOf(configurationEntry.getUUID());
 	/>
 
 	<c:choose>
-		<c:when test="<%= configurationEntry.isEnabled() %>">
+		<c:when test="<%= amImageConfigurationEntry.isEnabled() %>">
 			<portlet:actionURL name="/adaptive_media/disable_image_configuration_entry" var="disableImageConfigurationEntryURL">
 				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="adaptiveMediaImageConfigurationEntryUuid" value="<%= entryUuid %>" />
+				<portlet:param name="amImageConfigurationEntryUuid" value="<%= entryUuid %>" />
 			</portlet:actionURL>
 
 			<%
@@ -86,7 +86,7 @@ String entryUuid = String.valueOf(configurationEntry.getUUID());
 		<c:otherwise>
 			<portlet:actionURL name="/adaptive_media/enable_image_configuration_entry" var="enableImageConfigurationEntryURL">
 				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="adaptiveMediaImageConfigurationEntryUuid" value="<%= entryUuid %>" />
+				<portlet:param name="amImageConfigurationEntryUuid" value="<%= entryUuid %>" />
 			</portlet:actionURL>
 
 			<liferay-ui:icon
@@ -104,9 +104,9 @@ String entryUuid = String.valueOf(configurationEntry.getUUID());
 	<%
 	String onClick = liferayPortletResponse.getNamespace() + "adaptRemaining('" + entryUuid + "', '" + optimizeImagesURL.toString() + "');";
 
-	int percentage = AdaptiveMediaImageEntryLocalServiceUtil.getPercentage(themeDisplay.getCompanyId(), entryUuid);
+	int percentage = AMImageEntryLocalServiceUtil.getPercentage(themeDisplay.getCompanyId(), entryUuid);
 
-	String cssClass = (!configurationEntry.isEnabled() || percentage == 100 || !optimizeImagesEnabled) ? "disabled" : StringPool.BLANK;
+	String cssClass = (!amImageConfigurationEntry.isEnabled() || percentage == 100 || !optimizeImagesEnabled) ? "disabled" : StringPool.BLANK;
 	%>
 
 	<liferay-ui:icon
@@ -119,11 +119,11 @@ String entryUuid = String.valueOf(configurationEntry.getUUID());
 
 	<portlet:actionURL name="/adaptive_media/delete_image_configuration_entry" var="deleteImageConfigurationEntryURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="rowIdsAdaptiveMediaImageConfigurationEntry" value="<%= entryUuid %>" />
+		<portlet:param name="rowIdsAMImageConfigurationEntry" value="<%= entryUuid %>" />
 	</portlet:actionURL>
 
 	<c:choose>
-		<c:when test="<%= configurationEntry.isEnabled() %>">
+		<c:when test="<%= amImageConfigurationEntry.isEnabled() %>">
 			<liferay-ui:icon
 				cssClass="disabled"
 				message="delete"

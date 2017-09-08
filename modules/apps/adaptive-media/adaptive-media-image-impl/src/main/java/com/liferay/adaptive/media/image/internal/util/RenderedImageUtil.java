@@ -14,7 +14,7 @@
 
 package com.liferay.adaptive.media.image.internal.util;
 
-import com.liferay.adaptive.media.exception.AdaptiveMediaRuntimeException;
+import com.liferay.adaptive.media.exception.AMRuntimeException;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 
@@ -46,7 +46,7 @@ public class RenderedImageUtil {
 			return baos.toByteArray();
 		}
 		catch (IOException ioe) {
-			throw new AdaptiveMediaRuntimeException.IOException(ioe);
+			throw new AMRuntimeException.IOException(ioe);
 		}
 	}
 

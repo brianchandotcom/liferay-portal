@@ -31,10 +31,14 @@ public class ComparatorUtilTest {
 		Map<String, String> properties1 = MapUtil.fromArray("property", "-5");
 		Map<String, String> properties2 = MapUtil.fromArray("property", "5");
 
-		AdaptiveMediaConfigurationPropertiesComparator<Integer> comparator =
-			ComparatorUtil.distanceTo("property", 0);
+		AMConfigurationPropertiesComparator<Integer>
+			amConfigurationPropertiesComparator = ComparatorUtil.distanceTo(
+				"property", 0);
 
-		Assert.assertEquals(0, comparator.compare(properties1, properties2));
+		Assert.assertEquals(
+			0,
+			amConfigurationPropertiesComparator.compare(
+				properties1, properties2));
 	}
 
 	@Test
@@ -42,10 +46,14 @@ public class ComparatorUtilTest {
 		Map<String, String> properties1 = MapUtil.fromArray("property", "-2");
 		Map<String, String> properties2 = MapUtil.fromArray("property", "5");
 
-		AdaptiveMediaConfigurationPropertiesComparator<Integer> comparator =
-			ComparatorUtil.distanceTo("property", 0);
+		AMConfigurationPropertiesComparator<Integer>
+			amConfigurationPropertiesComparator = ComparatorUtil.distanceTo(
+				"property", 0);
 
-		Assert.assertEquals(-1, comparator.compare(properties1, properties2));
+		Assert.assertEquals(
+			-1,
+			amConfigurationPropertiesComparator.compare(
+				properties1, properties2));
 	}
 
 }

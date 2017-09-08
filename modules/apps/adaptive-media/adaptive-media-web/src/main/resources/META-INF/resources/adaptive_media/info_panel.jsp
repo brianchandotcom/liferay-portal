@@ -17,16 +17,16 @@
 <%@ include file="/adaptive_media/init.jsp" %>
 
 <%
-List<AdaptiveMediaImageConfigurationEntry> selectedConfigurationEntries = (List)request.getAttribute(AdaptiveMediaWebKeys.SELECTED_CONFIGURATION_ENTRIES);
+List<AMImageConfigurationEntry> selectedAMImageConfigurationEntries = (List)request.getAttribute(AMWebKeys.SELECTED_CONFIGURATION_ENTRIES);
 
-AdaptiveMediaImageConfigurationEntry configurationEntry = null;
+AMImageConfigurationEntry amImageConfigurationEntry = null;
 
 int selectedConfigurationEntriesSize = 0;
 
-if (ListUtil.isNotEmpty(selectedConfigurationEntries)) {
-	configurationEntry = selectedConfigurationEntries.get(0);
+if (ListUtil.isNotEmpty(selectedAMImageConfigurationEntries)) {
+	amImageConfigurationEntry = selectedAMImageConfigurationEntries.get(0);
 
-	selectedConfigurationEntriesSize = selectedConfigurationEntries.size();
+	selectedConfigurationEntriesSize = selectedAMImageConfigurationEntries.size();
 }
 %>
 
@@ -36,7 +36,7 @@ if (ListUtil.isNotEmpty(selectedConfigurationEntries)) {
 			<ul class="sidebar-actions">
 
 				<%
-				request.setAttribute("info_panel.jsp-configurationEntry", configurationEntry);
+				request.setAttribute("info_panel.jsp-amImageConfigurationEntry", amImageConfigurationEntry);
 				%>
 
 				<li>
@@ -45,7 +45,7 @@ if (ListUtil.isNotEmpty(selectedConfigurationEntries)) {
 			</ul>
 
 			<h4 class="sidebar-title">
-				<%= HtmlUtil.escape(configurationEntry.getName()) %>
+				<%= HtmlUtil.escape(amImageConfigurationEntry.getName()) %>
 			</h4>
 
 			<h5>
@@ -71,13 +71,13 @@ if (ListUtil.isNotEmpty(selectedConfigurationEntries)) {
 							<liferay-ui:message key="name" />
 						</dt>
 						<dd class="h6 sidebar-caption">
-							<%= HtmlUtil.escape(configurationEntry.getName()) %>
+							<%= HtmlUtil.escape(amImageConfigurationEntry.getName()) %>
 						</dd>
 						<dt class="h5">
 							<liferay-ui:message key="state" />
 						</dt>
 						<dd class="h6 sidebar-caption">
-							<%= configurationEntry.isEnabled() ? LanguageUtil.get(request, "enabled") : LanguageUtil.get(request, "disabled") %>
+							<%= amImageConfigurationEntry.isEnabled() ? LanguageUtil.get(request, "enabled") : LanguageUtil.get(request, "disabled") %>
 						</dd>
 						<dt class="h5">
 							<liferay-ui:message key="adapted-images" />
@@ -85,16 +85,16 @@ if (ListUtil.isNotEmpty(selectedConfigurationEntries)) {
 						<dd class="h6 sidebar-caption">
 
 							<%
-							int adaptedImages = AdaptiveMediaImageEntryLocalServiceUtil.getAdaptiveMediaImageEntriesCount(themeDisplay.getCompanyId(), configurationEntry.getUUID());
+							int adaptedImages = AMImageEntryLocalServiceUtil.getAMImageEntriesCount(themeDisplay.getCompanyId(), amImageConfigurationEntry.getUUID());
 
-							int totalImages = AdaptiveMediaImageEntryLocalServiceUtil.getExpectedAdaptiveMediaImageEntriesCount(themeDisplay.getCompanyId());
+							int totalImages = AMImageEntryLocalServiceUtil.getExpectedAMImageEntriesCount(themeDisplay.getCompanyId());
 							%>
 
 							<%= Math.min(adaptedImages, totalImages) + "/" + totalImages %>
 						</dd>
 
 						<%
-						Map<String, String> properties = configurationEntry.getProperties();
+						Map<String, String> properties = amImageConfigurationEntry.getProperties();
 						%>
 
 						<dt class="h5">
@@ -123,13 +123,13 @@ if (ListUtil.isNotEmpty(selectedConfigurationEntries)) {
 							<liferay-ui:message key="id" />
 						</dt>
 						<dd class="h6 sidebar-caption">
-							<%= HtmlUtil.escape(configurationEntry.getUUID()) %>
+							<%= HtmlUtil.escape(amImageConfigurationEntry.getUUID()) %>
 						</dd>
 						<dt class="h5">
 							<liferay-ui:message key="description" />
 						</dt>
 						<dd class="h6 sidebar-caption">
-							<%= HtmlUtil.escape(configurationEntry.getDescription()) %>
+							<%= HtmlUtil.escape(amImageConfigurationEntry.getDescription()) %>
 						</dd>
 					</c:when>
 					<c:when test="<%= (selectedConfigurationEntriesSize > 1) %>">
@@ -144,7 +144,7 @@ if (ListUtil.isNotEmpty(selectedConfigurationEntries)) {
 						<dd class="h6 sidebar-caption">
 
 							<%
-							List<AdaptiveMediaImageConfigurationEntry> configurationEntries = (List)request.getAttribute(AdaptiveMediaWebKeys.CONFIGURATION_ENTRIES_LIST);
+							List<AMImageConfigurationEntry> configurationEntries = (List)request.getAttribute(AMWebKeys.CONFIGURATION_ENTRIES_LIST);
 							%>
 
 							<%= configurationEntries.size() %>

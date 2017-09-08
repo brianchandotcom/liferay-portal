@@ -14,7 +14,7 @@
 
 package com.liferay.adaptive.media.content.transformer;
 
-import com.liferay.adaptive.media.exception.AdaptiveMediaException;
+import com.liferay.adaptive.media.exception.AMException;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 
 import java.util.ArrayList;
@@ -186,8 +186,7 @@ public class ContentTransformerTest {
 		Mockito.when(
 			failingContentTransformer.transform(originalContent)
 		).thenThrow(
-			new AdaptiveMediaException(
-				"Do not worry :), this is an expected exception")
+			new AMException("Do not worry :), this is an expected exception")
 		);
 	}
 

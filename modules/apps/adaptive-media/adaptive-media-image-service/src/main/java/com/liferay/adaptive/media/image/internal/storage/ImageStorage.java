@@ -14,7 +14,7 @@
 
 package com.liferay.adaptive.media.image.internal.storage;
 
-import com.liferay.adaptive.media.exception.AdaptiveMediaRuntimeException;
+import com.liferay.adaptive.media.exception.AMRuntimeException;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -52,7 +52,7 @@ public class ImageStorage {
 			return getFileAsStream(fileVersion.getCompanyId(), fileVersionPath);
 		}
 		catch (PortalException pe) {
-			throw new AdaptiveMediaRuntimeException.IOException(pe);
+			throw new AMRuntimeException.IOException(pe);
 		}
 	}
 
@@ -69,7 +69,7 @@ public class ImageStorage {
 				fileVersionPath, false, inputStream);
 		}
 		catch (PortalException pe) {
-			throw new AdaptiveMediaRuntimeException.IOException(pe);
+			throw new AMRuntimeException.IOException(pe);
 		}
 	}
 

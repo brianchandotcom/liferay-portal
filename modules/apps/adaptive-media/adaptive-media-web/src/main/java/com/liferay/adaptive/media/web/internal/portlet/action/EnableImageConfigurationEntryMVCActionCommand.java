@@ -14,9 +14,9 @@
 
 package com.liferay.adaptive.media.web.internal.portlet.action;
 
-import com.liferay.adaptive.media.image.configuration.AdaptiveMediaImageConfigurationEntry;
-import com.liferay.adaptive.media.image.configuration.AdaptiveMediaImageConfigurationHelper;
-import com.liferay.adaptive.media.web.constants.AdaptiveMediaPortletKeys;
+import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
+import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper;
+import com.liferay.adaptive.media.web.constants.AMPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + AdaptiveMediaPortletKeys.ADAPTIVE_MEDIA,
+		"javax.portlet.name=" + AMPortletKeys.ADAPTIVE_MEDIA,
 		"mvc.command.name=/adaptive_media/enable_image_configuration_entry"
 	},
 	service = MVCActionCommand.class
@@ -53,29 +53,23 @@ public class EnableImageConfigurationEntryMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String adaptiveMediaImageConfigurationEntryUuid = ParamUtil.getString(
-			actionRequest, "adaptiveMediaImageConfigurationEntryUuid");
+		String amImageConfigurationEntryUuid = ParamUtil.getString(
+			actionRequest, "amImageConfigurationEntryUuid");
 
-		_adaptiveMediaImageConfigurationHelper.
-			enableAdaptiveMediaImageConfigurationEntry(
-				themeDisplay.getCompanyId(),
-				adaptiveMediaImageConfigurationEntryUuid);
+		_amImageConfigurationHelper.enableAMImageConfigurationEntry(
+			themeDisplay.getCompanyId(), amImageConfigurationEntryUuid);
 
-		Optional<AdaptiveMediaImageConfigurationEntry>
-			configurationEntryOptional =
-				_adaptiveMediaImageConfigurationHelper.
-					getAdaptiveMediaImageConfigurationEntry(
-						themeDisplay.getCompanyId(),
-						adaptiveMediaImageConfigurationEntryUuid);
+		Optional<AMImageConfigurationEntry> amImageConfigurationEntryOptional =
+			_amImageConfigurationHelper.getAMImageConfigurationEntry(
+				themeDisplay.getCompanyId(), amImageConfigurationEntryUuid);
 
-		configurationEntryOptional.ifPresent(
-			configurationEntry -> SessionMessages.add(
+		amImageConfigurationEntryOptional.ifPresent(
+			amImageConfigurationEntry -> SessionMessages.add(
 				actionRequest, "configurationEntryEnabled",
-				configurationEntry));
+				amImageConfigurationEntry));
 	}
 
 	@Reference
-	private AdaptiveMediaImageConfigurationHelper
-		_adaptiveMediaImageConfigurationHelper;
+	private AMImageConfigurationHelper _amImageConfigurationHelper;
 
 }

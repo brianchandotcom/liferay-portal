@@ -148,7 +148,11 @@ PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.get
 												String controlPanelEntryClassName = panelAppPortlet.getControlPanelEntryClass();
 												ControlPanelEntry controlPanelEntryInstance = panelAppPortlet.getControlPanelEntryInstance();
 
-												if (Objects.equals(controlPanelEntryClassName, AdministratorControlPanelEntry.class.getName()) || Objects.equals(controlPanelEntryClassName, OmniadminControlPanelEntry.class.getName()) || AdministratorControlPanelEntry.class.isAssignableFrom(controlPanelEntryInstance.getClass()) || OmniadminControlPanelEntry.class.isAssignableFrom(controlPanelEntryInstance.getClass())) {
+												if (Objects.equals(controlPanelEntryClassName, AdministratorControlPanelEntry.class.getName()) ||
+													Objects.equals(controlPanelEntryClassName, OmniadminControlPanelEntry.class.getName()) ||
+													AdministratorControlPanelEntry.class.isAssignableFrom(controlPanelEntryInstance.getClass()) ||
+													OmniadminControlPanelEntry.class.isAssignableFrom(controlPanelEntryInstance.getClass())) {
+
 													continue;
 												}
 

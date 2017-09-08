@@ -1,3 +1,17 @@
+create table CPDefinitionAvailabilityRange (
+	uuid_ VARCHAR(75) null,
+	CPDefinitionAvailabilityRangeId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	CPDefinitionId LONG,
+	commerceAvailabilityRangeId LONG,
+	lastPublishDate DATE null
+);
+
 create table CommerceAddress (
 	commerceAddressId LONG not null primary key,
 	groupId LONG,
@@ -19,6 +33,20 @@ create table CommerceAddress (
 	phoneNumber VARCHAR(75) null,
 	defaultBilling BOOLEAN,
 	defaultShipping BOOLEAN
+);
+
+create table CommerceAvailabilityRange (
+	uuid_ VARCHAR(75) null,
+	commerceAvailabilityRangeId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	title STRING null,
+	priority DOUBLE,
+	lastPublishDate DATE null
 );
 
 create table CommerceCart (
@@ -70,6 +98,27 @@ create table CommerceCountry (
 	priority DOUBLE,
 	active_ BOOLEAN,
 	lastPublishDate DATE null
+);
+
+create table CommerceInventory (
+	uuid_ VARCHAR(75) null,
+	commerceInventoryId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	CPDefinitionId LONG,
+	commerceInventoryEngine VARCHAR(75) null,
+	displayAvailability BOOLEAN,
+	displayStockQuantity BOOLEAN,
+	minStockQuantity INTEGER,
+	backOrders BOOLEAN,
+	minCartQuantity INTEGER,
+	maxCartQuantity INTEGER,
+	allowedCartQuantities VARCHAR(75) null,
+	multipleCartQuantity INTEGER
 );
 
 create table CommerceOrder (

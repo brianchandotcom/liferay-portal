@@ -12,30 +12,33 @@
  * details.
  */
 
-package com.liferay.commerce.product.exception;
+package com.liferay.commerce.exception;
 
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 /**
- * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 @ProviderType
-public class NoSuchCPAvailabilityRangeException extends NoSuchModelException {
+public class NoSuchCPDefinitionAvailabilityRangeException
+	extends NoSuchModelException {
 
-	public NoSuchCPAvailabilityRangeException() {
+	public NoSuchCPDefinitionAvailabilityRangeException() {
 	}
 
-	public NoSuchCPAvailabilityRangeException(String msg) {
+	public NoSuchCPDefinitionAvailabilityRangeException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchCPAvailabilityRangeException(String msg, Throwable cause) {
+	public NoSuchCPDefinitionAvailabilityRangeException(
+		String msg, Throwable cause) {
+
 		super(msg, cause);
 	}
 
-	public NoSuchCPAvailabilityRangeException(Throwable cause) {
+	public NoSuchCPDefinitionAvailabilityRangeException(Throwable cause) {
 		super(cause);
 	}
 

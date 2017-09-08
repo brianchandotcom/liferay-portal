@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.commerce.product.service.http;
+package com.liferay.commerce.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.product.service.CPAvailabilityRangeServiceUtil;
+import com.liferay.commerce.service.CommerceInventoryServiceUtil;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 
 /**
  * Provides the HTTP utility for the
- * {@link CPAvailabilityRangeServiceUtil} service utility. The
+ * {@link CommerceInventoryServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
  * {@link HttpPrincipal} parameter.
@@ -47,26 +47,32 @@ import com.liferay.portal.kernel.util.MethodKey;
  * The HTTP utility is only generated for remote services.
  * </p>
  *
- * @author Marco Leo
- * @see CPAvailabilityRangeServiceSoap
+ * @author Alessio Antonio Rendina
+ * @see CommerceInventoryServiceSoap
  * @see HttpPrincipal
- * @see CPAvailabilityRangeServiceUtil
+ * @see CommerceInventoryServiceUtil
  * @generated
  */
 @ProviderType
-public class CPAvailabilityRangeServiceHttp {
-	public static com.liferay.commerce.product.model.CPAvailabilityRange addCPAvailabilityRange(
-		HttpPrincipal httpPrincipal,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+public class CommerceInventoryServiceHttp {
+	public static com.liferay.commerce.model.CommerceInventory addCommerceInventory(
+		HttpPrincipal httpPrincipal, long cpDefinitionId,
+		java.lang.String commerceInventoryEngine, boolean displayAvailability,
+		boolean displayStockQuantity, int minStockQuantity, boolean backOrders,
+		int minCartQuantity, int maxCartQuantity,
+		java.lang.String allowedCartQuantities, int multipleCartQuantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
-			MethodKey methodKey = new MethodKey(CPAvailabilityRangeServiceUtil.class,
-					"addCPAvailabilityRange",
-					_addCPAvailabilityRangeParameterTypes0);
+			MethodKey methodKey = new MethodKey(CommerceInventoryServiceUtil.class,
+					"addCommerceInventory", _addCommerceInventoryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					titleMap, serviceContext);
+					cpDefinitionId, commerceInventoryEngine,
+					displayAvailability, displayStockQuantity,
+					minStockQuantity, backOrders, minCartQuantity,
+					maxCartQuantity, allowedCartQuantities,
+					multipleCartQuantity, serviceContext);
 
 			Object returnObj = null;
 
@@ -81,7 +87,7 @@ public class CPAvailabilityRangeServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.commerce.product.model.CPAvailabilityRange)returnObj;
+			return (com.liferay.commerce.model.CommerceInventory)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -90,16 +96,16 @@ public class CPAvailabilityRangeServiceHttp {
 		}
 	}
 
-	public static void deleteCPAvailabilityRange(HttpPrincipal httpPrincipal,
-		long cpAvailabilityRangeId)
+	public static void deleteCommerceInventory(HttpPrincipal httpPrincipal,
+		long commerceInventoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
-			MethodKey methodKey = new MethodKey(CPAvailabilityRangeServiceUtil.class,
-					"deleteCPAvailabilityRange",
-					_deleteCPAvailabilityRangeParameterTypes1);
+			MethodKey methodKey = new MethodKey(CommerceInventoryServiceUtil.class,
+					"deleteCommerceInventory",
+					_deleteCommerceInventoryParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpAvailabilityRangeId);
+					commerceInventoryId);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -119,16 +125,43 @@ public class CPAvailabilityRangeServiceHttp {
 		}
 	}
 
-	public static com.liferay.commerce.product.model.CPAvailabilityRange getCPAvailabilityRange(
-		HttpPrincipal httpPrincipal, long cpAvailabilityRangeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static com.liferay.commerce.model.CommerceInventory fetchCommerceInventory(
+		HttpPrincipal httpPrincipal, long commerceInventoryId) {
 		try {
-			MethodKey methodKey = new MethodKey(CPAvailabilityRangeServiceUtil.class,
-					"getCPAvailabilityRange",
-					_getCPAvailabilityRangeParameterTypes2);
+			MethodKey methodKey = new MethodKey(CommerceInventoryServiceUtil.class,
+					"fetchCommerceInventory",
+					_fetchCommerceInventoryParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpAvailabilityRangeId);
+					commerceInventoryId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.model.CommerceInventory)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceInventory getCommerceInventory(
+		HttpPrincipal httpPrincipal, long groupId, long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceInventoryServiceUtil.class,
+					"getCommerceInventory", _getCommerceInventoryParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					cpDefinitionId);
 
 			Object returnObj = null;
 
@@ -143,7 +176,7 @@ public class CPAvailabilityRangeServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.commerce.product.model.CPAvailabilityRange)returnObj;
+			return (com.liferay.commerce.model.CommerceInventory)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -152,74 +185,24 @@ public class CPAvailabilityRangeServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.commerce.product.model.CPAvailabilityRange> getCPAvailabilityRanges(
-		HttpPrincipal httpPrincipal, long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPAvailabilityRange> orderByComparator) {
-		try {
-			MethodKey methodKey = new MethodKey(CPAvailabilityRangeServiceUtil.class,
-					"getCPAvailabilityRanges",
-					_getCPAvailabilityRangesParameterTypes3);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					start, end, orderByComparator);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (java.util.List<com.liferay.commerce.product.model.CPAvailabilityRange>)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static int getCPAvailabilityRangesCount(
-		HttpPrincipal httpPrincipal, long groupId) {
-		try {
-			MethodKey methodKey = new MethodKey(CPAvailabilityRangeServiceUtil.class,
-					"getCPAvailabilityRangesCount",
-					_getCPAvailabilityRangesCountParameterTypes4);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return ((Integer)returnObj).intValue();
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static com.liferay.commerce.product.model.CPAvailabilityRange updateCPAvailabilityRange(
-		HttpPrincipal httpPrincipal, long cpAvailabilityRangeId,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+	public static com.liferay.commerce.model.CommerceInventory updateCommerceInventory(
+		HttpPrincipal httpPrincipal, long commerceInventoryId,
+		boolean displayAvailability, boolean displayStockQuantity,
+		int minStockQuantity, boolean backOrders, int minCartQuantity,
+		int maxCartQuantity, java.lang.String allowedCartQuantities,
+		int multipleCartQuantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
-			MethodKey methodKey = new MethodKey(CPAvailabilityRangeServiceUtil.class,
-					"updateCPAvailabilityRange",
-					_updateCPAvailabilityRangeParameterTypes5);
+			MethodKey methodKey = new MethodKey(CommerceInventoryServiceUtil.class,
+					"updateCommerceInventory",
+					_updateCommerceInventoryParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpAvailabilityRangeId, titleMap, serviceContext);
+					commerceInventoryId, displayAvailability,
+					displayStockQuantity, minStockQuantity, backOrders,
+					minCartQuantity, maxCartQuantity, allowedCartQuantities,
+					multipleCartQuantity, serviceContext);
 
 			Object returnObj = null;
 
@@ -234,7 +217,7 @@ public class CPAvailabilityRangeServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.commerce.product.model.CPAvailabilityRange)returnObj;
+			return (com.liferay.commerce.model.CommerceInventory)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -243,25 +226,25 @@ public class CPAvailabilityRangeServiceHttp {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(CPAvailabilityRangeServiceHttp.class);
-	private static final Class<?>[] _addCPAvailabilityRangeParameterTypes0 = new Class[] {
-			java.util.Map.class,
+	private static Log _log = LogFactoryUtil.getLog(CommerceInventoryServiceHttp.class);
+	private static final Class<?>[] _addCommerceInventoryParameterTypes0 = new Class[] {
+			long.class, java.lang.String.class, boolean.class, boolean.class,
+			int.class, boolean.class, int.class, int.class,
+			java.lang.String.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _deleteCPAvailabilityRangeParameterTypes1 = new Class[] {
+	private static final Class<?>[] _deleteCommerceInventoryParameterTypes1 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getCPAvailabilityRangeParameterTypes2 = new Class[] {
+	private static final Class<?>[] _fetchCommerceInventoryParameterTypes2 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getCPAvailabilityRangesParameterTypes3 = new Class[] {
-			long.class, int.class, int.class,
-			com.liferay.portal.kernel.util.OrderByComparator.class
+	private static final Class<?>[] _getCommerceInventoryParameterTypes3 = new Class[] {
+			long.class, long.class
 		};
-	private static final Class<?>[] _getCPAvailabilityRangesCountParameterTypes4 =
-		new Class[] { long.class };
-	private static final Class<?>[] _updateCPAvailabilityRangeParameterTypes5 = new Class[] {
-			long.class, java.util.Map.class,
+	private static final Class<?>[] _updateCommerceInventoryParameterTypes4 = new Class[] {
+			long.class, boolean.class, boolean.class, int.class, boolean.class,
+			int.class, int.class, java.lang.String.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

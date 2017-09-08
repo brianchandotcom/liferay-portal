@@ -1,8 +1,16 @@
+create unique index IX_A85C2AC1 on CPDefinitionAvailabilityRange (groupId, CPDefinitionId, commerceAvailabilityRangeId);
+create index IX_58536E1C on CPDefinitionAvailabilityRange (uuid_[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_64D8CB9E on CPDefinitionAvailabilityRange (uuid_[$COLUMN_LENGTH:75$], groupId);
+
 create index IX_6DCF2DAB on CommerceAddress (addressUserId);
 create index IX_CD76FE87 on CommerceAddress (commerceCountryId);
 create index IX_71C5A9DD on CommerceAddress (commerceRegionId);
 create index IX_B2D4128D on CommerceAddress (groupId, addressUserId, defaultBilling);
 create index IX_F3EF45C0 on CommerceAddress (groupId, addressUserId, defaultShipping);
+
+create index IX_DC0A8E5D on CommerceAvailabilityRange (groupId);
+create index IX_A7FBA1A1 on CommerceAvailabilityRange (uuid_[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_FD921C63 on CommerceAvailabilityRange (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create index IX_73579769 on CommerceCart (billingAddressId);
 create index IX_13E7A9AC on CommerceCart (groupId, type_);
@@ -20,6 +28,10 @@ create index IX_FEDECABF on CommerceCountry (groupId, billingAllowed, active_);
 create index IX_158112E8 on CommerceCountry (groupId, shippingAllowed, active_);
 create index IX_91EA24D5 on CommerceCountry (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_7EFDC97 on CommerceCountry (uuid_[$COLUMN_LENGTH:75$], groupId);
+
+create unique index IX_52B563F2 on CommerceInventory (groupId, CPDefinitionId);
+create index IX_80D15A5B on CommerceInventory (uuid_[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_7412BB9D on CommerceInventory (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create index IX_64F208B1 on CommerceOrder (groupId);
 

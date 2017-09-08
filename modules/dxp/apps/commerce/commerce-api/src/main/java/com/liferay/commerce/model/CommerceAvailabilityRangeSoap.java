@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.model;
+package com.liferay.commerce.model;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -23,19 +23,20 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.product.service.http.CPAvailabilityRangeServiceSoap}.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.service.http.CommerceAvailabilityRangeServiceSoap}.
  *
- * @author Marco Leo
- * @see com.liferay.commerce.product.service.http.CPAvailabilityRangeServiceSoap
+ * @author Alessio Antonio Rendina
+ * @see com.liferay.commerce.service.http.CommerceAvailabilityRangeServiceSoap
  * @generated
  */
 @ProviderType
-public class CPAvailabilityRangeSoap implements Serializable {
-	public static CPAvailabilityRangeSoap toSoapModel(CPAvailabilityRange model) {
-		CPAvailabilityRangeSoap soapModel = new CPAvailabilityRangeSoap();
+public class CommerceAvailabilityRangeSoap implements Serializable {
+	public static CommerceAvailabilityRangeSoap toSoapModel(
+		CommerceAvailabilityRange model) {
+		CommerceAvailabilityRangeSoap soapModel = new CommerceAvailabilityRangeSoap();
 
 		soapModel.setUuid(model.getUuid());
-		soapModel.setCPAvailabilityRangeId(model.getCPAvailabilityRangeId());
+		soapModel.setCommerceAvailabilityRangeId(model.getCommerceAvailabilityRangeId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -43,14 +44,15 @@ public class CPAvailabilityRangeSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setTitle(model.getTitle());
+		soapModel.setPriority(model.getPriority());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
 
-	public static CPAvailabilityRangeSoap[] toSoapModels(
-		CPAvailabilityRange[] models) {
-		CPAvailabilityRangeSoap[] soapModels = new CPAvailabilityRangeSoap[models.length];
+	public static CommerceAvailabilityRangeSoap[] toSoapModels(
+		CommerceAvailabilityRange[] models) {
+		CommerceAvailabilityRangeSoap[] soapModels = new CommerceAvailabilityRangeSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -59,15 +61,15 @@ public class CPAvailabilityRangeSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static CPAvailabilityRangeSoap[][] toSoapModels(
-		CPAvailabilityRange[][] models) {
-		CPAvailabilityRangeSoap[][] soapModels = null;
+	public static CommerceAvailabilityRangeSoap[][] toSoapModels(
+		CommerceAvailabilityRange[][] models) {
+		CommerceAvailabilityRangeSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new CPAvailabilityRangeSoap[models.length][models[0].length];
+			soapModels = new CommerceAvailabilityRangeSoap[models.length][models[0].length];
 		}
 		else {
-			soapModels = new CPAvailabilityRangeSoap[0][0];
+			soapModels = new CommerceAvailabilityRangeSoap[0][0];
 		}
 
 		for (int i = 0; i < models.length; i++) {
@@ -77,26 +79,26 @@ public class CPAvailabilityRangeSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static CPAvailabilityRangeSoap[] toSoapModels(
-		List<CPAvailabilityRange> models) {
-		List<CPAvailabilityRangeSoap> soapModels = new ArrayList<CPAvailabilityRangeSoap>(models.size());
+	public static CommerceAvailabilityRangeSoap[] toSoapModels(
+		List<CommerceAvailabilityRange> models) {
+		List<CommerceAvailabilityRangeSoap> soapModels = new ArrayList<CommerceAvailabilityRangeSoap>(models.size());
 
-		for (CPAvailabilityRange model : models) {
+		for (CommerceAvailabilityRange model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new CPAvailabilityRangeSoap[soapModels.size()]);
+		return soapModels.toArray(new CommerceAvailabilityRangeSoap[soapModels.size()]);
 	}
 
-	public CPAvailabilityRangeSoap() {
+	public CommerceAvailabilityRangeSoap() {
 	}
 
 	public long getPrimaryKey() {
-		return _CPAvailabilityRangeId;
+		return _commerceAvailabilityRangeId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setCPAvailabilityRangeId(pk);
+		setCommerceAvailabilityRangeId(pk);
 	}
 
 	public String getUuid() {
@@ -107,12 +109,12 @@ public class CPAvailabilityRangeSoap implements Serializable {
 		_uuid = uuid;
 	}
 
-	public long getCPAvailabilityRangeId() {
-		return _CPAvailabilityRangeId;
+	public long getCommerceAvailabilityRangeId() {
+		return _commerceAvailabilityRangeId;
 	}
 
-	public void setCPAvailabilityRangeId(long CPAvailabilityRangeId) {
-		_CPAvailabilityRangeId = CPAvailabilityRangeId;
+	public void setCommerceAvailabilityRangeId(long commerceAvailabilityRangeId) {
+		_commerceAvailabilityRangeId = commerceAvailabilityRangeId;
 	}
 
 	public long getGroupId() {
@@ -171,6 +173,14 @@ public class CPAvailabilityRangeSoap implements Serializable {
 		_title = title;
 	}
 
+	public double getPriority() {
+		return _priority;
+	}
+
+	public void setPriority(double priority) {
+		_priority = priority;
+	}
+
 	public Date getLastPublishDate() {
 		return _lastPublishDate;
 	}
@@ -180,7 +190,7 @@ public class CPAvailabilityRangeSoap implements Serializable {
 	}
 
 	private String _uuid;
-	private long _CPAvailabilityRangeId;
+	private long _commerceAvailabilityRangeId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
@@ -188,5 +198,6 @@ public class CPAvailabilityRangeSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private String _title;
+	private double _priority;
 	private Date _lastPublishDate;
 }

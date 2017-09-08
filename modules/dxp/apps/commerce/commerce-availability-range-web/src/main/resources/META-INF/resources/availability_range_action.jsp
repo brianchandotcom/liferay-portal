@@ -19,15 +19,15 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-CPAvailabilityRange cpAvailabilityRange = (CPAvailabilityRange)row.getObject();
+CommerceAvailabilityRange commerceAvailabilityRange = (CommerceAvailabilityRange)row.getObject();
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-	<c:if test="<%= CPAvailabilityRangePermission.contains(permissionChecker, scopeGroupId, CPActionKeys.MANAGE_COMMERCE_PRODUCT_AVAILABILITY_RANGES) %>">
+	<c:if test="<%= CommercePermission.contains(permissionChecker, scopeGroupId, CommerceActionKeys.MANAGE_COMMERCE_AVAILABILITY_RANGES) %>">
 		<portlet:renderURL var="editURL">
-			<portlet:param name="mvcRenderCommandName" value="editCPAvailabilityRange" />
+			<portlet:param name="mvcRenderCommandName" value="editCommerceAvailabilityRange" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="cpAvailabilityRangeId" value="<%= String.valueOf(cpAvailabilityRange.getCPAvailabilityRangeId()) %>" />
+			<portlet:param name="commerceAvailabilityRangeId" value="<%= String.valueOf(commerceAvailabilityRange.getCommerceAvailabilityRangeId()) %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon
@@ -35,10 +35,10 @@ CPAvailabilityRange cpAvailabilityRange = (CPAvailabilityRange)row.getObject();
 			url="<%= editURL %>"
 		/>
 
-		<portlet:actionURL name="editCPAvailabilityRange" var="deleteURL">
+		<portlet:actionURL name="editCommerceAvailabilityRange" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="cpAvailabilityRangeId" value="<%= String.valueOf(cpAvailabilityRange.getCPAvailabilityRangeId()) %>" />
+			<portlet:param name="commerceAvailabilityRangeId" value="<%= String.valueOf(commerceAvailabilityRange.getCommerceAvailabilityRangeId()) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete

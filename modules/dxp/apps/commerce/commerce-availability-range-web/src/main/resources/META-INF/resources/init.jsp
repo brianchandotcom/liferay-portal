@@ -23,10 +23,10 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.commerce.product.availability.range.web.internal.display.context.CPAvailabilityRangeDisplayContext" %><%@
-page import="com.liferay.commerce.product.constants.CPActionKeys" %><%@
-page import="com.liferay.commerce.product.model.CPAvailabilityRange" %><%@
-page import="com.liferay.commerce.product.service.permission.CPAvailabilityRangePermission" %><%@
+<%@ page import="com.liferay.commerce.availability.range.web.internal.display.context.CommerceAvailabilityRangeDisplayContext" %><%@
+page import="com.liferay.commerce.constants.CommerceActionKeys" %><%@
+page import="com.liferay.commerce.model.CommerceAvailabilityRange" %><%@
+page import="com.liferay.commerce.service.permission.CommercePermission" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@

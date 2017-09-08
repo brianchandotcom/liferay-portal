@@ -81,12 +81,16 @@
 				</execute>
 			</else>
 		</if>
+
+		<execute function="Pause" locator1="3000" />
 	</command>
 
 	<command name="saveEntry">
 		<execute macro="Button#clickSave" />
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+
+		<execute function="Pause" locator1="3000" />
 	</command>
 
 	<command name="saveEntryAsDraft">
@@ -102,6 +106,49 @@
 					<var name="key_status" value="${status}" />
 				</execute>
 			</else>
+		</if>
+
+		<execute function="Pause" locator1="3000" />
+	</command>
+
+	<command name="selectAssociatedOptionsValue">
+		<if>
+			<condition function="IsElementPresent" locator1="CommerceEntry#OPTION_SELECT" />
+			<then>
+				<execute function="Click" locator1="CommerceEntry#OPTION_SELECT" />
+
+				<execute function="Click" locator1="CommerceEntry#OPTIONS_SELECT_LIST">
+					<var name="key_selectValue" value="${selectValue}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<condition function="IsElementPresent" locator1="CommerceEntry#OPTION_VALUE">
+				<var name="key_optionType" value="checkbox" />
+				<var name="key_optionValue" value="${optionValue}" />
+			</condition>
+
+			<then>
+				<execute function="Click" locator1="CommerceEntry#OPTION_VALUE">
+					<var name="key_optionType" value="checkbox" />
+					<var name="key_optionValue" value="${optionValue}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<condition function="IsElementPresent" locator1="CommerceEntry#OPTION_VALUE">
+				<var name="key_optionType" value="radio" />
+				<var name="key_optionValue" value="${optionValue}" />
+			</condition>
+
+			<then>
+				<execute function="Click" locator1="CommerceEntry#OPTION_VALUE">
+					<var name="key_optionType" value="radio" />
+					<var name="key_optionValue" value="${optionValue}" />
+				</execute>
+			</then>
 		</if>
 	</command>
 

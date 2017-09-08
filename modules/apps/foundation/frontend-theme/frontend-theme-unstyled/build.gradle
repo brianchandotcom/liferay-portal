@@ -185,5 +185,6 @@ dependencies {
 
 publishNodeModule {
 	dependsOn jar
+	enabled = false
 	workingDir = "src/main/resources/META-INF/resources/_unstyled"
 }

@@ -146,6 +146,24 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 				fileName, "There should be a line break after '},'", lineCount);
 		}
 
+		for (int x = 0;;) {
+			x = trimmedLine.indexOf("}", x + 1);
+
+			if (x == -1) {
+				break;
+			}
+
+			if (!ToolsUtil.isInsideQuotes(trimmedLine, x) &&
+				(getLevel(trimmedLine.substring(0, x + 1), "{", "}") < 0)) {
+
+				addMessage(
+					fileName,
+					"There should be a line break after '" +
+						trimmedLine.substring(0, x) + "'",
+					lineCount);
+			}
+		}
+
 		if (previousLine.endsWith(StringPool.PERIOD)) {
 			int x = trimmedLine.indexOf(CharPool.OPEN_PARENTHESIS);
 

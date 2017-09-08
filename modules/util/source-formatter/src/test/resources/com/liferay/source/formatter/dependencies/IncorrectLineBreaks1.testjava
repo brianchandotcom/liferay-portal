@@ -147,6 +147,18 @@ public class IncorrectLineBreaks1 {
 		}
 	}
 
+	protected String[][] getTwoDimensionalArray() {
+		return new String[][] {
+			new String[] {
+				"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight",
+				"Nine", "Ten"
+			},
+			new String[] {
+				"Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen",
+				"Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty"
+			}};
+	}
+
 	private static final String[] _NUMBERS = {
 		"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
 		"Ten"

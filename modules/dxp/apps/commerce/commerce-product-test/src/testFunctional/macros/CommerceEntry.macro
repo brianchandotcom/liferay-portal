@@ -31,6 +31,16 @@
 		<execute function="AssertTextEquals" locator1="CommerceEntry#KEY_FIELD" value1="${valueTitle}" />
 	</command>
 
+	<command name="addSKUsEntry">
+		<execute function="Type" locator1="CommerceEntry#SKU_FIELD" value1="${productSKU}" />
+
+		<execute macro="CommerceEntry#selectAssociatedOptionsValue">
+			<var name="optionText" value="${optionText}" />
+			<var name="optionValue" value="${optionValue}" />
+			<var name="selectValue" value="${selectValue}" />
+		</execute>
+	</command>
+
 	<command name="editEntryFullDescription">
 		<execute macro="CommerceEntry#addFullDescriptionViaAlloyEditor">
 			<var name="entryFullDescription" value="${newEntryFullDescription}" />

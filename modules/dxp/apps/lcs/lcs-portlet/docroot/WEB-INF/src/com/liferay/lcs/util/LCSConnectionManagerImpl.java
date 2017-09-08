@@ -192,7 +192,7 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 				TimeUnit.MILLISECONDS));
 		_scheduledFutures.add(
 			_scheduledExecutorService.scheduleAtFixedRate(
-				_licenseManagerTask, 2, 2, TimeUnit.MINUTES));
+				_licenseManagerTask, 0L, 2L, TimeUnit.MINUTES));
 	}
 
 	@Override

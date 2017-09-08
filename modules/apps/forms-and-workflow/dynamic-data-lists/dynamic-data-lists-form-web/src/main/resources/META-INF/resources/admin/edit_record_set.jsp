@@ -240,6 +240,39 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="getRoles" var="getRoles" />
 
 		<aui:script>
+			var <portlet:namespace />intervalId;
+
+			var <portlet:namespace />form;
+
+			function <portlet:namespace />isDDMModuleReady() {
+				if (window.ddm) {
+					clearInterval(<portlet:namespace />intervalId);
+
+					Liferay.component(
+						'formPortlet',
+						new Liferay.DDL.Portlet(
+							{
+								context: <%= ddlFormAdminDisplayContext.getFormBuilderContext() %>,
+								localizedDescription: <%= ddlFormAdminDisplayContext.getFormLocalizedDescription() %>,
+								localizedName: <%= ddlFormAdminDisplayContext.getFormLocalizedName() %>,
+								defaultLanguageId: '<%= ddlFormAdminDisplayContext.getDefaultLanguageId() %>',
+								editingLanguageId: '<%= ddlFormAdminDisplayContext.getDefaultLanguageId() %>',
+								editForm: <portlet:namespace />form,
+								namespace: '<portlet:namespace />',
+								published: !!<%= ddlFormAdminDisplayContext.isFormPublished() %>,
+								publishRecordSetURL: '<%= publishRecordSetURL.toString() %>',
+								recordSetId: <%= recordSetId %>,
+								rules: <%= ddlFormAdminDisplayContext.getSerializedDDMFormRules() %>,
+								translationManager: Liferay.component('<portlet:namespace />translationManager')
+							}
+						)
+					);
+				}
+				else {
+					<portlet:namespace />intervalId = setInterval(<portlet:namespace />isDDMModuleReady, 100);
+				}
+			}
+
 			Liferay.namespace('DDL').Settings = {
 				autosaveInterval: '<%= ddlFormAdminDisplayContext.getAutosaveInterval() %>',
 				autosaveURL: '<%= autoSaveRecordSetURL.toString() %>',
@@ -280,31 +313,11 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 							function() {
 								Liferay.DDM.Renderer.FieldTypes.register(fieldTypes);
 
-								setTimeout(
-									function() {
-										Liferay.component(
-											'formPortlet',
-											new Liferay.DDL.Portlet(
-												{
-													context: <%= ddlFormAdminDisplayContext.getFormBuilderContext() %>,
-													localizedDescription: <%= ddlFormAdminDisplayContext.getFormLocalizedDescription() %>,
-													localizedName: <%= ddlFormAdminDisplayContext.getFormLocalizedName() %>,
-													defaultLanguageId: '<%= ddlFormAdminDisplayContext.getDefaultLanguageId() %>',
-													editingLanguageId: '<%= ddlFormAdminDisplayContext.getDefaultLanguageId() %>',
-													editForm: event.form,
-													namespace: '<portlet:namespace />',
-													published: !!<%= ddlFormAdminDisplayContext.isFormPublished() %>,
-													publishRecordSetURL: '<%= publishRecordSetURL.toString() %>',
-													recordSetId: <%= recordSetId %>,
-													rules: <%= ddlFormAdminDisplayContext.getSerializedDDMFormRules() %>,
-													translationManager: Liferay.component('<portlet:namespace />translationManager')
-												}
-											)
-										);
-									}
-									, 500);
+								<portlet:namespace />form = event.form;
+
+								<portlet:namespace />intervalId = setInterval(<portlet:namespace />isDDMModuleReady, 100);
 							},
-							['liferay-ddl-portlet'].concat(systemFieldModules)
+							['liferay-ddl-portlet','liferay-ddm-form-renderer'].concat(systemFieldModules)
 						);
 
 						<portlet:namespace />init();
@@ -313,6 +326,10 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 			);
 
 			var clearPortletHandlers = function(event) {
+				if (<portlet:namespace />intervalId) {
+					clearInterval(<portlet:namespace />intervalId);
+				}
+
 				if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
 					Liferay.namespace('DDL').destroySettings();
 

@@ -24,10 +24,11 @@ import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -53,18 +54,17 @@ public class CommerceInventoryStagedModelRepository
 			serviceContext.setUuid(commerceInventory.getUuid());
 		}
 
-		return
-			_commerceInventoryLocalService.addCommerceInventory(
-				commerceInventory.getCPDefinitionId(),
-				commerceInventory.getCommerceInventoryEngine(),
-				commerceInventory.getDisplayAvailability(),
-				commerceInventory.getDisplayStockQuantity(),
-				commerceInventory.getMinStockQuantity(),
-				commerceInventory.getBackOrders(),
-				commerceInventory.getMinCartQuantity(),
-				commerceInventory.getMaxCartQuantity(),
-				commerceInventory.getAllowedCartQuantities(),
-				commerceInventory.getMultipleCartQuantity(), serviceContext);
+		return _commerceInventoryLocalService.addCommerceInventory(
+			commerceInventory.getCPDefinitionId(),
+			commerceInventory.getCommerceInventoryEngine(),
+			commerceInventory.getDisplayAvailability(),
+			commerceInventory.getDisplayStockQuantity(),
+			commerceInventory.getMinStockQuantity(),
+			commerceInventory.getBackOrders(),
+			commerceInventory.getMinCartQuantity(),
+			commerceInventory.getMaxCartQuantity(),
+			commerceInventory.getAllowedCartQuantities(),
+			commerceInventory.getMultipleCartQuantity(), serviceContext);
 	}
 
 	@Override
@@ -118,8 +118,8 @@ public class CommerceInventoryStagedModelRepository
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext) {
 
-		return _commerceInventoryLocalService.
-			getExportActionableDynamicQuery(portletDataContext);
+		return _commerceInventoryLocalService.getExportActionableDynamicQuery(
+			portletDataContext);
 	}
 
 	@Override

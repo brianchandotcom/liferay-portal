@@ -59,10 +59,6 @@
 			<var name="status" value="Approved" />
 		</execute>
 
-		<execute function="Pause" locator1="3000" />
-
-		<execute function="Pause" locator1="3000" />
-
 		<execute macro="CommerceNavigator#gotoSitesCommerce">
 			<var name="portlet" value="Catalog" />
 		</execute>
@@ -101,10 +97,6 @@
 			<var name="status" value="Approved" />
 		</execute>
 
-		<execute function="Pause" locator1="3000" />
-
-		<execute function="Pause" locator1="3000" />
-
 		<execute macro="CommerceNavigator#gotoSitesCommerce">
 			<var name="portlet" value="Catalog" />
 		</execute>
@@ -142,10 +134,6 @@
 		<execute macro="CommerceEntry#publishEntry">
 			<var name="status" value="Approved" />
 		</execute>
-
-		<execute function="Pause" locator1="3000" />
-
-		<execute function="Pause" locator1="3000" />
 
 		<execute macro="CommerceNavigator#gotoSitesCommerce">
 			<var name="portlet" value="Catalog" />

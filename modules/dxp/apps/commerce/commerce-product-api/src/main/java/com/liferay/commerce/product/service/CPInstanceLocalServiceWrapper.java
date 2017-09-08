@@ -49,8 +49,6 @@ public class CPInstanceLocalServiceWrapper implements CPInstanceLocalService,
 	public com.liferay.commerce.product.model.CPInstance addCPInstance(
 		long cpDefinitionId, java.lang.String sku, java.lang.String gtin,
 		java.lang.String manufacturerPartNumber, java.lang.String ddmContent,
-		boolean overrideInventory, int minCartQuantity, int maxCartQuantity,
-		java.lang.String allowedCartQuantities, int multipleCartQuantity,
 		double width, double height, double depth, double weight, double cost,
 		double price, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,
@@ -59,21 +57,17 @@ public class CPInstanceLocalServiceWrapper implements CPInstanceLocalService,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpInstanceLocalService.addCPInstance(cpDefinitionId, sku, gtin,
-			manufacturerPartNumber, ddmContent, overrideInventory,
-			minCartQuantity, maxCartQuantity, allowedCartQuantities,
-			multipleCartQuantity, width, height, depth, weight, cost, price,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, serviceContext);
+			manufacturerPartNumber, ddmContent, width, height, depth, weight,
+			cost, price, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
 	}
 
 	@Override
 	public com.liferay.commerce.product.model.CPInstance addCPInstance(
 		long cpDefinitionId, java.lang.String sku, java.lang.String gtin,
 		java.lang.String manufacturerPartNumber, java.lang.String ddmContent,
-		boolean overrideInventory, int minCartQuantity, int maxCartQuantity,
-		java.lang.String allowedCartQuantities, int multipleCartQuantity,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,
@@ -81,13 +75,11 @@ public class CPInstanceLocalServiceWrapper implements CPInstanceLocalService,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpInstanceLocalService.addCPInstance(cpDefinitionId, sku, gtin,
-			manufacturerPartNumber, ddmContent, overrideInventory,
-			minCartQuantity, maxCartQuantity, allowedCartQuantities,
-			multipleCartQuantity, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			manufacturerPartNumber, ddmContent, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	@Override
@@ -448,32 +440,8 @@ public class CPInstanceLocalServiceWrapper implements CPInstanceLocalService,
 	@Override
 	public com.liferay.commerce.product.model.CPInstance updateCPInstance(
 		long cpInstanceId, java.lang.String sku, java.lang.String gtin,
-		java.lang.String manufacturerPartNumber, boolean overrideInventory,
-		int minCartQuantity, int maxCartQuantity,
-		java.lang.String allowedCartQuantities, int multipleCartQuantity,
-		double width, double height, double depth, double weight, double cost,
-		double price, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpInstanceLocalService.updateCPInstance(cpInstanceId, sku,
-			gtin, manufacturerPartNumber, overrideInventory, minCartQuantity,
-			maxCartQuantity, allowedCartQuantities, multipleCartQuantity,
-			width, height, depth, weight, cost, price, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, serviceContext);
-	}
-
-	@Override
-	public com.liferay.commerce.product.model.CPInstance updateCPInstance(
-		long cpInstanceId, java.lang.String sku, java.lang.String gtin,
-		java.lang.String manufacturerPartNumber, boolean overrideInventory,
-		int minCartQuantity, int maxCartQuantity,
-		java.lang.String allowedCartQuantities, int multipleCartQuantity,
+		java.lang.String manufacturerPartNumber, double width, double height,
+		double depth, double weight, double cost, double price,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,
@@ -481,12 +449,29 @@ public class CPInstanceLocalServiceWrapper implements CPInstanceLocalService,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpInstanceLocalService.updateCPInstance(cpInstanceId, sku,
-			gtin, manufacturerPartNumber, overrideInventory, minCartQuantity,
-			maxCartQuantity, allowedCartQuantities, multipleCartQuantity,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, serviceContext);
+			gtin, manufacturerPartNumber, width, height, depth, weight, cost,
+			price, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPInstance updateCPInstance(
+		long cpInstanceId, java.lang.String sku, java.lang.String gtin,
+		java.lang.String manufacturerPartNumber, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpInstanceLocalService.updateCPInstance(cpInstanceId, sku,
+			gtin, manufacturerPartNumber, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
 
 	@Override

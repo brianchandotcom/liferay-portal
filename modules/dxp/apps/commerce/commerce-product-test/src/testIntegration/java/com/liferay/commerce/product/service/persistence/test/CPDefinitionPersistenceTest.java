@@ -146,18 +146,6 @@ public class CPDefinitionPersistenceTest {
 
 		newCPDefinition.setCanSellWithoutOptions(RandomTestUtil.randomBoolean());
 
-		newCPDefinition.setDisplayAvailability(RandomTestUtil.randomBoolean());
-
-		newCPDefinition.setDisplayStockQuantity(RandomTestUtil.randomBoolean());
-
-		newCPDefinition.setMinCartQuantity(RandomTestUtil.nextInt());
-
-		newCPDefinition.setMaxCartQuantity(RandomTestUtil.nextInt());
-
-		newCPDefinition.setAllowedCartQuantities(RandomTestUtil.randomString());
-
-		newCPDefinition.setMultipleCartQuantity(RandomTestUtil.nextInt());
-
 		newCPDefinition.setWidth(RandomTestUtil.nextDouble());
 
 		newCPDefinition.setHeight(RandomTestUtil.nextDouble());
@@ -212,18 +200,6 @@ public class CPDefinitionPersistenceTest {
 			newCPDefinition.getAvailableIndividually());
 		Assert.assertEquals(existingCPDefinition.getCanSellWithoutOptions(),
 			newCPDefinition.getCanSellWithoutOptions());
-		Assert.assertEquals(existingCPDefinition.getDisplayAvailability(),
-			newCPDefinition.getDisplayAvailability());
-		Assert.assertEquals(existingCPDefinition.getDisplayStockQuantity(),
-			newCPDefinition.getDisplayStockQuantity());
-		Assert.assertEquals(existingCPDefinition.getMinCartQuantity(),
-			newCPDefinition.getMinCartQuantity());
-		Assert.assertEquals(existingCPDefinition.getMaxCartQuantity(),
-			newCPDefinition.getMaxCartQuantity());
-		Assert.assertEquals(existingCPDefinition.getAllowedCartQuantities(),
-			newCPDefinition.getAllowedCartQuantities());
-		Assert.assertEquals(existingCPDefinition.getMultipleCartQuantity(),
-			newCPDefinition.getMultipleCartQuantity());
 		AssertUtils.assertEquals(existingCPDefinition.getWidth(),
 			newCPDefinition.getWidth());
 		AssertUtils.assertEquals(existingCPDefinition.getHeight(),
@@ -355,9 +331,6 @@ public class CPDefinitionPersistenceTest {
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "productTypeName", true,
 			"availableIndividually", true, "canSellWithoutOptions", true,
-			"displayAvailability", true, "displayStockQuantity", true,
-			"minCartQuantity", true, "maxCartQuantity", true,
-			"allowedCartQuantities", true, "multipleCartQuantity", true,
 			"width", true, "height", true, "depth", true, "weight", true,
 			"DDMStructureKey", true, "displayDate", true, "expirationDate",
 			true, "lastPublishDate", true, "status", true, "statusByUserId",
@@ -599,18 +572,6 @@ public class CPDefinitionPersistenceTest {
 		cpDefinition.setAvailableIndividually(RandomTestUtil.randomBoolean());
 
 		cpDefinition.setCanSellWithoutOptions(RandomTestUtil.randomBoolean());
-
-		cpDefinition.setDisplayAvailability(RandomTestUtil.randomBoolean());
-
-		cpDefinition.setDisplayStockQuantity(RandomTestUtil.randomBoolean());
-
-		cpDefinition.setMinCartQuantity(RandomTestUtil.nextInt());
-
-		cpDefinition.setMaxCartQuantity(RandomTestUtil.nextInt());
-
-		cpDefinition.setAllowedCartQuantities(RandomTestUtil.randomString());
-
-		cpDefinition.setMultipleCartQuantity(RandomTestUtil.nextInt());
 
 		cpDefinition.setWidth(RandomTestUtil.nextDouble());
 

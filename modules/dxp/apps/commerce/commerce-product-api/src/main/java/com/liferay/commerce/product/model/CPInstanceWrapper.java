@@ -72,11 +72,6 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 		attributes.put("gtin", getGtin());
 		attributes.put("manufacturerPartNumber", getManufacturerPartNumber());
 		attributes.put("DDMContent", getDDMContent());
-		attributes.put("overrideInventory", getOverrideInventory());
-		attributes.put("minCartQuantity", getMinCartQuantity());
-		attributes.put("maxCartQuantity", getMaxCartQuantity());
-		attributes.put("allowedCartQuantities", getAllowedCartQuantities());
-		attributes.put("multipleCartQuantity", getMultipleCartQuantity());
 		attributes.put("width", getWidth());
 		attributes.put("height", getHeight());
 		attributes.put("depth", getDepth());
@@ -175,38 +170,6 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 			setDDMContent(DDMContent);
 		}
 
-		Boolean overrideInventory = (Boolean)attributes.get("overrideInventory");
-
-		if (overrideInventory != null) {
-			setOverrideInventory(overrideInventory);
-		}
-
-		Integer minCartQuantity = (Integer)attributes.get("minCartQuantity");
-
-		if (minCartQuantity != null) {
-			setMinCartQuantity(minCartQuantity);
-		}
-
-		Integer maxCartQuantity = (Integer)attributes.get("maxCartQuantity");
-
-		if (maxCartQuantity != null) {
-			setMaxCartQuantity(maxCartQuantity);
-		}
-
-		String allowedCartQuantities = (String)attributes.get(
-				"allowedCartQuantities");
-
-		if (allowedCartQuantities != null) {
-			setAllowedCartQuantities(allowedCartQuantities);
-		}
-
-		Integer multipleCartQuantity = (Integer)attributes.get(
-				"multipleCartQuantity");
-
-		if (multipleCartQuantity != null) {
-			setMultipleCartQuantity(multipleCartQuantity);
-		}
-
 		Double width = (Double)attributes.get("width");
 
 		if (width != null) {
@@ -294,16 +257,6 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	@Override
 	public int compareTo(CPInstance cpInstance) {
 		return _cpInstance.compareTo(cpInstance);
-	}
-
-	/**
-	* Returns the allowed cart quantities of this cp instance.
-	*
-	* @return the allowed cart quantities of this cp instance
-	*/
-	@Override
-	public java.lang.String getAllowedCartQuantities() {
-		return _cpInstance.getAllowedCartQuantities();
 	}
 
 	/**
@@ -458,26 +411,6 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	}
 
 	/**
-	* Returns the max cart quantity of this cp instance.
-	*
-	* @return the max cart quantity of this cp instance
-	*/
-	@Override
-	public int getMaxCartQuantity() {
-		return _cpInstance.getMaxCartQuantity();
-	}
-
-	/**
-	* Returns the min cart quantity of this cp instance.
-	*
-	* @return the min cart quantity of this cp instance
-	*/
-	@Override
-	public int getMinCartQuantity() {
-		return _cpInstance.getMinCartQuantity();
-	}
-
-	/**
 	* Returns the modified date of this cp instance.
 	*
 	* @return the modified date of this cp instance
@@ -485,26 +418,6 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	@Override
 	public Date getModifiedDate() {
 		return _cpInstance.getModifiedDate();
-	}
-
-	/**
-	* Returns the multiple cart quantity of this cp instance.
-	*
-	* @return the multiple cart quantity of this cp instance
-	*/
-	@Override
-	public int getMultipleCartQuantity() {
-		return _cpInstance.getMultipleCartQuantity();
-	}
-
-	/**
-	* Returns the override inventory of this cp instance.
-	*
-	* @return the override inventory of this cp instance
-	*/
-	@Override
-	public boolean getOverrideInventory() {
-		return _cpInstance.getOverrideInventory();
 	}
 
 	/**
@@ -796,16 +709,6 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	}
 
 	/**
-	* Returns <code>true</code> if this cp instance is override inventory.
-	*
-	* @return <code>true</code> if this cp instance is override inventory; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isOverrideInventory() {
-		return _cpInstance.isOverrideInventory();
-	}
-
-	/**
 	* Returns <code>true</code> if this cp instance is pending.
 	*
 	* @return <code>true</code> if this cp instance is pending; <code>false</code> otherwise
@@ -828,16 +731,6 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	@Override
 	public void persist() {
 		_cpInstance.persist();
-	}
-
-	/**
-	* Sets the allowed cart quantities of this cp instance.
-	*
-	* @param allowedCartQuantities the allowed cart quantities of this cp instance
-	*/
-	@Override
-	public void setAllowedCartQuantities(java.lang.String allowedCartQuantities) {
-		_cpInstance.setAllowedCartQuantities(allowedCartQuantities);
 	}
 
 	@Override
@@ -1003,26 +896,6 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	}
 
 	/**
-	* Sets the max cart quantity of this cp instance.
-	*
-	* @param maxCartQuantity the max cart quantity of this cp instance
-	*/
-	@Override
-	public void setMaxCartQuantity(int maxCartQuantity) {
-		_cpInstance.setMaxCartQuantity(maxCartQuantity);
-	}
-
-	/**
-	* Sets the min cart quantity of this cp instance.
-	*
-	* @param minCartQuantity the min cart quantity of this cp instance
-	*/
-	@Override
-	public void setMinCartQuantity(int minCartQuantity) {
-		_cpInstance.setMinCartQuantity(minCartQuantity);
-	}
-
-	/**
 	* Sets the modified date of this cp instance.
 	*
 	* @param modifiedDate the modified date of this cp instance
@@ -1032,29 +905,9 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 		_cpInstance.setModifiedDate(modifiedDate);
 	}
 
-	/**
-	* Sets the multiple cart quantity of this cp instance.
-	*
-	* @param multipleCartQuantity the multiple cart quantity of this cp instance
-	*/
-	@Override
-	public void setMultipleCartQuantity(int multipleCartQuantity) {
-		_cpInstance.setMultipleCartQuantity(multipleCartQuantity);
-	}
-
 	@Override
 	public void setNew(boolean n) {
 		_cpInstance.setNew(n);
-	}
-
-	/**
-	* Sets whether this cp instance is override inventory.
-	*
-	* @param overrideInventory the override inventory of this cp instance
-	*/
-	@Override
-	public void setOverrideInventory(boolean overrideInventory) {
-		_cpInstance.setOverrideInventory(overrideInventory);
 	}
 
 	/**

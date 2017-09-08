@@ -68,8 +68,6 @@ public class CPInstanceServiceSoap {
 	public static com.liferay.commerce.product.model.CPInstanceSoap addCPInstance(
 		long cpDefinitionId, java.lang.String sku, java.lang.String gtin,
 		java.lang.String manufacturerPartNumber, java.lang.String ddmContent,
-		boolean overrideInventory, int minCartQuantity, int maxCartQuantity,
-		java.lang.String allowedCartQuantities, int multipleCartQuantity,
 		double width, double height, double depth, double weight, double cost,
 		double price, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,
@@ -79,10 +77,8 @@ public class CPInstanceServiceSoap {
 		throws RemoteException {
 		try {
 			com.liferay.commerce.product.model.CPInstance returnValue = CPInstanceServiceUtil.addCPInstance(cpDefinitionId,
-					sku, gtin, manufacturerPartNumber, ddmContent,
-					overrideInventory, minCartQuantity, maxCartQuantity,
-					allowedCartQuantities, multipleCartQuantity, width, height,
-					depth, weight, cost, price, displayDateMonth,
+					sku, gtin, manufacturerPartNumber, ddmContent, width,
+					height, depth, weight, cost, price, displayDateMonth,
 					displayDateDay, displayDateYear, displayDateHour,
 					displayDateMinute, expirationDateMonth, expirationDateDay,
 					expirationDateYear, expirationDateHour,
@@ -100,8 +96,6 @@ public class CPInstanceServiceSoap {
 	public static com.liferay.commerce.product.model.CPInstanceSoap addCPInstance(
 		long cpDefinitionId, java.lang.String sku, java.lang.String gtin,
 		java.lang.String manufacturerPartNumber, java.lang.String ddmContent,
-		boolean overrideInventory, int minCartQuantity, int maxCartQuantity,
-		java.lang.String allowedCartQuantities, int multipleCartQuantity,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,
@@ -111,8 +105,6 @@ public class CPInstanceServiceSoap {
 		try {
 			com.liferay.commerce.product.model.CPInstance returnValue = CPInstanceServiceUtil.addCPInstance(cpDefinitionId,
 					sku, gtin, manufacturerPartNumber, ddmContent,
-					overrideInventory, minCartQuantity, maxCartQuantity,
-					allowedCartQuantities, multipleCartQuantity,
 					displayDateMonth, displayDateDay, displayDateYear,
 					displayDateHour, displayDateMinute, expirationDateMonth,
 					expirationDateDay, expirationDateYear, expirationDateHour,
@@ -249,25 +241,22 @@ public class CPInstanceServiceSoap {
 
 	public static com.liferay.commerce.product.model.CPInstanceSoap updateCPInstance(
 		long cpInstanceId, java.lang.String sku, java.lang.String gtin,
-		java.lang.String manufacturerPartNumber, boolean overrideInventory,
-		int minCartQuantity, int maxCartQuantity,
-		java.lang.String allowedCartQuantities, int multipleCartQuantity,
-		double width, double height, double depth, double weight, double cost,
-		double price, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		java.lang.String manufacturerPartNumber, double width, double height,
+		double depth, double weight, double cost, double price,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.commerce.product.model.CPInstance returnValue = CPInstanceServiceUtil.updateCPInstance(cpInstanceId,
-					sku, gtin, manufacturerPartNumber, overrideInventory,
-					minCartQuantity, maxCartQuantity, allowedCartQuantities,
-					multipleCartQuantity, width, height, depth, weight, cost,
-					price, displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, expirationDateMonth,
-					expirationDateDay, expirationDateYear, expirationDateHour,
-					expirationDateMinute, neverExpire, serviceContext);
+					sku, gtin, manufacturerPartNumber, width, height, depth,
+					weight, cost, price, displayDateMonth, displayDateDay,
+					displayDateYear, displayDateHour, displayDateMinute,
+					expirationDateMonth, expirationDateDay, expirationDateYear,
+					expirationDateHour, expirationDateMinute, neverExpire,
+					serviceContext);
 
 			return com.liferay.commerce.product.model.CPInstanceSoap.toSoapModel(returnValue);
 		}
@@ -280,24 +269,20 @@ public class CPInstanceServiceSoap {
 
 	public static com.liferay.commerce.product.model.CPInstanceSoap updateCPInstance(
 		long cpInstanceId, java.lang.String sku, java.lang.String gtin,
-		java.lang.String manufacturerPartNumber, boolean overrideInventory,
-		int minCartQuantity, int maxCartQuantity,
-		java.lang.String allowedCartQuantities, int multipleCartQuantity,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		java.lang.String manufacturerPartNumber, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.commerce.product.model.CPInstance returnValue = CPInstanceServiceUtil.updateCPInstance(cpInstanceId,
-					sku, gtin, manufacturerPartNumber, overrideInventory,
-					minCartQuantity, maxCartQuantity, allowedCartQuantities,
-					multipleCartQuantity, displayDateMonth, displayDateDay,
-					displayDateYear, displayDateHour, displayDateMinute,
-					expirationDateMonth, expirationDateDay, expirationDateYear,
-					expirationDateHour, expirationDateMinute, neverExpire,
-					serviceContext);
+					sku, gtin, manufacturerPartNumber, displayDateMonth,
+					displayDateDay, displayDateYear, displayDateHour,
+					displayDateMinute, expirationDateMonth, expirationDateDay,
+					expirationDateYear, expirationDateHour,
+					expirationDateMinute, neverExpire, serviceContext);
 
 			return com.liferay.commerce.product.model.CPInstanceSoap.toSoapModel(returnValue);
 		}

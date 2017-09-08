@@ -20,7 +20,6 @@ import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;
 import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryFinder;
 import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryPersistence;
-import com.liferay.commerce.product.service.persistence.CPAvailabilityRangePersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionFinder;
 import com.liferay.commerce.product.service.persistence.CPDefinitionLinkPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionLocalizationPersistence;
@@ -506,44 +505,6 @@ public abstract class CPDefinitionLinkLocalServiceBaseImpl
 	public void setCPAttachmentFileEntryFinder(
 		CPAttachmentFileEntryFinder cpAttachmentFileEntryFinder) {
 		this.cpAttachmentFileEntryFinder = cpAttachmentFileEntryFinder;
-	}
-
-	/**
-	 * Returns the cp availability range local service.
-	 *
-	 * @return the cp availability range local service
-	 */
-	public com.liferay.commerce.product.service.CPAvailabilityRangeLocalService getCPAvailabilityRangeLocalService() {
-		return cpAvailabilityRangeLocalService;
-	}
-
-	/**
-	 * Sets the cp availability range local service.
-	 *
-	 * @param cpAvailabilityRangeLocalService the cp availability range local service
-	 */
-	public void setCPAvailabilityRangeLocalService(
-		com.liferay.commerce.product.service.CPAvailabilityRangeLocalService cpAvailabilityRangeLocalService) {
-		this.cpAvailabilityRangeLocalService = cpAvailabilityRangeLocalService;
-	}
-
-	/**
-	 * Returns the cp availability range persistence.
-	 *
-	 * @return the cp availability range persistence
-	 */
-	public CPAvailabilityRangePersistence getCPAvailabilityRangePersistence() {
-		return cpAvailabilityRangePersistence;
-	}
-
-	/**
-	 * Sets the cp availability range persistence.
-	 *
-	 * @param cpAvailabilityRangePersistence the cp availability range persistence
-	 */
-	public void setCPAvailabilityRangePersistence(
-		CPAvailabilityRangePersistence cpAvailabilityRangePersistence) {
-		this.cpAvailabilityRangePersistence = cpAvailabilityRangePersistence;
 	}
 
 	/**
@@ -1265,10 +1226,6 @@ public abstract class CPDefinitionLinkLocalServiceBaseImpl
 	protected CPAttachmentFileEntryPersistence cpAttachmentFileEntryPersistence;
 	@BeanReference(type = CPAttachmentFileEntryFinder.class)
 	protected CPAttachmentFileEntryFinder cpAttachmentFileEntryFinder;
-	@BeanReference(type = com.liferay.commerce.product.service.CPAvailabilityRangeLocalService.class)
-	protected com.liferay.commerce.product.service.CPAvailabilityRangeLocalService cpAvailabilityRangeLocalService;
-	@BeanReference(type = CPAvailabilityRangePersistence.class)
-	protected CPAvailabilityRangePersistence cpAvailabilityRangePersistence;
 	@BeanReference(type = com.liferay.commerce.product.service.CPDefinitionLocalService.class)
 	protected com.liferay.commerce.product.service.CPDefinitionLocalService cpDefinitionLocalService;
 	@BeanReference(type = CPDefinitionPersistence.class)

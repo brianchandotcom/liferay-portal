@@ -94,12 +94,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 			{ "productTypeName", Types.VARCHAR },
 			{ "availableIndividually", Types.BOOLEAN },
 			{ "canSellWithoutOptions", Types.BOOLEAN },
-			{ "displayAvailability", Types.BOOLEAN },
-			{ "displayStockQuantity", Types.BOOLEAN },
-			{ "minCartQuantity", Types.INTEGER },
-			{ "maxCartQuantity", Types.INTEGER },
-			{ "allowedCartQuantities", Types.VARCHAR },
-			{ "multipleCartQuantity", Types.INTEGER },
 			{ "width", Types.DOUBLE },
 			{ "height", Types.DOUBLE },
 			{ "depth", Types.DOUBLE },
@@ -128,12 +122,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		TABLE_COLUMNS_MAP.put("productTypeName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("availableIndividually", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("canSellWithoutOptions", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("displayAvailability", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("displayStockQuantity", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("minCartQuantity", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("maxCartQuantity", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("allowedCartQuantities", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("multipleCartQuantity", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("width", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("height", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("depth", Types.DOUBLE);
@@ -149,7 +137,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		TABLE_COLUMNS_MAP.put("defaultLanguageId", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPDefinition (uuid_ VARCHAR(75) null,CPDefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,productTypeName VARCHAR(75) null,availableIndividually BOOLEAN,canSellWithoutOptions BOOLEAN,displayAvailability BOOLEAN,displayStockQuantity BOOLEAN,minCartQuantity INTEGER,maxCartQuantity INTEGER,allowedCartQuantities VARCHAR(255) null,multipleCartQuantity INTEGER,width DOUBLE,height DOUBLE,depth DOUBLE,weight DOUBLE,DDMStructureKey VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,defaultLanguageId VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table CPDefinition (uuid_ VARCHAR(75) null,CPDefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,productTypeName VARCHAR(75) null,availableIndividually BOOLEAN,canSellWithoutOptions BOOLEAN,width DOUBLE,height DOUBLE,depth DOUBLE,weight DOUBLE,DDMStructureKey VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,defaultLanguageId VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table CPDefinition";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpDefinition.displayDate DESC, cpDefinition.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPDefinition.displayDate DESC, CPDefinition.createDate DESC";
@@ -196,12 +184,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		model.setProductTypeName(soapModel.getProductTypeName());
 		model.setAvailableIndividually(soapModel.getAvailableIndividually());
 		model.setCanSellWithoutOptions(soapModel.getCanSellWithoutOptions());
-		model.setDisplayAvailability(soapModel.getDisplayAvailability());
-		model.setDisplayStockQuantity(soapModel.getDisplayStockQuantity());
-		model.setMinCartQuantity(soapModel.getMinCartQuantity());
-		model.setMaxCartQuantity(soapModel.getMaxCartQuantity());
-		model.setAllowedCartQuantities(soapModel.getAllowedCartQuantities());
-		model.setMultipleCartQuantity(soapModel.getMultipleCartQuantity());
 		model.setWidth(soapModel.getWidth());
 		model.setHeight(soapModel.getHeight());
 		model.setDepth(soapModel.getDepth());
@@ -290,12 +272,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		attributes.put("productTypeName", getProductTypeName());
 		attributes.put("availableIndividually", getAvailableIndividually());
 		attributes.put("canSellWithoutOptions", getCanSellWithoutOptions());
-		attributes.put("displayAvailability", getDisplayAvailability());
-		attributes.put("displayStockQuantity", getDisplayStockQuantity());
-		attributes.put("minCartQuantity", getMinCartQuantity());
-		attributes.put("maxCartQuantity", getMaxCartQuantity());
-		attributes.put("allowedCartQuantities", getAllowedCartQuantities());
-		attributes.put("multipleCartQuantity", getMultipleCartQuantity());
 		attributes.put("width", getWidth());
 		attributes.put("height", getHeight());
 		attributes.put("depth", getDepth());
@@ -384,46 +360,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 		if (canSellWithoutOptions != null) {
 			setCanSellWithoutOptions(canSellWithoutOptions);
-		}
-
-		Boolean displayAvailability = (Boolean)attributes.get(
-				"displayAvailability");
-
-		if (displayAvailability != null) {
-			setDisplayAvailability(displayAvailability);
-		}
-
-		Boolean displayStockQuantity = (Boolean)attributes.get(
-				"displayStockQuantity");
-
-		if (displayStockQuantity != null) {
-			setDisplayStockQuantity(displayStockQuantity);
-		}
-
-		Integer minCartQuantity = (Integer)attributes.get("minCartQuantity");
-
-		if (minCartQuantity != null) {
-			setMinCartQuantity(minCartQuantity);
-		}
-
-		Integer maxCartQuantity = (Integer)attributes.get("maxCartQuantity");
-
-		if (maxCartQuantity != null) {
-			setMaxCartQuantity(maxCartQuantity);
-		}
-
-		String allowedCartQuantities = (String)attributes.get(
-				"allowedCartQuantities");
-
-		if (allowedCartQuantities != null) {
-			setAllowedCartQuantities(allowedCartQuantities);
-		}
-
-		Integer multipleCartQuantity = (Integer)attributes.get(
-				"multipleCartQuantity");
-
-		if (multipleCartQuantity != null) {
-			setMultipleCartQuantity(multipleCartQuantity);
 		}
 
 		Double width = (Double)attributes.get("width");
@@ -1056,89 +992,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 	@JSON
 	@Override
-	public boolean getDisplayAvailability() {
-		return _displayAvailability;
-	}
-
-	@JSON
-	@Override
-	public boolean isDisplayAvailability() {
-		return _displayAvailability;
-	}
-
-	@Override
-	public void setDisplayAvailability(boolean displayAvailability) {
-		_displayAvailability = displayAvailability;
-	}
-
-	@JSON
-	@Override
-	public boolean getDisplayStockQuantity() {
-		return _displayStockQuantity;
-	}
-
-	@JSON
-	@Override
-	public boolean isDisplayStockQuantity() {
-		return _displayStockQuantity;
-	}
-
-	@Override
-	public void setDisplayStockQuantity(boolean displayStockQuantity) {
-		_displayStockQuantity = displayStockQuantity;
-	}
-
-	@JSON
-	@Override
-	public int getMinCartQuantity() {
-		return _minCartQuantity;
-	}
-
-	@Override
-	public void setMinCartQuantity(int minCartQuantity) {
-		_minCartQuantity = minCartQuantity;
-	}
-
-	@JSON
-	@Override
-	public int getMaxCartQuantity() {
-		return _maxCartQuantity;
-	}
-
-	@Override
-	public void setMaxCartQuantity(int maxCartQuantity) {
-		_maxCartQuantity = maxCartQuantity;
-	}
-
-	@JSON
-	@Override
-	public String getAllowedCartQuantities() {
-		if (_allowedCartQuantities == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _allowedCartQuantities;
-		}
-	}
-
-	@Override
-	public void setAllowedCartQuantities(String allowedCartQuantities) {
-		_allowedCartQuantities = allowedCartQuantities;
-	}
-
-	@JSON
-	@Override
-	public int getMultipleCartQuantity() {
-		return _multipleCartQuantity;
-	}
-
-	@Override
-	public void setMultipleCartQuantity(int multipleCartQuantity) {
-		_multipleCartQuantity = multipleCartQuantity;
-	}
-
-	@JSON
-	@Override
 	public double getWidth() {
 		return _width;
 	}
@@ -1592,12 +1445,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		cpDefinitionImpl.setProductTypeName(getProductTypeName());
 		cpDefinitionImpl.setAvailableIndividually(getAvailableIndividually());
 		cpDefinitionImpl.setCanSellWithoutOptions(getCanSellWithoutOptions());
-		cpDefinitionImpl.setDisplayAvailability(getDisplayAvailability());
-		cpDefinitionImpl.setDisplayStockQuantity(getDisplayStockQuantity());
-		cpDefinitionImpl.setMinCartQuantity(getMinCartQuantity());
-		cpDefinitionImpl.setMaxCartQuantity(getMaxCartQuantity());
-		cpDefinitionImpl.setAllowedCartQuantities(getAllowedCartQuantities());
-		cpDefinitionImpl.setMultipleCartQuantity(getMultipleCartQuantity());
 		cpDefinitionImpl.setWidth(getWidth());
 		cpDefinitionImpl.setHeight(getHeight());
 		cpDefinitionImpl.setDepth(getDepth());
@@ -1761,25 +1608,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 		cpDefinitionCacheModel.canSellWithoutOptions = getCanSellWithoutOptions();
 
-		cpDefinitionCacheModel.displayAvailability = getDisplayAvailability();
-
-		cpDefinitionCacheModel.displayStockQuantity = getDisplayStockQuantity();
-
-		cpDefinitionCacheModel.minCartQuantity = getMinCartQuantity();
-
-		cpDefinitionCacheModel.maxCartQuantity = getMaxCartQuantity();
-
-		cpDefinitionCacheModel.allowedCartQuantities = getAllowedCartQuantities();
-
-		String allowedCartQuantities = cpDefinitionCacheModel.allowedCartQuantities;
-
-		if ((allowedCartQuantities != null) &&
-				(allowedCartQuantities.length() == 0)) {
-			cpDefinitionCacheModel.allowedCartQuantities = null;
-		}
-
-		cpDefinitionCacheModel.multipleCartQuantity = getMultipleCartQuantity();
-
 		cpDefinitionCacheModel.width = getWidth();
 
 		cpDefinitionCacheModel.height = getHeight();
@@ -1857,7 +1685,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(61);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1881,18 +1709,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		sb.append(getAvailableIndividually());
 		sb.append(", canSellWithoutOptions=");
 		sb.append(getCanSellWithoutOptions());
-		sb.append(", displayAvailability=");
-		sb.append(getDisplayAvailability());
-		sb.append(", displayStockQuantity=");
-		sb.append(getDisplayStockQuantity());
-		sb.append(", minCartQuantity=");
-		sb.append(getMinCartQuantity());
-		sb.append(", maxCartQuantity=");
-		sb.append(getMaxCartQuantity());
-		sb.append(", allowedCartQuantities=");
-		sb.append(getAllowedCartQuantities());
-		sb.append(", multipleCartQuantity=");
-		sb.append(getMultipleCartQuantity());
 		sb.append(", width=");
 		sb.append(getWidth());
 		sb.append(", height=");
@@ -1926,7 +1742,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(94);
+		StringBundler sb = new StringBundler(76);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.product.model.CPDefinition");
@@ -1975,30 +1791,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		sb.append(
 			"<column><column-name>canSellWithoutOptions</column-name><column-value><![CDATA[");
 		sb.append(getCanSellWithoutOptions());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>displayAvailability</column-name><column-value><![CDATA[");
-		sb.append(getDisplayAvailability());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>displayStockQuantity</column-name><column-value><![CDATA[");
-		sb.append(getDisplayStockQuantity());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>minCartQuantity</column-name><column-value><![CDATA[");
-		sb.append(getMinCartQuantity());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>maxCartQuantity</column-name><column-value><![CDATA[");
-		sb.append(getMaxCartQuantity());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>allowedCartQuantities</column-name><column-value><![CDATA[");
-		sb.append(getAllowedCartQuantities());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>multipleCartQuantity</column-name><column-value><![CDATA[");
-		sb.append(getMultipleCartQuantity());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>width</column-name><column-value><![CDATA[");
@@ -2079,12 +1871,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 	private String _productTypeName;
 	private boolean _availableIndividually;
 	private boolean _canSellWithoutOptions;
-	private boolean _displayAvailability;
-	private boolean _displayStockQuantity;
-	private int _minCartQuantity;
-	private int _maxCartQuantity;
-	private String _allowedCartQuantities;
-	private int _multipleCartQuantity;
 	private double _width;
 	private double _height;
 	private double _depth;

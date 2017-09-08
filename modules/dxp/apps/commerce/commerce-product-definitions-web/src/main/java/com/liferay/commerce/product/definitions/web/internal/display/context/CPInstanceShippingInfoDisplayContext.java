@@ -14,13 +14,12 @@
 
 package com.liferay.commerce.product.definitions.web.internal.display.context;
 
-import com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
-import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
-import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
+import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
-import com.liferay.item.selector.ItemSelector;
+import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringPool;
@@ -32,40 +31,21 @@ import javax.servlet.http.HttpServletRequest;
  * @author Alessio Antonio Rendina
  */
 public class CPInstanceShippingInfoDisplayContext
-	extends CPDefinitionsDisplayContext {
+	extends CPInstanceDisplayContext {
 
 	public CPInstanceShippingInfoDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
-			CPDefinitionService cpDefinitionService, ItemSelector itemSelector,
+			CPDefinitionOptionRelService cpDefinitionOptionRelService,
+			CPInstanceService cpInstanceService,
+			CPInstanceHelper cpInstanceHelper,
 			CPMeasurementUnitService cpMeasurementUnitService)
 		throws PortalException {
 
 		super(
-			actionHelper, httpServletRequest, cpDefinitionService,
-			itemSelector);
+			actionHelper, httpServletRequest, cpDefinitionOptionRelService,
+			cpInstanceService, cpInstanceHelper);
 
 		_cpMeasurementUnitService = cpMeasurementUnitService;
-	}
-
-	public CPInstance getCPInstance() throws PortalException {
-		if (_cpInstance != null) {
-			return _cpInstance;
-		}
-
-		_cpInstance = actionHelper.getCPInstance(
-			cpRequestHelper.getRenderRequest());
-
-		return _cpInstance;
-	}
-
-	public long getCPInstanceId() throws PortalException {
-		CPInstance cpInstance = getCPInstance();
-
-		if (cpInstance == null) {
-			return 0;
-		}
-
-		return cpInstance.getCPInstanceId();
 	}
 
 	public String getCPMeasurementUnitName(int type) {
@@ -84,12 +64,6 @@ public class CPInstanceShippingInfoDisplayContext
 		return StringPool.BLANK;
 	}
 
-	@Override
-	public String getScreenNavigationCategoryKey() throws PortalException {
-		return CPDefinitionScreenNavigationConstants.CATEGORY_KEY_SKUS;
-	}
-
-	private CPInstance _cpInstance;
 	private final CPMeasurementUnitService _cpMeasurementUnitService;
 
 }

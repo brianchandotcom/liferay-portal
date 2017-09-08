@@ -1,6 +1,6 @@
 Bundle-Name: Liferay LCS API
 Bundle-SymbolicName: com.liferay.lcs.api
-Bundle-Version: 8.0.5
+Bundle-Version: 9.0.0
 Export-Package:\
 	com.liferay.lcs.activation,\
 	com.liferay.lcs.notification,\

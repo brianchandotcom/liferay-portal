@@ -412,6 +412,10 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 	@Override
 	public Enumeration<String> getProperties(String name) {
+		if (name == null) {
+			throw new IllegalArgumentException();
+		}
+
 		List<String> values = new ArrayList<>();
 
 		Enumeration<String> enumeration = _request.getHeaders(name);
@@ -437,6 +441,10 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 	@Override
 	public String getProperty(String name) {
+		if (name == null) {
+			throw new IllegalArgumentException();
+		}
+
 		String value = _request.getHeader(name);
 
 		if (value == null) {

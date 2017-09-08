@@ -27,6 +27,23 @@
 		<field name="defaultBilling" type="boolean" />
 		<field name="defaultShipping" type="boolean" />
 	</model>
+	<model name="com.liferay.commerce.model.CommerceAvailabilityRange">
+		<field name="uuid" type="String" />
+		<field name="commerceAvailabilityRangeId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field localized="true" name="title" type="String">
+			<validator name="required" />
+		</field>
+		<field name="priority" type="double">
+			<validator name="number" />
+		</field>
+		<field name="lastPublishDate" type="Date" />
+	</model>
 	<model name="com.liferay.commerce.model.CommerceCart">
 		<field name="uuid" type="String" />
 		<field name="commerceCartId" type="long" />
@@ -71,9 +88,39 @@
 		<field name="threeLettersISOCode" type="String" />
 		<field name="numericISOCode" type="int" />
 		<field name="subjectToVAT" type="boolean" />
-		<field name="priority" type="double" />
+		<field name="priority" type="double">
+			<validator name="number" />
+		</field>
 		<field name="active" type="boolean" />
 		<field name="lastPublishDate" type="Date" />
+	</model>
+	<model name="com.liferay.commerce.model.CommerceInventory">
+		<field name="uuid" type="String" />
+		<field name="commerceInventoryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="CPDefinitionId" type="long" />
+		<field name="commerceInventoryEngine" type="String" />
+		<field name="displayAvailability" type="boolean" />
+		<field name="displayStockQuantity" type="boolean" />
+		<field name="minStockQuantity" type="int">
+			<hint name="default-value">1</hint>
+		</field>
+		<field name="backOrders" type="boolean" />
+		<field name="minCartQuantity" type="int">
+			<hint name="default-value">1</hint>
+		</field>
+		<field name="maxCartQuantity" type="int">
+			<hint name="default-value">1</hint>
+		</field>
+		<field name="allowedCartQuantities" type="String" />
+		<field name="multipleCartQuantity" type="int">
+			<hint name="default-value">1</hint>
+		</field>
 	</model>
 	<model name="com.liferay.commerce.model.CommerceOrder">
 		<field name="commerceOrderId" type="long" />
@@ -115,7 +162,9 @@
 		<field localized="true" name="name" type="String" />
 		<field localized="true" name="description" type="String" />
 		<field name="engineKey" type="String" />
-		<field name="priority" type="double" />
+		<field name="priority" type="double">
+			<validator name="number" />
+		</field>
 		<field name="active" type="boolean" />
 	</model>
 	<model name="com.liferay.commerce.model.CommerceRegion">
@@ -130,7 +179,9 @@
 		<field name="commerceCountryId" type="long" />
 		<field name="name" type="String" />
 		<field name="code" type="String" />
-		<field name="priority" type="double" />
+		<field name="priority" type="double">
+			<validator name="number" />
+		</field>
 		<field name="active" type="boolean" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
@@ -145,7 +196,9 @@
 		<field localized="true" name="name" type="String" />
 		<field localized="true" name="description" type="String" />
 		<field name="engineKey" type="String" />
-		<field name="priority" type="double" />
+		<field name="priority" type="double">
+			<validator name="number" />
+		</field>
 		<field name="active" type="boolean" />
 	</model>
 	<model name="com.liferay.commerce.model.CommerceWarehouse">
@@ -178,5 +231,18 @@
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="quantity" type="int" />
+	</model>
+	<model name="com.liferay.commerce.model.CPDefinitionAvailabilityRange">
+		<field name="uuid" type="String" />
+		<field name="CPDefinitionAvailabilityRangeId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="CPDefinitionId" type="long" />
+		<field name="commerceAvailabilityRangeId" type="long" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 </model-hints>

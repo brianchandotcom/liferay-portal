@@ -80,6 +80,7 @@ public class FriendlyURLServletTest {
 	public void setUp() throws Exception {
 		PropsValues.LOCALES_ENABLED = new String[] {"en_US", "hu_HU", "de_DE"};
 		PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE = true;
+		PropsValues.SITES_FRIENDLY_URL_ALLOW_GROUP_ID = false;
 		PropsValues.USERS_SCREEN_NAME_ALLOW_NUMERIC = true;
 
 		LanguageUtil.init();
@@ -120,6 +121,8 @@ public class FriendlyURLServletTest {
 			PropsKeys.LOCALES_ENABLED);
 		PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE = GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE));
+		PropsValues.SITES_FRIENDLY_URL_ALLOW_GROUP_ID = GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.SITES_FRIENDLY_URL_ALLOW_GROUP_ID));
 		PropsValues.USERS_SCREEN_NAME_ALLOW_NUMERIC = GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.USERS_SCREEN_NAME_ALLOW_NUMERIC));
 
@@ -142,6 +145,22 @@ public class FriendlyURLServletTest {
 
 	@Test(expected = NoSuchGroupException.class)
 	public void testGetRedirectWithGroupId() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setPathInfo(StringPool.SLASH);
+
+		String path = "/" + _group.getGroupId() + _layout.getFriendlyURL();
+
+		testGetRedirect(
+			mockHttpServletRequest, path, Portal.PATH_MAIN,
+			new FriendlyURLServlet.Redirect(getURL(_layout)));
+	}
+
+	@Test
+	public void testGetRedirectWithGroupId1() throws Exception {
+		PropsValues.SITES_FRIENDLY_URL_ALLOW_GROUP_ID = true;
+
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 

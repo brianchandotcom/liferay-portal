@@ -1576,21 +1576,19 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		// the osgi persistence dir using the URL's file part, which doesn't
 		// properly handle special character escaping and decoding.
 
-		URL equinoxInternallyCreatedURL = baseDir.toURL();
+		URL url = baseDir.toURL();
 
-		File equinoxInternallyCreatedDir = new File(
-			equinoxInternallyCreatedURL.getFile());
+		File equinoxBaseDir = new File(url.getFile());
 
-		if (!baseDir.equals(equinoxInternallyCreatedDir) &&
-			_log.isWarnEnabled()) {
+		if (!baseDir.equals(equinoxBaseDir) && _log.isWarnEnabled()) {
+			StringBundler sb = new StringBundler(6);
 
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(" The module.framework.base.dir path \"");
+			sb.append("The module.framework.base.dir path \"");
 			sb.append(baseDir);
-			sb.append("\" contains character that Equinox can't handle; ");
-			sb.append("the osgi persistence data will be stored under \"");
-			sb.append(equinoxInternallyCreatedDir);
+			sb.append("\" contains character that Equinox can't handle. ");
+			sb.append("The osgi persistence data will be stored under \"");
+			sb.append(equinoxBaseDir);
+			sb.append("\"")
 
 			_log.warn(sb.toString());
 		}

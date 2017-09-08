@@ -12,19 +12,19 @@
  * details.
  */
 
-package com.liferay.commerce.product.availability.range.web.internal.util;
+package com.liferay.commerce.availability.range.web.internal.util;
 
-import com.liferay.commerce.product.model.CPAvailabilityRange;
-import com.liferay.commerce.product.util.comparator.CPAvailabilityRangeTitleComparator;
+import com.liferay.commerce.model.CommerceAvailabilityRange;
+import com.liferay.commerce.util.comparator.CommerceAvailabilityRangePriorityComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
  * @author Alessio Antonio Rendina
  */
-public class CPAvailabilityRangeUtil {
+public class CommerceAvailabilityRangeUtil {
 
-	public static OrderByComparator<CPAvailabilityRange>
-		getCPAvailabilityRangeOrderByComparator(
+	public static OrderByComparator<CommerceAvailabilityRange>
+		getCommerceAvailabilityRangeOrderByComparator(
 			String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;
@@ -33,10 +33,10 @@ public class CPAvailabilityRangeUtil {
 			orderByAsc = true;
 		}
 
-		OrderByComparator<CPAvailabilityRange> orderByComparator = null;
+		OrderByComparator<CommerceAvailabilityRange> orderByComparator = null;
 
-		if (orderByCol.equals("title")) {
-			orderByComparator = new CPAvailabilityRangeTitleComparator(
+		if (orderByCol.equals("priority")) {
+			orderByComparator = new CommerceAvailabilityRangePriorityComparator(
 				orderByAsc);
 		}
 

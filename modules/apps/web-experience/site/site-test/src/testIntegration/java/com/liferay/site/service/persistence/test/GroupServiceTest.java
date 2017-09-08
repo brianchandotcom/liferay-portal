@@ -55,11 +55,15 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
 import java.util.ArrayList;
@@ -73,6 +77,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -99,7 +104,15 @@ public class GroupServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
+		PropsValues.SITES_FRIENDLY_URL_ALLOW_GROUP_ID = true;
+
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		PropsValues.SITES_FRIENDLY_URL_ALLOW_GROUP_ID = GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.SITES_FRIENDLY_URL_ALLOW_GROUP_ID));
 	}
 
 	@Test
@@ -905,8 +918,31 @@ public class GroupServiceTest {
 	}
 
 	@Test(expected = GroupFriendlyURLException.class)
-	public void testSetNumericFriendlyURL() throws Exception {
+	public void testSetNumericFriendlyURLToGroupId() throws Exception {
+		PropsValues.SITES_FRIENDLY_URL_ALLOW_GROUP_ID = false;
+
 		String friendlyURL = "/" + _group.getGroupId();
+
+		GroupLocalServiceUtil.updateFriendlyURL(
+			_group.getGroupId(), friendlyURL);
+	}
+
+	@Test
+	public void testSetNumericFriendlyURLToGroupId1() throws Exception {
+		String friendlyURL = "/" + _group.getGroupId();
+
+		GroupLocalServiceUtil.updateFriendlyURL(
+			_group.getGroupId(), friendlyURL);
+
+		Assert.assertEquals(
+			_group,
+			GroupLocalServiceUtil.fetchFriendlyURLGroup(
+				_group.getCompanyId(), friendlyURL));
+	}
+
+	@Test(expected = GroupFriendlyURLException.class)
+	public void testSetNumericFriendlyURLToRandomLong() throws Exception {
+		String friendlyURL = "/" + RandomTestUtil.nextLong();
 
 		GroupLocalServiceUtil.updateFriendlyURL(
 			_group.getGroupId(), friendlyURL);

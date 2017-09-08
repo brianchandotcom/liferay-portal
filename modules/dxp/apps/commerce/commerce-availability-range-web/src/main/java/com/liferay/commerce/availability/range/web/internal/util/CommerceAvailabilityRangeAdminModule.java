@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.commerce.product.availability.range.web.internal.util;
+package com.liferay.commerce.availability.range.web.internal.util;
 
 import com.liferay.commerce.admin.web.util.CommerceAdminModule;
-import com.liferay.commerce.product.availability.range.web.internal.display.context.CPAvailabilityRangeDisplayContext;
-import com.liferay.commerce.product.model.CPAvailabilityRange;
-import com.liferay.commerce.product.service.CPAvailabilityRangeService;
-import com.liferay.commerce.product.service.permission.CPAvailabilityRangePermission;
+import com.liferay.commerce.availability.range.web.internal.display.context.CommerceAvailabilityRangeDisplayContext;
+import com.liferay.commerce.model.CommerceAvailabilityRange;
+import com.liferay.commerce.service.CommerceAvailabilityRangeService;
+import com.liferay.commerce.service.permission.CommercePermission;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
@@ -56,9 +56,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.admin.module.key=" + CPAvailabilityRangeAdminModule.KEY
+	property = "commerce.admin.module.key=" + CommerceAvailabilityRangeAdminModule.KEY
 )
-public class CPAvailabilityRangeAdminModule implements CommerceAdminModule {
+public class CommerceAvailabilityRangeAdminModule
+	implements CommerceAdminModule {
 
 	public static final String KEY = "availability-ranges";
 
@@ -66,7 +67,7 @@ public class CPAvailabilityRangeAdminModule implements CommerceAdminModule {
 	public void deleteData(PortletDataContext portletDataContext)
 		throws Exception {
 
-		_cpAvailabilityRangeStagedModelRepository.deleteStagedModels(
+		_commerceAvailabilityRangeStagedModelRepository.deleteStagedModels(
 			portletDataContext);
 	}
 
@@ -76,13 +77,13 @@ public class CPAvailabilityRangeAdminModule implements CommerceAdminModule {
 		throws Exception {
 
 		portletDataContext.addPortletPermissions(
-			CPAvailabilityRangePermission.RESOURCE_NAME);
+			CommercePermission.RESOURCE_NAME);
 
 		if (portletDataContext.getBooleanParameter(
 				namespace, "availability-ranges")) {
 
 			ActionableDynamicQuery actionableDynamicQuery =
-				_cpAvailabilityRangeStagedModelRepository.
+				_commerceAvailabilityRangeStagedModelRepository.
 					getExportActionableDynamicQuery(portletDataContext);
 
 			actionableDynamicQuery.performActions();
@@ -92,7 +93,7 @@ public class CPAvailabilityRangeAdminModule implements CommerceAdminModule {
 	@Override
 	public List<StagedModelType> getDeletionSystemEventStagedModelTypes() {
 		return Collections.singletonList(
-			new StagedModelType(CPAvailabilityRange.class));
+			new StagedModelType(CommerceAvailabilityRange.class));
 	}
 
 	@Override
@@ -100,7 +101,7 @@ public class CPAvailabilityRangeAdminModule implements CommerceAdminModule {
 		return Collections.<PortletDataHandlerControl>singletonList(
 			new PortletDataHandlerBoolean(
 				namespace, "availability-ranges", true, false, null,
-				CPAvailabilityRange.class.getName()));
+				CommerceAvailabilityRange.class.getName()));
 	}
 
 	@Override
@@ -128,7 +129,7 @@ public class CPAvailabilityRangeAdminModule implements CommerceAdminModule {
 
 			Element modelsElement =
 				portletDataContext.getImportDataGroupElement(
-					CPAvailabilityRange.class);
+					CommerceAvailabilityRange.class);
 
 			List<Element> modelElements = modelsElement.elements();
 
@@ -144,7 +145,7 @@ public class CPAvailabilityRangeAdminModule implements CommerceAdminModule {
 		throws Exception {
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			_cpAvailabilityRangeStagedModelRepository.
+			_commerceAvailabilityRangeStagedModelRepository.
 				getExportActionableDynamicQuery(portletDataContext);
 
 		actionableDynamicQuery.performCount();
@@ -155,12 +156,15 @@ public class CPAvailabilityRangeAdminModule implements CommerceAdminModule {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException {
 
-		CPAvailabilityRangeDisplayContext cpAvailabilityRangeDisplayContext =
-			new CPAvailabilityRangeDisplayContext(
-				_cpAvailabilityRangeService, renderRequest, renderResponse);
+		CommerceAvailabilityRangeDisplayContext
+			commerceAvailabilityRangeDisplayContext =
+				new CommerceAvailabilityRangeDisplayContext(
+					_commerceAvailabilityRangeService, renderRequest,
+					renderResponse);
 
 		renderRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT, cpAvailabilityRangeDisplayContext);
+			WebKeys.PORTLET_DISPLAY_CONTEXT,
+			commerceAvailabilityRangeDisplayContext);
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			renderRequest);
@@ -173,13 +177,13 @@ public class CPAvailabilityRangeAdminModule implements CommerceAdminModule {
 	}
 
 	@Reference
-	private CPAvailabilityRangeService _cpAvailabilityRangeService;
+	private CommerceAvailabilityRangeService _commerceAvailabilityRangeService;
 
 	@Reference(
-		target = "(model.class.name=com.liferay.commerce.product.model.CPAvailabilityRange)"
+		target = "(model.class.name=com.liferay.commerce.model.CommerceAvailabilityRange)"
 	)
-	private StagedModelRepository<CPAvailabilityRange>
-		_cpAvailabilityRangeStagedModelRepository;
+	private StagedModelRepository<CommerceAvailabilityRange>
+		_commerceAvailabilityRangeStagedModelRepository;
 
 	@Reference
 	private JSPRenderer _jspRenderer;
@@ -188,7 +192,7 @@ public class CPAvailabilityRangeAdminModule implements CommerceAdminModule {
 	private Portal _portal;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.product.availability.range.web)"
+		target = "(osgi.web.symbolicname=com.liferay.commerce.availability.range.web)"
 	)
 	private ServletContext _servletContext;
 

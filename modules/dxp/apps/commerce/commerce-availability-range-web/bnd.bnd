@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Commerce Availability Range Web
+Bundle-SymbolicName: com.liferay.commerce.availability.range.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /commerce-availability-range-web

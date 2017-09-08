@@ -18,11 +18,12 @@ import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPInstancePricingInfoDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
+import com.liferay.commerce.product.service.CPInstanceService;
+import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -90,8 +91,9 @@ public class CPInstancePricingScreenNavigationEntry
 			CPInstancePricingInfoDisplayContext
 				cpInstancePricingInfoDisplayContext =
 					new CPInstancePricingInfoDisplayContext(
-						_actionHelper, httpServletRequest, _cpDefinitionService,
-						_itemSelector, _commerceCurrencyService);
+						_actionHelper, httpServletRequest,
+						_cpDefinitionOptionRelService, _cpInstanceService,
+						_cpInstanceHelper, _commerceCurrencyService);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -116,10 +118,13 @@ public class CPInstancePricingScreenNavigationEntry
 	private CommerceCurrencyService _commerceCurrencyService;
 
 	@Reference
-	private CPDefinitionService _cpDefinitionService;
+	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;
 
 	@Reference
-	private ItemSelector _itemSelector;
+	private CPInstanceHelper _cpInstanceHelper;
+
+	@Reference
+	private CPInstanceService _cpInstanceService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

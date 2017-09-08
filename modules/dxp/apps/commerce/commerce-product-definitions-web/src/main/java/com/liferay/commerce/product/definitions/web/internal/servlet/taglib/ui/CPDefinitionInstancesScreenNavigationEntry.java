@@ -20,7 +20,6 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
-import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -100,7 +99,7 @@ public class CPDefinitionInstancesScreenNavigationEntry
 		try {
 			CPInstanceDisplayContext cpInstanceDisplayContext =
 				new CPInstanceDisplayContext(
-					_actionHelper, httpServletRequest, _commercePriceFormatter,
+					_actionHelper, httpServletRequest,
 					_cpDefinitionOptionRelService, _cpInstanceService,
 					_cpInstanceHelper);
 
@@ -121,9 +120,6 @@ public class CPDefinitionInstancesScreenNavigationEntry
 
 	@Reference
 	private ActionHelper _actionHelper;
-
-	@Reference
-	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
 	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;

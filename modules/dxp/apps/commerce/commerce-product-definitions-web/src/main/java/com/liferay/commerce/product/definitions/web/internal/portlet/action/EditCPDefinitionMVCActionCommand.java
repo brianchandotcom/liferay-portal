@@ -219,18 +219,6 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		String layoutUuid = ParamUtil.getString(actionRequest, "layoutUuid");
 		boolean canSellWithoutOptions = ParamUtil.getBoolean(
 			actionRequest, "canSellWithoutOptions");
-		boolean displayAvailability = ParamUtil.getBoolean(
-			actionRequest, "displayAvailability");
-		boolean displayStockQuantity = ParamUtil.getBoolean(
-			actionRequest, "displayStockQuantity");
-		int minCartQuantity = ParamUtil.getInteger(
-			actionRequest, "minCartQuantity");
-		int maxCartQuantity = ParamUtil.getInteger(
-			actionRequest, "maxCartQuantity");
-		String allowedCartQuantities = ParamUtil.getString(
-			actionRequest, "allowedCartQuantities");
-		int multipleCartQuantity = ParamUtil.getInteger(
-			actionRequest, "multipleCartQuantity");
 
 		int displayDateMonth = ParamUtil.getInteger(
 			actionRequest, "displayDateMonth");
@@ -280,13 +268,11 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 			cpDefinition = _cpDefinitionService.addCPDefinition(
 				titleMap, shortDescriptionMap, descriptionMap, layoutUuid,
-				productTypeName, canSellWithoutOptions, displayAvailability,
-				displayStockQuantity, minCartQuantity, maxCartQuantity,
-				allowedCartQuantities, multipleCartQuantity, null,
-				displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, expirationDateMonth,
-				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, serviceContext);
+				productTypeName, canSellWithoutOptions, null, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, expirationDateMonth, expirationDateDay,
+				expirationDateYear, expirationDateHour, expirationDateMinute,
+				neverExpire, serviceContext);
 		}
 		else {
 
@@ -294,13 +280,11 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 			cpDefinition = _cpDefinitionService.updateCPDefinition(
 				cpDefinitionId, titleMap, shortDescriptionMap, descriptionMap,
-				layoutUuid, canSellWithoutOptions, displayAvailability,
-				displayStockQuantity, minCartQuantity, maxCartQuantity,
-				allowedCartQuantities, multipleCartQuantity, null,
-				displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, expirationDateMonth,
-				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, serviceContext);
+				layoutUuid, canSellWithoutOptions, null, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, expirationDateMonth, expirationDateDay,
+				expirationDateYear, expirationDateHour, expirationDateMinute,
+				neverExpire, serviceContext);
 		}
 
 		return cpDefinition;

@@ -118,11 +118,8 @@ public class CPInstanceStagedModelRepository
 		return _cpInstanceLocalService.addCPInstance(
 			cpInstance.getCPDefinitionId(), cpInstance.getSku(),
 			cpInstance.getGtin(), cpInstance.getManufacturerPartNumber(),
-			cpInstance.getDDMContent(), cpInstance.getOverrideInventory(),
-			cpInstance.getMinCartQuantity(), cpInstance.getMaxCartQuantity(),
-			cpInstance.getAllowedCartQuantities(),
-			cpInstance.getMultipleCartQuantity(), displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			cpInstance.getDDMContent(), displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			serviceContext);
@@ -252,14 +249,10 @@ public class CPInstanceStagedModelRepository
 		return _cpInstanceLocalService.updateCPInstance(
 			cpInstance.getCPInstanceId(), cpInstance.getSku(),
 			cpInstance.getGtin(), cpInstance.getManufacturerPartNumber(),
-			cpInstance.getOverrideInventory(), cpInstance.getMinCartQuantity(),
-			cpInstance.getMaxCartQuantity(),
-			cpInstance.getAllowedCartQuantities(),
-			cpInstance.getMultipleCartQuantity(), displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	@Reference

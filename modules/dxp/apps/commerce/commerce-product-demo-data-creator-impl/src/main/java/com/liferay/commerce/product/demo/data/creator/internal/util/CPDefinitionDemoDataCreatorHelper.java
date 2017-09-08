@@ -226,11 +226,10 @@ public class CPDefinitionDemoDataCreatorHelper
 
 		cpDefinition = _cpDefinitionLocalService.addCPDefinition(
 			titleMap, null, descriptionMap, null, null, null, layoutUuid,
-			productTypeName, false, false, false, 1, 10000, null, 1, 0, 0, 0, 0,
-			null, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, true, serviceContext);
+			productTypeName, false, 0, 0, 0, 0, null, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, true, serviceContext);
 
 		_cpDefinitions.put(title, cpDefinition);
 

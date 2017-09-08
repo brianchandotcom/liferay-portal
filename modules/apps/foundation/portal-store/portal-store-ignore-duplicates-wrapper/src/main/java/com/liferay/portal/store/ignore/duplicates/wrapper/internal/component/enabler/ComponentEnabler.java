@@ -12,34 +12,30 @@
  * details.
  */
 
-package com.liferay.mail.reader.web.portlet.action;
+package com.liferay.portal.store.ignore.duplicates.wrapper.internal.component.enabler;
 
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.osgi.util.ComponentUtil;
-import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.store.ignore.duplicates.wrapper.internal.IgnoreDuplicatesAdvancedFileSystemStoreWrapper;
 
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 
 /**
- * @author Shuyang Zhou
+ * @author Tina Tian
  */
 @Component(immediate = true)
-public class LoginPostActionEnabler {
+public class ComponentEnabler {
 
 	@Activate
-	public void activate(ComponentContext componentContext) {
+	protected void activate(ComponentContext componentContext) {
 		ComponentUtil.enableComponents(
-			MessageListener.class,
-			"(destination.name=" + DestinationNames.MAIL_SYNCHRONIZER + ")",
-			componentContext, LoginPostAction.class);
-	}
-
-	@Deactivate
-	public void deactivate(ComponentContext componentContext) {
-		componentContext.disableComponent(LoginPostAction.class.getName());
+			Store.class,
+			"(store.type=com.liferay.portal.store.file.system." +
+				"AdvancedFileSystemStore)",
+			componentContext,
+			IgnoreDuplicatesAdvancedFileSystemStoreWrapper.class);
 	}
 
 }

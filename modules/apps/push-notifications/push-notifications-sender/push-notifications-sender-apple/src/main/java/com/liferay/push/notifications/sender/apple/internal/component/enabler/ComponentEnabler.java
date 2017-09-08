@@ -12,34 +12,32 @@
  * details.
  */
 
-package com.liferay.mail.reader.web.portlet.action;
+package com.liferay.push.notifications.sender.apple.internal.component.enabler;
 
 import com.liferay.osgi.util.ComponentUtil;
-import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.push.notifications.constants.PushNotificationsDestinationNames;
+import com.liferay.push.notifications.sender.apple.internal.messaging.ApplePushNotificationsMessagingConfigurator;
 
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 
 /**
- * @author Shuyang Zhou
+ * @author Tina Tian
  */
 @Component(immediate = true)
-public class LoginPostActionEnabler {
+public class ComponentEnabler {
 
 	@Activate
-	public void activate(ComponentContext componentContext) {
+	protected void activate(ComponentContext componentContext) {
 		ComponentUtil.enableComponents(
-			MessageListener.class,
-			"(destination.name=" + DestinationNames.MAIL_SYNCHRONIZER + ")",
-			componentContext, LoginPostAction.class);
-	}
-
-	@Deactivate
-	public void deactivate(ComponentContext componentContext) {
-		componentContext.disableComponent(LoginPostAction.class.getName());
+			Destination.class,
+			"(destination.name= " +
+				PushNotificationsDestinationNames.PUSH_NOTIFICATION_RESPONSE +
+					")",
+			componentContext,
+			ApplePushNotificationsMessagingConfigurator.class);
 	}
 
 }

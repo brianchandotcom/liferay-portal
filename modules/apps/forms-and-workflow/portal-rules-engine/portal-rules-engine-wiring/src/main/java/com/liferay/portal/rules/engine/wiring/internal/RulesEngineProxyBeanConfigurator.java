@@ -37,7 +37,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = RulesEngineProxyBeanConfigurator.class)
+@Component(
+	enabled = false, immediate = true,
+	service = RulesEngineProxyBeanConfigurator.class
+)
 public class RulesEngineProxyBeanConfigurator {
 
 	@Activate

@@ -191,11 +191,12 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"There should be a line break after " +
 					"'themeDisplay.getCompanyId(),'",
 				"Line starts with '2' tabs, but '3' tabs are expected",
-				"There should be a line break before 'throws'"
+				"There should be a line break before 'throws'",
+				"There should be a line break after '}'"
 			},
 			new Integer[] {
 				33, 37, 45, 49, 49, 54, 57, 60, 63, 67, 70, 75, 79, 84, 88, 95,
-				106, 119, 123, 124, 124, 131, 141, 141
+				106, 119, 123, 124, 124, 131, 141, 141, 159
 			});
 		test("IncorrectLineBreaks2.testjava");
 	}

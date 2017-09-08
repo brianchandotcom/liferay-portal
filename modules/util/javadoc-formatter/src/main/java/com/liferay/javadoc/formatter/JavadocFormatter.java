@@ -1707,7 +1707,7 @@ public class JavadocFormatter {
 	}
 
 	private int _getJavaModelLineNumber(JavaModel javaModel, String content) {
-		String[] lines = StringUtil.splitLines(content);
+		String[] lines = StringUtil.splitByLines(content);
 
 		if (javaModel instanceof JavaClass) {
 			JavaClass javaClass = (JavaClass)javaModel;
@@ -1821,7 +1821,7 @@ public class JavadocFormatter {
 			String fileName, String javadocLessContent, Document document)
 		throws Exception {
 
-		String[] lines = StringUtil.splitLines(javadocLessContent);
+		String[] lines = StringUtil.splitByLines(javadocLessContent);
 
 		JavaClass javaClass = _getJavaClass(
 			fileName, new UnsyncStringReader(javadocLessContent));
@@ -1921,7 +1921,7 @@ public class JavadocFormatter {
 		Set<Integer> lineNumbers = _getJavaTermLineNumbers(
 			new HashSet<Integer>(), javaClass, content);
 
-		String[] lines = StringUtil.splitLines(content);
+		String[] lines = StringUtil.splitByLines(content);
 
 		for (int lineNumber : lineNumbers) {
 			if (lineNumber == -1) {
@@ -2032,7 +2032,7 @@ public class JavadocFormatter {
 	}
 
 	private String _trimMultilineText(String text) {
-		String[] lines = StringUtil.splitLines(text);
+		String[] lines = StringUtil.splitByLines(text);
 
 		StringBundler sb = new StringBundler();
 

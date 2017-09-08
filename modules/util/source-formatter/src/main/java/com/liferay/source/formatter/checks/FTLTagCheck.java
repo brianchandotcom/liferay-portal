@@ -56,7 +56,7 @@ public class FTLTagCheck extends BaseFileCheck {
 
 			replacement = StringUtil.removeChar(replacement, CharPool.TAB);
 
-			String[] lines = StringUtil.splitLines(replacement);
+			String[] lines = StringUtil.splitByLines(replacement);
 
 			StringBundler sb = new StringBundler((3 * lines.length) + 5);
 

@@ -761,7 +761,7 @@ public abstract class BaseDB implements DB {
 		String tablesSQLLowerCase = StringUtil.toLowerCase(tablesSQL);
 		String indexesSQLLowerCase = StringUtil.toLowerCase(indexesSQL);
 
-		String[] lines = StringUtil.splitLines(indexesSQL);
+		String[] lines = StringUtil.splitByLines(indexesSQL);
 
 		Set<String> indexNames = new HashSet<>();
 

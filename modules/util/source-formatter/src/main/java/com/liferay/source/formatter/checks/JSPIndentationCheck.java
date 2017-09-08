@@ -464,7 +464,7 @@ public class JSPIndentationCheck extends BaseFileCheck {
 	private int _getMinimumTabCount(String s) {
 		int minimumTabCount = -1;
 
-		String[] lines = StringUtil.splitLines(s);
+		String[] lines = StringUtil.splitByLines(s);
 
 		for (int i = 1; i < lines.length; i++) {
 			String line = lines[i];

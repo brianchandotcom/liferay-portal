@@ -38,7 +38,7 @@ public class JSPExceptionOrderCheck extends BaseFileCheck {
 		while (matcher.find()) {
 			String match = matcher.group();
 
-			String[] lines = StringUtil.splitLines(match);
+			String[] lines = StringUtil.splitByLines(match);
 
 			String previousException = null;
 			String previousLine = null;

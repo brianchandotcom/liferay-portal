@@ -113,7 +113,7 @@ public class SourceUtil {
 	private static int _adjustLevel(
 		int level, String text, String s, int diff) {
 
-		String[] lines = StringUtil.splitLines(text);
+		String[] lines = StringUtil.splitByLines(text);
 
 		forLoop:
 		for (String line : lines) {

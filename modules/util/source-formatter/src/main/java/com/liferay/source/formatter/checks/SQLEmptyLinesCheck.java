@@ -27,7 +27,7 @@ public class SQLEmptyLinesCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		String[] lines = StringUtil.splitLines(content);
+		String[] lines = StringUtil.splitByLines(content);
 
 		for (int i = 1; i < lines.length; i++) {
 			String line = lines[i];

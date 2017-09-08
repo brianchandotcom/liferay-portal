@@ -79,7 +79,7 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 		Set<String> uniqueDependencies = new TreeSet<>(
 			new GradleDependencyComparator());
 
-		for (String dependency : StringUtil.splitLines(dependencies)) {
+		for (String dependency : StringUtil.splitByLines(dependencies)) {
 			dependency = dependency.trim();
 
 			if (Validator.isNull(dependency)) {

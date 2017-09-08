@@ -11,6 +11,8 @@ AUI.add(
 					},
 					fullImageSelector: {
 					},
+					productContentSelector:{
+					},
 					thumbsContainerSelector: {
 					},
 					viewAttachmentURL: {
@@ -74,6 +76,11 @@ AUI.add(
 						);
 
 						return fieldValues;
+					},
+					getProductContent: function() {
+						var instance = this;
+
+						return A.one(instance.get('productContentSelector'));
 					},
 					_bindUI: function() {
 						var instance = this;
@@ -149,7 +156,6 @@ AUI.add(
 								imageNode.appendTo(thumbContainer);
 
 								thumbContainer.appendTo(thumbsContainer);
-
 							}
 						);
 
@@ -162,7 +168,9 @@ AUI.add(
 					_renderUI: function() {
 						var instance = this;
 
-						A.all('[data-cp-definition-id]').each(
+						var productContent = instance.getProductContent();
+
+						productContent.all('[data-cp-definition-id]').each(
 							function(node) {
 								node.setAttribute('data-cp-definition-id', instance.get('cpDefinitionId'))
 							}

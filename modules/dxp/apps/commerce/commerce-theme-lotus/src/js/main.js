@@ -1,10 +1,30 @@
 (function() {
 	AUI().ready(
 		function(A) {
+			var WIN = A.getWin();
+
+			var navbarEcommerce = A.one('.navbar-ecommerce');
+
 			var animateNodes = A.all('.animate');
 
 			var cartIcon = A.one('#cartIcon > a');
+
 			var wishlistIcon = A.one('#wishlistIcon > a');
+
+			var ScrollPos = function(e) {
+				var ScrollPosY = (WIN.get('docScrollY'));
+
+				if (ScrollPosY > 100) {
+					if (!navbarEcommerce.hasClass('navbar-reduced')) {
+						navbarEcommerce.addClass('navbar-reduced');
+					}
+				}
+				else {
+					navbarEcommerce.removeClass('navbar-reduced');
+				}
+			};
+
+			A.on('mousewheel', ScrollPos);
 
 			animateNodes.each(
 				function(node) {

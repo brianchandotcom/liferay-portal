@@ -65,6 +65,11 @@
 #content {
 	color: $brand-color;
 	min-height: 100vh;
+	padding: 0;
+
+	@include sm {
+		padding-top: 100px;
+	}
 
 	.table {
 		margin-top: 40px;

@@ -22,6 +22,7 @@
 		@include sm {
 			border-width: 0;
 			box-shadow: none;
+			max-height: calc(100vh - 130px);
 			top: 94%;
 		}
 	}
@@ -40,10 +41,26 @@
 	}
 }
 
+
+
 .navbar-ecommerce {
+	background-color: #FFF;
 	border-bottom: 1px solid $brand-border-color;
 	min-height: 98px;
 	padding: 17px 16px;
+
+	@include sm {
+		position: fixed;
+		width: 100%;
+		z-index: 1034;
+
+		@include transition(all 0.2s ease-in-out);
+
+		&.navbar-reduced {
+			min-height: 70px;
+			padding: 4px 16px 1px;
+		}
+	}
 
 	.navbar-blank {
 		a, .link-list a {

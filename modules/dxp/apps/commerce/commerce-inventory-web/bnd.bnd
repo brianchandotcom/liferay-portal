@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Commerce Inventory Web
+Bundle-SymbolicName: com.liferay.commerce.inventory.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /commerce-inventory-web

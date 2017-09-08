@@ -133,17 +133,10 @@ public class PoshiElementFactory {
 				}
 			}
 		}
-		catch (ClassNotFoundException cnfe) {
-			throw new RuntimeException(cnfe);
-		}
-		catch (InstantiationException ie) {
-			throw new RuntimeException(ie);
-		}
-		catch (IllegalAccessException iae) {
-			throw new RuntimeException(iae);
-		}
-		catch (URISyntaxException urise) {
-			throw new RuntimeException(urise);
+		catch (ClassNotFoundException | IllegalAccessException |
+			   InstantiationException | URISyntaxException e) {
+
+			throw new RuntimeException(e);
 		}
 	}
 

@@ -38,7 +38,7 @@ String data = JSONFactoryUtil.looseSerializeDeep(parameters);
 
 	Liferay.Portlet.addHTML(
 		{
-			data: A.JSON.parse('<%= HtmlUtil.escapeJS(data) %>'),
+			data: <%= data %>,
 			onComplete: function(portlet, portletId) {
 				portlet.refreshURL = '<%= HtmlUtil.escapeJS(url) %>';
 			},

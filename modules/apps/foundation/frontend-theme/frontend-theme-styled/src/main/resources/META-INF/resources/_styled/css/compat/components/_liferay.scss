@@ -23,3 +23,17 @@
 .fade.in {
 	opacity: 1;
 }
+
+.lfr-add-panel .input-group.search-bar {
+	margin: 0;
+	padding: 10px;
+
+	.form-control {
+		width: 100%;
+	}
+
+	.input-group-btn {
+		font-size: 1rem;
+		margin-top: -11px;
+	}
+}

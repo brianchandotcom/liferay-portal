@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.sharepoint.repository.internal.document.library.repository.authorization.oauth2;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;

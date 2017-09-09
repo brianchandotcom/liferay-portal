@@ -851,6 +851,9 @@ public interface GroupLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Group getStagingGroup(long liveGroupId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<java.lang.Long> getUserActiveGroupIds(long userId);
+
 	/**
 	* Returns the group directly associated with the user.
 	*

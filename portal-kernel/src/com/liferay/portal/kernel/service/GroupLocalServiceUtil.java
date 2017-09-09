@@ -1076,6 +1076,11 @@ public class GroupLocalServiceUtil {
 		return getService().getStagingGroup(liveGroupId);
 	}
 
+	public static java.util.List<java.lang.Long> getUserActiveGroupIds(
+		long userId) {
+		return getService().getUserActiveGroupIds(userId);
+	}
+
 	/**
 	* Returns the group directly associated with the user.
 	*

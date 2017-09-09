@@ -107,20 +107,12 @@
 		<field name="commerceInventoryEngine" type="String" />
 		<field name="displayAvailability" type="boolean" />
 		<field name="displayStockQuantity" type="boolean" />
-		<field name="minStockQuantity" type="int">
-			<hint name="default-value">1</hint>
-		</field>
+		<field name="minStockQuantity" type="int" />
 		<field name="backOrders" type="boolean" />
-		<field name="minCartQuantity" type="int">
-			<hint name="default-value">1</hint>
-		</field>
-		<field name="maxCartQuantity" type="int">
-			<hint name="default-value">1</hint>
-		</field>
+		<field name="minCartQuantity" type="int" />
+		<field name="maxCartQuantity" type="int" />
 		<field name="allowedCartQuantities" type="String" />
-		<field name="multipleCartQuantity" type="int">
-			<hint name="default-value">1</hint>
-		</field>
+		<field name="multipleCartQuantity" type="int" />
 	</model>
 	<model name="com.liferay.commerce.model.CommerceOrder">
 		<field name="commerceOrderId" type="long" />

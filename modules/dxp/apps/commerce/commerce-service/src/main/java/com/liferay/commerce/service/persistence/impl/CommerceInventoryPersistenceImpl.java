@@ -2692,6 +2692,7 @@ public class CommerceInventoryPersistenceImpl extends BasePersistenceImpl<Commer
 		commerceInventoryImpl.setModifiedDate(commerceInventory.getModifiedDate());
 		commerceInventoryImpl.setCPDefinitionId(commerceInventory.getCPDefinitionId());
 		commerceInventoryImpl.setCommerceInventoryEngine(commerceInventory.getCommerceInventoryEngine());
+		commerceInventoryImpl.setLowStockActivity(commerceInventory.getLowStockActivity());
 		commerceInventoryImpl.setDisplayAvailability(commerceInventory.isDisplayAvailability());
 		commerceInventoryImpl.setDisplayStockQuantity(commerceInventory.isDisplayStockQuantity());
 		commerceInventoryImpl.setMinStockQuantity(commerceInventory.getMinStockQuantity());

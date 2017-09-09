@@ -143,6 +143,8 @@ public class CommerceInventoryPersistenceTest {
 
 		newCommerceInventory.setCommerceInventoryEngine(RandomTestUtil.randomString());
 
+		newCommerceInventory.setLowStockActivity(RandomTestUtil.randomString());
+
 		newCommerceInventory.setDisplayAvailability(RandomTestUtil.randomBoolean());
 
 		newCommerceInventory.setDisplayStockQuantity(RandomTestUtil.randomBoolean());
@@ -185,6 +187,8 @@ public class CommerceInventoryPersistenceTest {
 			newCommerceInventory.getCPDefinitionId());
 		Assert.assertEquals(existingCommerceInventory.getCommerceInventoryEngine(),
 			newCommerceInventory.getCommerceInventoryEngine());
+		Assert.assertEquals(existingCommerceInventory.getLowStockActivity(),
+			newCommerceInventory.getLowStockActivity());
 		Assert.assertEquals(existingCommerceInventory.getDisplayAvailability(),
 			newCommerceInventory.getDisplayAvailability());
 		Assert.assertEquals(existingCommerceInventory.getDisplayStockQuantity(),
@@ -272,10 +276,11 @@ public class CommerceInventoryPersistenceTest {
 			true, "commerceInventoryId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "CPDefinitionId", true,
-			"commerceInventoryEngine", true, "displayAvailability", true,
-			"displayStockQuantity", true, "minStockQuantity", true,
-			"backOrders", true, "minCartQuantity", true, "maxCartQuantity",
-			true, "allowedCartQuantities", true, "multipleCartQuantity", true);
+			"commerceInventoryEngine", true, "lowStockActivity", true,
+			"displayAvailability", true, "displayStockQuantity", true,
+			"minStockQuantity", true, "backOrders", true, "minCartQuantity",
+			true, "maxCartQuantity", true, "allowedCartQuantities", true,
+			"multipleCartQuantity", true);
 	}
 
 	@Test
@@ -519,6 +524,8 @@ public class CommerceInventoryPersistenceTest {
 		commerceInventory.setCPDefinitionId(RandomTestUtil.nextLong());
 
 		commerceInventory.setCommerceInventoryEngine(RandomTestUtil.randomString());
+
+		commerceInventory.setLowStockActivity(RandomTestUtil.randomString());
 
 		commerceInventory.setDisplayAvailability(RandomTestUtil.randomBoolean());
 

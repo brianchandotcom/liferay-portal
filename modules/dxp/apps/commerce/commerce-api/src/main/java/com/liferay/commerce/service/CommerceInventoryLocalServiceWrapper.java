@@ -49,16 +49,17 @@ public class CommerceInventoryLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.model.CommerceInventory addCommerceInventory(
 		long cpDefinitionId, java.lang.String commerceInventoryEngine,
-		boolean displayAvailability, boolean displayStockQuantity,
-		int minStockQuantity, boolean backOrders, int minCartQuantity,
-		int maxCartQuantity, java.lang.String allowedCartQuantities,
-		int multipleCartQuantity,
+		java.lang.String lowStockActivity, boolean displayAvailability,
+		boolean displayStockQuantity, int minStockQuantity, boolean backOrders,
+		int minCartQuantity, int maxCartQuantity,
+		java.lang.String allowedCartQuantities, int multipleCartQuantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceInventoryLocalService.addCommerceInventory(cpDefinitionId,
-			commerceInventoryEngine, displayAvailability, displayStockQuantity,
-			minStockQuantity, backOrders, minCartQuantity, maxCartQuantity,
-			allowedCartQuantities, multipleCartQuantity, serviceContext);
+			commerceInventoryEngine, lowStockActivity, displayAvailability,
+			displayStockQuantity, minStockQuantity, backOrders,
+			minCartQuantity, maxCartQuantity, allowedCartQuantities,
+			multipleCartQuantity, serviceContext);
 	}
 
 	/**
@@ -212,6 +213,14 @@ public class CommerceInventoryLocalServiceWrapper
 		return _commerceInventoryLocalService.fetchCommerceInventory(commerceInventoryId);
 	}
 
+	@Override
+	public com.liferay.commerce.model.CommerceInventory fetchCommerceInventory(
+		long groupId, long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceInventoryLocalService.fetchCommerceInventory(groupId,
+			cpDefinitionId);
+	}
+
 	/**
 	* Returns the commerce inventory matching the UUID and group.
 	*
@@ -304,14 +313,6 @@ public class CommerceInventoryLocalServiceWrapper
 		return _commerceInventoryLocalService.getCommerceInventory(commerceInventoryId);
 	}
 
-	@Override
-	public com.liferay.commerce.model.CommerceInventory getCommerceInventory(
-		long groupId, long cpDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceInventoryLocalService.getCommerceInventory(groupId,
-			cpDefinitionId);
-	}
-
 	/**
 	* Returns the commerce inventory matching the UUID and group.
 	*
@@ -370,16 +371,18 @@ public class CommerceInventoryLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceInventory updateCommerceInventory(
-		long commerceInventoryId, boolean displayAvailability,
+		long commerceInventoryId, java.lang.String commerceInventoryEngine,
+		java.lang.String lowStockActivity, boolean displayAvailability,
 		boolean displayStockQuantity, int minStockQuantity, boolean backOrders,
 		int minCartQuantity, int maxCartQuantity,
 		java.lang.String allowedCartQuantities, int multipleCartQuantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceInventoryLocalService.updateCommerceInventory(commerceInventoryId,
-			displayAvailability, displayStockQuantity, minStockQuantity,
-			backOrders, minCartQuantity, maxCartQuantity,
-			allowedCartQuantities, multipleCartQuantity, serviceContext);
+			commerceInventoryEngine, lowStockActivity, displayAvailability,
+			displayStockQuantity, minStockQuantity, backOrders,
+			minCartQuantity, maxCartQuantity, allowedCartQuantities,
+			multipleCartQuantity, serviceContext);
 	}
 
 	@Override

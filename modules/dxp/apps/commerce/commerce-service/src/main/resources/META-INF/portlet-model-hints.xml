@@ -105,6 +105,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="CPDefinitionId" type="long" />
 		<field name="commerceInventoryEngine" type="String" />
+		<field name="lowStockActivity" type="String" />
 		<field name="displayAvailability" type="boolean" />
 		<field name="displayStockQuantity" type="boolean" />
 		<field name="minStockQuantity" type="int" />

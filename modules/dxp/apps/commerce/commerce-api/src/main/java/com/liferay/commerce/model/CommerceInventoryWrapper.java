@@ -70,6 +70,7 @@ public class CommerceInventoryWrapper implements CommerceInventory,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("CPDefinitionId", getCPDefinitionId());
 		attributes.put("commerceInventoryEngine", getCommerceInventoryEngine());
+		attributes.put("lowStockActivity", getLowStockActivity());
 		attributes.put("displayAvailability", getDisplayAvailability());
 		attributes.put("displayStockQuantity", getDisplayStockQuantity());
 		attributes.put("minStockQuantity", getMinStockQuantity());
@@ -143,6 +144,12 @@ public class CommerceInventoryWrapper implements CommerceInventory,
 
 		if (commerceInventoryEngine != null) {
 			setCommerceInventoryEngine(commerceInventoryEngine);
+		}
+
+		String lowStockActivity = (String)attributes.get("lowStockActivity");
+
+		if (lowStockActivity != null) {
+			setLowStockActivity(lowStockActivity);
 		}
 
 		Boolean displayAvailability = (Boolean)attributes.get(
@@ -311,6 +318,16 @@ public class CommerceInventoryWrapper implements CommerceInventory,
 	@Override
 	public long getGroupId() {
 		return _commerceInventory.getGroupId();
+	}
+
+	/**
+	* Returns the low stock activity of this commerce inventory.
+	*
+	* @return the low stock activity of this commerce inventory
+	*/
+	@Override
+	public java.lang.String getLowStockActivity() {
+		return _commerceInventory.getLowStockActivity();
 	}
 
 	/**
@@ -593,6 +610,16 @@ public class CommerceInventoryWrapper implements CommerceInventory,
 	@Override
 	public void setGroupId(long groupId) {
 		_commerceInventory.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the low stock activity of this commerce inventory.
+	*
+	* @param lowStockActivity the low stock activity of this commerce inventory
+	*/
+	@Override
+	public void setLowStockActivity(java.lang.String lowStockActivity) {
+		_commerceInventory.setLowStockActivity(lowStockActivity);
 	}
 
 	/**

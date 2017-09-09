@@ -43,17 +43,18 @@ public class CommerceInventoryServiceUtil {
 	 */
 	public static com.liferay.commerce.model.CommerceInventory addCommerceInventory(
 		long cpDefinitionId, java.lang.String commerceInventoryEngine,
-		boolean displayAvailability, boolean displayStockQuantity,
-		int minStockQuantity, boolean backOrders, int minCartQuantity,
-		int maxCartQuantity, java.lang.String allowedCartQuantities,
-		int multipleCartQuantity,
+		java.lang.String lowStockActivity, boolean displayAvailability,
+		boolean displayStockQuantity, int minStockQuantity, boolean backOrders,
+		int minCartQuantity, int maxCartQuantity,
+		java.lang.String allowedCartQuantities, int multipleCartQuantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCommerceInventory(cpDefinitionId,
-			commerceInventoryEngine, displayAvailability, displayStockQuantity,
-			minStockQuantity, backOrders, minCartQuantity, maxCartQuantity,
-			allowedCartQuantities, multipleCartQuantity, serviceContext);
+			commerceInventoryEngine, lowStockActivity, displayAvailability,
+			displayStockQuantity, minStockQuantity, backOrders,
+			minCartQuantity, maxCartQuantity, allowedCartQuantities,
+			multipleCartQuantity, serviceContext);
 	}
 
 	public static void deleteCommerceInventory(long commerceInventoryId)
@@ -66,10 +67,10 @@ public class CommerceInventoryServiceUtil {
 		return getService().fetchCommerceInventory(commerceInventoryId);
 	}
 
-	public static com.liferay.commerce.model.CommerceInventory getCommerceInventory(
+	public static com.liferay.commerce.model.CommerceInventory fetchCommerceInventory(
 		long groupId, long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCommerceInventory(groupId, cpDefinitionId);
+		return getService().fetchCommerceInventory(groupId, cpDefinitionId);
 	}
 
 	/**
@@ -82,7 +83,8 @@ public class CommerceInventoryServiceUtil {
 	}
 
 	public static com.liferay.commerce.model.CommerceInventory updateCommerceInventory(
-		long commerceInventoryId, boolean displayAvailability,
+		long commerceInventoryId, java.lang.String commerceInventoryEngine,
+		java.lang.String lowStockActivity, boolean displayAvailability,
 		boolean displayStockQuantity, int minStockQuantity, boolean backOrders,
 		int minCartQuantity, int maxCartQuantity,
 		java.lang.String allowedCartQuantities, int multipleCartQuantity,
@@ -90,9 +92,10 @@ public class CommerceInventoryServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCommerceInventory(commerceInventoryId,
-			displayAvailability, displayStockQuantity, minStockQuantity,
-			backOrders, minCartQuantity, maxCartQuantity,
-			allowedCartQuantities, multipleCartQuantity, serviceContext);
+			commerceInventoryEngine, lowStockActivity, displayAvailability,
+			displayStockQuantity, minStockQuantity, backOrders,
+			minCartQuantity, maxCartQuantity, allowedCartQuantities,
+			multipleCartQuantity, serviceContext);
 	}
 
 	public static CommerceInventoryService getService() {

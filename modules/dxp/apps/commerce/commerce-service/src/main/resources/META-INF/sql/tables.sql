@@ -111,6 +111,7 @@ create table CommerceInventory (
 	modifiedDate DATE null,
 	CPDefinitionId LONG,
 	commerceInventoryEngine VARCHAR(75) null,
+	lowStockActivity VARCHAR(75) null,
 	displayAvailability BOOLEAN,
 	displayStockQuantity BOOLEAN,
 	minStockQuantity INTEGER,

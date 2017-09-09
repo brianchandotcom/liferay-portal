@@ -67,17 +67,18 @@ import java.rmi.RemoteException;
 public class CommerceInventoryServiceSoap {
 	public static com.liferay.commerce.model.CommerceInventorySoap addCommerceInventory(
 		long cpDefinitionId, java.lang.String commerceInventoryEngine,
-		boolean displayAvailability, boolean displayStockQuantity,
-		int minStockQuantity, boolean backOrders, int minCartQuantity,
-		int maxCartQuantity, java.lang.String allowedCartQuantities,
-		int multipleCartQuantity,
+		java.lang.String lowStockActivity, boolean displayAvailability,
+		boolean displayStockQuantity, int minStockQuantity, boolean backOrders,
+		int minCartQuantity, int maxCartQuantity,
+		java.lang.String allowedCartQuantities, int multipleCartQuantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.commerce.model.CommerceInventory returnValue = CommerceInventoryServiceUtil.addCommerceInventory(cpDefinitionId,
-					commerceInventoryEngine, displayAvailability,
-					displayStockQuantity, minStockQuantity, backOrders,
-					minCartQuantity, maxCartQuantity, allowedCartQuantities,
+					commerceInventoryEngine, lowStockActivity,
+					displayAvailability, displayStockQuantity,
+					minStockQuantity, backOrders, minCartQuantity,
+					maxCartQuantity, allowedCartQuantities,
 					multipleCartQuantity, serviceContext);
 
 			return com.liferay.commerce.model.CommerceInventorySoap.toSoapModel(returnValue);
@@ -115,10 +116,10 @@ public class CommerceInventoryServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.model.CommerceInventorySoap getCommerceInventory(
+	public static com.liferay.commerce.model.CommerceInventorySoap fetchCommerceInventory(
 		long groupId, long cpDefinitionId) throws RemoteException {
 		try {
-			com.liferay.commerce.model.CommerceInventory returnValue = CommerceInventoryServiceUtil.getCommerceInventory(groupId,
+			com.liferay.commerce.model.CommerceInventory returnValue = CommerceInventoryServiceUtil.fetchCommerceInventory(groupId,
 					cpDefinitionId);
 
 			return com.liferay.commerce.model.CommerceInventorySoap.toSoapModel(returnValue);
@@ -131,7 +132,8 @@ public class CommerceInventoryServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceInventorySoap updateCommerceInventory(
-		long commerceInventoryId, boolean displayAvailability,
+		long commerceInventoryId, java.lang.String commerceInventoryEngine,
+		java.lang.String lowStockActivity, boolean displayAvailability,
 		boolean displayStockQuantity, int minStockQuantity, boolean backOrders,
 		int minCartQuantity, int maxCartQuantity,
 		java.lang.String allowedCartQuantities, int multipleCartQuantity,
@@ -139,6 +141,7 @@ public class CommerceInventoryServiceSoap {
 		throws RemoteException {
 		try {
 			com.liferay.commerce.model.CommerceInventory returnValue = CommerceInventoryServiceUtil.updateCommerceInventory(commerceInventoryId,
+					commerceInventoryEngine, lowStockActivity,
 					displayAvailability, displayStockQuantity,
 					minStockQuantity, backOrders, minCartQuantity,
 					maxCartQuantity, allowedCartQuantities,

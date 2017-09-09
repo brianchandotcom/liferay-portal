@@ -83,6 +83,7 @@ public class CommerceInventoryModelImpl extends BaseModelImpl<CommerceInventory>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "CPDefinitionId", Types.BIGINT },
 			{ "commerceInventoryEngine", Types.VARCHAR },
+			{ "lowStockActivity", Types.VARCHAR },
 			{ "displayAvailability", Types.BOOLEAN },
 			{ "displayStockQuantity", Types.BOOLEAN },
 			{ "minStockQuantity", Types.INTEGER },
@@ -105,6 +106,7 @@ public class CommerceInventoryModelImpl extends BaseModelImpl<CommerceInventory>
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("CPDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceInventoryEngine", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("lowStockActivity", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("displayAvailability", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("displayStockQuantity", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("minStockQuantity", Types.INTEGER);
@@ -115,7 +117,7 @@ public class CommerceInventoryModelImpl extends BaseModelImpl<CommerceInventory>
 		TABLE_COLUMNS_MAP.put("multipleCartQuantity", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceInventory (uuid_ VARCHAR(75) null,commerceInventoryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,commerceInventoryEngine VARCHAR(75) null,displayAvailability BOOLEAN,displayStockQuantity BOOLEAN,minStockQuantity INTEGER,backOrders BOOLEAN,minCartQuantity INTEGER,maxCartQuantity INTEGER,allowedCartQuantities VARCHAR(75) null,multipleCartQuantity INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceInventory (uuid_ VARCHAR(75) null,commerceInventoryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,commerceInventoryEngine VARCHAR(75) null,lowStockActivity VARCHAR(75) null,displayAvailability BOOLEAN,displayStockQuantity BOOLEAN,minStockQuantity INTEGER,backOrders BOOLEAN,minCartQuantity INTEGER,maxCartQuantity INTEGER,allowedCartQuantities VARCHAR(75) null,multipleCartQuantity INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceInventory";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceInventory.commerceInventoryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceInventory.commerceInventoryId ASC";
@@ -160,6 +162,7 @@ public class CommerceInventoryModelImpl extends BaseModelImpl<CommerceInventory>
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setCPDefinitionId(soapModel.getCPDefinitionId());
 		model.setCommerceInventoryEngine(soapModel.getCommerceInventoryEngine());
+		model.setLowStockActivity(soapModel.getLowStockActivity());
 		model.setDisplayAvailability(soapModel.getDisplayAvailability());
 		model.setDisplayStockQuantity(soapModel.getDisplayStockQuantity());
 		model.setMinStockQuantity(soapModel.getMinStockQuantity());
@@ -243,6 +246,7 @@ public class CommerceInventoryModelImpl extends BaseModelImpl<CommerceInventory>
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("CPDefinitionId", getCPDefinitionId());
 		attributes.put("commerceInventoryEngine", getCommerceInventoryEngine());
+		attributes.put("lowStockActivity", getLowStockActivity());
 		attributes.put("displayAvailability", getDisplayAvailability());
 		attributes.put("displayStockQuantity", getDisplayStockQuantity());
 		attributes.put("minStockQuantity", getMinStockQuantity());
@@ -319,6 +323,12 @@ public class CommerceInventoryModelImpl extends BaseModelImpl<CommerceInventory>
 
 		if (commerceInventoryEngine != null) {
 			setCommerceInventoryEngine(commerceInventoryEngine);
+		}
+
+		String lowStockActivity = (String)attributes.get("lowStockActivity");
+
+		if (lowStockActivity != null) {
+			setLowStockActivity(lowStockActivity);
 		}
 
 		Boolean displayAvailability = (Boolean)attributes.get(
@@ -567,6 +577,22 @@ public class CommerceInventoryModelImpl extends BaseModelImpl<CommerceInventory>
 
 	@JSON
 	@Override
+	public String getLowStockActivity() {
+		if (_lowStockActivity == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _lowStockActivity;
+		}
+	}
+
+	@Override
+	public void setLowStockActivity(String lowStockActivity) {
+		_lowStockActivity = lowStockActivity;
+	}
+
+	@JSON
+	@Override
 	public boolean getDisplayAvailability() {
 		return _displayAvailability;
 	}
@@ -723,6 +749,7 @@ public class CommerceInventoryModelImpl extends BaseModelImpl<CommerceInventory>
 		commerceInventoryImpl.setModifiedDate(getModifiedDate());
 		commerceInventoryImpl.setCPDefinitionId(getCPDefinitionId());
 		commerceInventoryImpl.setCommerceInventoryEngine(getCommerceInventoryEngine());
+		commerceInventoryImpl.setLowStockActivity(getLowStockActivity());
 		commerceInventoryImpl.setDisplayAvailability(getDisplayAvailability());
 		commerceInventoryImpl.setDisplayStockQuantity(getDisplayStockQuantity());
 		commerceInventoryImpl.setMinStockQuantity(getMinStockQuantity());
@@ -869,6 +896,14 @@ public class CommerceInventoryModelImpl extends BaseModelImpl<CommerceInventory>
 			commerceInventoryCacheModel.commerceInventoryEngine = null;
 		}
 
+		commerceInventoryCacheModel.lowStockActivity = getLowStockActivity();
+
+		String lowStockActivity = commerceInventoryCacheModel.lowStockActivity;
+
+		if ((lowStockActivity != null) && (lowStockActivity.length() == 0)) {
+			commerceInventoryCacheModel.lowStockActivity = null;
+		}
+
 		commerceInventoryCacheModel.displayAvailability = getDisplayAvailability();
 
 		commerceInventoryCacheModel.displayStockQuantity = getDisplayStockQuantity();
@@ -897,7 +932,7 @@ public class CommerceInventoryModelImpl extends BaseModelImpl<CommerceInventory>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -919,6 +954,8 @@ public class CommerceInventoryModelImpl extends BaseModelImpl<CommerceInventory>
 		sb.append(getCPDefinitionId());
 		sb.append(", commerceInventoryEngine=");
 		sb.append(getCommerceInventoryEngine());
+		sb.append(", lowStockActivity=");
+		sb.append(getLowStockActivity());
 		sb.append(", displayAvailability=");
 		sb.append(getDisplayAvailability());
 		sb.append(", displayStockQuantity=");
@@ -942,7 +979,7 @@ public class CommerceInventoryModelImpl extends BaseModelImpl<CommerceInventory>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(58);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.model.CommerceInventory");
@@ -987,6 +1024,10 @@ public class CommerceInventoryModelImpl extends BaseModelImpl<CommerceInventory>
 		sb.append(
 			"<column><column-name>commerceInventoryEngine</column-name><column-value><![CDATA[");
 		sb.append(getCommerceInventoryEngine());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lowStockActivity</column-name><column-value><![CDATA[");
+		sb.append(getLowStockActivity());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>displayAvailability</column-name><column-value><![CDATA[");
@@ -1048,6 +1089,7 @@ public class CommerceInventoryModelImpl extends BaseModelImpl<CommerceInventory>
 	private long _originalCPDefinitionId;
 	private boolean _setOriginalCPDefinitionId;
 	private String _commerceInventoryEngine;
+	private String _lowStockActivity;
 	private boolean _displayAvailability;
 	private boolean _displayStockQuantity;
 	private int _minStockQuantity;

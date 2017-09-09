@@ -44,6 +44,7 @@ public class CommerceInventorySoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setCPDefinitionId(model.getCPDefinitionId());
 		soapModel.setCommerceInventoryEngine(model.getCommerceInventoryEngine());
+		soapModel.setLowStockActivity(model.getLowStockActivity());
 		soapModel.setDisplayAvailability(model.getDisplayAvailability());
 		soapModel.setDisplayStockQuantity(model.getDisplayStockQuantity());
 		soapModel.setMinStockQuantity(model.getMinStockQuantity());
@@ -187,6 +188,14 @@ public class CommerceInventorySoap implements Serializable {
 		_commerceInventoryEngine = commerceInventoryEngine;
 	}
 
+	public String getLowStockActivity() {
+		return _lowStockActivity;
+	}
+
+	public void setLowStockActivity(String lowStockActivity) {
+		_lowStockActivity = lowStockActivity;
+	}
+
 	public boolean getDisplayAvailability() {
 		return _displayAvailability;
 	}
@@ -273,6 +282,7 @@ public class CommerceInventorySoap implements Serializable {
 	private Date _modifiedDate;
 	private long _CPDefinitionId;
 	private String _commerceInventoryEngine;
+	private String _lowStockActivity;
 	private boolean _displayAvailability;
 	private boolean _displayStockQuantity;
 	private int _minStockQuantity;

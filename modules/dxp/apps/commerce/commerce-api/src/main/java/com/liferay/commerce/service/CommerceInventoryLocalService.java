@@ -78,7 +78,8 @@ public interface CommerceInventoryLocalService extends BaseLocalService,
 		CommerceInventory commerceInventory);
 
 	public CommerceInventory addCommerceInventory(long cpDefinitionId,
-		java.lang.String commerceInventoryEngine, boolean displayAvailability,
+		java.lang.String commerceInventoryEngine,
+		java.lang.String lowStockActivity, boolean displayAvailability,
 		boolean displayStockQuantity, int minStockQuantity, boolean backOrders,
 		int minCartQuantity, int maxCartQuantity,
 		java.lang.String allowedCartQuantities, int multipleCartQuantity,
@@ -187,6 +188,10 @@ public interface CommerceInventoryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceInventory fetchCommerceInventory(long commerceInventoryId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceInventory fetchCommerceInventory(long groupId,
+		long cpDefinitionId) throws PortalException;
+
 	/**
 	* Returns the commerce inventory matching the UUID and group.
 	*
@@ -260,10 +265,6 @@ public interface CommerceInventoryLocalService extends BaseLocalService,
 	public CommerceInventory getCommerceInventory(long commerceInventoryId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceInventory getCommerceInventory(long groupId,
-		long cpDefinitionId) throws PortalException;
-
 	/**
 	* Returns the commerce inventory matching the UUID and group.
 	*
@@ -306,9 +307,10 @@ public interface CommerceInventoryLocalService extends BaseLocalService,
 		CommerceInventory commerceInventory);
 
 	public CommerceInventory updateCommerceInventory(long commerceInventoryId,
-		boolean displayAvailability, boolean displayStockQuantity,
-		int minStockQuantity, boolean backOrders, int minCartQuantity,
-		int maxCartQuantity, java.lang.String allowedCartQuantities,
-		int multipleCartQuantity, ServiceContext serviceContext)
-		throws PortalException;
+		java.lang.String commerceInventoryEngine,
+		java.lang.String lowStockActivity, boolean displayAvailability,
+		boolean displayStockQuantity, int minStockQuantity, boolean backOrders,
+		int minCartQuantity, int maxCartQuantity,
+		java.lang.String allowedCartQuantities, int multipleCartQuantity,
+		ServiceContext serviceContext) throws PortalException;
 }

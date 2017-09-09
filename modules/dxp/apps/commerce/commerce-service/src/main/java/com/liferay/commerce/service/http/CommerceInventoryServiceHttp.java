@@ -57,7 +57,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CommerceInventoryServiceHttp {
 	public static com.liferay.commerce.model.CommerceInventory addCommerceInventory(
 		HttpPrincipal httpPrincipal, long cpDefinitionId,
-		java.lang.String commerceInventoryEngine, boolean displayAvailability,
+		java.lang.String commerceInventoryEngine,
+		java.lang.String lowStockActivity, boolean displayAvailability,
 		boolean displayStockQuantity, int minStockQuantity, boolean backOrders,
 		int minCartQuantity, int maxCartQuantity,
 		java.lang.String allowedCartQuantities, int multipleCartQuantity,
@@ -68,7 +69,7 @@ public class CommerceInventoryServiceHttp {
 					"addCommerceInventory", _addCommerceInventoryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpDefinitionId, commerceInventoryEngine,
+					cpDefinitionId, commerceInventoryEngine, lowStockActivity,
 					displayAvailability, displayStockQuantity,
 					minStockQuantity, backOrders, minCartQuantity,
 					maxCartQuantity, allowedCartQuantities,
@@ -153,12 +154,13 @@ public class CommerceInventoryServiceHttp {
 		}
 	}
 
-	public static com.liferay.commerce.model.CommerceInventory getCommerceInventory(
+	public static com.liferay.commerce.model.CommerceInventory fetchCommerceInventory(
 		HttpPrincipal httpPrincipal, long groupId, long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceInventoryServiceUtil.class,
-					"getCommerceInventory", _getCommerceInventoryParameterTypes3);
+					"fetchCommerceInventory",
+					_fetchCommerceInventoryParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					cpDefinitionId);
@@ -187,10 +189,11 @@ public class CommerceInventoryServiceHttp {
 
 	public static com.liferay.commerce.model.CommerceInventory updateCommerceInventory(
 		HttpPrincipal httpPrincipal, long commerceInventoryId,
-		boolean displayAvailability, boolean displayStockQuantity,
-		int minStockQuantity, boolean backOrders, int minCartQuantity,
-		int maxCartQuantity, java.lang.String allowedCartQuantities,
-		int multipleCartQuantity,
+		java.lang.String commerceInventoryEngine,
+		java.lang.String lowStockActivity, boolean displayAvailability,
+		boolean displayStockQuantity, int minStockQuantity, boolean backOrders,
+		int minCartQuantity, int maxCartQuantity,
+		java.lang.String allowedCartQuantities, int multipleCartQuantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -199,7 +202,8 @@ public class CommerceInventoryServiceHttp {
 					_updateCommerceInventoryParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					commerceInventoryId, displayAvailability,
+					commerceInventoryId, commerceInventoryEngine,
+					lowStockActivity, displayAvailability,
 					displayStockQuantity, minStockQuantity, backOrders,
 					minCartQuantity, maxCartQuantity, allowedCartQuantities,
 					multipleCartQuantity, serviceContext);
@@ -228,9 +232,9 @@ public class CommerceInventoryServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CommerceInventoryServiceHttp.class);
 	private static final Class<?>[] _addCommerceInventoryParameterTypes0 = new Class[] {
-			long.class, java.lang.String.class, boolean.class, boolean.class,
-			int.class, boolean.class, int.class, int.class,
-			java.lang.String.class, int.class,
+			long.class, java.lang.String.class, java.lang.String.class,
+			boolean.class, boolean.class, int.class, boolean.class, int.class,
+			int.class, java.lang.String.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommerceInventoryParameterTypes1 = new Class[] {
@@ -239,12 +243,13 @@ public class CommerceInventoryServiceHttp {
 	private static final Class<?>[] _fetchCommerceInventoryParameterTypes2 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getCommerceInventoryParameterTypes3 = new Class[] {
+	private static final Class<?>[] _fetchCommerceInventoryParameterTypes3 = new Class[] {
 			long.class, long.class
 		};
 	private static final Class<?>[] _updateCommerceInventoryParameterTypes4 = new Class[] {
-			long.class, boolean.class, boolean.class, int.class, boolean.class,
-			int.class, int.class, java.lang.String.class, int.class,
+			long.class, java.lang.String.class, java.lang.String.class,
+			boolean.class, boolean.class, int.class, boolean.class, int.class,
+			int.class, java.lang.String.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

@@ -122,6 +122,7 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="CPDefinitionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="commerceInventoryEngine" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="lowStockActivity" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="displayAvailability" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="displayStockQuantity" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="minStockQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />

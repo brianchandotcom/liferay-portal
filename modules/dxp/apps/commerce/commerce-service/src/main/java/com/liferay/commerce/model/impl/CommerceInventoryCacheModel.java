@@ -66,7 +66,7 @@ public class CommerceInventoryCacheModel implements CacheModel<CommerceInventory
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -88,6 +88,8 @@ public class CommerceInventoryCacheModel implements CacheModel<CommerceInventory
 		sb.append(CPDefinitionId);
 		sb.append(", commerceInventoryEngine=");
 		sb.append(commerceInventoryEngine);
+		sb.append(", lowStockActivity=");
+		sb.append(lowStockActivity);
 		sb.append(", displayAvailability=");
 		sb.append(displayAvailability);
 		sb.append(", displayStockQuantity=");
@@ -155,6 +157,13 @@ public class CommerceInventoryCacheModel implements CacheModel<CommerceInventory
 			commerceInventoryImpl.setCommerceInventoryEngine(commerceInventoryEngine);
 		}
 
+		if (lowStockActivity == null) {
+			commerceInventoryImpl.setLowStockActivity(StringPool.BLANK);
+		}
+		else {
+			commerceInventoryImpl.setLowStockActivity(lowStockActivity);
+		}
+
 		commerceInventoryImpl.setDisplayAvailability(displayAvailability);
 		commerceInventoryImpl.setDisplayStockQuantity(displayStockQuantity);
 		commerceInventoryImpl.setMinStockQuantity(minStockQuantity);
@@ -193,6 +202,7 @@ public class CommerceInventoryCacheModel implements CacheModel<CommerceInventory
 
 		CPDefinitionId = objectInput.readLong();
 		commerceInventoryEngine = objectInput.readUTF();
+		lowStockActivity = objectInput.readUTF();
 
 		displayAvailability = objectInput.readBoolean();
 
@@ -247,6 +257,13 @@ public class CommerceInventoryCacheModel implements CacheModel<CommerceInventory
 			objectOutput.writeUTF(commerceInventoryEngine);
 		}
 
+		if (lowStockActivity == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(lowStockActivity);
+		}
+
 		objectOutput.writeBoolean(displayAvailability);
 
 		objectOutput.writeBoolean(displayStockQuantity);
@@ -279,6 +296,7 @@ public class CommerceInventoryCacheModel implements CacheModel<CommerceInventory
 	public long modifiedDate;
 	public long CPDefinitionId;
 	public String commerceInventoryEngine;
+	public String lowStockActivity;
 	public boolean displayAvailability;
 	public boolean displayStockQuantity;
 	public int minStockQuantity;

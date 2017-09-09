@@ -54,7 +54,8 @@ public interface CommerceInventoryService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CommerceInventoryServiceUtil} to access the commerce inventory remote service. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceInventoryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CommerceInventory addCommerceInventory(long cpDefinitionId,
-		java.lang.String commerceInventoryEngine, boolean displayAvailability,
+		java.lang.String commerceInventoryEngine,
+		java.lang.String lowStockActivity, boolean displayAvailability,
 		boolean displayStockQuantity, int minStockQuantity, boolean backOrders,
 		int minCartQuantity, int maxCartQuantity,
 		java.lang.String allowedCartQuantities, int multipleCartQuantity,
@@ -67,7 +68,7 @@ public interface CommerceInventoryService extends BaseService {
 	public CommerceInventory fetchCommerceInventory(long commerceInventoryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceInventory getCommerceInventory(long groupId,
+	public CommerceInventory fetchCommerceInventory(long groupId,
 		long cpDefinitionId) throws PortalException;
 
 	/**
@@ -78,9 +79,10 @@ public interface CommerceInventoryService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	public CommerceInventory updateCommerceInventory(long commerceInventoryId,
-		boolean displayAvailability, boolean displayStockQuantity,
-		int minStockQuantity, boolean backOrders, int minCartQuantity,
-		int maxCartQuantity, java.lang.String allowedCartQuantities,
-		int multipleCartQuantity, ServiceContext serviceContext)
-		throws PortalException;
+		java.lang.String commerceInventoryEngine,
+		java.lang.String lowStockActivity, boolean displayAvailability,
+		boolean displayStockQuantity, int minStockQuantity, boolean backOrders,
+		int minCartQuantity, int maxCartQuantity,
+		java.lang.String allowedCartQuantities, int multipleCartQuantity,
+		ServiceContext serviceContext) throws PortalException;
 }

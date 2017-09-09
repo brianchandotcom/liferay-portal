@@ -240,6 +240,21 @@ public interface CommerceInventoryModel extends BaseModel<CommerceInventory>,
 	public void setCommerceInventoryEngine(String commerceInventoryEngine);
 
 	/**
+	 * Returns the low stock activity of this commerce inventory.
+	 *
+	 * @return the low stock activity of this commerce inventory
+	 */
+	@AutoEscape
+	public String getLowStockActivity();
+
+	/**
+	 * Sets the low stock activity of this commerce inventory.
+	 *
+	 * @param lowStockActivity the low stock activity of this commerce inventory
+	 */
+	public void setLowStockActivity(String lowStockActivity);
+
+	/**
 	 * Returns the display availability of this commerce inventory.
 	 *
 	 * @return the display availability of this commerce inventory

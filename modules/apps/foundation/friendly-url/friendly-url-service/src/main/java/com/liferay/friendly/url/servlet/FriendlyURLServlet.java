@@ -103,10 +103,9 @@ public class FriendlyURLServlet extends HttpServlet {
 		if (group == null) {
 			String screenName = friendlyURL.substring(1);
 
-			if (_user || !Validator.isNumber(screenName)) {
-				group = _getUserGroup(companyId, screenName);
-			}
-			else if (PropsValues.SITES_FRIENDLY_URL_ALLOW_GROUP_ID) {
+			if (Validator.isNumber(screenName) &&
+				PropsValues.SITES_FRIENDLY_URL_ALLOW_GROUP_ID) {
+
 				long groupId = GetterUtil.getLong(screenName);
 
 				group = groupLocalService.fetchGroup(groupId);

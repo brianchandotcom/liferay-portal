@@ -861,16 +861,9 @@ public class PortletURLImpl
 			});
 
 		if (_doAsUserId > 0) {
-			try {
-				Company company = PortalUtil.getCompany(_request);
-
-				sb.append("doAsUserId=");
-				sb.append(processValue(company.getKeyObj(), _doAsUserId));
-				sb.append(StringPool.AMPERSAND);
-			}
-			catch (Exception e) {
-				_log.error("Unable to get company", e);
-			}
+			sb.append("doAsUserId=");
+			sb.append(processValue(key, _doAsUserId));
+			sb.append(StringPool.AMPERSAND);
 		}
 		else {
 			String doAsUserId = themeDisplay.getDoAsUserId();

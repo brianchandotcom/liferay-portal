@@ -55,6 +55,8 @@ public interface GroupFinder {
 	public java.util.List<com.liferay.portal.kernel.model.Group> findBySystem(
 		long companyId);
 
+	public java.util.List<java.lang.Long> findByUserActiveGroupIds(long userId);
+
 	public java.util.List<java.lang.Long> findByC_P(long companyId,
 		long parentGroupId, long previousGroupId, int size);
 

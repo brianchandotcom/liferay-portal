@@ -239,6 +239,24 @@ public class HtmlImpl implements Html {
 				if (!_VALID_CHARS[c]) {
 					String replacement = null;
 
+					if (mode == ESCAPE_MODE_ATTRIBUTE) {
+						if (c == CharPool.AMPERSAND) {
+							replacement = StringPool.AMPERSAND_ENCODED;
+						}
+						else if (c == CharPool.APOSTROPHE) {
+							replacement = "&#39;";
+						}
+						else if (c == CharPool.QUOTE) {
+							replacement = "&quot;";
+						}
+						else if (!_isValidXmlCharacter(c)) {
+							replacement = StringPool.SPACE;
+						}
+						else {
+							continue;
+						}
+					}
+
 					if (sb == null) {
 						sb = new StringBuilder(text.length() + 64);
 					}

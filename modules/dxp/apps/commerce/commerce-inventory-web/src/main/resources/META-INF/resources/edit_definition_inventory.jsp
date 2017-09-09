@@ -21,6 +21,11 @@ CommerceInventoryDisplayContext commerceInventoryDisplayContext = (CommerceInven
 
 CommerceInventory commerceInventory = commerceInventoryDisplayContext.getCommerceInventory();
 
+int minStockQuantity = BeanParamUtil.getInteger(commerceInventory, request, String.valueOf(CommerceConstants.COMMERCE_INVENTORY_DEFAULT_MIN_STOCK_QUANTITY));
+int minCartQuantity = BeanParamUtil.getInteger(commerceInventory, request, String.valueOf(CommerceConstants.COMMERCE_INVENTORY_DEFAULT_MIN_CART_QUANTITY));
+int maxCartQuantity = BeanParamUtil.getInteger(commerceInventory, request, String.valueOf(CommerceConstants.COMMERCE_INVENTORY_DEFAULT_MAX_CART_QUANTITY));
+int multipleCartQuantity = BeanParamUtil.getInteger(commerceInventory, request, String.valueOf(CommerceConstants.COMMERCE_INVENTORY_DEFAULT_MULTIPLE_CART_QUANTITY));
+
 CPDefinitionAvailabilityRange cpDefinitionAvailabilityRange = commerceInventoryDisplayContext.getCPDefinitionAvailabilityRange();
 
 CPDefinition cpDefinition = commerceInventoryDisplayContext.getCPDefinition();
@@ -89,17 +94,17 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 
 			<aui:input name="displayStockQuantity" />
 
-			<aui:input name="minStockQuantity" />
+			<aui:input name="minStockQuantity" value="<%= minStockQuantity %>" />
 
 			<aui:input name="backOrders" />
 
-			<aui:input name="minCartQuantity" />
+			<aui:input name="minCartQuantity" value="<%= minCartQuantity %>" />
 
-			<aui:input name="maxCartQuantity" />
+			<aui:input name="maxCartQuantity" value="<%= maxCartQuantity %>" />
 
 			<aui:input name="allowedCartQuantities" />
 
-			<aui:input name="multipleCartQuantity" />
+			<aui:input name="multipleCartQuantity" value="<%= multipleCartQuantity %>" />
 		</aui:fieldset>
 
 		<aui:button-row>

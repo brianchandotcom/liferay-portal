@@ -108,12 +108,20 @@
 		<field name="lowStockActivity" type="String" />
 		<field name="displayAvailability" type="boolean" />
 		<field name="displayStockQuantity" type="boolean" />
-		<field name="minStockQuantity" type="int" />
+		<field name="minStockQuantity" type="int">
+			<validator name="number" />
+		</field>
 		<field name="backOrders" type="boolean" />
-		<field name="minCartQuantity" type="int" />
-		<field name="maxCartQuantity" type="int" />
+		<field name="minCartQuantity" type="int">
+			<validator name="number" />
+		</field>
+		<field name="maxCartQuantity" type="int">
+			<validator name="number" />
+		</field>
 		<field name="allowedCartQuantities" type="String" />
-		<field name="multipleCartQuantity" type="int" />
+		<field name="multipleCartQuantity" type="int">
+			<validator name="number" />
+		</field>
 	</model>
 	<model name="com.liferay.commerce.model.CommerceOrder">
 		<field name="commerceOrderId" type="long" />

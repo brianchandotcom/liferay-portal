@@ -144,33 +144,17 @@ public class FriendlyURLServletTest {
 	}
 
 	@Test(expected = NoSuchGroupException.class)
-	public void testGetRedirectWithGroupId() throws Exception {
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
+	public void testGetRedirectWithGroupIdFailsWhenNotAllowed()
+		throws Exception {
 
-		mockHttpServletRequest.setPathInfo(StringPool.SLASH);
-
-		String path = "/" + _group.getGroupId() + _layout.getFriendlyURL();
-
-		testGetRedirect(
-			mockHttpServletRequest, path, Portal.PATH_MAIN,
-			new FriendlyURLServlet.Redirect(getURL(_layout)));
+		testGetGroupIdRedirect();
 	}
 
 	@Test
-	public void testGetRedirectWithGroupId1() throws Exception {
+	public void testGetRedirectWithGroupIdWhenAllowed() throws Exception {
 		PropsValues.SITES_FRIENDLY_URL_ALLOW_GROUP_ID = true;
 
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setPathInfo(StringPool.SLASH);
-
-		String path = "/" + _group.getGroupId() + _layout.getFriendlyURL();
-
-		testGetRedirect(
-			mockHttpServletRequest, path, Portal.PATH_MAIN,
-			new FriendlyURLServlet.Redirect(getURL(_layout)));
+		testGetGroupIdRedirect();
 	}
 
 	@Test
@@ -259,6 +243,19 @@ public class FriendlyURLServletTest {
 	protected String getURL(Layout layout) {
 		return "/c/portal/layout?p_l_id=" + layout.getPlid() +
 			"&p_v_l_s_g_id=0";
+	}
+
+	protected void testGetGroupIdRedirect() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setPathInfo(StringPool.SLASH);
+
+		String path = "/" + _group.getGroupId() + _layout.getFriendlyURL();
+
+		testGetRedirect(
+			mockHttpServletRequest, path, Portal.PATH_MAIN,
+			new FriendlyURLServlet.Redirect(getURL(_layout)));
 	}
 
 	protected void testGetI18nRedirect(String i18nPath, String expectedI18nPath)

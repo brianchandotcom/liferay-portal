@@ -98,13 +98,14 @@ public class CPDefinitionLocalServiceImpl
 			Map<Locale, String> metaTitleMap,
 			Map<Locale, String> metaKeywordsMap,
 			Map<Locale, String> metaDescriptionMap, String layoutUuid,
-			String productTypeName, boolean canSellWithoutOptions, double width,
-			double height, double depth, double weight, String ddmStructureKey,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
+			String productTypeName, boolean canSellWithoutOptionsCombination,
+			double width, double height, double depth, double weight,
+			String ddmStructureKey, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition
@@ -143,7 +144,8 @@ public class CPDefinitionLocalServiceImpl
 		cpDefinition.setUserId(user.getUserId());
 		cpDefinition.setUserName(user.getFullName());
 		cpDefinition.setProductTypeName(productTypeName);
-		cpDefinition.setCanSellWithoutOptions(canSellWithoutOptions);
+		cpDefinition.setCanSellWithoutOptionsCombination(
+			canSellWithoutOptionsCombination);
 		cpDefinition.setWidth(width);
 		cpDefinition.setHeight(height);
 		cpDefinition.setDepth(depth);
@@ -219,7 +221,7 @@ public class CPDefinitionLocalServiceImpl
 			Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, String layoutUuid,
-			String productTypeName, boolean canSellWithoutOptions,
+			String productTypeName, boolean canSellWithoutOptionsCombination,
 			String ddmStructureKey, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
 			int expirationDateMonth, int expirationDateDay,
@@ -230,11 +232,12 @@ public class CPDefinitionLocalServiceImpl
 
 		return addCPDefinition(
 			titleMap, shortDescriptionMap, descriptionMap, null, null, null,
-			layoutUuid, productTypeName, canSellWithoutOptions, 0, 0, 0, 0,
-			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, serviceContext);
+			layoutUuid, productTypeName, canSellWithoutOptionsCombination, 0, 0,
+			0, 0, ddmStructureKey, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
 
 	@Override
@@ -809,8 +812,8 @@ public class CPDefinitionLocalServiceImpl
 			Map<Locale, String> metaTitleMap,
 			Map<Locale, String> metaKeywordsMap,
 			Map<Locale, String> metaDescriptionMap, String layoutUuid,
-			boolean canSellWithoutOptions, double width, double height,
-			double depth, double weight, String ddmStructureKey,
+			boolean canSellWithoutOptionsCombination, double width,
+			double height, double depth, double weight, String ddmStructureKey,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -843,7 +846,8 @@ public class CPDefinitionLocalServiceImpl
 
 		validate(groupId, ddmStructureKey, cpDefinition.getProductTypeName());
 
-		cpDefinition.setCanSellWithoutOptions(canSellWithoutOptions);
+		cpDefinition.setCanSellWithoutOptionsCombination(
+			canSellWithoutOptionsCombination);
 		cpDefinition.setWidth(width);
 		cpDefinition.setHeight(height);
 		cpDefinition.setDepth(depth);
@@ -907,7 +911,7 @@ public class CPDefinitionLocalServiceImpl
 			long cpDefinitionId, Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, String layoutUuid,
-			boolean canSellWithoutOptions, String ddmStructureKey,
+			boolean canSellWithoutOptionsCombination, String ddmStructureKey,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -923,7 +927,7 @@ public class CPDefinitionLocalServiceImpl
 			cpDefinition.getUrlTitleMap(), cpDefinition.getMetaTitleMap(),
 			cpDefinition.getMetaKeywordsMap(),
 			cpDefinition.getMetaDescriptionMap(), layoutUuid,
-			canSellWithoutOptions, cpDefinition.getWidth(),
+			canSellWithoutOptionsCombination, cpDefinition.getWidth(),
 			cpDefinition.getHeight(), cpDefinition.getDepth(),
 			cpDefinition.getWeight(), ddmStructureKey, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,

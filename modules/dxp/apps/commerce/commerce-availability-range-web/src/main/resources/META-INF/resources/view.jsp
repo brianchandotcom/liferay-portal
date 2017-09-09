@@ -90,7 +90,7 @@ boolean hasManageCommerceAvailabilityRangesPermission = CommercePermission.conta
 					value="<%= HtmlUtil.escape(commerceAvailabilityRange.getTitle(languageId)) %>"
 				/>
 
-				<liferay-ui:search-container-column-date
+				<liferay-ui:search-container-column-text
 					cssClass="table-cell-content"
 					property="priority"
 				/>

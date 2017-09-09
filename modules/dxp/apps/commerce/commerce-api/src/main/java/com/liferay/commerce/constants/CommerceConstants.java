@@ -25,4 +25,11 @@ public class CommerceConstants {
 
 	public static final int COMMERCE_CART_TYPE_WISH_LIST = 1;
 
+	public static final int COMMERCE_INVENTORY_DEFAULT_MAX_CART_QUANTITY = 1;
+
+	public static final int COMMERCE_INVENTORY_DEFAULT_MIN_CART_QUANTITY = 1;
+
+	public static final int COMMERCE_INVENTORY_DEFAULT_MULTIPLE_CART_QUANTITY =
+		1;
+
 }

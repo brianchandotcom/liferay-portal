@@ -104,8 +104,6 @@ public class GroupServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		PropsValues.SITES_FRIENDLY_URL_ALLOW_GROUP_ID = true;
-
 		_group = GroupTestUtil.addGroup();
 	}
 
@@ -918,7 +916,9 @@ public class GroupServiceTest {
 	}
 
 	@Test(expected = GroupFriendlyURLException.class)
-	public void testSetNumericFriendlyURLToGroupId() throws Exception {
+	public void testSetNumericFriendlyURLToGroupIdFailsWhenNotAllowed()
+		throws Exception {
+
 		PropsValues.SITES_FRIENDLY_URL_ALLOW_GROUP_ID = false;
 
 		String friendlyURL = "/" + _group.getGroupId();
@@ -928,7 +928,11 @@ public class GroupServiceTest {
 	}
 
 	@Test
-	public void testSetNumericFriendlyURLToGroupId1() throws Exception {
+	public void testSetNumericFriendlyURLToGroupIdWhenAllowed()
+		throws Exception {
+
+		PropsValues.SITES_FRIENDLY_URL_ALLOW_GROUP_ID = true;
+
 		String friendlyURL = "/" + _group.getGroupId();
 
 		GroupLocalServiceUtil.updateFriendlyURL(

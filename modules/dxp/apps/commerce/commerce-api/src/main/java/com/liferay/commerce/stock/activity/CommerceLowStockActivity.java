@@ -18,4 +18,7 @@ package com.liferay.commerce.stock.activity;
  * @author Alessio Antonio Rendina
  */
 public interface CommerceLowStockActivity {
+
+	public String getName();
+
 }

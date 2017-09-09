@@ -24,6 +24,8 @@ import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefini
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.service.CPDefinitionAvailabilityRangeService;
 import com.liferay.commerce.service.CommerceAvailabilityRangeService;
+import com.liferay.commerce.stock.activity.CommerceLowStockActivity;
+import com.liferay.commerce.stock.activity.CommerceLowStockActivityRegistry;
 import com.liferay.commerce.util.comparator.CommerceAvailabilityRangePriorityComparator;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -43,6 +45,7 @@ public class CommerceInventoryDisplayContext
 			CommerceAvailabilityRangeService commerceAvailabilityRangeService,
 			CommerceInventoryActionHelper commerceInventoryActionHelper,
 			CommerceInventoryEngineRegistry commerceInventoryEngineRegistry,
+			CommerceLowStockActivityRegistry commerceLowStockActivityRegistry,
 			CPDefinitionAvailabilityRangeService
 				cpDefinitionAvailabilityRangeService)
 		throws PortalException {
@@ -52,6 +55,7 @@ public class CommerceInventoryDisplayContext
 		_commerceAvailabilityRangeService = commerceAvailabilityRangeService;
 		_commerceInventoryActionHelper = commerceInventoryActionHelper;
 		_commerceInventoryEngineRegistry = commerceInventoryEngineRegistry;
+		_commerceLowStockActivityRegistry = commerceLowStockActivityRegistry;
 		_cpDefinitionAvailabilityRangeService =
 			cpDefinitionAvailabilityRangeService;
 	}
@@ -82,6 +86,13 @@ public class CommerceInventoryDisplayContext
 		return _commerceInventoryEngineRegistry.getCommerceInventoryEngines();
 	}
 
+	public Map<String, CommerceLowStockActivity>
+		getCommerceLowStockActivities() {
+
+		return
+			_commerceLowStockActivityRegistry.getCommerceLowStockActivities();
+	}
+
 	public CPDefinitionAvailabilityRange getCPDefinitionAvailabilityRange()
 		throws PortalException {
 
@@ -101,6 +112,8 @@ public class CommerceInventoryDisplayContext
 	private final CommerceInventoryActionHelper _commerceInventoryActionHelper;
 	private final CommerceInventoryEngineRegistry
 		_commerceInventoryEngineRegistry;
+	private final CommerceLowStockActivityRegistry
+		_commerceLowStockActivityRegistry;
 	private final CPDefinitionAvailabilityRangeService
 		_cpDefinitionAvailabilityRangeService;
 

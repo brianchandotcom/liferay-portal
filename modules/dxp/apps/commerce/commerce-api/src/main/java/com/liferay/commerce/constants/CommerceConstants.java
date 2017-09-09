@@ -29,6 +29,8 @@ public class CommerceConstants {
 
 	public static final int COMMERCE_INVENTORY_DEFAULT_MIN_CART_QUANTITY = 1;
 
+	public static final int COMMERCE_INVENTORY_DEFAULT_MIN_STOCK_QUANTITY = 1;
+
 	public static final int COMMERCE_INVENTORY_DEFAULT_MULTIPLE_CART_QUANTITY =
 		1;
 

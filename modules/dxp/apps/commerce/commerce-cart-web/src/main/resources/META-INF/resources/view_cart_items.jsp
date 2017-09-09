@@ -115,7 +115,7 @@ renderResponse.setTitle(commerceCart.getName());
 			/>
 		</c:if>
 
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceCartItems();" %>' icon="trash" label="delete" />
+		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceCartItems();" %>' icon="times" label="delete" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 

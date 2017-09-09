@@ -90,7 +90,7 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpDefinition
 			/>
 		</c:if>
 
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCPDefinitionOptionValueRels();" %>' icon="trash" label="delete" />
+		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCPDefinitionOptionValueRels();" %>' icon="times" label="delete" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 

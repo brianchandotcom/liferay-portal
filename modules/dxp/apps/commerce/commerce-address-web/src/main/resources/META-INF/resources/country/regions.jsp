@@ -53,7 +53,7 @@ boolean hasManageCommerceCountriesPermission = CommercePermission.contains(permi
 
 	<c:if test="<%= hasManageCommerceCountriesPermission %>">
 		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceRegions();" %>' icon="trash" label="delete" />
+			<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceRegions();" %>' icon="times" label="delete" />
 		</liferay-frontend:management-bar-action-buttons>
 	</c:if>
 </liferay-frontend:management-bar>

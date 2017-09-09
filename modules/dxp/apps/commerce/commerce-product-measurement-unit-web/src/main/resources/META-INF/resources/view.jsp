@@ -58,7 +58,7 @@ boolean hasManageCPMeasurementUnitsPermission = CPMeasurementUnitPermission.cont
 
 	<c:if test="<%= hasManageCPMeasurementUnitsPermission %>">
 		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCPMeasurementUnits();" %>' icon="trash" label="delete" />
+			<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCPMeasurementUnits();" %>' icon="times" label="delete" />
 		</liferay-frontend:management-bar-action-buttons>
 	</c:if>
 </liferay-frontend:management-bar>

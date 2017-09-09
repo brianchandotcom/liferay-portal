@@ -21,10 +21,10 @@ CommerceInventoryDisplayContext commerceInventoryDisplayContext = (CommerceInven
 
 CommerceInventory commerceInventory = commerceInventoryDisplayContext.getCommerceInventory();
 
-int minStockQuantity = BeanParamUtil.getInteger(commerceInventory, request, String.valueOf(CommerceConstants.COMMERCE_INVENTORY_DEFAULT_MIN_STOCK_QUANTITY));
-int minCartQuantity = BeanParamUtil.getInteger(commerceInventory, request, String.valueOf(CommerceConstants.COMMERCE_INVENTORY_DEFAULT_MIN_CART_QUANTITY));
-int maxCartQuantity = BeanParamUtil.getInteger(commerceInventory, request, String.valueOf(CommerceConstants.COMMERCE_INVENTORY_DEFAULT_MAX_CART_QUANTITY));
-int multipleCartQuantity = BeanParamUtil.getInteger(commerceInventory, request, String.valueOf(CommerceConstants.COMMERCE_INVENTORY_DEFAULT_MULTIPLE_CART_QUANTITY));
+int minStockQuantity = BeanParamUtil.getInteger(commerceInventory, request, "minStockQuantity", CommerceConstants.COMMERCE_INVENTORY_DEFAULT_MIN_STOCK_QUANTITY);
+int minCartQuantity = BeanParamUtil.getInteger(commerceInventory, request, "minCartQuantity", CommerceConstants.COMMERCE_INVENTORY_DEFAULT_MIN_CART_QUANTITY);
+int maxCartQuantity = BeanParamUtil.getInteger(commerceInventory, request, "maxCartQuantity", CommerceConstants.COMMERCE_INVENTORY_DEFAULT_MAX_CART_QUANTITY);
+int multipleCartQuantity = BeanParamUtil.getInteger(commerceInventory, request, "multipleCartQuantity", CommerceConstants.COMMERCE_INVENTORY_DEFAULT_MULTIPLE_CART_QUANTITY);
 
 CPDefinitionAvailabilityRange cpDefinitionAvailabilityRange = commerceInventoryDisplayContext.getCPDefinitionAvailabilityRange();
 
@@ -62,7 +62,32 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 					String commerceInventoryEngineName = commerceInventoryEngine.getName();
 				%>
 
-					<aui:option label="<%= commerceInventoryEngineName %>" selected="<%= (commerceInventory != null) && commerceInventoryEngineName.equals(commerceInventory.getCommerceInventoryEngine()) %>" />
+					<aui:option
+						label="<%= commerceInventoryEngineName %>"
+						selected="<%= (commerceInventory != null) && commerceInventoryEngineName.equals(commerceInventory.getCommerceInventoryEngine()) %>"
+					/>
+
+				<%
+				}
+				%>
+
+			</aui:select>
+
+			<aui:select name="lowStockActivity" showEmptyOption="<%= true %>">
+
+				<%
+				Map<String, CommerceLowStockActivity> commerceLowStockActivities = commerceInventoryDisplayContext.getCommerceLowStockActivities();
+
+				for (Map.Entry<String, CommerceLowStockActivity> commerceLowStockActivityEntry : commerceLowStockActivities.entrySet()) {
+					CommerceLowStockActivity commerceLowStockActivity = commerceLowStockActivityEntry.getValue();
+
+					String commerceLowStockActivityName = commerceLowStockActivity.getName();
+				%>
+
+					<aui:option
+						label="<%= commerceLowStockActivityName %>"
+						selected="<%= (commerceInventory != null) && commerceLowStockActivityName.equals(commerceInventory.getLowStockActivity()) %>"
+					/>
 
 				<%
 				}

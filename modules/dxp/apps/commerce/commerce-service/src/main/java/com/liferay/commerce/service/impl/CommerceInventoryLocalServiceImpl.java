@@ -31,10 +31,11 @@ public class CommerceInventoryLocalServiceImpl
 	@Override
 	public CommerceInventory addCommerceInventory(
 			long cpDefinitionId, String commerceInventoryEngine,
-			boolean displayAvailability, boolean displayStockQuantity,
-			int minStockQuantity, boolean backOrders, int minCartQuantity,
-			int maxCartQuantity, String allowedCartQuantities,
-			int multipleCartQuantity, ServiceContext serviceContext)
+			String lowStockActivity, boolean displayAvailability,
+			boolean displayStockQuantity, int minStockQuantity,
+			boolean backOrders, int minCartQuantity, int maxCartQuantity,
+			String allowedCartQuantities, int multipleCartQuantity,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
@@ -52,6 +53,7 @@ public class CommerceInventoryLocalServiceImpl
 		commerceInventory.setUserName(user.getFullName());
 		commerceInventory.setCPDefinitionId(cpDefinitionId);
 		commerceInventory.setCommerceInventoryEngine(commerceInventoryEngine);
+		commerceInventory.setLowStockActivity(lowStockActivity);
 		commerceInventory.setDisplayAvailability(displayAvailability);
 		commerceInventory.setDisplayStockQuantity(displayStockQuantity);
 		commerceInventory.setMinStockQuantity(minStockQuantity);
@@ -99,7 +101,7 @@ public class CommerceInventoryLocalServiceImpl
 	}
 
 	@Override
-	public CommerceInventory getCommerceInventory(
+	public CommerceInventory fetchCommerceInventory(
 			long groupId, long cpDefinitionId)
 		throws PortalException {
 
@@ -108,7 +110,8 @@ public class CommerceInventoryLocalServiceImpl
 
 	@Override
 	public CommerceInventory updateCommerceInventory(
-			long commerceInventoryId, boolean displayAvailability,
+			long commerceInventoryId, String commerceInventoryEngine,
+			String lowStockActivity, boolean displayAvailability,
 			boolean displayStockQuantity, int minStockQuantity,
 			boolean backOrders, int minCartQuantity, int maxCartQuantity,
 			String allowedCartQuantities, int multipleCartQuantity,
@@ -118,6 +121,8 @@ public class CommerceInventoryLocalServiceImpl
 		CommerceInventory commerceInventory =
 			commerceInventoryPersistence.findByPrimaryKey(commerceInventoryId);
 
+		commerceInventory.setCommerceInventoryEngine(commerceInventoryEngine);
+		commerceInventory.setLowStockActivity(lowStockActivity);
 		commerceInventory.setDisplayAvailability(displayAvailability);
 		commerceInventory.setDisplayStockQuantity(displayStockQuantity);
 		commerceInventory.setMinStockQuantity(minStockQuantity);

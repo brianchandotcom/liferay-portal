@@ -30,10 +30,11 @@ public class CommerceInventoryServiceImpl
 	@Override
 	public CommerceInventory addCommerceInventory(
 			long cpDefinitionId, String commerceInventoryEngine,
-			boolean displayAvailability, boolean displayStockQuantity,
-			int minStockQuantity, boolean backOrders, int minCartQuantity,
-			int maxCartQuantity, String allowedCartQuantities,
-			int multipleCartQuantity, ServiceContext serviceContext)
+			String lowStockActivity, boolean displayAvailability,
+			boolean displayStockQuantity, int minStockQuantity,
+			boolean backOrders, int minCartQuantity, int maxCartQuantity,
+			String allowedCartQuantities, int multipleCartQuantity,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceInventoryPermission.check(
@@ -41,10 +42,10 @@ public class CommerceInventoryServiceImpl
 			CommerceActionKeys.MANAGE_COMMERCE_INVENTORY);
 
 		return commerceInventoryLocalService.addCommerceInventory(
-			cpDefinitionId, commerceInventoryEngine, displayAvailability,
-			displayStockQuantity, minStockQuantity, backOrders, minCartQuantity,
-			maxCartQuantity, allowedCartQuantities, multipleCartQuantity,
-			serviceContext);
+			cpDefinitionId, commerceInventoryEngine, lowStockActivity,
+			displayAvailability, displayStockQuantity, minStockQuantity,
+			backOrders, minCartQuantity, maxCartQuantity, allowedCartQuantities,
+			multipleCartQuantity, serviceContext);
 	}
 
 	@Override
@@ -69,17 +70,18 @@ public class CommerceInventoryServiceImpl
 	}
 
 	@Override
-	public CommerceInventory getCommerceInventory(
+	public CommerceInventory fetchCommerceInventory(
 			long groupId, long cpDefinitionId)
 		throws PortalException {
 
-		return commerceInventoryLocalService.getCommerceInventory(
+		return commerceInventoryLocalService.fetchCommerceInventory(
 			groupId, cpDefinitionId);
 	}
 
 	@Override
 	public CommerceInventory updateCommerceInventory(
-			long commerceInventoryId, boolean displayAvailability,
+			long commerceInventoryId, String commerceInventoryEngine,
+			String lowStockActivity, boolean displayAvailability,
 			boolean displayStockQuantity, int minStockQuantity,
 			boolean backOrders, int minCartQuantity, int maxCartQuantity,
 			String allowedCartQuantities, int multipleCartQuantity,
@@ -91,9 +93,10 @@ public class CommerceInventoryServiceImpl
 			CommerceActionKeys.MANAGE_COMMERCE_INVENTORY);
 
 		return commerceInventoryLocalService.updateCommerceInventory(
-			commerceInventoryId, displayAvailability, displayStockQuantity,
-			minStockQuantity, backOrders, minCartQuantity, maxCartQuantity,
-			allowedCartQuantities, multipleCartQuantity, serviceContext);
+			commerceInventoryId, commerceInventoryEngine, lowStockActivity,
+			displayAvailability, displayStockQuantity, minStockQuantity,
+			backOrders, minCartQuantity, maxCartQuantity, allowedCartQuantities,
+			multipleCartQuantity, serviceContext);
 	}
 
 }

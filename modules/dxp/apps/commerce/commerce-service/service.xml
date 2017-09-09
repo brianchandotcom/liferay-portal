@@ -292,6 +292,7 @@
 
 		<column name="CPDefinitionId" type="long" />
 		<column name="commerceInventoryEngine" type="String" />
+		<column name="lowStockActivity" type="String" />
 		<column name="displayAvailability" type="boolean" />
 		<column name="displayStockQuantity" type="boolean" />
 		<column name="minStockQuantity" type="int" />

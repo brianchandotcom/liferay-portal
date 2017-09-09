@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Contact;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseIndexer;
@@ -37,6 +36,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.impl.ContactImpl;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -270,7 +269,8 @@ public class UserIndexer extends BaseIndexer<User> {
 
 		document.addKeyword(Field.COMPANY_ID, user.getCompanyId());
 
-		document.addKeyword(Field.GROUP_ID, getActiveGroupIds(user));
+		document.addKeyword(
+			Field.GROUP_ID, getActiveGroupIds(user.getUserId()));
 		document.addDate(Field.MODIFIED_DATE, user.getModifiedDate());
 		document.addKeyword(Field.SCOPE_GROUP_ID, user.getGroupIds());
 		document.addKeyword(Field.STATUS, user.getStatus());
@@ -349,14 +349,8 @@ public class UserIndexer extends BaseIndexer<User> {
 		}
 	}
 
-	protected long[] getActiveGroupIds(User user) {
-		List<Long> groupIds = new ArrayList<>();
-
-		for (Group group : user.getGroups()) {
-			if (group.isActive()) {
-				groupIds.add(group.getGroupId());
-			}
-		}
+	protected long[] getActiveGroupIds(long userId) {
+		List<Long> groupIds = groupLocalService.getUserActiveGroupIds(userId);
 
 		return ArrayUtil.toArray(groupIds.toArray(new Long[groupIds.size()]));
 	}
@@ -413,6 +407,9 @@ public class UserIndexer extends BaseIndexer<User> {
 
 		indexableActionableDynamicQuery.performActions();
 	}
+
+	@Reference
+	protected GroupLocalService groupLocalService;
 
 	@Reference
 	protected IndexWriterHelper indexWriterHelper;

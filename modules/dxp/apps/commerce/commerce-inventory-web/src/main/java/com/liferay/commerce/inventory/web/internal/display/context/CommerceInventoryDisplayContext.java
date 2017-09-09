@@ -14,12 +14,14 @@
 
 package com.liferay.commerce.inventory.web.internal.display.context;
 
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.inventory.CommerceInventoryEngine;
 import com.liferay.commerce.inventory.CommerceInventoryEngineRegistry;
 import com.liferay.commerce.inventory.web.internal.portlet.action.CommerceInventoryActionHelper;
 import com.liferay.commerce.model.CPDefinitionAvailabilityRange;
 import com.liferay.commerce.model.CommerceAvailabilityRange;
 import com.liferay.commerce.model.CommerceInventory;
+import com.liferay.commerce.model.impl.CommerceInventoryImpl;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.service.CPDefinitionAvailabilityRangeService;
@@ -78,6 +80,17 @@ public class CommerceInventoryDisplayContext
 		_commerceInventory =
 			_commerceInventoryActionHelper.getCommerceInventory(
 				cpRequestHelper.getRenderRequest());
+
+		if (_commerceInventory == null) {
+			_commerceInventory = new CommerceInventoryImpl();
+
+			_commerceInventory.setMinCartQuantity(
+				CommerceConstants.COMMERCE_INVENTORY_DEFAULT_MIN_CART_QUANTITY);
+			_commerceInventory.setMaxCartQuantity(
+				CommerceConstants.COMMERCE_INVENTORY_DEFAULT_MAX_CART_QUANTITY);
+			_commerceInventory.setMultipleCartQuantity(
+				CommerceConstants.COMMERCE_INVENTORY_DEFAULT_MULTIPLE_CART_QUANTITY);
+		}
 
 		return _commerceInventory;
 	}

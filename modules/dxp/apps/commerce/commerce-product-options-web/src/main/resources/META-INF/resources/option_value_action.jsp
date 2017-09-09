@@ -32,6 +32,7 @@ else {
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<portlet:renderURL var="editURL">
 		<portlet:param name="mvcRenderCommandName" value="editProductOptionValue" />
+		<portlet:param name="cpOptionId" value="<%= String.valueOf(cpOptionValue.getCPOptionId()) %>" />
 		<portlet:param name="cpOptionValueId" value="<%= String.valueOf(cpOptionValue.getCPOptionValueId()) %>" />
 	</portlet:renderURL>
 
@@ -43,6 +44,7 @@ else {
 	<portlet:actionURL name="editProductOptionValue" var="deleteURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="cpOptionId" value="<%= String.valueOf(cpOptionValue.getCPOptionId()) %>" />
 		<portlet:param name="cpOptionValueId" value="<%= String.valueOf(cpOptionValue.getCPOptionValueId()) %>" />
 	</portlet:actionURL>
 

@@ -126,6 +126,7 @@ renderResponse.setTitle((cpOption == null) ? LanguageUtil.get(request, "add-opti
 							PortletURL rowURL = renderResponse.createRenderURL();
 
 							rowURL.setParameter("mvcRenderCommandName", "editProductOptionValue");
+							rowURL.setParameter("cpOptionId", String.valueOf(cpOptionValue.getCPOptionId()));
 							rowURL.setParameter("cpOptionValueId", String.valueOf(cpOptionValue.getCPOptionValueId()));
 							%>
 

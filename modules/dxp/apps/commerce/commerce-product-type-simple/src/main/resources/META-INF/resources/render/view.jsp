@@ -36,7 +36,7 @@ request.setAttribute("cpDefinitionId", cpDefinition.getCPDefinitionId());
 	entries="<%= Collections.singletonList(cpDefinition) %>"
 >
 	<aui:form action="#">
-		<div class="container-fluid product-detail" data-cp-definition-id="<%= cpDefinition.getCPDefinitionId() %>">
+		<div class="container-fluid product-detail" id="<portlet:namespace /><%= cpDefinition.getCPDefinitionId()%>ProductContent">
 			<div class="row">
 				<div class="product-detail-header">
 					<div class="col-lg-6 col-md-7">
@@ -168,6 +168,7 @@ request.setAttribute("cpDefinitionId", cpDefinition.getCPDefinitionId());
 					cpDefinitionId: <%= cpTypeDisplayContext.getCPDefinitionId() %>,
 					fullImageSelector : '#<portlet:namespace />full-image',
 					namespace: '<portlet:namespace />',
+					productContentSelector: '#<portlet:namespace /><%= cpDefinition.getCPDefinitionId()%>ProductContent',
 					thumbsContainerSelector : '#<portlet:namespace />thumbs-container',
 					viewAttachmentURL: '<%= cpTypeDisplayContext.getViewAttachmentURL().toString() %>'
 				}

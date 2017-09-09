@@ -111,6 +111,20 @@
 				(Group_.type_ != 4)
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.findByActiveGroups">
+		<![CDATA[
+			SELECT
+				Group_.groupId
+			FROM
+				Group_
+			INNER JOIN
+				Users_Groups ON
+					(Users_Groups.groupid = Group_.groupid)
+			WHERE
+				(Users_Groups.userid = ?) AND
+				(Group_.active_ = '1')
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.findByCompanyId">
 		<![CDATA[
 			SELECT

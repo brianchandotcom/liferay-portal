@@ -94,6 +94,8 @@ public class EditCommerceInventoryMVCActionCommand
 
 		String commerceInventoryEngine = ParamUtil.getString(
 			actionRequest, "commerceInventoryEngine");
+		String lowStockActivity = ParamUtil.getString(
+			actionRequest, "lowStockActivity");
 		long commerceAvailabilityRangeId = ParamUtil.getLong(
 			actionRequest, "commerceAvailabilityRangeId");
 		boolean displayAvailability = ParamUtil.getBoolean(
@@ -117,15 +119,16 @@ public class EditCommerceInventoryMVCActionCommand
 
 		if (commerceInventoryId <= 0) {
 			_commerceInventoryService.addCommerceInventory(
-				cpDefinitionId, commerceInventoryEngine, displayAvailability,
-				displayStockQuantity, minStockQuantity, backOrders,
-				minCartQuantity, maxCartQuantity, allowedCartQuantities,
-				multipleCartQuantity, serviceContext);
+				cpDefinitionId, commerceInventoryEngine, lowStockActivity,
+				displayAvailability, displayStockQuantity, minStockQuantity,
+				backOrders, minCartQuantity, maxCartQuantity,
+				allowedCartQuantities, multipleCartQuantity, serviceContext);
 		}
 		else {
 			_commerceInventoryService.updateCommerceInventory(
-				commerceInventoryId, displayAvailability, displayStockQuantity,
-				minStockQuantity, backOrders, minCartQuantity, maxCartQuantity,
+				commerceInventoryId, commerceInventoryEngine, lowStockActivity,
+				displayAvailability, displayStockQuantity, minStockQuantity,
+				backOrders, minCartQuantity, maxCartQuantity,
 				allowedCartQuantities, multipleCartQuantity, serviceContext);
 		}
 

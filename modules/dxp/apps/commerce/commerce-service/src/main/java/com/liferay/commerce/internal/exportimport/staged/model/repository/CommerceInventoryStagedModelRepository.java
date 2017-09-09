@@ -57,6 +57,7 @@ public class CommerceInventoryStagedModelRepository
 		return _commerceInventoryLocalService.addCommerceInventory(
 			commerceInventory.getCPDefinitionId(),
 			commerceInventory.getCommerceInventoryEngine(),
+			commerceInventory.getLowStockActivity(),
 			commerceInventory.getDisplayAvailability(),
 			commerceInventory.getDisplayStockQuantity(),
 			commerceInventory.getMinStockQuantity(),
@@ -142,6 +143,8 @@ public class CommerceInventoryStagedModelRepository
 
 		return _commerceInventoryLocalService.updateCommerceInventory(
 			commerceInventory.getCommerceInventoryId(),
+			commerceInventory.getCommerceInventoryEngine(),
+			commerceInventory.getLowStockActivity(),
 			commerceInventory.getDisplayAvailability(),
 			commerceInventory.getDisplayStockQuantity(),
 			commerceInventory.getMinStockQuantity(),

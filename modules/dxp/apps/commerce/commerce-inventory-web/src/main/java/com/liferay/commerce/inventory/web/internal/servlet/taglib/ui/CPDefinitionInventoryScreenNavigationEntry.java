@@ -21,6 +21,7 @@ import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.service.CPDefinitionAvailabilityRangeService;
 import com.liferay.commerce.service.CommerceAvailabilityRangeService;
+import com.liferay.commerce.stock.activity.CommerceLowStockActivityRegistry;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -30,18 +31,15 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.io.IOException;
-
-import java.util.Locale;
-import java.util.ResourceBundle;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * @author Alessio Antonio Rendina
@@ -101,6 +99,7 @@ public class CPDefinitionInventoryScreenNavigationEntry
 					_commerceAvailabilityRangeService,
 					_commerceInventoryActionHelper,
 					_commerceInventoryEngineRegistry,
+					_commerceLowStockActivityRegistry,
 					_cpDefinitionAvailabilityRangeService);
 
 			httpServletRequest.setAttribute(
@@ -130,6 +129,9 @@ public class CPDefinitionInventoryScreenNavigationEntry
 
 	@Reference
 	private CommerceInventoryEngineRegistry _commerceInventoryEngineRegistry;
+
+	@Reference
+	private CommerceLowStockActivityRegistry _commerceLowStockActivityRegistry;
 
 	@Reference
 	private CPDefinitionAvailabilityRangeService

@@ -20,17 +20,13 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionServiceUtil;
 import com.liferay.commerce.service.CommerceInventoryServiceUtil;
 import com.liferay.commerce.taglib.servlet.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
-
-import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -46,33 +42,31 @@ public class QuantityInputTag extends IncludeTag {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
-
 		try {
+			_allowedCartQuantity = StringPool.BLANK;
+			_maxCartQuantity =
+				CommerceConstants.COMMERCE_INVENTORY_DEFAULT_MAX_CART_QUANTITY;
+			_minCartQuantity =
+				CommerceConstants.COMMERCE_INVENTORY_DEFAULT_MIN_CART_QUANTITY;
+			_multipleCartQuantity =
+				CommerceConstants.
+					COMMERCE_INVENTORY_DEFAULT_MULTIPLE_CART_QUANTITY;
+
 			CommerceInventory commerceInventory =
-				CommerceInventoryServiceUtil.getCommerceInventory(
+				CommerceInventoryServiceUtil.fetchCommerceInventory(
 					themeDisplay.getScopeGroupId(), _cpDefinitionId);
 
-			_allowedCartQuantity = BeanParamUtil.getString(
-				commerceInventory, portletRequest, StringPool.BLANK);
+			if (commerceInventory != null) {
+				_allowedCartQuantity =
+					commerceInventory.getAllowedCartQuantities();
+				_maxCartQuantity = commerceInventory.getMaxCartQuantity();
+				_minCartQuantity = commerceInventory.getMinCartQuantity();
+				_multipleCartQuantity =
+					commerceInventory.getMultipleCartQuantity();
+			}
+
 			_cpDefinition = CPDefinitionServiceUtil.getCPDefinition(
 				_cpDefinitionId);
-			_maxCartQuantity = BeanParamUtil.getInteger(
-				commerceInventory, portletRequest,
-				String.valueOf(
-					CommerceConstants.
-						COMMERCE_INVENTORY_DEFAULT_MAX_CART_QUANTITY));
-			_minCartQuantity = BeanParamUtil.getInteger(
-				commerceInventory, portletRequest,
-				String.valueOf(
-					CommerceConstants.
-						COMMERCE_INVENTORY_DEFAULT_MIN_CART_QUANTITY));
-			_multipleCartQuantity = BeanParamUtil.getInteger(
-				commerceInventory, portletRequest,
-				String.valueOf(
-					CommerceConstants.
-						COMMERCE_INVENTORY_DEFAULT_MULTIPLE_CART_QUANTITY));
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {

@@ -14,13 +14,23 @@
 
 package com.liferay.commerce.taglib.servlet.taglib;
 
+import com.liferay.commerce.constants.CommerceConstants;
+import com.liferay.commerce.model.CommerceInventory;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionServiceUtil;
+import com.liferay.commerce.service.CommerceInventoryServiceUtil;
 import com.liferay.commerce.taglib.servlet.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
+
+import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -33,13 +43,40 @@ public class QuantityInputTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
+
 		try {
+			CommerceInventory commerceInventory =
+				CommerceInventoryServiceUtil.getCommerceInventory(
+					themeDisplay.getScopeGroupId(), _cpDefinitionId);
+
+			_allowedCartQuantity = BeanParamUtil.getString(
+				commerceInventory, portletRequest, StringPool.BLANK);
 			_cpDefinition = CPDefinitionServiceUtil.getCPDefinition(
 				_cpDefinitionId);
+			_maxCartQuantity = BeanParamUtil.getInteger(
+				commerceInventory, portletRequest,
+				String.valueOf(
+					CommerceConstants.
+						COMMERCE_INVENTORY_DEFAULT_MAX_CART_QUANTITY));
+			_minCartQuantity = BeanParamUtil.getInteger(
+				commerceInventory, portletRequest,
+				String.valueOf(
+					CommerceConstants.
+						COMMERCE_INVENTORY_DEFAULT_MIN_CART_QUANTITY));
+			_multipleCartQuantity = BeanParamUtil.getInteger(
+				commerceInventory, portletRequest,
+				String.valueOf(
+					CommerceConstants.
+						COMMERCE_INVENTORY_DEFAULT_MULTIPLE_CART_QUANTITY));
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to get cpDefinition", pe);
+				_log.debug(pe, pe);
 			}
 
 			return SKIP_BODY;
@@ -65,8 +102,12 @@ public class QuantityInputTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		_allowedCartQuantity = null;
 		_cpDefinition = null;
 		_cpDefinitionId = 0;
+		_maxCartQuantity = 0;
+		_minCartQuantity = 0;
+		_multipleCartQuantity = 0;
 		_useSelect = true;
 	}
 
@@ -78,7 +119,19 @@ public class QuantityInputTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
+			"liferay-commerce:quantity-input:allowedCartQuantity",
+			_allowedCartQuantity);
+		request.setAttribute(
 			"liferay-commerce:quantity-input:cpDefinition", _cpDefinition);
+		request.setAttribute(
+			"liferay-commerce:quantity-input:maxCartQuantity",
+			_maxCartQuantity);
+		request.setAttribute(
+			"liferay-commerce:quantity-input:minCartQuantity",
+			_minCartQuantity);
+		request.setAttribute(
+			"liferay-commerce:quantity-input:multipleCartQuantity",
+			_multipleCartQuantity);
 		request.setAttribute(
 			"liferay-commerce:quantity-input:useSelect", _useSelect);
 	}
@@ -88,8 +141,12 @@ public class QuantityInputTag extends IncludeTag {
 	private static final Log _log = LogFactoryUtil.getLog(
 		QuantityInputTag.class);
 
+	private String _allowedCartQuantity;
 	private CPDefinition _cpDefinition;
 	private long _cpDefinitionId;
+	private int _maxCartQuantity;
+	private int _minCartQuantity;
+	private int _multipleCartQuantity;
 	private boolean _useSelect = true;
 
 }

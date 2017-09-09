@@ -17,14 +17,14 @@
 <%@ include file="/quantity_input/init.jsp" %>
 
 <%
+String allowedCartQuantity = (String)request.getAttribute("liferay-commerce:quantity-input:allowedCartQuantity");
 CPDefinition cpDefinition = (CPDefinition)request.getAttribute("liferay-commerce:quantity-input:cpDefinition");
+int maxCartQuantity = (int)request.getAttribute("liferay-commerce:quantity-input:maxCartQuantity");
+int minCartQuantity = (int)request.getAttribute("liferay-commerce:quantity-input:minCartQuantity");
+int multipleCartQuantity = (int)request.getAttribute("liferay-commerce:quantity-input:multipleCartQuantity");
 boolean useSelect = (boolean)request.getAttribute("liferay-commerce:quantity-input:useSelect");
 
 long cpDefinitionId = cpDefinition.getCPDefinitionId();
-int minCartQuantity = cpDefinition.getMinCartQuantity();
-int maxCartQuantity = cpDefinition.getMaxCartQuantity();
-int multipleCartQuantity = cpDefinition.getMultipleCartQuantity();
-String allowedCartQuantity = cpDefinition.getAllowedCartQuantities();
 
 int[] allowedCartQuantities = null;
 

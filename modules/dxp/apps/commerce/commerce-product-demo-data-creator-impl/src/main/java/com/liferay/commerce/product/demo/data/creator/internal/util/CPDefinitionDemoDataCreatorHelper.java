@@ -16,6 +16,7 @@ package com.liferay.commerce.product.demo.data.creator.internal.util;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
@@ -27,6 +28,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -37,11 +42,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -132,6 +132,20 @@ public class CPDefinitionDemoDataCreatorHelper
 
 				_cpInstanceLocalService.buildCPInstances(
 					cpDefinition.getCPDefinitionId(), serviceContext);
+
+				// Update commerce product instances price
+
+				double price = productJSONObject.getDouble("price");
+
+				List<CPInstance> cpInstances =
+					_cpInstanceLocalService.getCPInstances(
+						cpDefinition.getCPDefinitionId());
+
+				for (CPInstance cpInstance : cpInstances) {
+					_cpInstanceLocalService.updatePricingInfo(
+						cpInstance.getCPInstanceId(), cpInstance.getCost(),
+						price, serviceContext);
+				}
 			}
 		}
 

@@ -2,5 +2,8 @@ Bundle-Name: Liferay Commerce Service
 Bundle-SymbolicName: com.liferay.commerce.service
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.commerce.service.permission
+Export-Package:\
+	com.liferay.commerce.model.impl,\
+	com.liferay.commerce.service.permission
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true

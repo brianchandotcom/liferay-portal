@@ -28,6 +28,7 @@ page import="com.liferay.commerce.model.CommerceAvailabilityRange" %><%@
 page import="com.liferay.commerce.model.CommerceInventory" %><%@
 page import="com.liferay.commerce.product.constants.CPPortletKeys" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
+page import="com.liferay.commerce.stock.activity.CommerceLowStockActivity" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayPortletRequest" %><%@

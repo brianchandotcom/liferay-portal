@@ -50,8 +50,7 @@ for (CPDefinitionOptionRel cpDefinitionOptionRel : cpDefinitionOptionRels) {
 
 <liferay-ui:search-container-column-text
 	cssClass="table-cell-content"
-	name="price"
-	value="<%= cpInstanceDisplayContext.getFormattedPrice(cpInstance.getCPInstanceId()) %>"
+	property="price"
 />
 
 <liferay-ui:search-container-column-status

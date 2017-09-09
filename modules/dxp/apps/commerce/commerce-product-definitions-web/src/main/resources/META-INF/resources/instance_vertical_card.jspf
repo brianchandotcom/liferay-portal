@@ -58,9 +58,5 @@
 	}
 	%>
 
-	<h6>
-		<%= HtmlUtil.escape(cpInstanceDisplayContext.getFormattedPrice(cpInstance.getCPInstanceId())) %>
-	</h6>
-
 	<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= cpInstance.getStatus() %>" />
 </liferay-frontend:vertical-card-footer>

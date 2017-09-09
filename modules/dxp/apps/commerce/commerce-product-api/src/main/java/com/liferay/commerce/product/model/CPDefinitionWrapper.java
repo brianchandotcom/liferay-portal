@@ -70,7 +70,8 @@ public class CPDefinitionWrapper implements CPDefinition,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("productTypeName", getProductTypeName());
 		attributes.put("availableIndividually", getAvailableIndividually());
-		attributes.put("canSellWithoutOptions", getCanSellWithoutOptions());
+		attributes.put("canSellWithoutOptionsCombination",
+			getCanSellWithoutOptionsCombination());
 		attributes.put("width", getWidth());
 		attributes.put("height", getHeight());
 		attributes.put("depth", getDepth());
@@ -151,11 +152,11 @@ public class CPDefinitionWrapper implements CPDefinition,
 			setAvailableIndividually(availableIndividually);
 		}
 
-		Boolean canSellWithoutOptions = (Boolean)attributes.get(
-				"canSellWithoutOptions");
+		Boolean canSellWithoutOptionsCombination = (Boolean)attributes.get(
+				"canSellWithoutOptionsCombination");
 
-		if (canSellWithoutOptions != null) {
-			setCanSellWithoutOptions(canSellWithoutOptions);
+		if (canSellWithoutOptionsCombination != null) {
+			setCanSellWithoutOptionsCombination(canSellWithoutOptionsCombination);
 		}
 
 		Double width = (Double)attributes.get("width");
@@ -263,13 +264,13 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	/**
-	* Returns the can sell without options of this cp definition.
+	* Returns the can sell without options combination of this cp definition.
 	*
-	* @return the can sell without options of this cp definition
+	* @return the can sell without options combination of this cp definition
 	*/
 	@Override
-	public boolean getCanSellWithoutOptions() {
-		return _cpDefinition.getCanSellWithoutOptions();
+	public boolean getCanSellWithoutOptionsCombination() {
+		return _cpDefinition.getCanSellWithoutOptionsCombination();
 	}
 
 	/**
@@ -814,13 +815,13 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	/**
-	* Returns <code>true</code> if this cp definition is can sell without options.
+	* Returns <code>true</code> if this cp definition is can sell without options combination.
 	*
-	* @return <code>true</code> if this cp definition is can sell without options; <code>false</code> otherwise
+	* @return <code>true</code> if this cp definition is can sell without options combination; <code>false</code> otherwise
 	*/
 	@Override
-	public boolean isCanSellWithoutOptions() {
-		return _cpDefinition.isCanSellWithoutOptions();
+	public boolean isCanSellWithoutOptionsCombination() {
+		return _cpDefinition.isCanSellWithoutOptionsCombination();
 	}
 
 	/**
@@ -954,13 +955,14 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	/**
-	* Sets whether this cp definition is can sell without options.
+	* Sets whether this cp definition is can sell without options combination.
 	*
-	* @param canSellWithoutOptions the can sell without options of this cp definition
+	* @param canSellWithoutOptionsCombination the can sell without options combination of this cp definition
 	*/
 	@Override
-	public void setCanSellWithoutOptions(boolean canSellWithoutOptions) {
-		_cpDefinition.setCanSellWithoutOptions(canSellWithoutOptions);
+	public void setCanSellWithoutOptionsCombination(
+		boolean canSellWithoutOptionsCombination) {
+		_cpDefinition.setCanSellWithoutOptionsCombination(canSellWithoutOptionsCombination);
 	}
 
 	/**

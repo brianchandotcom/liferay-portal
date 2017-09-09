@@ -250,25 +250,26 @@ public interface CPDefinitionModel extends BaseModel<CPDefinition>, ShardedModel
 	public void setAvailableIndividually(boolean availableIndividually);
 
 	/**
-	 * Returns the can sell without options of this cp definition.
+	 * Returns the can sell without options combination of this cp definition.
 	 *
-	 * @return the can sell without options of this cp definition
+	 * @return the can sell without options combination of this cp definition
 	 */
-	public boolean getCanSellWithoutOptions();
+	public boolean getCanSellWithoutOptionsCombination();
 
 	/**
-	 * Returns <code>true</code> if this cp definition is can sell without options.
+	 * Returns <code>true</code> if this cp definition is can sell without options combination.
 	 *
-	 * @return <code>true</code> if this cp definition is can sell without options; <code>false</code> otherwise
+	 * @return <code>true</code> if this cp definition is can sell without options combination; <code>false</code> otherwise
 	 */
-	public boolean isCanSellWithoutOptions();
+	public boolean isCanSellWithoutOptionsCombination();
 
 	/**
-	 * Sets whether this cp definition is can sell without options.
+	 * Sets whether this cp definition is can sell without options combination.
 	 *
-	 * @param canSellWithoutOptions the can sell without options of this cp definition
+	 * @param canSellWithoutOptionsCombination the can sell without options combination of this cp definition
 	 */
-	public void setCanSellWithoutOptions(boolean canSellWithoutOptions);
+	public void setCanSellWithoutOptionsCombination(
+		boolean canSellWithoutOptionsCombination);
 
 	/**
 	 * Returns the width of this cp definition.

@@ -88,8 +88,8 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		sb.append(productTypeName);
 		sb.append(", availableIndividually=");
 		sb.append(availableIndividually);
-		sb.append(", canSellWithoutOptions=");
-		sb.append(canSellWithoutOptions);
+		sb.append(", canSellWithoutOptionsCombination=");
+		sb.append(canSellWithoutOptionsCombination);
 		sb.append(", width=");
 		sb.append(width);
 		sb.append(", height=");
@@ -166,7 +166,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		}
 
 		cpDefinitionImpl.setAvailableIndividually(availableIndividually);
-		cpDefinitionImpl.setCanSellWithoutOptions(canSellWithoutOptions);
+		cpDefinitionImpl.setCanSellWithoutOptionsCombination(canSellWithoutOptionsCombination);
 		cpDefinitionImpl.setWidth(width);
 		cpDefinitionImpl.setHeight(height);
 		cpDefinitionImpl.setDepth(depth);
@@ -247,7 +247,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 
 		availableIndividually = objectInput.readBoolean();
 
-		canSellWithoutOptions = objectInput.readBoolean();
+		canSellWithoutOptionsCombination = objectInput.readBoolean();
 
 		width = objectInput.readDouble();
 
@@ -306,7 +306,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 
 		objectOutput.writeBoolean(availableIndividually);
 
-		objectOutput.writeBoolean(canSellWithoutOptions);
+		objectOutput.writeBoolean(canSellWithoutOptionsCombination);
 
 		objectOutput.writeDouble(width);
 
@@ -358,7 +358,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 	public long modifiedDate;
 	public String productTypeName;
 	public boolean availableIndividually;
-	public boolean canSellWithoutOptions;
+	public boolean canSellWithoutOptionsCombination;
 	public double width;
 	public double height;
 	public double depth;

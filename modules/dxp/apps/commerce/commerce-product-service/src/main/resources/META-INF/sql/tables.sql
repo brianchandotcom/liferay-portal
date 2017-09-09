@@ -51,7 +51,7 @@ create table CPDefinition (
 	modifiedDate DATE null,
 	productTypeName VARCHAR(75) null,
 	availableIndividually BOOLEAN,
-	canSellWithoutOptions BOOLEAN,
+	canSellWithoutOptionsCombination BOOLEAN,
 	width DOUBLE,
 	height DOUBLE,
 	depth DOUBLE,

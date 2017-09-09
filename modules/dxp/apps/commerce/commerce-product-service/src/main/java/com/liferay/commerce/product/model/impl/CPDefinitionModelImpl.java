@@ -93,7 +93,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "productTypeName", Types.VARCHAR },
 			{ "availableIndividually", Types.BOOLEAN },
-			{ "canSellWithoutOptions", Types.BOOLEAN },
+			{ "canSellWithoutOptionsCombination", Types.BOOLEAN },
 			{ "width", Types.DOUBLE },
 			{ "height", Types.DOUBLE },
 			{ "depth", Types.DOUBLE },
@@ -121,7 +121,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("productTypeName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("availableIndividually", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("canSellWithoutOptions", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("canSellWithoutOptionsCombination", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("width", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("height", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("depth", Types.DOUBLE);
@@ -137,7 +137,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		TABLE_COLUMNS_MAP.put("defaultLanguageId", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPDefinition (uuid_ VARCHAR(75) null,CPDefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,productTypeName VARCHAR(75) null,availableIndividually BOOLEAN,canSellWithoutOptions BOOLEAN,width DOUBLE,height DOUBLE,depth DOUBLE,weight DOUBLE,DDMStructureKey VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,defaultLanguageId VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table CPDefinition (uuid_ VARCHAR(75) null,CPDefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,productTypeName VARCHAR(75) null,availableIndividually BOOLEAN,canSellWithoutOptionsCombination BOOLEAN,width DOUBLE,height DOUBLE,depth DOUBLE,weight DOUBLE,DDMStructureKey VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,defaultLanguageId VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table CPDefinition";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpDefinition.displayDate DESC, cpDefinition.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPDefinition.displayDate DESC, CPDefinition.createDate DESC";
@@ -183,7 +183,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setProductTypeName(soapModel.getProductTypeName());
 		model.setAvailableIndividually(soapModel.getAvailableIndividually());
-		model.setCanSellWithoutOptions(soapModel.getCanSellWithoutOptions());
+		model.setCanSellWithoutOptionsCombination(soapModel.getCanSellWithoutOptionsCombination());
 		model.setWidth(soapModel.getWidth());
 		model.setHeight(soapModel.getHeight());
 		model.setDepth(soapModel.getDepth());
@@ -271,7 +271,8 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("productTypeName", getProductTypeName());
 		attributes.put("availableIndividually", getAvailableIndividually());
-		attributes.put("canSellWithoutOptions", getCanSellWithoutOptions());
+		attributes.put("canSellWithoutOptionsCombination",
+			getCanSellWithoutOptionsCombination());
 		attributes.put("width", getWidth());
 		attributes.put("height", getHeight());
 		attributes.put("depth", getDepth());
@@ -355,11 +356,11 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 			setAvailableIndividually(availableIndividually);
 		}
 
-		Boolean canSellWithoutOptions = (Boolean)attributes.get(
-				"canSellWithoutOptions");
+		Boolean canSellWithoutOptionsCombination = (Boolean)attributes.get(
+				"canSellWithoutOptionsCombination");
 
-		if (canSellWithoutOptions != null) {
-			setCanSellWithoutOptions(canSellWithoutOptions);
+		if (canSellWithoutOptionsCombination != null) {
+			setCanSellWithoutOptionsCombination(canSellWithoutOptionsCombination);
 		}
 
 		Double width = (Double)attributes.get("width");
@@ -975,19 +976,20 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 	@JSON
 	@Override
-	public boolean getCanSellWithoutOptions() {
-		return _canSellWithoutOptions;
+	public boolean getCanSellWithoutOptionsCombination() {
+		return _canSellWithoutOptionsCombination;
 	}
 
 	@JSON
 	@Override
-	public boolean isCanSellWithoutOptions() {
-		return _canSellWithoutOptions;
+	public boolean isCanSellWithoutOptionsCombination() {
+		return _canSellWithoutOptionsCombination;
 	}
 
 	@Override
-	public void setCanSellWithoutOptions(boolean canSellWithoutOptions) {
-		_canSellWithoutOptions = canSellWithoutOptions;
+	public void setCanSellWithoutOptionsCombination(
+		boolean canSellWithoutOptionsCombination) {
+		_canSellWithoutOptionsCombination = canSellWithoutOptionsCombination;
 	}
 
 	@JSON
@@ -1444,7 +1446,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		cpDefinitionImpl.setModifiedDate(getModifiedDate());
 		cpDefinitionImpl.setProductTypeName(getProductTypeName());
 		cpDefinitionImpl.setAvailableIndividually(getAvailableIndividually());
-		cpDefinitionImpl.setCanSellWithoutOptions(getCanSellWithoutOptions());
+		cpDefinitionImpl.setCanSellWithoutOptionsCombination(getCanSellWithoutOptionsCombination());
 		cpDefinitionImpl.setWidth(getWidth());
 		cpDefinitionImpl.setHeight(getHeight());
 		cpDefinitionImpl.setDepth(getDepth());
@@ -1606,7 +1608,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 		cpDefinitionCacheModel.availableIndividually = getAvailableIndividually();
 
-		cpDefinitionCacheModel.canSellWithoutOptions = getCanSellWithoutOptions();
+		cpDefinitionCacheModel.canSellWithoutOptionsCombination = getCanSellWithoutOptionsCombination();
 
 		cpDefinitionCacheModel.width = getWidth();
 
@@ -1707,8 +1709,8 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		sb.append(getProductTypeName());
 		sb.append(", availableIndividually=");
 		sb.append(getAvailableIndividually());
-		sb.append(", canSellWithoutOptions=");
-		sb.append(getCanSellWithoutOptions());
+		sb.append(", canSellWithoutOptionsCombination=");
+		sb.append(getCanSellWithoutOptionsCombination());
 		sb.append(", width=");
 		sb.append(getWidth());
 		sb.append(", height=");
@@ -1789,8 +1791,8 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		sb.append(getAvailableIndividually());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>canSellWithoutOptions</column-name><column-value><![CDATA[");
-		sb.append(getCanSellWithoutOptions());
+			"<column><column-name>canSellWithoutOptionsCombination</column-name><column-value><![CDATA[");
+		sb.append(getCanSellWithoutOptionsCombination());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>width</column-name><column-value><![CDATA[");
@@ -1870,7 +1872,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 	private boolean _setModifiedDate;
 	private String _productTypeName;
 	private boolean _availableIndividually;
-	private boolean _canSellWithoutOptions;
+	private boolean _canSellWithoutOptionsCombination;
 	private double _width;
 	private double _height;
 	private double _depth;

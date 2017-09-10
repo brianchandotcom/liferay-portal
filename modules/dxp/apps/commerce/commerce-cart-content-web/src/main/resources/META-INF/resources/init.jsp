@@ -22,17 +22,21 @@ taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
+taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.commerce.cart.content.web.internal.display.context.CommerceCartContentDisplayContext" %><%@
 page import="com.liferay.commerce.cart.content.web.internal.display.context.CommerceCartContentMiniDisplayContext" %><%@
 page import="com.liferay.commerce.cart.content.web.internal.display.context.CommerceCartContentTotalDisplayContext" %><%@
+page import="com.liferay.commerce.cart.content.web.internal.display.context.CommerceWishListContentDisplayContext" %><%@
 page import="com.liferay.commerce.cart.content.web.internal.portlet.CommerceCartContentMiniPortlet" %><%@
 page import="com.liferay.commerce.cart.content.web.internal.portlet.CommerceCartContentTotalPortlet" %><%@
 page import="com.liferay.commerce.constants.CommerceConstants" %><%@
 page import="com.liferay.commerce.constants.CommercePortletKeys" %><%@
 page import="com.liferay.commerce.model.CommerceCartItem" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
+page import="com.liferay.commerce.product.model.CPDefinitionOptionRel" %><%@
+page import="com.liferay.commerce.product.model.CPDefinitionOptionValueRel" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@

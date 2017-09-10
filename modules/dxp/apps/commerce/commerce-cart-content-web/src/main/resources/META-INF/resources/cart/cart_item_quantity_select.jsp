@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-int type = ParamUtil.getInteger(request, "type", CommerceConstants.COMMERCE_CART_TYPE_CART);
-
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 CommerceCartItem commerceCartItem = (CommerceCartItem)row.getObject();
@@ -30,7 +28,7 @@ CommerceCartItem commerceCartItem = (CommerceCartItem)row.getObject();
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="commerceCartItemId" type="hidden" value="<%= commerceCartItem.getCommerceCartItemId() %>" />
-	<aui:input name="type" type="hidden" value="<%= type %>" />
+	<aui:input name="type" type="hidden" value="<%= CommerceConstants.COMMERCE_CART_TYPE_CART %>" />
 
 	<aui:model-context bean="<%= commerceCartItem %>" model="<%= CommerceCartItem.class %>" />
 

@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-int type = ParamUtil.getInteger(request, "type", CommerceConstants.COMMERCE_CART_TYPE_CART);
-
 CommerceCartContentDisplayContext commerceCartContentDisplayContext = (CommerceCartContentDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 SearchContainer<CommerceCartItem> commerceCartItemSearchContainer = commerceCartContentDisplayContext.getSearchContainer();
@@ -90,7 +88,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="commerceCartItemId" value="<%= String.valueOf(commerceCartItem.getCommerceCartItemId()) %>" />
-						<portlet:param name="type" value="<%= String.valueOf(type) %>" />
+						<portlet:param name="type" value="<%= String.valueOf(CommerceConstants.COMMERCE_CART_TYPE_CART) %>" />
 					</portlet:actionURL>
 
 					<liferay-ui:icon-delete

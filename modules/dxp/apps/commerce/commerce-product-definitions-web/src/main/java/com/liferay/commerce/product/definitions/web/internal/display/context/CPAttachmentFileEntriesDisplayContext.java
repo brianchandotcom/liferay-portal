@@ -372,7 +372,8 @@ public class CPAttachmentFileEntriesDisplayContext extends
 		}
 
 		return _cpInstanceHelper.render(
-			getCPDefinitionId(), json, false, renderRequest, renderResponse);
+			getCPDefinitionId(), json, true, renderRequest, renderResponse,
+			false);
 	}
 
 	private final AttachmentsConfiguration _attachmentsConfiguration;

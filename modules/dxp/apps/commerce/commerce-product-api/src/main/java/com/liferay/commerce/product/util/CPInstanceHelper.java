@@ -19,8 +19,8 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
@@ -37,8 +37,7 @@ import javax.portlet.RenderResponse;
 public interface CPInstanceHelper {
 
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
-			long cpDefinitionId, Locale locale, String serializedDDMFormValues,
-			int type)
+			long cpDefinitionId, String serializedDDMFormValues, int type)
 		throws Exception;
 
 	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRel(
@@ -46,12 +45,14 @@ public interface CPInstanceHelper {
 			Map<String, String> optionMap)
 		throws Exception;
 
-	public DDMForm getDDMForm(
-			long cpDefinitionId, Locale locale, boolean required)
-		throws PortalException;
+	public CPInstance getCPInstance(
+			long cpDefinitionId, String serializedDDMFormValues)
+		throws Exception;
 
-	public DDMFormValues getDDMFormValues(
-		long cpDefinitionId, Locale locale, String serializedDDMFormValues);
+	public DDMForm getDDMForm(
+			long cpDefinitionId, Locale locale, boolean skuContributor,
+			boolean useDDMFormRule)
+		throws PortalException;
 
 	public Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
 		parseJSONString(String json) throws PortalException;
@@ -62,8 +63,9 @@ public interface CPInstanceHelper {
 		throws PortalException;
 
 	public String render(
-			long cpDefinitionId, String json, boolean required,
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			long cpDefinitionId, String json, boolean skuContributor,
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			boolean useDDMFormRule)
 		throws PortalException;
 
 }

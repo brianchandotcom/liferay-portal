@@ -247,7 +247,8 @@ public class CPInstanceDisplayContext
 		throws PortalException {
 
 		return _cpInstanceHelper.render(
-			getCPDefinitionId(), renderRequest, renderResponse);
+			getCPDefinitionId(), null, true, renderRequest, renderResponse,
+			false);
 	}
 
 	private final CPDefinitionOptionRelService _cpDefinitionOptionRelService;

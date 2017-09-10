@@ -45,6 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rafael Praxedes
+ * @author Marco Leo
  */
 @Component(
 	immediate = true,

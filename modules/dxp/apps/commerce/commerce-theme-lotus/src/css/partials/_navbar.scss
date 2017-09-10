@@ -48,8 +48,9 @@
 	padding: 17px 16px;
 
 	@include sm {
+		left: 0;
 		position: fixed;
-		width: 100%;
+		right: 0;
 		z-index: 1034;
 
 		@include transition(all 0.2s ease-in-out);

@@ -89,7 +89,8 @@ public class CommerceInventoryDisplayContext
 			_commerceInventory.setMaxCartQuantity(
 				CommerceConstants.COMMERCE_INVENTORY_DEFAULT_MAX_CART_QUANTITY);
 			_commerceInventory.setMultipleCartQuantity(
-				CommerceConstants.COMMERCE_INVENTORY_DEFAULT_MULTIPLE_CART_QUANTITY);
+				CommerceConstants.
+					COMMERCE_INVENTORY_DEFAULT_MULTIPLE_CART_QUANTITY);
 		}
 
 		return _commerceInventory;

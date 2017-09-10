@@ -74,6 +74,18 @@
 	.table {
 		margin-top: 40px;
 	}
+
+	.portlet:hover {
+		.portlet-topper {
+			z-index: 1034;
+		}
+
+		.portlet-content {
+			margin-top: 34px;
+
+			@include transition(margin-top 0.1s ease-in-out);
+		}
+	}
 }
 
 .product-detail-header {

@@ -27,6 +27,7 @@ import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -79,6 +80,15 @@ public class CPInstancePricingScreenNavigationEntry
 	public String getScreenNavigationKey() {
 		return CPInstanceScreenNavigationConstants.
 			SCREEN_NAVIGATION_KEY_CP_INSTANCE_GENERAL;
+	}
+
+	@Override
+	public boolean isVisible(User user, CPInstance cpInstance) {
+		if (cpInstance == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

@@ -61,6 +61,10 @@ if(Validator.isNotNull(allowedCartQuantity))
 					quantity = minCartQuantity;
 				}
 
+				if(multipleCartQuantity > 1){
+					quantity = multipleCartQuantity;
+				}
+
 				for(int i=1;i <10; i++){ %>
 					<aui:option value="<%= quantity %>" label="<%= quantity %>" />
 				<%

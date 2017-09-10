@@ -226,7 +226,7 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 		CommerceCart cookieCommerceCart =
 			_commerceCartService.fetchCommerceCart(commerceCartUuid, groupId);
 
-		if ((cookieCommerceCart == null) && !cookieCommerceCart.isGuestCart()) {
+		if ((cookieCommerceCart == null) || !cookieCommerceCart.isGuestCart()) {
 			return commerceCart;
 		}
 

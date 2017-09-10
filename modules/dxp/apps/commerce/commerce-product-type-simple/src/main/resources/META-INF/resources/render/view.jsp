@@ -25,7 +25,7 @@ contextObjects.put("simpleCPTypeDisplayContext", cpTypeDisplayContext);
 
 CPDefinition cpDefinition = cpTypeDisplayContext.getCPDefinition();
 
-request.setAttribute("cpDefinitionId", cpDefinition.getCPDefinitionId());
+request.setAttribute("cpDefinition", cpDefinition);
 %>
 
 <liferay-ddm:template-renderer

@@ -17,29 +17,46 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long cpDefinitionId = GetterUtil.getLong(request.getAttribute("cpDefinitionId"));
+CPDefinition cpDefinition = (CPDefinition)request.getAttribute("cpDefinition");
 
-HashMap<String, String> dataMap = new HashMap<>();
-dataMap.put("cp-definition-id", "");
+String buttonId = cpDefinition.getCPDefinitionId() + "addToCart";
 %>
 
-<liferay-commerce:quantity-input CPDefinitionId="<%= cpDefinitionId %>" useSelect="<%= true %>" />
+<liferay-commerce:quantity-input CPDefinitionId="<%= cpDefinition.getCPDefinitionId() %>" useSelect="<%= true %>" />
 
-<aui:button cssClass="btn-lg btn-primary" data="<%= dataMap %>" name="add-to-cart" value="add-to-cart" />
+<aui:button cssClass="btn-lg btn-primary" disabled="<%= !cpDefinition.getCanSellWithoutOptionsCombination() %>" name="<%= buttonId %>" value="add-to-cart" />
 
 <aui:script use="aui-io-request,aui-parse-content,liferay-notification">
-	A.one('#<portlet:namespace />add-to-cart').on(
+	<% if(!cpDefinition.getCanSellWithoutOptionsCombination()){ %>
+
+	Liferay.on(
+		'<%= cpDefinition.getCPDefinitionId() %>CPInstance:change',
+		function(event) {
+
+			var cartButton = A.one('#<portlet:namespace /><%= buttonId %>');
+
+			if (event.cpInstanceExist) {
+				Liferay.Util.toggleDisabled(cartButton, false);
+			}
+			else {
+				Liferay.Util.toggleDisabled(cartButton, true);
+			}
+		}
+	);
+
+	<% } %>
+
+	A.one('#<portlet:namespace /><%= buttonId %>').on(
 		'click',
 		function(event) {
-			var currentTarget = event.currentTarget;
 
-			var cpDefinitionId = currentTarget.getAttribute('data-cp-definition-id')
+			var cpDefinitionId = <%= cpDefinition.getCPDefinitionId() %>;
 
 			var productContent = Liferay.component('<portlet:namespace />' + cpDefinitionId + 'ProductContent');
 
 			var ddmFormValues = JSON.stringify(productContent.getFormValues());
 
-			var quantity = A.one('#<portlet:namespace /><%= cpDefinitionId + "Quantity" %>');
+			var quantity = A.one('#<portlet:namespace /><%= cpDefinition.getCPDefinitionId() + "Quantity" %>');
 
 			var data = {
 				'_<%= CommercePortletKeys.COMMERCE_CART_CONTENT %>_cpDefinitionId' : cpDefinitionId ,

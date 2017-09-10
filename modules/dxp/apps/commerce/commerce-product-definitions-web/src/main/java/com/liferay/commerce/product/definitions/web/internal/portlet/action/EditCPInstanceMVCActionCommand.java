@@ -16,24 +16,30 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Calendar;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
+import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -92,7 +98,12 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateCPInstance(actionRequest);
+				CPInstance cpInstance = updateCPInstance(actionRequest);
+
+				String redirect = getSaveAndContinueRedirect(
+					actionRequest, cpInstance);
+
+				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else if (cmd.equals(Constants.ADD_MULTIPLE)) {
 				buildCPInstances(actionRequest);
@@ -127,7 +138,31 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void updateCPInstance(ActionRequest actionRequest)
+	protected String getSaveAndContinueRedirect(
+			ActionRequest actionRequest, CPInstance cpInstance)
+		throws Exception {
+
+		if (cpInstance == null) {
+			return ParamUtil.getString(actionRequest, "redirect");
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			actionRequest, themeDisplay.getScopeGroup(),
+			CPDefinition.class.getName(), PortletProvider.Action.EDIT);
+
+		portletURL.setParameter("mvcRenderCommandName", "editProductInstance");
+		portletURL.setParameter(
+			"cpDefinitionId", String.valueOf(cpInstance.getCPDefinitionId()));
+		portletURL.setParameter(
+			"cpInstanceId", String.valueOf(cpInstance.getCPInstanceId()));
+
+		return portletURL.toString();
+	}
+
+	protected CPInstance updateCPInstance(ActionRequest actionRequest)
 		throws Exception {
 
 		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
@@ -180,8 +215,10 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPInstance.class.getName(), actionRequest);
 
+		CPInstance cpInstance = null;
+
 		if (cpInstanceId > 0) {
-			_cpInstanceService.updateCPInstance(
+			cpInstance = _cpInstanceService.updateCPInstance(
 				cpInstanceId, sku, gtin, manufacturerPartNumber,
 				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
@@ -192,7 +229,7 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 			String ddmFormValues = ParamUtil.getString(
 				actionRequest, "ddmFormValues");
 
-			_cpInstanceService.addCPInstance(
+			cpInstance = _cpInstanceService.addCPInstance(
 				cpDefinitionId, sku, gtin, manufacturerPartNumber,
 				ddmFormValues, displayDateMonth, displayDateDay,
 				displayDateYear, displayDateHour, displayDateMinute,
@@ -200,6 +237,8 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				expirationDateHour, expirationDateMinute, neverExpire,
 				serviceContext);
 		}
+
+		return cpInstance;
 	}
 
 	protected void updatePricingInfo(ActionRequest actionRequest)

@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
-import java.util.Locale;
 
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
@@ -67,8 +66,6 @@ public class ViewCPAttachmentsMVCResourceCommand
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		Locale locale = resourceRequest.getLocale();
-
 		int type = ParamUtil.getInteger(
 			resourceRequest, "type",
 			CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE);
@@ -82,7 +79,7 @@ public class ViewCPAttachmentsMVCResourceCommand
 		try {
 			List<CPAttachmentFileEntry> cpAttachmentFileEntries =
 				_cpInstanceHelper.getCPAttachmentFileEntries(
-					cpDefinitionId, locale, ddmFormValues, type);
+					cpDefinitionId, ddmFormValues, type);
 
 			for (CPAttachmentFileEntry cpAttachmentFileEntry :
 					cpAttachmentFileEntries) {

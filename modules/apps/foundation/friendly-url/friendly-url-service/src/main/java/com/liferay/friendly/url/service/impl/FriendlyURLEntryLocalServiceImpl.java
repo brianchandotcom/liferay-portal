@@ -40,6 +40,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Adolfo Pérez
@@ -77,42 +78,6 @@ public class FriendlyURLEntryLocalServiceImpl
 		if (friendlyURLEntryMapping == null) {
 			friendlyURLEntryMapping = friendlyURLEntryMappingPersistence.create(
 				friendlyURLEntryMappingPK);
-		}
-		else {
-			for (String urlTitle : urlTitleMap.values()) {
-				String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(
-					urlTitle);
-
-				FriendlyURLEntryLocalization oldFriendlyURLEntryLocalization =
-					friendlyURLEntryLocalizationPersistence.fetchByG_C_U(
-						groupId, classNameId, normalizedUrlTitle);
-
-				FriendlyURLEntry oldFriendlyURLEntry = null;
-
-				if (oldFriendlyURLEntryLocalization != null) {
-					oldFriendlyURLEntry =
-						friendlyURLEntryPersistence.fetchByPrimaryKey(
-							oldFriendlyURLEntryLocalization.
-								getFriendlyURLEntryId());
-				}
-
-				if (oldFriendlyURLEntry != null) {
-					friendlyURLEntryMapping.setFriendlyURLEntryId(
-						oldFriendlyURLEntry.getFriendlyURLEntryId());
-
-					friendlyURLEntryMappingPersistence.update(
-						friendlyURLEntryMapping);
-
-					updateFriendlyURLEntryLocalizations(
-						oldFriendlyURLEntry.getFriendlyURLEntryId(),
-						oldFriendlyURLEntry.getCompanyId(),
-						oldFriendlyURLEntry.getGroupId(),
-						oldFriendlyURLEntry.getClassNameId(),
-						oldFriendlyURLEntry.getClassPK(), urlTitleMap);
-
-					return oldFriendlyURLEntry;
-				}
-			}
 		}
 
 		long friendlyURLEntryId = counterLocalService.increment();
@@ -480,14 +445,20 @@ public class FriendlyURLEntryLocalServiceImpl
 					fetchByFriendlyURLEntryId_LanguageId(
 						friendlyURLEntryId, languageId);
 
+			normalizedUrlTitle = getUniqueUrlTitle(
+				groupId, classNameId, classPK, urlTitle);
+
 			if (friendlyURLEntryLocalization != null) {
-				normalizedUrlTitle = getUniqueUrlTitle(
-					groupId, classNameId, classPK, urlTitle);
+				if (!Objects.equals(
+						normalizedUrlTitle,
+						friendlyURLEntryLocalization.getUrlTitle())) {
 
-				friendlyURLEntryLocalization.setUrlTitle(normalizedUrlTitle);
+					friendlyURLEntryLocalization.setUrlTitle(
+						normalizedUrlTitle);
 
-				friendlyURLEntryLocalizationPersistence.updateImpl(
-					friendlyURLEntryLocalization);
+					friendlyURLEntryLocalizationPersistence.updateImpl(
+						friendlyURLEntryLocalization);
+				}
 
 				continue;
 			}

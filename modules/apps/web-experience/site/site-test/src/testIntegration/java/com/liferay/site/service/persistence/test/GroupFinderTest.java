@@ -293,7 +293,7 @@ public class GroupFinderTest {
 		List<Long> groups = GroupFinderUtil.findByUserActiveGroupIds(
 			TestPropsValues.getUserId());
 
-		Assert.assertTrue(groups.isEmpty());
+		Assert.assertFalse(groups.isEmpty());
 	}
 
 	protected static ResourceAction getModelResourceAction()

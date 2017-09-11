@@ -116,7 +116,6 @@ public class CPInstanceOptionsValuesDataProvider implements DDMDataProvider {
 				//collect filters and outputs
 
 				if (Validator.isNull(parameterValue)) {
-
 					outputParameterNames.put(
 						String.valueOf(cpDefinitionOptionRelId),
 						String.valueOf(cpDefinitionOptionRelId));

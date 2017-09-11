@@ -17,7 +17,9 @@ package com.liferay.commerce.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
+import com.liferay.commerce.product.service.CPInstanceLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
@@ -27,6 +29,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class CommerceCartItemImpl extends CommerceCartItemBaseImpl {
 
 	public CommerceCartItemImpl() {
+	}
+
+	@Override
+	public CPInstance fetchCPInstance() throws PortalException {
+		return CPInstanceLocalServiceUtil.fetchCPInstance(getCPInstanceId());
 	}
 
 	@Override

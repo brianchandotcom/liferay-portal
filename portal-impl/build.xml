@@ -609,13 +609,13 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 
 	<target name="format-source-current-branch-debug">
 		<antcall target="format-source-current-branch">
-			<param name="show.debug.information" value="true" />
+			<param name="source.formatter.show.debug.information" value="true" />
 		</antcall>
 	</target>
 
 	<target name="format-source-debug">
 		<antcall target="format-source">
-			<param name="show.debug.information" value="true" />
+			<param name="source.formatter.show.debug.information" value="true" />
 		</antcall>
 	</target>
 
@@ -627,7 +627,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 
 	<target name="format-source-latest-author-debug">
 		<antcall target="format-source-latest-author">
-			<param name="show.debug.information" value="true" />
+			<param name="source.formatter.show.debug.information" value="true" />
 		</antcall>
 	</target>
 
@@ -639,7 +639,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 
 	<target name="format-source-local-changes-debug">
 		<antcall target="format-source-local-changes">
-			<param name="show.debug.information" value="true" />
+			<param name="source.formatter.show.debug.information" value="true" />
 		</antcall>
 	</target>
 

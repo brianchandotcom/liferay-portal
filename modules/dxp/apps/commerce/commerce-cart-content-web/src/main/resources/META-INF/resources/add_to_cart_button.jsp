@@ -22,7 +22,7 @@ CPInstance cpInstance = (CPInstance)request.getAttribute("cpInstance");
 
 long cpInstanceId = 0;
 
-if(cpInstance != null){
+if (cpInstance != null) {
 	cpInstanceId = cpInstance.getCPInstanceId();
 }
 
@@ -35,7 +35,7 @@ dataMap.put("cp-instance-id", String.valueOf(cpInstanceId));
 
 <liferay-commerce:quantity-input CPDefinitionId="<%= cpDefinition.getCPDefinitionId() %>" useSelect="<%= true %>" />
 
-<aui:button cssClass="btn-lg btn-primary" data="<%= dataMap%>" disabled="<%= !cpDefinition.getCanSellWithoutOptionsCombination() %>" name="<%= buttonId %>" value="add-to-cart" />
+<aui:button cssClass="btn-lg btn-primary" data="<%= dataMap %>" disabled="<%= !cpDefinition.getCanSellWithoutOptionsCombination() %>" name="<%= buttonId %>" value="add-to-cart" />
 
 <aui:script use="aui-io-request,aui-parse-content,liferay-notification">
 	<% if(!cpDefinition.getCanSellWithoutOptionsCombination()){ %>
@@ -81,7 +81,7 @@ dataMap.put("cp-instance-id", String.valueOf(cpInstanceId));
 				ddmFormValues = JSON.stringify(productContent.getFormValues());
 			}
 
-			if(!cpInstanceId){
+			if (!cpInstanceId) {
 				new Liferay.Notification(
 					{
 						message: '<liferay-ui:message key="please-select-a-valid-product" />',
@@ -91,7 +91,6 @@ dataMap.put("cp-instance-id", String.valueOf(cpInstanceId));
 					}
 				);
 			}
-
 
 			var data = {
 				'_<%= CommercePortletKeys.COMMERCE_CART_CONTENT %>_cpDefinitionId' : cpDefinitionId ,

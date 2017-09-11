@@ -58,15 +58,14 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 
 		String portletId = "";
 
-		if(type == CommerceConstants.COMMERCE_CART_TYPE_CART){
+		if (type == CommerceConstants.COMMERCE_CART_TYPE_CART) {
 			portletId = CommercePortletKeys.COMMERCE_CART;
 		}
-		else if(type == CommerceConstants.COMMERCE_CART_TYPE_WISH_LIST){
+		else if (type == CommerceConstants.COMMERCE_CART_TYPE_WISH_LIST) {
 			portletId = CommercePortletKeys.COMMERCE_WISH_LIST_CONTENT;
 		}
 
-		long plid = _portal.getPlidFromPortletId(
-			groupId, portletId);
+		long plid = _portal.getPlidFromPortletId(groupId, portletId);
 
 		if (plid > 0) {
 			portletURL = _portletURLFactory.create(
@@ -75,8 +74,7 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 		}
 		else {
 			portletURL = _portletURLFactory.create(
-				httpServletRequest, portletId,
-				PortletRequest.RENDER_PHASE);
+				httpServletRequest, portletId, PortletRequest.RENDER_PHASE);
 		}
 
 		return portletURL;

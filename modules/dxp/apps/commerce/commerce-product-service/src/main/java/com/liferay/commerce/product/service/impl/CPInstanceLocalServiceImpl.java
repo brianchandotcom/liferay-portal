@@ -320,20 +320,21 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 	@Override
 	public void deleteCPInstances(long cpDefinitionId) throws PortalException {
-		List<CPInstance> cpInstances = cpInstanceLocalService.getCPInstances(
-			cpDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		List<CPInstance> cpInstances =
+			cpInstanceLocalService.getCPDefinitionInstances(
+				cpDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (CPInstance cpInstance : cpInstances) {
 			cpInstanceLocalService.deleteCPInstance(cpInstance);
 		}
 	}
 
-	public List<CPInstance> getCPInstances(long cpDefinitionId) {
+	public List<CPInstance> getCPDefinitionInstances(long cpDefinitionId) {
 		return cpInstancePersistence.findByCPDefinitionId(cpDefinitionId);
 	}
 
 	@Override
-	public List<CPInstance> getCPInstances(
+	public List<CPInstance> getCPDefinitionInstances(
 		long cpDefinitionId, int start, int end) {
 
 		return cpInstancePersistence.findByCPDefinitionId(
@@ -341,7 +342,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	}
 
 	@Override
-	public List<CPInstance> getCPInstances(
+	public List<CPInstance> getCPDefinitionInstances(
 		long cpDefinitionId, int status, int start, int end,
 		OrderByComparator<CPInstance> orderByComparator) {
 
@@ -356,7 +357,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	}
 
 	@Override
-	public int getCPInstancesCount(long cpDefinitionId, int status) {
+	public int getCPDefinitionInstancesCount(long cpDefinitionId, int status) {
 		if (status == WorkflowConstants.STATUS_ANY) {
 			cpInstancePersistence.countByC_NotST(
 				cpDefinitionId, WorkflowConstants.STATUS_IN_TRASH);
@@ -366,8 +367,36 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<CPInstance> getCPInstances(
+			long groupId, int status, int start, int end,
+			OrderByComparator<CPInstance> orderByComparator)
+		throws PortalException {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return cpInstancePersistence.findByG_NotST(
+				groupId, WorkflowConstants.STATUS_IN_TRASH, start, end,
+				orderByComparator);
+		}
+
+		return cpInstancePersistence.findByG_ST(
+			groupId, status, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCPInstancesCount(long groupId, int status)
+		throws PortalException {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			cpInstancePersistence.countByG_NotST(
+				groupId, WorkflowConstants.STATUS_IN_TRASH);
+		}
+
+		return cpInstancePersistence.countByG_ST(groupId, status);
+	}
+
+	@Override
 	public String[] getSKUs(long cpDefinitionId) {
-		List<CPInstance> cpInstances = getCPInstances(
+		List<CPInstance> cpInstances = getCPDefinitionInstances(
 			cpDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		String[] skusArray = new String[cpInstances.size()];
@@ -397,7 +426,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	}
 
 	@Override
-	public BaseModelSearchResult<CPInstance> searchCPInstances(
+	public BaseModelSearchResult<CPInstance> searchCPDefinitionInstances(
 			long companyId, long groupId, long cpDefinitionId, String keywords,
 			int status, int start, int end, Sort sort)
 		throws PortalException {
@@ -405,6 +434,18 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		SearchContext searchContext = buildSearchContext(
 			companyId, groupId, cpDefinitionId, keywords, status, start, end,
 			sort);
+
+		return searchCPInstances(searchContext);
+	}
+
+	@Override
+	public BaseModelSearchResult<CPInstance> searchCPInstances(
+			long companyId, long groupId, String keywords, int status,
+			int start, int end, Sort sort)
+		throws PortalException {
+
+		SearchContext searchContext = buildSearchContext(
+			companyId, groupId, keywords, status, start, end, sort);
 
 		return searchCPInstances(searchContext);
 	}
@@ -656,6 +697,47 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		attributes.put(Field.CONTENT, keywords);
 		attributes.put(Field.STATUS, status);
 		attributes.put("CPDefinitionId", cpDefinitionId);
+		attributes.put("params", params);
+
+		searchContext.setAttributes(attributes);
+
+		searchContext.setCompanyId(companyId);
+		searchContext.setStart(start);
+		searchContext.setEnd(end);
+		searchContext.setGroupIds(new long[] {groupId});
+
+		if (Validator.isNotNull(keywords)) {
+			searchContext.setKeywords(keywords);
+		}
+
+		QueryConfig queryConfig = new QueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		searchContext.setQueryConfig(queryConfig);
+
+		if (sort != null) {
+			searchContext.setSorts(sort);
+		}
+
+		return searchContext;
+	}
+
+	protected SearchContext buildSearchContext(
+		long companyId, long groupId, String keywords, int status, int start,
+		int end, Sort sort) {
+
+		SearchContext searchContext = new SearchContext();
+
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+
+		params.put("keywords", keywords);
+
+		Map<String, Serializable> attributes = new HashMap<>();
+
+		attributes.put(Field.CONTENT, keywords);
+		attributes.put(Field.STATUS, status);
 		attributes.put("params", params);
 
 		searchContext.setAttributes(attributes);

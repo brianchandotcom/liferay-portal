@@ -1,5 +1,5 @@
 .has-control-menu {
-	#wrapper {
+	.affix, #wrapper {
 		margin-top: $has-control-menu-margin-top-mobile;
 
 		.portlet-boundary > span:first-child {
@@ -21,7 +21,7 @@
 		}
 	}
 
-	&.has-customization-menu #wrapper {
+	&.has-customization-menu .affix, &.has-customization-menu #wrapper {
 		margin-top: ($has-control-menu-margin-top-mobile + $has-customization-menu-margin-top-mobile);
 
 		.portlet-boundary > span:first-child {
@@ -44,7 +44,7 @@
 	}
 }
 
-.control-menu {
+.affix, .control-menu {
 	left: 0;
 	position: fixed;
 	right: 0;
@@ -58,9 +58,8 @@
 }
 
 .control-menu-level-1 {
+	background-color: $control-menu-level-1-bg;
 	color: $control-menu-level-1-color;
-
-	@include linear-gradient(to right, $control-menu-level-1-bg, $control-menu-level-2-bg, $fallback: $control-menu-level-1-bg);
 
 	> .container-fluid-1280 {
 		padding: 6px 16px 7px 5px;
@@ -101,6 +100,11 @@
 .control-menu-level-2 {
 	background-color: $control-menu-level-2-bg;
 	color: $control-menu-level-2-color;
+
+	.container-fluid-1280 {
+		padding-left: 20px;
+		padding-right: 20px;
+	}
 
 	.control-menu-label {
 		@include sm() {
@@ -253,18 +257,34 @@
 
 .sidenav-transition {
 	.control-menu,
-	.control-menu-level-2 {
+	.control-menu-level-2,
+	.affix {
 		@include transition($control-menu-css-transition);
 	}
+}
+
+%control-menu-icon-monospaced {
+	height: 35px;
+	line-height: 35px;
+	margin-left: 3px;
+	margin-right: 3px;
+	text-align: center;
+	width: 35px;
 }
 
 .tools-control-group {
 	@include flex(1);
 	@include flex-wrap(wrap);
 
+	min-width: 50px;
+
 	> .control-menu-nav {
 		@include flex-wrap(wrap);
 		@include justify-content(center);
+
+		> li > .lfr-portal-tooltip > .control-menu-icon {
+			@extend %control-menu-icon-monospaced;
+		}
 	}
 
 	.taglib-icon-help {
@@ -275,7 +295,17 @@
 }
 
 .user-control-group {
+	> .control-menu-nav > li > .control-menu-icon {
+		@extend %control-menu-icon-monospaced;
+	}
+
 	.portlet-options {
 		margin-right: -1px;
 	}
+}
+
+// DXP overrides
+
+.control-menu-level-1 {
+	@include linear-gradient(to right, $control-menu-level-1-bg, $control-menu-level-2-bg, $fallback: $control-menu-level-1-bg);
 }

@@ -1,8 +1,7 @@
 @import "bourbon";
 @import "variables";
-
-@import "fonts";
 @import "mixins";
+@import "fonts";
 
 body {
 	&.open #wrapper {
@@ -11,7 +10,7 @@ body {
 		}
 	}
 
-	&.open .control-menu {
+	&.open .control-menu, &.open .affix {
 		@include sm() {
 			left: $product-menu-width;
 		}
@@ -39,33 +38,33 @@ body {
 
 .product-menu {
 	background-color: $product-menu-body-bg;
-	font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
 	.company-details .company-logo {
 		margin-right: 5px;
-		max-height: 28px;
-		max-width: 28px;
-	}
-
-	.sidebar-body {
-		border-right: 1px solid $product-menu-panel-title-active-bg;
+		max-height: 32px;
+		max-width: 32px;
 	}
 }
 
 .product-menu {
 	.form-control {
-		background-color: $product-menu-panel-title-active-bg;
-		color: #6A708B;
+		background-color: #1B2228;
+		border-radius: 0;
+		border-width: 0;
+		box-shadow: none;
+		color: #869CAD;
+		height: 40px;
+		padding: 8px 12px;
 
 		@include placeholder {
-			color: #C0CCD3;
+			color: #869CAD;
 		}
 
 		&:focus {
-			color: #44A5AA;
+			color: #65B6F0;
 
 			@include placeholder {
-				color: #44A5AA;
+				color: #65B6F0;
 			}
 		}
 	}
@@ -74,10 +73,6 @@ body {
 .product-menu {
 	.collapse-icon:before {
 		right: 25px;
-	}
-
-	.collapse-icon-closed {
-		opacity: 0.3;
 	}
 }
 
@@ -95,7 +90,6 @@ body {
 .product-menu {
 	.nav a {
 		color: $product-menu-nav-link-color;
-		font-size: 16px;
 	}
 
 	.nav-equal-height {
@@ -158,9 +152,8 @@ body {
 .product-menu {
 	.sidebar-header {
 		background-color: $product-menu-header-bg;
-		border-bottom-width: 0;
+		border-bottom: 1px solid $product-menu-header-border;
 		color: $product-menu-header-color;
-		font-size: 20px;
 
 		a {
 			color: $product-menu-header-link-color;
@@ -168,10 +161,6 @@ body {
 			&:focus, &:hover {
 				color: $product-menu-header-link-hover-color;
 			}
-		}
-
-		.close {
-			opacity: 0.8;
 		}
 	}
 }
@@ -192,8 +181,6 @@ body {
 
 	.list-group-heading,
 	.panel-title {
-		font-size: 16px;
-
 		> .panel-toggler {
 			line-height: 32px;
 			padding: 10px 40px 10px 24px;
@@ -211,7 +198,6 @@ body {
 	.list-group-heading {
 		background-color: $product-menu-list-group-heading-bg;
 		border-color: transparent;
-		font-size: 16px;
 		font-weight: 500;
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -225,7 +211,7 @@ body {
 		}
 
 		&.collapsed {
-			font-weight: normal;
+			font-weight: 300;
 		}
 	}
 
@@ -274,7 +260,7 @@ body {
 .product-menu {
 	.panel {
 		background-color: transparent;
-		border-bottom-width: 0;
+		border-bottom: 1px solid $product-menu-header-border;
 		border-left-width: 0;
 		border-radius: 0;
 		border-right-width: 0;
@@ -397,6 +383,10 @@ body {
 
 	.layouts-tree-container {
 		padding-left: 10px;
+	}
+
+	.layout-tree-options.open > a {
+		background-color: transparent;
 	}
 
 	.layout-set-tabs {
@@ -534,5 +524,77 @@ body {
 		overflow: auto;
 		visibility: visible;
 		width: 100%;
+	}
+}
+
+// DXP overrides
+
+.product-menu {
+	font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+	.sidebar-body {
+		border-right: 1px solid $product-menu-panel-title-active-bg;
+	}
+
+	.form-control {
+		background-color: $product-menu-panel-title-active-bg;
+		color: #6A708B;
+
+		@include placeholder {
+			color: #C0CCD3;
+		}
+
+		&:focus {
+			color: #44A5AA;
+
+			@include placeholder {
+				color: #44A5AA;
+			}
+		}
+	}
+
+	.collapse-icon-closed {
+		opacity: 0.3;
+	}
+
+	.close {
+		opacity: 0.8;
+	}
+
+	.lfr-icon-menu .btn-default {
+		background-color: transparent;
+
+		&:active {
+			box-shadow: none;
+			color: $product-menu-nav-link-color;
+		}
+	}
+
+	.nav a,
+	.list-group-heading,
+	.panel-title {
+		font-size: 16px;
+	}
+
+	.sidebar-header {
+		border-bottom-width: 0;
+		font-size: 20px;
+		padding: 15px 9px 15px 24px;
+	}
+
+	.list-group-heading {
+		font-size: 16px;
+
+		&.collapsed {
+			font-weight: normal;
+		}
+	}
+
+	.panel {
+		border-bottom-width: 0;
+	}
+
+	.layout-tree-options.open > a {
+		background-color: transparent;
 	}
 }

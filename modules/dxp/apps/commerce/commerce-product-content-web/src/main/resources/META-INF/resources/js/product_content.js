@@ -70,6 +70,7 @@ AUI.add(
 
 										if (response.cpInstanceExist) {
 											instance._renderCPInstance(response);
+                                            instance.set('cpInstanceId', response.cpInstanceId);
 										}
 
 										Liferay.fire(cpDefinitionId + CP_INSTANCE_CHANGE_EVENT, response);
@@ -231,6 +232,13 @@ AUI.add(
 
 						skus.setHTML(cpInstance.sku);
 						prices.setHTML(cpInstance.price)
+
+                        productContent.all('[data-cp-instance-id]').each(
+                            function(node) {
+                                node.setAttribute('data-cp-instance-id', cpInstance.cpInstanceId);
+                            }
+                        );
+
 					},
 					_renderUI: function() {
 						var instance = this;

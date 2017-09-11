@@ -59,7 +59,8 @@ public class UptimeMonitoringTask implements Task {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(UptimeMonitoringTask.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		UptimeMonitoringTask.class);
 
 	private UptimeMonitoringAdvisor _uptimeMonitoringAdvisor;
 

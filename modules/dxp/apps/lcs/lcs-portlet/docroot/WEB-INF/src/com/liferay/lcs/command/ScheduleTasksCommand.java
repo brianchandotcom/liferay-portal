@@ -17,6 +17,8 @@ package com.liferay.lcs.command;
 import com.liferay.lcs.messaging.CommandMessage;
 import com.liferay.lcs.task.scheduler.TaskSchedulerService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,6 +32,10 @@ public class ScheduleTasksCommand implements Command {
 
 	@Override
 	public void execute(CommandMessage commandMessage) throws PortalException {
+		if (_log.isTraceEnabled()) {
+			_log.trace("Executing Schedule Tasks Command");
+		}
+
 		Map<String, List<Map<String, String>>> prioritySchedulerContexts =
 			(Map<String, List<Map<String, String>>>)commandMessage.getPayload();
 
@@ -63,6 +69,9 @@ public class ScheduleTasksCommand implements Command {
 
 		_taskSchedulerService.scheduleTask(schedulerContext);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ScheduleTasksCommand.class);
 
 	private TaskSchedulerService _taskSchedulerService;
 

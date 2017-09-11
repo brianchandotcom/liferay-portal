@@ -32,6 +32,10 @@ public class ClusterHealthTask extends BaseScheduledTask {
 
 	@Override
 	protected void doRun() throws Exception {
+		if (_log.isTraceEnabled()) {
+			_log.trace("Running Cluster Health Task");
+		}
+
 		HealthMessage healthMessage = new HealthMessage();
 
 		healthMessage.setCreateTime(System.currentTimeMillis());

@@ -180,16 +180,30 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 		_lcsConnectionMetadata.put(
 			"messageTaskInterval", String.valueOf(10000));
 
+		if (_log.isTraceEnabled()) {
+			_log.trace("Scheduling task Command Message Task");
+		}
+
 		_scheduledFutures.add(
 			_scheduledExecutorService.scheduleAtFixedRate(
 				_commandMessageTask,
 				LCSConstants.COMMAND_MESSAGE_TASK_SCHEDULE_PERIOD,
 				LCSConstants.COMMAND_MESSAGE_TASK_SCHEDULE_PERIOD,
 				TimeUnit.SECONDS));
+
+		if (_log.isTraceEnabled()) {
+			_log.trace("Scheduling task Heartbeat Task");
+		}
+
 		_scheduledFutures.add(
 			_scheduledExecutorService.scheduleAtFixedRate(
 				_heartbeatTask, _heartbeatInterval, _heartbeatInterval,
 				TimeUnit.MILLISECONDS));
+
+		if (_log.isTraceEnabled()) {
+			_log.trace("Scheduling task License Manager Task");
+		}
+
 		_scheduledFutures.add(
 			_scheduledExecutorService.scheduleAtFixedRate(
 				_licenseManagerTask, 0L, 2L, TimeUnit.MINUTES));

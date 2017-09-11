@@ -16,6 +16,8 @@ package com.liferay.lcs.command;
 
 import com.liferay.lcs.messaging.CommandMessage;
 import com.liferay.lcs.task.HeartbeatTask;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -41,12 +43,19 @@ public class CheckHeartbeatCommand implements Command {
 
 	@Override
 	public void execute(CommandMessage commandMessage) {
+		if (_log.isTraceEnabled()) {
+			_log.trace("Executing Check Heartbeat Command");
+		}
+
 		_executorService.execute(_heartbeatTask);
 	}
 
 	public void setHeartbeatTask(HeartbeatTask heartbeatTask) {
 		_heartbeatTask = heartbeatTask;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CheckHeartbeatCommand.class);
 
 	private final ExecutorService _executorService =
 		Executors.newCachedThreadPool();

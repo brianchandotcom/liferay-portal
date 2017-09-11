@@ -49,6 +49,10 @@ public class SiteNamesTask extends BaseScheduledTask {
 
 	@Override
 	protected void doRun() throws Exception {
+		if (_log.isTraceEnabled()) {
+			_log.trace("Running Site Names Task");
+		}
+
 		int start = 0;
 		int end = _pageSize;
 		long queryStartTime = System.currentTimeMillis();

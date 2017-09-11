@@ -204,6 +204,10 @@ public abstract class BaseServerMetricsTask implements ServerMetricsTask {
 	}
 
 	protected void doRun() throws Exception {
+		if (_log.isTraceEnabled()) {
+			_log.trace("Running class " + getClass());
+		}
+
 		if (!lcsConnectionManager.isReady()) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Waiting for LCS connection manager");

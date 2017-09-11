@@ -52,6 +52,10 @@ public class HeartbeatTask implements Task {
 	}
 
 	protected void doRun() throws Exception {
+		if (_log.isTraceEnabled()) {
+			_log.trace("Running Heartbeat Task");
+		}
+
 		if (!_lcsConnectionManager.isReady()) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Waiting for LCS connection manager");

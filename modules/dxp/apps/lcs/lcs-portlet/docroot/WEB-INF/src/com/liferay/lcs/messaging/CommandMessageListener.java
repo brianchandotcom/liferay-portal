@@ -34,29 +34,54 @@ public class CommandMessageListener implements MessageListener {
 
 	@Override
 	public void receive(Message message) {
+		if (_log.isTraceEnabled()) {
+			_log.trace("Receiving message: " + message.getPayload());
+		}
+
 		CommandMessage commandMessage = (CommandMessage)message.getPayload();
 
 		String error = null;
 
-		if (_digitalSignature.verifyMessage(
-				LCSUtil.getLCSPortletBuildNumber(), commandMessage)) {
+		if (_log.isTraceEnabled()) {
+			_log.trace("Verifying digital signature");
+		}
 
-			try {
-				Command command = _commands.get(
-					commandMessage.getCommandType());
+		try {
+			if (_digitalSignature.verifyMessage(
+					LCSUtil.getLCSPortletBuildNumber(), commandMessage)) {
 
-				command.execute(commandMessage);
+				if (_log.isTraceEnabled()) {
+					_log.trace("Verified digital signature");
+				}
+
+				try {
+					Command command = _commands.get(
+						commandMessage.getCommandType());
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Executing command: " +
+								commandMessage.getCommandType());
+					}
+
+					command.execute(commandMessage);
+				}
+				catch (Exception e) {
+					_log.error(e, e);
+
+					error = e.getMessage();
+				}
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			else {
+				error = "Unable to verify digital signature";
 
-				error = e.getMessage();
+				_log.error(error + ": " + commandMessage);
 			}
 		}
-		else {
-			error = "Unable to verify digital signature";
+		catch (Exception e) {
+			_log.error(e, e);
 
-			_log.error(error + ": " + commandMessage);
+			throw e;
 		}
 
 		if (error != null) {
@@ -65,6 +90,10 @@ public class CommandMessageListener implements MessageListener {
 					commandMessage, null, error);
 
 			try {
+				if (_log.isTraceEnabled()) {
+					_log.trace("Sending response message");
+				}
+
 				_lcsConnectionManager.sendMessage(responseMessage);
 			}
 			catch (Exception e) {

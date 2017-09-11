@@ -21,6 +21,8 @@ import com.liferay.lcs.util.LCSConstants;
 import com.liferay.lcs.util.LCSPatcherUtil;
 import com.liferay.lcs.util.ResponseMessageUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -37,6 +39,10 @@ public class SendPatchesCommand implements Command {
 
 	@Override
 	public void execute(CommandMessage commandMessage) throws PortalException {
+		if (_log.isTraceEnabled()) {
+			_log.trace("Executing Send Patches Command");
+		}
+
 		String[] fixedIssues = LCSPatcherUtil.getFixedIssues();
 
 		String hashCode = null;
@@ -105,6 +111,9 @@ public class SendPatchesCommand implements Command {
 
 		_lcsConnectionManager = lcsConnectionManager;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SendPatchesCommand.class);
 
 	private LCSConnectionManager _lcsConnectionManager;
 

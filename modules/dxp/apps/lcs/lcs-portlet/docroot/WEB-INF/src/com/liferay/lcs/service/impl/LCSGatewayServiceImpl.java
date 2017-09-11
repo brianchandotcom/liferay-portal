@@ -118,8 +118,16 @@ public class LCSGatewayServiceImpl
 			String.valueOf(LCSUtil.getLCSPortletBuildNumber()));
 		headers.put("PROTOCOL_VERSION", LCSConstants.PROTOCOL_VERSION_CURRENT);
 
+		if (_log.isTraceEnabled()) {
+			_log.trace("Getting messages from gateway");
+		}
+
 		List<Message> messages = doGetToList(
 			Message.class, _URL_LCS_GATEWAY_GET_MESSAGES, parameters, headers);
+
+		if (_log.isTraceEnabled()) {
+			_log.trace("Got messages: " + messages);
+		}
 
 		return messages;
 	}

@@ -283,6 +283,15 @@ public class HandshakeTask implements Task {
 				continue;
 			}
 
+			if (_log.isDebugEnabled()) {
+				_log.debug("Sending messages to processing");
+			}
+
+			if (_log.isTraceEnabled()) {
+				_log.trace("Received messages: " + receivedMessages);
+				_log.trace("Delayed messages: " + delayedMessages);
+			}
+
 			if (processResponse(receivedMessages, delayedMessages)) {
 				break;
 			}
@@ -292,6 +301,11 @@ public class HandshakeTask implements Task {
 
 		for (Message delayedMessage : delayedMessages) {
 			if (delayedMessage instanceof CommandMessage) {
+				if (_log.isTraceEnabled()) {
+					_log.trace(
+						"Sending command to message bus: " + delayedMessage);
+				}
+
 				MessageBusUtil.sendMessage(
 					"liferay/lcs_commands", delayedMessage);
 			}
@@ -301,7 +315,15 @@ public class HandshakeTask implements Task {
 			}
 		}
 
+		if (_log.isTraceEnabled()) {
+			_log.trace("Handshake Success");
+		}
+
 		_lcsConnectionManager.onHandshakeSuccess();
+
+		if (_log.isTraceEnabled()) {
+			_log.trace("Reset Uptimes");
+		}
 
 		_uptimeMonitoringAdvisor.resetUptimes();
 
@@ -341,6 +363,11 @@ public class HandshakeTask implements Task {
 
 		for (Message receivedMessage : receivedMessages) {
 			if (!(receivedMessage instanceof ResponseMessage)) {
+				if (_log.isTraceEnabled()) {
+					_log.trace(
+						"Adding to delayed messages: " + receivedMessage);
+				}
+
 				delayedMessages.add(receivedMessage);
 
 				continue;
@@ -365,6 +392,10 @@ public class HandshakeTask implements Task {
 				throw new LCSHandshakeException(
 					"Handshake expired. Check that the server is " +
 						"synchronized with an NTP server.");
+			}
+
+			if (_log.isTraceEnabled()) {
+				_log.trace("Received Handshake Response");
 			}
 
 			receivedHandshakeResponse = true;

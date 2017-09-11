@@ -56,7 +56,7 @@ public class LCSHotDeployMessageListener extends HotDeployMessageListener {
 		SigarNativeLoader.unload();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LCSHotDeployMessageListener.class);
 
 	private LCSConnectionManager _lcsConnectionManager;

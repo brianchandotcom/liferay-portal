@@ -15,6 +15,8 @@
 package com.liferay.lcs.task;
 
 import com.liferay.lcs.messaging.MetricsMessage;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import com.yammer.metrics.core.VirtualMachineMetrics;
 import com.yammer.metrics.core.VirtualMachineMetrics.BufferPoolStats;
@@ -38,6 +40,10 @@ public class JVMMetricsTask extends BaseScheduledTask {
 
 	@Override
 	protected void doRun() throws Exception {
+		if (_log.isTraceEnabled()) {
+			_log.trace("Running JVM Metrics Task");
+		}
+
 		MetricsMessage metricsMessage = new MetricsMessage();
 
 		metricsMessage.setCreateTime(System.currentTimeMillis());
@@ -141,6 +147,8 @@ public class JVMMetricsTask extends BaseScheduledTask {
 
 		return payload;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(JVMMetricsTask.class);
 
 	private static final VirtualMachineMetrics _virtualMachineMetrics =
 		VirtualMachineMetrics.getInstance();

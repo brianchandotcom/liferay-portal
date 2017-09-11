@@ -38,6 +38,10 @@ public class ExecuteScriptCommand implements Command {
 
 	@Override
 	public void execute(CommandMessage commandMessage) throws PortalException {
+		if (_log.isTraceEnabled()) {
+			_log.trace("Executing Execute Script Command");
+		}
+
 		Map<String, Object> inputObjects = new HashMap<>();
 
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =

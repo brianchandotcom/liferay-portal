@@ -57,6 +57,10 @@ public class SignOffTask implements Task {
 	}
 
 	protected void doRun() throws PortalException {
+		if (_log.isTraceEnabled()) {
+			_log.trace("Running Sign Off Task");
+		}
+
 		String key = _keyGenerator.getKey();
 
 		HandshakeMessage handshakeMessage = new HandshakeMessage();

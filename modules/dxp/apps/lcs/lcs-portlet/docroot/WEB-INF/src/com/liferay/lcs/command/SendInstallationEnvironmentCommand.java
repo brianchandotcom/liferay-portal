@@ -34,6 +34,10 @@ public class SendInstallationEnvironmentCommand implements Command {
 
 	@Override
 	public void execute(CommandMessage commandMessage) throws PortalException {
+		if (_log.isTraceEnabled()) {
+			_log.trace("Executing Send Installation Environment Command");
+		}
+
 		Map<String, Object> payload = new HashMap<>();
 
 		InstallationEnvironmentAdvisor installationEnvironmentAdvisor =

@@ -61,6 +61,10 @@ public abstract class BaseScheduledTask implements ScheduledTask {
 	}
 
 	protected void sendMessage(Message message) throws PortalException {
+		if (_log.isTraceEnabled()) {
+			_log.trace("Sending message: " + message.getPayload());
+		}
+
 		_lcsConnectionManager.sendMessage(message);
 	}
 

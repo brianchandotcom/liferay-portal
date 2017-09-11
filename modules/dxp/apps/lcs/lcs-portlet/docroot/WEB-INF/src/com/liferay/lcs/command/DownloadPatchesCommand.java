@@ -59,6 +59,10 @@ public class DownloadPatchesCommand implements Command {
 			return;
 		}
 
+		if (_log.isTraceEnabled()) {
+			_log.trace("Executing Download Patches Command");
+		}
+
 		Map<String, String> payload =
 			(Map<String, String>)commandMessage.getPayload();
 

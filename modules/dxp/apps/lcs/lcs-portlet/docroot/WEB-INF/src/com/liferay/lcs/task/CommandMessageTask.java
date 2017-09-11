@@ -51,6 +51,10 @@ public class CommandMessageTask implements Task {
 	}
 
 	protected void doRun() throws Exception {
+		if (_log.isTraceEnabled()) {
+			_log.trace("Running Command Message Task");
+		}
+
 		if (!_lcsConnectionManager.isReady()) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Waiting for LCS connection manager");
@@ -67,6 +71,10 @@ public class CommandMessageTask implements Task {
 			_keyGenerator.getKey());
 
 		for (Message message : messages) {
+			if (_log.isTraceEnabled()) {
+				_log.trace("Processing message: " + message);
+			}
+
 			if (message instanceof CommandMessage) {
 				MessageBusUtil.sendMessage("liferay/lcs_commands", message);
 

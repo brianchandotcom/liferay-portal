@@ -26,6 +26,10 @@ public class DeregisterCommand implements Command {
 
 	@Override
 	public void execute(CommandMessage commandMessage) {
+		if (_log.isTraceEnabled()) {
+			_log.trace("Executing Deregister Command");
+		}
+
 		boolean deregister = Boolean.valueOf(
 			(String)commandMessage.get("deregister"));
 		boolean invalidateToken = Boolean.valueOf(

@@ -21,6 +21,8 @@ import com.liferay.lcs.util.LCSConstants;
 import com.liferay.lcs.util.LCSUtil;
 import com.liferay.lcs.util.ResponseMessageUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -42,6 +44,10 @@ public class SendPortalPropertiesCommand implements Command {
 
 	@Override
 	public void execute(CommandMessage commandMessage) throws PortalException {
+		if (_log.isTraceEnabled()) {
+			_log.trace("Executing Send Portal Properties Command");
+		}
+
 		Properties portalProperties = getSecurityInsensitivePropertiesKeys();
 
 		StringBundler sb = new StringBundler(portalProperties.size());
@@ -144,6 +150,9 @@ public class SendPortalPropertiesCommand implements Command {
 
 		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SendPortalPropertiesCommand.class);
 
 	private LCSConnectionManager _lcsConnectionManager;
 

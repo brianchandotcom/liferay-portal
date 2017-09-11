@@ -17,6 +17,8 @@ package com.liferay.lcs.task;
 import com.liferay.lcs.management.MBeanServerService;
 import com.liferay.lcs.util.KeyGenerator;
 import com.liferay.lcs.util.LCSConnectionManager;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 
 /**
@@ -28,9 +30,17 @@ public class ServerMetricsTaskFactory {
 		ServerMetricsTask serverMetricsTask = null;
 
 		if (ServerDetector.isTomcat()) {
+			if (_log.isTraceEnabled()) {
+				_log.trace("Setting Tomcat Server Metrics Task");
+			}
+
 			serverMetricsTask = new TomcatServerMetricsTask();
 		}
 		else if (ServerDetector.isWebLogic()) {
+			if (_log.isTraceEnabled()) {
+				_log.trace("Setting Weblogic Server Metrics Task");
+			}
+
 			serverMetricsTask = new WeblogicServerMetricsTask();
 		}
 		else {
@@ -57,6 +67,9 @@ public class ServerMetricsTaskFactory {
 	public void setmBeanServerService(MBeanServerService mBeanServerService) {
 		_mBeanServerService = mBeanServerService;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ServerMetricsTaskFactory.class);
 
 	private KeyGenerator _keyGenerator;
 	private LCSConnectionManager _lcsConnectionManager;

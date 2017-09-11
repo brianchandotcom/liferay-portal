@@ -91,7 +91,7 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.Chaining">
 			<property name="allowedClassNames" value=".*[Bb]uilder,Awaitility,Mockito,Response,RestAssured" />
 			<property name="allowedMethodNames" value="bind" />
-			<property name="allowedVariableTypeNames" value="^(?!String).+Builder,Optional,Response,Stream,Try" />
+			<property name="allowedVariableTypeNames" value="^(?!String).+Builder,Function,Optional,Response,Stream,Try" />
 			<message key="chaining.avoid" value="Avoid chaining on method ''{0}''. See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/chaining.markdown" />
 			<message key="chaining.avoid.multiple" value="Avoid multiple chaining on method ''{0}''. See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/chaining.markdown" />
 			<message key="concat.avoid.too.many" value="Use StringBundler instead of chaining concat when there is more than 3 parts" />

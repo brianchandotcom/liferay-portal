@@ -227,7 +227,7 @@ renderResponse.setTitle(commerceCart.getName());
 </aui:form>
 
 <liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item id="addCommerceCartItem" title='<%= LanguageUtil.get(request, "add-cart-item") %>' url="javascript:;" />
+	<liferay-frontend:add-menu-item id="addCommerceCartItem" title='<%= LanguageUtil.get(request, "add-item") %>' url="javascript:;" />
 </liferay-frontend:add-menu>
 
 <aui:script>

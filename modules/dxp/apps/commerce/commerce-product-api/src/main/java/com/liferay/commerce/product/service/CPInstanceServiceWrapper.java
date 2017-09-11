@@ -98,6 +98,30 @@ public class CPInstanceServiceWrapper implements CPInstanceService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPInstance> getCPDefinitionInstances(
+		long cpDefinitionId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpInstanceService.getCPDefinitionInstances(cpDefinitionId,
+			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPInstance> getCPDefinitionInstances(
+		long cpDefinitionId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPInstance> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpInstanceService.getCPDefinitionInstances(cpDefinitionId,
+			status, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCPDefinitionInstancesCount(long cpDefinitionId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpInstanceService.getCPDefinitionInstancesCount(cpDefinitionId,
+			status);
+	}
+
+	@Override
 	public com.liferay.commerce.product.model.CPInstance getCPInstance(
 		long cpInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -106,24 +130,17 @@ public class CPInstanceServiceWrapper implements CPInstanceService,
 
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPInstance> getCPInstances(
-		long cpDefinitionId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpInstanceService.getCPInstances(cpDefinitionId, start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.commerce.product.model.CPInstance> getCPInstances(
-		long cpDefinitionId, int status, int start, int end,
+		long groupId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPInstance> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpInstanceService.getCPInstances(cpDefinitionId, status, start,
-			end, orderByComparator);
+		return _cpInstanceService.getCPInstances(groupId, status, start, end,
+			orderByComparator);
 	}
 
 	@Override
-	public int getCPInstancesCount(long cpDefinitionId, int status)
+	public int getCPInstancesCount(long groupId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpInstanceService.getCPInstancesCount(cpDefinitionId, status);
+		return _cpInstanceService.getCPInstancesCount(groupId, status);
 	}
 
 	/**
@@ -143,13 +160,22 @@ public class CPInstanceServiceWrapper implements CPInstanceService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPInstance> searchCPInstances(
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPInstance> searchCPDefinitionInstances(
 		long companyId, long groupId, long cpDefinitionId,
 		java.lang.String keywords, int status, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpInstanceService.searchCPDefinitionInstances(companyId,
+			groupId, cpDefinitionId, keywords, status, start, end, sort);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPInstance> searchCPInstances(
+		long companyId, long groupId, java.lang.String keywords, int status,
+		int start, int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpInstanceService.searchCPInstances(companyId, groupId,
-			cpDefinitionId, keywords, status, start, end, sort);
+			keywords, status, start, end, sort);
 	}
 
 	@Override

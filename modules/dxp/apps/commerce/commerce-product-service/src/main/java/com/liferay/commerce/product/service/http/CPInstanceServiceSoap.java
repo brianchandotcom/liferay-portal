@@ -191,11 +191,12 @@ public class CPInstanceServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.product.model.CPInstanceSoap[] getCPInstances(
+	public static com.liferay.commerce.product.model.CPInstanceSoap[] getCPDefinitionInstances(
 		long cpDefinitionId, int start, int end) throws RemoteException {
 		try {
 			java.util.List<com.liferay.commerce.product.model.CPInstance> returnValue =
-				CPInstanceServiceUtil.getCPInstances(cpDefinitionId, start, end);
+				CPInstanceServiceUtil.getCPDefinitionInstances(cpDefinitionId,
+					start, end);
 
 			return com.liferay.commerce.product.model.CPInstanceSoap.toSoapModels(returnValue);
 		}
@@ -206,14 +207,14 @@ public class CPInstanceServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.product.model.CPInstanceSoap[] getCPInstances(
+	public static com.liferay.commerce.product.model.CPInstanceSoap[] getCPDefinitionInstances(
 		long cpDefinitionId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPInstance> orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.commerce.product.model.CPInstance> returnValue =
-				CPInstanceServiceUtil.getCPInstances(cpDefinitionId, status,
-					start, end, orderByComparator);
+				CPInstanceServiceUtil.getCPDefinitionInstances(cpDefinitionId,
+					status, start, end, orderByComparator);
 
 			return com.liferay.commerce.product.model.CPInstanceSoap.toSoapModels(returnValue);
 		}
@@ -224,10 +225,43 @@ public class CPInstanceServiceSoap {
 		}
 	}
 
-	public static int getCPInstancesCount(long cpDefinitionId, int status)
+	public static int getCPDefinitionInstancesCount(long cpDefinitionId,
+		int status) throws RemoteException {
+		try {
+			int returnValue = CPInstanceServiceUtil.getCPDefinitionInstancesCount(cpDefinitionId,
+					status);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPInstanceSoap[] getCPInstances(
+		long groupId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPInstance> orderByComparator)
 		throws RemoteException {
 		try {
-			int returnValue = CPInstanceServiceUtil.getCPInstancesCount(cpDefinitionId,
+			java.util.List<com.liferay.commerce.product.model.CPInstance> returnValue =
+				CPInstanceServiceUtil.getCPInstances(groupId, status, start,
+					end, orderByComparator);
+
+			return com.liferay.commerce.product.model.CPInstanceSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCPInstancesCount(long groupId, int status)
+		throws RemoteException {
+		try {
+			int returnValue = CPInstanceServiceUtil.getCPInstancesCount(groupId,
 					status);
 
 			return returnValue;

@@ -52,7 +52,7 @@ create unique index IX_7E830576 on CPInstance (CPDefinitionId, sku[$COLUMN_LENGT
 create index IX_F4C9CDD on CPInstance (CPDefinitionId, status);
 create index IX_48C70BC0 on CPInstance (companyId);
 create index IX_7C65903E on CPInstance (displayDate, status);
-create index IX_C1F8242 on CPInstance (groupId);
+create index IX_FF605F28 on CPInstance (groupId, status);
 create index IX_8A7A3F5C on CPInstance (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_F902ECDE on CPInstance (uuid_[$COLUMN_LENGTH:75$], groupId);
 

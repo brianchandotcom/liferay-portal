@@ -95,20 +95,30 @@ public interface CPInstanceService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPInstance> getCPDefinitionInstances(long cpDefinitionId,
+		int start, int end) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPInstance> getCPDefinitionInstances(long cpDefinitionId,
+		int status, int start, int end,
+		OrderByComparator<CPInstance> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPDefinitionInstancesCount(long cpDefinitionId, int status)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPInstance getCPInstance(long cpInstanceId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPInstance> getCPInstances(long cpDefinitionId, int start,
-		int end) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPInstance> getCPInstances(long cpDefinitionId, int status,
-		int start, int end, OrderByComparator<CPInstance> orderByComparator)
+	public List<CPInstance> getCPInstances(long groupId, int status, int start,
+		int end, OrderByComparator<CPInstance> orderByComparator)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPInstancesCount(long cpDefinitionId, int status)
+	public int getCPInstancesCount(long groupId, int status)
 		throws PortalException;
 
 	/**
@@ -122,9 +132,15 @@ public interface CPInstanceService extends BaseService {
 	public Hits search(SearchContext searchContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CPInstance> searchCPDefinitionInstances(
+		long companyId, long groupId, long cpDefinitionId,
+		java.lang.String keywords, int status, int start, int end, Sort sort)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPInstance> searchCPInstances(long companyId,
-		long groupId, long cpDefinitionId, java.lang.String keywords,
-		int status, int start, int end, Sort sort) throws PortalException;
+		long groupId, java.lang.String keywords, int status, int start,
+		int end, Sort sort) throws PortalException;
 
 	public CPInstance updateCPInstance(long cpInstanceId, java.lang.String sku,
 		java.lang.String gtin, java.lang.String manufacturerPartNumber,

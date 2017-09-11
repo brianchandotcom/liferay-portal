@@ -222,6 +222,21 @@ public interface CPInstanceLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPInstance> getCPDefinitionInstances(long cpDefinitionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPInstance> getCPDefinitionInstances(long cpDefinitionId,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPInstance> getCPDefinitionInstances(long cpDefinitionId,
+		int status, int start, int end,
+		OrderByComparator<CPInstance> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPDefinitionInstancesCount(long cpDefinitionId, int status);
+
 	/**
 	* Returns the cp instance with the primary key.
 	*
@@ -260,15 +275,9 @@ public interface CPInstanceLocalService extends BaseLocalService,
 	public List<CPInstance> getCPInstances(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPInstance> getCPInstances(long cpDefinitionId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPInstance> getCPInstances(long cpDefinitionId, int start,
-		int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPInstance> getCPInstances(long cpDefinitionId, int status,
-		int start, int end, OrderByComparator<CPInstance> orderByComparator);
+	public List<CPInstance> getCPInstances(long groupId, int status, int start,
+		int end, OrderByComparator<CPInstance> orderByComparator)
+		throws PortalException;
 
 	/**
 	* Returns all the cp instances matching the UUID and company.
@@ -305,7 +314,8 @@ public interface CPInstanceLocalService extends BaseLocalService,
 	public int getCPInstancesCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPInstancesCount(long cpDefinitionId, int status);
+	public int getCPInstancesCount(long groupId, int status)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -333,9 +343,15 @@ public interface CPInstanceLocalService extends BaseLocalService,
 	public Hits search(SearchContext searchContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CPInstance> searchCPDefinitionInstances(
+		long companyId, long groupId, long cpDefinitionId,
+		java.lang.String keywords, int status, int start, int end, Sort sort)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPInstance> searchCPInstances(long companyId,
-		long groupId, long cpDefinitionId, java.lang.String keywords,
-		int status, int start, int end, Sort sort) throws PortalException;
+		long groupId, java.lang.String keywords, int status, int start,
+		int end, Sort sort) throws PortalException;
 
 	/**
 	* Updates the cp instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

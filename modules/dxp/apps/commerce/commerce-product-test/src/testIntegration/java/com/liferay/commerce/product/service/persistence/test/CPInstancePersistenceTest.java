@@ -313,6 +313,22 @@ public class CPInstancePersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_ST() throws Exception {
+		_persistence.countByG_ST(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByG_ST(0L, 0);
+	}
+
+	@Test
+	public void testCountByG_NotST() throws Exception {
+		_persistence.countByG_NotST(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByG_NotST(0L, 0);
+	}
+
+	@Test
 	public void testCountByLtD_S() throws Exception {
 		_persistence.countByLtD_S(RandomTestUtil.nextDate(),
 			RandomTestUtil.nextInt());

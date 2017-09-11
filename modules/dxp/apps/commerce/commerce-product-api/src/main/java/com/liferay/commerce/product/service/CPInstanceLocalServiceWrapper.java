@@ -261,6 +261,33 @@ public class CPInstanceLocalServiceWrapper implements CPInstanceLocalService,
 		return _cpInstanceLocalService.getActionableDynamicQuery();
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPInstance> getCPDefinitionInstances(
+		long cpDefinitionId) {
+		return _cpInstanceLocalService.getCPDefinitionInstances(cpDefinitionId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPInstance> getCPDefinitionInstances(
+		long cpDefinitionId, int start, int end) {
+		return _cpInstanceLocalService.getCPDefinitionInstances(cpDefinitionId,
+			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPInstance> getCPDefinitionInstances(
+		long cpDefinitionId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPInstance> orderByComparator) {
+		return _cpInstanceLocalService.getCPDefinitionInstances(cpDefinitionId,
+			status, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCPDefinitionInstancesCount(long cpDefinitionId, int status) {
+		return _cpInstanceLocalService.getCPDefinitionInstancesCount(cpDefinitionId,
+			status);
+	}
+
 	/**
 	* Returns the cp instance with the primary key.
 	*
@@ -310,22 +337,11 @@ public class CPInstanceLocalServiceWrapper implements CPInstanceLocalService,
 
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPInstance> getCPInstances(
-		long cpDefinitionId) {
-		return _cpInstanceLocalService.getCPInstances(cpDefinitionId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.commerce.product.model.CPInstance> getCPInstances(
-		long cpDefinitionId, int start, int end) {
-		return _cpInstanceLocalService.getCPInstances(cpDefinitionId, start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.commerce.product.model.CPInstance> getCPInstances(
-		long cpDefinitionId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPInstance> orderByComparator) {
-		return _cpInstanceLocalService.getCPInstances(cpDefinitionId, status,
-			start, end, orderByComparator);
+		long groupId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPInstance> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpInstanceLocalService.getCPInstances(groupId, status, start,
+			end, orderByComparator);
 	}
 
 	/**
@@ -371,9 +387,9 @@ public class CPInstanceLocalServiceWrapper implements CPInstanceLocalService,
 	}
 
 	@Override
-	public int getCPInstancesCount(long cpDefinitionId, int status) {
-		return _cpInstanceLocalService.getCPInstancesCount(cpDefinitionId,
-			status);
+	public int getCPInstancesCount(long groupId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpInstanceLocalService.getCPInstancesCount(groupId, status);
 	}
 
 	@Override
@@ -416,13 +432,22 @@ public class CPInstanceLocalServiceWrapper implements CPInstanceLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPInstance> searchCPInstances(
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPInstance> searchCPDefinitionInstances(
 		long companyId, long groupId, long cpDefinitionId,
 		java.lang.String keywords, int status, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpInstanceLocalService.searchCPDefinitionInstances(companyId,
+			groupId, cpDefinitionId, keywords, status, start, end, sort);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPInstance> searchCPInstances(
+		long companyId, long groupId, java.lang.String keywords, int status,
+		int start, int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpInstanceLocalService.searchCPInstances(companyId, groupId,
-			cpDefinitionId, keywords, status, start, end, sort);
+			keywords, status, start, end, sort);
 	}
 
 	/**

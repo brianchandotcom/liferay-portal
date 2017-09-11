@@ -251,6 +251,29 @@ public class CPInstanceLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static java.util.List<com.liferay.commerce.product.model.CPInstance> getCPDefinitionInstances(
+		long cpDefinitionId) {
+		return getService().getCPDefinitionInstances(cpDefinitionId);
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CPInstance> getCPDefinitionInstances(
+		long cpDefinitionId, int start, int end) {
+		return getService().getCPDefinitionInstances(cpDefinitionId, start, end);
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CPInstance> getCPDefinitionInstances(
+		long cpDefinitionId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPInstance> orderByComparator) {
+		return getService()
+				   .getCPDefinitionInstances(cpDefinitionId, status, start,
+			end, orderByComparator);
+	}
+
+	public static int getCPDefinitionInstancesCount(long cpDefinitionId,
+		int status) {
+		return getService().getCPDefinitionInstancesCount(cpDefinitionId, status);
+	}
+
 	/**
 	* Returns the cp instance with the primary key.
 	*
@@ -295,20 +318,11 @@ public class CPInstanceLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPInstance> getCPInstances(
-		long cpDefinitionId) {
-		return getService().getCPInstances(cpDefinitionId);
-	}
-
-	public static java.util.List<com.liferay.commerce.product.model.CPInstance> getCPInstances(
-		long cpDefinitionId, int start, int end) {
-		return getService().getCPInstances(cpDefinitionId, start, end);
-	}
-
-	public static java.util.List<com.liferay.commerce.product.model.CPInstance> getCPInstances(
-		long cpDefinitionId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPInstance> orderByComparator) {
+		long groupId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPInstance> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .getCPInstances(cpDefinitionId, status, start, end,
+				   .getCPInstances(groupId, status, start, end,
 			orderByComparator);
 	}
 
@@ -351,8 +365,9 @@ public class CPInstanceLocalServiceUtil {
 		return getService().getCPInstancesCount();
 	}
 
-	public static int getCPInstancesCount(long cpDefinitionId, int status) {
-		return getService().getCPInstancesCount(cpDefinitionId, status);
+	public static int getCPInstancesCount(long groupId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCPInstancesCount(groupId, status);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -388,14 +403,23 @@ public class CPInstanceLocalServiceUtil {
 		return getService().search(searchContext);
 	}
 
-	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPInstance> searchCPInstances(
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPInstance> searchCPDefinitionInstances(
 		long companyId, long groupId, long cpDefinitionId,
 		java.lang.String keywords, int status, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .searchCPInstances(companyId, groupId, cpDefinitionId,
-			keywords, status, start, end, sort);
+				   .searchCPDefinitionInstances(companyId, groupId,
+			cpDefinitionId, keywords, status, start, end, sort);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPInstance> searchCPInstances(
+		long companyId, long groupId, java.lang.String keywords, int status,
+		int start, int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchCPInstances(companyId, groupId, keywords, status,
+			start, end, sort);
 	}
 
 	/**

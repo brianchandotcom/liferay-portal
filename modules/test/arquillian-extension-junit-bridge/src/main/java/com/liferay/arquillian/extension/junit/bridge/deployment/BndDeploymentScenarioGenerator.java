@@ -102,11 +102,7 @@ public class BndDeploymentScenarioGenerator
 
 			JavaArchive javaArchive = zipImporter.as(JavaArchive.class);
 
-			Properties analyzerProperties = new Properties();
-
-			analyzerProperties.putAll(analyzer.loadProperties(bndFile));
-
-			analyzer.setProperties(analyzerProperties);
+			analyzer.setProperties(properties);
 
 			javaArchive.addClass(testClass.getJavaClass());
 

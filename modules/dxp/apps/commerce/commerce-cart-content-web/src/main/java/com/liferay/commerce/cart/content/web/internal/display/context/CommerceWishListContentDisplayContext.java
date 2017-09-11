@@ -24,6 +24,7 @@ import com.liferay.commerce.util.CommerceCartHelper;
 import com.liferay.commerce.util.CommercePriceCalculationHelper;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -70,7 +71,9 @@ public class CommerceWishListContentDisplayContext
 
 	@Override
 	public int getCommerceCartType() {
-		return CommerceConstants.COMMERCE_CART_TYPE_WISH_LIST;
+		return ParamUtil.getInteger(
+			httpServletRequest, "type",
+			CommerceConstants.COMMERCE_CART_TYPE_WISH_LIST);
 	}
 
 }

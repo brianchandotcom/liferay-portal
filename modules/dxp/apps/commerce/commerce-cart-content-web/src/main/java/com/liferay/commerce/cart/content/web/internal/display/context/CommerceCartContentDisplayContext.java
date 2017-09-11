@@ -103,7 +103,9 @@ public class CommerceCartContentDisplayContext {
 	}
 
 	public int getCommerceCartType() {
-		return CommerceConstants.COMMERCE_CART_TYPE_CART;
+		return ParamUtil.getInteger(
+			httpServletRequest, "type",
+			CommerceConstants.COMMERCE_CART_TYPE_CART);
 	}
 
 	public String getCPDefinitionURL(

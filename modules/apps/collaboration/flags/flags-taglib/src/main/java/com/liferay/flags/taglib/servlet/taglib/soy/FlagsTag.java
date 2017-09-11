@@ -61,6 +61,8 @@ public class FlagsTag extends TemplateRendererTag {
 			boolean enabled = GetterUtil.getBoolean(
 				context.get("enabled"), true);
 
+			putValue("companyName", "Company name");//TODO
+
 			putValue("cssClass", _getCssClass(randomNamespace, enabled));
 
 			String className = (String)context.get("className");
@@ -84,6 +86,10 @@ public class FlagsTag extends TemplateRendererTag {
 
 			putValue(
 				"namespace", PortalUtil.getPortletNamespace(PortletKeys.FLAGS));
+
+			putValue(
+				"pathTermsOfUse",
+				themeDisplay.getPathMain() + "/portal/terms_of_use");
 
 			putValue("pathThemeImages", themeDisplay.getPathThemeImages());
 

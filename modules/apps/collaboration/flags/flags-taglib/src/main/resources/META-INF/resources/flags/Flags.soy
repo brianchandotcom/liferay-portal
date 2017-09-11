@@ -4,6 +4,7 @@
  * Prints the Flag component.
  *
  * @param closeReportDialog
+ * @param companyName
  * @param cssClass
  * @param enabled
  * @param id
@@ -11,6 +12,7 @@
  * @param message
  * @param onReasonChange_
  * @param onSubmitForm_
+ * @param pathTermsOfUse
  * @param pathThemeImages
  * @param reportDialogOpen
  * @param reportButton_
@@ -110,6 +112,7 @@
  * @param namespace
  * @param onReasonChange_
  * @param onSubmitForm_
+ * @param pathTermsOfUse
  * @param pathThemeImages
  * @param reporterEmailAddress
  * @param signedIn
@@ -118,8 +121,16 @@
 {template .reportForm}
 	<form class="container-fluid-1280" method="post" name="{$namespace}flagsForm" onsubmit="{$onSubmitForm_}" >
 		<p>
+		{let $linkText kind="text"}
+			{msg desc=""}terms-of-use{/msg}
+		{/let}
+
+		{let $termsOfUse kind="html"}
+			<a href="{$pathTermsOfUse}" target="_blank">{$linkText}</a>
+		{/let}
+
 		{msg desc=""}
-		you-are-about-to-report-a-violation-of-our-x-terms-of-use.-all-reports-are-strictly-confidential
+		you-are-about-to-report-a-violation-of-our-{$termsOfUse}-all-reports-are-strictly-confidential
 		{/msg}
 		</p>
 
@@ -161,14 +172,13 @@
 {/template}
 
 /**
- *
+ * @param companyName
  */
 {template .showConfirmation}
 	<p><strong>{msg desc=""}thank-you-for-your-report{/msg}</strong></p>
 
-	{let $company: 'OEOEOE' /}
 	<p>
-		{msg desc=""}although-we-cannot-disclose-our-final-decision-we-do-review-every-report-and-appreciate-your-effort-to-make-sure-{$company}-is-a-safe-environment-for-everyone{/msg}
+		{msg desc=""}although-we-cannot-disclose-our-final-decision-we-do-review-every-report-and-appreciate-your-effort-to-make-sure-{$companyName}-is-a-safe-environment-for-everyone{/msg}
 	</p>
 {/template}
 

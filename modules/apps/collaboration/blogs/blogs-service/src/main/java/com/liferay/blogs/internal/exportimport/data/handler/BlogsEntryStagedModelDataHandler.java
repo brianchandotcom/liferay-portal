@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -256,6 +257,10 @@ public class BlogsEntryStagedModelDataHandler
 
 		BlogsEntry importedEntry = null;
 
+		Map<Long, Long> fileEntryIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				FileEntry.class);
+
 		if (portletDataContext.isDataStrategyMirror()) {
 			BlogsEntry existingEntry = fetchStagedModelByUuidAndGroupId(
 				entry.getUuid(), portletDataContext.getScopeGroupId());
@@ -304,15 +309,19 @@ public class BlogsEntryStagedModelDataHandler
 			coverImageSelector = new ImageSelector(entry.getCoverImageURL());
 		}
 		else if (entry.getCoverImageFileEntryId() != 0) {
+			long coverImageFileEntryId = MapUtil.getLong(
+				fileEntryIds, entry.getCoverImageFileEntryId(), 0);
+
+			importedEntry.setCoverImageFileEntryId(coverImageFileEntryId);
+
+			_blogsEntryLocalService.updateBlogsEntry(importedEntry);
+
 			coverImageSelector = _getImageSelector(
 				portletDataContext, entry.getCoverImageFileEntryId(),
 				attachmentElements);
 		}
 
 		if (coverImageSelector != null) {
-			_blogsEntryLocalService.addCoverImage(
-				importedEntry.getEntryId(), coverImageSelector);
-
 			_blogsEntryLocalService.addOriginalImageFileEntry(
 				userId, importedEntry.getGroupId(), importedEntry.getEntryId(),
 				coverImageSelector);
@@ -350,6 +359,13 @@ public class BlogsEntryStagedModelDataHandler
 				}
 			}
 			else if (entry.getSmallImageFileEntryId() != 0) {
+				long smallImageFileEntryId = MapUtil.getLong(
+					fileEntryIds, entry.getSmallImageFileEntryId(), 0);
+
+				importedEntry.setSmallImageFileEntryId(smallImageFileEntryId);
+
+				_blogsEntryLocalService.updateBlogsEntry(importedEntry);
+
 				smallImageSelector = _getImageSelector(
 					portletDataContext, entry.getSmallImageFileEntryId(),
 					attachmentElements);
@@ -357,9 +373,6 @@ public class BlogsEntryStagedModelDataHandler
 		}
 
 		if (smallImageSelector != null) {
-			_blogsEntryLocalService.addSmallImage(
-				importedEntry.getEntryId(), smallImageSelector);
-
 			_blogsEntryLocalService.addOriginalImageFileEntry(
 				userId, importedEntry.getGroupId(), importedEntry.getEntryId(),
 				smallImageSelector);

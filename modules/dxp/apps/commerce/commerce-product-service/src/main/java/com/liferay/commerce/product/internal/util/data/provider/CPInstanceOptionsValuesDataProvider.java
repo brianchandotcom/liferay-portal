@@ -16,7 +16,6 @@ package com.liferay.commerce.product.internal.util.data.provider;
 
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
-import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
@@ -117,10 +116,9 @@ public class CPInstanceOptionsValuesDataProvider implements DDMDataProvider {
 				//collect filters and outputs
 
 				if (Validator.isNull(parameterValue)) {
-					CPOption cpOption = cpDefinitionOptionRel.getCPOption();
 
 					outputParameterNames.put(
-						cpOption.getKey(),
+						String.valueOf(cpDefinitionOptionRelId),
 						String.valueOf(cpDefinitionOptionRelId));
 				}
 				else {

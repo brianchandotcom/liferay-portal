@@ -19,7 +19,6 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.search.CPAttachmentFileEntryIndexer;
 import com.liferay.commerce.product.search.CPInstanceIndexer;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
@@ -253,6 +252,10 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
 			cpDefinitionId);
 
+		if (Validator.isNull(serializedDDMFormValues)) {
+			serializedDDMFormValues = "[]";
+		}
+
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 			serializedDDMFormValues);
 
@@ -273,6 +276,16 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
 			String key = jsonObject.getString("key");
+
+			long cpDefinitionOptionRelId = GetterUtil.getLong(key);
+
+			CPDefinitionOptionRel cpDefinitionOptionRel =
+				_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRel(
+					cpDefinitionOptionRelId);
+
+			if (!cpDefinitionOptionRel.isSkuContributor()) {
+				continue;
+			}
 
 			String fieldName = "ATTRIBUTE_" + key + "_VALUE_ID";
 
@@ -356,14 +369,10 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 				continue;
 			}
 
-			CPOption cpOption = cpDefinitionOptionRel.getCPOption();
-
 			DDMFormField ddmFormField = new DDMFormField(
 				String.valueOf(
 					cpDefinitionOptionRel.getCPDefinitionOptionRelId()),
 				cpDefinitionOptionRel.getDDMFormFieldTypeName());
-
-			ddmFormField.setProperty("cpOption", cpOption);
 
 			if (!cpDefinitionOptionValueRels.isEmpty()) {
 				DDMFormFieldOptions ddmFormFieldOptions =
@@ -586,6 +595,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		ddmFormRenderingContext.setLocale(locale);
 		ddmFormRenderingContext.setPortletNamespace(
 			renderResponse.getNamespace());
+		ddmFormRenderingContext.setShowRequiredFieldsWarning(false);
 
 		if (Validator.isNotNull(json)) {
 			DDMFormValues ddmFormValues = _ddmFormValuesHelper.deserialize(

@@ -18,13 +18,24 @@
 
 <%
 CPDefinition cpDefinition = (CPDefinition)request.getAttribute("cpDefinition");
+CPInstance cpInstance = (CPInstance)request.getAttribute("cpInstance");
+
+long cpInstanceId = 0;
+
+if(cpInstance != null){
+	cpInstanceId = cpInstance.getCPInstanceId();
+}
 
 String buttonId = cpDefinition.getCPDefinitionId() + "addToCart";
+
+HashMap<String, String> dataMap = new HashMap<>();
+
+dataMap.put("cp-instance-id", String.valueOf(cpInstanceId));
 %>
 
 <liferay-commerce:quantity-input CPDefinitionId="<%= cpDefinition.getCPDefinitionId() %>" useSelect="<%= true %>" />
 
-<aui:button cssClass="btn-lg btn-primary" disabled="<%= !cpDefinition.getCanSellWithoutOptionsCombination() %>" name="<%= buttonId %>" value="add-to-cart" />
+<aui:button cssClass="btn-lg btn-primary" data="<%= dataMap%>" disabled="<%= !cpDefinition.getCanSellWithoutOptionsCombination() %>" name="<%= buttonId %>" value="add-to-cart" />
 
 <aui:script use="aui-io-request,aui-parse-content,liferay-notification">
 	<% if(!cpDefinition.getCanSellWithoutOptionsCombination()){ %>
@@ -47,9 +58,13 @@ String buttonId = cpDefinition.getCPDefinitionId() + "addToCart";
 
 	Liferay.on(
 		'<%= cpDefinition.getCPDefinitionId() %>AddToCart',
-		function(event) {
+		function(cpInstanceId) {
 
 			var cpDefinitionId = <%= cpDefinition.getCPDefinitionId() %>;
+
+			var addToCartNode = A.one('#<portlet:namespace /><%= buttonId %>');
+
+			var cpInstanceId = addToCartNode.getAttribute('data-cp-instance-id');
 
 			var productContent = Liferay.component('<portlet:namespace />' + cpDefinitionId + 'ProductContent');
 
@@ -66,9 +81,22 @@ String buttonId = cpDefinition.getCPDefinitionId() + "addToCart";
 				ddmFormValues = JSON.stringify(productContent.getFormValues());
 			}
 
+			if(!cpInstanceId){
+				new Liferay.Notification(
+					{
+						message: '<liferay-ui:message key="please-select-a-valid-product" />',
+						render: true,
+						title: '<liferay-ui:message key="danger" />',
+						type: 'danger'
+					}
+				);
+			}
+
+
 			var data = {
 				'_<%= CommercePortletKeys.COMMERCE_CART_CONTENT %>_cpDefinitionId' : cpDefinitionId ,
 				'_<%= CommercePortletKeys.COMMERCE_CART_CONTENT %>_ddmFormValues' : ddmFormValues ,
+				'_<%= CommercePortletKeys.COMMERCE_CART_CONTENT %>_cpInstanceId' : cpInstanceId ,
 				'_<%= CommercePortletKeys.COMMERCE_CART_CONTENT %>_quantity' : quantity
 			};
 
@@ -103,7 +131,6 @@ String buttonId = cpDefinition.getCPDefinitionId() + "addToCart";
 	A.one('#<portlet:namespace /><%= buttonId %>').on(
 		'click',
 		function(event) {
-
 			var cpDefinitionId = <%= cpDefinition.getCPDefinitionId() %>;
 
 			var productContent = Liferay.component('<portlet:namespace />' + cpDefinitionId + 'ProductContent');

@@ -18,7 +18,9 @@
 
 <%
 HashMap<String, String> dataMap = new HashMap<>();
+
 dataMap.put("cp-definition-id", "");
+dataMap.put("cp-instance-id", "");
 %>
 
 <aui:button cssClass="btn-lg" data="<%= dataMap %>" name="add-to-wishlist" value="add-to-wishlist" />
@@ -29,7 +31,9 @@ dataMap.put("cp-definition-id", "");
 		function(event) {
 			var currentTarget = event.currentTarget;
 
-			var cpDefinitionId = currentTarget.getAttribute('data-cp-definition-id')
+			var cpDefinitionId = currentTarget.getAttribute('data-cp-definition-id');
+
+			var cpInstanceId = currentTarget.getAttribute('data-cp-instance-id');
 
 			var productContent = Liferay.component('<portlet:namespace />' + cpDefinitionId + 'ProductContent');
 
@@ -38,6 +42,7 @@ dataMap.put("cp-definition-id", "");
 			var data = {
 				'_<%= CommercePortletKeys.COMMERCE_CART_CONTENT %>_cpDefinitionId' : cpDefinitionId ,
 				'_<%= CommercePortletKeys.COMMERCE_CART_CONTENT %>_ddmFormValues' : ddmFormValues ,
+				'_<%= CommercePortletKeys.COMMERCE_CART_CONTENT %>_cpInstanceId' : cpInstanceId ,
 				'_<%= CommercePortletKeys.COMMERCE_CART_CONTENT %>_quantity' : 1 ,
 				'_<%= CommercePortletKeys.COMMERCE_CART_CONTENT %>_type' : <%= CommerceConstants.COMMERCE_CART_TYPE_WISH_LIST %>
 			};

@@ -82,7 +82,8 @@ public class CommentUserNotificationHandler
 
 	@Override
 	protected String getBodyContent(JSONObject jsonObject) {
-		return HtmlUtil.stripHtml(super.getBodyContent(jsonObject));
+		return HtmlUtil.unescape(
+			HtmlUtil.stripHtml(super.getBodyContent(jsonObject)));
 	}
 
 	@Override

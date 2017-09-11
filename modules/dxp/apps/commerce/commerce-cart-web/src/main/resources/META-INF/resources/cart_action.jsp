@@ -17,12 +17,26 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-carts");
+
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 CommerceCart commerceCart = (CommerceCart)row.getObject();
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+	<portlet:renderURL var="editURL">
+		<portlet:param name="mvcRenderCommandName" value="viewCommerceCartItems" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="commerceCartId" value="<%= String.valueOf(commerceCart.getCommerceCartId()) %>" />
+		<portlet:param name="cartToolbarItem" value="<%= toolbarItem %>" />
+	</portlet:renderURL>
+
+	<liferay-ui:icon
+		message="edit"
+		url="<%= editURL %>"
+	/>
+
 	<portlet:actionURL name="editCommerceCart" var="deleteURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />

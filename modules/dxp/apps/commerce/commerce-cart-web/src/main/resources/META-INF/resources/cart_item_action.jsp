@@ -23,6 +23,18 @@ CommerceCartItem commerceCartItem = (CommerceCartItem)row.getObject();
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+	<portlet:renderURL var="editURL">
+		<portlet:param name="mvcRenderCommandName" value="editCommerceCartItem" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="commerceCartId" value="<%= String.valueOf(commerceCartItem.getCommerceCartId()) %>" />
+		<portlet:param name="commerceCartItemId" value="<%= String.valueOf(commerceCartItem.getCommerceCartItemId()) %>" />
+	</portlet:renderURL>
+
+	<liferay-ui:icon
+		message="edit"
+		url="<%= editURL %>"
+	/>
+
 	<portlet:actionURL name="editCommerceCartItem" var="deleteURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />

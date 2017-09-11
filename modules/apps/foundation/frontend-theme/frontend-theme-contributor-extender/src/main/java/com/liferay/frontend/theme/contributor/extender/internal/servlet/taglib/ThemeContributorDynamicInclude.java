@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.theme.contributor.extender.internal;
+package com.liferay.frontend.theme.contributor.extender.internal.servlet.taglib;
 
 import com.liferay.frontend.theme.contributor.extender.BundleWebResources;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.js.top.head.extender.internal;
+package com.liferay.frontend.js.top.head.extender.internal.servlet.taglib;
 
 import com.liferay.frontend.js.top.head.extender.TopHeadResources;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;

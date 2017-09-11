@@ -22,6 +22,7 @@ import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.KeyValuePair;
 
 import java.util.List;
 import java.util.Locale;
@@ -55,7 +56,10 @@ public interface CPInstanceHelper {
 		throws PortalException;
 
 	public Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-		parseJSONString(String json) throws PortalException;
+		parseCPInstanceJSONString(String json) throws PortalException;
+
+	public List<KeyValuePair> parseJSONString(String json, Locale locale)
+		throws PortalException;
 
 	public String render(
 			long cpDefinitionId, RenderRequest renderRequest,

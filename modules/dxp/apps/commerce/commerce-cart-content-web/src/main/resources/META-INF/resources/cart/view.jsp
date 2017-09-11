@@ -49,16 +49,12 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 				String thumbnailSrc = cpDefinition.getDefaultImageThumbnailSrc(themeDisplay);
 
-				Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>> cpDefinitionOptionRelMap = commerceCartContentDisplayContext.parseJSONString(commerceCartItem.getJson());
+				List<KeyValuePair> optionValues = commerceCartContentDisplayContext.parseJSONString(commerceCartItem.getJson(), locale);
 
 				StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
 
-				for (Map.Entry<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>> cpDefinitionOptionRelEntry : cpDefinitionOptionRelMap.entrySet()) {
-					List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels = cpDefinitionOptionRelEntry.getValue();
-
-					for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel : cpDefinitionOptionValueRels) {
-						stringJoiner.add(cpDefinitionOptionValueRel.getTitle(languageId));
-					}
+				for (KeyValuePair optionValue : optionValues) {
+					stringJoiner.add(optionValue.getValue());
 				}
 				%>
 

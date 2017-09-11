@@ -18,8 +18,6 @@ import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
-import com.liferay.commerce.product.model.CPDefinitionOptionRel;
-import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceCartItemService;
@@ -31,11 +29,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
-import java.util.Map;
+import java.util.Locale;
 
 import javax.portlet.PortletURL;
 
@@ -171,11 +170,10 @@ public class CommerceCartContentDisplayContext {
 		return _searchContainer;
 	}
 
-	public Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-			parseJSONString(String json)
+	public List<KeyValuePair> parseJSONString(String json, Locale locale)
 		throws PortalException {
 
-		return cpInstanceHelper.parseJSONString(json);
+		return cpInstanceHelper.parseJSONString(json, locale);
 	}
 
 	protected final CPDefinitionHelper cpDefinitionHelper;

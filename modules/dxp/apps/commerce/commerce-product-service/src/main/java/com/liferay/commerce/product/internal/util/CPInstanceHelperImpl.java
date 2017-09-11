@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -465,6 +466,63 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		}
 
 		return cpDefinitionOptionRelListMap;
+	}
+
+	@Override
+	public List<KeyValuePair> parseJSONString(String json, Locale locale)
+		throws PortalException {
+
+		List<KeyValuePair> values = new ArrayList<>();
+
+		if (Validator.isNull(json)) {
+			return values;
+		}
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			long cpDefinitionOptionRelId = GetterUtil.getLong(
+				jsonObject.getString("key"));
+			JSONArray valueJSONArray = jsonObject.getJSONArray("value");
+
+			CPDefinitionOptionRel cpDefinitionOptionRel =
+				_cpDefinitionOptionRelLocalService.fetchCPDefinitionOptionRel(
+					cpDefinitionOptionRelId);
+
+			if (cpDefinitionOptionRel == null) {
+				continue;
+			}
+
+			for (int j = 0; j < valueJSONArray.length(); j++) {
+				String value = StringPool.BLANK;
+
+				long cpDefinitionOptionValueRelId = GetterUtil.getLong(
+					valueJSONArray.getString(j));
+
+				CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+					_cpDefinitionOptionValueRelLocalService.
+						fetchCPDefinitionOptionValueRel(
+							cpDefinitionOptionValueRelId);
+
+				if (cpDefinitionOptionValueRel != null) {
+					value = cpDefinitionOptionValueRel.getTitle(locale);
+				}
+				else {
+					value = valueJSONArray.getString(j);
+				}
+
+				KeyValuePair keyValuePair = new KeyValuePair();
+
+				keyValuePair.setKey(cpDefinitionOptionRel.getTitle(locale));
+				keyValuePair.setValue(value);
+
+				values.add(keyValuePair);
+			}
+		}
+
+		return values;
 	}
 
 	@Override

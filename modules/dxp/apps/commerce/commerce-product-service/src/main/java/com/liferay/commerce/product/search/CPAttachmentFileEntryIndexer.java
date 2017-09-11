@@ -222,8 +222,9 @@ public class CPAttachmentFileEntryIndexer
 			FIELD_FILE_ENTRY_ID, cpAttachmentFileEntry.getFileEntryId());
 
 		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-			cpDefinitionOptionRelListMap = _cpInstanceHelper.parseJSONString(
-				cpAttachmentFileEntry.getJson());
+			cpDefinitionOptionRelListMap =
+				_cpInstanceHelper.parseCPInstanceJSONString(
+					cpAttachmentFileEntry.getJson());
 
 		for (Map.Entry<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
 				cpDefinitionOptionRelListMapEntry :

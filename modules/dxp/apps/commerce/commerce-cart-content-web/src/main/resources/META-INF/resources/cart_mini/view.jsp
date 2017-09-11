@@ -60,8 +60,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				CPDefinition cpDefinition = commerceCartItem.getCPDefinition();
 
 				String thumbnailSrc = cpDefinition.getDefaultImageThumbnailSrc(themeDisplay);
-
-				Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>> cpDefinitionOptionRelMap = commerceCartContentMiniDisplayContext.parseJSONString(commerceCartItem.getJson());
 				%>
 
 				<liferay-ui:search-container-column-image
@@ -79,14 +77,12 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 					</h5>
 
 					<%
+					List<KeyValuePair> optionValues = commerceCartContentMiniDisplayContext.parseJSONString(commerceCartItem.getJson(), locale);
+
 					StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
 
-					for (Map.Entry<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>> cpDefinitionOptionRelEntry : cpDefinitionOptionRelMap.entrySet()) {
-						List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels = cpDefinitionOptionRelEntry.getValue();
-
-						for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel : cpDefinitionOptionValueRels) {
-							stringJoiner.add(cpDefinitionOptionValueRel.getTitle(languageId));
-						}
+					for (KeyValuePair optionValue : optionValues) {
+						stringJoiner.add(optionValue.getValue());
 					}
 					%>
 

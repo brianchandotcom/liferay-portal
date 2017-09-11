@@ -9,21 +9,6 @@ import componentTemplates from './EffectsComponent.soy';
 import controlsTemplates from './EffectsControls.soy';
 
 /**
- * Returns whether the carousel can be scrolled towards the right
- *
- * @private
- * @return {boolean} returns true if the carousel can be scrolled, false otherwise
- */
-function canScrollForward() {
-	const carousel = this.refs.carousel;
-	const continer = this.refs.carouselContainer;
-	const offset = Math.abs(parseInt(carousel.style.marginLeft || 0, 10));
-	const viewportWidth = parseInt(continer.offsetWidth, 10);
-	const maxContentWidth = parseInt(carousel.offsetWidth, 10);
-	return offset + viewportWidth < maxContentWidth;
-}
-
-/**
  * Effects Component
  */
 class EffectsComponent extends Component {
@@ -46,6 +31,22 @@ class EffectsComponent extends Component {
 	 */
 	detached() {
 		this.cache_ = {};
+	}
+
+	/**
+	 * Returns whether the carousel can be scrolled towards the right
+	 *
+	 * @private
+	 * @return {boolean} True if the carousel can be scrolled, false otherwise.
+	 */
+	canScrollForward_() {
+		const carousel = this.refs.carousel;
+		const continer = this.refs.carouselContainer;
+		const offset = Math.abs(parseInt(carousel.style.marginLeft || 0, 10));
+		const viewportWidth = parseInt(continer.offsetWidth, 10);
+		const maxContentWidth = parseInt(carousel.offsetWidth, 10);
+
+		return offset + viewportWidth < maxContentWidth;
 	}
 
 	/**
@@ -189,8 +190,10 @@ class EffectsComponent extends Component {
 		const carousel = this.refs.carousel;
 		const itemWidth = this.refs.carouselFirstItem.offsetWidth || 0;
 		const marginLeft = parseInt(carousel.style.marginLeft || 0, 10);
+
 		if (marginLeft < 0) {
 			const newMarginValue = Math.min(marginLeft + itemWidth, 0);
+
 			this.carouselOffset =  newMarginValue + 'px';
 		}
 	}
@@ -201,13 +204,13 @@ class EffectsComponent extends Component {
 	 * @return void
 	 */
 	scrollRight() {
-		const carousel = this.refs.carousel;
-		if (!canScrollForward.call(this)) {
-			return;
+		if (this.canScrollForward_()) {
+			const carousel = this.refs.carousel;
+			const itemWidth = this.refs.carouselFirstItem.offsetWidth || 0;
+			const marginLeft = parseInt(carousel.style.marginLeft || 0, 10);
+
+			this.carouselOffset = (marginLeft - itemWidth) + 'px';
 		}
-		const itemWidth = this.refs.carouselFirstItem.offsetWidth || 0;
-		const marginLeft = parseInt(carousel.style.marginLeft || 0, 10);
-		this.carouselOffset = (marginLeft - itemWidth) + 'px';
 	}
 
 	/**
@@ -235,21 +238,21 @@ class EffectsComponent extends Component {
  */
 EffectsComponent.STATE = {
 	/**
-	 * Array of available effects
-	 * @type {Object}
-	 */
-	effects: {
-		validator: core.isArray,
-		value: ['none', 'ruby', 'absinthe', 'chroma', 'atari', 'tripel', 'ailis', 'flatfoot', 'pyrexia', 'umbra', 'rouge', 'idyll', 'glimmer', 'elysium', 'nucleus', 'amber', 'paella', 'aureus', 'expanse', 'orchid']
-	},
-
-	/**
 	 * Offset to the carousel item with the 'px' postfix
 	 * @type {String}
 	 */
 	carouselOffset: {
 		validator: core.isString,
 		value: '0'
+	},
+	
+	/**
+	 * Array of available effects
+	 * @type {Object}
+	 */
+	effects: {
+		validator: core.isArray,
+		value: ['none', 'ruby', 'absinthe', 'chroma', 'atari', 'tripel', 'ailis', 'flatfoot', 'pyrexia', 'umbra', 'rouge', 'idyll', 'glimmer', 'elysium', 'nucleus', 'amber', 'paella', 'aureus', 'expanse', 'orchid']
 	},
 
 	/**

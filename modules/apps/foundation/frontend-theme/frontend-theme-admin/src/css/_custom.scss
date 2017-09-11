@@ -244,7 +244,7 @@ body {
 		}
 
 		&.selected {
-			border: 1px $brand-primary solid;
+			border: 1px map-get($theme-colors, primary) solid;
 		}
 	}
 }

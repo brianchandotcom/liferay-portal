@@ -1,6 +1,6 @@
 $portlet-content-border-radius: 0 0 2px 2px;
 
-$portlet-topper-bg: $brand-default;
+$portlet-topper-bg: map-get($theme-colors, secondary);
 $portlet-topper-border: $portlet-topper-bg;
 $portlet-topper-border-radius: 0;
 $portlet-topper-color: #FFF;

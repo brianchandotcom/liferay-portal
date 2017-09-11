@@ -82,6 +82,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				/>
 
 				<liferay-ui:search-container-column-jsp
+					colspan="<%= 2 %>"
 					cssClass="table-cell-content"
 					path="/wish_list/wish_list_action.jsp"
 				/>

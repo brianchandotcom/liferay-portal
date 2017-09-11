@@ -159,6 +159,12 @@ public class CommerceCartItemWrapper implements CommerceCartItem,
 		return _commerceCartItem.compareTo(commerceCartItem);
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPInstance fetchCPInstance()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCartItem.fetchCPInstance();
+	}
+
 	/**
 	* Returns the commerce cart ID of this commerce cart item.
 	*

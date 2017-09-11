@@ -43,25 +43,33 @@ String buttonId = cpDefinition.getCPDefinitionId() + "addToCart";
 			}
 		}
 	);
-
 	<% } %>
 
-	A.one('#<portlet:namespace /><%= buttonId %>').on(
-		'click',
+	Liferay.on(
+		'<%= cpDefinition.getCPDefinitionId() %>AddToCart',
 		function(event) {
 
 			var cpDefinitionId = <%= cpDefinition.getCPDefinitionId() %>;
 
 			var productContent = Liferay.component('<portlet:namespace />' + cpDefinitionId + 'ProductContent');
 
-			var ddmFormValues = JSON.stringify(productContent.getFormValues());
+			var quantityNode = A.one('#<portlet:namespace /><%= cpDefinition.getCPDefinitionId() + "Quantity" %>');
 
-			var quantity = A.one('#<portlet:namespace /><%= cpDefinition.getCPDefinitionId() + "Quantity" %>');
+			var quantity = "1";
+			var ddmFormValues = "[]";
+
+			if (quantityNode) {
+				quantity = quantityNode.val();
+			}
+
+			if (productContent) {
+				ddmFormValues = JSON.stringify(productContent.getFormValues());
+			}
 
 			var data = {
 				'_<%= CommercePortletKeys.COMMERCE_CART_CONTENT %>_cpDefinitionId' : cpDefinitionId ,
 				'_<%= CommercePortletKeys.COMMERCE_CART_CONTENT %>_ddmFormValues' : ddmFormValues ,
-				'_<%= CommercePortletKeys.COMMERCE_CART_CONTENT %>_quantity' : quantity.val()
+				'_<%= CommercePortletKeys.COMMERCE_CART_CONTENT %>_quantity' : quantity
 			};
 
 			A.io.request(
@@ -89,6 +97,30 @@ String buttonId = cpDefinition.getCPDefinitionId() + "addToCart";
 					}
 				}
 			);
+		}
+	);
+
+	A.one('#<portlet:namespace /><%= buttonId %>').on(
+		'click',
+		function(event) {
+
+			var cpDefinitionId = <%= cpDefinition.getCPDefinitionId() %>;
+
+			var productContent = Liferay.component('<portlet:namespace />' + cpDefinitionId + 'ProductContent');
+
+			if (productContent) {
+				productContent.validateProduct(
+					function(hasError) {
+						if (!hasError) {
+							Liferay.fire('<%= cpDefinition.getCPDefinitionId() %>AddToCart');
+						}
+					}
+				);
+			}
+			else {
+				Liferay.fire('<%= cpDefinition.getCPDefinitionId() %>AddToCart');
+			}
+
 		}
 	);
 </aui:script>

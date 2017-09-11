@@ -68,6 +68,10 @@ AUI.add(
 									success: function(event, id, obj) {
 										var response = JSON.parse(obj.response);
 
+										if (response.cpInstanceExist) {
+											instance._renderCPInstance(response);
+										}
+
 										Liferay.fire(cpDefinitionId + CP_INSTANCE_CHANGE_EVENT, response);
 									}
 								}
@@ -117,6 +121,20 @@ AUI.add(
 						var instance = this;
 
 						return A.one(instance.get('productContentSelector'));
+					},
+					validateProduct: function(callback) {
+						var instance = this;
+
+						var cpDefinitionId = instance.get('cpDefinitionId');
+
+						var ddmForm = Liferay.component(cpDefinitionId + 'DDMForm');
+
+						if (!ddmForm) {
+							callback.call(false,instance);
+						}
+
+						ddmForm.validate(callback);
+
 					},
 					_bindUI: function() {
 						var instance = this;
@@ -203,6 +221,17 @@ AUI.add(
 							fullImage.setAttribute('src', images[0].url);
 						}
 					},
+					_renderCPInstance: function(cpInstance) {
+						var instance = this;
+
+						var productContent = instance.getProductContent();
+
+						var skus = productContent.all('[data-text-cp-instance-sku]');
+						var prices = productContent.all('[data-text-cp-instance-price]');
+
+						skus.setHTML(cpInstance.sku);
+						prices.setHTML(cpInstance.price)
+					},
 					_renderUI: function() {
 						var instance = this;
 
@@ -222,6 +251,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-io-request', 'aui-parse-content', 'liferay-portlet-base']
+		requires: ['aui-base', 'aui-io-request', 'aui-parse-content', 'liferay-portlet-base', 'liferay-portlet-url']
 	}
 );

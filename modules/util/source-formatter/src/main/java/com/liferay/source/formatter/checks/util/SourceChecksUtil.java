@@ -128,7 +128,7 @@ public class SourceChecksUtil {
 				long endTime = System.currentTimeMillis();
 
 				DebugUtil.increaseProcessingTime(
-					clazz.getSimpleName(), (endTime - startTime));
+					clazz.getSimpleName(), endTime - startTime);
 			}
 
 			if (!content.equals(sourceChecksResult.getContent())) {

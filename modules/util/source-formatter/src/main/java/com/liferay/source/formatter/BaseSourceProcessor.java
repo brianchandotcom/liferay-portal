@@ -78,10 +78,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	public final void format() throws Exception {
 		List<String> fileNames = getFileNames();
 
-		Class<?> clazz = getClass();
+		if (sourceFormatterArgs.isShowDebugInformation()) {
+			Class<?> clazz = getClass();
 
-		DebugUtil.addProcessorFileCount(
-			clazz.getSimpleName(), fileNames.size());
+			DebugUtil.addProcessorFileCount(
+				clazz.getSimpleName(), fileNames.size());
+		}
 
 		if (fileNames.isEmpty()) {
 			addProgressStatusUpdate(
@@ -449,7 +451,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			SourceChecksUtil.processSourceChecks(
 				file, fileName, absolutePath, content,
 				_isModulesFile(absolutePath), _sourceChecks,
-				_sourceChecksSuppressions);
+				_sourceChecksSuppressions,
+				sourceFormatterArgs.isShowDebugInformation());
 
 		for (SourceFormatterMessage sourceFormatterMessage :
 				sourceChecksResult.getSourceFormatterMessages()) {

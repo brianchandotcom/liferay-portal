@@ -45,6 +45,8 @@ public class SourceFormatterArgs {
 
 	public static final int PROCESSOR_THREAD_COUNT = 5;
 
+	public static final boolean SHOW_DEBUG_INFORMATION = false;
+
 	public static final boolean SHOW_DOCUMENTATION = false;
 
 	public static final boolean SHOW_STATUS_UPDATES = false;
@@ -101,6 +103,10 @@ public class SourceFormatterArgs {
 
 	public boolean isPrintErrors() {
 		return _printErrors;
+	}
+
+	public boolean isShowDebugInformation() {
+		return _showDebugInformation;
 	}
 
 	public boolean isShowDocumentation() {
@@ -184,6 +190,10 @@ public class SourceFormatterArgs {
 		_recentChangesFileNames = recentChangesFileNames;
 	}
 
+	public void setShowDebugInformation(boolean showDebugInformation) {
+		_showDebugInformation = showDebugInformation;
+	}
+
 	public void setShowDocumentation(boolean showDocumentation) {
 		_showDocumentation = showDocumentation;
 	}
@@ -209,6 +219,7 @@ public class SourceFormatterArgs {
 	private boolean _printErrors = PRINT_ERRORS;
 	private int _processorThreadCount = PROCESSOR_THREAD_COUNT;
 	private List<String> _recentChangesFileNames;
+	private boolean _showDebugInformation = SHOW_DEBUG_INFORMATION;
 	private boolean _showDocumentation = SHOW_DOCUMENTATION;
 	private boolean _showStatusUpdates = SHOW_STATUS_UPDATES;
 	private boolean _throwException = THROW_EXCEPTION;

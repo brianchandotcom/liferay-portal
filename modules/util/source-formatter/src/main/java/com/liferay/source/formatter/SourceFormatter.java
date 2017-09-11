@@ -179,6 +179,12 @@ public class SourceFormatter {
 
 			sourceFormatterArgs.setProcessorThreadCount(processorThreadCount);
 
+			boolean showDebugInformation = ArgumentsUtil.getBoolean(
+				arguments, "show.debug.information",
+				SourceFormatterArgs.SHOW_DEBUG_INFORMATION);
+
+			sourceFormatterArgs.setShowDebugInformation(showDebugInformation);
+
 			boolean showDocumentation = ArgumentsUtil.getBoolean(
 				arguments, "show.documentation",
 				SourceFormatterArgs.SHOW_DOCUMENTATION);
@@ -300,7 +306,9 @@ public class SourceFormatter {
 			Thread.sleep(20);
 		}
 
-		DebugUtil.printSourceFormatterInformation();
+		if (_sourceFormatterArgs.isShowDebugInformation()) {
+			DebugUtil.printSourceFormatterInformation();
+		}
 
 		_progressStatusQueue.put(
 			new ProgressStatusUpdate(ProgressStatus.SOURCE_FORMAT_COMPLETED));

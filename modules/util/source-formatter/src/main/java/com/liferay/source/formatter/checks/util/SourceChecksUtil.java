@@ -68,7 +68,8 @@ public class SourceChecksUtil {
 	public static SourceChecksResult processSourceChecks(
 			File file, String fileName, String absolutePath, String content,
 			boolean modulesFile, List<SourceCheck> sourceChecks,
-			SourceChecksSuppressions sourceChecksSuppressions)
+			SourceChecksSuppressions sourceChecksSuppressions,
+			boolean showDebugInformation)
 		throws Exception {
 
 		SourceChecksResult sourceChecksResult = new SourceChecksResult(content);
@@ -123,15 +124,19 @@ public class SourceChecksUtil {
 					anonymousClasses, fileName, absolutePath);
 			}
 
-			long endTime = System.currentTimeMillis();
+			if (showDebugInformation) {
+				long endTime = System.currentTimeMillis();
 
-			DebugUtil.increaseProcessingTime(
-				clazz.getSimpleName(), (endTime - startTime));
+				DebugUtil.increaseProcessingTime(
+					clazz.getSimpleName(), (endTime - startTime));
+			}
 
 			if (!content.equals(sourceChecksResult.getContent())) {
-				DebugUtil.printContentModifications(
-					clazz.getSimpleName(), fileName, content,
-					sourceChecksResult.getContent());
+				if (showDebugInformation) {
+					DebugUtil.printContentModifications(
+						clazz.getSimpleName(), fileName, content,
+						sourceChecksResult.getContent());
+				}
 
 				return sourceChecksResult;
 			}

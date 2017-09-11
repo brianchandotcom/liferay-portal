@@ -96,6 +96,14 @@ public class SourceFormatterDefaultsPlugin
 				Integer.parseInt(processorThreadCount));
 		}
 
+		String showDebugInformation = GradleUtil.getProperty(
+			project, "source.formatter.show.debug.information", (String)null);
+
+		if (Validator.isNotNull(showDebugInformation)) {
+			formatSourceTask.setShowDebugInformation(
+				Boolean.parseBoolean(showDebugInformation));
+		}
+
 		String showDocumentation = GradleUtil.getProperty(
 			project, "source.formatter.show.documentation", (String)null);
 

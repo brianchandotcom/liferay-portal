@@ -23,16 +23,21 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 
 CommerceCartItem commerceCartItem = (CommerceCartItem)row.getObject();
 
-CPDefinition cpDefinition = commerceCartItem.getCPDefinition();
-
-request.setAttribute("cpDefinition", cpDefinition);
+request.setAttribute("cpDefinition", commerceCartItem.getCPDefinition());
+request.setAttribute("cpInstance", commerceCartItem.fetchCPInstance());
 %>
 
-<c:if test="<%= commerceWishListContentDisplayContext.canSellWithoutOptionsCombination(commerceCartItem) %>">
-	<liferay-util:dynamic-include key="com.liferay.commerce.product.content.web#/add_to_cart#" />
-</c:if>
+<%
+if (commerceWishListContentDisplayContext.canSellWithoutOptionsCombination(commerceCartItem)) {
+%>
 
-<c:if test="<%= !commerceWishListContentDisplayContext.canSellWithoutOptionsCombination(commerceCartItem) %>">
+	<liferay-util:dynamic-include key="com.liferay.commerce.product.content.web#/add_to_cart#" />
+
+<%
+}
+else {
+%>
+
 	<aui:button
 		cssClass="btn-lg btn-primary"
 		href="<%= commerceWishListContentDisplayContext.getCPDefinitionURL(commerceCartItem.getCPDefinitionId(), themeDisplay) %>"
@@ -40,7 +45,10 @@ request.setAttribute("cpDefinition", cpDefinition);
 		type="button"
 		value="select-options"
 	/>
-</c:if>
+
+<%
+}
+%>
 
 <portlet:actionURL name="editCommerceCartItem" var="deleteURL">
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />

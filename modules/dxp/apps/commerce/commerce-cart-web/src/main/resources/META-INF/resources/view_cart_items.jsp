@@ -163,6 +163,13 @@ renderResponse.setTitle(commerceCart.getName());
 							if (cpDefinition != null) {
 								thumbnailSrc = cpDefinition.getDefaultImageThumbnailSrc(themeDisplay);
 							}
+
+							PortletURL rowURL = renderResponse.createRenderURL();
+
+							rowURL.setParameter("mvcRenderCommandName", "editCommerceCartItem");
+							rowURL.setParameter("redirect", currentURL);
+							rowURL.setParameter("commerceCartId", String.valueOf(commerceCartItem.getCommerceCartId()));
+							rowURL.setParameter("commerceCartItemId", String.valueOf(commerceCartItem.getCommerceCartItemId()));
 							%>
 
 							<liferay-ui:search-container-column-image
@@ -173,6 +180,7 @@ renderResponse.setTitle(commerceCart.getName());
 
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
+								href="<%= rowURL %>"
 								name="title"
 								value="<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>"
 							/>
@@ -209,6 +217,19 @@ renderResponse.setTitle(commerceCart.getName());
 	</div>
 </div>
 
+<portlet:actionURL name="editCommerceCartItem" var="addCommerceCartItemURL" />
+
+<aui:form action="<%= addCommerceCartItemURL %>" cssClass="hide" name="addCommerceCartItemFm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD_MULTIPLE %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="commerceCartId" type="hidden" value="<%= commerceCart.getCommerceCartId() %>" />
+	<aui:input name="cpInstanceIds" type="hidden" value="" />
+</aui:form>
+
+<liferay-frontend:add-menu>
+	<liferay-frontend:add-menu-item id="addCommerceCartItem" title='<%= LanguageUtil.get(request, "add-cart-item") %>' url="javascript:;" />
+</liferay-frontend:add-menu>
+
 <aui:script>
 	function <portlet:namespace />deleteCommerceCartItems() {
 		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-items") %>')) {
@@ -221,4 +242,36 @@ renderResponse.setTitle(commerceCart.getName());
 			submitForm(form, '<portlet:actionURL name="editCommerceCartItem" />');
 		}
 	}
+</aui:script>
+
+<aui:script use="liferay-item-selector-dialog">
+	$('#<portlet:namespace />addCommerceCartItem').on(
+		'click',
+		function(event) {
+			event.preventDefault();
+
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+				{
+					eventName: 'productInstancesSelectItem',
+					on: {
+						selectedItemChange: function(event) {
+							var selectedItems = event.newVal;
+
+							if (selectedItems) {
+								$('#<portlet:namespace />cpInstanceIds').val(selectedItems);
+
+								var addCommerceCartItemFm = $('#<portlet:namespace />addCommerceCartItemFm');
+
+								submitForm(addCommerceCartItemFm);
+							}
+						}
+					},
+					title: '<liferay-ui:message arguments="<%= commerceCart.getName() %>" key="add-new-product-to-x" />',
+					url: '<%= commerceCartItemDisplayContext.getItemSelectorUrl() %>'
+				}
+			);
+
+			itemSelectorDialog.open();
+		}
+	);
 </aui:script>

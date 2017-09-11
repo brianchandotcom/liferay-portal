@@ -32,7 +32,6 @@ public class DigitalSignatureTest {
 	public void test() {
 		DigitalSignatureImpl digitalSignatureImpl = new DigitalSignatureImpl();
 
-		digitalSignatureImpl.setAlgorithmProvider("SunRsaSign");
 		digitalSignatureImpl.setKeyName("localhost");
 		digitalSignatureImpl.setKeyStorePath(
 			"classpath:/com/liferay/lcs/messaging/security/dependencies" +

@@ -93,6 +93,14 @@ public interface CPDefinitionOptionRelService extends BaseService {
 		long cpDefinitionOptionRelId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPDefinitionOptionRelCount(long cpDefinitionId,
+		boolean skuContributor) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels(
+		long cpDefinitionId, boolean skuContributor) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels(
 		long cpDefinitionId, int start, int end) throws PortalException;
 
@@ -112,14 +120,6 @@ public interface CPDefinitionOptionRelService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSkuContributorCPDefinitionOptionRelCount(long cpDefinitionId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPDefinitionOptionRel> getSkuContributorCPDefinitionOptionRels(
-		long cpDefinitionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Hits search(SearchContext searchContext);

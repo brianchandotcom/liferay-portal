@@ -399,16 +399,16 @@ public class CPDefinitionOptionRelServiceHttp {
 		}
 	}
 
-	public static int getSkuContributorCPDefinitionOptionRelCount(
-		HttpPrincipal httpPrincipal, long cpDefinitionId)
+	public static int getCPDefinitionOptionRelCount(
+		HttpPrincipal httpPrincipal, long cpDefinitionId, boolean skuContributor)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionOptionRelServiceUtil.class,
-					"getSkuContributorCPDefinitionOptionRelCount",
-					_getSkuContributorCPDefinitionOptionRelCountParameterTypes10);
+					"getCPDefinitionOptionRelCount",
+					_getCPDefinitionOptionRelCountParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpDefinitionId);
+					cpDefinitionId, skuContributor);
 
 			Object returnObj = null;
 
@@ -432,16 +432,16 @@ public class CPDefinitionOptionRelServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionRel> getSkuContributorCPDefinitionOptionRels(
-		HttpPrincipal httpPrincipal, long cpDefinitionId)
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionRel> getCPDefinitionOptionRels(
+		HttpPrincipal httpPrincipal, long cpDefinitionId, boolean skuContributor)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionOptionRelServiceUtil.class,
-					"getSkuContributorCPDefinitionOptionRels",
-					_getSkuContributorCPDefinitionOptionRelsParameterTypes11);
+					"getCPDefinitionOptionRels",
+					_getCPDefinitionOptionRelsParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpDefinitionId);
+					cpDefinitionId, skuContributor);
 
 			Object returnObj = null;
 
@@ -705,10 +705,11 @@ public class CPDefinitionOptionRelServiceHttp {
 		};
 	private static final Class<?>[] _getCPDefinitionOptionRelsCountParameterTypes9 =
 		new Class[] { long.class };
-	private static final Class<?>[] _getSkuContributorCPDefinitionOptionRelCountParameterTypes10 =
-		new Class[] { long.class };
-	private static final Class<?>[] _getSkuContributorCPDefinitionOptionRelsParameterTypes11 =
-		new Class[] { long.class };
+	private static final Class<?>[] _getCPDefinitionOptionRelCountParameterTypes10 =
+		new Class[] { long.class, boolean.class };
+	private static final Class<?>[] _getCPDefinitionOptionRelsParameterTypes11 = new Class[] {
+			long.class, boolean.class
+		};
 	private static final Class<?>[] _searchParameterTypes12 = new Class[] {
 			com.liferay.portal.kernel.search.SearchContext.class
 		};

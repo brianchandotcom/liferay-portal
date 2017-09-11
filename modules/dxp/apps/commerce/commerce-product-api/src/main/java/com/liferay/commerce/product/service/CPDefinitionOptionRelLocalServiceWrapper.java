@@ -277,6 +277,13 @@ public class CPDefinitionOptionRelLocalServiceWrapper
 			groupId);
 	}
 
+	@Override
+	public int getCPDefinitionOptionRelCount(long cpDefinitionId,
+		boolean skuContributor) {
+		return _cpDefinitionOptionRelLocalService.getCPDefinitionOptionRelCount(cpDefinitionId,
+			skuContributor);
+	}
+
 	/**
 	* Returns a range of all the cp definition option rels.
 	*
@@ -299,6 +306,13 @@ public class CPDefinitionOptionRelLocalServiceWrapper
 	public java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionRel> getCPDefinitionOptionRels(
 		long cpDefinitionId) {
 		return _cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(cpDefinitionId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionRel> getCPDefinitionOptionRels(
+		long cpDefinitionId, boolean skuContributor) {
+		return _cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(cpDefinitionId,
+			skuContributor);
 	}
 
 	@Override
@@ -389,17 +403,6 @@ public class CPDefinitionOptionRelLocalServiceWrapper
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionOptionRelLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	@Override
-	public int getSkuContributorCPDefinitionOptionRelCount(long cpDefinitionId) {
-		return _cpDefinitionOptionRelLocalService.getSkuContributorCPDefinitionOptionRelCount(cpDefinitionId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionRel> getSkuContributorCPDefinitionOptionRels(
-		long cpDefinitionId) {
-		return _cpDefinitionOptionRelLocalService.getSkuContributorCPDefinitionOptionRels(cpDefinitionId);
 	}
 
 	@Override

@@ -97,6 +97,22 @@ public class CPDefinitionOptionRelServiceWrapper
 	}
 
 	@Override
+	public int getCPDefinitionOptionRelCount(long cpDefinitionId,
+		boolean skuContributor)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionOptionRelService.getCPDefinitionOptionRelCount(cpDefinitionId,
+			skuContributor);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionRel> getCPDefinitionOptionRels(
+		long cpDefinitionId, boolean skuContributor)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionOptionRelService.getCPDefinitionOptionRels(cpDefinitionId,
+			skuContributor);
+	}
+
+	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionRel> getCPDefinitionOptionRels(
 		long cpDefinitionId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -127,19 +143,6 @@ public class CPDefinitionOptionRelServiceWrapper
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _cpDefinitionOptionRelService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public int getSkuContributorCPDefinitionOptionRelCount(long cpDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDefinitionOptionRelService.getSkuContributorCPDefinitionOptionRelCount(cpDefinitionId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionRel> getSkuContributorCPDefinitionOptionRels(
-		long cpDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDefinitionOptionRelService.getSkuContributorCPDefinitionOptionRels(cpDefinitionId);
 	}
 
 	@Override

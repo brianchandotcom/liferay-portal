@@ -83,7 +83,7 @@ public class CPDefinitionServiceSoap {
 		java.lang.String[] metaDescriptionMapLanguageIds,
 		java.lang.String[] metaDescriptionMapValues,
 		java.lang.String layoutUuid, java.lang.String productTypeName,
-		boolean canSellWithoutOptions, double width, double height,
+		boolean canSellWithoutOptionsCombination, double width, double height,
 		double depth, double weight, java.lang.String ddmStructureKey,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
@@ -108,8 +108,8 @@ public class CPDefinitionServiceSoap {
 			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.addCPDefinition(titleMap,
 					shortDescriptionMap, descriptionMap, metaTitleMap,
 					metaKeywordsMap, metaDescriptionMap, layoutUuid,
-					productTypeName, canSellWithoutOptions, width, height,
-					depth, weight, ddmStructureKey, displayDateMonth,
+					productTypeName, canSellWithoutOptionsCombination, width,
+					height, depth, weight, ddmStructureKey, displayDateMonth,
 					displayDateDay, displayDateYear, displayDateHour,
 					displayDateMinute, expirationDateMonth, expirationDateDay,
 					expirationDateYear, expirationDateHour,
@@ -131,7 +131,8 @@ public class CPDefinitionServiceSoap {
 		java.lang.String[] shortDescriptionMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues, java.lang.String layoutUuid,
-		java.lang.String productTypeName, boolean canSellWithoutOptions,
+		java.lang.String productTypeName,
+		boolean canSellWithoutOptionsCombination,
 		java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
@@ -149,11 +150,12 @@ public class CPDefinitionServiceSoap {
 
 			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.addCPDefinition(titleMap,
 					shortDescriptionMap, descriptionMap, layoutUuid,
-					productTypeName, canSellWithoutOptions, ddmStructureKey,
-					displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, expirationDateMonth,
-					expirationDateDay, expirationDateYear, expirationDateHour,
-					expirationDateMinute, neverExpire, serviceContext);
+					productTypeName, canSellWithoutOptionsCombination,
+					ddmStructureKey, displayDateMonth, displayDateDay,
+					displayDateYear, displayDateHour, displayDateMinute,
+					expirationDateMonth, expirationDateDay, expirationDateYear,
+					expirationDateHour, expirationDateMinute, neverExpire,
+					serviceContext);
 
 			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModel(returnValue);
 		}
@@ -369,7 +371,7 @@ public class CPDefinitionServiceSoap {
 		java.lang.String[] metaKeywordsMapValues,
 		java.lang.String[] metaDescriptionMapLanguageIds,
 		java.lang.String[] metaDescriptionMapValues,
-		java.lang.String layoutUuid, boolean canSellWithoutOptions,
+		java.lang.String layoutUuid, boolean canSellWithoutOptionsCombination,
 		double width, double height, double depth, double weight,
 		java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
@@ -397,12 +399,12 @@ public class CPDefinitionServiceSoap {
 			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.updateCPDefinition(cpDefinitionId,
 					titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
 					metaTitleMap, metaKeywordsMap, metaDescriptionMap,
-					layoutUuid, canSellWithoutOptions, width, height, depth,
-					weight, ddmStructureKey, displayDateMonth, displayDateDay,
-					displayDateYear, displayDateHour, displayDateMinute,
-					expirationDateMonth, expirationDateDay, expirationDateYear,
-					expirationDateHour, expirationDateMinute, neverExpire,
-					serviceContext);
+					layoutUuid, canSellWithoutOptionsCombination, width,
+					height, depth, weight, ddmStructureKey, displayDateMonth,
+					displayDateDay, displayDateYear, displayDateHour,
+					displayDateMinute, expirationDateMonth, expirationDateDay,
+					expirationDateYear, expirationDateHour,
+					expirationDateMinute, neverExpire, serviceContext);
 
 			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModel(returnValue);
 		}
@@ -420,10 +422,11 @@ public class CPDefinitionServiceSoap {
 		java.lang.String[] shortDescriptionMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues, java.lang.String layoutUuid,
-		boolean canSellWithoutOptions, java.lang.String ddmStructureKey,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		boolean canSellWithoutOptionsCombination,
+		java.lang.String ddmStructureKey, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -437,10 +440,10 @@ public class CPDefinitionServiceSoap {
 
 			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.updateCPDefinition(cpDefinitionId,
 					titleMap, shortDescriptionMap, descriptionMap, layoutUuid,
-					canSellWithoutOptions, ddmStructureKey, displayDateMonth,
-					displayDateDay, displayDateYear, displayDateHour,
-					displayDateMinute, expirationDateMonth, expirationDateDay,
-					expirationDateYear, expirationDateHour,
+					canSellWithoutOptionsCombination, ddmStructureKey,
+					displayDateMonth, displayDateDay, displayDateYear,
+					displayDateHour, displayDateMinute, expirationDateMonth,
+					expirationDateDay, expirationDateYear, expirationDateHour,
 					expirationDateMinute, neverExpire, serviceContext);
 
 			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModel(returnValue);

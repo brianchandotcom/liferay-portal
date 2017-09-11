@@ -49,7 +49,7 @@ public class CPDefinitionServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
 		java.lang.String layoutUuid, java.lang.String productTypeName,
-		boolean canSellWithoutOptions, double width, double height,
+		boolean canSellWithoutOptionsCombination, double width, double height,
 		double depth, double weight, java.lang.String ddmStructureKey,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
@@ -60,12 +60,12 @@ public class CPDefinitionServiceUtil {
 		return getService()
 				   .addCPDefinition(titleMap, shortDescriptionMap,
 			descriptionMap, metaTitleMap, metaKeywordsMap, metaDescriptionMap,
-			layoutUuid, productTypeName, canSellWithoutOptions, width, height,
-			depth, weight, ddmStructureKey, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			layoutUuid, productTypeName, canSellWithoutOptionsCombination,
+			width, height, depth, weight, ddmStructureKey, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinition addCPDefinition(
@@ -73,20 +73,22 @@ public class CPDefinitionServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String layoutUuid, java.lang.String productTypeName,
-		boolean canSellWithoutOptions, java.lang.String ddmStructureKey,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		boolean canSellWithoutOptionsCombination,
+		java.lang.String ddmStructureKey, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCPDefinition(titleMap, shortDescriptionMap,
-			descriptionMap, layoutUuid, productTypeName, canSellWithoutOptions,
-			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, serviceContext);
+			descriptionMap, layoutUuid, productTypeName,
+			canSellWithoutOptionsCombination, ddmStructureKey,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	public static void deleteAssetCategoryCPDefinition(long cpDefinitionId,
@@ -199,7 +201,7 @@ public class CPDefinitionServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
-		java.lang.String layoutUuid, boolean canSellWithoutOptions,
+		java.lang.String layoutUuid, boolean canSellWithoutOptionsCombination,
 		double width, double height, double depth, double weight,
 		java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
@@ -212,7 +214,7 @@ public class CPDefinitionServiceUtil {
 				   .updateCPDefinition(cpDefinitionId, titleMap,
 			shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap,
 			metaKeywordsMap, metaDescriptionMap, layoutUuid,
-			canSellWithoutOptions, width, height, depth, weight,
+			canSellWithoutOptionsCombination, width, height, depth, weight,
 			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, expirationDateMonth,
 			expirationDateDay, expirationDateYear, expirationDateHour,
@@ -224,7 +226,7 @@ public class CPDefinitionServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String layoutUuid, boolean canSellWithoutOptions,
+		java.lang.String layoutUuid, boolean canSellWithoutOptionsCombination,
 		java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
@@ -235,8 +237,8 @@ public class CPDefinitionServiceUtil {
 		return getService()
 				   .updateCPDefinition(cpDefinitionId, titleMap,
 			shortDescriptionMap, descriptionMap, layoutUuid,
-			canSellWithoutOptions, ddmStructureKey, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour,
+			canSellWithoutOptionsCombination, ddmStructureKey,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, serviceContext);

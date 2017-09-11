@@ -242,6 +242,10 @@ public interface CPDefinitionOptionRelLocalService extends BaseLocalService,
 	public CPDefinitionOptionRel getCPDefinitionOptionRelByUuidAndGroupId(
 		java.lang.String uuid, long groupId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPDefinitionOptionRelCount(long cpDefinitionId,
+		boolean skuContributor);
+
 	/**
 	* Returns a range of all the cp definition option rels.
 	*
@@ -260,6 +264,10 @@ public interface CPDefinitionOptionRelLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels(
 		long cpDefinitionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels(
+		long cpDefinitionId, boolean skuContributor);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels(
@@ -325,13 +333,6 @@ public interface CPDefinitionOptionRelLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSkuContributorCPDefinitionOptionRelCount(long cpDefinitionId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPDefinitionOptionRel> getSkuContributorCPDefinitionOptionRels(
-		long cpDefinitionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Hits search(SearchContext searchContext);

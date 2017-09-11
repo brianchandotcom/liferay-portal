@@ -288,6 +288,14 @@ public class GroupFinderTest {
 		Assert.assertTrue(groups.isEmpty());
 	}
 
+	@Test
+	public void testFindByUserActiveGroupIds() throws Exception {
+		List<Long> groups = GroupFinderUtil.findByUserActiveGroupIds(
+			TestPropsValues.getUserId());
+
+		Assert.assertTrue(groups.isEmpty());
+	}
+
 	protected static ResourceAction getModelResourceAction()
 		throws PortalException {
 

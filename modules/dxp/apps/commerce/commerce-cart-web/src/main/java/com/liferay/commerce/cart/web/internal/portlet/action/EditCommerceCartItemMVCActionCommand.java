@@ -16,10 +16,16 @@ package com.liferay.commerce.cart.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.exception.NoSuchCartItemException;
+import com.liferay.commerce.model.CommerceCartItem;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.service.CommerceCartItemService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -53,6 +59,61 @@ public class EditCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
 		return super.processAction(actionRequest, actionResponse);
 	}
 
+	protected void addCommerceCartItems(ActionRequest actionRequest)
+		throws Exception {
+
+		long[] addCPInstanceIds = null;
+
+		long commerceCartId = ParamUtil.getLong(
+			actionRequest, "commerceCartId");
+
+		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
+
+		if (cpInstanceId > 0) {
+			addCPInstanceIds = new long[] {cpInstanceId};
+		}
+		else {
+			addCPInstanceIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "cpInstanceIds"), 0L);
+		}
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CommerceCartItem.class.getName(), actionRequest);
+
+		for (long addCPInstanceId : addCPInstanceIds) {
+			CPInstance cpInstance = _cpInstanceService.getCPInstance(
+				addCPInstanceId);
+
+			_commerceCartItemService.addCommerceCartItem(
+				commerceCartId, cpInstance.getCPDefinitionId(),
+				cpInstance.getCPInstanceId(), 1, cpInstance.getDDMContent(),
+				serviceContext);
+		}
+	}
+
+	protected void deleteCommerceCartItems(ActionRequest actionRequest)
+		throws PortalException {
+
+		long[] deleteCommerceCartItemIds = null;
+
+		long commerceCartItemId = ParamUtil.getLong(
+			actionRequest, "commerceCartItemId");
+
+		if (commerceCartItemId > 0) {
+			deleteCommerceCartItemIds = new long[] {commerceCartItemId};
+		}
+		else {
+			deleteCommerceCartItemIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "deleteCommerceCartItemIds"),
+				0L);
+		}
+
+		for (long deleteCommerceCartItemId : deleteCommerceCartItemIds) {
+			_commerceCartItemService.deleteCommerceCartItem(
+				deleteCommerceCartItemId);
+		}
+	}
+
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -61,28 +122,16 @@ public class EditCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			if (cmd.equals(Constants.DELETE)) {
-				long[] deleteCommerceCartItemIds = null;
+			if (cmd.equals(Constants.ADD) ||
+				cmd.equals(Constants.ADD_MULTIPLE)) {
 
-				long commerceCartItemId = ParamUtil.getLong(
-					actionRequest, "commerceCartItemId");
-
-				if (commerceCartItemId > 0) {
-					deleteCommerceCartItemIds = new long[] {commerceCartItemId};
-				}
-				else {
-					deleteCommerceCartItemIds = StringUtil.split(
-						ParamUtil.getString(
-							actionRequest, "deleteCommerceCartItemIds"),
-						0L);
-				}
-
-				for (long deleteCommerceCartItemId :
-						deleteCommerceCartItemIds) {
-
-					_commerceCartItemService.deleteCommerceCartItem(
-						deleteCommerceCartItemId);
-				}
+				addCommerceCartItems(actionRequest);
+			}
+			else if (cmd.equals(Constants.DELETE)) {
+				deleteCommerceCartItems(actionRequest);
+			}
+			else if (cmd.equals(Constants.UPDATE)) {
+				updateCommerceCartItem(actionRequest);
 			}
 		}
 		catch (Exception e) {
@@ -97,7 +146,26 @@ public class EditCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	protected void updateCommerceCartItem(ActionRequest actionRequest)
+		throws PortalException {
+
+		long commerceCartItemId = ParamUtil.getLong(
+			actionRequest, "commerceCartItemId");
+
+		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
+
+		CommerceCartItem commerceCartItem =
+			_commerceCartItemService.getCommerceCartItem(commerceCartItemId);
+
+		_commerceCartItemService.updateCommerceCartItem(
+			commerceCartItem.getCommerceCartItemId(), quantity,
+			commerceCartItem.getJson());
+	}
+
 	@Reference
 	private CommerceCartItemService _commerceCartItemService;
+
+	@Reference
+	private CPInstanceService _cpInstanceService;
 
 }

@@ -21,6 +21,7 @@ import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
@@ -101,6 +102,21 @@ public class CPTypeDisplayContext {
 				cpDefinition.getCPDefinitionId());
 	}
 
+	public CPInstance getDefaultCPInstance() throws Exception {
+		CPDefinition cpDefinition = getCPDefinition();
+
+		if (cpDefinition == null) {
+			return null;
+		}
+
+		if (!cpDefinition.isCanSellWithoutOptionsCombination()) {
+			return null;
+		}
+
+		return cpInstanceHelper.getCPInstance(
+			cpDefinition.getCPDefinitionId(), null);
+	}
+
 	public CPAttachmentFileEntry getDefaultImage() throws PortalException {
 		long classNameId = portal.getClassNameId(CPDefinition.class);
 
@@ -162,8 +178,7 @@ public class CPTypeDisplayContext {
 	}
 
 	public String renderOptions(
-			RenderRequest renderRequest, RenderResponse renderResponse,
-			boolean skuContributor)
+			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException {
 
 		CPDefinition cpDefinition = getCPDefinition();
@@ -173,8 +188,7 @@ public class CPTypeDisplayContext {
 		}
 
 		return cpInstanceHelper.render(
-			cpDefinition.getCPDefinitionId(), renderRequest, renderResponse,
-			skuContributor);
+			cpDefinition.getCPDefinitionId(), renderRequest, renderResponse);
 	}
 
 	protected final CPAttachmentFileEntryService cpAttachmentFileEntryService;

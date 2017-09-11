@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -35,6 +36,9 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.ExistsFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -107,7 +111,24 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 		for (String fieldName : fieldNames) {
 			String fieldValue = (String)searchContext.getAttribute(fieldName);
 
-			contextBooleanFilter.addRequiredTerm(fieldName, fieldValue);
+			TermsFilter termFilter = new TermsFilter(fieldName);
+
+			termFilter.addValue(fieldValue);
+
+			Filter existFilter = new ExistsFilter(fieldName);
+
+			BooleanFilter existBooleanFilter = new BooleanFilter();
+
+			existBooleanFilter.add(existFilter, BooleanClauseOccur.MUST_NOT);
+
+			BooleanFilter fieldBooleanFilter = new BooleanFilter();
+
+			fieldBooleanFilter.add(
+				existBooleanFilter, BooleanClauseOccur.SHOULD);
+			fieldBooleanFilter.add(termFilter, BooleanClauseOccur.SHOULD);
+
+			contextBooleanFilter.add(
+				fieldBooleanFilter, BooleanClauseOccur.MUST);
 		}
 	}
 

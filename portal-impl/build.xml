@@ -582,6 +582,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			<arg value="include.subrepositories=${source.formatter.include.subrepositories}" />
 			<arg value="max.line.length=${source.formatter.max.line.length}" />
 			<arg value="processor.thread.count=${source.formatter.processor.thread.count}" />
+			<arg value="show.debug.information=${source.formatter.show.debug.information}" />
 			<arg value="show.documentation=${source.formatter.show.documentation}" />
 			<arg value="source.auto.fix=${source.auto.fix}" />
 			<arg value="source.base.dir=${source.base.dir}" />
@@ -606,15 +607,39 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</antcall>
 	</target>
 
+	<target name="format-source-current-branch-debug">
+		<antcall target="format-source-current-branch">
+			<param name="source.formatter.show.debug.information" value="true" />
+		</antcall>
+	</target>
+
+	<target name="format-source-debug">
+		<antcall target="format-source">
+			<param name="source.formatter.show.debug.information" value="true" />
+		</antcall>
+	</target>
+
 	<target name="format-source-latest-author">
 		<antcall target="format-source">
 			<param name="format.latest.author" value="true" />
 		</antcall>
 	</target>
 
+	<target name="format-source-latest-author-debug">
+		<antcall target="format-source-latest-author">
+			<param name="source.formatter.show.debug.information" value="true" />
+		</antcall>
+	</target>
+
 	<target name="format-source-local-changes">
 		<antcall target="format-source">
 			<param name="format.local.changes" value="true" />
+		</antcall>
+	</target>
+
+	<target name="format-source-local-changes-debug">
+		<antcall target="format-source-local-changes">
+			<param name="source.formatter.show.debug.information" value="true" />
 		</antcall>
 	</target>
 

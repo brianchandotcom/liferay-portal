@@ -27,6 +27,7 @@ import com.liferay.portal.tools.GitException;
 import com.liferay.portal.tools.GitUtil;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.source.formatter.util.DebugUtil;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
@@ -178,6 +179,12 @@ public class SourceFormatter {
 
 			sourceFormatterArgs.setProcessorThreadCount(processorThreadCount);
 
+			boolean showDebugInformation = ArgumentsUtil.getBoolean(
+				arguments, "show.debug.information",
+				SourceFormatterArgs.SHOW_DEBUG_INFORMATION);
+
+			sourceFormatterArgs.setShowDebugInformation(showDebugInformation);
+
 			boolean showDocumentation = ArgumentsUtil.getBoolean(
 				arguments, "show.documentation",
 				SourceFormatterArgs.SHOW_DOCUMENTATION);
@@ -297,6 +304,10 @@ public class SourceFormatter {
 
 		while (!executorService.isTerminated()) {
 			Thread.sleep(20);
+		}
+
+		if (_sourceFormatterArgs.isShowDebugInformation()) {
+			DebugUtil.printSourceFormatterInformation();
 		}
 
 		_progressStatusQueue.put(

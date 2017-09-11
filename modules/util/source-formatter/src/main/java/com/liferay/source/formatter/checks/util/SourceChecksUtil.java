@@ -28,6 +28,7 @@ import com.liferay.source.formatter.checks.configuration.SourceFormatterConfigur
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
 import com.liferay.source.formatter.parser.ParseException;
+import com.liferay.source.formatter.util.DebugUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
@@ -67,7 +68,8 @@ public class SourceChecksUtil {
 	public static SourceChecksResult processSourceChecks(
 			File file, String fileName, String absolutePath, String content,
 			boolean modulesFile, List<SourceCheck> sourceChecks,
-			SourceChecksSuppressions sourceChecksSuppressions)
+			SourceChecksSuppressions sourceChecksSuppressions,
+			boolean showDebugInformation)
 		throws Exception {
 
 		SourceChecksResult sourceChecksResult = new SourceChecksResult(content);
@@ -91,6 +93,8 @@ public class SourceChecksUtil {
 
 				continue;
 			}
+
+			long startTime = System.currentTimeMillis();
 
 			if (sourceCheck instanceof FileCheck) {
 				sourceChecksResult = _processFileCheck(
@@ -120,7 +124,20 @@ public class SourceChecksUtil {
 					anonymousClasses, fileName, absolutePath);
 			}
 
+			if (showDebugInformation) {
+				long endTime = System.currentTimeMillis();
+
+				DebugUtil.increaseProcessingTime(
+					clazz.getSimpleName(), endTime - startTime);
+			}
+
 			if (!content.equals(sourceChecksResult.getContent())) {
+				if (showDebugInformation) {
+					DebugUtil.printContentModifications(
+						clazz.getSimpleName(), fileName, content,
+						sourceChecksResult.getContent());
+				}
+
 				return sourceChecksResult;
 			}
 		}

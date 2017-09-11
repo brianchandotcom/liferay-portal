@@ -256,8 +256,8 @@ public class CPDefinitionLocalServiceImpl
 			return;
 		}
 
-		List<CPInstance> cpInstances = cpInstanceLocalService.getCPInstances(
-			cpDefinitionId);
+		List<CPInstance> cpInstances =
+			cpInstanceLocalService.getCPDefinitionInstances(cpDefinitionId);
 
 		if (cpInstances.isEmpty()) {
 			cpDefinitionLocalService.updateStatus(
@@ -1036,7 +1036,7 @@ public class CPDefinitionLocalServiceImpl
 			}
 
 			List<CPInstance> cpInstances =
-				cpInstanceLocalService.getCPInstances(cpDefinitionId);
+				cpInstanceLocalService.getCPDefinitionInstances(cpDefinitionId);
 
 			if (cpInstances.isEmpty()) {
 				throw new CPDefinitionStatusException();

@@ -29,6 +29,7 @@ import java.io.File;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
+import java.util.jar.Attributes;
 import java.util.jar.Attributes.Name;
 import java.util.jar.Manifest;
 
@@ -116,15 +117,13 @@ public class BndDeploymentScenarioGenerator
 
 			analyzer.setJar(jar);
 
-			DeploymentDescription deploymentDescription =
-				new DeploymentDescription(javaArchive.getName(), javaArchive);
-
 			Asset asset = javaArchive.get(_MANIFEST_PATH).getAsset();
 
 			Manifest firstPassManifest = new Manifest(asset.openStream());
 
-			firstPassManifest.getMainAttributes().remove(
-				new Name("Import-Package"));
+			Attributes mainAttributes = firstPassManifest.getMainAttributes();
+
+			mainAttributes.remove(new Name("Import-Package"));
 
 			analyzer.mergeManifest(firstPassManifest);
 
@@ -141,7 +140,8 @@ public class BndDeploymentScenarioGenerator
 
 			javaArchive.add(byteArrayAsset, _MANIFEST_PATH);
 
-			return Collections.singletonList(deploymentDescription);
+			return Collections.singletonList(
+				new DeploymentDescription(javaArchive.getName(), javaArchive));
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

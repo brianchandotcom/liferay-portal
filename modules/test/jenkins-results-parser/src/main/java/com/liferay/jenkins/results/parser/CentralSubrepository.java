@@ -34,14 +34,49 @@ public class CentralSubrepository {
 
 		_centralUpstreamBranchName = centralUpstreamBranchName;
 
+		_ciProperties = new Properties();
+
 		_gitrepoProperties = new Properties();
 
 		_gitrepoProperties.load(new FileInputStream(gitrepoFile));
 
 		_subrepositoryName = _getSubrepositoryName();
+
+		_subrepositoryDirectory =
+			"/opt/dev/projects/github/" + _subrepositoryName + "-private";
+
 		_subrepositoryUpstreamBranchName =
 			_getSubrepositoryUpstreamBranchName();
 		_subrepositoryUsername = _getSubrepositoryUsername();
+
+		try {
+			String[] args = {"git", "checkout", "master"};
+
+			ProcessBuilder pb = new ProcessBuilder(args);
+
+			pb.directory(new File(_subrepositoryDirectory));
+
+			pb.start();
+
+			args = new String[] {"git", "pull", "upstream", "master"};
+
+			pb = new ProcessBuilder(args);
+
+			pb.directory(new File(_subrepositoryDirectory));
+
+			pb.start();
+
+			File ciPropertiesFile = new File(
+				_subrepositoryDirectory, "ci.properties");
+
+			_ciProperties.load(new FileInputStream(ciPropertiesFile));
+		}
+		catch (Exception e) {
+		}
+	}
+
+	public String getCIProperty(String key) {
+		return _ciProperties.getProperty(key);
 	}
 
 	public String getSubrepositoryName() {
@@ -199,7 +234,9 @@ public class CentralSubrepository {
 
 	private Boolean _centralPullRequestCandidate;
 	private final String _centralUpstreamBranchName;
+	private final Properties _ciProperties;
 	private final Properties _gitrepoProperties;
+	private final String _subrepositoryDirectory;
 	private final String _subrepositoryName;
 	private final String _subrepositoryUpstreamBranchName;
 	private String _subrepositoryUpstreamCommit;

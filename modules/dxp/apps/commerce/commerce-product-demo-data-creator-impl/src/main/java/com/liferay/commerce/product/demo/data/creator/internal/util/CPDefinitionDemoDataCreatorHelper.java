@@ -138,7 +138,7 @@ public class CPDefinitionDemoDataCreatorHelper
 				double price = productJSONObject.getDouble("price");
 
 				List<CPInstance> cpInstances =
-					_cpInstanceLocalService.getCPInstances(
+					_cpInstanceLocalService.getCPDefinitionInstances(
 						cpDefinition.getCPDefinitionId());
 
 				for (CPInstance cpInstance : cpInstances) {

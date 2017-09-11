@@ -1250,12 +1250,10 @@ this task.
 
 		<replace file="${app.server.jboss.dir}/standalone/configuration/standalone.xml">
 			<replacetoken><![CDATA[<formatter>
-                    <named-formatter name="COLOR-PATTERN" />
-                </formatter>]]></replacetoken>
+                    <named-formatter name="COLOR-PATTERN"]]></replacetoken>
 			<replacevalue><![CDATA[<filter-spec value="not(any(match(&quot;WFLYSRV0059&quot;),match(&quot;WFLYEE0007&quot;)))" />
                 <formatter>
-                    <named-formatter name="COLOR-PATTERN" />
-                </formatter>]]></replacevalue>
+                    <named-formatter name="COLOR-PATTERN"]]></replacevalue>
 		</replace>
 
 		<echo file="${app.server.jboss.bin.dir}/server.policy">
@@ -2896,12 +2894,10 @@ this task.
 
 		<replace file="${app.server.wildfly.dir}/standalone/configuration/standalone.xml">
 			<replacetoken><![CDATA[<formatter>
-                    <named-formatter name="COLOR-PATTERN" />
-                </formatter>]]></replacetoken>
+                    <named-formatter name="COLOR-PATTERN"]]></replacetoken>
 			<replacevalue><![CDATA[<filter-spec value="not(any(match(&quot;WFLYSRV0059&quot;),match(&quot;WFLYEE0007&quot;)))" />
                 <formatter>
-                    <named-formatter name="COLOR-PATTERN" />
-                </formatter>]]></replacevalue>
+                    <named-formatter name="COLOR-PATTERN"]]></replacevalue>
 		</replace>
 
 		<echo file="${app.server.wildfly.bin.dir}/server.policy">

@@ -1067,6 +1067,71 @@
 		</execute>
 	</command>
 
+	<command name="SearchUsingNewSitePagePortlets" priority="4">
+		<var name="searchAssetType" value="Web Content" />
+		<var name="searchPage" value="Search Page" />
+		<var name="searchTerm" value="Apple" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="${searchAssetType}" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="${searchTerm}" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="Page#add">
+			<var name="pageName" value="${searchPage}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Search Results" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${searchPage}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Search Bar" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${searchPage}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Type Facet" />
+		</execute>
+
+		<execute macro="NewSearchPortlet#search">
+			<var name="searchTerm" value="${searchTerm}" />
+		</execute>
+
+		<execute macro="NewSearchPortlet#check">
+			<var name="facetOption" value="${searchAssetType}" />
+		</execute>
+
+		<execute macro="NewSearchPortlet#assertFacetURL">
+			<var name="searchAssetType" value="${searchAssetType}" />
+			<var name="searchPage" value="${searchPage}" />
+			<var name="searchTerm" value="${searchTerm}" />
+		</execute>
+
+		<execute macro="Search#gotoUserSearchResultPG">
+			<var name="searchAssetTitle" value="${searchTerm}" />
+		</execute>
+
+		<execute macro="NewSearchPortlet#viewResultDetails">
+			<var name="searchTerm" value="${searchTerm}" />
+		</execute>
+	</command>
+
 	<command name="SearchXSSAsset" priority="4">
 		<execute macro="Page#add">
 			<var name="pageName" value="Message Boards Page" />

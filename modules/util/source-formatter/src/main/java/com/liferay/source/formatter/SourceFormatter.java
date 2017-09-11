@@ -27,6 +27,7 @@ import com.liferay.portal.tools.GitException;
 import com.liferay.portal.tools.GitUtil;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.source.formatter.util.DebugUtil;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
@@ -298,6 +299,8 @@ public class SourceFormatter {
 		while (!executorService.isTerminated()) {
 			Thread.sleep(20);
 		}
+
+		DebugUtil.printSourceFormatterInformation();
 
 		_progressStatusQueue.put(
 			new ProgressStatusUpdate(ProgressStatus.SOURCE_FORMAT_COMPLETED));

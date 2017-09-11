@@ -28,6 +28,7 @@ import com.liferay.source.formatter.checks.configuration.SourceChecksSuppression
 import com.liferay.source.formatter.checks.configuration.SuppressionsLoader;
 import com.liferay.source.formatter.checks.util.SourceChecksUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.source.formatter.util.DebugUtil;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
@@ -76,6 +77,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	@Override
 	public final void format() throws Exception {
 		List<String> fileNames = getFileNames();
+
+		Class<?> clazz = getClass();
+
+		DebugUtil.addProcessorFileCount(
+			clazz.getSimpleName(), fileNames.size());
 
 		if (fileNames.isEmpty()) {
 			addProgressStatusUpdate(

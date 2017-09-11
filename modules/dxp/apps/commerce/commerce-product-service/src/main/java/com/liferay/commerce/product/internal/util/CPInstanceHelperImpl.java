@@ -253,9 +253,6 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
 			cpDefinitionId);
 
-		long cpDefinitionClassNameId = _portal.getClassNameId(
-			CPDefinition.class);
-
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 			serializedDDMFormValues);
 
@@ -334,8 +331,8 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 		if (skuContributor) {
 			cpDefinitionOptionRels =
-				_cpDefinitionOptionRelLocalService.
-					getSkuContributorCPDefinitionOptionRels(cpDefinitionId);
+				_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
+					cpDefinitionId, true);
 		}
 		else {
 			cpDefinitionOptionRels =
@@ -394,7 +391,13 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 			ddmFormField.setLabel(localizedValue);
 
-			ddmFormField.setRequired(skuContributor);
+			boolean required = false;
+
+			if (skuContributor || cpDefinitionOptionRel.getRequired()) {
+				required = true;
+			}
+
+			ddmFormField.setRequired(required);
 
 			ddmForm.addDDMFormField(ddmFormField);
 		}
@@ -411,8 +414,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 	@Override
 	public Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-			parseJSONString(String json)
-		throws PortalException {
+		parseCPInstanceJSONString(String json) throws PortalException {
 
 		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
 			cpDefinitionOptionRelListMap = new HashMap<>();
@@ -536,6 +538,20 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 		return render(
 			cpDefinitionId, null, false, renderRequest, renderResponse,
+			!cpDefinition.isCanSellWithoutOptionsCombination());
+	}
+
+	@Override
+	public String render(
+			long cpDefinitionId, RenderRequest renderRequest,
+			RenderResponse renderResponse, boolean skuContributor)
+		throws PortalException {
+
+		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
+			cpDefinitionId);
+
+		return render(
+			cpDefinitionId, null, skuContributor, renderRequest, renderResponse,
 			!cpDefinition.isCanSellWithoutOptionsCombination());
 	}
 

@@ -444,8 +444,8 @@ public class ActionHelper {
 			long cpDefinitionId)
 		throws PortalException {
 
-		return _cpDefinitionOptionRelService.
-			getSkuContributorCPDefinitionOptionRels(cpDefinitionId);
+		return _cpDefinitionOptionRelService.getCPDefinitionOptionRels(
+			cpDefinitionId, true);
 	}
 
 	@Reference

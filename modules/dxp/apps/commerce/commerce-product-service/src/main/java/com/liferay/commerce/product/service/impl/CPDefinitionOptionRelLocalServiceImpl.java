@@ -192,11 +192,27 @@ public class CPDefinitionOptionRelLocalServiceImpl
 	}
 
 	@Override
+	public int getCPDefinitionOptionRelCount(
+		long cpDefinitionId, boolean skuContributor) {
+
+		return cpDefinitionOptionRelPersistence.countByC_SC(
+			cpDefinitionId, skuContributor);
+	}
+
+	@Override
 	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels(
 		long cpDefinitionId) {
 
 		return cpDefinitionOptionRelPersistence.findByCPDefinitionId(
 			cpDefinitionId);
+	}
+
+	@Override
+	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels(
+		long cpDefinitionId, boolean skuContributor) {
+
+		return cpDefinitionOptionRelPersistence.findByC_SC(
+			cpDefinitionId, skuContributor);
 	}
 
 	@Override
@@ -220,22 +236,6 @@ public class CPDefinitionOptionRelLocalServiceImpl
 	public int getCPDefinitionOptionRelsCount(long cpDefinitionId) {
 		return cpDefinitionOptionRelPersistence.countByCPDefinitionId(
 			cpDefinitionId);
-	}
-
-	@Override
-	public int getSkuContributorCPDefinitionOptionRelCount(
-		long cpDefinitionId) {
-
-		return cpDefinitionOptionRelPersistence.countByC_SC(
-			cpDefinitionId, true);
-	}
-
-	@Override
-	public List<CPDefinitionOptionRel> getSkuContributorCPDefinitionOptionRels(
-		long cpDefinitionId) {
-
-		return cpDefinitionOptionRelPersistence.findByC_SC(
-			cpDefinitionId, true);
 	}
 
 	@Override

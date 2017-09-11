@@ -150,7 +150,8 @@ public class CPAttachmentFileEntriesDisplayContext extends
 			return Collections.emptyList();
 		}
 
-		return cpDefinition.getCPDefinitionOptionRels();
+		return _cpDefinitionOptionRelService.getCPDefinitionOptionRels(
+			cpDefinition.getCPDefinitionId(), true);
 	}
 
 	public String getCssClassFileMimeType(FileEntry fileEntry) {
@@ -327,9 +328,8 @@ public class CPAttachmentFileEntriesDisplayContext extends
 
 	public boolean hasOptions() throws PortalException {
 		int skuContributorCPDefinitionOptionRelCount =
-			_cpDefinitionOptionRelService.
-				getSkuContributorCPDefinitionOptionRelCount(
-					getCPDefinitionId());
+			_cpDefinitionOptionRelService.getCPDefinitionOptionRelCount(
+				getCPDefinitionId(), true);
 
 		if (skuContributorCPDefinitionOptionRelCount > 0) {
 			return true;

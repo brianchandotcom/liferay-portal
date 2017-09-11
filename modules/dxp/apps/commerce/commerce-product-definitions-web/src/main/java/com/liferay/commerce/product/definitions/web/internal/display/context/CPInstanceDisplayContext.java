@@ -80,7 +80,8 @@ public class CPInstanceDisplayContext
 			return Collections.emptyList();
 		}
 
-		return cpDefinition.getCPDefinitionOptionRels();
+		return _cpDefinitionOptionRelService.getCPDefinitionOptionRels(
+			cpDefinition.getCPDefinitionId(), true);
 	}
 
 	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
@@ -239,7 +240,8 @@ public class CPInstanceDisplayContext
 
 		CPInstance cpInstance = _cpInstanceService.getCPInstance(cpInstanceId);
 
-		return _cpInstanceHelper.parseJSONString(cpInstance.getDDMContent());
+		return _cpInstanceHelper.parseCPInstanceJSONString(
+			cpInstance.getDDMContent());
 	}
 
 	public String renderOptions(

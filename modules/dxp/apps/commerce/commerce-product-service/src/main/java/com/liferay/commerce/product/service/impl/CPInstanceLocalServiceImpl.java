@@ -197,8 +197,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			combinationGeneratorMap = new HashMap<>();
 
 		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
-			cpDefinitionOptionRelLocalService.
-				getSkuContributorCPDefinitionOptionRels(cpDefinitionId);
+			cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
+				cpDefinitionId, true);
 
 		if (cpDefinitionOptionRels.isEmpty()) {
 			throw new NoSuchSkuContributorCPDefinitionOptionRelException();

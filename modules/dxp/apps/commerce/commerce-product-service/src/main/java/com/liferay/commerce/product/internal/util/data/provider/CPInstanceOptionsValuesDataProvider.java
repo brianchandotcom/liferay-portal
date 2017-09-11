@@ -102,8 +102,8 @@ public class CPInstanceOptionsValuesDataProvider implements DDMDataProvider {
 			Map<String, String> filters = new HashMap<>();
 
 			List<CPDefinitionOptionRel> cpDefinitionOptionRels =
-				_cpDefinitionOptionRelService.
-					getSkuContributorCPDefinitionOptionRels(cpDefinitionId);
+				_cpDefinitionOptionRelService.getCPDefinitionOptionRels(
+					cpDefinitionId, true);
 
 			for (CPDefinitionOptionRel cpDefinitionOptionRel :
 					cpDefinitionOptionRels) {

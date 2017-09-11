@@ -133,6 +133,30 @@ public class CPDefinitionOptionRelServiceImpl
 	}
 
 	@Override
+	public int getCPDefinitionOptionRelCount(
+			long cpDefinitionId, boolean skuContributor)
+		throws PortalException {
+
+		CPDefinitionPermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
+
+		return cpDefinitionOptionRelLocalService.getCPDefinitionOptionRelCount(
+			cpDefinitionId, skuContributor);
+	}
+
+	@Override
+	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels(
+			long cpDefinitionId, boolean skuContributor)
+		throws PortalException {
+
+		CPDefinitionPermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
+
+		return cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
+			cpDefinitionId, skuContributor);
+	}
+
+	@Override
 	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels(
 			long cpDefinitionId, int start, int end)
 		throws PortalException {
@@ -166,29 +190,6 @@ public class CPDefinitionOptionRelServiceImpl
 
 		return cpDefinitionOptionRelLocalService.getCPDefinitionOptionRelsCount(
 			cpDefinitionId);
-	}
-
-	@Override
-	public int getSkuContributorCPDefinitionOptionRelCount(long cpDefinitionId)
-		throws PortalException {
-
-		CPDefinitionPermission.check(
-			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
-
-		return cpDefinitionOptionRelLocalService.
-			getSkuContributorCPDefinitionOptionRelCount(cpDefinitionId);
-	}
-
-	@Override
-	public List<CPDefinitionOptionRel> getSkuContributorCPDefinitionOptionRels(
-			long cpDefinitionId)
-		throws PortalException {
-
-		CPDefinitionPermission.check(
-			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
-
-		return cpDefinitionOptionRelLocalService.
-			getSkuContributorCPDefinitionOptionRels(cpDefinitionId);
 	}
 
 	@Override

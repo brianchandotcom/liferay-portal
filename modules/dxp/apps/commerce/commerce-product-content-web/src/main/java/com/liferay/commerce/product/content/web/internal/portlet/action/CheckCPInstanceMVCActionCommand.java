@@ -78,6 +78,7 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				jsonObject.put(
 					"manufacturerPartNumber",
 					cpInstance.getManufacturerPartNumber());
+				jsonObject.put("price", cpInstance.getPrice());
 				jsonObject.put("sku", cpInstance.getSku());
 			}
 			else {

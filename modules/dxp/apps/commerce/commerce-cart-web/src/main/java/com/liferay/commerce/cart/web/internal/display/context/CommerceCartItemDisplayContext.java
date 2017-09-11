@@ -17,14 +17,24 @@ package com.liferay.commerce.cart.web.internal.display.context;
 import com.liferay.commerce.cart.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.cart.web.internal.util.CommerceCartPortletUtil;
 import com.liferay.commerce.model.CommerceCartItem;
+import com.liferay.commerce.product.item.selector.criterion.CPInstanceItemSelectorCriterion;
 import com.liferay.commerce.service.CommerceCartItemService;
 import com.liferay.commerce.util.CommercePriceCalculationHelper;
 import com.liferay.commerce.util.CommercePriceFormatter;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -41,7 +51,8 @@ public class CommerceCartItemDisplayContext
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
 			CommerceCartItemService commerceCartItemService,
 			CommercePriceCalculationHelper commercePriceCalculationHelper,
-			CommercePriceFormatter commercePriceFormatter)
+			CommercePriceFormatter commercePriceFormatter,
+			ItemSelector itemSelector)
 		throws PortalException {
 
 		super(
@@ -51,6 +62,28 @@ public class CommerceCartItemDisplayContext
 		_commerceCartItemService = commerceCartItemService;
 		_commercePriceCalculationHelper = commercePriceCalculationHelper;
 		_commercePriceFormatter = commercePriceFormatter;
+		_itemSelector = itemSelector;
+	}
+
+	public CommerceCartItem getCommerceCartItem() throws PortalException {
+		if (_commerceCartItem != null) {
+			return _commerceCartItem;
+		}
+
+		_commerceCartItem = actionHelper.getCommerceCartItem(
+			cpRequestHelper.getRenderRequest());
+
+		return _commerceCartItem;
+	}
+
+	public long getCommerceCartItemId() throws PortalException {
+		CommerceCartItem commerceCartItem = getCommerceCartItem();
+
+		if (commerceCartItem == null) {
+			return 0;
+		}
+
+		return commerceCartItem.getCommerceCartItemId();
 	}
 
 	public String getFormattedPrice(CommerceCartItem commerceCartItem)
@@ -60,6 +93,31 @@ public class CommerceCartItemDisplayContext
 			commerceCartItem);
 
 		return _commercePriceFormatter.format(httpServletRequest, price);
+	}
+
+	public String getItemSelectorUrl() throws PortalException {
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(
+				cpRequestHelper.getRenderRequest());
+
+		CPInstanceItemSelectorCriterion cpInstanceItemSelectorCriterion =
+			new CPInstanceItemSelectorCriterion();
+
+		cpInstanceItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			Collections.<ItemSelectorReturnType>singletonList(
+				new UUIDItemSelectorReturnType()));
+
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+			requestBackedPortletURLFactory, "productInstancesSelectItem",
+			cpInstanceItemSelectorCriterion);
+
+		String checkedCPInstanceIds = StringUtil.merge(
+			getCheckedCPInstanceIds());
+
+		itemSelectorURL.setParameter(
+			"checkedCPInstanceIds", checkedCPInstanceIds);
+
+		return itemSelectorURL.toString();
 	}
 
 	@Override
@@ -116,9 +174,37 @@ public class CommerceCartItemDisplayContext
 		return searchContainer;
 	}
 
+	protected long[] getCheckedCPInstanceIds() throws PortalException {
+		List<Long> cpInstanceIdsList = new ArrayList<>();
+
+		List<CommerceCartItem> commerceCartItems = getCommerceCartItems();
+
+		for (CommerceCartItem commerceCartItem : commerceCartItems) {
+			cpInstanceIdsList.add(commerceCartItem.getCPInstanceId());
+		}
+
+		if (!cpInstanceIdsList.isEmpty()) {
+			return ArrayUtil.toLongArray(cpInstanceIdsList);
+		}
+
+		return new long[0];
+	}
+
+	protected List<CommerceCartItem> getCommerceCartItems()
+		throws PortalException {
+
+		int total = _commerceCartItemService.getCommerceCartItemsCount(
+			getCommerceCartId());
+
+		return _commerceCartItemService.getCommerceCartItems(
+			getCommerceCartId(), 0, total);
+	}
+
+	private CommerceCartItem _commerceCartItem;
 	private final CommerceCartItemService _commerceCartItemService;
 	private final CommercePriceCalculationHelper
 		_commercePriceCalculationHelper;
 	private final CommercePriceFormatter _commercePriceFormatter;
+	private final ItemSelector _itemSelector;
 
 }

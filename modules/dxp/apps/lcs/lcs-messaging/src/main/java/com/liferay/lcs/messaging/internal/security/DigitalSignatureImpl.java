@@ -56,18 +56,6 @@ public class DigitalSignatureImpl implements DigitalSignature {
 	}
 
 	/**
-	 * Sets the algorithm provider. The algorithm provider must have the signing
-	 * algorithm.
-	 *
-	 * @param algorithmProvider the algorithm provider
-	 * @see   #setSigningAlgorithm(String)
-	 * @since LCS 0.1
-	 */
-	public void setAlgorithmProvider(String algorithmProvider) {
-		_algorithmProvider = algorithmProvider;
-	}
-
-	/**
 	 * Sets the key name.
 	 *
 	 * @param keyName the alias defined for key store key entry
@@ -228,8 +216,7 @@ public class DigitalSignatureImpl implements DigitalSignature {
 	protected String doGetSignature(int buildNumber, byte[] data)
 		throws Exception {
 
-		Signature signature = Signature.getInstance(
-			_signingAlgorithm, _algorithmProvider);
+		Signature signature = Signature.getInstance(_signingAlgorithm);
 
 		KeyStore.ProtectionParameter protectionParameter =
 			new KeyStore.PasswordProtection(_keyStorePassword.toCharArray());
@@ -269,8 +256,7 @@ public class DigitalSignatureImpl implements DigitalSignature {
 			int buildNumber, byte[] data, String signature)
 		throws Exception {
 
-		Signature signatureInstance = Signature.getInstance(
-			_signingAlgorithm, _algorithmProvider);
+		Signature signatureInstance = Signature.getInstance(_signingAlgorithm);
 
 		KeyStore keyStore = getKeyStore();
 
@@ -320,7 +306,6 @@ public class DigitalSignatureImpl implements DigitalSignature {
 		return _keyStore;
 	}
 
-	private String _algorithmProvider;
 	private String _keyAlias;
 	private KeyStore _keyStore;
 	private final KeyStoreAdvisor _keyStoreAdvisor = new KeyStoreAdvisor();

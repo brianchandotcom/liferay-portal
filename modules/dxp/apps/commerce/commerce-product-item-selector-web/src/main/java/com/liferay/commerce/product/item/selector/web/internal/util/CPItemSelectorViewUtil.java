@@ -15,11 +15,16 @@
 package com.liferay.commerce.product.item.selector.web.internal.util;
 
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPSpecificationOption;
+import com.liferay.commerce.product.search.CPInstanceIndexer;
 import com.liferay.commerce.product.util.comparator.CPDefinitionDisplayDateComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionModifiedDateComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionTitleComparator;
+import com.liferay.commerce.product.util.comparator.CPInstanceCreateDateComparator;
+import com.liferay.commerce.product.util.comparator.CPInstanceDisplayDateComparator;
+import com.liferay.commerce.product.util.comparator.CPInstanceSkuComparator;
 import com.liferay.commerce.product.util.comparator.CPOptionTitleComparator;
 import com.liferay.commerce.product.util.comparator.CPSpecificationOptionTitleComparator;
 import com.liferay.portal.kernel.search.Field;
@@ -81,6 +86,55 @@ public class CPItemSelectorViewUtil {
 		else if (orderByCol.equals("title")) {
 			sort = SortFactoryUtil.create(
 				Field.TITLE, Sort.STRING_TYPE, orderByAsc);
+		}
+
+		return sort;
+	}
+
+	public static OrderByComparator<CPInstance> getCPInstanceOrderByComparator(
+		String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<CPInstance> orderByComparator = null;
+
+		if (orderByCol.equals("create-date")) {
+			orderByComparator = new CPInstanceCreateDateComparator(orderByAsc);
+		}
+		else if (orderByCol.equals("display-date")) {
+			orderByComparator = new CPInstanceDisplayDateComparator(orderByAsc);
+		}
+		else if (orderByCol.equals("sku")) {
+			orderByComparator = new CPInstanceSkuComparator(orderByAsc);
+		}
+
+		return orderByComparator;
+	}
+
+	public static Sort getCPInstanceSort(
+		String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (Objects.equals(orderByType, "asc")) {
+			orderByAsc = true;
+		}
+
+		Sort sort = null;
+
+		if (orderByCol.equals("create-date")) {
+			sort = SortFactoryUtil.create(Field.CREATE_DATE, true);
+		}
+		else if (orderByCol.equals("display-date")) {
+			sort = SortFactoryUtil.create("display-date", true);
+		}
+		else if (orderByCol.equals("sku")) {
+			sort = SortFactoryUtil.create(
+				CPInstanceIndexer.FIELD_SKU, Sort.STRING_TYPE, orderByAsc);
 		}
 
 		return sort;

@@ -67,6 +67,11 @@ public interface CPInstanceHelper {
 		throws PortalException;
 
 	public String render(
+			long cpDefinitionId, RenderRequest renderRequest,
+			RenderResponse renderResponse, boolean skuContributor)
+		throws PortalException;
+
+	public String render(
 			long cpDefinitionId, String json, boolean skuContributor,
 			RenderRequest renderRequest, RenderResponse renderResponse,
 			boolean useDDMFormRule)

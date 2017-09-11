@@ -162,7 +162,8 @@ public class CPTypeDisplayContext {
 	}
 
 	public String renderOptions(
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			boolean skuContributor)
 		throws PortalException {
 
 		CPDefinition cpDefinition = getCPDefinition();
@@ -172,7 +173,8 @@ public class CPTypeDisplayContext {
 		}
 
 		return cpInstanceHelper.render(
-			cpDefinition.getCPDefinitionId(), renderRequest, renderResponse);
+			cpDefinition.getCPDefinitionId(), renderRequest, renderResponse,
+			skuContributor);
 	}
 
 	protected final CPAttachmentFileEntryService cpAttachmentFileEntryService;

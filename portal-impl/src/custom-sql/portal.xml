@@ -122,7 +122,7 @@
 					(Users_Groups.groupId = Group_.groupId)
 			WHERE
 				(Users_Groups.userId = ?) AND
-				(Group_.active_ = '1')
+				(Group_.active_ = [$TRUE$])
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.findByCompanyId">

@@ -197,7 +197,7 @@ public class CPInstanceDisplayContext
 				getOrderByCol(), getOrderByType());
 
 			BaseModelSearchResult<CPInstance> cpInstanceBaseModelSearchResult =
-				_cpInstanceService.searchCPInstances(
+				_cpInstanceService.searchCPDefinitionInstances(
 					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
 					getCPDefinitionId(), getKeywords(), getStatus(),
 					searchContainer.getStart(), searchContainer.getEnd(), sort);
@@ -208,14 +208,16 @@ public class CPInstanceDisplayContext
 				cpInstanceBaseModelSearchResult.getBaseModels());
 		}
 		else {
-			int total = _cpInstanceService.getCPInstancesCount(
+			int total = _cpInstanceService.getCPDefinitionInstancesCount(
 				getCPDefinitionId(), getStatus());
 
 			searchContainer.setTotal(total);
 
-			List<CPInstance> results = _cpInstanceService.getCPInstances(
-				getCPDefinitionId(), getStatus(), searchContainer.getStart(),
-				searchContainer.getEnd(), orderByComparator);
+			List<CPInstance> results =
+				_cpInstanceService.getCPDefinitionInstances(
+					getCPDefinitionId(), getStatus(),
+					searchContainer.getStart(), searchContainer.getEnd(),
+					orderByComparator);
 
 			searchContainer.setResults(results);
 		}

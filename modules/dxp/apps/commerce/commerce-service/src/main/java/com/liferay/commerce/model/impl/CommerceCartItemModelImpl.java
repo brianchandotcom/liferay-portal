@@ -82,7 +82,7 @@ public class CommerceCartItemModelImpl extends BaseModelImpl<CommerceCartItem>
 			{ "CPDefinitionId", Types.BIGINT },
 			{ "CPInstanceId", Types.BIGINT },
 			{ "quantity", Types.INTEGER },
-			{ "json", Types.VARCHAR }
+			{ "json", Types.CLOB }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -98,10 +98,10 @@ public class CommerceCartItemModelImpl extends BaseModelImpl<CommerceCartItem>
 		TABLE_COLUMNS_MAP.put("CPDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CPInstanceId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("quantity", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("json", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("json", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceCartItem (commerceCartItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceCartId LONG,CPDefinitionId LONG,CPInstanceId LONG,quantity INTEGER,json VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceCartItem (commerceCartItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceCartId LONG,CPDefinitionId LONG,CPInstanceId LONG,quantity INTEGER,json TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceCartItem";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceCartItem.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceCartItem.createDate ASC";

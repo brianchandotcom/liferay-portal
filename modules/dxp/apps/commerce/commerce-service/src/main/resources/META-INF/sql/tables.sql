@@ -76,7 +76,7 @@ create table CommerceCartItem (
 	CPDefinitionId LONG,
 	CPInstanceId LONG,
 	quantity INTEGER,
-	json VARCHAR(75) null
+	json TEXT null
 );
 
 create table CommerceCountry (
@@ -147,7 +147,7 @@ create table CommerceOrderItem (
 	CPDefinitionId LONG,
 	CPInstanceId LONG,
 	quantity INTEGER,
-	json VARCHAR(75) null,
+	json TEXT null,
 	title STRING null,
 	sku VARCHAR(75) null,
 	price DOUBLE

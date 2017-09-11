@@ -232,7 +232,7 @@ public class CommerceCartItemPersistenceTest {
 			"commerceCartItemId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "commerceCartId", true, "CPDefinitionId",
-			true, "CPInstanceId", true, "quantity", true, "json", true);
+			true, "CPInstanceId", true, "quantity", true);
 	}
 
 	@Test

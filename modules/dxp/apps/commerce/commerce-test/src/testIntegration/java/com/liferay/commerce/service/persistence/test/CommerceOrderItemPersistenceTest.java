@@ -237,8 +237,8 @@ public class CommerceOrderItemPersistenceTest {
 			"commerceOrderItemId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "commerceOrderId", true, "CPDefinitionId",
-			true, "CPInstanceId", true, "quantity", true, "json", true,
-			"title", true, "sku", true, "price", true);
+			true, "CPInstanceId", true, "quantity", true, "title", true, "sku",
+			true, "price", true);
 	}
 
 	@Test

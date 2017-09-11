@@ -85,7 +85,7 @@
 		<property name="CPDefinitionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="CPInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="quantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="json" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="json" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 	</class>
 	<class name="com.liferay.commerce.model.impl.CommerceCountryImpl" table="CommerceCountry">
 		<id name="commerceCountryId" type="long">
@@ -160,7 +160,7 @@
 		<property name="CPDefinitionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="CPInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="quantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="json" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="json" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="sku" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="price" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />

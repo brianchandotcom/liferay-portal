@@ -89,7 +89,7 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 			{ "CPDefinitionId", Types.BIGINT },
 			{ "CPInstanceId", Types.BIGINT },
 			{ "quantity", Types.INTEGER },
-			{ "json", Types.VARCHAR },
+			{ "json", Types.CLOB },
 			{ "title", Types.VARCHAR },
 			{ "sku", Types.VARCHAR },
 			{ "price", Types.DOUBLE }
@@ -108,13 +108,13 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 		TABLE_COLUMNS_MAP.put("CPDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CPInstanceId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("quantity", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("json", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("json", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("sku", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("price", Types.DOUBLE);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceOrderItem (commerceOrderItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceOrderId LONG,CPDefinitionId LONG,CPInstanceId LONG,quantity INTEGER,json VARCHAR(75) null,title STRING null,sku VARCHAR(75) null,price DOUBLE)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceOrderItem (commerceOrderItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceOrderId LONG,CPDefinitionId LONG,CPInstanceId LONG,quantity INTEGER,json TEXT null,title STRING null,sku VARCHAR(75) null,price DOUBLE)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrderItem";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceOrderItem.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceOrderItem.createDate ASC";

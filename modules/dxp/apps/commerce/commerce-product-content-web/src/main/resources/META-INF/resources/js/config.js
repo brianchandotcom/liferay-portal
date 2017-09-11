@@ -10,9 +10,10 @@
 							path: 'product_content.js',
 							requires: [
 								'aui-base',
-								'liferay-portlet-base',
 								'aui-io-request',
-								'aui-parse-content'
+								'aui-parse-content',
+								'liferay-portlet-base',
+								'liferay-portlet-url'
 							]
 						}
 					},

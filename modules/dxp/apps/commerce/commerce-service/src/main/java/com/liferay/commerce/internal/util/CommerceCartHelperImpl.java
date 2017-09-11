@@ -49,24 +49,33 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceCartHelperImpl implements CommerceCartHelper {
 
 	public PortletURL getCommerceCartPortletURL(
-			HttpServletRequest httpServletRequest)
+			HttpServletRequest httpServletRequest, int type)
 		throws PortalException {
 
 		PortletURL portletURL = null;
 
 		long groupId = _portal.getScopeGroupId(httpServletRequest);
 
+		String portletId = "";
+
+		if(type == CommerceConstants.COMMERCE_CART_TYPE_CART){
+			portletId = CommercePortletKeys.COMMERCE_CART;
+		}
+		else if(type == CommerceConstants.COMMERCE_CART_TYPE_WISH_LIST){
+			portletId = CommercePortletKeys.COMMERCE_WISH_LIST_CONTENT;
+		}
+
 		long plid = _portal.getPlidFromPortletId(
-			groupId, CommercePortletKeys.COMMERCE_CART);
+			groupId, portletId);
 
 		if (plid > 0) {
 			portletURL = _portletURLFactory.create(
-				httpServletRequest, CommercePortletKeys.COMMERCE_CART, plid,
+				httpServletRequest, portletId, plid,
 				PortletRequest.RENDER_PHASE);
 		}
 		else {
 			portletURL = _portletURLFactory.create(
-				httpServletRequest, CommercePortletKeys.COMMERCE_CART,
+				httpServletRequest, portletId,
 				PortletRequest.RENDER_PHASE);
 		}
 

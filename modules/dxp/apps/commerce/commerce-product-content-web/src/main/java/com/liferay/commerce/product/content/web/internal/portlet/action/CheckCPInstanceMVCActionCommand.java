@@ -34,7 +34,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
@@ -59,9 +58,6 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
-
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			actionRequest);
 
 		HttpServletResponse httpServletResponse =
 			_portal.getHttpServletResponse(actionResponse);

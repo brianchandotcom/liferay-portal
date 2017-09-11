@@ -28,58 +28,63 @@ long cpDefinitionId = cpDefinition.getCPDefinitionId();
 
 int[] allowedCartQuantities = null;
 
-if(Validator.isNotNull(allowedCartQuantity))
-	allowedCartQuantities = StringUtil.split(allowedCartQuantity,0);
+if (Validator.isNotNull(allowedCartQuantity))
+	allowedCartQuantities = StringUtil.split(allowedCartQuantity, 0);
 
-	if(allowedCartQuantities != null) {
+	if (allowedCartQuantities != null) {
 		Arrays.sort(allowedCartQuantities);
 	}
 %>
 
 <div class="commerce-quantity-container">
 	<c:choose>
-		<c:when test="<%=!useSelect%>">
-			<aui:input type="text" name='<%= cpDefinitionId + "Quantity" %>' label="quantity">
+		<c:when test="<%= !useSelect %>">
+			<aui:input label="quantity" name='<%= cpDefinitionId + "Quantity" %>' type="text">
 				<aui:validator name="number" />
-				<aui:validator name="min"><%= minCartQuantity%></aui:validator>
-				<aui:validator name="max"><%= maxCartQuantity%></aui:validator>
+				<aui:validator name="min"><%= minCartQuantity %></aui:validator>
+				<aui:validator name="max"><%= maxCartQuantity %></aui:validator>
 			</aui:input>
 		</c:when>
-		<c:when test="<%= allowedCartQuantities != null%>">
-			<aui:select name='<%= cpDefinitionId + "Quantity" %>' label="quantity">
+		<c:when test="<%= allowedCartQuantities != null %>">
+			<aui:select label="quantity" name='<%= cpDefinitionId + "Quantity" %>'>
 				<% for(int curQuantity : allowedCartQuantities){ %>
-					<aui:option value="<%= curQuantity %>" label="<%= curQuantity %>" />
-				<%}%>
+				<aui:option label="<%= curQuantity %>" value="<%= curQuantity %>" />
+				<%} %>
 			</aui:select>
 		</c:when>
 		<c:otherwise>
-			<aui:select name='<%= cpDefinitionId + "Quantity" %>' label="quantity">
+			<aui:select label="quantity" name='<%= cpDefinitionId + "Quantity" %>'>
+
 				<%
 				int quantity = 1;
 
-				if(minCartQuantity > 1){
+				if (minCartQuantity > 1) {
 					quantity = minCartQuantity;
 				}
 
-				if(multipleCartQuantity > 1){
+				if (multipleCartQuantity > 1) {
 					quantity = multipleCartQuantity;
 				}
 
-				for(int i=1;i <10; i++){ %>
-					<aui:option value="<%= quantity %>" label="<%= quantity %>" />
+				for (int i = 1; i < 10; i++) {
+				%>
+
+					<aui:option label="<%= quantity %>" value="<%= quantity %>" />
+
 				<%
-					if((maxCartQuantity > 0) && (quantity == maxCartQuantity)){
+					if ((maxCartQuantity > 0) && (quantity == maxCartQuantity)) {
 						break;
 					}
 
-					if(multipleCartQuantity > 1){
+					if (multipleCartQuantity > 1) {
 						quantity = quantity + multipleCartQuantity;
 					}
-					else{
+					else {
 						quantity++;
 					}
 				}
 				%>
+
 			</aui:select>
 		</c:otherwise>
 	</c:choose>

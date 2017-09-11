@@ -56,6 +56,12 @@ public class CommerceCartItemServiceUtil {
 		getService().deleteCommerceCartItem(commerceCartItemId);
 	}
 
+	public static com.liferay.commerce.model.CommerceCartItem fetchCommerceCartItem(
+		long commerceCartItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchCommerceCartItem(commerceCartItemId);
+	}
+
 	public static com.liferay.commerce.model.CommerceCartItem getCommerceCartItem(
 		long commerceCartItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {

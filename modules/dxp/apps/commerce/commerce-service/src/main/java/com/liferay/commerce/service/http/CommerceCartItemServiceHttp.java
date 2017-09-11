@@ -119,12 +119,45 @@ public class CommerceCartItemServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceCartItem fetchCommerceCartItem(
+		HttpPrincipal httpPrincipal, long commerceCartItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceCartItemServiceUtil.class,
+					"fetchCommerceCartItem",
+					_fetchCommerceCartItemParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceCartItemId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.model.CommerceCartItem)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.commerce.model.CommerceCartItem getCommerceCartItem(
 		HttpPrincipal httpPrincipal, long commerceCartItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceCartItemServiceUtil.class,
-					"getCommerceCartItem", _getCommerceCartItemParameterTypes2);
+					"getCommerceCartItem", _getCommerceCartItemParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceCartItemId);
@@ -155,7 +188,7 @@ public class CommerceCartItemServiceHttp {
 		HttpPrincipal httpPrincipal, long commerceCartId, int start, int end) {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceCartItemServiceUtil.class,
-					"getCommerceCartItems", _getCommerceCartItemsParameterTypes3);
+					"getCommerceCartItems", _getCommerceCartItemsParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceCartId, start, end);
@@ -183,7 +216,7 @@ public class CommerceCartItemServiceHttp {
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceCartItem> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceCartItemServiceUtil.class,
-					"getCommerceCartItems", _getCommerceCartItemsParameterTypes4);
+					"getCommerceCartItems", _getCommerceCartItemsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceCartId, start, end, orderByComparator);
@@ -211,7 +244,7 @@ public class CommerceCartItemServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceCartItemServiceUtil.class,
 					"getCommerceCartItemsCount",
-					_getCommerceCartItemsCountParameterTypes5);
+					_getCommerceCartItemsCountParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceCartId);
@@ -241,7 +274,7 @@ public class CommerceCartItemServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceCartItemServiceUtil.class,
 					"updateCommerceCartItem",
-					_updateCommerceCartItemParameterTypes6);
+					_updateCommerceCartItemParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceCartItemId, quantity, json);
@@ -277,20 +310,23 @@ public class CommerceCartItemServiceHttp {
 	private static final Class<?>[] _deleteCommerceCartItemParameterTypes1 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getCommerceCartItemParameterTypes2 = new Class[] {
+	private static final Class<?>[] _fetchCommerceCartItemParameterTypes2 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getCommerceCartItemsParameterTypes3 = new Class[] {
-			long.class, int.class, int.class
+	private static final Class<?>[] _getCommerceCartItemParameterTypes3 = new Class[] {
+			long.class
 		};
 	private static final Class<?>[] _getCommerceCartItemsParameterTypes4 = new Class[] {
+			long.class, int.class, int.class
+		};
+	private static final Class<?>[] _getCommerceCartItemsParameterTypes5 = new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getCommerceCartItemsCountParameterTypes5 = new Class[] {
+	private static final Class<?>[] _getCommerceCartItemsCountParameterTypes6 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _updateCommerceCartItemParameterTypes6 = new Class[] {
+	private static final Class<?>[] _updateCommerceCartItemParameterTypes7 = new Class[] {
 			long.class, int.class, java.lang.String.class
 		};
 }

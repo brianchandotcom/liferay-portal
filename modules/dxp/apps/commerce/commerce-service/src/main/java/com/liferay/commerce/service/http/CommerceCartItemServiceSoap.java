@@ -95,6 +95,20 @@ public class CommerceCartItemServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceCartItemSoap fetchCommerceCartItem(
+		long commerceCartItemId) throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceCartItem returnValue = CommerceCartItemServiceUtil.fetchCommerceCartItem(commerceCartItemId);
+
+			return com.liferay.commerce.model.CommerceCartItemSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.model.CommerceCartItemSoap getCommerceCartItem(
 		long commerceCartItemId) throws RemoteException {
 		try {

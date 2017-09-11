@@ -50,6 +50,13 @@ public class CommerceCartItemServiceWrapper implements CommerceCartItemService,
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceCartItem fetchCommerceCartItem(
+		long commerceCartItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCartItemService.fetchCommerceCartItem(commerceCartItemId);
+	}
+
+	@Override
 	public com.liferay.commerce.model.CommerceCartItem getCommerceCartItem(
 		long commerceCartItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {

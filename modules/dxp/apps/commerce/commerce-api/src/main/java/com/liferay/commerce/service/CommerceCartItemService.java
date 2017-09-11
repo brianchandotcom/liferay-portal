@@ -65,6 +65,10 @@ public interface CommerceCartItemService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCartItem fetchCommerceCartItem(long commerceCartItemId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceCartItem getCommerceCartItem(long commerceCartItemId)
 		throws PortalException;
 

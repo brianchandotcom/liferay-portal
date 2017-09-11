@@ -64,6 +64,33 @@ public class ActionHelper {
 		return commerceCart;
 	}
 
+	public CommerceCartItem getCommerceCartItem(RenderRequest renderRequest)
+		throws PortalException {
+
+		CommerceCartItem commerceCartItem =
+			(CommerceCartItem)renderRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CART_ITEM);
+
+		if (commerceCartItem != null) {
+			return commerceCartItem;
+		}
+
+		long commerceCartItemId = ParamUtil.getLong(
+			renderRequest, "commerceCartItemId");
+
+		if (commerceCartItemId > 0) {
+			commerceCartItem = _commerceCartItemService.fetchCommerceCartItem(
+				commerceCartItemId);
+		}
+
+		if (commerceCartItem != null) {
+			renderRequest.setAttribute(
+				CommerceWebKeys.COMMERCE_CART_ITEM, commerceCartItem);
+		}
+
+		return commerceCartItem;
+	}
+
 	public List<CommerceCartItem> getCommerceCartItems(
 			ResourceRequest resourceRequest)
 		throws PortalException {
@@ -75,7 +102,7 @@ public class ActionHelper {
 
 		for (long commerceCartItemId : commerceCartItemIds) {
 			CommerceCartItem commerceCartItem =
-				_commerceCartItemService.getCommerceCartItem(
+				_commerceCartItemService.fetchCommerceCartItem(
 					commerceCartItemId);
 
 			commerceCartItems.add(commerceCartItem);

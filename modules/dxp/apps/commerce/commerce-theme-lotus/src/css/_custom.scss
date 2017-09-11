@@ -29,13 +29,17 @@
 			border-color: transparent;
 
 			@include sm {
-				padding-right: 0;
+				padding: 12px 0 12px;
+			}
+
+			.form-group {
+				position: relative;
 			}
 
 			.lexicon-icon-search-static {
 				z-index: 9;
 
-				@include position(absolute, 30px null null 30px);
+				@include position(absolute, null null 40px 12px);
 			}
 		}
 

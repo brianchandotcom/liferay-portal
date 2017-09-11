@@ -245,7 +245,7 @@ EffectsComponent.STATE = {
 		validator: core.isString,
 		value: '0'
 	},
-	
+
 	/**
 	 * Array of available effects
 	 * @type {Object}

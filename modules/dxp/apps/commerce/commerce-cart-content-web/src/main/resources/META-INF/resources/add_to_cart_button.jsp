@@ -20,10 +20,14 @@
 CPDefinition cpDefinition = (CPDefinition)request.getAttribute("cpDefinition");
 CPInstance cpInstance = (CPInstance)request.getAttribute("cpInstance");
 
+boolean disabled = !cpDefinition.getCanSellWithoutOptionsCombination();
+
 long cpInstanceId = 0;
 
 if (cpInstance != null) {
 	cpInstanceId = cpInstance.getCPInstanceId();
+
+	disabled = false;
 }
 
 String buttonId = cpDefinition.getCPDefinitionId() + "addToCart";
@@ -35,7 +39,7 @@ dataMap.put("cp-instance-id", String.valueOf(cpInstanceId));
 
 <liferay-commerce:quantity-input CPDefinitionId="<%= cpDefinition.getCPDefinitionId() %>" useSelect="<%= true %>" />
 
-<aui:button cssClass="btn-lg btn-primary" data="<%= dataMap %>" disabled="<%= !cpDefinition.getCanSellWithoutOptionsCombination() %>" name="<%= buttonId %>" value="add-to-cart" />
+<aui:button cssClass="btn-lg btn-primary" data="<%= dataMap %>" disabled="<%= disabled %>" name="<%= buttonId %>" value="add-to-cart" />
 
 <aui:script use="aui-io-request,aui-parse-content,liferay-notification">
 	<% if(!cpDefinition.getCanSellWithoutOptionsCombination()){ %>

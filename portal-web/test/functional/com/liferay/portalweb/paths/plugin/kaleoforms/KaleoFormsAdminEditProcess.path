@@ -136,7 +136,7 @@
 <!--WORKFLOW-->
 <tr>
 	<td>SELECTED_WORKFLOW</td>
-	<td>//div[contains(.,'Selected Workflow')]/span</td>
+	<td>//div[contains(.,'Selected Workflow')]//span[contains(@id,'workflowDefinitionDisplay')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -460,9 +460,9 @@
 	<command name="publishInvalidWorkflowDefinitionViaWorkflowCP">
 		<execute function="AssertClickNoError" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute macro="Alert#viewRequestFailedToComplete" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Please enter valid content." />
+		<execute macro="Alert#viewErrorMessage">
+			<var name="errorMessage" value="${errorMessage}" />
+		</execute>
 	</command>
 
 	<command name="publishWorkflowDefinitionViaKDCP">

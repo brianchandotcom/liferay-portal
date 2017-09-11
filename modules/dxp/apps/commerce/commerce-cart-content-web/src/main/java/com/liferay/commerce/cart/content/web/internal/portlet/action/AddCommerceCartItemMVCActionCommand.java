@@ -128,6 +128,8 @@ public class AddCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
 			jsonObject.put("success", false);
 		}
 
+		hideDefaultSuccessMessage(actionRequest);
+
 		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 
 		writeJSON(actionRequest, actionResponse, jsonObject);

@@ -1,1 +1,2 @@
 com.liferay.arquillian.extension.junit.bridge.LiferayArquillianJUnitBridgeExtension
+com.liferay.arquillian.deploymentscenario.BndDeploymentScenarioGeneratorExtension

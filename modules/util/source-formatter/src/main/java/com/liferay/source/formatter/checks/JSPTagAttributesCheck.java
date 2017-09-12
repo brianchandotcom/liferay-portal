@@ -228,6 +228,49 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 		return content;
 	}
 
+	private String _getExtendedFileName(
+		String content, String fileName, String utilTaglibSrcDirName) {
+
+		Matcher matcher = _extendedClassPattern.matcher(content);
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		StringBundler sb = new StringBundler();
+
+		String extendedClassName = matcher.group(1);
+
+		Pattern pattern = Pattern.compile(
+			"\nimport (.*\\." + extendedClassName + ");");
+
+		matcher = pattern.matcher(content);
+
+		if (matcher.find()) {
+			extendedClassName = matcher.group(1);
+
+			if (!extendedClassName.startsWith("com.liferay.taglib")) {
+				return null;
+			}
+
+			sb.append(utilTaglibSrcDirName);
+			sb.append(
+				StringUtil.replace(
+					extendedClassName, CharPool.PERIOD, CharPool.SLASH));
+		}
+		else {
+			int pos = fileName.lastIndexOf(CharPool.SLASH);
+
+			sb.append(fileName.substring(0, pos + 1));
+
+			sb.append(extendedClassName);
+		}
+
+		sb.append(".java");
+
+		return sb.toString();
+	}
+
 	private Set<String> _getPrimitiveTagAttributeDataTypes() {
 		return SetUtil.fromArray(
 			new String[] {
@@ -237,8 +280,26 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 			});
 	}
 
-	private Map<String, String> _getSetMethodsMap(JavaClass javaClass) {
+	private Map<String, String> _getSetMethodsMap(
+			String tagFileName, String utilTaglibSrcDirName)
+		throws Exception {
+
+		if (_classSetMethodsMap.containsKey(tagFileName)) {
+			return _classSetMethodsMap.get(tagFileName);
+		}
+
 		Map<String, String> setMethodsMap = new HashMap<>();
+
+		File tagFile = new File(tagFileName);
+
+		if (!tagFile.exists()) {
+			return setMethodsMap;
+		}
+
+		String tagFileContent = FileUtil.read(tagFile);
+
+		JavaClass javaClass = JavaClassParser.parseJavaClass(
+			tagFileName, tagFileContent);
 
 		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
 			if (!(javaTerm instanceof JavaMethod)) {
@@ -265,6 +326,16 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 
 			setMethodsMap.put(methodName, javaParameter.getParameterType());
 		}
+
+		String extendedFileName = _getExtendedFileName(
+			tagFileContent, tagFileName, utilTaglibSrcDirName);
+
+		if (extendedFileName != null) {
+			setMethodsMap.putAll(
+				_getSetMethodsMap(extendedFileName, utilTaglibSrcDirName));
+		}
+
+		_classSetMethodsMap.put(tagFileName, setMethodsMap);
 
 		return setMethodsMap;
 	}
@@ -324,10 +395,7 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 
 				if (srcDir == null) {
 					if (tldFileName.contains("/src/")) {
-						srcDir = tldFile.getAbsolutePath();
-
-						srcDir = StringUtil.replace(
-							srcDir, CharPool.BACK_SLASH, CharPool.SLASH);
+						srcDir = SourceUtil.getAbsolutePath(tldFile);
 
 						srcDir =
 							srcDir.substring(0, srcDir.lastIndexOf("/src/")) +
@@ -350,21 +418,8 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 						tagClassName, CharPool.PERIOD, CharPool.SLASH));
 				sb.append(".java");
 
-				String tagJavaFileName = sb.toString();
-
-				File tagJavaFile = new File(tagJavaFileName);
-
-				if (!tagJavaFile.exists()) {
-					continue;
-				}
-
-				String tagJavaContent = FileUtil.read(tagJavaFile);
-
-				JavaClass javaClass = JavaClassParser.parseJavaClass(
-					tagJavaFileName, tagJavaContent);
-
 				Map<String, String> setMethodsMap = _getSetMethodsMap(
-					javaClass);
+					sb.toString(), utilTaglibSrcDirName);
 
 				if (setMethodsMap.isEmpty()) {
 					continue;
@@ -418,14 +473,7 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 			return StringPool.BLANK;
 		}
 
-		String utilTaglibSrcDirName = utilTaglibDir.getAbsolutePath();
-
-		utilTaglibSrcDirName = StringUtil.replace(
-			utilTaglibSrcDirName, CharPool.BACK_SLASH, CharPool.SLASH);
-
-		utilTaglibSrcDirName += StringPool.SLASH;
-
-		return utilTaglibSrcDirName;
+		return SourceUtil.getAbsolutePath(utilTaglibDir) + StringPool.SLASH;
 	}
 
 	private boolean _isValidTagAttributeValue(String value, String dataType) {
@@ -454,6 +502,10 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 	}
 
 	private List<String> _allFileNames;
+	private final Map<String, Map<String, String>> _classSetMethodsMap =
+		new HashMap<>();
+	private final Pattern _extendedClassPattern = Pattern.compile(
+		"\\sextends\\s+(\\w+)\\W");
 	private final Pattern _jspTaglibPattern = Pattern.compile(
 		"<[-\\w]+:[-\\w]+ .");
 	private Set<String> _primitiveTagAttributeDataTypes;

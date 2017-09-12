@@ -57,7 +57,7 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 	@Override
 	public void init() throws Exception {
 		_primitiveTagAttributeDataTypes = _getPrimitiveTagAttributeDataTypes();
-		_tagJavaClassesMap = _getTagJavaClassesMap();
+		_tagSetMethodsMap = _getTagSetMethodsMap();
 	}
 
 	@Override
@@ -106,9 +106,9 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 			return line;
 		}
 
-		JavaClass tagJavaClass = _tagJavaClassesMap.get(tagName);
+		Map<String, String> setMethodsMap = _tagSetMethodsMap.get(tagName);
 
-		if (tagJavaClass == null) {
+		if (setMethodsMap == null) {
 			return line;
 		}
 
@@ -119,50 +119,29 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 		String setAttributeMethodName =
 			"set" + TextFormatter.format(attribute, TextFormatter.G);
 
-		for (String dataType : _primitiveTagAttributeDataTypes) {
-			JavaMethod setAttributeMethod = null;
+		String dataType = setMethodsMap.get(setAttributeMethodName);
 
-			while (true) {
-
-				// com.thoughtworks.qdox.model.JavaClass is not thread-safe and
-				// can throw NPE as a result of a race condition
-
-				try {
-					setAttributeMethod = _getSetAttributeMethod(
-						tagJavaClass, setAttributeMethodName, dataType);
-
-					break;
-				}
-				catch (Exception e) {
-				}
-			}
-
-			if (setAttributeMethod != null) {
-				String value = attributeAndValue.substring(
-					pos + 2, attributeAndValue.length() - 1);
-
-				if (!_isValidTagAttributeValue(value, dataType)) {
-					return line;
-				}
-
-				String newAttributeAndValue = StringUtil.replace(
-					attributeAndValue,
-					StringPool.QUOTE + value + StringPool.QUOTE,
-					"\"<%= " + value + " %>\"");
-
-				return StringUtil.replace(
-					line, attributeAndValue, newAttributeAndValue);
-			}
-		}
-
-		if (!attributeAndValue.matches(".*=\"(false|true)\".*")) {
+		if (dataType == null) {
 			return line;
 		}
 
-		JavaMethod setAttributeMethod = _getSetAttributeMethod(
-			tagJavaClass, setAttributeMethodName, "java.lang.String");
+		if (_primitiveTagAttributeDataTypes.contains(dataType)) {
+			String value = attributeAndValue.substring(
+				pos + 2, attributeAndValue.length() - 1);
 
-		if (setAttributeMethod == null) {
+			if (!_isValidTagAttributeValue(value, dataType)) {
+				return line;
+			}
+
+			String newAttributeAndValue = StringUtil.replace(
+				attributeAndValue, StringPool.QUOTE + value + StringPool.QUOTE,
+				"\"<%= " + value + " %>\"");
+
+			return StringUtil.replace(
+				line, attributeAndValue, newAttributeAndValue);
+		}
+
+		if (!dataType.equals("java.lang.String")) {
 			return line;
 		}
 
@@ -257,36 +236,10 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 			});
 	}
 
-	private JavaMethod _getSetAttributeMethod(
-		JavaClass javaClass, String methodName, String parameterTypeName) {
+	private Map<String, Map<String, String>> _getTagSetMethodsMap()
+		throws Exception {
 
-		List<JavaMethod> methods = javaClass.getMethods(true);
-
-		for (JavaMethod method : methods) {
-			if (!methodName.equals(method.getName())) {
-				continue;
-			}
-
-			List<JavaType> parameterTypes = method.getParameterTypes();
-
-			if (parameterTypes.size() != 1) {
-				continue;
-			}
-
-			JavaType parameterType = parameterTypes.get(0);
-
-			if (parameterTypeName.equals(
-					parameterType.getFullyQualifiedName())) {
-
-				return method;
-			}
-		}
-
-		return null;
-	}
-
-	private Map<String, JavaClass> _getTagJavaClassesMap() throws Exception {
-		Map<String, JavaClass> tagJavaClassesMap = new HashMap<>();
+		Map<String, Map<String, String>> tagSetMethodsMap = new HashMap<>();
 
 		outerLoop:
 		for (String tldFileName : _getTLDFileNames()) {
@@ -365,16 +318,43 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 				JavaClass tagJavaClass = javaProjectBuilder.getClassByName(
 					tagClassName);
 
+				Map<String, String> setMethodsMap = new HashMap<>();
+
+				for (JavaMethod javaMethod : tagJavaClass.getMethods()) {
+					String methodName = javaMethod.getName();
+
+					if (!methodName.startsWith("set")) {
+						continue;
+					}
+
+					List<JavaType> parameterTypes =
+						javaMethod.getParameterTypes();
+
+					if (parameterTypes.size() != 1) {
+						continue;
+					}
+
+					JavaType parameterType = parameterTypes.get(0);
+
+					setMethodsMap.put(
+						javaMethod.getName(),
+						parameterType.getFullyQualifiedName());
+				}
+
+				if (setMethodsMap.isEmpty()) {
+					continue;
+				}
+
 				Element tagNameElement = tagElement.element("name");
 
 				String tagName = tagNameElement.getStringValue();
 
-				tagJavaClassesMap.put(
-					shortName + StringPool.COLON + tagName, tagJavaClass);
+				tagSetMethodsMap.put(
+					shortName + StringPool.COLON + tagName, setMethodsMap);
 			}
 		}
 
-		return tagJavaClassesMap;
+		return tagSetMethodsMap;
 	}
 
 	private List<String> _getTLDFileNames() throws Exception {
@@ -456,6 +436,6 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 	private final Pattern _jspTaglibPattern = Pattern.compile(
 		"<[-\\w]+:[-\\w]+ .");
 	private Set<String> _primitiveTagAttributeDataTypes;
-	private Map<String, JavaClass> _tagJavaClassesMap;
+	private Map<String, Map<String, String>> _tagSetMethodsMap;
 
 }

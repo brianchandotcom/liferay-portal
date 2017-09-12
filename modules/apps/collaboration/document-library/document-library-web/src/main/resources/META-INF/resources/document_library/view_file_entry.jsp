@@ -630,13 +630,6 @@ if (portletTitleBasedNavigation) {
 			<portlet:namespace />updateRowsChecked($(event.currentTarget));
 		}
 	);
-
-	$('#<portlet:namespace />url, #<portlet:namespace />webDavURL').on(
-		'click',
-		function() {
-			this.setSelectionRange(0, 9999);
-		}
-	);
 </aui:script>
 
 <%

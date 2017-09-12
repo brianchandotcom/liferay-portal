@@ -95,15 +95,6 @@ else {
 						var webdavURLInput = webdavDialog.get('boundingBox').one('#<portlet:namespace />webDavURL');
 
 						webdavURLInput.focus();
-
-						webdavURLInput.on(
-							'click',
-							function(event) {
-								var webdavURLInputDOMNode = this.getDOMNode();
-
-								webdavURLInputDOMNode.setSelectionRange(0, 9999);
-							}
-						);
 					}
 				);
 

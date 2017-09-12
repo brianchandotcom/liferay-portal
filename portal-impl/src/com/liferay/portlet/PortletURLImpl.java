@@ -984,6 +984,10 @@ public class PortletURLImpl
 
 		String result = sb.toString();
 
+		if (result.length() > Http.URL_MAXIMUM_LENGTH) {
+			result = HttpUtil.shortenURL(result);
+		}
+
 		if (PropsValues.PORTLET_URL_ANCHOR_ENABLE) {
 			if (_anchor && (_windowStateString != null) &&
 				!_windowStateString.equals(WindowState.MAXIMIZED.toString()) &&
@@ -1009,10 +1013,6 @@ public class PortletURLImpl
 
 		if (_escapeXml) {
 			result = HtmlUtil.escape(result);
-		}
-
-		if (result.length() > Http.URL_MAXIMUM_LENGTH) {
-			result = HttpUtil.shortenURL(result, 2);
 		}
 
 		return result;

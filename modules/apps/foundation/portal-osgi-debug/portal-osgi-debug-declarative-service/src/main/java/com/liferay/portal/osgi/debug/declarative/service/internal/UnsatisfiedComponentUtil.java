@@ -75,21 +75,23 @@ public class UnsatisfiedComponentUtil {
 		ComponentDescriptionDTO componentDescriptionDTO,
 		ComponentConfigurationDTO componentConfigurationDTO, StringBundler sb) {
 
-		sb.append("\n\tDeclarative Service: id=");
+		sb.append("\n\tDeclarative Service {id: ");
 		sb.append(componentConfigurationDTO.id);
-		sb.append(",name=");
+		sb.append(", name: ");
 		sb.append(componentDescriptionDTO.name);
-		sb.append(",unsatisfied references=");
+		sb.append(", unsatisfied references: ");
 
 		for (UnsatisfiedReferenceDTO unsatisfiedReferenceDTO :
 				componentConfigurationDTO.unsatisfiedReferences) {
 
-			sb.append("{name: ");
+			sb.append("\n\t\t{name: ");
 			sb.append(unsatisfiedReferenceDTO.name);
 			sb.append(", target: ");
 			sb.append(unsatisfiedReferenceDTO.target);
 			sb.append("}");
 		}
+
+		sb.append("\n\t}");
 	}
 
 	private static void _listUnsatisfiedComponents(
@@ -107,12 +109,13 @@ public class UnsatisfiedComponentUtil {
 			return;
 		}
 
-		sb.append("\nBundle: id=");
+		sb.append("\nBundle {id: ");
 		sb.append(bundle.getBundleId());
-		sb.append(",name=");
+		sb.append(", name: ");
 		sb.append(bundle.getSymbolicName());
-		sb.append(",version=");
+		sb.append(", version: ");
 		sb.append(bundle.getVersion());
+		sb.append("}");
 		sb.append(unsatisfiedInformation);
 	}
 

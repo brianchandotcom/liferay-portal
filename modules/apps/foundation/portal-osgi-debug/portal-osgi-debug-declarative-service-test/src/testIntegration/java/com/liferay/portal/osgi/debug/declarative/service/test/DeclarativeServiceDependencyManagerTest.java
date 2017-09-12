@@ -159,10 +159,11 @@ public class DeclarativeServiceDependencyManagerTest {
 
 			StringBundler sb = new StringBundler(4);
 
-			sb.append("name=");
+			sb.append("name: ");
 			sb.append(DeclarativeServiceTestComponent.class.getName());
-			sb.append(",unsatisfied references=");
-			sb.append("{name: declarativeServiceTestReference, target: null}");
+			sb.append(", unsatisfied references: ");
+			sb.append(
+				"\n\t\t{name: declarativeServiceTestReference, target: null}");
 
 			Assert.assertTrue(message.contains(sb.toString()));
 
@@ -195,7 +196,7 @@ public class DeclarativeServiceDependencyManagerTest {
 				public boolean add(LoggingEvent loggingEvent) {
 					boolean added = super.add(loggingEvent);
 
-					String message = loggingEvent.getMessage();
+					String message = String.valueOf(loggingEvent.getMessage());
 
 					if (message.equals(
 							"Stopped scanning for unsatisfied declarative " +

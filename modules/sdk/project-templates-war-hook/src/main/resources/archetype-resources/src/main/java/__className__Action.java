@@ -1,4 +1,4 @@
-package ${package}.${artifactId};
+package ${package}.${className}LoginPreAction;
 
 import com.liferay.portal.kernel.events.Action;
 import javax.servlet.http.HttpServletRequest;
@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author ${author}
  */
-public class ${artifactId} extends Action {
+public class ${className}LoginPreAction extends Action {
 	
 	@Override
     public void run(HttpServletRequest req, HttpServletResponse res) {

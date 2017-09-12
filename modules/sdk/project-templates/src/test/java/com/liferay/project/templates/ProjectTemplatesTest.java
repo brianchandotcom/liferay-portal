@@ -1395,7 +1395,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "src/main/java/warhook/WarHookAction.java",
-			"public class WarHook extends Action");
+			"public class WarHookLoginPreAction extends Action");
 
 		_testContains(
 			gradleProjectDir, "src/main/java/warhook/WarHookStartupAction.java",

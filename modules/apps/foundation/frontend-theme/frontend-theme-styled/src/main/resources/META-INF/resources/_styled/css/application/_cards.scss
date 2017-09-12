@@ -9,6 +9,11 @@
 
 			.card-tab {
 				border-left-color: lighten($card-tab-border-left-color, 20%);
+
+				.card-tab {
+					border-left-width: 0;
+					padding-left: 0;
+				}
 			}
 		}
 	}

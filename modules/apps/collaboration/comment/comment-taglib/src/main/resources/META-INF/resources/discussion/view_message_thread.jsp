@@ -33,15 +33,6 @@ boolean skipEditorLoading = ParamUtil.getBoolean(request, "skipEditorLoading");
 
 DiscussionComment rootDiscussionComment = discussion.getRootDiscussionComment();
 
-String articleCssClass = StringPool.BLANK;
-
-if (rootDiscussionComment.getCommentId() == discussionComment.getParentCommentId()) {
-	articleCssClass = "card-tab-group";
-}
-else if (depth < 4) {
-	articleCssClass = "card-tab";
-}
-
 DiscussionRequestHelper discussionRequestHelper = new DiscussionRequestHelper(request);
 
 DiscussionPermission discussionPermission = CommentManagerUtil.getDiscussionPermission(discussionRequestHelper.getPermissionChecker());
@@ -52,7 +43,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 %>
 
 <c:if test="<%= commentTreeDisplayContext.isDiscussionVisible() %>">
-	<article class="lfr-discussion <%= articleCssClass %>">
+	<article class="lfr-discussion <%= (rootDiscussionComment.getCommentId() == discussionComment.getParentCommentId()) ? "card-tab-group" : "card-tab" %>">
 		<div class="card list-group-card panel">
 			<div class="panel-body">
 				<div class="card-row">
@@ -263,7 +254,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 			</div>
 		</div>
 
-		<div class="<%= (depth < 3) ? "card-tab" : StringPool.BLANK %> lfr-discussion lfr-discussion-form-reply" id="<%= namespace + randomNamespace + "postReplyForm" + index %>" style="display: none;">
+		<div class="card-tab lfr-discussion lfr-discussion-form-reply" id="<%= namespace + randomNamespace + "postReplyForm" + index %>" style="display: none;">
 			<div class="card list-group-card panel">
 				<div class="panel-body">
 					<div class="lfr-discussion-details">

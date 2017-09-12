@@ -17,6 +17,7 @@ package com.liferay.site.service.persistence.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.GroupFriendlyURLException;
 import com.liferay.portal.kernel.exception.GroupParentException;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.NoSuchResourcePermissionException;
@@ -54,11 +55,15 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
 import java.util.ArrayList;
@@ -72,6 +77,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -101,6 +107,12 @@ public class GroupServiceTest {
 		_group = GroupTestUtil.addGroup();
 	}
 
+	@After
+	public void tearDown() throws Exception {
+		PropsValues.SITES_FRIENDLY_URL_ALLOW_GROUP_ID = GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.SITES_FRIENDLY_URL_ALLOW_GROUP_ID));
+	}
+
 	@Test
 	public void testAddCompanyStagingGroup() throws Exception {
 		Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
@@ -120,10 +132,16 @@ public class GroupServiceTest {
 			companyGroup.getFriendlyURL(), false, companyGroup.isActive(),
 			serviceContext);
 
-		Assert.assertTrue(companyStagingGroup.isCompanyStagingGroup());
+		try {
+			Assert.assertTrue(companyStagingGroup.isCompanyStagingGroup());
 
-		Assert.assertEquals(
-			companyGroup.getGroupId(), companyStagingGroup.getLiveGroupId());
+			Assert.assertEquals(
+				companyGroup.getGroupId(),
+				companyStagingGroup.getLiveGroupId());
+		}
+		finally {
+			GroupLocalServiceUtil.deleteGroup(companyStagingGroup);
+		}
 	}
 
 	@Test
@@ -897,6 +915,43 @@ public class GroupServiceTest {
 		}
 	}
 
+	@Test(expected = GroupFriendlyURLException.class)
+	public void testSetNumericFriendlyURLToGroupIdFailsWhenNotAllowed()
+		throws Exception {
+
+		PropsValues.SITES_FRIENDLY_URL_ALLOW_GROUP_ID = false;
+
+		String friendlyURL = "/" + _group.getGroupId();
+
+		GroupLocalServiceUtil.updateFriendlyURL(
+			_group.getGroupId(), friendlyURL);
+	}
+
+	@Test
+	public void testSetNumericFriendlyURLToGroupIdWhenAllowed()
+		throws Exception {
+
+		PropsValues.SITES_FRIENDLY_URL_ALLOW_GROUP_ID = true;
+
+		String friendlyURL = "/" + _group.getGroupId();
+
+		GroupLocalServiceUtil.updateFriendlyURL(
+			_group.getGroupId(), friendlyURL);
+
+		Assert.assertEquals(
+			_group,
+			GroupLocalServiceUtil.fetchFriendlyURLGroup(
+				_group.getCompanyId(), friendlyURL));
+	}
+
+	@Test(expected = GroupFriendlyURLException.class)
+	public void testSetNumericFriendlyURLToRandomLong() throws Exception {
+		String friendlyURL = "/" + RandomTestUtil.nextLong();
+
+		GroupLocalServiceUtil.updateFriendlyURL(
+			_group.getGroupId(), friendlyURL);
+	}
+
 	@Test
 	public void testSubsites() throws Exception {
 		Group group1 = GroupTestUtil.addGroup();
@@ -922,29 +977,37 @@ public class GroupServiceTest {
 	public void testUpdateAvailableLocales() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		List<Locale> availableLocales = Arrays.asList(
-			LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US);
+		try {
+			List<Locale> availableLocales = Arrays.asList(
+				LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US);
 
-		group = GroupTestUtil.updateDisplaySettings(
-			group.getGroupId(), availableLocales, null);
+			group = GroupTestUtil.updateDisplaySettings(
+				group.getGroupId(), availableLocales, null);
 
-		Assert.assertEquals(
-			new HashSet<>(availableLocales),
-			LanguageUtil.getAvailableLocales(group.getGroupId()));
-
-		GroupLocalServiceUtil.deleteGroup(group);
+			Assert.assertEquals(
+				new HashSet<>(availableLocales),
+				LanguageUtil.getAvailableLocales(group.getGroupId()));
+		}
+		finally {
+			GroupLocalServiceUtil.deleteGroup(group);
+		}
 	}
 
 	@Test
 	public void testUpdateDefaultLocale() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		group = GroupTestUtil.updateDisplaySettings(
-			group.getGroupId(), null, LocaleUtil.SPAIN);
+		try {
+			group = GroupTestUtil.updateDisplaySettings(
+				group.getGroupId(), null, LocaleUtil.SPAIN);
 
-		Assert.assertEquals(
-			LocaleUtil.SPAIN,
-			PortalUtil.getSiteDefaultLocale(group.getGroupId()));
+			Assert.assertEquals(
+				LocaleUtil.SPAIN,
+				PortalUtil.getSiteDefaultLocale(group.getGroupId()));
+		}
+		finally {
+			GroupLocalServiceUtil.deleteGroup(group);
+		}
 	}
 
 	@Test

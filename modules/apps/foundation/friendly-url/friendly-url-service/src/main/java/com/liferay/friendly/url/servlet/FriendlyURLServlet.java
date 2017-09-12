@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.site.model.SiteFriendlyURL;
 import com.liferay.site.service.SiteFriendlyURLLocalService;
 
@@ -102,18 +103,9 @@ public class FriendlyURLServlet extends HttpServlet {
 		if (group == null) {
 			String screenName = friendlyURL.substring(1);
 
-			if (_user || !Validator.isNumber(screenName)) {
-				User user = userLocalService.fetchUserByScreenName(
-					companyId, screenName);
+			if (Validator.isNumber(screenName) &&
+				PropsValues.SITES_FRIENDLY_URL_ALLOW_GROUP_ID) {
 
-				if (user != null) {
-					group = user.getGroup();
-				}
-				else if (_log.isWarnEnabled()) {
-					_log.warn("No user exists with friendly URL " + screenName);
-				}
-			}
-			else {
 				long groupId = GetterUtil.getLong(screenName);
 
 				group = groupLocalService.fetchGroup(groupId);
@@ -125,18 +117,11 @@ public class FriendlyURLServlet extends HttpServlet {
 								". Try fetching by screen name instead.");
 					}
 
-					User user = userLocalService.fetchUserByScreenName(
-						companyId, screenName);
-
-					if (user != null) {
-						group = user.getGroup();
-					}
-					else if (_log.isWarnEnabled()) {
-						_log.warn(
-							"No user or group exists with friendly URL " +
-								groupId);
-					}
+					group = _getUserGroup(companyId, screenName);
 				}
+			}
+			else {
+				group = _getUserGroup(companyId, screenName);
 			}
 		}
 
@@ -549,6 +534,20 @@ public class FriendlyURLServlet extends HttpServlet {
 
 	@Reference
 	protected UserLocalService userLocalService;
+
+	private Group _getUserGroup(long companyId, String screenName) {
+		User user = userLocalService.fetchUserByScreenName(
+			companyId, screenName);
+
+		if (user != null) {
+			return user.getGroup();
+		}
+		else if (_log.isWarnEnabled()) {
+			_log.warn("No user exists with friendly URL " + screenName);
+		}
+
+		return null;
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FriendlyURLServlet.class);

@@ -51,7 +51,7 @@ public class GroupLocalServiceTest {
 
 		_group3 = GroupTestUtil.addGroup(_group2.getGroupId());
 
-		_group4 = GroupTestUtil.addGroup(_group3.getGroupId());
+		_group4 = GroupTestUtil.addGroup(_group1.getGroupId());
 
 		_groups.add(_group4);
 
@@ -61,18 +61,11 @@ public class GroupLocalServiceTest {
 	}
 
 	@Test
-	public void testGetDescendants() throws Exception {
-		Assert.assertEquals(3, _group1.getDescendants(true).size());
-		Assert.assertEquals(2, _group2.getDescendants(true).size());
-		Assert.assertEquals(1, _group3.getDescendants(true).size());
-		Assert.assertEquals(0, _group4.getDescendants(true).size());
-
-		List<Group> groups = _group1.getDescendants(true);
-
-		Assert.assertTrue(groups.contains(_group2));
-		Assert.assertTrue(groups.contains(_group3));
-		Assert.assertTrue(groups.contains(_group4));
-		Assert.assertTrue(!groups.contains(_group1));
+	public void testGetGroupDescendantSites() throws Exception {
+		_assertDescendantSites(_group1, _group2, _group3, _group4);
+		_assertDescendantSites(_group2, _group3);
+		_assertDescendantSites(_group3);
+		_assertDescendantSites(_group4);
 	}
 
 	@Test
@@ -80,6 +73,22 @@ public class GroupLocalServiceTest {
 		List<Group> groups = GroupLocalServiceUtil.getStagedSites();
 
 		Assert.assertTrue(groups.isEmpty());
+	}
+
+	private void _assertDescendantSites(
+		Group parentGroup, Group... expectedDescendants) {
+
+		List<Group> actualDescendants = parentGroup.getDescendants(true);
+
+		Assert.assertEquals(
+			actualDescendants.toString(), expectedDescendants.length,
+			actualDescendants.size());
+
+		for (Group expectedDescendant : expectedDescendants) {
+			Assert.assertTrue(
+				"Missing descendant: " + expectedDescendant.toString(),
+				actualDescendants.contains(expectedDescendant));
+		}
 	}
 
 	private Group _group1;

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.osgi.debug.spring.extender.internal.configuration.UnavailableComponentScannerConfiguration;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,7 +43,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Matthew Tambara
  */
 @Component(
-	configurationPid = "com.liferay.portal.osgi.debug.spring.extender.internal.UnavailableComponentScannerConfiguration",
+	configurationPid = "com.liferay.portal.osgi.debug.spring.extender.internal.configuration.UnavailableComponentScannerConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true
 )
 public class UnavailableComponentScanner {

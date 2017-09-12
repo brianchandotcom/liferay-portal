@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Portal Osgi Debug Declarative Service
+Bundle-SymbolicName: com.liferay.portal.osgi.debug.declarative.service
+Bundle-Version: 1.0.0

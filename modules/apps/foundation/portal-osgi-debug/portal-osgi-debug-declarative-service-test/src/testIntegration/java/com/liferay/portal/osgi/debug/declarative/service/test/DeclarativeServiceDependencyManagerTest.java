@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.osgi.debug.spring.extender.test;
+package com.liferay.portal.osgi.debug.declarative.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
@@ -25,8 +25,8 @@ import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.osgi.debug.spring.extender.test.reference.SpringExtenderTestComponentReference;
-import com.liferay.portal.osgi.debug.spring.extender.test.service.impl.SpringExtenderTestComponentLocalServiceImpl;
+import com.liferay.portal.osgi.debug.declarative.service.test.component.DeclarativeServiceTestComponent;
+import com.liferay.portal.osgi.debug.declarative.service.test.reference.DeclarativeServiceTestReference;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -65,10 +65,10 @@ import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
- * @author Matthew Tambara
+ * @author Tina Tian
  */
 @RunWith(Arquillian.class)
-public class SpringExtenderDependencyManagerTest {
+public class DeclarativeServiceDependencyManagerTest {
 
 	@ClassRule
 	@Rule
@@ -78,17 +78,17 @@ public class SpringExtenderDependencyManagerTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		Bundle bundle = FrameworkUtil.getBundle(
-			SpringExtenderDependencyManagerTest.class);
+			DeclarativeServiceDependencyManagerTest.class);
 
 		_bundleContext = bundle.getBundleContext();
 
-		_unavailableComponentScannerConfiguration =
+		_unsatisfiedComponentScannerConfiguration =
 			_configurationAdmin.getConfiguration(
-				"com.liferay.portal.osgi.debug.spring.extender.internal." +
-					"configuration.UnavailableComponentScannerConfiguration",
+				"com.liferay.portal.osgi.debug.declarative.service.internal." +
+					"configuration.UnsatisfiedComponentScannerConfiguration",
 				null);
 
-		_properties = _unavailableComponentScannerConfiguration.getProperties();
+		_properties = _unsatisfiedComponentScannerConfiguration.getProperties();
 
 		_ensureStopScanning();
 	}
@@ -96,15 +96,15 @@ public class SpringExtenderDependencyManagerTest {
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		if (_properties == null) {
-			_unavailableComponentScannerConfiguration.delete();
+			_unsatisfiedComponentScannerConfiguration.delete();
 		}
 		else {
-			_unavailableComponentScannerConfiguration.update(_properties);
+			_unsatisfiedComponentScannerConfiguration.update(_properties);
 		}
 	}
 
 	@Test
-	public void testSpringExtenderDependencyManagerResolvedDependencies()
+	public void testDeclarativeServiceDependencyManagerResolvedDependencies()
 		throws Exception {
 
 		try (CaptureAppender captureAppender = _configureLog4JLogger()) {
@@ -120,21 +120,20 @@ public class SpringExtenderDependencyManagerTest {
 
 			Assert.assertEquals(Level.INFO, loggingEvent.getLevel());
 			Assert.assertEquals(
-				"All Spring extender dependency manager components are " +
-					"registered",
+				"All Declarative Service components are satisfied",
 				loggingEvent.getMessage());
 
 			loggingEvent = loggingEvents.get(1);
 
 			Assert.assertEquals(Level.INFO, loggingEvent.getLevel());
 			Assert.assertEquals(
-				"Stopped scanning for unavailable components",
+				"Stopped scanning for unsatisfied components",
 				loggingEvent.getMessage());
 		}
 	}
 
 	@Test
-	public void testSpringExtenderDependencyManagerUnresolvedDependencies()
+	public void testDeclarativeServiceDependencyManagerUnresolvedDependencies()
 		throws Exception {
 
 		Bundle bundle = _bundleContext.installBundle(
@@ -159,10 +158,10 @@ public class SpringExtenderDependencyManagerTest {
 
 			StringBundler sb = new StringBundler(4);
 
-			sb.append("is unavailable due to missing required dependencies: ");
-			sb.append("ServiceDependency[interface ");
-			sb.append(_SPRING_EXTENDER_TEST_COMPONENT_REFERENCE_CLASS_NAME);
-			sb.append(" null]");
+			sb.append("name=");
+			sb.append(DeclarativeServiceTestComponent.class.getName());
+			sb.append(",unsatisfied references=");
+			sb.append("{name: declarativeServiceTestReference, target: null}");
 
 			Assert.assertTrue(message.contains(sb.toString()));
 
@@ -170,7 +169,7 @@ public class SpringExtenderDependencyManagerTest {
 
 			Assert.assertEquals(Level.INFO, loggingEvent.getLevel());
 			Assert.assertEquals(
-				"Stopped scanning for unavailable components",
+				"Stopped scanning for unsatisfied components",
 				loggingEvent.getMessage());
 		}
 		finally {
@@ -194,14 +193,14 @@ public class SpringExtenderDependencyManagerTest {
 				public boolean add(LoggingEvent loggingEvent) {
 					boolean added = super.add(loggingEvent);
 
-					if ("Stopped scanning for unavailable components".equals(
+					if ("Stopped scanning for unsatisfied components".equals(
 							loggingEvent.getMessage())) {
 
 						return added;
 					}
 
 					try {
-						_unavailableComponentScannerConfiguration.update(
+						_unsatisfiedComponentScannerConfiguration.update(
 							new HashMapDictionary<String, Object>());
 					}
 					catch (IOException ioe) {
@@ -224,9 +223,9 @@ public class SpringExtenderDependencyManagerTest {
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-		properties.put("unavailableComponentScanningInterval", "1");
+		properties.put("unsatisfiedComponentScanningInterval", "1");
 
-		_unavailableComponentScannerConfiguration.update(properties);
+		_unsatisfiedComponentScannerConfiguration.update(properties);
 
 		countDownLatch.await();
 
@@ -237,8 +236,8 @@ public class SpringExtenderDependencyManagerTest {
 
 	private static CaptureAppender _configureLog4JLogger() {
 		return Log4JLoggerTestUtil.configureLog4JLogger(
-			"com.liferay.portal.osgi.debug.spring.extender.internal." +
-				"UnavailableComponentScanner",
+			"com.liferay.portal.osgi.debug.declarative.service.internal." +
+				"UnsatisfiedComponentScanner",
 			Level.INFO);
 	}
 
@@ -262,12 +261,13 @@ public class SpringExtenderDependencyManagerTest {
 				attributes.putValue(Constants.BUNDLE_MANIFESTVERSION, "2");
 				attributes.putValue(
 					Constants.BUNDLE_SYMBOLICNAME,
-					"com.liferay.portal.osgi.debug.spring.extender.test." +
+					"com.liferay.portal.osgi.debug.declarative.service.test." +
 						"bundle");
 				attributes.putValue(Constants.BUNDLE_VERSION, "1.0.0");
 				attributes.putValue("Manifest-Version", "1.0");
-				attributes.putValue("Liferay-Service", Boolean.TRUE.toString());
-				attributes.putValue("Liferay-Spring-Context", null);
+				attributes.putValue(
+					"Service-Component",
+					"OSGI-INF/" + _TEST_COMPONENT_FILE_NAME);
 
 				jarOutputStream.putNextEntry(
 					new ZipEntry(JarFile.MANIFEST_NAME));
@@ -277,18 +277,15 @@ public class SpringExtenderDependencyManagerTest {
 				jarOutputStream.closeEntry();
 
 				_writeClasses(
-					jarOutputStream, SpringExtenderTestComponentReference.class,
-					SpringExtenderTestComponentLocalServiceImpl.class);
+					jarOutputStream, DeclarativeServiceTestComponent.class,
+					DeclarativeServiceTestReference.class);
 
 				jarOutputStream.putNextEntry(
-					new ZipEntry("OSGI-INF/context/context.dependencies"));
+					new ZipEntry("OSGI-INF/" + _TEST_COMPONENT_FILE_NAME));
 
-				jarOutputStream.write(
-					_SPRING_EXTENDER_TEST_COMPONENT_REFERENCE_CLASS_NAME.
-						getBytes());
+				_writeServiceComponentFile(jarOutputStream, getClass());
 
 				jarOutputStream.closeEntry();
-
 			}
 
 			return new UnsyncByteArrayInputStream(
@@ -321,9 +318,26 @@ public class SpringExtenderDependencyManagerTest {
 		}
 	}
 
-	private static final String
-		_SPRING_EXTENDER_TEST_COMPONENT_REFERENCE_CLASS_NAME =
-			SpringExtenderTestComponentReference.class.getName();
+	private void _writeServiceComponentFile(
+			JarOutputStream jarOutputStream, Class<?> clazz)
+		throws IOException {
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		Package pkg = clazz.getPackage();
+
+		String packagePath = StringUtil.replace(
+			pkg.getName(), CharPool.PERIOD, CharPool.SLASH);
+
+		StreamUtil.transfer(
+			classLoader.getResourceAsStream(
+				packagePath.concat("/dependencies/").concat(
+					_TEST_COMPONENT_FILE_NAME)),
+			jarOutputStream, false);
+	}
+
+	private static final String _TEST_COMPONENT_FILE_NAME =
+		"DeclarativeServiceTestComponent.xml";
 
 	private static BundleContext _bundleContext;
 
@@ -331,6 +345,6 @@ public class SpringExtenderDependencyManagerTest {
 	private static ConfigurationAdmin _configurationAdmin;
 
 	private static Dictionary<String, Object> _properties;
-	private static Configuration _unavailableComponentScannerConfiguration;
+	private static Configuration _unsatisfiedComponentScannerConfiguration;
 
 }

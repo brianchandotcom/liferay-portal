@@ -1,5 +1,6 @@
 .input-localized {
 	.palette-item-inner .lfr-input-localized-flag {
+		font-size: 16px;
 		opacity: 0.5;
 	}
 
@@ -37,7 +38,7 @@
 
 	.input-group-constrain {
 		background-color: $input-group-addon-bg;
-		border-color: $input-border;
+		border-color: $input-border-color;
 		border-style: solid;
 		border-top-left-radius: $input-border-radius;
 		border-top-width: $input-border-top-width;

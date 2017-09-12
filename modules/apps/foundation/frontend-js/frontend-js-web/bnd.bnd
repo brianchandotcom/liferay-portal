@@ -30,7 +30,7 @@ Liferay-Top-Head-Authenticated-JS-Resources:\
 	/liferay/deprecated.js
 Liferay-Top-Head-JS-Resources:\
 	/jquery/jquery.js,\
-	/lexicon/bootstrap.js,\
+	/clay/bootstrap.js,\
 	/loader/config.js,\
 	/loader/loader.js,\
 	/lodash/lodash.js,\
@@ -39,8 +39,8 @@ Liferay-Top-Head-JS-Resources:\
 	/liferay/browser_selectors.js,\
 	/liferay/modules.js,\
 	/liferay/aui_sandbox.js,\
-	/lexicon/collapsible-search.js,\
-	/lexicon/side-navigation.js,\
+	/clay/collapsible-search.js,\
+	/clay/side-navigation.js,\
 	/jquery/fm.js,\
 	/jquery/form.js,\
 	/lodash/util.js,\

@@ -3,23 +3,43 @@ import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 configurations {
 	jQuery
-	lexicon
 	lodash
 }
 
+task buildClay(type: Copy)
 task buildJQuery(type: Copy)
 task buildJQueryPluginsForm
-task buildLexicon(type: Copy)
 task buildLiferayAMDLoader(type: Copy)
 task buildLodash(type: Copy)
 task buildSvg4everybody(type: Copy)
 
 String jqueryPluginsFormVersion = "3.51"
-String jQueryVersion = "2.1.4"
-String lexiconVersion = "1.0.24"
+String jQueryVersion = "3.2.1"
 String lodashVersion = "3.10.1"
 
 File jsDestinationDir = file("tmp/META-INF/resources")
+
+buildClay {
+	dependsOn npmInstall
+	File clayDestinationDir = new File(jsDestinationDir, "clay")
+
+	doFirst {
+		delete clayDestinationDir
+	}
+
+	eachFile new StripPathSegmentsAction(3)
+
+	filter {
+		String line ->
+
+		line.replace ".offsetWidth // force reflow", ".offsetWidth.toFixed() // force reflow"
+	}
+
+	from npmInstall.nodeModulesDir
+	include "clay/build/js/"
+	includeEmptyDirs = false
+	into clayDestinationDir
+}
 
 buildJQuery {
 	eachFile new StripPathSegmentsAction(6)
@@ -51,30 +71,6 @@ buildJQueryPluginsForm {
 	onlyIf {
 		!jQueryPluginsFormJsFile.exists()
 	}
-}
-
-buildLexicon {
-	File lexiconDestinationDir = new File(jsDestinationDir, "lexicon")
-
-	doFirst {
-		delete lexiconDestinationDir
-	}
-
-	eachFile new StripPathSegmentsAction(7)
-
-	filter {
-		String line ->
-
-		line.replace ".offsetWidth // force reflow", ".offsetWidth.toFixed() // force reflow"
-	}
-
-	from {
-		zipTree(configurations.lexicon.singleFile)
-	}
-
-	include "META-INF/resources/webjars/lexicon/${lexiconVersion}/release/js/"
-	includeEmptyDirs = false
-	into lexiconDestinationDir
 }
 
 buildLiferayAMDLoader {
@@ -122,9 +118,9 @@ buildSvg4everybody {
 }
 
 classes {
+	dependsOn buildClay
 	dependsOn buildJQuery
 	dependsOn buildJQueryPluginsForm
-	dependsOn buildLexicon
 	dependsOn buildLiferayAMDLoader
 	dependsOn buildLodash
 	dependsOn buildSvg4everybody
@@ -136,8 +132,6 @@ clean {
 
 dependencies {
 	jQuery group: "org.webjars.npm", name: "jquery", transitive: false, version: jQueryVersion
-
-	lexicon group: "com.liferay.webjars", name: "com.liferay.webjars.lexicon", transitive: false, version: lexiconVersion
 
 	lodash group: "org.webjars.bower", name: "lodash", transitive: false, version: lodashVersion
 

@@ -1,0 +1,33 @@
+// .panel-header styling from lexicon-base/_panels.scss
+.panel-heading {
+	border-bottom: $panel-header-border-bottom-width solid transparent;
+	padding: $panel-header-padding-y $panel-header-padding-x;
+	position: relative;
+}
+
+.panel-title {
+	text-transform: none;
+}
+
+// .panel-header-link styling from lexicon-base/_panels.scss
+.panel-title .collapse-icon {
+	color: inherit;
+	display: block;
+	padding: $panel-header-padding-y $panel-header-padding-x;
+	text-decoration: $panel-header-link-text-decoration;
+
+	&:hover,
+	&:focus {
+		color: inherit;
+		text-decoration: $panel-header-link-text-decoration;
+	}
+
+	.collapse-icon {
+		padding-left: $collapse-icon-padding-left;
+		padding-right: $collapse-icon-padding-right;
+	}
+}
+
+.panel-group {
+	background-color: transparent;
+}

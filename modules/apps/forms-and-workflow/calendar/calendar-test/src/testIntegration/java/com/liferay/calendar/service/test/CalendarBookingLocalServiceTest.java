@@ -1451,6 +1451,68 @@ public class CalendarBookingLocalServiceTest {
 		assertStatus(calendarBooking, WorkflowConstants.STATUS_DRAFT);
 	}
 
+	@Test
+	public void testStagingCalendarResourceShouldNotBeInviteToLiveCalendarBookingAfterPublish()
+		throws Exception {
+
+		_liveGroup = GroupTestUtil.addGroup();
+
+		Calendar liveCalendar = CalendarTestUtil.getDefaultCalendar(_liveGroup);
+
+		CalendarStagingTestUtil.enableLocalStaging(_liveGroup, true);
+
+		Calendar stagingCalendar = CalendarStagingTestUtil.getStagingCalendar(
+			_liveGroup, liveCalendar);
+
+		Assert.assertNotNull(stagingCalendar);
+
+		CalendarBooking stagingCalendarBooking =
+			CalendarBookingTestUtil.addRegularCalendarBooking(stagingCalendar);
+
+		Group stagingGroup = _liveGroup.getStagingGroup();
+
+		CalendarTestUtil.addCalendarResourceCalendar(stagingGroup);
+
+		CalendarTestUtil.addCalendarResourceCalendar(stagingGroup);
+
+		List<CalendarBooking> liveCalendarBookings =
+			CalendarBookingLocalServiceUtil.getCalendarBookings(
+				liveCalendar.getCalendarId());
+
+		Assert.assertEquals(
+			liveCalendarBookings.toString(), 0, liveCalendarBookings.size());
+
+		List<CalendarBooking> childCalendarBookings =
+			stagingCalendarBooking.getChildCalendarBookings();
+
+		Assert.assertEquals(
+			childCalendarBookings.toString(), 1, childCalendarBookings.size());
+
+		CalendarStagingTestUtil.publishLayouts(_liveGroup, true);
+
+		liveCalendarBookings =
+			CalendarBookingLocalServiceUtil.getCalendarBookings(
+				liveCalendar.getCalendarId());
+
+		Assert.assertEquals(
+			liveCalendarBookings.toString(), 1, liveCalendarBookings.size());
+
+		CalendarBooking liveCalendarBooking = liveCalendarBookings.get(0);
+
+		List<CalendarBooking> liveChildCalendarBookings =
+			liveCalendarBooking.getChildCalendarBookings();
+
+		Assert.assertEquals(
+			liveChildCalendarBookings.toString(), 1,
+			liveChildCalendarBookings.size());
+
+		childCalendarBookings =
+			stagingCalendarBooking.getChildCalendarBookings();
+
+		Assert.assertEquals(
+			childCalendarBookings.toString(), 1, childCalendarBookings.size());
+	}
+
 	@Test(expected = CalendarBookingRecurrenceException.class)
 	public void testStartDateBeforeUntilDateThrowsRecurrenceException()
 		throws Exception {

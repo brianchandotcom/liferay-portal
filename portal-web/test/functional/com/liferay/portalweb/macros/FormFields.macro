@@ -494,7 +494,7 @@
 		<execute function="AssertTextEquals" locator1="FormFields#REPEATABLE_TEXT_MULTILINE_FIELD" value1="${fieldValue}">
 			<var name="key_fieldName" value="${fieldName}" />
 			<var name="key_repeatableFieldNumber" value="${repeatableFieldNumber}" />
-		<execute>
+		</execute>
 	</command>
 
 	<command name="viewRequiredAsterisk">

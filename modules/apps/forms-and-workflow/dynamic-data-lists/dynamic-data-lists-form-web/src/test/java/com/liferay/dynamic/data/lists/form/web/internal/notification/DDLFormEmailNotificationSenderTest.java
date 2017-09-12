@@ -25,6 +25,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.util.HtmlImpl;
 
 import java.util.Locale;
 import java.util.Map;
@@ -136,8 +137,9 @@ public class DDLFormEmailNotificationSenderTest {
 
 	protected void setUpHtmlUtil() {
 		HtmlUtil htmlUtil = new HtmlUtil();
+		HtmlImpl htmlImpl = new HtmlImpl();
 
-		htmlUtil.setHtml(_html);
+		htmlUtil.setHtml(htmlImpl);
 
 		PowerMockito.when(
 			_html.escape(Matchers.anyString())

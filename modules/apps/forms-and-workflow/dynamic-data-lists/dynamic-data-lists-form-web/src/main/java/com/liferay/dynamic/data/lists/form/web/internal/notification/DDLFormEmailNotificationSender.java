@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -477,7 +478,8 @@ public class DDLFormEmailNotificationSender {
 			_ddmFormFieldTypeServicesTracker.getDDMFormFieldValueRenderer(
 				ddmFormFieldValue.getType());
 
-		return ddmFormFieldValueRenderer.render(ddmFormFieldValue, locale);
+		return HtmlUtil.unescape(
+			ddmFormFieldValueRenderer.render(ddmFormFieldValue, locale));
 	}
 
 	@Reference(unbind = "-")

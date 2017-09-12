@@ -80,7 +80,8 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
-		dynamicIncludeRegistry.register("/html/common/themes/top_js.jspf");
+		dynamicIncludeRegistry.register(
+			"/html/common/themes/top_js.jspf#resources");
 	}
 
 	@Reference(unbind = "-")

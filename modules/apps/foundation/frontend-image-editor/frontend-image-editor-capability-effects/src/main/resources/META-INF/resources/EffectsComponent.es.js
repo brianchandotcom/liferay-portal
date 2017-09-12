@@ -34,6 +34,22 @@ class EffectsComponent extends Component {
 	}
 
 	/**
+	 * Returns whether the carousel can be scrolled towards the right
+	 *
+	 * @private
+	 * @return {boolean} True if the carousel can be scrolled, false otherwise.
+	 */
+	canScrollForward_() {
+		const carousel = this.refs.carousel;
+		const continer = this.refs.carouselContainer;
+		const offset = Math.abs(parseInt(carousel.style.marginLeft || 0, 10));
+		const viewportWidth = parseInt(continer.offsetWidth, 10);
+		const maxContentWidth = parseInt(carousel.offsetWidth, 10);
+
+		return offset + viewportWidth < maxContentWidth;
+	}
+
+	/**
 	 * Generates a specific thumbnail for a given effect.
 	 *
 	 * @param  {String} effect The effect to generate the thumbnail for.
@@ -166,6 +182,38 @@ class EffectsComponent extends Component {
 	}
 
 	/**
+	 * Makes the carousel scroll left to reveal options off the visible area
+	 *
+	 * @return void
+	 */
+	scrollLeft() {
+		const carousel = this.refs.carousel;
+		const itemWidth = this.refs.carouselFirstItem.offsetWidth || 0;
+		const marginLeft = parseInt(carousel.style.marginLeft || 0, 10);
+
+		if (marginLeft < 0) {
+			const newMarginValue = Math.min(marginLeft + itemWidth, 0);
+
+			this.carouselOffset =  newMarginValue + 'px';
+		}
+	}
+
+	/**
+	 * Makes the caousel scroll right to reveal options off the visible area
+	 *
+	 * @return void
+	 */
+	scrollRight() {
+		if (this.canScrollForward_()) {
+			const carousel = this.refs.carousel;
+			const itemWidth = this.refs.carouselFirstItem.offsetWidth || 0;
+			const marginLeft = parseInt(carousel.style.marginLeft || 0, 10);
+
+			this.carouselOffset = (marginLeft - itemWidth) + 'px';
+		}
+	}
+
+	/**
 	 * Spawns the a webworker to do the image processing in a different thread.
 	 *
 	 * @param  {String} workerURI URI of the worker to spawn.
@@ -189,6 +237,15 @@ class EffectsComponent extends Component {
  * @static
  */
 EffectsComponent.STATE = {
+	/**
+	 * Offset to the carousel item with the 'px' postfix
+	 * @type {String}
+	 */
+	carouselOffset: {
+		validator: core.isString,
+		value: '0'
+	},
+
 	/**
 	 * Array of available effects
 	 * @type {Object}

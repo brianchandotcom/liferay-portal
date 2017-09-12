@@ -103,7 +103,7 @@ $gray-lighter: lighten($gray-base, 93.5%) !default; // #EEE
 			}
 
 			.tool-controls {
-				overflow: auto;
+				overflow: visible;
 				padding: 10px 0 0;
 
 				> * {
@@ -131,7 +131,40 @@ $gray-lighter: lighten($gray-base, 93.5%) !default; // #EEE
 					margin: 0 32px;
 				}
 
+				.carousel-wrapper {
+					position: relative;
+
+					.carousel-left-arrow, .carousel-right-arrow {
+						position: absolute;
+						top: 50%;
+						z-index: 1;
+
+						.btn {
+							padding: 0;
+						}
+					}
+
+					.carousel-left-arrow {
+						@include transform(translate(-100%, -50%));
+
+						left: 0;
+					}
+
+					.carousel-right-arrow {
+						@include transform(translate(100%, -50%));
+
+						right: 0;
+					}
+				}
+
+				.carousel-container {
+					overflow: hidden;
+					width: 100%;
+				}
+
 				.carousel {
+					@include transition(margin 0.6s $ease-out-quint);
+
 					display: table;
 
 					.item {

@@ -89,12 +89,10 @@ public class CPInstanceItemSelectorViewDisplayContext
 				getOrderByCol(), getOrderByType());
 
 			BaseModelSearchResult<CPInstance> cpInstanceBaseModelSearchResult =
-					_cpInstanceService.searchCPInstances(
-						themeDisplay.getCompanyId(),
-						themeDisplay.getScopeGroupId(), getKeywords(),
-						WorkflowConstants.STATUS_APPROVED,
-						searchContainer.getStart(), searchContainer.getEnd(),
-						sort);
+				_cpInstanceService.searchCPInstances(
+					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+					getKeywords(), WorkflowConstants.STATUS_APPROVED,
+					searchContainer.getStart(), searchContainer.getEnd(), sort);
 
 			searchContainer.setTotal(
 				cpInstanceBaseModelSearchResult.getLength());

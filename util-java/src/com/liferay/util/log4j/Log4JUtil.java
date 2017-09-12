@@ -56,7 +56,9 @@ import org.xml.sax.InputSource;
  * @author Brian Wing Shun Chan
  * @author Tomas Polesovsky
  * @see    com.liferay.petra.log4j.Log4JUtil
+ * @deprecated As of 7.0.0
  */
+@Deprecated
 public class Log4JUtil {
 
 	public static void configureLog4J(ClassLoader classLoader) {

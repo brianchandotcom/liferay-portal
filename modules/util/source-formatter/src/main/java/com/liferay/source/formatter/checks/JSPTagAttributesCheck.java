@@ -26,15 +26,14 @@ import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.source.formatter.parser.JavaClass;
+import com.liferay.source.formatter.parser.JavaClassParser;
+import com.liferay.source.formatter.parser.JavaMethod;
+import com.liferay.source.formatter.parser.JavaParameter;
+import com.liferay.source.formatter.parser.JavaSignature;
+import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
-import com.liferay.source.formatter.util.ThreadSafeSortedClassLibraryBuilder;
-
-import com.thoughtworks.qdox.JavaProjectBuilder;
-import com.thoughtworks.qdox.model.JavaClass;
-import com.thoughtworks.qdox.model.JavaMethod;
-import com.thoughtworks.qdox.model.JavaType;
-import com.thoughtworks.qdox.parser.ParseException;
 
 import java.io.File;
 
@@ -141,7 +140,9 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 				line, attributeAndValue, newAttributeAndValue);
 		}
 
-		if (!dataType.equals("java.lang.String")) {
+		if (!dataType.equals("java.lang.String") &&
+			!dataType.equals("String")) {
+
 			return line;
 		}
 
@@ -236,6 +237,38 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 			});
 	}
 
+	private Map<String, String> _getSetMethodsMap(JavaClass javaClass) {
+		Map<String, String> setMethodsMap = new HashMap<>();
+
+		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
+			if (!(javaTerm instanceof JavaMethod)) {
+				continue;
+			}
+
+			JavaMethod javaMethod = (JavaMethod)javaTerm;
+
+			String methodName = javaMethod.getName();
+
+			if (!methodName.startsWith("set")) {
+				continue;
+			}
+
+			JavaSignature javaSignature = javaMethod.getSignature();
+
+			List<JavaParameter> javaParameters = javaSignature.getParameters();
+
+			if (javaParameters.size() != 1) {
+				continue;
+			}
+
+			JavaParameter javaParameter = javaParameters.get(0);
+
+			setMethodsMap.put(methodName, javaParameter.getParameterType());
+		}
+
+		return setMethodsMap;
+	}
+
 	private Map<String, Map<String, String>> _getTagSetMethodsMap()
 		throws Exception {
 
@@ -299,47 +332,21 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 						tagClassName, CharPool.PERIOD, CharPool.SLASH));
 				sb.append(".java");
 
-				File tagJavaFile = new File(sb.toString());
+				String tagJavaFileName = sb.toString();
+
+				File tagJavaFile = new File(tagJavaFileName);
 
 				if (!tagJavaFile.exists()) {
 					continue;
 				}
 
-				JavaProjectBuilder javaProjectBuilder = new JavaProjectBuilder(
-					new ThreadSafeSortedClassLibraryBuilder());
+				String tagJavaContent = FileUtil.read(tagJavaFile);
 
-				try {
-					javaProjectBuilder.addSource(tagJavaFile);
-				}
-				catch (ParseException pe) {
-					continue;
-				}
+				JavaClass javaClass = JavaClassParser.parseJavaClass(
+					tagJavaFileName, tagJavaContent);
 
-				JavaClass tagJavaClass = javaProjectBuilder.getClassByName(
-					tagClassName);
-
-				Map<String, String> setMethodsMap = new HashMap<>();
-
-				for (JavaMethod javaMethod : tagJavaClass.getMethods()) {
-					String methodName = javaMethod.getName();
-
-					if (!methodName.startsWith("set")) {
-						continue;
-					}
-
-					List<JavaType> parameterTypes =
-						javaMethod.getParameterTypes();
-
-					if (parameterTypes.size() != 1) {
-						continue;
-					}
-
-					JavaType parameterType = parameterTypes.get(0);
-
-					setMethodsMap.put(
-						javaMethod.getName(),
-						parameterType.getFullyQualifiedName());
-				}
+				Map<String, String> setMethodsMap = _getSetMethodsMap(
+					javaClass);
 
 				if (setMethodsMap.isEmpty()) {
 					continue;

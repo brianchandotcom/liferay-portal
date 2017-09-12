@@ -417,16 +417,18 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 	</c:otherwise>
 </c:choose>
 
-<aui:script sandbox="<%= true %>">
-	function selectAllTextField() {
+<aui:script>
+	var selectAllTextField = function() {
 		this.setSelectionRange(0, 9999);
-	}
+	};
 
 	var urlField = document.getElementById('<portlet:namespace />url');
+
 	var webDavUrlField = document.getElementById('<portlet:namespace />webDavURL');
 
 	if (urlField && webDavUrlField) {
 		urlField.addEventListener('click', selectAllTextField);
+
 		webDavUrlField.addEventListener('click', selectAllTextField);
 	}
 </aui:script>

@@ -1,4 +1,4 @@
-package ${package}.${artifactId}GlobalStartupAction;
+package ${package}.${className}GlobalStartupAction;
 
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;
@@ -6,7 +6,7 @@ import com.liferay.portal.kernel.events.SimpleAction;
 /**
  * @author ${author}
  */
-public class ${artifactId}StartupAction extends SimpleAction {
+public class ${className}StartupAction extends SimpleAction {
 	
 	@Override
 	public void run(String[] arg0) throws ActionException {

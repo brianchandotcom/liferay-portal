@@ -274,6 +274,14 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 
 		Map<String, Map<String, String>> tagSetMethodsMap = new HashMap<>();
 
+		List<String> tldFileNames = _getTLDFileNames();
+
+		if (tldFileNames.isEmpty()) {
+			return tagSetMethodsMap;
+		}
+
+		String utilTaglibSrcDirName = _getUtilTaglibSrcDirName();
+
 		outerLoop:
 		for (String tldFileName : _getTLDFileNames()) {
 			tldFileName = StringUtil.replace(
@@ -326,7 +334,7 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 								"/src/main/java/";
 					}
 					else {
-						srcDir = _getUtilTaglibSrcDirName();
+						srcDir = utilTaglibSrcDirName;
 
 						if (Validator.isNull(srcDir)) {
 							continue outerLoop;

@@ -152,6 +152,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SETTINGS_TIMERS</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Timers')]//following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SETTINGS_ASSIGNMENTS</td>
 	<td>//td[contains(@class,'table-col-name') and contains(.,'Assignments')]//following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
@@ -174,7 +179,7 @@
 </tr>
 <tr>
 	<td>SETTINGS_CELL_EDITOR_ADD_SECTION</td>
-	<td>//div[contains(@class,'component toolbar')]//button[contains(.,'Add Section')]</td>
+	<td>//button[@id='addSectionButton']</td>
 	<td></td>
 </tr>
 <tr>
@@ -190,6 +195,41 @@
 <tr>
 	<td>SETTINGS_CELL_EDITOR_DESCRIPTION</td>
 	<td>//textarea[@name='description']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_BLOCKING</td>
+	<td>//input[@name='blocking']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_ACTION_NAME</td>
+	<td>//div[contains(@class,'celleditor-view-type-action')]//input[@name='name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_ACTION_DESCRIPTION</td>
+	<td>//div[contains(@class,'celleditor-view-type-action')]//textarea[@name='description']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_DURATION</td>
+	<td>//input[@name='duration']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_SCALE_SELECT</td>
+	<td>//select[@name='scale']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_DURATION_2</td>
+	<td>xpath=(//input[@name='duration'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_SCALE_SELECT_2</td>
+	<td>xpath=(//select[@name='scale'])[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -235,6 +275,11 @@
 <tr>
 	<td>SETTINGS_CELL_EDITOR_EDIT_RECIPIENTS</td>
 	<td>//a[.='Edit Recipients']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR</td>
+	<td>//div[contains(@class,'celleditor-full-view')]</td>
 	<td></td>
 </tr>
 <tr>

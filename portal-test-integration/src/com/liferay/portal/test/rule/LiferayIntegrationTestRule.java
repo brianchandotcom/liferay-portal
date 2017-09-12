@@ -14,6 +14,7 @@
 
 package com.liferay.portal.test.rule;
 
+import com.liferay.petra.log4j.Log4JUtil;
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.BaseTestRule;
@@ -35,7 +36,6 @@ import com.liferay.portal.test.rule.callback.SybaseDumpTransactionLogTestCallbac
 import com.liferay.portal.test.rule.callback.UniqueStringRandomizerBumperTestCallback;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PropsUtil;
-import com.liferay.util.log4j.Log4JUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;

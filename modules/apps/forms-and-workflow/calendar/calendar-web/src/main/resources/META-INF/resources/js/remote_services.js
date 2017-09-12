@@ -106,7 +106,7 @@ AUI.add(
 					instance._invokeResourceURL(
 						{
 							callback: callback,
-							queryParameters: {
+							payload: {
 								calendarIds: calendarIds.join(),
 								endTime: endDate.getTime(),
 								ruleName: ruleName,
@@ -152,7 +152,7 @@ AUI.add(
 					instance._invokeResourceURL(
 						{
 							callback: callback,
-							queryParameters: {
+							payload: {
 								calendarIds: calendarIds.join(','),
 								endTimeDay: endDate.getDate(),
 								endTimeHour: endDate.getHours(),

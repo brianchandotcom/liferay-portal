@@ -3,3 +3,7 @@ dependencies {
 	provided group: "dom4j", name: "dom4j", version: "1.6.1"
 	provided group: "log4j", name: "log4j", version: "1.2.17"
 }
+
+liferay {
+	deployDir = file("${appServerPortalDir}/WEB-INF/lib")
+}

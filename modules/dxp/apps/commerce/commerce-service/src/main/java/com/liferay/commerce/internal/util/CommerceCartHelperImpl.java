@@ -59,7 +59,7 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 		String portletId = "";
 
 		if (type == CommerceConstants.COMMERCE_CART_TYPE_CART) {
-			portletId = CommercePortletKeys.COMMERCE_CART;
+			portletId = CommercePortletKeys.COMMERCE_CART_CONTENT;
 		}
 		else if (type == CommerceConstants.COMMERCE_CART_TYPE_WISH_LIST) {
 			portletId = CommercePortletKeys.COMMERCE_WISH_LIST_CONTENT;

@@ -30,6 +30,7 @@ import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -57,6 +58,17 @@ public class WebSsoAutoLogin extends BaseAutoLogin {
 
 			if (Validator.isNull(samlSsoSessionId)) {
 				return null;
+			}
+
+			HttpSession session = request.getSession(false);
+
+			if (session != null) {
+				boolean forceReauthentication = (Boolean)session.getAttribute(
+					SamlWebKeys.FORCE_REAUTHENTICATION);
+
+				if (forceReauthentication) {
+					return null;
+				}
 			}
 
 			SamlIdpSsoSession samlIdpSsoSession =

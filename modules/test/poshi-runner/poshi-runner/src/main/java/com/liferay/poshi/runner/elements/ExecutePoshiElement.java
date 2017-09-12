@@ -26,43 +26,40 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class ExecuteElement extends PoshiElement {
+public class ExecutePoshiElement extends BasePoshiElement {
 
-	public ExecuteElement(Element element) {
-		super("execute", element);
+	@Override
+	public PoshiElement clone(Element element) {
+		if (isElementType(_ELEMENT_NAME, element)) {
+			return new ExecutePoshiElement(element);
+		}
+
+		return null;
 	}
 
-	public ExecuteElement(String readableSyntax) {
-		super("execute", readableSyntax);
-	}
+	@Override
+	public PoshiElement clone(
+		PoshiElement parentPoshiElement, String readableSyntax) {
 
-	public ExecuteElement(String name, Element element) {
-		super(name, element);
-	}
+		if (_isElementType(parentPoshiElement, readableSyntax)) {
+			return new ExecutePoshiElement(readableSyntax);
+		}
 
-	public ExecuteElement(String name, String readableSyntax) {
-		super(name, readableSyntax);
+		return null;
 	}
 
 	@Override
 	public void parseReadableSyntax(String readableSyntax) {
 		if (readableSyntax.contains("return(\n")) {
-			ReturnElement returnElement = new ReturnElement(readableSyntax);
+			PoshiElement returnPoshiElement =
+				PoshiElementFactory.newPoshiElement(this, readableSyntax);
 
-			String returnFrom = RegexUtil.getGroup(
-				readableSyntax, ".*,(.*)\\)", 1);
+			if (returnPoshiElement instanceof ReturnPoshiElement) {
+				add(returnPoshiElement);
 
-			returnElement.addAttribute("from", returnFrom.trim());
-
-			String returnName = RegexUtil.getGroup(
-				readableSyntax, "var(.*?)=", 1);
-
-			returnElement.addAttribute("name", returnName.trim());
-
-			add(returnElement);
-
-			readableSyntax = RegexUtil.getGroup(
-				readableSyntax, "return\\((.*),", 1);
+				readableSyntax = RegexUtil.getGroup(
+					readableSyntax, "return\\((.*),", 1);
+			}
 		}
 
 		String executeType = "macro";
@@ -102,9 +99,9 @@ public class ExecuteElement extends PoshiElement {
 			assignment = assignment.trim();
 
 			if (executeType.equals("macro")) {
-				assignment = "var " + assignment;
+				assignment = "var " + assignment + ";";
 
-				addElementFromReadableSyntax(assignment);
+				add(PoshiElementFactory.newPoshiElement(this, assignment));
 
 				continue;
 			}
@@ -143,11 +140,11 @@ public class ExecuteElement extends PoshiElement {
 
 		StringBuilder sb = new StringBuilder();
 
-		PoshiElement returnElement = null;
+		ReturnPoshiElement returnPoshiElement = null;
 
 		for (PoshiElement poshiElement : toPoshiElements(elements())) {
-			if (poshiElement instanceof ReturnElement) {
-				returnElement = poshiElement;
+			if (poshiElement instanceof ReturnPoshiElement) {
+				returnPoshiElement = (ReturnPoshiElement)poshiElement;
 
 				continue;
 			}
@@ -157,11 +154,30 @@ public class ExecuteElement extends PoshiElement {
 
 		String readableBlock = createReadableBlock(sb.toString());
 
-		if (returnElement == null) {
+		if (returnPoshiElement == null) {
 			return readableBlock;
 		}
 
-		return returnElement.createReadableBlock(readableBlock);
+		return returnPoshiElement.createReadableBlock(readableBlock);
+	}
+
+	protected ExecutePoshiElement() {
+	}
+
+	protected ExecutePoshiElement(Element element) {
+		super("execute", element);
+	}
+
+	protected ExecutePoshiElement(String readableSyntax) {
+		super("execute", readableSyntax);
+	}
+
+	protected ExecutePoshiElement(String name, Element element) {
+		super(name, element);
+	}
+
+	protected ExecutePoshiElement(String name, String readableSyntax) {
+		super(name, readableSyntax);
 	}
 
 	@Override
@@ -201,6 +217,42 @@ public class ExecuteElement extends PoshiElement {
 
 		return attributeValue("macro");
 	}
+
+	private static boolean _isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		readableSyntax = readableSyntax.trim();
+
+		if (parentPoshiElement instanceof ExecutePoshiElement) {
+			return false;
+		}
+
+		if (!isBalancedReadableSyntax(readableSyntax)) {
+			return false;
+		}
+
+		if (readableSyntax.startsWith("property ")) {
+			return false;
+		}
+
+		if (readableSyntax.startsWith("var ") &&
+			readableSyntax.contains(" = return(")) {
+
+			return true;
+		}
+
+		if (readableSyntax.startsWith("var ")) {
+			return false;
+		}
+
+		if (!readableSyntax.endsWith(");")) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private static final String _ELEMENT_NAME = "execute";
 
 	private static final Pattern _assignmentPattern = Pattern.compile(
 		"([^,]*? = \".*?\")");

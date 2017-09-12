@@ -19,19 +19,26 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class EqualsElement extends PoshiElement {
+public class EqualsPoshiElement extends BasePoshiElement {
 
-	public EqualsElement(Element element) {
-		super("equals", element);
-	}
+	@Override
+	public PoshiElement clone(Element element) {
+		if (isElementType(_ELEMENT_NAME, element)) {
+			return new EqualsPoshiElement(element);
+		}
 
-	public EqualsElement(String readableSyntax) {
-		super("equals", readableSyntax);
+		return null;
 	}
 
 	@Override
-	public String getBlockName() {
-		return "equals";
+	public PoshiElement clone(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (_isElementType(parentPoshiElement, readableSyntax)) {
+			return new EqualsPoshiElement(readableSyntax);
+		}
+
+		return null;
 	}
 
 	@Override
@@ -63,5 +70,35 @@ public class EqualsElement extends PoshiElement {
 
 		return sb.toString();
 	}
+
+	protected EqualsPoshiElement() {
+	}
+
+	protected EqualsPoshiElement(Element element) {
+		super(_ELEMENT_NAME, element);
+	}
+
+	protected EqualsPoshiElement(String readableSyntax) {
+		super(_ELEMENT_NAME, readableSyntax);
+	}
+
+	@Override
+	protected String getBlockName() {
+		return "equals";
+	}
+
+	private static boolean _isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (parentPoshiElement instanceof IfPoshiElement &&
+			readableSyntax.contains("==")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private static final String _ELEMENT_NAME = "equals";
 
 }

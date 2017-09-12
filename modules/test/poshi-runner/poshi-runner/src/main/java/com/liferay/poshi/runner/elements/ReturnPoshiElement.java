@@ -21,23 +21,53 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class ReturnElement extends PoshiElement {
+public class ReturnPoshiElement extends BasePoshiElement {
 
-	public ReturnElement(Element element) {
-		super("return", element);
+	@Override
+	public PoshiElement clone(Element element) {
+		if (isElementType(_ELEMENT_NAME, element)) {
+			return new ReturnPoshiElement(element);
+		}
+
+		return null;
 	}
 
-	public ReturnElement(String readableSyntax) {
-		super("return", readableSyntax);
+	@Override
+	public PoshiElement clone(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (_isElementType(parentPoshiElement, readableSyntax)) {
+			return new ReturnPoshiElement(readableSyntax);
+		}
+
+		return null;
 	}
 
 	@Override
 	public void parseReadableSyntax(String readableSyntax) {
+		String returnFrom = RegexUtil.getGroup(readableSyntax, ".*,(.*)\\)", 1);
+
+		addAttribute("from", returnFrom.trim());
+
+		String returnName = RegexUtil.getGroup(readableSyntax, "var(.*?)=", 1);
+
+		addAttribute("name", returnName.trim());
 	}
 
 	@Override
 	public String toReadableSyntax() {
 		return "";
+	}
+
+	protected ReturnPoshiElement() {
+	}
+
+	protected ReturnPoshiElement(Element element) {
+		super(_ELEMENT_NAME, element);
+	}
+
+	protected ReturnPoshiElement(String readableSyntax) {
+		super(_ELEMENT_NAME, readableSyntax);
 	}
 
 	@Override
@@ -93,5 +123,19 @@ public class ReturnElement extends PoshiElement {
 
 		return sb.toString();
 	}
+
+	private static boolean _isElementType(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (parentPoshiElement instanceof ExecutePoshiElement &&
+			readableSyntax.contains("return(\n")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private static final String _ELEMENT_NAME = "return";
 
 }

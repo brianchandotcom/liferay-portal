@@ -22,14 +22,26 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class DefinitionElement extends PoshiElement {
+public class DefinitionPoshiElement extends BasePoshiElement {
 
-	public DefinitionElement(Element element) {
-		super("definition", element);
+	@Override
+	public PoshiElement clone(Element element) {
+		if (isElementType(_ELEMENT_NAME, element)) {
+			return new DefinitionPoshiElement(element);
+		}
+
+		return null;
 	}
 
-	public DefinitionElement(String readableSyntax) {
-		super("definition", readableSyntax);
+	@Override
+	public PoshiElement clone(
+		PoshiElement parentPoshiElement, String readableSyntax) {
+
+		if (_isElementType(readableSyntax)) {
+			return new DefinitionPoshiElement(readableSyntax);
+		}
+
+		return null;
 	}
 
 	@Override
@@ -47,7 +59,7 @@ public class DefinitionElement extends PoshiElement {
 				continue;
 			}
 
-			addElementFromReadableSyntax(readableBlock);
+			add(PoshiElementFactory.newPoshiElement(this, readableBlock));
 		}
 	}
 
@@ -101,6 +113,17 @@ public class DefinitionElement extends PoshiElement {
 		String string = sb.toString();
 
 		return string.trim();
+	}
+
+	protected DefinitionPoshiElement() {
+	}
+
+	protected DefinitionPoshiElement(Element element) {
+		super(_ELEMENT_NAME, element);
+	}
+
+	protected DefinitionPoshiElement(String readableSyntax) {
+		super(_ELEMENT_NAME, readableSyntax);
 	}
 
 	@Override
@@ -170,5 +193,35 @@ public class DefinitionElement extends PoshiElement {
 
 		return false;
 	}
+
+	private static boolean _isElementType(String readableSyntax) {
+		readableSyntax = readableSyntax.trim();
+
+		if (!isBalancedReadableSyntax(readableSyntax)) {
+			return false;
+		}
+
+		if (!readableSyntax.endsWith("}")) {
+			return false;
+		}
+
+		for (String line : readableSyntax.split("\n")) {
+			line = line.trim();
+
+			if (line.startsWith("@")) {
+				continue;
+			}
+
+			if (!line.equals("definition {")) {
+				return false;
+			}
+
+			break;
+		}
+
+		return true;
+	}
+
+	private static final String _ELEMENT_NAME = "definition";
 
 }

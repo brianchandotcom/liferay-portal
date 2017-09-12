@@ -22,28 +22,26 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class ForElement extends PoshiElement {
+public class ForPoshiElement extends BasePoshiElement {
 
-	public ForElement(Element element) {
-		super("for", element);
-	}
+	@Override
+	public PoshiElement clone(Element element) {
+		if (isElementType(_ELEMENT_NAME, element)) {
+			return new ForPoshiElement(element);
+		}
 
-	public ForElement(String readableSyntax) {
-		super("for", readableSyntax);
+		return null;
 	}
 
 	@Override
-	public String getBlockName() {
-		StringBuilder sb = new StringBuilder();
+	public PoshiElement clone(
+		PoshiElement parentPoshiElement, String readableSyntax) {
 
-		sb.append("for ");
-		sb.append("(");
-		sb.append(attributeValue("param"));
-		sb.append(" : \"");
-		sb.append(attributeValue("list"));
-		sb.append("\")");
+		if (_isElementType(readableSyntax)) {
+			return new ForPoshiElement(readableSyntax);
+		}
 
-		return sb.toString();
+		return null;
 	}
 
 	@Override
@@ -68,7 +66,7 @@ public class ForElement extends PoshiElement {
 				continue;
 			}
 
-			addElementFromReadableSyntax(readableBlock);
+			add(PoshiElementFactory.newPoshiElement(this, readableBlock));
 		}
 	}
 
@@ -77,6 +75,30 @@ public class ForElement extends PoshiElement {
 		String readableSyntax = super.toReadableSyntax();
 
 		return "\n" + createReadableBlock(readableSyntax);
+	}
+
+	protected ForPoshiElement() {
+	}
+
+	protected ForPoshiElement(Element element) {
+		super(_ELEMENT_NAME, element);
+	}
+
+	protected ForPoshiElement(String readableSyntax) {
+		super(_ELEMENT_NAME, readableSyntax);
+	}
+
+	@Override
+	protected String getBlockName() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("for (");
+		sb.append(attributeValue("param"));
+		sb.append(" : \"");
+		sb.append(attributeValue("list"));
+		sb.append("\")");
+
+		return sb.toString();
 	}
 
 	protected List<String> getReadableBlocks(String readableSyntax) {
@@ -91,20 +113,43 @@ public class ForElement extends PoshiElement {
 				continue;
 			}
 
-			String readableBlock = sb.toString();
+			if (!line.startsWith("else {")) {
+				String readableBlock = sb.toString();
 
-			readableBlock = readableBlock.trim();
+				readableBlock = readableBlock.trim();
 
-			if (isValidReadableBlock(readableBlock)) {
-				readableBlocks.add(readableBlock);
+				if (isValidReadableBlock(readableBlock)) {
+					readableBlocks.add(readableBlock);
 
-				sb.setLength(0);
+					sb.setLength(0);
+				}
 			}
 
 			sb.append(line);
+			sb.append("\n");
 		}
 
 		return readableBlocks;
 	}
+
+	private static boolean _isElementType(String readableSyntax) {
+		readableSyntax = readableSyntax.trim();
+
+		if (!isBalancedReadableSyntax(readableSyntax)) {
+			return false;
+		}
+
+		if (!readableSyntax.startsWith("for (")) {
+			return false;
+		}
+
+		if (!readableSyntax.endsWith("}")) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private static final String _ELEMENT_NAME = "for";
 
 }

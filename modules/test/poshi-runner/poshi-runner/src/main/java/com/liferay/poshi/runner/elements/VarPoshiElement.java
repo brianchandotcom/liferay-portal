@@ -25,24 +25,26 @@ import org.dom4j.Node;
 /**
  * @author Kenji Heigel
  */
-public class VarElement extends PoshiElement {
+public class VarPoshiElement extends BasePoshiElement {
 
-	public VarElement(Element element) {
-		this("var", element);
+	@Override
+	public PoshiElement clone(Element element) {
+		if (isElementType(_ELEMENT_NAME, element)) {
+			return new VarPoshiElement(element);
+		}
+
+		return null;
 	}
 
-	public VarElement(String readableSyntax) {
-		this("var", readableSyntax);
-	}
+	@Override
+	public PoshiElement clone(
+		PoshiElement parentPoshiElement, String readableSyntax) {
 
-	public VarElement(String name, Element element) {
-		super(name, element);
+		if (_isElementType(readableSyntax)) {
+			return new VarPoshiElement(readableSyntax);
+		}
 
-		initValueAttributeName(element);
-	}
-
-	public VarElement(String name, String readableSyntax) {
-		super(name, readableSyntax);
+		return null;
 	}
 
 	public String getVarValue() {
@@ -118,6 +120,29 @@ public class VarElement extends PoshiElement {
 		return sb.toString();
 	}
 
+	protected VarPoshiElement() {
+	}
+
+	protected VarPoshiElement(Element element) {
+		this(_ELEMENT_NAME, element);
+	}
+
+	protected VarPoshiElement(String readableSyntax) {
+		this(_ELEMENT_NAME, readableSyntax);
+	}
+
+	protected VarPoshiElement(String name, Element element) {
+		super(name, element);
+
+		if (isElementType(name, element)) {
+			initValueAttributeName(element);
+		}
+	}
+
+	protected VarPoshiElement(String name, String readableSyntax) {
+		super(name, readableSyntax);
+	}
+
 	@Override
 	protected String getBlockName() {
 		return null;
@@ -154,5 +179,29 @@ public class VarElement extends PoshiElement {
 	}
 
 	protected String valueAttributeName;
+
+	private static boolean _isElementType(String readableSyntax) {
+		readableSyntax = readableSyntax.trim();
+
+		if (!isBalancedReadableSyntax(readableSyntax)) {
+			return false;
+		}
+
+		if (!readableSyntax.endsWith(";")) {
+			return false;
+		}
+
+		if (!readableSyntax.startsWith("var ")) {
+			return false;
+		}
+
+		if (readableSyntax.contains(" = return(")) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private static final String _ELEMENT_NAME = "var";
 
 }

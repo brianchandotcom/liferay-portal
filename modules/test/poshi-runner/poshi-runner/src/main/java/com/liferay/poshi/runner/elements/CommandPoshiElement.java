@@ -25,35 +25,35 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class CommandElement extends PoshiElement {
+public class CommandPoshiElement extends BasePoshiElement {
 
-	public CommandElement(Element element) {
-		this("command", element);
+	@Override
+	public PoshiElement clone(Element element) {
+		if (isElementType(_ELEMENT_NAME, element)) {
+			return new CommandPoshiElement(element);
+		}
+
+		return null;
 	}
 
-	public CommandElement(String readableSyntax) {
-		this("command", readableSyntax);
-	}
+	@Override
+	public PoshiElement clone(
+		PoshiElement parentPoshiElement, String readableSyntax) {
 
-	public CommandElement(String name, Element element) {
-		super(name, element);
-	}
+		if (_isElementType(readableSyntax)) {
+			return new CommandPoshiElement(readableSyntax);
+		}
 
-	public CommandElement(String name, String readableSyntax) {
-		super(name, readableSyntax);
+		return null;
 	}
 
 	@Override
 	public void parseReadableSyntax(String readableSyntax) {
 		for (String readableBlock : getReadableBlocks(readableSyntax)) {
-			if (readableBlock.startsWith("setUp")) {
-				System.out.println(readableBlock);
-			}
-
 			if (readableBlock.endsWith("}") || readableBlock.endsWith(";") ||
 				readableBlock.startsWith("@description")) {
 
-				addElementFromReadableSyntax(readableBlock);
+				add(PoshiElementFactory.newPoshiElement(this, readableBlock));
 
 				continue;
 			}
@@ -110,6 +110,25 @@ public class CommandElement extends PoshiElement {
 		sb.append(createReadableBlock(readableBlocks));
 
 		return sb.toString();
+	}
+
+	protected CommandPoshiElement() {
+	}
+
+	protected CommandPoshiElement(Element element) {
+		this(_ELEMENT_NAME, element);
+	}
+
+	protected CommandPoshiElement(String readableSyntax) {
+		this(_ELEMENT_NAME, readableSyntax);
+	}
+
+	protected CommandPoshiElement(String name, Element element) {
+		super(name, element);
+	}
+
+	protected CommandPoshiElement(String name, String readableSyntax) {
+		super(name, readableSyntax);
 	}
 
 	protected String createReadableBlock(List<String> items) {
@@ -219,5 +238,35 @@ public class CommandElement extends PoshiElement {
 
 		return false;
 	}
+
+	private static boolean _isElementType(String readableSyntax) {
+		readableSyntax = readableSyntax.trim();
+
+		if (!isBalancedReadableSyntax(readableSyntax)) {
+			return false;
+		}
+
+		if (!readableSyntax.endsWith("}")) {
+			return false;
+		}
+
+		for (String line : readableSyntax.split("\n")) {
+			line = line.trim();
+
+			if (line.startsWith("@")) {
+				continue;
+			}
+
+			if (!(line.endsWith("{") && line.startsWith("test"))) {
+				return false;
+			}
+
+			break;
+		}
+
+		return true;
+	}
+
+	private static final String _ELEMENT_NAME = "command";
 
 }

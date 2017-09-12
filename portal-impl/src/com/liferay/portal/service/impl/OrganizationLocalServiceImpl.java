@@ -599,10 +599,6 @@ public class OrganizationLocalServiceImpl
 	public List<Organization> getOrganizations(
 		long companyId, String treePath) {
 
-		if (!treePath.endsWith(StringPool.PERCENT)) {
-			treePath = treePath + StringPool.UNDERLINE + StringPool.PERCENT;
-		}
-
 		return organizationPersistence.findByC_T(companyId, treePath);
 	}
 

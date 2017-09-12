@@ -436,7 +436,15 @@ public class FriendlyURLEntryLocalServiceImpl
 			String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(
 				urlTitle);
 
-			if (Validator.isNull(normalizedUrlTitle)) {
+			FriendlyURLEntryLocalization existingFriendlyURLEntryLocalization =
+				friendlyURLEntryLocalizationPersistence.fetchByG_C_U(
+					groupId, classNameId, normalizedUrlTitle);
+
+			if (Validator.isNull(normalizedUrlTitle) ||
+				((existingFriendlyURLEntryLocalization != null) &&
+				 (existingFriendlyURLEntryLocalization.getClassPK() ==
+					 classPK))) {
+
 				continue;
 			}
 

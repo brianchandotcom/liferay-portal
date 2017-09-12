@@ -1706,6 +1706,7 @@
 		<field name="companyId" type="long" />
 		<field name="layoutSetId" type="long" />
 		<field name="hostname" type="String">
+			<hint name="max-length">200</hint>
 			<validator name="required" />
 		</field>
 	</model>

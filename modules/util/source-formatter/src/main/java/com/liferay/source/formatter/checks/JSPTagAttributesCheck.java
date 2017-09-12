@@ -304,6 +304,16 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 					continue;
 				}
 
+				Element tagNameElement = tagElement.element("name");
+
+				String tagName = tagNameElement.getStringValue();
+
+				if (tagSetMethodsMap.containsKey(
+						shortName + StringPool.COLON + tagName)) {
+
+					continue;
+				}
+
 				if (srcDir == null) {
 					if (tldFileName.contains("/src/")) {
 						srcDir = tldFile.getAbsolutePath();
@@ -351,10 +361,6 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 				if (setMethodsMap.isEmpty()) {
 					continue;
 				}
-
-				Element tagNameElement = tagElement.element("name");
-
-				String tagName = tagNameElement.getStringValue();
 
 				tagSetMethodsMap.put(
 					shortName + StringPool.COLON + tagName, setMethodsMap);

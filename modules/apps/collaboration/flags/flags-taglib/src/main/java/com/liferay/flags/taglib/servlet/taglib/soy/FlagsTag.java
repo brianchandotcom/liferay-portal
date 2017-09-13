@@ -58,7 +58,8 @@ public class FlagsTag extends TemplateRendererTag {
 		try {
 			Map<String, Object> context = getContext();
 
-			boolean enabled = (Boolean)context.get("enabled");
+			boolean enabled = GetterUtil.getBoolean(
+				context.get("enabled"), true);
 
 			putValue("cssClass", _getCssClass(randomNamespace, enabled));
 

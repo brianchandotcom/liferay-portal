@@ -27,6 +27,7 @@ import com.liferay.message.boards.kernel.model.MBThreadConstants;
 import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceUtil;
 import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
 import com.liferay.message.boards.kernel.service.MBThreadLocalServiceUtil;
+import com.liferay.petra.mail.JavaMailUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -78,7 +79,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.messageboards.MBGroupServiceSettings;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
-import com.liferay.util.mail.JavaMailUtil;
 
 import java.io.InputStream;
 

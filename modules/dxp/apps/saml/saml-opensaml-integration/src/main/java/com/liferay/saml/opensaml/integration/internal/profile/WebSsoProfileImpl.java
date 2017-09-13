@@ -1504,6 +1504,11 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				}
 
 				long clockSkew = metadataManager.getClockSkew();
+				DateTime notBefore = subjectConfirmationData.getNotBefore();
+
+				if (notBefore != null) {
+					verifyNotBeforeDateTime(clockSkew, notBefore);
+				}
 				DateTime notOnOrAfter =
 					subjectConfirmationData.getNotOnOrAfter();
 

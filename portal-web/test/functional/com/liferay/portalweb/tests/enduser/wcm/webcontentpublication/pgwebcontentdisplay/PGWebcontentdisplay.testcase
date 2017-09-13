@@ -952,9 +952,7 @@
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="WC WebContent Content" />
-		</execute>
+		<execute macro="WebContent#viewNoContentAsGuestPGViaWCD" />
 
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />

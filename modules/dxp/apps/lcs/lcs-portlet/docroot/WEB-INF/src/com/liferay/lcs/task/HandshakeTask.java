@@ -311,7 +311,7 @@ public class HandshakeTask implements Task {
 			}
 			else {
 				_log.error(
-					"There are no handlers for message " + delayedMessage);
+					"There are no handlers for message: " + delayedMessage);
 			}
 		}
 

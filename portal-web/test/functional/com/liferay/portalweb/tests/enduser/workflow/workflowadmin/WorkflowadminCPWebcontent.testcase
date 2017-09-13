@@ -1,0 +1,155 @@
+<definition component-name="portal-workflow">
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
+	<property name="testray.main.component.name" value="Workflow" />
+
+	<var name="workflowAssetType" value="Web Content Article" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="WebContent#tearDownCP" />
+
+				<execute macro="Workflow#tearDownPortalWorkflow" />
+
+				<execute macro="Workflow#tearDownSiteWorkflow" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="ApproveInWCSubfolderWorkflow" priority="4">
+		<property name="testray.component.names" value="Training" />
+
+		<execute macro="WebContentNavigator#gotoManageStructures" />
+
+		<execute macro="WebContentStructures#addCP">
+			<var name="structureDescription" value="WC Structure Description" />
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="WebContentStructures#saveCP">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoManageTemplates" />
+
+		<execute macro="WebContentTemplates#addCP">
+			<var name="templateLanguage" value="ftl" />
+			<var name="templateName" value="WC Template Name" />
+		</execute>
+
+		<execute macro="WebContentTemplates#addStructure">
+			<var name="structureName" value="WC Structure Name" />
+			<var name="templateFieldNames" value="Text" />
+			<var name="templateLanguage" value="ftl" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentFolder#addCP">
+			<var name="folderDescription" value="WC Folder Description" />
+			<var name="folderName" value="WC Folder Name" />
+		</execute>
+
+		<execute macro="WebContentFolder#addSubfolderCP">
+			<var name="folderName" value="WC Folder Name" />
+			<var name="subfolderDescription" value="WC Subfolder Description" />
+			<var name="subfolderName" value="WC Subfolder Name" />
+		</execute>
+
+		<execute macro="WebContentFolder#configureWorkflowCP">
+			<var name="folderName" value="WC Subfolder Name" />
+			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowRestriction" value="Default Workflow" />
+		</execute>
+
+		<execute macro="WebContentFolder#gotoCP">
+			<var name="folderName" value="WC Subfolder Name" />
+			<var name="webContentTitle" value="WC Subfolder Name" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="WebContent#addWithStructureAndWorkflowCP">
+			<var name="webContentText" value="WC WebContent Text" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#assignToMeTaskByActions">
+			<var name="workflowAssetTitle" value="WC WebContent Title" />
+			<var name="workflowAssetType" value="Web Content Article" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Workflow#approveTaskByActions">
+			<var name="workflowAssetTitle" value="WC WebContent Title" />
+			<var name="workflowAssetType" value="Web Content Article" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentFolder#gotoSubfolderCP">
+			<var name="foldersName" value="WC Folder Name,WC Subfolder Name" />
+		</execute>
+
+		<execute macro="WebContent#viewApprovedStatus">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="WebContent#viewCP">
+			<var name="webContentText" value="WC WebContent Text" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+	</command>
+</definition>

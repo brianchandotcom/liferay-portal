@@ -181,7 +181,7 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 			"messageTaskInterval", String.valueOf(10000));
 
 		if (_log.isTraceEnabled()) {
-			_log.trace("Scheduling task Command Message Task");
+			_log.trace("Scheduling command message task");
 		}
 
 		_scheduledFutures.add(
@@ -192,7 +192,7 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 				TimeUnit.SECONDS));
 
 		if (_log.isTraceEnabled()) {
-			_log.trace("Scheduling task Heartbeat Task");
+			_log.trace("Scheduling heartbeat task");
 		}
 
 		_scheduledFutures.add(
@@ -201,7 +201,7 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 				TimeUnit.MILLISECONDS));
 
 		if (_log.isTraceEnabled()) {
-			_log.trace("Scheduling task License Manager Task");
+			_log.trace("Scheduling license manager task");
 		}
 
 		_scheduledFutures.add(

@@ -30,7 +30,10 @@ import javax.mail.internet.InternetAddress;
 /**
  * @author Brian Wing Shun Chan
  * @see    com.liferay.petra.mail.JavaMailUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.petra.mail.JavaMailUtil}
  */
+@Deprecated
 public class JavaMailUtil {
 
 	public static byte[] getBytes(Part part)

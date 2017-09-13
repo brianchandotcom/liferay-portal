@@ -66,6 +66,59 @@ public class CheckStyleUtil {
 		return _sourceFormatterMessages;
 	}
 
+	private static Configuration _addAttribute(
+		Configuration configuration, String key, String value,
+		String... regexChecks) {
+
+		if (!(configuration instanceof DefaultConfiguration)) {
+			return configuration;
+		}
+
+		DefaultConfiguration defaultConfiguration =
+			(DefaultConfiguration)configuration;
+
+		DefaultConfiguration treeWalkerModule = null;
+
+		for (Configuration childConfiguration :
+				defaultConfiguration.getChildren()) {
+
+			String name = childConfiguration.getName();
+
+			if (name.equals("TreeWalker") &&
+				(childConfiguration instanceof DefaultConfiguration)) {
+
+				treeWalkerModule = (DefaultConfiguration)childConfiguration;
+
+				break;
+			}
+		}
+
+		if (treeWalkerModule == null) {
+			return configuration;
+		}
+
+		for (Configuration childConfiguration :
+				treeWalkerModule.getChildren()) {
+
+			if (!(childConfiguration instanceof DefaultConfiguration)) {
+				continue;
+			}
+
+			String name = childConfiguration.getName();
+
+			for (String regexCheck : regexChecks) {
+				if (name.matches(regexCheck)) {
+					DefaultConfiguration defaultChildConfiguration =
+						(DefaultConfiguration)childConfiguration;
+
+					defaultChildConfiguration.addAttribute(key, value);
+				}
+			}
+		}
+
+		return defaultConfiguration;
+	}
+
 	private static Checker _getChecker(
 			List<File> suppressionsFiles, String baseDirName)
 		throws Exception {

@@ -17,7 +17,6 @@ package com.liferay.source.formatter;
 import com.liferay.portal.kernel.nio.charset.CharsetDecoderUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -101,8 +100,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			new ProgressStatusUpdate(
 				ProgressStatus.SOURCE_CHECKS_INITIALIZED, fileNames.size()));
 
+		List<File> suppressionsFiles = SourceFormatterUtil.getSuppressionsFiles(
+			sourceFormatterArgs.getBaseDirName(),
+			"sourcechecks-suppressions.xml", _allFileNames,
+			_sourceFormatterExcludes, portalSource, subrepository);
+
 		_sourceChecksSuppressions = SuppressionsLoader.loadSuppressions(
-			getSuppressionsFiles("sourcechecks-suppressions.xml"));
+			suppressionsFiles);
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
 			sourceFormatterArgs.getProcessorThreadCount());
@@ -259,6 +263,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return filteredIncludes;
 	}
 
+	protected List<String> getAllFileNames() {
+		return _allFileNames;
+	}
+
 	protected File getFile(String fileName, int level) {
 		return SourceFormatterUtil.getFile(
 			sourceFormatterArgs.getBaseDirName(), fileName, level);
@@ -297,48 +305,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return _progressStatusQueue;
 	}
 
-	protected List<File> getSuppressionsFiles(String fileName)
-		throws Exception {
-
-		List<File> suppressionsFiles = new ArrayList<>();
-
-		// Find suppressions files in any parent directory
-
-		int maxDirLevel = PLUGINS_MAX_DIR_LEVEL;
-		String parentDirName = sourceFormatterArgs.getBaseDirName();
-
-		if (portalSource || subrepository) {
-			maxDirLevel = PORTAL_MAX_DIR_LEVEL;
-		}
-
-		for (int i = 0; i < maxDirLevel; i++) {
-			File suppressionsFile = new File(parentDirName + fileName);
-
-			if (suppressionsFile.exists()) {
-				suppressionsFiles.add(suppressionsFile);
-			}
-
-			parentDirName += "../";
-		}
-
-		if (!portalSource && !subrepository) {
-			return suppressionsFiles;
-		}
-
-		// Find suppressions files in any child directory
-
-		List<String> moduleSuppressionsFileNames = getFileNames(
-			new String[0], new String[] {"**/" + fileName}, true);
-
-		for (String moduleSuppressionsFileName : moduleSuppressionsFileNames) {
-			moduleSuppressionsFileName = StringUtil.replace(
-				moduleSuppressionsFileName, CharPool.BACK_SLASH,
-				CharPool.SLASH);
-
-			suppressionsFiles.add(new File(moduleSuppressionsFileName));
-		}
-
-		return suppressionsFiles;
+	protected SourceFormatterExcludes getSourceFormatterExcludes() {
+		return _sourceFormatterExcludes;
 	}
 
 	protected void postFormat() throws Exception {

@@ -586,6 +586,39 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		_webSsoProfileImpl.verifyConditions(spSamlMessageContext, conditions);
 	}
 
+	@Test(expected = ExpiredException.class)
+	public void testVerifyConditionNotOnOrAfter() throws Exception {
+		prepareIdentityProvider(IDP_ENTITY_ID);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			getMockHttpServletRequest(SSO_URL);
+
+		SAMLMessageContext<AuthnRequest, Response, NameID>
+			idpSamlMessageContext =
+			(SAMLMessageContext<AuthnRequest, Response, NameID>)
+				_webSsoProfileImpl.getSamlMessageContext(
+					mockHttpServletRequest, new MockHttpServletResponse());
+
+		idpSamlMessageContext.setPeerEntityId(SP_ENTITY_ID);
+
+		SamlSsoRequestContext samlSsoRequestContext = new SamlSsoRequestContext(
+			SP_ENTITY_ID, null, idpSamlMessageContext, userLocalService);
+
+		Conditions conditions = _webSsoProfileImpl.getSuccessConditions(
+			samlSsoRequestContext,
+			null, new DateTime(DateTimeZone.UTC).minusYears(1));
+
+		prepareServiceProvider(SP_ENTITY_ID);
+
+		mockHttpServletRequest = getMockHttpServletRequest(ACS_URL);
+
+		SAMLMessageContext<?, ?, ?> spSamlMessageContext =
+			_webSsoProfileImpl.getSamlMessageContext(
+				mockHttpServletRequest, new MockHttpServletResponse());
+
+		_webSsoProfileImpl.verifyConditions(spSamlMessageContext, conditions);
+	}
+
 	@Test
 	public void testVerifyDestinationAllow() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =

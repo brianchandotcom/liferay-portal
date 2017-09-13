@@ -93,6 +93,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return;
 		}
 
+		_sourceFormatterMessagesMap = new HashMap<>();
+
 		_sourceChecks = _getSourceChecks(_containsModuleFile(fileNames));
 
 		addProgressStatusUpdate(
@@ -211,8 +213,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		SourceFormatterArgs sourceFormatterArgs) {
 
 		this.sourceFormatterArgs = sourceFormatterArgs;
-
-		_init();
 	}
 
 	@Override
@@ -563,15 +563,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return sourceChecks;
-	}
-
-	private void _init() {
-		try {
-			_sourceFormatterMessagesMap = new HashMap<>();
-		}
-		catch (Exception e) {
-			ReflectionUtil.throwException(e);
-		}
 	}
 
 	private void _initSourceCheck(SourceCheck sourceCheck) throws Exception {

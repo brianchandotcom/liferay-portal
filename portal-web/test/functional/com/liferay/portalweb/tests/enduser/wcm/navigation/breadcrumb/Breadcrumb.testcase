@@ -113,8 +113,13 @@
 			<var name="uncheckSetupName" value="Show Current Site,Show Guest Site,Show Page,Show Parent Sites,Show Application Breadcrumb" />
 		</execute>
 
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="Breadcrumb#viewConfigurationPreview">
-			<var name="breadcrumbListNotVisible" value="Liferay,Site Name,Parent Page Name,Child Page Name" />
+			<var name="breadcrumbListNotVisible" value="${siteName},Site Name,Parent Page Name,Child Page Name" />
 		</execute>
 
 		<execute macro="Breadcrumb#configureBreadcrumb">
@@ -123,7 +128,7 @@
 		</execute>
 
 		<execute macro="Breadcrumb#viewConfigurationPreview">
-			<var name="breadcrumbListVisible" value="Liferay,Site Name,Parent Page Name,Child Page Name" />
+			<var name="breadcrumbListVisible" value="${siteName},Site Name,Parent Page Name,Child Page Name" />
 		</execute>
 	</command>
 
@@ -696,8 +701,13 @@
 			<var name="breadcrumbListVisible" value="Welcome,Child Page Name" />
 		</execute>
 
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="Breadcrumb#viewConfigurationPreview">
-			<var name="breadcrumbListNotVisible" value="Liferay" />
+			<var name="breadcrumbListNotVisible" value="${siteName}" />
 		</execute>
 
 		<execute macro="Breadcrumb#configureBreadcrumb">
@@ -705,13 +715,13 @@
 		</execute>
 
 		<execute macro="Breadcrumb#viewConfigurationPreview">
-			<var name="breadcrumbListVisible" value="Liferay,Welcome,Child Page Name" />
+			<var name="breadcrumbListVisible" value="${siteName},Welcome,Child Page Name" />
 		</execute>
 
 		<execute macro="Breadcrumb#saveDisplayPreview" />
 
 		<execute macro="Breadcrumb#viewConfigurationPreview">
-			<var name="breadcrumbListVisible" value="Liferay,Welcome,Child Page Name" />
+			<var name="breadcrumbListVisible" value="${siteName},Welcome,Child Page Name" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -722,7 +732,7 @@
 		</execute>
 
 		<execute macro="Breadcrumb#viewPG">
-			<var name="breadcrumbListVisible" value="Liferay,Welcome,Child Page Name" />
+			<var name="breadcrumbListVisible" value="${siteName},Welcome,Child Page Name" />
 			<var name="pathLocator" value="PAGE" />
 		</execute>
 	</command>

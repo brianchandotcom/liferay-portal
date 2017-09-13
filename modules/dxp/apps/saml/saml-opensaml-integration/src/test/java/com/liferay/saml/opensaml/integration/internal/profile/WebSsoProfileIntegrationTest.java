@@ -521,8 +521,8 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			audienceRestrictions, samlMessageContext);
 	}
 
-	@Test
-	public void testVerifyConditionsNoDates() throws Exception {
+	@Test(expected = AssertionException.class)
+	public void testVerifyConditionNotOnBefore() throws Exception {
 		prepareIdentityProvider(IDP_ENTITY_ID);
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -540,40 +540,8 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			SP_ENTITY_ID, null, idpSamlMessageContext, userLocalService);
 
 		Conditions conditions = _webSsoProfileImpl.getSuccessConditions(
-			samlSsoRequestContext, null, null);
-
-		prepareServiceProvider(SP_ENTITY_ID);
-
-		mockHttpServletRequest = getMockHttpServletRequest(ACS_URL);
-
-		SAMLMessageContext<?, ?, ?> spSamlMessageContext =
-			_webSsoProfileImpl.getSamlMessageContext(
-				mockHttpServletRequest, new MockHttpServletResponse());
-
-		_webSsoProfileImpl.verifyConditions(spSamlMessageContext, conditions);
-	}
-
-	@Test(expected = AssertionException.class)
-	public void testVerifyConditionNotOnBefore() throws Exception {
-		prepareIdentityProvider(IDP_ENTITY_ID);
-
-		MockHttpServletRequest mockHttpServletRequest =
-			getMockHttpServletRequest(SSO_URL);
-
-		SAMLMessageContext<AuthnRequest, Response, NameID>
-			idpSamlMessageContext =
-			(SAMLMessageContext<AuthnRequest, Response, NameID>)
-				_webSsoProfileImpl.getSamlMessageContext(
-					mockHttpServletRequest, new MockHttpServletResponse());
-
-		idpSamlMessageContext.setPeerEntityId(SP_ENTITY_ID);
-
-		SamlSsoRequestContext samlSsoRequestContext = new SamlSsoRequestContext(
-			SP_ENTITY_ID, null, idpSamlMessageContext, userLocalService);
-
-		Conditions conditions = _webSsoProfileImpl.getSuccessConditions(
-			samlSsoRequestContext,
-			new DateTime(DateTimeZone.UTC).plusDays(1), null);
+			samlSsoRequestContext, new DateTime(DateTimeZone.UTC).plusDays(1),
+			null);
 
 		prepareServiceProvider(SP_ENTITY_ID);
 
@@ -595,9 +563,9 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		SAMLMessageContext<AuthnRequest, Response, NameID>
 			idpSamlMessageContext =
-			(SAMLMessageContext<AuthnRequest, Response, NameID>)
-				_webSsoProfileImpl.getSamlMessageContext(
-					mockHttpServletRequest, new MockHttpServletResponse());
+				(SAMLMessageContext<AuthnRequest, Response, NameID>)
+					_webSsoProfileImpl.getSamlMessageContext(
+						mockHttpServletRequest, new MockHttpServletResponse());
 
 		idpSamlMessageContext.setPeerEntityId(SP_ENTITY_ID);
 
@@ -605,8 +573,40 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			SP_ENTITY_ID, null, idpSamlMessageContext, userLocalService);
 
 		Conditions conditions = _webSsoProfileImpl.getSuccessConditions(
-			samlSsoRequestContext,
-			null, new DateTime(DateTimeZone.UTC).minusYears(1));
+			samlSsoRequestContext, null,
+			new DateTime(DateTimeZone.UTC).minusYears(1));
+
+		prepareServiceProvider(SP_ENTITY_ID);
+
+		mockHttpServletRequest = getMockHttpServletRequest(ACS_URL);
+
+		SAMLMessageContext<?, ?, ?> spSamlMessageContext =
+			_webSsoProfileImpl.getSamlMessageContext(
+				mockHttpServletRequest, new MockHttpServletResponse());
+
+		_webSsoProfileImpl.verifyConditions(spSamlMessageContext, conditions);
+	}
+
+	@Test
+	public void testVerifyConditionsNoDates() throws Exception {
+		prepareIdentityProvider(IDP_ENTITY_ID);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			getMockHttpServletRequest(SSO_URL);
+
+		SAMLMessageContext<AuthnRequest, Response, NameID>
+			idpSamlMessageContext =
+				(SAMLMessageContext<AuthnRequest, Response, NameID>)
+					_webSsoProfileImpl.getSamlMessageContext(
+						mockHttpServletRequest, new MockHttpServletResponse());
+
+		idpSamlMessageContext.setPeerEntityId(SP_ENTITY_ID);
+
+		SamlSsoRequestContext samlSsoRequestContext = new SamlSsoRequestContext(
+			SP_ENTITY_ID, null, idpSamlMessageContext, userLocalService);
+
+		Conditions conditions = _webSsoProfileImpl.getSuccessConditions(
+			samlSsoRequestContext, null, null);
 
 		prepareServiceProvider(SP_ENTITY_ID);
 

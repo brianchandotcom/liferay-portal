@@ -82,4 +82,33 @@
 			</then>
 		</if>
 	</command>
+
+	<command name="viewNoStylingInAlloyEditor">
+		<if>
+			<isset var="boldContent" />
+			<then>
+				<execute function="AssertElementNotPresent" locator1="AlloyEditor#CONTENT_FIELD_BOLD">
+					<var name="key_boldContent" value="${boldContent}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<isset var="italicContent" />
+			<then>
+				<execute function="AssertElementNotPresent" locator1="AlloyEditor#CONTENT_FIELD_ITALIC">
+					<var name="key_italicContent" value="${italicContent}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<isset var="underlineContent" />
+			<then>
+				<execute function="AssertElementNotPresent" locator1="AlloyEditor#CONTENT_FIELD_UNDERLINE">
+					<var name="key_underlineContent" value="${underlineContent}" />
+				</execute>
+			</then>
+		</if>
+	</command>
 </definition>

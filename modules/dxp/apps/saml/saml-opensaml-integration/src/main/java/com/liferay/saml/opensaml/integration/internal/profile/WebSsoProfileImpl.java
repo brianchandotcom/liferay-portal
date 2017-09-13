@@ -304,11 +304,22 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		SamlSsoRequestContext samlSsoRequestContext =
-			decodeAuthnConversationAfterLogin(request, response);
+		String samlMessageId = ParamUtil.getString(request, "saml_message_id");
 
-		if (samlSsoRequestContext != null) {
-			return samlSsoRequestContext;
+		if (!Validator.isBlank(samlMessageId)) {
+			SamlSsoRequestContext samlSsoRequestContext =
+				decodeAuthnConversationAfterLogin(request, response);
+
+			SAMLMessageContext<AuthnRequest, Response, NameID>
+				samlMessageContext =
+					samlSsoRequestContext.getSAMLMessageContext();
+
+			if ((samlMessageContext != null) &&
+				samlMessageContext.getInboundSAMLMessageId().equals(
+					samlMessageId)) {
+
+				return samlSsoRequestContext;
+			}
 		}
 
 		SAMLMessageContext<AuthnRequest, Response, NameID> samlMessageContext =
@@ -326,6 +337,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		String entityId = ParamUtil.getString(request, "entityId");
 		String samlRequest = ParamUtil.getString(request, "SAMLRequest");
+
+		SamlSsoRequestContext samlSsoRequestContext = null;
 
 		if (Validator.isNotNull(entityId) && Validator.isNull(samlRequest)) {
 			samlMessageContext =
@@ -998,6 +1011,9 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				SamlWebKeys.FORCE_REAUTHENTICATION, Boolean.TRUE);
 		}
 
+		SAMLMessageContext samlMessageContext =
+			samlSsoRequestContext.getSAMLMessageContext();
+
 		samlSsoRequestContext.setSAMLMessageContext(null);
 
 		session.setAttribute(
@@ -1009,7 +1025,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		response.addHeader(
 			HttpHeaders.PRAGMA, HttpHeaders.PRAGMA_NO_CACHE_VALUE);
 
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(5);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -1018,7 +1034,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		sb.append("/portal/login?redirect=");
 		sb.append(themeDisplay.getPathMain());
-		sb.append("/portal/saml/sso");
+		sb.append("/portal/saml/sso?saml_message_id=");
+		sb.append(samlMessageContext.getInboundSAMLMessageId());
 
 		String redirect = sb.toString();
 

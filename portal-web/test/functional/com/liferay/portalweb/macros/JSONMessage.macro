@@ -1,23 +1,5 @@
 <definition>
 	<command name="addMessage">
-		<if>
-			<not>
-				<isset var="threadSubject" />
-			</not>
-			<then>
-				<fail message="Please set 'threadSubject'." />
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<isset var="threadBody" />
-			</not>
-			<then>
-				<fail message="Please set 'threadBody'." />
-			</then>
-		</if>
-
 		<execute macro="JSONMessage#getmessageId">
 			<return from="messageId" name="messageId" />
 		</execute>

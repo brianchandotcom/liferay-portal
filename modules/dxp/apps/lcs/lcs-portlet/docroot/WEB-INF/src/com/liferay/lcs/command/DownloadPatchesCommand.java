@@ -60,7 +60,7 @@ public class DownloadPatchesCommand implements Command {
 		}
 
 		if (_log.isTraceEnabled()) {
-			_log.trace("Executing Download Patches Command");
+			_log.trace("Executing download patches command");
 		}
 
 		Map<String, String> payload =

@@ -45,7 +45,7 @@ public class SendPortalPropertiesCommand implements Command {
 	@Override
 	public void execute(CommandMessage commandMessage) throws PortalException {
 		if (_log.isTraceEnabled()) {
-			_log.trace("Executing Send Portal Properties Command");
+			_log.trace("Executing send portal properties command");
 		}
 
 		Properties portalProperties = getSecurityInsensitivePropertiesKeys();

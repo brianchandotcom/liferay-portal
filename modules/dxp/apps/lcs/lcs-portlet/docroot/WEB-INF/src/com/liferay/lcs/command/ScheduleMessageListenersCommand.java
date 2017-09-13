@@ -32,7 +32,7 @@ public class ScheduleMessageListenersCommand implements Command {
 	@Override
 	public void execute(CommandMessage commandMessage) throws PortalException {
 		if (_log.isTraceEnabled()) {
-			_log.trace("Executing Schedule Message Listeners Command");
+			_log.trace("Executing schedule message listeners command");
 		}
 
 		List<Map<String, String>> schedulerContexts =

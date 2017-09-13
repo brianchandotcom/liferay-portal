@@ -33,7 +33,7 @@ public class ScheduleTasksCommand implements Command {
 	@Override
 	public void execute(CommandMessage commandMessage) throws PortalException {
 		if (_log.isTraceEnabled()) {
-			_log.trace("Executing Schedule Tasks Command");
+			_log.trace("Executing schedule tasks command");
 		}
 
 		Map<String, List<Map<String, String>>> prioritySchedulerContexts =

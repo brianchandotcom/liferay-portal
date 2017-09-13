@@ -40,7 +40,7 @@ public class SendPatchesCommand implements Command {
 	@Override
 	public void execute(CommandMessage commandMessage) throws PortalException {
 		if (_log.isTraceEnabled()) {
-			_log.trace("Executing Send Patches Command");
+			_log.trace("Executing send patches command");
 		}
 
 		String[] fixedIssues = LCSPatcherUtil.getFixedIssues();

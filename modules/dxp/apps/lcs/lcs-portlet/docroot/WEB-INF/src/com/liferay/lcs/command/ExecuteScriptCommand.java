@@ -39,7 +39,7 @@ public class ExecuteScriptCommand implements Command {
 	@Override
 	public void execute(CommandMessage commandMessage) throws PortalException {
 		if (_log.isTraceEnabled()) {
-			_log.trace("Executing Execute Script Command");
+			_log.trace("Executing execute script command");
 		}
 
 		Map<String, Object> inputObjects = new HashMap<>();

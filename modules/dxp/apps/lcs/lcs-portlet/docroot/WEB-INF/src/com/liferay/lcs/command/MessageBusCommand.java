@@ -30,7 +30,7 @@ public class MessageBusCommand implements Command {
 	@Override
 	public void execute(CommandMessage commandMessage) throws PortalException {
 		if (_log.isTraceEnabled()) {
-			_log.trace("Executing Message Bus Command");
+			_log.trace("Executing message bus command");
 		}
 
 		MessageBusCommandMessage messageBusCommandMessage =

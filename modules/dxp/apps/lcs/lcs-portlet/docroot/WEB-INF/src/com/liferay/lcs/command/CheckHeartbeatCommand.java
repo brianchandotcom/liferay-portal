@@ -44,7 +44,7 @@ public class CheckHeartbeatCommand implements Command {
 	@Override
 	public void execute(CommandMessage commandMessage) {
 		if (_log.isTraceEnabled()) {
-			_log.trace("Executing Check Heartbeat Command");
+			_log.trace("Executing check heartbeat command");
 		}
 
 		_executorService.execute(_heartbeatTask);

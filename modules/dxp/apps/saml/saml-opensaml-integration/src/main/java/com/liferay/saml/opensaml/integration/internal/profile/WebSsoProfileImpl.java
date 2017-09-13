@@ -1502,9 +1502,13 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 					continue;
 				}
 
-				verifyNotOnOrAfterDateTime(
-					metadataManager.getClockSkew(),
-					subjectConfirmationData.getNotOnOrAfter());
+				long clockSkew = metadataManager.getClockSkew();
+				DateTime notOnOrAfter =
+					subjectConfirmationData.getNotOnOrAfter();
+
+				if (notOnOrAfter != null) {
+					verifyNotOnOrAfterDateTime(clockSkew, notOnOrAfter);
+				}
 
 				if (Validator.isNull(subjectConfirmationData.getRecipient())) {
 					continue;

@@ -107,6 +107,42 @@
 		<execute function="AssertElementPresent" locator1="//img[contains(@src,'Document_1.jpg')]" />
 	</command>
 
+	<command name="RemoveAppliedStylingInAlloyEditor" priority="4">
+		<description message="This is a use case for LPS-61676." />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="AlloyEditor#addContent">
+			<var name="content" value="This is a sentence" />
+		</execute>
+
+		<execute macro="AlloyEditor#applyStylingInAlloyEditor">
+			<var name="boldContent" value="This is a sentence" />
+		</execute>
+
+		<execute function="Click" locator1="AlloyEditor#CONTENT_FIELD" />
+
+		<execute macro="AlloyEditor#viewStylingInAlloyEditor">
+			<var name="boldContent" value="This is a sentence" />
+		</execute>
+
+		<execute macro="AlloyEditor#removeAppliedStylingInAlloyEditor">
+			<var name="boldContent" value="This is a sentence" />
+		</execute>
+
+		<execute function="Click" locator1="AlloyEditor#CONTENT_FIELD" />
+
+		<execute macro="AlloyEditor#viewNoStylingInAlloyEditor">
+			<var name="boldContent" value="This is a sentence" />
+		</execute>
+	</command>
+
 	<command name="ViewWikiFrontPageLeftToRight" priority="4">
 		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />

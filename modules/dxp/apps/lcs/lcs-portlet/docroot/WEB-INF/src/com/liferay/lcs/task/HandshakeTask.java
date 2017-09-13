@@ -284,7 +284,7 @@ public class HandshakeTask implements Task {
 			}
 
 			if (_log.isDebugEnabled()) {
-				_log.debug("Sending messages to processing");
+				_log.debug("Sending messages for processing");
 			}
 
 			if (_log.isTraceEnabled()) {

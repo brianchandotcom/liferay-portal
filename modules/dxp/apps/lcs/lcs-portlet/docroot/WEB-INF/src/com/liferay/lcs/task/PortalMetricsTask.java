@@ -38,7 +38,7 @@ public class PortalMetricsTask extends BaseScheduledTask {
 	@Override
 	protected void doRun() throws Exception {
 		if (_log.isTraceEnabled()) {
-			_log.trace("Running Portal Metrics Task");
+			_log.trace("Running portal metrics task");
 		}
 
 		if (_portalMetricsAggregator.isEmpty()) {

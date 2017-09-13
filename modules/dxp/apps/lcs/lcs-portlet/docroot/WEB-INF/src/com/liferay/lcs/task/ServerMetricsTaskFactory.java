@@ -31,14 +31,14 @@ public class ServerMetricsTaskFactory {
 
 		if (ServerDetector.isTomcat()) {
 			if (_log.isTraceEnabled()) {
-				_log.trace("Setting Tomcat Server Metrics Task");
+				_log.trace("Setting Tomcat metrics task");
 			}
 
 			serverMetricsTask = new TomcatServerMetricsTask();
 		}
 		else if (ServerDetector.isWebLogic()) {
 			if (_log.isTraceEnabled()) {
-				_log.trace("Setting Weblogic Server Metrics Task");
+				_log.trace("Setting WebLogic metrics task");
 			}
 
 			serverMetricsTask = new WeblogicServerMetricsTask();

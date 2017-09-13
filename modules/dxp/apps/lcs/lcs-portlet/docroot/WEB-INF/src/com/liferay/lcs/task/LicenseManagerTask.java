@@ -38,7 +38,7 @@ public class LicenseManagerTask implements Task {
 	@Override
 	public void run() {
 		if (_log.isTraceEnabled()) {
-			_log.trace("Running License Manager Task");
+			_log.trace("Running license manager task");
 		}
 
 		Map<String, String> lcsConnectionMetadata =

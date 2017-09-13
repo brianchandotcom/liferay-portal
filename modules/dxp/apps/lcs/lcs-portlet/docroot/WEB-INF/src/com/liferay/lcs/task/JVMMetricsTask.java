@@ -41,7 +41,7 @@ public class JVMMetricsTask extends BaseScheduledTask {
 	@Override
 	protected void doRun() throws Exception {
 		if (_log.isTraceEnabled()) {
-			_log.trace("Running JVM Metrics Task");
+			_log.trace("Running JVM metrics task");
 		}
 
 		MetricsMessage metricsMessage = new MetricsMessage();

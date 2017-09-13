@@ -53,7 +53,7 @@ public class HeartbeatTask implements Task {
 
 	protected void doRun() throws Exception {
 		if (_log.isTraceEnabled()) {
-			_log.trace("Running Heartbeat Task");
+			_log.trace("Running heartbeat task");
 		}
 
 		if (!_lcsConnectionManager.isReady()) {

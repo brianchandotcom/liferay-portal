@@ -106,6 +106,10 @@
 	.liferay-ddm-form-field-key-value {
 		margin-bottom: 20px;
 
+		.form-control {
+			padding-right: 30px;
+		}
+
 		.help-block {
 			height: 22px;
 			position: relative;

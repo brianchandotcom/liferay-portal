@@ -201,7 +201,7 @@ public class SynchronousDestinationTestCallback
 			replaceDestination(DestinationNames.MAIL);
 			replaceDestination(DestinationNames.SCHEDULER_ENGINE);
 			replaceDestination(DestinationNames.SUBSCRIPTION_SENDER);
-			replaceDestination("liferay/adaptive_media_processor");
+			replaceDestination("liferay/am_processor");
 			replaceDestination("liferay/report_request");
 			replaceDestination("liferay/reports_admin");
 

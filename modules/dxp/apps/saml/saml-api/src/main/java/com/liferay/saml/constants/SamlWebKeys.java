@@ -22,7 +22,8 @@ import aQute.bnd.annotation.ProviderType;
 @ProviderType
 public interface SamlWebKeys {
 
-	public static final String FORCE_REAUHENTICATION = "FORCE_REAUTHENTICATION";
+	public static final String FORCE_REAUTHENTICATION =
+		"FORCE_REAUTHENTICATION";
 
 	public static final String SAML_ASSERTION_LIFETIME =
 		"SAML_ASSERTION_LIFETIME";

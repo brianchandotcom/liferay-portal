@@ -974,7 +974,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			session = request.getSession(true);
 
 			session.setAttribute(
-				SamlWebKeys.FORCE_REAUHENTICATION, Boolean.TRUE);
+				SamlWebKeys.FORCE_REAUTHENTICATION, Boolean.TRUE);
 		}
 
 		samlSsoRequestContext.setSAMLMessageContext(null);

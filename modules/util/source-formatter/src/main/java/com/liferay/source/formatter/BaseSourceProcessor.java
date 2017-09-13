@@ -24,7 +24,6 @@ import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.SourceCheck;
 import com.liferay.source.formatter.checks.configuration.SourceChecksResult;
 import com.liferay.source.formatter.checks.configuration.SourceChecksSuppressions;
-import com.liferay.source.formatter.checks.configuration.SuppressionsLoader;
 import com.liferay.source.formatter.checks.util.SourceChecksUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.DebugUtil;
@@ -99,14 +98,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		addProgressStatusUpdate(
 			new ProgressStatusUpdate(
 				ProgressStatus.SOURCE_CHECKS_INITIALIZED, fileNames.size()));
-
-		List<File> suppressionsFiles = SourceFormatterUtil.getSuppressionsFiles(
-			sourceFormatterArgs.getBaseDirName(),
-			"sourcechecks-suppressions.xml", _allFileNames,
-			_sourceFormatterExcludes, portalSource, subrepository);
-
-		_sourceChecksSuppressions = SuppressionsLoader.loadSuppressions(
-			suppressionsFiles);
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
 			sourceFormatterArgs.getProcessorThreadCount());
@@ -210,6 +201,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	@Override
 	public void setPropertiesMap(Map<String, Properties> propertiesMap) {
 		_propertiesMap = propertiesMap;
+	}
+
+	@Override
+	public void setSourceChecksSuppressions(
+		SourceChecksSuppressions sourceChecksSuppressions) {
+
+		_sourceChecksSuppressions = sourceChecksSuppressions;
 	}
 
 	@Override

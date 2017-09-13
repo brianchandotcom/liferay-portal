@@ -26,6 +26,8 @@ import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.tools.GitException;
 import com.liferay.portal.tools.GitUtil;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.checks.configuration.SourceChecksSuppressions;
+import com.liferay.source.formatter.checks.configuration.SuppressionsLoader;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.DebugUtil;
 import com.liferay.source.formatter.util.FileUtil;
@@ -439,6 +441,17 @@ public class SourceFormatter {
 		return properties;
 	}
 
+	private SourceChecksSuppressions _getSourceChecksSuppressions()
+		throws Exception {
+
+		List<File> suppressionsFiles = SourceFormatterUtil.getSuppressionsFiles(
+			_sourceFormatterArgs.getBaseDirName(),
+			"sourcechecks-suppressions.xml", _allFileNames,
+			_sourceFormatterExcludes, _portalSource, _subrepository);
+
+		return SuppressionsLoader.loadSuppressions(suppressionsFiles);
+	}
+
 	private void _init() throws Exception {
 		_sourceFormatterExcludes = new SourceFormatterExcludes(
 			SetUtil.fromArray(DEFAULT_EXCLUDE_SYNTAX_PATTERNS));
@@ -476,6 +489,8 @@ public class SourceFormatter {
 
 		_portalSource = _isPortalSource();
 		_subrepository = _isSubrepository();
+
+		_sourceChecksSuppressions = _getSourceChecksSuppressions();
 	}
 
 	private boolean _isPortalSource() {
@@ -570,6 +585,7 @@ public class SourceFormatter {
 		sourceProcessor.setPortalSource(_portalSource);
 		sourceProcessor.setProgressStatusQueue(_progressStatusQueue);
 		sourceProcessor.setPropertiesMap(_propertiesMap);
+		sourceProcessor.setSourceChecksSuppressions(_sourceChecksSuppressions);
 		sourceProcessor.setSourceFormatterArgs(_sourceFormatterArgs);
 		sourceProcessor.setSourceFormatterExcludes(_sourceFormatterExcludes);
 		sourceProcessor.setSubrepository(_subrepository);
@@ -755,6 +771,7 @@ public class SourceFormatter {
 	};
 
 	private Map<String, Properties> _propertiesMap = new HashMap<>();
+	private SourceChecksSuppressions _sourceChecksSuppressions;
 	private final SourceFormatterArgs _sourceFormatterArgs;
 	private SourceFormatterExcludes _sourceFormatterExcludes;
 	private final Set<SourceFormatterMessage> _sourceFormatterMessages =

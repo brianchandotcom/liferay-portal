@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter;
 
+import com.liferay.source.formatter.checks.configuration.SourceChecksSuppressions;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -46,6 +48,9 @@ public interface SourceProcessor {
 		BlockingQueue<ProgressStatusUpdate> progressStatusQueue);
 
 	public void setPropertiesMap(Map<String, Properties> propertiesMap);
+
+	public void setSourceChecksSuppressions(
+		SourceChecksSuppressions sourceChecksSuppressions);
 
 	public void setSourceFormatterArgs(SourceFormatterArgs sourceFormatterArgs);
 

@@ -14,7 +14,12 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.dom4j.Element;
+
+import org.json.JSONObject;
 
 /**
  * @author Leslie Wong
@@ -31,6 +36,20 @@ public class ValidationBuild extends BaseBuild {
 			getBaseBranchDetailsElement());
 
 		return rootElement;
+	}
+
+	@Override
+	public List<TestResult> getTestResults(String testStatus) {
+		String status = getStatus();
+
+		if (!status.equals("completed")) {
+			return Collections.emptyList();
+		}
+
+		JSONObject testReportJSONObject = getTestReportJSONObject();
+
+		return TestResult.getTestResults(
+			this, testReportJSONObject.getJSONArray("suites"), testStatus);
 	}
 
 	protected ValidationBuild(String url) {

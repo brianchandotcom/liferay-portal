@@ -126,7 +126,7 @@ public class LCSGatewayServiceImpl
 			Message.class, _URL_LCS_GATEWAY_GET_MESSAGES, parameters, headers);
 
 		if (_log.isTraceEnabled()) {
-			_log.trace("Got messages: " + messages);
+			_log.trace("Received messages: " + messages);
 		}
 
 		return messages;

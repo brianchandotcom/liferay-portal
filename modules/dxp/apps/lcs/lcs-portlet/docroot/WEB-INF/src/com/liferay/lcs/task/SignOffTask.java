@@ -58,7 +58,7 @@ public class SignOffTask implements Task {
 
 	protected void doRun() throws PortalException {
 		if (_log.isTraceEnabled()) {
-			_log.trace("Running Sign Off Task");
+			_log.trace("Running sign off task");
 		}
 
 		String key = _keyGenerator.getKey();

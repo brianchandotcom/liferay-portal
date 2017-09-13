@@ -50,7 +50,7 @@ public class SiteNamesTask extends BaseScheduledTask {
 	@Override
 	protected void doRun() throws Exception {
 		if (_log.isTraceEnabled()) {
-			_log.trace("Running Site Names Task");
+			_log.trace("Running site names task");
 		}
 
 		int start = 0;

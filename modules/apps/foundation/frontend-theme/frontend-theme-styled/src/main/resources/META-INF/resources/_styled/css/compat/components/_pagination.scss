@@ -1,0 +1,50 @@
+.pagination > li {
+	display: inline; // Remove list-style and block-level defaults
+
+	&:first-child > a {
+		margin-left: 0;
+		@include border-left-radius($border-radius);
+	}
+
+	&:last-child > a {
+		@include border-right-radius($border-radius);
+	}
+
+	&.active > a {
+		@include plain-hover-focus {
+			background-color: $pagination-active-bg;
+			border-color: $pagination-active-border-color;
+			color: $pagination-active-color;
+			cursor: default;
+			z-index: 2;
+		}
+	}
+
+	&.disabled > a {
+		@include plain-hover-focus {
+			background-color: $pagination-disabled-bg;
+			border-color: $pagination-disabled-border-color;
+			color: $pagination-disabled-color;
+			cursor: not-allowed;
+			pointer-events: none;
+		}
+	}
+}
+
+.pagination > li > a {
+	position: relative;
+	float: left; // Collapse white-space
+	background-color: $pagination-bg;
+	border: $pagination-border-width solid $pagination-border-color;
+	color: $pagination-color;
+	line-height: $pagination-line-height;
+	margin-left: -1px;
+	padding: $pagination-padding-y $pagination-padding-x;
+
+	@include hover-focus {
+		background-color: $pagination-hover-bg;
+		border-color: $pagination-hover-border-color;
+		color: $pagination-hover-color;
+		text-decoration: none;
+	}
+}

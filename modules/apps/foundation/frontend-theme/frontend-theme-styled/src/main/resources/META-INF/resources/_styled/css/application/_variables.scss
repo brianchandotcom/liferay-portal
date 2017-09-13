@@ -15,7 +15,7 @@ $dialog-footer-bg: $modal-footer-bg !default;
 $dialog-footer-border-color: $modal-footer-border-color !default;
 $dialog-footer-box-shadow: if(variable-exists(modal-footer-box-shadow), $modal-footer-box-shadow, null) !default;
 $dialog-footer-height: 60px;
-$dialog-navbar-height: $navbar-height !default;
+$dialog-navbar-height: 60px !default;
 
 $dialog-desktop-footer-bg: if(variable-exists(modal-desktop-footer-bg), $modal-desktop-footer-bg, $dialog-footer-bg) !default;
 $dialog-desktop-footer-height: 89px;
@@ -26,13 +26,13 @@ $dialog-iframe-padding: 0 !default;
 
 /* ---------- Splitter ---------- */
 
-$splitter-bg: $panel-default-heading-bg !default;
+$splitter-bg: $panel-secondary-header-bg !default;
 $splitter-border-radius: nth($panel-border-radius, 1) nth($panel-border-radius, 1) 0 0 !default;
 $splitter-box-shadow: if(variable-exists(panel-box-shadow), $panel-box-shadow, null) !default;
 $splitter-footer-margin: 20px;
 $splitter-padding: 10px 15px !default;
 $splitter-spaced-border-radius: $panel-border-radius;
-$splitter-text-color: $panel-default-text !default;
+$splitter-text-color: $panel-secondary-color !default;
 
 /* ---------- Toggle card ---------- */
 

@@ -1120,6 +1120,14 @@
 		<execute function="Click" locator1="Icon#CLOSE" />
 	</command>
 
+	<command name="viewNotAvailableMenuItem">
+		<var name="key_page" value="${pageName}" />
+
+		<execute function="Click#mouseOverClick" locator1="SitePages#SPECIFIC_PAGE_ELLIPSIS" />
+
+		<execute function="AssertNotVisible" locator1="SitePages#DELETE_SPECIFIC_PAGE" />
+	</command>
+
 	<command name="viewPageVariationPG">
 		<var name="key_pageVariationName" value="${pageVariationName}" />
 

@@ -43,7 +43,7 @@ public class DebugUtil {
 		_processorFileCountMap.put(processorName, count);
 	}
 
-	public static void increaseProcessingTime(
+	public static synchronized void increaseProcessingTime(
 		String checkName, long processingTime) {
 
 		long currentProcessingTime = 0;

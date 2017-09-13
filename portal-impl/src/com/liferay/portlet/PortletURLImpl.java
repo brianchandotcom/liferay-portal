@@ -984,7 +984,12 @@ public class PortletURLImpl
 
 		String result = sb.toString();
 
-		if (result.length() > Http.URL_MAXIMUM_LENGTH) {
+		if (!CookieKeys.hasSessionId(_request)) {
+			result = PortalUtil.getURLWithSessionId(
+				result, _request.getSession().getId());
+		}
+
+		if (!_escapeXml) {
 			result = HttpUtil.shortenURL(result);
 		}
 
@@ -1006,13 +1011,10 @@ public class PortletURLImpl
 			}
 		}
 
-		if (!CookieKeys.hasSessionId(_request)) {
-			result = PortalUtil.getURLWithSessionId(
-				result, _request.getSession().getId());
-		}
-
 		if (_escapeXml) {
 			result = HtmlUtil.escape(result);
+
+			result = HttpUtil.shortenURL(result);
 		}
 
 		return result;

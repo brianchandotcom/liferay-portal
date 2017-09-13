@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.security.auto.login.AutoLoginException;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.CookieKeys;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.persistence.model.SamlIdpSsoSession;
@@ -63,8 +64,8 @@ public class WebSsoAutoLogin extends BaseAutoLogin {
 			HttpSession session = request.getSession(false);
 
 			if (session != null) {
-				boolean forceReauthentication = (Boolean)session.getAttribute(
-					SamlWebKeys.FORCE_REAUTHENTICATION);
+				boolean forceReauthentication = GetterUtil.getBoolean(
+					session.getAttribute(SamlWebKeys.FORCE_REAUTHENTICATION));
 
 				if (forceReauthentication) {
 					return null;

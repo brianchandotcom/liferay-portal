@@ -21,10 +21,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.ProgressStatus;
 import com.liferay.source.formatter.ProgressStatusUpdate;
+import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checkstyle.Checker;
 
 import com.puppycrawl.tools.checkstyle.ConfigurationLoader;
+import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
 import com.puppycrawl.tools.checkstyle.DefaultLogger;
 import com.puppycrawl.tools.checkstyle.PropertiesExpander;
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
@@ -51,7 +53,8 @@ import org.xml.sax.InputSource;
 public class CheckStyleUtil {
 
 	public static Set<SourceFormatterMessage> process(
-			Set<File> files, List<File> suppressionsFiles, String baseDirName,
+			Set<File> files, List<File> suppressionsFiles,
+			SourceFormatterArgs sourceFormatterArgs,
 			BlockingQueue<ProgressStatusUpdate> progressStatusQueue)
 		throws Exception {
 
@@ -59,7 +62,7 @@ public class CheckStyleUtil {
 
 		_sourceFormatterMessages.clear();
 
-		Checker checker = _getChecker(suppressionsFiles, baseDirName);
+		Checker checker = _getChecker(suppressionsFiles, sourceFormatterArgs);
 
 		checker.process(ListUtil.fromCollection(files));
 
@@ -120,7 +123,8 @@ public class CheckStyleUtil {
 	}
 
 	private static Checker _getChecker(
-			List<File> suppressionsFiles, String baseDirName)
+			List<File> suppressionsFiles,
+			SourceFormatterArgs sourceFormatterArgs)
 		throws Exception {
 
 		Checker checker = new Checker();
@@ -139,10 +143,16 @@ public class CheckStyleUtil {
 			new InputSource(classLoader.getResourceAsStream("checkstyle.xml")),
 			new PropertiesExpander(System.getProperties()), false);
 
+		configuration = _addAttribute(
+			configuration, "maxLineLength",
+			String.valueOf(sourceFormatterArgs.getMaxLineLength()),
+			"com.liferay.source.formatter.checkstyle.checks.PlusStatement");
+
 		checker.configure(configuration);
 
 		AuditListener listener = new SourceFormatterLogger(
-			new UnsyncByteArrayOutputStream(), true, baseDirName);
+			new UnsyncByteArrayOutputStream(), true,
+			sourceFormatterArgs.getBaseDirName());
 
 		checker.addListener(listener);
 

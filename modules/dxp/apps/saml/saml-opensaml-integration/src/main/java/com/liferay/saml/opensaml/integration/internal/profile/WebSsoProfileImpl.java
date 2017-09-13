@@ -1288,11 +1288,11 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		DateTime nowDateTime = new DateTime(DateTimeZone.UTC);
 
-		DateTime notBefore = conditions.getNotBefore();
+		DateTime notBeforeDateTime = conditions.getNotBefore();
 
-		if (notBefore != null) {
+		if (notBeforeDateTime != null) {
 			verifyNotBeforeDateTime(
-				nowDateTime, metadataManager.getClockSkew(), notBefore);
+				nowDateTime, metadataManager.getClockSkew(), notBeforeDateTime);
 		}
 
 		DateTime notOnOrAfter = conditions.getNotOnOrAfter();
@@ -1515,10 +1515,12 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 				DateTime nowDateTime = new DateTime(DateTimeZone.UTC);
 
-				DateTime notBefore = subjectConfirmationData.getNotBefore();
+				DateTime notBeforeDateTime =
+					subjectConfirmationData.getNotBefore();
 
-				if (notBefore != null) {
-					verifyNotBeforeDateTime(nowDateTime, clockSkew, notBefore);
+				if (notBeforeDateTime != null) {
+					verifyNotBeforeDateTime(
+						nowDateTime, clockSkew, notBeforeDateTime);
 				}
 
 				DateTime notOnOrAfter =

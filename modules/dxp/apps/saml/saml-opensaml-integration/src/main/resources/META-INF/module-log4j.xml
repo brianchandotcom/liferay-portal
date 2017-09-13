@@ -5,4 +5,8 @@
 	<category name="com.liferay.saml.opensaml.integration">
 		<priority value="INFO" />
 	</category>
+
+	<category name="org.opensaml">
+		<priority value="WARN" />
+	</category>
 </log4j:configuration>

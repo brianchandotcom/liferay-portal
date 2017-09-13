@@ -1385,11 +1385,14 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		DateTime lowerBoundDateTime = dateTime.minus(new Duration(clockSkew));
 
-		if (lowerBoundDateTime.isAfter(nowDateTime)) {
-			throw new AssertionException(
-				"Date " + lowerBoundDateTime.toString() + " is after " +
-					nowDateTime.toString());
+		if (!nowDateTime.isBefore(lowerBoundDateTime)) {
+			return;
 		}
+
+		throw new AssertionException(
+			"Date " + nowDateTime.toString() + " is before " +
+				lowerBoundDateTime.toString() + " including clock skew " +
+					clockSkew);
 	}
 
 	protected void verifyNotOnOrAfterDateTime(
@@ -1398,11 +1401,16 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		DateTime upperBoundDateTime = dateTime.plus(new Duration(clockSkew));
 
-		if (upperBoundDateTime.isBefore(nowDateTime)) {
-			throw new ExpiredException(
-				"Date " + upperBoundDateTime.toString() + " is before " +
-					nowDateTime.toString());
+		if (!(nowDateTime.isEqual(upperBoundDateTime) ||
+			nowDateTime.isAfter(upperBoundDateTime))) {
+
+			return;
 		}
+
+		throw new ExpiredException(
+			"Date " + nowDateTime.toString() + " is after " +
+				upperBoundDateTime.toString() + " including clock skew " +
+					clockSkew);
 	}
 
 	protected void verifyReplay(

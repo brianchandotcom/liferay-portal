@@ -501,10 +501,20 @@ AUI.add(
 						var cssClassesOn = cssClasses.on;
 
 						var ratingThumbDown = elements.item(1);
+
+						var ratingThumbDownCssClassOn = false;
+
+						if (ratingThumbDown) {
+							ratingThumbDownCssClassOn = ratingThumbDown.hasClass(cssClassesOn);
+						}
+
 						var ratingThumbUp = elements.item(0);
 
-						var ratingThumbDownCssClassOn = ratingThumbDown.hasClass(cssClassesOn);
-						var ratingThumbUpCssClassOn = ratingThumbUp.hasClass(cssClassesOn);
+						var ratingThumbUpCssClassOn = false;
+
+						if (ratingThumbUp) {
+							ratingThumbUpCssClassOn = ratingThumbUp.hasClass(cssClassesOn);
+						}
 
 						var thumbDownMessage = '';
 						var thumbUpMessage = '';

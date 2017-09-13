@@ -194,7 +194,13 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 
 	@Override
 	public long getDateHeader(String name) {
-		return GetterUtil.getLong(getHeader(name), -1);
+		String header = getHeader(name);
+
+		if (header == null) {
+			return -1;
+		}
+
+		return GetterUtil.getLongStrict(getHeader(name));
 	}
 
 	@Override
@@ -234,7 +240,13 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 
 	@Override
 	public int getIntHeader(String name) {
-		return GetterUtil.getInteger(getHeader(name));
+		String header = getHeader(name);
+
+		if (header == null) {
+			return -1;
+		}
+
+		return GetterUtil.getIntegerStrict(header);
 	}
 
 	@Override

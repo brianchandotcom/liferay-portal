@@ -122,7 +122,15 @@ public class ExportUsersMVCResourceCommand extends BaseMVCResourceCommand {
 		for (int i = 0; i < PropsValues.USERS_EXPORT_CSV_FIELDS.length; i++) {
 			String field = PropsValues.USERS_EXPORT_CSV_FIELDS[i];
 
-			if (field.contains("Date")) {
+			if (field.startsWith("expando:")) {
+				String attributeName = field.substring(8);
+
+				ExpandoBridge expandoBridge = user.getExpandoBridge();
+
+				sb.append(
+					CSVUtil.encode(expandoBridge.getAttribute(attributeName)));
+			}
+			else if (field.contains("Date")) {
 				Date date = (Date)BeanPropertiesUtil.getObject(user, field);
 
 				if (date instanceof Timestamp) {
@@ -130,14 +138,6 @@ public class ExportUsersMVCResourceCommand extends BaseMVCResourceCommand {
 				}
 
 				sb.append(CSVUtil.encode(String.valueOf(date)));
-			}
-			else if (field.startsWith("expando:")) {
-				String attributeName = field.substring(8);
-
-				ExpandoBridge expandoBridge = user.getExpandoBridge();
-
-				sb.append(
-					CSVUtil.encode(expandoBridge.getAttribute(attributeName)));
 			}
 			else if (field.equals("fullName")) {
 				sb.append(CSVUtil.encode(user.getFullName()));

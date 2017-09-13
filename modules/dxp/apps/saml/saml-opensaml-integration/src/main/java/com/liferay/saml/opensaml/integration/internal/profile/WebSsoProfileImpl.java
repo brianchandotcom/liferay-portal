@@ -441,6 +441,10 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		}
 		else {
 			sendSuccessResponse(request, response, samlSsoRequestContext);
+
+			HttpSession session = request.getSession();
+
+			session.removeAttribute(SamlWebKeys.FORCE_REAUTHENTICATION);
 		}
 	}
 

@@ -571,48 +571,18 @@ public class GitWorkingDirectory {
 		}
 
 		sb.append(gitRemote.getName());
-
+		sb.append(" ");
 		sb.append(localBranchName);
 		sb.append(":");
 		sb.append(remoteBranch._name);
 
-		PushCommand pushCommand = null;
-
-		synchronized (_git) {
-			pushCommand = _git.push();
+		try {
+			executeBashCommands(sb.toString());
+		} catch (RuntimeException re) {
+			return false;
 		}
 
-		String remoteRefName = "refs/heads/" + remoteBranch;
-
-		RefSpec refSpec = new RefSpec(
-			JenkinsResultsParserUtil.combine(localBranch, ":", remoteRefName));
-
-		synchronized (pushCommand) {
-			pushCommand.setForce(force);
-			pushCommand.setRefSpecs(refSpec);
-			pushCommand.setRemote(remoteURL);
-
-			for (PushResult pushResult : pushCommand.call()) {
-				for (RemoteRefUpdate remoteRefUpdate :
-						pushResult.getRemoteUpdates()) {
-
-					if ((remoteRefUpdate != null) &&
-						(remoteRefUpdate.getStatus() !=
-							RemoteRefUpdate.Status.OK)) {
-
-						System.out.println(
-							JenkinsResultsParserUtil.combine(
-								"Unable to push ", localBranchName, " to ",
-								getRemoteURL(gitRemote), ".\nPush response: ",
-								remoteRefUpdate.toString()));
-
-						return false;
-					}
-				}
-			}
-
-			return true;
-		}
+		return true;
 	}
 
 	public boolean pushToRemote(boolean force, GitRemote gitRemote) {
@@ -636,57 +606,16 @@ public class GitWorkingDirectory {
 				targetBranchName));
 
 		try {
-			Process process = JenkinsResultsParserUtil.executeBashCommands(
-				true, getWorkingDirectory(), 1000 * 60 * 10, rebaseCommand);
-
-			if ((process != null) && (process.exitValue() != 0)) {
-				try {
-					System.out.println(
-						JenkinsResultsParserUtil.readInputStream(
-							process.getErrorStream()));
-				}
-				catch (IOException ioe) {
-					ioe.printStackTrace();
-				}
-
-				throw new RuntimeException("Unable to rebase");
-			}
-
-			if (process != null) {
-				System.out.println(
-					JenkinsResultsParserUtil.readInputStream(
-						process.getInputStream()));
-			}
-
-			int i = 0;
-
-			while (i < 10) {
-				List<String> branchNamesContainingSourceBranchSHA =
-					getBranchNamesContainingSHA(sourceBranchSHA);
-
-				if (!branchNamesContainingSourceBranchSHA.contains(
-						targetBranchName)) {
-
-					i++;
-
-					JenkinsResultsParserUtil.sleep(1000 * 30);
-
-					continue;
-				}
-
-				break;
-			}
+			System.out.println(
+				executeBashCommands(1, 1000 * 60 * 10, rebaseCommand));
 		}
-		catch (Exception e) {
-			RepositoryState repositoryState = _repository.getRepositoryState();
-
+		catch (RuntimeException re) {
 			try {
 				throw new RuntimeException(
 					JenkinsResultsParserUtil.combine(
 						"Unable to rebase ", targetBranchName, " to ",
-						sourceBranchName, ". Repository is in the ",
-						repositoryState.toString(), " state."),
-					e);
+						sourceBranchName),
+					re);
 			}
 			finally {
 				if (abortOnFail) {
@@ -1009,8 +938,8 @@ public class GitWorkingDirectory {
 
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
-					"Unable to execute bash commands: ", commands, "\n",
-					errorInput));
+					"Unable to execute bash commands: ", commands.toString(),
+					"\n", errorInput));
 		}
 
 		try {

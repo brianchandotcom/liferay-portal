@@ -1251,9 +1251,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		if (signature != null) {
 			verifySignature(samlMessageContext, signature, trustEngine);
 		}
-		else if (spSsoDescriptor.getWantAssertionsSigned() &&
-				 (signature == null)) {
-
+		else if (spSsoDescriptor.getWantAssertionsSigned()) {
 			throw new SignatureException("SAML assertion is not signed");
 		}
 	}

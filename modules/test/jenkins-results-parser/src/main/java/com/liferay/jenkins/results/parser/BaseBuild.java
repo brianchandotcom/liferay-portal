@@ -1268,9 +1268,9 @@ public abstract class BaseBuild implements Build {
 	protected static boolean isTestFailingInUpstreamJob(TestResult testResult) {
 		try {
 			for (String failure : getUpstreamJobFailures("test")) {
-				Build axisBuild = testResult.getAxisBuild();
+				Build build = testResult.getBuild();
 
-				String jobVariant = axisBuild.getJobVariant();
+				String jobVariant = build.getJobVariant();
 
 				if (jobVariant.contains("/")) {
 					int index = jobVariant.lastIndexOf("/");

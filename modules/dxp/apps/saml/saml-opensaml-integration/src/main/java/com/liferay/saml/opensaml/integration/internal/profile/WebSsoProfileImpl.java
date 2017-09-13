@@ -1295,11 +1295,12 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				nowDateTime, metadataManager.getClockSkew(), notBeforeDateTime);
 		}
 
-		DateTime notOnOrAfter = conditions.getNotOnOrAfter();
+		DateTime notOnOrAfterDateTime = conditions.getNotOnOrAfter();
 
-		if (notOnOrAfter != null) {
+		if (notOnOrAfterDateTime != null) {
 			verifyNotOnOrAfterDateTime(
-				nowDateTime, metadataManager.getClockSkew(), notOnOrAfter);
+				nowDateTime, metadataManager.getClockSkew(),
+				notOnOrAfterDateTime);
 		}
 	}
 
@@ -1423,9 +1424,9 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		String messageKey = assertion.getID();
 
-		DateTime notOnOrAfter = new DateTime(DateTimeZone.UTC);
+		DateTime notOnOrAfterDateTime = new DateTime(DateTimeZone.UTC);
 
-		notOnOrAfter = notOnOrAfter.plus(
+		notOnOrAfterDateTime = notOnOrAfterDateTime.plus(
 			_samlConfiguration.getReplayChacheDuration() +
 				metadataManager.getClockSkew());
 
@@ -1452,7 +1453,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				serviceContext.setCompanyId(companyId);
 
 				_samlSpMessageLocalService.addSamlSpMessage(
-					idpEntityId, messageKey, notOnOrAfter.toDate(),
+					idpEntityId, messageKey, notOnOrAfterDateTime.toDate(),
 					serviceContext);
 			}
 		}
@@ -1523,12 +1524,12 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 						nowDateTime, clockSkew, notBeforeDateTime);
 				}
 
-				DateTime notOnOrAfter =
+				DateTime notOnOrAfterDateTime =
 					subjectConfirmationData.getNotOnOrAfter();
 
-				if (notOnOrAfter != null) {
+				if (notOnOrAfterDateTime != null) {
 					verifyNotOnOrAfterDateTime(
-						nowDateTime, clockSkew, notOnOrAfter);
+						nowDateTime, clockSkew, notOnOrAfterDateTime);
 				}
 
 				if (Validator.isNull(subjectConfirmationData.getRecipient())) {

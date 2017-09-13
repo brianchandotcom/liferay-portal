@@ -20,7 +20,6 @@ import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.FileCheck;
 import com.liferay.source.formatter.checks.JavaTermCheck;
 import com.liferay.source.formatter.checks.SourceCheck;
-import com.liferay.source.formatter.checks.configuration.ConfigurationLoader;
 import com.liferay.source.formatter.checks.configuration.SourceCheckConfiguration;
 import com.liferay.source.formatter.checks.configuration.SourceChecksResult;
 import com.liferay.source.formatter.checks.configuration.SourceChecksSuppressions;
@@ -46,12 +45,10 @@ import org.apache.commons.beanutils.BeanUtils;
 public class SourceChecksUtil {
 
 	public static List<SourceCheck> getSourceChecks(
+			SourceFormatterConfiguration sourceFormatterConfiguration,
 			String sourceProcessorName, boolean portalSource,
 			boolean subrepository, boolean includeModuleChecks)
 		throws Exception {
-
-		SourceFormatterConfiguration sourceFormatterConfiguration =
-			ConfigurationLoader.loadConfiguration("sourcechecks.xml");
 
 		List<SourceCheck> sourceChecks = _getSourceChecks(
 			sourceFormatterConfiguration, sourceProcessorName, portalSource,

@@ -26,7 +26,9 @@ import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.tools.GitException;
 import com.liferay.portal.tools.GitUtil;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.checks.configuration.ConfigurationLoader;
 import com.liferay.source.formatter.checks.configuration.SourceChecksSuppressions;
+import com.liferay.source.formatter.checks.configuration.SourceFormatterConfiguration;
 import com.liferay.source.formatter.checks.configuration.SuppressionsLoader;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.DebugUtil;
@@ -491,6 +493,9 @@ public class SourceFormatter {
 		_subrepository = _isSubrepository();
 
 		_sourceChecksSuppressions = _getSourceChecksSuppressions();
+
+		_sourceFormatterConfiguration = ConfigurationLoader.loadConfiguration(
+			"sourcechecks.xml");
 	}
 
 	private boolean _isPortalSource() {
@@ -587,6 +592,8 @@ public class SourceFormatter {
 		sourceProcessor.setPropertiesMap(_propertiesMap);
 		sourceProcessor.setSourceChecksSuppressions(_sourceChecksSuppressions);
 		sourceProcessor.setSourceFormatterArgs(_sourceFormatterArgs);
+		sourceProcessor.setSourceFormatterConfiguration(
+			_sourceFormatterConfiguration);
 		sourceProcessor.setSourceFormatterExcludes(_sourceFormatterExcludes);
 		sourceProcessor.setSubrepository(_subrepository);
 
@@ -773,6 +780,7 @@ public class SourceFormatter {
 	private Map<String, Properties> _propertiesMap = new HashMap<>();
 	private SourceChecksSuppressions _sourceChecksSuppressions;
 	private final SourceFormatterArgs _sourceFormatterArgs;
+	private SourceFormatterConfiguration _sourceFormatterConfiguration;
 	private SourceFormatterExcludes _sourceFormatterExcludes;
 	private final Set<SourceFormatterMessage> _sourceFormatterMessages =
 		new ConcurrentSkipListSet<>();

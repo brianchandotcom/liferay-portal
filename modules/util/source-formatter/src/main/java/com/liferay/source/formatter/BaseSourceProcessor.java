@@ -24,6 +24,7 @@ import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.SourceCheck;
 import com.liferay.source.formatter.checks.configuration.SourceChecksResult;
 import com.liferay.source.formatter.checks.configuration.SourceChecksSuppressions;
+import com.liferay.source.formatter.checks.configuration.SourceFormatterConfiguration;
 import com.liferay.source.formatter.checks.util.SourceChecksUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.DebugUtil;
@@ -93,7 +94,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		_sourceFormatterMessagesMap = new HashMap<>();
 
-		_sourceChecks = _getSourceChecks(_containsModuleFile(fileNames));
+		_sourceChecks = _getSourceChecks(
+			_sourceFormatterConfiguration, _containsModuleFile(fileNames));
 
 		addProgressStatusUpdate(
 			new ProgressStatusUpdate(
@@ -215,6 +217,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		SourceFormatterArgs sourceFormatterArgs) {
 
 		this.sourceFormatterArgs = sourceFormatterArgs;
+	}
+
+	@Override
+	public void setSourceFormatterConfiguration(
+		SourceFormatterConfiguration sourceFormatterConfiguration) {
+
+		_sourceFormatterConfiguration = sourceFormatterConfiguration;
 	}
 
 	@Override
@@ -515,14 +524,16 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				ProgressStatus.SOURCE_CHECK_FILE_COMPLETED));
 	}
 
-	private List<SourceCheck> _getSourceChecks(boolean includeModuleChecks)
+	private List<SourceCheck> _getSourceChecks(
+			SourceFormatterConfiguration sourceFormatterConfiguration,
+			boolean includeModuleChecks)
 		throws Exception {
 
 		Class<?> clazz = getClass();
 
 		List<SourceCheck> sourceChecks = SourceChecksUtil.getSourceChecks(
-			clazz.getSimpleName(), portalSource, subrepository,
-			includeModuleChecks);
+			sourceFormatterConfiguration, clazz.getSimpleName(), portalSource,
+			subrepository, includeModuleChecks);
 
 		for (SourceCheck sourceCheck : sourceChecks) {
 			_initSourceCheck(sourceCheck);
@@ -606,6 +617,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private Map<String, Properties> _propertiesMap;
 	private List<SourceCheck> _sourceChecks = new ArrayList<>();
 	private SourceChecksSuppressions _sourceChecksSuppressions;
+	private SourceFormatterConfiguration _sourceFormatterConfiguration;
 	private SourceFormatterExcludes _sourceFormatterExcludes;
 	private Map<String, Set<SourceFormatterMessage>>
 		_sourceFormatterMessagesMap = new ConcurrentHashMap<>();

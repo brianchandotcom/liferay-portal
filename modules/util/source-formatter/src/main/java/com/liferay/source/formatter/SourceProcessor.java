@@ -15,6 +15,7 @@
 package com.liferay.source.formatter;
 
 import com.liferay.source.formatter.checks.configuration.SourceChecksSuppressions;
+import com.liferay.source.formatter.checks.configuration.SourceFormatterConfiguration;
 
 import java.util.List;
 import java.util.Map;
@@ -53,6 +54,9 @@ public interface SourceProcessor {
 		SourceChecksSuppressions sourceChecksSuppressions);
 
 	public void setSourceFormatterArgs(SourceFormatterArgs sourceFormatterArgs);
+
+	public void setSourceFormatterConfiguration(
+		SourceFormatterConfiguration sourceFormatterConfiguration);
 
 	public void setSourceFormatterExcludes(
 		SourceFormatterExcludes sourceFormatterExcludes);

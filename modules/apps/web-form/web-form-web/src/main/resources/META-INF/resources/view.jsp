@@ -34,7 +34,7 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 
 	<aui:fieldset label="<%= HtmlUtil.escape(title) %>">
 		<c:if test="<%= Validator.isNotNull(description) %>">
-			<p class="description"><%= HtmlUtil.escape(description) %></p>
+			<p class="description"><%= StringUtil.replace(HtmlUtil.escape(description), CharPool.NEW_LINE, "<br />") %></p>
 		</c:if>
 
 		<liferay-ui:success key="success" message="the-form-information-was-sent-successfully" />

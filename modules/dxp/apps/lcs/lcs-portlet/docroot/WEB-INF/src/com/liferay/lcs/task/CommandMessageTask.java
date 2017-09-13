@@ -52,7 +52,7 @@ public class CommandMessageTask implements Task {
 
 	protected void doRun() throws Exception {
 		if (_log.isTraceEnabled()) {
-			_log.trace("Running Command Message Task");
+			_log.trace("Running command message task");
 		}
 
 		if (!_lcsConnectionManager.isReady()) {

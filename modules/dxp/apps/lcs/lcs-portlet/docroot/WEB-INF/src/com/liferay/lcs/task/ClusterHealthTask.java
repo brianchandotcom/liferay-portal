@@ -33,7 +33,7 @@ public class ClusterHealthTask extends BaseScheduledTask {
 	@Override
 	protected void doRun() throws Exception {
 		if (_log.isTraceEnabled()) {
-			_log.trace("Running Cluster Health Task");
+			_log.trace("Running cluster health task");
 		}
 
 		HealthMessage healthMessage = new HealthMessage();

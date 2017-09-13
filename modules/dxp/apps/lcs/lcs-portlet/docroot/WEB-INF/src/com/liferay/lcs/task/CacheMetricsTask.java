@@ -49,7 +49,7 @@ public class CacheMetricsTask extends BaseScheduledTask {
 
 	protected void doRun() throws Exception {
 		if (_log.isTraceEnabled()) {
-			_log.trace("Running Cache Metrics Task");
+			_log.trace("Running cache metrics task");
 		}
 
 		MetricsMessage metricsMessage = new MetricsMessage();

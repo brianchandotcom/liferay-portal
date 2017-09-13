@@ -239,7 +239,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			samlSsoRequestContext.getSamlSsoSessionId(), -1);
 	}
 
-	protected SamlSsoRequestContext decodeAuthnRequest(
+	protected SamlSsoRequestContext decodeAuthnConversationAfterLogin(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
@@ -294,6 +294,20 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 			samlSsoRequestContext.setUserId(userId);
 
+			return samlSsoRequestContext;
+		}
+
+		return null;
+	}
+
+	protected SamlSsoRequestContext decodeAuthnRequest(
+			HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
+
+		SamlSsoRequestContext samlSsoRequestContext =
+			decodeAuthnConversationAfterLogin(request, response);
+
+		if (samlSsoRequestContext != null) {
 			return samlSsoRequestContext;
 		}
 

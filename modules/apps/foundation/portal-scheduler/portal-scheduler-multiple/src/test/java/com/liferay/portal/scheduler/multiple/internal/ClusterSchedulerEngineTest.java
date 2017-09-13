@@ -2292,6 +2292,10 @@ public class ClusterSchedulerEngineTest {
 			schedulerResponse.setTrigger(trigger);
 		}
 
+		@Override
+		public void validateTrigger(Trigger trigger, StorageType storageType) {
+		}
+
 		private SchedulerResponse _addJobs(
 			String jobName, String groupName, StorageType storageType,
 			Trigger trigger, Message message) {

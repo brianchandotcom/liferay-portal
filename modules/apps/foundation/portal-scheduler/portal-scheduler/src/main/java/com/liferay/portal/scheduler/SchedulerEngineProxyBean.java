@@ -131,4 +131,9 @@ public class SchedulerEngineProxyBean
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public void validateTrigger(Trigger trigger, StorageType storageType) {
+		throw new UnsupportedOperationException();
+	}
+
 }

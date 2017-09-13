@@ -632,6 +632,8 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			String destinationName, Message message, int exceptionsMaxSize)
 		throws SchedulerException {
 
+		_schedulerEngine.validateTrigger(trigger, storageType);
+
 		if (message == null) {
 			message = new Message();
 		}

@@ -155,4 +155,8 @@ public interface SchedulerEngine {
 	public void update(Trigger trigger, StorageType storageType)
 		throws SchedulerException;
 
+	@MessagingProxy(mode = ProxyMode.SYNC)
+	public void validateTrigger(Trigger trigger, StorageType storageType)
+		throws SchedulerException;
+
 }

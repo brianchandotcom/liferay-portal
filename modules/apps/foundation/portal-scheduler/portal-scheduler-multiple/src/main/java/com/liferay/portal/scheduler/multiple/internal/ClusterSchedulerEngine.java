@@ -496,6 +496,13 @@ public class ClusterSchedulerEngine
 		setClusterableThreadLocal(storageType);
 	}
 
+	@Override
+	public void validateTrigger(Trigger trigger, StorageType storageType)
+		throws SchedulerException {
+
+		_schedulerEngine.validateTrigger(trigger, storageType);
+	}
+
 	protected void addMemoryClusteredJob(SchedulerResponse schedulerResponse) {
 		String jobName = schedulerResponse.getJobName();
 		String groupName = schedulerResponse.getGroupName();

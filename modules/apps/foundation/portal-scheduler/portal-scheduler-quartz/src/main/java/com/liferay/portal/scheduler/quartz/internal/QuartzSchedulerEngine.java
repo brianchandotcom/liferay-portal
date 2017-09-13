@@ -57,6 +57,7 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
+import org.quartz.Calendar;
 import org.quartz.JobBuilder;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
@@ -66,9 +67,11 @@ import org.quartz.ObjectAlreadyExistsException;
 import org.quartz.Scheduler;
 import org.quartz.Trigger;
 import org.quartz.TriggerKey;
+import org.quartz.TriggerUtils;
 import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.jdbcjobstore.UpdateLockRowSemaphore;
 import org.quartz.impl.matchers.GroupMatcher;
+import org.quartz.spi.OperableTrigger;
 
 /**
  * @author Michael C. Han
@@ -506,6 +509,43 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		catch (Exception e) {
 			throw new SchedulerException("Unable to update trigger", e);
 		}
+	}
+
+	@Override
+	public void validateTrigger(
+			com.liferay.portal.kernel.scheduler.Trigger trigger,
+			StorageType storageType)
+		throws SchedulerException {
+
+		Trigger quartzTrigger = (Trigger)trigger.getWrappedTrigger();
+
+		if (quartzTrigger == null) {
+			return;
+		}
+
+		Scheduler scheduler = getScheduler(storageType);
+
+		Calendar calendar = null;
+
+		try {
+			calendar = scheduler.getCalendar(quartzTrigger.getCalendarName());
+		}
+		catch (org.quartz.SchedulerException se) {
+			throw new SchedulerException(
+				"Unable to validate trigger '" + quartzTrigger.getKey() + "'",
+				se);
+		}
+
+		List<Date> dates = TriggerUtils.computeFireTimes(
+			(OperableTrigger)quartzTrigger, calendar, 1);
+
+		if (!dates.isEmpty()) {
+			return;
+		}
+
+		throw new SchedulerException(
+			"Based on configured schedule, the given trigger '" +
+				quartzTrigger.getKey() + "' will never fire.");
 	}
 
 	@Activate

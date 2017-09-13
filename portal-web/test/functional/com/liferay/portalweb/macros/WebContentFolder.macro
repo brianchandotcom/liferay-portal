@@ -177,22 +177,6 @@
 		</execute>
 	</command>
 
-	<command name="gotoSubfolderCP">
-		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="Descriptive" />
-		</execute>
-
-		<for list="${foldersName}" param="folderName">
-			<var name="key_webContentTitle" value="${folderName}" />
-
-			<execute function="AssertTextEquals#assertPartialText" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="${folderName}" />
-
-			<execute function="AssertClick" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="${folderName}" />
-
-			<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${folderName}" />
-		</for>
-	</command>
-
 	<command name="moveToRecycleBinCP">
 		<execute macro="Portlet#changeDisplayStyle">
 			<var name="displayStyle" value="Descriptive" />

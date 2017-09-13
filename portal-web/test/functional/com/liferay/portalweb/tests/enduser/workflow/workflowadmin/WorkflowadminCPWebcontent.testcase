@@ -135,8 +135,14 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentFolder#gotoSubfolderCP">
-			<var name="foldersName" value="WC Folder Name,WC Subfolder Name" />
+		<execute macro="WebContentFolder#gotoCP">
+			<var name="folderName" value="WC Folder Name" />
+			<var name="webContentTitle" value="WC Folder Name" />
+		</execute>
+
+		<execute macro="WebContentFolder#gotoCP">
+			<var name="folderName" value="WC Subfolder Name" />
+			<var name="webContentTitle" value="WC Subfolder Name" />
 		</execute>
 
 		<execute macro="WebContent#viewApprovedStatus">

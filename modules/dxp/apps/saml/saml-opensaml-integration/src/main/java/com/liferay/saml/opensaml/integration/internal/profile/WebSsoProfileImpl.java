@@ -1286,18 +1286,20 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		verifyAudienceRestrictions(
 			conditions.getAudienceRestrictions(), samlMessageContext);
 
+		DateTime nowDateTime = new DateTime(DateTimeZone.UTC);
+
 		DateTime notBefore = conditions.getNotBefore();
 
 		if (notBefore != null) {
 			verifyNotBeforeDateTime(
-				metadataManager.getClockSkew(), conditions.getNotBefore());
+				nowDateTime, metadataManager.getClockSkew(), notBefore);
 		}
 
 		DateTime notOnOrAfter = conditions.getNotOnOrAfter();
 
 		if (notOnOrAfter != null) {
 			verifyNotOnOrAfterDateTime(
-				metadataManager.getClockSkew(), notOnOrAfter);
+				nowDateTime, metadataManager.getClockSkew(), notOnOrAfter);
 		}
 	}
 
@@ -1377,10 +1379,9 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		}
 	}
 
-	protected void verifyNotBeforeDateTime(long clockSkew, DateTime dateTime)
+	protected void verifyNotBeforeDateTime(
+			DateTime nowDateTime, long clockSkew, DateTime dateTime)
 		throws PortalException {
-
-		DateTime nowDateTime = new DateTime(DateTimeZone.UTC);
 
 		DateTime lowerBoundDateTime = dateTime.minus(new Duration(clockSkew));
 
@@ -1391,10 +1392,9 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		}
 	}
 
-	protected void verifyNotOnOrAfterDateTime(long clockSkew, DateTime dateTime)
+	protected void verifyNotOnOrAfterDateTime(
+			DateTime nowDateTime, long clockSkew, DateTime dateTime)
 		throws PortalException {
-
-		DateTime nowDateTime = new DateTime(DateTimeZone.UTC);
 
 		DateTime upperBoundDateTime = dateTime.plus(new Duration(clockSkew));
 
@@ -1504,16 +1504,21 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				}
 
 				long clockSkew = metadataManager.getClockSkew();
+
+				DateTime nowDateTime = new DateTime(DateTimeZone.UTC);
+
 				DateTime notBefore = subjectConfirmationData.getNotBefore();
 
 				if (notBefore != null) {
-					verifyNotBeforeDateTime(clockSkew, notBefore);
+					verifyNotBeforeDateTime(nowDateTime, clockSkew, notBefore);
 				}
+
 				DateTime notOnOrAfter =
 					subjectConfirmationData.getNotOnOrAfter();
 
 				if (notOnOrAfter != null) {
-					verifyNotOnOrAfterDateTime(clockSkew, notOnOrAfter);
+					verifyNotOnOrAfterDateTime(
+						nowDateTime, clockSkew, notOnOrAfter);
 				}
 
 				if (Validator.isNull(subjectConfirmationData.getRecipient())) {

@@ -45,19 +45,17 @@ public class WebSsoProfileTest extends BaseSamlTestCase {
 
 		DateTime dateTime = new DateTime(DateTimeZone.UTC);
 
-		dateTime = dateTime.minusMillis(50000);
-
-		_webSsoProfileImpl.verifyNotBeforeDateTime(3000, dateTime);
+		_webSsoProfileImpl.verifyNotBeforeDateTime(
+			dateTime, 3000, dateTime.minusMillis(50000));
 	}
 
 	@Test
 	public void testVerifyNotBeforeDateTimeMoreThanNow() {
 		DateTime dateTime = new DateTime(DateTimeZone.UTC);
 
-		dateTime = dateTime.plusMillis(4000);
-
 		try {
-			_webSsoProfileImpl.verifyNotBeforeDateTime(3000, dateTime);
+			_webSsoProfileImpl.verifyNotBeforeDateTime(
+				dateTime, 3000, dateTime.plusMillis(4000));
 
 			Assert.fail("Date verification failed");
 		}
@@ -74,9 +72,8 @@ public class WebSsoProfileTest extends BaseSamlTestCase {
 
 		DateTime dateTime = new DateTime(DateTimeZone.UTC);
 
-		dateTime = dateTime.plusMillis(300);
-
-		_webSsoProfileImpl.verifyNotBeforeDateTime(3000, dateTime);
+		_webSsoProfileImpl.verifyNotBeforeDateTime(
+			dateTime, 3000, dateTime.plusMillis(300));
 	}
 
 	@Test
@@ -85,19 +82,17 @@ public class WebSsoProfileTest extends BaseSamlTestCase {
 
 		DateTime dateTime = new DateTime(DateTimeZone.UTC);
 
-		dateTime = dateTime.minusMillis(200);
-
-		_webSsoProfileImpl.verifyNotBeforeDateTime(3000, dateTime);
+		_webSsoProfileImpl.verifyNotBeforeDateTime(
+			dateTime, 3000, dateTime.minusMillis(200));
 	}
 
 	@Test
 	public void testVerifyNotOnOrAfterDateTimeLessThanNow() {
 		DateTime dateTime = new DateTime(DateTimeZone.UTC);
 
-		dateTime = dateTime.minusMillis(4000);
-
 		try {
-			_webSsoProfileImpl.verifyNotOnOrAfterDateTime(3000, dateTime);
+			_webSsoProfileImpl.verifyNotOnOrAfterDateTime(
+				dateTime, 3000, dateTime.minusMillis(4000));
 
 			Assert.fail("Date verification failed");
 		}
@@ -114,9 +109,8 @@ public class WebSsoProfileTest extends BaseSamlTestCase {
 
 		DateTime dateTime = new DateTime(DateTimeZone.UTC);
 
-		dateTime = dateTime.minusMillis(300);
-
-		_webSsoProfileImpl.verifyNotOnOrAfterDateTime(3000, dateTime);
+		_webSsoProfileImpl.verifyNotOnOrAfterDateTime(
+			dateTime, 3000, dateTime.minusMillis(300));
 	}
 
 	@Test
@@ -125,9 +119,8 @@ public class WebSsoProfileTest extends BaseSamlTestCase {
 
 		DateTime dateTime = new DateTime(DateTimeZone.UTC);
 
-		dateTime = dateTime.plusMillis(200);
-
-		_webSsoProfileImpl.verifyNotOnOrAfterDateTime(3000, dateTime);
+		_webSsoProfileImpl.verifyNotOnOrAfterDateTime(
+			dateTime, 3000, dateTime.plusMillis(200));
 	}
 
 	@Test
@@ -136,9 +129,8 @@ public class WebSsoProfileTest extends BaseSamlTestCase {
 
 		DateTime dateTime = new DateTime(DateTimeZone.UTC);
 
-		dateTime = dateTime.plusMillis(50000);
-
-		_webSsoProfileImpl.verifyNotOnOrAfterDateTime(3000, dateTime);
+		_webSsoProfileImpl.verifyNotOnOrAfterDateTime(
+			dateTime, 3000, dateTime.plusMillis(50000));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

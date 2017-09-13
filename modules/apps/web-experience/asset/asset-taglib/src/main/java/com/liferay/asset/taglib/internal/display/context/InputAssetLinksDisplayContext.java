@@ -72,7 +72,7 @@ public class InputAssetLinksDisplayContext {
 
 		_assetEntryId = GetterUtil.getLong(
 			(String)_request.getAttribute(
-				"liferay-ui:input-asset-links:assetEntryId"));
+				"liferay-asset:input-asset-links:assetEntryId"));
 		_portletRequest = (PortletRequest)_request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 		_themeDisplay = (ThemeDisplay)_request.getAttribute(
@@ -164,7 +164,7 @@ public class InputAssetLinksDisplayContext {
 		}
 
 		String randomKey = PortalUtil.generateRandomKey(
-			_request, "taglib_ui_input_asset_links_page");
+			_request, "taglib_asset_input_asset_links_page");
 
 		_randomNamespace = randomKey + StringPool.UNDERLINE;
 
@@ -468,7 +468,7 @@ public class InputAssetLinksDisplayContext {
 
 		if (_isStagedLocally()) {
 			String className = (String)_request.getAttribute(
-				"liferay-ui:input-asset-links:className");
+				"liferay-asset:input-asset-links:className");
 
 			AssetRendererFactory<?> assetRendererFactory =
 				AssetRendererFactoryRegistryUtil.

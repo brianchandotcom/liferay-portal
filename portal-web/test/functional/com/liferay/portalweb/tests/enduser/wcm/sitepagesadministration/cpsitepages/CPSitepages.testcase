@@ -369,7 +369,8 @@
 		</execute>
 	</command>
 
-	<command name="ChangePageLayout" priority="3">
+	<command name="ChangePageLayout" priority="5">
+		<property name="portal.acceptance" value="pending" />
 		<property name="testray.component.names" value="Site Pages Administration,Training" />
 
 		<execute macro="Page#add">

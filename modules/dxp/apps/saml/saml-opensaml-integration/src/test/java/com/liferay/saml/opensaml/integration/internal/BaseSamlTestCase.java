@@ -391,6 +391,12 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 		samlProviderConfiguration = mock(SamlProviderConfiguration.class);
 
 		when(
+			samlProviderConfiguration.defaultAssertionLifetime()
+		).thenReturn(
+			1800
+		);
+
+		when(
 			samlProviderConfigurationHelper.getSamlProviderConfiguration()
 		).thenReturn(
 			samlProviderConfiguration

@@ -93,8 +93,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class MetadataManagerImpl
 	implements LocalEntityManager, MetadataManager, SamlHttpRequestUtil {
 
-	public static final int SAML_IDP_ASSERTION_LIFETIME_DEFAULT = 1800;
-
 	@Override
 	public int getAssertionLifetime(String entityId) {
 		long companyId = CompanyThreadLocal.getCompanyId();
@@ -112,7 +110,10 @@ public class MetadataManagerImpl
 			}
 		}
 
-		return SAML_IDP_ASSERTION_LIFETIME_DEFAULT;
+		SamlProviderConfiguration samlProviderConfiguration =
+			_samlProviderConfigurationHelper.getSamlProviderConfiguration();
+
+		return samlProviderConfiguration.defaultAssertionLifetime();
 	}
 
 	@Override

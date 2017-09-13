@@ -1512,9 +1512,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 					continue;
 				}
 
-				long clockSkew = metadataManager.getClockSkew();
-
 				DateTime nowDateTime = new DateTime(DateTimeZone.UTC);
+				long clockSkew = metadataManager.getClockSkew();
 
 				DateTime notBeforeDateTime =
 					subjectConfirmationData.getNotBefore();

@@ -85,6 +85,7 @@ import javax.servlet.http.HttpSession;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.joda.time.Duration;
 
 import org.opensaml.common.IdentifierGenerator;
 import org.opensaml.common.SAMLObject;
@@ -1287,7 +1288,13 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		verifyAudienceRestrictions(
 			conditions.getAudienceRestrictions(), samlMessageContext);
 
-		if (conditions.getNotOnOrAfter() != null) {
+		DateTime notBefore = conditions.getNotBefore();
+
+		if (notBefore != null) {
+			verifyNotBeforeDateTime(
+				metadataManager.getClockSkew(), conditions.getNotBefore());
+		}
+
 			verifyNotOnOrAfterDateTime(
 				metadataManager.getClockSkew(), conditions.getNotOnOrAfter());
 		}
@@ -1366,6 +1373,20 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			throw new IssuerException(
 				"Issuer does not match expected peer entity ID " +
 					peerEntityId);
+		}
+	}
+
+	protected void verifyNotBeforeDateTime(long clockSkew, DateTime dateTime)
+		throws PortalException {
+
+		DateTime nowDateTime = new DateTime(DateTimeZone.UTC);
+
+		DateTime lowerBoundDateTime = dateTime.minus(new Duration(clockSkew));
+
+		if (lowerBoundDateTime.isAfter(nowDateTime)) {
+			throw new AssertionException(
+				"Date " + lowerBoundDateTime.toString() + " is after " +
+					nowDateTime.toString());
 		}
 	}
 

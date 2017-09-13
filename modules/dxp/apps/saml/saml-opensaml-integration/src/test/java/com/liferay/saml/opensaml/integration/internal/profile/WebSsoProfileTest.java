@@ -40,6 +40,57 @@ public class WebSsoProfileTest extends BaseSamlTestCase {
 	}
 
 	@Test
+	public void testVerifyNotBeforeDateTimeLessThanSkew()
+		throws PortalException {
+
+		DateTime dateTime = new DateTime(DateTimeZone.UTC);
+
+		dateTime = dateTime.minusMillis(50000);
+
+		_webSsoProfileImpl.verifyNotBeforeDateTime(3000, dateTime);
+	}
+
+	@Test
+	public void testVerifyNotBeforeDateTimeMoreThanNow() {
+		DateTime dateTime = new DateTime(DateTimeZone.UTC);
+
+		dateTime = dateTime.plusMillis(4000);
+
+		try {
+			_webSsoProfileImpl.verifyNotBeforeDateTime(3000, dateTime);
+
+			Assert.fail("Date verification failed");
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
+	}
+
+	@Test
+	public void testVerifyNotBeforeDateTimeMoreThanNowSmallerSkew()
+		throws PortalException {
+
+		DateTime dateTime = new DateTime(DateTimeZone.UTC);
+
+		dateTime = dateTime.plusMillis(300);
+
+		_webSsoProfileImpl.verifyNotBeforeDateTime(3000, dateTime);
+	}
+
+	@Test
+	public void testVerifyNotBeforeDateTimeMoreThanSkew()
+		throws PortalException {
+
+		DateTime dateTime = new DateTime(DateTimeZone.UTC);
+
+		dateTime = dateTime.minusMillis(200);
+
+		_webSsoProfileImpl.verifyNotBeforeDateTime(3000, dateTime);
+	}
+
+	@Test
 	public void testVerifyNotOnOrAfterDateTimeLessThanNow() {
 		DateTime dateTime = new DateTime(DateTimeZone.UTC);
 

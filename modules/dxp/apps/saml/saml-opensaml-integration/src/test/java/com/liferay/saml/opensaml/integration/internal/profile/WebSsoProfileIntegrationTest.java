@@ -30,6 +30,7 @@ import com.liferay.saml.persistence.service.SamlSpMessageLocalService;
 import com.liferay.saml.persistence.service.SamlSpMessageLocalServiceUtil;
 import com.liferay.saml.persistence.service.SamlSpSessionLocalService;
 import com.liferay.saml.persistence.service.SamlSpSessionLocalServiceUtil;
+import com.liferay.saml.runtime.exception.AssertionException;
 import com.liferay.saml.runtime.exception.AudienceException;
 import com.liferay.saml.runtime.exception.DestinationException;
 import com.liferay.saml.runtime.exception.ExpiredException;
@@ -540,6 +541,39 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		Conditions conditions = _webSsoProfileImpl.getSuccessConditions(
 			samlSsoRequestContext, null, null);
+
+		prepareServiceProvider(SP_ENTITY_ID);
+
+		mockHttpServletRequest = getMockHttpServletRequest(ACS_URL);
+
+		SAMLMessageContext<?, ?, ?> spSamlMessageContext =
+			_webSsoProfileImpl.getSamlMessageContext(
+				mockHttpServletRequest, new MockHttpServletResponse());
+
+		_webSsoProfileImpl.verifyConditions(spSamlMessageContext, conditions);
+	}
+
+	@Test(expected = AssertionException.class)
+	public void testVerifyConditionNotOnBefore() throws Exception {
+		prepareIdentityProvider(IDP_ENTITY_ID);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			getMockHttpServletRequest(SSO_URL);
+
+		SAMLMessageContext<AuthnRequest, Response, NameID>
+			idpSamlMessageContext =
+			(SAMLMessageContext<AuthnRequest, Response, NameID>)
+				_webSsoProfileImpl.getSamlMessageContext(
+					mockHttpServletRequest, new MockHttpServletResponse());
+
+		idpSamlMessageContext.setPeerEntityId(SP_ENTITY_ID);
+
+		SamlSsoRequestContext samlSsoRequestContext = new SamlSsoRequestContext(
+			SP_ENTITY_ID, null, idpSamlMessageContext, userLocalService);
+
+		Conditions conditions = _webSsoProfileImpl.getSuccessConditions(
+			samlSsoRequestContext,
+			new DateTime(DateTimeZone.UTC).plusDays(1), null);
 
 		prepareServiceProvider(SP_ENTITY_ID);
 

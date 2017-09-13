@@ -2,35 +2,64 @@
 
 /**
  * Prints the Flag component.
- *
- * @param closeReportDialog
- * @param companyName
- * @param cssClass
- * @param enabled
- * @param id
- * @param label
- * @param message
- * @param onReasonChange_
- * @param onSubmitForm_
- * @param pathTermsOfUse
- * @param pathThemeImages
- * @param reportDialogOpen
- * @param reportButton_
- * @param showConfirmationMessage_
- * @param showErrorMessage_
- * @param title
  */
 {template .render}
+	{@param closeReportDialog: any}
+	{@param companyName: string}
+	{@param cssClass: string}
+	{@param enabled: bool}
+	{@param flagsEnabled: bool}
+	{@param id: string}
+	{@param label: bool}
+	{@param message: string}
+	{@param pathTermsOfUse: string}
+	{@param pathThemeImages: string}
+	{@param portletNamespace: string}
+	{@param reasons: list<string>}
+	{@param? reporterEmailAddress: string | null}
+	{@param signedIn: bool}
+	{@param title: string}
+	{@param? _onReasonChange: any}
+	{@param? _onSubmitForm: any}
+	{@param? _reportDialogOpen: bool}
+	{@param? _reportButton: any}
+	{@param? _showConfirmationMessage: bool}
+	{@param? _showErrorMessage: bool}
+
 	{let $tooltip: not $label and $message!='' /}
 	<div class="taglib-flags" id="{$id}" title="{$title}">
 		<span class="{$cssClass} {if $tooltip}lfr-portal-tooltip{/if}" {if $tooltip}title="{$message}"{/if}>
 			{if $enabled}
 				<a class="taglib-icon" href="javascript:;" data-onclick="openReportDialog" >
-					{call .icon data="all" /}
+					{call .icon}
+						{param label: $label /}
+						{param message: $message /}
+						{param pathThemeImages: $pathThemeImages /}
+					{/call}
 				</a>
-				{call .reportDialog data="all" /}
+				{call .reportDialog}
+					{param closeReportDialog: $closeReportDialog /}
+					{param companyName: $companyName /}
+					{param flagsEnabled: $flagsEnabled /}
+					{param portletNamespace: $portletNamespace /}
+					{param pathTermsOfUse: $pathTermsOfUse /}
+					{param pathThemeImages: $pathThemeImages /}
+					{param reporterEmailAddress: $reporterEmailAddress /}
+					{param signedIn: $signedIn /}
+					{param reasons: $reasons /}
+					{param _onReasonChange: $_onReasonChange /}
+					{param _onSubmitForm: $_onSubmitForm /}
+					{param _reportButton: $_reportButton /}
+					{param _reportDialogOpen: $_reportDialogOpen /}
+					{param _showConfirmationMessage: $_showConfirmationMessage /}
+					{param _showErrorMessage: $_showErrorMessage /}
+				{/call}
 			{else}
-				{call .icon data="all" /}
+				{call .icon}
+					{param label: $label /}
+					{param message: $message /}
+					{param pathThemeImages: $pathThemeImages /}
+				{/call}
 			{/if}
 		</span>
 	</div>
@@ -38,12 +67,12 @@
 
 /**
  * Prints the flag icon and the text message.
- *
- * @param label
- * @param message
- * @param pathThemeImages
  */
 {template .icon}
+	{@param label: bool}
+	{@param message: string}
+	{@param pathThemeImages: string}
+
 	<svg class="lexicon-icon">
 		<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#flag-full"></use>
 	</svg>
@@ -53,15 +82,25 @@
 
 /**
  * Prints the modal component.
- *
- * @param closeReportDialog
- * @param reportButton_
- * @param reportDialogOpen
- * @param showConfirmationMessage_
- * @param showErrorMessage_
  */
 {template .reportDialog}
-	{if $reportDialogOpen}
+	{@param closeReportDialog: any}
+	{@param companyName: string}
+	{@param flagsEnabled: bool}
+	{@param portletNamespace: string}
+	{@param pathTermsOfUse: string}
+	{@param pathThemeImages: string}
+	{@param reasons: list<string>}
+	{@param? reporterEmailAddress: string | null}
+	{@param signedIn: bool}
+	{@param? _onReasonChange: any}
+	{@param? _onSubmitForm: any}
+	{@param? _reportButton: any}
+	{@param? _reportDialogOpen: bool}
+	{@param? _showConfirmationMessage: bool}
+	{@param? _showErrorMessage: bool}
+
+	{if $_reportDialogOpen}
 		{call Modal.render}
 			{param header kind="html"}
 				<button type="button" class="close" data-onclick="{$closeReportDialog}" aria-label="Close">
@@ -72,13 +111,26 @@
 
 			{param body kind="html"}
 				<div class="portlet-flags">
-					{call .reportDialogBody data="all" /}
+					{call .reportDialogBody}
+						{param companyName: $companyName /}
+						{param flagsEnabled: $flagsEnabled /}
+						{param portletNamespace: $portletNamespace /}
+						{param pathTermsOfUse: $pathTermsOfUse /}
+						{param pathThemeImages: $pathThemeImages /}
+						{param reasons: $reasons /}
+						{param reporterEmailAddress: $reporterEmailAddress /}
+						{param signedIn: $signedIn /}
+						{param _onReasonChange: $_onReasonChange /}
+						{param _onSubmitForm: $_onSubmitForm /}
+						{param _showConfirmationMessage: $_showConfirmationMessage /}
+						{param _showErrorMessage: $_showErrorMessage /}
+					{/call}
 				</div>
 			{/param}
 
 			{param footer kind="html"}
-				{let $showCloseButton: $showConfirmationMessage_ or $showErrorMessage_ /}
-				<button class="btn btn-primary {if $showCloseButton}hidden{/if}" data-onclick="{$reportButton_}" type="button">{msg desc=""}report{/msg}</button>
+				{let $showCloseButton: $_showConfirmationMessage or $_showErrorMessage /}
+				<button class="btn btn-primary {if $showCloseButton}hidden{/if}" data-onclick="{$_reportButton}" type="button">{msg desc=""}report{/msg}</button>
 
 				<button class="btn btn-link {if $showCloseButton}hidden{/if}" data-onclick="{$closeReportDialog}" type="button">{msg desc=""}cancel{/msg}</button>
 
@@ -92,19 +144,39 @@
 
 /**
  * Prints the modal body.
- *
- * @param flagsEnabled
- * @param showConfirmationMessage_
- * @param showErrorMessage_
  */
 {template .reportDialogBody}
+	{@param companyName: string}
+	{@param flagsEnabled: bool}
+	{@param portletNamespace: string}
+	{@param pathTermsOfUse: string}
+	{@param pathThemeImages: string}
+	{@param reasons: list<string>}
+	{@param? reporterEmailAddress: string | null}
+	{@param signedIn: bool}
+	{@param? _onReasonChange: any}
+	{@param? _onSubmitForm: any}
+	{@param? _showConfirmationMessage: bool}
+	{@param? _showErrorMessage: bool}
+
 	{if $flagsEnabled}
-		{if $showErrorMessage_}
-			{call .showError data="all" /}
-		{elseif $showConfirmationMessage_}
-			{call .showConfirmation data="all" /}
+		{if $_showErrorMessage}
+			{call .showError /}
+		{elseif $_showConfirmationMessage}
+			{call .showConfirmation}
+				{param companyName: $companyName /}
+			{/call}
 		{else}
-			{call .reportForm data="all" /}
+			{call .reportForm}
+				{param portletNamespace: $portletNamespace /}
+				{param pathTermsOfUse: $pathTermsOfUse /}
+				{param pathThemeImages: $pathThemeImages /}
+				{param reporterEmailAddress: $reporterEmailAddress /}
+				{param signedIn: $signedIn /}
+				{param reasons: $reasons /}
+				{param _onReasonChange: $_onReasonChange /}
+				{param _onSubmitForm: $_onSubmitForm /}
+			{/call}
 		{/if}
 	{else}
 		<p>{msg desc=""}please-sign-in-to-flag-this-as-inappropriate{/msg}</p>
@@ -113,18 +185,18 @@
 
 /**
  * Prints the form to select the flag's reason.
- *
- * @param namespace
- * @param onReasonChange_
- * @param onSubmitForm_
- * @param pathTermsOfUse
- * @param pathThemeImages
- * @param reporterEmailAddress
- * @param signedIn
- * @param reasons
  */
 {template .reportForm}
-	<form class="container-fluid-1280" method="post" name="{$namespace}flagsForm" onsubmit="{$onSubmitForm_}" >
+	{@param portletNamespace: string}
+	{@param pathTermsOfUse: string}
+	{@param pathThemeImages: string}
+	{@param reasons: list<string>}
+	{@param? reporterEmailAddress: string | null}
+	{@param signedIn: bool}
+	{@param? _onReasonChange: any}
+	{@param? _onSubmitForm: any}
+
+	<form class="container-fluid-1280" method="post" name="{$portletNamespace}flagsForm" onsubmit="{$_onSubmitForm}" >
 		<p>
 		{let $linkText kind="text"}
 			{msg desc=""}terms-of-use{/msg}
@@ -141,9 +213,9 @@
 
 		<fieldset>
 			<div class="form-group">
-				<label class="control-label" for="{$namespace}reason">{msg desc=""}reason-for-the-report{/msg}</label>
+				<label class="control-label" for="{$portletNamespace}reason">{msg desc=""}reason-for-the-report{/msg}</label>
 
-				<select class="form-control" id="{$namespace}reason" name="{$namespace}reason" data-onchange="{$onReasonChange_}">
+				<select class="form-control" id="{$portletNamespace}reason" name="{$portletNamespace}reason" data-onchange="{$_onReasonChange}">
 					{foreach $reason in $reasons}
 						<option value="{$reason}">{$reason}</option>
 					{/foreach}
@@ -151,24 +223,24 @@
 				</select>
 			</div>
 
-			<span class="hide" id="{$namespace}otherReasonContainer">
+			<span class="hide" id="{$portletNamespace}otherReasonContainer">
 				<div class="form-group">
-					<label class="control-label" for="{$namespace}otherReason">{msg desc=""}other-reason{/msg}</label>
-					<input class="form-control" id="{$namespace}otherReason" name="{$namespace}otherReason" />
+					<label class="control-label" for="{$portletNamespace}otherReason">{msg desc=""}other-reason{/msg}</label>
+					<input class="form-control" id="{$portletNamespace}otherReason" name="{$portletNamespace}otherReason" />
 				</div>
 			</span>
 
 			{if $signedIn}
-				<input id="{$namespace}reporterEmailAddress" name="{$namespace}reporterEmailAddress" type="hidden" value="{$reporterEmailAddress}" />
+				<input id="{$portletNamespace}reporterEmailAddress" name="{$portletNamespace}reporterEmailAddress" type="hidden" value="{$reporterEmailAddress}" />
 			{else}
-				<label class="control-label" for="{$namespace}reporterEmailAddress">{msg desc=""}email-address{/msg}
+				<label class="control-label" for="{$portletNamespace}reporterEmailAddress">{msg desc=""}email-address{/msg}
 					<span class="reference-mark text-warning">
 						<svg class="lexicon-icon">
 							<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#asterisk"></use>
 						</svg>
 					</span>
 				</label>
-				<input class="form-control" id="{$namespace}reporterEmailAddress" name="{$namespace}reporterEmailAddress" required type="email"/>
+				<input class="form-control" id="{$portletNamespace}reporterEmailAddress" name="{$portletNamespace}reporterEmailAddress" required type="email"/>
 			{/if}
 		</fieldset>
 
@@ -178,10 +250,10 @@
 
 /**
  * Shows a confirmation message if the request was successfully sent.
- *
- * @param companyName
  */
 {template .showConfirmation}
+	{@param companyName: string}
+
 	<p><strong>{msg desc=""}thank-you-for-your-report{/msg}</strong></p>
 
 	<p>

@@ -22,18 +22,19 @@ class Flags extends PortletBase {
 	/**
 	 * @inheritDoc
 	 */
-	created() {
-		this.eventHandler_ = new EventHandler();
+	attached() {
+		this._reportDialogOpen = false;
+		this.namespace = this.portletNamespace;
+		this.rootNode = this.one('.taglib-flags');
+		this._showConfirmationMessage = false;
+		this._showErrorMessage = false;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	attached() {
-		this.reportDialogOpen = false;
-		this.rootNode = this.one('.taglib-flags');
-		this.showConfirmationMessage_ = false;
-		this.showErrorMessage_ = false;
+	created() {
+		this.eventHandler_ = new EventHandler();
 	}
 
 	/**
@@ -48,16 +49,16 @@ class Flags extends PortletBase {
 	 * Closes the dialog to flag the page.
 	 */
 	closeReportDialog() {
-		this.reportDialogOpen = false;
-		this.showConfirmationMessage_ = false;
-		this.showErrorMessage_ = false;
+		this._reportDialogOpen = false;
+		this._showConfirmationMessage = false;
+		this._showErrorMessage = false;
 	}
 
 	/**
 	 * Opens a dialog where the user can flag the page.
 	 */
 	openReportDialog() {
-		this.reportDialogOpen = true;
+		this._reportDialogOpen = true;
 	}
 
 	/**
@@ -65,7 +66,7 @@ class Flags extends PortletBase {
 	 *
 	 * @return {String} reason
 	 */
-	getReason_() {
+	_getReason() {
 		let reason = this.one('#reason').value;
 
 		if (reason === 'other') {
@@ -84,7 +85,7 @@ class Flags extends PortletBase {
 	 * @param {Event} event
 	 * @protected
 	 */
-	onReasonChange_(event) {
+	_onReasonChange(event) {
 		let reason = event.delegateTarget.value;
 
 		let otherReasonContainer = this.one('#otherReasonContainer');
@@ -103,12 +104,12 @@ class Flags extends PortletBase {
 	 * @param {Event} event
 	 * @protected
 	 */
-	onSubmitForm_(event) {
+	_onSubmitForm(event) {
 		event.preventDefault();
 
 		let form = this.one('form[name="' + this.ns('flagsForm') +'"]');
 
-		this.data[this.ns('reason')] = this.getReason_();
+		this.data[this.ns('reason')] = this._getReason();
 		this.data[this.ns('reporterEmailAddress')] = this.one('#reporterEmailAddress').value;
 
 		let formData = new FormData();
@@ -124,19 +125,20 @@ class Flags extends PortletBase {
 		})
 		.then((xhr) => {
 			if (xhr.status === Liferay.STATUS_CODE.OK) {
-				this.showConfirmationMessage_ = true;
+				this._showConfirmationMessage = true;
 			}
 		})
 		.catch(() => {
-			this.showErrorMessage_ = true;
+			this._showErrorMessage = true;
 		});
 	}
 
 	/**
 	 * Forms the submit.
+	 * @internal
 	 * @protected
 	 */
-	reportButton_() {
+	_reportButton() {
 		let input = this.one('input[type="submit"]');
 
 		input.click();
@@ -151,6 +153,28 @@ class Flags extends PortletBase {
  */
 Flags.STATE = {
 	/**
+	 * Company name.
+	 *
+	 * @instance
+	 * @memberof Flags
+	 * @type {String}
+	 */
+	companyName: {
+		validator: core.isString
+	},
+
+	/**
+	 * CSS classes.
+	 *
+	 * @instance
+	 * @memberof Flags
+	 * @type {String}
+	 */
+	cssClass: {
+		validator: core.isString
+	},
+
+	/**
 	 * Portlet's data.
 	 * @instance
 	 * @memberof Flags
@@ -158,6 +182,18 @@ Flags.STATE = {
 	 */
 	data: {
 		validator: core.isObject
+	},
+
+	/**
+	 * Whether the form to flag is enabled
+	 * or not.
+	 *
+	 * @instance
+	 * @memberof Flags
+	 * @type {Boolean}
+	 */
+	enabled: {
+		validator: core.isBoolean
 	},
 
 	/**
@@ -171,8 +207,122 @@ Flags.STATE = {
 	},
 
 	/**
+	 * Component id.
+	 *
+	 * @instance
+	 * @memberof Flags
+	 * @type {String}
+	 */
+	id: {
+		validator: core.isString
+	},
+
+	/**
+	 * Whether to show message text as a label next
+	 * to the flag icon or as a tooltip.
+	 *
+	 * @instance
+	 * @memberof Flags
+	 * @type {Boolean}
+	 */
+	label: {
+		validator: core.isBoolean
+	},
+
+	/**
+	 * Text to display next to the flag icon.
+	 *
+	 * @instance
+	 * @memberof Flags
+	 * @type {String}
+	 */
+	message: {
+		validator: core.isString
+	},
+
+	/**
+	 * Path to Terms of Use.
+	 *
+	 * @instance
+	 * @memberof Flags
+	 * @type {String}
+	 */
+	pathTermsOfUse: {
+		validator: core.isString
+	},
+
+	/**
+	 * Path to images.
+	 *
+	 * @instance
+	 * @memberof Flags
+	 * @type {String}
+	 */
+	pathThemeImages: {
+		validator: core.isString
+	}
+
+	/**
+	 * Portlet's namespace
+	 *
+	 * @instance
+	 * @memberof Flags
+	 * @type {String}
+	 */
+	portletNamespace: {
+		validator: core.isString
+	},
+
+	/**
+	 * List of possible reasons to flag
+	 * a content.
+	 *
+	 * @instance
+	 * @memberof Flags
+	 * @type {List}
+	 */
+	reasons: {
+		validator: core.isObject //CORE.LIST??
+	},
+
+	/**
+	 * Email of the user who reports
+	 * the flag.
+	 *
+	 * @instance
+	 * @memberof Flags
+	 * @type {String}
+	 */
+	reporterEmailAddress: {
+		validator: core.isString
+	},
+
+	/**
+	 * Wheter the user is signed in or not.
+	 *
+	 * @instance
+	 * @memberof Flags
+	 * @type {Boolean}
+	 */
+	signedIn: {
+		validator: core.isBoolean
+	},
+
+	/**
+	 * Title to show in the Modal.
+	 *
+	 * @instance
+	 * @memberof Flags
+	 * @type {String}
+	 */
+	title: {
+		validator: core.isString
+	}
+
+	/**
 	 * Uri of the page that will be opened
 	 * in the dialog.
+	 *
 	 * @instance
 	 * @memberof Flags
 	 * @type {String}

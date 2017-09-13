@@ -1417,8 +1417,9 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		DateTime notOnOrAfter = new DateTime();
 
-		notOnOrAfter = notOnOrAfter.plusMillis(
-			_samlConfiguration.getReplayChacheDuration());
+		notOnOrAfter = notOnOrAfter.plus(
+			_samlConfiguration.getReplayChacheDuration() +
+				metadataManager.getClockSkew());
 
 		try {
 			SamlSpMessage samlSpMessage =

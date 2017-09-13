@@ -394,6 +394,41 @@ public class SourceFormatter {
 		return ToolsUtil.PLUGINS_MAX_DIR_LEVEL;
 	}
 
+	private List<String> _getPluginsInsideModulesDirectoryNames()
+		throws Exception {
+
+		List<String> pluginsInsideModulesDirectoryNames = new ArrayList<>();
+
+		List<String> pluginBuildFileNames = SourceFormatterUtil.filterFileNames(
+			_allFileNames, new String[0],
+			new String[] {
+				"**/modules/apps/**/build.xml",
+				"**/modules/private/apps/**/build.xml"
+			},
+			_sourceFormatterExcludes, true);
+
+		for (String pluginBuildFileName : pluginBuildFileNames) {
+			pluginBuildFileName = StringUtil.replace(
+				pluginBuildFileName, CharPool.BACK_SLASH, CharPool.SLASH);
+
+			String absolutePath = SourceUtil.getAbsolutePath(
+				pluginBuildFileName);
+
+			int x = absolutePath.indexOf("/modules/apps/");
+
+			if (x == -1) {
+				x = absolutePath.indexOf("/modules/private/apps/");
+			}
+
+			int y = absolutePath.lastIndexOf(StringPool.SLASH);
+
+			pluginsInsideModulesDirectoryNames.add(
+				absolutePath.substring(x, y + 1));
+		}
+
+		return pluginsInsideModulesDirectoryNames;
+	}
+
 	private Properties _getProperties(File file) throws Exception {
 		Properties properties = new Properties();
 
@@ -435,6 +470,9 @@ public class SourceFormatter {
 		for (String modulePropertiesFileName : modulePropertiesFileNames) {
 			_readProperties(new File(modulePropertiesFileName));
 		}
+
+		_pluginsInsideModulesDirectoryNames =
+			_getPluginsInsideModulesDirectoryNames();
 	}
 
 	private void _printProgressStatusMessage(String message) {
@@ -489,6 +527,8 @@ public class SourceFormatter {
 		throws Exception {
 
 		sourceProcessor.setAllFileNames(_allFileNames);
+		sourceProcessor.setPluginsInsideModulesDirectoryNames(
+			_pluginsInsideModulesDirectoryNames);
 		sourceProcessor.setProgressStatusQueue(_progressStatusQueue);
 		sourceProcessor.setPropertiesMap(_propertiesMap);
 		sourceProcessor.setSourceFormatterArgs(_sourceFormatterArgs);
@@ -514,6 +554,7 @@ public class SourceFormatter {
 	private int _maxStatusMessageLength = -1;
 	private final List<String> _modifiedFileNames =
 		new CopyOnWriteArrayList<>();
+	private List<String> _pluginsInsideModulesDirectoryNames;
 	private final BlockingQueue<ProgressStatusUpdate> _progressStatusQueue =
 		new LinkedBlockingQueue<>();
 

@@ -93,9 +93,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return;
 		}
 
-		_pluginsInsideModulesDirectoryNames =
-			getPluginsInsideModulesDirectoryNames();
-
 		_sourceChecks = _getSourceChecks(_containsModuleFile(fileNames));
 
 		addProgressStatusUpdate(
@@ -182,6 +179,14 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	@Override
 	public void setAllFileNames(List<String> allFileNames) {
 		_allFileNames = allFileNames;
+	}
+
+	@Override
+	public void setPluginsInsideModulesDirectoryNames(
+		List<String> pluginsInsideModulesDirectoryNames) {
+
+		_pluginsInsideModulesDirectoryNames =
+			pluginsInsideModulesDirectoryNames;
 	}
 
 	@Override
@@ -274,43 +279,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			forceIncludeAllFiles);
 	}
 
-	protected List<String> getPluginsInsideModulesDirectoryNames()
-		throws Exception {
-
-		if (_pluginsInsideModulesDirectoryNames != null) {
-			return _pluginsInsideModulesDirectoryNames;
-		}
-
-		List<String> pluginsInsideModulesDirectoryNames = new ArrayList<>();
-
-		List<String> pluginBuildFileNames = getFileNames(
-			new String[0],
-			new String[] {
-				"**/modules/apps/**/build.xml",
-				"**/modules/private/apps/**/build.xml"
-			},
-			true);
-
-		for (String pluginBuildFileName : pluginBuildFileNames) {
-			pluginBuildFileName = StringUtil.replace(
-				pluginBuildFileName, CharPool.BACK_SLASH, CharPool.SLASH);
-
-			String absolutePath = SourceUtil.getAbsolutePath(
-				pluginBuildFileName);
-
-			int x = absolutePath.indexOf("/modules/apps/");
-
-			if (x == -1) {
-				x = absolutePath.indexOf("/modules/private/apps/");
-			}
-
-			int y = absolutePath.lastIndexOf(StringPool.SLASH);
-
-			pluginsInsideModulesDirectoryNames.add(
-				absolutePath.substring(x, y + 1));
-		}
-
-		return pluginsInsideModulesDirectoryNames;
+	protected List<String> getPluginsInsideModulesDirectoryNames() {
+		return _pluginsInsideModulesDirectoryNames;
 	}
 
 	protected BlockingQueue<ProgressStatusUpdate> getProgressStatusQueue() {
@@ -638,9 +608,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		try {
-			for (String directoryName :
-					getPluginsInsideModulesDirectoryNames()) {
-
+			for (String directoryName : _pluginsInsideModulesDirectoryNames) {
 				if (absolutePath.contains(directoryName)) {
 					return false;
 				}

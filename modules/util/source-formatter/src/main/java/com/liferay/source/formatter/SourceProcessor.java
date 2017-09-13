@@ -37,6 +37,9 @@ public interface SourceProcessor {
 
 	public void setAllFileNames(List<String> allFileNames);
 
+	public void setPluginsInsideModulesDirectoryNames(
+		List<String> pluginsInsideModulesDirectoryNames);
+
 	public void setProgressStatusQueue(
 		BlockingQueue<ProgressStatusUpdate> progressStatusQueue);
 

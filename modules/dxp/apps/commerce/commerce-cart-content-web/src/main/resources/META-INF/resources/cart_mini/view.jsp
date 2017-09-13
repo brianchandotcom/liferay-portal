@@ -77,12 +77,12 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 					</h5>
 
 					<%
-					List<KeyValuePair> optionValues = commerceCartContentMiniDisplayContext.parseJSONString(commerceCartItem.getJson(), locale);
+					List<KeyValuePair> keyValuePairs = commerceCartContentMiniDisplayContext.parseJSONString(commerceCartItem.getJson(), locale);
 
 					StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
 
-					for (KeyValuePair optionValue : optionValues) {
-						stringJoiner.add(optionValue.getValue());
+					for (KeyValuePair keyValuePair : keyValuePairs) {
+						stringJoiner.add(keyValuePair.getValue());
 					}
 					%>
 

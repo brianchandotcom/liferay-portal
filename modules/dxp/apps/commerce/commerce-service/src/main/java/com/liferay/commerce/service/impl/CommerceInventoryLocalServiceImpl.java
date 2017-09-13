@@ -97,7 +97,9 @@ public class CommerceInventoryLocalServiceImpl
 		CommerceInventory commerceInventory =
 			commerceInventoryPersistence.fetchByG_C(groupId, cpDefinitionId);
 
-		deleteCommerceInventory(commerceInventory);
+		if (commerceInventory != null) {
+			deleteCommerceInventory(commerceInventory);
+		}
 	}
 
 	@Override

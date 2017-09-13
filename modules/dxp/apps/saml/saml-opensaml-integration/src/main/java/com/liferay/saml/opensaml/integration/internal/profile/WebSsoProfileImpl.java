@@ -1395,7 +1395,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		DateTime nowDateTime = new DateTime(DateTimeZone.UTC);
 
-		DateTime upperBoundDateTime = dateTime.plusMillis((int)clockSkew);
+		DateTime upperBoundDateTime = dateTime.plus(new Duration(clockSkew));
 
 		if (upperBoundDateTime.isBefore(nowDateTime)) {
 			throw new ExpiredException(

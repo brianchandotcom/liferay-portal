@@ -40,7 +40,7 @@ public class SamlImplUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.saml.impl", "0.0.0", "1.0.0",
+			"com.liferay.saml.impl", "0.0.0", "0.0.1",
 			new UpgradeSamlConfigurationPreferences(
 				_configurationAdmin, _props),
 			new UpgradeSamlKeyStoreProperties(_configurationAdmin, _prefsProps),
@@ -49,7 +49,7 @@ public class SamlImplUpgrade implements UpgradeStepRegistrator {
 				_samlProviderConfigurationHelper));
 
 		registry.register(
-			"com.liferay.saml.impl", "0.0.0", "1.0.0",
+			"com.liferay.saml.impl", "0.0.1", "1.0.0",
 			new UpgradeSamlIdpSsoSessionMaxAgeProperty(
 				_configurationAdmin, _props));
 	}

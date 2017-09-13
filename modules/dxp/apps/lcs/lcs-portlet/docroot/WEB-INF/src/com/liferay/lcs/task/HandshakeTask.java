@@ -316,13 +316,13 @@ public class HandshakeTask implements Task {
 		}
 
 		if (_log.isTraceEnabled()) {
-			_log.trace("Handshake Success");
+			_log.trace("Handshake success");
 		}
 
 		_lcsConnectionManager.onHandshakeSuccess();
 
 		if (_log.isTraceEnabled()) {
-			_log.trace("Reset Uptimes");
+			_log.trace("Reset uptimes");
 		}
 
 		_uptimeMonitoringAdvisor.resetUptimes();
@@ -395,7 +395,7 @@ public class HandshakeTask implements Task {
 			}
 
 			if (_log.isTraceEnabled()) {
-				_log.trace("Received Handshake Response");
+				_log.trace("Received handshake response");
 			}
 
 			receivedHandshakeResponse = true;

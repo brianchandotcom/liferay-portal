@@ -162,12 +162,27 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			runSQL("alter table DLFileEntry add fileName VARCHAR(255) null");
 
+			runSQL(
+				"update DLFileEntry set fileName = title where title like " +
+					"CONCAT('%.', extension) or extension = '' or extension " +
+						"is null");
+
+			runSQL(
+				"update DLFileEntry set fileName = CONCAT(title, '.', " +
+					"extension) where (fileName is null or fileName = '') " +
+						"and LENGTH(title) + LENGTH(extension) < 255");
+
+			runSQL(
+				"update DLFileEntry set fileName = REPLACE(fileName, '/', " +
+					"'_') where fileName is not null and fileName != ''");
+
 			Set<String> generatedUniqueFileNames = new HashSet<>();
 			Set<String> generatedUniqueTitles = new HashSet<>();
 
 			try (PreparedStatement ps1 = connection.prepareStatement(
 					"select fileEntryId, groupId, folderId, extension, " +
-						"title, version from DLFileEntry");
+						"title, version from DLFileEntry where fileName = '' " +
+							"or fileName is null");
 				PreparedStatement ps2 =
 					AutoBatchPreparedStatementUtil.autoBatch(
 						connection.prepareStatement(

@@ -204,6 +204,10 @@
 			<contains>The activate method has thrown an exception</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="LRQA-34927, temporarily ignore until COMMERCE-210 is fixed">
+			<contains>Invocation to listener threw exception</contains>
+			<matches></matches>
+		</ignore-error>
 		<ignore-error description="WCM-202">
 			<contains>No score point assigners available</contains>
 			<matches></matches>

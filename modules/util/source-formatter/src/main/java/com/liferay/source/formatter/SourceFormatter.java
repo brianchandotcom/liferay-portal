@@ -473,6 +473,44 @@ public class SourceFormatter {
 
 		_pluginsInsideModulesDirectoryNames =
 			_getPluginsInsideModulesDirectoryNames();
+
+		_portalSource = _isPortalSource();
+		_subrepository = _isSubrepository();
+	}
+
+	private boolean _isPortalSource() {
+		File portalImplDir = SourceFormatterUtil.getFile(
+			_sourceFormatterArgs.getBaseDirName(), "portal-impl",
+			ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+
+		if (portalImplDir != null) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isSubrepository() {
+		String baseDirAbsolutePath = SourceUtil.getAbsolutePath(
+			_sourceFormatterArgs.getBaseDirName());
+
+		int x = baseDirAbsolutePath.length();
+
+		for (int i = 0; i < _SUBREPOSITORY_MAX_DIR_LEVEL; i++) {
+			x = baseDirAbsolutePath.lastIndexOf(CharPool.FORWARD_SLASH, x - 1);
+
+			if (x == -1) {
+				return false;
+			}
+
+			String dirName = baseDirAbsolutePath.substring(x + 1);
+
+			if (dirName.startsWith("com-liferay-")) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private void _printProgressStatusMessage(String message) {
@@ -529,10 +567,12 @@ public class SourceFormatter {
 		sourceProcessor.setAllFileNames(_allFileNames);
 		sourceProcessor.setPluginsInsideModulesDirectoryNames(
 			_pluginsInsideModulesDirectoryNames);
+		sourceProcessor.setPortalSource(_portalSource);
 		sourceProcessor.setProgressStatusQueue(_progressStatusQueue);
 		sourceProcessor.setPropertiesMap(_propertiesMap);
 		sourceProcessor.setSourceFormatterArgs(_sourceFormatterArgs);
 		sourceProcessor.setSourceFormatterExcludes(_sourceFormatterExcludes);
+		sourceProcessor.setSubrepository(_subrepository);
 
 		sourceProcessor.format();
 
@@ -549,12 +589,15 @@ public class SourceFormatter {
 	private static final String _PROPERTIES_FILE_NAME =
 		"source-formatter.properties";
 
+	private static final int _SUBREPOSITORY_MAX_DIR_LEVEL = 3;
+
 	private List<String> _allFileNames;
 	private volatile SourceMismatchException _firstSourceMismatchException;
 	private int _maxStatusMessageLength = -1;
 	private final List<String> _modifiedFileNames =
 		new CopyOnWriteArrayList<>();
 	private List<String> _pluginsInsideModulesDirectoryNames;
+	private boolean _portalSource;
 	private final BlockingQueue<ProgressStatusUpdate> _progressStatusQueue =
 		new LinkedBlockingQueue<>();
 
@@ -717,5 +760,6 @@ public class SourceFormatter {
 	private final Set<SourceFormatterMessage> _sourceFormatterMessages =
 		new ConcurrentSkipListSet<>();
 	private List<SourceProcessor> _sourceProcessors = new ArrayList<>();
+	private boolean _subrepository;
 
 }

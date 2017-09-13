@@ -40,6 +40,8 @@ public interface SourceProcessor {
 	public void setPluginsInsideModulesDirectoryNames(
 		List<String> pluginsInsideModulesDirectoryNames);
 
+	public void setPortalSource(boolean portalSource);
+
 	public void setProgressStatusQueue(
 		BlockingQueue<ProgressStatusUpdate> progressStatusQueue);
 
@@ -49,5 +51,7 @@ public interface SourceProcessor {
 
 	public void setSourceFormatterExcludes(
 		SourceFormatterExcludes sourceFormatterExcludes);
+
+	public void setSubrepository(boolean subrepository);
 
 }

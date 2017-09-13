@@ -190,6 +190,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	@Override
+	public void setPortalSource(boolean portalSource) {
+		this.portalSource = portalSource;
+	}
+
+	@Override
 	public void setProgressStatusQueue(
 		BlockingQueue<ProgressStatusUpdate> progressStatusQueue) {
 
@@ -215,6 +220,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		SourceFormatterExcludes sourceFormatterExcludes) {
 
 		_sourceFormatterExcludes = sourceFormatterExcludes;
+	}
+
+	@Override
+	public void setSubrepository(boolean subrepository) {
+		this.subrepository = subrepository;
 	}
 
 	protected void addProgressStatusUpdate(
@@ -433,10 +443,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return sourceChecksResult.getContent();
 	}
 
-	protected static boolean portalSource;
-	protected static boolean subrepository;
-
+	protected boolean portalSource;
 	protected SourceFormatterArgs sourceFormatterArgs;
+	protected boolean subrepository;
 
 	private void _checkUTF8(File file, String fileName) throws Exception {
 		byte[] bytes = FileUtil.getBytes(file);
@@ -558,9 +567,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	private void _init() {
 		try {
-			portalSource = _isPortalSource();
-			subrepository = _isSubrepository();
-
 			_sourceFormatterMessagesMap = new HashMap<>();
 		}
 		catch (Exception e) {
@@ -620,37 +626,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return absolutePath.contains("/modules/");
 	}
 
-	private boolean _isPortalSource() {
-		if (getFile("portal-impl", PORTAL_MAX_DIR_LEVEL) != null) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private boolean _isSubrepository() {
-		String baseDirAbsolutePath = SourceUtil.getAbsolutePath(
-			sourceFormatterArgs.getBaseDirName());
-
-		int x = baseDirAbsolutePath.length();
-
-		for (int i = 0; i < _SUBREPOSITORY_MAX_DIR_LEVEL; i++) {
-			x = baseDirAbsolutePath.lastIndexOf(CharPool.FORWARD_SLASH, x - 1);
-
-			if (x == -1) {
-				return false;
-			}
-
-			String dirName = baseDirAbsolutePath.substring(x + 1);
-
-			if (dirName.startsWith("com-liferay-")) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private String _normalizePattern(String originalPattern) {
 		String pattern = originalPattern.replace(
 			CharPool.SLASH, File.separatorChar);
@@ -663,8 +638,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		return pattern;
 	}
-
-	private static final int _SUBREPOSITORY_MAX_DIR_LEVEL = 3;
 
 	private List<String> _allFileNames;
 	private boolean _browserStarted;

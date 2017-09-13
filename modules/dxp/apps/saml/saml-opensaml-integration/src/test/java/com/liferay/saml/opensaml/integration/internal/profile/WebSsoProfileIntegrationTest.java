@@ -845,7 +845,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			NameIDType.UNSPECIFIED, "test");
 
 		Subject subject = getSubject(
-			samlMessageContext, nameId, new DateTime());
+			samlMessageContext, nameId, new DateTime(DateTimeZone.UTC));
 
 		List<SubjectConfirmation> subjectConfirmations =
 			subject.getSubjectConfirmations();
@@ -876,7 +876,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			NameIDType.UNSPECIFIED, "test");
 
 		Subject subject = getSubject(
-			samlMessageContext, nameId, new DateTime());
+			samlMessageContext, nameId, new DateTime(DateTimeZone.UTC));
 
 		_webSsoProfileImpl.verifySubject(samlMessageContext, subject);
 

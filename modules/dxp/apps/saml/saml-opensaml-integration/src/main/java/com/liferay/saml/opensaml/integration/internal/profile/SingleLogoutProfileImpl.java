@@ -910,7 +910,7 @@ public class SingleLogoutProfileImpl
 
 		samlMessageContext.setSubjectNameIdentifier(nameId);
 
-		samlSloRequestInfo.setInitiateTime(new DateTime());
+		samlSloRequestInfo.setInitiateTime(new DateTime(DateTimeZone.UTC));
 		samlSloRequestInfo.setStatus(
 			SamlSloRequestInfo.REQUEST_STATUS_INITIATED);
 

@@ -1415,7 +1415,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		String messageKey = assertion.getID();
 
-		DateTime notOnOrAfter = new DateTime();
+		DateTime notOnOrAfter = new DateTime(DateTimeZone.UTC);
 
 		notOnOrAfter = notOnOrAfter.plus(
 			_samlConfiguration.getReplayChacheDuration() +

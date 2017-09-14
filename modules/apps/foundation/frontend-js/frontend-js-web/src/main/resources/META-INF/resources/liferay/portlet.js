@@ -203,7 +203,27 @@
 
 				placeHolder.addClass('portlet-boundary');
 
-				portletPosition = column.all('.portlet-boundary').indexOf(placeHolder);
+				var columnPortlets = column.all('.portlet-boundary');
+				var nestedPortlets = column.all('.portlet-nested-portlets');
+
+				portletPosition = columnPortlets.indexOf(placeHolder);
+
+				var nestedPortletOffset = 0;
+
+				nestedPortlets.some(
+					function(nestedPortlet) {
+						var nestedPortletIndex = columnPortlets.indexOf(nestedPortlet);
+
+						if ((nestedPortletIndex !== -1) && (nestedPortletIndex < portletPosition)) {
+							nestedPortletOffset += nestedPortlet.all('.portlet-boundary').size();
+						}
+						else if (nestedPortletIndex >= portletPosition) {
+							return true;
+						}
+					}
+				);
+
+				portletPosition -= nestedPortletOffset;
 
 				currentColumnId = Util.getColumnId(column.attr('id'));
 			}

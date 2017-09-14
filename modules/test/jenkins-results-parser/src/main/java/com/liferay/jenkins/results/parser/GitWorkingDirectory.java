@@ -729,7 +729,7 @@ public class GitWorkingDirectory {
 
 		BashCommandResult result = executeBashCommands(
 			"git remote rm " + gitRemote.getName());
-		
+
 		if (result.getExitValue() != 0) {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
@@ -744,27 +744,16 @@ public class GitWorkingDirectory {
 		}
 	}
 
-	public void reset(String ref, ResetCommand.ResetType resetType) {
-		if ((ref != null) && (ref.equals("head") || ref.equals("HEAD"))) {
-			ref = null;
+	public void reset(String options) {
+		String command = "git reset " + options;
+
+		BashCommandResult result = executeBashCommands(command);
+
+		if (result.getExitValue() != 0) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to reset\n", result.getStandardErr()));
 		}
-
-		ResetCommand resetCommand = _git.reset();
-
-		resetCommand.setMode(resetType);
-
-		if (ref != null) {
-			resetCommand.setRef(ref);
-		}
-		else {
-			ref = Constants.HEAD;
-		}
-
-		System.out.println(
-			JenkinsResultsParserUtil.combine(
-				"Resetting ", resetType.toString(), " to ", ref));
-
-		resetCommand.call();
 	}
 
 	public static class GitRemote implements Comparable<GitRemote> {

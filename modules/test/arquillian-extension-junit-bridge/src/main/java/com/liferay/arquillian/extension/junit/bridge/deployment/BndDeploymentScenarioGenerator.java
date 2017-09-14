@@ -26,6 +26,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.jar.Attributes;
@@ -57,21 +58,7 @@ public class BndDeploymentScenarioGenerator
 
 			ProjectBuilder projectBuilder = new ProjectBuilder(project);
 
-			String javaClassPathString = System.getProperty("java.class.path");
-
-			String[] javaClassPaths = StringUtil.split(
-				javaClassPathString, File.pathSeparatorChar);
-
-			for (String javaClassPath : javaClassPaths) {
-				File file = new File(javaClassPath);
-
-				if (file.isDirectory() ||
-					StringUtil.endsWith(javaClassPath, ".zip") ||
-					StringUtil.endsWith(javaClassPath, ".jar")) {
-
-					projectBuilder.addClasspath(file);
-				}
-			}
+			projectBuilder.addClasspath(_getClassPathFiles());
 
 			Jar jar = projectBuilder.build();
 
@@ -127,6 +114,25 @@ public class BndDeploymentScenarioGenerator
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	private List<File> _getClassPathFiles() {
+		List<File> files = new ArrayList<>();
+
+		for (String filePath : StringUtil.split(
+				System.getProperty("java.class.path"),
+				File.pathSeparatorChar)) {
+
+			File file = new File(filePath);
+
+			if (file.isDirectory() || StringUtil.endsWith(filePath, ".zip") ||
+				StringUtil.endsWith(filePath, ".jar")) {
+
+				files.add(file);
+			}
+		}
+
+		return files;
 	}
 
 	private static final String _MANIFEST_PATH = "META-INF/MANIFEST.MF";

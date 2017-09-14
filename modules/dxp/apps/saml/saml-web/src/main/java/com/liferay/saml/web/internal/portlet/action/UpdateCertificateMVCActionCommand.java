@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
-import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.constants.SamlWebKeys;
@@ -37,6 +36,7 @@ import java.security.KeyStore;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.portlet.ActionRequest;
@@ -139,7 +139,14 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 		int validityDays = ParamUtil.getInteger(
 			actionRequest, "certificateValidityDays");
 
-		Date endDate = new Date(startDate.getTime() + validityDays * Time.DAY);
+		Calendar endDate = Calendar.getInstance();
+
+		endDate.add(Calendar.DAY_OF_YEAR, validityDays);
+
+		if (endDate.get(Calendar.YEAR) > 9999) {
+			SessionErrors.add(actionRequest, "certificateValidityDays");
+			return;
+		}
 
 		CertificateEntityId subjectCertificateEntityId =
 			new CertificateEntityId(
@@ -148,7 +155,7 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 
 		X509Certificate x509Certificate = _certificateTool.generateCertificate(
 			keyPair, subjectCertificateEntityId, subjectCertificateEntityId,
-			startDate, endDate, _SHA1_PREFIX + keyAlgorithm);
+			startDate, endDate.getTime(), _SHA1_PREFIX + keyAlgorithm);
 
 		KeyStore.PrivateKeyEntry privateKeyEntry = new KeyStore.PrivateKeyEntry(
 			keyPair.getPrivate(), new Certificate[] {x509Certificate});

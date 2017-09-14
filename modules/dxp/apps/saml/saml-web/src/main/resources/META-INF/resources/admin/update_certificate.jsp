@@ -54,6 +54,7 @@ X509Certificate x509Certificate = (X509Certificate)request.getAttribute(SamlWebK
 				<liferay-ui:error exception="<%= CertificateException.class %>" message="please-enter-a-valid-key-length-and-algorithm" />
 				<liferay-ui:error exception="<%= CertificateKeyPasswordException.class %>" message="please-enter-a-valid-key-password" />
 				<liferay-ui:error exception="<%= InvalidParameterException.class %>" message="please-enter-a-valid-key-length-and-algorithm" />
+				<liferay-ui:error key="certificateValidityDays" message="please-enter-a-valid-certificate-validity" />
 
 				<aui:input name="cmd" type="hidden" value="<%= cmd %>" />
 

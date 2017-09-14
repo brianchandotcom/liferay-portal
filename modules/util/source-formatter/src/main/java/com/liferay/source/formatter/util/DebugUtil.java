@@ -51,14 +51,16 @@ public class DebugUtil {
 	public static synchronized void increaseProcessingTime(
 		String checkName, long processingTime) {
 
-		long currentProcessingTime = 0;
+		double checkTotalProcessingTime = 0.0;
 
 		if (_processingTimeMap.containsKey(checkName)) {
-			currentProcessingTime = _processingTimeMap.get(checkName);
+			checkTotalProcessingTime = _processingTimeMap.get(checkName);
 		}
 
-		_processingTimeMap.put(
-			checkName, currentProcessingTime + processingTime);
+		checkTotalProcessingTime +=
+			(double)processingTime / _concurrentTasksCount.get();
+
+		_processingTimeMap.put(checkName, checkTotalProcessingTime);
 	}
 
 	public static void printContentModifications(
@@ -203,16 +205,14 @@ public class DebugUtil {
 			new Comparator<String>() {
 
 				public int compare(String key1, String key2) {
-					long diff =
-						_processingTimeMap.get(key2) -
-							_processingTimeMap.get(key1);
-
-					return (int)diff;
+					return Double.compare(
+						_processingTimeMap.get(key2),
+						_processingTimeMap.get(key1));
 				}
 
 			});
 
-		long totalProcessingTime = 0;
+		double totalProcessingTime = 0.0;
 
 		for (String key : keys) {
 			totalProcessingTime += _processingTimeMap.get(key);
@@ -226,10 +226,9 @@ public class DebugUtil {
 			sb.append(key);
 			sb.append(": ");
 
-			long processingTime = _processingTimeMap.get(key);
+			double processingTime = _processingTimeMap.get(key);
 
-			double percentage =
-				((double)processingTime / totalProcessingTime) * 100;
+			double percentage = (processingTime / totalProcessingTime) * 100;
 
 			sb.append(decimalFormat.format(percentage));
 
@@ -260,7 +259,7 @@ public class DebugUtil {
 
 	private static final AtomicInteger _concurrentTasksCount =
 		new AtomicInteger();
-	private static final Map<String, Long> _processingTimeMap =
+	private static final Map<String, Double> _processingTimeMap =
 		new ConcurrentHashMap<>();
 	private static final Map<String, Integer> _processorFileCountMap =
 		new ConcurrentSkipListMap<>();

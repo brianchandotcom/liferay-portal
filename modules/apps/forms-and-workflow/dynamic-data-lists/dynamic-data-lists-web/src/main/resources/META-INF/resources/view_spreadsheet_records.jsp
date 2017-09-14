@@ -189,3 +189,5 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 	window.<portlet:namespace />spreadSheet = spreadSheet;
 	window.<portlet:namespace />structure = structure;
 </aui:script>
+
+<%@ include file="/export_record_set.jspf" %>

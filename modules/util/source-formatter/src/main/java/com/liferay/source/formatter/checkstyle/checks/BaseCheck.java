@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
+import com.liferay.source.formatter.util.DebugUtil;
+
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 
@@ -22,11 +24,32 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
  */
 public abstract class BaseCheck extends AbstractCheck {
 
+	public void setShowDebugInformation(boolean showDebugInformation) {
+		_showDebugInformation = showDebugInformation;
+	}
+
 	@Override
 	public void visitToken(DetailAST detailAST) {
+		if (!_showDebugInformation) {
+			doVisitToken(detailAST);
+
+			return;
+		}
+
+		long startTime = System.currentTimeMillis();
+
 		doVisitToken(detailAST);
+
+		long endTime = System.currentTimeMillis();
+
+		Class<?> clazz = getClass();
+
+		DebugUtil.increaseProcessingTime(
+			clazz.getSimpleName(), endTime - startTime);
 	}
 
 	protected abstract void doVisitToken(DetailAST detailAST);
+
+	private boolean _showDebugInformation;
 
 }

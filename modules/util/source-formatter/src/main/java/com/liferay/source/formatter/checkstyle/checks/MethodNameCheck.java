@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
+import com.liferay.source.formatter.util.DebugUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
@@ -35,13 +36,28 @@ public class MethodNameCheck
 		_checkDoMethodName = checkDoMethodName;
 	}
 
+	public void setShowDebugInformation(boolean showDebugInformation) {
+		_showDebugInformation = showDebugInformation;
+	}
+
 	@Override
 	public void visitToken(DetailAST detailAST) {
-		if (_checkDoMethodName) {
-			_checkDoMethodName(detailAST);
+		if (!_showDebugInformation) {
+			_checkMethodName(detailAST);
+
+			return;
 		}
 
-		super.visitToken(detailAST);
+		long startTime = System.currentTimeMillis();
+
+		_checkMethodName(detailAST);
+
+		long endTime = System.currentTimeMillis();
+
+		Class<?> clazz = getClass();
+
+		DebugUtil.increaseProcessingTime(
+			clazz.getSimpleName(), endTime - startTime);
 	}
 
 	@Override
@@ -86,6 +102,14 @@ public class MethodNameCheck
 		log(detailAST.getLineNo(), _MSG_RENAME_METHOD, name, noDoName);
 	}
 
+	private void _checkMethodName(DetailAST detailAST) {
+		if (_checkDoMethodName) {
+			_checkDoMethodName(detailAST);
+		}
+
+		super.visitToken(detailAST);
+	}
+
 	private String _getMethodName(DetailAST detailAST) {
 		DetailAST nameAST = detailAST.findFirstToken(TokenTypes.IDENT);
 
@@ -97,5 +121,6 @@ public class MethodNameCheck
 	private boolean _checkDoMethodName;
 	private final Pattern _doMethodNamePattern = Pattern.compile(
 		"^_do([A-Z])(.*)$");
+	private boolean _showDebugInformation;
 
 }

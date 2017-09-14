@@ -147,6 +147,10 @@ public class CheckStyleUtil {
 			configuration, "maxLineLength",
 			String.valueOf(sourceFormatterArgs.getMaxLineLength()),
 			"com.liferay.source.formatter.checkstyle.checks.PlusStatement");
+		configuration = _addAttribute(
+			configuration, "showDebugInformation",
+			String.valueOf(sourceFormatterArgs.isShowDebugInformation()),
+			"com.liferay.*");
 
 		checker.configure(configuration);
 

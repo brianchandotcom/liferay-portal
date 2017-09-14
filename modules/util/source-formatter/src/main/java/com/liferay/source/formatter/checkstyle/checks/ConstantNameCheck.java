@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
+import com.liferay.source.formatter.util.DebugUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
@@ -28,8 +29,31 @@ import java.util.regex.Pattern;
 public class ConstantNameCheck
 	extends com.puppycrawl.tools.checkstyle.checks.naming.ConstantNameCheck {
 
+	public void setShowDebugInformation(boolean showDebugInformation) {
+		_showDebugInformation = showDebugInformation;
+	}
+
 	@Override
 	public void visitToken(DetailAST detailAST) {
+		if (!_showDebugInformation) {
+			_checkConstantName(detailAST);
+
+			return;
+		}
+
+		long startTime = System.currentTimeMillis();
+
+		_checkConstantName(detailAST);
+
+		long endTime = System.currentTimeMillis();
+
+		Class<?> clazz = getClass();
+
+		DebugUtil.increaseProcessingTime(
+			clazz.getSimpleName(), endTime - startTime);
+	}
+
+	private void _checkConstantName(DetailAST detailAST) {
 		if (!mustCheckName(detailAST)) {
 			return;
 		}
@@ -91,5 +115,7 @@ public class ConstantNameCheck
 
 	private static final String _MSG_PROTECTED_PUBLIC_COLLECTION =
 		"name.collectionProtectedPublicPattern";
+
+	private boolean _showDebugInformation;
 
 }

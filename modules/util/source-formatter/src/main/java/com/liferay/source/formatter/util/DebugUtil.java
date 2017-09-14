@@ -58,7 +58,7 @@ public class DebugUtil {
 		}
 
 		checkTotalProcessingTime +=
-			(double)processingTime / _concurrentTasksCount.get();
+			(double)processingTime / Math.max(1, _concurrentTasksCount.get());
 
 		_processingTimeMap.put(checkName, checkTotalProcessingTime);
 	}

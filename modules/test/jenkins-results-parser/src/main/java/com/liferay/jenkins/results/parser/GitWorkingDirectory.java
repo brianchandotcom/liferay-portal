@@ -127,7 +127,7 @@ public class GitWorkingDirectory {
 			branchNames = getLocalBranchNames();
 		}
 		else {
-			GitBranch gitBranch = gitRemote.getGitBranch(branchName);
+			GitBranch gitBranch = getRemoteBranch(branchName, gitRemote);
 
 			if (gitBranch != null) {
 				return true;
@@ -208,7 +208,7 @@ public class GitWorkingDirectory {
 
 			GitRemote gitRemote = getGitRemote(remoteName);
 
-			GitBranch gitBranch = gitRemote.getGitBranch(remoteBranchName);
+			GitBranch gitBranch = getRemoteBranch(remoteBranchName, gitRemote);
 
 			expectedContent = gitBranch.getSha();
 		}
@@ -569,7 +569,7 @@ public class GitWorkingDirectory {
 
 		for (int i = 0; i < lines.length; i = i + 2) {
 			GitRemote gitRemote = new GitRemote(
-				this, Arrays.copyOfRange(lines, i, i+1));
+				this, Arrays.copyOfRange(lines, i, i + 1));
 
 			gitRemotes.put(gitRemote.getName(), gitRemote);
 		}
@@ -591,6 +591,48 @@ public class GitWorkingDirectory {
 		String standardOut = result.getStandardOut();
 
 		return toShortNameList(Arrays.asList(standardOut.split("\n")));
+	}
+
+	public GitBranch getRemoteBranch(String branchName, GitRemote gitRemote) {
+		List<GitBranch> remoteBranches = getRemoteBranches(gitRemote);
+
+		for (GitBranch gitBranch : remoteBranches) {
+			if (branchName.equals(gitBranch.getName())) {
+				return gitBranch;
+			}
+		}
+
+		return null;
+	}
+
+	public List<GitBranch> getRemoteBranches(GitRemote gitRemote) {
+		BashCommandResult result = executeBashCommands(
+			JenkinsResultsParserUtil.combine(
+				"git ls-remote -h ", gitRemote.getName()));
+
+		if (result.getExitValue() != 0) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to get remote branches from ", gitRemote.getName(),
+					"\n", result.getStandardErr()));
+		}
+
+		String input = result.getStandardOut();
+
+		List<GitBranch> branches = new ArrayList<>();
+
+		for (String line : input.split("\n")) {
+			Matcher matcher = _gitLsRemotePattern.matcher(line);
+
+			if (matcher.find()) {
+				branches.add(
+					new GitBranch(
+						gitRemote, matcher.group("name"),
+						matcher.group("sha")));
+			}
+		}
+
+		return branches;
 	}
 
 	public Set<String> getRemoteNames() {
@@ -663,7 +705,8 @@ public class GitWorkingDirectory {
 		GitBranch currentBranch = getCurrentBranch();
 
 		return pushToRemote(
-			force, currentBranch, gitRemote.getGitBranch(currentBranch._name));
+			force, currentBranch,
+			getRemoteBranch(currentBranch.getName(), gitRemote));
 	}
 
 	public void rebase(
@@ -780,20 +823,6 @@ public class GitWorkingDirectory {
 			return _fetchRefSpec;
 		}
 
-		public GitBranch getGitBranch(String branchName) {
-			List<GitBranch> gitBranches = _getGitLsResults(branchName, "-h");
-
-			if (gitBranches.isEmpty()) {
-				return null;
-			}
-
-			return gitBranches.get(0);
-		}
-
-		public List<GitBranch> getGitBranches() {
-			return _getGitLsResults(null, "-h");
-		}
-
 		public String getName() {
 			return _name;
 		}
@@ -847,16 +876,16 @@ public class GitWorkingDirectory {
 
 			for (String gitRemoteInputLine : gitRemoteInputLines) {
 				Matcher matcher = _gitRemotePattern.matcher(gitRemoteInputLine);
-	
+
 				if (!matcher.matches()) {
 					throw new IllegalArgumentException(
 						"Invalid git remote input line " + gitRemoteInputLine);
 				}
 
 				if (name == null) {
-					name = matcher.group("name");	
+					name = matcher.group("name");
 				}
-	
+
 				String remoteURL = matcher.group("remoteURL");
 				String type = matcher.group("type");
 
@@ -874,51 +903,6 @@ public class GitWorkingDirectory {
 			_pushRemoteURL = pushRemoteURL;
 		}
 
-		private List<GitBranch> _getGitLsResults(
-			String branchName, String options) {
-
-			try {
-				Process process = JenkinsResultsParserUtil.executeBashCommands(
-					true, _gitWorkingDirectory._workingDirectory, 1000 * 5,
-					JenkinsResultsParserUtil.combine(
-						"git ls-remote ", options, " ", getName(), " ",
-						branchName));
-
-				if (process.exitValue() != 0) {
-					throw new RuntimeException(
-						JenkinsResultsParserUtil.combine(
-							"Unable to get details of remote branch ",
-							getName(), " ", branchName));
-				}
-
-				String input = JenkinsResultsParserUtil.readInputStream(
-					process.getInputStream());
-
-				List<GitBranch> branches = new ArrayList<>();
-
-				for (String line : input.split("\n")) {
-					Matcher matcher = _gitLsRemotePattern.matcher(line);
-
-					if (matcher.find()) {
-						branches.add(
-							new GitBranch(
-								this, matcher.group("name"),
-								matcher.group("sha")));
-					}
-				}
-
-				return branches;
-			}
-			catch (InterruptedException | IOException e) {
-				throw new RuntimeException(
-					JenkinsResultsParserUtil.combine(
-						"Unable to get details of remote branch ", getName(),
-						" ", branchName));
-			}
-		}
-
-		private static final Pattern _gitLsRemotePattern = Pattern.compile(
-			"(?<SHA>[^\\s]{40}+)[\\s]+(?<name>[^\\s]+)");
 		private static final Pattern _gitRemotePattern = Pattern.compile(
 			JenkinsResultsParserUtil.combine(
 				"(?<name>[^\\s]+)[\\s]+(?<remoteURL>[^\\s]+)[\\s]+\\(",
@@ -1037,7 +1021,9 @@ public class GitWorkingDirectory {
 	}
 
 	protected String loadRepositoryName() {
-		String remoteURL = getRemoteURL(_getGitRemote("upstream"));
+		GitRemote gitRemote = getGitRemote("upstream");
+
+		String remoteURL = gitRemote.getRemoteURL();
 
 		int x = remoteURL.lastIndexOf("/") + 1;
 		int y = remoteURL.indexOf(".git");
@@ -1066,7 +1052,9 @@ public class GitWorkingDirectory {
 	}
 
 	protected String loadRepositoryUsername() {
-		String remoteURL = getRemoteURL(_getGitRemote("upstream"));
+		GitRemote gitRemote = getGitRemote("upstream");
+
+		String remoteURL = gitRemote.getRemoteURL();
 
 		int x = remoteURL.indexOf(":") + 1;
 		int y = remoteURL.indexOf("/");
@@ -1126,6 +1114,8 @@ public class GitWorkingDirectory {
 
 	private static final Pattern _gitDirectoryPathPattern = Pattern.compile(
 		"gitdir\\: (.*\\.git)");
+	private static final Pattern _gitLsRemotePattern = Pattern.compile(
+		"(?<SHA>[^\\s]{40}+)[\\s]+(?<name>[^\\s]+)");
 
 	private File _gitDirectory;
 	private final String _repositoryName;

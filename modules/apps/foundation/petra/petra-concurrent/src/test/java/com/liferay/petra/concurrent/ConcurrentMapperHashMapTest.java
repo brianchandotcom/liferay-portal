@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.concurrent;
+package com.liferay.petra.concurrent;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;

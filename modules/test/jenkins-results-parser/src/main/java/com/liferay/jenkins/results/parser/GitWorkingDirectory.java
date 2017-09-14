@@ -133,26 +133,27 @@ public class GitWorkingDirectory {
 		return branchNames.contains(branchName);
 	}
 
-	public void checkoutBranch(String branchName) {
-		checkoutBranch(branchName, "-f");
+	public void checkoutBranch(Branch branch) {
+		checkoutBranch(branch, "-f");
 	}
 
-	public void checkoutBranch(String branchName, String options) {
-		Branch currentBranch = getCurrentBranch();
-
+	public void checkoutBranch(Branch branch, String options) {
 		List<String> localBranchNames = getLocalBranchNames();
 
-		if (!branchName.contains("/") &&
-			!localBranchNames.contains(branchName)) {
-
+		if (localBranchNames.contains(branch.getName())) {
 			throw new IllegalArgumentException(
 				JenkinsResultsParserUtil.combine(
-					"Unable to checkout ", branchName,
-					" because it does not exist"));
+					"The branch ", branch.getName(), " could not be found"));
 		}
 
-		if (branchName.equals(currentBranch.getName())) {
-			System.out.println(branchName + " is already checked out");
+		Branch currentBranch = getCurrentBranch();
+
+		String currentBranchName = currentBranch.getName();
+
+		String branchName = branch.getName();
+
+		if (currentBranchName.equals(branchName)) {
+			System.out.println(currentBranchName + " is already checked out");
 
 			return;
 		}
@@ -184,25 +185,8 @@ public class GitWorkingDirectory {
 
 		File headFile = new File(_gitDirectory, "HEAD");
 
-		String expectedContent = null;
-
-		if (!branchName.contains("/")) {
-			expectedContent = JenkinsResultsParserUtil.combine(
-				"ref: refs/heads/", branchName);
-		}
-		else {
-			int i = branchName.indexOf("/");
-
-			String remoteName = branchName.substring(0, i);
-
-			Remote remote = getRemote(remoteName);
-
-			String remoteBranchName = branchName.substring(i + 1);
-
-			Branch branch = getRemoteBranch(remoteBranchName, remote);
-
-			expectedContent = branch.getSha();
-		}
+		String expectedContent = JenkinsResultsParserUtil.combine(
+			"ref: refs/heads/", branchName);
 
 		while (true) {
 			String headContent = null;
@@ -352,7 +336,7 @@ public class GitWorkingDirectory {
 
 		sb.append("git fetch --progress -v -f ");
 
-		Remote remote = remoteBranch.getGitRemote();
+		Remote remote = remoteBranch.getRemote();
 
 		sb.append(remote.getName());
 
@@ -453,7 +437,7 @@ public class GitWorkingDirectory {
 
 		String branchName = executionResult.getStandardOut();
 
-		return new Branch(null, branchName, getBranchSha(branchName));
+		return new Branch(branchName, null, getBranchSha(branchName));
 	}
 
 	public String getGitConfigProperty(String gitConfigPropertyName) {
@@ -580,7 +564,7 @@ public class GitWorkingDirectory {
 			if (matcher.find()) {
 				branches.add(
 					new Branch(
-						remote, matcher.group("name"), matcher.group("sha")));
+						matcher.group("name"), remote, matcher.group("sha")));
 			}
 		}
 
@@ -763,21 +747,21 @@ public class GitWorkingDirectory {
 
 	public static class Branch {
 
-		public Remote getGitRemote() {
-			return _remote;
-		}
-
 		public String getName() {
 			return _name;
+		}
+
+		public Remote getRemote() {
+			return _remote;
 		}
 
 		public String getSha() {
 			return _sha;
 		}
 
-		private Branch(Remote remote, String name, String sha) {
-			_remote = remote;
+		private Branch(String name, Remote remote, String sha) {
 			_name = name;
+			_remote = remote;
 			_sha = sha;
 		}
 

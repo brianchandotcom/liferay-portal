@@ -269,7 +269,7 @@ public class FriendlyURLEntryLocalServiceImpl
 				Math.min(
 					maxLength - suffix.length(), normalizedUrlTitle.length()));
 
-			curUrlTitle = prefix + suffix;
+			curUrlTitle = FriendlyURLNormalizerUtil.normalize(prefix + suffix);
 		}
 
 		return curUrlTitle;

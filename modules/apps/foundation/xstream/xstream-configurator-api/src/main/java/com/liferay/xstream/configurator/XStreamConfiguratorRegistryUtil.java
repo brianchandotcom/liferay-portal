@@ -17,12 +17,13 @@ package com.liferay.xstream.configurator;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.xstream.XStreamAliasRegistryUtil;
-import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -88,7 +89,7 @@ public class XStreamConfiguratorRegistryUtil {
 	}
 
 	private static final Set<XStreamConfigurator> _xStreamConfigurators =
-		new ConcurrentHashSet<>();
+		Collections.newSetFromMap(new ConcurrentHashMap<>());
 
 	private BundleContext _bundleContext;
 	private ServiceTracker<XStreamConfigurator, XStreamConfigurator>

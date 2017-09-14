@@ -14,7 +14,6 @@
 
 package com.liferay.portal.resiliency.spi;
 
-import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
@@ -29,6 +28,7 @@ import com.liferay.portal.spring.aop.ServiceBeanAopCacheManagerUtil;
 import java.rmi.RemoteException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -194,7 +194,8 @@ public class SPIRegistryImpl implements SPIRegistry {
 		SPIRegistryImpl.class);
 
 	private SPI _errorSPI;
-	private final Set<String> _excludedPortletIds = new ConcurrentHashSet<>();
+	private final Set<String> _excludedPortletIds = Collections.newSetFromMap(
+		new ConcurrentHashMap<>());
 	private final Lock _lock = new ReentrantLock();
 	private final Map<SPI, String[]> _portletIds = new ConcurrentHashMap<>();
 	private final Map<String, SPI> _portletSPIs = new ConcurrentHashMap<>();

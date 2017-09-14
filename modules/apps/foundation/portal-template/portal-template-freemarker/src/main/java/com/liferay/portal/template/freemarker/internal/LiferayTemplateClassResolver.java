@@ -15,7 +15,6 @@
 package com.liferay.portal.template.freemarker.internal;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
@@ -34,9 +33,11 @@ import freemarker.template.TemplateException;
 import freemarker.template.utility.Execute;
 import freemarker.template.utility.ObjectConstructor;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -292,12 +293,13 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayTemplateClassResolver.class);
 
-	private final Set<Bundle> _bundles = new ConcurrentHashSet<>();
+	private final Set<Bundle> _bundles = Collections.newSetFromMap(
+		new ConcurrentHashMap<>());
 	private BundleTracker<ClassLoader> _classLoaderBundleTracker;
 	private volatile FreeMarkerEngineConfiguration
 		_freemarkerEngineConfiguration;
 	private final Set<ClassLoader> _wwhitelistedClassLoaders =
-		new ConcurrentHashSet<>();
+		Collections.newSetFromMap(new ConcurrentHashMap<>());
 
 	private class ClassLoaderBundleTrackerCustomizer
 		implements BundleTrackerCustomizer<ClassLoader> {

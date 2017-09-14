@@ -21,7 +21,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class ConcurrentHashSet<E> extends MapBackedSet<E> {
 
 	public ConcurrentHashSet() {

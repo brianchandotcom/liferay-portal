@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.test.randomizerbumpers;
 
-import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
-
+import java.util.Collections;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Shuyang Zhou
@@ -35,6 +35,7 @@ public class UniqueStringRandomizerBumper implements RandomizerBumper<String> {
 		return _randomValues.add(randomValue);
 	}
 
-	private static final Set<String> _randomValues = new ConcurrentHashSet<>();
+	private static final Set<String> _randomValues = Collections.newSetFromMap(
+		new ConcurrentHashMap<>());
 
 }

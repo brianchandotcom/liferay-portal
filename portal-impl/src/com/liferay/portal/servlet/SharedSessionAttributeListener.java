@@ -14,11 +14,12 @@
 
 package com.liferay.portal.servlet;
 
-import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.Collections;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionAttributeListener;
@@ -41,7 +42,7 @@ public class SharedSessionAttributeListener
 	implements HttpSessionAttributeListener, HttpSessionListener {
 
 	public SharedSessionAttributeListener() {
-		_sessionIds = new ConcurrentHashSet<>();
+		_sessionIds = Collections.newSetFromMap(new ConcurrentHashMap<>());
 	}
 
 	@Override

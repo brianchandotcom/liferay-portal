@@ -14,8 +14,6 @@
 
 package com.liferay.portal.template.freemarker.internal;
 
-import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
-
 import java.io.IOException;
 
 import java.net.URL;
@@ -24,6 +22,7 @@ import java.net.URLClassLoader;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.Bundle;
 
@@ -126,6 +125,7 @@ public class FreeMarkerBundleClassloader extends URLClassLoader {
 		return clazz;
 	}
 
-	private final Set<Bundle> _bundles = new ConcurrentHashSet<>();
+	private final Set<Bundle> _bundles = Collections.newSetFromMap(
+		new ConcurrentHashMap<>());
 
 }

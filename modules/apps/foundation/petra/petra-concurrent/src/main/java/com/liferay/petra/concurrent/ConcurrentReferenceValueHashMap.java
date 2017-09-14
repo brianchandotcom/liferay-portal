@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.concurrent;
+package com.liferay.petra.concurrent;
 
 import com.liferay.portal.kernel.memory.FinalizeAction;
 import com.liferay.portal.kernel.memory.FinalizeManager;

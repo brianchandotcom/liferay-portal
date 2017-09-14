@@ -3,7 +3,7 @@
 		padding-right: 2px;
 
 		&:before {
-			content: $check-empty;
+			content: "\f096";
 		}
 	}
 
@@ -12,7 +12,7 @@
 			padding-right: 0;
 
 			&:before {
-				content: $check;
+				content: "\f046";
 			}
 		}
 	}

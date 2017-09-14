@@ -1,5 +1,11 @@
 /* ---------- Portlet topper ---------- */
 
+$navbar-default-bg: #F7F7F7;
+$navbar-default-border: transparent;
+$navbar-default-color: $navbar-light-color;
+$navbar-default-link-color: $navbar-light-color;
+$navbar-default-link-hover-color: $navbar-light-hover-color;
+
 $portlet-topper-bg: $navbar-default-bg !default;
 $portlet-topper-border: $navbar-default-border !default;
 $portlet-topper-color: $navbar-default-color !default;

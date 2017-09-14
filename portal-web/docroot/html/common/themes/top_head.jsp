@@ -64,7 +64,7 @@ if (!themeDisplay.isSignedIn() && layout.isPublicLayout()) {
 
 <%-- Portal CSS --%>
 
-<link class="lfr-css-file" data-senna-track="temporary" href="<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getPathThemeCss() + "/aui.css")) %>" id="liferayAUICSS" rel="stylesheet" type="text/css" />
+<link class="lfr-css-file" data-senna-track="temporary" href="<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getPathThemeCss() + "/clay.css")) %>" id="liferayAUICSS" rel="stylesheet" type="text/css" />
 
 <%
 long cssLastModifiedTime = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_CSS);

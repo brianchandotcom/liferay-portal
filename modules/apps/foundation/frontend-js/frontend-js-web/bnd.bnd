@@ -16,6 +16,7 @@ Liferay-Top-Head-Authenticated-JS-Resources:\
 	/aui/widget-position/widget-position.js,\
 	/aui/widget-stack/widget-stack.js,\
 	/aui/widget-stdmod/widget-stdmod.js,\
+	\
 	/aui/aui-aria/aui-aria.js,\
 	/aui/aui-io-plugin-deprecated/aui-io-plugin-deprecated.js,\
 	/aui/aui-io-request/aui-io-request.js,\
@@ -25,26 +26,39 @@ Liferay-Top-Head-Authenticated-JS-Resources:\
 	/aui/aui-overlay-manager-deprecated/aui-overlay-manager-deprecated.js,\
 	/aui/aui-overlay-mask-deprecated/aui-overlay-mask-deprecated.js,\
 	/aui/aui-parse-content/aui-parse-content.js,\
+	\
 	/liferay/layout_exporter.js,\
 	/liferay/session.js,\
+	\
 	/liferay/deprecated.js
 Liferay-Top-Head-JS-Resources:\
 	/jquery/jquery.js,\
-	/lexicon/bootstrap.js,\
+	\
+	/clay/bootstrap.js,\
+	\
 	/loader/config.js,\
 	/loader/loader.js,\
+	\
 	/lodash/lodash.js,\
+	\
 	/aui/aui/aui.js,\
 	/aui/aui-base-html5-shiv/aui-base-html5-shiv.js,\
+	\
 	/liferay/browser_selectors.js,\
 	/liferay/modules.js,\
+	\
 	/liferay/aui_sandbox.js,\
-	/lexicon/collapsible-search.js,\
-	/lexicon/side-navigation.js,\
+	\
+	/clay/collapsible-search.js,\
+	/clay/side-navigation.js,\
+	\
 	/jquery/fm.js,\
 	/jquery/form.js,\
+	\
 	/lodash/util.js,\
+	\
 	/misc/svg4everybody.js,\
+	\
 	/aui/arraylist-add/arraylist-add.js,\
 	/aui/arraylist-filter/arraylist-filter.js,\
 	/aui/arraylist/arraylist.js,\
@@ -108,8 +122,10 @@ Liferay-Top-Head-JS-Resources:\
 	/aui/widget-skin/widget-skin.js,\
 	/aui/widget-uievents/widget-uievents.js,\
 	/aui/yui-throttle/yui-throttle.js,\
+	\
 	/aui/aui-base-core/aui-base-core.js,\
 	/aui/aui-base-lang/aui-base-lang.js,\
+	\
 	/aui/aui-classnamemanager/aui-classnamemanager.js,\
 	/aui/aui-component/aui-component.js,\
 	/aui/aui-debounce/aui-debounce.js,\
@@ -121,15 +137,18 @@ Liferay-Top-Head-JS-Resources:\
 	/aui/aui-node-html5/aui-node-html5.js,\
 	/aui/aui-selector/aui-selector.js,\
 	/aui/aui-timer/aui-timer.js,\
+	\
 	/liferay/dependency.js,\
 	/liferay/dom_task_runner.js,\
 	/liferay/events.js,\
 	/liferay/language.js,\
 	/liferay/liferay.js,\
 	/liferay/util.js,\
+	\
 	/liferay/portal.js,\
 	/liferay/portlet.js,\
 	/liferay/workflow.js,\
+	\
 	/liferay/address.js,\
 	/liferay/form.js,\
 	/liferay/form_placeholders.js,\

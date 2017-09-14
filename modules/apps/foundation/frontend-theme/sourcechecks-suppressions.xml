@@ -1,0 +1,3 @@
+<suppressions>
+	<suppress checks="BNDWebContextPathCheck" files="frontend-theme-unstyled/bnd\.bnd" />
+</suppressions>

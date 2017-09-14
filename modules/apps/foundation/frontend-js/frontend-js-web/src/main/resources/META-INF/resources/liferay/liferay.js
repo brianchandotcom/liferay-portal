@@ -30,6 +30,42 @@ Liferay = window.Liferay || {};
 		}
 	);
 
+	var jqueryInit = $.prototype.init;
+
+	$.prototype.init = function(selector, context, root) {
+		if (selector === '#') {
+			selector = '';
+		}
+
+		return new jqueryInit(selector, context, root);
+	};
+
+	$(document).on(
+		'show.bs.collapse',
+		function(event) {
+			var target = $(event.target);
+
+			var ancestor = target.parents('.panel-group');
+
+			if (target.hasClass('panel-collapse') && ancestor.length) {
+				var openChildren = ancestor.find('.panel-collapse.in').not(target);
+
+				if (openChildren.length && ancestor.find('[data-parent="#' + ancestor.attr('id') + '"]').length) {
+					openChildren.removeClass('in');
+				}
+			}
+
+			if (target.hasClass('in')) {
+				target.addClass('show');
+				target.removeClass('in');
+
+				target.collapse('hide');
+
+				return false;
+			}
+		}
+	);
+
 	/**
 	 * OPTIONS
 	 *

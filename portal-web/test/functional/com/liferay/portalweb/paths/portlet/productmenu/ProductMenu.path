@@ -30,12 +30,12 @@
 </tr>
 <tr>
 	<td>PRODUCT_MENU_OPENED</td>
-	<td>//div[contains(@id,'sidenavSliderId') and not(contains(@class,'closed')) and not(contains(@class,'transition'))]</td>
+	<td>//div[contains(@id,'sidenavSliderId') and not(contains(@class,'closed'))]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PRODUCT_MENU_CLOSED</td>
-	<td>//div[contains(@id,'sidenavSliderId') and (contains(@class,'closed')) and not(contains(@class,'transition'))]</td>
+	<td>//div[contains(@id,'sidenavSliderId') and (contains(@class,'closed'))]</td>
 	<td></td>
 </tr>
 <tr>
@@ -286,7 +286,7 @@
 </tr>
 <tr>
 	<td>PRODUCT_MENU_TABS_EXPANDED_PANEL</td>
-	<td>//div[(@class='collapse panel-collapse in' or @class='panel-collapse collapse in') and contains(@id,'${key_panelId}')]</td>
+	<td>//div[(@class='collapse panel-collapse in' or @class='panel-collapse collapse in' or @class='panel-collapse collapse show') and contains(@id,'${key_panelId}')]</td>
 	<td></td>
 </tr>
 <tr>

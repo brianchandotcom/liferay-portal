@@ -37,7 +37,6 @@ import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

@@ -1296,7 +1296,7 @@
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="Staging#LIVE_BUTTON" value1="Live" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="Staging#LIVE_BUTTON" value1="Live" />
 
 		<var name="key_pageName" value="${pageName}" />
 

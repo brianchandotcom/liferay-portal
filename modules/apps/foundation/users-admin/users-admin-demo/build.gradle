@@ -1,4 +1,6 @@
 dependencies {
+	provided group: "com.liferay", name: "com.liferay.journal.api", version: "2.0.0"
+	provided group: "com.liferay", name: "com.liferay.journal.content.web", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.instance.lifecycle", version: "3.0.0"
 	provided group: "com.liferay", name: "com.liferay.roles.admin.demo.data.creator.api", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.site.demo.data.creator.api", version: "1.0.0"

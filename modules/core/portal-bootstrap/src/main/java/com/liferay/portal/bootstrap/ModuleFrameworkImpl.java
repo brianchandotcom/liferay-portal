@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -42,6 +43,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.module.framework.ModuleFramework;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
@@ -628,7 +630,11 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 			Bundle bundle = null;
 
-			if (location.startsWith("reference:")) {
+			Map<String, String[]> parameterMap = _getParameterMap(location);
+
+			String[] isStatic = parameterMap.get("static");
+
+			if (!ArrayUtil.isEmpty(isStatic) && Boolean.valueOf(isStatic[0])) {
 				bundle = _getStaticBundle(
 					bundleContext, unsyncBufferedInputStream, location);
 			}
@@ -774,6 +780,53 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	private String _getFelixFileInstallDir() {
 		return PropsValues.MODULE_FRAMEWORK_PORTAL_DIR + StringPool.COMMA +
 			StringUtil.merge(PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS);
+	}
+
+	private Map<String, String[]> _getParameterMap(String location) {
+		int index = location.indexOf(CharPool.QUESTION);
+
+		if (index == -1) {
+			return Collections.emptyMap();
+		}
+
+		String queryString = location.substring(index + 1);
+
+		if (Validator.isNull(queryString)) {
+			return Collections.emptyMap();
+		}
+
+		String[] parameters = StringUtil.split(queryString, CharPool.AMPERSAND);
+
+		Map<String, String[]> parameterMap = new HashMap<>();
+
+		for (String parameter : parameters) {
+			if (parameter.length() > 0) {
+				String[] kvp = StringUtil.split(parameter, CharPool.EQUAL);
+
+				if (kvp.length == 0) {
+					continue;
+				}
+
+				String key = kvp[0];
+
+				String value = StringPool.BLANK;
+
+				if (kvp.length > 1) {
+					value = kvp[1];
+				}
+
+				String[] values = parameterMap.get(key);
+
+				if (values == null) {
+					parameterMap.put(key, new String[] {value});
+				}
+				else {
+					parameterMap.put(key, ArrayUtil.append(values, value));
+				}
+			}
+		}
+
+		return parameterMap;
 	}
 
 	private Dictionary<String, Object> _getProperties(
@@ -949,8 +1002,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				_log.debug("Adding initial bundle " + location.toString());
 			}
 
-			Bundle bundle = _addBundle(
-				"reference:" + location, inputStream, false);
+			Bundle bundle = _addBundle(location, inputStream, false);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Added initial bundle " + bundle);
@@ -1208,18 +1260,21 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		Collections.sort(jarPaths);
 
-		String prefix = "reference:".concat(_STATIC_JAR);
-
 		List<Bundle> refreshBundles = new ArrayList<>();
 
 		for (Bundle bundle : bundleContext.getBundles()) {
 			String location = bundle.getLocation();
 
-			if (!location.startsWith(prefix)) {
+			Map<String, String[]> parameters = _getParameterMap(location);
+
+			String[] isStatic = parameters.get("static");
+
+			if (ArrayUtil.isEmpty(isStatic) || !Boolean.valueOf(isStatic[0])) {
 				continue;
 			}
 
-			Path filePath = Paths.get(location.substring(prefix.length()));
+			Path filePath = Paths.get(
+				location.substring(0, location.indexOf(StringPool.QUESTION)));
 
 			if (jarPaths.contains(filePath)) {
 				bundles.put(bundle.getLocation(), bundle);
@@ -1246,16 +1301,20 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		for (Path jarPath : jarPaths) {
 			try (InputStream inputStream = Files.newInputStream(jarPath)) {
-				String path = jarPath.toString();
+				URI uri = jarPath.toUri();
 
-				Bundle bundle = _installInitialBundle(
-					_STATIC_JAR.concat(path), inputStream);
+				String uriString = uri.toString();
+
+				String location = uriString.concat("?protocol=jar&static=true");
+
+				Bundle bundle = _installInitialBundle(location, inputStream);
 
 				if (bundle != null) {
-					bundles.put(bundle.getLocation(), bundle);
+					bundles.put(location, bundle);
 
 					overrideStaticFileNames.add(
-						path.substring(path.lastIndexOf(StringPool.SLASH) + 1));
+						uriString.substring(
+							uriString.lastIndexOf(StringPool.SLASH) + 1));
 				}
 			}
 		}
@@ -1332,11 +1391,15 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 							}
 						}
 
+						String location =
+							"file:/" + zipEntryName +
+								"?protocol=lpkg&static=true";
+
 						Bundle bundle = _installInitialBundle(
-							StringPool.SLASH.concat(zipEntryName), inputStream);
+							location, inputStream);
 
 						if (bundle != null) {
-							bundles.put(bundle.getLocation(), bundle);
+							bundles.put(location, bundle);
 						}
 					}
 				}
@@ -1593,8 +1656,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			_log.warn(sb.toString());
 		}
 	}
-
-	private static final String _STATIC_JAR = "Static-Jar::";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ModuleFrameworkImpl.class);

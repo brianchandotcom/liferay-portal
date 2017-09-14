@@ -50,16 +50,10 @@ public class BndDeploymentScenarioGenerator
 
 	@Override
 	public List<DeploymentDescription> generate(TestClass testClass) {
-		File bndFile = new File("bnd.bnd");
-
 		try (Analyzer analyzer = new Analyzer()) {
-			File absoluteBndFile = bndFile.getAbsoluteFile();
+			Workspace workspace = new Workspace(_buildDir);
 
-			File parentBndDir = absoluteBndFile.getParentFile();
-
-			Workspace workspace = new Workspace(parentBndDir);
-
-			Project project = new Project(workspace, parentBndDir);
+			Project project = new Project(workspace, _buildDir);
 
 			ProjectBuilder projectBuilder = new ProjectBuilder(project);
 
@@ -136,5 +130,8 @@ public class BndDeploymentScenarioGenerator
 	}
 
 	private static final String _MANIFEST_PATH = "META-INF/MANIFEST.MF";
+
+	private static final File _buildDir = new File(
+		System.getProperty("user.dir"));
 
 }

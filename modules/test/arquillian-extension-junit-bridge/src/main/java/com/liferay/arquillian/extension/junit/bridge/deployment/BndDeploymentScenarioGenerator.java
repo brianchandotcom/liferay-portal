@@ -39,7 +39,6 @@ import org.jboss.arquillian.test.spi.TestClass;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.Asset;
 import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
-import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 import org.jboss.shrinkwrap.api.importer.ZipImporter;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 
@@ -75,14 +74,6 @@ public class BndDeploymentScenarioGenerator
 			JavaArchive javaArchive = zipImporter.as(JavaArchive.class);
 
 			analyzer.setProperties(project.getProperties());
-
-			javaArchive.addClass(testClass.getJavaClass());
-
-			ZipExporter zipExporter = javaArchive.as(ZipExporter.class);
-
-			jar = new Jar(
-				javaArchive.getName(), zipExporter.exportAsInputStream());
-
 			analyzer.setJar(jar);
 
 			Asset asset = javaArchive.get(_MANIFEST_PATH).getAsset();

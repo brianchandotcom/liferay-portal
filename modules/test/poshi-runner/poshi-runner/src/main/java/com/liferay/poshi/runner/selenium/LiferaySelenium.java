@@ -397,7 +397,7 @@ public interface LiferaySelenium {
 
 	public void type(String locator, String value) throws Exception;
 
-	public void typeAceEditor(String locator, String value) throws Exception;
+	public void typeAceEditor(String locator, String value);
 
 	public void typeAlloyEditor(String locator, String value);
 

@@ -315,8 +315,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 					samlSsoRequestContext.getSAMLMessageContext();
 
 			if ((samlMessageContext != null) &&
-				samlMessageContext.getInboundSAMLMessageId().equals(
-					samlMessageId)) {
+				samlMessageId.equals(
+					samlMessageContext.getInboundSAMLMessageId())) {
 
 				return samlSsoRequestContext;
 			}
@@ -1025,7 +1025,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		response.addHeader(
 			HttpHeaders.PRAGMA, HttpHeaders.PRAGMA_NO_CACHE_VALUE);
 
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(6);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -1034,8 +1034,12 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		sb.append("/portal/login?redirect=");
 		sb.append(themeDisplay.getPathMain());
-		sb.append("/portal/saml/sso?saml_message_id=");
-		sb.append(samlMessageContext.getInboundSAMLMessageId());
+		sb.append("/portal/saml/sso");
+
+		if (samlMessageContext.getInboundSAMLMessageId() != null) {
+			sb.append("?saml_message_id=");
+			sb.append(samlMessageContext.getInboundSAMLMessageId());
+		}
 
 		String redirect = sb.toString();
 

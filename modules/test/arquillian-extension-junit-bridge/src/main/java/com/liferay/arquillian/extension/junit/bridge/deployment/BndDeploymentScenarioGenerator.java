@@ -28,7 +28,6 @@ import java.io.File;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Properties;
 import java.util.jar.Attributes;
 import java.util.jar.Attributes.Name;
 import java.util.jar.Manifest;
@@ -61,12 +60,6 @@ public class BndDeploymentScenarioGenerator
 			Workspace workspace = new Workspace(parentBndDir);
 
 			Project project = new Project(workspace, parentBndDir);
-
-			Properties properties = new Properties();
-
-			properties.putAll(project.loadProperties(bndFile));
-
-			project.setProperties(properties);
 
 			ProjectBuilder projectBuilder = new ProjectBuilder(project);
 
@@ -102,7 +95,7 @@ public class BndDeploymentScenarioGenerator
 
 			JavaArchive javaArchive = zipImporter.as(JavaArchive.class);
 
-			analyzer.setProperties(properties);
+			analyzer.setProperties(project.getProperties());
 
 			javaArchive.addClass(testClass.getJavaClass());
 

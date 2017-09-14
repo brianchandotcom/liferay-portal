@@ -89,10 +89,6 @@ public class GitWorkingDirectory {
 	public Remote addRemote(
 		boolean force, String remoteName, String remoteURL) {
 
-		System.out.println(
-			JenkinsResultsParserUtil.combine(
-				"Adding remote ", remoteName, " with url: ", remoteURL));
-
 		Remote remote = getRemote(remoteName);
 
 		if (remote != null) {
@@ -155,16 +151,11 @@ public class GitWorkingDirectory {
 					" because it does not exist"));
 		}
 
-		if (branchName.equals(currentBranch._name)) {
+		if (branchName.equals(currentBranch.getName())) {
 			System.out.println(branchName + " is already checked out");
 
 			return;
 		}
-
-		System.out.println(
-			JenkinsResultsParserUtil.combine(
-				"The current branch is ", currentBranch._name,
-				". Checking out branch ", branchName, "."));
 
 		waitForIndexLock();
 
@@ -202,11 +193,11 @@ public class GitWorkingDirectory {
 		else {
 			int i = branchName.indexOf("/");
 
-			String remoteBranchName = branchName.substring(i + 1);
-
 			String remoteName = branchName.substring(0, i);
 
 			Remote remote = getRemote(remoteName);
+
+			String remoteBranchName = branchName.substring(i + 1);
 
 			Branch branch = getRemoteBranch(remoteBranchName, remote);
 
@@ -265,8 +256,6 @@ public class GitWorkingDirectory {
 	}
 
 	public void commitFileToCurrentBranch(String fileName, String message) {
-		System.out.println("Committing file to current branch " + fileName);
-
 		String commitCommand = JenkinsResultsParserUtil.combine(
 			"git commit -m \'", message, "\' ", fileName);
 
@@ -286,11 +275,6 @@ public class GitWorkingDirectory {
 
 	public void createLocalBranch(
 		String localBranchName, boolean force, String startPoint) {
-
-		System.out.println(
-			JenkinsResultsParserUtil.combine(
-				"Creating branch ", localBranchName, " at starting point ",
-				startPoint));
 
 		StringBuilder sb = new StringBuilder();
 
@@ -345,8 +329,6 @@ public class GitWorkingDirectory {
 	}
 
 	public void deleteLocalBranch(String localBranchName) {
-		System.out.println("Deleting local branch " + localBranchName);
-
 		BashCommandResult result = executeBashCommands(
 			"git branch -f -D " + localBranchName);
 
@@ -361,11 +343,6 @@ public class GitWorkingDirectory {
 	public void deleteRemoteBranch(Branch remoteBranch) {
 		Remote remote = remoteBranch._remote;
 
-		System.out.println(
-			JenkinsResultsParserUtil.combine(
-				"Deleting remote branch ", remoteBranch._name, " from ",
-				remote.getRemoteURL()));
-
 		pushToRemote(true, null, remoteBranch);
 	}
 
@@ -377,12 +354,6 @@ public class GitWorkingDirectory {
 		Remote remote = remoteBranch.getGitRemote();
 
 		sb.append(remote.getName());
-
-		System.out.println(
-			JenkinsResultsParserUtil.combine(
-				"Fetching from ", remote.getName(), " ",
-				remoteBranch.getName()));
-
 		sb.append(" ");
 		sb.append(remoteBranch.getName());
 
@@ -418,8 +389,6 @@ public class GitWorkingDirectory {
 		if (standardOut.contains("no such commit")) {
 			return Collections.emptyList();
 		}
-
-		System.out.println(standardOut);
 
 		String[] lines = standardOut.split("\n");
 
@@ -671,11 +640,6 @@ public class GitWorkingDirectory {
 
 		Remote remote = remoteBranch._remote;
 
-		System.out.println(
-			JenkinsResultsParserUtil.combine(
-				"Pushing ", localBranchName, " to ", remote.getRemoteURL(), " ",
-				remoteBranch._name));
-
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("git push ");
@@ -767,8 +731,6 @@ public class GitWorkingDirectory {
 		if (!remoteExists(remote.getName())) {
 			return;
 		}
-
-		System.out.println("Removing remote " + remote.getName());
 
 		BashCommandResult result = executeBashCommands(
 			"git remote rm " + remote.getName());

@@ -24,6 +24,8 @@ import com.liferay.source.formatter.ProgressStatusUpdate;
 import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checkstyle.Checker;
+import com.liferay.source.formatter.util.CheckType;
+import com.liferay.source.formatter.util.DebugUtil;
 
 import com.puppycrawl.tools.checkstyle.ConfigurationLoader;
 import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
@@ -40,6 +42,7 @@ import java.io.OutputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -63,6 +66,11 @@ public class CheckStyleUtil {
 		_sourceFormatterMessages.clear();
 
 		Configuration configuration = _getConfiguration(sourceFormatterArgs);
+
+		if (sourceFormatterArgs.isShowDebugInformation()) {
+			DebugUtil.addCheckNames(
+				CheckType.CHECKSTYLE, _getCheckNames(configuration));
+		}
 
 		Checker checker = _getChecker(
 			configuration, suppressionsFiles, sourceFormatterArgs);
@@ -151,6 +159,28 @@ public class CheckStyleUtil {
 		checker.addListener(listener);
 
 		return checker;
+	}
+
+	private static List<String> _getCheckNames(Configuration configuration) {
+		List<String> checkNames = new ArrayList<>();
+
+		String name = configuration.getName();
+
+		if (name.startsWith("com.liferay.")) {
+			int pos = name.lastIndexOf(CharPool.PERIOD);
+
+			if (!name.endsWith("Check")) {
+				name = name.concat("Check");
+			}
+
+			checkNames.add(name.substring(pos + 1));
+		}
+
+		for (Configuration childConfiguration : configuration.getChildren()) {
+			checkNames.addAll(_getCheckNames(childConfiguration));
+		}
+
+		return checkNames;
 	}
 
 	private static Configuration _getConfiguration(

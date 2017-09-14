@@ -568,7 +568,8 @@ public class GitWorkingDirectory {
 		String[] lines = standardOut.split("\n");
 
 		for (int i = 0; i < lines.length; i = i + 2) {
-			GitRemote gitRemote = new GitRemote(this, lines[i], lines[i + 1]);
+			GitRemote gitRemote = new GitRemote(
+				this, Arrays.copyOfRange(lines, i, i+1));
 
 			gitRemotes.put(gitRemote.getName(), gitRemote);
 		}
@@ -824,65 +825,53 @@ public class GitWorkingDirectory {
 		}
 
 		private GitRemote(
-			GitWorkingDirectory gitWorkingDirectory, String gitRemoteInputLine1,
-			String gitRemoteInputLine2) {
+			GitWorkingDirectory gitWorkingDirectory,
+			String[] gitRemoteInputLines) {
 
 			_gitWorkingDirectory = gitWorkingDirectory;
 
-			if (gitRemoteInputLine1.equals(gitRemoteInputLine2)) {
+			if (gitRemoteInputLines.length != 2) {
+				throw new IllegalArgumentException(
+					"gitRemoteInputLines but be an array of 2 Strings");
+			}
+
+			if (gitRemoteInputLines[0].equals(gitRemoteInputLines[1])) {
 				throw new IllegalArgumentException(
 					"Duplicate remote input lines detected. " +
-						gitRemoteInputLine1);
+						gitRemoteInputLines[0]);
 			}
 
-			Matcher matcher = _gitRemotePattern.matcher(gitRemoteInputLine1);
+			String name = null;
+			String fetchRemoteURL = null;
+			String pushRemoteURL = null;
 
-			if (!matcher.matches()) {
-				throw new IllegalArgumentException(
-					"Invalid git remote input line " + gitRemoteInputLine1);
+			for (String gitRemoteInputLine : gitRemoteInputLines) {
+				Matcher matcher = _gitRemotePattern.matcher(gitRemoteInputLine);
+	
+				if (!matcher.matches()) {
+					throw new IllegalArgumentException(
+						"Invalid git remote input line " + gitRemoteInputLine);
+				}
+
+				if (name == null) {
+					name = matcher.group("name");	
+				}
+	
+				String remoteURL = matcher.group("remoteURL");
+				String type = matcher.group("type");
+
+				if ((fetchRemoteURL == null) && type.equals("fetch")) {
+					fetchRemoteURL = remoteURL;
+				}
+
+				if ((pushRemoteURL == null) && type.equals("push")) {
+					pushRemoteURL = remoteURL;
+				}
 			}
 
-			_name = matcher.group("name");
-
-			String remoteURL = matcher.group("remoteURL");
-			String type = matcher.group("type");
-
-			_fetchRemoteURL = null;
-			_pushRemoteURL = null;
-
-			if (type.equals("fetch")) {
-				_fetchRemoteURL = remoteURL;
-			}
-
-			if (type.equals("push")) {
-				_pushRemoteURL = remoteURL;
-			}
-
-			matcher = _gitRemotePattern.matcher(gitRemoteInputLine2);
-
-			if (!matcher.matches()) {
-				throw new IllegalArgumentException(
-					"Invalid git remote input line " + gitRemoteInputLine2);
-			}
-
-			String name2 = matcher.group("name");
-
-			if (!_name.equals(name2)) {
-				throw new IllegalArgumentException(
-					JenkinsResultsParserUtil.combine(
-						"Names do not match ", _name, " " + name2));
-			}
-
-			remoteURL = matcher.group("remoteURL");
-			type = matcher.group("type");
-
-			if (type.equals("fetch")) {
-				_fetchRemoteURL = remoteURL;
-			}
-
-			if (type.equals("push")) {
-				_pushRemoteURL = remoteURL;
-			}
+			_fetchRemoteURL = fetchRemoteURL;
+			_name = name;
+			_pushRemoteURL = pushRemoteURL;
 		}
 
 		private List<GitBranch> _getGitLsResults(

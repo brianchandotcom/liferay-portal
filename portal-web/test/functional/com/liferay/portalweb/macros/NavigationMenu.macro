@@ -8,4 +8,8 @@
 			<var name="key_menuItem" value="Add Page" />
 		</execute>
 	</command>
+
+	<command name="selectDisplayTemplate">
+		<execute function="Select" locator1="Configuration#SETUP_DISPLAY_SETTINGS_DISPLAY_TEMPLATE_SELECT" value1="${displayTemplate}" />
+	</command>
 </definition>

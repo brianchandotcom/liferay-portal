@@ -145,6 +145,7 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 
 		if (endDate.get(Calendar.YEAR) > 9999) {
 			SessionErrors.add(actionRequest, "certificateValidityDays");
+
 			return;
 		}
 

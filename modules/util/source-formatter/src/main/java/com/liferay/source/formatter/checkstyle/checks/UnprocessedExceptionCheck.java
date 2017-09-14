@@ -22,7 +22,6 @@ import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 import com.liferay.source.formatter.util.ThreadSafeSortedClassLibraryBuilder;
 
-import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.FileText;
@@ -42,7 +41,7 @@ import java.util.Set;
 /**
  * @author Hugo Huijser
  */
-public class UnprocessedExceptionCheck extends AbstractCheck {
+public class UnprocessedExceptionCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -50,7 +49,7 @@ public class UnprocessedExceptionCheck extends AbstractCheck {
 	}
 
 	@Override
-	public void visitToken(DetailAST detailAST) {
+	protected void doVisitToken(DetailAST detailAST) {
 		FileContents fileContents = getFileContents();
 
 		String fileName = StringUtil.replace(

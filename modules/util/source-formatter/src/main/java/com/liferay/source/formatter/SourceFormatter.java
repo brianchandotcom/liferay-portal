@@ -27,10 +27,12 @@ import com.liferay.portal.tools.GitException;
 import com.liferay.portal.tools.GitUtil;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.configuration.ConfigurationLoader;
+import com.liferay.source.formatter.checks.configuration.SourceCheckConfiguration;
 import com.liferay.source.formatter.checks.configuration.SourceChecksSuppressions;
 import com.liferay.source.formatter.checks.configuration.SourceFormatterConfiguration;
 import com.liferay.source.formatter.checks.configuration.SuppressionsLoader;
 import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.source.formatter.util.CheckType;
 import com.liferay.source.formatter.util.DebugUtil;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
@@ -358,6 +360,23 @@ public class SourceFormatter {
 		return _firstSourceMismatchException;
 	}
 
+	private List<String> _getCheckNames() {
+		List<String> checkNames = new ArrayList<>();
+
+		for (String sourceProcessorName :
+				_sourceFormatterConfiguration.getSourceProcessorNames()) {
+
+			for (SourceCheckConfiguration sourceCheckConfiguration :
+					_sourceFormatterConfiguration.getSourceCheckConfigurations(
+						sourceProcessorName)) {
+
+				checkNames.add(sourceCheckConfiguration.getName());
+			}
+		}
+
+		return checkNames;
+	}
+
 	private List<ExcludeSyntaxPattern> _getExcludeSyntaxPatterns(
 		String sourceFormatterExcludes) {
 
@@ -496,6 +515,10 @@ public class SourceFormatter {
 
 		_sourceFormatterConfiguration = ConfigurationLoader.loadConfiguration(
 			"sourcechecks.xml");
+
+		if (_sourceFormatterArgs.isShowDebugInformation()) {
+			DebugUtil.addCheckNames(CheckType.SOURCECHECK, _getCheckNames());
+		}
 	}
 
 	private boolean _isPortalSource() {

@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
-import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtils;
@@ -30,7 +29,7 @@ import java.util.Set;
 /**
  * @author Hugo Huijser
  */
-public class PlusStatementCheck extends AbstractCheck {
+public class PlusStatementCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -42,7 +41,7 @@ public class PlusStatementCheck extends AbstractCheck {
 	}
 
 	@Override
-	public void visitToken(DetailAST detailAST) {
+	protected void doVisitToken(DetailAST detailAST) {
 		_checkMultiLinesPlusStatement(detailAST);
 		_checkTabbing(detailAST);
 

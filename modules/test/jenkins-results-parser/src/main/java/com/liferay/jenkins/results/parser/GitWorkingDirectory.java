@@ -784,32 +784,12 @@ public class GitWorkingDirectory {
 			return _fetchRemoteURL.compareTo(otherGitRemote._fetchRemoteURL);
 		}
 
-		public String getFetchRefSpec() {
-			if (_fetchRefSpec == null) {
-				_fetchRefSpec = _gitWorkingDirectory.getGitConfigProperty(
-					JenkinsResultsParserUtil.combine(
-						"remote.", _name, ".fetch"));
-			}
-
-			return _fetchRefSpec;
+		public GitWorkingDirectory getGitWorkingDirectory() {
+			return _gitWorkingDirectory;
 		}
 
 		public String getName() {
 			return _name;
-		}
-
-		public String getPushRefSpec() {
-			if (_pushRefSpec == null) {
-				_pushRefSpec = _gitWorkingDirectory.getGitConfigProperty(
-					JenkinsResultsParserUtil.combine(
-						"remote.", _name, ".push"));
-			}
-
-			if (_pushRefSpec == null) {
-				return getFetchRefSpec();
-			}
-
-			return _fetchRefSpec;
 		}
 
 		public String getPushRemoteURL() {
@@ -879,11 +859,9 @@ public class GitWorkingDirectory {
 				"(?<name>[^\\s]+)[\\s]+(?<remoteURL>[^\\s]+)[\\s]+\\(",
 				"(?<type>[^\\s]+)\\)"));
 
-		private String _fetchRefSpec;
 		private final String _fetchRemoteURL;
 		private final GitWorkingDirectory _gitWorkingDirectory;
 		private final String _name;
-		private String _pushRefSpec;
 		private final String _pushRemoteURL;
 
 	}

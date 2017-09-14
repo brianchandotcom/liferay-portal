@@ -47,7 +47,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class PersistenceCallCheck extends AbstractCheck {
+public class PersistenceCallCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -55,7 +55,7 @@ public class PersistenceCallCheck extends AbstractCheck {
 	}
 
 	@Override
-	public void visitToken(DetailAST detailAST) {
+	protected void doVisitToken(DetailAST detailAST) {
 		DetailAST parent = detailAST.getParent();
 
 		if (parent != null) {

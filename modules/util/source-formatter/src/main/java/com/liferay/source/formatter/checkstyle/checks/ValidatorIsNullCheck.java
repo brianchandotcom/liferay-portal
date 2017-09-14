@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class ValidatorIsNullCheck extends AbstractCheck {
+public class ValidatorIsNullCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -33,7 +33,7 @@ public class ValidatorIsNullCheck extends AbstractCheck {
 	}
 
 	@Override
-	public void visitToken(DetailAST detailAST) {
+	protected void doVisitToken(DetailAST detailAST) {
 		_checkMethod(detailAST, "Validator", "isNotNull");
 		_checkMethod(detailAST, "Validator", "isNull");
 	}

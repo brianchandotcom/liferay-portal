@@ -23,7 +23,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 /**
  * @author Hugo Huijser
  */
-public class TernaryOperatorCheck extends AbstractCheck {
+public class TernaryOperatorCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -31,7 +31,7 @@ public class TernaryOperatorCheck extends AbstractCheck {
 	}
 
 	@Override
-	public void visitToken(DetailAST detailAST) {
+	protected void doVisitToken(DetailAST detailAST) {
 		if (DetailASTUtil.getStartLine(detailAST) !=
 				DetailASTUtil.getEndLine(detailAST)) {
 

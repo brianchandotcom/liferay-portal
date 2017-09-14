@@ -42,7 +42,7 @@ import java.util.Set;
 /**
  * @author Hugo Huijser
  */
-public class UnprocessedExceptionCheck extends AbstractCheck {
+public class UnprocessedExceptionCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -50,7 +50,7 @@ public class UnprocessedExceptionCheck extends AbstractCheck {
 	}
 
 	@Override
-	public void visitToken(DetailAST detailAST) {
+	protected void doVisitToken(DetailAST detailAST) {
 		FileContents fileContents = getFileContents();
 
 		String fileName = StringUtil.replace(

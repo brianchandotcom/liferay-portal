@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class VariableNameCheck extends AbstractCheck {
+public class VariableNameCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -38,7 +38,7 @@ public class VariableNameCheck extends AbstractCheck {
 	}
 
 	@Override
-	public void visitToken(DetailAST detailAST) {
+	protected void doVisitToken(DetailAST detailAST) {
 		DetailAST nameAST = detailAST.findFirstToken(TokenTypes.IDENT);
 
 		String name = nameAST.getText();

@@ -22,7 +22,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 /**
  * @author Hugo Huijser
  */
-public class UnwrappedVariableInfoCheck extends AbstractCheck {
+public class UnwrappedVariableInfoCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -30,7 +30,7 @@ public class UnwrappedVariableInfoCheck extends AbstractCheck {
 	}
 
 	@Override
-	public void visitToken(DetailAST detailAST) {
+	protected void doVisitToken(DetailAST detailAST) {
 		FileContents fileContents = getFileContents();
 
 		String fileName = fileContents.getFileName();

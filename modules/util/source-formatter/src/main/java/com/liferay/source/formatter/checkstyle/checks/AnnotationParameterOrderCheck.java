@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class AnnotationParameterOrderCheck extends AbstractCheck {
+public class AnnotationParameterOrderCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -33,7 +33,7 @@ public class AnnotationParameterOrderCheck extends AbstractCheck {
 	}
 
 	@Override
-	public void visitToken(DetailAST detailAST) {
+	protected void doVisitToken(DetailAST detailAST) {
 		List<DetailAST> annotationMemberValuePairASTList =
 			DetailASTUtil.getAllChildTokens(
 				detailAST, false, TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR);

@@ -24,7 +24,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 /**
  * @author Hugo Huijser
  */
-public class JSONNamingCheck extends AbstractCheck {
+public class JSONNamingCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -35,7 +35,7 @@ public class JSONNamingCheck extends AbstractCheck {
 	}
 
 	@Override
-	public void visitToken(DetailAST detailAST) {
+	protected void doVisitToken(DetailAST detailAST) {
 		String typeName = DetailASTUtil.getTypeName(detailAST);
 
 		if (typeName.equals("boolean") || typeName.equals("void")) {

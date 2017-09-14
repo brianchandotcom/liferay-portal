@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class LocalPatternCheck extends AbstractCheck {
+public class LocalPatternCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -34,7 +34,7 @@ public class LocalPatternCheck extends AbstractCheck {
 	}
 
 	@Override
-	public void visitToken(DetailAST detailAST) {
+	protected void doVisitToken(DetailAST detailAST) {
 		if (!ScopeUtils.isLocalVariableDef(detailAST)) {
 			return;
 		}

@@ -23,7 +23,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 /**
  * @author Hugo Huijser
  */
-public class MissingAuthorCheck extends AbstractCheck {
+public class MissingAuthorCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -33,7 +33,7 @@ public class MissingAuthorCheck extends AbstractCheck {
 	}
 
 	@Override
-	public void visitToken(DetailAST detailAST) {
+	protected void doVisitToken(DetailAST detailAST) {
 		DetailAST parentAST = detailAST.getParent();
 
 		if (parentAST != null) {

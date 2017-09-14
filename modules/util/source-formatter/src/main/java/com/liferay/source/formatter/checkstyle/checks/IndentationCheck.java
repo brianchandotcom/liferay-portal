@@ -32,7 +32,7 @@ import java.util.Set;
 /**
  * @author Hugo Huijser
  */
-public class IndentationCheck extends AbstractCheck {
+public class IndentationCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -79,7 +79,7 @@ public class IndentationCheck extends AbstractCheck {
 	}
 
 	@Override
-	public void visitToken(DetailAST detailAST) {
+	protected void doVisitToken(DetailAST detailAST) {
 
 		// Only check types at the beginning of the line. We can skip if/while
 		// statements since we have logic in BaseSourceProcessor in place to

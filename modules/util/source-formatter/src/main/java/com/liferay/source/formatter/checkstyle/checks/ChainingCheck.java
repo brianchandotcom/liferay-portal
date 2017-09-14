@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class ChainingCheck extends AbstractCheck {
+public class ChainingCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -50,7 +50,7 @@ public class ChainingCheck extends AbstractCheck {
 	}
 
 	@Override
-	public void visitToken(DetailAST detailAST) {
+	protected void doVisitToken(DetailAST detailAST) {
 		List<DetailAST> methodCallASTList = DetailASTUtil.getAllChildTokens(
 			detailAST, true, TokenTypes.METHOD_CALL);
 

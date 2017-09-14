@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class NotRequireThisCheck extends AbstractCheck {
+public class NotRequireThisCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -33,7 +33,7 @@ public class NotRequireThisCheck extends AbstractCheck {
 	}
 
 	@Override
-	public void visitToken(DetailAST detailAST) {
+	protected void doVisitToken(DetailAST detailAST) {
 		List<DetailAST> thisASTList = DetailASTUtil.getAllChildTokens(
 			detailAST, true, TokenTypes.LITERAL_THIS);
 

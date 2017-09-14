@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class AssertEqualsCheck extends AbstractCheck {
+public class AssertEqualsCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -33,7 +33,7 @@ public class AssertEqualsCheck extends AbstractCheck {
 	}
 
 	@Override
-	public void visitToken(DetailAST detailAST) {
+	protected void doVisitToken(DetailAST detailAST) {
 		List<DetailAST> methodCallASTList = DetailASTUtil.getMethodCalls(
 			detailAST, "Assert", "assertEquals");
 

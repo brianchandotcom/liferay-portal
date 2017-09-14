@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class FilterStringWhitespaceCheck extends AbstractCheck {
+public class FilterStringWhitespaceCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -33,7 +33,7 @@ public class FilterStringWhitespaceCheck extends AbstractCheck {
 	}
 
 	@Override
-	public void visitToken(DetailAST detailAST) {
+	protected void doVisitToken(DetailAST detailAST) {
 		_checkMethod(detailAST, "ServiceTrackerFactory", "open");
 		_checkMethod(detailAST, "WaiterUtil", "waitForFilter");
 	}

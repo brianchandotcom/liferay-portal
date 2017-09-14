@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class MissingEmptyLineCheck extends AbstractCheck {
+public class MissingEmptyLineCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -33,7 +33,7 @@ public class MissingEmptyLineCheck extends AbstractCheck {
 	}
 
 	@Override
-	public void visitToken(DetailAST detailAST) {
+	protected void doVisitToken(DetailAST detailAST) {
 		DetailAST firstChildAST = detailAST.getFirstChild();
 
 		if ((firstChildAST == null) ||

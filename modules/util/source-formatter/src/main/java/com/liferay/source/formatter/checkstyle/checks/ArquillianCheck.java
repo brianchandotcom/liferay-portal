@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class ArquillianCheck extends AbstractCheck {
+public class ArquillianCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -39,7 +39,7 @@ public class ArquillianCheck extends AbstractCheck {
 	}
 
 	@Override
-	public void visitToken(DetailAST detailAST) {
+	protected void doVisitToken(DetailAST detailAST) {
 		FileContents fileContents = getFileContents();
 
 		String fileName = StringUtil.replace(

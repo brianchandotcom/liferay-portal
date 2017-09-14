@@ -30,7 +30,7 @@ import java.util.Set;
 /**
  * @author Hugo Huijser
  */
-public class PlusStatementCheck extends AbstractCheck {
+public class PlusStatementCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -42,7 +42,7 @@ public class PlusStatementCheck extends AbstractCheck {
 	}
 
 	@Override
-	public void visitToken(DetailAST detailAST) {
+	protected void doVisitToken(DetailAST detailAST) {
 		_checkMultiLinesPlusStatement(detailAST);
 		_checkTabbing(detailAST);
 

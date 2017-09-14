@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class SelfReferenceCheck extends AbstractCheck {
+public class SelfReferenceCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -34,7 +34,7 @@ public class SelfReferenceCheck extends AbstractCheck {
 	}
 
 	@Override
-	public void visitToken(DetailAST detailAST) {
+	protected void doVisitToken(DetailAST detailAST) {
 		DetailAST nameAST = detailAST.findFirstToken(TokenTypes.IDENT);
 
 		String className = nameAST.getText();

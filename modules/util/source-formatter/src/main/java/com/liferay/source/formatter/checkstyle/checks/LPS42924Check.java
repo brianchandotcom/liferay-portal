@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class LPS42924Check extends AbstractCheck {
+public class LPS42924Check extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -34,7 +34,7 @@ public class LPS42924Check extends AbstractCheck {
 	}
 
 	@Override
-	public void visitToken(DetailAST detailAST) {
+	protected void doVisitToken(DetailAST detailAST) {
 		FileContents fileContents = getFileContents();
 
 		String fileName = fileContents.getFileName();

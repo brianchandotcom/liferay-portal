@@ -212,15 +212,7 @@ public class PrioritizationStrategy {
 			double sectionFileEntryNamePrefix = getNumericalPrefix(
 				filePath, childArticle);
 
-			if (sectionFileEntryNamePrefix < 0.0) {
-			}
-			else if (sectionFileEntryNamePrefix < 1.0) {
-				kbArticle.setPriority(1.0);
-
-				_importedKBArticleUrlTitlesPrioritiesMap.put(
-					kbArticle.getUrlTitle(), sectionFileEntryNamePrefix);
-			}
-			else {
+			if (sectionFileEntryNamePrefix >= 0.0) {
 				_importedKBArticleUrlTitlesPrioritiesMap.put(
 					kbArticle.getUrlTitle(), sectionFileEntryNamePrefix);
 			}

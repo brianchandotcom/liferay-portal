@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Hugo Huijser
@@ -45,6 +46,10 @@ public class SourceFormatterConfiguration {
 		String sourceProcessorName) {
 
 		return _sourceCheckConfigurationMap.get(sourceProcessorName);
+	}
+
+	public Set<String> getSourceProcessorNames() {
+		return _sourceCheckConfigurationMap.keySet();
 	}
 
 	private final Map<String, List<SourceCheckConfiguration>>

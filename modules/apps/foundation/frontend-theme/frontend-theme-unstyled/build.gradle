@@ -11,6 +11,7 @@ task buildClay(type: Copy)
 task buildClayFonts(type: Copy)
 task buildClayIcons(type: Copy)
 task buildFontAwesome(type: Copy)
+task buildLexiconIcons(type: Copy)
 task buildTheme
 task publishNodeModule(type: PublishNodeModuleTask)
 
@@ -166,11 +167,29 @@ buildFontAwesome {
 	into fontAwesomeDestinationDir
 }
 
+buildLexiconIcons {
+	dependsOn npmInstall
+
+	File lexiconIconsDestinationDir = new File(themeDestinationDir, "images/lexicon")
+
+	doFirst {
+		delete lexiconIconsDestinationDir
+	}
+
+	eachFile new StripPathSegmentsAction(4)
+
+	from npmInstall.nodeModulesDir
+	include "clay/build/images/icons/"
+	includeEmptyDirs = false
+	into lexiconIconsDestinationDir
+}
+
 buildTheme {
 	dependsOn buildAlloyUITheme
 	dependsOn buildClayFonts
 	dependsOn buildClayIcons
 	dependsOn buildFontAwesome
+	dependsOn buildLexiconIcons
 }
 
 classes {

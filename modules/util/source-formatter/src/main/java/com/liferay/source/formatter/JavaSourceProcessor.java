@@ -199,8 +199,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		Set<SourceFormatterMessage> sourceFormatterMessages =
 			CheckStyleUtil.process(
-				_ungeneratedFiles, suppressionsFiles,
-				sourceFormatterArgs.getBaseDirName(), getProgressStatusQueue());
+				_ungeneratedFiles, suppressionsFiles, sourceFormatterArgs,
+				getProgressStatusQueue());
 
 		for (SourceFormatterMessage sourceFormatterMessage :
 				sourceFormatterMessages) {

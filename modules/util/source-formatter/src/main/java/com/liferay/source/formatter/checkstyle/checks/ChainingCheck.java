@@ -17,7 +17,6 @@ package com.liferay.source.formatter.checkstyle.checks;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
-import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.FileText;
@@ -30,7 +29,7 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class ChainingCheck extends AbstractCheck {
+public class ChainingCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -50,7 +49,7 @@ public class ChainingCheck extends AbstractCheck {
 	}
 
 	@Override
-	public void visitToken(DetailAST detailAST) {
+	protected void doVisitToken(DetailAST detailAST) {
 		List<DetailAST> methodCallASTList = DetailASTUtil.getAllChildTokens(
 			detailAST, true, TokenTypes.METHOD_CALL);
 

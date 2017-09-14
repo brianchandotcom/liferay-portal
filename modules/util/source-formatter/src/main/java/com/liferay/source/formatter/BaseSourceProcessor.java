@@ -113,7 +113,17 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 					@Override
 					public Void call() throws Exception {
 						try {
+							if (!sourceFormatterArgs.isShowDebugInformation()) {
+								_format(fileName);
+
+								return null;
+							}
+
+							DebugUtil.startTask();
+
 							_format(fileName);
+
+							DebugUtil.finishTask();
 
 							return null;
 						}

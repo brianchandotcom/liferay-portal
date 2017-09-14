@@ -29,31 +29,45 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Hugo Huijser
  */
 public class DebugUtil {
 
+	public static void addCheckNames(
+		CheckType checkType, List<String> checkNames) {
+
+		_checkNamesMap.put(checkType, checkNames);
+	}
+
 	public static void addProcessorFileCount(String processorName, int count) {
 		_processorFileCountMap.put(processorName, count);
 	}
 
-	public static void increaseProcessingTime(
+	public static void finishTask() {
+		_concurrentTasksCount.decrementAndGet();
+	}
+
+	public static synchronized void increaseProcessingTime(
 		String checkName, long processingTime) {
 
-		long currentProcessingTime = 0;
+		double checkTotalProcessingTime = 0.0;
 
 		if (_processingTimeMap.containsKey(checkName)) {
-			currentProcessingTime = _processingTimeMap.get(checkName);
+			checkTotalProcessingTime = _processingTimeMap.get(checkName);
 		}
 
-		_processingTimeMap.put(
-			checkName, currentProcessingTime + processingTime);
+		checkTotalProcessingTime +=
+			(double)processingTime / Math.max(1, _concurrentTasksCount.get());
+
+		_processingTimeMap.put(checkName, checkTotalProcessingTime);
 	}
 
 	public static void printContentModifications(
@@ -96,7 +110,12 @@ public class DebugUtil {
 	public static void printSourceFormatterInformation() {
 		_printProcessorInformation();
 
-		_printProcessingTimeInformation();
+		_printProcessingTimeInformation(CheckType.CHECKSTYLE);
+		_printProcessingTimeInformation(CheckType.SOURCECHECK);
+	}
+
+	public static void startTask() {
+		_concurrentTasksCount.incrementAndGet();
 	}
 
 	private static void _printDelta(Delta<String> delta, String fileName) {
@@ -181,46 +200,66 @@ public class DebugUtil {
 		System.out.println(sb.toString());
 	}
 
-	private static void _printProcessingTimeInformation() {
-		System.out.println();
-		System.out.println(
-			"==== SourceFormatter Processing Time Information ====");
-		System.out.println();
+	private static void _printProcessingTimeInformation(CheckType checkType) {
+		if (!_checkNamesMap.containsKey(checkType)) {
+			return;
+		}
 
-		List<String> keys = new ArrayList<>(_processingTimeMap.keySet());
+		final Map<String, Double> checkTypeProcessingTimeMap = new HashMap<>();
+
+		for (String checkName : _checkNamesMap.get(checkType)) {
+			if (_processingTimeMap.containsKey(checkName)) {
+				checkTypeProcessingTimeMap.put(
+					checkName, _processingTimeMap.get(checkName));
+			}
+		}
+
+		if (checkTypeProcessingTimeMap.isEmpty()) {
+			return;
+		}
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("\n");
+		sb.append("==== Processing Time Information for '");
+		sb.append(checkType.getValue());
+		sb.append("' ====");
+		sb.append("\n\n");
+
+		System.out.println(sb.toString());
+
+		List<String> keys = new ArrayList<>(
+			checkTypeProcessingTimeMap.keySet());
 
 		Collections.sort(
 			keys,
 			new Comparator<String>() {
 
 				public int compare(String key1, String key2) {
-					long diff =
-						_processingTimeMap.get(key2) -
-							_processingTimeMap.get(key1);
-
-					return (int)diff;
+					return Double.compare(
+						checkTypeProcessingTimeMap.get(key2),
+						checkTypeProcessingTimeMap.get(key1));
 				}
 
 			});
 
-		long totalProcessingTime = 0;
+		double totalProcessingTime = 0.0;
 
 		for (String key : keys) {
-			totalProcessingTime += _processingTimeMap.get(key);
+			totalProcessingTime += checkTypeProcessingTimeMap.get(key);
 		}
 
 		DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
 		for (String key : keys) {
-			StringBundler sb = new StringBundler(4);
+			sb = new StringBundler(4);
 
 			sb.append(key);
 			sb.append(": ");
 
-			long processingTime = _processingTimeMap.get(key);
+			double processingTime = checkTypeProcessingTimeMap.get(key);
 
-			double percentage =
-				((double)processingTime / totalProcessingTime) * 100;
+			double percentage = (processingTime / totalProcessingTime) * 100;
 
 			sb.append(decimalFormat.format(percentage));
 
@@ -249,7 +288,11 @@ public class DebugUtil {
 		}
 	}
 
-	private static final Map<String, Long> _processingTimeMap =
+	private static final Map<CheckType, List<String>> _checkNamesMap =
+		new HashMap<>();
+	private static final AtomicInteger _concurrentTasksCount =
+		new AtomicInteger();
+	private static final Map<String, Double> _processingTimeMap =
 		new ConcurrentHashMap<>();
 	private static final Map<String, Integer> _processorFileCountMap =
 		new ConcurrentSkipListMap<>();

@@ -17,7 +17,6 @@ package com.liferay.source.formatter.checkstyle.checks;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.TextBlock;
@@ -26,7 +25,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 /**
  * @author Hugo Huijser
  */
-public class JavadocCheck extends AbstractCheck {
+public class JavadocCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -40,7 +39,7 @@ public class JavadocCheck extends AbstractCheck {
 	}
 
 	@Override
-	public void visitToken(DetailAST detailAST) {
+	protected void doVisitToken(DetailAST detailAST) {
 		FileContents fileContents = getFileContents();
 
 		TextBlock javadoc = fileContents.getJavadocBefore(

@@ -14,39 +14,42 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
+import com.liferay.source.formatter.util.DebugUtil;
+
+import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
-import com.puppycrawl.tools.checkstyle.api.FileContents;
-import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 /**
  * @author Hugo Huijser
  */
-public class TransactionalTestRuleCheck extends BaseCheck {
+public abstract class BaseCheck extends AbstractCheck {
 
-	@Override
-	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.IMPORT};
+	public void setShowDebugInformation(boolean showDebugInformation) {
+		_showDebugInformation = showDebugInformation;
 	}
 
 	@Override
-	protected void doVisitToken(DetailAST detailAST) {
-		String line = getLine(detailAST.getLineNo());
-
-		if (!line.contains(
-				"import com.liferay.portal.test.rule.TransactionalTestRule;")) {
+	public void visitToken(DetailAST detailAST) {
+		if (!_showDebugInformation) {
+			doVisitToken(detailAST);
 
 			return;
 		}
 
-		FileContents fileContents = getFileContents();
+		long startTime = System.currentTimeMillis();
 
-		String fileName = fileContents.getFileName();
+		doVisitToken(detailAST);
 
-		if (fileName.endsWith("StagedModelDataHandlerTest.java")) {
-			log(detailAST.getLineNo(), _MSG_INVALID_IMPORT);
-		}
+		long endTime = System.currentTimeMillis();
+
+		Class<?> clazz = getClass();
+
+		DebugUtil.increaseProcessingTime(
+			clazz.getSimpleName(), endTime - startTime);
 	}
 
-	private static final String _MSG_INVALID_IMPORT = "import.invalid";
+	protected abstract void doVisitToken(DetailAST detailAST);
+
+	private boolean _showDebugInformation;
 
 }

@@ -97,7 +97,7 @@ public class GitWorkingDirectory {
 
 		if (gitRemote != null) {
 			if (force) {
-				removeRemote(gitRemote);
+				removeGitRemote(gitRemote);
 			}
 			else {
 				throw new IllegalArgumentException(
@@ -720,44 +720,27 @@ public class GitWorkingDirectory {
 		return false;
 	}
 
-	public void removeRemote(GitRemote gitRemote) {
+	public void removeGitRemote(GitRemote gitRemote) {
 		if (!remoteExists(gitRemote.getName())) {
 			return;
 		}
 
 		System.out.println("Removing remote " + gitRemote.getName());
 
-		Process process = null;
-
-		try {
-			process = JenkinsResultsParserUtil.executeBashCommands(
-				true, _workingDirectory, 1000 * 60,
-				"git remote rm " + gitRemote.getName());
-		}
-		catch (InterruptedException | IOException e) {
-			throw new RuntimeException(
-				"Unable to remove remote " + gitRemote.getName(), e);
-		}
-
-		if ((process != null) && (process.exitValue() != 0)) {
-			try {
-				System.out.println(
-					JenkinsResultsParserUtil.readInputStream(
-						process.getErrorStream()));
-			}
-			catch (IOException ioe) {
-				ioe.printStackTrace();
-			}
-
+		BashCommandResult result = executeBashCommands(
+			"git remote rm " + gitRemote.getName());
+		
+		if (result.getExitValue() != 0) {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
-					"Unable to remove remote", gitRemote.getName()));
+					"Unable to remove remote ", gitRemote.getName(), "\n",
+					result.getStandardErr()));
 		}
 	}
 
-	public void removeRemotes(List<GitRemote> gitRemotes) {
+	public void removeGitRemotes(List<GitRemote> gitRemotes) {
 		for (GitRemote gitRemote : gitRemotes) {
-			removeRemote(gitRemote);
+			removeGitRemote(gitRemote);
 		}
 	}
 

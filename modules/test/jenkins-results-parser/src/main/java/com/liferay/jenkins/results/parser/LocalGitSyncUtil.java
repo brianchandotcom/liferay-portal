@@ -59,7 +59,7 @@ public class LocalGitSyncUtil {
 		finally {
 			if (localGitRemoteConfigs != null) {
 				try {
-					gitWorkingDirectory.removeRemotes(localGitRemoteConfigs);
+					gitWorkingDirectory.removeGitRemotes(localGitRemoteConfigs);
 				}
 				catch (Exception e) {
 					e.printStackTrace();
@@ -782,7 +782,7 @@ public class LocalGitSyncUtil {
 			finally {
 				if (localGitRemoteConfigs != null) {
 					try {
-						gitWorkingDirectory.removeRemotes(
+						gitWorkingDirectory.removeGitRemotes(
 							localGitRemoteConfigs);
 					}
 					catch (Exception e) {
@@ -805,7 +805,7 @@ public class LocalGitSyncUtil {
 		finally {
 			if (senderRemoteConfig != null) {
 				try {
-					gitWorkingDirectory.removeRemote(senderRemoteConfig);
+					gitWorkingDirectory.removeGitRemote(senderRemoteConfig);
 				}
 				catch (Exception e) {
 					e.printStackTrace();

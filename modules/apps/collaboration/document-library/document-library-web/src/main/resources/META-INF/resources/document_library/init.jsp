@@ -44,7 +44,7 @@ if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			rootFolderName = StringPool.BLANK;
 		}
 	}
-	catch (NoSuchFolderException nsfe) {
+	catch (NoSuchFolderException | PrincipalException e) {
 		rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 	}
 }

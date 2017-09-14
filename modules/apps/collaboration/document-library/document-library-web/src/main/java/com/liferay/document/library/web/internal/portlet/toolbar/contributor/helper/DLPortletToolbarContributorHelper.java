@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -66,12 +67,12 @@ public class DLPortletToolbarContributorHelper {
 			try {
 				folder = _dlAppLocalService.getFolder(rootFolderId);
 			}
-			catch (NoSuchFolderException nsfe) {
+			catch (NoSuchFolderException | PrincipalException e) {
 
 				// LPS-52675
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(nsfe, nsfe);
+					_log.debug(e, e);
 				}
 
 				folder = null;

@@ -77,6 +77,8 @@
 
 		<action path="/portal/robots" type="com.liferay.portal.action.RobotsAction" />
 
+		<action forward="portal.select_language" path="/portal/select_language" />
+
 		<action path="/portal/session_click" type="com.liferay.portal.action.SessionClickAction" />
 
 		<action path="/portal/session_tree_js_click" type="com.liferay.portal.action.SessionTreeJSClickAction" />

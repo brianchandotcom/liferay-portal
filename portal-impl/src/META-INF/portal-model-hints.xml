@@ -11,6 +11,9 @@
 	<hint-collection name="EMAIL-ADDRESS">
 		<hint name="max-length">254</hint>
 	</hint-collection>
+	<hint-collection name="HOSTNAME">
+		<hint name="max-length">200</hint>
+	</hint-collection>
 	<hint-collection name="SEARCHABLE-DATE">
 		<hint name="month-nullable">true</hint>
 		<hint name="day-nullable">true</hint>
@@ -24,9 +27,6 @@
 	</hint-collection>
 	<hint-collection name="URL">
 		<hint name="max-length">4000</hint>
-	</hint-collection>
-	<hint-collection name="HOSTNAME">
-		<hint name="max-length">200</hint>
 	</hint-collection>
 	<model name="com.liferay.announcements.kernel.model.AnnouncementsDelivery">
 		<field name="deliveryId" type="long" />

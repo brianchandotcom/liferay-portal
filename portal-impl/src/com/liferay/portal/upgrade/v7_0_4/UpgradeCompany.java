@@ -14,8 +14,6 @@
 
 package com.liferay.portal.upgrade.v7_0_4;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.v7_0_4.util.CompanyTable;
 
@@ -26,9 +24,7 @@ public class UpgradeCompany extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(
-			CompanyTable.class,
-			new AlterColumnType("mx", "VARCHAR(200)"));
+		alter(CompanyTable.class, new AlterColumnType("mx", "VARCHAR(200)"));
 	}
 
 }

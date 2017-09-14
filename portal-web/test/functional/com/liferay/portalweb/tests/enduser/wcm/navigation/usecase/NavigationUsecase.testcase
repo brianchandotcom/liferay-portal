@@ -44,6 +44,103 @@
 		<execute function="AssertTextEquals" locator1="Navigation#BREADCRUMB_ENTRY" value1="Navigation Display Test Page" />
 	</command>
 
+	<command name="NavigationMenuConfigureDisplayTemplate" priority="5">
+		<description message="This is a use case for LPS-67191." />
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Navigation Test Page1" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Navigation Test Page1" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Navigation Menu" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute macro="NavigationMenu#selectDisplayTemplate">
+			<var name="displayTemplate" value="Split Button Dropdowns" />
+		</execute>
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Navigation Test Page1" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute macro="NavigationMenu#selectDisplayTemplate">
+			<var name="displayTemplate" value="Bar minimally styled" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Navigation Test Page1" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Navigation Test Page2" />
+		</execute>
+
+		<execute macro="Navigator#gotoEditPageViaControlMenu" >
+			<var name="pageName" value="Navigation Test Page2" />
+		</execute>
+
+		<execute macro="Page#editName">
+			<var name="pageNameEdit" value="Navigation Test Page2 Edit" />
+		</execute>
+
+		<execute macro="Page#view">
+			<var name="pageName" value="Navigation Test Page2 Edit" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Navigation Test Page2 Edit" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Look and Feel Configuration" />
+		</execute>
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Navigation Test Page1" />
+		</execute>
+
+		<execute function="AssertClick" locator1="Portlet#NAVIGATION_MENU_PAGE_LINK" value1="${key_pageName}">
+			<var name="key_pageName" value="Navigation Test Page2 Edit" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Home#PAGE" value1="${key_pageName}">
+			<var name="key_pageName" value="Welcome" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute function="DragAndDrop#dragAndDropToObject" locator1="Home#PAGE_1" locator2="Home#PAGE_2" value1="Welcome" />
+	</command>
+
 	<command name="UserPersonalSiteUserGroupPrivatePage" priority="4">
 		<property name="custom.properties" value="layout.user.private.layouts.enabled=false${line.separator}layout.user.private.layouts.auto.create=false" />
 		<property name="testray.component.names" value="Navigation" />

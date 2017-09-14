@@ -17,6 +17,7 @@ package com.liferay.hello.soy.navigation.web.internal.portlet.action;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -47,14 +48,14 @@ public class HelloSoyFormMVCActionCommand extends BaseMVCActionCommand {
 		LiferayPortletResponse liferayPortletResponse =
 			_portal.getLiferayPortletResponse(actionResponse);
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("mvcRenderCommandName", "View");
-
 		String submittedData = ParamUtil.getString(
 			actionRequest, "submittedData");
 
-		portletURL.setParameter("submittedData", submittedData);
+		SessionMessages.add(actionRequest, "Your name is: " + submittedData);
+
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter("mvcRenderCommandName", "View");
 
 		sendRedirect(actionRequest, actionResponse, portletURL.toString());
 	}

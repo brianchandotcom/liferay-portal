@@ -139,6 +139,12 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 		int validityDays = ParamUtil.getInteger(
 			actionRequest, "certificateValidityDays");
 
+		if (validityDays == 0) {
+			SessionErrors.add(actionRequest, "certificateValidityDays");
+
+			return;
+		}
+
 		Calendar endDate = (Calendar)startDate.clone();
 
 		endDate.add(Calendar.DAY_OF_YEAR, validityDays);

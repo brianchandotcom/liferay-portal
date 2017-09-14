@@ -463,30 +463,23 @@ public class PortletConfigurationPermissionsDisplayContext {
 			return _roleTypes;
 		}
 
-		Group parentGroup = null;
+		Group parentOrActualGroup = null;
 
 		if (_group.isLayout()) {
-			parentGroup = GroupLocalServiceUtil.fetchGroup(
+			parentOrActualGroup = GroupLocalServiceUtil.fetchGroup(
 				_group.getParentGroupId());
 		}
 
-		if (parentGroup == null) {
-			if (_group.isOrganization()) {
-				_roleTypes =
-					RoleConstants.TYPES_ORGANIZATION_AND_REGULAR_AND_SITE;
-			}
-			else if (_group.isUser()) {
-				_roleTypes = RoleConstants.TYPES_REGULAR;
-			}
+		if (parentOrActualGroup == null) {
+			parentOrActualGroup = _group;
 		}
-		else {
-			if (parentGroup.isOrganization()) {
-				_roleTypes =
-					RoleConstants.TYPES_ORGANIZATION_AND_REGULAR_AND_SITE;
-			}
-			else if (parentGroup.isUser()) {
-				_roleTypes = RoleConstants.TYPES_REGULAR;
-			}
+
+		if (parentOrActualGroup.isOrganization()) {
+			_roleTypes =
+				RoleConstants.TYPES_ORGANIZATION_AND_REGULAR_AND_SITE;
+		}
+		else if (parentOrActualGroup.isUser()) {
+			_roleTypes = RoleConstants.TYPES_REGULAR;
 		}
 
 		return _roleTypes;

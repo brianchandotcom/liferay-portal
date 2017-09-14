@@ -134,12 +134,12 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 		KeyPair keyPair = _certificateTool.generateKeyPair(
 			keyAlgorithm, keyLength);
 
-		Date startDate = new Date(System.currentTimeMillis());
+		Calendar startDate = Calendar.getInstance();
 
 		int validityDays = ParamUtil.getInteger(
 			actionRequest, "certificateValidityDays");
 
-		Calendar endDate = Calendar.getInstance();
+		Calendar endDate = (Calendar)startDate.clone();
 
 		endDate.add(Calendar.DAY_OF_YEAR, validityDays);
 
@@ -156,7 +156,8 @@ public class UpdateCertificateMVCActionCommand extends BaseMVCActionCommand {
 
 		X509Certificate x509Certificate = _certificateTool.generateCertificate(
 			keyPair, subjectCertificateEntityId, subjectCertificateEntityId,
-			startDate, endDate.getTime(), _SHA1_PREFIX + keyAlgorithm);
+			startDate.getTime(), endDate.getTime(),
+			_SHA1_PREFIX + keyAlgorithm);
 
 		KeyStore.PrivateKeyEntry privateKeyEntry = new KeyStore.PrivateKeyEntry(
 			keyPair.getPrivate(), new Certificate[] {x509Certificate});

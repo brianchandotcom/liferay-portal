@@ -30,7 +30,9 @@ public class ClusterNodeResponses implements Serializable {
 
 	public ClusterNodeResponses(Set<String> expectedReplyNodeIds) {
 		_expectedReplyNodeIds = Collections.newSetFromMap(
-			new ConcurrentHashMap<String, Boolean>());
+			new ConcurrentHashMap<>());
+
+		_expectedReplyNodeIds.addAll(expectedReplyNodeIds);
 	}
 
 	public boolean addClusterResponse(ClusterNodeResponse clusterNodeResponse) {

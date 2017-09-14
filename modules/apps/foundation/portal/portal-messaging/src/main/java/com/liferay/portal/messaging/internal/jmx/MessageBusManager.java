@@ -159,7 +159,6 @@ public class MessageBusManager
 		_mbeanServiceRegistrations = new ConcurrentHashMap<>();
 	private MessageBus _messageBus;
 	private final Set<Destination> _queuedDestinations =
-		Collections.newSetFromMap(
-			new ConcurrentHashMap<Destination, Boolean>());
+		Collections.newSetFromMap(new ConcurrentHashMap<>());
 
 }

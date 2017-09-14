@@ -232,7 +232,7 @@ public class AutoBatchPreparedStatementUtilTest {
 			new PreparedStatementInvocationHandler(supportBatchUpdates);
 
 		Set<Throwable> throwables = Collections.newSetFromMap(
-			new IdentityHashMap<Throwable, Boolean>());
+			new IdentityHashMap<>());
 
 		try (PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(

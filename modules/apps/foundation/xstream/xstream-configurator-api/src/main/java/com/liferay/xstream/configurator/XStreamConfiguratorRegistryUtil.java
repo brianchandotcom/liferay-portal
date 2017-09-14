@@ -89,8 +89,7 @@ public class XStreamConfiguratorRegistryUtil {
 	}
 
 	private static final Set<XStreamConfigurator> _xStreamConfigurators =
-		Collections.newSetFromMap(
-			new ConcurrentHashMap<XStreamConfigurator, Boolean>());
+		Collections.newSetFromMap(new ConcurrentHashMap<>());
 
 	private BundleContext _bundleContext;
 	private ServiceTracker<XStreamConfigurator, XStreamConfigurator>

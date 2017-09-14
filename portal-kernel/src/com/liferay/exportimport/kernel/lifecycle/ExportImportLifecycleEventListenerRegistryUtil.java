@@ -122,7 +122,7 @@ public class ExportImportLifecycleEventListenerRegistryUtil {
 
 	private final Set<ExportImportLifecycleListener>
 		_asyncExportImportLifecycleListeners = Collections.newSetFromMap(
-			new ConcurrentHashMap<ExportImportLifecycleListener, Boolean>());
+			new ConcurrentHashMap<>());
 	private final ServiceRegistrationMap<ExportImportLifecycleListener>
 		_serviceRegistrations = new ServiceRegistrationMapImpl<>();
 	private final ServiceTracker
@@ -130,7 +130,7 @@ public class ExportImportLifecycleEventListenerRegistryUtil {
 			_serviceTracker;
 	private final Set<ExportImportLifecycleListener>
 		_syncExportImportLifecycleListeners = Collections.newSetFromMap(
-			new ConcurrentHashMap<ExportImportLifecycleListener, Boolean>());
+			new ConcurrentHashMap<>());
 
 	private class ExportImportLifecycleListenerServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer

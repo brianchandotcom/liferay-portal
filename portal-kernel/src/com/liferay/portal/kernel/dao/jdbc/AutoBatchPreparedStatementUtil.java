@@ -251,7 +251,7 @@ public class AutoBatchPreparedStatementUtil {
 		private final Connection _connection;
 		private int _count;
 		private final Set<Future<Void>> _futures = Collections.newSetFromMap(
-			new ConcurrentHashMap<Future<Void>, Boolean>());
+			new ConcurrentHashMap<>());
 		private PreparedStatement _preparedStatement;
 		private final String _sql;
 		private final ThreadPoolExecutor _threadPoolExecutor =
@@ -360,7 +360,7 @@ public class AutoBatchPreparedStatementUtil {
 
 		private final Connection _connection;
 		private final Set<Future<Void>> _futures = Collections.newSetFromMap(
-			new ConcurrentHashMap<Future<Void>, Boolean>());
+			new ConcurrentHashMap<>());
 		private PreparedStatement _preparedStatement;
 		private final String _sql;
 		private final ThreadPoolExecutor _threadPoolExecutor =

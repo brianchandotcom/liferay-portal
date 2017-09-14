@@ -222,11 +222,10 @@ public abstract class BaseDestination implements Destination {
 	}
 
 	protected Set<MessageListener> messageListeners = Collections.newSetFromMap(
-		new ConcurrentHashMap<MessageListener, Boolean>());
+		new ConcurrentHashMap<>());
 	protected String name = StringPool.BLANK;
 
 	private final Set<DestinationEventListener> _destinationEventListeners =
-		Collections.newSetFromMap(
-			new ConcurrentHashMap<DestinationEventListener, Boolean>());
+		Collections.newSetFromMap(new ConcurrentHashMap<>());
 
 }

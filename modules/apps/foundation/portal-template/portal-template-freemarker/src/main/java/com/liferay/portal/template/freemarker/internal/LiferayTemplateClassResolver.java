@@ -294,13 +294,12 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 		LiferayTemplateClassResolver.class);
 
 	private final Set<Bundle> _bundles = Collections.newSetFromMap(
-		new ConcurrentHashMap<Bundle, Boolean>());
+		new ConcurrentHashMap<>());
 	private BundleTracker<ClassLoader> _classLoaderBundleTracker;
 	private volatile FreeMarkerEngineConfiguration
 		_freemarkerEngineConfiguration;
 	private final Set<ClassLoader> _wwhitelistedClassLoaders =
-		Collections.newSetFromMap(
-			new ConcurrentHashMap<ClassLoader, Boolean>());
+		Collections.newSetFromMap(new ConcurrentHashMap<>());
 
 	private class ClassLoaderBundleTrackerCustomizer
 		implements BundleTrackerCustomizer<ClassLoader> {

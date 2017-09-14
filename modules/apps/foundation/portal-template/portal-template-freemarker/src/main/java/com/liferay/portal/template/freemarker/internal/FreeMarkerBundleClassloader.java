@@ -126,6 +126,6 @@ public class FreeMarkerBundleClassloader extends URLClassLoader {
 	}
 
 	private final Set<Bundle> _bundles = Collections.newSetFromMap(
-		new ConcurrentHashMap<Bundle, Boolean>());
+		new ConcurrentHashMap<>());
 
 }

@@ -389,8 +389,7 @@ public class VelocityTemplateTest {
 	private static final String _WRONG_TEMPLATE_ID = "WRONG_TEMPLATE_ID";
 
 	private static final Set<ServiceRegistration<?>> _serviceRegistrations =
-		Collections.newSetFromMap(
-			new ConcurrentHashMap<ServiceRegistration<?>, Boolean>());
+		Collections.newSetFromMap(new ConcurrentHashMap<>());
 	private static MockTemplateResourceLoader _templateResourceLoader;
 
 	private TemplateContextHelper _templateContextHelper;

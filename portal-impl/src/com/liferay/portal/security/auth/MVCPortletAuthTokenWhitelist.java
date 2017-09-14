@@ -253,13 +253,13 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 	}
 
 	private final Set<String> _portletCSRFWhitelist = Collections.newSetFromMap(
-		new ConcurrentHashMap<String, Boolean>());
+		new ConcurrentHashMap<>());
 	private final Set<String> _portletInvocationWhitelistAction =
-		Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());
+		Collections.newSetFromMap(new ConcurrentHashMap<>());
 	private final Set<String> _portletInvocationWhitelistRender =
-		Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());
+		Collections.newSetFromMap(new ConcurrentHashMap<>());
 	private final Set<String> _portletInvocationWhitelistResource =
-		Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());
+		Collections.newSetFromMap(new ConcurrentHashMap<>());
 
 	private class TokenWhitelistTrackerCustomizer
 		implements ServiceTrackerCustomizer<Object, Object> {

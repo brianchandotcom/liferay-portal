@@ -91,8 +91,7 @@ public class ReferenceRegistry {
 
 	private static final PACL _pacl = new NoPACL();
 	private static final Set<ReferenceEntry> _referenceEntries =
-		Collections.newSetFromMap(
-			new ConcurrentHashMap<ReferenceEntry, Boolean>());
+		Collections.newSetFromMap(new ConcurrentHashMap<>());
 
 	private static class NoPACL implements PACL {
 

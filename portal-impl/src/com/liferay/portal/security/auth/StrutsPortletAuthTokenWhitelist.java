@@ -230,8 +230,8 @@ public class StrutsPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 		StrutsPortletAuthTokenWhitelist.class);
 
 	private final Set<String> _portletCSRFWhitelist = Collections.newSetFromMap(
-		new ConcurrentHashMap<String, Boolean>());
+		new ConcurrentHashMap<>());
 	private final Set<String> _portletInvocationWhitelist =
-		Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());
+		Collections.newSetFromMap(new ConcurrentHashMap<>());
 
 }

@@ -513,8 +513,7 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 	private final Map<String, String> _factoryPidsToDestinationName =
 		new ConcurrentHashMap<>();
 	private final Set<MessageBusEventListener> _messageBusEventListeners =
-		Collections.newSetFromMap(
-			new ConcurrentHashMap<MessageBusEventListener, Boolean>());
+		Collections.newSetFromMap(new ConcurrentHashMap<>());
 	private final Map<String, List<MessageListener>> _queuedMessageListeners =
 		new HashMap<>();
 

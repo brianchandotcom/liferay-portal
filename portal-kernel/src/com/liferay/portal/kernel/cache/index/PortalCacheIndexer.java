@@ -74,7 +74,7 @@ public class PortalCacheIndexer<I, K extends Serializable, V> {
 
 		if (keys == null) {
 			Set<K> newKeys = Collections.newSetFromMap(
-				new ConcurrentHashMap<K, Boolean>());
+				new ConcurrentHashMap<>());
 
 			newKeys.add(key);
 

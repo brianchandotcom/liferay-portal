@@ -46,6 +46,6 @@ public class DefaultAuthenticatedUserUUIDStoreImpl
 	}
 
 	private final Set<String> _userUUIDStore = Collections.newSetFromMap(
-		new ConcurrentHashMap<String, Boolean>());
+		new ConcurrentHashMap<>());
 
 }

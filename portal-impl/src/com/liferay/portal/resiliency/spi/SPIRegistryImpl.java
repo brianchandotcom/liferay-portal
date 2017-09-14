@@ -195,7 +195,7 @@ public class SPIRegistryImpl implements SPIRegistry {
 
 	private SPI _errorSPI;
 	private final Set<String> _excludedPortletIds = Collections.newSetFromMap(
-		new ConcurrentHashMap<String, Boolean>());
+		new ConcurrentHashMap<>());
 	private final Lock _lock = new ReentrantLock();
 	private final Map<SPI, String[]> _portletIds = new ConcurrentHashMap<>();
 	private final Map<String, SPI> _portletSPIs = new ConcurrentHashMap<>();

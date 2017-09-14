@@ -141,10 +141,10 @@ public class AuthTokenWhitelistImpl extends BaseAuthTokenWhitelist {
 	}
 
 	private final Set<String> _originCSRFWhitelist = Collections.newSetFromMap(
-		new ConcurrentHashMap<String, Boolean>());
+		new ConcurrentHashMap<>());
 	private final Set<String> _portletCSRFWhitelist = Collections.newSetFromMap(
-		new ConcurrentHashMap<String, Boolean>());
+		new ConcurrentHashMap<>());
 	private final Set<String> _portletInvocationWhitelist =
-		Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());
+		Collections.newSetFromMap(new ConcurrentHashMap<>());
 
 }

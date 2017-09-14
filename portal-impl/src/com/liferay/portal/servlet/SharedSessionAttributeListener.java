@@ -42,8 +42,7 @@ public class SharedSessionAttributeListener
 	implements HttpSessionAttributeListener, HttpSessionListener {
 
 	public SharedSessionAttributeListener() {
-		_sessionIds = Collections.newSetFromMap(
-			new ConcurrentHashMap<String, Boolean>());
+		_sessionIds = Collections.newSetFromMap(new ConcurrentHashMap<>());
 	}
 
 	@Override

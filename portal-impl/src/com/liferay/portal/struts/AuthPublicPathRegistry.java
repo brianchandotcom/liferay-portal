@@ -70,7 +70,7 @@ public class AuthPublicPathRegistry {
 	}
 
 	private static final Set<String> _paths = Collections.newSetFromMap(
-		new ConcurrentHashMap<String, Boolean>());
+		new ConcurrentHashMap<>());
 	private static final StringServiceRegistrationMap<Object>
 		_serviceRegistrations = new StringServiceRegistrationMapImpl<>();
 	private static final ServiceTracker<Object, Object> _serviceTracker;

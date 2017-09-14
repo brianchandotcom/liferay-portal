@@ -36,6 +36,6 @@ public class UniqueStringRandomizerBumper implements RandomizerBumper<String> {
 	}
 
 	private static final Set<String> _randomValues = Collections.newSetFromMap(
-		new ConcurrentHashMap<String, Boolean>());
+		new ConcurrentHashMap<>());
 
 }

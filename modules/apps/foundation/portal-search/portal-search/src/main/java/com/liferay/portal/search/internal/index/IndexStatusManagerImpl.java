@@ -78,6 +78,6 @@ public class IndexStatusManagerImpl implements IndexStatusManager {
 
 	private volatile boolean _indexReadOnly;
 	private final Set<String> _indexReadOnlyModels = Collections.newSetFromMap(
-		new ConcurrentHashMap<String, Boolean>());
+		new ConcurrentHashMap<>());
 
 }

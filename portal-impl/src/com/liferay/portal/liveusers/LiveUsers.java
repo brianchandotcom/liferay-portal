@@ -294,8 +294,7 @@ public class LiveUsers {
 		Set<String> userSessions = companyUsers.get(userId);
 
 		if (userSessions == null) {
-			userSessions = Collections.newSetFromMap(
-				new ConcurrentHashMap<String, Boolean>());
+			userSessions = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
 			companyUsers.put(userId, userSessions);
 		}
@@ -329,8 +328,7 @@ public class LiveUsers {
 		Set<Long> groupUsers = liveUsers.get(groupId);
 
 		if (groupUsers == null) {
-			groupUsers = Collections.newSetFromMap(
-				new ConcurrentHashMap<Long, Boolean>());
+			groupUsers = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
 			liveUsers.put(groupId, groupUsers);
 		}

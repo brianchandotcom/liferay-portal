@@ -977,10 +977,6 @@ public class GroupImpl extends GroupBaseImpl {
 			this, privateSite);
 
 		if (siteLayoutsCount == 0) {
-			boolean hasPowerUserRole = RoleLocalServiceUtil.hasUserRole(
-				permissionChecker.getUserId(), permissionChecker.getCompanyId(),
-				RoleConstants.POWER_USER, true);
-
 			if (isSite()) {
 				if (privateSite) {
 					showSite =
@@ -995,6 +991,11 @@ public class GroupImpl extends GroupBaseImpl {
 				showSite = false;
 			}
 			else if (isUser()) {
+				boolean hasPowerUserRole = RoleLocalServiceUtil.hasUserRole(
+					permissionChecker.getUserId(),
+					permissionChecker.getCompanyId(), RoleConstants.POWER_USER,
+					true);
+
 				if (privateSite) {
 					showSite =
 						PropsValues.

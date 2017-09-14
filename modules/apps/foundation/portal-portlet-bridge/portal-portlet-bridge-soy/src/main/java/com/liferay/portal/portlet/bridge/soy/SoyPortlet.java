@@ -505,6 +505,30 @@ public class SoyPortlet extends MVCPortlet {
 		return false;
 	}
 
+	private void _prepareSessionMessages(
+		PortletRequest portletRequest, SoyContext soyContext) {
+
+		Map<String, Object> sessionErrors = new HashMap<>();
+
+		for (String key : SessionErrors.keySet(portletRequest)) {
+			sessionErrors.put(key, SessionErrors.get(portletRequest, key));
+		}
+
+		Map<String, Object> sessionMessages = new HashMap<>();
+
+		for (String key : SessionMessages.keySet(portletRequest)) {
+			if (key.endsWith(
+					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE)) {
+
+				continue;
+			}
+
+			sessionMessages.put(key, SessionMessages.get(portletRequest, key));
+		}
+
+		soyContext.putInjectedData("sessionMessages", sessionMessages);
+	}
+
 	private void _prepareTemplate(
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
@@ -537,6 +561,8 @@ public class SoyPortlet extends MVCPortlet {
 
 		soyContext.putInjectedData(
 			"portletNamespace", portletResponse.getNamespace());
+
+		_prepareSessionMessages(portletRequest, soyContext);
 
 		template.putAll(soyContext);
 

@@ -74,7 +74,7 @@ buildClay {
 				}
 				else if (line == "// INSERT CUSTOM VARS") {
 					line = """\
-@import url(font-awesome.css);
+@import url(font_awesome.css);
 @import \"../clay_variables\";"""
 				}
 

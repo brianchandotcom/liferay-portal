@@ -61,20 +61,7 @@ public class BndDeploymentScenarioGenerator
 
 			jar.setManifest(analyzer.calcManifest());
 
-			ByteArrayOutputStream byteArrayOutputStream =
-				new ByteArrayOutputStream();
-
-			jar.write(byteArrayOutputStream);
-
-			ZipImporter zipImporter = ShrinkWrap.create(ZipImporter.class);
-
-			zipImporter.importFrom(
-				new ByteArrayInputStream(byteArrayOutputStream.toByteArray()));
-
-			JavaArchive javaArchive = zipImporter.as(JavaArchive.class);
-
-			return Collections.singletonList(
-				new DeploymentDescription(javaArchive.getName(), javaArchive));
+			return _toDeploymentDescriptions(jar);
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -98,6 +85,25 @@ public class BndDeploymentScenarioGenerator
 		}
 
 		return files;
+	}
+
+	private List<DeploymentDescription> _toDeploymentDescriptions(Jar jar)
+		throws Exception {
+
+		ByteArrayOutputStream byteArrayOutputStream =
+			new ByteArrayOutputStream();
+
+		jar.write(byteArrayOutputStream);
+
+		ZipImporter zipImporter = ShrinkWrap.create(ZipImporter.class);
+
+		zipImporter.importFrom(
+			new ByteArrayInputStream(byteArrayOutputStream.toByteArray()));
+
+		JavaArchive javaArchive = zipImporter.as(JavaArchive.class);
+
+		return Collections.singletonList(
+			new DeploymentDescription(javaArchive.getName(), javaArchive));
 	}
 
 	private static final File _buildDir = new File(

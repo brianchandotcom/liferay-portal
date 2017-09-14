@@ -14,9 +14,9 @@
 
 package com.liferay.petra.concurrent;
 
-import com.liferay.portal.kernel.memory.FinalizeAction;
-import com.liferay.portal.kernel.memory.FinalizeManager;
-import com.liferay.portal.kernel.memory.FinalizeManager.ReferenceFactory;
+import com.liferay.petra.memory.FinalizeAction;
+import com.liferay.petra.memory.FinalizeManager;
+import com.liferay.petra.memory.FinalizeManager.ReferenceFactory;
 
 import java.lang.ref.Reference;
 

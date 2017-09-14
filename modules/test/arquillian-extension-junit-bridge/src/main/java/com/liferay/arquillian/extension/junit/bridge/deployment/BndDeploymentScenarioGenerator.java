@@ -63,8 +63,6 @@ public class BndDeploymentScenarioGenerator
 
 			ProjectBuilder projectBuilder = new ProjectBuilder(project);
 
-			projectBuilder.setBase(parentBndDir);
-
 			String javaClassPathString = System.getProperty("java.class.path");
 
 			String[] javaClassPaths = StringUtil.split(

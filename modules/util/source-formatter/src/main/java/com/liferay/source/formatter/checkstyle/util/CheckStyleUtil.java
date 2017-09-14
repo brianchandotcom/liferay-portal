@@ -62,7 +62,10 @@ public class CheckStyleUtil {
 
 		_sourceFormatterMessages.clear();
 
-		Checker checker = _getChecker(suppressionsFiles, sourceFormatterArgs);
+		Configuration configuration = _getConfiguration(sourceFormatterArgs);
+
+		Checker checker = _getChecker(
+			configuration, suppressionsFiles, sourceFormatterArgs);
 
 		checker.process(ListUtil.fromCollection(files));
 
@@ -123,7 +126,7 @@ public class CheckStyleUtil {
 	}
 
 	private static Checker _getChecker(
-			List<File> suppressionsFiles,
+			Configuration configuration, List<File> suppressionsFiles,
 			SourceFormatterArgs sourceFormatterArgs)
 		throws Exception {
 
@@ -139,6 +142,23 @@ public class CheckStyleUtil {
 					suppressionsFile.getAbsolutePath()));
 		}
 
+		checker.configure(configuration);
+
+		AuditListener listener = new SourceFormatterLogger(
+			new UnsyncByteArrayOutputStream(), true,
+			sourceFormatterArgs.getBaseDirName());
+
+		checker.addListener(listener);
+
+		return checker;
+	}
+
+	private static Configuration _getConfiguration(
+			SourceFormatterArgs sourceFormatterArgs)
+		throws Exception {
+
+		ClassLoader classLoader = CheckStyleUtil.class.getClassLoader();
+
 		Configuration configuration = ConfigurationLoader.loadConfiguration(
 			new InputSource(classLoader.getResourceAsStream("checkstyle.xml")),
 			new PropertiesExpander(System.getProperties()), false);
@@ -152,15 +172,7 @@ public class CheckStyleUtil {
 			String.valueOf(sourceFormatterArgs.isShowDebugInformation()),
 			"com.liferay.*");
 
-		checker.configure(configuration);
-
-		AuditListener listener = new SourceFormatterLogger(
-			new UnsyncByteArrayOutputStream(), true,
-			sourceFormatterArgs.getBaseDirName());
-
-		checker.addListener(listener);
-
-		return checker;
+		return configuration;
 	}
 
 	private static BlockingQueue<ProgressStatusUpdate> _progressStatusQueue;

@@ -1,5 +1,5 @@
 dependencies {
-	provided group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.7"
+	provided group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.8"
 	provided group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

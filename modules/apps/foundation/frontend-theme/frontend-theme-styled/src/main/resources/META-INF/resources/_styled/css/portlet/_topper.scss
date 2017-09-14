@@ -1,4 +1,6 @@
 @mixin set-portlet-topper-width($size: "sm", $i: 6) {
+	$list: ".col-xs-#{$i}, .col-sm-#{$i}";
+
 	@if $size == "lg" {
 		$list: ".col-lg-#{$i}";
 
@@ -16,8 +18,6 @@
 	}
 
 	@else {
-		$list: ".col-xs-#{$i}, .col-sm-#{$i}";
-
 		@for $i from (7) through $grid-columns {
 			$list: "#{$list}, .col-xs-#{$i}, .col-sm-#{$i}";
 		}
@@ -48,8 +48,6 @@
 
 	> .portlet-content-editable {
 		border-color: transparent;
-		border-top-left-radius: $navbar-border-radius;
-		border-top-right-radius: $navbar-border-radius;
 	}
 
 	> .portlet-topper {

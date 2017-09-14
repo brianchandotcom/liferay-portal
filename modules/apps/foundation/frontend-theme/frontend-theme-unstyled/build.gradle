@@ -3,18 +3,20 @@ import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 configurations {
 	alloyUI
-	lexicon
+	fontAwesome
 }
 
 task buildAlloyUITheme(type: Copy)
-task buildLexicon(type: Copy)
-task buildLexiconFonts(type: Copy)
+task buildClay(type: Copy)
+task buildClayFonts(type: Copy)
+task buildClayIcons(type: Copy)
+task buildFontAwesome(type: Copy)
 task buildLexiconIcons(type: Copy)
 task buildTheme
 task publishNodeModule(type: PublishNodeModuleTask)
 
 String alloyUIVersion = "3.1.0-deprecated.23"
-String lexiconVersion = "1.0.24"
+String fontAwesomeVersion = "3.2.1"
 
 File themeDestinationDir = file("src/main/resources/META-INF/resources/_unstyled");
 
@@ -47,48 +49,53 @@ buildCSS {
 	dependsOn buildTheme
 }
 
-buildLexicon {
-	File lexiconDestinationDir = new File(themeDestinationDir, "css/aui/lexicon")
+buildClay {
+	dependsOn npmInstall
+
+	File clayDestinationDir = new File(themeDestinationDir, "css/clay")
 
 	doFirst {
-		delete lexiconDestinationDir
+		delete clayDestinationDir
 	}
 
 	eachFile {
-		if (name in ["atlas.scss", "bootstrap.scss", "lexicon-base.scss"]) {
+		if (name in ["atlas.scss", "bootstrap.scss", "base.scss"]) {
 			filter {
 				String line ->
 
 				if (line == "// INSERT CUSTOM EXTENSIONS") {
 					line = """\
-@import \"../../liferay_variables_custom\";
-@import \"../../liferay_variables\";
+@import \"variables\";
+
+@import \"../liferay_variables_custom\";
+@import \"../liferay_variables\";
 @import \"bourbon\";
-@import \"../../aui_custom\";
-@import \"../../liferay_custom\";"""
+@import \"../clay_custom\";
+@import \"../liferay_custom\";"""
 				}
 				else if (line == "// INSERT CUSTOM VARS") {
 					line = """\
-@import url(font-awesome.css);
-@import \"../../aui_variables\";"""
+@import url(font_awesome.css);
+@import \"../clay_variables\";"""
 				}
 
 				return line
 			}
 		}
-		else if (name in ["atlas-variables.scss", "lexicon-base-variables.scss"]) {
+		else if (name in ["atlas-variables.scss", "base-variables.scss"]) {
 			filter {
 				String line ->
 
 				if (line == "// INSERT CUSTOM BASE VARS") {
 					line = """\
-@import \"../../aui_variables\";
-@import \"fonts/alloy-font-awesome/scss/variables\";"""
+@import \"../clay_variables\";"""
 				}
 				else if (line == "// INSERT CUSTOM VARS") {
 					line = """\
-@import \"../../liferay_variables_custom\";
-@import \"../../liferay_variables\";"""
+@import \"variables\";
+
+@import \"../liferay_variables_custom\";
+@import \"../liferay_variables\";"""
 				}
 
 				return line
@@ -96,58 +103,92 @@ buildLexicon {
 		}
 	}
 
-	eachFile new StripPathSegmentsAction(7)
+	eachFile new StripPathSegmentsAction(3)
 
-	from {
-		zipTree(configurations.lexicon.singleFile)
-	}
-
-	include "META-INF/resources/webjars/lexicon/${lexiconVersion}/release/scss/"
+	from npmInstall.nodeModulesDir
+	include "clay/src/scss/"
 	includeEmptyDirs = false
-	into lexiconDestinationDir
+	into clayDestinationDir
 }
 
-buildLexiconFonts {
-	File lexiconFontsDestinationDir = new File(themeDestinationDir, "css/aui/lexicon/fonts")
+buildClayFonts {
+	dependsOn npmInstall
 
-	dependsOn buildLexicon
+	File clayFontsDestinationDir = new File(themeDestinationDir, "css/clay/fonts")
+
+	dependsOn buildClay
 
 	doFirst {
-		delete lexiconFontsDestinationDir
+		delete clayFontsDestinationDir
 	}
 
-	eachFile new StripPathSegmentsAction(7)
+	eachFile new StripPathSegmentsAction(3)
+
+	from npmInstall.nodeModulesDir
+	include "clay/release/fonts/"
+	includeEmptyDirs = false
+	into clayFontsDestinationDir
+}
+
+buildClayIcons {
+	dependsOn npmInstall
+
+	File clayIconsDestinationDir = new File(themeDestinationDir, "images/clay")
+
+	doFirst {
+		delete clayIconsDestinationDir
+	}
+
+	eachFile new StripPathSegmentsAction(4)
+
+	from npmInstall.nodeModulesDir
+	include "clay/build/images/icons/"
+	includeEmptyDirs = false
+	into clayIconsDestinationDir
+}
+
+buildFontAwesome {
+	File fontAwesomeDestinationDir = new File(themeDestinationDir, "css/font-awesome")
+
+	doFirst {
+		delete fontAwesomeDestinationDir
+	}
+
+	eachFile new StripPathSegmentsAction(5)
 
 	from {
-		zipTree(configurations.lexicon.singleFile)
+		zipTree(configurations.fontAwesome.singleFile)
 	}
 
-	include "META-INF/resources/webjars/lexicon/${lexiconVersion}/release/fonts/"
+	include "META-INF/resources/webjars/font-awesome/${fontAwesomeVersion}/scss/**.scss"
+	include "META-INF/resources/webjars/font-awesome/${fontAwesomeVersion}/font/**"
+
 	includeEmptyDirs = false
-	into lexiconFontsDestinationDir
+	into fontAwesomeDestinationDir
 }
 
 buildLexiconIcons {
+	dependsOn npmInstall
+
 	File lexiconIconsDestinationDir = new File(themeDestinationDir, "images/lexicon")
 
 	doFirst {
 		delete lexiconIconsDestinationDir
 	}
 
-	eachFile new StripPathSegmentsAction(8)
+	eachFile new StripPathSegmentsAction(4)
 
-	from {
-		zipTree(configurations.lexicon.singleFile)
-	}
-
-	include "META-INF/resources/webjars/lexicon/${lexiconVersion}/release/images/icons/"
+	from npmInstall.nodeModulesDir
+	include "clay/build/images/icons/"
 	includeEmptyDirs = false
 	into lexiconIconsDestinationDir
 }
 
 buildTheme {
 	dependsOn buildAlloyUITheme
-	dependsOn buildLexiconFonts
+	dependsOn buildClayFonts
+	dependsOn buildClayIcons
+	dependsOn buildFontAwesome
 	dependsOn buildLexiconIcons
 }
 
@@ -158,10 +199,11 @@ classes {
 dependencies {
 	alloyUI group: "com.liferay.webjars", name: "com.liferay.webjars.alloy-ui", transitive: false, version: alloyUIVersion
 
-	lexicon group: "com.liferay.webjars", name: "com.liferay.webjars.lexicon", transitive: false, version: lexiconVersion
+	fontAwesome group: "org.webjars", name: "font-awesome", transitive: false, version: fontAwesomeVersion
 }
 
 publishNodeModule {
 	dependsOn jar
+	enabled = false
 	workingDir = "src/main/resources/META-INF/resources/_unstyled"
 }

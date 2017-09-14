@@ -269,7 +269,7 @@
 </tr>
 <tr>
 	<td>CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN_CHECKBOX</td>
-	<td>//input[contains(@name,'TypeSettingsProperties--column-${key_columnId}-customizable')]</td>
+	<td>//input[contains(@name,'column-${key_columnId}-customizable')]/../span[contains(@class,'toggle-switch')]</td>
 	<td></td>
 </tr>
 <tr>

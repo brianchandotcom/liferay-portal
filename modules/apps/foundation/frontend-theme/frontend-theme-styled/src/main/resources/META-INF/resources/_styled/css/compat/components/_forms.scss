@@ -1,0 +1,144 @@
+label {
+	max-width: 100%;
+}
+
+// Checkboxes and radios
+//
+// Indent the labels to position radios/checkboxes as hanging controls.
+
+.radio,
+.checkbox {
+	display: block;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	position: relative;
+
+	label {
+		min-height: 24px; // Ensure the input doesn't jump when there is no text
+		cursor: pointer;
+		font-weight: normal;
+		margin-bottom: 0;
+		padding-left: 20px;
+	}
+}
+.radio input[type="radio"],
+.radio-inline input[type="radio"],
+.checkbox input[type="checkbox"],
+.checkbox-inline input[type="checkbox"] {
+	margin-left: -20px;
+	margin-top: 4px \9;
+	position: absolute;
+}
+
+.radio + .radio,
+.checkbox + .checkbox {
+	margin-top: -5px; // Move up sibling radios or checkboxes for tighter spacing
+}
+
+// Radios and checkboxes on same line
+.radio-inline,
+.checkbox-inline {
+	cursor: pointer;
+	display: inline-block;
+	font-weight: normal;
+	margin-bottom: 0;
+	padding-left: 20px;
+	position: relative;
+	vertical-align: middle;
+}
+
+.radio-inline + .radio-inline,
+.checkbox-inline + .checkbox-inline {
+	margin-top: 0;
+	margin-left: 10px; // space out consecutive inline controls
+}
+
+@if (variable-exists(atlas-theme)) {
+	// Checkbox and Radio Styles
+
+	.checkbox,
+	.radio {
+		label {
+			font-weight: $input-label-font-weight;
+			padding-left: 25px;
+
+			@media (-webkit-min-device-pixel-ratio: 0) {
+				padding-left: 20px;
+			}
+		}
+	}
+
+	.checkbox input[type="checkbox"],
+	.checkbox-inline input[type="checkbox"] {
+		height: 20px;
+		margin-left: -25px;
+		margin-top: 0;
+		top: 50%;
+
+		-ms-transform: translateY(-50%);
+		transform: translateY(-50%);
+		width: 20px;
+
+		@media (-webkit-min-device-pixel-ratio: 0) {
+			height: 14px;
+			margin-left: -20px;
+			width: 14px;
+		}
+	}
+
+	.radio input[type="radio"],
+	.radio-inline input[type="radio"] {
+		height: 20px;
+		margin-left: -25px;
+		margin-top: 0;
+		top: 50%;
+
+		-ms-transform: translateY(-50%);
+		transform: translateY(-50%);
+		width: 20px;
+
+		@media (-webkit-min-device-pixel-ratio: 0) {
+			height: 15px;
+			margin-left: -20px;
+			width: 14px;
+		}
+	}
+
+	.checkbox-card,
+	.radio-card {
+		label {
+			padding-left: 0;
+		}
+	}
+
+	.checkbox-card input[type="checkbox"],
+	.radio-card input[type="radio"] {
+		margin-left: 0;
+	}
+}
+
+@if (variable-exists(atlas-theme)) {
+	.input-group-lg > .form-control {
+		@extend .input-lg;
+	}
+
+	.input-group-sm > .form-control {
+		@extend .input-sm;
+	}
+}
+
+.form-horizontal > .form-group {
+	@extend .row;
+}
+
+.input-lg {
+	@extend .form-control-lg;
+}
+
+.input-sm {
+	@extend .form-control-sm;
+}
+
+fieldset {
+	width: 100%;
+}

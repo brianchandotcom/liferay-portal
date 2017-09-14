@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"clay": "2.0.0-alpha.7",
 		"liferay-amd-loader": "2.1.0",
 		"svg4everybody": "^2.1.8"
 	},

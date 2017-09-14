@@ -17,14 +17,13 @@ package com.liferay.source.formatter.checkstyle.checks;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
-import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 /**
  * @author Hugo Huijser
  */
-public class JSONNamingCheck extends AbstractCheck {
+public class JSONNamingCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -35,7 +34,7 @@ public class JSONNamingCheck extends AbstractCheck {
 	}
 
 	@Override
-	public void visitToken(DetailAST detailAST) {
+	protected void doVisitToken(DetailAST detailAST) {
 		String typeName = DetailASTUtil.getTypeName(detailAST);
 
 		if (typeName.equals("boolean") || typeName.equals("void")) {

@@ -454,7 +454,7 @@ class SoyPortletRouter extends State {
 	 * success)
 	 */
 	maybeShowAlert_(message, type = 'danger') {
-		if (message !== undefined) {
+		if (message) {
 			const alert = Component.render(
 				Alert,
 				{
@@ -466,6 +466,8 @@ class SoyPortletRouter extends State {
 				},
 				this.portletWrapper,
 			);
+
+			this.portletWrapper.parentNode.insertBefore(alert.element, this.portletWrapper);
 
 			Router.router().once('startNavigate', () => alert.dispose());
 		}
@@ -485,11 +487,13 @@ class SoyPortletRouter extends State {
 		} else {
 			const activeState = Router.getActiveState();
 			if (activeState) {
-				const { sessionErrors, sessionMessages } = activeState;
+				const { _INJECTED_DATA_ } = activeState;
+
+				const { sessionErrors, sessionMessages } = _INJECTED_DATA_;
 
 				if (sessionMessages) {
 					Object.keys(sessionMessages).forEach(key =>
-						this.maybeShowAlert_(sessionMessages[key], 'warning'),
+						this.maybeShowAlert_(sessionMessages[key], 'success'),
 					);
 				}
 

@@ -29,15 +29,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.jar.Attributes;
-import java.util.jar.Attributes.Name;
 import java.util.jar.Manifest;
 
 import org.jboss.arquillian.container.spi.client.deployment.DeploymentDescription;
 import org.jboss.arquillian.container.test.spi.client.deployment.DeploymentScenarioGenerator;
 import org.jboss.arquillian.test.spi.TestClass;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.Asset;
 import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
 import org.jboss.shrinkwrap.api.importer.ZipImporter;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
@@ -75,16 +72,6 @@ public class BndDeploymentScenarioGenerator
 
 			analyzer.setProperties(project.getProperties());
 			analyzer.setJar(jar);
-
-			Asset asset = javaArchive.get(_MANIFEST_PATH).getAsset();
-
-			Manifest firstPassManifest = new Manifest(asset.openStream());
-
-			Attributes mainAttributes = firstPassManifest.getMainAttributes();
-
-			mainAttributes.remove(new Name("Import-Package"));
-
-			analyzer.mergeManifest(firstPassManifest);
 
 			Manifest manifest = analyzer.calcManifest();
 

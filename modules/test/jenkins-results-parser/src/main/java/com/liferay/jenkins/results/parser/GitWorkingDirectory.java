@@ -678,30 +678,18 @@ public class GitWorkingDirectory {
 		String rebaseCommand = JenkinsResultsParserUtil.combine(
 			"git rebase ", sourceBranchName, " ", targetBranchName);
 
-		String sourceBranchSHA = getBranchSha(sourceBranchName);
+		BashCommandResult result = executeBashCommands(
+			1, 1000 * 60 * 10, rebaseCommand);
 
-		System.out.println(
-			JenkinsResultsParserUtil.combine(
-				"Rebasing ", sourceBranchName, "(", sourceBranchSHA, ") to ",
-				targetBranchName));
+		if (result.getExitValue() != 0) {
+			if (abortOnFail) {
+				rebaseAbort();
+			}
 
-		try {
-			System.out.println(
-				executeBashCommands(1, 1000 * 60 * 10, rebaseCommand));
-		}
-		catch (RuntimeException re) {
-			try {
-				throw new RuntimeException(
-					JenkinsResultsParserUtil.combine(
-						"Unable to rebase ", targetBranchName, " to ",
-						sourceBranchName),
-					re);
-			}
-			finally {
-				if (abortOnFail) {
-					rebaseAbort();
-				}
-			}
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to rebase ", targetBranchName, " to ",
+					sourceBranchName));
 		}
 	}
 

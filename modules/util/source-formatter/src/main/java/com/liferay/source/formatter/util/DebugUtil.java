@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Hugo Huijser
@@ -41,6 +42,10 @@ public class DebugUtil {
 
 	public static void addProcessorFileCount(String processorName, int count) {
 		_processorFileCountMap.put(processorName, count);
+	}
+
+	public static void finishTask() {
+		_concurrentTasksCount.decrementAndGet();
 	}
 
 	public static synchronized void increaseProcessingTime(
@@ -97,6 +102,10 @@ public class DebugUtil {
 		_printProcessorInformation();
 
 		_printProcessingTimeInformation();
+	}
+
+	public static void startTask() {
+		_concurrentTasksCount.incrementAndGet();
 	}
 
 	private static void _printDelta(Delta<String> delta, String fileName) {
@@ -249,6 +258,8 @@ public class DebugUtil {
 		}
 	}
 
+	private static final AtomicInteger _concurrentTasksCount =
+		new AtomicInteger();
 	private static final Map<String, Long> _processingTimeMap =
 		new ConcurrentHashMap<>();
 	private static final Map<String, Integer> _processorFileCountMap =

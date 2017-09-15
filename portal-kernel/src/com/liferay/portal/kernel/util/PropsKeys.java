@@ -435,6 +435,10 @@ public interface PropsKeys {
 
 	public static final String CLUSTER_LINK_AUTODETECT_ADDRESS = "cluster.link.autodetect.address";
 
+	public static final String CLUSTER_LINK_CHANNEL_LOGIC_NAME_CONTROL = "cluster.link.channel.logic.name.control";
+
+	public static final String CLUSTER_LINK_CHANNEL_LOGIC_NAME_TRANSPORT = "cluster.link.channel.logic.name.transport";
+
 	public static final String CLUSTER_LINK_CHANNEL_NAME_CONTROL = "cluster.link.channel.name.control";
 
 	public static final String CLUSTER_LINK_CHANNEL_NAME_TRANSPORT = "cluster.link.channel.name.transport";

@@ -94,6 +94,7 @@ public class ClusterLinkImpl implements ClusterLink {
 
 		if (_enabled) {
 			initialize(
+				getChannelLogicNames(properties),
 				getChannelPropertiesStrings(properties),
 				getChannelNames(properties));
 		}
@@ -133,6 +134,40 @@ public class ClusterLinkImpl implements ClusterLink {
 		}
 
 		return _clusterChannels.get(channelIndex);
+	}
+
+	protected Map<String, String> getChannelLogicNames(
+		Map<String, Object> properties) {
+
+		Map<String, String> channelLogicNames = new HashMap<>();
+
+		int prefixLength =
+			ClusterPropsKeys.CHANNEL_LOGIC_NAME_TRANSPORT_PREFIX.length();
+
+		for (Entry<String, Object> entry : properties.entrySet()) {
+			String key = entry.getKey();
+
+			if (key.startsWith(
+					ClusterPropsKeys.CHANNEL_LOGIC_NAME_TRANSPORT_PREFIX)) {
+
+				channelLogicNames.put(
+					key.substring(prefixLength + 1), (String)entry.getValue());
+			}
+		}
+
+		if (channelLogicNames.isEmpty()) {
+			Properties channelLogicNameProperties = _props.getProperties(
+				PropsKeys.CLUSTER_LINK_CHANNEL_LOGIC_NAME_TRANSPORT, true);
+
+			for (Map.Entry<Object, Object> entry :
+					channelLogicNameProperties.entrySet()) {
+
+				channelLogicNames.put(
+					(String)entry.getKey(), (String)entry.getValue());
+			}
+		}
+
+		return channelLogicNames;
 	}
 
 	protected Map<String, String> getChannelNames(
@@ -212,6 +247,7 @@ public class ClusterLinkImpl implements ClusterLink {
 	}
 
 	protected void initChannels(
+			Map<String, String> channelLogicNames,
 			Map<String, String> channelPropertiesStrings,
 			Map<String, String> channelNames)
 		throws Exception {
@@ -234,6 +270,7 @@ public class ClusterLinkImpl implements ClusterLink {
 		for (String key : keys) {
 			String channelPropertiesString = channelPropertiesStrings.get(key);
 			String channelName = channelNames.get(key);
+			String channelLogicName = channelLogicNames.get(key);
 
 			if (Validator.isNull(channelPropertiesString) ||
 				Validator.isNull(channelName)) {
@@ -245,7 +282,8 @@ public class ClusterLinkImpl implements ClusterLink {
 
 			ClusterChannel clusterChannel =
 				_clusterChannelFactory.createClusterChannel(
-					channelPropertiesString, channelName, clusterReceiver);
+					channelLogicName, channelPropertiesString, channelName,
+					clusterReceiver);
 
 			_clusterChannels.add(clusterChannel);
 
@@ -255,6 +293,7 @@ public class ClusterLinkImpl implements ClusterLink {
 	}
 
 	protected void initialize(
+		Map<String, String> channelLogicNames,
 		Map<String, String> channelPropertiesStrings,
 		Map<String, String> channelNames) {
 
@@ -262,7 +301,8 @@ public class ClusterLinkImpl implements ClusterLink {
 			ClusterLinkImpl.class.getName());
 
 		try {
-			initChannels(channelPropertiesStrings, channelNames);
+			initChannels(
+				channelLogicNames, channelPropertiesStrings, channelNames);
 		}
 		catch (Exception e) {
 			_log.error("Unable to initialize channels", e);

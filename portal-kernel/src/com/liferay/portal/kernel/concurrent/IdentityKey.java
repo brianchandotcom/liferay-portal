@@ -18,7 +18,9 @@ import java.io.Serializable;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.petra.concurrent.IdentityKey}
  */
+@Deprecated
 public class IdentityKey<K> implements Serializable {
 
 	public IdentityKey(K key) {

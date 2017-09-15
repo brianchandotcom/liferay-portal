@@ -26,7 +26,9 @@ import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.petra.concurrent.ConcurrentReferenceKeyHashMap}
  */
+@Deprecated
 public class ConcurrentReferenceKeyHashMap<K, V>
 	extends ConcurrentMapperHashMap<K, Reference<K>, V, V> {
 

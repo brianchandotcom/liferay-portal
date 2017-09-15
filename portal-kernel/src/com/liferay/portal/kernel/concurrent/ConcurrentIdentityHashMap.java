@@ -20,7 +20,9 @@ import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.petra.concurrent.ConcurrentIdentityHashMap}
  */
+@Deprecated
 public class ConcurrentIdentityHashMap<K, V>
 	extends ConcurrentMapperHashMap<K, IdentityKey<K>, V, V> {
 

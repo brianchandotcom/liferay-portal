@@ -160,6 +160,12 @@
 		<execute function="Click" locator1="FormFields#FIELD_REMOVE" />
 	</command>
 
+	<command name="save">
+		<execute function="Click" locator1="FormFields#FIELD_NAME" />
+
+		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
+	</command>
+
 	<command name="selectAutoCompleteOption">
 		<var name="key_autocompleteOption" value="${autocompleteOption}" />
 

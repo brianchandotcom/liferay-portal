@@ -329,8 +329,6 @@ public class GitWorkingDirectory {
 	}
 
 	public void deleteRemoteBranch(Branch remoteBranch) {
-		Remote remote = remoteBranch._remote;
-
 		pushToRemote(true, null, remoteBranch);
 	}
 

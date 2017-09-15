@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -488,8 +487,10 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 					String titleWithoutExtension = title;
 
 					if (title.endsWith(StringPool.PERIOD + extension)) {
-						titleExtension = extension;
-						titleWithoutExtension = FileUtil.stripExtension(title);
+						titleExtension = StringPool.PERIOD + extension;
+
+						titleWithoutExtension = titleWithoutExtension.substring(
+							0, title.length() - titleExtension.length());
 					}
 
 					for (int i = 1;; i++) {
@@ -498,7 +499,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 								String.valueOf(i);
 
 						if (Validator.isNotNull(titleExtension)) {
-							title += StringPool.PERIOD.concat(titleExtension);
+							title = title.concat(titleExtension);
 						}
 
 						uniqueFileName = DLUtil.getSanitizedFileName(

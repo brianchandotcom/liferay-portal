@@ -1,6 +1,19 @@
 <?xml version="1.0"?>
 
 <model-hints>
+	<model name="com.liferay.commerce.model.CAvailabilityRangeEntry">
+		<field name="uuid" type="String" />
+		<field name="CAvailabilityRangeEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="CPDefinitionId" type="long" />
+		<field name="commerceAvailabilityRangeId" type="long" />
+		<field name="lastPublishDate" type="Date" />
+	</model>
 	<model name="com.liferay.commerce.model.CommerceAddress">
 		<field name="commerceAddressId" type="long" />
 		<field name="groupId" type="long" />
@@ -236,18 +249,5 @@
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="quantity" type="int" />
-	</model>
-	<model name="com.liferay.commerce.model.CPDefinitionAvailabilityRange">
-		<field name="uuid" type="String" />
-		<field name="CPDefinitionAvailabilityRangeId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="CPDefinitionId" type="long" />
-		<field name="commerceAvailabilityRangeId" type="long" />
-		<field name="lastPublishDate" type="Date" />
 	</model>
 </model-hints>

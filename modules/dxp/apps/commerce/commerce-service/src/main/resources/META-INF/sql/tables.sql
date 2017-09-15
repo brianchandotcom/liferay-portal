@@ -1,6 +1,6 @@
-create table CPDefinitionAvailabilityRange (
+create table CAvailabilityRangeEntry (
 	uuid_ VARCHAR(75) null,
-	CPDefinitionAvailabilityRangeId LONG not null primary key,
+	CAvailabilityRangeEntryId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,

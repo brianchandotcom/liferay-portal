@@ -16,7 +16,7 @@ package com.liferay.commerce.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.service.CPDefinitionAvailabilityRangeServiceUtil;
+import com.liferay.commerce.service.CAvailabilityRangeEntryServiceUtil;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,7 +25,7 @@ import java.rmi.RemoteException;
 
 /**
  * Provides the SOAP utility for the
- * {@link CPDefinitionAvailabilityRangeServiceUtil} service utility. The
+ * {@link CAvailabilityRangeEntryServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -33,10 +33,10 @@ import java.rmi.RemoteException;
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
  * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link com.liferay.commerce.model.CPDefinitionAvailabilityRangeSoap}.
+ * is translated to an array of {@link com.liferay.commerce.model.CAvailabilityRangeEntrySoap}.
  * If the method in the service utility returns a
- * {@link com.liferay.commerce.model.CPDefinitionAvailabilityRange}, that is translated to a
- * {@link com.liferay.commerce.model.CPDefinitionAvailabilityRangeSoap}. Methods that SOAP cannot
+ * {@link com.liferay.commerce.model.CAvailabilityRangeEntry}, that is translated to a
+ * {@link com.liferay.commerce.model.CAvailabilityRangeEntrySoap}. Methods that SOAP cannot
  * safely wire are skipped.
  * </p>
  *
@@ -58,17 +58,17 @@ import java.rmi.RemoteException;
  * </p>
  *
  * @author Alessio Antonio Rendina
- * @see CPDefinitionAvailabilityRangeServiceHttp
- * @see com.liferay.commerce.model.CPDefinitionAvailabilityRangeSoap
- * @see CPDefinitionAvailabilityRangeServiceUtil
+ * @see CAvailabilityRangeEntryServiceHttp
+ * @see com.liferay.commerce.model.CAvailabilityRangeEntrySoap
+ * @see CAvailabilityRangeEntryServiceUtil
  * @generated
  */
 @ProviderType
-public class CPDefinitionAvailabilityRangeServiceSoap {
-	public static void deleteCPDefinitionAvailabilityRange(
-		long cpDefinitionAvailabilityRangeId) throws RemoteException {
+public class CAvailabilityRangeEntryServiceSoap {
+	public static void deleteCAvailabilityRangeEntry(
+		long cAvailabilityRangeEntryId) throws RemoteException {
 		try {
-			CPDefinitionAvailabilityRangeServiceUtil.deleteCPDefinitionAvailabilityRange(cpDefinitionAvailabilityRangeId);
+			CAvailabilityRangeEntryServiceUtil.deleteCAvailabilityRangeEntry(cAvailabilityRangeEntryId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -77,14 +77,13 @@ public class CPDefinitionAvailabilityRangeServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.model.CPDefinitionAvailabilityRangeSoap fetchCPDefinitionAvailabilityRange(
+	public static com.liferay.commerce.model.CAvailabilityRangeEntrySoap fetchCAvailabilityRangeEntry(
 		long groupId, long cpDefinitionId) throws RemoteException {
 		try {
-			com.liferay.commerce.model.CPDefinitionAvailabilityRange returnValue =
-				CPDefinitionAvailabilityRangeServiceUtil.fetchCPDefinitionAvailabilityRange(groupId,
+			com.liferay.commerce.model.CAvailabilityRangeEntry returnValue = CAvailabilityRangeEntryServiceUtil.fetchCAvailabilityRangeEntry(groupId,
 					cpDefinitionId);
 
-			return com.liferay.commerce.model.CPDefinitionAvailabilityRangeSoap.toSoapModel(returnValue);
+			return com.liferay.commerce.model.CAvailabilityRangeEntrySoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -93,17 +92,16 @@ public class CPDefinitionAvailabilityRangeServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.model.CPDefinitionAvailabilityRangeSoap updateCPDefinitionAvailabilityRange(
-		long cpDefinitionAvailabilityId, long cpDefinitionId,
+	public static com.liferay.commerce.model.CAvailabilityRangeEntrySoap updateCAvailabilityRangeEntry(
+		long cAvailabilityRangeEntryId, long cpDefinitionId,
 		long commerceAvailabilityRangeId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			com.liferay.commerce.model.CPDefinitionAvailabilityRange returnValue =
-				CPDefinitionAvailabilityRangeServiceUtil.updateCPDefinitionAvailabilityRange(cpDefinitionAvailabilityId,
+			com.liferay.commerce.model.CAvailabilityRangeEntry returnValue = CAvailabilityRangeEntryServiceUtil.updateCAvailabilityRangeEntry(cAvailabilityRangeEntryId,
 					cpDefinitionId, commerceAvailabilityRangeId, serviceContext);
 
-			return com.liferay.commerce.model.CPDefinitionAvailabilityRangeSoap.toSoapModel(returnValue);
+			return com.liferay.commerce.model.CAvailabilityRangeEntrySoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -112,5 +110,5 @@ public class CPDefinitionAvailabilityRangeServiceSoap {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(CPDefinitionAvailabilityRangeServiceSoap.class);
+	private static Log _log = LogFactoryUtil.getLog(CAvailabilityRangeEntryServiceSoap.class);
 }

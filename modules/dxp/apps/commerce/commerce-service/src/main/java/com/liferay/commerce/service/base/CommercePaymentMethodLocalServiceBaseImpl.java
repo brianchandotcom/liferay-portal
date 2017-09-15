@@ -18,7 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.model.CommercePaymentMethod;
 import com.liferay.commerce.service.CommercePaymentMethodLocalService;
-import com.liferay.commerce.service.persistence.CPDefinitionAvailabilityRangePersistence;
+import com.liferay.commerce.service.persistence.CAvailabilityRangeEntryPersistence;
 import com.liferay.commerce.service.persistence.CommerceAddressPersistence;
 import com.liferay.commerce.service.persistence.CommerceAvailabilityRangePersistence;
 import com.liferay.commerce.service.persistence.CommerceCartItemPersistence;
@@ -336,6 +336,44 @@ public abstract class CommercePaymentMethodLocalServiceBaseImpl
 	public CommercePaymentMethod updateCommercePaymentMethod(
 		CommercePaymentMethod commercePaymentMethod) {
 		return commercePaymentMethodPersistence.update(commercePaymentMethod);
+	}
+
+	/**
+	 * Returns the c availability range entry local service.
+	 *
+	 * @return the c availability range entry local service
+	 */
+	public com.liferay.commerce.service.CAvailabilityRangeEntryLocalService getCAvailabilityRangeEntryLocalService() {
+		return cAvailabilityRangeEntryLocalService;
+	}
+
+	/**
+	 * Sets the c availability range entry local service.
+	 *
+	 * @param cAvailabilityRangeEntryLocalService the c availability range entry local service
+	 */
+	public void setCAvailabilityRangeEntryLocalService(
+		com.liferay.commerce.service.CAvailabilityRangeEntryLocalService cAvailabilityRangeEntryLocalService) {
+		this.cAvailabilityRangeEntryLocalService = cAvailabilityRangeEntryLocalService;
+	}
+
+	/**
+	 * Returns the c availability range entry persistence.
+	 *
+	 * @return the c availability range entry persistence
+	 */
+	public CAvailabilityRangeEntryPersistence getCAvailabilityRangeEntryPersistence() {
+		return cAvailabilityRangeEntryPersistence;
+	}
+
+	/**
+	 * Sets the c availability range entry persistence.
+	 *
+	 * @param cAvailabilityRangeEntryPersistence the c availability range entry persistence
+	 */
+	public void setCAvailabilityRangeEntryPersistence(
+		CAvailabilityRangeEntryPersistence cAvailabilityRangeEntryPersistence) {
+		this.cAvailabilityRangeEntryPersistence = cAvailabilityRangeEntryPersistence;
 	}
 
 	/**
@@ -890,44 +928,6 @@ public abstract class CommercePaymentMethodLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the cp definition availability range local service.
-	 *
-	 * @return the cp definition availability range local service
-	 */
-	public com.liferay.commerce.service.CPDefinitionAvailabilityRangeLocalService getCPDefinitionAvailabilityRangeLocalService() {
-		return cpDefinitionAvailabilityRangeLocalService;
-	}
-
-	/**
-	 * Sets the cp definition availability range local service.
-	 *
-	 * @param cpDefinitionAvailabilityRangeLocalService the cp definition availability range local service
-	 */
-	public void setCPDefinitionAvailabilityRangeLocalService(
-		com.liferay.commerce.service.CPDefinitionAvailabilityRangeLocalService cpDefinitionAvailabilityRangeLocalService) {
-		this.cpDefinitionAvailabilityRangeLocalService = cpDefinitionAvailabilityRangeLocalService;
-	}
-
-	/**
-	 * Returns the cp definition availability range persistence.
-	 *
-	 * @return the cp definition availability range persistence
-	 */
-	public CPDefinitionAvailabilityRangePersistence getCPDefinitionAvailabilityRangePersistence() {
-		return cpDefinitionAvailabilityRangePersistence;
-	}
-
-	/**
-	 * Sets the cp definition availability range persistence.
-	 *
-	 * @param cpDefinitionAvailabilityRangePersistence the cp definition availability range persistence
-	 */
-	public void setCPDefinitionAvailabilityRangePersistence(
-		CPDefinitionAvailabilityRangePersistence cpDefinitionAvailabilityRangePersistence) {
-		this.cpDefinitionAvailabilityRangePersistence = cpDefinitionAvailabilityRangePersistence;
-	}
-
-	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -1092,6 +1092,10 @@ public abstract class CommercePaymentMethodLocalServiceBaseImpl
 		}
 	}
 
+	@BeanReference(type = com.liferay.commerce.service.CAvailabilityRangeEntryLocalService.class)
+	protected com.liferay.commerce.service.CAvailabilityRangeEntryLocalService cAvailabilityRangeEntryLocalService;
+	@BeanReference(type = CAvailabilityRangeEntryPersistence.class)
+	protected CAvailabilityRangeEntryPersistence cAvailabilityRangeEntryPersistence;
 	@BeanReference(type = com.liferay.commerce.service.CommerceAddressLocalService.class)
 	protected com.liferay.commerce.service.CommerceAddressLocalService commerceAddressLocalService;
 	@BeanReference(type = CommerceAddressPersistence.class)
@@ -1150,10 +1154,6 @@ public abstract class CommercePaymentMethodLocalServiceBaseImpl
 	protected CommerceWarehouseItemPersistence commerceWarehouseItemPersistence;
 	@BeanReference(type = CommerceWarehouseItemFinder.class)
 	protected CommerceWarehouseItemFinder commerceWarehouseItemFinder;
-	@BeanReference(type = com.liferay.commerce.service.CPDefinitionAvailabilityRangeLocalService.class)
-	protected com.liferay.commerce.service.CPDefinitionAvailabilityRangeLocalService cpDefinitionAvailabilityRangeLocalService;
-	@BeanReference(type = CPDefinitionAvailabilityRangePersistence.class)
-	protected CPDefinitionAvailabilityRangePersistence cpDefinitionAvailabilityRangePersistence;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)

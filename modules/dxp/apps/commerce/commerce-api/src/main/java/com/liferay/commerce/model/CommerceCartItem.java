@@ -55,9 +55,9 @@ public interface CommerceCartItem extends CommerceCartItemModel, PersistedModel 
 			}
 		};
 
-	public com.liferay.commerce.product.model.CPDefinition getCPDefinition()
+	public com.liferay.commerce.product.model.CPInstance fetchCPInstance()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.commerce.product.model.CPInstance fetchCPInstance()
+	public com.liferay.commerce.product.model.CPDefinition getCPDefinition()
 		throws com.liferay.portal.kernel.exception.PortalException;
 }

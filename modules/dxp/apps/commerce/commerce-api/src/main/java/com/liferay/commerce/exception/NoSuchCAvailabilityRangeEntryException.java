@@ -22,23 +22,21 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
  * @author Alessio Antonio Rendina
  */
 @ProviderType
-public class NoSuchCPDefinitionAvailabilityRangeException
+public class NoSuchCAvailabilityRangeEntryException
 	extends NoSuchModelException {
 
-	public NoSuchCPDefinitionAvailabilityRangeException() {
+	public NoSuchCAvailabilityRangeEntryException() {
 	}
 
-	public NoSuchCPDefinitionAvailabilityRangeException(String msg) {
+	public NoSuchCAvailabilityRangeEntryException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchCPDefinitionAvailabilityRangeException(
-		String msg, Throwable cause) {
-
+	public NoSuchCAvailabilityRangeEntryException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoSuchCPDefinitionAvailabilityRangeException(Throwable cause) {
+	public NoSuchCAvailabilityRangeEntryException(Throwable cause) {
 		super(cause);
 	}
 

@@ -16,7 +16,7 @@ package com.liferay.commerce.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.service.CPDefinitionAvailabilityRangeServiceUtil;
+import com.liferay.commerce.service.CAvailabilityRangeEntryServiceUtil;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 
 /**
  * Provides the HTTP utility for the
- * {@link CPDefinitionAvailabilityRangeServiceUtil} service utility. The
+ * {@link CAvailabilityRangeEntryServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
  * {@link HttpPrincipal} parameter.
@@ -48,23 +48,23 @@ import com.liferay.portal.kernel.util.MethodKey;
  * </p>
  *
  * @author Alessio Antonio Rendina
- * @see CPDefinitionAvailabilityRangeServiceSoap
+ * @see CAvailabilityRangeEntryServiceSoap
  * @see HttpPrincipal
- * @see CPDefinitionAvailabilityRangeServiceUtil
+ * @see CAvailabilityRangeEntryServiceUtil
  * @generated
  */
 @ProviderType
-public class CPDefinitionAvailabilityRangeServiceHttp {
-	public static void deleteCPDefinitionAvailabilityRange(
-		HttpPrincipal httpPrincipal, long cpDefinitionAvailabilityRangeId)
+public class CAvailabilityRangeEntryServiceHttp {
+	public static void deleteCAvailabilityRangeEntry(
+		HttpPrincipal httpPrincipal, long cAvailabilityRangeEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
-			MethodKey methodKey = new MethodKey(CPDefinitionAvailabilityRangeServiceUtil.class,
-					"deleteCPDefinitionAvailabilityRange",
-					_deleteCPDefinitionAvailabilityRangeParameterTypes0);
+			MethodKey methodKey = new MethodKey(CAvailabilityRangeEntryServiceUtil.class,
+					"deleteCAvailabilityRangeEntry",
+					_deleteCAvailabilityRangeEntryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpDefinitionAvailabilityRangeId);
+					cAvailabilityRangeEntryId);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -84,12 +84,12 @@ public class CPDefinitionAvailabilityRangeServiceHttp {
 		}
 	}
 
-	public static com.liferay.commerce.model.CPDefinitionAvailabilityRange fetchCPDefinitionAvailabilityRange(
+	public static com.liferay.commerce.model.CAvailabilityRangeEntry fetchCAvailabilityRangeEntry(
 		HttpPrincipal httpPrincipal, long groupId, long cpDefinitionId) {
 		try {
-			MethodKey methodKey = new MethodKey(CPDefinitionAvailabilityRangeServiceUtil.class,
-					"fetchCPDefinitionAvailabilityRange",
-					_fetchCPDefinitionAvailabilityRangeParameterTypes1);
+			MethodKey methodKey = new MethodKey(CAvailabilityRangeEntryServiceUtil.class,
+					"fetchCAvailabilityRangeEntry",
+					_fetchCAvailabilityRangeEntryParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					cpDefinitionId);
@@ -103,7 +103,7 @@ public class CPDefinitionAvailabilityRangeServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.commerce.model.CPDefinitionAvailabilityRange)returnObj;
+			return (com.liferay.commerce.model.CAvailabilityRangeEntry)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -112,18 +112,18 @@ public class CPDefinitionAvailabilityRangeServiceHttp {
 		}
 	}
 
-	public static com.liferay.commerce.model.CPDefinitionAvailabilityRange updateCPDefinitionAvailabilityRange(
-		HttpPrincipal httpPrincipal, long cpDefinitionAvailabilityId,
+	public static com.liferay.commerce.model.CAvailabilityRangeEntry updateCAvailabilityRangeEntry(
+		HttpPrincipal httpPrincipal, long cAvailabilityRangeEntryId,
 		long cpDefinitionId, long commerceAvailabilityRangeId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
-			MethodKey methodKey = new MethodKey(CPDefinitionAvailabilityRangeServiceUtil.class,
-					"updateCPDefinitionAvailabilityRange",
-					_updateCPDefinitionAvailabilityRangeParameterTypes2);
+			MethodKey methodKey = new MethodKey(CAvailabilityRangeEntryServiceUtil.class,
+					"updateCAvailabilityRangeEntry",
+					_updateCAvailabilityRangeEntryParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpDefinitionAvailabilityId, cpDefinitionId,
+					cAvailabilityRangeEntryId, cpDefinitionId,
 					commerceAvailabilityRangeId, serviceContext);
 
 			Object returnObj = null;
@@ -139,7 +139,7 @@ public class CPDefinitionAvailabilityRangeServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.commerce.model.CPDefinitionAvailabilityRange)returnObj;
+			return (com.liferay.commerce.model.CAvailabilityRangeEntry)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -148,12 +148,12 @@ public class CPDefinitionAvailabilityRangeServiceHttp {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(CPDefinitionAvailabilityRangeServiceHttp.class);
-	private static final Class<?>[] _deleteCPDefinitionAvailabilityRangeParameterTypes0 =
+	private static Log _log = LogFactoryUtil.getLog(CAvailabilityRangeEntryServiceHttp.class);
+	private static final Class<?>[] _deleteCAvailabilityRangeEntryParameterTypes0 =
 		new Class[] { long.class };
-	private static final Class<?>[] _fetchCPDefinitionAvailabilityRangeParameterTypes1 =
+	private static final Class<?>[] _fetchCAvailabilityRangeEntryParameterTypes1 =
 		new Class[] { long.class, long.class };
-	private static final Class<?>[] _updateCPDefinitionAvailabilityRangeParameterTypes2 =
+	private static final Class<?>[] _updateCAvailabilityRangeEntryParameterTypes2 =
 		new Class[] {
 			long.class, long.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class

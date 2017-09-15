@@ -14,10 +14,10 @@
 
 package com.liferay.portal.bean;
 
+import com.liferay.petra.concurrent.ConcurrentReferenceKeyHashMap;
+import com.liferay.petra.concurrent.ConcurrentReferenceValueHashMap;
+import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.portal.kernel.bean.ConstantsBeanFactory;
-import com.liferay.portal.kernel.concurrent.ConcurrentReferenceKeyHashMap;
-import com.liferay.portal.kernel.concurrent.ConcurrentReferenceValueHashMap;
-import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.lang.ref.Reference;

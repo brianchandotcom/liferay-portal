@@ -94,6 +94,8 @@ public interface Build {
 
 	public String getResult();
 
+	public String getSlave();
+
 	public Map<String, String> getStartPropertiesTempMap();
 
 	public Long getStartTimestamp();

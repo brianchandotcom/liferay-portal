@@ -619,6 +619,21 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public String getSlave() {
+		if ((slave == null) && (getBuildURL() != null)) {
+			JSONObject builtOnJSONObject = getBuildJSONObject("builtOn");
+
+			slave = builtOnJSONObject.optString("builtOn");
+
+			if (slave.equals("")) {
+				slave = "master";
+			}
+		}
+
+		return slave;
+	}
+
+	@Override
 	public Map<String, String> getStartPropertiesTempMap() {
 		return getTempMap("start.properties");
 	}
@@ -2058,6 +2073,7 @@ public abstract class BaseBuild implements Build {
 		ReinvokeRule.getReinvokeRules();
 	protected String repositoryName;
 	protected String result;
+	protected String slave;
 	protected long statusModifiedTime;
 	protected Element upstreamJobFailureMessageElement;
 

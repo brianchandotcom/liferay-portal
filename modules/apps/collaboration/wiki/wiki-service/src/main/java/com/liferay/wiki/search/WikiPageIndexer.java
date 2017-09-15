@@ -69,7 +69,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bruno Farache
  * @author Raymond Augé
  */
-@Component(immediate = true, service = Indexer.class)
+@Component(
+	immediate = true,
+	property = {"related.entry.indexer.class.name=com.liferay.wiki.model.WikiPage"},
+	service = {Indexer.class, RelatedEntryIndexer.class}
+)
 public class WikiPageIndexer
 	extends BaseIndexer<WikiPage> implements RelatedEntryIndexer {
 

@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.RelatedEntryIndexer;
+import com.liferay.portal.kernel.search.RelatedEntryIndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
@@ -98,7 +99,11 @@ import javax.portlet.PortletResponse;
  * @author Raymond Augé
  * @author Alexander Chow
  */
-@OSGiBeanProperties
+@OSGiBeanProperties(
+	property = {
+		"related.entry.indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntry"
+	}
+)
 public class DLFileEntryIndexer
 	extends BaseIndexer<DLFileEntry> implements RelatedEntryIndexer {
 
@@ -472,26 +477,27 @@ public class DLFileEntryIndexer
 			addFileEntryTypeAttributes(document, dlFileVersion);
 
 			if (dlFileEntry.isInHiddenFolder()) {
-				Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
-					dlFileEntry.getClassName());
+				List<RelatedEntryIndexer> relatedEntryIndexers =
+					RelatedEntryIndexerRegistryUtil.getRelatedEntryIndexers(
+						dlFileEntry.getClassName());
 
-				if ((indexer != null) &&
-					(indexer instanceof RelatedEntryIndexer)) {
+				if (relatedEntryIndexers != null) {
+					for (RelatedEntryIndexer relatedEntryIndexer :
+							relatedEntryIndexers) {
 
-					RelatedEntryIndexer relatedEntryIndexer =
-						(RelatedEntryIndexer)indexer;
+						relatedEntryIndexer.addRelatedEntryFields(
+							document, new LiferayFileEntry(dlFileEntry));
 
-					relatedEntryIndexer.addRelatedEntryFields(
-						document, new LiferayFileEntry(dlFileEntry));
+						DocumentHelper documentHelper = new DocumentHelper(
+							document);
 
-					DocumentHelper documentHelper = new DocumentHelper(
-						document);
+						documentHelper.setAttachmentOwnerKey(
+							PortalUtil.getClassNameId(
+								dlFileEntry.getClassName()),
+							dlFileEntry.getClassPK());
 
-					documentHelper.setAttachmentOwnerKey(
-						PortalUtil.getClassNameId(dlFileEntry.getClassName()),
-						dlFileEntry.getClassPK());
-
-					document.addKeyword(Field.RELATED_ENTRY, true);
+						document.addKeyword(Field.RELATED_ENTRY, true);
+					}
 				}
 			}
 

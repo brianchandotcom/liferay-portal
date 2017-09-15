@@ -1034,19 +1034,19 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		sb.append("/portal/login?redirect=");
 
-		StringBundler redirectParameterSB = new StringBundler(4);
+		StringBundler redirectSB = new StringBundler(4);
 
-		redirectParameterSB.append(themeDisplay.getPathMain());
-		redirectParameterSB.append("/portal/saml/sso");
+		redirectSB.append(themeDisplay.getPathMain());
+		redirectSB.append("/portal/saml/sso");
 
 		if (samlMessageContext.getInboundSAMLMessageId() != null) {
-			redirectParameterSB.append("?saml_message_id=");
-			redirectParameterSB.append(
+			redirectSB.append("?saml_message_id=");
+			redirectSB.append(
 				URLCodec.encodeURL(
 					samlMessageContext.getInboundSAMLMessageId()));
 		}
 
-		sb.append(URLCodec.encodeURL(redirectParameterSB.toString()));
+		sb.append(URLCodec.encodeURL(redirectSB.toString()));
 
 		String redirect = sb.toString();
 

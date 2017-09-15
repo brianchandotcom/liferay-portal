@@ -14,28 +14,29 @@
 
 package com.liferay.portal.verify;
 
-import com.liferay.portal.kernel.concurrent.ThrowableAwareRunnable;
-import com.liferay.portal.kernel.concurrent.ThrowableAwareRunnablesExecutorUtil;
 import com.liferay.portal.kernel.dao.db.BaseDBProcess;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.exception.BulkException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnsafeConsumer;
 import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -91,41 +92,33 @@ public abstract class VerifyProcess extends BaseDBProcess {
 	protected void doVerify() throws Exception {
 	}
 
-	protected void doVerify(
-			Collection<? extends ThrowableAwareRunnable>
-				throwableAwareRunnables)
+	protected void doVerify(Collection<? extends Callable<Void>> callables)
 		throws Exception {
 
-		if ((throwableAwareRunnables.size() <
-				PropsValues.VERIFY_PROCESS_CONCURRENCY_THRESHOLD) &&
-			!isForceConcurrent(throwableAwareRunnables)) {
+		try {
+			if ((callables.size() <
+					PropsValues.VERIFY_PROCESS_CONCURRENCY_THRESHOLD) &&
+				!isForceConcurrent(callables)) {
 
-			for (ThrowableAwareRunnable throwableAwareRunnable :
-					throwableAwareRunnables) {
-
-				throwableAwareRunnable.run();
+				UnsafeConsumer.accept(callables, Callable<Void>::call);
 			}
+			else {
+				ExecutorService executorService = Executors.newFixedThreadPool(
+					callables.size());
 
-			List<Throwable> throwables = new ArrayList<>();
+				List<Future<Void>> futures = executorService.invokeAll(
+					callables);
 
-			for (ThrowableAwareRunnable throwableAwareRunnable :
-					throwableAwareRunnables) {
+				executorService.shutdown();
 
-				if (throwableAwareRunnable.hasException()) {
-					throwables.add(throwableAwareRunnable.getThrowable());
-				}
-			}
-
-			if (!throwables.isEmpty()) {
-				Class<?> clazz = getClass();
-
-				throw new BulkException(
-					"Verification error: " + clazz.getName(), throwables);
+				UnsafeConsumer.accept(futures, Future::get);
 			}
 		}
-		else {
-			ThrowableAwareRunnablesExecutorUtil.execute(
-				throwableAwareRunnables);
+		catch (Throwable throwable) {
+			Class<?> clazz = getClass();
+
+			throw new Exception(
+				"Verification error: " + clazz.getName(), throwable);
 		}
 	}
 
@@ -177,7 +170,7 @@ public abstract class VerifyProcess extends BaseDBProcess {
 	}
 
 	protected boolean isForceConcurrent(
-		Collection<? extends ThrowableAwareRunnable> throwableAwareRunnables) {
+		Collection<? extends Callable<Void>> callables) {
 
 		return false;
 	}

@@ -343,9 +343,9 @@
 		<for list="${kbAdminSection}" param="kbAdminSection">
 			<var method="MathUtil#sum('${sectionCount}', '1')" name="sectionCount" />
 
-			<execute function="Type" locator1="KnowledgeBaseArticle#ADMIN_KB_ARTICLE_SECTION" value1="${kbAdminSection}">
-				<var name="key_counter" value="${sectionCount}" />
-			</execute>
+			<var name="key_counter" value="${sectionCount}" />
+
+			<execute function="Type" locator1="KnowledgeBaseArticle#ADMIN_KB_ARTICLE_SECTION" value1="${kbAdminSection}" />
 
 			<execute function="Click" locator1="Icon#ADD_REPEATABLE_ENTRY">
 				<var name="key_assetType" value="KBArticleSection" />
@@ -809,6 +809,8 @@
 	</command>
 
 	<command name="editPGViaLocalizedKBDisplay">
+		<var name="key_editLocalized" value="Editar" />
+		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 		<var name="key_localizedText" value="Editor de texto enriquecido" />
 
 		<execute function="AssertClick" locator1="KnowledgeBase#KB_TOOLS" value1="${key_editLocalized}">
@@ -1342,9 +1344,9 @@
 	</command>
 
 	<command name="viewChildArticleHierarchyViaKBDisplayPG">
-		<execute function="AssertClick" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_PARENT" value1="${kbArticleTitle}">
-			<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-		</execute>
+		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+
+		<execute function="AssertClick" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_PARENT" value1="${kbArticleTitle}" />
 
 		<var name="childCount" value="0" />
 		<var name="kbParentChild" value="${kbArticleTitle} Child" />
@@ -1359,9 +1361,9 @@
 				<if>
 					<condition function="IsElementPresent" locator1="xpath=//div[@class='kbarticle-navigation']/ul/li[contains(.,'${key_kbArticleTitle}')]/ul[${childCount}]" />
 					<then>
-						<execute function="AssertClick#assertTextClickNoMouseOver" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_CHILD" value1="${kbChildArticleTitle}">
-							<var name="key_kbChildArticleTitle" value="${kbChildArticleTitle}" />
-						</execute>
+						<var name="key_kbChildArticleTitle" value="${kbChildArticleTitle}" />
+
+						<execute function="AssertClick#assertTextClickNoMouseOver" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_CHILD" value1="${kbChildArticleTitle}" />
 					</then>
 				</if>
 			</then>

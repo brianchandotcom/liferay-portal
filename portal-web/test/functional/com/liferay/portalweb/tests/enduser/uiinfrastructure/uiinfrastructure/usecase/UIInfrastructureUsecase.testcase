@@ -20,6 +20,41 @@
 		</if>
 	</tear-down>
 
+	<command name="RightToLeftSmoke" priority="4">
+		<execute macro="Page#add">
+			<var name="pageName" value="RTL Test Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Language Selector" />
+		</execute>
+
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="language" value="Hebrew (Israel)" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#openProductMenu" />
+
+		<execute macro="Page#viewRTLLayout" />
+
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="language" value="English (United States)" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addLocale">
+			<var name="language" value="Hebrew (Israel)" />
+			<var name="locale" value="iw-IL" />
+		</execute>
+
+		<execute macro="WebContent#viewRTLLayout" />
+	</command>
+
 	<command name="Smoke" priority="5">
 		<description message="Ensure that a user can access portlet options and drag and drop portlets." />
 

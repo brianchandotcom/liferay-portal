@@ -1223,6 +1223,12 @@
 		</for>
 	</command>
 
+	<command name="viewRTLLayout">
+		<execute function="AssertCssValue" locator1="Home#SITE_NAME" locator2="margin-right" value1="20px" />
+		<execute function="AssertCssValue" locator1="ProductMenu#TOGGLE" locator2="text-align" value1="right" />
+		<execute function="AssertCssValue" locator1="ProductMenu#PRODUCT_MENU_OPENED" locator2="right" value1="0px" />
+	</command>
+
 	<command name="viewSelectedLayoutColumn">
 		<execute function="AssertElementPresent" locator1="SitePagesEditPage#LAYOUT_CARD_SELECTED">
 			<var name="key_columnName" value="${columnName}" />

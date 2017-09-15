@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.kernel.memory;
+package com.liferay.petra.memory;
+
+import java.lang.ref.Reference;
 
 /**
  * @author Shuyang Zhou
  */
-public interface PoolAction<O, I> {
+public class DummyFinalizeAction implements FinalizeAction {
 
-	public O onBorrow(O output, I input);
-
-	public O onCreate(I input);
-
-	public void onReturn(O output);
+	@Override
+	public void doFinalize(Reference<?> reference) {
+	}
 
 }

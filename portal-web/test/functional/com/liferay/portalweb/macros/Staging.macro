@@ -1075,6 +1075,8 @@
 		<if>
 			<equals arg1="${modifiedVersion}" arg2="true" />
 			<then>
+				<var name="key_historyVersion" value="${historyVersion}" />
+
 				<execute function="AssertTextNotEquals" locator1="Staging#HISTORY_VERSION" value1="${historyVersion}" />
 			</then>
 			<elseif>
@@ -1088,6 +1090,8 @@
 			<elseif>
 				<condition function="IsElementPresent#isVisible" locator1="Staging#HISTORY_VERSION" />
 				<then>
+					<var name="key_historyVersion" value="${historyVersion}" />
+		
 					<execute function="AssertTextEquals#assertPartialText" locator1="Staging#HISTORY_VERSION" value1="${historyVersion}" />
 				</then>
 			</elseif>

@@ -62,8 +62,10 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.Assert;
 
@@ -435,19 +437,41 @@ public class CPTestUtil {
 	protected static String getJSON(
 		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels) {
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		Map<Long, Set<Long>> cpDefinitionOptionValueRelMap = new HashMap<>();
 
 		for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
 				cpDefinitionOptionValueRels) {
 
+			long key = cpDefinitionOptionValueRel.getCPDefinitionOptionRelId();
+
+			Set<Long> values = cpDefinitionOptionValueRelMap.get(key);
+
+			if (values == null) {
+				values = new HashSet<>();
+
+				cpDefinitionOptionValueRelMap.put(key, values);
+			}
+
+			values.add(
+				cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId());
+		}
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (Map.Entry<Long, Set<Long>> entry :
+				cpDefinitionOptionValueRelMap.entrySet()) {
+
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			jsonObject.put(
-				"cpDefinitionOptionRelId",
-				cpDefinitionOptionValueRel.getCPDefinitionOptionRelId());
-			jsonObject.put(
-				"cpDefinitionOptionValueRelId",
-				cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId());
+			jsonObject.put("key", entry.getKey());
+
+			JSONArray valueJSONArray = JSONFactoryUtil.createJSONArray();
+
+			for (long value : entry.getValue()) {
+				valueJSONArray.put(value);
+			}
+
+			jsonObject.put("value", valueJSONArray);
 
 			jsonArray.put(jsonObject);
 		}

@@ -494,9 +494,20 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 					}
 
 					for (int i = 1;; i++) {
+						String iString = String.valueOf(i);
+
+						int availableLength =
+							254 - (titleExtension.length() + iString.length());
+
+						if (titleWithoutExtension.length() > availableLength) {
+							titleWithoutExtension =
+								titleWithoutExtension.substring(
+									0, availableLength);
+						}
+
 						title =
 							titleWithoutExtension + StringPool.UNDERLINE +
-								String.valueOf(i);
+								iString;
 
 						if (Validator.isNotNull(titleExtension)) {
 							title = title.concat(titleExtension);

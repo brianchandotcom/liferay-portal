@@ -224,6 +224,10 @@ public class GitWorkingDirectory {
 		}
 	}
 
+	public void clean() {
+		clean(null);
+	}
+
 	public void clean(File workingDirectory) {
 		if (workingDirectory == null) {
 			workingDirectory = _workingDirectory;

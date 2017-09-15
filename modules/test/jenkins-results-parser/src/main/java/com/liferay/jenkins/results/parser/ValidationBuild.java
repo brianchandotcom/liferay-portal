@@ -45,7 +45,16 @@ public class ValidationBuild extends BaseBuild {
 		String[] consoleSnippets = consoleText.split(
 			"Executing subrepository task ");
 
-		if (consoleSnippets.length <= 1) {
+		if (consoleSnippets.length > 1) {
+			for (int i = 1; i < consoleSnippets.length; i++) {
+				String consoleSnippet = consoleSnippets[i];
+
+				if (consoleSnippet.contains("merge-test-results:")) {
+					continue;
+				}
+			}
+		}
+		else {
 			Dom4JUtil.addToElement(rootElement, getFailureMessageElement());
 		}
 

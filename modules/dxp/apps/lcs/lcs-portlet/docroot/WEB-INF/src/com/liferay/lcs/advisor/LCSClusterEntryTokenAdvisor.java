@@ -410,6 +410,8 @@ public class LCSClusterEntryTokenAdvisor {
 		Map<String, String> lcsServicesConfiguration =
 			lcsClusterEntryTokenContentAdvisor.getLCSServicesConfiguration();
 
+		_addMissingConfigurations(lcsServicesConfiguration);
+
 		for (Map.Entry<String, String> lcsServiceConfigurationEntry :
 				lcsServicesConfiguration.entrySet()) {
 
@@ -456,6 +458,31 @@ public class LCSClusterEntryTokenAdvisor {
 		}
 
 		return true;
+	}
+
+	private void _addMissingConfigurations(
+		Map<String, String> lcsServicesConfiguration) {
+
+		if (lcsServicesConfiguration.get(
+				LCSConstants.METRICS_LCS_SERVICE_ENABLED) == null) {
+
+			lcsServicesConfiguration.put(
+				LCSConstants.METRICS_LCS_SERVICE_ENABLED, "false");
+		}
+
+		if (lcsServicesConfiguration.get(
+				LCSConstants.PATCHES_LCS_SERVICE_ENABLED) == null) {
+
+			lcsServicesConfiguration.put(
+				LCSConstants.PATCHES_LCS_SERVICE_ENABLED, "false");
+		}
+
+		if (lcsServicesConfiguration.get(
+				LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED) == null) {
+
+			lcsServicesConfiguration.put(
+				LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED, "false");
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

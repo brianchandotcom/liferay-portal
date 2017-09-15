@@ -18,7 +18,9 @@ import java.lang.ref.Reference;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.petra.memory.FinalizeAction}
  */
+@Deprecated
 public interface FinalizeAction {
 
 	public void doFinalize(Reference<?> reference);

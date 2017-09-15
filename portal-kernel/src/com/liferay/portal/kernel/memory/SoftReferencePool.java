@@ -23,7 +23,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.petra.memory.SoftReferencePool}
  */
+@Deprecated
 public class SoftReferencePool<V, P> {
 
 	public static final int DEFAULT_IDLE_SIZE = 8;

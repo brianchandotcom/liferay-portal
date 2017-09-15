@@ -16,7 +16,9 @@ package com.liferay.portal.kernel.memory;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.petra.memory.PoolAction}
  */
+@Deprecated
 public interface PoolAction<O, I> {
 
 	public O onBorrow(O output, I input);

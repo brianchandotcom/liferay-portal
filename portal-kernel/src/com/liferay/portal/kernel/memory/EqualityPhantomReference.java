@@ -19,7 +19,9 @@ import java.lang.ref.ReferenceQueue;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.petra.memory.EqualityPhantomReference}
  */
+@Deprecated
 public class EqualityPhantomReference<T> extends PhantomReference<T> {
 
 	public EqualityPhantomReference(

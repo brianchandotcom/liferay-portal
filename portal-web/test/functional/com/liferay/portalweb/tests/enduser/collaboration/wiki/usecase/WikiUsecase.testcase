@@ -567,7 +567,7 @@
 
 		<execute macro="WikiPage#viewSearchResultsPG">
 			<var name="wikiAttachment" value="true" />
-			<var name="wikiAttachmentBody" value="This is a *.txt document." />
+			<var name="wikiAttachmentBody" value="Document_1.txt" />
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
 	</command>

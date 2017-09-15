@@ -330,8 +330,8 @@ AUI.add(
 								}
 
 								instance._appendXMLAssignments(buffer, item.assignments);
-								instance._appendXMLTransitions(buffer, item.transitions);
 								instance._appendXMLTaskTimers(buffer, item.taskTimers);
+								instance._appendXMLTransitions(buffer, item.transitions);
 
 								buffer.push(xmlNode.close);
 							}

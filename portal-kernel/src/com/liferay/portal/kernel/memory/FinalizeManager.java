@@ -22,7 +22,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.petra.memory.FinalizeManager}
  */
+@Deprecated
 public class FinalizeManager {
 
 	public static final ReferenceFactory PHANTOM_REFERENCE_FACTORY =

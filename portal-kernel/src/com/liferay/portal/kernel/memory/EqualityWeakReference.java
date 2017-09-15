@@ -21,7 +21,9 @@ import java.util.Objects;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.petra.memory.EqualityWeakReference}
  */
+@Deprecated
 public class EqualityWeakReference<T> extends WeakReference<T> {
 
 	public EqualityWeakReference(T referent) {

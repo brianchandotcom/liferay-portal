@@ -184,7 +184,6 @@
 	</command>
 
 	<command name="gotoSitesCommerce" summary="Navigate to Product Menu > Sites > Commerce > ${portlet}">
-
 		<execute macro="ProductMenuHelper#expandPanelSites" />
 
 		<execute macro="ProductMenuHelper#expandCategory">

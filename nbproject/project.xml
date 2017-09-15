@@ -20,6 +20,12 @@
 					<encoding>UTF-8</encoding>
 				</source-folder>
 				<source-folder>
+					<label>modules\apps\foundation\petra\petra-memory\src\main\java</label>
+					<type>java</type>
+					<location>modules/apps/foundation/petra/petra-memory/src/main/java</location>
+					<encoding>UTF-8</encoding>
+				</source-folder>
+				<source-folder>
 					<label>modules\core\registry-api\src\main\java</label>
 					<type>java</type>
 					<location>modules/core/registry-api/src/main/java</location>
@@ -152,6 +158,10 @@
 			<view>
 				<items>
 					<source-folder style="packages">
+						<label>modules\apps\foundation\petra\petra-memory\src</label>
+						<location>modules/apps/foundation/petra/petra-memory/src</location>
+					</source-folder>
+					<source-folder style="packages">
 						<label>modules\core\registry\registry-api\src</label>
 						<location>modules/core/registry/registry-api/src</location>
 					</source-folder>
@@ -234,6 +244,7 @@
 		</general-data>
 		<java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/4">
 			<compilation-unit>
+				<package-root>modules/apps/foundation/petra/petra-memory/src/main/java</package-root>
 				<package-root>modules/core/registry-api/src/main/java</package-root>
 				<package-root>portal-impl/src</package-root>
 				<package-root>portal-impl/test/integration</package-root>

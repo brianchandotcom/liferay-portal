@@ -14,9 +14,9 @@
 
 package com.liferay.portal.store.jcr;
 
+import com.liferay.petra.memory.FinalizeAction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.memory.FinalizeAction;
 
 import java.lang.ref.Reference;
 import java.lang.reflect.InvocationHandler;

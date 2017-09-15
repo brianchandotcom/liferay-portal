@@ -14,21 +14,21 @@
 
 package com.liferay.portal.security.pacl;
 
+import com.liferay.petra.concurrent.ConcurrentIdentityHashMap;
+import com.liferay.petra.concurrent.ConcurrentReferenceKeyHashMap;
+import com.liferay.petra.concurrent.ConcurrentReferenceValueHashMap;
+import com.liferay.petra.memory.EqualityWeakReference;
+import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.dao.jdbc.DataSourceFactoryImpl;
 import com.liferay.portal.dao.orm.hibernate.DynamicQueryFactoryImpl;
 import com.liferay.portal.deploy.hot.HotDeployImpl;
 import com.liferay.portal.kernel.bean.BeanLocator;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.concurrent.ConcurrentIdentityHashMap;
-import com.liferay.portal.kernel.concurrent.ConcurrentReferenceKeyHashMap;
-import com.liferay.portal.kernel.concurrent.ConcurrentReferenceValueHashMap;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.jndi.JNDIUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.memory.EqualityWeakReference;
-import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.security.pacl.PACLConstants;
 import com.liferay.portal.kernel.security.pacl.permission.PortalFilePermission;

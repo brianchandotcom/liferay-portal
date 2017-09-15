@@ -117,20 +117,19 @@ public class GitWorkingDirectory {
 	}
 
 	public boolean branchExists(String branchName, Remote remote) {
-		List<String> branchNames = null;
-
 		if (remote == null) {
-			branchNames = getLocalBranchNames();
-		}
-		else {
-			Branch branch = getRemoteBranch(branchName, remote);
-
-			if (branch != null) {
+			if (getLocalBranch(branchName) != null) {
 				return true;
 			}
+
+			return false;
 		}
 
-		return branchNames.contains(branchName);
+		if (getRemoteBranch(branchName, remote) != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public void checkoutBranch(Branch branch) {
@@ -425,19 +424,7 @@ public class GitWorkingDirectory {
 	public Branch getCurrentBranch() {
 		waitForIndexLock();
 
-		ExecutionResult executionResult = executeBashCommands(
-			"git rev-parse --abbrev-ref HEAD");
-
-		if (executionResult.getExitValue() != 0) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to get current branch name\n",
-					executionResult.getStandardErr()));
-		}
-
-		String branchName = executionResult.getStandardOut();
-
-		return new Branch(branchName, null, getBranchSha(branchName));
+		return getLocalBranch("HEAD");
 	}
 
 	public String getGitConfigProperty(String gitConfigPropertyName) {
@@ -483,6 +470,21 @@ public class GitWorkingDirectory {
 
 	public File getGitDirectory() {
 		return _gitDirectory;
+	}
+
+	public Branch getLocalBranch(String branchName) {
+		ExecutionResult executionResult = executeBashCommands(
+			"git rev-parse --abbrev-ref " + branchName);
+
+		if (executionResult.getExitValue() != 0) {
+			return null;
+		}
+
+		if (branchName.equals("HEAD")) {
+			branchName = executionResult.getStandardOut();
+		}
+
+		return new Branch(branchName, null, getBranchSha(branchName));
 	}
 
 	public List<String> getLocalBranchNames() {
@@ -626,13 +628,20 @@ public class GitWorkingDirectory {
 	public boolean pushToRemote(
 		boolean force, Branch localBranch, Branch remoteBranch) {
 
+		return pushToRemote(
+			force, localBranch, remoteBranch.getName(),
+			remoteBranch.getRemote());
+	}
+
+	public boolean pushToRemote(
+		boolean force, Branch localBranch, String remoteBranchName,
+		Remote remote) {
+
 		String localBranchName = "";
 
 		if (localBranch != null) {
 			localBranchName = localBranch._name;
 		}
-
-		Remote remote = remoteBranch._remote;
 
 		StringBuilder sb = new StringBuilder();
 
@@ -646,7 +655,7 @@ public class GitWorkingDirectory {
 		sb.append(" ");
 		sb.append(localBranchName);
 		sb.append(":");
-		sb.append(remoteBranch._name);
+		sb.append(remoteBranchName);
 
 		try {
 			executeBashCommands(sb.toString());

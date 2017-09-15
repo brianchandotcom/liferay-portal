@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.kernel.memory;
+package com.liferay.petra.memory;
 
-import com.liferay.portal.kernel.memory.FinalizeManager.ReferenceFactory;
+import com.liferay.petra.memory.FinalizeManager.ReferenceFactory;
 import com.liferay.portal.kernel.test.GCUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;

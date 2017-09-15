@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.memory;
+package com.liferay.petra.memory;
 
 import java.lang.ref.Reference;
 

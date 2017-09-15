@@ -15,7 +15,6 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.concurrent.ThrowableAwareRunnable;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -31,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 /**
  * @author Brian Wing Shun Chan
@@ -61,11 +61,11 @@ public class VerifyUUID extends VerifyProcess {
 	protected void doVerify(VerifiableUUIDModel... verifiableUUIDModels)
 		throws Exception {
 
-		List<VerifyUUIDRunnable> verifyUUIDRunnables = new ArrayList<>(
+		List<VerifyUUIDCallable> verifyUUIDRunnables = new ArrayList<>(
 			verifiableUUIDModels.length);
 
 		for (VerifiableUUIDModel verifiableUUIDModel : verifiableUUIDModels) {
-			VerifyUUIDRunnable verifyUUIDRunnable = new VerifyUUIDRunnable(
+			VerifyUUIDCallable verifyUUIDRunnable = new VerifyUUIDCallable(
 				verifiableUUIDModel);
 
 			verifyUUIDRunnables.add(verifyUUIDRunnable);
@@ -110,15 +110,17 @@ public class VerifyUUID extends VerifyProcess {
 		}
 	}
 
-	private class VerifyUUIDRunnable extends ThrowableAwareRunnable {
-
-		public VerifyUUIDRunnable(VerifiableUUIDModel verifiableUUIDModel) {
-			_verifiableUUIDModel = verifiableUUIDModel;
-		}
+	private class VerifyUUIDCallable implements Callable<Void> {
 
 		@Override
-		protected void doRun() throws Exception {
+		public Void call() throws Exception {
 			verifyUUID(_verifiableUUIDModel);
+
+			return null;
+		}
+
+		private VerifyUUIDCallable(VerifiableUUIDModel verifiableUUIDModel) {
+			_verifiableUUIDModel = verifiableUUIDModel;
 		}
 
 		private final VerifiableUUIDModel _verifiableUUIDModel;

@@ -1,9 +1,5 @@
 <definition>
 	<command name="gotoEntry">
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
-			<var name="portlet" value="${portlet}" />
-		</execute>
-
 		<execute function="AssertClick" locator1="CommerceNavigation#ENTRY_TITLE" value1="${entryTitle}">
 			<var name="key_entryTitle" value="${entryTitle}" />
 		</execute>

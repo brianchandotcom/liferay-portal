@@ -188,6 +188,12 @@ public class BatchBuild extends BaseBuild {
 	}
 
 	@Override
+	public void takeSlaveOffline(SlaveOfflineRule slaveOfflineRule) {
+		throw new RuntimeException(
+			"Batch Build slaves should not be taken offline");
+	}
+
+	@Override
 	public void update() {
 		super.update();
 

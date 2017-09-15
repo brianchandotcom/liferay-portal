@@ -18,14 +18,15 @@ import com.liferay.lcs.task.ScheduledTask;
 import com.liferay.lcs.util.LCSConnectionManager;
 import com.liferay.portal.kernel.bean.BeanLocator;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Riccardo Ferrari
@@ -104,7 +105,7 @@ public class TaskSchedulerReceiverMessageListener extends BaseMessageListener {
 		TaskSchedulerReceiverMessageListener.class);
 
 	private static final Set<String> _runningTaskNames =
-		new ConcurrentHashSet<>();
+		Collections.newSetFromMap(new ConcurrentHashMap<>());
 
 	private LCSConnectionManager _lcsConnectionManager;
 

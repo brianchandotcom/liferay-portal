@@ -14,9 +14,9 @@
 
 package com.liferay.vldap.server.internal.directory.builder;
 
-import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -31,7 +31,8 @@ public class AttributeValidator {
 	}
 
 	public void addValidAttributeValues(String name, String... values) {
-		Set<String> lowerCaseValues = new ConcurrentHashSet<>(values.length);
+		Set<String> lowerCaseValues = Collections.newSetFromMap(
+			new ConcurrentHashMap<>());
 
 		for (String value : values) {
 			lowerCaseValues.add(StringUtil.toLowerCase(value));
@@ -64,7 +65,7 @@ public class AttributeValidator {
 	}
 
 	private final Set<String> _alwaysValidAttributeNames =
-		new ConcurrentHashSet<>();
+		Collections.newSetFromMap(new ConcurrentHashMap<>());
 	private final Map<String, Set<String>> _validAttributeValues =
 		new ConcurrentHashMap<>();
 

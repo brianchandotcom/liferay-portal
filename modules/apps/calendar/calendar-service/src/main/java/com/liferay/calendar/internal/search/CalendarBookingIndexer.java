@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
-import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.search.SearchPermissionChecker;
@@ -55,14 +54,12 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
+ * @deprecated As of 3.0.0, since 7.1.0
  * @author Adam Victor Brandizzi
  * @author Eduardo Lundgren
  */
-@Component(immediate = true, service = Indexer.class)
+@Deprecated
 public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 
 	public static final String CLASS_NAME = CalendarBooking.class.getName();
@@ -354,14 +351,12 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 		indexableActionableDynamicQuery.performActions();
 	}
 
-	@Reference(unbind = "-")
 	protected void setCalendarBookingLocalService(
 		CalendarBookingLocalService calendarBookingLocalService) {
 
 		_calendarBookingLocalService = calendarBookingLocalService;
 	}
 
-	@Reference(unbind = "-")
 	protected void setClassNameLocalService(
 		ClassNameLocalService classNameLocalService) {
 
@@ -373,11 +368,7 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 
 	private CalendarBookingLocalService _calendarBookingLocalService;
 	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
 	private IndexWriterHelper _indexWriterHelper;
-
-	@Reference
 	private TrashHelper _trashHelper;
 
 }

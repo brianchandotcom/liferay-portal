@@ -47,13 +47,11 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
+ * @deprecated As of 3.0.0, since 7.1.0
  * @author Adam Brandizzi
  */
-@Component(immediate = true, service = Indexer.class)
+@Deprecated
 public class CalendarIndexer extends BaseIndexer<Calendar> {
 
 	public static final String CLASS_NAME = Calendar.class.getName();
@@ -208,21 +206,18 @@ public class CalendarIndexer extends BaseIndexer<Calendar> {
 		indexableActionableDynamicQuery.performActions();
 	}
 
-	@Reference(unbind = "-")
 	protected void setCalendarBookingLocalService(
 		CalendarBookingLocalService calendarBookingLocalService) {
 
 		_calendarBookingLocalService = calendarBookingLocalService;
 	}
 
-	@Reference(unbind = "-")
 	protected void setCalendarLocalService(
 		CalendarLocalService calendarLocalService) {
 
 		_calendarLocalService = calendarLocalService;
 	}
 
-	@Reference(unbind = "-")
 	protected void setIndexerRegistry(IndexerRegistry indexerRegistry) {
 		_indexerRegistry = indexerRegistry;
 	}
@@ -232,15 +227,8 @@ public class CalendarIndexer extends BaseIndexer<Calendar> {
 
 	private CalendarBookingLocalService _calendarBookingLocalService;
 	private CalendarLocalService _calendarLocalService;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.calendar.model.Calendar)"
-	)
 	private ModelResourcePermission<Calendar> _calendarModelResourcePermission;
-
 	private IndexerRegistry _indexerRegistry;
-
-	@Reference
 	private IndexWriterHelper _indexWriterHelper;
 
 }

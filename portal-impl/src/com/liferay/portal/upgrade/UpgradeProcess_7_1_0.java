@@ -26,7 +26,7 @@ public class UpgradeProcess_7_1_0 extends UpgradeProcess {
 
 	@Override
 	public int getThreshold() {
-		return ReleaseInfo.RELEASE_7_0_4_BUILD_NUMBER;
+		return ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER;
 	}
 
 	@Override

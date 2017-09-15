@@ -619,19 +619,6 @@ public class UpgradeClient {
 			_portalUpgradeDatabaseProperties.setProperty(
 				"jdbc.default.username", username);
 		}
-
-		value = _portalUpgradeDatabaseProperties.getProperty(
-			"schema.run.enabled");
-
-		if ((value != null) && value.equals("true")) {
-			System.out.println(
-				"Overwritting property 'schema.run.enabled' setting it to " +
-					"false. An upgrade process must not popula" +
-						"te the database.");
-		}
-
-		_portalUpgradeDatabaseProperties.setProperty(
-			"schema.run.enabled", "false");
 	}
 
 	private void _verifyPortalUpgradeExtProperties() throws IOException {

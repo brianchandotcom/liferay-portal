@@ -319,6 +319,10 @@ public class GitWorkingDirectory {
 	}
 
 	public void deleteLocalBranch(Branch branch) {
+		if (!branchExists(branch.getName(), null)) {
+			return;
+		}
+
 		ExecutionResult executionResult = executeBashCommands(
 			"git branch -f -D " + branch.getName());
 
@@ -327,6 +331,14 @@ public class GitWorkingDirectory {
 				JenkinsResultsParserUtil.combine(
 					"Unable to delete local branch ", branch.getName(), "\n",
 					executionResult.getStandardErr()));
+		}
+	}
+
+	public void deleteLocalBranch(String branchName) {
+		Branch branch = getLocalBranch(branchName);
+
+		if (branch != null) {
+			deleteLocalBranch(branch);
 		}
 	}
 

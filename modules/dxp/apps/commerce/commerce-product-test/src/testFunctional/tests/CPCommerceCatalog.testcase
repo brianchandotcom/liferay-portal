@@ -52,6 +52,10 @@
 	<command name="AddGroupedCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="true" />
 
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Catalog" />
+		</execute>
+
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="plusMenu" value="Grouped" />
 			<var name="productFullDescription" value="Grouped Product 1 Full Description" />
@@ -81,6 +85,10 @@
 	<command name="AddGroupedDraftCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="true" />
 
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Catalog" />
+		</execute>
+
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="plusMenu" value="Grouped" />
 			<var name="productFullDescription" value="Grouped Product 1 Full Description" />
@@ -95,6 +103,10 @@
 
 	<command name="AddSimpleCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Catalog" />
+		</execute>
 
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="plusMenu" value="Simple" />
@@ -125,6 +137,10 @@
 	<command name="AddSimpleDraftCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="true" />
 
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Catalog" />
+		</execute>
+
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="plusMenu" value="Simple" />
 			<var name="productFullDescription" value="Simple Product 1 Full Description" />
@@ -139,6 +155,10 @@
 
 	<command name="AddVirtualCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="true" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Catalog" />
+		</execute>
 
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="plusMenu" value="Virtual" />
@@ -168,6 +188,10 @@
 
 	<command name="AddVirtualDraftCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="true" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Catalog" />
+		</execute>
 
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="plusMenu" value="Virtual" />
@@ -275,6 +299,10 @@
 		<property name="portal.acceptance" value="true" />
 
 		<for list="1,2,3" param="entryNumber">
+			<execute macro="ProductMenu#gotoSitesCommerce">
+				<var name="portlet" value="Catalog" />
+			</execute>
+
 			<execute macro="CommerceCatalog#addEntry">
 				<var name="plusMenu" value="Simple" />
 				<var name="productFullDescription" value="Product ${entryNumber} Full Description" />
@@ -319,6 +347,10 @@
 	</command>
 
 	<command ignore="true" name="EditCatalogEntry" priority="5">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Catalog" />
+		</execute>
+
 		<execute macro="CommerceCatalog#addEntry">
 			<var name="plusMenu" value="Simple" />
 			<var name="productFullDescription" value="Product Full Description" />

@@ -482,8 +482,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 					String title = GetterUtil.getString(rs.getString("title"));
 					String version = rs.getString("version");
 
-					String uniqueFileName = DLUtil.getSanitizedFileName(
-						title, extension);
+					String uniqueFileName = null;
 
 					String titleExtension = StringPool.BLANK;
 					String titleWithoutExtension = title;
@@ -493,61 +492,44 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 						titleWithoutExtension = FileUtil.stripExtension(title);
 					}
 
-					boolean generatedUniqueFileName = false;
-					String uniqueTitle = title;
-
 					for (int i = 1;; i++) {
-						if (!generatedUniqueFileNames.contains(
-								uniqueFileName) &&
-							!generatedUniqueTitles.contains(uniqueTitle) &&
-							!hasFileEntry(
-								groupId, folderId, fileEntryId, uniqueTitle,
-								uniqueFileName)) {
-
-							break;
-						}
-
-						generatedUniqueFileName = true;
-
-						uniqueTitle =
+						title =
 							titleWithoutExtension + StringPool.UNDERLINE +
 								String.valueOf(i);
 
 						if (Validator.isNotNull(titleExtension)) {
-							uniqueTitle += StringPool.PERIOD.concat(
-								titleExtension);
+							title += StringPool.PERIOD.concat(titleExtension);
 						}
 
 						uniqueFileName = DLUtil.getSanitizedFileName(
-							uniqueTitle, extension);
+							title, extension);
+
+						if (!generatedUniqueFileNames.contains(
+								uniqueFileName) &&
+							!generatedUniqueTitles.contains(title) &&
+							!hasFileEntry(
+								groupId, folderId, fileEntryId, title,
+								uniqueFileName)) {
+
+							break;
+						}
 					}
 
-					if (generatedUniqueFileName) {
-						generatedUniqueFileNames.add(uniqueFileName);
-						generatedUniqueTitles.add(uniqueTitle);
-					}
+					generatedUniqueFileNames.add(uniqueFileName);
+					generatedUniqueTitles.add(title);
 
 					ps2.setString(1, uniqueFileName);
-
-					if (Validator.isNotNull(uniqueTitle)) {
-						ps2.setString(2, uniqueTitle);
-					}
-					else {
-						ps2.setString(2, title);
-					}
-
+					ps2.setString(2, title);
 					ps2.setLong(3, fileEntryId);
 
 					ps2.addBatch();
 
-					if (Validator.isNotNull(uniqueTitle)) {
-						ps3.setString(1, uniqueTitle);
-						ps3.setLong(2, fileEntryId);
-						ps3.setString(3, version);
-						ps3.setInt(4, WorkflowConstants.STATUS_IN_TRASH);
+					ps3.setString(1, title);
+					ps3.setLong(2, fileEntryId);
+					ps3.setString(3, version);
+					ps3.setInt(4, WorkflowConstants.STATUS_IN_TRASH);
 
-						ps3.addBatch();
-					}
+					ps3.addBatch();
 				}
 
 				ps2.executeBatch();

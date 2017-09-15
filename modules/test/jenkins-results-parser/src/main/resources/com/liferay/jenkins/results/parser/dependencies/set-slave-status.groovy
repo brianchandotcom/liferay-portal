@@ -16,7 +16,7 @@ for (String slave : slaves.split(",")) {
 
 		OfflineCause offlineCause = new OfflineCause.ByCLI("${offline.reason}");
 
-		slaveComputer.setTemporarilyOffline(offlineStatus}, offlineCause);
+		slaveComputer.setTemporarilyOffline(offlineStatus, offlineCause);
 	}
 	catch (NullPointerException npe) {
 	}

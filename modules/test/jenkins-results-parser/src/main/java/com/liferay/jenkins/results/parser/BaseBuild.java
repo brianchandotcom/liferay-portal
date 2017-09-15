@@ -1016,6 +1016,7 @@ public abstract class BaseBuild implements Build {
 					}
 				}
 
+				slave = getSlave();
 				status = getStatus();
 
 				if (downstreamBuilds != null) {

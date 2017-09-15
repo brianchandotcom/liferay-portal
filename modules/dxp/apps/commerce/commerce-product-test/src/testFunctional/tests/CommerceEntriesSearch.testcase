@@ -18,7 +18,9 @@
 				<execute macro="PortalInstances#tearDownCP" />
 			</then>
 			<else>
-				<execute macro="CommerceNavigator#gotoSitesCommerce">
+				<execute macro="Navigator#openURL" />
+
+				<execute macro="ProductMenu#gotoSitesCommerce">
 					<var name="portlet" value="Catalog" />
 				</execute>
 
@@ -29,7 +31,9 @@
 					</then>
 				</if>
 
-				<execute macro="CommerceNavigator#gotoSitesCommerce">
+				<execute macro="Navigator#openURL" />
+
+				<execute macro="ProductMenu#gotoSitesCommerce">
 					<var name="portlet" value="Options" />
 				</execute>
 
@@ -58,7 +62,9 @@
 
 		<execute macro="CommerceEntry#publishEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Catalog" />
 		</execute>
 

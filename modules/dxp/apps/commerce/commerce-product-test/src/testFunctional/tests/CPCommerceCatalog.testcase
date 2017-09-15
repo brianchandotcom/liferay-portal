@@ -18,7 +18,9 @@
 				<execute macro="PortalInstances#tearDownCP" />
 			</then>
 			<else>
-				<execute macro="CommerceNavigator#gotoSitesCommerce">
+				<execute macro="Navigator#openURL" />
+
+				<execute macro="ProductMenu#gotoSitesCommerce">
 					<var name="portlet" value="Catalog" />
 				</execute>
 
@@ -29,7 +31,9 @@
 					</then>
 				</if>
 
-				<execute macro="CommerceNavigator#gotoSitesCommerce">
+				<execute macro="Navigator#openURL" />
+
+				<execute macro="ProductMenu#gotoSitesCommerce">
 					<var name="portlet" value="Options" />
 				</execute>
 
@@ -59,7 +63,13 @@
 			<var name="status" value="Approved" />
 		</execute>
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute function="Pause" locator1="3000" />
+
+		<execute function="Pause" locator1="3000" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Catalog" />
 		</execute>
 
@@ -97,7 +107,13 @@
 			<var name="status" value="Approved" />
 		</execute>
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute function="Pause" locator1="3000" />
+
+		<execute function="Pause" locator1="3000" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Catalog" />
 		</execute>
 
@@ -135,7 +151,13 @@
 			<var name="status" value="Approved" />
 		</execute>
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute function="Pause" locator1="3000" />
+
+		<execute function="Pause" locator1="3000" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Catalog" />
 		</execute>
 
@@ -265,7 +287,9 @@
 			</execute>
 		</for>
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Catalog" />
 		</execute>
 
@@ -337,7 +361,9 @@
 			</else>
 		</if>
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Catalog" />
 		</execute>
 

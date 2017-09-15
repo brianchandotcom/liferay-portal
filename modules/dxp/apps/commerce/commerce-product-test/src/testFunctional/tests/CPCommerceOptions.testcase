@@ -18,7 +18,9 @@
 				<execute macro="PortalInstances#tearDownCP" />
 			</then>
 			<else>
-				<execute macro="CommerceNavigator#gotoSitesCommerce">
+				<execute macro="Navigator#openURL" />
+
+				<execute macro="ProductMenu#gotoSitesCommerce">
 					<var name="portlet" value="Options" />
 				</execute>
 
@@ -307,7 +309,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -360,7 +364,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -387,7 +393,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -422,7 +430,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -449,7 +459,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -484,7 +496,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -511,7 +525,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -546,7 +562,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -573,7 +591,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -608,7 +628,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -635,7 +657,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -670,7 +694,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -697,7 +723,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -727,7 +755,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -749,7 +779,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -779,7 +811,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -801,7 +835,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -831,7 +867,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -853,7 +891,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -888,7 +928,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -915,7 +957,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -952,7 +996,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -981,7 +1027,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -1010,7 +1058,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -1039,7 +1089,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -1068,7 +1120,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -1097,7 +1151,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -1124,7 +1180,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -1151,7 +1209,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -1186,7 +1246,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -1213,7 +1275,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -1248,7 +1312,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -1275,7 +1341,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -1310,7 +1378,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -1337,7 +1407,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -1372,7 +1444,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -1399,7 +1473,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -1429,7 +1505,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -1477,7 +1555,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -1611,7 +1691,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -1664,7 +1746,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -1722,7 +1806,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -1780,7 +1866,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -1838,7 +1926,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -1896,7 +1986,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -1954,7 +2046,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -2007,7 +2101,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -2055,7 +2151,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -2103,7 +2201,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -2151,7 +2251,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -2199,7 +2301,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -2292,7 +2396,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -2314,7 +2420,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -2336,7 +2444,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -2358,7 +2468,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -2380,7 +2492,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 
@@ -2402,7 +2516,9 @@
 
 		<execute macro="CommerceEntry#saveEntry" />
 
-		<execute macro="CommerceNavigator#gotoSitesCommerce">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Options" />
 		</execute>
 

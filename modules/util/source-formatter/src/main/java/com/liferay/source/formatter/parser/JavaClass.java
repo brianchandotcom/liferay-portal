@@ -34,10 +34,28 @@ public class JavaClass extends BaseJavaTerm {
 		_childJavaTerms.add(javaTerm);
 	}
 
+	public void addImport(String importName) {
+		_imports.add(importName);
+	}
+
 	public List<JavaTerm> getChildJavaTerms() {
 		return _childJavaTerms;
 	}
 
+	public List<String> getImports() {
+		return _imports;
+	}
+
+	public String getPackageName() {
+		return _packageName;
+	}
+
+	public void setPackageName(String packageName) {
+		_packageName = packageName;
+	}
+
 	private final List<JavaTerm> _childJavaTerms = new ArrayList<>();
+	private List<String> _imports = new ArrayList<>();
+	private String _packageName;
 
 }

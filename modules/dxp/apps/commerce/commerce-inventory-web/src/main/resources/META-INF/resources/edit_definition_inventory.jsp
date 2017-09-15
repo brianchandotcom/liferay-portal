@@ -21,7 +21,7 @@ CommerceInventoryDisplayContext commerceInventoryDisplayContext = (CommerceInven
 
 CommerceInventory commerceInventory = commerceInventoryDisplayContext.getCommerceInventory();
 
-CPDefinitionAvailabilityRange cpDefinitionAvailabilityRange = commerceInventoryDisplayContext.getCPDefinitionAvailabilityRange();
+CAvailabilityRangeEntry cAvailabilityRangeEntry = commerceInventoryDisplayContext.getCAvailabilityRangeEntry();
 
 CPDefinition cpDefinition = commerceInventoryDisplayContext.getCPDefinition();
 
@@ -38,8 +38,8 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 <aui:form action="<%= editProductDefinitionInventoryActionURL %>" cssClass="container-fluid-1280" method="post" name="fm1">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceInventory == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="cAvailabilityRangeEntryId" type="hidden" value="<%= (cAvailabilityRangeEntry == null) ? StringPool.BLANK : cAvailabilityRangeEntry.getCAvailabilityRangeEntryId() %>" />
 	<aui:input name="commerceInventoryId" type="hidden" value="<%= (commerceInventory == null) ? StringPool.BLANK : commerceInventory.getCommerceInventoryId() %>" />
-	<aui:input name="cpDefinitionAvailabilityRangeId" type="hidden" value="<%= (cpDefinitionAvailabilityRange == null) ? StringPool.BLANK : cpDefinitionAvailabilityRange.getCPDefinitionAvailabilityRangeId() %>" />
 	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinitionId %>" />
 
 	<div class="lfr-form-content">
@@ -100,7 +100,7 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 
 					<aui:option
 						label="<%= commerceAvailabilityRange.getTitle(languageId) %>"
-						selected="<%= (cpDefinitionAvailabilityRange != null) && (commerceAvailabilityRange.getCommerceAvailabilityRangeId() == cpDefinitionAvailabilityRange.getCommerceAvailabilityRangeId()) %>"
+						selected="<%= (cAvailabilityRangeEntry != null) && (commerceAvailabilityRange.getCommerceAvailabilityRangeId() == cAvailabilityRangeEntry.getCommerceAvailabilityRangeId()) %>"
 						value="<%= commerceAvailabilityRange.getCommerceAvailabilityRangeId() %>"
 					/>
 

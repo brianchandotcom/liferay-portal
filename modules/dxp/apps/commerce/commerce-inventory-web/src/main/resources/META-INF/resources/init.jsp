@@ -22,7 +22,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.commerce.inventory.CommerceInventoryEngine" %><%@
 page import="com.liferay.commerce.inventory.web.internal.display.context.CommerceInventoryDisplayContext" %><%@
-page import="com.liferay.commerce.model.CPDefinitionAvailabilityRange" %><%@
+page import="com.liferay.commerce.model.CAvailabilityRangeEntry" %><%@
 page import="com.liferay.commerce.model.CommerceAvailabilityRange" %><%@
 page import="com.liferay.commerce.model.CommerceInventory" %><%@
 page import="com.liferay.commerce.product.constants.CPPortletKeys" %><%@

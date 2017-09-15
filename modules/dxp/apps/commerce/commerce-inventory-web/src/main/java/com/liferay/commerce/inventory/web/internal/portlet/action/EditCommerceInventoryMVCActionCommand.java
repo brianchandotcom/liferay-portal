@@ -17,7 +17,7 @@ package com.liferay.commerce.inventory.web.internal.portlet.action;
 import com.liferay.commerce.exception.NoSuchInventoryException;
 import com.liferay.commerce.model.CommerceInventory;
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.service.CPDefinitionAvailabilityRangeService;
+import com.liferay.commerce.service.CAvailabilityRangeEntryService;
 import com.liferay.commerce.service.CommerceInventoryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -27,12 +27,11 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -86,8 +85,8 @@ public class EditCommerceInventoryMVCActionCommand
 		long commerceInventoryId = ParamUtil.getLong(
 			actionRequest, "commerceInventoryId");
 
-		long cpDefinitionAvailabilityRangeId = ParamUtil.getLong(
-			actionRequest, "cpDefinitionAvailabilityRangeId");
+		long cAvailabilityRangeEntryId = ParamUtil.getLong(
+			actionRequest, "cAvailabilityRangeEntryId");
 
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
@@ -132,17 +131,15 @@ public class EditCommerceInventoryMVCActionCommand
 				allowedCartQuantities, multipleCartQuantity, serviceContext);
 		}
 
-		_cpDefinitionAvailabilityRangeService.
-			updateCPDefinitionAvailabilityRange(
-				cpDefinitionAvailabilityRangeId, cpDefinitionId,
-				commerceAvailabilityRangeId, serviceContext);
+		_cAvailabilityRangeEntryService.updateCAvailabilityRangeEntry(
+			cAvailabilityRangeEntryId, cpDefinitionId,
+			commerceAvailabilityRangeId, serviceContext);
 	}
 
 	@Reference
-	private CommerceInventoryService _commerceInventoryService;
+	private CAvailabilityRangeEntryService _cAvailabilityRangeEntryService;
 
 	@Reference
-	private CPDefinitionAvailabilityRangeService
-		_cpDefinitionAvailabilityRangeService;
+	private CommerceInventoryService _commerceInventoryService;
 
 }

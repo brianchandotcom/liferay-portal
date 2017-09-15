@@ -19,7 +19,7 @@ import com.liferay.commerce.inventory.web.internal.display.context.CommerceInven
 import com.liferay.commerce.inventory.web.internal.portlet.action.CommerceInventoryActionHelper;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.service.CPDefinitionAvailabilityRangeService;
+import com.liferay.commerce.service.CAvailabilityRangeEntryService;
 import com.liferay.commerce.service.CommerceAvailabilityRangeService;
 import com.liferay.commerce.stock.activity.CommerceLowStockActivityRegistry;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
@@ -103,7 +103,7 @@ public class CPDefinitionInventoryScreenNavigationEntry
 					_commerceInventoryActionHelper,
 					_commerceInventoryEngineRegistry,
 					_commerceLowStockActivityRegistry,
-					_cpDefinitionAvailabilityRangeService);
+					_cAvailabilityRangeEntryService);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -125,6 +125,9 @@ public class CPDefinitionInventoryScreenNavigationEntry
 	private ActionHelper _actionHelper;
 
 	@Reference
+	private CAvailabilityRangeEntryService _cAvailabilityRangeEntryService;
+
+	@Reference
 	private CommerceAvailabilityRangeService _commerceAvailabilityRangeService;
 
 	@Reference
@@ -135,10 +138,6 @@ public class CPDefinitionInventoryScreenNavigationEntry
 
 	@Reference
 	private CommerceLowStockActivityRegistry _commerceLowStockActivityRegistry;
-
-	@Reference
-	private CPDefinitionAvailabilityRangeService
-		_cpDefinitionAvailabilityRangeService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

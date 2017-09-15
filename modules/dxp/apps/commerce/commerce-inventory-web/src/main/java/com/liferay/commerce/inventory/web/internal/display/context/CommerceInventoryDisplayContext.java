@@ -18,13 +18,13 @@ import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.inventory.CommerceInventoryEngine;
 import com.liferay.commerce.inventory.CommerceInventoryEngineRegistry;
 import com.liferay.commerce.inventory.web.internal.portlet.action.CommerceInventoryActionHelper;
-import com.liferay.commerce.model.CPDefinitionAvailabilityRange;
+import com.liferay.commerce.model.CAvailabilityRangeEntry;
 import com.liferay.commerce.model.CommerceAvailabilityRange;
 import com.liferay.commerce.model.CommerceInventory;
 import com.liferay.commerce.model.impl.CommerceInventoryImpl;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
-import com.liferay.commerce.service.CPDefinitionAvailabilityRangeService;
+import com.liferay.commerce.service.CAvailabilityRangeEntryService;
 import com.liferay.commerce.service.CommerceAvailabilityRangeService;
 import com.liferay.commerce.stock.activity.CommerceLowStockActivity;
 import com.liferay.commerce.stock.activity.CommerceLowStockActivityRegistry;
@@ -48,8 +48,7 @@ public class CommerceInventoryDisplayContext
 			CommerceInventoryActionHelper commerceInventoryActionHelper,
 			CommerceInventoryEngineRegistry commerceInventoryEngineRegistry,
 			CommerceLowStockActivityRegistry commerceLowStockActivityRegistry,
-			CPDefinitionAvailabilityRangeService
-				cpDefinitionAvailabilityRangeService)
+			CAvailabilityRangeEntryService cAvailabilityRangeEntryService)
 		throws PortalException {
 
 		super(actionHelper, httpServletRequest);
@@ -58,8 +57,14 @@ public class CommerceInventoryDisplayContext
 		_commerceInventoryActionHelper = commerceInventoryActionHelper;
 		_commerceInventoryEngineRegistry = commerceInventoryEngineRegistry;
 		_commerceLowStockActivityRegistry = commerceLowStockActivityRegistry;
-		_cpDefinitionAvailabilityRangeService =
-			cpDefinitionAvailabilityRangeService;
+		_cAvailabilityRangeEntryService = cAvailabilityRangeEntryService;
+	}
+
+	public CAvailabilityRangeEntry getCAvailabilityRangeEntry()
+		throws PortalException {
+
+		return _cAvailabilityRangeEntryService.fetchCAvailabilityRangeEntry(
+			getScopeGroupId(), getCPDefinitionId());
 	}
 
 	public List<CommerceAvailabilityRange> getCommerceAvailabilityRanges() {
@@ -107,19 +112,13 @@ public class CommerceInventoryDisplayContext
 			_commerceLowStockActivityRegistry.getCommerceLowStockActivities();
 	}
 
-	public CPDefinitionAvailabilityRange getCPDefinitionAvailabilityRange()
-		throws PortalException {
-
-		return _cpDefinitionAvailabilityRangeService.
-			fetchCPDefinitionAvailabilityRange(
-				getScopeGroupId(), getCPDefinitionId());
-	}
-
 	@Override
 	public String getScreenNavigationCategoryKey() throws PortalException {
 		return "inventory";
 	}
 
+	private final CAvailabilityRangeEntryService
+		_cAvailabilityRangeEntryService;
 	private final CommerceAvailabilityRangeService
 		_commerceAvailabilityRangeService;
 	private CommerceInventory _commerceInventory;
@@ -128,7 +127,5 @@ public class CommerceInventoryDisplayContext
 		_commerceInventoryEngineRegistry;
 	private final CommerceLowStockActivityRegistry
 		_commerceLowStockActivityRegistry;
-	private final CPDefinitionAvailabilityRangeService
-		_cpDefinitionAvailabilityRangeService;
 
 }

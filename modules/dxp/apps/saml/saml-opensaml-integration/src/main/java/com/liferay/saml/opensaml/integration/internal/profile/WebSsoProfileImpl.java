@@ -26,12 +26,12 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.constants.SamlWebKeys;
@@ -648,7 +648,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			relayState = portal.getHomeURL(request);
 		}
 
-		sb.append(_http.encodeURL(relayState));
+		sb.append(URLCodec.encodeURL(relayState));
 
 		response.sendRedirect(sb.toString());
 	}
@@ -1025,7 +1025,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		response.addHeader(
 			HttpHeaders.PRAGMA, HttpHeaders.PRAGMA_NO_CACHE_VALUE);
 
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(3);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -1033,13 +1033,20 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		sb.append(themeDisplay.getPathMain());
 
 		sb.append("/portal/login?redirect=");
-		sb.append(themeDisplay.getPathMain());
-		sb.append("/portal/saml/sso");
+
+		StringBundler redirectParameterSB = new StringBundler(4);
+
+		redirectParameterSB.append(themeDisplay.getPathMain());
+		redirectParameterSB.append("/portal/saml/sso");
 
 		if (samlMessageContext.getInboundSAMLMessageId() != null) {
-			sb.append("?saml_message_id=");
-			sb.append(samlMessageContext.getInboundSAMLMessageId());
+			redirectParameterSB.append("?saml_message_id=");
+			redirectParameterSB.append(
+				URLCodec.encodeURL(
+					samlMessageContext.getInboundSAMLMessageId()));
 		}
+
+		sb.append(URLCodec.encodeURL(redirectParameterSB.toString()));
 
 		String redirect = sb.toString();
 
@@ -1593,10 +1600,6 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		_samlSignatureProfileValidator = new SAMLSignatureProfileValidator();
 
 	private AttributeResolverRegistry _attributeResolverRegistry;
-
-	@Reference
-	private Http _http;
-
 	private NameIdResolverRegistry _nameIdResolverRegistry;
 	private SamlConfiguration _samlConfiguration;
 

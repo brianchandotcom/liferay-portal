@@ -473,6 +473,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			ps1.setString(3, fileName);
 
 			try (ResultSet rs = ps1.executeQuery()) {
+				rs.next();
+
 				while (rs.next()) {
 					long fileEntryId = rs.getLong("fileEntryId");
 					String extension = GetterUtil.getString(

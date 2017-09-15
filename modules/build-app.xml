@@ -70,23 +70,19 @@
 		<pathconvert pathsep="," property="app.names">
 			<globmapper from="${modules.dir}${file.separator}apps${file.separator}*" to="*" />
 			<path>
-				<dirset dir="${modules.dir}" includes="apps/*" />
+				<dirset dir="${modules.dir}" includes="apps/*">
+					<present targetdir="${modules.dir}">
+						<mapper from="*" to="*/app.bnd" type="glob" />
+					</present>
+				</dirset>
 			</path>
 		</pathconvert>
 
 		<for list="${app.names}" param="app.name">
 			<sequential>
-				<if>
-					<or>
-						<available file="${modules.dir}${file.separator}apps${file.separator}@{app.name}${file.separator}app.bnd" />
-						<available file="${modules.dir}${file.separator}private${file.separator}apps${file.separator}@{app.name}${file.separator}app.bnd" />
-					</or>
-					<then>
-						<antcall inheritall="false" target="build-app-lpkg">
-							<param name="app.name" value="@{app.name}" />
-						</antcall>
-					</then>
-				</if>
+				<antcall inheritall="false" target="build-app-lpkg">
+					<param name="app.name" value="@{app.name}" />
+				</antcall>
 			</sequential>
 		</for>
 

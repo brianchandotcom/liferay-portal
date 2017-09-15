@@ -14,11 +14,12 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.memory.SoftReferenceThreadLocal;
-
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.Writer;
+
+import java.lang.ref.Reference;
+import java.lang.ref.SoftReference;
 
 /**
  * <p>
@@ -252,12 +253,17 @@ public class StringBundler implements Serializable {
 		UnsafeStringBuilder usb = null;
 
 		if (length > _THREAD_LOCAL_BUFFER_LIMIT) {
-			usb = _unsafeStringBuilderThreadLocal.get();
+			Reference<UnsafeStringBuilder> reference =
+				_unsafeStringBuilderThreadLocal.get();
+
+			if (reference != null) {
+				usb = reference.get();
+			}
 
 			if (usb == null) {
 				usb = new UnsafeStringBuilder(length);
 
-				_unsafeStringBuilderThreadLocal.set(usb);
+				_unsafeStringBuilderThreadLocal.set(new SoftReference<>(usb));
 			}
 			else {
 				usb.resetAndEnsureCapacity(length);
@@ -292,7 +298,7 @@ public class StringBundler implements Serializable {
 
 	private static final int _THREAD_LOCAL_BUFFER_LIMIT;
 
-	private static final ThreadLocal<UnsafeStringBuilder>
+	private static final ThreadLocal<Reference<UnsafeStringBuilder>>
 		_unsafeStringBuilderThreadLocal;
 	private static final long serialVersionUID = 1L;
 
@@ -307,7 +313,8 @@ public class StringBundler implements Serializable {
 
 			_THREAD_LOCAL_BUFFER_LIMIT = threadLocalBufferLimit;
 
-			_unsafeStringBuilderThreadLocal = new SoftReferenceThreadLocal<>();
+			_unsafeStringBuilderThreadLocal = new CentralizedThreadLocal<>(
+				false);
 		}
 		else {
 			_THREAD_LOCAL_BUFFER_LIMIT = Integer.MAX_VALUE;

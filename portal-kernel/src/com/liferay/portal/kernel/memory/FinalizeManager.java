@@ -14,12 +14,11 @@
 
 package com.liferay.portal.kernel.memory;
 
-import com.liferay.portal.kernel.concurrent.ConcurrentIdentityHashMap;
-
 import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Shuyang Zhou
@@ -38,7 +37,7 @@ public class FinalizeManager {
 
 					@Override
 					public void clear() {
-						_finalizeActions.remove(this);
+						_finalizeActions.remove(new IdentityKey(this));
 
 						super.clear();
 					}
@@ -59,7 +58,7 @@ public class FinalizeManager {
 
 					@Override
 					public void clear() {
-						_finalizeActions.remove(this);
+						_finalizeActions.remove(new IdentityKey(this));
 
 						super.clear();
 					}
@@ -83,7 +82,7 @@ public class FinalizeManager {
 
 					@Override
 					public void clear() {
-						_finalizeActions.remove(this);
+						_finalizeActions.remove(new IdentityKey(this));
 
 						super.clear();
 					}
@@ -100,7 +99,7 @@ public class FinalizeManager {
 		Reference<T> newReference = referenceFactory.createReference(
 			reference, _referenceQueue);
 
-		_finalizeActions.put(newReference, finalizeAction);
+		_finalizeActions.put(new IdentityKey(newReference), finalizeAction);
 
 		if (!THREAD_ENABLED) {
 			_pollingCleanup();
@@ -119,7 +118,8 @@ public class FinalizeManager {
 	private static void _finalizeReference(
 		Reference<? extends Object> reference) {
 
-		FinalizeAction finalizeAction = _finalizeActions.remove(reference);
+		FinalizeAction finalizeAction = _finalizeActions.remove(
+			new IdentityKey(reference));
 
 		if (finalizeAction != null) {
 			try {
@@ -139,8 +139,8 @@ public class FinalizeManager {
 		}
 	}
 
-	private static final Map<Reference<?>, FinalizeAction> _finalizeActions =
-		new ConcurrentIdentityHashMap<>();
+	private static final Map<IdentityKey, FinalizeAction> _finalizeActions =
+		new ConcurrentHashMap<>();
 	private static final ReferenceQueue<Object> _referenceQueue =
 		new ReferenceQueue<>();
 
@@ -160,6 +160,32 @@ public class FinalizeManager {
 				}
 			}
 		}
+
+	}
+
+	private static class IdentityKey {
+
+		@Override
+		public boolean equals(Object obj) {
+			IdentityKey identityKey = (IdentityKey)obj;
+
+			if (_reference == identityKey._reference) {
+				return true;
+			}
+
+			return false;
+		}
+
+		@Override
+		public int hashCode() {
+			return _reference.hashCode();
+		}
+
+		private IdentityKey(Reference<?> reference) {
+			_reference = reference;
+		}
+
+		private final Reference<?> _reference;
 
 	}
 

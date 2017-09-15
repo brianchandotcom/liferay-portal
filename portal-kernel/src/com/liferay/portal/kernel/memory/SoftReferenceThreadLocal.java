@@ -20,7 +20,9 @@ import java.lang.ref.SoftReference;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class SoftReferenceThreadLocal<T> extends CentralizedThreadLocal<T> {
 
 	public SoftReferenceThreadLocal() {

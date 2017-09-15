@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.ThreadUtil;
 
 import java.lang.ref.Reference;
+import java.lang.reflect.Constructor;
 
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
@@ -96,7 +97,7 @@ public class FinalizeManagerTest {
 	}
 
 	@Test
-	public void testManualClear() throws InterruptedException {
+	public void testManualClear() throws Exception {
 		System.setProperty(_THREAD_ENABLED_KEY, StringPool.FALSE);
 
 		Object object = new Object();
@@ -106,15 +107,17 @@ public class FinalizeManagerTest {
 		Reference<Object> reference = FinalizeManager.register(
 			object, markFinalizeAction, FinalizeManager.WEAK_REFERENCE_FACTORY);
 
-		Map<Reference<?>, FinalizeAction> finalizeActions =
+		Map<Object, FinalizeAction> finalizeActions =
 			ReflectionTestUtil.getFieldValue(
 				FinalizeManager.class, "_finalizeActions");
 
-		Assert.assertEquals(markFinalizeAction, finalizeActions.get(reference));
+		Assert.assertEquals(
+			markFinalizeAction,
+			finalizeActions.get(_newIdentityKey(reference)));
 
 		reference.clear();
 
-		Assert.assertNull(finalizeActions.get(reference));
+		Assert.assertNull(finalizeActions.get(_newIdentityKey(reference)));
 
 		object = null;
 
@@ -133,7 +136,7 @@ public class FinalizeManagerTest {
 	}
 
 	@Test
-	public void testRegisterationIdentity() {
+	public void testRegisterationIdentity() throws Exception {
 		System.setProperty(_THREAD_ENABLED_KEY, StringPool.FALSE);
 
 		String testString = new String("testString");
@@ -144,13 +147,14 @@ public class FinalizeManagerTest {
 			testString, markFinalizeAction,
 			FinalizeManager.SOFT_REFERENCE_FACTORY);
 
-		Map<Reference<?>, FinalizeAction> finalizeActions =
+		Map<Object, FinalizeAction> finalizeActions =
 			ReflectionTestUtil.getFieldValue(
 				FinalizeManager.class, "_finalizeActions");
 
 		Assert.assertEquals(
 			finalizeActions.toString(), 1, finalizeActions.size());
-		Assert.assertTrue(finalizeActions.containsKey(reference1));
+		Assert.assertTrue(
+			finalizeActions.containsKey(_newIdentityKey(reference1)));
 
 		Reference<?> reference2 = FinalizeManager.register(
 			testString, markFinalizeAction,
@@ -161,14 +165,17 @@ public class FinalizeManagerTest {
 
 		Assert.assertEquals(
 			finalizeActions.toString(), 2, finalizeActions.size());
-		Assert.assertTrue(finalizeActions.containsKey(reference1));
-		Assert.assertTrue(finalizeActions.containsKey(reference2));
+		Assert.assertTrue(
+			finalizeActions.containsKey(_newIdentityKey(reference1)));
+		Assert.assertTrue(
+			finalizeActions.containsKey(_newIdentityKey(reference2)));
 
 		reference2.clear();
 
 		Assert.assertEquals(
 			finalizeActions.toString(), 1, finalizeActions.size());
-		Assert.assertTrue(finalizeActions.containsKey(reference1));
+		Assert.assertTrue(
+			finalizeActions.containsKey(_newIdentityKey(reference1)));
 
 		reference2 = FinalizeManager.register(
 			new String(testString), markFinalizeAction,
@@ -176,14 +183,17 @@ public class FinalizeManagerTest {
 
 		Assert.assertEquals(
 			finalizeActions.toString(), 2, finalizeActions.size());
-		Assert.assertTrue(finalizeActions.containsKey(reference1));
-		Assert.assertTrue(finalizeActions.containsKey(reference2));
+		Assert.assertTrue(
+			finalizeActions.containsKey(_newIdentityKey(reference1)));
+		Assert.assertTrue(
+			finalizeActions.containsKey(_newIdentityKey(reference2)));
 
 		reference2.clear();
 
 		Assert.assertEquals(
 			finalizeActions.toString(), 1, finalizeActions.size());
-		Assert.assertTrue(finalizeActions.containsKey(reference1));
+		Assert.assertTrue(
+			finalizeActions.containsKey(_newIdentityKey(reference1)));
 
 		reference1.clear();
 
@@ -296,6 +306,22 @@ public class FinalizeManagerTest {
 		if (threadEnabled) {
 			_checkThreadState();
 		}
+	}
+
+	private static Object _newIdentityKey(Reference<?> reference)
+		throws Exception {
+
+		ClassLoader classLoader = FinalizeManager.class.getClassLoader();
+
+		Class<?> identityKeyClass = classLoader.loadClass(
+			FinalizeManager.class.getName() + "$IdentityKey");
+
+		Constructor<?> constructor = identityKeyClass.getDeclaredConstructor(
+			Reference.class);
+
+		constructor.setAccessible(true);
+
+		return constructor.newInstance(reference);
 	}
 
 	private void _checkThreadState() {

@@ -83,14 +83,15 @@ public class ServiceProxyFactoryTest {
 
 		FinalizeAction finalizeAction = null;
 
-		Map<Reference<?>, FinalizeAction> finalizeActions =
+		Map<Object, FinalizeAction> finalizeActions =
 			ReflectionTestUtil.getFieldValue(
 				FinalizeManager.class, "_finalizeActions");
 
-		for (Map.Entry<Reference<?>, FinalizeAction> entry :
+		for (Map.Entry<Object, FinalizeAction> entry :
 				finalizeActions.entrySet()) {
 
-			Reference<?> reference = entry.getKey();
+			Reference<?> reference = ReflectionTestUtil.getFieldValue(
+				entry.getKey(), "_reference");
 
 			if (!(reference instanceof PhantomReference<?>)) {
 				continue;

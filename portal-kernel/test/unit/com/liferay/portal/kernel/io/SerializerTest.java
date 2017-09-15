@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.io.Serializer.BufferNode;
 import com.liferay.portal.kernel.io.Serializer.BufferQueue;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
@@ -388,7 +389,10 @@ public class SerializerTest {
 
 		serializer.toByteBuffer();
 
-		Assert.assertEquals(0, Serializer.bufferQueueThreadLocal.get().count);
+		BufferQueue bufferQueue = ReflectionTestUtil.invoke(
+			serializer, "_getBufferQueue", new Class<?>[0]);
+
+		Assert.assertEquals(0, bufferQueue.count);
 
 		serializer = new Serializer();
 
@@ -399,8 +403,7 @@ public class SerializerTest {
 
 		serializer.writeTo(unsyncByteArrayOutputStream);
 
-		Assert.assertEquals(0, Serializer.bufferQueueThreadLocal.get().count);
-
+		Assert.assertEquals(0, bufferQueue.count);
 		Assert.assertEquals(
 			chars.length * 2 + 5, unsyncByteArrayOutputStream.size());
 	}

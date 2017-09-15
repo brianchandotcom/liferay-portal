@@ -36,7 +36,7 @@ public class JavaSourceUtil extends SourceUtil {
 		return fileName.substring(x + 1, y);
 	}
 
-	public static String getPackagePath(String content) {
+	public static String getPackageName(String content) {
 		Matcher matcher = _packagePattern.matcher(content);
 
 		if (matcher.find()) {

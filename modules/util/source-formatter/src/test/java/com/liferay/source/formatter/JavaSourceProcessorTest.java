@@ -315,9 +315,9 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testPackagePath() throws Exception {
+	public void testPackageName() throws Exception {
 		test(
-			"PackagePath.testjava",
+			"PackageName.testjava",
 			"The declared package 'com.liferay.source.formatter.hello.world' " +
 				"does not match the expected package");
 	}

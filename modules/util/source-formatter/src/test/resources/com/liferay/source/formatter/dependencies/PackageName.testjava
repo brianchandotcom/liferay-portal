@@ -17,5 +17,5 @@ package com.liferay.source.formatter.hello.world;
 /**
  * @author Hugo Huijser
  */
-public class PackagePath {
+public class PackageName {
 }

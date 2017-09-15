@@ -24,7 +24,7 @@ specified in the bnd settings
 ```
 Bundle-SymbolicName: com.liferay.freemarker.osgi.bridge
 ```
-The package path for all files inside the module should start with
+The package name for all files inside the module should start with
 ```com.liferay.freemarker.osgi.bridge```
 
 #### Exceptions
@@ -39,7 +39,7 @@ or
 Bundle-SymbolicName: com.liferay.blogs.api
 ```
 
-The package path for all files inside the module should start with
+The package name for all files inside the module should start with
 ```com.liferay.blogs```
 
 2. Bundle-SymbolicName ending with ```.impl```
@@ -48,6 +48,6 @@ The package path for all files inside the module should start with
 Bundle-SymbolicName: com.liferay.blogs.demo.data.creator.impl
 ```
 
-The package path for all files inside the module should start with
+The package name for all files inside the module should start with
 ```com.liferay.blogs.demo.data.creator.impl``` or
 ```com.liferay.blogs.demo.data.creator.internal```

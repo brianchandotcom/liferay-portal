@@ -114,7 +114,7 @@ public class JavaRedundantConstructorCheck extends BaseJavaTermCheck {
 
 	private String _getClassName(String fileContent, JavaClass javaClass) {
 		if (javaClass.getParentJavaClass() == null) {
-			return JavaSourceUtil.getPackagePath(fileContent) +
+			return JavaSourceUtil.getPackageName(fileContent) +
 				StringPool.PERIOD + javaClass.getName();
 		}
 

@@ -117,7 +117,7 @@ public class UnprocessedExceptionCheck extends BaseCheck {
 
 		if (!exceptionClassName.contains(StringPool.PERIOD)) {
 			exceptionClassName =
-				JavaSourceUtil.getPackagePath(content) + StringPool.PERIOD +
+				JavaSourceUtil.getPackageName(content) + StringPool.PERIOD +
 					exceptionClassName;
 		}
 

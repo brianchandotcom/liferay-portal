@@ -78,7 +78,7 @@ public class MissingOverrideCheck extends BaseCheck {
 		}
 
 		JavaClass javaClass = javaProjectBuilder.getClassByName(
-			_getPackagePath(detailAST) + "." + _getClassName(fileName));
+			_getPackageName(detailAST) + "." + _getClassName(fileName));
 
 		List<Tuple> ancestorJavaClassTuples = _addAncestorJavaClassTuples(
 			javaClass, javaProjectBuilder, new ArrayList<Tuple>());
@@ -195,7 +195,7 @@ public class MissingOverrideCheck extends BaseCheck {
 		return _javaProjectBuilder;
 	}
 
-	private String _getPackagePath(DetailAST packageDefAST) {
+	private String _getPackageName(DetailAST packageDefAST) {
 		DetailAST dotAST = packageDefAST.findFirstToken(TokenTypes.DOT);
 
 		FullIdent fullIdent = FullIdent.createFullIdent(dotAST);

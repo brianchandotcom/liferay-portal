@@ -14,7 +14,7 @@
 
 package com.liferay.portal.bean;
 
-import com.liferay.portal.kernel.memory.FinalizeManager;
+import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.test.GCUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;

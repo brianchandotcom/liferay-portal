@@ -341,12 +341,16 @@ public class GitWorkingDirectory {
 
 		sb.append(remote.getName());
 
-		sb.append(" ");
-		sb.append(remoteBranch.getName());
+		String remoteBranchName = remoteBranch.getName();
 
-		if (localBranch != null) {
-			sb.append(":");
-			sb.append(localBranch.getName());
+		if ((remoteBranchName != null) && !remoteBranchName.isEmpty()) {
+			sb.append(" ");
+			sb.append(remoteBranch.getName());
+
+			if (localBranch != null) {
+				sb.append(":");
+				sb.append(localBranch.getName());
+			}
 		}
 
 		long start = System.currentTimeMillis();
@@ -365,6 +369,10 @@ public class GitWorkingDirectory {
 			"Fetch completed in " +
 				JenkinsResultsParserUtil.toDurationString(
 					System.currentTimeMillis() - start));
+	}
+
+	public void fetch(Remote remote) {
+		fetch(null, new Branch(null, remote, null));
 	}
 
 	public List<String> getBranchNamesContainingSha(String sha) {

@@ -262,7 +262,7 @@ public class GitWorkingDirectory {
 	}
 
 	public Branch createLocalBranch(
-		String localBranchName, boolean force, String startPoint) {
+		String branchName, boolean force, String startPoint) {
 
 		StringBuilder sb = new StringBuilder();
 
@@ -272,7 +272,7 @@ public class GitWorkingDirectory {
 			sb.append("-f ");
 		}
 
-		sb.append(localBranchName);
+		sb.append(branchName);
 
 		if (startPoint != null) {
 			sb.append(" ");
@@ -284,11 +284,11 @@ public class GitWorkingDirectory {
 		if (executionResult.getExitValue() != 0) {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
-					"Unable to create local branch ", localBranchName, " at ",
+					"Unable to create local branch ", branchName, " at ",
 					startPoint, "\n", executionResult.getStandardErr()));
 		}
 
-		return getLocalBranch(localBranchName);
+		return getLocalBranch(branchName);
 	}
 
 	public String createPullRequest(
@@ -318,14 +318,14 @@ public class GitWorkingDirectory {
 		return pullRequestURL;
 	}
 
-	public void deleteLocalBranch(String localBranchName) {
+	public void deleteLocalBranch(Branch branch) {
 		ExecutionResult executionResult = executeBashCommands(
-			"git branch -f -D " + localBranchName);
+			"git branch -f -D " + branch.getName());
 
 		if (executionResult.getExitValue() != 0) {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
-					"Unable to delete local branch ", localBranchName, "\n",
+					"Unable to delete local branch ", branch.getName(), "\n",
 					executionResult.getStandardErr()));
 		}
 	}

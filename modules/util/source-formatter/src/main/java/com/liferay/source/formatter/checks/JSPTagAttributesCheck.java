@@ -229,7 +229,8 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 	}
 
 	private String _getExtendedFileName(
-		String content, String fileName, String utilTaglibSrcDirName) {
+		String content, String fileName, List<String> imports,
+		String utilTaglibSrcDirName) {
 
 		Matcher matcher = _extendedClassPattern.matcher(content);
 
@@ -237,33 +238,37 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 			return null;
 		}
 
-		StringBundler sb = new StringBundler();
-
 		String extendedClassName = matcher.group(1);
 
-		Pattern pattern = Pattern.compile(
-			"\nimport (.*\\." + extendedClassName + ");");
+		if (!extendedClassName.contains(StringPool.PERIOD)) {
+			for (String importName : imports) {
+				if (importName.endsWith(
+						StringPool.PERIOD + extendedClassName)) {
 
-		matcher = pattern.matcher(content);
+					extendedClassName = importName;
 
-		if (matcher.find()) {
-			extendedClassName = matcher.group(1);
-
-			if (!extendedClassName.startsWith("com.liferay.taglib")) {
-				return null;
+					break;
+				}
 			}
+		}
 
+		StringBundler sb = new StringBundler(3);
+
+		if (extendedClassName.startsWith("com.liferay.taglib")) {
 			sb.append(utilTaglibSrcDirName);
 			sb.append(
 				StringUtil.replace(
 					extendedClassName, CharPool.PERIOD, CharPool.SLASH));
 		}
-		else {
+		else if (!extendedClassName.contains(StringPool.PERIOD)) {
 			int pos = fileName.lastIndexOf(CharPool.SLASH);
 
 			sb.append(fileName.substring(0, pos + 1));
 
 			sb.append(extendedClassName);
+		}
+		else {
+			return null;
 		}
 
 		sb.append(".java");
@@ -328,7 +333,8 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 		}
 
 		String extendedFileName = _getExtendedFileName(
-			tagFileContent, tagFileName, utilTaglibSrcDirName);
+			tagFileContent, tagFileName, javaClass.getImports(),
+			utilTaglibSrcDirName);
 
 		if (extendedFileName != null) {
 			setMethodsMap.putAll(

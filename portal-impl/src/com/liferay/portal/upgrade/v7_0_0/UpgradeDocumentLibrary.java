@@ -432,13 +432,32 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 	}
 
 	private void _fixDuplicateFileEntryFileNames() throws Exception {
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select groupId, folderId, fileName from DLFileEntry group " +
+					"by groupId, folderId, fileName having count(*) > 1");
+			ResultSet rs = ps.executeQuery()) {
+
+			while (rs.next()) {
+				long groupId = rs.getLong("groupId");
+				long folderId = rs.getLong("folderId");
+				String fileName = rs.getString("fileName");
+
+				_fixDuplicateFileEntryFileNames(groupId, folderId, fileName);
+			}
+		}
+	}
+
+	private void _fixDuplicateFileEntryFileNames(
+			long groupId, long folderId, String fileName)
+		throws Exception {
+
 		Set<String> generatedUniqueFileNames = new HashSet<>();
 		Set<String> generatedUniqueTitles = new HashSet<>();
 
 		try (PreparedStatement ps1 = connection.prepareStatement(
-				"select fileEntryId, groupId, folderId, extension, title, " +
-					"version from DLFileEntry where fileName = '' or " +
-						"fileName is null");
+				"select fileEntryId, extension, title, version from " +
+					"DLFileEntry where groupId = ? and folderId = ? and " +
+						"fileName = ?");
 			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
 				connection.prepareStatement(
 					"update DLFileEntry set fileName = ?, title = ? where " +
@@ -447,87 +466,92 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update DLFileVersion set title = ? where fileEntryId = " +
-						"? and version = ? and status != ?");
-			ResultSet rs = ps1.executeQuery()) {
+						"? and version = ? and status != ?")) {
 
-			while (rs.next()) {
-				long fileEntryId = rs.getLong("fileEntryId");
-				long groupId = rs.getLong("groupId");
-				long folderId = rs.getLong("folderId");
-				String extension = GetterUtil.getString(
-					rs.getString("extension"));
-				String title = GetterUtil.getString(rs.getString("title"));
-				String version = rs.getString("version");
+			ps1.setLong(1, groupId);
+			ps1.setLong(2, folderId);
+			ps1.setString(3, fileName);
 
-				String uniqueFileName = DLUtil.getSanitizedFileName(
-					title, extension);
+			try (ResultSet rs = ps1.executeQuery()) {
+				while (rs.next()) {
+					long fileEntryId = rs.getLong("fileEntryId");
+					String extension = GetterUtil.getString(
+						rs.getString("extension"));
+					String title = GetterUtil.getString(rs.getString("title"));
+					String version = rs.getString("version");
 
-				String titleExtension = StringPool.BLANK;
-				String titleWithoutExtension = title;
+					String uniqueFileName = DLUtil.getSanitizedFileName(
+						title, extension);
 
-				if (title.endsWith(StringPool.PERIOD + extension)) {
-					titleExtension = extension;
-					titleWithoutExtension = FileUtil.stripExtension(title);
-				}
+					String titleExtension = StringPool.BLANK;
+					String titleWithoutExtension = title;
 
-				boolean generatedUniqueFileName = false;
-				String uniqueTitle = title;
-
-				for (int i = 1;; i++) {
-					if (!generatedUniqueFileNames.contains(uniqueFileName) &&
-						!generatedUniqueTitles.contains(uniqueTitle) &&
-						!hasFileEntry(
-							groupId, folderId, fileEntryId, uniqueTitle,
-							uniqueFileName)) {
-
-						break;
+					if (title.endsWith(StringPool.PERIOD + extension)) {
+						titleExtension = extension;
+						titleWithoutExtension = FileUtil.stripExtension(title);
 					}
 
-					generatedUniqueFileName = true;
+					boolean generatedUniqueFileName = false;
+					String uniqueTitle = title;
 
-					uniqueTitle =
-						titleWithoutExtension + StringPool.UNDERLINE +
-							String.valueOf(i);
+					for (int i = 1;; i++) {
+						if (!generatedUniqueFileNames.contains(
+								uniqueFileName) &&
+							!generatedUniqueTitles.contains(uniqueTitle) &&
+							!hasFileEntry(
+								groupId, folderId, fileEntryId, uniqueTitle,
+								uniqueFileName)) {
 
-					if (Validator.isNotNull(titleExtension)) {
-						uniqueTitle += StringPool.PERIOD.concat(titleExtension);
+							break;
+						}
+
+						generatedUniqueFileName = true;
+
+						uniqueTitle =
+							titleWithoutExtension + StringPool.UNDERLINE +
+								String.valueOf(i);
+
+						if (Validator.isNotNull(titleExtension)) {
+							uniqueTitle += StringPool.PERIOD.concat(
+								titleExtension);
+						}
+
+						uniqueFileName = DLUtil.getSanitizedFileName(
+							uniqueTitle, extension);
 					}
 
-					uniqueFileName = DLUtil.getSanitizedFileName(
-						uniqueTitle, extension);
+					if (generatedUniqueFileName) {
+						generatedUniqueFileNames.add(uniqueFileName);
+						generatedUniqueTitles.add(uniqueTitle);
+					}
+
+					ps2.setString(1, uniqueFileName);
+
+					if (Validator.isNotNull(uniqueTitle)) {
+						ps2.setString(2, uniqueTitle);
+					}
+					else {
+						ps2.setString(2, title);
+					}
+
+					ps2.setLong(3, fileEntryId);
+
+					ps2.addBatch();
+
+					if (Validator.isNotNull(uniqueTitle)) {
+						ps3.setString(1, uniqueTitle);
+						ps3.setLong(2, fileEntryId);
+						ps3.setString(3, version);
+						ps3.setInt(4, WorkflowConstants.STATUS_IN_TRASH);
+
+						ps3.addBatch();
+					}
 				}
 
-				if (generatedUniqueFileName) {
-					generatedUniqueFileNames.add(uniqueFileName);
-					generatedUniqueTitles.add(uniqueTitle);
-				}
+				ps2.executeBatch();
 
-				ps2.setString(1, uniqueFileName);
-
-				if (Validator.isNotNull(uniqueTitle)) {
-					ps2.setString(2, uniqueTitle);
-				}
-				else {
-					ps2.setString(2, title);
-				}
-
-				ps2.setLong(3, fileEntryId);
-
-				ps2.addBatch();
-
-				if (Validator.isNotNull(uniqueTitle)) {
-					ps3.setString(1, uniqueTitle);
-					ps3.setLong(2, fileEntryId);
-					ps3.setString(3, version);
-					ps3.setInt(4, WorkflowConstants.STATUS_IN_TRASH);
-
-					ps3.addBatch();
-				}
+				ps3.executeBatch();
 			}
-
-			ps2.executeBatch();
-
-			ps3.executeBatch();
 		}
 	}
 

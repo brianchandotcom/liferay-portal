@@ -39,6 +39,10 @@
 	<command name="AddCheckboxOptionsEntry" priority="5">
 		<property name="portal.acceptance" value="true" />
 
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Checkbox Option 1 Description" />
 			<var name="optionFieldType" value="checkbox_multiple" />
@@ -61,6 +65,10 @@
 
 	<command name="AddCheckboxOptionsEntryValue" priority="5">
 		<property name="portal.acceptance" value="true" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
 
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Checkbox Option 1 Description" />
@@ -87,6 +95,10 @@
 
 	<command name="AddContributorCheckboxOptionsEntryValue">
 		<property name="portal.acceptance" value="true" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
 
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Checkbox Option 1 Description" />
@@ -116,6 +128,10 @@
 	<command name="AddContributorDateOptionsEntryValue">
 		<property name="portal.acceptance" value="true" />
 
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Date Option 1 Description" />
 			<var name="optionFieldType" value="Date" />
@@ -143,6 +159,10 @@
 
 	<command name="AddContributorParagraphOptionsEntryValue">
 		<property name="portal.acceptance" value="true" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
 
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Paragraph Option 1 Description" />
@@ -172,6 +192,10 @@
 	<command name="AddContributorRadioOptionsEntryValue">
 		<property name="portal.acceptance" value="true" />
 
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Radio Option 1 Description" />
 			<var name="optionFieldType" value="Radio" />
@@ -199,6 +223,10 @@
 
 	<command name="AddContributorSelectOptionsEntryValue">
 		<property name="portal.acceptance" value="true" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
 
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Select Option 1 Description" />
@@ -228,6 +256,10 @@
 	<command name="AddContributorTextOptionsEntryValue">
 		<property name="portal.acceptance" value="true" />
 
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Checkbox Option 1 Description" />
 			<var name="optionFieldType" value="Text" />
@@ -254,6 +286,10 @@
 	</command>
 
 	<command name="AddDateOptionsEntry" priority="5">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Date Option 1 Description" />
 			<var name="optionFieldType" value="Date" />
@@ -275,6 +311,10 @@
 	</command>
 
 	<command name="AddDateOptionsEntryValue" priority="5">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Date Option 1 Description" />
 			<var name="optionFieldType" value="Date" />
@@ -299,6 +339,10 @@
 	</command>
 
 	<command name="AddFacetableCheckboxOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Checkbox Option 1 Description" />
 			<var name="optionFieldType" value="checkbox_multiple" />
@@ -323,6 +367,10 @@
 	</command>
 
 	<command name="AddFacetableCheckboxOptionsEntryValue">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Checkbox Option 1 Description" />
 			<var name="optionFieldType" value="checkbox_multiple" />
@@ -349,6 +397,10 @@
 	</command>
 
 	<command name="AddFacetableContributorCheckboxOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Checkbox Option 1 Description" />
 			<var name="optionFieldType" value="checkbox_multiple" />
@@ -378,6 +430,10 @@
 	</command>
 
 	<command name="AddFacetableContributorCheckboxOptionsEntryValue">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Checkbox Option 1 Description" />
 			<var name="optionFieldType" value="checkbox_multiple" />
@@ -415,6 +471,10 @@
 	</command>
 
 	<command name="AddFacetableContributorDateOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Date Option 1 Description" />
 			<var name="optionFieldType" value="Date" />
@@ -444,6 +504,10 @@
 	</command>
 
 	<command name="AddFacetableContributorDateOptionsEntryValue">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Date Option 1 Description" />
 			<var name="optionFieldType" value="Date" />
@@ -481,6 +545,10 @@
 	</command>
 
 	<command name="AddFacetableContributorParagraphOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Paragraph Option 1 Description" />
 			<var name="optionFieldType" value="Paragraph" />
@@ -510,6 +578,10 @@
 	</command>
 
 	<command name="AddFacetableContributorParagraphOptionsEntryValue">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Paragraph Option 1 Description" />
 			<var name="optionFieldType" value="Paragraph" />
@@ -547,6 +619,10 @@
 	</command>
 
 	<command name="AddFacetableContributorRadioOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Radio Option 1 Description" />
 			<var name="optionFieldType" value="Radio" />
@@ -576,6 +652,10 @@
 	</command>
 
 	<command name="AddFacetableContributorRadioOptionsEntryValue">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Radio Option 1 Description" />
 			<var name="optionFieldType" value="Radio" />
@@ -613,6 +693,10 @@
 	</command>
 
 	<command name="AddFacetableContributorSelectOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Select Option 1 Description" />
 			<var name="optionFieldType" value="Select" />
@@ -642,6 +726,10 @@
 	</command>
 
 	<command name="AddFacetableContributorSelectOptionsEntryValue">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Select Option 1 Description" />
 			<var name="optionFieldType" value="Select" />
@@ -679,6 +767,10 @@
 	</command>
 
 	<command name="AddFacetableContributorTextOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Text Option 1 Description" />
 			<var name="optionFieldType" value="Text" />
@@ -708,6 +800,10 @@
 	</command>
 
 	<command name="AddFacetableContributorTextOptionsEntryValue">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Text Option 1 Description" />
 			<var name="optionFieldType" value="Text" />
@@ -745,6 +841,10 @@
 	</command>
 
 	<command name="AddFacetableDateOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Date Option 1 Description" />
 			<var name="optionFieldType" value="Date" />
@@ -769,6 +869,10 @@
 	</command>
 
 	<command name="AddFacetableDateOptionsEntryValue">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Date Option 1 Description" />
 			<var name="optionFieldType" value="Date" />
@@ -801,6 +905,10 @@
 	</command>
 
 	<command name="AddFacetableParagraphOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Paragraph Option 1 Description" />
 			<var name="optionFieldType" value="Paragraph" />
@@ -825,6 +933,10 @@
 	</command>
 
 	<command name="AddFacetableParagraphOptionsEntryValue">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Paragraph Option 1 Description" />
 			<var name="optionFieldType" value="Paragraph" />
@@ -857,6 +969,10 @@
 	</command>
 
 	<command name="AddFacetableRadioOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Radio Option 1 Description" />
 			<var name="optionFieldType" value="Radio" />
@@ -881,6 +997,10 @@
 	</command>
 
 	<command name="AddFacetableRadioOptionsEntryValue">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Radio Option 1 Description" />
 			<var name="optionFieldType" value="Radio" />
@@ -913,6 +1033,10 @@
 	</command>
 
 	<command name="AddFacetableRequiredCheckboxOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Checkbox Option 1 Description" />
 			<var name="optionFieldType" value="checkbox_multiple" />
@@ -942,6 +1066,10 @@
 	</command>
 
 	<command name="AddFacetableRequiredCheckboxOptionsEntryValue">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Checkbox Option 1 Description" />
 			<var name="optionFieldType" value="checkbox_multiple" />
@@ -979,6 +1107,10 @@
 	</command>
 
 	<command name="AddFacetableRequiredContributorCheckboxOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Checkbox Option 1 Description" />
 			<var name="optionFieldType" value="checkbox_multiple" />
@@ -1010,6 +1142,10 @@
 	</command>
 
 	<command name="AddFacetableRequiredContributorDateOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Date Option 1 Description" />
 			<var name="optionFieldType" value="Date" />
@@ -1041,6 +1177,10 @@
 	</command>
 
 	<command name="AddFacetableRequiredContributorParagraphOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Paragraph Option 1 Description" />
 			<var name="optionFieldType" value="Paragraph" />
@@ -1072,6 +1212,10 @@
 	</command>
 
 	<command name="AddFacetableRequiredContributorRadioOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Radio Option 1 Description" />
 			<var name="optionFieldType" value="Radio" />
@@ -1103,6 +1247,10 @@
 	</command>
 
 	<command name="AddFacetableRequiredContributorSelectOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Select Option 1 Description" />
 			<var name="optionFieldType" value="Select" />
@@ -1134,6 +1282,10 @@
 	</command>
 
 	<command name="AddFacetableRequiredContributorTextOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Text Option 1 Description" />
 			<var name="optionFieldType" value="Text" />
@@ -1165,6 +1317,10 @@
 	</command>
 
 	<command name="AddFacetableRequiredDateOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Date Option 1 Description" />
 			<var name="optionFieldType" value="Date" />
@@ -1194,6 +1350,10 @@
 	</command>
 
 	<command name="AddFacetableRequiredDateOptionsEntryValue">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Date Option 1 Description" />
 			<var name="optionFieldType" value="Date" />
@@ -1231,6 +1391,10 @@
 	</command>
 
 	<command name="AddFacetableRequiredParagraphOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Paragraph Option 1 Description" />
 			<var name="optionFieldType" value="Paragraph" />
@@ -1260,6 +1424,10 @@
 	</command>
 
 	<command name="AddFacetableRequiredParagraphOptionsEntryValue">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Paragraph Option 1 Description" />
 			<var name="optionFieldType" value="Paragraph" />
@@ -1297,6 +1465,10 @@
 	</command>
 
 	<command name="AddFacetableRequiredRadioOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Radio Option 1 Description" />
 			<var name="optionFieldType" value="Radio" />
@@ -1326,6 +1498,10 @@
 	</command>
 
 	<command name="AddFacetableRequiredRadioOptionsEntryValue">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Radio Option 1 Description" />
 			<var name="optionFieldType" value="Radio" />
@@ -1363,6 +1539,10 @@
 	</command>
 
 	<command name="AddFacetableRequiredSelectOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Select Option 1 Description" />
 			<var name="optionFieldType" value="Select" />
@@ -1392,6 +1572,10 @@
 	</command>
 
 	<command name="AddFacetableRequiredSelectOptionsEntryValue">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Select Option 1 Description" />
 			<var name="optionFieldType" value="Select" />
@@ -1429,6 +1613,10 @@
 	</command>
 
 	<command name="AddFacetableRequiredTextOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Text Option 1 Description" />
 			<var name="optionFieldType" value="Text" />
@@ -1458,6 +1646,10 @@
 	</command>
 
 	<command name="AddFacetableRequiredTextOptionsEntryValue">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Text Option 1 Description" />
 			<var name="optionFieldType" value="Text" />
@@ -1495,6 +1687,10 @@
 	</command>
 
 	<command name="AddFacetableSelectOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Select Option 1 Description" />
 			<var name="optionFieldType" value="Select" />
@@ -1519,6 +1715,10 @@
 	</command>
 
 	<command name="AddFacetableSelectOptionsEntryValue">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Select Option 1 Description" />
 			<var name="optionFieldType" value="Select" />
@@ -1545,6 +1745,10 @@
 	</command>
 
 	<command name="AddFacetableTextOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Text Option 1 Description" />
 			<var name="optionFieldType" value="Text" />
@@ -1569,6 +1773,10 @@
 	</command>
 
 	<command name="AddFacetableTextOptionsEntryValue">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Checkbox Option 1 Description" />
 			<var name="optionFieldType" value="Text" />
@@ -1595,6 +1803,10 @@
 	</command>
 
 	<command name="AddParagraphOptionsEntry" priority="5">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Paragraph Option 1 Description" />
 			<var name="optionFieldType" value="Paragraph" />
@@ -1616,6 +1828,10 @@
 	</command>
 
 	<command name="AddParagraphOptionsEntryValue" priority="5">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Paragraph Option 1 Description" />
 			<var name="optionFieldType" value="Paragraph" />
@@ -1636,6 +1852,10 @@
 	</command>
 
 	<command name="AddRadioOptionsEntry" priority="5">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Radio Option 1 Description" />
 			<var name="optionFieldType" value="Radio" />
@@ -1657,6 +1877,10 @@
 	</command>
 
 	<command name="AddRadioOptionsEntryValue" priority="5">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Radio Option 1 Description" />
 			<var name="optionFieldType" value="Radio" />
@@ -1681,6 +1905,10 @@
 	</command>
 
 	<command name="AddRequiredCheckboxOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Checkbox Option 1 Description" />
 			<var name="optionFieldType" value="checkbox_multiple" />
@@ -1705,6 +1933,10 @@
 	</command>
 
 	<command name="AddRequiredCheckboxOptionsEntryValue">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Checkbox Option 1 Description" />
 			<var name="optionFieldType" value="checkbox_multiple" />
@@ -1731,6 +1963,10 @@
 	</command>
 
 	<command name="AddRequiredContributorCheckboxOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Checkbox Option 1 Description" />
 			<var name="optionFieldType" value="checkbox_multiple" />
@@ -1760,6 +1996,10 @@
 	</command>
 
 	<command name="AddRequiredContributorCheckboxOptionsEntryValue">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Checkbox Option 1 Description" />
 			<var name="optionFieldType" value="checkbox_multiple" />
@@ -1791,6 +2031,10 @@
 	</command>
 
 	<command name="AddRequiredContributorDateOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Date Option 1 Description" />
 			<var name="optionFieldType" value="Date" />
@@ -1820,6 +2064,10 @@
 	</command>
 
 	<command name="AddRequiredContributorDateOptionsEntryValue">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Date Option 1 Description" />
 			<var name="optionFieldType" value="Date" />
@@ -1851,6 +2099,10 @@
 	</command>
 
 	<command name="AddRequiredContributorParagraphOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Paragraph Option 1 Description" />
 			<var name="optionFieldType" value="Paragraph" />
@@ -1880,6 +2132,10 @@
 	</command>
 
 	<command name="AddRequiredContributorParagraphOptionsEntryValue">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Paragraph Option 1 Description" />
 			<var name="optionFieldType" value="Paragraph" />
@@ -1911,6 +2167,10 @@
 	</command>
 
 	<command name="AddRequiredContributorRadioOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Radio Option 1 Description" />
 			<var name="optionFieldType" value="Radio" />
@@ -1940,6 +2200,10 @@
 	</command>
 
 	<command name="AddRequiredContributorRadioOptionsEntryValue">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Radio Option 1 Description" />
 			<var name="optionFieldType" value="Radio" />
@@ -1971,6 +2235,10 @@
 	</command>
 
 	<command name="AddRequiredContributorSelectOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Select Option 1 Description" />
 			<var name="optionFieldType" value="Select" />
@@ -2000,6 +2268,10 @@
 	</command>
 
 	<command name="AddRequiredContributorSelectOptionsEntryValue">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Select Option 1 Description" />
 			<var name="optionFieldType" value="Select" />
@@ -2031,6 +2303,10 @@
 	</command>
 
 	<command name="AddRequiredContributorTextOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Text Option 1 Description" />
 			<var name="optionFieldType" value="Text" />
@@ -2060,6 +2336,10 @@
 	</command>
 
 	<command name="AddRequiredContributorTextOptionsEntryValue">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Text Option 1 Description" />
 			<var name="optionFieldType" value="Text" />
@@ -2091,6 +2371,10 @@
 	</command>
 
 	<command name="AddRequiredDateOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Date Option 1 Description" />
 			<var name="optionFieldType" value="Date" />
@@ -2115,6 +2399,10 @@
 	</command>
 
 	<command name="AddRequiredDateOptionsEntryValue">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Date Option 1 Description" />
 			<var name="optionFieldType" value="Date" />
@@ -2141,6 +2429,10 @@
 	</command>
 
 	<command name="AddRequiredParagraphOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Paragraph Option 1 Description" />
 			<var name="optionFieldType" value="Paragraph" />
@@ -2165,6 +2457,10 @@
 	</command>
 
 	<command name="AddRequiredParagraphOptionsEntryValue">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Paragraph Option 1 Description" />
 			<var name="optionFieldType" value="Paragraph" />
@@ -2191,6 +2487,10 @@
 	</command>
 
 	<command name="AddRequiredRadioOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Radio Option 1 Description" />
 			<var name="optionFieldType" value="Radio" />
@@ -2215,6 +2515,10 @@
 	</command>
 
 	<command name="AddRequiredRadioOptionsEntryValue">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Radio Option 1 Description" />
 			<var name="optionFieldType" value="Radio" />
@@ -2241,6 +2545,10 @@
 	</command>
 
 	<command name="AddRequiredSelectOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Select Option 1 Description" />
 			<var name="optionFieldType" value="Select" />
@@ -2265,6 +2573,10 @@
 	</command>
 
 	<command name="AddRequiredSelectOptionsEntryValue">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Select Option 1 Description" />
 			<var name="optionFieldType" value="Select" />
@@ -2291,6 +2603,10 @@
 	</command>
 
 	<command name="AddRequiredTextOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Text Option 1 Description" />
 			<var name="optionFieldType" value="Text" />
@@ -2315,6 +2631,10 @@
 	</command>
 
 	<command name="AddRequiredTextOptionsEntryValue">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Checkbox Option 1 Description" />
 			<var name="optionFieldType" value="Text" />
@@ -2341,6 +2661,10 @@
 	</command>
 
 	<command name="AddSelectOptionsEntry" priority="5">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Select Option 1 Description" />
 			<var name="optionFieldType" value="Select" />
@@ -2362,6 +2686,10 @@
 	</command>
 
 	<command name="AddSelectOptionsEntryValue" priority="5">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Select Option 1 Description" />
 			<var name="optionFieldType" value="Select" />
@@ -2386,6 +2714,10 @@
 	</command>
 
 	<command name="AddSKUContributorCheckboxOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Checkbox Option 1 Description" />
 			<var name="optionFieldType" value="checkbox_multiple" />
@@ -2410,6 +2742,10 @@
 	</command>
 
 	<command name="AddSKUContributorDateOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Date Option 1 Description" />
 			<var name="optionFieldType" value="Date" />
@@ -2434,6 +2770,10 @@
 	</command>
 
 	<command name="AddSKUContributorParagraphOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Paragraph Option 1 Description" />
 			<var name="optionFieldType" value="Paragraph" />
@@ -2458,6 +2798,10 @@
 	</command>
 
 	<command name="AddSKUContributorRadioOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Radio Option 1 Description" />
 			<var name="optionFieldType" value="Radio" />
@@ -2482,6 +2826,10 @@
 	</command>
 
 	<command name="AddSKUContributorSelectOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Select Option 1 Description" />
 			<var name="optionFieldType" value="Select" />
@@ -2506,6 +2854,10 @@
 	</command>
 
 	<command name="AddSKUContributorTextOptionsEntry">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Text Option 1 Description" />
 			<var name="optionFieldType" value="Text" />
@@ -2530,6 +2882,10 @@
 	</command>
 
 	<command name="AddTextOptionsEntry" priority="5">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Text Option 1 Description" />
 			<var name="optionFieldType" value="Text" />
@@ -2551,6 +2907,10 @@
 	</command>
 
 	<command name="AddTextOptionsEntryValue" priority="5">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Options" />
+		</execute>
+
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="Text Option 1 Description" />
 			<var name="optionFieldType" value="Text" />

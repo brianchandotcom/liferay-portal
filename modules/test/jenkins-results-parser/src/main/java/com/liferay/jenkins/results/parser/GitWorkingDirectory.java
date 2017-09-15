@@ -261,7 +261,7 @@ public class GitWorkingDirectory {
 		createLocalBranch(branchName, false, null);
 	}
 
-	public void createLocalBranch(
+	public Branch createLocalBranch(
 		String localBranchName, boolean force, String startPoint) {
 
 		StringBuilder sb = new StringBuilder();
@@ -287,6 +287,8 @@ public class GitWorkingDirectory {
 					"Unable to create local branch ", localBranchName, " at ",
 					startPoint, "\n", executionResult.getStandardErr()));
 		}
+
+		return getLocalBranch(localBranchName);
 	}
 
 	public String createPullRequest(

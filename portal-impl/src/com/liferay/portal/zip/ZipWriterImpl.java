@@ -14,11 +14,11 @@
 
 package com.liferay.portal.zip;
 
+import com.liferay.petra.memory.DeleteFileFinalizeAction;
+import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.memory.DeleteFileFinalizeAction;
-import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;

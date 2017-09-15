@@ -14,8 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.store;
 
-import com.liferay.portal.kernel.memory.DeleteFileFinalizeAction;
-import com.liferay.portal.kernel.memory.FinalizeManager;
+import com.liferay.petra.memory.DeleteFileFinalizeAction;
+import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.portal.kernel.util.FileUtil;
 
 import java.io.File;

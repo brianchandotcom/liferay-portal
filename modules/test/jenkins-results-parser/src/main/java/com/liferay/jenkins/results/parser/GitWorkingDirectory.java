@@ -673,10 +673,10 @@ public class GitWorkingDirectory {
 	}
 
 	public void rebase(
-		boolean abortOnFail, String sourceBranchName, String targetBranchName) {
+		boolean abortOnFail, Branch sourceBranch, Branch targetBranch) {
 
 		String rebaseCommand = JenkinsResultsParserUtil.combine(
-			"git rebase ", sourceBranchName, " ", targetBranchName);
+			"git rebase ", sourceBranch.getName(), " ", targetBranch.getName());
 
 		ExecutionResult executionResult = executeBashCommands(
 			1, 1000 * 60 * 10, rebaseCommand);
@@ -688,8 +688,8 @@ public class GitWorkingDirectory {
 
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
-					"Unable to rebase ", targetBranchName, " to ",
-					sourceBranchName));
+					"Unable to rebase ", targetBranch.getName(), " to ",
+					sourceBranch.getName()));
 		}
 	}
 

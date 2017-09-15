@@ -474,6 +474,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			try (ResultSet rs = ps1.executeQuery()) {
 				rs.next();
 
+				int i = 1;
+
 				while (rs.next()) {
 					long fileEntryId = rs.getLong("fileEntryId");
 					String extension = GetterUtil.getString(
@@ -493,7 +495,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 							0, title.length() - titleExtension.length());
 					}
 
-					for (int i = 1;; i++) {
+					do {
 						String iString = String.valueOf(i);
 
 						int availableLength =
@@ -516,16 +518,13 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 						uniqueFileName = DLUtil.getSanitizedFileName(
 							title, extension);
 
-						if (!generatedUniqueFileNames.contains(
-								uniqueFileName) &&
-							!generatedUniqueTitles.contains(title) &&
-							!hasFileEntry(
-								groupId, folderId, fileEntryId, title,
-								uniqueFileName)) {
-
-							break;
-						}
+						i++;
 					}
+					while (generatedUniqueFileNames.contains(uniqueFileName) ||
+						   generatedUniqueTitles.contains(title) ||
+						   hasFileEntry(
+							   groupId, folderId, fileEntryId, title,
+							   uniqueFileName));
 
 					generatedUniqueFileNames.add(uniqueFileName);
 					generatedUniqueTitles.add(title);

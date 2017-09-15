@@ -28,7 +28,9 @@ import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.petra.concurrent.ConcurrentMapperHashMap}
  */
+@Deprecated
 public abstract class ConcurrentMapperHashMap<K, IK, V, IV>
 	extends AbstractMap<K, V> implements ConcurrentMap<K, V>, Serializable {
 

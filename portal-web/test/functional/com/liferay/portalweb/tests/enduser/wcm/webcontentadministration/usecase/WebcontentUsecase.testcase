@@ -1038,6 +1038,91 @@
 		<execute macro="WebContent#viewVideoViaWCD" />
 	</command>
 
+	<command name="AddWebContentFromImportedStructureAndTemplate" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training" />
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="LAR#importPortlet">
+			<var name="larFileName" value="frontPage-structures.lar" />
+			<var name="uploadFrom" value="dependencies" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoManageStructures" />
+
+		<for list="3 Columns with Images,Footer Content,1 Column Banner" param="structureName">
+			<execute macro="WebContentStructures#viewCP">
+				<var name="structureName" value="${structureName}" />
+			</execute>
+		</for>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="LAR#importPortlet">
+			<var name="larFileName" value="space-templates.lar" />
+			<var name="uploadFrom" value="dependencies" />
+		</execute>
+
+		<for list="3 Columns with Images Template,Footer Content Template,1 Column Banner Template,News,Events" param="templateName">
+			<execute macro="WebContentTemplates#viewCP">
+				<var name="templateDescription" value="" />
+				<var name="templateLanguage" value="ftl" />
+				<var name="templateName" value="${templateName}" />
+			</execute>
+
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Web Content" />
+			</execute>
+		</for>
+
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
+			<var name="structureName" value="1 Column Banner" />
+		</execute>
+
+		<execute macro="WebContent#addWithStructureCP">
+			<var name="abstractSummary" value="The Structured Banner for the S.P.A.C.E. FrontPage" />
+			<var name="fieldName" value="BannerTitle" />
+			<var name="fieldName2" value="BannerHeading" />
+			<var name="webContentImage" value="Spaceport.jpg" />
+			<var name="webContentTextBox" value="Space Program Academy of Continuing Education" />
+			<var name="webContentTextBox2" value="Dare to dream out of this world" />
+			<var name="webContentTitle" value="S.P.A.C.E. Banner" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="S.P.A.C.E. Banner" />
+		</execute>
+
+		<execute macro="WebContent#viewWithStructureCP">
+			<var name="abstractSummary" value="The Structured Banner for the S.P.A.C.E. FrontPage" />
+			<var name="fieldName" value="BannerTitle" />
+			<var name="fieldName2" value="BannerHeading" />
+			<var name="webContentImage" value="Spaceport.jpg" />
+			<var name="webContentTextBox" value="Space Program Academy of Continuing Education" />
+			<var name="webContentTextBox2" value="Dare to dream out of this world" />
+			<var name="webContentTitle" value="S.P.A.C.E. Banner" />
+		</execute>
+	</command>
+
 	<command name="AddWebContentRemoveGuestViewPermission" priority="4">
 		<property name="test.name.skip.portal.instance" value="WebcontentUsecase#AddWebContentRemoveGuestViewPermission" />
 		<property name="testray.component.names" value="Permissions,Web Content Administration" />
@@ -1416,91 +1501,6 @@
 
 		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="Web Content Title" />
-		</execute>
-	</command>
-
-	<command name="AddWebContentFromImportedStructureAndTemplate" priority="5">
-		<property name="portal.acceptance" value="pending" />
-		<property name="testray.component.names" value="Training" />
-
-		<execute macro="ProductMenu#gotoControlPanelSites">
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="LAR#importPortlet">
-			<var name="larFileName" value="frontPage-structures.lar" />
-			<var name="uploadFrom" value="dependencies" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoManageStructures" />
-
-		<for list="3 Columns with Images,Footer Content,1 Column Banner" param="structureName">
-			<execute macro="WebContentStructures#viewCP">
-				<var name="structureName" value="${structureName}" />
-			</execute>
-		</for>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="LAR#importPortlet">
-			<var name="larFileName" value="space-templates.lar" />
-			<var name="uploadFrom" value="dependencies" />
-		</execute>
-
-		<for list="3 Columns with Images Template,Footer Content Template,1 Column Banner Template,News,Events" param="templateName">
-			<execute macro="WebContentTemplates#viewCP">
-				<var name="templateDescription" value="" />
-				<var name="templateLanguage" value="ftl" />
-				<var name="templateName" value="${templateName}" />
-			</execute>
-
-			<execute macro="ProductMenu#gotoSitesContent">
-				<var name="portlet" value="Web Content" />
-			</execute>
-		</for>
-
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="1 Column Banner" />
-		</execute>
-
-		<execute macro="WebContent#addWithStructureCP">
-			<var name="abstractSummary" value="The Structured Banner for the S.P.A.C.E. FrontPage" />
-			<var name="fieldName" value="BannerTitle" />
-			<var name="fieldName2" value="BannerHeading" />
-			<var name="webContentImage" value="Spaceport.jpg" />
-			<var name="webContentTextBox" value="Space Program Academy of Continuing Education" />
-			<var name="webContentTextBox2" value="Dare to dream out of this world" />
-			<var name="webContentTitle" value="S.P.A.C.E. Banner" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="S.P.A.C.E. Banner" />
-		</execute>
-
-		<execute macro="WebContent#viewWithStructureCP">
-			<var name="abstractSummary" value="The Structured Banner for the S.P.A.C.E. FrontPage" />
-			<var name="fieldName" value="BannerTitle" />
-			<var name="fieldName2" value="BannerHeading" />
-			<var name="webContentImage" value="Spaceport.jpg" />
-			<var name="webContentTextBox" value="Space Program Academy of Continuing Education" />
-			<var name="webContentTextBox2" value="Dare to dream out of this world" />
-			<var name="webContentTitle" value="S.P.A.C.E. Banner" />
 		</execute>
 	</command>
 

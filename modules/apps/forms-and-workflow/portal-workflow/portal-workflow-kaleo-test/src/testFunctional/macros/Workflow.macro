@@ -1077,7 +1077,7 @@
 
 		<execute function="AssertTextEquals#assertText" locator1="MyWorkflowTasksTask#STATE" value1="${workflowTask}" />
 
-		<execute function="AssertTextEquals" locator1="MyWorkflowTasksTask#PREVIEW_TITLE" value1="${workflowAssetTitle}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasksTask#PREVIEW_TITLE" value1="${workflowAssetTitle}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasksTask#PREVIEW_CONTENT" value1="${workflowAssetContent}" />
 	</command>
 
@@ -1109,7 +1109,7 @@
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasksTask#ASSIGNED_TO" value1="Nobody" />
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasksTask#STATE" value1="${workflowTask}" />
 
-		<execute function="AssertTextEquals" locator1="MyWorkflowTasksTask#PREVIEW_TITLE" value1="${workflowAssetTitle}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasksTask#PREVIEW_TITLE" value1="${workflowAssetTitle}" />
 	</command>
 
 	<command name="viewTaskHeaderTitle">

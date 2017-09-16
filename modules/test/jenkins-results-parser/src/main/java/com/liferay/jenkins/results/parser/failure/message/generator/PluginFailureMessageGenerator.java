@@ -132,9 +132,9 @@ public class PluginFailureMessageGenerator extends BaseFailureMessageGenerator {
 			return null;
 		}
 
-		String consoleText = build.getConsoleText();
+		String consoleOutput = build.getConsoleText();
 
-		Matcher matcher = _pattern.matcher(consoleText);
+		Matcher matcher = _pattern.matcher(consoleOutput);
 
 		Element messageElement = Dom4JUtil.getNewElement("div");
 
@@ -162,9 +162,9 @@ public class PluginFailureMessageGenerator extends BaseFailureMessageGenerator {
 					break;
 				}
 
-				int y = consoleText.indexOf("\n", x);
+				int y = consoleOutput.indexOf("\n", x);
 
-				String pluginName = consoleText.substring(x, y);
+				String pluginName = consoleOutput.substring(x, y);
 
 				pluginListItemElement.addText(
 					pluginName.replace("[echo] ", ""));
@@ -175,7 +175,7 @@ public class PluginFailureMessageGenerator extends BaseFailureMessageGenerator {
 		else {
 			TopLevelBuild topLevelBuild = build.getTopLevelBuild();
 
-			int end = consoleText.indexOf("merge-test-results:");
+			int end = consoleOutput.indexOf("merge-test-results:");
 
 			Dom4JUtil.addToElement(
 				paragraphElement,
@@ -184,7 +184,7 @@ public class PluginFailureMessageGenerator extends BaseFailureMessageGenerator {
 				getGitCommitPluginsAnchorElement(topLevelBuild), ". Click ",
 				Dom4JUtil.getNewAnchorElement(_blogURL, "here"),
 				" for more details.",
-				getConsoleOutputSnippetElement(consoleText, true, end));
+				getConsoleOutputSnippetElement(consoleOutput, true, end));
 		}
 
 		return messageElement;

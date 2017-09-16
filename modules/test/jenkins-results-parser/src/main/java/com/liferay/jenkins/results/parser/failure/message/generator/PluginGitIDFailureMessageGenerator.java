@@ -68,13 +68,13 @@ public class PluginGitIDFailureMessageGenerator
 
 	@Override
 	public Element getMessageElement(Build build) {
-		String consoleText = build.getConsoleText();
+		String consoleOutput = build.getConsoleText();
 
-		if (!consoleText.contains("fatal: Could not parse object")) {
+		if (!consoleOutput.contains("fatal: Could not parse object")) {
 			return null;
 		}
 
-		int end = consoleText.indexOf("merge-test-results:");
+		int end = consoleOutput.indexOf("merge-test-results:");
 		TopLevelBuild topLevelBuild = build.getTopLevelBuild();
 
 		Element messageElement = Dom4JUtil.getNewElement(
@@ -85,7 +85,7 @@ public class PluginGitIDFailureMessageGenerator
 			" to an existing Git ID from ",
 			Dom4JUtil.getNewElement(
 				"strong", null, getPluginsBranchAnchorElement(topLevelBuild)),
-			".", getConsoleOutputSnippetElement(consoleText, true, end));
+			".", getConsoleOutputSnippetElement(consoleOutput, true, end));
 
 		return messageElement;
 	}

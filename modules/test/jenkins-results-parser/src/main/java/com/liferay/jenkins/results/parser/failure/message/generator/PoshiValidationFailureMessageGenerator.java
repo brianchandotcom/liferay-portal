@@ -48,9 +48,8 @@ public class PoshiValidationFailureMessageGenerator
 
 	@Override
 	public Element getMessageElement(Build build) {
-		String consoleText = build.getConsoleText();
-
-		Matcher poshiFailureMatcher = _poshiFailurePattern.matcher(consoleText);
+		Matcher poshiFailureMatcher = _poshiFailurePattern.matcher(
+			build.getConsoleText());
 
 		if (!poshiFailureMatcher.find()) {
 			return null;

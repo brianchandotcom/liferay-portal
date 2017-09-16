@@ -69,10 +69,10 @@ public class PoshiTestFailureMessageGenerator
 
 	@Override
 	public Element getMessageElement(Build build) {
-		String consoleText = build.getConsoleText();
+		String consoleOutput = build.getConsoleText();
 
 		Matcher poshiTestFailureMatcher = _poshiTestFailurePattern.matcher(
-			consoleText);
+			consoleOutput);
 
 		if (!poshiTestFailureMatcher.find()) {
 			return null;
@@ -80,22 +80,22 @@ public class PoshiTestFailureMessageGenerator
 
 		String failedPoshiTaskToken = poshiTestFailureMatcher.group(1);
 
-		int end = consoleText.indexOf(failedPoshiTaskToken);
+		int end = consoleOutput.indexOf(failedPoshiTaskToken);
 
-		end = consoleText.indexOf(_TOKEN_TRY, end);
+		end = consoleOutput.indexOf(_TOKEN_TRY, end);
 
-		end = consoleText.lastIndexOf("\n", end);
+		end = consoleOutput.lastIndexOf("\n", end);
 
-		int start = consoleText.lastIndexOf(_TOKEN_JAVA_LANG_EXCEPTION, end);
+		int start = consoleOutput.lastIndexOf(_TOKEN_JAVA_LANG_EXCEPTION, end);
 
-		start = consoleText.lastIndexOf("\n", start);
+		start = consoleOutput.lastIndexOf("\n", start);
 
 		return Dom4JUtil.getNewElement(
 			"div", null,
 			Dom4JUtil.getNewElement(
 				"p", null, "POSHI Test Failure: ",
 				Dom4JUtil.getNewElement("strong", null, failedPoshiTaskToken)),
-			getConsoleOutputSnippetElement(consoleText, true, start, end));
+			getConsoleOutputSnippetElement(consoleOutput, true, start, end));
 	}
 
 	private static final String _TOKEN_JAVA_LANG_EXCEPTION =

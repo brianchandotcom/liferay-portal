@@ -71,23 +71,23 @@ public class SemanticVersioningFailureMessageGenerator
 
 	@Override
 	public Element getMessageElement(Build build) {
-		String consoleText = build.getConsoleText();
+		String consoleOutput = build.getConsoleText();
 
-		if (!consoleText.contains(_TOKEN_SEMVER_INCORRECT) ||
-			!consoleText.contains(_TOKEN_SEMVER_PACKAGE)) {
+		if (!consoleOutput.contains(_TOKEN_SEMVER_INCORRECT) ||
+			!consoleOutput.contains(_TOKEN_SEMVER_PACKAGE)) {
 
 			return null;
 		}
 
-		int end = consoleText.indexOf(_TOKEN_SEMVER_INCORRECT);
+		int end = consoleOutput.indexOf(_TOKEN_SEMVER_INCORRECT);
 
-		end = consoleText.indexOf("\n", end);
+		end = consoleOutput.indexOf("\n", end);
 
-		int start = consoleText.lastIndexOf(_TOKEN_BASELINE_CHECK, end);
+		int start = consoleOutput.lastIndexOf(_TOKEN_BASELINE_CHECK, end);
 
-		start = consoleText.indexOf(_TOKEN_SEMVER_PACKAGE, start);
+		start = consoleOutput.indexOf(_TOKEN_SEMVER_PACKAGE, start);
 
-		start = consoleText.lastIndexOf("\n", start);
+		start = consoleOutput.lastIndexOf("\n", start);
 
 		return Dom4JUtil.getNewElement(
 			"div", null,
@@ -98,7 +98,8 @@ public class SemanticVersioningFailureMessageGenerator
 				Dom4JUtil.getNewElement(
 					"strong", null,
 					getBaseBranchAnchorElement(build.getTopLevelBuild())),
-				getConsoleOutputSnippetElement(consoleText, true, start, end)));
+				getConsoleOutputSnippetElement(
+					consoleOutput, true, start, end)));
 	}
 
 	private static final String _TOKEN_BASELINE_CHECK =

@@ -53,25 +53,28 @@ public class SubrepositorySourceFormatFailureMessageGenerator
 
 	@Override
 	public Element getMessageElement(Build build) {
-		String consoleText = build.getConsoleText();
+		return getMessageElement(build.getConsoleText());
+	}
 
-		if (!consoleText.contains(_TOKEN_SOURCE_FORMAT)) {
+	@Override
+	public Element getMessageElement(String consoleOutput) {
+		if (!consoleOutput.contains(_TOKEN_SOURCE_FORMAT)) {
 			return null;
 		}
 
-		int start = consoleText.lastIndexOf(_TOKEN_FORMAT_SOURCE);
+		int start = consoleOutput.lastIndexOf(_TOKEN_FORMAT_SOURCE);
 
-		start = consoleText.indexOf(_TOKEN_SYNC_RESULTS, start);
+		start = consoleOutput.indexOf(_TOKEN_SYNC_RESULTS, start);
 
-		start = consoleText.indexOf("\n", start);
+		start = consoleOutput.indexOf("\n", start);
 
-		int end = consoleText.indexOf(_TOKEN_EXCEPTION_IS, start);
+		int end = consoleOutput.indexOf(_TOKEN_EXCEPTION_IS, start);
 
-		end = consoleText.lastIndexOf(_TOKEN_SOURCE_FORMAT, end);
+		end = consoleOutput.lastIndexOf(_TOKEN_SOURCE_FORMAT, end);
 
-		end = consoleText.indexOf("\n", end);
+		end = consoleOutput.indexOf("\n", end);
 
-		return getConsoleOutputSnippetElement(consoleText, true, start, end);
+		return getConsoleOutputSnippetElement(consoleOutput, true, start, end);
 	}
 
 	private static final String _TOKEN_EXCEPTION_IS =

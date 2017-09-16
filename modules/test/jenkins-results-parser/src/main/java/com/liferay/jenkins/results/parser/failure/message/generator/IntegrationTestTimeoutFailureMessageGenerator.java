@@ -55,9 +55,12 @@ public class IntegrationTestTimeoutFailureMessageGenerator
 
 	@Override
 	public Element getMessageElement(Build build) {
-		String consoleText = build.getConsoleText();
+		return getMessageElement(build.getConsoleText());
+	}
 
-		Matcher matcher = _pattern.matcher(consoleText);
+	@Override
+	public Element getMessageElement(String consoleOutput) {
+		Matcher matcher = _pattern.matcher(consoleOutput);
 
 		if (!matcher.find()) {
 			return null;

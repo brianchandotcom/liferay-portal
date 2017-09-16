@@ -49,23 +49,26 @@ public class ModulesCompilationFailureMessageGenerator
 
 	@Override
 	public Element getMessageElement(Build build) {
-		String consoleText = build.getConsoleText();
+		return getMessageElement(build.getConsoleText());
+	}
 
-		if (!consoleText.contains(_TOKEN_COULD_NOT_RESOLVE_CONFIG)) {
+	@Override
+	public Element getMessageElement(String consoleOutput) {
+		if (!consoleOutput.contains(_TOKEN_COULD_NOT_RESOLVE_CONFIG)) {
 			return null;
 		}
 
-		int end = consoleText.indexOf(_TOKEN_MERGE_TEST_RESULTS);
+		int end = consoleOutput.indexOf(_TOKEN_MERGE_TEST_RESULTS);
 
-		end = consoleText.lastIndexOf(_TOKEN_TRY, end);
+		end = consoleOutput.lastIndexOf(_TOKEN_TRY, end);
 
-		end = consoleText.lastIndexOf("\n", end);
+		end = consoleOutput.lastIndexOf("\n", end);
 
-		int start = consoleText.lastIndexOf(_TOKEN_WHAT_WENT_WRONG, end);
+		int start = consoleOutput.lastIndexOf(_TOKEN_WHAT_WENT_WRONG, end);
 
-		start = consoleText.lastIndexOf("\n", start);
+		start = consoleOutput.lastIndexOf("\n", start);
 
-		return getConsoleOutputSnippetElement(consoleText, true, start, end);
+		return getConsoleOutputSnippetElement(consoleOutput, true, start, end);
 	}
 
 	private static final String _TOKEN_COULD_NOT_RESOLVE_CONFIG =

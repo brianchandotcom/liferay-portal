@@ -58,21 +58,25 @@ public class StartupFailureMessageGenerator
 
 	@Override
 	public Element getMessageElement(Build build) {
-		String consoleText = build.getConsoleText();
+		return getMessageElement(build.getConsoleText());
+	}
 
-		if (!consoleText.contains(_TOKEN_UNRESOLVED_REQUIREMENT)) {
+	@Override
+	public Element getMessageElement(String consoleOutput) {
+		if (!consoleOutput.contains(_TOKEN_UNRESOLVED_REQUIREMENT)) {
 			return null;
 		}
 
-		int start = consoleText.indexOf(_TOKEN_UNRESOLVED_REQUIREMENT);
+		int start = consoleOutput.indexOf(_TOKEN_UNRESOLVED_REQUIREMENT);
 
-		start = consoleText.lastIndexOf(_TOKEN_COULD_NOT_RESOLVE_MODULE, start);
+		start = consoleOutput.lastIndexOf(
+			_TOKEN_COULD_NOT_RESOLVE_MODULE, start);
 
-		start = consoleText.lastIndexOf("\n", start);
+		start = consoleOutput.lastIndexOf("\n", start);
 
-		int end = consoleText.indexOf(_TOKEN_DELETING, start);
+		int end = consoleOutput.indexOf(_TOKEN_DELETING, start);
 
-		end = consoleText.lastIndexOf("\n", end);
+		end = consoleOutput.lastIndexOf("\n", end);
 
 		return Dom4JUtil.getNewElement(
 			"div", null,
@@ -80,7 +84,7 @@ public class StartupFailureMessageGenerator
 				"p", null, "Startup error: ",
 				Dom4JUtil.getNewElement(
 					"strong", null, "Unresolved Requirement(s)")),
-			getConsoleOutputSnippetElement(consoleText, true, start, end));
+			getConsoleOutputSnippetElement(consoleOutput, true, start, end));
 	}
 
 	private static final String _TOKEN_COULD_NOT_RESOLVE_MODULE =

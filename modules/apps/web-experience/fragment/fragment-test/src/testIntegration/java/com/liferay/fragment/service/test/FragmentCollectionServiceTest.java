@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.modern.site.building.fragment.service.test;
+package com.liferay.fragment.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.exception.DuplicateFragmentCollectionException;
 import com.liferay.fragment.exception.FragmentCollectionNameException;
-import com.liferay.modern.site.building.fragment.model.MSBFragmentCollection;
-import com.liferay.modern.site.building.fragment.service.MSBFragmentCollectionServiceUtil;
-import com.liferay.modern.site.building.fragment.service.MSBFragmentEntryServiceUtil;
+import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.service.FragmentCollectionServiceUtil;
+import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -45,7 +45,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 @Sync
-public class MSBFragmentCollectionServiceTest {
+public class FragmentCollectionServiceTest {
 
 	@ClassRule
 	@Rule
@@ -65,10 +65,10 @@ public class MSBFragmentCollectionServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		MSBFragmentCollectionServiceUtil.addMSBFragmentCollection(
+		FragmentCollectionServiceUtil.addFragmentCollection(
 			_group.getGroupId(), "Fragment Collection", null, serviceContext);
 
-		MSBFragmentCollectionServiceUtil.addMSBFragmentCollection(
+		FragmentCollectionServiceUtil.addFragmentCollection(
 			_group.getGroupId(), "Fragment Collection", null, serviceContext);
 	}
 
@@ -78,8 +78,8 @@ public class MSBFragmentCollectionServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		MSBFragmentCollection fragmentCollection =
-			MSBFragmentCollectionServiceUtil.addMSBFragmentCollection(
+		FragmentCollection fragmentCollection =
+			FragmentCollectionServiceUtil.addFragmentCollection(
 				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
 				serviceContext);
 
@@ -93,7 +93,7 @@ public class MSBFragmentCollectionServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		MSBFragmentCollectionServiceUtil.addMSBFragmentCollection(
+		FragmentCollectionServiceUtil.addFragmentCollection(
 			_group.getGroupId(), StringPool.BLANK, StringPool.BLANK,
 			serviceContext);
 	}
@@ -104,7 +104,7 @@ public class MSBFragmentCollectionServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		MSBFragmentCollectionServiceUtil.addMSBFragmentCollection(
+		FragmentCollectionServiceUtil.addFragmentCollection(
 			_group.getGroupId(), null, StringPool.BLANK, serviceContext);
 	}
 
@@ -115,19 +115,19 @@ public class MSBFragmentCollectionServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		int originalFragmentCollectionsCount =
-			MSBFragmentCollectionServiceUtil.getMSBFragmentCollectionsCount(
+			FragmentCollectionServiceUtil.getFragmentCollectionsCount(
 				_group.getGroupId());
 
-		MSBFragmentCollectionServiceUtil.addMSBFragmentCollection(
+		FragmentCollectionServiceUtil.addFragmentCollection(
 			_group.getGroupId(), "Fragment Collection 1", StringPool.BLANK,
 			serviceContext);
 
-		MSBFragmentCollectionServiceUtil.addMSBFragmentCollection(
+		FragmentCollectionServiceUtil.addFragmentCollection(
 			_group.getGroupId(), "Fragment Collection 2", StringPool.BLANK,
 			serviceContext);
 
 		int actualFragmentCollectionsCount =
-			MSBFragmentCollectionServiceUtil.getMSBFragmentCollectionsCount(
+			FragmentCollectionServiceUtil.getFragmentCollectionsCount(
 				_group.getGroupId());
 
 		Assert.assertEquals(
@@ -141,17 +141,17 @@ public class MSBFragmentCollectionServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		MSBFragmentCollection fragmentCollection =
-			MSBFragmentCollectionServiceUtil.addMSBFragmentCollection(
+		FragmentCollection fragmentCollection =
+			FragmentCollectionServiceUtil.addFragmentCollection(
 				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
 				serviceContext);
 
-		MSBFragmentCollectionServiceUtil.deleteMSBFragmentCollection(
-			fragmentCollection.getMsbFragmentCollectionId());
+		FragmentCollectionServiceUtil.deleteFragmentCollection(
+			fragmentCollection.getFragmentCollectionId());
 
 		Assert.assertNull(
-			MSBFragmentCollectionServiceUtil.fetchMSBFragmentCollection(
-				fragmentCollection.getMsbFragmentCollectionId()));
+			FragmentCollectionServiceUtil.fetchFragmentCollection(
+				fragmentCollection.getFragmentCollectionId()));
 	}
 
 	@Test
@@ -162,23 +162,22 @@ public class MSBFragmentCollectionServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		MSBFragmentCollection fragmentCollection =
-			MSBFragmentCollectionServiceUtil.addMSBFragmentCollection(
+		FragmentCollection fragmentCollection =
+			FragmentCollectionServiceUtil.addFragmentCollection(
 				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
 				serviceContext);
 
-		MSBFragmentEntryServiceUtil.addMSBFragmentEntry(
-			_group.getGroupId(),
-			fragmentCollection.getMsbFragmentCollectionId(), "Fragment Entry",
-			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			serviceContext);
+		FragmentEntryServiceUtil.addFragmentEntry(
+			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
+			"Fragment Entry", StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, serviceContext);
 
-		MSBFragmentCollectionServiceUtil.deleteMSBFragmentCollection(
-			fragmentCollection.getMsbFragmentCollectionId());
+		FragmentCollectionServiceUtil.deleteFragmentCollection(
+			fragmentCollection.getFragmentCollectionId());
 
 		Assert.assertNull(
-			MSBFragmentCollectionServiceUtil.fetchMSBFragmentCollection(
-				fragmentCollection.getMsbFragmentCollectionId()));
+			FragmentCollectionServiceUtil.fetchFragmentCollection(
+				fragmentCollection.getFragmentCollectionId()));
 	}
 
 	@DeleteAfterTestRun

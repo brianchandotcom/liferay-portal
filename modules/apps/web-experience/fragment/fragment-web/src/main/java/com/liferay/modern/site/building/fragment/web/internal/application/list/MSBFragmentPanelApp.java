@@ -17,7 +17,7 @@ package com.liferay.modern.site.building.fragment.web.internal.application.list;
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.modern.site.building.fragment.constants.MSBFragmentPortletKeys;
+import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.portal.kernel.model.Portlet;
 
 import org.osgi.service.component.annotations.Component;
@@ -38,12 +38,12 @@ public class MSBFragmentPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return MSBFragmentPortletKeys.MODERN_SITE_BUILDING_FRAGMENT;
+		return FragmentPortletKeys.FRAGMENT;
 	}
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + MSBFragmentPortletKeys.MODERN_SITE_BUILDING_FRAGMENT + ")",
+		target = "(javax.portlet.name=" + FragmentPortletKeys.FRAGMENT + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {

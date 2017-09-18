@@ -118,7 +118,7 @@ renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentCollectionTitle(
 	</liferay-ui:search-container>
 </aui:form>
 
-<c:if test="<%= msbFragmentDisplayContext.isShowAddButton(MSBFragmentActionKeys.ADD_MSB_FRAGMENT_ENTRY) %>">
+<c:if test="<%= msbFragmentDisplayContext.isShowAddButton(FragmentActionKeys.ADD_FRAGMENT_ENTRY) %>">
 	<portlet:actionURL name="addMSBFragmentEntry" var="addMSBFragmentEntryURL">
 		<portlet:param name="mvcPath" value="/edit_msb_fragment_entry.jsp" />
 		<portlet:param name="msbFragmentCollectionId" value="<%= String.valueOf(msbFragmentDisplayContext.getMSBFragmentCollectionId()) %>" />

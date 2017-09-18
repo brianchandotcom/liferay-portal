@@ -14,7 +14,7 @@
 
 package com.liferay.modern.site.building.fragment.service.impl;
 
-import com.liferay.modern.site.building.fragment.constants.MSBFragmentActionKeys;
+import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.modern.site.building.fragment.model.MSBFragmentEntry;
 import com.liferay.modern.site.building.fragment.service.base.MSBFragmentEntryServiceBaseImpl;
 import com.liferay.modern.site.building.fragment.service.permission.MSBFragmentEntryPermission;
@@ -43,7 +43,7 @@ public class MSBFragmentEntryServiceImpl
 
 		MSBFragmentPermission.check(
 			getPermissionChecker(), groupId,
-			MSBFragmentActionKeys.ADD_MSB_FRAGMENT_ENTRY);
+			FragmentActionKeys.ADD_FRAGMENT_ENTRY);
 
 		return msbFragmentEntryLocalService.addMSBFragmentEntry(
 			groupId, getUserId(), msbFragmentCollectionId, name, css, html, js,

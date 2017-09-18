@@ -14,7 +14,7 @@
 
 package com.liferay.modern.site.building.fragment.web.internal.display.context;
 
-import com.liferay.modern.site.building.fragment.constants.MSBFragmentPortletKeys;
+import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.modern.site.building.fragment.model.MSBFragmentCollection;
 import com.liferay.modern.site.building.fragment.model.MSBFragmentEntry;
 import com.liferay.modern.site.building.fragment.service.MSBFragmentCollectionServiceUtil;
@@ -64,8 +64,7 @@ public class MSBFragmentDisplayContext {
 			PortletPreferencesFactoryUtil.getPortalPreferences(_request);
 
 		_displayStyle = portalPreferences.getValue(
-			MSBFragmentPortletKeys.MODERN_SITE_BUILDING_FRAGMENT,
-			"display-style", "icon");
+			FragmentPortletKeys.FRAGMENT, "display-style", "icon");
 
 		return _displayStyle;
 	}
@@ -415,8 +414,8 @@ public class MSBFragmentDisplayContext {
 		if (MSBFragmentPermission.contains(
 				themeDisplay.getPermissionChecker(),
 				MSBFragmentPermission.RESOURCE_NAME,
-				MSBFragmentPortletKeys.MODERN_SITE_BUILDING_FRAGMENT,
-				themeDisplay.getSiteGroupId(), actionId)) {
+				FragmentPortletKeys.FRAGMENT, themeDisplay.getSiteGroupId(),
+			actionId)) {
 
 			return true;
 		}

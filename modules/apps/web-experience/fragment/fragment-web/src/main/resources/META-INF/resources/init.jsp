@@ -24,7 +24,7 @@ taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.modern.site.building.fragment.constants.MSBFragmentActionKeys" %><%@
+<%@ page import="com.liferay.fragment.constants.FragmentActionKeys" %><%@
 page import="com.liferay.fragment.exception.DuplicateFragmentCollectionException" %><%@
 page import="com.liferay.fragment.exception.FragmentCollectionNameException" %><%@
 page import="com.liferay.modern.site.building.fragment.model.MSBFragmentCollection" %><%@

@@ -11,14 +11,14 @@
 		<weight>1</weight>
 		<permissions>
 			<supports>
-				<action-key>ADD_MSB_FRAGMENT_COLLECTION</action-key>
-				<action-key>ADD_MSB_FRAGMENT_ENTRY</action-key>
+				<action-key>ADD_FRAGMENT_COLLECTION</action-key>
+				<action-key>ADD_FRAGMENT_ENTRY</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>VIEW</action-key>
 			</supports>
 			<site-member-defaults>
-				<action-key>ADD_MSB_FRAGMENT_COLLECTION</action-key>
-				<action-key>ADD_MSB_FRAGMENT_ENTRY</action-key>
+				<action-key>ADD_FRAGMENT_COLLECTION</action-key>
+				<action-key>ADD_FRAGMENT_ENTRY</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>VIEW</action-key>
 			</site-member-defaults>
@@ -26,8 +26,8 @@
 				<action-key>VIEW</action-key>
 			</guest-defaults>
 			<guest-unsupported>
-				<action-key>ADD_MSB_FRAGMENT_COLLECTION</action-key>
-				<action-key>ADD_MSB_FRAGMENT_ENTRY</action-key>
+				<action-key>ADD_FRAGMENT_COLLECTION</action-key>
+				<action-key>ADD_FRAGMENT_ENTRY</action-key>
 				<action-key>PERMISSIONS</action-key>
 			</guest-unsupported>
 		</permissions>

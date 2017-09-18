@@ -121,7 +121,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "fragments"));
 	</liferay-ui:search-container>
 </aui:form>
 
-<c:if test="<%= msbFragmentDisplayContext.isShowAddButton(MSBFragmentActionKeys.ADD_MSB_FRAGMENT_COLLECTION) %>">
+<c:if test="<%= msbFragmentDisplayContext.isShowAddButton(FragmentActionKeys.ADD_FRAGMENT_COLLECTION) %>">
 	<portlet:renderURL var="addFragmentCollectionURL">
 		<portlet:param name="mvcPath" value="/edit_msb_fragment_collection.jsp" />
 	</portlet:renderURL>

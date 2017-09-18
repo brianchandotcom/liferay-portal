@@ -14,7 +14,7 @@
 
 package com.liferay.modern.site.building.fragment.web.internal.portlet.action;
 
-import com.liferay.modern.site.building.fragment.constants.MSBFragmentPortletKeys;
+import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.exception.DuplicateFragmentEntryException;
 import com.liferay.fragment.exception.FragmentEntryNameException;
 import com.liferay.modern.site.building.fragment.model.MSBFragmentEntry;
@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + MSBFragmentPortletKeys.MODERN_SITE_BUILDING_FRAGMENT,
+		"javax.portlet.name=" + FragmentPortletKeys.FRAGMENT,
 		"mvc.command.name=addMSBFragmentEntry"
 	},
 	service = MVCActionCommand.class

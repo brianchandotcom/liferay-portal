@@ -99,9 +99,11 @@ issues when building your SASS files (e.g., when building a theme). It's
 recommended to switch to using the Oracle JDK, but if you prefer using the IBM
 JDK, you must use the fallback Ruby compiler. You can do this two ways:
 
-- Set `sass.compiler.class.name=ruby` in your `gradle.properties` file.
-- Set `buildCSS.sassCompilerClassName='ruby'` in the project's `build.gradle`
-  file.
+- In a [*Liferay Workspace*](https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/creating-a-liferay-workspace),
+  or if using the [Liferay Gradle Plugins](https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins)
+  plugin, set `sass.compiler.class.name=ruby` in your `gradle.properties` file.
+- Otherwise, set `buildCSS.sassCompilerClassName='ruby'` in the project's
+  `build.gradle` file.
 
 Be aware that the Ruby-based compiler doesn't perform as well as the native
 compiler, so expect longer compile times.

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.search.test.TestIndexerRegistry;
+import com.liferay.portal.search.test.TestRelatedEntryIndexerRegistry;
 import com.liferay.portlet.documentlibrary.util.DLFileEntryIndexer;
 import com.liferay.portlet.messageboards.util.MBMessageIndexer;
 import com.liferay.registry.BasicRegistryImpl;
@@ -30,7 +31,9 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -142,6 +145,9 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 
 		registry.registerService(
 			IndexerRegistry.class, new TestIndexerRegistry());
+		registry.registerService(
+			RelatedEntryIndexerRegistry.class,
+			new TestRelatedEntryIndexerRegistry());
 	}
 
 	protected void setUpJSONFactoryUtil() {
@@ -169,8 +175,30 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 
 		RegistryUtil.setRegistry(registry);
 
-		registry.registerService(Indexer.class, new DLFileEntryIndexer());
-		registry.registerService(Indexer.class, new MBMessageIndexer());
+		DLFileEntryIndexer dlFileEntryIndexer = new DLFileEntryIndexer();
+
+		registry.registerService(Indexer.class, dlFileEntryIndexer);
+
+		Map<String, Object> dlFileEntryProperties = new HashMap<>();
+
+		dlFileEntryProperties.put(
+			"related.entry.indexer.class.name", DLFileEntry.class.getName());
+
+		registry.registerService(
+			RelatedEntryIndexer.class, dlFileEntryIndexer,
+			dlFileEntryProperties);
+
+		MBMessageIndexer mbMessageIndexer = new MBMessageIndexer();
+
+		registry.registerService(Indexer.class, mbMessageIndexer);
+
+		Map<String, Object> mbMessageProperties = new HashMap<>();
+
+		mbMessageProperties.put(
+			"related.entry.indexer.class.name", MBMessage.class.getName());
+
+		registry.registerService(
+			RelatedEntryIndexer.class, mbMessageIndexer, mbMessageProperties);
 	}
 
 	protected void setUpSearchEngineHelperUtil() {

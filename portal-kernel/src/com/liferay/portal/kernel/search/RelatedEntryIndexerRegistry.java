@@ -16,24 +16,18 @@ package com.liferay.portal.kernel.search;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import java.util.List;
 
 /**
  * @author Michael C. Han
  */
 @ProviderType
-public interface RelatedEntryIndexer {
+public interface RelatedEntryIndexerRegistry {
 
-	public void addRelatedClassNames(
-			BooleanFilter contextBooleanFilter, SearchContext searchContext)
-		throws Exception;
+	public List<RelatedEntryIndexer> getRelatedEntryIndexers();
 
-	public void addRelatedEntryFields(Document document, Object obj)
-		throws Exception;
+	public List<RelatedEntryIndexer> getRelatedEntryIndexers(Class clazz);
 
-	public boolean isVisibleRelatedEntry(long classPK, int status)
-		throws Exception;
-
-	public void updateFullQuery(SearchContext searchContext);
+	public List<RelatedEntryIndexer> getRelatedEntryIndexers(String className);
 
 }

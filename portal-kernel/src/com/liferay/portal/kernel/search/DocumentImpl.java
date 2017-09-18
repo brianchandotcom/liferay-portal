@@ -780,19 +780,7 @@ public class DocumentImpl implements Document {
 		String portletId, String field1, String field2, String field3,
 		String field4) {
 
-		String uid = portletId + _UID_PORTLET + field1;
-
-		if (field2 != null) {
-			uid += _UID_FIELD + field2;
-		}
-
-		if (field3 != null) {
-			uid += _UID_FIELD + field3;
-		}
-
-		if (field4 != null) {
-			uid += _UID_FIELD + field4;
-		}
+		String uid = Field.getUID(portletId, field1, field2, field3, field4);
 
 		addKeyword(Field.UID, uid);
 	}

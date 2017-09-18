@@ -216,6 +216,43 @@ public class Field implements Serializable {
 		return name.concat(StringPool.UNDERLINE).concat(SORTABLE_FIELD_SUFFIX);
 	}
 
+	public static String getUID(String portletId, String field1) {
+		return getUID(portletId, field1, null);
+	}
+
+	public static String getUID(
+		String portletId, String field1, String field2) {
+
+		return getUID(portletId, field1, field2, null);
+	}
+
+	public static String getUID(
+		String portletId, String field1, String field2, String field3) {
+
+		return getUID(portletId, field1, field2, field3, null);
+	}
+
+	public static String getUID(
+		String portletId, String field1, String field2, String field3,
+		String field4) {
+
+		String uid = portletId + _UID_PORTLET + field1;
+
+		if (field2 != null) {
+			uid += _UID_FIELD + field2;
+		}
+
+		if (field3 != null) {
+			uid += _UID_FIELD + field3;
+		}
+
+		if (field4 != null) {
+			uid += _UID_FIELD + field4;
+		}
+
+		return uid;
+	}
+
 	public static boolean validateFieldName(String name) {
 		if (name.contains(StringPool.COMMA) ||
 			name.contains(StringPool.PERIOD) ||
@@ -516,6 +553,10 @@ public class Field implements Serializable {
 					name);
 		}
 	}
+
+	private static final String _UID_FIELD = "_FIELD_";
+
+	private static final String _UID_PORTLET = "_PORTLET_";
 
 	private float _boost = 1;
 	private Date[] _dates;

@@ -86,6 +86,13 @@ public class BaseRelatedEntryIndexer implements RelatedEntryIndexer {
 	}
 
 	@Override
+	public boolean isVisibleRelatedEntry(long classPK, int status)
+		throws Exception {
+
+		return true;
+	}
+
+	@Override
 	public void updateFullQuery(SearchContext searchContext) {
 	}
 

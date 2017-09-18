@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.RelatedEntryIndexer;
+import com.liferay.portal.kernel.search.RelatedEntryIndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -71,7 +72,11 @@ import javax.portlet.PortletResponse;
  * @author Bruno Farache
  * @author Raymond Augé
  */
-@OSGiBeanProperties
+@OSGiBeanProperties(
+	property = {
+		"related.entry.indexer.class.name=com.liferay.message.boards.kernel.model.MBMessage"
+	}
+)
 public class MBMessageIndexer
 	extends BaseIndexer<MBMessage> implements RelatedEntryIndexer {
 
@@ -148,16 +153,23 @@ public class MBMessageIndexer
 	}
 
 	@Override
-	public boolean isVisibleRelatedEntry(long classPK, int status)
-		throws Exception {
+	public boolean isVisibleRelatedEntry(long classPK, int status) {
+		try {
+			MBMessage message = MBMessageLocalServiceUtil.getMessage(classPK);
 
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(classPK);
+			if (message.isDiscussion()) {
+				Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
+					message.getClassName());
 
-		if (message.isDiscussion()) {
-			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
-				message.getClassName());
+				return indexer.isVisible(message.getClassPK(), status);
+			}
+		}
+		catch (Exception e) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Error retrieving message", e);
+			}
 
-			return indexer.isVisible(message.getClassPK(), status);
+			return false;
 		}
 
 		return true;
@@ -270,21 +282,23 @@ public class MBMessageIndexer
 		document.addKeyword("threadId", mbMessage.getThreadId());
 
 		if (mbMessage.isDiscussion()) {
-			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
-				mbMessage.getClassName());
+			List<RelatedEntryIndexer> relatedEntryIndexers =
+				RelatedEntryIndexerRegistryUtil.getRelatedEntryIndexers(
+					mbMessage.getClassName());
 
-			if ((indexer != null) && (indexer instanceof RelatedEntryIndexer)) {
-				RelatedEntryIndexer relatedEntryIndexer =
-					(RelatedEntryIndexer)indexer;
+			if (relatedEntryIndexers != null) {
+				for (RelatedEntryIndexer relatedEntryIndexer :
+						relatedEntryIndexers) {
 
-				Comment comment = CommentManagerUtil.fetchComment(
-					mbMessage.getMessageId());
+					Comment comment = CommentManagerUtil.fetchComment(
+						mbMessage.getMessageId());
 
-				if (comment != null) {
-					relatedEntryIndexer.addRelatedEntryFields(
-						document, comment);
+					if (comment != null) {
+						relatedEntryIndexer.addRelatedEntryFields(
+							document, comment);
 
-					document.addKeyword(Field.RELATED_ENTRY, true);
+						document.addKeyword(Field.RELATED_ENTRY, true);
+					}
 				}
 			}
 		}

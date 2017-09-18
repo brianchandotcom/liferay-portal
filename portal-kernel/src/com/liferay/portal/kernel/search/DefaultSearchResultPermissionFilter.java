@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -166,8 +167,20 @@ public class DefaultSearchResultPermissionFilter
 		try {
 			if (indexer.hasPermission(
 					_permissionChecker, entryClassName, entryClassPK,
-					ActionKeys.VIEW) &&
-				indexer.isVisibleRelatedEntry(entryClassPK, status)) {
+					ActionKeys.VIEW)) {
+
+				List<RelatedEntryIndexer> relatedEntryIndexers =
+					RelatedEntryIndexerRegistryUtil.getRelatedEntryIndexers(
+						entryClassName);
+
+				if (ListUtil.isNotEmpty(relatedEntryIndexers)) {
+					for (RelatedEntryIndexer relatedEntryIndexer :
+							relatedEntryIndexers) {
+
+						relatedEntryIndexer.isVisibleRelatedEntry(
+							entryClassPK, status);
+					}
+				}
 
 				return true;
 			}

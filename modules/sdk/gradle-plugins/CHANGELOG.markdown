@@ -2325,7 +2325,8 @@ to version 2.1.9.
 ## 3.4.50 - 2017-09-06
 
 ### Changed
-- [LPS-74171]: Update the default Tomcat version to 8.5.20.
+- [LPS-74171]: Update the default value of the
+`liferay.appServers.tomcat.version` property to `8.5.20`.
 - [LPS-74490]: Update the [Liferay Whip] dependency to version 1.0.2.
 
 ## 3.4.51 - 2017-09-07
@@ -2339,7 +2340,8 @@ to version 2.1.10.
 ## 3.4.52 - 2017-09-08
 
 ### Changed
-- [LPS-74171]: Update the default Tomcat version to 8.0.32.
+- [LPS-74171]: Update the default value of the
+`liferay.appServers.tomcat.version` property to `8.0.32`.
 - [LPS-74544]: Update the [Liferay Gradle Plugins Source Formatter] dependency
 to version 2.1.11.
 - [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
@@ -2406,6 +2408,12 @@ to version 2.2.3.
 to version 2.2.4.
 - [LPS-74614]: Update the [Liferay Source Formatter] dependency to version
 1.0.462.
+
+## 3.4.60 - 2017-09-18
+
+### Changed
+- [LPS-74752]: Update the default value of the `jsModuleConfigGenerator.version`
+property to `1.3.3`.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
@@ -2619,4 +2627,5 @@ to version 2.2.4.
 [LPS-74614]: https://issues.liferay.com/browse/LPS-74614
 [LPS-74637]: https://issues.liferay.com/browse/LPS-74637
 [LPS-74657]: https://issues.liferay.com/browse/LPS-74657
+[LPS-74752]: https://issues.liferay.com/browse/LPS-74752
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

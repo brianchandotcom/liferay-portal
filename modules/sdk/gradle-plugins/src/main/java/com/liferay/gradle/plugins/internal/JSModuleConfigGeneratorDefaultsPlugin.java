@@ -73,6 +73,6 @@ public class JSModuleConfigGeneratorDefaultsPlugin
 		configJSModulesTask.setModuleFormat("/_/g,-");
 	}
 
-	private static final String _VERSION = "1.1.10";
+	private static final String _VERSION = "1.3.3";
 
 }

@@ -972,6 +972,69 @@ another task with the same name is being executed in a parent project.
 - [LPS-72705]: Update the [Liferay Source Formatter] dependency to version
 1.0.452.
 
+## 2.1.7 - 2017-09-01
+
+### Changed
+- [LPS-74475]: Update the [Liferay Source Formatter] dependency to version
+1.0.453.
+
+## 2.1.9 - 2017-09-06
+
+### Changed
+- [LPS-74538]: Update the [Liferay Source Formatter] dependency to version
+1.0.454.
+
+## 2.1.10 - 2017-09-07
+
+### Changed
+- [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
+1.0.455.
+
+## 2.1.11 - 2017-09-08
+
+### Changed
+- [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
+1.0.456.
+
+## 2.1.12 - 2017-09-10
+
+### Changed
+- [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
+1.0.457.
+
+## 2.2.0 - 2017-09-11
+
+### Added
+- [LPS-74614]: Add the property `showDebugInformation` to `FormatSourceTask`.
+
+### Changed
+- [LPS-74614]: Update the [Liferay Source Formatter] dependency to version
+1.0.458.
+
+## 2.2.1 - 2017-09-11
+
+### Changed
+- [LPS-74373]: Update the [Liferay Source Formatter] dependency to version
+1.0.459.
+
+## 2.2.2 - 2017-09-12
+
+### Changed
+- [LPS-74637]: Update the [Liferay Source Formatter] dependency to version
+1.0.460.
+
+## 2.2.3 - 2017-09-13
+
+### Changed
+- [LPS-74657]: Update the [Liferay Source Formatter] dependency to version
+1.0.461.
+
+## 2.2.4 - 2017-09-14
+
+### Changed
+- [LPS-74614]: Update the [Liferay Source Formatter] dependency to version
+1.0.462.
+
 [Liferay Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/util/source-formatter
 [LPS-52675]: https://issues.liferay.com/browse/LPS-52675
 [LPS-62970]: https://issues.liferay.com/browse/LPS-62970
@@ -1024,4 +1087,11 @@ another task with the same name is being executed in a parent project.
 [LPS-74269]: https://issues.liferay.com/browse/LPS-74269
 [LPS-74314]: https://issues.liferay.com/browse/LPS-74314
 [LPS-74328]: https://issues.liferay.com/browse/LPS-74328
+[LPS-74373]: https://issues.liferay.com/browse/LPS-74373
 [LPS-74433]: https://issues.liferay.com/browse/LPS-74433
+[LPS-74475]: https://issues.liferay.com/browse/LPS-74475
+[LPS-74538]: https://issues.liferay.com/browse/LPS-74538
+[LPS-74544]: https://issues.liferay.com/browse/LPS-74544
+[LPS-74614]: https://issues.liferay.com/browse/LPS-74614
+[LPS-74637]: https://issues.liferay.com/browse/LPS-74637
+[LPS-74657]: https://issues.liferay.com/browse/LPS-74657

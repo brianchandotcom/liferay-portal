@@ -48,6 +48,7 @@ page import="com.liferay.asset.kernel.model.AssetVocabulary" %><%@
 page import="com.liferay.asset.kernel.model.ClassType" %><%@
 page import="com.liferay.asset.kernel.model.ClassTypeReader" %><%@
 page import="com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil" %><%@
+page import="com.liferay.asset.kernel.service.AssetCategoryPropertyLocalServiceUtil" %><%@
 page import="com.liferay.asset.kernel.service.AssetCategoryPropertyServiceUtil" %><%@
 page import="com.liferay.asset.kernel.service.AssetVocabularyServiceUtil" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
@@ -66,7 +67,6 @@ page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
-page import="com.liferay.portlet.asset.model.impl.AssetCategoryPropertyImpl" %><%@
 page import="com.liferay.portlet.asset.util.AssetVocabularySettingsHelper" %>
 
 <%@ page import="java.util.ArrayList" %><%@

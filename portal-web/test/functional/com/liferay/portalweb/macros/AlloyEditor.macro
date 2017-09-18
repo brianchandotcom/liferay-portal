@@ -4,7 +4,7 @@
 	</command>
 
 	<command name="addSourceContent">
-		<execute function="Click" locator1="AlloyEditor#CONTENT_FIELD" />
+		<execute macro="AlloyEditor#clickContentField" />
 
 		<execute function="Click" locator1="Button#EDITOR_SWITCH" />
 
@@ -23,6 +23,10 @@
 		<execute macro="AlloyEditor#addContent">
 			<var name="content" value="${content}" />
 		</execute>
+	</command>
+
+	<command name="clickContentField">
+		<execute function="Click" locator1="AlloyEditor#CONTENT_FIELD" />
 	</command>
 
 	<command name="toggleStylingInAlloyEditor">
@@ -51,6 +55,8 @@
 	</command>
 
 	<command name="viewNoStylingInAlloyEditor">
+		<execute macro="AlloyEditor#clickContentField" />
+
 		<if>
 			<isset var="boldContent" />
 			<then>
@@ -80,6 +86,8 @@
 	</command>
 
 	<command name="viewStylingInAlloyEditor">
+		<execute macro="AlloyEditor#clickContentField" />
+
 		<if>
 			<isset var="boldContent" />
 			<then>

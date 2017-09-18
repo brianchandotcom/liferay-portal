@@ -126,8 +126,6 @@
 			<var name="boldContent" value="This is a sentence" />
 		</execute>
 
-		<execute function="Click" locator1="AlloyEditor#CONTENT_FIELD" />
-
 		<execute macro="AlloyEditor#viewStylingInAlloyEditor">
 			<var name="boldContent" value="This is a sentence" />
 		</execute>
@@ -135,8 +133,6 @@
 		<execute macro="AlloyEditor#toggleStylingInAlloyEditor">
 			<var name="boldContent" value="This is a sentence" />
 		</execute>
-
-		<execute function="Click" locator1="AlloyEditor#CONTENT_FIELD" />
 
 		<execute macro="AlloyEditor#viewNoStylingInAlloyEditor">
 			<var name="boldContent" value="This is a sentence" />

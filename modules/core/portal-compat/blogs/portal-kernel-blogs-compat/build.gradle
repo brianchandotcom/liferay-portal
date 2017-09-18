@@ -22,7 +22,7 @@ importFiles {
 }
 
 liferay {
-	deployDir = appServerLibGlobalDir
+	deployDir = "../../../../../tmp/lib-pre"
 }
 
 transformImportedFiles {

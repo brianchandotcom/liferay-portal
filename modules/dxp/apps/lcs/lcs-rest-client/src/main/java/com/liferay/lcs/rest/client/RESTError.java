@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.lcs.rest;
+package com.liferay.lcs.rest.client;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

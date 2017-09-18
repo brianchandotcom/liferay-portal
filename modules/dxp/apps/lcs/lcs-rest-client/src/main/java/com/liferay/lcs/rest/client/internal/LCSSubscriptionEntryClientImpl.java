@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.lcs.rest.internal.client;
+package com.liferay.lcs.rest.client.internal;
 
 import com.liferay.lcs.rest.client.LCSSubscriptionEntry;
 import com.liferay.lcs.rest.client.LCSSubscriptionEntryClient;

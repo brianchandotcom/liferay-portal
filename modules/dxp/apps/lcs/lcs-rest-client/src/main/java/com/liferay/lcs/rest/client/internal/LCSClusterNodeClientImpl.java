@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.lcs.rest.internal.client;
+package com.liferay.lcs.rest.client.internal;
 
-import com.liferay.lcs.rest.RESTError;
 import com.liferay.lcs.rest.client.LCSClusterNode;
 import com.liferay.lcs.rest.client.LCSClusterNodeClient;
+import com.liferay.lcs.rest.client.RESTError;
 import com.liferay.lcs.rest.client.exception.DuplicateLCSClusterNodeNameException;
 import com.liferay.lcs.rest.client.exception.NoSuchLCSSubscriptionEntryException;
 import com.liferay.lcs.rest.client.exception.RequiredLCSClusterNodeNameException;

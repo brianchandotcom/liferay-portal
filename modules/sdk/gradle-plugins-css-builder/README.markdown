@@ -100,7 +100,7 @@ recommended to switch to using the Oracle JDK, but if you prefer using the IBM
 JDK, you must use the fallback Ruby compiler. You can do this two ways:
 
 - Set `sass.compiler.class.name=ruby` in your `gradle.properties` file.
-- Set `buildCSS.sassCompilerClassName='ruby'` in the plugin's `build.gradle`
+- Set `buildCSS.sassCompilerClassName='ruby'` in the project's `build.gradle`
   file.
 
 Be aware that the Ruby-based compiler doesn't perform as well as the native

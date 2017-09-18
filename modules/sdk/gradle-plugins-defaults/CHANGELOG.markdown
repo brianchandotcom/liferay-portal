@@ -2032,7 +2032,6 @@ ensure it matches the project version.
 dependencies that belong to a different sub-repository.
 
 ### Changed
-
 - [LPS-74469]: Allow publishing modules whose `soyCompile` configuration
 contains project dependencies.
 

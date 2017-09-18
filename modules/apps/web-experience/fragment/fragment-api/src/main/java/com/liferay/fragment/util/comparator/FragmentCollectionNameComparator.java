@@ -12,38 +12,39 @@
  * details.
  */
 
-package com.liferay.modern.site.building.fragment.util.comparator;
+package com.liferay.fragment.util.comparator;
 
-import com.liferay.modern.site.building.fragment.model.MSBFragmentEntry;
+import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Jürgen Kappler
  */
-public class MSBFragmentEntryNameComparator
-	extends OrderByComparator<MSBFragmentEntry> {
+public class FragmentCollectionNameComparator
+	extends OrderByComparator<FragmentCollection> {
 
-	public static final String ORDER_BY_ASC = "FragmentEntry.name ASC";
+	public static final String ORDER_BY_ASC = "FragmentCollection.name ASC";
 
-	public static final String ORDER_BY_DESC = "FragmentEntry.name DESC";
+	public static final String ORDER_BY_DESC = "FragmentCollection.name DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public MSBFragmentEntryNameComparator() {
+	public FragmentCollectionNameComparator() {
 		this(false);
 	}
 
-	public MSBFragmentEntryNameComparator(boolean ascending) {
+	public FragmentCollectionNameComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
 	@Override
 	public int compare(
-		MSBFragmentEntry fragmentEntry1, MSBFragmentEntry fragmentEntry2) {
+		FragmentCollection fragmentCollection1,
+		FragmentCollection fragmentCollection2) {
 
-		String name1 = StringUtil.toLowerCase(fragmentEntry1.getName());
-		String name2 = StringUtil.toLowerCase(fragmentEntry2.getName());
+		String name1 = StringUtil.toLowerCase(fragmentCollection1.getName());
+		String name2 = StringUtil.toLowerCase(fragmentCollection2.getName());
 
 		int value = name1.compareTo(name2);
 

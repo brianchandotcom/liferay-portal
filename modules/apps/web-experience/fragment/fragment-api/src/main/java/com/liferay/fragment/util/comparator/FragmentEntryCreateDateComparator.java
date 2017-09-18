@@ -12,42 +12,38 @@
  * details.
  */
 
-package com.liferay.modern.site.building.fragment.util.comparator;
+package com.liferay.fragment.util.comparator;
 
-import com.liferay.modern.site.building.fragment.model.MSBFragmentCollection;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Jürgen Kappler
  */
-public class MSBFragmentCollectionNameComparator
-	extends OrderByComparator<MSBFragmentCollection> {
+public class FragmentEntryCreateDateComparator
+	extends OrderByComparator<FragmentEntry> {
 
-	public static final String ORDER_BY_ASC = "MSBFragmentCollection.name ASC";
+	public static final String ORDER_BY_ASC = "FragmentEntry.createDate ASC";
 
-	public static final String ORDER_BY_DESC =
-		"MSBFragmentCollection.name DESC";
+	public static final String ORDER_BY_DESC = "FragmentEntry.createDate DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"name"};
+	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public MSBFragmentCollectionNameComparator() {
-		this(false);
+	public FragmentEntryCreateDateComparator() {
+		this(true);
 	}
 
-	public MSBFragmentCollectionNameComparator(boolean ascending) {
+	public FragmentEntryCreateDateComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
 	@Override
 	public int compare(
-		MSBFragmentCollection msbFragmentCollection1,
-		MSBFragmentCollection msbFragmentCollection2) {
+		FragmentEntry fragmentEntry1, FragmentEntry fragmentEntry2) {
 
-		String name1 = StringUtil.toLowerCase(msbFragmentCollection1.getName());
-		String name2 = StringUtil.toLowerCase(msbFragmentCollection2.getName());
-
-		int value = name1.compareTo(name2);
+		int value = DateUtil.compareTo(
+			fragmentEntry1.getCreateDate(), fragmentEntry2.getCreateDate());
 
 		if (_ascending) {
 			return value;

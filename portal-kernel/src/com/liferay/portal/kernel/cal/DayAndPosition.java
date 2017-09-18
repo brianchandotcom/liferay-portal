@@ -44,8 +44,7 @@
 
 package com.liferay.portal.kernel.cal;
 
-import com.liferay.portal.kernel.util.HashCode;
-import com.liferay.portal.kernel.util.HashCodeFactoryUtil;
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
@@ -204,12 +203,9 @@ public class DayAndPosition implements Cloneable, Serializable {
 	 */
 	@Override
 	public int hashCode() {
-		HashCode hashCode = HashCodeFactoryUtil.getHashCode();
+		int hashCode = HashUtil.hash(0, _day);
 
-		hashCode.append(_day);
-		hashCode.append(_position);
-
-		return hashCode.toHashCode();
+		return HashUtil.hash(hashCode, _position);
 	}
 
 	/**

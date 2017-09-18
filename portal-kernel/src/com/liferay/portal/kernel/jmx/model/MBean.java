@@ -17,8 +17,7 @@ package com.liferay.portal.kernel.jmx.model;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.HashCode;
-import com.liferay.portal.kernel.util.HashCodeFactoryUtil;
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
@@ -113,12 +112,9 @@ public class MBean implements Serializable {
 
 	@Override
 	public int hashCode() {
-		HashCode hashCode = HashCodeFactoryUtil.getHashCode();
+		int hashCode = HashUtil.hash(0, _domainName);
 
-		hashCode.append(_domainName);
-		hashCode.append(_mBeanName);
-
-		return hashCode.toHashCode();
+		return HashUtil.hash(hashCode, _mBeanName);
 	}
 
 	public boolean isLoaded() {

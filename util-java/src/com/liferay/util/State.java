@@ -14,8 +14,7 @@
 
 package com.liferay.util;
 
-import com.liferay.portal.kernel.util.HashCode;
-import com.liferay.portal.kernel.util.HashCodeFactoryUtil;
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
@@ -79,12 +78,9 @@ public class State {
 
 	@Override
 	public int hashCode() {
-		HashCode hashCode = HashCodeFactoryUtil.getHashCode();
+		int hashCode = HashUtil.hash(0, _id);
 
-		hashCode.append(_id);
-		hashCode.append(_name);
-
-		return hashCode.toHashCode();
+		return HashUtil.hash(hashCode, _name);
 	}
 
 	private final String _id;

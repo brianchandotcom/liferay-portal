@@ -15,8 +15,8 @@
 package com.liferay.modern.site.building.fragment.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.modern.site.building.fragment.exception.DuplicateMSBFragmentEntryException;
-import com.liferay.modern.site.building.fragment.exception.MSBFragmentEntryNameException;
+import com.liferay.fragment.exception.DuplicateFragmentEntryException;
+import com.liferay.fragment.exception.FragmentEntryNameException;
 import com.liferay.modern.site.building.fragment.model.MSBFragmentCollection;
 import com.liferay.modern.site.building.fragment.model.MSBFragmentEntry;
 import com.liferay.modern.site.building.fragment.service.MSBFragmentCollectionServiceUtil;
@@ -62,7 +62,7 @@ public class MSBFragmentEntryServiceTest {
 		_group = GroupTestUtil.addGroup();
 	}
 
-	@Test(expected = DuplicateMSBFragmentEntryException.class)
+	@Test(expected = DuplicateFragmentEntryException.class)
 	public void testAddDuplicateFragmentEntries() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -104,7 +104,7 @@ public class MSBFragmentEntryServiceTest {
 		Assert.assertEquals("Fragment Entry", fragmentEntry.getName());
 	}
 
-	@Test(expected = MSBFragmentEntryNameException.class)
+	@Test(expected = FragmentEntryNameException.class)
 	public void testAddFragmentEntryWithEmptyName() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -121,7 +121,7 @@ public class MSBFragmentEntryServiceTest {
 			null, null, null, serviceContext);
 	}
 
-	@Test(expected = MSBFragmentEntryNameException.class)
+	@Test(expected = FragmentEntryNameException.class)
 	public void testAddFragmentEntryWithNullName() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(

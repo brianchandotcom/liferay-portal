@@ -14,7 +14,7 @@
 
 package com.liferay.modern.site.building.fragment.service.impl;
 
-import com.liferay.modern.site.building.fragment.exception.DuplicateMSBFragmentEntryException;
+import com.liferay.fragment.exception.DuplicateFragmentEntryException;
 import com.liferay.modern.site.building.fragment.exception.MSBFragmentEntryNameException;
 import com.liferay.modern.site.building.fragment.model.MSBFragmentEntry;
 import com.liferay.modern.site.building.fragment.service.base.MSBFragmentEntryLocalServiceBaseImpl;
@@ -189,7 +189,7 @@ public class MSBFragmentEntryLocalServiceImpl
 			msbFragmentEntryPersistence.fetchByG_N(groupId, name);
 
 		if (msbFragmentEntry != null) {
-			throw new DuplicateMSBFragmentEntryException(name);
+			throw new DuplicateFragmentEntryException(name);
 		}
 	}
 

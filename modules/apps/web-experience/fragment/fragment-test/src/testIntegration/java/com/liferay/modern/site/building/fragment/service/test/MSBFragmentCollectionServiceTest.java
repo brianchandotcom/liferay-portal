@@ -15,8 +15,8 @@
 package com.liferay.modern.site.building.fragment.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.modern.site.building.fragment.exception.DuplicateMSBFragmentCollectionException;
-import com.liferay.modern.site.building.fragment.exception.MSBFragmentCollectionNameException;
+import com.liferay.fragment.exception.DuplicateFragmentCollectionException;
+import com.liferay.fragment.exception.FragmentCollectionNameException;
 import com.liferay.modern.site.building.fragment.model.MSBFragmentCollection;
 import com.liferay.modern.site.building.fragment.service.MSBFragmentCollectionServiceUtil;
 import com.liferay.modern.site.building.fragment.service.MSBFragmentEntryServiceUtil;
@@ -59,7 +59,7 @@ public class MSBFragmentCollectionServiceTest {
 		_group = GroupTestUtil.addGroup();
 	}
 
-	@Test(expected = DuplicateMSBFragmentCollectionException.class)
+	@Test(expected = DuplicateFragmentCollectionException.class)
 	public void testAddDuplicateFragmentCollections() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -87,7 +87,7 @@ public class MSBFragmentCollectionServiceTest {
 			"Fragment Collection", fragmentCollection.getName());
 	}
 
-	@Test(expected = MSBFragmentCollectionNameException.class)
+	@Test(expected = FragmentCollectionNameException.class)
 	public void testAddFragmentCollectionWithEmptyName() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -98,7 +98,7 @@ public class MSBFragmentCollectionServiceTest {
 			serviceContext);
 	}
 
-	@Test(expected = MSBFragmentCollectionNameException.class)
+	@Test(expected = FragmentCollectionNameException.class)
 	public void testAddFragmentCollectionWithNullName() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(

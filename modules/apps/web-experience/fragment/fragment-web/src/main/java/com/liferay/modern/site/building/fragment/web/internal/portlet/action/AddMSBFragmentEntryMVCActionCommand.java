@@ -15,8 +15,8 @@
 package com.liferay.modern.site.building.fragment.web.internal.portlet.action;
 
 import com.liferay.modern.site.building.fragment.constants.MSBFragmentPortletKeys;
-import com.liferay.modern.site.building.fragment.exception.DuplicateMSBFragmentEntryException;
-import com.liferay.modern.site.building.fragment.exception.MSBFragmentEntryNameException;
+import com.liferay.fragment.exception.DuplicateFragmentEntryException;
+import com.liferay.fragment.exception.FragmentEntryNameException;
 import com.liferay.modern.site.building.fragment.model.MSBFragmentEntry;
 import com.liferay.modern.site.building.fragment.service.MSBFragmentEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -101,10 +101,10 @@ public class AddMSBFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		String errorMessage = "an-unexpected-error-occurred";
 
-		if (pe instanceof DuplicateMSBFragmentEntryException) {
+		if (pe instanceof DuplicateFragmentEntryException) {
 			errorMessage = "a-fragment-entry-with-that-name-already-exists";
 		}
-		else if (pe instanceof MSBFragmentEntryNameException) {
+		else if (pe instanceof FragmentEntryNameException) {
 			errorMessage = "this-field-is-required";
 		}
 

@@ -33,8 +33,8 @@ renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentCollectionTitle(
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="msbFragmentCollectionId" type="hidden" value="<%= msbFragmentDisplayContext.getMSBFragmentCollectionId() %>" />
 
-	<liferay-ui:error exception="<%= DuplicateMSBFragmentCollectionException.class %>" message="please-enter-a-unique-name" />
-	<liferay-ui:error exception="<%= MSBFragmentCollectionNameException.class %>" message="please-enter-a-valid-name" />
+	<liferay-ui:error exception="<%= DuplicateFragmentCollectionException.class %>" message="please-enter-a-unique-name" />
+	<liferay-ui:error exception="<%= FragmentCollectionNameException.class %>" message="please-enter-a-valid-name" />
 
 	<aui:model-context bean="<%= msbFragmentDisplayContext.getMSBFragmentCollection() %>" model="<%= MSBFragmentCollection.class %>" />
 

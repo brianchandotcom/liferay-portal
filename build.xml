@@ -207,6 +207,12 @@ message.
 
 		<ant dir="portal-kernel" inheritAll="false" target="compile" />
 
+		<gradle-execute dir="modules" task="deploy">
+			<arg value="--parallel" />
+			<arg value="-Dbuild.profile=portal-post-kernel" />
+			<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
+		</gradle-execute>
+
 		<parallel failonany="true" threadcount="${parallel.thread.count}">
 			<ant dir="portal-test" inheritAll="false" target="compile" />
 			<ant dir="support-tomcat" inheritAll="false" target="compile" />

@@ -323,8 +323,13 @@ public class LPKGIndexValidator {
 
 		List<File> additionalJarFiles = new ArrayList<>(_jarFiles);
 
-		additionalJarFiles.add(
-			new File(PropsValues.LIFERAY_LIB_PORTAL_DIR, "util-taglib.jar"));
+		for (String staticJarFileName :
+				PropsValues.MODULE_FRAMEWORK_STATIC_JARS) {
+
+			additionalJarFiles.add(
+				new File(
+					PropsValues.LIFERAY_LIB_PORTAL_DIR, staticJarFileName));
+		}
 
 		try {
 			ProcessChannel<byte[]> processChannel =

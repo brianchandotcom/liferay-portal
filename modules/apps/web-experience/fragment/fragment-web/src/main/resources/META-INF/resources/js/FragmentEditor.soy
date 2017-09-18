@@ -1,7 +1,7 @@
-{namespace MSBFragmentEditor}
+{namespace FragmentEditor}
 
 /**
- * MSBFragmentEditor
+ * FragmentEditor
  */
 {template .render}
 	{@param initialCSS: string}
@@ -15,7 +15,7 @@
 	{@param? _html: string}
 	{@param? _js: string}
 
-	<div class="msb-fragment-editor">
+	<div class="fragment-editor">
 		{call SourceEditor.render}
 			{param events: ['contentChanged': $_handleHTMLChanged] /}
 			{param initialContent: $initialHTML /}
@@ -34,7 +34,7 @@
 			{param syntax: 'javascript' /}
 		{/call}
 
-		{call MSBFragmentPreview.render}
+		{call FragmentPreview.render}
 			{param css: $_css /}
 			{param html: $_html /}
 			{param js: $_js /}

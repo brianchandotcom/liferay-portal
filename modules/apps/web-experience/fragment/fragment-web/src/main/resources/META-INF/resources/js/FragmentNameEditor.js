@@ -4,12 +4,12 @@ import Soy from 'metal-soy';
 import Uri from 'metal-uri';
 import { Config } from 'metal-state';
 
-import templates from './MSBFragmentNameEditor.soy';
+import templates from './FragmentNameEditor.soy';
 
 /**
  * Component that generates a form for setting the Fragment name.
  */
-class MSBFragmentNameEditor extends Component {
+class FragmentNameEditor extends Component {
 	/**
 	 * Callback executed when the modal is hidden.
 	 * @protected
@@ -31,7 +31,7 @@ class MSBFragmentNameEditor extends Component {
 		const form = document.getElementById(`${this.namespace}addForm`);
 		const formData = new FormData(form);
 
-		fetch(this.addMSBFragmentEntryURL, {
+		fetch(this.addFragmentEntryURL, {
 			body: formData,
 			credentials: 'include',
 			method: 'POST',
@@ -40,12 +40,12 @@ class MSBFragmentNameEditor extends Component {
 			.then((jsonResponse) => {
 				this.error = jsonResponse.error;
 
-				if (jsonResponse.msbFragmentEntryId) {
-					const uri = new Uri(this.editMSBFragmentEntryURL);
+				if (jsonResponse.fragmentEntryId) {
+					const uri = new Uri(this.editFragmentEntryURL);
 
 					uri.addParameterValue(
-						`${this.namespace}msbFragmentEntryId`,
-						jsonResponse.msbFragmentEntryId,
+						`${this.namespace}fragmentEntryId`,
+						jsonResponse.fragmentEntryId,
 					);
 
 					const uriString = uri.toString();
@@ -66,25 +66,25 @@ class MSBFragmentNameEditor extends Component {
  * @type {!Object}
  * @static
  */
-MSBFragmentNameEditor.STATE = {
+FragmentNameEditor.STATE = {
 	/**
 	 * URL used for creating the fragment. The generated form
 	 * will be submited to this url.
 	 * @instance
-	 * @memberOf MSBFragmentNameEditor
+	 * @memberOf FragmentNameEditor
 	 * @type {!string}
 	 */
-	addMSBFragmentEntryURL: Config.string().required(),
+	addFragmentEntryURL: Config.string().required(),
 
 	/**
 	 * URL used for editing the fragment.
 	 * Once the fragment has been successfully created, the browser
 	 * will be redirected to this url.
 	 * @instance
-	 * @memberOf MSBFragmentNameEditor
+	 * @memberOf FragmentNameEditor
 	 * @type {!string}
 	 */
-	editMSBFragmentEntryURL: Config.string().required(),
+	editFragmentEntryURL: Config.string().required(),
 
 	/**
 	 * Error message returned by the server.
@@ -92,7 +92,7 @@ MSBFragmentNameEditor.STATE = {
 	 * and processed.
 	 * @default ''
 	 * @instance
-	 * @memberOf MSBFragmentNameEditor
+	 * @memberOf FragmentNameEditor
 	 * @type {?string}
 	 */
 	error: Config.string().value(''),
@@ -100,7 +100,7 @@ MSBFragmentNameEditor.STATE = {
 	/**
 	 * Portlet namespace needed for prefixing form inputs
 	 * @instance
-	 * @memberOf MSBFragmentNameEditor
+	 * @memberOf FragmentNameEditor
 	 * @type {!string}
 	 */
 	namespace: Config.string().required(),
@@ -108,13 +108,13 @@ MSBFragmentNameEditor.STATE = {
 	/**
 	 * Path of the available icons.
 	 * @instance
-	 * @memberOf MSBFragmentEditor
+	 * @memberOf FragmentEditor
 	 * @type {!string}
 	 */
 	spritemap: Config.string().required(),
 };
 
-Soy.register(MSBFragmentNameEditor, templates);
+Soy.register(FragmentNameEditor, templates);
 
-export { MSBFragmentNameEditor };
-export default MSBFragmentNameEditor;
+export { FragmentNameEditor };
+export default FragmentNameEditor;

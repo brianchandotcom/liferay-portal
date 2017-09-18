@@ -1,7 +1,7 @@
-{namespace MSBFragmentPreview}
+{namespace FragmentPreview}
 
 /**
- * Renders a MSBFragmentPreview
+ * Renders a FragmentPreview
  */
 {template .render}
 	{@param spritemap: string}
@@ -10,8 +10,8 @@
 	{@param? _previewContent: string}
 	{@param? _previewSizes: list<string>}
 
-	<div class="msb-fragment-preview" ref="wrapper">
-		<div class="msb-fragment-preview__toolbar btn-group">
+	<div class="fragment-preview" ref="wrapper">
+		<div class="fragment-preview__toolbar btn-group">
 			{if $_previewSizes}
 				{foreach $size in $_previewSizes}
 					{let $buttonClasses kind="text"}
@@ -59,9 +59,9 @@
 		</div>
 
 		{let $iframeClasses kind="text"}
-			msb-fragment-preview__frame
+			fragment-preview__frame
 			{if $_currentPreviewSize}
-				{sp}msb-fragment-preview__frame--resized
+				{sp}fragment-preview__frame--resized
 			{/if}
 		{/let}
 

@@ -3,7 +3,7 @@ import Soy from 'metal-soy';
 import debounce from 'metal-debounce';
 import { Config } from 'metal-state';
 
-import templates from './MSBFragmentPreview.soy';
+import templates from './FragmentPreview.soy';
 
 /**
  * Defined ratios for preview sizing
@@ -25,7 +25,7 @@ const PREVIEW_SIZES = Object.keys(SIZE_RATIO);
  * Component that renders the preview of a Fragment.
  * It allows modifying the preview with an update method.
  */
-class MSBFragmentPreview extends Component {
+class FragmentPreview extends Component {
 	/**
 	 * @inheritDoc
 	 */
@@ -141,11 +141,11 @@ class MSBFragmentPreview extends Component {
  * @type {!Object}
  * @static
  */
-MSBFragmentPreview.STATE = {
+FragmentPreview.STATE = {
 	/**
 	 * CSS content of the preview
 	 * @instance
-	 * @memberOf MSBFragmentPreview
+	 * @memberOf FragmentPreview
 	 * @type {!string}
 	 */
 	css: Config.string().required(),
@@ -153,7 +153,7 @@ MSBFragmentPreview.STATE = {
 	/**
 	 * HTML content of the preview
 	 * @instance
-	 * @memberOf MSBFragmentPreview
+	 * @memberOf FragmentPreview
 	 * @type {!string}
 	 */
 	html: Config.string().required(),
@@ -161,7 +161,7 @@ MSBFragmentPreview.STATE = {
 	/**
 	 * JS content of the preview
 	 * @instance
-	 * @memberOf MSBFragmentPreview
+	 * @memberOf FragmentPreview
 	 * @type {!string}
 	 */
 	js: Config.string().required(),
@@ -169,7 +169,7 @@ MSBFragmentPreview.STATE = {
 	/**
 	 * Path of the available icons.
 	 * @instance
-	 * @memberOf MSBFragmentEditor
+	 * @memberOf FragmentEditor
 	 * @type {!string}
 	 */
 	spritemap: Config.string().required(),
@@ -178,7 +178,7 @@ MSBFragmentPreview.STATE = {
 	 * Processed iframe content
 	 * @default ''
 	 * @instance
-	 * @memberOf MSBFragmentPreview
+	 * @memberOf FragmentPreview
 	 * @protected
 	 * @type {?string}
 	 */
@@ -192,7 +192,7 @@ MSBFragmentPreview.STATE = {
 	 * presented to the user, but it can be safely altered externally.
 	 * @default 'full'
 	 * @instance
-	 * @memberOf MSBFragmentPreview
+	 * @memberOf FragmentPreview
 	 * @protected
 	 * @type {?string}
 	 */
@@ -205,7 +205,7 @@ MSBFragmentPreview.STATE = {
 	 * List of available sizes
 	 * @default PREVIEW_SIZES
 	 * @instance
-	 * @memberOf MSBFragmentPreview
+	 * @memberOf FragmentPreview
 	 * @protected
 	 * @type {?Array<string>}
 	 */
@@ -214,7 +214,7 @@ MSBFragmentPreview.STATE = {
 		.value(PREVIEW_SIZES),
 };
 
-Soy.register(MSBFragmentPreview, templates);
+Soy.register(FragmentPreview, templates);
 
-export { MSBFragmentPreview };
-export default MSBFragmentPreview;
+export { FragmentPreview };
+export default FragmentPreview;

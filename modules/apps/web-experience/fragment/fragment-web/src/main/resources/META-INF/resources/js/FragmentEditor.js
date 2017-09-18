@@ -2,8 +2,8 @@ import Component from 'metal-component';
 import Soy from 'metal-soy';
 import { Config } from 'metal-state';
 
-import templates from './MSBFragmentEditor.soy';
-import './MSBFragmentPreview';
+import templates from './FragmentEditor.soy';
+import './FragmentPreview';
 import './SourceEditor';
 
 /**
@@ -11,7 +11,7 @@ import './SourceEditor';
  * It integrates three <SourceEditor /> components for each part of
  * the fragment and a <FragmentPreview /> component for the preview
  */
-class MSBFragmentEditor extends Component {
+class FragmentEditor extends Component {
 	/**
 	 * @inheritDoc
 	 */
@@ -67,11 +67,11 @@ class MSBFragmentEditor extends Component {
  * @type {!Object}
  * @static
  */
-MSBFragmentEditor.STATE = {
+FragmentEditor.STATE = {
 	/**
 	 * Initial HTML sent to the editor
 	 * @instance
-	 * @memberOf MSBFragmentEditor
+	 * @memberOf FragmentEditor
 	 * @type {!string}
 	 */
 	initialHTML: Config.string().required(),
@@ -79,7 +79,7 @@ MSBFragmentEditor.STATE = {
 	/**
 	 * Initial CSS sent to the editor
 	 * @instance
-	 * @memberOf MSBFragmentEditor
+	 * @memberOf FragmentEditor
 	 * @type {!string}
 	 */
 	initialCSS: Config.string().required(),
@@ -87,7 +87,7 @@ MSBFragmentEditor.STATE = {
 	/**
 	 * Initial JS sent to the editor
 	 * @instance
-	 * @memberOf MSBFragmentEditor
+	 * @memberOf FragmentEditor
 	 * @type {!string}
 	 */
 	initialJS: Config.string().required(),
@@ -96,7 +96,7 @@ MSBFragmentEditor.STATE = {
 	 * Namespace of the portlet being used.
 	 * Necesary for getting the real inputs which interact with the server.
 	 * @instance
-	 * @memberOf MSBFragmentEditor
+	 * @memberOf FragmentEditor
 	 * @type {!string}
 	 */
 	namespace: Config.string().required(),
@@ -104,7 +104,7 @@ MSBFragmentEditor.STATE = {
 	/**
 	 * Path of the available icons.
 	 * @instance
-	 * @memberOf MSBFragmentEditor
+	 * @memberOf FragmentEditor
 	 * @type {!string}
 	 */
 	spritemap: Config.string().required(),
@@ -114,7 +114,7 @@ MSBFragmentEditor.STATE = {
 	 * the editor. This value will be propagated to the preview.
 	 * @default ''
 	 * @instance
-	 * @memberOf MSBFragmentEditor
+	 * @memberOf FragmentEditor
 	 * @protected
 	 * @type {?string}
 	 */
@@ -127,7 +127,7 @@ MSBFragmentEditor.STATE = {
 	 * the editor. This value will be propagated to the preview.
 	 * @default ''
 	 * @instance
-	 * @memberOf MSBFragmentEditor
+	 * @memberOf FragmentEditor
 	 * @protected
 	 * @type {?string}
 	 */
@@ -140,7 +140,7 @@ MSBFragmentEditor.STATE = {
 	 * the editor. This value will be propagated to the preview.
 	 * @default ''
 	 * @instance
-	 * @memberOf MSBFragmentEditor
+	 * @memberOf FragmentEditor
 	 * @protected
 	 * @type {?string}
 	 */
@@ -149,7 +149,7 @@ MSBFragmentEditor.STATE = {
 		.value(''),
 };
 
-Soy.register(MSBFragmentEditor, templates);
+Soy.register(FragmentEditor, templates);
 
-export { MSBFragmentEditor };
-export default MSBFragmentEditor;
+export { FragmentEditor };
+export default FragmentEditor;

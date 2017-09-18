@@ -416,12 +416,15 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		PortletURL currentURL = PortletURLUtil.getCurrent(
-			_portal.getLiferayPortletRequest(portletRequest),
-			_portal.getLiferayPortletResponse(portletResponse));
+		if ((portletRequest != null) && (portletResponse != null)) {
+			PortletURL currentURL = PortletURLUtil.getCurrent(
+				_portal.getLiferayPortletRequest(portletRequest),
+				_portal.getLiferayPortletResponse(portletResponse));
 
-		contextObjects.put(
-			PortletDisplayTemplateConstants.CURRENT_URL, currentURL.toString());
+			contextObjects.put(
+				PortletDisplayTemplateConstants.CURRENT_URL,
+				currentURL.toString());
+		}
 
 		contextObjects.put(PortletDisplayTemplateConstants.ENTRIES, entries);
 

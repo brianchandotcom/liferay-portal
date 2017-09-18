@@ -3,3 +3,4 @@ Bundle-SymbolicName: com.liferay.social.private.messaging.test
 Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Social
+-includeresource: test-classes/integration

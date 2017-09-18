@@ -9,7 +9,7 @@ dependencies {
 	provided project(":test:external-data-source-test-service")
 
 	testIntegrationCompile group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.5"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.8"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "2.0.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.xstream.configurator.api", version: "2.0.0"

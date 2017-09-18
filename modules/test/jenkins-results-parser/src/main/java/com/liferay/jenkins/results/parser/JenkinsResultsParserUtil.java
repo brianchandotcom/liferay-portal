@@ -911,6 +911,18 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
+	public static void takeSlavesOffline(
+		String jenkinsMasterName, String offlineReason, String... slaveNames) {
+
+		_setSlaveStatus(jenkinsMasterName, offlineReason, true, slaveNames);
+	}
+
+	public static void takeSlavesOnline(
+		String jenkinsMasterName, String offlineReason, String... slaveNames) {
+
+		_setSlaveStatus(jenkinsMasterName, offlineReason, false, slaveNames);
+	}
+
 	public static String toDurationString(long duration) {
 		StringBuilder sb = new StringBuilder();
 
@@ -1200,18 +1212,6 @@ public class JenkinsResultsParserUtil {
 		return toString(
 			url, false, _MAX_RETRIES_DEFAULT, postContent,
 			_RETRY_PERIOD_DEFAULT, _TIMEOUT_DEFAULT);
-	}
-
-	public static void turnSlavesOff(
-		String jenkinsMasterName, String offlineReason, String... slaveNames) {
-
-		_setSlaveStatus(jenkinsMasterName, offlineReason, true, slaveNames);
-	}
-
-	public static void turnSlavesOn(
-		String jenkinsMasterName, String offlineReason, String... slaveNames) {
-
-		_setSlaveStatus(jenkinsMasterName, offlineReason, false, slaveNames);
 	}
 
 	public static void write(File file, String content) throws IOException {

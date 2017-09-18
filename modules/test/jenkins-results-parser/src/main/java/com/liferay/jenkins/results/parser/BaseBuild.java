@@ -967,7 +967,7 @@ public abstract class BaseBuild implements Build {
 				message, "Top Level Build URL: ", topLevelBuild.getBuildURL());
 		}
 
-		JenkinsResultsParserUtil.turnSlavesOff(master, message, slave);
+		JenkinsResultsParserUtil.takeSlavesOffline(master, message, slave);
 
 		String notificationList = slaveOfflineRule.getNotificationList();
 

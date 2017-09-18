@@ -410,7 +410,10 @@ public class LCSClusterEntryTokenAdvisor {
 		Map<String, String> lcsServicesConfiguration =
 			lcsClusterEntryTokenContentAdvisor.getLCSServicesConfiguration();
 
-		_addMissingConfigurations(lcsServicesConfiguration);
+		_verifyLCSServiceConfiguration(
+			lcsServicesConfiguration, LCSConstants.METRICS_LCS_SERVICE_ENABLED,
+			LCSConstants.PATCHES_LCS_SERVICE_ENABLED,
+			LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED);
 
 		for (Map.Entry<String, String> lcsServiceConfigurationEntry :
 				lcsServicesConfiguration.entrySet()) {
@@ -460,28 +463,19 @@ public class LCSClusterEntryTokenAdvisor {
 		return true;
 	}
 
-	private void _addMissingConfigurations(
-		Map<String, String> lcsServicesConfiguration) {
+	private void _verifyLCSServiceConfiguration(
+		Map<String, String> lcsServicesConfiguration, String... keys) {
 
-		if (lcsServicesConfiguration.get(
-				LCSConstants.METRICS_LCS_SERVICE_ENABLED) == null) {
-
-			lcsServicesConfiguration.put(
-				LCSConstants.METRICS_LCS_SERVICE_ENABLED, "false");
+		if (keys == null) {
+			return;
 		}
 
-		if (lcsServicesConfiguration.get(
-				LCSConstants.PATCHES_LCS_SERVICE_ENABLED) == null) {
+		for (String key : keys) {
+			if (lcsServicesConfiguration.containsKey(key)) {
+				continue;
+			}
 
-			lcsServicesConfiguration.put(
-				LCSConstants.PATCHES_LCS_SERVICE_ENABLED, "false");
-		}
-
-		if (lcsServicesConfiguration.get(
-				LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED) == null) {
-
-			lcsServicesConfiguration.put(
-				LCSConstants.PORTAL_PROPERTIES_LCS_SERVICE_ENABLED, "false");
+			lcsServicesConfiguration.put(key, "false");
 		}
 	}
 

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
@@ -68,12 +69,26 @@ public interface CommerceAddressService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceAddress fetchCommerceAddress(long commerceAddressId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceAddress getCommerceAddress(long commerceAddressId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceAddress> getCommerceAddresses(long groupId,
 		long addressUserId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceAddress> getCommerceAddresses(long groupId,
+		long addressUserId, int start, int end,
+		OrderByComparator<CommerceAddress> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceAddressesCount(long groupId, long addressUserId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

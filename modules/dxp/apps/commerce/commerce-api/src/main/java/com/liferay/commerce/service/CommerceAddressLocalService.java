@@ -220,6 +220,11 @@ public interface CommerceAddressLocalService extends BaseLocalService,
 	public List<CommerceAddress> getCommerceAddresses(long groupId,
 		long addressUserId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceAddress> getCommerceAddresses(long groupId,
+		long addressUserId, int start, int end,
+		OrderByComparator<CommerceAddress> orderByComparator);
+
 	/**
 	* Returns the number of commerce addresses.
 	*
@@ -227,6 +232,9 @@ public interface CommerceAddressLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceAddressesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceAddressesCount(long groupId, long addressUserId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

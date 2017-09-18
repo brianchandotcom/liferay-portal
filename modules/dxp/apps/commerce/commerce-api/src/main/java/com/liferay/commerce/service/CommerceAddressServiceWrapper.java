@@ -56,6 +56,13 @@ public class CommerceAddressServiceWrapper implements CommerceAddressService,
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceAddress fetchCommerceAddress(
+		long commerceAddressId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceAddressService.fetchCommerceAddress(commerceAddressId);
+	}
+
+	@Override
 	public com.liferay.commerce.model.CommerceAddress getCommerceAddress(
 		long commerceAddressId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -67,6 +74,22 @@ public class CommerceAddressServiceWrapper implements CommerceAddressService,
 		long groupId, long addressUserId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceAddressService.getCommerceAddresses(groupId,
+			addressUserId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceAddress> getCommerceAddresses(
+		long groupId, long addressUserId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceAddress> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceAddressService.getCommerceAddresses(groupId,
+			addressUserId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCommerceAddressesCount(long groupId, long addressUserId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceAddressService.getCommerceAddressesCount(groupId,
 			addressUserId);
 	}
 

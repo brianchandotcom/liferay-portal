@@ -106,7 +106,7 @@ public class CommerceAddressPersistenceImpl extends BasePersistenceImpl<Commerce
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAddressUserId",
 			new String[] { Long.class.getName() },
 			CommerceAddressModelImpl.ADDRESSUSERID_COLUMN_BITMASK |
-			CommerceAddressModelImpl.NAME_COLUMN_BITMASK);
+			CommerceAddressModelImpl.CREATEDATE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_ADDRESSUSERID = new FinderPath(CommerceAddressModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceAddressModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAddressUserId",
@@ -622,7 +622,7 @@ public class CommerceAddressPersistenceImpl extends BasePersistenceImpl<Commerce
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCommerceRegionId", new String[] { Long.class.getName() },
 			CommerceAddressModelImpl.COMMERCEREGIONID_COLUMN_BITMASK |
-			CommerceAddressModelImpl.NAME_COLUMN_BITMASK);
+			CommerceAddressModelImpl.CREATEDATE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMMERCEREGIONID = new FinderPath(CommerceAddressModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceAddressModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -1141,7 +1141,7 @@ public class CommerceAddressPersistenceImpl extends BasePersistenceImpl<Commerce
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCommerceCountryId", new String[] { Long.class.getName() },
 			CommerceAddressModelImpl.COMMERCECOUNTRYID_COLUMN_BITMASK |
-			CommerceAddressModelImpl.NAME_COLUMN_BITMASK);
+			CommerceAddressModelImpl.CREATEDATE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMMERCECOUNTRYID = new FinderPath(CommerceAddressModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceAddressModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -1663,7 +1663,7 @@ public class CommerceAddressPersistenceImpl extends BasePersistenceImpl<Commerce
 			new String[] { Long.class.getName(), Long.class.getName() },
 			CommerceAddressModelImpl.GROUPID_COLUMN_BITMASK |
 			CommerceAddressModelImpl.ADDRESSUSERID_COLUMN_BITMASK |
-			CommerceAddressModelImpl.NAME_COLUMN_BITMASK);
+			CommerceAddressModelImpl.CREATEDATE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_A = new FinderPath(CommerceAddressModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceAddressModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A",
@@ -2215,7 +2215,7 @@ public class CommerceAddressPersistenceImpl extends BasePersistenceImpl<Commerce
 			CommerceAddressModelImpl.GROUPID_COLUMN_BITMASK |
 			CommerceAddressModelImpl.ADDRESSUSERID_COLUMN_BITMASK |
 			CommerceAddressModelImpl.DEFAULTBILLING_COLUMN_BITMASK |
-			CommerceAddressModelImpl.NAME_COLUMN_BITMASK);
+			CommerceAddressModelImpl.CREATEDATE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_A_DB = new FinderPath(CommerceAddressModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceAddressModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A_DB",
@@ -2816,7 +2816,7 @@ public class CommerceAddressPersistenceImpl extends BasePersistenceImpl<Commerce
 			CommerceAddressModelImpl.GROUPID_COLUMN_BITMASK |
 			CommerceAddressModelImpl.ADDRESSUSERID_COLUMN_BITMASK |
 			CommerceAddressModelImpl.DEFAULTSHIPPING_COLUMN_BITMASK |
-			CommerceAddressModelImpl.NAME_COLUMN_BITMASK);
+			CommerceAddressModelImpl.CREATEDATE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_A_DS = new FinderPath(CommerceAddressModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceAddressModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A_DS",

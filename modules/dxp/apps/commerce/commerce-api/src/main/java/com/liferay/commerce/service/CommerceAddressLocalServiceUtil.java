@@ -251,6 +251,14 @@ public class CommerceAddressLocalServiceUtil {
 		return getService().getCommerceAddresses(groupId, addressUserId);
 	}
 
+	public static java.util.List<com.liferay.commerce.model.CommerceAddress> getCommerceAddresses(
+		long groupId, long addressUserId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceAddress> orderByComparator) {
+		return getService()
+				   .getCommerceAddresses(groupId, addressUserId, start, end,
+			orderByComparator);
+	}
+
 	/**
 	* Returns the number of commerce addresses.
 	*
@@ -258,6 +266,10 @@ public class CommerceAddressLocalServiceUtil {
 	*/
 	public static int getCommerceAddressesCount() {
 		return getService().getCommerceAddressesCount();
+	}
+
+	public static int getCommerceAddressesCount(long groupId, long addressUserId) {
+		return getService().getCommerceAddressesCount(groupId, addressUserId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {

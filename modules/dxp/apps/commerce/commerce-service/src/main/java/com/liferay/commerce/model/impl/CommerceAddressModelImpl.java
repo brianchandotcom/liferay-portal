@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -118,8 +119,8 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 
 	public static final String TABLE_SQL_CREATE = "create table CommerceAddress (commerceAddressId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,addressUserId LONG,name VARCHAR(75) null,description STRING null,street1 VARCHAR(75) null,street2 VARCHAR(75) null,street3 VARCHAR(75) null,city VARCHAR(75) null,zip VARCHAR(75) null,commerceRegionId LONG,commerceCountryId LONG,phoneNumber VARCHAR(75) null,defaultBilling BOOLEAN,defaultShipping BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceAddress";
-	public static final String ORDER_BY_JPQL = " ORDER BY commerceAddress.name ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY CommerceAddress.name ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY commerceAddress.createDate DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY CommerceAddress.createDate DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -138,7 +139,7 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 	public static final long DEFAULTBILLING_COLUMN_BITMASK = 8L;
 	public static final long DEFAULTSHIPPING_COLUMN_BITMASK = 16L;
 	public static final long GROUPID_COLUMN_BITMASK = 32L;
-	public static final long NAME_COLUMN_BITMASK = 64L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -484,6 +485,8 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		_columnBitmask = -1L;
+
 		_createDate = createDate;
 	}
 
@@ -556,8 +559,6 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask = -1L;
-
 		_name = name;
 	}
 
@@ -838,7 +839,10 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 	public int compareTo(CommerceAddress commerceAddress) {
 		int value = 0;
 
-		value = getName().compareTo(commerceAddress.getName());
+		value = DateUtil.compareTo(getCreateDate(),
+				commerceAddress.getCreateDate());
+
+		value = value * -1;
 
 		if (value != 0) {
 			return value;

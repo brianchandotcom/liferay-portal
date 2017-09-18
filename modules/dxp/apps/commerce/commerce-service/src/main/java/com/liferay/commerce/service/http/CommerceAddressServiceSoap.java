@@ -101,6 +101,20 @@ public class CommerceAddressServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceAddressSoap fetchCommerceAddress(
+		long commerceAddressId) throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceAddress returnValue = CommerceAddressServiceUtil.fetchCommerceAddress(commerceAddressId);
+
+			return com.liferay.commerce.model.CommerceAddressSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.model.CommerceAddressSoap getCommerceAddress(
 		long commerceAddressId) throws RemoteException {
 		try {
@@ -123,6 +137,39 @@ public class CommerceAddressServiceSoap {
 					addressUserId);
 
 			return com.liferay.commerce.model.CommerceAddressSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceAddressSoap[] getCommerceAddresses(
+		long groupId, long addressUserId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceAddress> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.model.CommerceAddress> returnValue =
+				CommerceAddressServiceUtil.getCommerceAddresses(groupId,
+					addressUserId, start, end, orderByComparator);
+
+			return com.liferay.commerce.model.CommerceAddressSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCommerceAddressesCount(long groupId, long addressUserId)
+		throws RemoteException {
+		try {
+			int returnValue = CommerceAddressServiceUtil.getCommerceAddressesCount(groupId,
+					addressUserId);
+
+			return returnValue;
 		}
 		catch (Exception e) {
 			_log.error(e, e);

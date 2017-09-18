@@ -190,6 +190,11 @@ classes {
 	dependsOn buildTheme
 }
 
+configJSModules {
+	dependsOn = []
+	enabled = false
+}
+
 dependencies {
 	alloyUI group: "com.liferay.webjars", name: "com.liferay.webjars.alloy-ui", transitive: false, version: alloyUIVersion
 

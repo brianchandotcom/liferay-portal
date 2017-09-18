@@ -52,7 +52,9 @@ public class CommercePriceCalculationHelperImpl
 			CPInstance cpInstance = _cpInstanceService.fetchCPInstance(
 				cpInstanceId);
 
-			price = cpInstance.getPrice();
+			if (cpInstance != null) {
+				price = cpInstance.getPrice();
+			}
 		}
 
 		return price * quantity;

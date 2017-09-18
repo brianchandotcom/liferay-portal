@@ -128,7 +128,7 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 		<liferay-frontend:add-menu-item id="addFragmentEntryMenuItem" title='<%= LanguageUtil.get(request, "add-fragment") %>' url="<%= addFragmentEntryURL.toString() %>" />
 	</liferay-frontend:add-menu>
 
-	<aui:script require="modern-site-building-fragment-web/js/FragmentNameEditor">
+	<aui:script require="fragment-web/js/FragmentNameEditor">
 		var addFragmentEntryMenuItem = document.getElementById('<portlet:namespace />addFragmentEntryMenuItem');
 
 		addFragmentEntryMenuItem.addEventListener(
@@ -136,7 +136,7 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 			function(event) {
 				event.preventDefault();
 
-				var fragmentNameEditor = new modernSiteBuildingFragmentWebJsFragmentNameEditor.default(
+				var fragmentNameEditor = new fragmentWebJsFragmentNameEditor.default(
 					{
 						addFragmentEntryURL: '<%= addFragmentEntryURL.toString() %>',
 						editFragmentEntryURL: '<portlet:renderURL><portlet:param name="mvcPath" value="/edit_fragment_entry.jsp" /><portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentDisplayContext.getFragmentCollectionId()) %>" /></portlet:renderURL>',

@@ -53,18 +53,18 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentEntryTitle());
 
 	<div id="<portlet:namespace />fragmentEditor"></div>
 
-	<aui:button-row cssClass="msb-fragment-submit-buttons">
+	<aui:button-row cssClass="fragment-submit-buttons">
 		<aui:button cssClass="btn btn-lg" type="submit" />
 	</aui:button-row>
 </aui:form>
 
-<aui:script require="modern-site-building-fragment-web/js/FragmentEditor">
+<aui:script require="fragment-web/js/FragmentEditor">
 	var cssInput = document.getElementById('<portlet:namespace />cssContent');
 	var htmlInput = document.getElementById('<portlet:namespace />htmlContent');
 	var jsInput = document.getElementById('<portlet:namespace />jsContent');
 	var wrapper = document.getElementById('<portlet:namespace />fragmentEditor');
 
-	new modernSiteBuildingFragmentWebJsFragmentEditor.default(
+	new fragmentWebJsFragmentEditor.default(
 		{
 			events: {
 				contentChanged: function(event) {

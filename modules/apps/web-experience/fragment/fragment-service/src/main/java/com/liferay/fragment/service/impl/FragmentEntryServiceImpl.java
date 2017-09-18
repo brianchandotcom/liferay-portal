@@ -14,27 +14,160 @@
 
 package com.liferay.fragment.service.impl;
 
+import com.liferay.fragment.constants.FragmentActionKeys;
+import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.base.FragmentEntryServiceBaseImpl;
+import com.liferay.fragment.service.permission.FragmentEntryPermission;
+import com.liferay.fragment.service.permission.FragmentPermission;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * The implementation of the fragment entry remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.fragment.service.FragmentEntryService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see FragmentEntryServiceBaseImpl
- * @see com.liferay.fragment.service.FragmentEntryServiceUtil
+ * @author Jürgen Kappler
  */
 public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.fragment.service.FragmentEntryServiceUtil} to access the fragment entry remote service.
-	 */
+	@Override
+	public FragmentEntry addFragmentEntry(
+			long groupId, long fragmentCollectionId, String name, String css,
+			String html, String js, ServiceContext serviceContext)
+		throws PortalException {
+
+		FragmentPermission.check(
+			getPermissionChecker(), groupId,
+			FragmentActionKeys.ADD_FRAGMENT_ENTRY);
+
+		return fragmentEntryLocalService.addFragmentEntry(
+			groupId, getUserId(), fragmentCollectionId, name, css, html, js,
+			serviceContext);
+	}
+
+	@Override
+	public List<FragmentEntry> deleteFragmentEntries(long[] fragmentEntriesIds)
+		throws PortalException {
+
+		List<FragmentEntry> undeletableFragmentEntries = new ArrayList<>();
+
+		for (long fragmentEntryId : fragmentEntriesIds) {
+			try {
+				FragmentEntryPermission.check(
+					getPermissionChecker(), fragmentEntryId, ActionKeys.DELETE);
+
+				fragmentEntryLocalService.deleteFragmentEntry(fragmentEntryId);
+			}
+			catch (PortalException pe) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(pe, pe);
+				}
+
+				FragmentEntry mSBFragmentEntry =
+					fragmentEntryPersistence.fetchByPrimaryKey(fragmentEntryId);
+
+				undeletableFragmentEntries.add(mSBFragmentEntry);
+			}
+		}
+
+		return undeletableFragmentEntries;
+	}
+
+	@Override
+	public FragmentEntry deleteFragmentEntry(long fragmentEntryId)
+		throws PortalException {
+
+		FragmentEntryPermission.check(
+			getPermissionChecker(), fragmentEntryId, ActionKeys.DELETE);
+
+		return fragmentEntryLocalService.deleteFragmentEntry(fragmentEntryId);
+	}
+
+	@Override
+	public List<FragmentEntry> fetchFragmentEntries(long fragmentCollectionId)
+		throws PortalException {
+
+		return fragmentEntryLocalService.fetchFragmentEntries(
+			fragmentCollectionId);
+	}
+
+	@Override
+	public FragmentEntry fetchFragmentEntry(long fragmentEntryId)
+		throws PortalException {
+
+		FragmentEntry fragmentEntry =
+			fragmentEntryLocalService.fetchFragmentEntry(fragmentEntryId);
+
+		if (fragmentEntry != null) {
+			FragmentEntryPermission.check(
+				getPermissionChecker(), fragmentEntry, ActionKeys.VIEW);
+		}
+
+		return fragmentEntry;
+	}
+
+	@Override
+	public int getFragmentCollectionsCount(
+		long groupId, long fragmentCollectionId) {
+
+		return fragmentEntryPersistence.filterCountByG_FCI(
+			groupId, fragmentCollectionId);
+	}
+
+	@Override
+	public int getFragmentCollectionsCount(
+		long groupId, long fragmentCollectionId, String name) {
+
+		return fragmentEntryPersistence.filterCountByG_FCI_LikeN(
+			groupId, fragmentCollectionId, name);
+	}
+
+	@Override
+	public List<FragmentEntry> getFragmentEntries(
+			long groupId, long fragmentCollectionId, int start, int end)
+		throws PortalException {
+
+		return fragmentEntryPersistence.filterFindByG_FCI(
+			groupId, fragmentCollectionId, start, end);
+	}
+
+	@Override
+	public List<FragmentEntry> getFragmentEntries(
+			long groupId, long fragmentCollectionId, int start, int end,
+			OrderByComparator<FragmentEntry> orderByComparator)
+		throws PortalException {
+
+		return fragmentEntryPersistence.filterFindByG_FCI(
+			groupId, fragmentCollectionId, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<FragmentEntry> getFragmentEntries(
+		long groupId, long fragmentCollectionId, String name, int start,
+		int end, OrderByComparator<FragmentEntry> orderByComparator) {
+
+		return fragmentEntryPersistence.filterFindByG_FCI_LikeN(
+			groupId, fragmentCollectionId, name, start, end, orderByComparator);
+	}
+
+	@Override
+	public FragmentEntry updateFragmentEntry(
+			long fragmentEntryId, String name, String css, String html,
+			String js)
+		throws PortalException {
+
+		FragmentEntryPermission.check(
+			getPermissionChecker(), fragmentEntryId, ActionKeys.UPDATE);
+
+		return fragmentEntryLocalService.updateFragmentEntry(
+			fragmentEntryId, name, css, html, js);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FragmentEntryServiceImpl.class);
+
 }

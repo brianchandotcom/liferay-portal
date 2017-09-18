@@ -14,28 +14,181 @@
 
 package com.liferay.fragment.service.impl;
 
+import com.liferay.fragment.exception.DuplicateFragmentCollectionException;
+import com.liferay.fragment.exception.FragmentCollectionNameException;
+import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.base.FragmentCollectionLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 /**
- * The implementation of the fragment collection local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.fragment.service.FragmentCollectionLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see FragmentCollectionLocalServiceBaseImpl
- * @see com.liferay.fragment.service.FragmentCollectionLocalServiceUtil
+ * @author Jürgen Kappler
  */
 public class FragmentCollectionLocalServiceImpl
 	extends FragmentCollectionLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.fragment.service.FragmentCollectionLocalServiceUtil} to access the fragment collection local service.
-	 */
+	@Override
+	public FragmentCollection addFragmentCollection(
+			long groupId, long userId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		// Fragment collection
+
+		User user = userLocalService.getUser(userId);
+
+		validate(groupId, name);
+
+		long fragmentCollectionId = counterLocalService.increment();
+
+		FragmentCollection fragmentCollection =
+			fragmentCollectionPersistence.create(fragmentCollectionId);
+
+		fragmentCollection.setGroupId(groupId);
+		fragmentCollection.setCompanyId(user.getCompanyId());
+		fragmentCollection.setUserId(user.getUserId());
+		fragmentCollection.setUserName(user.getFullName());
+		fragmentCollection.setCreateDate(
+			serviceContext.getCreateDate(new Date()));
+		fragmentCollection.setModifiedDate(
+			serviceContext.getModifiedDate(new Date()));
+		fragmentCollection.setName(name);
+		fragmentCollection.setDescription(description);
+
+		fragmentCollectionPersistence.update(fragmentCollection);
+
+		// Resources
+
+		resourceLocalService.addModelResources(
+			fragmentCollection, serviceContext);
+
+		return fragmentCollection;
+	}
+
+	@Override
+	public FragmentCollection deleteFragmentCollection(
+			FragmentCollection fragmentCollection)
+		throws PortalException {
+
+		/// Fragment collection
+
+		fragmentCollectionPersistence.remove(fragmentCollection);
+
+		// Resources
+
+		resourceLocalService.deleteResource(
+			fragmentCollection.getCompanyId(),
+			FragmentCollection.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			fragmentCollection.getFragmentCollectionId());
+
+		// Fragment entries
+
+		List<FragmentEntry> fragmentEntries =
+			fragmentEntryPersistence.findByFragmentCollectionId(
+				fragmentCollection.getFragmentCollectionId());
+
+		for (FragmentEntry fragmentEntry : fragmentEntries) {
+			fragmentEntryLocalService.deleteFragmentEntry(fragmentEntry);
+		}
+
+		return fragmentCollection;
+	}
+
+	@Override
+	public FragmentCollection deleteFragmentCollection(
+			long fragmentCollectionId)
+		throws PortalException {
+
+		FragmentCollection fragmentCollection = getFragmentCollection(
+			fragmentCollectionId);
+
+		return deleteFragmentCollection(fragmentCollection);
+	}
+
+	@Override
+	public FragmentCollection fetchFragmentCollection(
+		long fragmentCollectionId) {
+
+		return fragmentCollectionPersistence.fetchByPrimaryKey(
+			fragmentCollectionId);
+	}
+
+	@Override
+	public List<FragmentCollection> getFragmentCollections(
+			long groupId, int start, int end)
+		throws PortalException {
+
+		return getFragmentCollections(groupId, start, end, null);
+	}
+
+	@Override
+	public List<FragmentCollection> getFragmentCollections(
+			long groupId, int start, int end,
+			OrderByComparator<FragmentCollection> orderByComparator)
+		throws PortalException {
+
+		return fragmentCollectionPersistence.findByGroupId(
+			groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<FragmentCollection> getFragmentCollections(
+		long groupId, String name, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator) {
+
+		if (Validator.isNull(name)) {
+			return fragmentCollectionPersistence.findByGroupId(
+				groupId, start, end, orderByComparator);
+		}
+
+		return fragmentCollectionPersistence.findByG_LikeN(
+			groupId, name, start, end, orderByComparator);
+	}
+
+	@Override
+	public FragmentCollection updateFragmentCollection(
+			long fragmentCollectionId, String name, String description)
+		throws PortalException {
+
+		FragmentCollection fragmentCollection =
+			fragmentCollectionPersistence.findByPrimaryKey(
+				fragmentCollectionId);
+
+		if (!Objects.equals(fragmentCollection.getName(), name)) {
+			validate(fragmentCollection.getGroupId(), name);
+		}
+
+		fragmentCollection.setModifiedDate(new Date());
+		fragmentCollection.setName(name);
+		fragmentCollection.setDescription(description);
+
+		fragmentCollectionPersistence.update(fragmentCollection);
+
+		return fragmentCollection;
+	}
+
+	protected void validate(long groupId, String name) throws PortalException {
+		if (Validator.isNull(name)) {
+			throw new FragmentCollectionNameException(
+				"Name must not be null for group " + groupId);
+		}
+
+		FragmentCollection fragmentCollection =
+			fragmentCollectionPersistence.fetchByG_N(groupId, name);
+
+		if (fragmentCollection != null) {
+			throw new DuplicateFragmentCollectionException(name);
+		}
+	}
+
 }

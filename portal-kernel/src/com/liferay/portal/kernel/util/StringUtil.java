@@ -2207,11 +2207,13 @@ public class StringUtil {
 	/**
 	 * Pseudorandomly permutes the characters of the string.
 	 *
+	 * @deprecated As of 7.0.0, replaced by {@link RandomUtil#shuffle(String)}
 	 * @param  s the string whose characters are to be randomized
 	 * @return a string of the same length as the string whose characters
 	 *         represent a pseudorandom permutation of the characters of the
 	 *         string
 	 */
+	@Deprecated
 	public static String randomize(String s) {
 		return RandomUtil.shuffle(s);
 	}

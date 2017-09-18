@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.security.RandomUtil;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -338,7 +340,7 @@ public class StringUtil_IW {
 	}
 
 	public java.lang.String randomize(java.lang.String s) {
-		return StringUtil.randomize(s);
+		return RandomUtil.shuffle(s);
 	}
 
 	public java.lang.String randomString() {

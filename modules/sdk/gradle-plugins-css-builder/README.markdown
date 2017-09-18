@@ -95,7 +95,7 @@ Property Name | Type | Default Value | Description
 
 **Note:** Liferay's CSS Builder is supported for Oracle's JDK and uses a native
 compiler for increased speed. If you're using an IBM JDK, you may experience
-issues when building your SASS files (e.g., when building a theme). It's
+issues when building your Sass files (e.g., when building a theme). It's
 recommended to switch to using the Oracle JDK, but if you prefer using the IBM
 JDK, you must use the fallback Ruby compiler. You can do this two ways:
 

@@ -122,7 +122,7 @@
 			<var name="content" value="This is a sentence" />
 		</execute>
 
-		<execute macro="AlloyEditor#applyStylingInAlloyEditor">
+		<execute macro="AlloyEditor#toggleStylingInAlloyEditor">
 			<var name="boldContent" value="This is a sentence" />
 		</execute>
 
@@ -132,7 +132,7 @@
 			<var name="boldContent" value="This is a sentence" />
 		</execute>
 
-		<execute macro="AlloyEditor#removeAppliedStylingInAlloyEditor">
+		<execute macro="AlloyEditor#toggleStylingInAlloyEditor">
 			<var name="boldContent" value="This is a sentence" />
 		</execute>
 

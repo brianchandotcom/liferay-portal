@@ -23,7 +23,6 @@ import com.liferay.opensocial.model.impl.GadgetImpl;
 import com.liferay.opensocial.service.GadgetLocalServiceUtil;
 import com.liferay.opensocial.service.OAuthConsumerLocalServiceUtil;
 import com.liferay.opensocial.util.PortletPropsValues;
-import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -48,8 +47,10 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.File;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -475,7 +476,7 @@ public class ShindigUtil {
 		new AutoResetThreadLocal<>(
 			ShindigUtil.class + "._host", StringPool.BLANK);
 	private static final Set<String> _ignoreGadgetSpecCache =
-		new ConcurrentHashSet<>();
+		Collections.newSetFromMap(new ConcurrentHashMap<>());
 
 	@Inject
 	private static Processor _processor;

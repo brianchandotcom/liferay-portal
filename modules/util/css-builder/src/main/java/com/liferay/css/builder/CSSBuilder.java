@@ -36,13 +36,16 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -201,30 +204,25 @@ public class CSSBuilder implements AutoCloseable {
 			List<String> fileNames, String dirName, String docrootDirName)
 		throws Exception {
 
-		DirectoryScanner directoryScanner = new DirectoryScanner();
-
 		String basedir = docrootDirName.concat(dirName);
 
-		directoryScanner.setBasedir(basedir);
+		String[] scssFiles = _getScssFiles(basedir);
 
-		directoryScanner.setExcludes(
-			new String[] {
-				"**\\_*.scss", "**\\_diffs\\**", "**\\.sass-cache*\\**",
-				"**\\.sass_cache_*\\**", "**\\_sass_cache_*\\**",
-				"**\\_styled\\**", "**\\_unstyled\\**", "**\\css\\aui\\**",
-				"**\\tmp\\**"
-			});
-		directoryScanner.setIncludes(new String[] {"**\\*.scss"});
+		if (!_isModified(basedir, scssFiles)) {
+			long oldestSassModifiedTime = _getOldestModifiedTime(
+				basedir, scssFiles);
 
-		directoryScanner.scan();
+			String[] scssFragments = _getScssFragments(basedir);
 
-		String[] fileNamesArray = directoryScanner.getIncludedFiles();
+			long newestFragmentModifiedTime = _getNewestModifiedTime(
+				basedir, scssFragments);
 
-		if (!_isModified(basedir, fileNamesArray)) {
-			return;
+			if (oldestSassModifiedTime > newestFragmentModifiedTime) {
+				return;
+			}
 		}
 
-		for (String fileName : fileNamesArray) {
+		for (String fileName : scssFiles) {
 			if (fileName.contains("_rtl")) {
 				continue;
 			}
@@ -261,6 +259,59 @@ public class CSSBuilder implements AutoCloseable {
 			});
 	}
 
+	private String[] _getFilesFromDirectory(
+		String baseDir, String[] includes, String[] excludes) {
+
+		DirectoryScanner directoryScanner = new DirectoryScanner();
+
+		directoryScanner.setBasedir(baseDir);
+		directoryScanner.setExcludes(excludes);
+		directoryScanner.setIncludes(includes);
+
+		directoryScanner.scan();
+
+		return directoryScanner.getIncludedFiles();
+	}
+
+	private long _getLastModifiedTime(Path path) {
+		try {
+			FileTime fileTime = Files.getLastModifiedTime(path);
+
+			return fileTime.toMillis();
+		}
+		catch (IOException ioe) {
+			return -1;
+		}
+	}
+
+	private long _getNewestModifiedTime(String baseDir, String[] fileNames) {
+		Stream<String> stream = Stream.of(fileNames);
+
+		return stream.map(
+			fileName -> Paths.get(baseDir, fileName)
+		).map(
+			this::_getLastModifiedTime
+		).max(
+			Comparator.naturalOrder()
+		).orElse(
+			Long.MIN_VALUE
+		);
+	}
+
+	private long _getOldestModifiedTime(String baseDir, String[] fileNames) {
+		Stream<String> stream = Stream.of(fileNames);
+
+		return stream.map(
+			fileName -> Paths.get(baseDir, fileName)
+		).map(
+			this::_getLastModifiedTime
+		).min(
+			Comparator.naturalOrder()
+		).orElse(
+			Long.MIN_VALUE
+		);
+	}
+
 	private String _getRtlCss(String fileName, String css) throws Exception {
 		String rtlCss = css;
 
@@ -278,6 +329,27 @@ public class CSSBuilder implements AutoCloseable {
 		}
 
 		return rtlCss;
+	}
+
+	private String[] _getScssFiles(String baseDir) {
+		String[] fragments = {"**\\_*.scss"};
+		String[] includes = {"**\\*.scss"};
+
+		Stream<String[]> stream = Stream.of(fragments, _EXCLUDES);
+
+		String[] excludes = stream.flatMap(
+			Stream::of
+		).toArray(
+			String[]::new
+		);
+
+		return _getFilesFromDirectory(baseDir, includes, excludes);
+	}
+
+	private String[] _getScssFragments(String baseDir) {
+		String[] includes = {"**\\\\_*.scss"};
+
+		return _getFilesFromDirectory(baseDir, includes, _EXCLUDES);
 	}
 
 	private void _initSassCompiler(String sassCompilerClassName)
@@ -475,6 +547,12 @@ public class CSSBuilder implements AutoCloseable {
 
 		outputFile.setLastModified(file.lastModified());
 	}
+
+	private static final String[] _EXCLUDES = {
+		"**\\_diffs\\**", "**\\.sass-cache*\\**", "**\\.sass_cache_*\\**",
+		"**\\_sass_cache_*\\**", "**\\_styled\\**", "**\\_unstyled\\**",
+		"**\\css\\aui\\**", "**\\tmp\\**"
+	};
 
 	private static RTLCSSConverter _rtlCSSConverter;
 

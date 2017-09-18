@@ -21,6 +21,8 @@ import com.liferay.jenkins.results.parser.failure.message.generator.Subrepositor
 
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.dom4j.Element;
 
@@ -46,12 +48,23 @@ public class ValidationBuild extends BaseBuild {
 			"Executing subrepository task ");
 
 		if (consoleSnippets.length > 1) {
+			Dom4JUtil.addToElement(
+				rootElement,
+				Dom4JUtil.getNewElement("h6", null, "Task Summary:"));
+
+			Element taskSummaryListElement = Dom4JUtil.getNewElement(
+				"ul", rootElement);
+
 			for (int i = 1; i < consoleSnippets.length; i++) {
 				String consoleSnippet = consoleSnippets[i];
 
 				if (consoleSnippet.contains("merge-test-results:")) {
 					continue;
 				}
+
+				Dom4JUtil.addToElement(
+					taskSummaryListElement,
+					getTaskSummaryIndexElement(consoleSnippet));
 			}
 		}
 		else {
@@ -142,6 +155,50 @@ public class ValidationBuild extends BaseBuild {
 
 		return resultMessageElement;
 	}
+
+	protected String getTaskResultIcon(String result) {
+		if (result.equals("FAILED")) {
+			return " :x:";
+		}
+
+		if (result.equals("SUCCESSFUL")) {
+			return " :white_check_mark:";
+		}
+
+		return "";
+	}
+
+	protected Element getTaskSummaryIndexElement(String console) {
+		String taskName = console.substring(0, console.indexOf("\n"));
+
+		Matcher matcher = _consoleResultPattern.matcher(console);
+
+		String taskResult = "FAILED";
+
+		if (matcher.find()) {
+			taskResult = matcher.group(1);
+		}
+
+		Element taskSummaryIndexElement = Dom4JUtil.getNewElement("li", null);
+
+		Dom4JUtil.addToElement(
+			taskSummaryIndexElement, taskName, " - ",
+			getTaskResultIcon(taskResult));
+
+		if (taskResult.equals("FAILED")) {
+			GenericFailureMessageGenerator genericFailureMessageGenerator =
+				new GenericFailureMessageGenerator();
+
+			Dom4JUtil.addToElement(
+				taskSummaryIndexElement,
+				genericFailureMessageGenerator.getMessageElement(console));
+		}
+
+		return taskSummaryIndexElement;
+	}
+
+	private static final Pattern _consoleResultPattern = Pattern.compile(
+		"Subrepository task (FAILED|SUCCESSFUL)");
 
 	private static final FailureMessageGenerator[] _failureMessageGenerators = {
 		new RebaseFailureMessageGenerator(),

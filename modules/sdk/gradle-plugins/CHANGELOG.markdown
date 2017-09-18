@@ -2353,6 +2353,19 @@ to version 2.1.12.
 - [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
 1.0.457.
 
+## 3.4.54 - 2017-09-11
+
+### Added
+- [LPS-74614]: Add the ability to configure the `showDebugInformation` property
+in all `FormatSourceTask` instances by setting the project property
+`source.formatter.show.debug.information`.
+
+### Changed
+- [LPS-74614]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.2.0.
+- [LPS-74614]: Update the [Liferay Source Formatter] dependency to version
+1.0.458.
+
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
@@ -2560,4 +2573,5 @@ to version 2.1.12.
 [LPS-74490]: https://issues.liferay.com/browse/LPS-74490
 [LPS-74538]: https://issues.liferay.com/browse/LPS-74538
 [LPS-74544]: https://issues.liferay.com/browse/LPS-74544
+[LPS-74614]: https://issues.liferay.com/browse/LPS-74614
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

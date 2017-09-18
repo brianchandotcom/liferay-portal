@@ -2325,7 +2325,8 @@ to version 2.1.9.
 ## 3.4.50 - 2017-09-06
 
 ### Changed
-- [LPS-74171]: Update the default Tomcat version to 8.5.20.
+- [LPS-74171]: Update the default value of the
+`liferay.appServers.tomcat.version` property to `8.5.20`.
 - [LPS-74490]: Update the [Liferay Whip] dependency to version 1.0.2.
 
 ## 3.4.51 - 2017-09-07
@@ -2339,7 +2340,8 @@ to version 2.1.10.
 ## 3.4.52 - 2017-09-08
 
 ### Changed
-- [LPS-74171]: Update the default Tomcat version to 8.0.32.
+- [LPS-74171]: Update the default value of the
+`liferay.appServers.tomcat.version` property to `8.0.32`.
 - [LPS-74544]: Update the [Liferay Gradle Plugins Source Formatter] dependency
 to version 2.1.11.
 - [LPS-74544]: Update the [Liferay Source Formatter] dependency to version

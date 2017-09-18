@@ -16,10 +16,10 @@ package com.liferay.modern.site.building.fragment.web.util;
 
 import com.liferay.modern.site.building.fragment.model.MSBFragmentCollection;
 import com.liferay.modern.site.building.fragment.model.MSBFragmentEntry;
-import com.liferay.modern.site.building.fragment.util.comparator.MSBFragmentCollectionCreateDateComparator;
-import com.liferay.modern.site.building.fragment.util.comparator.MSBFragmentCollectionNameComparator;
-import com.liferay.modern.site.building.fragment.util.comparator.MSBFragmentEntryCreateDateComparator;
-import com.liferay.modern.site.building.fragment.util.comparator.MSBFragmentEntryNameComparator;
+import com.liferay.fragment.util.comparator.FragmentCollectionCreateDateComparator;
+import com.liferay.fragment.util.comparator.FragmentCollectionNameComparator;
+import com.liferay.fragment.util.comparator.FragmentEntryCreateDateComparator;
+import com.liferay.fragment.util.comparator.FragmentEntryNameComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
@@ -40,11 +40,11 @@ public class MSBFragmentPortletUtil {
 		OrderByComparator<MSBFragmentCollection> orderByComparator = null;
 
 		if (orderByCol.equals("create-date")) {
-			orderByComparator = new MSBFragmentCollectionCreateDateComparator(
+			orderByComparator = new FragmentCollectionCreateDateComparator(
 				orderByAsc);
 		}
 		else if (orderByCol.equals("name")) {
-			orderByComparator = new MSBFragmentCollectionNameComparator(
+			orderByComparator = new FragmentCollectionNameComparator(
 				orderByAsc);
 		}
 
@@ -64,11 +64,11 @@ public class MSBFragmentPortletUtil {
 		OrderByComparator<MSBFragmentEntry> orderByComparator = null;
 
 		if (orderByCol.equals("create-date")) {
-			orderByComparator = new MSBFragmentEntryCreateDateComparator(
+			orderByComparator = new FragmentEntryCreateDateComparator(
 				orderByAsc);
 		}
 		else if (orderByCol.equals("name")) {
-			orderByComparator = new MSBFragmentEntryNameComparator(orderByAsc);
+			orderByComparator = new FragmentEntryNameComparator(orderByAsc);
 		}
 
 		return orderByComparator;

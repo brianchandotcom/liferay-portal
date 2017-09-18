@@ -43,6 +43,14 @@ import javax.portlet.PortletRequest;
 @ProviderType
 public class ExportImportHelperUtil {
 
+	public static boolean alwaysIncludeReference(
+		PortletDataContext portletDataContext,
+		StagedModel referenceStagedModel) {
+
+		return _exportImportHelper.alwaysIncludeReference(
+			portletDataContext, referenceStagedModel);
+	}
+
 	public static long[] getAllLayoutIds(long groupId, boolean privateLayout) {
 		return _exportImportHelper.getAllLayoutIds(groupId, privateLayout);
 	}

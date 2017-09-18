@@ -15,6 +15,7 @@
 package com.liferay.exportimport.kernel.lar;
 
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.util.StringPool;
 
 import javax.portlet.PortletPreferences;
 
@@ -169,6 +170,10 @@ public interface PortletDataHandler {
 	 */
 	public PortletDataHandlerControl[] getImportMetadataControls()
 		throws PortletDataException;
+
+	public default String getNamespace() {
+		return StringPool.BLANK;
+	}
 
 	public String getPortletId();
 

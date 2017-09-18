@@ -27,6 +27,7 @@ import com.liferay.exportimport.kernel.lar.MissingReferences;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactory;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
@@ -122,6 +123,47 @@ import org.xml.sax.XMLReader;
 @Component(immediate = true)
 @ProviderType
 public class ExportImportHelperImpl implements ExportImportHelper {
+
+	@Override
+	public boolean alwaysIncludeReference(
+		PortletDataContext portletDataContext,
+		StagedModel referenceStagedModel) {
+
+		String rootPortletId = portletDataContext.getRootPortletId();
+
+		if (Validator.isBlank(rootPortletId)) {
+			return true;
+		}
+
+		Portlet portlet = _portletLocalService.getPortletById(rootPortletId);
+
+		PortletDataHandler portletDataHandler =
+			portlet.getPortletDataHandlerInstance();
+
+		Map<String, String[]> parameterMap =
+			portletDataContext.getParameterMap();
+
+		String[] referencedContentBehaviorArray = parameterMap.get(
+			PortletDataHandlerControl.getNamespacedControlName(
+				portletDataHandler.getNamespace(),
+				"referenced-content-behavior"));
+
+		String referencedContentBehavior = "include-always";
+
+		if (!ArrayUtil.isEmpty(referencedContentBehaviorArray)) {
+			referencedContentBehavior = referencedContentBehaviorArray[0];
+		}
+
+		if (referencedContentBehavior.equals("include-always") ||
+			(referencedContentBehavior.equals("include-if-modified") &&
+			 portletDataContext.isWithinDateRange(
+				 referenceStagedModel.getModifiedDate()))) {
+
+			return true;
+		}
+
+		return false;
+	}
 
 	@Override
 	public long[] getAllLayoutIds(long groupId, boolean privateLayout) {

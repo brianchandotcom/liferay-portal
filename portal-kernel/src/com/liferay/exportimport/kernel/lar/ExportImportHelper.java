@@ -122,6 +122,10 @@ public interface ExportImportHelper {
 	public static final String TEMP_FOLDER_NAME =
 		ExportImportHelper.class.getName();
 
+	public boolean alwaysIncludeReference(
+		PortletDataContext portletDataContext,
+		StagedModel referenceStagedModel);
+
 	public long[] getAllLayoutIds(long groupId, boolean privateLayout);
 
 	public Map<Long, Boolean> getAllLayoutIdsMap(

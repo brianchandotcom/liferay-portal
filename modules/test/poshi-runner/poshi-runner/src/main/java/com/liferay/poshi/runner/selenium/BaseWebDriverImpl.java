@@ -2697,10 +2697,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void typeAceEditor(String locator, String value) throws Exception {
+	public void typeAceEditor(String locator, String value) {
 		WebElement webElement = getWebElement(locator);
-
-		webElement.click();
 
 		webElement.sendKeys(Keys.chord(Keys.CONTROL, "a"));
 

@@ -29,7 +29,8 @@ import org.slf4j.LoggerFactory;
  */
 public enum RESTError {
 
-	UNDEFINED(0), NO_SUCH_LCS_SUBSCRIPTION_ENTRY(1);
+	UNDEFINED(0), NO_SUCH_LCS_SUBSCRIPTION_ENTRY(1),
+	REQUIRED_PARAMETER_MISSING(2);
 
 	public static RESTError getRESTError(
 		JSONWebServiceInvocationException jsonwsie) {

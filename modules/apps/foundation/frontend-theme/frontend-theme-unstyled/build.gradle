@@ -64,19 +64,19 @@ buildClay {
 				String line ->
 
 				if (line == "// INSERT CUSTOM EXTENSIONS") {
-					line = """\
-@import \"variables\";
+					line = '''\
+@import "variables";
 
-@import \"../liferay_variables_custom\";
-@import \"../liferay_variables\";
-@import \"bourbon\";
-@import \"../clay_custom\";
-@import \"../liferay_custom\";"""
+@import "../liferay_variables_custom";
+@import "../liferay_variables";
+@import "bourbon";
+@import "../clay_custom";
+@import "../liferay_custom";'''
 				}
 				else if (line == "// INSERT CUSTOM VARS") {
-					line = """\
+					line = '''\
 @import url(font_awesome.css);
-@import \"../clay_variables\";"""
+@import "../clay_variables";'''
 				}
 
 				return line
@@ -87,15 +87,15 @@ buildClay {
 				String line ->
 
 				if (line == "// INSERT CUSTOM BASE VARS") {
-					line = """\
-@import \"../clay_variables\";"""
+					line = '''\
+@import "../clay_variables";'''
 				}
 				else if (line == "// INSERT CUSTOM VARS") {
-					line = """\
-@import \"variables\";
+					line = '''\
+@import "variables";
 
-@import \"../liferay_variables_custom\";
-@import \"../liferay_variables\";"""
+@import "../liferay_variables_custom";
+@import "../liferay_variables";'''
 				}
 
 				return line

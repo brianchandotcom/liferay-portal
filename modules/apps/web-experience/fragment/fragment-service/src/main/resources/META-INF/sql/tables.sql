@@ -7,7 +7,7 @@ create table FragmentCollection (
 	createDate DATE null,
 	modifiedDate DATE null,
 	name VARCHAR(75) null,
-	description VARCHAR(75) null
+	description STRING null
 );
 
 create table FragmentEntry (
@@ -20,7 +20,7 @@ create table FragmentEntry (
 	modifiedDate DATE null,
 	fragmentCollectionId LONG,
 	name VARCHAR(75) null,
-	css VARCHAR(75) null,
-	html VARCHAR(75) null,
-	js VARCHAR(75) null
+	css STRING null,
+	html STRING null,
+	js STRING null
 );

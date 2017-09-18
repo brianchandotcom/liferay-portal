@@ -92,9 +92,7 @@ public class FragmentEntryPermission implements BaseModelPermissionChecker {
 			FragmentEntryLocalServiceUtil.fetchFragmentEntry(fragmentEntryId);
 
 		if (fragmentEntry == null) {
-			_log.error(
-				"Unable to get modern site building fragment entry " +
-					fragmentEntryId);
+			_log.error("Unable to get fragment entry " + fragmentEntryId);
 
 			return false;
 		}

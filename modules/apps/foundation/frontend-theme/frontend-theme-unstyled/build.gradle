@@ -113,7 +113,6 @@ buildClay {
 buildClayFonts {
 	File clayFontsDestinationDir = new File(themeDestinationDir, "css/clay/fonts")
 
-	dependsOn npmInstall
 	dependsOn buildClay
 
 	doFirst {

@@ -2326,6 +2326,8 @@ to version 2.1.9.
 
 ### Changed
 - [LPS-74171]: Update the default Tomcat version to 8.5.20.
+- [LPS-74490]: Update the [Liferay Whip] dependency to version 1.0.2.
+
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
@@ -2359,6 +2361,7 @@ to version 2.1.9.
 [Liferay Portal Tools WSDD Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-wsdd-builder
 [Liferay Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/util/source-formatter
 [Liferay TLD Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/util/tld-formatter
+[Liferay Whip]: https://github.com/liferay/liferay-portal/tree/master/modules/test/whip
 [Liferay XML Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/util/xml-formatter
 [LPS-52675]: https://issues.liferay.com/browse/LPS-52675
 [LPS-53392]: https://issues.liferay.com/browse/LPS-53392
@@ -2529,5 +2532,6 @@ to version 2.1.9.
 [LPS-74368]: https://issues.liferay.com/browse/LPS-74368
 [LPS-74433]: https://issues.liferay.com/browse/LPS-74433
 [LPS-74475]: https://issues.liferay.com/browse/LPS-74475
+[LPS-74490]: https://issues.liferay.com/browse/LPS-74490
 [LPS-74538]: https://issues.liferay.com/browse/LPS-74538
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

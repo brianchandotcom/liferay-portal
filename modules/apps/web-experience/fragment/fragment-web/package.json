@@ -15,6 +15,6 @@
 		"liferay-module-config-generator": "^1.1.10",
 		"metal-cli": "^4.3.3"
 	},
-	"name": "modern-site-building-fragment-web",
+	"name": "fragment-web",
 	"version": "1.0.0"
 }

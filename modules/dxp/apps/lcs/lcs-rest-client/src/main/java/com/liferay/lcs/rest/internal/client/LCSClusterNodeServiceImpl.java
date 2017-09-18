@@ -14,9 +14,9 @@
 
 package com.liferay.lcs.rest.internal.client;
 
+import com.liferay.lcs.rest.RESTError;
 import com.liferay.lcs.rest.client.LCSClusterNode;
 import com.liferay.lcs.rest.client.LCSClusterNodeService;
-import com.liferay.lcs.rest.RESTError;
 import com.liferay.lcs.rest.client.exception.DuplicateLCSClusterNodeNameException;
 import com.liferay.lcs.rest.client.exception.NoSuchLCSSubscriptionEntryException;
 import com.liferay.lcs.rest.client.exception.RequiredLCSClusterNodeNameException;

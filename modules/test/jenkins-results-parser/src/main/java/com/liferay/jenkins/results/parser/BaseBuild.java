@@ -1063,9 +1063,7 @@ public abstract class BaseBuild implements Build {
 						return;
 					}
 
-					if (!(this instanceof BatchBuild) &&
-						!(this instanceof TopLevelBuild) && !fromArchive) {
-
+					if (!(this instanceof TopLevelBuild) && !fromArchive) {
 						for (SlaveOfflineRule slaveOfflineRule :
 								slaveOfflineRules) {
 

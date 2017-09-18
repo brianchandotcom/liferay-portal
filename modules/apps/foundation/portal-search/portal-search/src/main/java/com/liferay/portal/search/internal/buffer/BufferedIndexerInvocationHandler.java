@@ -102,19 +102,25 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 			return method.invoke(_indexer, args);
 		}
 
-		if (args[0] instanceof ResourcedModel &&
-			args[0] instanceof ClassedModel &&
+		if (args[0] instanceof ClassedModel &&
 			Objects.equals(method.getName(), "reindex")) {
 
 			MethodKey methodKey = new MethodKey(
 				Indexer.class, method.getName(), String.class, Long.TYPE);
 
 			ClassedModel classedModel = (ClassedModel)args[0];
-			ResourcedModel resourcedModel = (ResourcedModel)args[0];
+
+			Long classPK = (Long)classedModel.getPrimaryKeyObj();
+
+			if (args[0] instanceof ResourcedModel) {
+				ResourcedModel resourcedModel = (ResourcedModel)args[0];
+
+				classPK = resourcedModel.getResourcePrimKey();
+			}
 
 			bufferRequest(
-				methodKey, classedModel.getModelClassName(),
-				resourcedModel.getResourcePrimKey(), indexerRequestBuffer);
+				methodKey, classedModel.getModelClassName(), classPK,
+				indexerRequestBuffer);
 		}
 		else if (args[0] instanceof ClassedModel) {
 			MethodKey methodKey = new MethodKey(

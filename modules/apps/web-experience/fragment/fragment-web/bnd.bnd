@@ -1,13 +1,13 @@
-Bundle-Name: Liferay Modern Site Building Fragment Web
-Bundle-SymbolicName: com.liferay.modern.site.building.fragment.web
+Bundle-Name: Liferay Fragment Web
+Bundle-SymbolicName: com.liferay.fragment.web
 Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Modern Site Building
+Liferay-Releng-Module-Group-Title: Fragment
 Provide-Capability:\
 	soy;\
-		type="modern-site-building-fragment";\
+		type="fragment";\
 		version:Version="${Bundle-Version}"
 Require-Capability:\
 	osgi.extender;\
 		filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/soy))"
-Web-ContextPath: /modern-site-building-fragment-web
+Web-ContextPath: /fragment-web

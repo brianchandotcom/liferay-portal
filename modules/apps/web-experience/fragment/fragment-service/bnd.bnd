@@ -1,8 +1,8 @@
-Bundle-Name: Liferay Modern Site Building Fragment Service
-Bundle-SymbolicName: com.liferay.modern.site.building.fragment.service
+Bundle-Name: Liferay Fragment Service
+Bundle-SymbolicName: com.liferay.fragment.service
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.modern.site.building.fragment.service.permission
+Export-Package: com.liferay.fragment.service.permission
 Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Modern Site Building
+Liferay-Releng-Module-Group-Title: Fragment
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true

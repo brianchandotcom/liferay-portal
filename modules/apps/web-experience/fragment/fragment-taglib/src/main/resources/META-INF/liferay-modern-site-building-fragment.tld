@@ -7,7 +7,7 @@
 	<uri>http://liferay.com/tld/modern-site-building-fragment</uri>
 	<tag>
 		<name>msb-fragment-entry-renderer</name>
-		<tag-class>com.liferay.modern.site.building.fragment.taglib.servlet.taglib.MSBFragmentEntryRendererTag</tag-class>
+		<tag-class>com.liferay.fragment.taglib.servlet.taglib.MSBFragmentEntryRendererTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>msbFragmentEntryId</name>

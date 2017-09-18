@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.modern.site.building.fragment.taglib.servlet.taglib;
+package com.liferay.fragment.taglib.servlet.taglib;
 
-import com.liferay.modern.site.building.fragment.model.MSBFragmentEntry;
-import com.liferay.modern.site.building.fragment.service.MSBFragmentEntryServiceUtil;
-import com.liferay.modern.site.building.fragment.taglib.servlet.ServletContextUtil;
+import com.liferay.fragment.taglib.servlet.ServletContextUtil;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -29,19 +29,18 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Jürgen Kappler
  */
-public class MSBFragmentEntryRendererTag extends IncludeTag {
+public class FragmentEntryRendererTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
 		try {
-			_msbFragmentEntry =
-				MSBFragmentEntryServiceUtil.fetchMSBFragmentEntry(
-					_msbFragmentEntryId);
+			_fragmentEntry =
+				FragmentEntryServiceUtil.fetchFragmentEntry(_fragmentEntryId);
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Unable to get modern site building fragment entry", pe);
+					"Unable to get fragment entry", pe);
 			}
 
 			return SKIP_BODY;
@@ -50,8 +49,8 @@ public class MSBFragmentEntryRendererTag extends IncludeTag {
 		return super.doStartTag();
 	}
 
-	public void setMsbFragmentEntryId(long msbFragmentEntryId) {
-		_msbFragmentEntryId = msbFragmentEntryId;
+	public void setFragmentEntryId(long fragmentEntryId) {
+		_fragmentEntryId = fragmentEntryId;
 	}
 
 	@Override
@@ -63,8 +62,8 @@ public class MSBFragmentEntryRendererTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
-		_msbFragmentEntry = null;
-		_msbFragmentEntryId = 0;
+		_fragmentEntry = null;
+		_fragmentEntryId = 0;
 	}
 
 	@Override
@@ -75,17 +74,16 @@ public class MSBFragmentEntryRendererTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-modern-site-building-fragment:" +
-				"msb-fragment-entry-renderer:msbFragmentEntry",
-			_msbFragmentEntry);
+			"liferay-fragment:fragment-entry-renderer:fragmentEntry",
+			_fragmentEntry);
 	}
 
 	private static final String _PAGE = "/msb_fragment_entry_renderer/page.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		MSBFragmentEntryRendererTag.class);
+		FragmentEntryRendererTag.class);
 
-	private MSBFragmentEntry _msbFragmentEntry;
-	private long _msbFragmentEntryId;
+	private FragmentEntry _fragmentEntry;
+	private long _fragmentEntryId;
 
 }

@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.modern.site.building.fragment.taglib.servlet;
-
-import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Reference;
+package com.liferay.fragment.taglib.servlet;
 
 import javax.servlet.ServletContext;
 
@@ -50,7 +48,7 @@ public class ServletContextUtil {
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.modern.site.building.fragment.taglib)",
+		target = "(osgi.web.symbolicname=com.liferay.fragment.taglib)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {

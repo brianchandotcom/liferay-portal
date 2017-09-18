@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
 
-<service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.modern.site.building.fragment">
-	<namespace>MSB</namespace>
-	<entity local-service="true" name="MSBFragmentCollection" remote-service="true">
+<service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.fragment">
+	<namespace>Fragment</namespace>
+	<entity local-service="true" name="FragmentCollection" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="msbFragmentCollectionId" primary="true" type="long" />
+		<column name="fragmentCollectionId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -48,15 +48,15 @@
 
 		<!-- References -->
 
-		<reference entity="MSBFragmentEntry" package-path="com.liferay.modern.site.building.fragment" />
+		<reference entity="FragmentEntry" package-path="com.liferay.fragment" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="MSBFragmentEntry" remote-service="true">
+	<entity local-service="true" name="FragmentEntry" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="msbFragmentEntryId" primary="true" type="long" />
+		<column name="fragmentEntryId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -72,7 +72,7 @@
 
 		<!-- Other fields -->
 
-		<column name="msbFragmentCollectionId" type="long" />
+		<column name="fragmentCollectionId" type="long" />
 		<column name="name" type="String" />
 		<column name="css" type="String" />
 		<column name="html" type="String" />
@@ -89,33 +89,33 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
-		<finder name="MSBFragmentCollectionId" return-type="Collection">
-			<finder-column name="msbFragmentCollectionId" />
+		<finder name="FragmentCollectionId" return-type="Collection">
+			<finder-column name="fragmentCollectionId" />
 		</finder>
-		<finder name="G_MSBFCI" return-type="Collection">
+		<finder name="G_FCI" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="msbFragmentCollectionId" />
+			<finder-column name="fragmentCollectionId" />
 		</finder>
 		<finder name="G_N" return-type="FragmentEntry" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="name" />
 		</finder>
-		<finder name="G_MSBFCI_LikeN" return-type="Collection">
+		<finder name="G_FCI_LikeN" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="msbFragmentCollectionId" />
+			<finder-column name="fragmentCollectionId" />
 			<finder-column case-sensitive="false" comparator="LIKE" name="name" />
 		</finder>
 
 		<!-- References -->
 
-		<reference entity="MSBFragmentCollection" package-path="com.liferay.modern.site.building.fragment" />
+		<reference entity="FragmentCollection" package-path="com.liferay.fragment" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<exceptions>
-		<exception>DuplicateMSBFragmentCollection</exception>
-		<exception>DuplicateMSBFragmentEntry</exception>
-		<exception>MSBFragmentCollectionName</exception>
-		<exception>MSBFragmentEntryName</exception>
+		<exception>DuplicateFragmentCollection</exception>
+		<exception>DuplicateFragmentEntry</exception>
+		<exception>FragmentCollectionName</exception>
+		<exception>FragmentEntryName</exception>
 	</exceptions>
 </service-builder>

@@ -2328,6 +2328,30 @@ to version 2.1.9.
 - [LPS-74171]: Update the default Tomcat version to 8.5.20.
 - [LPS-74490]: Update the [Liferay Whip] dependency to version 1.0.2.
 
+## 3.4.51 - 2017-09-07
+
+### Changed
+- [LPS-74544]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.1.10.
+- [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
+1.0.455.
+
+## 3.4.52 - 2017-09-08
+
+### Changed
+- [LPS-74544]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.1.11.
+- [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
+1.0.456.
+
+## 3.4.53 - 2017-09-10
+
+### Changed
+- [LPS-74544]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.1.12.
+- [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
+1.0.457.
+
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
@@ -2534,4 +2558,5 @@ to version 2.1.9.
 [LPS-74475]: https://issues.liferay.com/browse/LPS-74475
 [LPS-74490]: https://issues.liferay.com/browse/LPS-74490
 [LPS-74538]: https://issues.liferay.com/browse/LPS-74538
+[LPS-74544]: https://issues.liferay.com/browse/LPS-74544
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

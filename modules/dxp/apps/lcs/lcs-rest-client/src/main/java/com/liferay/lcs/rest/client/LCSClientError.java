@@ -27,12 +27,12 @@ import org.slf4j.LoggerFactory;
  * @author Mladen Cikara
  * @author Igor Beslic
  */
-public enum RESTError {
+public enum LCSClientError {
 
 	UNDEFINED(0), NO_SUCH_LCS_SUBSCRIPTION_ENTRY(1),
 	REQUIRED_PARAMETER_MISSING(2);
 
-	public static RESTError getRESTError(
+	public static LCSClientError getRESTError(
 		JSONWebServiceInvocationException jsonwsie) {
 
 		try {
@@ -47,7 +47,7 @@ public enum RESTError {
 				return UNDEFINED;
 			}
 
-			return toRESTError(errorCodeJsonNode.asInt());
+			return toLCSClientError(errorCodeJsonNode.asInt());
 		}
 		catch (Exception e) {
 			_log.error(e.getMessage(), e);
@@ -56,10 +56,10 @@ public enum RESTError {
 		}
 	}
 
-	public static RESTError toRESTError(int errorCode) {
-		for (RESTError restError : values()) {
-			if (restError.getErrorCode() == errorCode) {
-				return restError;
+	public static LCSClientError toLCSClientError(int errorCode) {
+		for (LCSClientError lcsClientError : values()) {
+			if (lcsClientError.getErrorCode() == errorCode) {
+				return lcsClientError;
 			}
 		}
 
@@ -107,11 +107,12 @@ public enum RESTError {
 		return sb.toString();
 	}
 
-	private RESTError(int errorCode) {
+	private LCSClientError(int errorCode) {
 		_errorCode = errorCode;
 	}
 
-	private static final Logger _log = LoggerFactory.getLogger(RESTError.class);
+	private static final Logger _log = LoggerFactory.getLogger(
+		LCSClientError.class);
 
 	private final int _errorCode;
 

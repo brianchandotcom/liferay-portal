@@ -14,9 +14,9 @@
 
 package com.liferay.lcs.rest.client.internal;
 
+import com.liferay.lcs.rest.client.LCSClientError;
 import com.liferay.lcs.rest.client.LCSClusterNode;
 import com.liferay.lcs.rest.client.LCSClusterNodeClient;
-import com.liferay.lcs.rest.client.RESTError;
 import com.liferay.lcs.rest.client.exception.DuplicateLCSClusterNodeNameException;
 import com.liferay.lcs.rest.client.exception.NoSuchLCSSubscriptionEntryException;
 import com.liferay.lcs.rest.client.exception.RequiredLCSClusterNodeNameException;
@@ -69,8 +69,8 @@ public class LCSClusterNodeClientImpl
 				protocolVersion);
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
-			if (RESTError.getRESTError(jsonwsie) ==
-					RESTError.NO_SUCH_LCS_SUBSCRIPTION_ENTRY) {
+			if (LCSClientError.getRESTError(jsonwsie) ==
+					LCSClientError.NO_SUCH_LCS_SUBSCRIPTION_ENTRY) {
 
 				throw new NoSuchLCSSubscriptionEntryException(jsonwsie);
 			}
@@ -103,8 +103,8 @@ public class LCSClusterNodeClientImpl
 				"processorCoresTotal", String.valueOf(processorCoresTotal));
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
-			if (RESTError.getRESTError(jsonwsie) ==
-					RESTError.NO_SUCH_LCS_SUBSCRIPTION_ENTRY) {
+			if (LCSClientError.getRESTError(jsonwsie) ==
+					LCSClientError.NO_SUCH_LCS_SUBSCRIPTION_ENTRY) {
 
 				throw new NoSuchLCSSubscriptionEntryException(jsonwsie);
 			}

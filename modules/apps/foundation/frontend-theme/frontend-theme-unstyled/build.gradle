@@ -50,9 +50,9 @@ buildCSS {
 }
 
 buildClay {
-	dependsOn npmInstall
-
 	File clayDestinationDir = new File(themeDestinationDir, "css/clay")
+
+	dependsOn npmInstall
 
 	doFirst {
 		delete clayDestinationDir
@@ -64,19 +64,19 @@ buildClay {
 				String line ->
 
 				if (line == "// INSERT CUSTOM EXTENSIONS") {
-					line = """\
-@import \"variables\";
+					line = '''\
+@import "variables";
 
-@import \"../liferay_variables_custom\";
-@import \"../liferay_variables\";
-@import \"bourbon\";
-@import \"../clay_custom\";
-@import \"../liferay_custom\";"""
+@import "../liferay_variables_custom";
+@import "../liferay_variables";
+@import "bourbon";
+@import "../clay_custom";
+@import "../liferay_custom";'''
 				}
 				else if (line == "// INSERT CUSTOM VARS") {
-					line = """\
+					line = '''\
 @import url(font_awesome.css);
-@import \"../clay_variables\";"""
+@import "../clay_variables";'''
 				}
 
 				return line
@@ -87,15 +87,15 @@ buildClay {
 				String line ->
 
 				if (line == "// INSERT CUSTOM BASE VARS") {
-					line = """\
-@import \"../clay_variables\";"""
+					line = '''\
+@import "../clay_variables";'''
 				}
 				else if (line == "// INSERT CUSTOM VARS") {
-					line = """\
-@import \"variables\";
+					line = '''\
+@import "variables";
 
-@import \"../liferay_variables_custom\";
-@import \"../liferay_variables\";"""
+@import "../liferay_variables_custom";
+@import "../liferay_variables";'''
 				}
 
 				return line
@@ -104,7 +104,6 @@ buildClay {
 	}
 
 	eachFile new StripPathSegmentsAction(3)
-
 	from npmInstall.nodeModulesDir
 	include "clay/src/scss/"
 	includeEmptyDirs = false
@@ -112,8 +111,6 @@ buildClay {
 }
 
 buildClayFonts {
-	dependsOn npmInstall
-
 	File clayFontsDestinationDir = new File(themeDestinationDir, "css/clay/fonts")
 
 	dependsOn buildClay
@@ -123,7 +120,6 @@ buildClayFonts {
 	}
 
 	eachFile new StripPathSegmentsAction(3)
-
 	from npmInstall.nodeModulesDir
 	include "clay/release/fonts/"
 	includeEmptyDirs = false
@@ -131,16 +127,15 @@ buildClayFonts {
 }
 
 buildClayIcons {
-	dependsOn npmInstall
-
 	File clayIconsDestinationDir = new File(themeDestinationDir, "images/clay")
+
+	dependsOn npmInstall
 
 	doFirst {
 		delete clayIconsDestinationDir
 	}
 
 	eachFile new StripPathSegmentsAction(4)
-
 	from npmInstall.nodeModulesDir
 	include "clay/build/images/icons/"
 	includeEmptyDirs = false
@@ -168,16 +163,15 @@ buildFontAwesome {
 }
 
 buildLexiconIcons {
-	dependsOn npmInstall
-
 	File lexiconIconsDestinationDir = new File(themeDestinationDir, "images/lexicon")
+
+	dependsOn npmInstall
 
 	doFirst {
 		delete lexiconIconsDestinationDir
 	}
 
 	eachFile new StripPathSegmentsAction(4)
-
 	from npmInstall.nodeModulesDir
 	include "clay/build/images/icons/"
 	includeEmptyDirs = false
@@ -194,6 +188,11 @@ buildTheme {
 
 classes {
 	dependsOn buildTheme
+}
+
+configJSModules {
+	dependsOn = []
+	enabled = false
 }
 
 dependencies {

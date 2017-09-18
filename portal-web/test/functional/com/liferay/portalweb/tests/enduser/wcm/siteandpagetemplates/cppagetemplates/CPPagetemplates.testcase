@@ -382,6 +382,8 @@
 	</command>
 
 	<command name="LocalizeDefaultPageTemplates" priority="4">
+		<property name="test.name.skip.portal.instance" value="CPPagetemplates#LocalizeDefaultPageTemplates" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Page Templates" />
 		</execute>

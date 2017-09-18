@@ -40,8 +40,8 @@
 
 		<!-- Order -->
 
-		<order by="asc">
-			<order-column name="name" />
+		<order by="desc">
+			<order-column name="createDate" />
 		</order>
 
 		<!-- Finder methods -->

@@ -5101,10 +5101,12 @@ public class StringUtil {
 	 * Wraps the text when it exceeds the <code>80</code> column width limit,
 	 * using a {@link StringPool#NEW_LINE} to break each wrapped line.
 	 *
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 * @param  text the text to wrap
 	 * @return the wrapped text following the column width limit, or
 	 *         <code>null</code> if the text is <code>null</code>
 	 */
+	@Deprecated
 	public static String wrap(String text) {
 		return wrap(text, 80, StringPool.NEW_LINE);
 	}
@@ -5113,12 +5115,14 @@ public class StringUtil {
 	 * Wraps the text when it exceeds the column width limit, using the line
 	 * separator to break each wrapped line.
 	 *
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 * @param  text the text to wrap
 	 * @param  width the column width limit for the text
 	 * @param  lineSeparator the string to use in breaking each wrapped line
 	 * @return the wrapped text and line separators, following the column width
 	 *         limit, or <code>null</code> if the text is <code>null</code>
 	 */
+	@Deprecated
 	public static String wrap(String text, int width, String lineSeparator) {
 		if (text == null) {
 			return null;

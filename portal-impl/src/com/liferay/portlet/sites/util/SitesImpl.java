@@ -1354,16 +1354,18 @@ public class SitesImpl implements Sites {
 		catch (Exception e) {
 			mergeFailCount++;
 
-			StringBundler sb = new StringBundler(6);
+			if (_log.isWarnEnabled()) {
+				StringBundler sb = new StringBundler(6);
 
-			sb.append("Merge fail count increased to ");
-			sb.append(mergeFailCount);
-			sb.append(" for layout set prototype ");
-			sb.append(layoutSetPrototype.getLayoutSetPrototypeId());
-			sb.append(" and layout set ");
-			sb.append(layoutSet.getLayoutSetId());
+				sb.append("Merge fail count increased to ");
+				sb.append(mergeFailCount);
+				sb.append(" for layout set prototype ");
+				sb.append(layoutSetPrototype.getLayoutSetPrototypeId());
+				sb.append(" and layout set ");
+				sb.append(layoutSet.getLayoutSetId());
 
-			_log.error(sb.toString(), e);
+				_log.warn(sb.toString(), e);
+			}
 
 			layoutSetPrototypeSettingsProperties.setProperty(
 				MERGE_FAIL_COUNT, String.valueOf(mergeFailCount));

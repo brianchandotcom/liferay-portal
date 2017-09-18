@@ -2339,6 +2339,7 @@ to version 2.1.10.
 ## 3.4.52 - 2017-09-08
 
 ### Changed
+- [LPS-74171]: Update the default Tomcat version to 8.0.32.
 - [LPS-74544]: Update the [Liferay Gradle Plugins Source Formatter] dependency
 to version 2.1.11.
 - [LPS-74544]: Update the [Liferay Source Formatter] dependency to version

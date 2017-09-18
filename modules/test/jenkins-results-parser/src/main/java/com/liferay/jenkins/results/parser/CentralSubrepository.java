@@ -20,6 +20,9 @@ import java.io.IOException;
 
 import java.util.Properties;
 
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.transport.RemoteConfig;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -49,30 +52,49 @@ public class CentralSubrepository {
 			_getSubrepositoryUpstreamBranchName();
 		_subrepositoryUsername = _getSubrepositoryUsername();
 
+		String tempBranchName = "temp-" + System.currentTimeMillis();
+
+		GitWorkingDirectory gitWorkingDirectory = null;
+
 		try {
-			String[] args = {"git", "checkout", "master"};
+			gitWorkingDirectory = new GitWorkingDirectory(
+				"master", _subrepositoryDirectory);
 
-			ProcessBuilder pb = new ProcessBuilder(args);
+			gitWorkingDirectory.createLocalBranch(tempBranchName);
 
-			pb.directory(new File(_subrepositoryDirectory));
+			gitWorkingDirectory.checkoutBranch(tempBranchName);
 
-			pb.start();
+			RemoteConfig remoteConfig = gitWorkingDirectory.getRemoteConfig(
+				"upstream");
 
-			args = new String[] {"git", "pull", "upstream", "master"};
-
-			pb = new ProcessBuilder(args);
-
-			pb.directory(new File(_subrepositoryDirectory));
-
-			pb.start();
-
-			File ciPropertiesFile = new File(
-				_subrepositoryDirectory, "ci.properties");
-
-			_ciProperties.load(new FileInputStream(ciPropertiesFile));
+			gitWorkingDirectory.fetch("master", "master", remoteConfig);
 		}
-		catch (Exception e) {
+		catch (GitAPIException gapie) {
+			throw new RuntimeException(
+				"Unable to refresh master branch in repo " + _subrepositoryName,
+				gapie);
 		}
+		finally {
+			try {
+				if (gitWorkingDirectory != null &&
+					gitWorkingDirectory.branchExists(tempBranchName, null)) {
+
+					gitWorkingDirectory.checkoutBranch("master");
+
+					gitWorkingDirectory.deleteLocalBranch(tempBranchName);
+				}
+			}
+			catch (GitAPIException gapie) {
+				throw new RuntimeException(
+					"Unable to delete temporary branch " + tempBranchName,
+					gapie);
+			}
+		}
+
+		File ciPropertiesFile = new File(
+			_subrepositoryDirectory, "ci.properties");
+
+		_ciProperties.load(new FileInputStream(ciPropertiesFile));
 	}
 
 	public String getCIProperty(String key) {

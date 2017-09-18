@@ -12,17 +12,14 @@
  * details.
  */
 
-package com.liferay.modern.site.building.fragment.constants;
+package com.liferay.fragment.constants;
 
 /**
  * @author Jürgen Kappler
  */
-public class MSBFragmentActionKeys {
+public class FragmentPortletKeys {
 
-	public static final String ADD_MSB_FRAGMENT_COLLECTION =
-		"ADD_MSB_FRAGMENT_COLLECTION";
-
-	public static final String ADD_MSB_FRAGMENT_ENTRY =
-		"ADD_MSB_FRAGMENT_ENTRY";
+	public static final String FRAGMENT =
+		"com_liferay_fragment_web_portlet_FragmentPortlet";
 
 }

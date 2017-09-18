@@ -343,7 +343,7 @@ public class MapUtil {
 
 		V value = map.get(key);
 
-		if (value != null) {
+		if (Validator.isNotNull(value)) {
 			return value;
 		}
 

@@ -138,10 +138,8 @@ public class SlaveOfflineRule {
 				continue;
 			}
 
-			Pattern pattern = Pattern.compile(value);
-
 			if (name.equals("console")) {
-				consolePattern = pattern;
+				consolePattern = Pattern.compile(value);
 
 				continue;
 			}

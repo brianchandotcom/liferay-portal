@@ -106,7 +106,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_ACTION_TARGET_FIELD</td>
-	<td>//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@id,'action') and contains(@class,'select-field-trigger')]/span</td>
+	<td>//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@id,'action') and contains(@class,'select-field-trigger')]/div</td>
 	<td></td>
 </tr>
 <tr>

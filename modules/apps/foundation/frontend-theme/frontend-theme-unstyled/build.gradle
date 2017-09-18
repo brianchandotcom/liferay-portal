@@ -50,9 +50,9 @@ buildCSS {
 }
 
 buildClay {
-	dependsOn npmInstall
-
 	File clayDestinationDir = new File(themeDestinationDir, "css/clay")
+
+	dependsOn npmInstall
 
 	doFirst {
 		delete clayDestinationDir
@@ -104,7 +104,6 @@ buildClay {
 	}
 
 	eachFile new StripPathSegmentsAction(3)
-
 	from npmInstall.nodeModulesDir
 	include "clay/src/scss/"
 	includeEmptyDirs = false
@@ -112,10 +111,9 @@ buildClay {
 }
 
 buildClayFonts {
-	dependsOn npmInstall
-
 	File clayFontsDestinationDir = new File(themeDestinationDir, "css/clay/fonts")
 
+	dependsOn npmInstall
 	dependsOn buildClay
 
 	doFirst {
@@ -123,7 +121,6 @@ buildClayFonts {
 	}
 
 	eachFile new StripPathSegmentsAction(3)
-
 	from npmInstall.nodeModulesDir
 	include "clay/release/fonts/"
 	includeEmptyDirs = false
@@ -131,16 +128,15 @@ buildClayFonts {
 }
 
 buildClayIcons {
-	dependsOn npmInstall
-
 	File clayIconsDestinationDir = new File(themeDestinationDir, "images/clay")
+
+	dependsOn npmInstall
 
 	doFirst {
 		delete clayIconsDestinationDir
 	}
 
 	eachFile new StripPathSegmentsAction(4)
-
 	from npmInstall.nodeModulesDir
 	include "clay/build/images/icons/"
 	includeEmptyDirs = false
@@ -168,16 +164,15 @@ buildFontAwesome {
 }
 
 buildLexiconIcons {
-	dependsOn npmInstall
-
 	File lexiconIconsDestinationDir = new File(themeDestinationDir, "images/lexicon")
+
+	dependsOn npmInstall
 
 	doFirst {
 		delete lexiconIconsDestinationDir
 	}
 
 	eachFile new StripPathSegmentsAction(4)
-
 	from npmInstall.nodeModulesDir
 	include "clay/build/images/icons/"
 	includeEmptyDirs = false

@@ -15,7 +15,7 @@
 package com.liferay.lcs.rest.internal.client;
 
 import com.liferay.lcs.rest.client.LCSMetadata;
-import com.liferay.lcs.rest.client.LCSMetadataService;
+import com.liferay.lcs.rest.client.LCSMetadataClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 
@@ -29,9 +29,9 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Riccardo Ferrari
  */
-@Component(immediate = true, service = LCSMetadataService.class)
-public class LCSMetadataServiceImpl
-	extends BaseLCSServiceImpl implements LCSMetadataService {
+@Component(immediate = true, service = LCSMetadataClient.class)
+public class LCSMetadataClientImpl
+	extends BaseLCSServiceImpl implements LCSMetadataClient {
 
 	@Override
 	public int getSupportedLCSPortlet(

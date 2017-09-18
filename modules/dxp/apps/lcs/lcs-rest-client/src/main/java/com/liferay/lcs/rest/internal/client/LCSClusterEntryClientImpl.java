@@ -15,7 +15,7 @@
 package com.liferay.lcs.rest.internal.client;
 
 import com.liferay.lcs.rest.client.LCSClusterEntry;
-import com.liferay.lcs.rest.client.LCSClusterEntryService;
+import com.liferay.lcs.rest.client.LCSClusterEntryClient;
 import com.liferay.lcs.rest.client.exception.DuplicateLCSClusterEntryNameException;
 import com.liferay.lcs.rest.client.exception.RequiredLCSClusterEntryNameException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
@@ -29,9 +29,9 @@ import org.osgi.service.component.annotations.Component;
  * @author Ivica Cardic
  * @author Igor Beslic
  */
-@Component(immediate = true, service = LCSClusterEntryService.class)
-public class LCSClusterEntryServiceImpl
-	extends BaseLCSServiceImpl implements LCSClusterEntryService {
+@Component(immediate = true, service = LCSClusterEntryClient.class)
+public class LCSClusterEntryClientImpl
+	extends BaseLCSServiceImpl implements LCSClusterEntryClient {
 
 	@Override
 	public LCSClusterEntry addLCSClusterEntry(

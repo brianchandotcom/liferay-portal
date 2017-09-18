@@ -14,7 +14,7 @@
 
 package com.liferay.lcs.rest.internal.client;
 
-import com.liferay.lcs.rest.client.LCSMembersService;
+import com.liferay.lcs.rest.client.LCSMembersClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 
 import org.osgi.service.component.annotations.Component;
@@ -22,9 +22,9 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Riccardo Ferrari
  */
-@Component(immediate = true, service = LCSMembersService.class)
-public class LCSMembersServiceImpl
-	extends BaseLCSServiceImpl implements LCSMembersService {
+@Component(immediate = true, service = LCSMembersClient.class)
+public class LCSMembersClientImpl
+	extends BaseLCSServiceImpl implements LCSMembersClient {
 
 	@Override
 	public void sendMonitoringUnavailableEmail(String key) {

@@ -17,10 +17,14 @@ package com.liferay.lcs.rest.client;
 /**
  * @author Riccardo Ferrari
  */
-public interface LCSPatchingAdvisorService {
+public interface LCSMembersClient {
 
-	public java.util.List<String> getInstallablePatchIds(
-			String key, int patchingToolVersion, String[] installedPatchIds)
-		throws Exception;
+	public void sendMonitoringUnavailableEmail(String key);
+
+	public void sendPatchingToolUnavailableEmail(String key);
+
+	public void sendServerManuallyShutdownEmail(String key);
+
+	public void sendServerUnexpectedlyShutdownEmail(String key);
 
 }

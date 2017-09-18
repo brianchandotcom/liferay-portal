@@ -14,17 +14,20 @@
 
 package com.liferay.lcs.rest.client;
 
+import java.util.List;
+
 /**
- * @author Riccardo Ferrari
+ * @author Ivica Cardic
  */
-public interface LCSMembersService {
+public interface LCSClusterEntryClient {
 
-	public void sendMonitoringUnavailableEmail(String key);
+	public LCSClusterEntry addLCSClusterEntry(
+		long lcsProjectId, String name, String description, String location,
+		String subscriptionType, int type);
 
-	public void sendPatchingToolUnavailableEmail(String key);
+	public LCSClusterEntry getLCSClusterEntry(long lcsClusterEntryId);
 
-	public void sendServerManuallyShutdownEmail(String key);
-
-	public void sendServerUnexpectedlyShutdownEmail(String key);
+	public List<LCSClusterEntry> getLCSProjectManageableLCSClusterEntries(
+		long lcsProjectId, int localLCSClusterEntryType);
 
 }

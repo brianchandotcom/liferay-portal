@@ -14,15 +14,13 @@
 
 package com.liferay.lcs.rest.client;
 
-import java.util.List;
-
 /**
- * @author Ivica Cardic
+ * @author Riccardo Ferrari
  */
-public interface LCSProjectService {
+public interface LCSClusterNodeUptimeClient {
 
-	public LCSProject addDefaultLCSProject();
+	public void updateLCSClusterNodeUptime(String key);
 
-	public List<LCSProject> getUserManageableLCSProjects();
+	public void updateLCSClusterNodeUptimes(String key, String uptimesJSON);
 
 }

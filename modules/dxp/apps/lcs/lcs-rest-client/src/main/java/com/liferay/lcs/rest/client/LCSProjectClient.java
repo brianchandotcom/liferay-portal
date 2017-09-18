@@ -19,15 +19,10 @@ import java.util.List;
 /**
  * @author Ivica Cardic
  */
-public interface LCSClusterEntryService {
+public interface LCSProjectClient {
 
-	public LCSClusterEntry addLCSClusterEntry(
-		long lcsProjectId, String name, String description, String location,
-		String subscriptionType, int type);
+	public LCSProject addDefaultLCSProject();
 
-	public LCSClusterEntry getLCSClusterEntry(long lcsClusterEntryId);
-
-	public List<LCSClusterEntry> getLCSProjectManageableLCSClusterEntries(
-		long lcsProjectId, int localLCSClusterEntryType);
+	public List<LCSProject> getUserManageableLCSProjects();
 
 }

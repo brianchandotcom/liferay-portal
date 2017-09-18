@@ -15,7 +15,7 @@
 package com.liferay.lcs.rest.internal.client;
 
 import com.liferay.lcs.rest.client.LCSProject;
-import com.liferay.lcs.rest.client.LCSProjectService;
+import com.liferay.lcs.rest.client.LCSProjectClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 
 import java.util.ArrayList;
@@ -26,9 +26,9 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Igor Beslic
  */
-@Component(immediate = true, service = LCSProjectService.class)
-public class LCSProjectServiceImpl
-	extends BaseLCSServiceImpl implements LCSProjectService {
+@Component(immediate = true, service = LCSProjectClient.class)
+public class LCSProjectClientImpl
+	extends BaseLCSServiceImpl implements LCSProjectClient {
 
 	@Override
 	public LCSProject addDefaultLCSProject() {

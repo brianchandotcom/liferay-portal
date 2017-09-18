@@ -17,7 +17,7 @@ package com.liferay.lcs.rest.client;
 /**
  * @author Riccardo Ferrari
  */
-public interface LCSMetadataService {
+public interface LCSMetadataClient {
 
 	public int getSupportedLCSPortlet(String buildNumber, String portalEdition);
 

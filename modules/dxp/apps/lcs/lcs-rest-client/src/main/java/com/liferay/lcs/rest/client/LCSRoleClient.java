@@ -16,11 +16,9 @@ package com.liferay.lcs.rest.client;
 
 /**
  * @author Ivica Cardic
- * @author Igor Beslic
  */
-public interface LCSClusterEntryTokenService {
+public interface LCSRoleClient {
 
-	public LCSClusterEntryToken fetchLCSClusterEntryToken(
-		long lcsClusterEntryId);
+	public boolean hasUserLCSAdministratorLCSRole(long lcsProjectId);
 
 }

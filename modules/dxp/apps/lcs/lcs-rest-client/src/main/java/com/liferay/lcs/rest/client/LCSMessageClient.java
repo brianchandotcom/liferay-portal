@@ -19,7 +19,7 @@ import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationExcepti
 /**
  * @author Riccardo Ferrari
  */
-public interface LCSMessageService {
+public interface LCSMessageClient {
 
 	public void addCorpProjectLCSMessage(
 			long corpProjectId, long sourceMessageId, String content, int type)

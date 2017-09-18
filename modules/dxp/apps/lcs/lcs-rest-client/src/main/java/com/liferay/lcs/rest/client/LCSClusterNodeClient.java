@@ -20,7 +20,7 @@ import java.util.List;
  * @author Ivica Cardic
  * @author Igor Beslic
  */
-public interface LCSClusterNodeService {
+public interface LCSClusterNodeClient {
 
 	public LCSClusterNode addLCSClusterNode(
 		long lcsClusterEntryId, String name, String description,

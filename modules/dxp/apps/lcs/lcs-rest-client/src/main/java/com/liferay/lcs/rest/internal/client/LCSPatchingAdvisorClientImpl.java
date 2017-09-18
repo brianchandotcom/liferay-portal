@@ -14,7 +14,7 @@
 
 package com.liferay.lcs.rest.internal.client;
 
-import com.liferay.lcs.rest.client.LCSPatchingAdvisorService;
+import com.liferay.lcs.rest.client.LCSPatchingAdvisorClient;
 
 import java.util.List;
 
@@ -23,9 +23,9 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Riccardo Ferrari
  */
-@Component(immediate = true, service = LCSPatchingAdvisorService.class)
-public class LCSPatchingAdvisorServiceImpl
-	extends BaseLCSServiceImpl implements LCSPatchingAdvisorService {
+@Component(immediate = true, service = LCSPatchingAdvisorClient.class)
+public class LCSPatchingAdvisorClientImpl
+	extends BaseLCSServiceImpl implements LCSPatchingAdvisorClient {
 
 	@Override
 	public List<String> getInstallablePatchIds(

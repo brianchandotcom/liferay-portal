@@ -16,7 +16,7 @@ package com.liferay.lcs.rest.internal.client;
 
 import com.liferay.lcs.rest.RESTError;
 import com.liferay.lcs.rest.client.LCSClusterNode;
-import com.liferay.lcs.rest.client.LCSClusterNodeService;
+import com.liferay.lcs.rest.client.LCSClusterNodeClient;
 import com.liferay.lcs.rest.client.exception.DuplicateLCSClusterNodeNameException;
 import com.liferay.lcs.rest.client.exception.NoSuchLCSSubscriptionEntryException;
 import com.liferay.lcs.rest.client.exception.RequiredLCSClusterNodeNameException;
@@ -34,9 +34,9 @@ import org.osgi.service.component.annotations.Component;
  * @author Ivica Cardic
  * @author Igor Beslic
  */
-@Component(immediate = true, service = LCSClusterNodeService.class)
-public class LCSClusterNodeServiceImpl
-	extends BaseLCSServiceImpl implements LCSClusterNodeService {
+@Component(immediate = true, service = LCSClusterNodeClient.class)
+public class LCSClusterNodeClientImpl
+	extends BaseLCSServiceImpl implements LCSClusterNodeClient {
 
 	@Override
 	public LCSClusterNode addLCSClusterNode(

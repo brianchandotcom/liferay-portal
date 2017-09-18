@@ -14,8 +14,7 @@
 
 package com.liferay.lcs.rest.internal.client;
 
-import com.liferay.lcs.rest.client.LCSClusterEntryToken;
-import com.liferay.lcs.rest.client.LCSClusterEntryTokenService;
+import com.liferay.lcs.rest.client.LCSClusterNodeUptimeClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 
 import javax.servlet.http.HttpServletResponse;
@@ -23,34 +22,39 @@ import javax.servlet.http.HttpServletResponse;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Igor Beslic
+ * @author Riccardo Ferrari
  */
-@Component(immediate = true, service = LCSClusterEntryTokenService.class)
-public class LCSClusterEntryTokenServiceImpl
-	extends BaseLCSServiceImpl implements LCSClusterEntryTokenService {
+@Component(immediate = true, service = LCSClusterNodeUptimeClient.class)
+public class LCSClusterNodeUptimeClientImpl
+	extends BaseLCSServiceImpl implements LCSClusterNodeUptimeClient {
 
 	@Override
-	public LCSClusterEntryToken fetchLCSClusterEntryToken(
-		long lcsClusterEntryTokenId) {
-
+	public void updateLCSClusterNodeUptime(String key) {
 		try {
-			LCSClusterEntryToken lcsClusterEntryToken = doGetToObject(
-				LCSClusterEntryToken.class, _URL_LCS_CLUSTER_ENTRY_TOKEN,
-				"lcsClusterEntryTokenId",
-				String.valueOf(lcsClusterEntryTokenId));
-
-			return lcsClusterEntryToken;
+			doPut(_URL_LCS_CLUSTER_NODE_UPTIME, "key", key);
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
 			if (jsonwsie.getStatus() == HttpServletResponse.SC_NOT_FOUND) {
-				return null;
+				return;
 			}
 
 			throw new RuntimeException(jsonwsie);
 		}
 	}
 
-	private static final String _URL_LCS_CLUSTER_ENTRY_TOKEN =
-		"/o/osb-lcs-rest/LCSClusterEntryToken";
+	@Override
+	public void updateLCSClusterNodeUptimes(String key, String uptimesJSON) {
+		try {
+			doPut(
+				_URL_LCS_CLUSTER_NODE_UPTIME, "key", key, "uptimesJSON",
+				uptimesJSON);
+		}
+		catch (JSONWebServiceInvocationException jsonwsie) {
+			throw new RuntimeException(jsonwsie);
+		}
+	}
+
+	private static final String _URL_LCS_CLUSTER_NODE_UPTIME =
+		"/o/osb-lcs-rest/LCSClusterNodeUptime";
 
 }

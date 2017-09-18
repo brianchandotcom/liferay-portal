@@ -14,20 +14,13 @@
 
 package com.liferay.lcs.rest.client;
 
-import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
-
 /**
+ * @author Ivica Cardic
  * @author Igor Beslic
  */
-public interface LCSSubscriptionEntryService {
+public interface LCSClusterEntryTokenClient {
 
-	public void addCorpProjectLCSSubscriptionEntries(
-			long corpProjectId, String lcsSubscriptionEntriesJSON)
-		throws JSONWebServiceInvocationException;
-
-	public LCSSubscriptionEntry fetchLCSSubscriptionEntry(String key);
-
-	public void incrementServerUsed(String key)
-		throws JSONWebServiceInvocationException;
+	public LCSClusterEntryToken fetchLCSClusterEntryToken(
+		long lcsClusterEntryId);
 
 }

@@ -17,10 +17,10 @@ package com.liferay.lcs.rest.client;
 /**
  * @author Riccardo Ferrari
  */
-public interface LCSClusterNodeUptimeService {
+public interface LCSPatchingAdvisorClient {
 
-	public void updateLCSClusterNodeUptime(String key);
-
-	public void updateLCSClusterNodeUptimes(String key, String uptimesJSON);
+	public java.util.List<String> getInstallablePatchIds(
+			String key, int patchingToolVersion, String[] installedPatchIds)
+		throws Exception;
 
 }

@@ -15,7 +15,7 @@
 package com.liferay.lcs.rest.internal.client;
 
 import com.liferay.lcs.rest.client.LCSSubscriptionEntry;
-import com.liferay.lcs.rest.client.LCSSubscriptionEntryService;
+import com.liferay.lcs.rest.client.LCSSubscriptionEntryClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 
 import javax.servlet.http.HttpServletResponse;
@@ -28,9 +28,9 @@ import org.slf4j.LoggerFactory;
 /**
  * @author Igor Beslic
  */
-@Component(immediate = true, service = LCSSubscriptionEntryService.class)
-public class LCSSubscriptionEntryServiceImpl
-	extends BaseLCSServiceImpl implements LCSSubscriptionEntryService {
+@Component(immediate = true, service = LCSSubscriptionEntryClient.class)
+public class LCSSubscriptionEntryClientImpl
+	extends BaseLCSServiceImpl implements LCSSubscriptionEntryClient {
 
 	@Override
 	public void addCorpProjectLCSSubscriptionEntries(
@@ -81,6 +81,6 @@ public class LCSSubscriptionEntryServiceImpl
 		"/o/osb-lcs-rest/LCSSubscriptionEntry";
 
 	private static final Logger _logger = LoggerFactory.getLogger(
-		LCSSubscriptionEntryServiceImpl.class);
+		LCSSubscriptionEntryClientImpl.class);
 
 }

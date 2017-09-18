@@ -15,10 +15,10 @@
 package com.liferay.modern.site.building.fragment.service.impl;
 
 import com.liferay.fragment.constants.FragmentActionKeys;
+import com.liferay.fragment.service.permission.FragmentCollectionPermission;
+import com.liferay.fragment.service.permission.FragmentPermission;
 import com.liferay.modern.site.building.fragment.model.MSBFragmentCollection;
 import com.liferay.modern.site.building.fragment.service.base.MSBFragmentCollectionServiceBaseImpl;
-import com.liferay.modern.site.building.fragment.service.permission.MSBFragmentCollectionPermission;
-import com.liferay.modern.site.building.fragment.service.permission.MSBFragmentPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -41,7 +41,7 @@ public class MSBFragmentCollectionServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		MSBFragmentPermission.check(
+		FragmentPermission.check(
 			getPermissionChecker(), groupId,
 			FragmentActionKeys.ADD_FRAGMENT_COLLECTION);
 
@@ -54,7 +54,7 @@ public class MSBFragmentCollectionServiceImpl
 			long msbFragmentCollectionId)
 		throws PortalException {
 
-		MSBFragmentCollectionPermission.check(
+		FragmentCollectionPermission.check(
 			getPermissionChecker(), msbFragmentCollectionId, ActionKeys.DELETE);
 
 		return msbFragmentCollectionLocalService.deleteMSBFragmentCollection(
@@ -71,7 +71,7 @@ public class MSBFragmentCollectionServiceImpl
 
 		for (long msbFragmentCollectionId : msbFragmentCollectionIds) {
 			try {
-				MSBFragmentCollectionPermission.check(
+				FragmentCollectionPermission.check(
 					getPermissionChecker(), msbFragmentCollectionId,
 					ActionKeys.DELETE);
 
@@ -104,7 +104,7 @@ public class MSBFragmentCollectionServiceImpl
 				msbFragmentCollectionId);
 
 		if (msbFragmentCollection != null) {
-			MSBFragmentCollectionPermission.check(
+			FragmentCollectionPermission.check(
 				getPermissionChecker(), msbFragmentCollection, ActionKeys.VIEW);
 		}
 
@@ -156,7 +156,7 @@ public class MSBFragmentCollectionServiceImpl
 			long msbFragmentCollectionId, String name, String description)
 		throws PortalException {
 
-		MSBFragmentCollectionPermission.check(
+		FragmentCollectionPermission.check(
 			getPermissionChecker(), msbFragmentCollectionId, ActionKeys.UPDATE);
 
 		return msbFragmentCollectionLocalService.updateMSBFragmentCollection(

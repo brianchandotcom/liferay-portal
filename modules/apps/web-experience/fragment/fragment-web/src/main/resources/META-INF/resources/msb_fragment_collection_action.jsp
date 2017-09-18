@@ -23,7 +23,7 @@ MSBFragmentCollection msbFragmentCollection = (MSBFragmentCollection)row.getObje
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-	<c:if test="<%= MSBFragmentCollectionPermission.contains(permissionChecker, msbFragmentCollection, ActionKeys.UPDATE) %>">
+	<c:if test="<%= FragmentCollectionPermission.contains(permissionChecker, msbFragmentCollection, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editMSBFragmentCollectionURL">
 			<portlet:param name="mvcPath" value="/edit_msb_fragment_collection.jsp" />
 			<portlet:param name="msbFragmentCollectionId" value="<%= String.valueOf(msbFragmentCollection.getMsbFragmentCollectionId()) %>" />
@@ -35,7 +35,7 @@ MSBFragmentCollection msbFragmentCollection = (MSBFragmentCollection)row.getObje
 		/>
 	</c:if>
 
-	<c:if test="<%= MSBFragmentCollectionPermission.contains(permissionChecker, msbFragmentCollection, ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= FragmentCollectionPermission.contains(permissionChecker, msbFragmentCollection, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= MSBFragmentCollection.class.getName() %>"
 			modelResourceDescription="<%= msbFragmentCollection.getName() %>"
@@ -52,7 +52,7 @@ MSBFragmentCollection msbFragmentCollection = (MSBFragmentCollection)row.getObje
 		/>
 	</c:if>
 
-	<c:if test="<%= MSBFragmentCollectionPermission.contains(permissionChecker, msbFragmentCollection, ActionKeys.DELETE) %>">
+	<c:if test="<%= FragmentCollectionPermission.contains(permissionChecker, msbFragmentCollection, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="deleteMSBFragmentCollection" var="deleteMSBFragmentCollectionURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="msbFragmentCollectionId" value="<%= String.valueOf(msbFragmentCollection.getMsbFragmentCollectionId()) %>" />

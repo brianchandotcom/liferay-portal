@@ -23,7 +23,7 @@ MSBFragmentEntry msbFragmentEntry = (MSBFragmentEntry)row.getObject();
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-	<c:if test="<%= MSBFragmentEntryPermission.contains(permissionChecker, msbFragmentEntry, ActionKeys.UPDATE) %>">
+	<c:if test="<%= FragmentEntryPermission.contains(permissionChecker, msbFragmentEntry, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editMSBFragmentEntryURL">
 			<portlet:param name="mvcPath" value="/edit_msb_fragment_entry.jsp" />
 			<portlet:param name="msbFragmentCollectionId" value="<%= String.valueOf(msbFragmentEntry.getMsbFragmentCollectionId()) %>" />
@@ -36,7 +36,7 @@ MSBFragmentEntry msbFragmentEntry = (MSBFragmentEntry)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= MSBFragmentEntryPermission.contains(permissionChecker, msbFragmentEntry, ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= FragmentEntryPermission.contains(permissionChecker, msbFragmentEntry, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= MSBFragmentEntry.class.getName() %>"
 			modelResourceDescription="<%= msbFragmentEntry.getName() %>"
@@ -53,7 +53,7 @@ MSBFragmentEntry msbFragmentEntry = (MSBFragmentEntry)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= MSBFragmentEntryPermission.contains(permissionChecker, msbFragmentEntry, ActionKeys.DELETE) %>">
+	<c:if test="<%= FragmentEntryPermission.contains(permissionChecker, msbFragmentEntry, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="deleteMSBFragmentEntries" var="deleteMSBFragmentEntryURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="msbFragmentEntryId" value="<%= String.valueOf(msbFragmentEntry.getMsbFragmentEntryId()) %>" />

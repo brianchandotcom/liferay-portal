@@ -15,10 +15,10 @@
 package com.liferay.modern.site.building.fragment.service.impl;
 
 import com.liferay.fragment.constants.FragmentActionKeys;
+import com.liferay.fragment.service.permission.FragmentEntryPermission;
+import com.liferay.fragment.service.permission.FragmentPermission;
 import com.liferay.modern.site.building.fragment.model.MSBFragmentEntry;
 import com.liferay.modern.site.building.fragment.service.base.MSBFragmentEntryServiceBaseImpl;
-import com.liferay.modern.site.building.fragment.service.permission.MSBFragmentEntryPermission;
-import com.liferay.modern.site.building.fragment.service.permission.MSBFragmentPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -41,7 +41,7 @@ public class MSBFragmentEntryServiceImpl
 			String html, String js, ServiceContext serviceContext)
 		throws PortalException {
 
-		MSBFragmentPermission.check(
+		FragmentPermission.check(
 			getPermissionChecker(), groupId,
 			FragmentActionKeys.ADD_FRAGMENT_ENTRY);
 
@@ -60,7 +60,7 @@ public class MSBFragmentEntryServiceImpl
 
 		for (long msbFragmentEntryId : msbFragmentEntriesIds) {
 			try {
-				MSBFragmentEntryPermission.check(
+				FragmentEntryPermission.check(
 					getPermissionChecker(), msbFragmentEntryId,
 					ActionKeys.DELETE);
 
@@ -87,7 +87,7 @@ public class MSBFragmentEntryServiceImpl
 	public MSBFragmentEntry deleteMSBFragmentEntry(long msbFragmentEntryId)
 		throws PortalException {
 
-		MSBFragmentEntryPermission.check(
+		FragmentEntryPermission.check(
 			getPermissionChecker(), msbFragmentEntryId, ActionKeys.DELETE);
 
 		return msbFragmentEntryLocalService.deleteMSBFragmentEntry(
@@ -112,7 +112,7 @@ public class MSBFragmentEntryServiceImpl
 				msbFragmentEntryId);
 
 		if (msbFragmentEntry != null) {
-			MSBFragmentEntryPermission.check(
+			FragmentEntryPermission.check(
 				getPermissionChecker(), msbFragmentEntry, ActionKeys.VIEW);
 		}
 
@@ -170,7 +170,7 @@ public class MSBFragmentEntryServiceImpl
 			String js)
 		throws PortalException {
 
-		MSBFragmentEntryPermission.check(
+		FragmentEntryPermission.check(
 			getPermissionChecker(), msbFragmentEntryId, ActionKeys.UPDATE);
 
 		return msbFragmentEntryLocalService.updateMSBFragmentEntry(

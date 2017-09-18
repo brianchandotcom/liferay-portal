@@ -19,7 +19,7 @@ import com.liferay.modern.site.building.fragment.model.MSBFragmentCollection;
 import com.liferay.modern.site.building.fragment.model.MSBFragmentEntry;
 import com.liferay.modern.site.building.fragment.service.MSBFragmentCollectionServiceUtil;
 import com.liferay.modern.site.building.fragment.service.MSBFragmentEntryServiceUtil;
-import com.liferay.modern.site.building.fragment.service.permission.MSBFragmentPermission;
+import com.liferay.fragment.service.permission.FragmentPermission;
 import com.liferay.modern.site.building.fragment.web.util.MSBFragmentPortletUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -411,9 +411,9 @@ public class MSBFragmentDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (MSBFragmentPermission.contains(
+		if (FragmentPermission.contains(
 				themeDisplay.getPermissionChecker(),
-				MSBFragmentPermission.RESOURCE_NAME,
+				FragmentPermission.RESOURCE_NAME,
 				FragmentPortletKeys.FRAGMENT, themeDisplay.getSiteGroupId(),
 			actionId)) {
 

@@ -20,6 +20,8 @@ package com.liferay.commerce.constants;
  */
 public class CommerceWebKeys {
 
+	public static final String COMMERCE_ADDRESS = "COMMERCE_ADDRESS";
+
 	public static final String COMMERCE_CART = "COMMERCE_CART_CONTENT";
 
 	public static final String COMMERCE_CART_ITEM = "COMMERCE_CART_ITEM";

@@ -76,7 +76,7 @@ public class CentralSubrepository {
 		}
 		finally {
 			try {
-				if (gitWorkingDirectory != null &&
+				if ((gitWorkingDirectory != null) &&
 					gitWorkingDirectory.branchExists(tempBranchName, null)) {
 
 					gitWorkingDirectory.checkoutBranch("master");

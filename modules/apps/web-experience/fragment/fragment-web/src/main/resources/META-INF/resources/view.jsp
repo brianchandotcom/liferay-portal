@@ -27,11 +27,11 @@ renderResponse.setTitle(LanguageUtil.get(request, "fragments"));
 		<aui:nav-item href="<%= mainURL.toString() %>" label="collections" selected="<%= true %>" />
 	</aui:nav>
 
-	<c:if test="<%= msbFragmentDisplayContext.isShowMSBFragmentCollectionsSearch() %>">
+	<c:if test="<%= fragmentDisplayContext.isShowFragmentCollectionsSearch() %>">
 		<portlet:renderURL var="portletURL">
 			<portlet:param name="mvcPath" value="/view.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="displayStyle" value="<%= msbFragmentDisplayContext.getDisplayStyle() %>" />
+			<portlet:param name="displayStyle" value="<%= fragmentDisplayContext.getDisplayStyle() %>" />
 		</portlet:renderURL>
 
 		<aui:nav-bar-search>
@@ -43,15 +43,15 @@ renderResponse.setTitle(LanguageUtil.get(request, "fragments"));
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
-	disabled="<%= msbFragmentDisplayContext.isDisabledMSBFragmentCollectionsManagementBar() %>"
+	disabled="<%= fragmentDisplayContext.isDisabledFragmentCollectionsManagementBar() %>"
 	includeCheckBox="<%= true %>"
-	searchContainerId="msbFragmentCollections"
+	searchContainerId="fragmentCollections"
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"icon"} %>'
 			portletURL="<%= currentURLObj %>"
-			selectedDisplayStyle="<%= msbFragmentDisplayContext.getDisplayStyle() %>"
+			selectedDisplayStyle="<%= fragmentDisplayContext.getDisplayStyle() %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
 
@@ -62,35 +62,35 @@ renderResponse.setTitle(LanguageUtil.get(request, "fragments"));
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= msbFragmentDisplayContext.getOrderByCol() %>"
-			orderByType="<%= msbFragmentDisplayContext.getOrderByType() %>"
-			orderColumns="<%= msbFragmentDisplayContext.getOrderColumns() %>"
+			orderByCol="<%= fragmentDisplayContext.getOrderByCol() %>"
+			orderByType="<%= fragmentDisplayContext.getOrderByType() %>"
+			orderColumns="<%= fragmentDisplayContext.getOrderColumns() %>"
 			portletURL="<%= currentURLObj %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedMSBFragmentCollections" label="delete" />
+		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedFragmentCollections" label="delete" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
-<portlet:actionURL name="deleteMSBFragmentCollection" var="deleteMSBFragmentCollectionURL">
+<portlet:actionURL name="deleteFragmentCollection" var="deleteFragmentCollectionURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteMSBFragmentCollectionURL %>" cssClass="container-fluid-1280" name="fm">
+<aui:form action="<%= deleteFragmentCollectionURL %>" cssClass="container-fluid-1280" name="fm">
 	<liferay-ui:search-container
-		id="msbFragmentCollections"
-		searchContainer="<%= msbFragmentDisplayContext.getMSBFragmentCollectionsSearchContainer() %>"
+		id="fragmentCollections"
+		searchContainer="<%= fragmentDisplayContext.getFragmentCollectionsSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
-			className="com.liferay.modern.site.building.fragment.model.MSBFragmentCollection"
-			keyProperty="msbFragmentCollectionId"
-			modelVar="msbFragmentCollection"
+			className="com.liferay.fragment.model.FragmentCollection"
+			keyProperty="fragmentCollectionId"
+			modelVar="fragmentCollection"
 		>
 			<portlet:renderURL var="rowURL">
 				<portlet:param name="mvcPath" value="/view_msb_fragment_entries.jsp" />
-				<portlet:param name="msbFragmentCollectionId" value="<%= String.valueOf(msbFragmentCollection.getMsbFragmentCollectionId()) %>" />
+				<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentCollection.getFragmentCollectionId()) %>" />
 			</portlet:renderURL>
 
 			<%
@@ -104,7 +104,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "fragments"));
 						actionJspServletContext="<%= application %>"
 						resultRow="<%= row %>"
 						rowChecker="<%= searchContainer.getRowChecker() %>"
-						text="<%= HtmlUtil.escape(msbFragmentCollection.getName()) %>"
+						text="<%= HtmlUtil.escape(fragmentCollection.getName()) %>"
 						url="<%= rowURL.toString() %>"
 					>
 						<liferay-frontend:horizontal-card-col>
@@ -117,11 +117,11 @@ renderResponse.setTitle(LanguageUtil.get(request, "fragments"));
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= msbFragmentDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
+		<liferay-ui:search-iterator displayStyle="<%= fragmentDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 
-<c:if test="<%= msbFragmentDisplayContext.isShowAddButton(FragmentActionKeys.ADD_FRAGMENT_COLLECTION) %>">
+<c:if test="<%= fragmentDisplayContext.isShowAddButton(FragmentActionKeys.ADD_FRAGMENT_COLLECTION) %>">
 	<portlet:renderURL var="addFragmentCollectionURL">
 		<portlet:param name="mvcPath" value="/edit_msb_fragment_collection.jsp" />
 	</portlet:renderURL>
@@ -132,7 +132,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "fragments"));
 </c:if>
 
 <aui:script sandbox="<%= true %>">
-	$('#<portlet:namespace />deleteSelectedMSBFragmentCollections').on(
+	$('#<portlet:namespace />deleteSelectedFragmentCollections').on(
 		'click',
 		function() {
 			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {

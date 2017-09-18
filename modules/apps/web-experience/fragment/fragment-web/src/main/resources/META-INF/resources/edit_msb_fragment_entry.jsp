@@ -17,14 +17,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = msbFragmentDisplayContext.getEditMSBFragmentEntryRedirect();
+String redirect = fragmentDisplayContext.getEditFragmentEntryRedirect();
 
-MSBFragmentEntry msbFragmentEntry = msbFragmentDisplayContext.getMSBFragmentEntry();
+FragmentEntry fragmentEntry = fragmentDisplayContext.getFragmentEntry();
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentEntryTitle());
+renderResponse.setTitle(fragmentDisplayContext.getFragmentEntryTitle());
 %>
 
 <aui:nav-bar markupView="lexicon">
@@ -35,36 +35,36 @@ renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentEntryTitle());
 	</aui:nav>
 </aui:nav-bar>
 
-<portlet:actionURL name="editMSBFragmentEntry" var="editMSBFragmentEntryURL">
+<portlet:actionURL name="editFragmentEntry" var="editFragmentEntryURL">
 	<portlet:param name="mvcPath" value="/edit_msb_fragment_entry.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= editMSBFragmentEntryURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm">
+<aui:form action="<%= editFragmentEntryURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="msbFragmentEntryId" type="hidden" value="<%= msbFragmentDisplayContext.getMSBFragmentEntryId() %>" />
-	<aui:input name="msbFragmentCollectionId" type="hidden" value="<%= msbFragmentDisplayContext.getMSBFragmentCollectionId() %>" />
+	<aui:input name="fragmentEntryId" type="hidden" value="<%= fragmentDisplayContext.getFragmentEntryId() %>" />
+	<aui:input name="fragmentCollectionId" type="hidden" value="<%= fragmentDisplayContext.getFragmentCollectionId() %>" />
 	<aui:input name="cssContent" type="hidden" value="" />
 	<aui:input name="htmlContent" type="hidden" value="" />
 	<aui:input name="jsContent" type="hidden" value="" />
 
-	<aui:model-context bean="<%= msbFragmentEntry %>" model="<%= MSBFragmentEntry.class %>" />
+	<aui:model-context bean="<%= fragmentEntry %>" model="<%= FragmentEntry.class %>" />
 
 	<aui:input autoFocus="<%= false %>" name="name" placeholder="name" type="hidden" />
 
-	<div id="<portlet:namespace />msbFragmentEditor"></div>
+	<div id="<portlet:namespace />fragmentEditor"></div>
 
 	<aui:button-row cssClass="msb-fragment-submit-buttons">
 		<aui:button cssClass="btn btn-lg" type="submit" />
 	</aui:button-row>
 </aui:form>
 
-<aui:script require="modern-site-building-fragment-web/js/MSBFragmentEditor">
+<aui:script require="modern-site-building-fragment-web/js/FragmentEditor">
 	var cssInput = document.getElementById('<portlet:namespace />cssContent');
 	var htmlInput = document.getElementById('<portlet:namespace />htmlContent');
 	var jsInput = document.getElementById('<portlet:namespace />jsContent');
-	var wrapper = document.getElementById('<portlet:namespace />msbFragmentEditor');
+	var wrapper = document.getElementById('<portlet:namespace />fragmentEditor');
 
-	new modernSiteBuildingFragmentWebJsMSBFragmentEditor.default(
+	new modernSiteBuildingFragmentWebJsFragmentEditor.default(
 		{
 			events: {
 				contentChanged: function(event) {
@@ -73,9 +73,9 @@ renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentEntryTitle());
 					jsInput.value = event.js;
 				}
 			},
-			initialCSS: '<%= HtmlUtil.escapeJS((msbFragmentEntry != null) ? msbFragmentEntry.getCss() : StringPool.BLANK) %>',
-			initialHTML: '<%= HtmlUtil.escapeJS((msbFragmentEntry != null) ? msbFragmentEntry.getHtml() : StringPool.BLANK) %>',
-			initialJS: '<%= HtmlUtil.escapeJS((msbFragmentEntry != null) ? msbFragmentEntry.getJs() : StringPool.BLANK) %>',
+			initialCSS: '<%= HtmlUtil.escapeJS((fragmentEntry != null) ? fragmentEntry.getCss() : StringPool.BLANK) %>',
+			initialHTML: '<%= HtmlUtil.escapeJS((fragmentEntry != null) ? fragmentEntry.getHtml() : StringPool.BLANK) %>',
+			initialJS: '<%= HtmlUtil.escapeJS((fragmentEntry != null) ? fragmentEntry.getJs() : StringPool.BLANK) %>',
 			namespace: '<portlet:namespace />',
 			spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
 		},

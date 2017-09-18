@@ -27,11 +27,11 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.fragment.constants.FragmentActionKeys" %><%@
 page import="com.liferay.fragment.exception.DuplicateFragmentCollectionException" %><%@
 page import="com.liferay.fragment.exception.FragmentCollectionNameException" %><%@
-page import="com.liferay.modern.site.building.fragment.model.MSBFragmentCollection" %><%@
-page import="com.liferay.modern.site.building.fragment.model.MSBFragmentEntry" %><%@
+page import="com.liferay.fragment.model.FragmentCollection" %><%@
+page import="com.liferay.fragment.model.FragmentEntry" %><%@
 page import="com.liferay.fragment.service.permission.FragmentCollectionPermission" %><%@
 page import="com.liferay.fragment.service.permission.FragmentEntryPermission" %><%@
-page import="com.liferay.modern.site.building.fragment.web.internal.display.context.MSBFragmentDisplayContext" %><%@
+page import="com.liferay.fragment.web.internal.display.context.FragmentDisplayContext" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
@@ -47,7 +47,7 @@ page import="com.liferay.taglib.search.ResultRow" %>
 <portlet:defineObjects />
 
 <%
-MSBFragmentDisplayContext msbFragmentDisplayContext = new MSBFragmentDisplayContext(renderRequest, renderResponse, request);
+FragmentDisplayContext fragmentDisplayContext = new FragmentDisplayContext(renderRequest, renderResponse, request);
 %>
 
 <%@ include file="/init-ext.jsp" %>

@@ -18,9 +18,9 @@
 
 <%
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(msbFragmentDisplayContext.getMSBFragmentCollectionsRedirect());
+portletDisplay.setURLBack(fragmentDisplayContext.getFragmentCollectionsRedirect());
 
-renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentCollectionTitle());
+renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
@@ -30,12 +30,12 @@ renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentCollectionTitle(
 		<aui:nav-item href="<%= currentURL %>" label="fragments" selected="<%= true %>" />
 	</aui:nav>
 
-	<c:if test="<%= msbFragmentDisplayContext.isShowMSBFragmentEntriesSearch() %>">
+	<c:if test="<%= fragmentDisplayContext.isShowFragmentEntriesSearch() %>">
 		<portlet:renderURL var="portletURL">
 			<portlet:param name="mvcPath" value="/view_fragment_entries.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="msbFragmentCollectionId" value="<%= String.valueOf(msbFragmentDisplayContext.getMSBFragmentCollectionId()) %>" />
-			<portlet:param name="displayStyle" value="<%= msbFragmentDisplayContext.getDisplayStyle() %>" />
+			<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentDisplayContext.getFragmentCollectionId()) %>" />
+			<portlet:param name="displayStyle" value="<%= fragmentDisplayContext.getDisplayStyle() %>" />
 		</portlet:renderURL>
 
 		<aui:nav-bar-search>
@@ -47,15 +47,15 @@ renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentCollectionTitle(
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
-	disabled="<%= msbFragmentDisplayContext.isDisabledMSBFragmentEntriesManagementBar() %>"
+	disabled="<%= fragmentDisplayContext.isDisabledFragmentEntriesManagementBar() %>"
 	includeCheckBox="<%= true %>"
-	searchContainerId="msbFragmentEntries"
+	searchContainerId="fragmentEntries"
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"icon"} %>'
 			portletURL="<%= currentURLObj %>"
-			selectedDisplayStyle="<%= msbFragmentDisplayContext.getDisplayStyle() %>"
+			selectedDisplayStyle="<%= fragmentDisplayContext.getDisplayStyle() %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
 
@@ -66,31 +66,31 @@ renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentCollectionTitle(
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= msbFragmentDisplayContext.getOrderByCol() %>"
-			orderByType="<%= msbFragmentDisplayContext.getOrderByType() %>"
-			orderColumns="<%= msbFragmentDisplayContext.getOrderColumns() %>"
+			orderByCol="<%= fragmentDisplayContext.getOrderByCol() %>"
+			orderByType="<%= fragmentDisplayContext.getOrderByType() %>"
+			orderColumns="<%= fragmentDisplayContext.getOrderColumns() %>"
 			portletURL="<%= currentURLObj %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedMSBFragmentEntries" label="delete" />
+		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedFragmentEntries" label="delete" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
-<portlet:actionURL name="deleteMSBFragmentEntries" var="deleteMSBFragmentEntriesURL">
+<portlet:actionURL name="deleteFragmentEntries" var="deleteFragmentEntriesURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteMSBFragmentEntriesURL %>" cssClass="container-fluid-1280" name="fm">
+<aui:form action="<%= deleteFragmentEntriesURL %>" cssClass="container-fluid-1280" name="fm">
 	<liferay-ui:search-container
-		id="msbFragmentEntries"
-		searchContainer="<%= msbFragmentDisplayContext.getMSBFragmentEntriesSearchContainer() %>"
+		id="fragmentEntries"
+		searchContainer="<%= fragmentDisplayContext.getFragmentEntriesSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
-			className="com.liferay.modern.site.building.fragment.model.MSBFragmentEntry"
-			keyProperty="msbFragmentEntryId"
-			modelVar="msbFragmentEntry"
+			className="com.liferay.fragment.model.FragmentEntry"
+			keyProperty="fragmentEntryId"
+			modelVar="fragmentEntry"
 		>
 
 			<%
@@ -105,44 +105,44 @@ renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentCollectionTitle(
 					icon="page"
 					resultRow="<%= row %>"
 					rowChecker="<%= searchContainer.getRowChecker() %>"
-					title="<%= msbFragmentEntry.getName() %>"
+					title="<%= fragmentEntry.getName() %>"
 				>
 					<liferay-frontend:vertical-card-header>
-						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - msbFragmentEntry.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - fragmentEntry.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
 					</liferay-frontend:vertical-card-header>
 				</liferay-frontend:icon-vertical-card>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= msbFragmentDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
+		<liferay-ui:search-iterator displayStyle="<%= fragmentDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 
-<c:if test="<%= msbFragmentDisplayContext.isShowAddButton(FragmentActionKeys.ADD_FRAGMENT_ENTRY) %>">
-	<portlet:actionURL name="addMSBFragmentEntry" var="addMSBFragmentEntryURL">
+<c:if test="<%= fragmentDisplayContext.isShowAddButton(FragmentActionKeys.ADD_FRAGMENT_ENTRY) %>">
+	<portlet:actionURL name="addFragmentEntry" var="addFragmentEntryURL">
 		<portlet:param name="mvcPath" value="/edit_msb_fragment_entry.jsp" />
-		<portlet:param name="msbFragmentCollectionId" value="<%= String.valueOf(msbFragmentDisplayContext.getMSBFragmentCollectionId()) %>" />
+		<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentDisplayContext.getFragmentCollectionId()) %>" />
 	</portlet:actionURL>
 
 	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item id="addMSBFragmentEntryMenuItem" title='<%= LanguageUtil.get(request, "add-fragment") %>' url="<%= addMSBFragmentEntryURL.toString() %>" />
+		<liferay-frontend:add-menu-item id="addFragmentEntryMenuItem" title='<%= LanguageUtil.get(request, "add-fragment") %>' url="<%= addFragmentEntryURL.toString() %>" />
 	</liferay-frontend:add-menu>
 
-	<aui:script require="modern-site-building-fragment-web/js/MSBFragmentNameEditor">
-		var addMSBFragmentEntryMenuItem = document.getElementById('<portlet:namespace />addMSBFragmentEntryMenuItem');
+	<aui:script require="modern-site-building-fragment-web/js/FragmentNameEditor">
+		var addFragmentEntryMenuItem = document.getElementById('<portlet:namespace />addFragmentEntryMenuItem');
 
-		addMSBFragmentEntryMenuItem.addEventListener(
+		addFragmentEntryMenuItem.addEventListener(
 			'click',
 			function(event) {
 				event.preventDefault();
 
-				var msbFragmentNameEditor = new modernSiteBuildingFragmentWebJsMSBFragmentNameEditor.default(
+				var fragmentNameEditor = new modernSiteBuildingFragmentWebJsFragmentNameEditor.default(
 					{
-						addMSBFragmentEntryURL: '<%= addMSBFragmentEntryURL.toString() %>',
-						editMSBFragmentEntryURL: '<portlet:renderURL><portlet:param name="mvcPath" value="/edit_msb_fragment_entry.jsp" /><portlet:param name="msbFragmentCollectionId" value="<%= String.valueOf(msbFragmentDisplayContext.getMSBFragmentCollectionId()) %>" /></portlet:renderURL>',
+						addFragmentEntryURL: '<%= addFragmentEntryURL.toString() %>',
+						editFragmentEntryURL: '<portlet:renderURL><portlet:param name="mvcPath" value="/edit_msb_fragment_entry.jsp" /><portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentDisplayContext.getFragmentCollectionId()) %>" /></portlet:renderURL>',
 						events: {
 							hide: function() {
-								msbFragmentNameEditor.disposeInternal();
+								fragmentNameEditor.disposeInternal();
 							}
 						},
 						namespace: '<portlet:namespace />',
@@ -155,7 +155,7 @@ renderResponse.setTitle(msbFragmentDisplayContext.getMSBFragmentCollectionTitle(
 </c:if>
 
 <aui:script sandbox="<%= true %>">
-	$('#<portlet:namespace />deleteSelectedMSBFragmentEntries').on(
+	$('#<portlet:namespace />deleteSelectedFragmentEntries').on(
 		'click',
 		function() {
 			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {

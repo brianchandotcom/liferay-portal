@@ -19,48 +19,48 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-MSBFragmentEntry msbFragmentEntry = (MSBFragmentEntry)row.getObject();
+FragmentEntry fragmentEntry = (FragmentEntry)row.getObject();
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-	<c:if test="<%= FragmentEntryPermission.contains(permissionChecker, msbFragmentEntry, ActionKeys.UPDATE) %>">
-		<portlet:renderURL var="editMSBFragmentEntryURL">
+	<c:if test="<%= FragmentEntryPermission.contains(permissionChecker, fragmentEntry, ActionKeys.UPDATE) %>">
+		<portlet:renderURL var="editFragmentEntryURL">
 			<portlet:param name="mvcPath" value="/edit_msb_fragment_entry.jsp" />
-			<portlet:param name="msbFragmentCollectionId" value="<%= String.valueOf(msbFragmentEntry.getMsbFragmentCollectionId()) %>" />
-			<portlet:param name="msbFragmentEntryId" value="<%= String.valueOf(msbFragmentEntry.getMsbFragmentEntryId()) %>" />
+			<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentEntry.getFragmentCollectionId()) %>" />
+			<portlet:param name="fragmentEntryId" value="<%= String.valueOf(fragmentEntry.getFragmentEntryId()) %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon
 			message="edit"
-			url="<%= editMSBFragmentEntryURL %>"
+			url="<%= editFragmentEntryURL %>"
 		/>
 	</c:if>
 
-	<c:if test="<%= FragmentEntryPermission.contains(permissionChecker, msbFragmentEntry, ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= FragmentEntryPermission.contains(permissionChecker, fragmentEntry, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
-			modelResource="<%= MSBFragmentEntry.class.getName() %>"
-			modelResourceDescription="<%= msbFragmentEntry.getName() %>"
-			resourcePrimKey="<%= String.valueOf(msbFragmentEntry.getMsbFragmentEntryId()) %>"
-			var="msbFragmentEntryPermissionsURL"
+			modelResource="<%= FragmentEntry.class.getName() %>"
+			modelResourceDescription="<%= fragmentEntry.getName() %>"
+			resourcePrimKey="<%= String.valueOf(fragmentEntry.getFragmentEntryId()) %>"
+			var="fragmentEntryPermissionsURL"
 			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 		/>
 
 		<liferay-ui:icon
 			message="permissions"
 			method="get"
-			url="<%= msbFragmentEntryPermissionsURL %>"
+			url="<%= fragmentEntryPermissionsURL %>"
 			useDialog="<%= true %>"
 		/>
 	</c:if>
 
-	<c:if test="<%= FragmentEntryPermission.contains(permissionChecker, msbFragmentEntry, ActionKeys.DELETE) %>">
-		<portlet:actionURL name="deleteMSBFragmentEntries" var="deleteMSBFragmentEntryURL">
+	<c:if test="<%= FragmentEntryPermission.contains(permissionChecker, fragmentEntry, ActionKeys.DELETE) %>">
+		<portlet:actionURL name="deleteFragmentEntries" var="deleteFragmentEntryURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="msbFragmentEntryId" value="<%= String.valueOf(msbFragmentEntry.getMsbFragmentEntryId()) %>" />
+			<portlet:param name="fragmentEntryId" value="<%= String.valueOf(fragmentEntry.getFragmentEntryId()) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete
-			url="<%= deleteMSBFragmentEntryURL %>"
+			url="<%= deleteFragmentEntryURL %>"
 		/>
 	</c:if>
 </liferay-ui:icon-menu>

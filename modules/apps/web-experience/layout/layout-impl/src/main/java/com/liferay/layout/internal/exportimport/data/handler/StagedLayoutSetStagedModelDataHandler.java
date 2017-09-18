@@ -246,6 +246,8 @@ public class StagedLayoutSetStagedModelDataHandler
 				portletDataContext.getScopeGroupId(),
 				stagedLayoutSet.isPrivateLayout());
 
+		stagedLayoutSet.setPrivateLayout(portletDataContext.isPrivateLayout());
+
 		StagedLayoutSet importedStagedLayoutSet =
 			(StagedLayoutSet)stagedLayoutSet.clone();
 

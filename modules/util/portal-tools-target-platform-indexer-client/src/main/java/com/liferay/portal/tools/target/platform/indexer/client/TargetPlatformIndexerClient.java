@@ -44,7 +44,6 @@ import java.nio.file.StandardOpenOption;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -92,12 +91,18 @@ public class TargetPlatformIndexerClient {
 			"module.framework.marketplace.dir",
 			liferayHome.concat("/osgi/marketplace"));
 
+		List<File> staticJars = new ArrayList<>();
+
+		for (String staticJarFileName : Utilities.split(
+				System.getProperty("module.framework.static.jars"))) {
+
+			staticJars.add(new File(portalLibDirName, staticJarFileName));
+		}
+
 		List<URI> uris = _index(
-			indexesFileName,
-			Arrays.asList(new File(portalLibDirName, "util-taglib.jar")),
-			stopWaitTimeout, moduleFrameworkStaticDirName,
-			moduleFrameworkModulesDirName, moduleFrameworkPortalDirName,
-			moduleFrameworkMarketplaceDir);
+			indexesFileName, staticJars, stopWaitTimeout,
+			moduleFrameworkStaticDirName, moduleFrameworkModulesDirName,
+			moduleFrameworkPortalDirName, moduleFrameworkMarketplaceDir);
 
 		if (_validate(uris)) {
 			String integrityPropertiesFileName = System.getProperty(

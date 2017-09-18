@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.modern.site.building.fragment.internal.model.listener;
+package com.liferay.fragment.internal.model.listener;
 
-import com.liferay.modern.site.building.fragment.model.MSBFragmentCollection;
-import com.liferay.modern.site.building.fragment.service.MSBFragmentCollectionLocalService;
+import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -36,15 +36,13 @@ public class GroupModelListener extends BaseModelListener<Group> {
 	@Override
 	public void onBeforeRemove(Group group) throws ModelListenerException {
 		try {
-			List<MSBFragmentCollection> msbFragmentCollections =
-				_msbFragmentCollectionLocalService.getMSBFragmentCollections(
+			List<FragmentCollection> fragmentCollections =
+				_fragmentCollectionLocalService.getFragmentCollections(
 					group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-			for (MSBFragmentCollection msbFragmentCollection :
-					msbFragmentCollections) {
-
-				_msbFragmentCollectionLocalService.deleteMSBFragmentCollection(
-					msbFragmentCollection);
+			for (FragmentCollection fragmentCollection : fragmentCollections) {
+				_fragmentCollectionLocalService.deleteFragmentCollection(
+					fragmentCollection);
 			}
 		}
 		catch (Exception e) {
@@ -53,7 +51,6 @@ public class GroupModelListener extends BaseModelListener<Group> {
 	}
 
 	@Reference(unbind = "-")
-	private MSBFragmentCollectionLocalService
-		_msbFragmentCollectionLocalService;
+	private FragmentCollectionLocalService _fragmentCollectionLocalService;
 
 }

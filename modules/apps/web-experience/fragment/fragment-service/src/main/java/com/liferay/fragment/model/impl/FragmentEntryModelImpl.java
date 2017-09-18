@@ -100,20 +100,20 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 		TABLE_COLUMNS_MAP.put("js", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table FragmentEntry (fragmentEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fragmentCollectionId LONG,name VARCHAR(75) null,css VARCHAR(75) null,html VARCHAR(75) null,js VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table FragmentEntry (fragmentEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fragmentCollectionId LONG,name VARCHAR(75) null,css STRING null,html STRING null,js STRING null)";
 	public static final String TABLE_SQL_DROP = "drop table FragmentEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY fragmentEntry.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY FragmentEntry.name ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.modern.site.building.fragment.service.util.ServiceProps.get(
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.fragment.service.util.ServiceProps.get(
 				"value.object.entity.cache.enabled.com.liferay.fragment.model.FragmentEntry"),
 			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.modern.site.building.fragment.service.util.ServiceProps.get(
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.fragment.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.liferay.fragment.model.FragmentEntry"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.modern.site.building.fragment.service.util.ServiceProps.get(
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.fragment.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.fragment.model.FragmentEntry"),
 			true);
 	public static final long FRAGMENTCOLLECTIONID_COLUMN_BITMASK = 1L;
@@ -169,7 +169,7 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.modern.site.building.fragment.service.util.ServiceProps.get(
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.fragment.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.fragment.model.FragmentEntry"));
 
 	public FragmentEntryModelImpl() {

@@ -14,9 +14,9 @@
 
 package com.liferay.fragment.taglib.servlet.taglib;
 
-import com.liferay.fragment.taglib.servlet.ServletContextUtil;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
+import com.liferay.fragment.taglib.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -34,13 +34,12 @@ public class FragmentEntryRendererTag extends IncludeTag {
 	@Override
 	public int doStartTag() throws JspException {
 		try {
-			_fragmentEntry =
-				FragmentEntryServiceUtil.fetchFragmentEntry(_fragmentEntryId);
+			_fragmentEntry = FragmentEntryServiceUtil.fetchFragmentEntry(
+				_fragmentEntryId);
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to get fragment entry", pe);
+				_log.debug("Unable to get fragment entry", pe);
 			}
 
 			return SKIP_BODY;
@@ -78,7 +77,7 @@ public class FragmentEntryRendererTag extends IncludeTag {
 			_fragmentEntry);
 	}
 
-	private static final String _PAGE = "/msb_fragment_entry_renderer/page.jsp";
+	private static final String _PAGE = "/fragment_entry_renderer/page.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentEntryRendererTag.class);

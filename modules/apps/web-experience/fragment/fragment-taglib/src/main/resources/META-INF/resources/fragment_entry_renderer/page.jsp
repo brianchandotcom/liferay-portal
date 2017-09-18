@@ -14,28 +14,28 @@
  */
 --%>
 
-<%@ include file="/msb_fragment_entry_renderer/init.jsp" %>
+<%@ include file="/fragment_entry_renderer/init.jsp" %>
 
 <%
-String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_modern_site_building_msb_fragment_entry_renderer_page") + StringPool.UNDERLINE;
+String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_fragment_entry_renderer_page") + StringPool.UNDERLINE;
 
-MSBFragmentEntry msbFragmentEntry = (MSBFragmentEntry)request.getAttribute("liferay-modern-site-building-fragment:msb-fragment-entry-renderer:msbFragmentEntry");
+FragmentEntry fragmentEntry = (FragmentEntry)request.getAttribute("liferay-fragment:fragment-entry-renderer:fragmentEntry");
 %>
 
 <liferay-util:html-top outputKey="<%= randomNamespace %>">
 	<style type="text/css">
-		<%= msbFragmentEntry.getCss() %>
+		<%= fragmentEntry.getCss() %>
 	</style>
 </liferay-util:html-top>
 
 <div id="<%= randomNamespace %>">
-	<%= msbFragmentEntry.getHtml() %>
+	<%= fragmentEntry.getHtml() %>
 </div>
 
 <aui:script>
 	(function() {
 		var fragment = document.getElementById("<%= randomNamespace %>");
 
-		<%= msbFragmentEntry.getJs() %>
+		<%= fragmentEntry.getJs() %>
 	}());
 </aui:script>

@@ -26,11 +26,11 @@
 	</command>
 
 	<command name="applyStylingInAlloyEditor">
+		<execute function="SelectFieldText" locator1="AlloyEditor#CONTENT_FIELD" />
+
 		<if>
 			<isset var="boldContent" />
 			<then>
-				<execute function="SelectFieldText" locator1="AlloyEditor#CONTENT_FIELD" value1="${boldContent}" />
-
 				<execute function="Click" locator1="AlloyEditor#TEXT_FORMATTING_BOLD" />
 			</then>
 		</if>
@@ -38,8 +38,6 @@
 		<if>
 			<isset var="italicContent" />
 			<then>
-				<execute function="SelectFieldText" locator1="AlloyEditor#CONTENT_FIELD" value1="${italicContent}" />
-
 				<execute function="Click" locator1="AlloyEditor#TEXT_FORMATTING_ITALIC" />
 			</then>
 		</if>
@@ -47,8 +45,6 @@
 		<if>
 			<isset var="underlineContent" />
 			<then>
-				<execute function="SelectFieldText" locator1="AlloyEditor#CONTENT_FIELD" value1="${underlineContent}" />
-
 				<execute function="Click" locator1="AlloyEditor#TEXT_FORMATTING_UNDERLINE" />
 			</then>
 		</if>

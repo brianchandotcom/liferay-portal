@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.JavaImportsFormatter;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
@@ -86,8 +87,22 @@ public class JavaClassParser {
 
 		String classContent = content.substring(y + 2);
 
-		return _parseJavaClass(
+		JavaClass javaClass = _parseJavaClass(
 			className, classContent, JavaTerm.ACCESS_MODIFIER_PUBLIC, false);
+
+		javaClass.setPackageName(JavaSourceUtil.getPackageName(content));
+
+		String[] importLines = StringUtil.splitLines(
+			JavaImportsFormatter.getImports(content));
+
+		for (String importLine : importLines) {
+			if (Validator.isNotNull(importLine)) {
+				javaClass.addImport(
+					importLine.substring(7, importLine.length() - 1));
+			}
+		}
+
+		return javaClass;
 	}
 
 	private static String _getClassName(String line) {

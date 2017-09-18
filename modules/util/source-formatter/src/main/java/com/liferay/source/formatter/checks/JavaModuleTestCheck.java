@@ -34,20 +34,20 @@ public class JavaModuleTestCheck extends BaseFileCheck {
 			return content;
 		}
 
-		String packagePath = JavaSourceUtil.getPackagePath(content);
+		String packageName = JavaSourceUtil.getPackageName(content);
 
-		if (!packagePath.startsWith("com.liferay")) {
+		if (!packageName.startsWith("com.liferay")) {
 			return content;
 		}
 
-		_checkTestPackage(fileName, absolutePath, content, packagePath);
+		_checkTestPackage(fileName, absolutePath, content, packageName);
 
 		return content;
 	}
 
 	private void _checkTestPackage(
 		String fileName, String absolutePath, String content,
-		String packagePath) {
+		String packageName) {
 
 		if (absolutePath.contains("/src/testIntegration/java/") ||
 			absolutePath.contains("/test/integration/")) {
@@ -61,7 +61,7 @@ public class JavaModuleTestCheck extends BaseFileCheck {
 						"LPS-56706");
 			}
 
-			if (!packagePath.endsWith(".test")) {
+			if (!packageName.endsWith(".test")) {
 				addMessage(
 					fileName,
 					"Module integration test must be under a test " +
@@ -70,7 +70,7 @@ public class JavaModuleTestCheck extends BaseFileCheck {
 		}
 		else if ((absolutePath.contains("/test/unit/") ||
 				  absolutePath.contains("/src/test/java/")) &&
-				 packagePath.endsWith(".test")) {
+				 packageName.endsWith(".test")) {
 
 			addMessage(
 				fileName,

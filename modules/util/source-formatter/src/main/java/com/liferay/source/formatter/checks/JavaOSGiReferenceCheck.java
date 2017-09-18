@@ -80,9 +80,9 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 			return content;
 		}
 
-		String packagePath = JavaSourceUtil.getPackagePath(content);
+		String packageName = JavaSourceUtil.getPackageName(content);
 
-		if (!packagePath.startsWith("com.liferay")) {
+		if (!packageName.startsWith("com.liferay")) {
 			return content;
 		}
 
@@ -91,7 +91,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 		String className = JavaSourceUtil.getClassName(fileName);
 
 		String moduleSuperClassContent = _getModuleSuperClassContent(
-			content, className, packagePath);
+			content, className, packageName);
 
 		content = _formatDuplicateReferenceMethods(
 			fileName, content, moduleSuperClassContent);
@@ -140,23 +140,23 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 	}
 
 	private void _checkMissingReference(String fileName, String content) {
-		String moduleServicePackagePath = null;
+		String moduleServicePackageName = null;
 
 		Matcher matcher = _serviceUtilImportPattern.matcher(content);
 
 		while (matcher.find()) {
 			String serviceUtilClassName = matcher.group(2);
 
-			if (moduleServicePackagePath == null) {
-				moduleServicePackagePath = _getModuleServicePackagePath(
+			if (moduleServicePackageName == null) {
+				moduleServicePackageName = _getModuleServicePackageName(
 					fileName);
 			}
 
-			if (Validator.isNotNull(moduleServicePackagePath)) {
-				String serviceUtilClassPackagePath = matcher.group(1);
+			if (Validator.isNotNull(moduleServicePackageName)) {
+				String serviceUtilClassPackageName = matcher.group(1);
 
-				if (serviceUtilClassPackagePath.startsWith(
-						moduleServicePackagePath)) {
+				if (serviceUtilClassPackageName.startsWith(
+						moduleServicePackageName)) {
 
 					continue;
 				}
@@ -455,7 +455,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 		return moduleFileNamesMap;
 	}
 
-	private String _getModuleServicePackagePath(String fileName) {
+	private String _getModuleServicePackageName(String fileName) {
 		String serviceDirLocation = fileName;
 
 		while (true) {
@@ -494,7 +494,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 	}
 
 	private String _getModuleSuperClassContent(
-			String content, String className, String packagePath)
+			String content, String className, String packageName)
 		throws Exception {
 
 		Pattern pattern = Pattern.compile(
@@ -516,22 +516,22 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 			return _getModuleClassContent(superClassName);
 		}
 
-		String superClassPackagePath = packagePath;
+		String superClassPackageName = packageName;
 
 		pattern = Pattern.compile("\nimport (.+?)\\." + superClassName + ";");
 
 		matcher = pattern.matcher(content);
 
 		if (matcher.find()) {
-			superClassPackagePath = matcher.group(1);
+			superClassPackageName = matcher.group(1);
 		}
 
-		if (!superClassPackagePath.startsWith("com.liferay")) {
+		if (!superClassPackageName.startsWith("com.liferay")) {
 			return null;
 		}
 
 		String superClassFullClassName =
-			superClassPackagePath + StringPool.PERIOD + superClassName;
+			superClassPackageName + StringPool.PERIOD + superClassName;
 
 		return _getModuleClassContent(superClassFullClassName);
 	}
@@ -570,7 +570,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 						"com.liferay.portal.kernel.util.ServiceProxyFactory")) {
 
 					serviceProxyFactoryUtilClassNames.add(
-						JavaSourceUtil.getPackagePath(content) + "." +
+						JavaSourceUtil.getPackageName(content) + "." +
 							JavaSourceUtil.getClassName(fileName));
 				}
 			}

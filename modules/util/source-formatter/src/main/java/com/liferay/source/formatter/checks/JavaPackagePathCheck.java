@@ -32,29 +32,29 @@ public class JavaPackagePathCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		String packagePath = JavaSourceUtil.getPackagePath(content);
+		String packageName = JavaSourceUtil.getPackageName(content);
 
-		if (Validator.isNull(packagePath)) {
+		if (Validator.isNull(packageName)) {
 			addMessage(fileName, "Missing package");
 
 			return content;
 		}
 
-		_checkPackagePath(fileName, packagePath);
+		_checkPackageName(fileName, packageName);
 
 		if (!absolutePath.contains("/modules/private/apps/") &&
 			isModulesFile(absolutePath)) {
 
-			_checkModulePackagePath(fileName, packagePath);
+			_checkModulePackageName(fileName, packageName);
 		}
 
 		return content;
 	}
 
-	private void _checkModulePackagePath(String fileName, String packagePath)
+	private void _checkModulePackageName(String fileName, String packageName)
 		throws Exception {
 
-		if (!packagePath.startsWith("com.liferay")) {
+		if (!packageName.startsWith("com.liferay")) {
 			return;
 		}
 
@@ -74,14 +74,14 @@ public class JavaPackagePathCheck extends BaseFileCheck {
 		bundleSymbolicName = bundleSymbolicName.replaceAll(
 			"\\.(api|service|test)$", StringPool.BLANK);
 
-		if (packagePath.contains(bundleSymbolicName)) {
+		if (packageName.contains(bundleSymbolicName)) {
 			return;
 		}
 
 		bundleSymbolicName = bundleSymbolicName.replaceAll(
 			"\\.impl$", ".internal");
 
-		if (!packagePath.contains(bundleSymbolicName)) {
+		if (!packageName.contains(bundleSymbolicName)) {
 			addMessage(
 				fileName,
 				"Package should follow Bundle-SymbolicName specified in " +
@@ -90,23 +90,23 @@ public class JavaPackagePathCheck extends BaseFileCheck {
 		}
 	}
 
-	private void _checkPackagePath(String fileName, String packagePath) {
+	private void _checkPackageName(String fileName, String packageName) {
 		int pos = fileName.lastIndexOf(CharPool.SLASH);
 
 		String filePath = StringUtil.replace(
 			fileName.substring(0, pos), CharPool.SLASH, CharPool.PERIOD);
 
-		if (!filePath.endsWith(packagePath)) {
+		if (!filePath.endsWith(packageName)) {
 			addMessage(
 				fileName,
-				"The declared package '" + packagePath +
+				"The declared package '" + packageName +
 					"' does not match the expected package",
 				"package.markdown");
 
 			return;
 		}
 
-		if (packagePath.matches(".*\\.internal\\.([\\w.]+\\.)?impl")) {
+		if (packageName.matches(".*\\.internal\\.([\\w.]+\\.)?impl")) {
 			addMessage(
 				fileName, "Do not use 'impl' inside 'internal', see LPS-70113");
 		}

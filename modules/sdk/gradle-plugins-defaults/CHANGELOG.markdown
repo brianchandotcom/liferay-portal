@@ -2072,6 +2072,11 @@ belong to a different sub-repository.
 ### Changed
 - [LPS-74614]: Update the [Liferay Gradle Plugins] dependency to version 3.4.54.
 
+## 5.0.42 - 2017-09-11
+
+### Changed
+- [LPS-74373]: Update the [Liferay Gradle Plugins] dependency to version 3.4.55.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -2292,6 +2297,7 @@ belong to a different sub-repository.
 [LPS-74343]: https://issues.liferay.com/browse/LPS-74343
 [LPS-74345]: https://issues.liferay.com/browse/LPS-74345
 [LPS-74368]: https://issues.liferay.com/browse/LPS-74368
+[LPS-74373]: https://issues.liferay.com/browse/LPS-74373
 [LPS-74433]: https://issues.liferay.com/browse/LPS-74433
 [LPS-74469]: https://issues.liferay.com/browse/LPS-74469
 [LPS-74490]: https://issues.liferay.com/browse/LPS-74490

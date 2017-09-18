@@ -1,5 +1,9 @@
 * [class*="ae-toolbar-"][role="toolbar"] {
 	z-index: 1000;
+
+	@include media-query($screen-sm) {
+		z-index: 1050;
+	}
 }
 
 .alloy-editor-container {

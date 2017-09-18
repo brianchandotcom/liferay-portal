@@ -24,6 +24,7 @@ import com.liferay.commerce.service.base.CommerceAddressLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -159,6 +160,19 @@ public class CommerceAddressLocalServiceImpl
 		long groupId, long addressUserId) {
 
 		return commerceAddressPersistence.findByG_A(groupId, addressUserId);
+	}
+
+	@Override
+	public List<CommerceAddress> getCommerceAddresses(
+		long groupId, long addressUserId, int start, int end,
+		OrderByComparator<CommerceAddress> orderByComparator) {
+
+		return commerceAddressPersistence.findByG_A(
+			groupId, addressUserId, start, end, orderByComparator);
+	}
+
+	public int getCommerceAddressesCount(long groupId, long addressUserId) {
+		return commerceAddressPersistence.countByG_A(groupId, addressUserId);
 	}
 
 	@Override

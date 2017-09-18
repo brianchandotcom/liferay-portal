@@ -21,11 +21,13 @@ import com.liferay.commerce.service.permission.CommercePermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
 public class CommerceAddressServiceImpl extends CommerceAddressServiceBaseImpl {
 
@@ -59,6 +61,18 @@ public class CommerceAddressServiceImpl extends CommerceAddressServiceBaseImpl {
 	}
 
 	@Override
+	public CommerceAddress fetchCommerceAddress(long commerceAddressId)
+		throws PortalException {
+
+		CommerceAddress commerceAddress =
+			commerceAddressLocalService.fetchCommerceAddress(commerceAddressId);
+
+		checkPermission(commerceAddress);
+
+		return commerceAddress;
+	}
+
+	@Override
 	public CommerceAddress getCommerceAddress(long commerceAddressId)
 		throws PortalException {
 
@@ -78,6 +92,28 @@ public class CommerceAddressServiceImpl extends CommerceAddressServiceBaseImpl {
 		checkPermission(groupId, addressUserId);
 
 		return commerceAddressLocalService.getCommerceAddresses(
+			groupId, addressUserId);
+	}
+
+	@Override
+	public List<CommerceAddress> getCommerceAddresses(
+			long groupId, long addressUserId, int start, int end,
+			OrderByComparator<CommerceAddress> orderByComparator)
+		throws PortalException {
+
+		checkPermission(groupId, addressUserId);
+
+		return commerceAddressLocalService.getCommerceAddresses(
+			groupId, addressUserId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCommerceAddressesCount(long groupId, long addressUserId)
+		throws PortalException {
+
+		checkPermission(groupId, addressUserId);
+
+		return commerceAddressLocalService.getCommerceAddressesCount(
 			groupId, addressUserId);
 	}
 

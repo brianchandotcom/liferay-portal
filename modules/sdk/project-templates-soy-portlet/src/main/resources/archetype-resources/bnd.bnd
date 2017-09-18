@@ -1,6 +1,7 @@
 Bundle-Name: ${artifactId}
 Bundle-SymbolicName: ${package}
 Bundle-Version: ${version}
+Include-Resource: package.json
 Require-Capability:\
 	soy;\
 		filter:="(type=metal)"

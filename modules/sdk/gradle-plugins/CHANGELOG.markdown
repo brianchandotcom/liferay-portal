@@ -2417,6 +2417,14 @@ version 2.1.2.
 - [LPS-74752]: Update the default value of the `jsModuleConfigGenerator.version`
 property to `1.3.3`.
 
+## 3.4.61 - 2017-09-18
+
+### Changed
+- [LPS-74637]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.2.5.
+- [LPS-74637]: Update the [Liferay Source Formatter] dependency to version
+1.0.463.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

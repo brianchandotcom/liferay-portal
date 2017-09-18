@@ -55,6 +55,7 @@ dependencies {
 	projectTemplates project(":sdk:project-templates-template-context-contributor")
 	projectTemplates project(":sdk:project-templates-theme")
 	projectTemplates project(":sdk:project-templates-theme-contributor")
+	projectTemplates project(":sdk:project-templates-war-mvc-portlet")
 	projectTemplates project(":sdk:project-templates-workspace")
 
 	provided group: "org.apache.maven.archetype", name: "archetype-common", version: "2.4"

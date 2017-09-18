@@ -1,0 +1,53 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.lcs.rest.internal.client;
+
+import com.liferay.lcs.rest.client.LCSRole;
+import com.liferay.lcs.rest.client.LCSRoleService;
+import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+
+import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+
+/**
+ * @author Igor Beslic
+ */
+@Component(immediate = true, service = LCSRoleService.class)
+public class LCSRoleServiceImpl
+	extends BaseLCSServiceImpl implements LCSRoleService {
+
+	@Override
+	public boolean hasUserLCSAdministratorLCSRole(long lcsProjectId) {
+		try {
+			List<LCSRole> lcsRoles = doGetToList(
+				LCSRole.class, _URL_LCS_ROLE, "lcsProjectId",
+				String.valueOf(lcsProjectId), "lcsAdministrator", "true",
+				"lcsEnvironmentManager", "false");
+
+			if (lcsRoles.isEmpty()) {
+				return false;
+			}
+
+			return true;
+		}
+		catch (JSONWebServiceInvocationException jsonwsie) {
+			throw new RuntimeException(jsonwsie);
+		}
+	}
+
+	private static final String _URL_LCS_ROLE = "/o/osb-lcs-rest/LCSRole";
+
+}

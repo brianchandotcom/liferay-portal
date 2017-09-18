@@ -2412,6 +2412,8 @@ to version 2.2.4.
 ## 3.4.60 - 2017-09-18
 
 ### Changed
+- [LPS-74315]: Update the [Liferay Gradle Plugins CSS Builder] dependency to
+version 2.1.2.
 - [LPS-74752]: Update the default value of the `jsModuleConfigGenerator.version`
 property to `1.3.3`.
 
@@ -2614,6 +2616,7 @@ property to `1.3.3`.
 [LPS-74269]: https://issues.liferay.com/browse/LPS-74269
 [LPS-74278]: https://issues.liferay.com/browse/LPS-74278
 [LPS-74314]: https://issues.liferay.com/browse/LPS-74314
+[LPS-74315]: https://issues.liferay.com/browse/LPS-74315
 [LPS-74328]: https://issues.liferay.com/browse/LPS-74328
 [LPS-74343]: https://issues.liferay.com/browse/LPS-74343
 [LPS-74345]: https://issues.liferay.com/browse/LPS-74345

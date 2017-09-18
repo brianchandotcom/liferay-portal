@@ -84,7 +84,7 @@ public class FragmentDisplayContext {
 	public String getEditFragmentEntryRedirect() throws PortalException {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
-		portletURL.setParameter("mvcPath", "/view_msb_fragment_entries.jsp");
+		portletURL.setParameter("mvcPath", "/view_fragment_entries.jsp");
 
 		if (getFragmentCollectionId() > 0) {
 			portletURL.setParameter(

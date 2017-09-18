@@ -36,7 +36,7 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentEntryTitle());
 </aui:nav-bar>
 
 <portlet:actionURL name="editFragmentEntry" var="editFragmentEntryURL">
-	<portlet:param name="mvcPath" value="/edit_msb_fragment_entry.jsp" />
+	<portlet:param name="mvcPath" value="/edit_fragment_entry.jsp" />
 </portlet:actionURL>
 
 <aui:form action="<%= editFragmentEntryURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm">

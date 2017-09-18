@@ -99,7 +99,7 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 
 			<liferay-ui:search-container-column-text>
 				<liferay-frontend:icon-vertical-card
-					actionJsp="/msb_fragment_entry_action.jsp"
+					actionJsp="/fragment_entry_action.jsp"
 					actionJspServletContext="<%= application %>"
 					cssClass="entry-display-style"
 					icon="page"
@@ -120,7 +120,7 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 
 <c:if test="<%= fragmentDisplayContext.isShowAddButton(FragmentActionKeys.ADD_FRAGMENT_ENTRY) %>">
 	<portlet:actionURL name="addFragmentEntry" var="addFragmentEntryURL">
-		<portlet:param name="mvcPath" value="/edit_msb_fragment_entry.jsp" />
+		<portlet:param name="mvcPath" value="/edit_fragment_entry.jsp" />
 		<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentDisplayContext.getFragmentCollectionId()) %>" />
 	</portlet:actionURL>
 
@@ -139,7 +139,7 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 				var fragmentNameEditor = new modernSiteBuildingFragmentWebJsFragmentNameEditor.default(
 					{
 						addFragmentEntryURL: '<%= addFragmentEntryURL.toString() %>',
-						editFragmentEntryURL: '<portlet:renderURL><portlet:param name="mvcPath" value="/edit_msb_fragment_entry.jsp" /><portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentDisplayContext.getFragmentCollectionId()) %>" /></portlet:renderURL>',
+						editFragmentEntryURL: '<portlet:renderURL><portlet:param name="mvcPath" value="/edit_fragment_entry.jsp" /><portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentDisplayContext.getFragmentCollectionId()) %>" /></portlet:renderURL>',
 						events: {
 							hide: function() {
 								fragmentNameEditor.disposeInternal();

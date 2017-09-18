@@ -89,7 +89,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "fragments"));
 			modelVar="fragmentCollection"
 		>
 			<portlet:renderURL var="rowURL">
-				<portlet:param name="mvcPath" value="/view_msb_fragment_entries.jsp" />
+				<portlet:param name="mvcPath" value="/view_fragment_entries.jsp" />
 				<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentCollection.getFragmentCollectionId()) %>" />
 			</portlet:renderURL>
 
@@ -100,7 +100,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "fragments"));
 			<liferay-ui:search-container-column-text>
 				<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 					<liferay-frontend:horizontal-card
-						actionJsp="/msb_fragment_collection_action.jsp"
+						actionJsp="/fragment_collection_action.jsp"
 						actionJspServletContext="<%= application %>"
 						resultRow="<%= row %>"
 						rowChecker="<%= searchContainer.getRowChecker() %>"
@@ -123,7 +123,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "fragments"));
 
 <c:if test="<%= fragmentDisplayContext.isShowAddButton(FragmentActionKeys.ADD_FRAGMENT_COLLECTION) %>">
 	<portlet:renderURL var="addFragmentCollectionURL">
-		<portlet:param name="mvcPath" value="/edit_msb_fragment_collection.jsp" />
+		<portlet:param name="mvcPath" value="/edit_fragment_collection.jsp" />
 	</portlet:renderURL>
 
 	<liferay-frontend:add-menu>

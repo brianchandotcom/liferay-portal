@@ -127,7 +127,7 @@
 <!--ICON_FOLDER-->
 <tr>
 	<td>ICON_FOLDER_THUMBNAIL</td>
-	<td>//div[contains(@class,'selectable') and contains(.,'${key_dmFolderName}')]</td>
+	<td>//div[contains(@class,'card-col-content')]/span[contains(@class,'lfr-card-title-text')]/a[contains(@title,'${key_dmFolderName}')]</td>
 	<td></td>
 </tr>
 <tr>

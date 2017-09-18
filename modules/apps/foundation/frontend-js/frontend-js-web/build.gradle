@@ -20,8 +20,9 @@ String lodashVersion = "3.10.1"
 File jsDestinationDir = file("tmp/META-INF/resources")
 
 buildClay {
-	dependsOn npmInstall
 	File clayDestinationDir = new File(jsDestinationDir, "clay")
+
+	dependsOn npmInstall
 
 	doFirst {
 		delete clayDestinationDir
@@ -77,8 +78,10 @@ buildLiferayAMDLoader {
 	dependsOn npmInstall
 	eachFile new StripPathSegmentsAction(2)
 	from npmInstall.nodeModulesDir
+
 	include "liferay-amd-loader/dist/loader.js"
 	include "liferay-amd-loader/dist/es6-promise.map"
+
 	includeEmptyDirs = false
 	into new File(jsDestinationDir, "loader")
 }

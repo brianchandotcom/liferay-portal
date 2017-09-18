@@ -32,6 +32,7 @@ page import="com.liferay.commerce.product.model.CPInstance" %><%@
 page import="com.liferay.commerce.product.model.CPSpecificationOption" %><%@
 page import="com.liferay.commerce.product.type.simple.internal.SimpleCPType" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <%@ page import="java.util.Collections" %><%@

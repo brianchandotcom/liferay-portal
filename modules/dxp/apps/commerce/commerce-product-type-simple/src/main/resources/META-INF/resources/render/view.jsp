@@ -80,10 +80,12 @@ request.setAttribute("cpDefinition", cpDefinition);
 					<c:choose>
 						<c:when test="<%= cpInstance != null %>">
 							<h4 class="sku"><%= cpInstance.getSku() %></h4>
+
 							<div class="price"><%= cpInstance.getPrice() %></div>
 						</c:when>
 						<c:otherwise>
 							<h4 class="sku" data-text-cp-instance-sku=""></h4>
+
 							<div class="price" data-text-cp-instance-price="" ></div>
 						</c:otherwise>
 					</c:choose>
@@ -108,7 +110,8 @@ request.setAttribute("cpDefinition", cpDefinition);
 		</div>
 
 		<%
-			List<CPDefinitionSpecificationOptionValue> cpDefinitionSpecificationOptionValues = cpTypeDisplayContext.getCPDefinitionSpecificationOptionValues();
+		List<CPDefinitionSpecificationOptionValue> cpDefinitionSpecificationOptionValues = cpTypeDisplayContext.getCPDefinitionSpecificationOptionValues();
+		List<CPAttachmentFileEntry> cpAttachmentFileEntries = cpTypeDisplayContext.getCPAttachmentFileEntries();
 		%>
 
 		<div class="row">
@@ -125,6 +128,14 @@ request.setAttribute("cpDefinition", cpDefinition);
 							<li class="nav-item" role="presentation">
 								<a aria-controls="<portlet:namespace />specification" aria-expanded="false" class="nav-link" data-toggle="tab" href="#<portlet:namespace />specification" role="tab">
 									<%= LanguageUtil.get(resourceBundle, "specification-options") %>
+								</a>
+							</li>
+						</c:if>
+
+						<c:if test="<%= !cpAttachmentFileEntries.isEmpty() %>">
+							<li role="presentation">
+								<a aria-controls="<portlet:namespace />attachments" aria-expanded="false" data-toggle="tab" href="#<portlet:namespace />attachments" role="tab">
+									<%= LanguageUtil.get(resourceBundle, "attachments") %>
 								</a>
 							</li>
 						</c:if>
@@ -149,6 +160,40 @@ request.setAttribute("cpDefinition", cpDefinition);
 												<td><%= cpSpecificationOption.getTitle(languageId) %></td>
 												<td><%= cpDefinitionSpecificationOptionValue.getValue(languageId) %></td>
 											</tr>
+
+										<%
+										}
+										%>
+
+									</table>
+								</div>
+							</div>
+						</c:if>
+
+						<c:if test="<%= !cpAttachmentFileEntries.isEmpty() %>">
+							<div class="tab-pane" id="<portlet:namespace />attachments">
+								<div class="table-responsive">
+									<table class="table table-bordered table-striped">
+
+										<%
+										for (CPAttachmentFileEntry curCPAttachmentFileEntry : cpAttachmentFileEntries) {
+											FileEntry fileEntry = curCPAttachmentFileEntry.getFileEntry();
+										%>
+
+										<tr>
+											<td>
+												<span><%= curCPAttachmentFileEntry.getTitle(languageId) %></span>
+
+												<span>
+													<aui:icon
+														cssClass="icon-monospaced"
+														image="download"
+														markupView="lexicon"
+														url="<%= cpTypeDisplayContext.getDownloadFileEntryURL(fileEntry) %>"
+													/>
+												</span>
+											</td>
+										</tr>
 
 										<%
 										}

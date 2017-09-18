@@ -11,6 +11,9 @@
 	<hint-collection name="EMAIL-ADDRESS">
 		<hint name="max-length">254</hint>
 	</hint-collection>
+	<hint-collection name="HOSTNAME">
+		<hint name="max-length">200</hint>
+	</hint-collection>
 	<hint-collection name="SEARCHABLE-DATE">
 		<hint name="month-nullable">true</hint>
 		<hint name="day-nullable">true</hint>
@@ -712,6 +715,7 @@
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="mx" type="String">
+			<hint-collection name="HOSTNAME" />
 			<validator name="required" />
 		</field>
 		<field name="homeURL" type="String">
@@ -1706,6 +1710,7 @@
 		<field name="companyId" type="long" />
 		<field name="layoutSetId" type="long" />
 		<field name="hostname" type="String">
+			<hint-collection name="HOSTNAME" />
 			<validator name="required" />
 		</field>
 	</model>

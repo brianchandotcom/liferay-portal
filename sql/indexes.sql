@@ -65,7 +65,7 @@ create unique index IX_E7B95510 on BrowserTracker (userId);
 create unique index IX_B27A301F on ClassName_ (value[$COLUMN_LENGTH:200$]);
 
 create index IX_38EFE3FD on Company (logoId);
-create index IX_12566EC2 on Company (mx[$COLUMN_LENGTH:75$]);
+create index IX_12566EC2 on Company (mx[$COLUMN_LENGTH:200$]);
 create index IX_35E3E7C6 on Company (system);
 create unique index IX_EC00543C on Company (webId[$COLUMN_LENGTH:75$]);
 
@@ -536,7 +536,7 @@ create index IX_66FF2503 on Users_UserGroups (userGroupId);
 create index IX_BE8102D6 on Users_UserGroups (userId);
 
 create unique index IX_A083D394 on VirtualHost (companyId, layoutSetId);
-create unique index IX_431A3960 on VirtualHost (hostname[$COLUMN_LENGTH:75$]);
+create unique index IX_431A3960 on VirtualHost (hostname[$COLUMN_LENGTH:200$]);
 
 create unique index IX_97DFA146 on WebDAVProps (classNameId, classPK);
 

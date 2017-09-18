@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.modern.site.building.fragment.service.permission;
+package com.liferay.fragment.service.permission;
 
-import com.liferay.modern.site.building.fragment.model.MSBFragmentCollection;
-import com.liferay.modern.site.building.fragment.service.MSBFragmentCollectionLocalServiceUtil;
+import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -33,76 +33,75 @@ import org.osgi.service.component.annotations.Component;
  * @author Jürgen Kappler
  */
 @Component(
-	property = {"model.class.name=com.liferay.modern.site.building.fragment.model.MSBFragmentCollection"},
+	property = {"model.class.name=com.liferay.fragment.model.FragmentCollection"},
 	service = BaseModelPermissionChecker.class
 )
-public class MSBFragmentCollectionPermission
+public class FragmentCollectionPermission
 	implements BaseModelPermissionChecker {
 
 	public static void check(
-			PermissionChecker permissionChecker, long msbFragmentCollectionId,
-			String actionId)
+			PermissionChecker permissionChecker,
+			FragmentCollection fragmentCollection, String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, msbFragmentCollectionId, actionId)) {
+		if (!contains(permissionChecker, fragmentCollection, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, MSBFragmentCollection.class.getName(),
-				msbFragmentCollectionId, actionId);
+				permissionChecker, FragmentCollection.class.getName(),
+				fragmentCollection.getFragmentCollectionId(), actionId);
 		}
 	}
 
 	public static void check(
-			PermissionChecker permissionChecker,
-			MSBFragmentCollection msbFragmentCollection, String actionId)
-		throws PortalException {
-
-		if (!contains(permissionChecker, msbFragmentCollection, actionId)) {
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, MSBFragmentCollection.class.getName(),
-				msbFragmentCollection.getMsbFragmentCollectionId(), actionId);
-		}
-	}
-
-	public static boolean contains(
-			PermissionChecker permissionChecker, long msbFragmentCollectionId,
+			PermissionChecker permissionChecker, long fragmentCollectionId,
 			String actionId)
 		throws PortalException {
 
-		MSBFragmentCollection msbFragmentCollection =
-			MSBFragmentCollectionLocalServiceUtil.fetchMSBFragmentCollection(
-				msbFragmentCollectionId);
-
-		if (msbFragmentCollection == null) {
-			_log.error(
-				"Unable to get modern site building fragment collection " +
-					msbFragmentCollectionId);
-
-			return false;
+		if (!contains(permissionChecker, fragmentCollectionId, actionId)) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, FragmentCollection.class.getName(),
+				fragmentCollectionId, actionId);
 		}
-
-		return contains(permissionChecker, msbFragmentCollection, actionId);
 	}
 
 	public static boolean contains(
 		PermissionChecker permissionChecker,
-		MSBFragmentCollection msbFragmentCollection, String actionId) {
+		FragmentCollection fragmentCollection, String actionId) {
 
 		Map<Object, Object> permissionChecksMap =
 			permissionChecker.getPermissionChecksMap();
 
 		PermissionCacheKey permissionCacheKey = new PermissionCacheKey(
-			msbFragmentCollection.getMsbFragmentCollectionId(), actionId);
+			fragmentCollection.getFragmentCollectionId(), actionId);
 
 		Boolean contains = (Boolean)permissionChecksMap.get(permissionCacheKey);
 
 		if (contains == null) {
 			contains = _contains(
-				permissionChecker, msbFragmentCollection, actionId);
+				permissionChecker, fragmentCollection, actionId);
 
 			permissionChecksMap.put(permissionCacheKey, contains);
 		}
 
 		return contains;
+	}
+
+	public static boolean contains(
+			PermissionChecker permissionChecker, long fragmentCollectionId,
+			String actionId)
+		throws PortalException {
+
+		FragmentCollection fragmentCollection =
+			FragmentCollectionLocalServiceUtil.fetchFragmentCollection(
+				fragmentCollectionId);
+
+		if (fragmentCollection == null) {
+			_log.error(
+				"Unable to get fragment collection " + fragmentCollectionId);
+
+			return false;
+		}
+
+		return contains(permissionChecker, fragmentCollection, actionId);
 	}
 
 	@Override
@@ -116,17 +115,17 @@ public class MSBFragmentCollectionPermission
 
 	private static boolean _contains(
 		PermissionChecker permissionChecker,
-		MSBFragmentCollection msbFragmentCollection, String actionId) {
+		FragmentCollection fragmentCollection, String actionId) {
 
 		if (permissionChecker.hasOwnerPermission(
-				msbFragmentCollection.getCompanyId(),
-				MSBFragmentCollection.class.getName(),
-				msbFragmentCollection.getMsbFragmentCollectionId(),
-				msbFragmentCollection.getUserId(), actionId) ||
+				fragmentCollection.getCompanyId(),
+				FragmentCollection.class.getName(),
+				fragmentCollection.getFragmentCollectionId(),
+				fragmentCollection.getUserId(), actionId) ||
 			permissionChecker.hasPermission(
-				msbFragmentCollection.getGroupId(),
-				MSBFragmentCollection.class.getName(),
-				msbFragmentCollection.getMsbFragmentCollectionId(), actionId)) {
+				fragmentCollection.getGroupId(),
+				FragmentCollection.class.getName(),
+				fragmentCollection.getFragmentCollectionId(), actionId)) {
 
 			return true;
 		}
@@ -135,7 +134,7 @@ public class MSBFragmentCollectionPermission
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		MSBFragmentCollectionPermission.class);
+		FragmentCollectionPermission.class);
 
 	private static class PermissionCacheKey {
 
@@ -151,8 +150,8 @@ public class MSBFragmentCollectionPermission
 
 			PermissionCacheKey permissionCacheKey = (PermissionCacheKey)obj;
 
-			if ((_msbFragmentCollectionId ==
-					permissionCacheKey._msbFragmentCollectionId) &&
+			if ((_fragmentCollectionId ==
+					permissionCacheKey._fragmentCollectionId) &&
 				Objects.equals(_actionId, permissionCacheKey._actionId)) {
 
 				return true;
@@ -163,20 +162,18 @@ public class MSBFragmentCollectionPermission
 
 		@Override
 		public int hashCode() {
-			int hash = HashUtil.hash(0, _msbFragmentCollectionId);
+			int hash = HashUtil.hash(0, _fragmentCollectionId);
 
 			return HashUtil.hash(hash, _actionId);
 		}
 
-		private PermissionCacheKey(
-			long msbFragmentCollectionId, String actionId) {
-
-			_msbFragmentCollectionId = msbFragmentCollectionId;
+		private PermissionCacheKey(long fragmentCollectionId, String actionId) {
+			_fragmentCollectionId = fragmentCollectionId;
 			_actionId = actionId;
 		}
 
 		private final String _actionId;
-		private final long _msbFragmentCollectionId;
+		private final long _fragmentCollectionId;
 
 	}
 

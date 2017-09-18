@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.modern.site.building.fragment.service.permission;
+package com.liferay.fragment.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -26,13 +26,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Jürgen Kappler
  */
 @Component(
-	property = {"resource.name=" + MSBFragmentPermission.RESOURCE_NAME},
+	property = {"resource.name=" + FragmentPermission.RESOURCE_NAME},
 	service = ResourcePermissionChecker.class
 )
-public class MSBFragmentPermission extends BaseResourcePermissionChecker {
+public class FragmentPermission extends BaseResourcePermissionChecker {
 
-	public static final String RESOURCE_NAME =
-		"com.liferay.modern.site.building.fragment";
+	public static final String RESOURCE_NAME = "com.liferay.fragment";
 
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String actionId)

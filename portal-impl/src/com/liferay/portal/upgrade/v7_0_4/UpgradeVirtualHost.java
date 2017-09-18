@@ -26,7 +26,7 @@ public class UpgradeVirtualHost extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		alter(
 			VirtualHostTable.class,
-			new AlterColumnType("hostname", "VARCHAR(200)"));
+			new AlterColumnType("hostname", "VARCHAR(200) null"));
 	}
 
 }

@@ -24,7 +24,8 @@ public class UpgradeCompany extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alter(CompanyTable.class, new AlterColumnType("mx", "VARCHAR(200)"));
+		alter(
+			CompanyTable.class, new AlterColumnType("mx", "VARCHAR(200) null"));
 	}
 
 }

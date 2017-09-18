@@ -28,6 +28,7 @@ import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -83,6 +85,23 @@ public class CPTypeDisplayContext {
 		cpContentPortletInstanceConfiguration =
 			portletDisplay.getPortletInstanceConfiguration(
 				CPContentPortletInstanceConfiguration.class);
+	}
+
+	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries()
+		throws PortalException {
+
+		long classNameId = portal.getClassNameId(CPDefinition.class);
+
+		int total =
+			cpAttachmentFileEntryService.getCPAttachmentFileEntriesCount(
+				classNameId, cpDefinition.getCPDefinitionId(),
+				CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_OTHER,
+				WorkflowConstants.STATUS_APPROVED);
+
+		return cpAttachmentFileEntryService.getCPAttachmentFileEntries(
+			classNameId, cpDefinition.getCPDefinitionId(),
+			CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_OTHER,
+			WorkflowConstants.STATUS_APPROVED, 0, total);
 	}
 
 	public CPDefinition getCPDefinition() {
@@ -145,6 +164,20 @@ public class CPTypeDisplayContext {
 			cpDefinition.getProductTypeName());
 	}
 
+	public String getDownloadFileEntryURL(FileEntry fileEntry)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		String downloadUrl = DLUtil.getDownloadURL(
+			fileEntry, fileEntry.getLatestFileVersion(), themeDisplay,
+			StringPool.BLANK, true, true);
+
+		return downloadUrl;
+	}
+
 	public List<CPAttachmentFileEntry> getImages() throws PortalException {
 		long classNameId = portal.getClassNameId(CPDefinition.class);
 
@@ -160,6 +193,10 @@ public class CPTypeDisplayContext {
 
 		return DLUtil.getDownloadURL(
 			fileEntry, fileEntry.getFileVersion(), themeDisplay, "");
+	}
+
+	public String getLabel(Locale locale, String key) {
+		return LanguageUtil.get(locale, key);
 	}
 
 	public ResourceURL getViewAttachmentURL() {

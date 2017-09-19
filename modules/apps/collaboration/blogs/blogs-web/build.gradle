@@ -37,6 +37,4 @@ dependencies {
 	provided project(":apps:web-experience:export-import:export-import-api")
 	provided project(":apps:web-experience:trash:trash-api")
 	provided project(":apps:web-experience:trash:trash-taglib")
-	provided project(":core:portal-compat:blogs:portal-impl-blogs-compat")
-	provided project(":core:portal-compat:blogs:portal-kernel-blogs-compat")
 }

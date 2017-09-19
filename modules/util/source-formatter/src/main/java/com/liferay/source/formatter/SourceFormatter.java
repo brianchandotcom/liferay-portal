@@ -653,10 +653,10 @@ public class SourceFormatter {
 		public void run() {
 			int fileScansCompletedCount = 0;
 			int percentage = 0;
-			int processedSourceChecksFileCount = 0;
-			int totalSourceChecksFileCount = 0;
+			int processedChecksFileCount = 0;
+			int totalChecksFileCount = 0;
 
-			boolean sourceChecksInitialized = false;
+			boolean checksInitialized = false;
 
 			while (true) {
 				try {
@@ -667,16 +667,15 @@ public class SourceFormatter {
 						progressStatusUpdate.getProgressStatus();
 
 					if (progressStatus.equals(
-							ProgressStatus.SOURCE_CHECKS_INITIALIZED)) {
+							ProgressStatus.CHECKS_INITIALIZED)) {
 
 						fileScansCompletedCount++;
-						totalSourceChecksFileCount +=
-							progressStatusUpdate.getCount();
+						totalChecksFileCount += progressStatusUpdate.getCount();
 
 						if (fileScansCompletedCount ==
 								_sourceProcessors.size()) {
 
-							sourceChecksInitialized = true;
+							checksInitialized = true;
 
 							// Some SourceProcessors might already have
 							// processed files before other SourceProcessors
@@ -685,28 +684,27 @@ public class SourceFormatter {
 							// processed files from the total count and reset
 							// the processed files count.
 
-							totalSourceChecksFileCount -=
-								processedSourceChecksFileCount;
+							totalChecksFileCount -= processedChecksFileCount;
 
-							processedSourceChecksFileCount = 0;
+							processedChecksFileCount = 0;
 						}
 					}
 					else if (progressStatus.equals(
-								ProgressStatus.SOURCE_CHECK_FILE_COMPLETED)) {
+								ProgressStatus.CHECK_FILE_COMPLETED)) {
 
-						processedSourceChecksFileCount++;
+						processedChecksFileCount++;
 
-						if (!sourceChecksInitialized) {
+						if (!checksInitialized) {
 
 							// Do not show progress when there are still other
-							// source checks that are still being finalized.
+							// checks that are still being finalized.
 
 							continue;
 						}
 
 						percentage = _processCompletedPercentage(
-							percentage, processedSourceChecksFileCount,
-							totalSourceChecksFileCount, "source checks");
+							percentage, processedChecksFileCount,
+							totalChecksFileCount);
 					}
 					else if (progressStatus.equals(
 								ProgressStatus.SOURCE_FORMAT_COMPLETED)) {
@@ -736,20 +734,13 @@ public class SourceFormatter {
 		}
 
 		private int _processCompletedPercentage(
-			int percentage, int count, int total, String checkType) {
+			int percentage, int count, int total) {
 
 			int newPercentage = (count * 100) / total;
 
 			if (newPercentage > percentage) {
-				StringBundler sb = new StringBundler();
-
-				sb.append("Processing ");
-				sb.append(checkType);
-				sb.append(": ");
-				sb.append(newPercentage);
-				sb.append("% completed");
-
-				_printProgressStatusMessage(sb.toString());
+				_printProgressStatusMessage(
+					"Processing checks: " + newPercentage + "% completed");
 			}
 
 			return newPercentage;

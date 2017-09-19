@@ -86,8 +86,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		if (fileNames.isEmpty()) {
 			addProgressStatusUpdate(
-				new ProgressStatusUpdate(
-					ProgressStatus.SOURCE_CHECKS_INITIALIZED, 0));
+				new ProgressStatusUpdate(ProgressStatus.CHECKS_INITIALIZED, 0));
 
 			return;
 		}
@@ -99,7 +98,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		addProgressStatusUpdate(
 			new ProgressStatusUpdate(
-				ProgressStatus.SOURCE_CHECKS_INITIALIZED, fileNames.size()));
+				ProgressStatus.CHECKS_INITIALIZED, fileNames.size()));
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
 			sourceFormatterArgs.getProcessorThreadCount());
@@ -485,8 +484,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private void _format(String fileName) throws Exception {
 		if (!_isMatchPath(fileName)) {
 			addProgressStatusUpdate(
-				new ProgressStatusUpdate(
-					ProgressStatus.SOURCE_CHECK_FILE_COMPLETED));
+				new ProgressStatusUpdate(ProgressStatus.CHECK_FILE_COMPLETED));
 
 			return;
 		}
@@ -501,8 +499,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		format(file, fileName, absolutePath, FileUtil.read(file));
 
 		addProgressStatusUpdate(
-			new ProgressStatusUpdate(
-				ProgressStatus.SOURCE_CHECK_FILE_COMPLETED));
+			new ProgressStatusUpdate(ProgressStatus.CHECK_FILE_COMPLETED));
 	}
 
 	private List<SourceCheck> _getSourceChecks(

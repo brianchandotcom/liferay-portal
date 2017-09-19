@@ -286,7 +286,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		Set<String> modifiedContents = new HashSet<>();
 
-		String newContent = _format(
+		String newContent = format(
 			file, fileName, absolutePath, content, content, modifiedContents,
 			0);
 
@@ -478,7 +478,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return false;
 	}
 
-	private String _format(
+	protected String format(
 			File file, String fileName, String absolutePath, String content,
 			String originalContent, Set<String> modifiedContents, int count)
 		throws Exception {
@@ -513,7 +513,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			count = 0;
 		}
 
-		return _format(
+		return format(
 			file, fileName, absolutePath, newContent, originalContent,
 			modifiedContents, count);
 	}

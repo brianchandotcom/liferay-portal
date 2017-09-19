@@ -17,28 +17,57 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String jspPage = (String)request.getAttribute("view_checkout_step.jsp-jspPage");
-String mvcActionCommandName = (String)request.getAttribute("view_checkout_step.jsp-mvcActionCommandName");
-String submitButtonValue = GetterUtil.getString(request.getAttribute("view_checkout_step.jsp-submitButtonValue"), "next");
+CheckoutDisplayContext checkoutDisplayContext = (CheckoutDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+List<CommerceCheckoutStep> commerceCheckoutSteps = checkoutDisplayContext.getCommerceCheckoutSteps();
+
+int step = 1;
 %>
 
-<portlet:actionURL name="<%= mvcActionCommandName %>" var="editCheckoutStepActionURL" />
+<ul class="multi-step-progress-bar multi-step-progress-bar-collapse">
 
-<aui:form action="<%= editCheckoutStepActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCheckoutStep();" %>'>
-	<c:if test="<%= Validator.isNotNull(redirect) %>">
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	</c:if>
+	<%
+	for (CommerceCheckoutStep commerceCheckoutStep : commerceCheckoutSteps) {
+		String cssClass = "";
 
+		if (checkoutDisplayContext.isCurrentCommerceCheckoutStep(commerceCheckoutStep)) {
+			cssClass = "active";
+		}
+	%>
+
+		<li class="<%= cssClass %>">
+			<div class="progress-bar-title"><liferay-ui:message key="<%= commerceCheckoutStep.getLabel(locale) %>" /> </div>
+			<div class="divider"></div>
+			<div class="progress-bar-step"><%= step %></div>
+		</li>
+
+	<%
+			step ++;
+	}
+	%>
+
+	<li class="">
+		<div class="progress-bar-title"><liferay-ui:message key="confirmation" /> </div>
+		<div class="divider"></div>
+		<div class="progress-bar-step"><%= step %></div>
+	</li>
+</ul>
+
+<portlet:actionURL name="saveStep" var="saveStepURL">
+	<portlet:param name="checkoutStepName" value="<%= checkoutDisplayContext.getCurrentCheckoutStepName() %>" />
+</portlet:actionURL>
+
+<aui:form action="<%= saveStepURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCheckoutStep();" %>'>
 	<aui:input name="commerceCartId" type="hidden" value="<%= commerceCart.getCommerceCartId() %>" />
 
-	<liferay-util:include page="<%= jspPage %>" servletContext="<%= application %>" />
+	<%= checkoutDisplayContext.renderCurrentCheckoutStep() %>
 
 	<aui:button-row>
 		<c:if test="<%= Validator.isNotNull(backURL) %>">
 			<aui:button cssClass="btn-lg" href="<%= backURL %>" type="cancel" value="previous" />
 		</c:if>
 
-		<aui:button cssClass="btn-lg" primary="<%= false %>" type="submit" value="<%= submitButtonValue %>" />
+		<aui:button cssClass="btn-lg" primary="<%= false %>" type="submit" value="next" />
 	</aui:button-row>
 </aui:form>
 

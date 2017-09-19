@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CheckoutStepBillingDisplayContext checkoutStepBillingDisplayContext = (CheckoutStepBillingDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CheckoutStepBillingDisplayContext checkoutStepBillingDisplayContext = (CheckoutStepBillingDisplayContext)request.getAttribute("CommerceCheckoutStepDisplayContext");
 
 List<CommerceAddress> commerceAddresses = checkoutStepBillingDisplayContext.getCommerceAddresses();
 
@@ -43,11 +43,9 @@ long commerceCountryId = ParamUtil.getLong(request, "commerceCountryId");
 long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 %>
 
-<liferay-ui:header
-	title="billing"
-/>
+<h3><liferay-ui:message key="billing-address" /></h3>
 
-<aui:fieldset label="billing-address">
+<aui:fieldset>
 	<div id="<portlet:namespace />billingAddressChoice">
 
 		<%

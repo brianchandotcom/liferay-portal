@@ -42,6 +42,8 @@ public class CheckStyleLogger extends DefaultLogger {
 		super(outputStream, closeStreamsAfterUse);
 
 		_baseDirName = baseDirName;
+
+		_sourceFormatterMessages.clear();
 	}
 
 	@Override

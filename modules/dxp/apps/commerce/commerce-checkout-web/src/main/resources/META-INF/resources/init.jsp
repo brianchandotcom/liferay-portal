@@ -33,7 +33,7 @@ page import="com.liferay.commerce.exception.CommerceAddressNameException" %><%@
 page import="com.liferay.commerce.exception.CommerceAddressStreetException" %><%@
 page import="com.liferay.commerce.exception.CommerceCartBillingAddressException" %><%@
 page import="com.liferay.commerce.model.CommerceAddress" %><%@
-page import="com.liferay.commerce.model.CommerceCart" %><%@
+page import="com.liferay.commerce.model.CommerceCountry" %><%@
 page import="com.liferay.commerce.model.CommerceOrder" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
@@ -50,7 +50,4 @@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 <portlet:defineObjects />
 
 <%
-CommerceCart commerceCart = (CommerceCart)request.getAttribute(CommerceCheckoutWebKeys.COMMERCE_CART);
-
-String backURL = (String)request.getAttribute(CommerceCheckoutWebKeys.BACK_URL);
 %>

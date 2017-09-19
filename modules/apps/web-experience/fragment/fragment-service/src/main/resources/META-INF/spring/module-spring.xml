@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean class="com.liferay.fragment.service.impl.FragmentCollectionLocalServiceImpl" id="com.liferay.fragment.service.FragmentCollectionLocalService" />
+	<bean class="com.liferay.fragment.service.impl.FragmentCollectionServiceImpl" id="com.liferay.fragment.service.FragmentCollectionService" />
+	<bean class="com.liferay.fragment.service.persistence.impl.FragmentCollectionPersistenceImpl" id="com.liferay.fragment.service.persistence.FragmentCollectionPersistence" parent="basePersistence" />
+	<bean class="com.liferay.fragment.service.impl.FragmentEntryLocalServiceImpl" id="com.liferay.fragment.service.FragmentEntryLocalService" />
+	<bean class="com.liferay.fragment.service.impl.FragmentEntryServiceImpl" id="com.liferay.fragment.service.FragmentEntryService" />
+	<bean class="com.liferay.fragment.service.persistence.impl.FragmentEntryPersistenceImpl" id="com.liferay.fragment.service.persistence.FragmentEntryPersistence" parent="basePersistence" />
+</beans>

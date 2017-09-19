@@ -783,7 +783,7 @@
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="A" />
+			<var name="fieldValue" value="Text Field" />
 		</execute>
 
 		<execute macro="Form#closeSidebar" />
@@ -793,7 +793,7 @@
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="B" />
+			<var name="fieldValue" value="Date Field" />
 		</execute>
 
 		<execute macro="Form#closeSidebar" />
@@ -803,7 +803,7 @@
 		<execute macro="FormRules#addRule" />
 
 		<execute macro="FormRules#configureConditionOptions">
-			<var name="conditionField" value="A" />
+			<var name="conditionField" value="Text Field" />
 			<var name="conditionOperator" value="Is not empty" />
 			<var name="conditionRowNumber" value="1" />
 		</execute>
@@ -811,7 +811,7 @@
 		<execute macro="FormRules#configureActionOptions">
 			<var name="action" value="Show" />
 			<var name="actionRowNumber" value="1" />
-			<var name="actionTarget" value="B" />
+			<var name="actionTarget" value="Date Field" />
 		</execute>
 
 		<execute macro="FormRules#save" />
@@ -827,47 +827,47 @@
 		</execute>
 
 		<execute macro="FormFields#viewDateFieldNotPresent">
-			<var name="fieldLabel" value="B" />
-			<var name="fieldName" value="B" />
+			<var name="fieldLabel" value="Date Field" />
+			<var name="fieldName" value="DateField" />
 		</execute>
 
 		<execute macro="FormFields#editText">
-			<var name="fieldName" value="A" />
+			<var name="fieldName" value="TextField" />
 			<var name="fieldValue" value="1" />
 		</execute>
 
 		<execute macro="FormFields#viewDateField">
-			<var name="fieldLabel" value="B" />
-			<var name="fieldName" value="B" />
+			<var name="fieldLabel" value="Date Field" />
+			<var name="fieldName" value="DateField" />
 		</execute>
 
 		<execute macro="FormFields#editText">
-			<var name="fieldName" value="A" />
+			<var name="fieldName" value="TextField" />
 			<var name="fieldValue" value="Test" />
 		</execute>
 
 		<execute macro="FormFields#viewDateField">
-			<var name="fieldLabel" value="B" />
-			<var name="fieldName" value="B" />
+			<var name="fieldLabel" value="Date Field" />
+			<var name="fieldName" value="DateField" />
 		</execute>
 
 		<execute macro="FormFields#editText">
-			<var name="fieldName" value="A" />
+			<var name="fieldName" value="TextField" />
 			<var name="fieldValue" value="%" />
 		</execute>
 
 		<execute macro="FormFields#viewDateField">
-			<var name="fieldLabel" value="B" />
-			<var name="fieldName" value="B" />
+			<var name="fieldLabel" value="Date Field" />
+			<var name="fieldName" value="DateField" />
 		</execute>
 
 		<execute macro="FormFields#editTextWithBackspace">
-			<var name="fieldName" value="A" />
+			<var name="fieldName" value="TextField" />
 		</execute>
 
 		<execute macro="FormFields#viewDateFieldNotPresent">
-			<var name="fieldLabel" value="B" />
-			<var name="fieldName" value="B" />
+			<var name="fieldLabel" value="Date Field" />
+			<var name="fieldName" value="DateField" />
 		</execute>
 	</command>
 

@@ -280,6 +280,19 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return filteredIncludes;
 	}
 
+	protected void format(
+			File file, String fileName, String absolutePath, String content)
+		throws Exception {
+
+		Set<String> modifiedContents = new HashSet<>();
+
+		String newContent = _format(
+			file, fileName, absolutePath, content, content, modifiedContents,
+			0);
+
+		processFormattedFile(file, fileName, content, newContent);
+	}
+
 	protected List<String> getAllFileNames() {
 		return _allFileNames;
 	}
@@ -335,7 +348,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	protected void processFormattedFile(
+	protected File processFormattedFile(
 			File file, String fileName, String content, String newContent)
 		throws Exception {
 
@@ -386,6 +399,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		_modifiedFileNames.add(file.getAbsolutePath());
+
+		return file;
 	}
 
 	protected void processMessage(
@@ -519,15 +534,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		File file = new File(absolutePath);
 
-		String content = FileUtil.read(file);
-
-		Set<String> modifiedContents = new HashSet<>();
-
-		String newContent = _format(
-			file, fileName, absolutePath, content, content, modifiedContents,
-			0);
-
-		processFormattedFile(file, fileName, content, newContent);
+		format(file, fileName, absolutePath, FileUtil.read(file));
 
 		addProgressStatusUpdate(
 			new ProgressStatusUpdate(

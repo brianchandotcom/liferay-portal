@@ -14,7 +14,6 @@
 
 package com.liferay.arquillian.extension.junit.bridge.container.remote;
 
-import com.liferay.arquillian.containter.remote.LiferayRemoteContainerConfiguration;
 import com.liferay.hot.deploy.jmx.listener.mbean.manager.PluginMBeanManager;
 
 import java.io.File;

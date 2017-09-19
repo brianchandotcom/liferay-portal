@@ -25,6 +25,7 @@ import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceCartService;
+import com.liferay.commerce.util.CommerceCartHelper;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -33,6 +34,9 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.Locale;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,19 +51,19 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"commerce.checkout.step.name=billing",
-		"commerce.checkout.step.order:Integer=5"
+		"commerce.checkout.step.order:Integer=10"
 	},
 	service = CommerceCheckoutStep.class
 )
 public class BillingCommerceCheckoutStep implements CommerceCheckoutStep {
 
+	@Override
 	public boolean action(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		try {
-			updateCommerceCartBilling(httpServletRequest);
+			updateCommerceCartBilling(actionRequest);
 		}
 		catch (Exception e) {
 			if (e instanceof CommerceAddressCityException ||
@@ -68,7 +72,7 @@ public class BillingCommerceCheckoutStep implements CommerceCheckoutStep {
 				e instanceof CommerceAddressStreetException ||
 				e instanceof CommerceCartBillingAddressException) {
 
-				SessionErrors.add(httpServletRequest, e.getClass());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				return false;
 			}
@@ -80,10 +84,17 @@ public class BillingCommerceCheckoutStep implements CommerceCheckoutStep {
 		return true;
 	}
 
+	@Override
 	public String getLabel(Locale locale) {
 		return "BILLING_TO_CHANGE";
 	}
 
+	@Override
+	public String getName() {
+		return "billing";
+	}
+
+	@Override
 	public boolean isActive(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
@@ -92,6 +103,7 @@ public class BillingCommerceCheckoutStep implements CommerceCheckoutStep {
 		return true;
 	}
 
+	@Override
 	public boolean isVisible(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
@@ -100,6 +112,7 @@ public class BillingCommerceCheckoutStep implements CommerceCheckoutStep {
 		return true;
 	}
 
+	@Override
 	public void render(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
@@ -107,7 +120,8 @@ public class BillingCommerceCheckoutStep implements CommerceCheckoutStep {
 
 		CheckoutStepBillingDisplayContext checkoutStepBillingDisplayContext =
 			new CheckoutStepBillingDisplayContext(
-				_commerceAddressService, httpServletRequest);
+				_commerceAddressService, _commerceCartHelper,
+				httpServletRequest, httpServletResponse);
 
 		httpServletRequest.setAttribute(
 			"CommerceCheckoutStepDisplayContext",
@@ -118,27 +132,33 @@ public class BillingCommerceCheckoutStep implements CommerceCheckoutStep {
 			"/checkout_step/billing.jsp");
 	}
 
+	@Override
+	public boolean showControls(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+
+		return true;
+	}
+
 	protected CommerceAddress addCommerceAddress(
-			long addressUserId, HttpServletRequest httpServletRequest)
+			long addressUserId, ActionRequest actionRequest)
 		throws PortalException {
 
-		String name = ParamUtil.getString(httpServletRequest, "name");
-		String description = ParamUtil.getString(
-			httpServletRequest, "description");
-		String street1 = ParamUtil.getString(httpServletRequest, "street1");
-		String street2 = ParamUtil.getString(httpServletRequest, "street2");
-		String street3 = ParamUtil.getString(httpServletRequest, "street3");
-		String city = ParamUtil.getString(httpServletRequest, "city");
-		String zip = ParamUtil.getString(httpServletRequest, "zip");
+		String name = ParamUtil.getString(actionRequest, "name");
+		String description = ParamUtil.getString(actionRequest, "description");
+		String street1 = ParamUtil.getString(actionRequest, "street1");
+		String street2 = ParamUtil.getString(actionRequest, "street2");
+		String street3 = ParamUtil.getString(actionRequest, "street3");
+		String city = ParamUtil.getString(actionRequest, "city");
+		String zip = ParamUtil.getString(actionRequest, "zip");
 		long commerceRegionId = ParamUtil.getLong(
-			httpServletRequest, "commerceRegionId");
+			actionRequest, "commerceRegionId");
 		long commerceCountryId = ParamUtil.getLong(
-			httpServletRequest, "commerceCountryId");
-		String phoneNumber = ParamUtil.getString(
-			httpServletRequest, "phoneNumber");
+			actionRequest, "commerceCountryId");
+		String phoneNumber = ParamUtil.getString(actionRequest, "phoneNumber");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceAddress.class.getName(), httpServletRequest);
+			CommerceAddress.class.getName(), actionRequest);
 
 		return _commerceAddressService.addCommerceAddress(
 			addressUserId, name, description, street1, street2, street3, city,
@@ -146,22 +166,23 @@ public class BillingCommerceCheckoutStep implements CommerceCheckoutStep {
 			serviceContext);
 	}
 
-	protected void updateCommerceCartBilling(
-			HttpServletRequest httpServletRequest)
+	protected void updateCommerceCartBilling(ActionRequest actionRequest)
 		throws PortalException {
 
 		long commerceCartId = ParamUtil.getLong(
-			httpServletRequest, "commerceCartId");
+			actionRequest, "commerceCartId");
 
 		CommerceCart commerceCart = _commerceCartService.getCommerceCart(
 			commerceCartId);
 
-		long billingAddressId = ParamUtil.getLong(
-			httpServletRequest, "billingAddressId");
+		boolean newAddress = ParamUtil.getBoolean(actionRequest, "newAddress");
 
-		if (billingAddressId <= 0) {
+		long billingAddressId = ParamUtil.getLong(
+			actionRequest, "billingAddressId");
+
+		if (newAddress) {
 			CommerceAddress commerceAddress = addCommerceAddress(
-				commerceCart.getUserId(), httpServletRequest);
+				commerceCart.getUserId(), actionRequest);
 
 			billingAddressId = commerceAddress.getCommerceAddressId();
 		}
@@ -173,6 +194,9 @@ public class BillingCommerceCheckoutStep implements CommerceCheckoutStep {
 
 	@Reference
 	private CommerceAddressService _commerceAddressService;
+
+	@Reference
+	private CommerceCartHelper _commerceCartHelper;
 
 	@Reference
 	private CommerceCartService _commerceCartService;

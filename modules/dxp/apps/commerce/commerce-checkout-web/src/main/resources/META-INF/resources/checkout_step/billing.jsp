@@ -37,7 +37,7 @@ if ((defaultBillingAddressId == 0) && !commerceAddresses.isEmpty()) {
 	defaultBillingAddressId = commerceAddress.getCommerceAddressId();
 }
 
-long billingAddressId = BeanParamUtil.getLong(commerceCart, request, "billingAddressId", defaultBillingAddressId);
+long billingAddressId = BeanParamUtil.getLong(checkoutStepBillingDisplayContext.getCommerceCart(), request, "billingAddressId", defaultBillingAddressId);
 
 long commerceCountryId = ParamUtil.getLong(request, "commerceCountryId");
 long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
@@ -47,23 +47,69 @@ long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 
 <aui:fieldset>
 	<div id="<portlet:namespace />billingAddressChoice">
+		<div class="row">
 
-		<%
-		for (CommerceAddress commerceAddress : commerceAddresses) {
-		%>
+			<%
+			for (CommerceAddress commerceAddress : commerceAddresses) {
+			%>
 
-			<aui:input checked="<%= billingAddressId == commerceAddress.getCommerceAddressId() %>" label="<%= commerceAddress.getName() %>" name="billingAddressId" type="radio" value="<%= commerceAddress.getCommerceAddressId() %>" />
+				<div class="col-md-4">
+					<div class="radio radio-card radio-middle-left">
+						<label>
+							<aui:input checked="<%= billingAddressId == commerceAddress.getCommerceAddressId() %>" label="" name="billingAddressId" type="radio" value="<%= commerceAddress.getCommerceAddressId() %>" />
 
-		<%
-		}
-		%>
+							<div class="card card-horizontal">
+								<div class="card-row">
+									<div class="card-col-content card-col-gutters">
+										<h4><%= commerceAddress.getName() %></h4>
+										<p><%= commerceAddress.getStreet1() %></p>
+
+										<c:if test="<%= Validator.isNotNull(commerceAddress.getStreet2()) %>">
+											<p><%= commerceAddress.getStreet2() %></p>
+										</c:if>
+
+										<c:if test="<%= Validator.isNotNull(commerceAddress.getStreet3()) %>">
+											<p><%= commerceAddress.getStreet3() %></p>
+										</c:if>
+
+										<p><%= commerceAddress.getCity() %></p>
+
+										<%
+										CommerceCountry commerceCountry = commerceAddress.getCommerceCountry();
+										%>
+
+										<c:if test="<%= commerceCountry != null %>">
+											<p><%= commerceCountry.getName(locale) %></p>
+										</c:if>
+									</div>
+								</div>
+							</div>
+						</label>
+					</div>
+				</div>
+
+			<%
+			}
+			%>
+
+		</div>
 
 		<c:if test="<%= !commerceAddresses.isEmpty() %>">
-			<aui:input checked="<%= billingAddressId <= 0 %>" id="newAddress" label="add-new-address" name="billingAddressId" type="radio" value="0" />
+			<aui:button-row>
+				<aui:button cssClass="btn-lg" name="addNewAddress" value="add-new-address" />
+			</aui:button-row>
 		</c:if>
 	</div>
 
 	<aui:fieldset cssClass='<%= (billingAddressId > 0) ? "hide" : StringPool.BLANK %>' id='<%= renderResponse.getNamespace() + "newAddressContainer" %>'>
+		<aui:input name="newAddress" type="hidden" value="<%= commerceAddresses.isEmpty() ? '1' : '0' %>" />
+
+		<c:if test="<%= !commerceAddresses.isEmpty() %>">
+			<aui:button-row>
+				<aui:button cssClass="btn-lg" name="cancel" value="cancel" />
+			</aui:button-row>
+		</c:if>
+
 		<liferay-ui:error exception="<%= CommerceAddressCityException.class %>" message="please-enter-a-valid-city" />
 		<liferay-ui:error exception="<%= CommerceAddressCountryException.class %>" message="please-enter-a-valid-country" />
 		<liferay-ui:error exception="<%= CommerceAddressNameException.class %>" message="please-enter-a-valid-name" />
@@ -146,7 +192,8 @@ long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 		if (event.formName === '<portlet:namespace />fm') {
 			A.Do.before(
 				function() {
-					if (!document.getElementById('<portlet:namespace />newAddress').checked) {
+					var newAddress = A.one('#<portlet:namespace />newAddress');
+					if (!(newAddress.val() == '1')) {
 						return new A.Do.Halt('', false);
 					}
 				},
@@ -156,18 +203,33 @@ long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 		}
 	});
 
-	A.one('#<portlet:namespace />billingAddressChoice').delegate(
-		'change',
-		function(event) {
-			var input = event.currentTarget;
+	var addNewAddress = A.one('#<portlet:namespace />addNewAddress')
 
-			if (input.get('checked') && (input.val() == 0)) {
+	if (addNewAddress) {
+		addNewAddress.on(
+			'click',
+			function(event) {
+
 				A.one('#<portlet:namespace />newAddressContainer').show();
+				A.one('#<portlet:namespace />newAddress').val('1');
+				A.one('#<portlet:namespace />billingAddressChoice').hide();
+
 			}
-			else {
+		);
+	}
+
+	var cancel = A.one('#<portlet:namespace />cancel')
+
+	if (cancel) {
+		A.one('#<portlet:namespace />cancel').on(
+			'click',
+			function(event) {
+
 				A.one('#<portlet:namespace />newAddressContainer').hide();
+				A.one('#<portlet:namespace />newAddress').val('0');
+				A.one('#<portlet:namespace />billingAddressChoice').show();
+
 			}
-		},
-		'input'
-	);
+		);
+	}
 </aui:script>

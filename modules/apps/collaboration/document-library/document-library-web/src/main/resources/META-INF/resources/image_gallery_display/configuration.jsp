@@ -38,10 +38,6 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				<aui:fieldset collapsible="<%= true %>" id="imageGalleryDisplayDisplay" label="display-settings">
 					<aui:input label="show-actions" name="preferences--showActions--" type="checkbox" value="<%= dlPortletInstanceSettings.isShowActions() %>" />
 
-					<aui:input label="show-navigation-links" name="preferences--showTabs--" type="checkbox" value="<%= dlPortletInstanceSettings.isShowTabs() %>" />
-
-					<aui:input label="show-search" name="preferences--showFoldersSearch--" type="checkbox" value="<%= dlPortletInstanceSettings.isShowFoldersSearch() %>" />
-
 					<aui:field-wrapper label="show-media-type">
 						<liferay-ui:input-move-boxes
 							leftBoxName="currentMimeTypes"
@@ -79,11 +75,6 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 							<aui:button disabled="<%= rootFolderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
 						</div>
 					</aui:field-wrapper>
-				</aui:fieldset>
-
-				<aui:fieldset collapsible="<%= true %>" id="imageGalleryImagesRatingsPanel" label="ratings">
-					<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= dlPortletInstanceSettings.isEnableRatings() %>" />
-					<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= dlPortletInstanceSettings.isEnableCommentRatings() %>" />
 				</aui:fieldset>
 			</aui:fieldset-group>
 		</div>

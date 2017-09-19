@@ -89,11 +89,9 @@ public class GitWorkingDirectory {
 	public Remote addRemote(
 		boolean force, String remoteName, String remoteURL) {
 
-		Remote remote = getRemote(remoteName);
-
-		if (remote != null) {
+		if (remoteExists(remoteName)) {
 			if (force) {
-				removeGitRemote(remote);
+				removeGitRemote(getRemote(remoteName));
 			}
 			else {
 				throw new IllegalArgumentException(
@@ -113,7 +111,7 @@ public class GitWorkingDirectory {
 					executionResult.getStandardErr()));
 		}
 
-		return getRemote(remoteName);
+		return getRemote(false, remoteName);
 	}
 
 	public boolean branchExists(String branchName, Remote remote) {
@@ -553,32 +551,7 @@ public class GitWorkingDirectory {
 	}
 
 	public Remote getRemote(String name) {
-		Map<String, Remote> remotes = getRemotes();
-
-		Remote remote = remotes.get(name);
-
-		if ((remote == null) && name.equals("upstream-public")) {
-			Remote upstreamGitRemote = remotes.get("upstream");
-
-			String upstreamRemoteURL = upstreamGitRemote.getRemoteURL();
-
-			upstreamRemoteURL = upstreamRemoteURL.replace("-ee", "");
-			upstreamRemoteURL = upstreamRemoteURL.replace("-private", "");
-
-			return addRemote(true, "upstream-public", upstreamRemoteURL);
-		}
-
-		if (name.equals("upstream")) {
-			String upstreamRemoteURL = remote.getRemoteURL();
-
-			if (upstreamRemoteURL.contains(_repositoryName + ".git")) {
-				return remote;
-			}
-
-			return getRemote("upstream-public");
-		}
-
-		return remote;
+		return getRemote(true, name);
 	}
 
 	public Set<String> getRemoteNames() {
@@ -720,7 +693,7 @@ public class GitWorkingDirectory {
 	}
 
 	public boolean remoteExists(String remoteName) {
-		if (getRemote(remoteName) != null) {
+		if (getRemote(false, remoteName) != null) {
 			return true;
 		}
 
@@ -985,8 +958,42 @@ public class GitWorkingDirectory {
 			"Real git directory could not be found in " + gitFile.getPath());
 	}
 
+	protected Remote getRemote(boolean createUpstreamPublic, String name) {
+		Map<String, Remote> remotes = getRemotes();
+
+		Remote remote = remotes.get(name);
+
+		if (createUpstreamPublic) {
+			if ((remote == null) && name.equals("upstream-public")) {
+				Remote upstreamGitRemote = remotes.get("upstream");
+
+				String upstreamRemoteURL = upstreamGitRemote.getRemoteURL();
+
+				upstreamRemoteURL = upstreamRemoteURL.replace("-ee", "");
+				upstreamRemoteURL = upstreamRemoteURL.replace("-private", "");
+
+				return addRemote(true, "upstream-public", upstreamRemoteURL);
+			}
+
+			if (name.equals("upstream")) {
+				String upstreamRemoteURL = remote.getRemoteURL();
+
+				if ((_repositoryName == null) ||
+					upstreamRemoteURL.contains(_repositoryName + ".git")) {
+
+					return remote;
+				}
+
+				return getRemote("upstream-public");
+			}
+		}
+
+		return remote;
+	}
+
 	protected List<Branch> getRemoteBranches(Remote remote) {
 		ExecutionResult executionResult = executeBashCommands(
+			1, 1000 * 5,
 			JenkinsResultsParserUtil.combine(
 				"git ls-remote -h ", remote.getName()));
 
@@ -1010,6 +1017,9 @@ public class GitWorkingDirectory {
 						matcher.group("name"), remote, matcher.group("sha")));
 			}
 		}
+
+		System.out.println(
+			"getRemoteBranches found " + branches.size() + " branches.");
 
 		return branches;
 	}
@@ -1042,7 +1052,7 @@ public class GitWorkingDirectory {
 	}
 
 	protected String loadRepositoryName() {
-		Remote remote = getRemote("upstream");
+		Remote remote = getRemote(false, "upstream");
 
 		String remoteURL = remote.getRemoteURL();
 

@@ -905,8 +905,16 @@ public class GroupServiceTest {
 	}
 
 	@Test(expected = GroupFriendlyURLException.class)
-	public void testSetNumericFriendlyURL() throws Exception {
+	public void testSetNumericFriendlyURLToGroupId() throws Exception {
 		String friendlyURL = "/" + _group.getGroupId();
+
+		GroupLocalServiceUtil.updateFriendlyURL(
+			_group.getGroupId(), friendlyURL);
+	}
+
+	@Test(expected = GroupFriendlyURLException.class)
+	public void testSetNumericFriendlyURLToRandomLong() throws Exception {
+		String friendlyURL = "/" + RandomTestUtil.nextLong();
 
 		GroupLocalServiceUtil.updateFriendlyURL(
 			_group.getGroupId(), friendlyURL);

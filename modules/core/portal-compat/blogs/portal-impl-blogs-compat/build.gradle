@@ -21,6 +21,10 @@ importFiles {
 	}
 }
 
+liferay {
+	deployDir = "../../../../../tmp/lib-pre"
+}
+
 transformImportedFiles {
 	classpath = configurations.bytecodeTransformer
 	dependsOn importFiles

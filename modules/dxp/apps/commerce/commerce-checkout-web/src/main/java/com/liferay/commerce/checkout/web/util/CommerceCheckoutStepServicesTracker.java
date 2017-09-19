@@ -24,8 +24,15 @@ import java.util.List;
 @ProviderType
 public interface CommerceCheckoutStepServicesTracker {
 
-	public CommerceCheckoutStep getCommerceCheckoutStep(String name);
+	public CommerceCheckoutStep getCommerceCheckoutStep(
+		String commerceCheckoutStepName);
 
 	public List<CommerceCheckoutStep> getCommerceCheckoutSteps();
+
+	public CommerceCheckoutStep getNextCommerceCheckoutStep(
+		String commerceCheckoutStepName);
+
+	public CommerceCheckoutStep getPreviusCommerceCheckoutStep(
+		String commerceCheckoutStepName);
 
 }

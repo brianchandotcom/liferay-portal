@@ -44,19 +44,23 @@ public class CommerceCheckoutStepServicesTrackerImpl
 	implements CommerceCheckoutStepServicesTracker {
 
 	@Override
-	public CommerceCheckoutStep getCommerceCheckoutStep(String name) {
-		if (Validator.isNull(name)) {
+	public CommerceCheckoutStep getCommerceCheckoutStep(
+		String commerceCheckoutStepName) {
+
+		if (Validator.isNull(commerceCheckoutStepName)) {
 			return null;
 		}
 
 		ServiceWrapper<CommerceCheckoutStep>
 			commerceCheckoutStepServiceWrapper =
-				_commerceCheckoutStepServiceTrackerMap.getService(name);
+				_commerceCheckoutStepServiceTrackerMap.getService(
+					commerceCheckoutStepName);
 
 		if (commerceCheckoutStepServiceWrapper == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No commerce checkout step registered with name " + name);
+					"No commerce checkout step registered with name " +
+						commerceCheckoutStepName);
 			}
 
 			return null;
@@ -86,6 +90,56 @@ public class CommerceCheckoutStepServicesTrackerImpl
 		}
 
 		return Collections.unmodifiableList(commerceCheckoutSteps);
+	}
+
+	@Override
+	public CommerceCheckoutStep getNextCommerceCheckoutStep(
+		String commerceCheckoutStepName) {
+
+		if (Validator.isNull(commerceCheckoutStepName)) {
+			return null;
+		}
+
+		List<CommerceCheckoutStep> commerceCheckoutSteps =
+			getCommerceCheckoutSteps();
+
+		CommerceCheckoutStep commerceCheckoutStep = getCommerceCheckoutStep(
+			commerceCheckoutStepName);
+
+		int commerceCheckoutStepIndex = commerceCheckoutSteps.indexOf(
+			commerceCheckoutStep);
+
+		if ((commerceCheckoutStepIndex >= 0) &&
+			(commerceCheckoutStepIndex < (commerceCheckoutSteps.size() - 1))) {
+
+			return commerceCheckoutSteps.get(commerceCheckoutStepIndex + 1);
+		}
+
+		return null;
+	}
+
+	@Override
+	public CommerceCheckoutStep getPreviusCommerceCheckoutStep(
+		String commerceCheckoutStepName) {
+
+		if (Validator.isNull(commerceCheckoutStepName)) {
+			return null;
+		}
+
+		List<CommerceCheckoutStep> commerceCheckoutSteps =
+			getCommerceCheckoutSteps();
+
+		CommerceCheckoutStep commerceCheckoutStep = getCommerceCheckoutStep(
+			commerceCheckoutStepName);
+
+		int commerceCheckoutStepIndex = commerceCheckoutSteps.indexOf(
+			commerceCheckoutStep);
+
+		if (commerceCheckoutStepIndex > 0) {
+			return commerceCheckoutSteps.get(commerceCheckoutStepIndex - 1);
+		}
+
+		return null;
 	}
 
 	@Activate

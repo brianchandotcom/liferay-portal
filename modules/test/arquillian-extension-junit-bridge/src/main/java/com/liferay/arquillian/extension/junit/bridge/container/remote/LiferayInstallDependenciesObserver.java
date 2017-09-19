@@ -16,16 +16,19 @@ package com.liferay.arquillian.extension.junit.bridge.container.remote;
 
 import com.liferay.arquillian.containter.remote.LiferayRemoteContainerConfiguration;
 import com.liferay.hot.deploy.jmx.listener.mbean.manager.PluginMBeanManager;
+
 import java.io.File;
 import java.io.IOException;
+
 import java.net.URL;
+
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -39,13 +42,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import javax.management.MBeanServerConnection;
 import javax.management.MBeanServerInvocationHandler;
 import javax.management.ObjectName;
-import javax.management.QueryExp;
 import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
+
 import org.jboss.arquillian.container.spi.ContainerRegistry;
 import org.jboss.arquillian.container.spi.client.container.LifecycleException;
 import org.jboss.arquillian.container.spi.context.annotation.ContainerScoped;
@@ -60,6 +64,7 @@ import org.jboss.shrinkwrap.resolver.api.maven.ConfigurableMavenResolverSystem;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.jboss.shrinkwrap.resolver.api.maven.MavenFormatStage;
 import org.jboss.shrinkwrap.resolver.api.maven.MavenStrategyStage;
+
 import org.osgi.jmx.framework.BundleStateMBean;
 import org.osgi.jmx.framework.FrameworkMBean;
 
@@ -67,36 +72,6 @@ import org.osgi.jmx.framework.FrameworkMBean;
  * @author Preston Crary
  */
 public class LiferayInstallDependenciesObserver {
-
-	private static final String _FILE_PREFIX = "file";
-	private static final String _HOT_DEPLOY_JMX_LISTENER_MVN =
-		"com.liferay:com.liferay.hot.deploy.jmx.listener:1.0.0-SNAPSHOT";
-	private static final String _MAVEN_PREFIX = "mvn";
-	private static final Logger _log = Logger.getLogger(
-		LiferayInstallDependenciesObserver.class.getName());
-
-	private static final Pattern _pattern = Pattern.compile(
-		"(.*?)(-\\d+\\.\\d+\\.\\d+\\.\\d+)?");
-
-	private BundleStateMBean _bundleStateMBean;
-
-	@ApplicationScoped
-	@Inject
-	private Instance<LiferayRemoteContainerConfiguration>
-		_configurationInstance;
-
-	@Inject
-	private Instance<ContainerRegistry> _containerRegistryInstance;
-
-	private FrameworkMBean _frameworkMBean;
-
-	private List<Long> _installedBundles;
-
-	private PluginMBeanManager _pluginsManagerMBean;
-
-	@ContainerScoped
-	@Inject
-	private InstanceProducer<MBeanServerConnection> mbeanServerInstance;
 
 	public void startContainer(@Observes StartContainer context)
 		throws Exception {
@@ -108,7 +83,7 @@ public class LiferayInstallDependenciesObserver {
 
 		_installedBundles = new ArrayList<>();
 
-		if(dependencyPropertyFile != null) {
+		if (dependencyPropertyFile != null) {
 			_initOSGiJMXAttributes(config);
 
 			_initLiferayJMXAttributes();
@@ -123,13 +98,7 @@ public class LiferayInstallDependenciesObserver {
 
 				String dependencyPath = "";
 
-				for (Iterator<String> iterator = dependencies.iterator();
-						iterator.hasNext();
-						_installBundle(
-							Paths.get(dependencyPath).toAbsolutePath().toString())) {
-
-					String dependency = iterator.next();
-
+				for (String dependency : dependencies) {
 					if (dependency.startsWith(_MAVEN_PREFIX)) {
 						String mavenDependency = dependency.substring(
 							_MAVEN_PREFIX.length() + 1);
@@ -141,6 +110,12 @@ public class LiferayInstallDependenciesObserver {
 						dependencyPath = dependency.substring(
 							_FILE_PREFIX.length() + 1);
 					}
+
+					Path path = Paths.get(dependencyPath);
+
+					path = path.toAbsolutePath();
+
+					_installBundle(path.toString());
 				}
 			}
 			catch (IOException ioe) {
@@ -155,12 +130,12 @@ public class LiferayInstallDependenciesObserver {
 	public void stopContainer(@Observes StopContainer context)
 		throws LifecycleException {
 
-		for (Long bundleId : this._installedBundles) {
+		for (Long bundleId : _installedBundles) {
 			try {
-				this._frameworkMBean.uninstallBundle(bundleId);
+				_frameworkMBean.uninstallBundle(bundleId);
 			}
-			catch (IOException var6) {
-				throw new LifecycleException("Can't uninstall bundle", var6);
+			catch (IOException ioe) {
+				throw new LifecycleException("Can't uninstall bundle", ioe);
 			}
 		}
 	}
@@ -170,8 +145,8 @@ public class LiferayInstallDependenciesObserver {
 
 		long timeoutMillis = System.currentTimeMillis() + 3000L;
 
-		while(System.currentTimeMillis() < timeoutMillis) {
-			if("ACTIVE".equals(_bundleStateMBean.getState(bundleId))) {
+		while (System.currentTimeMillis() < timeoutMillis) {
+			if ("ACTIVE".equals(_bundleStateMBean.getState(bundleId))) {
 				return;
 			}
 
@@ -187,11 +162,11 @@ public class LiferayInstallDependenciesObserver {
 
 		long timeoutMillis = System.currentTimeMillis() + 3000L;
 
-		while(System.currentTimeMillis() < timeoutMillis) {
+		while (System.currentTimeMillis() < timeoutMillis) {
 			List<String> legacyPluginsList =
 				_pluginsManagerMBean.listLegacyPlugins();
 
-			if(legacyPluginsList.contains(contextName)) {
+			if (legacyPluginsList.contains(contextName)) {
 				return;
 			}
 
@@ -246,10 +221,10 @@ public class LiferayInstallDependenciesObserver {
 				long timeoutMillis =
 					System.currentTimeMillis() + unit.toMillis(timeout);
 
-				while(System.currentTimeMillis() < timeoutMillis) {
+				while (System.currentTimeMillis() < timeoutMillis) {
 					Set<ObjectName> names = mbeanServer.queryNames(oname, null);
 
-					if(names.size() == 1) {
+					if (names.size() == 1) {
 						ObjectName instanceName = names.iterator().next();
 
 						return MBeanServerInvocationHandler.newProxyInstance(
@@ -265,6 +240,7 @@ public class LiferayInstallDependenciesObserver {
 
 				throw new TimeoutException();
 			}
+
 		};
 
 		ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -286,9 +262,8 @@ public class LiferayInstallDependenciesObserver {
 			LiferayRemoteContainerConfiguration configuration)
 		throws IOException {
 
-		String[] credentials = new String[] {
-			configuration.getJmxUsername(), configuration.getJmxPassword()
-		};
+		String[] credentials =
+			{configuration.getJmxUsername(), configuration.getJmxPassword()};
 
 		Map<String, String[]> env = Collections.singletonMap(
 			"jmx.remote.credentials", credentials);
@@ -316,7 +291,7 @@ public class LiferayInstallDependenciesObserver {
 					long timeoutMillis =
 						System.currentTimeMillis() + unit.toMillis(timeout);
 
-					while(System.currentTimeMillis() < timeoutMillis) {
+					while (System.currentTimeMillis() < timeoutMillis) {
 						try {
 							return LiferayInstallDependenciesObserver.this.
 								_getMBeanServerConnection(configuration);
@@ -334,6 +309,7 @@ public class LiferayInstallDependenciesObserver {
 
 					throw timeoutException;
 				}
+
 			};
 
 		ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -359,10 +335,9 @@ public class LiferayInstallDependenciesObserver {
 				"com.liferay.portal.monitoring:classification=" +
 					"plugin_statistics,name=PluginsManager");
 
-			_pluginsManagerMBean =
-				_getMBeanProxy(
-					mbeanServerInstance.get(), oname, PluginMBeanManager.class,
-					30L, TimeUnit.SECONDS);
+			_pluginsManagerMBean = _getMBeanProxy(
+				_mbeanServerInstance.get(), oname, PluginMBeanManager.class,
+				30L, TimeUnit.SECONDS);
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -383,11 +358,11 @@ public class LiferayInstallDependenciesObserver {
 			mbeanServer = _getMBeanServerConnection(
 				configuration, 30L, TimeUnit.SECONDS);
 
-			mbeanServerInstance.set(mbeanServer);
+			_mbeanServerInstance.set(mbeanServer);
 		}
-		catch (TimeoutException var6) {
+		catch (TimeoutException te) {
 			throw new LifecycleException(
-				"Error connecting to Karaf MBeanServer: ", var6);
+				"Error connecting to Karaf MBeanServer: ", te);
 		}
 
 		try {
@@ -424,7 +399,7 @@ public class LiferayInstallDependenciesObserver {
 
 				Matcher matcher = _pattern.matcher(contextName);
 
-				if(matcher.matches()) {
+				if (matcher.matches()) {
 					contextName = matcher.group(1);
 				}
 
@@ -461,5 +436,37 @@ public class LiferayInstallDependenciesObserver {
 			throw new LifecycleException("Timeout exception", te);
 		}
 	}
+
+	private static final String _FILE_PREFIX = "file";
+
+	private static final String _HOT_DEPLOY_JMX_LISTENER_MVN =
+		"com.liferay:com.liferay.hot.deploy.jmx.listener:1.0.0-SNAPSHOT";
+
+	private static final String _MAVEN_PREFIX = "mvn";
+
+	private static final Logger _log = Logger.getLogger(
+		LiferayInstallDependenciesObserver.class.getName());
+
+	private static final Pattern _pattern = Pattern.compile(
+		"(.*?)(-\\d+\\.\\d+\\.\\d+\\.\\d+)?");
+
+	private BundleStateMBean _bundleStateMBean;
+
+	@ApplicationScoped
+	@Inject
+	private Instance<LiferayRemoteContainerConfiguration>
+		_configurationInstance;
+
+	@Inject
+	private Instance<ContainerRegistry> _containerRegistryInstance;
+
+	private FrameworkMBean _frameworkMBean;
+	private List<Long> _installedBundles;
+
+	@ContainerScoped
+	@Inject
+	private InstanceProducer<MBeanServerConnection> _mbeanServerInstance;
+
+	private PluginMBeanManager _pluginsManagerMBean;
 
 }

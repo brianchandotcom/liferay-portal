@@ -1,0 +1,29 @@
+apply plugin: "com.liferay.test.integration.base"
+
+task runGradleTest
+
+dependencies {
+	testIntegrationCompile group: "junit", name: "junit", version: "4.12"
+}
+
+repositories {
+	maven {
+		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+	}
+}
+
+runGradleTest {
+	dependsOn testIntegration
+
+	doLast {
+		XmlSlurper xmlSlurper = new XmlSlurper()
+
+		File xmlFile = new File(testIntegration.reports.junitXml.destination, "TEST-com.example.sample.GreetingBuilderTest.xml")
+
+		def testsuiteNode = xmlSlurper.parse(xmlFile)
+
+		assert testsuiteNode.@name == "com.example.sample.GreetingBuilderTest"
+		assert testsuiteNode.@skipped == "0"
+		assert testsuiteNode.@tests == "2"
+	}
+}

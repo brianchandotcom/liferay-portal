@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.modern.site.building.fragment.web.internal.portlet.action;
+package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
-import com.liferay.modern.site.building.fragment.service.MSBFragmentEntryService;
+import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -33,36 +33,30 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + FragmentPortletKeys.FRAGMENT,
-		"mvc.command.name=deleteMSBFragmentEntries"
+		"mvc.command.name=editFragmentEntry"
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteMSBFragmentEntriesMVCActionCommand
-	extends BaseMVCActionCommand {
+public class EditFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long[] deleteMSBFragmentEntryIds = null;
+		long fragmentEntryId = ParamUtil.getLong(
+			actionRequest, "fragmentEntryId");
 
-		long msbFragmentEntryId = ParamUtil.getLong(
-			actionRequest, "msbFragmentEntryId");
+		String name = ParamUtil.getString(actionRequest, "name");
+		String css = ParamUtil.getString(actionRequest, "cssContent");
+		String js = ParamUtil.getString(actionRequest, "jsContent");
+		String html = ParamUtil.getString(actionRequest, "htmlContent");
 
-		if (msbFragmentEntryId > 0) {
-			deleteMSBFragmentEntryIds = new long[] {msbFragmentEntryId};
-		}
-		else {
-			deleteMSBFragmentEntryIds = ParamUtil.getLongValues(
-				actionRequest, "rowIds");
-		}
-
-		_msbFragmentEntryService.deleteMSBFragmentEntries(
-			deleteMSBFragmentEntryIds);
+		_fragmentEntryService.updateFragmentEntry(
+			fragmentEntryId, name, css, html, js);
 	}
 
 	@Reference
-	private MSBFragmentEntryService _msbFragmentEntryService;
+	private FragmentEntryService _fragmentEntryService;
 
 }

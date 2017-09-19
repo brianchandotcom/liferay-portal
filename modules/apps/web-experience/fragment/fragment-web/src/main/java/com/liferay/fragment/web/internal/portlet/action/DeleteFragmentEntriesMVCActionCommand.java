@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.modern.site.building.fragment.web.internal.portlet.action;
+package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
-import com.liferay.modern.site.building.fragment.service.MSBFragmentEntryService;
+import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -33,30 +33,35 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + FragmentPortletKeys.FRAGMENT,
-		"mvc.command.name=editMSBFragmentEntry"
+		"mvc.command.name=deleteFragmentEntries"
 	},
 	service = MVCActionCommand.class
 )
-public class EditMSBFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
+public class DeleteFragmentEntriesMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long msbFragmentEntryId = ParamUtil.getLong(
-			actionRequest, "msbFragmentEntryId");
+		long[] deleteFragmentEntryIds = null;
 
-		String name = ParamUtil.getString(actionRequest, "name");
-		String css = ParamUtil.getString(actionRequest, "cssContent");
-		String js = ParamUtil.getString(actionRequest, "jsContent");
-		String html = ParamUtil.getString(actionRequest, "htmlContent");
+		long fragmentEntryId = ParamUtil.getLong(
+			actionRequest, "fragmentEntryId");
 
-		_msbFragmentEntryService.updateMSBFragmentEntry(
-			msbFragmentEntryId, name, css, html, js);
+		if (fragmentEntryId > 0) {
+			deleteFragmentEntryIds = new long[] {fragmentEntryId};
+		}
+		else {
+			deleteFragmentEntryIds = ParamUtil.getLongValues(
+				actionRequest, "rowIds");
+		}
+
+		_fragmentEntryService.deleteFragmentEntries(deleteFragmentEntryIds);
 	}
 
 	@Reference
-	private MSBFragmentEntryService _msbFragmentEntryService;
+	private FragmentEntryService _fragmentEntryService;
 
 }

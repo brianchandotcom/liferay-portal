@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.modern.site.building.fragment.web.internal.application.list;
+package com.liferay.fragment.web.internal.application.list;
 
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PanelApp.class
 )
-public class MSBFragmentPanelApp extends BasePanelApp {
+public class FragmentPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {

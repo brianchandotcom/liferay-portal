@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.modern.site.building.fragment.web.util;
+package com.liferay.fragment.web.util;
 
-import com.liferay.modern.site.building.fragment.model.MSBFragmentCollection;
-import com.liferay.modern.site.building.fragment.model.MSBFragmentEntry;
+import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.util.comparator.FragmentCollectionCreateDateComparator;
 import com.liferay.fragment.util.comparator.FragmentCollectionNameComparator;
 import com.liferay.fragment.util.comparator.FragmentEntryCreateDateComparator;
@@ -25,10 +25,10 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 /**
  * @author Jürgen Kappler
  */
-public class MSBFragmentPortletUtil {
+public class FragmentPortletUtil {
 
-	public static OrderByComparator<MSBFragmentCollection>
-		getMSBFragmentCollectionOrderByComparator(
+	public static OrderByComparator<FragmentCollection>
+		getFragmentCollectionOrderByComparator(
 			String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;
@@ -37,7 +37,7 @@ public class MSBFragmentPortletUtil {
 			orderByAsc = true;
 		}
 
-		OrderByComparator<MSBFragmentCollection> orderByComparator = null;
+		OrderByComparator<FragmentCollection> orderByComparator = null;
 
 		if (orderByCol.equals("create-date")) {
 			orderByComparator = new FragmentCollectionCreateDateComparator(
@@ -51,8 +51,8 @@ public class MSBFragmentPortletUtil {
 		return orderByComparator;
 	}
 
-	public static OrderByComparator<MSBFragmentEntry>
-		getMSBFragmentEntryOrderByComparator(
+	public static OrderByComparator<FragmentEntry>
+		getFragmentEntryOrderByComparator(
 			String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;
@@ -61,7 +61,7 @@ public class MSBFragmentPortletUtil {
 			orderByAsc = true;
 		}
 
-		OrderByComparator<MSBFragmentEntry> orderByComparator = null;
+		OrderByComparator<FragmentEntry> orderByComparator = null;
 
 		if (orderByCol.equals("create-date")) {
 			orderByComparator = new FragmentEntryCreateDateComparator(

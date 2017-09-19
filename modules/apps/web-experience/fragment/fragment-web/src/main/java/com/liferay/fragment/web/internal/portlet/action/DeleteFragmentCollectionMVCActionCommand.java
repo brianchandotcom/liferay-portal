@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.modern.site.building.fragment.web.internal.portlet.action;
+package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
-import com.liferay.modern.site.building.fragment.service.MSBFragmentCollectionService;
+import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -33,11 +33,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + FragmentPortletKeys.FRAGMENT,
-		"mvc.command.name=deleteMSBFragmentCollection"
+		"mvc.command.name=deleteFragmentCollection"
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteMSBFragmentCollectionMVCActionCommand
+public class DeleteFragmentCollectionMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override
@@ -45,25 +45,24 @@ public class DeleteMSBFragmentCollectionMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long[] deleteMSBFragmentCollectionIds = null;
+		long[] deleteFragmentCollectionIds = null;
 
-		long msbFragmentCollectionId = ParamUtil.getLong(
-			actionRequest, "msbFragmentCollectionId");
+		long fragmentCollectionId = ParamUtil.getLong(
+			actionRequest, "fragmentCollectionId");
 
-		if (msbFragmentCollectionId > 0) {
-			deleteMSBFragmentCollectionIds =
-				new long[] {msbFragmentCollectionId};
+		if (fragmentCollectionId > 0) {
+			deleteFragmentCollectionIds = new long[] {fragmentCollectionId};
 		}
 		else {
-			deleteMSBFragmentCollectionIds = ParamUtil.getLongValues(
+			deleteFragmentCollectionIds = ParamUtil.getLongValues(
 				actionRequest, "rowIds");
 		}
 
-		_msbFragmentCollectionService.deleteMSBFragmentCollections(
-			deleteMSBFragmentCollectionIds);
+		_fragmentCollectionService.deleteFragmentCollections(
+			deleteFragmentCollectionIds);
 	}
 
 	@Reference
-	private MSBFragmentCollectionService _msbFragmentCollectionService;
+	private FragmentCollectionService _fragmentCollectionService;
 
 }

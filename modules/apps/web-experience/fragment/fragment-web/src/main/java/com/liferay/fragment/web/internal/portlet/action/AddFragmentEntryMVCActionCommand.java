@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.modern.site.building.fragment.web.internal.portlet.action;
+package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.exception.DuplicateFragmentEntryException;
 import com.liferay.fragment.exception.FragmentEntryNameException;
-import com.liferay.modern.site.building.fragment.model.MSBFragmentEntry;
-import com.liferay.modern.site.building.fragment.service.MSBFragmentEntryService;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -48,19 +48,19 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + FragmentPortletKeys.FRAGMENT,
-		"mvc.command.name=addMSBFragmentEntry"
+		"mvc.command.name=addFragmentEntry"
 	},
 	service = MVCActionCommand.class
 )
-public class AddMSBFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
+public class AddFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long msbFragmentCollectionId = ParamUtil.getLong(
-			actionRequest, "msbFragmentCollectionId");
+		long fragmentCollectionId = ParamUtil.getLong(
+			actionRequest, "fragmentCollectionId");
 
 		String name = ParamUtil.getString(actionRequest, "name");
 		String css = ParamUtil.getString(actionRequest, "cssContent");
@@ -71,15 +71,15 @@ public class AddMSBFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				actionRequest);
 
-			MSBFragmentEntry msbFragmentEntry =
-				_msbFragmentEntryService.addMSBFragmentEntry(
-					serviceContext.getScopeGroupId(), msbFragmentCollectionId,
+			FragmentEntry fragmentEntry =
+				_fragmentEntryService.addFragmentEntry(
+					serviceContext.getScopeGroupId(), fragmentCollectionId,
 					name, css, html, js, serviceContext);
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 			jsonObject.put(
-				"msbFragmentEntryId", msbFragmentEntry.getMsbFragmentEntryId());
+				"fragmentEntryId", fragmentEntry.getFragmentEntryId());
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);
@@ -118,11 +118,10 @@ public class AddMSBFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private MSBFragmentEntryService _msbFragmentEntryService;
+	private FragmentEntryService _fragmentEntryService;
 
 	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.modern.site.building.fragment.web)",
-		unbind = "-"
+		target = "(bundle.symbolic.name=com.liferay.fragment.web)", unbind = "-"
 	)
 	private ResourceBundleLoader _resourceBundleLoader;
 

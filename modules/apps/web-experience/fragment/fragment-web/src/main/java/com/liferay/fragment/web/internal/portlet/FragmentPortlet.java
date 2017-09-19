@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.modern.site.building.fragment.web.internal.portlet;
+package com.liferay.fragment.web.internal.portlet;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -44,5 +44,5 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = Portlet.class
 )
-public class MSBFragmentPortlet extends MVCPortlet {
+public class FragmentPortlet extends MVCPortlet {
 }

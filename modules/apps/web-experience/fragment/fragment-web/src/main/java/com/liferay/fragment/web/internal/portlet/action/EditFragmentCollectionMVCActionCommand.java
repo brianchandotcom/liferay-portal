@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.modern.site.building.fragment.web.internal.portlet.action;
+package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
-import com.liferay.modern.site.building.fragment.service.MSBFragmentCollectionService;
+import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -35,11 +35,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + FragmentPortletKeys.FRAGMENT,
-		"mvc.command.name=editMSBFragmentCollection"
+		"mvc.command.name=editFragmentCollection"
 	},
 	service = MVCActionCommand.class
 )
-public class EditMSBFragmentCollectionMVCActionCommand
+public class EditFragmentCollectionMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override
@@ -47,33 +47,33 @@ public class EditMSBFragmentCollectionMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long msbFragmentCollectionId = ParamUtil.getLong(
-			actionRequest, "msbFragmentCollectionId");
+		long fragmentCollectionId = ParamUtil.getLong(
+			actionRequest, "fragmentCollectionId");
 
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 
-		if (msbFragmentCollectionId <= 0) {
+		if (fragmentCollectionId <= 0) {
 
-			// Add modern site building fragment collection
+			// Add fragment collection
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				actionRequest);
 
-			_msbFragmentCollectionService.addMSBFragmentCollection(
+			_fragmentCollectionService.addFragmentCollection(
 				serviceContext.getScopeGroupId(), name, description,
 				serviceContext);
 		}
 		else {
 
-			// Update modern site building fragment collection
+			// Update fragment collection
 
-			_msbFragmentCollectionService.updateMSBFragmentCollection(
-				msbFragmentCollectionId, name, description);
+			_fragmentCollectionService.updateFragmentCollection(
+				fragmentCollectionId, name, description);
 		}
 	}
 
 	@Reference
-	private MSBFragmentCollectionService _msbFragmentCollectionService;
+	private FragmentCollectionService _fragmentCollectionService;
 
 }

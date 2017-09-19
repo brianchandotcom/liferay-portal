@@ -15,9 +15,23 @@
 package com.liferay.commerce.checkout.web.internal.util;
 
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
+import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,25 +45,53 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"commerce.checkout.step.name=summary",
-		"commerce.checkout.step.order:Integer=" + (Integer.MAX_VALUE - 10)
+		"commerce.checkout.step.name=orderSummary",
+		"commerce.checkout.step.order:Integer=" + (Integer.MAX_VALUE - 1)
 	},
 	service = CommerceCheckoutStep.class
 )
-public class SummaryCommerceCheckoutStep implements CommerceCheckoutStep {
+public class OrderSummaryCommerceCheckoutStep implements CommerceCheckoutStep {
 
 	@Override
 	public boolean action(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long commerceCartId = ParamUtil.getLong(
+			actionRequest, "commerceCartId");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CommerceOrder.class.getName(), actionRequest);
+
+		CommerceOrder commerceOrder =
+			_commerceOrderService.addCommerceOrderFromCart(
+				commerceCartId, serviceContext);
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			actionRequest, CommercePortletKeys.COMMERCE_CHECKOUT,
+			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter(
+			"commerceOrderId",
+			String.valueOf(commerceOrder.getCommerceOrderId()));
+		portletURL.setParameter("checkoutStepName", "orderConfirmation");
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, portletURL.toString());
 
 		return true;
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return "SUMMARY_TO_CHANGE";
+		return "ORDER_SUMMARY_TO_CHANGE";
+	}
+
+	@Override
+	public String getName() {
+		return "orderSummary";
 	}
 
 	@Override
@@ -78,13 +120,19 @@ public class SummaryCommerceCheckoutStep implements CommerceCheckoutStep {
 
 		_jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse,
-			"/checkout_step/summary.jsp");
+			"/checkout_step/order_summary.jsp");
 	}
 
 	@Override
-	public String getName() {
-		return "summary";
+	public boolean showControls(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+
+		return true;
 	}
+
+	@Reference
+	private CommerceOrderService _commerceOrderService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

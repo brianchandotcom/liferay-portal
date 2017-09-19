@@ -302,7 +302,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		_checkUTF8(file, fileName);
 
-		String newContent = processSourceChecks(
+		String newContent = _processSourceChecks(
 			file, fileName, absolutePath, content);
 
 		if (content.equals(newContent)) {
@@ -463,7 +463,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			fileName, new SourceFormatterMessage(fileName, message, null, -1));
 	}
 
-	protected String processSourceChecks(
+	private String _processSourceChecks(
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 

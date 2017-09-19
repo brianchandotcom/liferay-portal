@@ -31,13 +31,14 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"commerce.checkout.step.name=billing",
-		"commerce.checkout.step.order:Integer=5"
+		"commerce.checkout.step.name=summary",
+		"commerce.checkout.step.order:Integer=" + (Integer.MAX_VALUE - 10)
 	},
 	service = CommerceCheckoutStep.class
 )
 public class SummaryCommerceCheckoutStep implements CommerceCheckoutStep {
 
+	@Override
 	public boolean action(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
@@ -46,10 +47,12 @@ public class SummaryCommerceCheckoutStep implements CommerceCheckoutStep {
 		return true;
 	}
 
+	@Override
 	public String getLabel(Locale locale) {
-		return "BILLING_TO_CHANGE";
+		return "SUMMARY_TO_CHANGE";
 	}
 
+	@Override
 	public boolean isActive(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
@@ -58,6 +61,7 @@ public class SummaryCommerceCheckoutStep implements CommerceCheckoutStep {
 		return true;
 	}
 
+	@Override
 	public boolean isVisible(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
@@ -66,6 +70,7 @@ public class SummaryCommerceCheckoutStep implements CommerceCheckoutStep {
 		return true;
 	}
 
+	@Override
 	public void render(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
@@ -74,6 +79,11 @@ public class SummaryCommerceCheckoutStep implements CommerceCheckoutStep {
 		_jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse,
 			"/checkout_step/summary.jsp");
+	}
+
+	@Override
+	public String getName() {
+		return "summary";
 	}
 
 	@Reference

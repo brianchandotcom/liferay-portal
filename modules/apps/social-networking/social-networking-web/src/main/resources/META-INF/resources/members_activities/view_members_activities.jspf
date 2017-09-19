@@ -38,5 +38,5 @@ String taglibFeedURLMessage = LanguageUtil.format(request, "subscribe-to-x's-act
 	feedTitle="<%= taglibFeedTitle %>"
 	feedType="<%= rssFeedType %>"
 	feedURL="<%= rssURL.toString() %>"
-	feedURLMessage="<%= taglibFeedURLMessage %>"
+	feedURLMessage="<%= HtmlUtil.escape(taglibFeedURLMessage) %>"
 />

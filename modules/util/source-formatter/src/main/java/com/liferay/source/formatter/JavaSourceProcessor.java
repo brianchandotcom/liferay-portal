@@ -16,8 +16,13 @@ package com.liferay.source.formatter;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.source.formatter.checkstyle.Checker;
 import com.liferay.source.formatter.checkstyle.util.CheckStyleUtil;
+import com.liferay.source.formatter.util.CheckType;
+import com.liferay.source.formatter.util.DebugUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
+
+import com.puppycrawl.tools.checkstyle.api.Configuration;
 
 import java.io.File;
 
@@ -81,6 +86,40 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected void postFormat() throws Exception {
 		_processCheckStyle();
+	}
+
+	private Checker _getChecker() throws Exception {
+		if (_checker != null) {
+			return _checker;
+		}
+
+		Configuration configuration = CheckStyleUtil.getConfiguration(
+			"checkstyle.xml");
+
+		configuration = CheckStyleUtil.addAttribute(
+			configuration, "maxLineLength",
+			String.valueOf(sourceFormatterArgs.getMaxLineLength()),
+			"com.liferay.source.formatter.checkstyle.checks.PlusStatement");
+		configuration = CheckStyleUtil.addAttribute(
+			configuration, "showDebugInformation",
+			String.valueOf(sourceFormatterArgs.isShowDebugInformation()),
+			"com.liferay.*");
+
+		if (sourceFormatterArgs.isShowDebugInformation()) {
+			DebugUtil.addCheckNames(
+				CheckType.CHECKSTYLE,
+				CheckStyleUtil.getCheckNames(configuration));
+		}
+
+		List<File> suppressionsFiles = SourceFormatterUtil.getSuppressionsFiles(
+			sourceFormatterArgs.getBaseDirName(), "checkstyle-suppressions.xml",
+			getAllFileNames(), getSourceFormatterExcludes(), portalSource,
+			subrepository);
+
+		_checker = CheckStyleUtil.getChecker(
+			configuration, suppressionsFiles, sourceFormatterArgs);
+
+		return _checker;
 	}
 
 	private String[] _getPluginExcludes(String pluginDirectoryName) {
@@ -194,14 +233,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			return;
 		}
 
-		List<File> suppressionsFiles = SourceFormatterUtil.getSuppressionsFiles(
-			sourceFormatterArgs.getBaseDirName(), "checkstyle-suppressions.xml",
-			getAllFileNames(), getSourceFormatterExcludes(), portalSource,
-			subrepository);
+		Checker checker = _getChecker();
+
+		checker.process(_ungeneratedFiles);
 
 		Set<SourceFormatterMessage> sourceFormatterMessages =
-			CheckStyleUtil.process(
-				_ungeneratedFiles, suppressionsFiles, sourceFormatterArgs);
+			checker.getSourceFormatterMessages();
 
 		for (SourceFormatterMessage sourceFormatterMessage :
 				sourceFormatterMessages) {
@@ -217,6 +254,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	private static final String[] _INCLUDES = {"**/*.java"};
 
+	private Checker _checker;
 	private final List<File> _ungeneratedFiles = new CopyOnWriteArrayList<>();
 
 }

@@ -17,15 +17,11 @@ package com.liferay.source.formatter.checkstyle.util;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.source.formatter.SourceFormatterArgs;
-import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checkstyle.Checker;
-import com.liferay.source.formatter.util.CheckType;
-import com.liferay.source.formatter.util.DebugUtil;
 
 import com.puppycrawl.tools.checkstyle.ConfigurationLoader;
 import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
 import com.puppycrawl.tools.checkstyle.PropertiesExpander;
-import com.puppycrawl.tools.checkstyle.api.AuditListener;
 import com.puppycrawl.tools.checkstyle.api.Configuration;
 import com.puppycrawl.tools.checkstyle.filters.SuppressionsLoader;
 
@@ -33,8 +29,6 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 import org.xml.sax.InputSource;
 
@@ -43,29 +37,7 @@ import org.xml.sax.InputSource;
  */
 public class CheckStyleUtil {
 
-	public static Set<SourceFormatterMessage> process(
-			List<File> files, List<File> suppressionsFiles,
-			SourceFormatterArgs sourceFormatterArgs)
-		throws Exception {
-
-		_sourceFormatterMessages.clear();
-
-		Configuration configuration = _getConfiguration(sourceFormatterArgs);
-
-		if (sourceFormatterArgs.isShowDebugInformation()) {
-			DebugUtil.addCheckNames(
-				CheckType.CHECKSTYLE, _getCheckNames(configuration));
-		}
-
-		Checker checker = _getChecker(
-			configuration, suppressionsFiles, sourceFormatterArgs);
-
-		checker.process(files);
-
-		return _sourceFormatterMessages;
-	}
-
-	private static Configuration _addAttribute(
+	public static Configuration addAttribute(
 		Configuration configuration, String key, String value,
 		String... regexChecks) {
 
@@ -118,7 +90,7 @@ public class CheckStyleUtil {
 		return defaultConfiguration;
 	}
 
-	private static Checker _getChecker(
+	public static Checker getChecker(
 			Configuration configuration, List<File> suppressionsFiles,
 			SourceFormatterArgs sourceFormatterArgs)
 		throws Exception {
@@ -137,16 +109,17 @@ public class CheckStyleUtil {
 
 		checker.configure(configuration);
 
-		AuditListener listener = new CheckStyleLogger(
+		CheckStyleLogger checkStyleLogger = new CheckStyleLogger(
 			new UnsyncByteArrayOutputStream(), true,
 			sourceFormatterArgs.getBaseDirName());
 
-		checker.addListener(listener);
+		checker.addListener(checkStyleLogger);
+		checker.setCheckStyleLogger(checkStyleLogger);
 
 		return checker;
 	}
 
-	private static List<String> _getCheckNames(Configuration configuration) {
+	public static List<String> getCheckNames(Configuration configuration) {
 		List<String> checkNames = new ArrayList<>();
 
 		String name = configuration.getName();
@@ -162,35 +135,21 @@ public class CheckStyleUtil {
 		}
 
 		for (Configuration childConfiguration : configuration.getChildren()) {
-			checkNames.addAll(_getCheckNames(childConfiguration));
+			checkNames.addAll(getCheckNames(childConfiguration));
 		}
 
 		return checkNames;
 	}
 
-	private static Configuration _getConfiguration(
-			SourceFormatterArgs sourceFormatterArgs)
+	public static Configuration getConfiguration(String configurationFileName)
 		throws Exception {
 
 		ClassLoader classLoader = CheckStyleUtil.class.getClassLoader();
 
-		Configuration configuration = ConfigurationLoader.loadConfiguration(
-			new InputSource(classLoader.getResourceAsStream("checkstyle.xml")),
+		return ConfigurationLoader.loadConfiguration(
+			new InputSource(
+				classLoader.getResourceAsStream(configurationFileName)),
 			new PropertiesExpander(System.getProperties()), false);
-
-		configuration = _addAttribute(
-			configuration, "maxLineLength",
-			String.valueOf(sourceFormatterArgs.getMaxLineLength()),
-			"com.liferay.source.formatter.checkstyle.checks.PlusStatement");
-		configuration = _addAttribute(
-			configuration, "showDebugInformation",
-			String.valueOf(sourceFormatterArgs.isShowDebugInformation()),
-			"com.liferay.*");
-
-		return configuration;
 	}
-
-	private static final Set<SourceFormatterMessage> _sourceFormatterMessages =
-		new TreeSet<>();
 
 }

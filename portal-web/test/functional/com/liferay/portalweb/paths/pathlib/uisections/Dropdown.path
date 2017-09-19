@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>SELECTED_VALUE</td>
-	<td>//span[@class='option-selected']</td>
+	<td>//div[@class='option-selected']</td>
 	<td></td>
 </tr>
 <tr>

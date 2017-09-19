@@ -410,8 +410,9 @@ public class PortletPreferencesFactoryImpl
 			modeEditGuest = true;
 		}
 
-		return getPortletPreferencesIds(
-			siteGroupId, userId, layout, portletId, modeEditGuest);
+		return _getPortletPreferencesIds(
+			themeDisplay, siteGroupId, userId, layout, portletId,
+			modeEditGuest);
 	}
 
 	@Override
@@ -428,6 +429,15 @@ public class PortletPreferencesFactoryImpl
 	public PortletPreferencesIds getPortletPreferencesIds(
 			long siteGroupId, long userId, Layout layout, String portletId,
 			boolean modeEditGuest)
+		throws PortalException {
+
+		return _getPortletPreferencesIds(
+			null, siteGroupId, userId, layout, portletId, modeEditGuest);
+	}
+
+	private PortletPreferencesIds _getPortletPreferencesIds(
+			ThemeDisplay themeDisplay, long siteGroupId, long userId,
+			Layout layout, String portletId, boolean modeEditGuest)
 		throws PortalException {
 
 		PermissionChecker permissionChecker =
@@ -478,7 +488,17 @@ public class PortletPreferencesFactoryImpl
 				ownerType = PortletKeys.PREFS_OWNER_TYPE_LAYOUT;
 				plid = layout.getPlid();
 
-				if (layout.isPortletEmbedded(portletId, layout.getGroupId())) {
+				if (themeDisplay != null) {
+					if (themeDisplay.isPortletEmbedded(
+							layout.getGroupId(), layout, portletId)) {
+
+						ownerId = layout.getGroupId();
+						plid = PortletKeys.PREFS_PLID_SHARED;
+					}
+				}
+				else if (layout.isPortletEmbedded(
+							portletId, layout.getGroupId())) {
+
 					ownerId = layout.getGroupId();
 					plid = PortletKeys.PREFS_PLID_SHARED;
 				}

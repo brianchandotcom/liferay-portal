@@ -204,8 +204,8 @@ public class PortletRequestDispatcherImpl
 				}
 			}
 
-			if (pathInfo == null) {
-				pathInfo = pathNoQueryString;
+			if (servletPath == null) {
+				servletPath = pathNoQueryString;
 			}
 
 			String contextPath = portletRequest.getContextPath();

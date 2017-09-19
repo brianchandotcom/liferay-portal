@@ -34,6 +34,10 @@ public class JSONWhitespaceCheck extends WhitespaceCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
+		if (absolutePath.endsWith("/package.json")) {
+			return content;
+		}
+
 		StringBundler sb = new StringBundler();
 
 		try (UnsyncBufferedReader unsyncBufferedReader =

@@ -102,41 +102,25 @@ public class FriendlyURLServlet extends HttpServlet {
 		if (group == null) {
 			String screenName = friendlyURL.substring(1);
 
-			if (_user || !Validator.isNumber(screenName)) {
-				User user = userLocalService.fetchUserByScreenName(
-					companyId, screenName);
+			User user = userLocalService.fetchUserByScreenName(
+				companyId, screenName);
 
-				if (user != null) {
-					group = user.getGroup();
-				}
-				else if (_log.isWarnEnabled()) {
-					_log.warn("No user exists with friendly URL " + screenName);
-				}
+			if (user != null) {
+				group = user.getGroup();
 			}
-			else {
-				long groupId = GetterUtil.getLong(screenName);
+			else if (_log.isWarnEnabled()) {
+				_log.warn("No user exists with friendly URL " + screenName);
+			}
+		}
 
-				group = groupLocalService.fetchGroup(groupId);
+		if (group == null) {
+			long groupId = GetterUtil.getLong(friendlyURL.substring(1));
 
-				if (group == null) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"No group exists with friendly URL " + groupId +
-								". Try fetching by screen name instead.");
-					}
+			group = groupLocalService.fetchGroup(groupId);
 
-					User user = userLocalService.fetchUserByScreenName(
-						companyId, screenName);
-
-					if (user != null) {
-						group = user.getGroup();
-					}
-					else if (_log.isWarnEnabled()) {
-						_log.warn(
-							"No user or group exists with friendly URL " +
-								groupId);
-					}
-				}
+			if ((group == null) && _log.isDebugEnabled()) {
+				_log.debug(
+					"No group exists with friendly URL " + groupId + ".");
 			}
 		}
 

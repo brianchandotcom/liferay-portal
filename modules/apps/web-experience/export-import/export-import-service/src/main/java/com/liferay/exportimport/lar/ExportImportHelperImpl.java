@@ -74,7 +74,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -552,13 +551,14 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		throws Exception {
 
 		File file = FileUtil.createTempFile("lar");
-		InputStream inputStream = _dlFileEntryLocalService.getFileAsStream(
-			fileEntry.getFileEntryId(), fileEntry.getVersion(), false);
+
 		ZipReader zipReader = null;
 
 		ManifestSummary manifestSummary = null;
 
-		try {
+		try (InputStream inputStream = _dlFileEntryLocalService.getFileAsStream(
+				fileEntry.getFileEntryId(), fileEntry.getVersion(), false)) {
+
 			FileUtil.write(file, inputStream);
 
 			Group group = _groupLocalService.getGroup(groupId);
@@ -575,8 +575,6 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			manifestSummary = getManifestSummary(portletDataContext);
 		}
 		finally {
-			StreamUtil.cleanUp(inputStream);
-
 			if (zipReader != null) {
 				zipReader.close();
 			}

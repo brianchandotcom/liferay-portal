@@ -343,18 +343,13 @@ public class BlogsEntryStagedModelDataHandler
 					entry.getSmallImageId() + StringPool.PERIOD +
 						entry.getSmallImageType();
 
-				InputStream inputStream = null;
-
-				try {
-					inputStream = portletDataContext.getZipEntryAsInputStream(
-						smallImagePath);
+				try (InputStream inputStream =
+						portletDataContext.getZipEntryAsInputStream(
+							smallImagePath)) {
 
 					smallImageSelector = new ImageSelector(
 						FileUtil.getBytes(inputStream), smallImageFileName,
 						MimeTypesUtil.getContentType(smallImageFileName), null);
-				}
-				finally {
-					StreamUtil.cleanUp(inputStream);
 				}
 			}
 			else if (entry.getSmallImageFileEntryId() != 0) {

@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -33,13 +35,13 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.HashMap;
@@ -109,14 +111,18 @@ public class KnowledgeBaseUtil {
 	}
 
 	public static String getMimeType(byte[] bytes, String fileName) {
-		InputStream inputStream = new UnsyncByteArrayInputStream(bytes);
-
-		try {
+		try (InputStream inputStream = new UnsyncByteArrayInputStream(bytes)) {
 			return MimeTypesUtil.getContentType(inputStream, fileName);
 		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
+		catch (IOException ioe) {
+			ioe.addSuppressed(ioe);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(ioe, ioe);
+			}
 		}
+
+		return null;
 	}
 
 	public static Long[][] getParams(Long[] params) {
@@ -248,6 +254,9 @@ public class KnowledgeBaseUtil {
 
 	private static final int _SQL_DATA_MAX_PARAMETERS = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.SQL_DATA_MAX_PARAMETERS));
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		KnowledgeBaseUtil.class);
 
 	private static final Pattern _normalizationFriendlyUrlPattern =
 		Pattern.compile("[^a-z0-9_-]");

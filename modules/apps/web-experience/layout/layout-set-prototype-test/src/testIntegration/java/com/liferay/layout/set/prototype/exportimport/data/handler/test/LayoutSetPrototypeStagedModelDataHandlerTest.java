@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -285,46 +284,44 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 		String modelPath = ExportImportPathUtil.getModelPath(
 			stagedModel, fileName);
 
-		InputStream inputStream = portletDataContext.getZipEntryAsInputStream(
-			modelPath);
+		try (InputStream inputStream =
+				portletDataContext.getZipEntryAsInputStream(modelPath)) {
 
-		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(inputStream);
+			ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(
+				inputStream);
 
-		Document document = UnsecureSAXReaderUtil.read(
-			zipReader.getEntryAsString("manifest.xml"));
+			Document document = UnsecureSAXReaderUtil.read(
+				zipReader.getEntryAsString("manifest.xml"));
 
-		Element rootElement = document.getRootElement();
+			Element rootElement = document.getRootElement();
 
-		Element layoutElement = rootElement.element("Layout");
+			Element layoutElement = rootElement.element("Layout");
 
-		List<Element> elements = layoutElement.elements();
+			List<Element> elements = layoutElement.elements();
 
-		List<Layout> importedLayouts = new ArrayList<>(elements.size());
+			List<Layout> importedLayouts = new ArrayList<>(elements.size());
 
-		for (Element element : elements) {
-			String layoutPrototypeUuid = element.attributeValue(
-				"layout-prototype-uuid");
+			for (Element element : elements) {
+				String layoutPrototypeUuid = element.attributeValue(
+					"layout-prototype-uuid");
 
-			if (Validator.isNotNull(layoutPrototypeUuid)) {
-				String path = element.attributeValue("path");
+				if (Validator.isNotNull(layoutPrototypeUuid)) {
+					String path = element.attributeValue("path");
 
-				Layout layout = (Layout)portletDataContext.fromXML(
-					zipReader.getEntryAsString(path));
+					Layout layout = (Layout)portletDataContext.fromXML(
+						zipReader.getEntryAsString(path));
 
-				importedLayouts.add(layout);
+					importedLayouts.add(layout);
+				}
 			}
-		}
 
-		Assert.assertEquals(
-			importedLayouts.toString(), 1, importedLayouts.size());
+			Assert.assertEquals(
+				importedLayouts.toString(), 1, importedLayouts.size());
 
-		try {
 			return importedLayouts.get(0);
 		}
 		finally {
 			zipReader.close();
-
-			StreamUtil.cleanUp(inputStream);
 		}
 	}
 

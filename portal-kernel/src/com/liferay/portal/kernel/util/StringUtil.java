@@ -2274,14 +2274,12 @@ public class StringUtil {
 			while (enu.hasMoreElements()) {
 				URL url = enu.nextElement();
 
-				InputStream is = url.openStream();
+				try (InputStream is = url.openStream()) {
+					if (is == null) {
+						throw new IOException(
+							"Unable to open resource at " + url.toString());
+					}
 
-				if (is == null) {
-					throw new IOException(
-						"Unable to open resource at " + url.toString());
-				}
-
-				try {
 					String s = read(is);
 
 					if (s != null) {
@@ -2289,28 +2287,20 @@ public class StringUtil {
 						sb.append(StringPool.NEW_LINE);
 					}
 				}
-				finally {
-					StreamUtil.cleanUp(is);
-				}
 			}
 
 			return sb.toString().trim();
 		}
 
-		InputStream is = classLoader.getResourceAsStream(name);
+		try (InputStream is = classLoader.getResourceAsStream(name)) {
+			if (is == null) {
+				throw new IOException(
+					"Unable to open resource in class loader " + name);
+			}
 
-		if (is == null) {
-			throw new IOException(
-				"Unable to open resource in class loader " + name);
-		}
-
-		try {
 			String s = read(is);
 
 			return s;
-		}
-		finally {
-			StreamUtil.cleanUp(is);
 		}
 	}
 

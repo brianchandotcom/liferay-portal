@@ -17,6 +17,8 @@ package com.liferay.portal.kernel.util;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.util.DLAppHelperThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
@@ -34,6 +36,7 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
@@ -67,7 +70,14 @@ public class TempFileEntryUtil {
 			throw new PortalException(fnfe);
 		}
 		finally {
-			StreamUtil.cleanUp(inputStream);
+			try {
+				inputStream.close();
+			}
+			catch (IOException ioe) {
+				if (_log.isWarnEnabled()) {
+					_log.error(ioe, ioe);
+				}
+			}
 		}
 	}
 
@@ -252,5 +262,8 @@ public class TempFileEntryUtil {
 
 	private static final UUID _UUID = UUID.fromString(
 		"00EF1134-B3EE-432A-BABD-367CEFA44DE1");
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		TempFileEntryUtil.class);
 
 }

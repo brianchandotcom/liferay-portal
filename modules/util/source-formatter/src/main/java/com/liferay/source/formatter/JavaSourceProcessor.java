@@ -248,7 +248,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	private void _processCheckStyle(File file) throws Exception {
+	private synchronized void _processCheckStyle(File file) throws Exception {
 		_ungeneratedFiles.add(file);
 
 		if (_ungeneratedFiles.size() == _CHECKSTYLE_BATCH_SIZE) {

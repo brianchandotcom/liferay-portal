@@ -506,4 +506,30 @@ public class MapUtilTest {
 
 	}
 
+	public static class WhenGettingValueWithFallbackKey {
+
+		@Test
+		public void shouldReturnFallbackValue() {
+			Map<String, String> inputMap = new HashMap<>();
+
+			String fallbackKey = "1";
+			String fallbackValue = "one";
+
+			inputMap.put(fallbackKey, fallbackValue);
+			inputMap.put("2", StringPool.BLANK);
+			inputMap.put("3", null);
+
+			Assert.assertEquals(
+				fallbackValue,
+				MapUtil.getWithFallbackKey(inputMap, "2", fallbackKey));
+			Assert.assertEquals(
+				fallbackValue,
+				MapUtil.getWithFallbackKey(inputMap, "3", fallbackKey));
+			Assert.assertEquals(
+				fallbackValue,
+				MapUtil.getWithFallbackKey(inputMap, "4", fallbackKey));
+		}
+
+	}
+
 }

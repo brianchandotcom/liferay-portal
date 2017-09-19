@@ -293,6 +293,46 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		processFormattedFile(file, fileName, content, newContent);
 	}
 
+	protected String format(
+			File file, String fileName, String absolutePath, String content,
+			String originalContent, Set<String> modifiedContents, int count)
+		throws Exception {
+
+		_sourceFormatterMessagesMap.remove(fileName);
+
+		_checkUTF8(file, fileName);
+
+		String newContent = processSourceChecks(
+			file, fileName, absolutePath, content);
+
+		if (content.equals(newContent)) {
+			return content;
+		}
+
+		if (!modifiedContents.add(newContent)) {
+			processMessage(fileName, "Infinite loop in SourceFormatter");
+
+			return originalContent;
+		}
+
+		if (newContent.length() > content.length()) {
+			count++;
+
+			if (count > 100) {
+				processMessage(fileName, "Infinite loop in SourceFormatter");
+
+				return originalContent;
+			}
+		}
+		else {
+			count = 0;
+		}
+
+		return format(
+			file, fileName, absolutePath, newContent, originalContent,
+			modifiedContents, count);
+	}
+
 	protected List<String> getAllFileNames() {
 		return _allFileNames;
 	}
@@ -476,46 +516,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return false;
-	}
-
-	protected String format(
-			File file, String fileName, String absolutePath, String content,
-			String originalContent, Set<String> modifiedContents, int count)
-		throws Exception {
-
-		_sourceFormatterMessagesMap.remove(fileName);
-
-		_checkUTF8(file, fileName);
-
-		String newContent = processSourceChecks(
-			file, fileName, absolutePath, content);
-
-		if (content.equals(newContent)) {
-			return content;
-		}
-
-		if (!modifiedContents.add(newContent)) {
-			processMessage(fileName, "Infinite loop in SourceFormatter");
-
-			return originalContent;
-		}
-
-		if (newContent.length() > content.length()) {
-			count++;
-
-			if (count > 100) {
-				processMessage(fileName, "Infinite loop in SourceFormatter");
-
-				return originalContent;
-			}
-		}
-		else {
-			count = 0;
-		}
-
-		return format(
-			file, fileName, absolutePath, newContent, originalContent,
-			modifiedContents, count);
 	}
 
 	private void _format(String fileName) throws Exception {

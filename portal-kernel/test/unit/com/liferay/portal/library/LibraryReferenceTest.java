@@ -358,7 +358,7 @@ public class LibraryReferenceTest {
 
 					String dirName = String.valueOf(dirPath.getFileName());
 
-					if (!dirName.equals("util-taglib-compat") &&
+					if (!dirName.endsWith("-compat") &&
 						Files.exists(dirPath.resolve(".lfrbuild-portal-pre"))) {
 
 						Path sourceDirPath = dirPath.resolve(

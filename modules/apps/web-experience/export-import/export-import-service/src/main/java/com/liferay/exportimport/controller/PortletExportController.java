@@ -191,7 +191,6 @@ public class PortletExportController implements ExportController {
 		Layout layout = _layoutLocalService.fetchLayout(plid);
 
 		if (layout != null) {
-			plid = layout.getPlid();
 			layoutId = layout.getLayoutId();
 		}
 

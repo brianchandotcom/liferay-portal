@@ -16,8 +16,6 @@ package com.liferay.arquillian.extension.junit.bridge;
 
 import com.liferay.arquillian.container.remote.installdependency.LiferayInstallDependenciesObserver;
 import com.liferay.arquillian.containter.osgi.allin.remote.KarafWithoutBundleRemoteDeployableContainer;
-import com.liferay.arquillian.containter.remote.enricher.LiferayEnricherAuxiliaryAppender;
-import com.liferay.arquillian.containter.remote.wait.LiferayWaitForServiceAuxiliaryAppender;
 import com.liferay.arquillian.extension.junit.bridge.container.remote.LiferayRemoteDeployableContainer;
 import com.liferay.arquillian.extension.junit.bridge.deployment.BndDeploymentScenarioGenerator;
 import com.liferay.arquillian.extension.junit.bridge.deployment.JUnitBridgeAuxiliaryArchiveAppender;
@@ -50,12 +48,6 @@ public class LiferayArquillianJUnitBridgeExtension
 				DeployableContainer.class,
 				KarafWithoutBundleRemoteDeployableContainer.class,
 				LiferayRemoteDeployableContainer.class);
-			extensionBuilder.service(
-				AuxiliaryArchiveAppender.class,
-				LiferayEnricherAuxiliaryAppender.class);
-			extensionBuilder.service(
-				AuxiliaryArchiveAppender.class,
-				LiferayWaitForServiceAuxiliaryAppender.class);
 			extensionBuilder.observer(LiferayInstallDependenciesObserver.class);
 			extensionBuilder.service(
 				DeploymentScenarioGenerator.class,

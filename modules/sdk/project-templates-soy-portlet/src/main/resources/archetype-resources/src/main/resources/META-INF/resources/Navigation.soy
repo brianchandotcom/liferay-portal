@@ -2,11 +2,11 @@
 
 /**
  * Prints the portlet navigation example page.
- *
- * @param id
- * @param navigationURL
  */
 {template .render}
+	{@param id: string}
+ 	{@param navigationURL: string}
+
 	<div id="{$id}">
 		{call Header.render data="all"}{/call}
 

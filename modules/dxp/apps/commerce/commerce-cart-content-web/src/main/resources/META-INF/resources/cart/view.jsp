@@ -57,7 +57,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				%>
 
 				<liferay-ui:search-container-column-image
-					cssClass="table-cell-content"
+					cssClass=""
 					name="product"
 					src="<%= thumbnailSrc %>"
 				/>
@@ -76,13 +76,13 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass=""
 					name="price"
 					value="<%= commerceCartContentDisplayContext.getFormattedPrice(commerceCartItem) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass=""
 				>
 					<portlet:actionURL name="editCommerceCartItem" var="deleteURL">
 						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
@@ -98,7 +98,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-jsp
-					cssClass="table-cell-content"
+					cssClass=""
 					name="quantity"
 					path="/cart/cart_item_quantity_select.jsp"
 				/>

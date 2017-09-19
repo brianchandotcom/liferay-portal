@@ -27,34 +27,17 @@ request.setAttribute("cpDefinition", commerceCartItem.getCPDefinition());
 request.setAttribute("cpInstance", commerceCartItem.fetchCPInstance());
 %>
 
-<%
-if (commerceWishListContentDisplayContext.canSellWithoutOptionsCombination(commerceCartItem)) {
-%>
-
-	<liferay-util:dynamic-include key="com.liferay.commerce.product.content.web#/add_to_cart#" />
-
-<%
-}
-else {
-%>
-
-	<aui:button
-		cssClass="btn-lg btn-primary"
-		href="<%= commerceWishListContentDisplayContext.getCPDefinitionURL(commerceCartItem.getCPDefinitionId(), themeDisplay) %>"
-		name="selectOptions"
-		type="button"
-		value="select-options"
-	/>
-
-<%
-}
-%>
-
-<portlet:actionURL name="editCommerceCartItem" var="deleteURL">
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="commerceCartItemId" value="<%= String.valueOf(commerceCartItem.getCommerceCartItemId()) %>" />
-	<portlet:param name="type" value="<%= String.valueOf(CommerceConstants.COMMERCE_CART_TYPE_WISH_LIST) %>" />
-</portlet:actionURL>
-
-<aui:button href="<%= deleteURL %>" name="removeItem" value="remove" />
+<c:choose>
+	<c:when test="<%= commerceWishListContentDisplayContext.canSellWithoutOptionsCombination(commerceCartItem) %>">
+		<aui:button cssClass="btn-lg btn-primary" value="add-to-cart" />
+	</c:when>
+	<c:otherwise>
+		<aui:button
+			cssClass="btn-primary"
+			href="<%= commerceWishListContentDisplayContext.getCPDefinitionURL(commerceCartItem.getCPDefinitionId(), themeDisplay) %>"
+			name="selectOptions"
+			type="button"
+			value="select-options"
+		/>
+	</c:otherwise>
+</c:choose>

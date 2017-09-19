@@ -57,7 +57,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				%>
 
 				<liferay-ui:search-container-column-image
-					cssClass="table-cell-content"
+					cssClass=""
 					name="product"
 					src="<%= thumbnailSrc %>"
 				/>
@@ -76,14 +76,30 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass=""
 					name="price"
 					value="<%= commerceWishListContentDisplayContext.getFormattedPrice(commerceCartItem) %>"
 				/>
 
+				<liferay-ui:search-container-column-text
+					cssClass=""
+				>
+					<portlet:actionURL name="editCommerceCartItem" var="deleteURL">
+						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="commerceCartItemId" value="<%= String.valueOf(commerceCartItem.getCommerceCartItemId()) %>" />
+						<portlet:param name="type" value="<%= String.valueOf(CommerceConstants.COMMERCE_CART_TYPE_CART) %>" />
+					</portlet:actionURL>
+
+					<liferay-ui:icon-delete
+						label="<%= true %>"
+						url="<%= deleteURL %>"
+					/>
+				</liferay-ui:search-container-column-text>
+
 				<liferay-ui:search-container-column-jsp
 					colspan="<%= 2 %>"
-					cssClass="table-cell-content"
+					cssClass=""
 					path="/wish_list/wish_list_action.jsp"
 				/>
 			</liferay-ui:search-container-row>

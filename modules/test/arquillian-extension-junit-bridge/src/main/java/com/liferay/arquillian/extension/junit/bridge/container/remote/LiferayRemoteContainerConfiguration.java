@@ -23,21 +23,22 @@ public class LiferayRemoteContainerConfiguration
 	extends KarafRemoteContainerConfiguration {
 
 	public static final String LIFERAY_DEFAULT_HTTP_HOST = "localhost";
+
 	public static final int LIFERAY_DEFAULT_HTTP_PORT = 8080;
+
 	public static final String LIFERAY_DEFAULT_JMX_PASSWORD = "";
+
 	public static final String LIFERAY_DEFAULT_JMX_SERVICE_URL =
 		"service:jmx:rmi:///jndi/rmi://localhost:8099/jmxrmi";
+
 	public static final String LIFERAY_DEFAULT_JMX_USERNAME = "";
 
-	private String httpHost;
-	private Integer httpPort;
-
 	public String getHttpHost() {
-		return this.httpHost;
+		return _httpHost;
 	}
 
 	public int getHttpPort() {
-		return httpPort;
+		return _httpPort;
 	}
 
 	@Override
@@ -46,34 +47,37 @@ public class LiferayRemoteContainerConfiguration
 	}
 
 	public void setHttpHost(String httpHost) {
-		this.httpHost = httpHost;
+		_httpHost = httpHost;
 	}
 
 	public void setHttpPort(int httpPort) {
-		this.httpPort = httpPort;
+		_httpPort = httpPort;
 	}
 
 	@Override
 	public void validate() {
-		if(httpHost == null) {
+		if (_httpHost == null) {
 			setHttpHost(LIFERAY_DEFAULT_HTTP_HOST);
 		}
 
-		if(httpPort == null) {
+		if (_httpPort == null) {
 			setHttpPort(LIFERAY_DEFAULT_HTTP_PORT);
 		}
 
-		if(jmxServiceURL == null) {
+		if (jmxServiceURL == null) {
 			setJmxServiceURL(LIFERAY_DEFAULT_JMX_SERVICE_URL);
 		}
 
-		if(jmxUsername == null) {
+		if (jmxUsername == null) {
 			setJmxUsername(LIFERAY_DEFAULT_JMX_USERNAME);
 		}
 
-		if(jmxPassword == null) {
+		if (jmxPassword == null) {
 			setJmxPassword(LIFERAY_DEFAULT_JMX_PASSWORD);
 		}
 	}
+
+	private String _httpHost;
+	private Integer _httpPort;
 
 }

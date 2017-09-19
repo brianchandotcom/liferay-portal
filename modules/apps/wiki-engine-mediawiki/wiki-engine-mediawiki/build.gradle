@@ -5,7 +5,7 @@ task copyJAMWiki(type: Copy)
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
-String jamWikiVersion = "1.0.8"
+String jamWikiVersion = "1.0.7"
 
 copyJAMWiki {
 	eachFile new StripPathSegmentsAction(5)

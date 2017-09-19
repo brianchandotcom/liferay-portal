@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemEnv;
 import com.liferay.portal.kernel.util.Validator;
@@ -404,8 +403,6 @@ public class PDFProcessorImpl
 			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception {
 
-		InputStream inputStream = null;
-
 		try {
 			if (sourceFileVersion != null) {
 				copy(sourceFileVersion, destinationFileVersion);
@@ -435,31 +432,36 @@ public class PDFProcessorImpl
 					}
 				}
 
-				inputStream = destinationFileVersion.getContentStream(false);
+				try (InputStream inputStream =
+						destinationFileVersion.getContentStream(false)) {
 
-				_generateImages(destinationFileVersion, inputStream);
+					_generateImages(destinationFileVersion, inputStream);
+				}
 			}
 			else if (DocumentConversionUtil.isEnabled()) {
-				inputStream = destinationFileVersion.getContentStream(false);
+				try (InputStream inputStream =
+						destinationFileVersion.getContentStream(false)) {
 
-				String tempFileId = DLUtil.getTempFileId(
-					destinationFileVersion.getFileEntryId(),
-					destinationFileVersion.getVersion());
+					String tempFileId = DLUtil.getTempFileId(
+						destinationFileVersion.getFileEntryId(),
+						destinationFileVersion.getVersion());
 
-				if (Objects.equals(
-						"PWC", destinationFileVersion.getVersion()) ||
-					destinationFileVersion.isPending()) {
+					if (Objects.equals(
+							"PWC", destinationFileVersion.getVersion()) ||
+						destinationFileVersion.isPending()) {
 
-					File file = new File(
-						DocumentConversionUtil.getFilePath(tempFileId, "pdf"));
+						File file = new File(
+							DocumentConversionUtil.getFilePath(
+								tempFileId, "pdf"));
 
-					FileUtil.delete(file);
+						FileUtil.delete(file);
+					}
+
+					File file = DocumentConversionUtil.convert(
+						tempFileId, inputStream, extension, "pdf");
+
+					_generateImages(destinationFileVersion, file);
 				}
-
-				File file = DocumentConversionUtil.convert(
-					tempFileId, inputStream, extension, "pdf");
-
-				_generateImages(destinationFileVersion, file);
 			}
 		}
 		catch (NoSuchFileEntryException nsfee) {
@@ -468,8 +470,6 @@ public class PDFProcessorImpl
 			}
 		}
 		finally {
-			StreamUtil.cleanUp(inputStream);
-
 			_fileVersionIds.remove(destinationFileVersion.getFileVersionId());
 		}
 	}

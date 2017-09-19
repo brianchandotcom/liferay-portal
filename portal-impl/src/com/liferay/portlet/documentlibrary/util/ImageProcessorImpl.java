@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -268,8 +267,6 @@ public class ImageProcessorImpl
 			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception {
 
-		InputStream inputStream = null;
-
 		try {
 			if (sourceFileVersion != null) {
 				copy(sourceFileVersion, destinationFileVersion);
@@ -283,46 +280,49 @@ public class ImageProcessorImpl
 				return;
 			}
 
-			inputStream = destinationFileVersion.getContentStream(false);
+			try (InputStream inputStream =
+					destinationFileVersion.getContentStream(false)) {
 
-			byte[] bytes = FileUtil.getBytes(inputStream);
+				byte[] bytes = FileUtil.getBytes(inputStream);
 
-			ImageBag imageBag = ImageToolUtil.read(bytes);
+				ImageBag imageBag = ImageToolUtil.read(bytes);
 
-			RenderedImage renderedImage = imageBag.getRenderedImage();
+				RenderedImage renderedImage = imageBag.getRenderedImage();
 
-			if (renderedImage == null) {
-				return;
-			}
-
-			ColorModel colorModel = renderedImage.getColorModel();
-
-			if (colorModel.getNumColorComponents() == 4) {
-				Future<RenderedImage> future = ImageToolUtil.convertCMYKtoRGB(
-					bytes, imageBag.getType());
-
-				if (future == null) {
+				if (renderedImage == null) {
 					return;
 				}
 
-				String processIdentity = String.valueOf(
-					destinationFileVersion.getFileVersionId());
+				ColorModel colorModel = renderedImage.getColorModel();
 
-				futures.put(processIdentity, future);
+				if (colorModel.getNumColorComponents() == 4) {
+					Future<RenderedImage> future =
+						ImageToolUtil.convertCMYKtoRGB(
+							bytes, imageBag.getType());
 
-				RenderedImage convertedRenderedImage = future.get();
+					if (future == null) {
+						return;
+					}
 
-				if (convertedRenderedImage != null) {
-					renderedImage = convertedRenderedImage;
+					String processIdentity = String.valueOf(
+						destinationFileVersion.getFileVersionId());
+
+					futures.put(processIdentity, future);
+
+					RenderedImage convertedRenderedImage = future.get();
+
+					if (convertedRenderedImage != null) {
+						renderedImage = convertedRenderedImage;
+					}
 				}
-			}
 
-			if (!_hasPreview(destinationFileVersion)) {
-				_storePreviewImage(destinationFileVersion, renderedImage);
-			}
+				if (!_hasPreview(destinationFileVersion)) {
+					_storePreviewImage(destinationFileVersion, renderedImage);
+				}
 
-			if (!hasThumbnails(destinationFileVersion)) {
-				storeThumbnailImages(destinationFileVersion, renderedImage);
+				if (!hasThumbnails(destinationFileVersion)) {
+					storeThumbnailImages(destinationFileVersion, renderedImage);
+				}
 			}
 		}
 		catch (NoSuchFileEntryException nsfee) {
@@ -331,8 +331,6 @@ public class ImageProcessorImpl
 			}
 		}
 		finally {
-			StreamUtil.cleanUp(inputStream);
-
 			_fileVersionIds.remove(destinationFileVersion.getFileVersionId());
 		}
 	}

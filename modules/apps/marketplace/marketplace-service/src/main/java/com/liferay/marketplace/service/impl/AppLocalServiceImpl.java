@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -428,7 +427,6 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 	}
 
 	protected Properties getMarketplaceProperties(File liferayPackageFile) {
-		InputStream inputStream = null;
 		ZipFile zipFile = null;
 
 		try {
@@ -437,11 +435,11 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 			ZipEntry zipEntry = zipFile.getEntry(
 				"liferay-marketplace.properties");
 
-			inputStream = zipFile.getInputStream(zipEntry);
+			try (InputStream inputStream = zipFile.getInputStream(zipEntry)) {
+				String propertiesString = StringUtil.read(inputStream);
 
-			String propertiesString = StringUtil.read(inputStream);
-
-			return PropertiesUtil.load(propertiesString);
+				return PropertiesUtil.load(propertiesString);
+			}
 		}
 		catch (IOException ioe) {
 			return null;
@@ -454,8 +452,6 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 				catch (IOException ioe) {
 				}
 			}
-
-			StreamUtil.cleanUp(inputStream);
 		}
 	}
 

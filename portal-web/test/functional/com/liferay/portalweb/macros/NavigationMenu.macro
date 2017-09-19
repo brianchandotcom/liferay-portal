@@ -8,4 +8,16 @@
 			<var name="key_menuItem" value="Add Page" />
 		</execute>
 	</command>
+
+	<command name="selectAndSaveConfiguration">
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+
+		<execute function="Select" locator1="Select#DISPLAY_TEMPLATE" value1="${displayTemplate}" />
+
+		<execute macro="Button#clickSave" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+
+		<execute function="SelectFrame" value1="relative=top" />
+	</command>
 </definition>

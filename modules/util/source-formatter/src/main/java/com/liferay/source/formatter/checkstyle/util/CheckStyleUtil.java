@@ -16,7 +16,6 @@ package com.liferay.source.formatter.checkstyle.util;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.ProgressStatus;
@@ -56,7 +55,7 @@ import org.xml.sax.InputSource;
 public class CheckStyleUtil {
 
 	public static Set<SourceFormatterMessage> process(
-			Set<File> files, List<File> suppressionsFiles,
+			List<File> files, List<File> suppressionsFiles,
 			SourceFormatterArgs sourceFormatterArgs,
 			BlockingQueue<ProgressStatusUpdate> progressStatusQueue)
 		throws Exception {
@@ -75,7 +74,7 @@ public class CheckStyleUtil {
 		Checker checker = _getChecker(
 			configuration, suppressionsFiles, sourceFormatterArgs);
 
-		checker.process(ListUtil.fromCollection(files));
+		checker.process(files);
 
 		return _sourceFormatterMessages;
 	}

@@ -27,7 +27,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Hugo Huijser
@@ -222,6 +222,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	private static final String[] _INCLUDES = {"**/*.java"};
 
-	private final Set<File> _ungeneratedFiles = new CopyOnWriteArraySet<>();
+	private final List<File> _ungeneratedFiles = new CopyOnWriteArrayList<>();
 
 }

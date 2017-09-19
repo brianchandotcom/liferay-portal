@@ -129,7 +129,7 @@ public class GitWorkingDirectory {
 	}
 
 	public void checkoutBranch(Branch branch, String options) {
-		if (branchExists(branch.getName(), null)) {
+		if (!branchExists(branch.getName(), null)) {
 			throw new IllegalArgumentException(
 				JenkinsResultsParserUtil.combine(
 					"The branch ", branch.getName(), " could not be found"));
@@ -484,11 +484,7 @@ public class GitWorkingDirectory {
 					executionResult.getStandardErr()));
 		}
 
-		String standardOut = executionResult.getStandardOut();
-
-		String firstLine = standardOut.substring(0, standardOut.indexOf("\n"));
-
-		return firstLine.trim();
+		return executionResult.getStandardOut();
 	}
 
 	public Branch getCurrentBranch() {
@@ -595,7 +591,7 @@ public class GitWorkingDirectory {
 
 		for (int i = 0; i < lines.length; i = i + 2) {
 			Remote remote = new Remote(
-				this, Arrays.copyOfRange(lines, i, i + 1));
+				this, Arrays.copyOfRange(lines, i, i + 2));
 
 			remotes.put(remote.getName(), remote);
 		}
@@ -669,7 +665,7 @@ public class GitWorkingDirectory {
 		Branch currentBranch = getCurrentBranch();
 
 		return pushToRemote(
-			force, currentBranch, getBranch(currentBranch.getName(), remote));
+			force, currentBranch, currentBranch.getName(), remote);
 	}
 
 	public void rebase(
@@ -881,15 +877,17 @@ public class GitWorkingDirectory {
 
 		while (retries < maxRetries) {
 			try {
+				retries++;
+
 				process = JenkinsResultsParserUtil.executeBashCommands(
 					true, _workingDirectory, timeout, commands);
 			}
 			catch (InterruptedException | IOException | TimeoutException e) {
-				retries++;
-
 				if (retries == maxRetries) {
 					throw new RuntimeException(
-						"Unable to execute bash commands: " + commands, e);
+						"Unable to execute bash commands: " +
+							Arrays.toString(commands),
+						e);
 				}
 			}
 		}
@@ -1130,7 +1128,15 @@ public class GitWorkingDirectory {
 
 			_exitValue = exitValue;
 			_standardErr = standardErr;
-			_standardOut = standardOut;
+
+			if (standardOut.endsWith("\nFinished executing Bash commands.")) {
+				_standardOut = standardOut.substring(
+					0,
+					standardOut.indexOf("\nFinished executing Bash commands."));
+			}
+			else {
+				_standardOut = standardOut;
+			}
 		}
 
 		private final int _exitValue;
@@ -1142,7 +1148,7 @@ public class GitWorkingDirectory {
 	private static final Pattern _gitDirectoryPathPattern = Pattern.compile(
 		"gitdir\\: (.*\\.git)");
 	private static final Pattern _gitLsRemotePattern = Pattern.compile(
-		"(?<SHA>[^\\s]{40}+)[\\s]+(?<name>[^\\s]+)");
+		"(?<sha>[^\\s]{40}+)[\\s]+refs/heads/(?<name>[^\\s]+)");
 
 	private File _gitDirectory;
 	private final String _repositoryName;

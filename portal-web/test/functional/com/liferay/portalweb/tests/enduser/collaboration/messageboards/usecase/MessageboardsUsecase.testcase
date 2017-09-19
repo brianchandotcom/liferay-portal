@@ -437,7 +437,7 @@
 			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
-		<execute macro="JSONMessage#addMessage">
+		<execute macro="JSONMBMessage#addMessage">
 			<var name="threadBody"><![CDATA[<script>alert(2)</script>]]></var>
 			<var name="threadSubject"><![CDATA[<script>alert(1)</script>]]></var>
 		</execute>

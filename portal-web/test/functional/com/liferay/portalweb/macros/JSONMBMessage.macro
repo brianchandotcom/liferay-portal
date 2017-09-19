@@ -1,6 +1,6 @@
 <definition>
 	<command name="addMessage">
-		<execute macro="JSONMessage#getmessageId">
+		<execute macro="JSONMBMessage#getmessageId">
 			<return from="messageId" name="messageId" />
 		</execute>
 

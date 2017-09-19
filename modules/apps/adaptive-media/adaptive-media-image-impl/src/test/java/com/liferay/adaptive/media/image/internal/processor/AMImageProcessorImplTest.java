@@ -330,7 +330,7 @@ public class AMImageProcessorImplTest {
 		).addAMImageEntry(
 			Mockito.any(AMImageConfigurationEntry.class),
 			Mockito.any(FileVersion.class), Mockito.anyInt(), Mockito.anyInt(),
-			Mockito.any(InputStream.class), Mockito.anyInt()
+			Mockito.any(InputStream.class), Mockito.anyLong()
 		);
 
 		_amImageProcessorImpl.process(_fileVersion);
@@ -384,7 +384,7 @@ public class AMImageProcessorImplTest {
 		).addAMImageEntry(
 			Mockito.any(AMImageConfigurationEntry.class),
 			Mockito.any(FileVersion.class), Mockito.anyInt(), Mockito.anyInt(),
-			Mockito.any(InputStream.class), Mockito.anyInt()
+			Mockito.any(InputStream.class), Mockito.anyLong()
 		);
 	}
 
@@ -487,7 +487,7 @@ public class AMImageProcessorImplTest {
 		).addAMImageEntry(
 			Mockito.any(AMImageConfigurationEntry.class),
 			Mockito.any(FileVersion.class), Mockito.anyInt(), Mockito.anyInt(),
-			Mockito.any(InputStream.class), Mockito.anyInt()
+			Mockito.any(InputStream.class), Mockito.anyLong()
 		);
 
 		_amImageProcessorImpl.process(_fileVersion);
@@ -521,9 +521,8 @@ public class AMImageProcessorImplTest {
 			_amImageEntryLocalService, Mockito.never()
 		).addAMImageEntry(
 			Mockito.any(AMImageConfigurationEntry.class),
-			Mockito.any(FileVersion.class), Mockito.anyInt(),
-			Mockito.any(Integer.class), Mockito.any(InputStream.class),
-			Mockito.any(Integer.class)
+			Mockito.any(FileVersion.class), Mockito.anyInt(), Mockito.anyInt(),
+			Mockito.any(InputStream.class), Mockito.anyLong()
 		);
 	}
 

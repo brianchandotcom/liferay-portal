@@ -68,8 +68,8 @@ public interface AMImageEntryLocalService extends BaseLocalService,
 	* Adds an adaptive media image entry in the database and stores the image
 	* bytes in the file store.
 	*
-	* @param amImageConfigurationEntry the configuration used to create the adaptive
-	media image
+	* @param amImageConfigurationEntry the configuration used to create the
+	adaptive media image
 	* @param fileVersion the file version used to create the adaptive media
 	image
 	* @param width the adaptive media image's width
@@ -84,7 +84,7 @@ public interface AMImageEntryLocalService extends BaseLocalService,
 	public AMImageEntry addAMImageEntry(
 		AMImageConfigurationEntry amImageConfigurationEntry,
 		FileVersion fileVersion, int width, int height,
-		InputStream inputStream, int size) throws PortalException;
+		InputStream inputStream, long size) throws PortalException;
 
 	/**
 	* Adds the am image entry to the database. Also notifies the appropriate model listeners.
@@ -109,8 +109,8 @@ public interface AMImageEntryLocalService extends BaseLocalService,
 	* the database and the bytes from the file store.
 	*
 	* @param companyId the primary key of the company
-	* @param amImageConfigurationEntry the configuration used to create the adaptive
-	media image
+	* @param amImageConfigurationEntry the configuration used to create the
+	adaptive media image
 	*/
 	public void deleteAMImageEntries(long companyId,
 		AMImageConfigurationEntry amImageConfigurationEntry);
@@ -345,8 +345,8 @@ public interface AMImageEntryLocalService extends BaseLocalService,
 	* Returns the input stream of the adaptive media image generated for a file
 	* version and configuration.
 	*
-	* @param amImageConfigurationEntry the configuration used to create the adaptive
-	media image
+	* @param amImageConfigurationEntry the configuration used to create the
+	adaptive media image
 	* @param fileVersion the file version used to create the adaptive media
 	image
 	* @return the input stream of the adaptive media image generated for a file

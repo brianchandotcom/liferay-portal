@@ -83,7 +83,7 @@ public class AMImageEntryLocalServiceImpl
 	public AMImageEntry addAMImageEntry(
 			AMImageConfigurationEntry amImageConfigurationEntry,
 			FileVersion fileVersion, int width, int height,
-			InputStream inputStream, int size)
+			InputStream inputStream, long size)
 		throws PortalException {
 
 		_checkDuplicates(

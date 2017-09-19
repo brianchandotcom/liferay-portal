@@ -246,12 +246,10 @@ public class AMImageDLPluggableContentDataHandler
 			}
 
 			try (InputStream inputStream = adaptiveMedia.getInputStream()) {
-				Long contentLength = contentLengthOptional.get();
-
 				_amImageEntryLocalService.addAMImageEntry(
 					amImageConfigurationEntry, fileVersion, widthOptional.get(),
 					heightOptional.get(), inputStream,
-					contentLength.intValue());
+					contentLengthOptional.get());
 			}
 		}
 	}

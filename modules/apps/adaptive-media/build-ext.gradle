@@ -101,6 +101,12 @@ appDocker {
 	imageName this.getImageName()
 	imageUser this.getUserName()
 	inputDir "adaptive-media-docker"
+
+	def excludedModules = project.getProperty('com.liferay.adaptive.media.docker.excluded.modules').split(',')
+
+	onlyIf {
+		project -> !excludedModules.contains(project.name)
+	}
 }
 
 docker {
@@ -108,10 +114,6 @@ docker {
 		username = System.getenv().get("DOCKER_USER")
 		password = System.getenv().get("DOCKER_PWD")
 	}
-}
-
-buildAppDockerImage {
-	buildAppDockerImage.dependsOn subprojects.findAll{!it.childProjects}.deploy
 }
 
 allprojects {

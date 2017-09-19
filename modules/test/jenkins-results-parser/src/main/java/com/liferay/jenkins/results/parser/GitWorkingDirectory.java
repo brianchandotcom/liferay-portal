@@ -247,6 +247,20 @@ public class GitWorkingDirectory {
 		}
 	}
 
+	public void commitStagedFilesToCurrentBranch(String message) {
+		String commitCommand = JenkinsResultsParserUtil.combine(
+			"git commit -m \'", message, "\' ");
+
+		ExecutionResult executionResult = executeBashCommands(commitCommand);
+
+		if (executionResult.getExitValue() != 0) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to commit staged files", "\n",
+					executionResult.getStandardErr()));
+		}
+	}
+
 	public Branch createLocalBranch(String branchName) {
 		return createLocalBranch(branchName, false, null);
 	}
@@ -744,6 +758,16 @@ public class GitWorkingDirectory {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
 					"Unable to reset\n", executionResult.getStandardErr()));
+		}
+	}
+
+	public void stageFileInCurrentBranch(String fileName) {
+		String command = "git stage " + fileName;
+
+		ExecutionResult result = executeBashCommands(command);
+
+		if (result.getExitValue() != 0) {
+			throw new RuntimeException("Unable to stage file " + fileName);
 		}
 	}
 

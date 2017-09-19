@@ -516,6 +516,7 @@ public class MapUtilTest {
 			String fallbackValue = "one";
 
 			inputMap.put(fallbackKey, fallbackValue);
+
 			inputMap.put("2", StringPool.BLANK);
 			inputMap.put("3", null);
 

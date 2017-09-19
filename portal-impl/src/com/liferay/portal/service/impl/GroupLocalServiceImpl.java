@@ -4283,8 +4283,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			if (((classNameId != groupClassNameId) &&
 				 !groupIdFriendlyURL.equals(String.valueOf(classPK)) &&
 				 !PropsValues.USERS_SCREEN_NAME_ALLOW_NUMERIC) ||
-				((classNameId == groupClassNameId) &&
-				 !groupIdFriendlyURL.equals(String.valueOf(groupId)))) {
+				(classNameId == groupClassNameId)) {
 
 				GroupFriendlyURLException gfurle =
 					new GroupFriendlyURLException(

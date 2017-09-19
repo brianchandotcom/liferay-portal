@@ -412,7 +412,9 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 		return classContent;
 	}
 
-	private Map<String, String> _getModuleFileNamesMap() throws Exception {
+	private synchronized Map<String, String> _getModuleFileNamesMap()
+		throws Exception {
+
 		if (_moduleFileNamesMap != null) {
 			return _moduleFileNamesMap;
 		}
@@ -535,7 +537,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 		return _getModuleClassContent(superClassFullClassName);
 	}
 
-	private List<String> _getServiceProxyFactoryUtilClassNames()
+	private synchronized List<String> _getServiceProxyFactoryUtilClassNames()
 		throws Exception {
 
 		if (_serviceProxyFactoryUtilClassNames != null) {

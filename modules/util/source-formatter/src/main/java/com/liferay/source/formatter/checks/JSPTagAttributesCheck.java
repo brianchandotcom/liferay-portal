@@ -348,7 +348,7 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 		return setMethodsMap;
 	}
 
-	private Map<String, Map<String, String>> _getTagSetMethodsMap()
+	private synchronized Map<String, Map<String, String>> _getTagSetMethodsMap()
 		throws Exception {
 
 		if (_tagSetMethodsMap != null) {

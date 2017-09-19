@@ -33,9 +33,9 @@ import java.util.TreeSet;
 /**
  * @author Hugo Huijser
  */
-public class CheckStyleLogger extends DefaultLogger {
+public class CheckstyleLogger extends DefaultLogger {
 
-	public CheckStyleLogger(
+	public CheckstyleLogger(
 		OutputStream outputStream, boolean closeStreamsAfterUse,
 		String baseDirName) {
 

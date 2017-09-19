@@ -35,7 +35,7 @@ import org.xml.sax.InputSource;
 /**
  * @author Hugo Huijser
  */
-public class CheckStyleUtil {
+public class CheckstyleUtil {
 
 	public static Configuration addAttribute(
 		Configuration configuration, String key, String value,
@@ -97,7 +97,7 @@ public class CheckStyleUtil {
 
 		Checker checker = new Checker();
 
-		ClassLoader classLoader = CheckStyleUtil.class.getClassLoader();
+		ClassLoader classLoader = CheckstyleUtil.class.getClassLoader();
 
 		checker.setModuleClassLoader(classLoader);
 
@@ -109,12 +109,12 @@ public class CheckStyleUtil {
 
 		checker.configure(configuration);
 
-		CheckStyleLogger checkStyleLogger = new CheckStyleLogger(
+		CheckstyleLogger checkstyleLogger = new CheckstyleLogger(
 			new UnsyncByteArrayOutputStream(), true,
 			sourceFormatterArgs.getBaseDirName());
 
-		checker.addListener(checkStyleLogger);
-		checker.setCheckStyleLogger(checkStyleLogger);
+		checker.addListener(checkstyleLogger);
+		checker.setCheckstyleLogger(checkstyleLogger);
 
 		return checker;
 	}
@@ -144,7 +144,7 @@ public class CheckStyleUtil {
 	public static Configuration getConfiguration(String configurationFileName)
 		throws Exception {
 
-		ClassLoader classLoader = CheckStyleUtil.class.getClassLoader();
+		ClassLoader classLoader = CheckstyleUtil.class.getClassLoader();
 
 		return ConfigurationLoader.loadConfiguration(
 			new InputSource(

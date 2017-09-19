@@ -514,11 +514,11 @@ public class DLImpl implements DL {
 
 		String previewQueryString = null;
 
-		if (PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED) {
-			if (ImageProcessorUtil.hasImages(fileVersion)) {
-				previewQueryString = "&imagePreview=1";
-			}
-			else if (PDFProcessorUtil.hasImages(fileVersion)) {
+		if (ImageProcessorUtil.isSupported(fileVersion.getMimeType())) {
+			previewQueryString = "&imagePreview=1";
+		}
+		else if (PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED) {
+			if (PDFProcessorUtil.hasImages(fileVersion)) {
 				previewQueryString = "&previewFileIndex=1";
 			}
 			else if (VideoProcessorUtil.hasVideo(fileVersion)) {

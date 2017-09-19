@@ -213,10 +213,10 @@ public class PoshiRunnerContext {
 				PoshiRunnerGetterUtil.getCommandNameFromClassCommandName(
 					pathLocatorKey);
 
-			pathLocator = _pathLocators.get(
-				namespace + "." +
-					_pathExtensions.get(namespace + "." + className) + "#" +
-						commandName);
+			String pathExtension = _pathExtensions.get(
+				namespace + "." + className);
+
+			return getPathLocator(pathExtension + "#" + commandName, namespace);
 		}
 
 		return pathLocator;

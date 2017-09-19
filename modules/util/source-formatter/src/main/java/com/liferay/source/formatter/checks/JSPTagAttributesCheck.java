@@ -56,7 +56,6 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 	@Override
 	public void init() throws Exception {
 		_primitiveTagAttributeDataTypes = _getPrimitiveTagAttributeDataTypes();
-		_tagSetMethodsMap = _getTagSetMethodsMap();
 	}
 
 	@Override
@@ -105,7 +104,10 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 			return line;
 		}
 
-		Map<String, String> setMethodsMap = _tagSetMethodsMap.get(tagName);
+		Map<String, Map<String, String>> tagSetMethodsMap =
+			_getTagSetMethodsMap();
+
+		Map<String, String> setMethodsMap = tagSetMethodsMap.get(tagName);
 
 		if (setMethodsMap == null) {
 			return line;
@@ -349,12 +351,16 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 	private Map<String, Map<String, String>> _getTagSetMethodsMap()
 		throws Exception {
 
-		Map<String, Map<String, String>> tagSetMethodsMap = new HashMap<>();
+		if (_tagSetMethodsMap != null) {
+			return _tagSetMethodsMap;
+		}
+
+		_tagSetMethodsMap = new HashMap<>();
 
 		List<String> tldFileNames = _getTLDFileNames();
 
 		if (tldFileNames.isEmpty()) {
-			return tagSetMethodsMap;
+			return _tagSetMethodsMap;
 		}
 
 		String utilTaglibSrcDirName = _getUtilTaglibSrcDirName();
@@ -393,7 +399,7 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 
 				String tagName = tagNameElement.getStringValue();
 
-				if (tagSetMethodsMap.containsKey(
+				if (_tagSetMethodsMap.containsKey(
 						shortName + StringPool.COLON + tagName)) {
 
 					continue;
@@ -431,12 +437,12 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 					continue;
 				}
 
-				tagSetMethodsMap.put(
+				_tagSetMethodsMap.put(
 					shortName + StringPool.COLON + tagName, setMethodsMap);
 			}
 		}
 
-		return tagSetMethodsMap;
+		return _tagSetMethodsMap;
 	}
 
 	private List<String> _getTLDFileNames() throws Exception {

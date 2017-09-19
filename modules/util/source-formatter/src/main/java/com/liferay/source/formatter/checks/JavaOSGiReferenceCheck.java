@@ -48,13 +48,6 @@ import java.util.regex.Pattern;
 public class JavaOSGiReferenceCheck extends BaseFileCheck {
 
 	@Override
-	public void init() throws Exception {
-		_moduleFileNamesMap = _getModuleFileNamesMap();
-		_serviceProxyFactoryUtilClassNames =
-			_getServiceProxyFactoryUtilClassNames();
-	}
-
-	@Override
 	public boolean isModulesCheck() {
 		return true;
 	}
@@ -98,7 +91,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 
 		if (!isExcludedPath("service.reference.util.excludes", absolutePath)) {
 			for (String serviceProxyFactoryUtilClassName :
-					_serviceProxyFactoryUtilClassNames) {
+					_getServiceProxyFactoryUtilClassNames()) {
 
 				_checkUtilUsage(
 					fileName, content, serviceProxyFactoryUtilClassName,
@@ -398,7 +391,9 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 			return classContent;
 		}
 
-		String moduleFileName = _moduleFileNamesMap.get(fullClassName);
+		Map<String, String> moduleFileNamesMap = _getModuleFileNamesMap();
+
+		String moduleFileName = moduleFileNamesMap.get(fullClassName);
 
 		if (moduleFileName == null) {
 			_moduleFileContentsMap.put(fullClassName, StringPool.BLANK);
@@ -418,7 +413,11 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 	}
 
 	private Map<String, String> _getModuleFileNamesMap() throws Exception {
-		Map<String, String> moduleFileNamesMap = new HashMap<>();
+		if (_moduleFileNamesMap != null) {
+			return _moduleFileNamesMap;
+		}
+
+		_moduleFileNamesMap = new HashMap<>();
 
 		List<String> fileNames = new ArrayList<>();
 
@@ -449,10 +448,10 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 
 			className = className.substring(pos + 1, fileName.length() - 5);
 
-			moduleFileNamesMap.put(className, fileName);
+			_moduleFileNamesMap.put(className, fileName);
 		}
 
-		return moduleFileNamesMap;
+		return _moduleFileNamesMap;
 	}
 
 	private String _getModuleServicePackageName(String fileName) {
@@ -539,8 +538,14 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 	private List<String> _getServiceProxyFactoryUtilClassNames()
 		throws Exception {
 
+		if (_serviceProxyFactoryUtilClassNames != null) {
+			return _serviceProxyFactoryUtilClassNames;
+		}
+
 		if (!isPortalSource()) {
-			return Collections.emptyList();
+			_serviceProxyFactoryUtilClassNames = Collections.emptyList();
+
+			return _serviceProxyFactoryUtilClassNames;
 		}
 
 		String portalKernelLocation = "portal-kernel/";
@@ -554,7 +559,7 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 				continue;
 			}
 
-			List<String> serviceProxyFactoryUtilClassNames = new ArrayList<>();
+			_serviceProxyFactoryUtilClassNames = new ArrayList<>();
 
 			List<String> utilFileNames = getFileNames(
 				getBaseDirName() + portalKernelLocation, new String[0],
@@ -569,16 +574,18 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 				if (content.contains(
 						"com.liferay.portal.kernel.util.ServiceProxyFactory")) {
 
-					serviceProxyFactoryUtilClassNames.add(
+					_serviceProxyFactoryUtilClassNames.add(
 						JavaSourceUtil.getPackageName(content) + "." +
 							JavaSourceUtil.getClassName(fileName));
 				}
 			}
 
-			return serviceProxyFactoryUtilClassNames;
+			return _serviceProxyFactoryUtilClassNames;
 		}
 
-		return Collections.emptyList();
+		_serviceProxyFactoryUtilClassNames = Collections.emptyList();
+
+		return _serviceProxyFactoryUtilClassNames;
 	}
 
 	private final Set<String> _bndFileNames = new CopyOnWriteArraySet<>();

@@ -32,7 +32,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Hugo Huijser
@@ -79,13 +78,34 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			file, fileName, absolutePath, content, content, modifiedContents,
 			0);
 
-		_ungeneratedFiles.add(
-			processFormattedFile(file, fileName, content, newContent));
+		file = processFormattedFile(file, fileName, content, newContent);
+
+		_processCheckStyle(file);
 	}
 
 	@Override
 	protected void postFormat() throws Exception {
-		_processCheckStyle();
+		if (_ungeneratedFiles.isEmpty()) {
+			return;
+		}
+
+		Checker checker = _getChecker();
+
+		checker.process(_ungeneratedFiles);
+
+		Set<SourceFormatterMessage> sourceFormatterMessages =
+			checker.getSourceFormatterMessages();
+
+		for (SourceFormatterMessage sourceFormatterMessage :
+				sourceFormatterMessages) {
+
+			processMessage(
+				sourceFormatterMessage.getFileName(), sourceFormatterMessage);
+
+			printError(
+				sourceFormatterMessage.getFileName(),
+				sourceFormatterMessage.toString());
+		}
 	}
 
 	private Checker _getChecker() throws Exception {
@@ -228,33 +248,23 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	private void _processCheckStyle() throws Exception {
-		if (_ungeneratedFiles.isEmpty()) {
-			return;
-		}
+	private void _processCheckStyle(File file) throws Exception {
+		_ungeneratedFiles.add(file);
 
-		Checker checker = _getChecker();
+		if (_ungeneratedFiles.size() == _CHECKSTYLE_BATCH_SIZE) {
+			Checker checker = _getChecker();
 
-		checker.process(_ungeneratedFiles);
+			checker.process(_ungeneratedFiles);
 
-		Set<SourceFormatterMessage> sourceFormatterMessages =
-			checker.getSourceFormatterMessages();
-
-		for (SourceFormatterMessage sourceFormatterMessage :
-				sourceFormatterMessages) {
-
-			processMessage(
-				sourceFormatterMessage.getFileName(), sourceFormatterMessage);
-
-			printError(
-				sourceFormatterMessage.getFileName(),
-				sourceFormatterMessage.toString());
+			_ungeneratedFiles = new ArrayList<>();
 		}
 	}
+
+	private static final int _CHECKSTYLE_BATCH_SIZE = 1000;
 
 	private static final String[] _INCLUDES = {"**/*.java"};
 
 	private Checker _checker;
-	private final List<File> _ungeneratedFiles = new CopyOnWriteArrayList<>();
+	private List<File> _ungeneratedFiles = new ArrayList<>();
 
 }

@@ -144,13 +144,15 @@ GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 									showCheckbox="<%= false %>"
 								>
 									<liferay-frontend:vertical-card-header>
-										<h5>
-											<aui:a cssClass="selector-button truncate-text" data="<%= data %>" href="javascript:;">
-												<%= HtmlUtil.escape(siteItemSelectorViewDisplayContext.getGroupName(group)) %>
-											</aui:a>
-										</h5>
+										<div class="row">
+											<h5 class="col text-truncate">
+												<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+													<%= HtmlUtil.escape(siteItemSelectorViewDisplayContext.getGroupName(group)) %>
+												</aui:a>
+											</h5>
 
-										<aui:a href="<%= groupURLProvider.getGroupURL(group, liferayPortletRequest) %>" target="_blank" />
+											<aui:a cssClass="col-auto" href="<%= groupURLProvider.getGroupURL(group, liferayPortletRequest) %>" target="_blank" />
+										</div>
 									</liferay-frontend:vertical-card-header>
 
 									<c:if test="<%= siteItemSelectorViewDisplayContext.isShowChildSitesLink() %>">
@@ -170,13 +172,15 @@ GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 									showCheckbox="<%= false %>"
 								>
 									<liferay-frontend:vertical-card-header>
-										<h5>
-											<aui:a cssClass="selector-button truncate-text" data="<%= data %>" href="javascript:;">
-												<%= HtmlUtil.escape(siteItemSelectorViewDisplayContext.getGroupName(group)) %>
-											</aui:a>
-										</h5>
+										<div class="row">
+											<h5 class="col text-truncate">
+												<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+													<%= HtmlUtil.escape(siteItemSelectorViewDisplayContext.getGroupName(group)) %>
+												</aui:a>
+											</h5>
 
-										<aui:a href="<%= groupURLProvider.getGroupURL(group, liferayPortletRequest) %>" target="_blank" />
+											<aui:a cssClass="col-auto" href="<%= groupURLProvider.getGroupURL(group, liferayPortletRequest) %>" target="_blank" />
+										</div>
 									</liferay-frontend:vertical-card-header>
 
 									<liferay-frontend:vertical-card-footer>

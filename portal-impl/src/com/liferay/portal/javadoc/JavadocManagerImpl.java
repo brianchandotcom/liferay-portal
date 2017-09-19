@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.javadoc.JavadocMethodImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -147,8 +146,6 @@ public class JavadocManagerImpl implements JavadocManager {
 	}
 
 	protected Document getDocument(ClassLoader classLoader) {
-		InputStream inputStream = null;
-
 		try {
 			URL url = classLoader.getResource("META-INF/javadocs-rt.xml");
 
@@ -156,15 +153,12 @@ public class JavadocManagerImpl implements JavadocManager {
 				return null;
 			}
 
-			inputStream = url.openStream();
-
-			return UnsecureSAXReaderUtil.read(inputStream, true);
+			try (InputStream inputStream = url.openStream()) {
+				return UnsecureSAXReaderUtil.read(inputStream, true);
+			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
 		}
 
 		return null;

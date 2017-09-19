@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -281,7 +280,16 @@ public class PrivateMessagingPortlet extends MVCPortlet {
 
 				InputStream inputStream = inputStreamOVP.getValue();
 
-				StreamUtil.cleanUp(inputStream);
+				if (inputStream != null) {
+					try {
+						inputStream.close();
+					}
+					catch (IOException ioe) {
+						if (_log.isWarnEnabled()) {
+							_log.error(ioe, ioe);
+						}
+					}
+				}
 			}
 		}
 

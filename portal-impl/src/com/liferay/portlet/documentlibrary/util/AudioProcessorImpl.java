@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemEnv;
@@ -280,8 +279,6 @@ public class AudioProcessorImpl
 
 		File audioTempFile = null;
 
-		InputStream inputStream = null;
-
 		try {
 			if (sourceFileVersion != null) {
 				copy(sourceFileVersion, destinationFileVersion);
@@ -311,12 +308,13 @@ public class AudioProcessorImpl
 				}
 
 				if (file == null) {
-					inputStream = destinationFileVersion.getContentStream(
-						false);
+					try (InputStream inputStream =
+							destinationFileVersion.getContentStream(false)) {
 
-					FileUtil.write(audioTempFile, inputStream);
+						FileUtil.write(audioTempFile, inputStream);
 
-					file = audioTempFile;
+						file = audioTempFile;
+					}
 				}
 
 				try {
@@ -334,8 +332,6 @@ public class AudioProcessorImpl
 			}
 		}
 		finally {
-			StreamUtil.cleanUp(inputStream);
-
 			_fileVersionIds.remove(destinationFileVersion.getFileVersionId());
 
 			for (int i = 0; i < previewTempFiles.length; i++) {

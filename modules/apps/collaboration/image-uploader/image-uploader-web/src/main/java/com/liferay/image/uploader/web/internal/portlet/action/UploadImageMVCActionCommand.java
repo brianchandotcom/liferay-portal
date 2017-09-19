@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -279,80 +278,79 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 
 		FileEntry tempFileEntry = null;
 
-		InputStream tempImageStream = null;
-
 		try {
 			tempFileEntry = UploadImageUtil.getTempImageFileEntry(
 				actionRequest);
 
-			tempImageStream = tempFileEntry.getContentStream();
+			try (InputStream tempImageStream =
+					tempFileEntry.getContentStream()) {
 
-			ImageBag imageBag = ImageToolUtil.read(tempImageStream);
+				ImageBag imageBag = ImageToolUtil.read(tempImageStream);
 
-			RenderedImage renderedImage = imageBag.getRenderedImage();
+				RenderedImage renderedImage = imageBag.getRenderedImage();
 
-			String cropRegionJSON = ParamUtil.getString(
-				actionRequest, "cropRegion");
+				String cropRegionJSON = ParamUtil.getString(
+					actionRequest, "cropRegion");
 
-			if (Validator.isNotNull(cropRegionJSON)) {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-					cropRegionJSON);
+				if (Validator.isNotNull(cropRegionJSON)) {
+					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+						cropRegionJSON);
 
-				int height = jsonObject.getInt("height");
-				int width = jsonObject.getInt("width");
-				int x = jsonObject.getInt("x");
-				int y = jsonObject.getInt("y");
+					int height = jsonObject.getInt("height");
+					int width = jsonObject.getInt("width");
+					int x = jsonObject.getInt("x");
+					int y = jsonObject.getInt("y");
 
-				if ((x == 0) && (y == 0) &&
-					(renderedImage.getHeight() == height) &&
-					(renderedImage.getWidth() == width)) {
+					if ((x == 0) && (y == 0) &&
+						(renderedImage.getHeight() == height) &&
+						(renderedImage.getWidth() == width)) {
 
-					return tempFileEntry;
+						return tempFileEntry;
+					}
+
+					if ((height + y) > renderedImage.getHeight()) {
+						height = renderedImage.getHeight() - y;
+					}
+
+					if ((width + x) > renderedImage.getWidth()) {
+						width = renderedImage.getWidth() - x;
+					}
+
+					renderedImage = ImageToolUtil.crop(
+						renderedImage, height, width, x, y);
 				}
 
-				if ((height + y) > renderedImage.getHeight()) {
-					height = renderedImage.getHeight() - y;
+				byte[] bytes = ImageToolUtil.getBytes(
+					renderedImage, imageBag.getType());
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)actionRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				File file = FileUtil.createTempFile(bytes);
+
+				try {
+					TempFileEntryUtil.deleteTempFileEntry(
+						themeDisplay.getScopeGroupId(),
+						themeDisplay.getUserId(),
+						UploadImageUtil.getTempImageFolderName(),
+						getTempImageFileName(actionRequest));
+				}
+				catch (Exception e) {
 				}
 
-				if ((width + x) > renderedImage.getWidth()) {
-					width = renderedImage.getWidth() - x;
-				}
-
-				renderedImage = ImageToolUtil.crop(
-					renderedImage, height, width, x, y);
-			}
-
-			byte[] bytes = ImageToolUtil.getBytes(
-				renderedImage, imageBag.getType());
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			File file = FileUtil.createTempFile(bytes);
-
-			try {
-				TempFileEntryUtil.deleteTempFileEntry(
+				return TempFileEntryUtil.addTempFileEntry(
 					themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 					UploadImageUtil.getTempImageFolderName(),
-					getTempImageFileName(actionRequest));
+					getTempImageFileName(actionRequest), file,
+					tempFileEntry.getMimeType());
 			}
-			catch (Exception e) {
-			}
-
-			return TempFileEntryUtil.addTempFileEntry(
-				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				UploadImageUtil.getTempImageFolderName(),
-				getTempImageFileName(actionRequest), file,
-				tempFileEntry.getMimeType());
 		}
 		catch (NoSuchFileEntryException nsfee) {
 			throw new UploadException(nsfee);
 		}
 		catch (NoSuchRepositoryException nsre) {
 			throw new UploadException(nsre);
-		}
-		finally {
-			StreamUtil.cleanUp(tempImageStream);
 		}
 	}
 

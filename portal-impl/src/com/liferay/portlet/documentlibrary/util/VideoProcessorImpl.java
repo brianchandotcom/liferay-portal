@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -415,8 +414,6 @@ public class VideoProcessorImpl
 			return;
 		}
 
-		InputStream inputStream = null;
-
 		File[] previewTempFiles = new File[_PREVIEW_TYPES.length];
 
 		File videoTempFile = null;
@@ -445,15 +442,16 @@ public class VideoProcessorImpl
 				}
 
 				if (file == null) {
-					inputStream = destinationFileVersion.getContentStream(
-						false);
+					try (InputStream inputStream =
+							destinationFileVersion.getContentStream(false)) {
 
-					videoTempFile = FileUtil.createTempFile(
-						destinationFileVersion.getExtension());
+						videoTempFile = FileUtil.createTempFile(
+							destinationFileVersion.getExtension());
 
-					FileUtil.write(videoTempFile, inputStream);
+						FileUtil.write(videoTempFile, inputStream);
 
-					file = videoTempFile;
+						file = videoTempFile;
+					}
 				}
 			}
 
@@ -494,8 +492,6 @@ public class VideoProcessorImpl
 			}
 		}
 		finally {
-			StreamUtil.cleanUp(inputStream);
-
 			_fileVersionIds.remove(destinationFileVersion.getFileVersionId());
 
 			for (int i = 0; i < previewTempFiles.length; i++) {

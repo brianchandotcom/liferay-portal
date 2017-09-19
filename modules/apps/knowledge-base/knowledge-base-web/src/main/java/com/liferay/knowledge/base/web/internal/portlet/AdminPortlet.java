@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -188,8 +187,6 @@ public class AdminPortlet extends BaseKBPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		InputStream inputStream = null;
-
 		try {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
@@ -212,27 +209,29 @@ public class AdminPortlet extends BaseKBPortlet {
 			boolean prioritizeByNumericalPrefix = ParamUtil.getBoolean(
 				uploadPortletRequest, "prioritizeByNumericalPrefix");
 
-			inputStream = uploadPortletRequest.getFileAsStream("file");
+			try (InputStream inputStream =
+					uploadPortletRequest.getFileAsStream("file")) {
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				AdminPortlet.class.getName(), actionRequest);
+				ServiceContext serviceContext =
+					ServiceContextFactory.getInstance(
+						AdminPortlet.class.getName(), actionRequest);
 
-			serviceContext.setGuestPermissions(new String[] {ActionKeys.VIEW});
+				serviceContext.setGuestPermissions(
+					new String[] {ActionKeys.VIEW});
 
-			int importedKBArticlesCount =
-				kbArticleService.addKBArticlesMarkdown(
-					themeDisplay.getScopeGroupId(), parentKBFolderId, fileName,
-					prioritizeByNumericalPrefix, inputStream, serviceContext);
+				int importedKBArticlesCount =
+					kbArticleService.addKBArticlesMarkdown(
+						themeDisplay.getScopeGroupId(), parentKBFolderId,
+						fileName, prioritizeByNumericalPrefix, inputStream,
+						serviceContext);
 
-			SessionMessages.add(
-				actionRequest, "importedKBArticlesCount",
-				importedKBArticlesCount);
+				SessionMessages.add(
+					actionRequest, "importedKBArticlesCount",
+					importedKBArticlesCount);
+			}
 		}
 		catch (KBArticleImportException kbaie) {
 			SessionErrors.add(actionRequest, kbaie.getClass(), kbaie);
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
 		}
 	}
 

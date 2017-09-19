@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -251,8 +250,6 @@ public abstract class BaseSpellCheckIndexWriter
 		throws Exception {
 
 		for (String dictionaryFileName : dictionaryFileNames) {
-			InputStream inputStream = null;
-
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					"Start indexing dictionary for " + dictionaryFileName);
@@ -269,22 +266,21 @@ public abstract class BaseSpellCheckIndexWriter
 					continue;
 				}
 
-				inputStream = url.openStream();
+				try (InputStream inputStream = url.openStream()) {
+					if (inputStream == null) {
+						if (_log.isWarnEnabled()) {
+							_log.warn("Unable to read " + dictionaryFileName);
+						}
 
-				if (inputStream == null) {
-					if (_log.isWarnEnabled()) {
-						_log.warn("Unable to read " + dictionaryFileName);
+						continue;
 					}
 
-					continue;
+					indexKeywords(
+						searchContext, groupId, languageId, inputStream,
+						keywordFieldName, typeFieldValue, maxNGramLength);
 				}
-
-				indexKeywords(
-					searchContext, groupId, languageId, inputStream,
-					keywordFieldName, typeFieldValue, maxNGramLength);
 			}
 			finally {
-				StreamUtil.cleanUp(inputStream);
 			}
 
 			if (_log.isInfoEnabled()) {

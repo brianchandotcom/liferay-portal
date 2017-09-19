@@ -30,7 +30,9 @@ public class CommerceCheckoutStepServiceWrapperOrderComparator
 		this(true);
 	}
 
-	public CommerceCheckoutStepServiceWrapperOrderComparator(boolean ascending) {
+	public CommerceCheckoutStepServiceWrapperOrderComparator(
+		boolean ascending) {
+
 		_ascending = ascending;
 	}
 
@@ -40,11 +42,11 @@ public class CommerceCheckoutStepServiceWrapperOrderComparator
 		ServiceWrapper<CommerceCheckoutStep> serviceWrapper2) {
 
 		int displayOrder1 = MapUtil.getInteger(
-			serviceWrapper1.getProperties(),
-			"commerce.product.type.display.order", Integer.MAX_VALUE);
+			serviceWrapper1.getProperties(), "commerce.checkout.step.order",
+			Integer.MAX_VALUE);
 		int displayOrder2 = MapUtil.getInteger(
-			serviceWrapper2.getProperties(),
-			"commerce.product.type.display.order", Integer.MAX_VALUE);
+			serviceWrapper2.getProperties(), "commerce.checkout.step.order",
+			Integer.MAX_VALUE);
 
 		int value = Integer.compare(displayOrder1, displayOrder2);
 

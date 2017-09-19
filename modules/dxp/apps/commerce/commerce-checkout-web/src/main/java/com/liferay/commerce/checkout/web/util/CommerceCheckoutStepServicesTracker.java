@@ -17,7 +17,6 @@ package com.liferay.commerce.checkout.web.util;
 import aQute.bnd.annotation.ProviderType;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Marco Leo
@@ -28,4 +27,5 @@ public interface CommerceCheckoutStepServicesTracker {
 	public CommerceCheckoutStep getCommerceCheckoutStep(String name);
 
 	public List<CommerceCheckoutStep> getCommerceCheckoutSteps();
+
 }

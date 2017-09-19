@@ -25,21 +25,23 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+
 /**
  * @author Marco Leo
  */
 @Component(immediate = true)
-public class CommerceCheckoutStepServicesTrackerImpl implements CommerceCheckoutStepServicesTracker {
+public class CommerceCheckoutStepServicesTrackerImpl
+	implements CommerceCheckoutStepServicesTracker {
 
 	@Override
 	public CommerceCheckoutStep getCommerceCheckoutStep(String name) {
@@ -68,9 +70,8 @@ public class CommerceCheckoutStepServicesTrackerImpl implements CommerceCheckout
 		List<CommerceCheckoutStep> commerceCheckoutSteps = new ArrayList<>();
 
 		List<ServiceWrapper<CommerceCheckoutStep>>
-			commerceCheckoutStepServiceWrappers =
-				ListUtil.fromCollection(
-					_commerceCheckoutStepServiceTrackerMap.values());
+			commerceCheckoutStepServiceWrappers = ListUtil.fromCollection(
+				_commerceCheckoutStepServiceTrackerMap.values());
 
 		Collections.sort(
 			commerceCheckoutStepServiceWrappers,
@@ -105,10 +106,8 @@ public class CommerceCheckoutStepServicesTrackerImpl implements CommerceCheckout
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceCheckoutStepServicesTrackerImpl.class);
 
-
 	private ServiceTrackerMap<String, ServiceWrapper<CommerceCheckoutStep>>
 		_commerceCheckoutStepServiceTrackerMap;
-
 	private final Comparator<ServiceWrapper<CommerceCheckoutStep>>
 		_commerceCheckoutStepServiceWrapperDisplayOrderComparator =
 			new CommerceCheckoutStepServiceWrapperOrderComparator();

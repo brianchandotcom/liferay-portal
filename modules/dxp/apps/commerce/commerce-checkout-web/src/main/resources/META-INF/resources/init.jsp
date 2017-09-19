@@ -21,11 +21,12 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
-taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.commerce.checkout.web.constants.CommerceCheckoutWebKeys" %><%@
+page import="com.liferay.commerce.checkout.web.internal.display.context.CheckoutDisplayContext" %><%@
 page import="com.liferay.commerce.checkout.web.internal.display.context.CheckoutStepBillingDisplayContext" %><%@
+page import="com.liferay.commerce.checkout.web.util.CommerceCheckoutStep" %><%@
 page import="com.liferay.commerce.exception.CommerceAddressCityException" %><%@
 page import="com.liferay.commerce.exception.CommerceAddressCountryException" %><%@
 page import="com.liferay.commerce.exception.CommerceAddressNameException" %><%@
@@ -35,7 +36,6 @@ page import="com.liferay.commerce.model.CommerceAddress" %><%@
 page import="com.liferay.commerce.model.CommerceCart" %><%@
 page import="com.liferay.commerce.model.CommerceOrder" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
@@ -53,5 +53,4 @@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 CommerceCart commerceCart = (CommerceCart)request.getAttribute(CommerceCheckoutWebKeys.COMMERCE_CART);
 
 String backURL = (String)request.getAttribute(CommerceCheckoutWebKeys.BACK_URL);
-String redirect = (String)request.getAttribute(WebKeys.REDIRECT);
 %>

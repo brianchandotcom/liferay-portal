@@ -16,6 +16,7 @@ package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
+import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -198,6 +199,13 @@ public class UserServiceTest {
 			_user = UserTestUtil.addUser(String.valueOf(groupId));
 
 			Assert.assertEquals(String.valueOf(groupId), _user.getScreenName());
+		}
+
+		@Test(expected = UserScreenNameException.MustNotBeNumeric.class)
+		public void shouldThrowException() throws Exception {
+			PropsValues.USERS_SCREEN_NAME_ALLOW_NUMERIC = false;
+
+			UserTestUtil.addUser(String.valueOf(RandomTestUtil.nextLong()));
 		}
 
 		@After

@@ -14,15 +14,17 @@
 
 package com.liferay.commerce.checkout.web.internal.display.context;
 
-import com.liferay.commerce.checkout.web.constants.CommerceCheckoutWebKeys;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.service.CommerceAddressService;
+import com.liferay.commerce.util.CommerceCartHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Andrea Di Giorgi
@@ -31,13 +33,18 @@ import javax.servlet.http.HttpServletRequest;
 public class CheckoutStepBillingDisplayContext {
 
 	public CheckoutStepBillingDisplayContext(
-		CommerceAddressService commerceAddressService,
-		HttpServletRequest httpServletRequest) {
+			CommerceAddressService commerceAddressService,
+			CommerceCartHelper commerceCartHelper,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws PortalException {
 
 		_commerceAddressService = commerceAddressService;
+		_commerceCartHelper = commerceCartHelper;
 
-		_commerceCart = (CommerceCart)httpServletRequest.getAttribute(
-			CommerceCheckoutWebKeys.COMMERCE_CART);
+		_commerceCart = _commerceCartHelper.getCurrentCommerceCart(
+			httpServletRequest, httpServletResponse,
+			CommerceConstants.COMMERCE_CART_TYPE_CART);
 	}
 
 	public List<CommerceAddress> getCommerceAddresses() throws PortalException {
@@ -45,7 +52,12 @@ public class CheckoutStepBillingDisplayContext {
 			_commerceCart.getGroupId(), _commerceCart.getUserId());
 	}
 
+	public CommerceCart getCommerceCart() {
+		return _commerceCart;
+	}
+
 	private final CommerceAddressService _commerceAddressService;
 	private final CommerceCart _commerceCart;
+	private final CommerceCartHelper _commerceCartHelper;
 
 }

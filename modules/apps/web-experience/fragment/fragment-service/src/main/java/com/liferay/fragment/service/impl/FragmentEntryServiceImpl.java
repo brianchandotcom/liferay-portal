@@ -67,10 +67,10 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 					_log.debug(pe, pe);
 				}
 
-				FragmentEntry mSBFragmentEntry =
+				FragmentEntry fragmentEntry =
 					fragmentEntryPersistence.fetchByPrimaryKey(fragmentEntryId);
 
-				undeletableFragmentEntries.add(mSBFragmentEntry);
+				undeletableFragmentEntries.add(fragmentEntry);
 			}
 		}
 

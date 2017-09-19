@@ -17,7 +17,7 @@ package com.liferay.source.formatter;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.source.formatter.checkstyle.Checker;
-import com.liferay.source.formatter.checkstyle.util.CheckStyleUtil;
+import com.liferay.source.formatter.checkstyle.util.CheckstyleUtil;
 import com.liferay.source.formatter.util.CheckType;
 import com.liferay.source.formatter.util.DebugUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
@@ -80,7 +80,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		file = processFormattedFile(file, fileName, content, newContent);
 
-		_processCheckStyle(file);
+		_processCheckstyle(file);
 	}
 
 	@Override
@@ -113,14 +113,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			return _checker;
 		}
 
-		Configuration configuration = CheckStyleUtil.getConfiguration(
+		Configuration configuration = CheckstyleUtil.getConfiguration(
 			"checkstyle.xml");
 
-		configuration = CheckStyleUtil.addAttribute(
+		configuration = CheckstyleUtil.addAttribute(
 			configuration, "maxLineLength",
 			String.valueOf(sourceFormatterArgs.getMaxLineLength()),
 			"com.liferay.source.formatter.checkstyle.checks.PlusStatement");
-		configuration = CheckStyleUtil.addAttribute(
+		configuration = CheckstyleUtil.addAttribute(
 			configuration, "showDebugInformation",
 			String.valueOf(sourceFormatterArgs.isShowDebugInformation()),
 			"com.liferay.*");
@@ -128,7 +128,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (sourceFormatterArgs.isShowDebugInformation()) {
 			DebugUtil.addCheckNames(
 				CheckType.CHECKSTYLE,
-				CheckStyleUtil.getCheckNames(configuration));
+				CheckstyleUtil.getCheckNames(configuration));
 		}
 
 		List<File> suppressionsFiles = SourceFormatterUtil.getSuppressionsFiles(
@@ -136,7 +136,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			getAllFileNames(), getSourceFormatterExcludes(), portalSource,
 			subrepository);
 
-		_checker = CheckStyleUtil.getChecker(
+		_checker = CheckstyleUtil.getChecker(
 			configuration, suppressionsFiles, sourceFormatterArgs);
 
 		return _checker;
@@ -248,7 +248,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	private synchronized void _processCheckStyle(File file) throws Exception {
+	private synchronized void _processCheckstyle(File file) throws Exception {
 		_ungeneratedFiles.add(file);
 
 		if (_ungeneratedFiles.size() == _CHECKSTYLE_BATCH_SIZE) {

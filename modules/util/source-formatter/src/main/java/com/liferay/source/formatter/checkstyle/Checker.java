@@ -17,7 +17,7 @@ package com.liferay.source.formatter.checkstyle;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.SourceFormatterMessage;
-import com.liferay.source.formatter.checkstyle.util.CheckStyleLogger;
+import com.liferay.source.formatter.checkstyle.util.CheckstyleLogger;
 
 import com.puppycrawl.tools.checkstyle.api.LocalizedMessage;
 
@@ -50,11 +50,11 @@ public class Checker extends com.puppycrawl.tools.checkstyle.Checker {
 	}
 
 	public Set<SourceFormatterMessage> getSourceFormatterMessages() {
-		return _checkStyleLogger.getSourceFormatterMessages();
+		return _checkstyleLogger.getSourceFormatterMessages();
 	}
 
-	public void setCheckStyleLogger(CheckStyleLogger checkStyleLogger) {
-		_checkStyleLogger = checkStyleLogger;
+	public void setCheckstyleLogger(CheckstyleLogger checkstyleLogger) {
+		_checkstyleLogger = checkstyleLogger;
 	}
 
 	private String _normalizeFileName(String fileName) {
@@ -66,6 +66,6 @@ public class Checker extends com.puppycrawl.tools.checkstyle.Checker {
 			filePath.toString(), CharPool.BACK_SLASH, CharPool.SLASH);
 	}
 
-	private CheckStyleLogger _checkStyleLogger;
+	private CheckstyleLogger _checkstyleLogger;
 
 }

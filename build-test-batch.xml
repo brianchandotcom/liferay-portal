@@ -437,39 +437,6 @@ app.server.type=@{app.server.type}]]></echo>
 
 			<antcall inheritAll="false" target="compile-test" />
 
-			<echo file="${project.dir}/.gitignore">/.ivy/
-/app.server.*.properties
-/build.*.properties
-/release.*.properties
-/sql/sql.*.properties
-/test.*.properties
-/tools/maven/*.asc
-/tools/node*
-/tools/selenium/*.exe
-/tools/selenium/extensions/ide.*.js
-/tools/tck
-/tools/zip_tmpl/license</echo>
-
-			<delete file="${project.dir}/lib/.gitignore" />
-
-			<echo file="${project.dir}/modules/.gitignore">tmp
-/*/*/ivy.xml.MD5
-/*/*/javadoc
-/*/*/lib
-/*/*/tmp
-/*/*/*/build/node
-/*/*/*/ivy.xml.MD5
-/*/*/*/javadoc
-/*/*/*/lib
-/*/*/*/node_modules
-/*/*/*/tmp
-/*/*/*/*/build/node
-/*/*/*/*/ivy.xml.MD5
-/*/*/*/*/javadoc
-/*/*/*/*/lib
-/*/*/*/*/node_modules
-/*/*/*/*/tmp</echo>
-
 			<delete>
 				<fileset dir="bundles" includes="*.zip" />
 			</delete>
@@ -477,13 +444,12 @@ app.server.type=@{app.server.type}]]></echo>
 			<if>
 				<contains string="@{app.server.type}" substring="tomcat" />
 				<then>
-					<execute>
-						<![CDATA[
-							git add -A
-
-							git diff --cached --name-only -z | grep -E -v -z '^\.gitignore|bundles/|^modules/\.gitignore' | xargs -0 -n 1000 zip -v liferay-portal-source.zip
-						]]>
-					</execute>
+					<zip
+						basedir="${project.dir}"
+						destfile="liferay-portal-source.zip"
+						excludes="${test.batch.dist.source.excludes}"
+						includes="${test.batch.dist.source.includes}"
+					/>
 
 					<prepare-liferay-classes if:true="${test.batch.code.coverage}" merged.jar="${project.dir}/jacoco/merged.jar" portal.bundle.dir="bundles" />
 				</then>
@@ -520,15 +486,19 @@ app.server.type=@{app.server.type}]]></echo>
 		<attribute default="tomcat" name="app.server.type" />
 
 		<sequential>
+			<antcall inheritAll="false" target="setup-sdk" />
+
+			<unzip dest="." src="liferay-portal-source.zip" />
+
 			<execute>
 				<![CDATA[
-					unzip -oq liferay-portal-source.zip
-
 					unzip -oq liferay-portal-bundle-@{app.server.type}.zip
 
 					chmod -R a+x bundles
 				]]>
 			</execute>
+
+			<setup-libs />
 
 			<antcall inheritAll="false" target="install-portal-snapshots" />
 

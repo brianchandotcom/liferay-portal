@@ -14,21 +14,19 @@
 
 package com.liferay.commerce.checkout.web.internal.display.context;
 
-import com.liferay.commerce.checkout.web.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStepServicesTracker;
 import com.liferay.commerce.constants.CommerceConstants;
-import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCart;
-import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.util.CommerceCartHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.List;
+
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  * @author Marco Leo
@@ -54,41 +52,46 @@ public class CheckoutDisplayContext {
 			httpServletRequest, httpServletResponse,
 			CommerceConstants.COMMERCE_CART_TYPE_CART);
 
-		String checkoutStep = httpServletRequest.getParameter("checkoutStep");
+		String checkoutStepName = httpServletRequest.getParameter(
+			"checkoutStepName");
 
-		_currentCheckoutStep = _commerceCheckoutStepServicesTracker.
-			getCommerceCheckoutStep(checkoutStep);
+		_currentCheckoutStep =
+			_commerceCheckoutStepServicesTracker.getCommerceCheckoutStep(
+				checkoutStepName);
 	}
 
-	public List<CommerceCheckoutStep> getCommerceCheckoutSteps(){
+	public List<CommerceCheckoutStep> getCommerceCheckoutSteps() {
 		return _commerceCheckoutStepServicesTracker.getCommerceCheckoutSteps();
 	}
 
-	public boolean isCurrentCommerceCheckoutStep(CommerceCheckoutStep commerceCheckoutStep){
+	public String getCurrentCheckoutStepName() {
+		return _commerceCart.getName();
+	}
+
+	public PortletURL getNextCheckoutStepPortletURL() {
+		return null;
+	}
+
+	public PortletURL getPreviusCheckoutStepPortletURL() {
+		return null;
+	}
+
+	public boolean isCurrentCommerceCheckoutStep(
+		CommerceCheckoutStep commerceCheckoutStep) {
+
 		return false;
 	}
 
-	public void renderCurrentCheckoutStep() throws Exception{
+	public void renderCurrentCheckoutStep() throws Exception {
 		_currentCheckoutStep.render(_httpServletRequest, _httpServletResponse);
 	}
 
-	public PortletURL getNextCheckoutStepPortletURL(){
-		return null;
-	}
-
-	public PortletURL getPreviusCheckoutStepPortletURL(){
-		return null;
-	}
-
+	private final CommerceCart _commerceCart;
+	private final CommerceCartHelper _commerceCartHelper;
 	private final CommerceCheckoutStepServicesTracker
 		_commerceCheckoutStepServicesTracker;
-
-	private final CommerceCart _commerceCart;
-
-	private final CommerceCartHelper _commerceCartHelper;
-
+	private final CommerceCheckoutStep _currentCheckoutStep;
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
 
-	private final CommerceCheckoutStep _currentCheckoutStep;
 }

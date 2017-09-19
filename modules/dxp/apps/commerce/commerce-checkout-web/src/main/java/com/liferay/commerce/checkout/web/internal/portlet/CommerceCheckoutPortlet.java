@@ -14,26 +14,19 @@
 
 package com.liferay.commerce.checkout.web.internal.portlet;
 
-import com.liferay.commerce.checkout.web.constants.CommerceCheckoutWebKeys;
-import com.liferay.commerce.checkout.web.internal.util.CommerceCheckoutStepRegistry;
+import com.liferay.commerce.checkout.web.internal.display.context.CheckoutDisplayContext;
+import com.liferay.commerce.checkout.web.util.CommerceCheckoutStepServicesTracker;
 import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.util.CommerceCartHelper;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.DynamicRenderRequest;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
-import java.util.Collections;
-
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -76,52 +69,19 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		try {
-			String mvcRenderCommandName = ParamUtil.getString(
-				renderRequest, "mvcRenderCommandName");
-
-			if (Validator.isNull(mvcRenderCommandName)) {
-				mvcRenderCommandName =
-					_commerceCheckoutStepRegistry.
-						getFirstMVCRenderCommandName();
-
-				renderRequest = new DynamicRenderRequest(
-					renderRequest,
-					Collections.singletonMap(
-						"mvcRenderCommandName",
-						new String[] {mvcRenderCommandName}));
-			}
-
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(renderRequest);
 
 			HttpServletResponse httpServletResponse =
 				_portal.getHttpServletResponse(renderResponse);
 
-			CommerceCart commerceCart =
-				_commerceCartHelper.getCurrentCommerceCart(
+			CheckoutDisplayContext checkoutDisplayContext =
+				new CheckoutDisplayContext(
+					_commerceCartHelper, _commerceCheckoutStepServicesTracker,
 					httpServletRequest, httpServletResponse);
 
 			renderRequest.setAttribute(
-				CommerceCheckoutWebKeys.COMMERCE_CART, commerceCart);
-
-			String previousMVCRenderCommandName =
-				_commerceCheckoutStepRegistry.getPreviousMVCRenderCommandName(
-					mvcRenderCommandName);
-
-			renderRequest.setAttribute(
-				CommerceCheckoutWebKeys.BACK_URL,
-				getCheckoutStepUrl(
-					renderResponse, commerceCart,
-					previousMVCRenderCommandName));
-
-			String nextMVCRenderCommandName =
-				_commerceCheckoutStepRegistry.getNextMVCRenderCommandName(
-					mvcRenderCommandName);
-
-			renderRequest.setAttribute(
-				WebKeys.REDIRECT,
-				getCheckoutStepUrl(
-					renderResponse, commerceCart, nextMVCRenderCommandName));
+				WebKeys.PORTLET_DISPLAY_CONTEXT, checkoutDisplayContext);
 
 			super.render(renderRequest, renderResponse);
 		}
@@ -130,28 +90,12 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 		}
 	}
 
-	protected String getCheckoutStepUrl(
-		RenderResponse renderResponse, CommerceCart commerceCart,
-		String mvcRenderCommandName) {
-
-		if ((commerceCart == null) || Validator.isNull(mvcRenderCommandName)) {
-			return null;
-		}
-
-		PortletURL portletURL = renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcRenderCommandName", mvcRenderCommandName);
-		portletURL.setParameter(
-			"commerceCartId", String.valueOf(commerceCart.getCommerceCartId()));
-
-		return portletURL.toString();
-	}
-
 	@Reference
 	private CommerceCartHelper _commerceCartHelper;
 
 	@Reference
-	private CommerceCheckoutStepRegistry _commerceCheckoutStepRegistry;
+	private CommerceCheckoutStepServicesTracker
+		_commerceCheckoutStepServicesTracker;
 
 	@Reference
 	private Portal _portal;

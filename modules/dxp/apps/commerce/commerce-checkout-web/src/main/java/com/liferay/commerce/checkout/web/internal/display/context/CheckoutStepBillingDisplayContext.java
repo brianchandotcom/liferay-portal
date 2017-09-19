@@ -22,20 +22,21 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
 
-import javax.portlet.RenderRequest;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Marco Leo
  */
 public class CheckoutStepBillingDisplayContext {
 
 	public CheckoutStepBillingDisplayContext(
 		CommerceAddressService commerceAddressService,
-		RenderRequest renderRequest) {
+		HttpServletRequest httpServletRequest) {
 
 		_commerceAddressService = commerceAddressService;
 
-		_commerceCart = (CommerceCart)renderRequest.getAttribute(
+		_commerceCart = (CommerceCart)httpServletRequest.getAttribute(
 			CommerceCheckoutWebKeys.COMMERCE_CART);
 	}
 

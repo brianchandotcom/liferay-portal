@@ -17,6 +17,18 @@
 <%@ include file="/init.jsp" %>
 
 <%
+boolean useRedirect = false;
+
+String redirect = ParamUtil.getString(request, "redirect");
+
+if (Validator.isNotNull(redirect)) {
+	String ppid = HttpUtil.getParameter(redirect, "p_p_id", false);
+
+	if (ppid.equals("com_liferay_asset_browser_web_portlet_AssetBrowserPortlet")) {
+		useRedirect = true;
+	}
+}
+
 String activeView = ParamUtil.getString(request, "activeView", defaultView);
 
 TimeZone calendarBookingTimeZone = userTimeZone;
@@ -272,12 +284,12 @@ while (manageableCalendarsIterator.hasNext()) {
 <aui:form action="<%= updateFormCalendarBookingURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "updateCalendarBooking();" %>'>
 	<aui:input name="mvcPath" type="hidden" value="/edit_calendar_booking.jsp" />
 
-	<liferay-portlet:renderURL var="redirectURL">
+	<liferay-portlet:renderURL var="customRedirect">
 		<liferay-portlet:param name="mvcPath" value="/edit_calendar_booking.jsp" />
 		<liferay-portlet:param name="calendarBookingId" value="<%= String.valueOf(calendarBookingId) %>" />
 	</liferay-portlet:renderURL>
 
-	<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
+	<aui:input name="redirect" type="hidden" value="<%= useRedirect ? redirect : customRedirect %>" />
 	<aui:input name="calendarBookingId" type="hidden" value="<%= calendarBookingId %>" />
 	<aui:input name="instanceIndex" type="hidden" value="<%= instanceIndex %>" />
 	<aui:input name="childCalendarIds" type="hidden" />
@@ -478,7 +490,7 @@ while (manageableCalendarsIterator.hasNext()) {
 			<liferay-security:permissionsURL
 				modelResource="<%= CalendarBooking.class.getName() %>"
 				modelResourceDescription="<%= calendarBooking.getTitle(locale) %>"
-				redirect="<%= redirectURL %>"
+				redirect="<%= customRedirect %>"
 				resourceGroupId="<%= calendarBooking.getGroupId() %>"
 				resourcePrimKey="<%= String.valueOf(calendarBooking.getCalendarBookingId()) %>"
 				var="permissionsCalendarBookingURL"

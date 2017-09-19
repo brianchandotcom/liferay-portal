@@ -112,25 +112,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 					@Override
 					public Void call() throws Exception {
-						try {
-							if (!sourceFormatterArgs.isShowDebugInformation()) {
-								_format(fileName);
+						_performTask(fileName);
 
-								return null;
-							}
-
-							DebugUtil.startTask();
-
-							_format(fileName);
-
-							DebugUtil.finishTask();
-
-							return null;
-						}
-						catch (Throwable t) {
-							throw new RuntimeException(
-								"Unable to format " + fileName, t);
-						}
+						return null;
 					}
 
 				});
@@ -602,6 +586,25 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return pattern;
+	}
+
+	private void _performTask(String fileName) {
+		try {
+			if (!sourceFormatterArgs.isShowDebugInformation()) {
+				_format(fileName);
+
+				return;
+			}
+
+			DebugUtil.startTask();
+
+			_format(fileName);
+
+			DebugUtil.finishTask();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException("Unable to format " + fileName, t);
+		}
 	}
 
 	private String _processSourceChecks(

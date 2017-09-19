@@ -279,7 +279,7 @@
 		</execute>
 	</command>
 
-	<command name="MoveDocumentToHome" priority="5">
+	<command name="MoveDocumentToSameFolder" priority="5">
 		<description message="This is a use case for LPS-60405." />
 
 		<execute macro="Navigator#openURL" />
@@ -289,7 +289,7 @@
 		</execute>
 
 		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description1" />
+			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentFile" value="Document_1.txt" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>

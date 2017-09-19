@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%@ page import="com.liferay.captcha.configuration.CaptchaConfiguration" %><%@
-page import="com.liferay.portal.kernel.captcha.CaptchaUtil" %><%@
+page import="com.liferay.captcha.util.CaptchaUtil" %><%@
 page import="com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil" %>
 
 <%

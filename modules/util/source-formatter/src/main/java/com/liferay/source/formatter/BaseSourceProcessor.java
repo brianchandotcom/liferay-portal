@@ -86,8 +86,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		if (fileNames.isEmpty()) {
 			addProgressStatusUpdate(
-				new ProgressStatusUpdate(
-					ProgressStatus.SOURCE_CHECKS_INITIALIZED, 0));
+				new ProgressStatusUpdate(ProgressStatus.CHECKS_INITIALIZED, 0));
 
 			return;
 		}
@@ -99,7 +98,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		addProgressStatusUpdate(
 			new ProgressStatusUpdate(
-				ProgressStatus.SOURCE_CHECKS_INITIALIZED, fileNames.size()));
+				ProgressStatus.CHECKS_INITIALIZED, fileNames.size()));
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
 			sourceFormatterArgs.getProcessorThreadCount());
@@ -112,25 +111,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 					@Override
 					public Void call() throws Exception {
-						try {
-							if (!sourceFormatterArgs.isShowDebugInformation()) {
-								_format(fileName);
+						_performTask(fileName);
 
-								return null;
-							}
-
-							DebugUtil.startTask();
-
-							_format(fileName);
-
-							DebugUtil.finishTask();
-
-							return null;
-						}
-						catch (Throwable t) {
-							throw new RuntimeException(
-								"Unable to format " + fileName, t);
-						}
+						return null;
 					}
 
 				});
@@ -280,6 +263,59 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return filteredIncludes;
 	}
 
+	protected void format(
+			File file, String fileName, String absolutePath, String content)
+		throws Exception {
+
+		Set<String> modifiedContents = new HashSet<>();
+
+		String newContent = format(
+			file, fileName, absolutePath, content, content, modifiedContents,
+			0);
+
+		processFormattedFile(file, fileName, content, newContent);
+	}
+
+	protected String format(
+			File file, String fileName, String absolutePath, String content,
+			String originalContent, Set<String> modifiedContents, int count)
+		throws Exception {
+
+		_sourceFormatterMessagesMap.remove(fileName);
+
+		_checkUTF8(file, fileName);
+
+		String newContent = _processSourceChecks(
+			file, fileName, absolutePath, content);
+
+		if (content.equals(newContent)) {
+			return content;
+		}
+
+		if (!modifiedContents.add(newContent)) {
+			processMessage(fileName, "Infinite loop in SourceFormatter");
+
+			return originalContent;
+		}
+
+		if (newContent.length() > content.length()) {
+			count++;
+
+			if (count > 100) {
+				processMessage(fileName, "Infinite loop in SourceFormatter");
+
+				return originalContent;
+			}
+		}
+		else {
+			count = 0;
+		}
+
+		return format(
+			file, fileName, absolutePath, newContent, originalContent,
+			modifiedContents, count);
+	}
+
 	protected List<String> getAllFileNames() {
 		return _allFileNames;
 	}
@@ -335,7 +371,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	protected void processFormattedFile(
+	protected File processFormattedFile(
 			File file, String fileName, String content, String newContent)
 		throws Exception {
 
@@ -386,6 +422,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		_modifiedFileNames.add(file.getAbsolutePath());
+
+		return file;
 	}
 
 	protected void processMessage(
@@ -406,26 +444,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected void processMessage(String fileName, String message) {
 		processMessage(
 			fileName, new SourceFormatterMessage(fileName, message, null, -1));
-	}
-
-	protected String processSourceChecks(
-			File file, String fileName, String absolutePath, String content)
-		throws Exception {
-
-		SourceChecksResult sourceChecksResult =
-			SourceChecksUtil.processSourceChecks(
-				file, fileName, absolutePath, content,
-				_isModulesFile(absolutePath), _sourceChecks,
-				_sourceChecksSuppressions,
-				sourceFormatterArgs.isShowDebugInformation());
-
-		for (SourceFormatterMessage sourceFormatterMessage :
-				sourceChecksResult.getSourceFormatterMessages()) {
-
-			processMessage(fileName, sourceFormatterMessage);
-		}
-
-		return sourceChecksResult.getContent();
 	}
 
 	protected boolean portalSource;
@@ -463,51 +481,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return false;
 	}
 
-	private final String _format(
-			File file, String fileName, String absolutePath, String content,
-			String originalContent, Set<String> modifiedContents, int count)
-		throws Exception {
-
-		_sourceFormatterMessagesMap.remove(fileName);
-
-		_checkUTF8(file, fileName);
-
-		String newContent = processSourceChecks(
-			file, fileName, absolutePath, content);
-
-		if (content.equals(newContent)) {
-			return content;
-		}
-
-		if (!modifiedContents.add(newContent)) {
-			processMessage(fileName, "Infinite loop in SourceFormatter");
-
-			return originalContent;
-		}
-
-		if (newContent.length() > content.length()) {
-			count++;
-
-			if (count > 100) {
-				processMessage(fileName, "Infinite loop in SourceFormatter");
-
-				return originalContent;
-			}
-		}
-		else {
-			count = 0;
-		}
-
-		return _format(
-			file, fileName, absolutePath, newContent, originalContent,
-			modifiedContents, count);
-	}
-
-	private final void _format(String fileName) throws Exception {
+	private void _format(String fileName) throws Exception {
 		if (!_isMatchPath(fileName)) {
 			addProgressStatusUpdate(
-				new ProgressStatusUpdate(
-					ProgressStatus.SOURCE_CHECK_FILE_COMPLETED));
+				new ProgressStatusUpdate(ProgressStatus.CHECK_FILE_COMPLETED));
 
 			return;
 		}
@@ -519,19 +496,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		File file = new File(absolutePath);
 
-		String content = FileUtil.read(file);
-
-		Set<String> modifiedContents = new HashSet<>();
-
-		String newContent = _format(
-			file, fileName, absolutePath, content, content, modifiedContents,
-			0);
-
-		processFormattedFile(file, fileName, content, newContent);
+		format(file, fileName, absolutePath, FileUtil.read(file));
 
 		addProgressStatusUpdate(
-			new ProgressStatusUpdate(
-				ProgressStatus.SOURCE_CHECK_FILE_COMPLETED));
+			new ProgressStatusUpdate(ProgressStatus.CHECK_FILE_COMPLETED));
 	}
 
 	private List<SourceCheck> _getSourceChecks(
@@ -615,6 +583,45 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return pattern;
+	}
+
+	private void _performTask(String fileName) {
+		try {
+			if (!sourceFormatterArgs.isShowDebugInformation()) {
+				_format(fileName);
+
+				return;
+			}
+
+			DebugUtil.startTask();
+
+			_format(fileName);
+
+			DebugUtil.finishTask();
+		}
+		catch (Throwable t) {
+			throw new RuntimeException("Unable to format " + fileName, t);
+		}
+	}
+
+	private String _processSourceChecks(
+			File file, String fileName, String absolutePath, String content)
+		throws Exception {
+
+		SourceChecksResult sourceChecksResult =
+			SourceChecksUtil.processSourceChecks(
+				file, fileName, absolutePath, content,
+				_isModulesFile(absolutePath), _sourceChecks,
+				_sourceChecksSuppressions,
+				sourceFormatterArgs.isShowDebugInformation());
+
+		for (SourceFormatterMessage sourceFormatterMessage :
+				sourceChecksResult.getSourceFormatterMessages()) {
+
+			processMessage(fileName, sourceFormatterMessage);
+		}
+
+		return sourceChecksResult.getContent();
 	}
 
 	private List<String> _allFileNames;

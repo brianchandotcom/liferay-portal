@@ -1,10 +1,16 @@
 dependencies {
+	compile group: "biz.aQute.bnd", name: "bndlib", version: "2.4.0"
 	compile group: "com.liferay", name: "aQute.bnd", version: "2.3.0"
-	compile group: "com.liferay.arquillian", name: "com.liferay.arquillian.arquillian-container-liferay", version: "1.0.4"
 	compile group: "com.liferay.arquillian", name: "com.liferay.arquillian.arquillian-container-osgi-allin", version: "1.0.4"
+	compile group: "com.liferay.arquillian", name: "com.liferay.arquillian.arquillian-portal-liferay-extension", version: "1.0.4"
+	compile group: "com.liferay.arquillian", name: "com.liferay.arquillian.arquillian-processor-osgi-allin", version: "1.0.4"
 	compile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compile group: "junit", name: "junit", version: "4.12"
+	compile group: "org.jboss.arquillian.container", name: "arquillian-container-karaf-remote", version: "2.1.0.Final"
+	compile group: "org.jboss.arquillian.container", name: "arquillian-container-test-impl-base", version: "1.1.10.Final"
+	compile group: "org.jboss.arquillian.container", name: "arquillian-container-test-spi", version: "1.1.10.Final"
 	compile group: "org.jboss.arquillian.junit", name: "arquillian-junit-container", version: "1.1.10.Final"
 	compile group: "org.jboss.osgi.metadata", name: "jbosgi-metadata", version: "4.0.0.CR1"
+	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.enterprise", version: "5.0.0"
 }

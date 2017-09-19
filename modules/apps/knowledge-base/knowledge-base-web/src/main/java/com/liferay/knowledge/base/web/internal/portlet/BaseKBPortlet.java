@@ -62,7 +62,6 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -115,19 +114,14 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			actionRequest, "resourcePrimKey");
 		String sourceFileName = uploadPortletRequest.getFileName("file");
 
-		InputStream inputStream = null;
-
-		try {
-			inputStream = uploadPortletRequest.getFileAsStream("file");
+		try (InputStream inputStream =
+				uploadPortletRequest.getFileAsStream("file")) {
 
 			String mimeType = uploadPortletRequest.getContentType("file");
 
 			kbArticleService.addTempAttachment(
 				themeDisplay.getScopeGroupId(), resourcePrimKey, sourceFileName,
 				KnowledgeBaseConstants.TEMP_FOLDER_NAME, inputStream, mimeType);
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
 		}
 	}
 

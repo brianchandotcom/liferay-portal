@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -276,19 +275,13 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 		FileEntry fileEntry = _exportImportHelper.getTempFileEntry(
 			groupId, themeDisplay.getUserId(), folderName);
 
-		InputStream inputStream = null;
-
-		try {
-			inputStream = _dlFileEntryLocalService.getFileAsStream(
-				fileEntry.getFileEntryId(), fileEntry.getVersion(), false);
+		try (InputStream inputStream = _dlFileEntryLocalService.getFileAsStream(
+				fileEntry.getFileEntryId(), fileEntry.getVersion(), false)) {
 
 			importData(actionRequest, inputStream);
 
 			_importLayoutsMVCActionCommand.deleteTempFileEntry(
 				groupId, folderName);
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
 		}
 	}
 
@@ -335,11 +328,8 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 		FileEntry fileEntry = _exportImportHelper.getTempFileEntry(
 			groupId, themeDisplay.getUserId(), folderName);
 
-		InputStream inputStream = null;
-
-		try {
-			inputStream = _dlFileEntryLocalService.getFileAsStream(
-				fileEntry.getFileEntryId(), fileEntry.getVersion(), false);
+		try (InputStream inputStream = _dlFileEntryLocalService.getFileAsStream(
+				fileEntry.getFileEntryId(), fileEntry.getVersion(), false)) {
 
 			MissingReferences missingReferences = validateFile(
 				actionRequest, inputStream);
@@ -364,9 +354,6 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
 		}
 	}
 

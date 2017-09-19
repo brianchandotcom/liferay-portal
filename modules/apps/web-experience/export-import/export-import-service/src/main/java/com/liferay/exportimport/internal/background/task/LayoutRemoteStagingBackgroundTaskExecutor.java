@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.exportimport.service.http.StagingServiceHttp;
 
@@ -293,11 +292,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 			"%%0%dd",
 			String.valueOf((int)(file.length() / bytes.length)).length() + 1);
 
-		FileInputStream fileInputStream = null;
-
-		try {
-			fileInputStream = new FileInputStream(file);
-
+		try (FileInputStream fileInputStream = new FileInputStream(file)) {
 			while ((i = fileInputStream.read(bytes)) >= 0) {
 				String fileName =
 					file.getName() + String.format(numberFormat, j++);
@@ -318,9 +313,6 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 				bytes =
 					new byte[PropsValues.STAGING_REMOTE_TRANSFER_BUFFER_SIZE];
 			}
-		}
-		finally {
-			StreamUtil.cleanUp(fileInputStream);
 		}
 	}
 

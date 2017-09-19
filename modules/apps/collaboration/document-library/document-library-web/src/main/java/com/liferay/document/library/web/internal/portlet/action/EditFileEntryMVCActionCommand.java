@@ -75,7 +75,6 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -257,13 +256,11 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		long folderId = ParamUtil.getLong(uploadPortletRequest, "folderId");
 		String sourceFileName = uploadPortletRequest.getFileName("file");
 
-		InputStream inputStream = null;
+		try (InputStream inputStream =
+				uploadPortletRequest.getFileAsStream("file")) {
 
-		try {
 			String tempFileName = TempFileEntryUtil.getTempFileName(
 				sourceFileName);
-
-			inputStream = uploadPortletRequest.getFileAsStream("file");
 
 			String mimeType = uploadPortletRequest.getContentType("file");
 
@@ -280,9 +277,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
 		}
 	}
 
@@ -937,13 +931,13 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 
-		InputStream inputStream = null;
-
 		if (cmd.equals(Constants.ADD_DYNAMIC)) {
 			title = uploadPortletRequest.getFileName("file");
 		}
 
-		try {
+		try (InputStream inputStream =
+				uploadPortletRequest.getFileAsStream("file")) {
+
 			String contentType = uploadPortletRequest.getContentType("file");
 			long size = uploadPortletRequest.getSize("file");
 
@@ -975,8 +969,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					}
 				}
 			}
-
-			inputStream = uploadPortletRequest.getFileAsStream("file");
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				DLFileEntry.class.getName(), uploadPortletRequest);
@@ -1021,9 +1013,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			return fileEntry;
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
 		}
 	}
 

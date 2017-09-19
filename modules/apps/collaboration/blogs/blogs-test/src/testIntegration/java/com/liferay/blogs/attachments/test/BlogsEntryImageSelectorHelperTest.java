@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
@@ -89,11 +88,7 @@ public class BlogsEntryImageSelectorHelperTest {
 
 	@Test
 	public void testGetImageSelectorWithDLImageFileEntry() throws Exception {
-		InputStream inputStream = null;
-
-		try {
-			inputStream = getInputStream();
-
+		try (InputStream inputStream = getInputStream()) {
 			byte[] bytes = FileUtil.getBytes(inputStream);
 
 			ServiceContext serviceContext =
@@ -125,9 +120,6 @@ public class BlogsEntryImageSelectorHelperTest {
 			Assert.assertFalse(
 				blogsEntryImageSelectorHelper.isFileEntryTempFile());
 		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
-		}
 	}
 
 	@Test
@@ -153,11 +145,7 @@ public class BlogsEntryImageSelectorHelperTest {
 	public void testGetImageSelectorWithSameDLImageFileEntry()
 		throws Exception {
 
-		InputStream inputStream = null;
-
-		try {
-			inputStream = getInputStream();
-
+		try (InputStream inputStream = getInputStream()) {
 			byte[] bytes = FileUtil.getBytes(inputStream);
 
 			ServiceContext serviceContext =
@@ -178,9 +166,6 @@ public class BlogsEntryImageSelectorHelperTest {
 			Assert.assertFalse(
 				blogsEntryImageSelectorHelper.isFileEntryTempFile());
 		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
-		}
 	}
 
 	@Test
@@ -195,11 +180,7 @@ public class BlogsEntryImageSelectorHelperTest {
 
 	@Test
 	public void testGetImageSelectorWithTempImageFileEntry() throws Exception {
-		InputStream inputStream = null;
-
-		try {
-			inputStream = getInputStream();
-
+		try (InputStream inputStream = getInputStream()) {
 			byte[] bytes = FileUtil.getBytes(inputStream);
 
 			FileEntry tempFileEntry = TempFileEntryUtil.addTempFileEntry(
@@ -227,9 +208,6 @@ public class BlogsEntryImageSelectorHelperTest {
 
 			Assert.assertTrue(
 				blogsEntryImageSelectorHelper.isFileEntryTempFile());
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
 		}
 	}
 

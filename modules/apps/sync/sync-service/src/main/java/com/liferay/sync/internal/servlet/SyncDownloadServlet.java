@@ -217,19 +217,14 @@ public class SyncDownloadServlet extends HttpServlet {
 			repositoryId, folderId);
 
 		for (FileEntry fileEntry : fileEntries) {
-			InputStream inputStream = null;
-
-			try {
-				inputStream = _dlFileEntryLocalService.getFileAsStream(
-					userId, fileEntry.getFileEntryId(), fileEntry.getVersion(),
-					false);
+			try (InputStream inputStream =
+					_dlFileEntryLocalService.getFileAsStream(
+						userId, fileEntry.getFileEntryId(),
+						fileEntry.getVersion(), false)) {
 
 				String filePath = folderPath + fileEntry.getTitle();
 
 				zipWriter.addEntry(filePath, inputStream);
-			}
-			finally {
-				StreamUtil.cleanUp(inputStream);
 			}
 		}
 

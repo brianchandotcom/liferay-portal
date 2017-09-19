@@ -251,11 +251,9 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 			throw new NoSuchFileException();
 		}
 
-		InputStream inputStream = null;
-
-		try {
-			inputStream = DLStoreUtil.getFileAsStream(
-				app.getCompanyId(), CompanyConstants.SYSTEM, app.getFilePath());
+		try (InputStream inputStream = DLStoreUtil.getFileAsStream(
+				app.getCompanyId(), CompanyConstants.SYSTEM,
+				app.getFilePath())) {
 
 			if (inputStream == null) {
 				throw new IOException(
@@ -298,8 +296,6 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 			_log.error(e, e);
 		}
 		finally {
-			StreamUtil.cleanUp(inputStream);
-
 			clearInstalledAppsCache();
 		}
 	}

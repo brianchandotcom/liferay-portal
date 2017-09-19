@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -180,10 +179,8 @@ public class KBArticleImporter {
 	protected Map<String, String> getMetadata(ZipReader zipReader)
 		throws KBArticleImportException {
 
-		InputStream inputStream = null;
-
-		try {
-			inputStream = zipReader.getEntryAsInputStream(".METADATA");
+		try (InputStream inputStream =
+				zipReader.getEntryAsInputStream(".METADATA")) {
 
 			if (inputStream == null) {
 				return Collections.emptyMap();
@@ -208,9 +205,6 @@ public class KBArticleImporter {
 		}
 		catch (IOException ioe) {
 			throw new KBArticleImportException(ioe);
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
 		}
 	}
 

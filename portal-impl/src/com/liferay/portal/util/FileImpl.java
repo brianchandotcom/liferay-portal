@@ -603,15 +603,8 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 	@Override
 	public String getMD5Checksum(File file) throws IOException {
-		FileInputStream fileInputStream = null;
-
-		try {
-			fileInputStream = new FileInputStream(file);
-
+		try (FileInputStream fileInputStream = new FileInputStream(file)) {
 			return DigesterUtil.digestHex(Digester.MD5, fileInputStream);
-		}
-		finally {
-			StreamUtil.cleanUp(fileInputStream);
 		}
 	}
 

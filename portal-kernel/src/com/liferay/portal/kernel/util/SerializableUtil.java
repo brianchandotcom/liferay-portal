@@ -37,11 +37,9 @@ public class SerializableUtil {
 	}
 
 	public static Object deserialize(byte[] bytes) {
-		ObjectInputStream objectInputStream = null;
-
-		try {
-			objectInputStream = new ProtectedObjectInputStream(
-				new UnsyncByteArrayInputStream(bytes));
+		try (ObjectInputStream objectInputStream =
+				new ProtectedObjectInputStream(
+					new UnsyncByteArrayInputStream(bytes))) {
 
 			return objectInputStream.readObject();
 		}
@@ -50,18 +48,13 @@ public class SerializableUtil {
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
-		}
-		finally {
-			StreamUtil.cleanUp(objectInputStream);
 		}
 	}
 
 	public static Object deserialize(byte[] bytes, ClassLoader classLoader) {
-		ObjectInputStream objectInputStream = null;
-
-		try {
-			objectInputStream = new ProtectedClassLoaderObjectInputStream(
-				new UnsyncByteArrayInputStream(bytes), classLoader);
+		try (ObjectInputStream objectInputStream =
+				new ProtectedClassLoaderObjectInputStream(
+					new UnsyncByteArrayInputStream(bytes), classLoader)) {
 
 			return objectInputStream.readObject();
 		}
@@ -71,28 +64,19 @@ public class SerializableUtil {
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
 		}
-		finally {
-			StreamUtil.cleanUp(objectInputStream);
-		}
 	}
 
 	public static byte[] serialize(Object object) {
-		ObjectOutputStream objectOutputStream = null;
-
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
-		try {
-			objectOutputStream = new ObjectOutputStream(
-				unsyncByteArrayOutputStream);
+		try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+				unsyncByteArrayOutputStream)) {
 
 			objectOutputStream.writeObject(object);
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
-		}
-		finally {
-			StreamUtil.cleanUp(objectOutputStream);
 		}
 
 		return unsyncByteArrayOutputStream.toByteArray();

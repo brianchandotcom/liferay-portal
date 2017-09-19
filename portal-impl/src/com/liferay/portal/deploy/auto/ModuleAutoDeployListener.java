@@ -21,7 +21,6 @@ import aQute.bnd.osgi.Constants;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployer;
 import com.liferay.portal.kernel.deploy.auto.BaseAutoDeployListener;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
@@ -68,20 +67,15 @@ public class ModuleAutoDeployListener extends BaseAutoDeployListener {
 			return false;
 		}
 
-		JarInputStream jarInputStream = null;
-
 		Manifest manifest = null;
 
-		try {
-			jarInputStream = new JarInputStream(new FileInputStream(file));
+		try (JarInputStream jarInputStream =
+				new JarInputStream(new FileInputStream(file))) {
 
 			manifest = jarInputStream.getManifest();
 		}
 		catch (IOException ioe) {
 			throw new AutoDeployException(ioe);
-		}
-		finally {
-			StreamUtil.cleanUp(jarInputStream);
 		}
 
 		if (manifest == null) {

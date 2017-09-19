@@ -23,6 +23,7 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -59,26 +60,31 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
+	protected void format(
+			File file, String fileName, String absolutePath, String content)
+		throws Exception {
+
+		if (_hasGeneratedTag(content)) {
+			return;
+		}
+
+		Set<String> modifiedContents = new HashSet<>();
+
+		String newContent = format(
+			file, fileName, absolutePath, content, content, modifiedContents,
+			0);
+
+		_ungeneratedFiles.add(
+			processFormattedFile(file, fileName, content, newContent));
+	}
+
+	@Override
 	protected void postFormat() throws Exception {
 		addProgressStatusUpdate(
 			new ProgressStatusUpdate(
 				ProgressStatus.CHECK_STYLE_STARTING, _ungeneratedFiles.size()));
 
 		_processCheckStyle();
-	}
-
-	@Override
-	protected String processSourceChecks(
-			File file, String fileName, String absolutePath, String content)
-		throws Exception {
-
-		if (_hasGeneratedTag(content)) {
-			return content;
-		}
-
-		_ungeneratedFiles.add(file);
-
-		return super.processSourceChecks(file, fileName, absolutePath, content);
 	}
 
 	private String[] _getPluginExcludes(String pluginDirectoryName) {

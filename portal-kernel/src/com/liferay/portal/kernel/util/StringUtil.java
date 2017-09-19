@@ -2324,34 +2324,6 @@ public class StringUtil {
 		return s.trim();
 	}
 
-	private static String _read(InputStream inputStream) throws IOException {
-		byte[] buffer = new byte[8192];
-		int length = 0;
-
-		int bytesRead = inputStream.read(buffer, 0, buffer.length);
-
-		while (bytesRead != -1) {
-			if (bytesRead == buffer.length) {
-				byte[] newBuffer = new byte[buffer.length << 1];
-
-				System.arraycopy(buffer, 0, newBuffer, 0, bytesRead);
-
-				buffer = newBuffer;
-			}
-
-			length += bytesRead;
-
-			bytesRead = inputStream.read(
-				buffer, length, buffer.length - length);
-		}
-
-		if (length == 0) {
-			return StringPool.BLANK;
-		}
-
-		return new String(buffer, 0, length, StringPool.UTF8);
-	}
-
 	public static void readLines(InputStream is, Collection<String> lines)
 		throws IOException {
 
@@ -4001,43 +3973,6 @@ public class StringUtil {
 		return lines.toArray(new String[lines.size()]);
 	}
 
-	private static void _splitLines(String s, Collection<String> lines) {
-		int lastIndex = 0;
-
-		while (true) {
-			int returnIndex = s.indexOf(CharPool.RETURN, lastIndex);
-
-			if (returnIndex == -1) {
-				_split(lines, s, lastIndex, CharPool.NEW_LINE);
-
-				return;
-			}
-
-			int newLineIndex = s.indexOf(CharPool.NEW_LINE, lastIndex);
-
-			if (newLineIndex == -1) {
-				_split(lines, s, lastIndex, CharPool.RETURN);
-
-				return;
-			}
-
-			if (newLineIndex < returnIndex) {
-				lines.add(s.substring(lastIndex, newLineIndex));
-
-				lastIndex = newLineIndex + 1;
-			}
-			else {
-				lines.add(s.substring(lastIndex, returnIndex));
-
-				lastIndex = returnIndex + 1;
-
-				if (lastIndex == newLineIndex) {
-					lastIndex++;
-				}
-			}
-		}
-	}
-
 	/**
 	 * Returns <code>true</code> if, ignoring case, the string starts with the
 	 * specified character.
@@ -5221,6 +5156,34 @@ public class StringUtil {
 		return Character.isWhitespace(c);
 	}
 
+	private static String _read(InputStream inputStream) throws IOException {
+		byte[] buffer = new byte[8192];
+		int length = 0;
+
+		int bytesRead = inputStream.read(buffer, 0, buffer.length);
+
+		while (bytesRead != -1) {
+			if (bytesRead == buffer.length) {
+				byte[] newBuffer = new byte[buffer.length << 1];
+
+				System.arraycopy(buffer, 0, newBuffer, 0, bytesRead);
+
+				buffer = newBuffer;
+			}
+
+			length += bytesRead;
+
+			bytesRead = inputStream.read(
+				buffer, length, buffer.length - length);
+		}
+
+		if (length == 0) {
+			return StringPool.BLANK;
+		}
+
+		return new String(buffer, 0, length, StringPool.UTF8);
+	}
+
 	private static void _split(
 		Collection<String> values, String s, int offset, char delimiter) {
 
@@ -5236,6 +5199,43 @@ public class StringUtil {
 
 		if (offset < s.length()) {
 			values.add(s.substring(offset));
+		}
+	}
+
+	private static void _splitLines(String s, Collection<String> lines) {
+		int lastIndex = 0;
+
+		while (true) {
+			int returnIndex = s.indexOf(CharPool.RETURN, lastIndex);
+
+			if (returnIndex == -1) {
+				_split(lines, s, lastIndex, CharPool.NEW_LINE);
+
+				return;
+			}
+
+			int newLineIndex = s.indexOf(CharPool.NEW_LINE, lastIndex);
+
+			if (newLineIndex == -1) {
+				_split(lines, s, lastIndex, CharPool.RETURN);
+
+				return;
+			}
+
+			if (newLineIndex < returnIndex) {
+				lines.add(s.substring(lastIndex, newLineIndex));
+
+				lastIndex = newLineIndex + 1;
+			}
+			else {
+				lines.add(s.substring(lastIndex, returnIndex));
+
+				lastIndex = returnIndex + 1;
+
+				if (lastIndex == newLineIndex) {
+					lastIndex++;
+				}
+			}
 		}
 	}
 

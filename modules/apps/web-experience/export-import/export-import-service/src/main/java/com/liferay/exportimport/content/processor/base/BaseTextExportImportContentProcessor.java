@@ -727,12 +727,26 @@ public class BaseTextExportImportContentProcessor
 					throw new NoSuchLayoutException();
 				}
 
-				if (urlGroup.getGroupId() == groupId) {
-					urlSB.append(DATA_HANDLER_GROUP_FRIENDLY_URL);
+				urlSB.append(DATA_HANDLER_GROUP_FRIENDLY_URL);
+
+				// Append uuid so we can resolve during import regardless of
+				// it's this group or a different one
+
+				urlSB.append(StringPool.AT);
+
+				if (urlGroup.isStagedRemotely()) {
+					String remoteGroupUuid = urlGroup.getTypeSettingsProperty(
+						"remoteGroupUUID");
+
+					if (Validator.isNotNull(remoteGroupUuid)) {
+						urlSB.append(remoteGroupUuid);
+					}
 				}
 				else {
-					urlSB.append(groupFriendlyURL);
+					urlSB.append(urlGroup.getUuid());
 				}
+
+				urlSB.append(StringPool.AT);
 
 				String siteAdminURL =
 					GroupConstants.CONTROL_PANEL_FRIENDLY_URL +
@@ -1038,8 +1052,53 @@ public class BaseTextExportImportContentProcessor
 			content, DATA_HANDLER_COMPANY_SECURE_URL, companySecurePortalURL);
 		content = StringUtil.replace(
 			content, DATA_HANDLER_COMPANY_URL, companyPortalURL);
-		content = StringUtil.replace(
-			content, DATA_HANDLER_GROUP_FRIENDLY_URL, group.getFriendlyURL());
+
+		// Group friendly URLs
+
+		do {
+			int groupFriendlyUrlPos = content.indexOf(
+				DATA_HANDLER_GROUP_FRIENDLY_URL);
+
+			if (groupFriendlyUrlPos == -1) {
+				break;
+			}
+
+			int groupUuidPos =
+				groupFriendlyUrlPos + DATA_HANDLER_GROUP_FRIENDLY_URL.length();
+
+			String groupUuid = content.substring(
+				groupUuidPos + 1,
+				content.indexOf(StringPool.AT, groupUuidPos + 1));
+
+			Group groupFriendlyUrlGroup =
+				GroupLocalServiceUtil.fetchGroupByUuidAndCompanyId(
+					groupUuid, portletDataContext.getCompanyId());
+
+			if (groupFriendlyUrlGroup == null) {
+
+				// Group not found fall back to the current one
+
+				content = StringUtil.replaceFirst(
+					content, DATA_HANDLER_GROUP_FRIENDLY_URL,
+					group.getFriendlyURL(), groupFriendlyUrlPos);
+
+				content = StringUtil.replaceFirst(
+					content, StringPool.AT + groupUuid + StringPool.AT,
+					StringPool.BLANK, content.indexOf(group.getFriendlyURL()));
+
+				continue;
+			}
+
+			content = StringUtil.replaceFirst(
+				content, DATA_HANDLER_GROUP_FRIENDLY_URL, StringPool.BLANK,
+				groupFriendlyUrlPos);
+
+			content = StringUtil.replaceFirst(
+				content, StringPool.AT + groupUuid + StringPool.AT,
+				groupFriendlyUrlGroup.getFriendlyURL(), groupFriendlyUrlPos);
+		}
+		while (true);
+
 		content = StringUtil.replace(
 			content, DATA_HANDLER_PATH_CONTEXT, PortalUtil.getPathContext());
 		content = StringUtil.replace(

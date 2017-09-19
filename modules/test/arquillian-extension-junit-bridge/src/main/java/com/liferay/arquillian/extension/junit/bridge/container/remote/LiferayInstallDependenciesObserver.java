@@ -21,11 +21,6 @@ import java.io.IOException;
 
 import java.net.URL;
 
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -56,7 +51,6 @@ import org.jboss.arquillian.container.spi.event.StartContainer;
 import org.jboss.arquillian.container.spi.event.StopContainer;
 import org.jboss.arquillian.core.api.Instance;
 import org.jboss.arquillian.core.api.InstanceProducer;
-import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.shrinkwrap.resolver.api.maven.ConfigurableMavenResolverSystem;
@@ -72,58 +66,8 @@ import org.osgi.jmx.framework.FrameworkMBean;
  */
 public class LiferayInstallDependenciesObserver {
 
-	public void startContainer(@Observes StartContainer context)
-		throws Exception {
-
-		LiferayRemoteContainerConfiguration config =
-			_configurationInstance.get();
-
-		String dependencyPropertyFile = config.getDependencyPropertyFile();
-
+	public void startContainer(@Observes StartContainer context) {
 		_installedBundles = new ArrayList<>();
-
-		if (dependencyPropertyFile != null) {
-			_initOSGiJMXAttributes(config);
-
-			_initLiferayJMXAttributes();
-
-			Path dependencyPropertyFilePath = Paths.get(dependencyPropertyFile);
-
-			Charset charset = Charset.forName("UTF-8");
-
-			try {
-				List<String> dependencies = Files.readAllLines(
-					dependencyPropertyFilePath, charset);
-
-				String dependencyPath = "";
-
-				for (String dependency : dependencies) {
-					if (dependency.startsWith(_MAVEN_PREFIX)) {
-						String mavenDependency = dependency.substring(
-							_MAVEN_PREFIX.length() + 1);
-
-						dependencyPath = _getMavenDependencyPath(
-							mavenDependency);
-					}
-					else if (dependency.startsWith(_FILE_PREFIX)) {
-						dependencyPath = dependency.substring(
-							_FILE_PREFIX.length() + 1);
-					}
-
-					Path path = Paths.get(dependencyPath);
-
-					path = path.toAbsolutePath();
-
-					_installBundle(path.toString());
-				}
-			}
-			catch (IOException ioe) {
-				throw new LifecycleException(
-					"Can't find file " +
-						dependencyPropertyFilePath.toAbsolutePath(),
-					ioe);
-			}
-		}
 	}
 
 	public void stopContainer(@Observes StopContainer context)
@@ -450,11 +394,6 @@ public class LiferayInstallDependenciesObserver {
 		"(.*?)(-\\d+\\.\\d+\\.\\d+\\.\\d+)?");
 
 	private BundleStateMBean _bundleStateMBean;
-
-	@ApplicationScoped
-	@Inject
-	private Instance<LiferayRemoteContainerConfiguration>
-		_configurationInstance;
 
 	@Inject
 	private Instance<ContainerRegistry> _containerRegistryInstance;

@@ -29,13 +29,8 @@ public class LiferayRemoteContainerConfiguration
 		"service:jmx:rmi:///jndi/rmi://localhost:8099/jmxrmi";
 	public static final String LIFERAY_DEFAULT_JMX_USERNAME = "";
 
-	private String dependencyPropertyFile;
 	private String httpHost;
 	private Integer httpPort;
-
-	public String getDependencyPropertyFile() {
-		return this.dependencyPropertyFile;
-	}
 
 	public String getHttpHost() {
 		return this.httpHost;
@@ -48,10 +43,6 @@ public class LiferayRemoteContainerConfiguration
 	@Override
 	public boolean isAutostartBundle() {
 		return true;
-	}
-
-	public void setDependencyPropertyFile(String dependencyPropertyFile) {
-		this.dependencyPropertyFile = dependencyPropertyFile;
 	}
 
 	public void setHttpHost(String httpHost) {

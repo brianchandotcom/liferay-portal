@@ -102,6 +102,8 @@
 	</command>
 
 	<command name="editDescription">
+		<execute function="Click" locator1="Form#DESCRIPTION_FIELD" />
+
 		<execute function="Type#typeAceEditor" locator1="Form#DESCRIPTION_FIELD" value1="${formDescription}" />
 	</command>
 

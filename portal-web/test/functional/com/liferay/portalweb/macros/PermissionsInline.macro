@@ -96,6 +96,15 @@
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
 
+	<command name="gotoDocumentsAndMediaDocumentPG">
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Permissions" />
+			<var name="rowEntry" value="${dmDocumentTitle}" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+	</command>
+
 	<command name="gotoDocumentsAndMediaHomeFolderPG">
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="${pageName}" />
@@ -121,9 +130,9 @@
 	</command>
 
 	<command name="gotoMessageBoardsCategoryPG">
-		<var name="key_categoryName" value="${categoryName}" />
-
-		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" value1="${categoryName}" />
+		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" value1="${categoryName}">
+			<var name="key_categoryName" value="${categoryName}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="Button#PERMISSIONS" value1="Permissions" />
 
@@ -146,13 +155,13 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<var name="key_threadSubject" value="${threadSubject}" />
+		<execute function="AssertClick" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}">
+			<var name="key_threadSubject" value="${threadSubject}" />
+		</execute>
 
-		<execute function="AssertClick" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
-
-		<var name="key_threadReplyBody" value="${threadReplyBody}" />
-
-		<execute function="Click" locator1="MessageBoards#THREAD_REPLY_ACTIONS" />
+		<execute function="Click" locator1="MessageBoards#THREAD_REPLY_ACTIONS">
+			<var name="key_threadReplyBody" value="${threadReplyBody}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
 			<var name="key_menuItem" value="Permissions" />
@@ -176,21 +185,18 @@
 	</command>
 
 	<command name="gotoPollPermissionsCP">
-		<var name="key_pollsQuestionTitle" value="${pollsQuestionTitle}" />
-
-		<execute function="Click" locator1="Polls#POLLS_TABLE_ACTION" />
-
-		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
-			<var name="key_menuItem" value="Permissions" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Permissions" />
+			<var name="rowEntry" value="pollsQuestionTitle" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
 
 	<command name="gotoRolesAdminFromPortletConfiguration">
-		<var name="key_roleName" value="${roleName}" />
-
-		<execute function="AssertClick" locator1="AssetPermissions#ROLE_LINK" value1="${roleName}" />
+		<execute function="AssertClick" locator1="AssetPermissions#ROLE_LINK" value1="${roleName}">
+			<var name="key_roleName" value="${roleName}" />
+		</execute>
 	</command>
 
 	<command name="gotoSitepageCP">
@@ -218,12 +224,9 @@
 			<var name="portlet" value="${portletName}" />
 		</execute>
 
-		<var name="key_rowEntry" value="${teamName}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
-			<var name="key_menuItem" value="Permissions" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Permissions" />
+			<var name="rowEntry" value="${teamName}" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
@@ -247,9 +250,9 @@
 			<var name="portlet" value="User Groups" />
 		</execute>
 
-		<var name="key_userGroupName" value="${userGroupName}" />
-
-		<execute function="Click" locator1="UserGroups#USER_GROUP_TABLE_ACTIONS" />
+		<execute function="Click" locator1="UserGroups#USER_GROUP_TABLE_ACTIONS">
+			<var name="key_userGroupName" value="${userGroupName}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="User Group Pages Permissions">
 			<var name="key_menuItem" value="User Group Pages Permissions" />

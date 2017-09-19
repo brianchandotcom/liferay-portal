@@ -1,7 +1,5 @@
 <definition>
 	<command name="_gotoAddArticleViaTemplate">
-		<var name="key_kbTemplateTitle" value="${kbTemplateTitle}" />
-
 		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${kbTemplateTitle}">
@@ -60,9 +58,9 @@
 	</command>
 
 	<command name="addChildPGViaKBDisplay">
-		<var name="key_kbTool" value="Add Child Article" />
-
-		<execute function="AssertClick" locator1="KnowledgeBase#KB_TOOLS" value1="Add Child Article" />
+		<execute function="AssertClick" locator1="KnowledgeBase#KB_TOOLS" value1="Add Child Article">
+			<var name="key_kbTool" value="Add Child Article" />
+		</execute>
 
 		<execute macro="AlloyEditor#addTitleAndContent">
 			<var name="content" value="${kbArticleContent}" />
@@ -184,9 +182,9 @@
 		<if>
 			<isset var="kbArticleSection" />
 			<then>
-				<var name="key_kbArticleSection" value="${kbArticleSection}" />
-
-				<execute function="AssertClick" locator1="KnowledgeBaseArticle#SECTIONS_SELECT" value1="${kbArticleSection}" />
+				<execute function="AssertClick" locator1="KnowledgeBaseArticle#SECTIONS_SELECT" value1="${kbArticleSection}">
+					<var name="key_kbArticleSection" value="${kbArticleSection}" />
+				</execute>
 			</then>
 		</if>
 
@@ -343,14 +341,15 @@
 		<var name="sectionCount" value="0" />
 
 		<for list="${kbAdminSection}" param="kbAdminSection">
-			<var name="key_assetType" value="KBArticleSection" />
 			<var method="MathUtil#sum('${sectionCount}', '1')" name="sectionCount" />
 
 			<var name="key_counter" value="${sectionCount}" />
 
 			<execute function="Type" locator1="KnowledgeBaseArticle#ADMIN_KB_ARTICLE_SECTION" value1="${kbAdminSection}" />
 
-			<execute function="Click" locator1="Icon#ADD_REPEATABLE_ENTRY" />
+			<execute function="Click" locator1="Icon#ADD_REPEATABLE_ENTRY">
+				<var name="key_assetType" value="KBArticleSection" />
+			</execute>
 		</for>
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
@@ -463,24 +462,24 @@
 
 		<execute function="SelectFrame" value1="relative=top" />
 
-		<var name="key_kbFolderName" value="${kbFolderName}" />
-
 		<if>
 			<isset var="kbFolderName" />
 			<then>
 				<execute function="SelectFrame" locator1="KnowledgeBaseSelectParent#SELECT_PARENT_DISPLAY_IFRAME" />
 
-				<execute function="AssertClick" locator1="KnowledgeBaseSelectParent#FOLDER_TITLE_LINK" value1="${kbFolderName}" />
+				<execute function="AssertClick" locator1="KnowledgeBaseSelectParent#FOLDER_TITLE_LINK" value1="${kbFolderName}">
+					<var name="key_kbFolderName" value="${kbFolderName}" />
+				</execute>
 
 				<execute function="SelectFrame" value1="relative=top" />
 			</then>
 		</if>
 
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-
 		<execute function="SelectFrame" locator1="KnowledgeBaseSelectParent#SELECT_PARENT_DISPLAY_IFRAME" />
 
-		<execute function="Click" locator1="KnowledgeBaseSelectParent#CHOOSE_BUTTON" />
+		<execute function="Click" locator1="KnowledgeBaseSelectParent#CHOOSE_BUTTON">
+			<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+		</execute>
 
 		<execute function="SelectFrame" value1="relative=top" />
 
@@ -548,8 +547,6 @@
 	</command>
 
 	<command name="configureKBFolderDisplay">
-		<var name="key_kbFolderName" value="${kbFolderName}" />
-
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="${portletName}" />
 			<var name="portletOption" value="Configuration" />
@@ -665,9 +662,9 @@
 				<execute function="ClickNoError" locator1="Icon#DELETE" />
 			</then>
 			<else>
-				<var name="key_rowEntry" value="${kbArticleTitle}" />
-
-				<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+				<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
+					<var name="key_rowEntry" value="${kbArticleTitle}" />
+				</execute>
 
 				<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
 					<var name="key_menuItem" value="Delete" />
@@ -684,9 +681,9 @@
 	</command>
 
 	<command name="deletePG">
-		<var name="key_kbTool" value="Delete" />
-
-		<execute function="ClickNoError" locator1="KnowledgeBase#KB_TOOLS" />
+		<execute function="ClickNoError" locator1="KnowledgeBase#KB_TOOLS">
+			<var name="key_kbTool" value="Delete" />
+		</execute>
 
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
@@ -703,17 +700,16 @@
 
 	<command name="disableSocialBookmarkSites">
 		<for list="${disableSocialBookmarkSites}" param="socialBookmarkSite">
-			<var name="key_socialBookmarkSite" value="${socialBookmarkSite}" />
-
-			<execute function="Uncheck" locator1="SocialBookmarks#SOCIAL_BOOKMARKS_CONFIGURATION_CHECKBOX" />
+			<execute function="Uncheck" locator1="SocialBookmarks#SOCIAL_BOOKMARKS_CONFIGURATION_CHECKBOX">
+				<var name="key_socialBookmarkSite" value="${socialBookmarkSite}" />
+			</execute>
 		</for>
 	</command>
 
 	<command name="editCP">
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-		<var name="key_rowEntry" value="${kbArticleTitle}" />
-
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
+			<var name="key_rowEntry" value="${kbArticleTitle}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
 			<var name="key_menuItem" value="Edit" />
@@ -784,9 +780,9 @@
 	</command>
 
 	<command name="editPGViaKBDisplay">
-		<var name="key_kbTool" value="Edit" />
-
-		<execute function="AssertClick" locator1="KnowledgeBase#KB_TOOLS" value1="Edit" />
+		<execute function="AssertClick" locator1="KnowledgeBase#KB_TOOLS" value1="Edit">
+			<var name="key_kbTool" value="Edit" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="A new version is created automatically if this content is modified." />
 
@@ -833,9 +829,9 @@
 
 	<command name="enableSocialBookmarkSites">
 		<for list="${enableSocialBookmarkSites}" param="socialBookmarkSite">
-			<var name="key_socialBookmarkSite" value="${socialBookmarkSite}" />
-
-			<execute function="Check" locator1="SocialBookmarks#SOCIAL_BOOKMARKS_CONFIGURATION_CHECKBOX" />
+			<execute function="Check" locator1="SocialBookmarks#SOCIAL_BOOKMARKS_CONFIGURATION_CHECKBOX">
+				<var name="key_socialBookmarkSite" value="${socialBookmarkSite}" />
+			</execute>
 		</for>
 	</command>
 
@@ -854,20 +850,21 @@
 	</command>
 
 	<command name="gotoChildArticleDescriptiveDetails">
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="KnowledgeBase#DESCRIPTIVE_VIEW_CHILD_ARTICLE_LINK" value1="Child Article" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="KnowledgeBase#DESCRIPTIVE_VIEW_CHILD_ARTICLE_LINK" value1="Child Article">
+			<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+		</execute>
 	</command>
 
 	<command name="gotoCP">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-		<var name="key_rowEntry" value="${kbArticleTitle}" />
 
 		<execute function="AssertTextEquals#assertValue" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_PRIORITY" value1="${kbPriority}" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#DESCRIPTIVE_VIEW_ARTICLE_TITLE" value1="${kbArticleTitle}" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_AUTHOR" value1="${kbAuthor}" />
 
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
+			<var name="key_rowEntry" value="${kbArticleTitle}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="View">
 			<var name="key_menuItem" value="View" />
@@ -875,9 +872,9 @@
 	</command>
 
 	<command name="gotoKBArticleViaKBDisplayHierarchyNavigationPG">
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-
-		<execute function="AssertClick" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_PARENT" value1="${kbArticleTitle}" />
+		<execute function="AssertClick" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_PARENT" value1="${kbArticleTitle}">
+			<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+		</execute>
 	</command>
 
 	<command name="gotoKBChildArticleViaKBDisplayHierarchyNavigationPG">
@@ -892,13 +889,14 @@
 	<command name="gotoKBGrandchildArticleViaKBDisplayHierarchyNavigationPG">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 		<var name="key_kbChildArticleTitle" value="${kbChildArticleTitle}" />
-		<var name="key_kbGrandchildArticleTitle" value="${kbGrandchildArticleTitle}" />
 
 		<execute function="AssertClick" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_PARENT" value1="${kbArticleTitle}" />
 
 		<execute function="AssertClick#assertTextClickNoMouseOver" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_CHILD" value1="${kbChildArticleTitle}" />
 
-		<execute function="AssertClick#assertTextClickNoMouseOver" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_GRANDCHILD" value1="${kbGrandchildArticleTitle}" />
+		<execute function="AssertClick#assertTextClickNoMouseOver" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_GRANDCHILD" value1="${kbGrandchildArticleTitle}">
+			<var name="key_kbGrandchildArticleTitle" value="${kbGrandchildArticleTitle}" />
+		</execute>
 	</command>
 
 	<command name="gotoNextArticlePG">
@@ -906,15 +904,15 @@
 	</command>
 
 	<command name="gotoPGViaKBSearchResult">
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-
-		<execute function="AssertClick" locator1="KnowledgeBase#KB_SEARCH_RESULTS_TITLE" value1="${kbArticleTitle}" />
+		<execute function="AssertClick" locator1="KnowledgeBase#KB_SEARCH_RESULTS_TITLE" value1="${kbArticleTitle}">
+			<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+		</execute>
 	</command>
 
 	<command name="gotoPGViaKBSection">
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-
-		<execute function="AssertClick" locator1="KnowledgeBaseSection#KB_ARTICLE_LINK" value1="${kbArticleTitle}" />
+		<execute function="AssertClick" locator1="KnowledgeBaseSection#KB_ARTICLE_LINK" value1="${kbArticleTitle}">
+			<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+		</execute>
 	</command>
 
 	<command name="gotoPreviousArticle">
@@ -949,17 +947,14 @@
 	</command>
 
 	<command name="gotoViaKBDisplayPG">
-		<var name="kbArticleTitle" value="${kbArticleTitle}" />
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-
-		<execute function="AssertClick" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_PARENT" value1="${kbArticleTitle}" />
+		<execute function="AssertClick" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_PARENT" value1="${kbArticleTitle}">
+			<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+		</execute>
 
 		<execute function="Pause" locator1="5000" />
 	</command>
 
 	<command name="importCP">
-		<var name="key_kbZipFile" value="${kbZipFile}" />
-
 		<execute macro="KBArticle#_gotoImportArticle" />
 
 		<execute function="UploadCommonFile" locator1="TextInput#UPLOAD_FILE" value1="${kbZipFile}" />
@@ -978,7 +973,6 @@
 	</command>
 
 	<command name="moveArticleCP">
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 		<var name="key_rowEntry" value="${kbArticleTitle}" />
 
 		<if>
@@ -1006,10 +1000,9 @@
 	</command>
 
 	<command name="moveArticleViaKBDisplayPG">
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-		<var name="key_kbTool" value="Move" />
-
-		<execute function="AssertClick" locator1="KnowledgeBase#KB_TOOLS" value1="Move" />
+		<execute function="AssertClick" locator1="KnowledgeBase#KB_TOOLS" value1="Move">
+			<var name="key_kbTool" value="Move" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${kbArticleTitle}" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#MOVE_CURRENT_PARENT_TITLE_LABEL" value1="Current Parent" />
@@ -1022,8 +1015,6 @@
 	</command>
 
 	<command name="rateArticle1Star">
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#DISPLAY_TITLE" value1="${kbArticleTitle}" />
 
 		<execute function="Click#clickWaitForInlineCKEditorNoMouseOver" locator1="Ratings#YOUR_RATING_STAR_EMPTY_1" />
@@ -1033,8 +1024,6 @@
 	</command>
 
 	<command name="rateArticleFrom1StarTo5Star">
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#DISPLAY_TITLE" value1="${kbArticleTitle}" />
 
 		<execute function="Click#clickWaitForInlineCKEditorNoMouseOver" locator1="Ratings#YOUR_RATING_STAR_EMPTY_4" />
@@ -1044,8 +1033,6 @@
 	</command>
 
 	<command name="rateArticlePG">
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#DISPLAY_TITLE" value1="${kbArticleTitle}" />
 
 		<if>
@@ -1075,9 +1062,9 @@
 	</command>
 
 	<command name="selectArticleCP">
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-
-		<execute function="Check" locator1="KnowledgeBase#ARTICLE_DESCRIPTIVE_ARTICLE_CHECKBOX" />
+		<execute function="Check" locator1="KnowledgeBase#ARTICLE_DESCRIPTIVE_ARTICLE_CHECKBOX">
+			<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+		</execute>
 	</command>
 
 	<command name="selectAttachmentCP">
@@ -1094,11 +1081,11 @@
 	</command>
 
 	<command name="selectParentArticleCP">
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-
 		<execute function="SelectFrame" locator1="KnowledgeBaseSelectParent#IFRAME" />
 
-		<execute function="Click" locator1="KnowledgeBaseSelectParent#CHOOSE_BUTTON" value1="Choose" />
+		<execute function="Click" locator1="KnowledgeBaseSelectParent#CHOOSE_BUTTON" value1="Choose">
+			<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+		</execute>
 
 		<execute function="SelectFrame" value1="relative=top" />
 
@@ -1110,11 +1097,11 @@
 	</command>
 
 	<command name="selectParentViaKBDisplayPG">
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-
 		<execute function="SelectFrame" locator1="KnowledgeBaseSelectParent#IFRAME" />
 
-		<execute function="Click" locator1="KnowledgeBaseSelectParent#CHOOSE_BUTTON" value1="Choose" />
+		<execute function="Click" locator1="KnowledgeBaseSelectParent#CHOOSE_BUTTON" value1="Choose">
+			<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+		</execute>
 
 		<execute function="SelectFrame" value1="relative=top" />
 
@@ -1141,9 +1128,9 @@
 
 		<execute function="SelectFrame" locator1="KnowledgeBaseSelectParent#SELECT_PARENT_DISPLAY_IFRAME" />
 
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-
-		<execute function="AssertClick" locator1="KnowledgeBaseSelectParent#CHOOSE_BUTTON" value1="Choose" />
+		<execute function="AssertClick" locator1="KnowledgeBaseSelectParent#CHOOSE_BUTTON" value1="Choose">
+			<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+		</execute>
 
 		<execute function="SelectFrame" value1="relative=top" />
 
@@ -1157,15 +1144,15 @@
 	<command name="selectRelatedAssetCP">
 		<execute function="AssertClick" locator1="AssetRelatedAssets#RELATED_ASSETS_SELECT" value1="Select" />
 
-		<var name="key_kbArticleRelatedAssetType" value="${kbArticleRelatedAssetType}" />
-
-		<execute function="AssertClick" locator1="KnowledgeBaseArticle#EDIT_SELECT_RELATED_ASSETS" value1="${kbArticleRelatedAssetType}" />
+		<execute function="AssertClick" locator1="KnowledgeBaseArticle#EDIT_SELECT_RELATED_ASSETS" value1="${kbArticleRelatedAssetType}">
+			<var name="key_kbArticleRelatedAssetType" value="${kbArticleRelatedAssetType}" />
+		</execute>
 
 		<execute function="SelectFrame" locator1="AssetRelatedAssets#SELECT_ASSET_IFRAME" />
 
-		<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
-
-		<execute function="AssertClick" locator1="AssetRelatedAssets#KB_ASSET_TABLE_TITLE_LINK" value1="${kbArticleRelatedAssetTitle}" />
+		<execute function="AssertClick" locator1="AssetRelatedAssets#KB_ASSET_TABLE_TITLE_LINK" value1="${kbArticleRelatedAssetTitle}">
+			<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
+		</execute>
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -1219,11 +1206,7 @@
 	</command>
 
 	<command name="setScopeCP">
-		<var name="key_kbPageScope" value="${kbPageScope}" />
-
 		<execute function="Click" locator1="KnowledgeBase#SCOPE_DROPDOWN" />
-
-		<var name="key_scopeSelection" value="${kbPageScope}" />
 
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="MenuItem#ANY_MENU_ITEM" value1="${kbPageScope}">
 			<var name="key_menuItem" value="${kbPageScope}" />
@@ -1298,22 +1281,22 @@
 	<command name="viewArticleHistoryPG">
 		<execute function="AssertClick" locator1="KnowledgeBaseArticle#HISTORY" value1="History" />
 
-		<var name="key_versionNumber" value="${kbArticleVersionNew}" />
+		<execute function="Check" locator1="KnowledgeBaseArticle#HISTORY_SELECT_VERSION_CHECKBOX" value1="${kbArticleVersionNew}">
+			<var name="key_versionNumber" value="${kbArticleVersionNew}" />
+		</execute>
 
-		<execute function="Check" locator1="KnowledgeBaseArticle#HISTORY_SELECT_VERSION_CHECKBOX" value1="${kbArticleVersionNew}" />
-
-		<var name="key_versionNumber" value="${kbArticleVersionOld}" />
-
-		<execute function="Check" locator1="KnowledgeBaseArticle#HISTORY_SELECT_VERSION_CHECKBOX" value1="${kbArticleVersionOld}" />
+		<execute function="Check" locator1="KnowledgeBaseArticle#HISTORY_SELECT_VERSION_CHECKBOX" value1="${kbArticleVersionOld}">
+			<var name="key_versionNumber" value="${kbArticleVersionOld}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="Button#COMPARE_VERSIONS" value1="Compare Versions" />
 
 		<if>
 			<isset var="kbArticleContentRemovedDiff" />
 			<then>
-				<var name="key_kbArticleContentRemovedDiff" value="${kbArticleContentRemovedDiff}" />
-
-				<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#HISTORY_CONTENT_REMOVED_DIFF" value1="${kbArticleContentRemovedDiff}" />
+				<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#HISTORY_CONTENT_REMOVED_DIFF" value1="${kbArticleContentRemovedDiff}">
+					<var name="key_kbArticleContentRemovedDiff" value="${kbArticleContentRemovedDiff}" />
+				</execute>
 			</then>
 		</if>
 
@@ -1333,10 +1316,9 @@
 	</command>
 
 	<command name="viewAttachmentCP">
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-		<var name="key_rowEntry" value="${kbArticleTitle}" />
-
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
+			<var name="key_rowEntry" value="${kbArticleTitle}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
 			<var name="key_menuItem" value="Edit" />
@@ -1389,10 +1371,10 @@
 	</command>
 
 	<command name="viewChildArticlePG">
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-		<var name="key_kbChildArticleTitle" value="${kbChildArticleTitle}" />
-
-		<execute function="AssertClick#assertTextClickNoMouseOver" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_CHILD" value1="${kbChildArticleTitle}" />
+		<execute function="AssertClick#assertTextClickNoMouseOver" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_CHILD" value1="${kbChildArticleTitle}">
+			<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+			<var name="key_kbChildArticleTitle" value="${kbChildArticleTitle}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#DISPLAY_TITLE" value1="${kbChildArticleTitle}" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#DISPLAY_CONTENT" value1="${kbChildArticleContent}" />
@@ -1433,20 +1415,20 @@
 		<if>
 			<isset var="kbArticleRelatedAssetTitle" />
 			<then>
-				<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
-
 				<execute function="AssertTextEquals" locator1="AssetRelatedAssets#HEADER" value1="Related Assets:" />
-				<execute function="AssertTextEquals" locator1="AssetRelatedAssets#KB_RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
+				<execute function="AssertTextEquals" locator1="AssetRelatedAssets#KB_RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}">
+					<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
+				</execute>
 			</then>
 		</if>
 
 		<if>
 			<isset var="categoryName" />
 			<then>
-				<var name="key_categoryName" value="${categoryName}" />
-
 				<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#CATEGORY_HEADER" value1="${vocabularyName}: ${categoryName}" />
-				<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#CATEGORY_LINKS" value1="${categoryName}" />
+				<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#CATEGORY_LINKS" value1="${categoryName}">
+					<var name="key_categoryName" value="${categoryName}" />
+				</execute>
 			</then>
 		</if>
 
@@ -1459,9 +1441,9 @@
 	</command>
 
 	<command name="viewCPWithHTML">
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-
-		<execute function="AssertClick" locator1="KnowledgeBase#DESCRIPTIVE_VIEW_ARTICLE_TITLE" value1="${kbArticleTitle}" />
+		<execute function="AssertClick" locator1="KnowledgeBase#DESCRIPTIVE_VIEW_ARTICLE_TITLE" value1="${kbArticleTitle}">
+			<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#TITLE" value1="${kbArticleTitle}" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#HTML_BOLD_CONTENT" value1="${kbArticleContent}" />
@@ -1489,15 +1471,31 @@
 	</command>
 
 	<command name="viewDisabledKBSocialBookmarkSites">
-		<var name="key_socialBookmarkSite" value="${socialBookmarkSite}" />
-
-		<execute function="AssertElementNotPresent" locator1="SocialBookmarks#SOCIAL_BOOKMARKS_SITE_LINK" />
+		<execute function="AssertElementNotPresent" locator1="SocialBookmarks#SOCIAL_BOOKMARKS_SITE_LINK">
+			<var name="key_socialBookmarkSite" value="${socialBookmarkSite}" />
+		</execute>
 	</command>
 
 	<command name="viewEnabledKBSocialBookmarkSites">
-		<var name="key_socialBookmarkSite" value="${socialBookmarkSite}" />
+		<execute function="AssertElementPresent" locator1="SocialBookmarks#SOCIAL_BOOKMARKS_SITE_LINK">
+			<var name="key_socialBookmarkSite" value="${socialBookmarkSite}" />
+		</execute>
+	</command>
 
-		<execute function="AssertElementPresent" locator1="SocialBookmarks#SOCIAL_BOOKMARKS_SITE_LINK" />
+	<command name="viewFriendlyURLCP">
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS_2">
+			<var name="key_rowEntry" value="${kbArticleTitle}" />
+		</execute>
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Configuration" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#EDIT_FRIENDLY_URL_FIELD" value1="${kbArticleFriendlyURL}" />
 	</command>
 
 	<command name="viewImageCaptionViaContentCmd">
@@ -1516,10 +1514,9 @@
 	</command>
 
 	<command name="viewKBArticleWithAttachmentCP">
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-		<var name="key_rowEntry" value="${kbArticleTitle}" />
-
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
+			<var name="key_rowEntry" value="${kbArticleTitle}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
 			<var name="key_menuItem" value="Edit" />
@@ -1552,9 +1549,9 @@
 			<then>
 				<execute function="AssertClick" locator1="KnowledgeBaseArticle#EDIT_ON_GITHUB" value1="Edit on GitHub" />
 
-				<var name="key_pageTitle" value="Google" />
-
-				<execute function="SelectWindow" locator1="Google#PAGE_TITLE" />
+				<execute function="SelectWindow" locator1="Google#PAGE_TITLE">
+					<var name="key_pageTitle" value="Google" />
+				</execute>
 
 				<var method="selenium#getLocation()" name="url" />
 
@@ -1570,7 +1567,9 @@
 					</else>
 				</if>
 
-				<execute function="Close" locator1="Google#PAGE_TITLE" />
+				<execute function="Close" locator1="Google#PAGE_TITLE">
+					<var name="key_pageTitle" value="Google" />
+				</execute>
 			</then>
 		</if>
 
@@ -1643,9 +1642,10 @@
 	</command>
 
 	<command name="viewNoHierarchyPG">
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+		<execute function="AssertElementNotPresent" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_PARENT">
+			<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_PARENT" />
 		<execute function="AssertElementPresent" locator1="KnowledgeBase#FOLDER_NAVIGATION_MENULIST" />
 	</command>
 
@@ -1666,12 +1666,13 @@
 			<then>
 				<var method="MathUtil#sum('${count}', '1')" name="count" />
 				<var name="kbParentTitle" value="${kbArticleTitle} ${count}" />
-				<var name="key_kbArticleTitle" value="${kbParentTitle}" />
 
 				<if>
 					<condition function="IsElementPresent" locator1="xpath=//div[@class='kbarticle-navigation']/ul[${count}]" />
 					<then>
-						<execute function="AssertClick" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_PARENT" value1="${kbParentTitle}" />
+						<execute function="AssertClick" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_PARENT" value1="${kbParentTitle}">
+							<var name="key_kbArticleTitle" value="${kbParentTitle}" />
+						</execute>
 					</then>
 				</if>
 			</then>
@@ -1701,9 +1702,9 @@
 
 	<command name="viewSearchResultsPG">
 		<for list="${kbArticleTitleList}" param="kbArticleTitle">
-			<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-
-			<execute function="AssertTextEquals" locator1="KnowledgeBase#KB_SEARCH_RESULTS_TITLE" value1="${kbArticleTitle}" />
+			<execute function="AssertTextEquals" locator1="KnowledgeBase#KB_SEARCH_RESULTS_TITLE" value1="${kbArticleTitle}">
+				<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+			</execute>
 		</for>
 	</command>
 
@@ -1711,24 +1712,22 @@
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseSection#SECTIONS_TITLE" value1="${kbArticleSection}" />
 
 		<for list="${kbArticleTitleList}" param="kbArticleTitle">
-			<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-
-			<execute function="AssertTextEquals" locator1="KnowledgeBaseSection#KB_ARTICLE_LINK" value1="${kbArticleTitle}" />
+			<execute function="AssertTextEquals" locator1="KnowledgeBaseSection#KB_ARTICLE_LINK" value1="${kbArticleTitle}">
+				<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+			</execute>
 		</for>
 	</command>
 
 	<command name="viewSourceURLCP">
-		<var name="key_kbArticleSourceURL" value="${kbArticleSourceURL}" />
-
 		<if>
 			<isset var="kbChildArticleTitle" />
 			<then>
 				<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 			</then>
 			<else>
-				<var name="key_rowEntry" value="${kbArticleTitle}" />
-
-				<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+				<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
+					<var name="key_rowEntry" value="${kbArticleTitle}" />
+				</execute>
 			</else>
 		</if>
 
@@ -1744,11 +1743,9 @@
 	</command>
 
 	<command name="viewSourceURLPG">
-		<var name="key_kbArticleSourceURL" value="${kbArticleSourceURL}" />
-		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
-		<var name="key_kbTool" value="Edit" />
-
-		<execute function="AssertClick" locator1="KnowledgeBase#KB_TOOLS" value1="Edit" />
+		<execute function="AssertClick" locator1="KnowledgeBase#KB_TOOLS" value1="Edit">
+			<var name="key_kbTool" value="Edit" />
+		</execute>
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Configuration" />
@@ -1776,10 +1773,10 @@
 		<if>
 			<isset var="kbArticleRelatedAssetTitle" />
 			<then>
-				<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
-
 				<execute function="AssertTextEquals" locator1="AssetRelatedAssets#HEADER" value1="Related Assets:" />
-				<execute function="AssertTextEquals" locator1="AssetRelatedAssets#KB_RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
+				<execute function="AssertTextEquals" locator1="AssetRelatedAssets#KB_RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}">
+					<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
+				</execute>
 			</then>
 		</if>
 	</command>

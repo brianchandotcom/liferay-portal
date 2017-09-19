@@ -369,8 +369,9 @@
 		</execute>
 	</command>
 
-	<command name="ChangePageLayout" priority="3">
-		<property name="testray.component.names" value="Site Pages Administration" />
+	<command name="ChangePageLayout" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Site Pages Administration,Training" />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Site Page Name" />
@@ -394,6 +395,158 @@
 
 		<execute macro="Page#viewPageLayout">
 			<var name="pageLayout" value="1 Column" />
+		</execute>
+
+		<execute macro="SitePageNavigator#gotoEditPage">
+			<var name="page" value="Site Page Name" />
+		</execute>
+
+		<execute macro="Page#editPageTypeLayout">
+			<var name="columnName" value="1-2-1 Columns" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Site Page Name" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="SitePageNavigator#gotoEditPage">
+			<var name="page" value="Site Page Name" />
+		</execute>
+
+		<execute macro="Page#editPageTypeLayout">
+			<var name="columnName" value="Freeform" />
+		</execute>
+
+		<execute macro="Portlet#viewPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="SitePageNavigator#gotoEditPage">
+			<var name="page" value="Site Page Name" />
+		</execute>
+
+		<execute macro="Page#editPageTypeLayout">
+			<var name="columnName" value="2 Columns (50/50)" />
+		</execute>
+
+		<execute macro="Portlet#viewPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="SitePageNavigator#gotoEditPage">
+			<var name="page" value="Site Page Name" />
+		</execute>
+
+		<execute macro="Page#editPageTypeLayout">
+			<var name="columnName" value="2 Columns (70/30)" />
+		</execute>
+
+		<execute macro="Portlet#viewPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="SitePageNavigator#gotoEditPage">
+			<var name="page" value="Site Page Name" />
+		</execute>
+
+		<execute macro="Page#editPageTypeLayout">
+			<var name="columnName" value="3 Columns" />
+		</execute>
+
+		<execute macro="Portlet#viewPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="SitePageNavigator#gotoEditPage">
+			<var name="page" value="Site Page Name" />
+		</execute>
+
+		<execute macro="Page#editPageTypeLayout">
+			<var name="columnName" value="1-2 Columns (30/70)" />
+		</execute>
+
+		<execute macro="Portlet#viewPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Site Page Name" />
+		</execute>
+
+		<execute macro="SitePageNavigator#gotoEditPage">
+			<var name="page" value="Site Page Name" />
+		</execute>
+
+		<execute macro="Page#editPageTypeLayout">
+			<var name="columnName" value="1-2 Columns (70/30)" />
+		</execute>
+
+		<execute macro="Portlet#viewPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="SitePageNavigator#gotoEditPage">
+			<var name="page" value="Site Page Name" />
+		</execute>
+
+		<execute macro="Page#editPageTypeLayout">
+			<var name="columnName" value="2-2 Columns" />
+		</execute>
+
+		<execute macro="Portlet#viewPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="SitePageNavigator#gotoEditPage">
+			<var name="page" value="Site Page Name" />
+		</execute>
+
+		<execute macro="Page#editPageTypeLayout">
+			<var name="columnName" value="1-3-1 Columns" />
+		</execute>
+
+		<execute macro="Portlet#viewPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="SitePageNavigator#gotoEditPage">
+			<var name="page" value="Site Page Name" />
+		</execute>
+
+		<execute macro="Page#editPageTypeLayout">
+			<var name="columnName" value="1-3-2 Columns" />
+		</execute>
+
+		<execute macro="Portlet#viewPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="SitePageNavigator#gotoEditPage">
+			<var name="page" value="Site Page Name" />
+		</execute>
+
+		<execute macro="Page#editPageTypeLayout">
+			<var name="columnName" value="2-1-2 Columns" />
+		</execute>
+
+		<execute macro="Portlet#viewPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="SitePageNavigator#gotoEditPage">
+			<var name="page" value="Site Page Name" />
+		</execute>
+
+		<execute macro="Page#editPageTypeLayout">
+			<var name="columnName" value="3-2-3 Columns" />
+		</execute>
+
+		<execute macro="Portlet#viewPG">
+			<var name="portletName" value="Web Content Display" />
 		</execute>
 	</command>
 

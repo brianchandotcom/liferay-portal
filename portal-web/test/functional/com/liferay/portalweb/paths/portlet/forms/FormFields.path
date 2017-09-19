@@ -97,6 +97,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>HELP_TEXT_INPUT_FIELD</td>
+	<td>//input[@type='text' and contains(@id,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -1,0 +1,50 @@
+<definition>
+	<command name="addMessage">
+		<execute macro="JSONMBMessage#getmessageId">
+			<return from="messageId" name="messageId" />
+		</execute>
+
+		<execute macro="JSONCompany#getPortalURL">
+			<return from="portalURL" name="portalURL" />
+		</execute>
+
+		<var name="curl">
+			${portalURL}/api/jsonws/mbmessage/add-message \
+				-u test@liferay.com:test \
+				-d parentMessageId=${messageId} \
+				-d subject=${threadSubject} \
+				-d body=${threadBody} \
+				-d format=bbcode \
+				-d inputStreamOVPs=[] \
+				-d anonymous=true \
+				-d priority=0 \
+				-d allowPingbacks=true \
+				-d entryURL='javascript:alert(3)'
+		</var>
+
+		<echo>## Adding a 'Message' with the following info using JSONWS:</echo>
+
+		<echo>## * Parent messageId: ${messageId}</echo>
+
+		<echo>## * Subject: ${threadSubject}</echo>
+
+		<echo>## * Body: ${threadBody}</echo>
+
+		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
+			<arg value="${curl}" />
+			<arg value="$['messageId']" />
+			<return name="messageId" />
+		</execute>
+	</command>
+
+	<command name="getmessageId" returns="messageId">
+
+		<var method="selenium#getLocation()" name="messageBoardsThreadURL" />
+
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
+		<var method="StringUtil#replace('${messageBoardsThreadURL}', '${portalURL}/web/guest/message-boards-page/-/message_boards/message/', '')" name="messageId" />
+
+		<return name="messageId" value="${messageId}" />
+	</command>
+</definition>

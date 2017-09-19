@@ -285,7 +285,7 @@ public class JenkinsResultsParserUtil {
 		if (debug) {
 			InputStream inputStream = process.getInputStream();
 
-			inputStream.mark(inputStream.available());
+			inputStream.mark(Integer.MAX_VALUE);
 
 			System.out.println(
 				"Output stream: " + readInputStream(inputStream));
@@ -296,7 +296,7 @@ public class JenkinsResultsParserUtil {
 		if (debug && (returnCode != 0)) {
 			InputStream inputStream = process.getErrorStream();
 
-			inputStream.mark(inputStream.available());
+			inputStream.mark(Integer.MAX_VALUE);
 
 			System.out.println("Error stream: " + readInputStream(inputStream));
 

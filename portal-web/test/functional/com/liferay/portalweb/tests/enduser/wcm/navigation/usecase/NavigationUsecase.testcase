@@ -63,15 +63,12 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
-		<execute macro="NavigationMenu#selectDisplayTemplate">
-			<var name="displayTemplate" value="Split Button Dropdowns" />
-		</execute>
-
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-
+		<execute function="Select" locator1="Select#DISPLAY_TEMPLATE" value1="Split Button Dropdowns" />
+		<execute macro="Button#clickSave" />
 		<execute macro="Alert#viewSuccessMessage" />
+		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Navigation Test Page1" />
@@ -81,15 +78,11 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
-		<execute macro="NavigationMenu#selectDisplayTemplate">
-			<var name="displayTemplate" value="Bar minimally styled" />
-		</execute>
+		<execute function="Select" locator1="Select#DISPLAY_TEMPLATE" value1="Bar minimally styled" />
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Navigation Test Page1" />
-		</execute>
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Navigation Test Page2" />
@@ -119,18 +112,20 @@
 			<var name="portletOption" value="Look and Feel Configuration" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Portlet#configureCustomTitleViaLookandfeelPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Navigation Test Page1" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Portlet#NAVIGATION_MENU_PAGE_LINK" value1="${key_pageName}">
+		<execute function="AssertClick" locator1="Navigation#BREADCRUMB_ENTRY" value1="Navigation Test Page2 Edit">
 			<var name="key_pageName" value="Navigation Test Page2 Edit" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Home#PAGE" value1="${key_pageName}">
-			<var name="key_pageName" value="Welcome" />
+		<execute function="AssertVisible" locator1="Home#PAGE_ACTIVE">
+			<var name="key_pageName" value="Navigation Test Page2 Edit" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">

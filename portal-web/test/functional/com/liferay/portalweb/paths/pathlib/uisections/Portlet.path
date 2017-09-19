@@ -73,13 +73,6 @@
 	<td>//div[@data-qa-id='app-loaded']//span[contains(.,'${key_portletName}')]</td>
 	<td></td>
 </tr>
-
-<tr>
-	<td>NAVIGATION_MENU_PAGE_LINK</td>
-	<td>//ul[contains(@class,'split-button-dropdowns')]//li[contains(.,'${key_pageName}')]</td>
-	<td></td>
-</tr>
-
 <tr>
 	<td>OPTIONS_ICON</td>
 	<td>//div[@id='main-content']//div[contains(@class,'portlet-options')]/a</td>

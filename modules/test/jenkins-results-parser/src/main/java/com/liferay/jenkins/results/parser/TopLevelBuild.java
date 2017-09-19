@@ -205,6 +205,12 @@ public class TopLevelBuild extends BaseBuild {
 	}
 
 	@Override
+	public void takeSlaveOffline(SlaveOfflineRule slaveOfflineRule) {
+		throw new RuntimeException(
+			"Top Level Build slaves should not be taken offline");
+	}
+
+	@Override
 	public void update() {
 		long start = System.currentTimeMillis();
 

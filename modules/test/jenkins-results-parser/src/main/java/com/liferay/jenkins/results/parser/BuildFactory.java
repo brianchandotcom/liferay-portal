@@ -31,8 +31,10 @@ public class BuildFactory {
 			return new AxisBuild(url, (BatchBuild)parentBuild);
 		}
 
-		if (url.contains("-source") || url.contains("-validation")) {
-			return new SourceBuild(url, parentBuild);
+		for (String sourceIndicator : _SOURCE_INDICATORS) {
+			if (url.contains(sourceIndicator)) {
+				return new SourceBuild(url, parentBuild);
+			}
 		}
 
 		for (String batchIndicator : _BATCH_INDICATORS) {
@@ -86,5 +88,8 @@ public class BuildFactory {
 
 	private static final String[] _BATCH_INDICATORS =
 		{"-batch", "-dist", "environment-"};
+
+	private static final String[] _SOURCE_INDICATORS =
+		{"-source", "-validation"};
 
 }

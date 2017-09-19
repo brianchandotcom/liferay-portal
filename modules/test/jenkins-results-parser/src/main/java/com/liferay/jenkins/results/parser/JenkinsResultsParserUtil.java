@@ -911,6 +911,18 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
+	public static void takeSlavesOffline(
+		String jenkinsMasterName, String offlineReason, String... slaveNames) {
+
+		_setSlaveStatus(jenkinsMasterName, offlineReason, true, slaveNames);
+	}
+
+	public static void takeSlavesOnline(
+		String jenkinsMasterName, String offlineReason, String... slaveNames) {
+
+		_setSlaveStatus(jenkinsMasterName, offlineReason, false, slaveNames);
+	}
+
 	public static String toDurationString(long duration) {
 		StringBuilder sb = new StringBuilder();
 
@@ -1202,18 +1214,6 @@ public class JenkinsResultsParserUtil {
 			_RETRY_PERIOD_DEFAULT, _TIMEOUT_DEFAULT);
 	}
 
-	public static void turnSlavesOff(
-		String jenkinsMasterName, String... slaveNames) {
-
-		_setSlaveStatus(jenkinsMasterName, true, slaveNames);
-	}
-
-	public static void turnSlavesOn(
-		String jenkinsMasterName, String... slaveNames) {
-
-		_setSlaveStatus(jenkinsMasterName, false, slaveNames);
-	}
-
 	public static void write(File file, String content) throws IOException {
 		if (debug) {
 			System.out.println(
@@ -1338,7 +1338,8 @@ public class JenkinsResultsParserUtil {
 	}
 
 	private static void _setSlaveStatus(
-		String jenkinsMasterName, boolean offlineStatus, String... slaveNames) {
+		String jenkinsMasterName, String offlineReason, boolean offlineStatus,
+		String... slaveNames) {
 
 		try {
 			String script = "script=";
@@ -1350,6 +1351,9 @@ public class JenkinsResultsParserUtil {
 					"dependencies/set-slave-status.groovy"));
 
 			script = script.replace("${slaves}", merge(slaveNames));
+			script = script.replace(
+				"${offline.reason}",
+				offlineReason.replaceAll("\n", "<br />\\\\n"));
 			script = script.replace(
 				"${offline.status}", String.valueOf(offlineStatus));
 

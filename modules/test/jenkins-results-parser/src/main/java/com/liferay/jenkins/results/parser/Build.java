@@ -94,6 +94,8 @@ public interface Build {
 
 	public String getResult();
 
+	public String getSlave();
+
 	public Map<String, String> getStartPropertiesTempMap();
 
 	public Long getStartTimestamp();
@@ -125,6 +127,8 @@ public interface Build {
 	public String replaceBuildURL(String text);
 
 	public void setCompareToUpstream(boolean compareToUpstream);
+
+	public void takeSlaveOffline(SlaveOfflineRule slaveOfflineRule);
 
 	public void update();
 

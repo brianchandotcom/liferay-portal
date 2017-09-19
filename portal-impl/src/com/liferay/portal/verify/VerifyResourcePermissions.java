@@ -19,14 +19,12 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Contact;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ContactLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
@@ -75,8 +73,6 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			}
 
 			doVerify(verifyResourcedModelCallables);
-
-			verifyLayout(role);
 		}
 	}
 
@@ -92,23 +88,6 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			verifiableResourcedModels.toArray(
 				new VerifiableResourcedModel[
 					verifiableResourcedModels.size()]));
-	}
-
-	protected void verifyLayout(Role role) throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			List<Layout> layouts =
-				LayoutLocalServiceUtil.getNoPermissionLayouts(role.getRoleId());
-
-			int total = layouts.size();
-
-			for (int i = 0; i < total; i++) {
-				Layout layout = layouts.get(i);
-
-				verifyResourcedModel(
-					role.getCompanyId(), Layout.class.getName(),
-					layout.getPlid(), role, 0, i, total);
-			}
-		}
 	}
 
 	protected void verifyResourcedModel(

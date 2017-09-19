@@ -20,7 +20,9 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
+import org.gradle.api.GradleException;
 import org.gradle.api.Project;
+import org.gradle.api.logging.Logger;
 import org.gradle.process.ExecSpec;
 
 /**
@@ -45,24 +47,33 @@ public class ExecStandardOutputCallable implements Callable<String> {
 		final ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
 
-		_project.exec(
-			new Action<ExecSpec>() {
+		try {
+			_project.exec(
+				new Action<ExecSpec>() {
 
-				@Override
-				public void execute(ExecSpec execSpec) {
-					if (_environment != null) {
-						execSpec.environment(_environment);
+					@Override
+					public void execute(ExecSpec execSpec) {
+						if (_environment != null) {
+							execSpec.environment(_environment);
+						}
+
+						execSpec.setCommandLine(_commandLine);
+						execSpec.setStandardOutput(byteArrayOutputStream);
 					}
 
-					execSpec.setCommandLine(_commandLine);
-					execSpec.setStandardOutput(byteArrayOutputStream);
-				}
+				});
 
-			});
+			String result = byteArrayOutputStream.toString();
 
-		String result = byteArrayOutputStream.toString();
+			return result.trim();
+		}
+		catch (GradleException ge) {
+			Logger logger = _project.getLogger();
 
-		return result.trim();
+			logger.error("Unable to execute {}", _commandLine, ge);
+
+			return null;
+		}
 	}
 
 	private final Object[] _commandLine;

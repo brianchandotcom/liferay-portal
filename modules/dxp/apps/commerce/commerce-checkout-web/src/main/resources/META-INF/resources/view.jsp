@@ -21,6 +21,7 @@ CheckoutDisplayContext checkoutDisplayContext = (CheckoutDisplayContext)request.
 
 List<CommerceCheckoutStep> commerceCheckoutSteps = checkoutDisplayContext.getCommerceCheckoutSteps();
 
+boolean complete = true;
 int step = 1;
 %>
 
@@ -32,6 +33,11 @@ int step = 1;
 
 		if (checkoutDisplayContext.isCurrentCommerceCheckoutStep(commerceCheckoutStep)) {
 			cssClass = "active";
+			complete = false;
+		}
+
+		if (complete) {
+			cssClass = "complete";
 		}
 	%>
 
@@ -46,29 +52,36 @@ int step = 1;
 	}
 	%>
 
-	<li class="">
-		<div class="progress-bar-title"><liferay-ui:message key="confirmation" /> </div>
-		<div class="divider"></div>
-		<div class="progress-bar-step"><%= step %></div>
-	</li>
 </ul>
 
-<portlet:actionURL name="saveStep" var="saveStepURL">
-	<portlet:param name="checkoutStepName" value="<%= checkoutDisplayContext.getCurrentCheckoutStepName() %>" />
-</portlet:actionURL>
+<portlet:actionURL name="saveStep" var="saveStepURL" />
+
+<portlet:renderURL var="nextStepURL">
+	<portlet:param name="checkoutStepName" value="<%= checkoutDisplayContext.getNextCheckoutStepName() %>" />
+</portlet:renderURL>
 
 <aui:form action="<%= saveStepURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCheckoutStep();" %>'>
-	<aui:input name="commerceCartId" type="hidden" value="<%= commerceCart.getCommerceCartId() %>" />
+	<aui:input name="checkoutStepName" type="hidden" value="<%= checkoutDisplayContext.getCurrentCheckoutStepName() %>" />
+	<aui:input name="commerceCartId" type="hidden" value="<%= checkoutDisplayContext.getCommerceCartId() %>" />
+	<aui:input name="redirect" type="hidden" value="<%= nextStepURL.toString() %>" />
 
-	<%= checkoutDisplayContext.renderCurrentCheckoutStep() %>
+	<%
+	checkoutDisplayContext.renderCurrentCheckoutStep();
+	%>
 
-	<aui:button-row>
-		<c:if test="<%= Validator.isNotNull(backURL) %>">
-			<aui:button cssClass="btn-lg" href="<%= backURL %>" type="cancel" value="previous" />
-		</c:if>
+	<c:if test="<%= checkoutDisplayContext.showControls() %>">
+		<aui:button-row>
+			<c:if test="<%= Validator.isNotNull(checkoutDisplayContext.getPreviusCheckoutStepName()) %>">
+				<portlet:renderURL var="previusStepURL">
+					<portlet:param name="checkoutStepName" value="<%= checkoutDisplayContext.getPreviusCheckoutStepName() %>" />
+				</portlet:renderURL>
 
-		<aui:button cssClass="btn-lg" primary="<%= false %>" type="submit" value="next" />
-	</aui:button-row>
+				<aui:button cssClass="btn-lg" href="<%= previusStepURL %>" type="cancel" value="previous" />
+			</c:if>
+
+			<aui:button cssClass="btn-lg" primary="<%= false %>" type="submit" value="next" />
+		</aui:button-row>
+	</c:if>
 </aui:form>
 
 <aui:script>

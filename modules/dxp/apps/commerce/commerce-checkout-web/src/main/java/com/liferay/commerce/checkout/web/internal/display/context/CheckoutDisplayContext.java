@@ -20,10 +20,9 @@ import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.util.CommerceCartHelper;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.List;
-
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,12 +51,29 @@ public class CheckoutDisplayContext {
 			httpServletRequest, httpServletResponse,
 			CommerceConstants.COMMERCE_CART_TYPE_CART);
 
-		String checkoutStepName = httpServletRequest.getParameter(
-			"checkoutStepName");
+		String checkoutStepName = ParamUtil.getString(
+			httpServletRequest, "checkoutStepName");
 
-		_currentCheckoutStep =
+		CommerceCheckoutStep commerceCheckoutStep =
 			_commerceCheckoutStepServicesTracker.getCommerceCheckoutStep(
 				checkoutStepName);
+
+		if (commerceCheckoutStep == null) {
+			List<CommerceCheckoutStep> commerceCheckoutSteps =
+				_commerceCheckoutStepServicesTracker.getCommerceCheckoutSteps();
+
+			commerceCheckoutStep = commerceCheckoutSteps.get(0);
+		}
+
+		_currentCheckoutStep = commerceCheckoutStep;
+	}
+
+	public long getCommerceCartId() {
+		if (_commerceCart == null) {
+			return 0;
+		}
+
+		return _commerceCart.getCommerceCartId();
 	}
 
 	public List<CommerceCheckoutStep> getCommerceCheckoutSteps() {
@@ -65,25 +81,52 @@ public class CheckoutDisplayContext {
 	}
 
 	public String getCurrentCheckoutStepName() {
-		return _commerceCart.getName();
+		return _currentCheckoutStep.getName();
 	}
 
-	public PortletURL getNextCheckoutStepPortletURL() {
-		return null;
+	public String getNextCheckoutStepName() {
+		CommerceCheckoutStep commerceCheckoutStep =
+			_commerceCheckoutStepServicesTracker.getNextCommerceCheckoutStep(
+				_currentCheckoutStep.getName());
+
+		if (commerceCheckoutStep == null) {
+			return null;
+		}
+
+		return commerceCheckoutStep.getName();
 	}
 
-	public PortletURL getPreviusCheckoutStepPortletURL() {
-		return null;
+	public String getPreviusCheckoutStepName() {
+		CommerceCheckoutStep commerceCheckoutStep =
+			_commerceCheckoutStepServicesTracker.getPreviusCommerceCheckoutStep(
+				_currentCheckoutStep.getName());
+
+		if (commerceCheckoutStep == null) {
+			return null;
+		}
+
+		return commerceCheckoutStep.getName();
 	}
 
 	public boolean isCurrentCommerceCheckoutStep(
 		CommerceCheckoutStep commerceCheckoutStep) {
+
+		if (getCurrentCheckoutStepName().equals(
+				commerceCheckoutStep.getName())) {
+
+			return true;
+		}
 
 		return false;
 	}
 
 	public void renderCurrentCheckoutStep() throws Exception {
 		_currentCheckoutStep.render(_httpServletRequest, _httpServletResponse);
+	}
+
+	public boolean showControls() {
+		return _currentCheckoutStep.showControls(
+			_httpServletRequest, _httpServletResponse);
 	}
 
 	private final CommerceCart _commerceCart;

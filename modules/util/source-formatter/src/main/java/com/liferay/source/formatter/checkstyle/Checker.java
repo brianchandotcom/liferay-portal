@@ -16,12 +16,15 @@ package com.liferay.source.formatter.checkstyle;
 
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.SourceFormatterMessage;
+import com.liferay.source.formatter.checkstyle.util.CheckstyleLogger;
 
 import com.puppycrawl.tools.checkstyle.api.LocalizedMessage;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.util.Set;
 import java.util.SortedSet;
 
 /**
@@ -46,6 +49,14 @@ public class Checker extends com.puppycrawl.tools.checkstyle.Checker {
 		super.fireFileStarted(_normalizeFileName(fileName));
 	}
 
+	public Set<SourceFormatterMessage> getSourceFormatterMessages() {
+		return _checkstyleLogger.getSourceFormatterMessages();
+	}
+
+	public void setCheckstyleLogger(CheckstyleLogger checkstyleLogger) {
+		_checkstyleLogger = checkstyleLogger;
+	}
+
 	private String _normalizeFileName(String fileName) {
 		Path filePath = Paths.get(fileName);
 
@@ -54,5 +65,7 @@ public class Checker extends com.puppycrawl.tools.checkstyle.Checker {
 		return StringUtil.replace(
 			filePath.toString(), CharPool.BACK_SLASH, CharPool.SLASH);
 	}
+
+	private CheckstyleLogger _checkstyleLogger;
 
 }

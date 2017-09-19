@@ -16,6 +16,9 @@ package com.liferay.commerce.checkout.web.util;
 
 import java.util.Locale;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -25,11 +28,12 @@ import javax.servlet.http.HttpServletResponse;
 public interface CommerceCheckoutStep {
 
 	public boolean action(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception;
 
 	public String getLabel(Locale locale);
+
+	public String getName();
 
 	public boolean isActive(
 			HttpServletRequest httpServletRequest,
@@ -45,5 +49,9 @@ public interface CommerceCheckoutStep {
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception;
+
+	public boolean showControls(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse);
 
 }

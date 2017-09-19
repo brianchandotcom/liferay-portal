@@ -76,7 +76,10 @@ Export-Package:\
 	com.liferay.portlet.trash.util,\
 	com.liferay.portlet.usersadmin.search
 Import-Package: *
-Include-Resource: classes
+Include-Resource:\
+	classes,\
+	@../tmp/lib-pre/com.liferay.portal.impl.blogs.compat.jar,\
+	@../tmp/lib-pre/com.liferay.portal.impl.trash.compat.jar
 Private-Package: com.liferay.*.dependencies
 -baseline: *;file=${project.dir}/.bnd/ant-baseline-cache/com.liferay.portal.impl-2.21.0.jar
 -donotcopy: (log4j\.properties|logging\.properties|portal-.*\.properties|system-.*\.properties|\.touch)

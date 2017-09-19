@@ -106,6 +106,86 @@ public class JenkinsReportUtil {
 		return headElement;
 	}
 
+	protected static void addAxisInfoToTableElement(
+		List<Build> axisBuilds, Element tableElement) {
+
+		for (Build axisBuild : axisBuilds) {
+			String axisName =
+				"AXIS_VARIABLE=" + ((AxisBuild)axisBuild).getAxisNumber();
+
+			String axisBuildURL = axisBuild.getBuildURL();
+
+			String axisConsoleURL = axisBuildURL + "console";
+
+			String axisTestReportURL = axisBuildURL + "testReport";
+
+			long axisDuration = axisBuild.getDuration();
+
+			String axisDurationString =
+				JenkinsResultsParserUtil.toDurationString(axisDuration);
+
+			long axisStartTime = axisBuild.getStartTimestamp();
+
+			Date axisStartDate = new Date(axisStartTime);
+
+			String status = axisBuild.getStatus();
+
+			String result = axisBuild.getResult();
+
+			Element axisNameElement = Dom4JUtil.getNewAnchorElement(
+				axisBuildURL, null, axisName);
+
+			Element axisConsoleElement = Dom4JUtil.getNewAnchorElement(
+				axisConsoleURL, null, "Console");
+
+			Element axisTestReportElement = Dom4JUtil.getNewAnchorElement(
+				axisTestReportURL, null, "Test Report");
+
+			Element tdAxisNameElement = Dom4JUtil.getNewElement("td");
+
+			tdAxisNameElement.add(axisNameElement);
+
+			Element tdAxisConsoleElement = Dom4JUtil.getNewElement("td");
+
+			tdAxisConsoleElement.add(axisConsoleElement);
+
+			Element tdAxisTestReportElement = Dom4JUtil.getNewElement("td");
+
+			tdAxisTestReportElement.add(axisTestReportElement);
+
+			Element tdStartTimeStringElement = Dom4JUtil.getNewElement(
+				"td", null, "START TIME:");
+
+			Element tdStartTimeElement = Dom4JUtil.getNewElement(
+				"td", null, axisStartDate.toLocaleString());
+
+			Element tdBuildTimeStringElement = Dom4JUtil.getNewElement(
+				"td", null, "BUILD TIME:");
+
+			Element tdBuildTimeElement = Dom4JUtil.getNewElement(
+				"td", null, axisDurationString);
+
+			Element tdStatusResultElement = Dom4JUtil.getNewElement("td");
+
+			if (result != null) {
+				tdStatusResultElement.addText(result);
+			}
+			else {
+				tdStatusResultElement.addText(status);
+			}
+
+			Element trAxisInfoElement = Dom4JUtil.getNewElement("tr");
+
+			Dom4JUtil.addToElement(
+				trAxisInfoElement, tdAxisNameElement, tdAxisConsoleElement,
+				tdAxisTestReportElement, tdStartTimeStringElement,
+				tdStartTimeElement, tdBuildTimeStringElement,
+				tdBuildTimeElement, tdStatusResultElement);
+
+			tableElement.add(trAxisInfoElement);
+		}
+	}
+
 	protected static Element getBatchInfoTableElement(
 		List<Build> batchBuilds, String statusCountCaption) {
 
@@ -196,6 +276,10 @@ public class JenkinsReportUtil {
 				thBuildTimeElement, thStatusResultElement);
 
 			tableElement.add(trBatchElement);
+
+			List<Build> axisBuilds = batchBuild.getDownstreamBuilds(null);
+
+			addAxisInfoToTableElement(axisBuilds, tableElement);
 		}
 
 		return tableElement;

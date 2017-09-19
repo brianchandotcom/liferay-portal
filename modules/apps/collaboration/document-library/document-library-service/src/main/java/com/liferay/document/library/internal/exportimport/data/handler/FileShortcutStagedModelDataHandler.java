@@ -16,9 +16,11 @@ package com.liferay.document.library.internal.exportimport.data.handler;
 
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
+import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileShortcutLocalService;
+import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -173,9 +175,9 @@ public class FileShortcutStagedModelDataHandler
 		long groupId = portletDataContext.getScopeGroupId();
 
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			Folder folder = FolderUtil.findByPrimaryKey(folderId);
+			DLFolder dlFolder = _dlFolderLocalService.getFolder(folderId);
 
-			groupId = folder.getRepositoryId();
+			groupId = dlFolder.getRepositoryId();
 		}
 
 		Map<Long, Long> fileEntryIds =
@@ -284,5 +286,8 @@ public class FileShortcutStagedModelDataHandler
 
 	private DLAppLocalService _dlAppLocalService;
 	private DLFileShortcutLocalService _dlFileShortcutLocalService;
+
+	@Reference
+	private DLFolderLocalService _dlFolderLocalService;
 
 }

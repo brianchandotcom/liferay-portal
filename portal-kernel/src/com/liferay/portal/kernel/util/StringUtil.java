@@ -5120,7 +5120,69 @@ public class StringUtil {
 	 *         limit, or <code>null</code> if the text is <code>null</code>
 	 */
 	public static String wrap(String text, int width, String lineSeparator) {
-		return _wrap(text, width, lineSeparator);
+		if (text == null) {
+			return null;
+		}
+
+		StringBundler sb = new StringBundler();
+
+		for (String line : splitLines(text)) {
+			if (line.isEmpty()) {
+				sb.append(lineSeparator);
+
+				continue;
+			}
+
+			int lineLength = 0;
+
+			for (String token : split(line, CharPool.SPACE)) {
+				if ((lineLength + token.length() + 1) > width) {
+					if (lineLength > 0) {
+						sb.append(lineSeparator);
+					}
+
+					if (token.length() > width) {
+						int pos = token.indexOf(CharPool.OPEN_PARENTHESIS);
+
+						if (pos != -1) {
+							sb.append(token.substring(0, pos + 1));
+							sb.append(lineSeparator);
+
+							token = token.substring(pos + 1);
+
+							sb.append(token);
+
+							lineLength = token.length();
+						}
+						else {
+							sb.append(token);
+
+							lineLength = token.length();
+						}
+					}
+					else {
+						sb.append(token);
+
+						lineLength = token.length();
+					}
+				}
+				else {
+					if (lineLength > 0) {
+						sb.append(StringPool.SPACE);
+
+						lineLength++;
+					}
+
+					sb.append(token);
+
+					lineLength += token.length();
+				}
+			}
+
+			sb.append(lineSeparator);
+		}
+
+		return sb.toString();
 	}
 
 	protected static final char[] HEX_DIGITS = {
@@ -5228,72 +5290,6 @@ public class StringUtil {
 				}
 			}
 		}
-	}
-
-	private static String _wrap(String text, int width, String lineSeparator) {
-		if (text == null) {
-			return null;
-		}
-
-		StringBundler sb = new StringBundler();
-
-		for (String line : splitLines(text)) {
-			if (line.isEmpty()) {
-				sb.append(lineSeparator);
-
-				continue;
-			}
-
-			int lineLength = 0;
-
-			for (String token : split(line, CharPool.SPACE)) {
-				if ((lineLength + token.length() + 1) > width) {
-					if (lineLength > 0) {
-						sb.append(lineSeparator);
-					}
-
-					if (token.length() > width) {
-						int pos = token.indexOf(CharPool.OPEN_PARENTHESIS);
-
-						if (pos != -1) {
-							sb.append(token.substring(0, pos + 1));
-							sb.append(lineSeparator);
-
-							token = token.substring(pos + 1);
-
-							sb.append(token);
-
-							lineLength = token.length();
-						}
-						else {
-							sb.append(token);
-
-							lineLength = token.length();
-						}
-					}
-					else {
-						sb.append(token);
-
-						lineLength = token.length();
-					}
-				}
-				else {
-					if (lineLength > 0) {
-						sb.append(StringPool.SPACE);
-
-						lineLength++;
-					}
-
-					sb.append(token);
-
-					lineLength += token.length();
-				}
-			}
-
-			sb.append(lineSeparator);
-		}
-
-		return sb.toString();
 	}
 
 	private static final char[] _RANDOM_STRING_CHAR_TABLE = {

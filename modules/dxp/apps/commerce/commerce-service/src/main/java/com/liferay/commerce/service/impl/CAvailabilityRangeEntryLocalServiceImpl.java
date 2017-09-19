@@ -54,7 +54,7 @@ public class CAvailabilityRangeEntryLocalServiceImpl
 				cAvailabilityRangeEntryId);
 
 		return cAvailabilityRangeEntryLocalService.
-			deleteCAvailabilityRangeEntry(cAvailabilityRangeEntryId);
+			deleteCAvailabilityRangeEntry(cAvailabilityRangeEntry);
 	}
 
 	@Override

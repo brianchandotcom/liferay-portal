@@ -17,6 +17,8 @@
 <%@ include file="/html/taglib/ui/social_bookmark/init.jsp" %>
 
 <%
+String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social_bookmark_facebook") + StringPool.UNDERLINE;
+
 String facebookDisplayStyle = "button_count";
 
 if (displayStyle.equals("simple")) {
@@ -44,16 +46,25 @@ else if (displayStyle.equals("vertical")) {
 
 			firstScriptNode.parentNode.insertBefore(facebookScriptNode, firstScriptNode);
 		}(document, 'script', 'facebook-jssdk'));
+
+		(function() {
+			if (FB && typeof(FB) !== 'undefined') {
+				var fbLike = document.getElementById('<%= randomNamespace %>');
+
+				FB.XFBML.parse(fbLike);
+			}
+		}());
 	</script>
 </liferay-util:html-bottom>
 
-<div id="fb-root"></div>
-<div class="fb-like"
-	data-action="like"
-	data-height="<%= (facebookDisplayStyle.equals("standard") || facebookDisplayStyle.equals("button_count")) ? 20 : StringPool.BLANK %>"
-	data-href="<%= url %>"
-	data-layout="<%= facebookDisplayStyle %>"
-	data-size="small"
-	data-show-faces="true"
->
+<div id="<%= randomNamespace %>fbRoot">
+	<div class="fb-like"
+		data-action="like"
+		data-height="<%= (facebookDisplayStyle.equals("standard") || facebookDisplayStyle.equals("button_count")) ? 20 : StringPool.BLANK %>"
+		data-href="<%= url %>"
+		data-layout="<%= facebookDisplayStyle %>"
+		data-size="small"
+		data-show-faces="true"
+	>
+	</div>
 </div>

@@ -16,6 +16,7 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import java.util.Properties;
@@ -91,10 +92,16 @@ public class CentralSubrepository {
 			}
 		}
 
-		File ciPropertiesFile = new File(
-			_subrepositoryDirectory, "ci.properties");
+		try {
+			File ciPropertiesFile = new File(
+				_subrepositoryDirectory, "ci.properties");
 
-		_ciProperties.load(new FileInputStream(ciPropertiesFile));
+			_ciProperties.load(new FileInputStream(ciPropertiesFile));
+		}
+		catch (FileNotFoundException fnfe) {
+			System.out.println(
+				"Unable to find ci.properties in " + _subrepositoryDirectory);
+		}
 	}
 
 	public String getCIProperty(String key) {

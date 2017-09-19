@@ -78,6 +78,15 @@ public class WorkflowDefinitionManagerUtil {
 			companyId, name);
 	}
 
+	public static List<WorkflowDefinition> getLatestWorkflowDefinitions(
+			long companyId, int start, int end,
+			OrderByComparator<WorkflowDefinition> orderByComparator)
+		throws WorkflowException {
+
+		return getWorkflowDefinitionManager().getLatestWorkflowDefinitions(
+			companyId, start, end, orderByComparator);
+	}
+
 	public static WorkflowDefinition getWorkflowDefinition(
 			long companyId, String name, int version)
 		throws WorkflowException {

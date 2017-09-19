@@ -76,6 +76,14 @@ public class WorkflowDefinitionManagerProxyBean
 	}
 
 	@Override
+	public List<WorkflowDefinition> getLatestWorkflowDefinitions(
+		long companyId, int start, int end,
+		OrderByComparator<WorkflowDefinition> orderByComparator) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public WorkflowDefinition getWorkflowDefinition(
 		long companyId, String name, int version) {
 

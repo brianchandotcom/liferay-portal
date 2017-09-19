@@ -298,6 +298,15 @@ public class WorkflowDefinitionLinkLocalServiceUtil {
 		return getService().getWorkflowDefinitionLinks(start, end);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.WorkflowDefinitionLink> getWorkflowDefinitionLinks(
+		long companyId, java.lang.String workflowDefinitionName,
+		int workflowDefinitionVersion)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getWorkflowDefinitionLinks(companyId,
+			workflowDefinitionName, workflowDefinitionVersion);
+	}
+
 	/**
 	* Returns the number of workflow definition links.
 	*

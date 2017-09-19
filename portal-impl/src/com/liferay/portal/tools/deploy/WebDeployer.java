@@ -14,12 +14,14 @@
 
 package com.liferay.portal.tools.deploy;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Plugin;
 import com.liferay.portal.kernel.plugin.PluginPackage;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.tools.ToolDependencies;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +46,16 @@ public class WebDeployer extends BaseDeployer {
 			}
 		}
 
-		StreamUtil.cleanUp(new WebDeployer(wars, jars));
+		WebDeployer webDeployer = new WebDeployer(wars, jars);
+
+		try {
+			webDeployer.close();
+		}
+		catch (IOException ioe) {
+			if (_log.isWarnEnabled()) {
+				_log.error(ioe, ioe);
+			}
+		}
 	}
 
 	public WebDeployer() {
@@ -68,5 +79,7 @@ public class WebDeployer extends BaseDeployer {
 	public String getPluginType() {
 		return Plugin.TYPE_WEB;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(WebDeployer.class);
 
 }

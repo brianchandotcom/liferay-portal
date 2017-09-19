@@ -14,15 +14,17 @@
 
 package com.liferay.portal.tools.deploy;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Plugin;
 import com.liferay.portal.kernel.plugin.PluginPackage;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolDependencies;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +50,16 @@ public class ThemeDeployer extends BaseDeployer {
 			}
 		}
 
-		StreamUtil.cleanUp(new ThemeDeployer(wars, jars));
+		ThemeDeployer themeDeployer = new ThemeDeployer(wars, jars);
+
+		try {
+			themeDeployer.close();
+		}
+		catch (IOException ioe) {
+			if (_log.isWarnEnabled()) {
+				_log.error(ioe, ioe);
+			}
+		}
 	}
 
 	public ThemeDeployer() {
@@ -135,5 +146,7 @@ public class ThemeDeployer extends BaseDeployer {
 
 		return filterMap;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(ThemeDeployer.class);
 
 }

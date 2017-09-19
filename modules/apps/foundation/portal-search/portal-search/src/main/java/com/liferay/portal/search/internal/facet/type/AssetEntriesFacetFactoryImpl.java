@@ -12,27 +12,34 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search.facet;
+package com.liferay.portal.search.internal.facet.type;
 
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.util.FacetFactory;
+import com.liferay.portal.search.facet.Facet;
+import com.liferay.portal.search.facet.type.AssetEntriesFacetFactory;
+import com.liferay.portal.search.internal.facet.FacetImpl;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Raymond Augé
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.portal.search.facet.type.AssetEntriesFacetFactory}
+ * @author André de Oliveira
  */
-@Deprecated
-public class AssetEntriesFacetFactory implements FacetFactory {
+@Component(
+	immediate = true,
+	service = {AssetEntriesFacetFactory.class, FacetFactory.class}
+)
+public class AssetEntriesFacetFactoryImpl implements AssetEntriesFacetFactory {
 
 	@Override
 	public String getFacetClassName() {
-		return AssetEntriesFacet.class.getName();
+		return Field.ENTRY_CLASS_NAME;
 	}
 
 	@Override
 	public Facet newInstance(SearchContext searchContext) {
-		return new AssetEntriesFacet(searchContext);
+		return new FacetImpl(Field.ENTRY_CLASS_NAME, searchContext);
 	}
 
 }

@@ -32,40 +32,13 @@ public class AssetEntriesFacetConfigurationImpl
 	}
 
 	@Override
-	public String[] getClassNames() {
-		String[] classNames = new String[0];
-
-		if (_jsonObject.has("assetTypes")) {
-			JSONArray assetTypes = _jsonObject.getJSONArray("assetTypes");
-
-			classNames = new String[assetTypes.length()];
-
-			for (int i = 0; i < assetTypes.length(); i++) {
-				classNames[i] = assetTypes.getString(i);
-			}
-		}
-
-		return classNames;
-	}
-
-	@Override
 	public int getFrequencyThreshold() {
 		return _jsonObject.getInt("frequencyThreshold");
 	}
 
 	@Override
-	public void setClassNames(String... classNames) {
-		_jsonObject.put("assetTypes", toJSONArray(classNames));
-	}
-
-	@Override
 	public void setFrequencyThreshold(int frequencyThreshold) {
 		_jsonObject.put("frequencyThreshold", frequencyThreshold);
-	}
-
-	@Override
-	public void setSelectedTypes(String... selectedTypes) {
-		_jsonObject.put("values", toJSONArray(selectedTypes));
 	}
 
 	protected JSONArray toJSONArray(String... values) {

@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletPreferences;
 
@@ -83,11 +84,7 @@ public class TypeFacetPortletPreferencesImpl
 	public List<KeyValuePair> getCurrentAssetTypes(
 		long companyId, Locale locale) {
 
-		Optional<String[]> assetTypesOptional = getAssetTypesArray();
-
-		String[] allAssetTypes = getAllAssetTypes(companyId);
-
-		String[] assetTypes = assetTypesOptional.orElse(allAssetTypes);
+		String[] assetTypes = getCurrentAssetTypesArray(companyId);
 
 		List<KeyValuePair> currentAssetTypes = new ArrayList<>();
 
@@ -96,6 +93,15 @@ public class TypeFacetPortletPreferencesImpl
 		}
 
 		return currentAssetTypes;
+	}
+
+	@Override
+	public String[] getCurrentAssetTypesArray(long companyId) {
+		Optional<String[]> assetTypesOptional = getAssetTypesArray();
+
+		String[] allAssetTypes = getAllAssetTypes(companyId);
+
+		return assetTypesOptional.orElse(allAssetTypes);
 	}
 
 	@Override
@@ -118,21 +124,20 @@ public class TypeFacetPortletPreferencesImpl
 	}
 
 	protected String[] getAllAssetTypes(long companyId) {
-		List<String> classNames = new ArrayList<>();
-
 		List<AssetRendererFactory<?>> assetRendererFactories =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
 				companyId);
 
-		for (AssetRendererFactory<?> assetRendererFactory :
-				assetRendererFactories) {
+		Stream<AssetRendererFactory<?>> assetRendererFactoriesStream =
+			assetRendererFactories.stream();
 
-			String className = assetRendererFactory.getClassName();
-
-			classNames.add(className);
-		}
-
-		return ArrayUtil.toStringArray(classNames);
+		return assetRendererFactoriesStream.filter(
+			AssetRendererFactory::isSearchable
+		).map(
+			AssetRendererFactory::getClassName
+		).toArray(
+			String[]::new
+		);
 	}
 
 	protected KeyValuePair getKeyValuePair(Locale locale, String className) {

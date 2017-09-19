@@ -17,23 +17,29 @@ package com.liferay.portal.search.web.internal.facet;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.facet.AssetEntriesFacet;
-import com.liferay.portal.kernel.search.facet.AssetEntriesFacetFactory;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.facet.util.FacetFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.facet.type.AssetEntriesFacetFactory;
 import com.liferay.portal.search.web.facet.BaseJSPSearchFacet;
 import com.liferay.portal.search.web.facet.SearchFacet;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 
@@ -47,6 +53,56 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = SearchFacet.class)
 public class AssetEntriesSearchFacet extends BaseJSPSearchFacet {
+
+	public static String[] getEntryClassNames(String configuration) {
+		if (Validator.isNull(configuration)) {
+			return null;
+		}
+
+		JSONObject configurationJSONObject;
+
+		try {
+			configurationJSONObject = JSONFactoryUtil.createJSONObject(
+				configuration);
+		}
+		catch (JSONException jsone) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to parse configuration", jsone.getCause());
+			}
+
+			return null;
+		}
+
+		JSONArray jsonArray = configurationJSONObject.getJSONArray("facets");
+
+		if (jsonArray == null) {
+			return null;
+		}
+
+		String id = AssetEntriesSearchFacet.class.getName();
+
+		IntStream intStream = IntStream.range(0, jsonArray.length());
+
+		Stream<JSONObject> jsonObjectsStream = intStream.mapToObj(
+			jsonArray::getJSONObject);
+
+		return jsonObjectsStream.filter(
+			jsonObject -> id.equals(jsonObject.getString("id"))
+		).map(
+			jsonObject -> jsonObject.getJSONObject("data")
+		).filter(
+			Objects::nonNull
+		).map(
+			jsonObject -> jsonObject.getJSONArray("values")
+		).filter(
+			Objects::nonNull
+		).map(
+			ArrayUtil::toStringArray
+		).findAny(
+		).orElse(
+			null
+		);
+	}
 
 	public List<AssetRendererFactory<?>> getAssetRendererFactories(
 		long companyId) {
@@ -96,7 +152,7 @@ public class AssetEntriesSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getFacetClassName() {
-		return AssetEntriesFacet.class.getName();
+		return Field.ENTRY_CLASS_NAME;
 	}
 
 	@Override
@@ -181,5 +237,8 @@ public class AssetEntriesSearchFacet extends BaseJSPSearchFacet {
 
 	@Reference
 	protected AssetEntriesFacetFactory assetEntriesFacetFactory;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetEntriesSearchFacet.class);
 
 }

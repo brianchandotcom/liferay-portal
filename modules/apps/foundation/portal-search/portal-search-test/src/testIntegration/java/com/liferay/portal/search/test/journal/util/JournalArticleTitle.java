@@ -12,15 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.type.facet.portlet;
+package com.liferay.portal.search.test.journal.util;
+
+import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 
 /**
- * @author Lino Alves
+ * @author André de Oliveira
  */
-public interface AssetEntriesFacetConfiguration {
-
-	public int getFrequencyThreshold();
-
-	public void setFrequencyThreshold(int frequencyThreshold);
-
+public class JournalArticleTitle extends LocalizedValuesMap {
 }

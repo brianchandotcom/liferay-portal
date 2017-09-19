@@ -106,10 +106,17 @@ public class UserSearchFixture {
 	}
 
 	public void setUp() throws Exception {
+		_companyId = TestPropsValues.getCompanyId();
+
 		_permissionChecker = PermissionThreadLocal.getPermissionChecker();
 
 		PermissionThreadLocal.setPermissionChecker(
 			new DummyPermissionChecker() {
+
+				@Override
+				public long getCompanyId() {
+					return _companyId;
+				}
 
 				@Override
 				public boolean hasPermission(
@@ -122,6 +129,11 @@ public class UserSearchFixture {
 				public boolean hasPermission(
 					long groupId, String name, long primKey, String actionId) {
 
+					return true;
+				}
+
+				@Override
+				public boolean isCompanyAdmin(long companyId) {
 					return true;
 				}
 
@@ -190,8 +202,8 @@ public class UserSearchFixture {
 		throws Exception {
 
 		return UserTestUtil.addUser(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			screenName, LocaleUtil.getDefault(), RandomTestUtil.randomString(),
+			_companyId, TestPropsValues.getUserId(), screenName,
+			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), groupIds, serviceContext);
 	}
 
@@ -218,6 +230,7 @@ public class UserSearchFixture {
 	}
 
 	private final List<AssetTag> _assetTags = new ArrayList<>();
+	private long _companyId;
 	private final List<Group> _groups = new ArrayList<>();
 	private PermissionChecker _permissionChecker;
 	private String _principal;

@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.type.facet.portlet;
+package com.liferay.portal.search.facet.type;
+
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.search.facet.FacetFactory;
 
 /**
- * @author Lino Alves
+ * @author André de Oliveira
  */
-public interface AssetEntriesFacetConfiguration {
-
-	public int getFrequencyThreshold();
-
-	public void setFrequencyThreshold(int frequencyThreshold);
-
+@ProviderType
+public interface AssetEntriesFacetFactory extends FacetFactory {
 }

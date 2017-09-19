@@ -22,6 +22,9 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.facet.util.FacetFactory;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
@@ -101,6 +104,12 @@ public abstract class BaseSearchFacet implements SearchFacet {
 			facet = facetFactory.newInstance(searchContext);
 
 			facet.setFacetConfiguration(facetConfiguration);
+
+			if (facet instanceof com.liferay.portal.search.facet.Facet) {
+				_select(
+					(com.liferay.portal.search.facet.Facet)facet,
+					searchContext);
+			}
 		}
 
 		_facet = facet;
@@ -143,6 +152,18 @@ public abstract class BaseSearchFacet implements SearchFacet {
 		}
 
 		return null;
+	}
+
+	private void _select(
+		com.liferay.portal.search.facet.Facet facet,
+		SearchContext searchContext) {
+
+		String[] selections = StringUtil.split(
+			GetterUtil.getString(searchContext.getAttribute(getFieldName())));
+
+		if (ArrayUtil.isNotEmpty(selections)) {
+			facet.select(selections);
+		}
 	}
 
 	private FacetConfiguration _toFacetConfiguration(

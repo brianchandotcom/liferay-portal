@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.security.permission.comparator.ModelResourceComparator;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.StringPool;
@@ -97,9 +96,7 @@ public class AssetEntriesSearchFacetDisplayBuilder implements Serializable {
 			new ModelResourceComparator(_locale));
 
 		for (String className : _classNames) {
-			if (assetTypes.contains(className) ||
-				!ArrayUtil.contains(_classNames, className)) {
-
+			if (assetTypes.contains(className)) {
 				continue;
 			}
 

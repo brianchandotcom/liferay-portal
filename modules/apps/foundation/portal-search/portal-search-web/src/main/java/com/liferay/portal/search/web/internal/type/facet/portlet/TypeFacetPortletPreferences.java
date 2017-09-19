@@ -45,6 +45,8 @@ public interface TypeFacetPortletPreferences {
 	public List<KeyValuePair> getCurrentAssetTypes(
 		long companyId, Locale locale);
 
+	public String[] getCurrentAssetTypesArray(long companyId);
+
 	public int getFrequencyThreshold();
 
 	public String getParameterName();

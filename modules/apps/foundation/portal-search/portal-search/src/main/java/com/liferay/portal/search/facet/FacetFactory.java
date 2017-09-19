@@ -12,15 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.type.facet.portlet;
+package com.liferay.portal.search.facet;
+
+import com.liferay.portal.kernel.search.SearchContext;
 
 /**
- * @author Lino Alves
+ * @author André de Oliveira
  */
-public interface AssetEntriesFacetConfiguration {
+public interface FacetFactory
+	extends com.liferay.portal.kernel.search.facet.util.FacetFactory {
 
-	public int getFrequencyThreshold();
-
-	public void setFrequencyThreshold(int frequencyThreshold);
+	@Override
+	public Facet newInstance(SearchContext searchContext);
 
 }

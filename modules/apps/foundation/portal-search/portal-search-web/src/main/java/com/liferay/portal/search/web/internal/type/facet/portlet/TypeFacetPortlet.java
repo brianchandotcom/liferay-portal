@@ -16,10 +16,10 @@ package com.liferay.portal.search.web.internal.type.facet.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.facet.AssetEntriesFacetFactory;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.facet.type.AssetEntriesFacetFactory;
 import com.liferay.portal.search.web.internal.facet.display.builder.AssetEntriesSearchFacetDisplayBuilder;
 import com.liferay.portal.search.web.internal.facet.display.context.AssetEntriesSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.type.facet.constants.TypeFacetPortletKeys;
@@ -32,7 +32,6 @@ import java.io.IOException;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 import javax.portlet.Portlet;
@@ -85,6 +84,15 @@ public class TypeFacetPortlet
 			typeFacetPortletPreferences, portletSharedSearchSettings);
 
 		portletSharedSearchSettings.addFacet(facet);
+
+		ThemeDisplay themeDisplay =
+			portletSharedSearchSettings.getThemeDisplay();
+
+		SearchContext searchContext =
+			portletSharedSearchSettings.getSearchContext();
+
+		searchContext.setEntryClassNames(
+			getAssetTypesClassNames(typeFacetPortletPreferences, themeDisplay));
 	}
 
 	@Override
@@ -125,16 +133,19 @@ public class TypeFacetPortlet
 			assetEntriesSearchFacetDisplayBuilder =
 				new AssetEntriesSearchFacetDisplayBuilder();
 
-		assetEntriesSearchFacetDisplayBuilder.setClassNames(
-			getAssetTypesClassNames(
-				assetEntriesFacetConfiguration, typeFacetPortletPreferences));
 		assetEntriesSearchFacetDisplayBuilder.setFacet(facet);
 		assetEntriesSearchFacetDisplayBuilder.setFrequencyThreshold(
 			assetEntriesFacetConfiguration.getFrequencyThreshold());
 		assetEntriesSearchFacetDisplayBuilder.setFrequenciesVisible(
 			typeFacetPortletPreferences.isFrequenciesVisible());
+
+		ThemeDisplay themeDisplay = portletSharedSearchResponse.getThemeDisplay(
+			renderRequest);
+
+		assetEntriesSearchFacetDisplayBuilder.setClassNames(
+			getAssetTypesClassNames(typeFacetPortletPreferences, themeDisplay));
 		assetEntriesSearchFacetDisplayBuilder.setLocale(
-			getLocale(portletSharedSearchResponse, renderRequest));
+			themeDisplay.getLocale());
 
 		String parameterName = typeFacetPortletPreferences.getParameterName();
 
@@ -156,8 +167,6 @@ public class TypeFacetPortlet
 		AssetEntriesFacetBuilder assetEntriesFacetBuilder =
 			new AssetEntriesFacetBuilder(assetEntriesFacetFactory);
 
-		assetEntriesFacetBuilder.setCompanyId(
-			getCompanyId(portletSharedSearchSettings));
 		assetEntriesFacetBuilder.setFrequencyThreshold(
 			typeFacetPortletPreferences.getFrequencyThreshold());
 		assetEntriesFacetBuilder.setSearchContext(
@@ -174,39 +183,17 @@ public class TypeFacetPortlet
 	}
 
 	protected String[] getAssetTypesClassNames(
-		AssetEntriesFacetConfiguration assetEntriesFacetConfiguration,
-		TypeFacetPortletPreferences typeFacetPortletPreferences) {
+		TypeFacetPortletPreferences typeFacetPortletPreferences,
+		ThemeDisplay themeDisplay) {
 
-		Optional<String[]> assetTypesArray =
-			typeFacetPortletPreferences.getAssetTypesArray();
-
-		return assetTypesArray.orElse(
-			assetEntriesFacetConfiguration.getClassNames());
-	}
-
-	protected long getCompanyId(
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		ThemeDisplay themeDisplay =
-			portletSharedSearchSettings.getThemeDisplay();
-
-		return themeDisplay.getCompanyId();
+		return typeFacetPortletPreferences.getCurrentAssetTypesArray(
+			themeDisplay.getCompanyId());
 	}
 
 	protected String getFieldName() {
 		Facet facet = assetEntriesFacetFactory.newInstance(new SearchContext());
 
 		return facet.getFieldName();
-	}
-
-	protected Locale getLocale(
-		PortletSharedSearchResponse portletSharedSearchResponse,
-		RenderRequest renderRequest) {
-
-		ThemeDisplay themeDisplay = portletSharedSearchResponse.getThemeDisplay(
-			renderRequest);
-
-		return themeDisplay.getLocale();
 	}
 
 	protected Optional<List<String>> getParameterValues(

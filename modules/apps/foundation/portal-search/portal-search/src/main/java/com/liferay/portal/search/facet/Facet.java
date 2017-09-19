@@ -12,15 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.type.facet.portlet;
+package com.liferay.portal.search.facet;
 
 /**
- * @author Lino Alves
+ * @author André de Oliveira
  */
-public interface AssetEntriesFacetConfiguration {
+public interface Facet extends com.liferay.portal.kernel.search.facet.Facet {
 
-	public int getFrequencyThreshold();
-
-	public void setFrequencyThreshold(int frequencyThreshold);
+	public void select(String... selections);
 
 }

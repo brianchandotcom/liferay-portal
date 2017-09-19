@@ -15,7 +15,6 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.concurrent.ThrowableAwareRunnable;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
@@ -37,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 /**
  * @author Michael C. Han
@@ -55,7 +55,7 @@ public class VerifyAuditedModel extends VerifyProcess {
 			unverifiedTableNames.add(verifiableAuditedModel.getTableName());
 		}
 
-		List<VerifyAuditedModelRunnable> verifyAuditedModelRunnables =
+		List<VerifyAuditedModelCallable> verifyAuditedModelRunnables =
 			new ArrayList<>(unverifiedTableNames.size());
 
 		while (!unverifiedTableNames.isEmpty()) {
@@ -72,8 +72,8 @@ public class VerifyAuditedModel extends VerifyProcess {
 					continue;
 				}
 
-				VerifyAuditedModelRunnable verifyAuditedModelRunnable =
-					new VerifyAuditedModelRunnable(verifiableAuditedModel);
+				VerifyAuditedModelCallable verifyAuditedModelRunnable =
+					new VerifyAuditedModelCallable(verifiableAuditedModel);
 
 				verifyAuditedModelRunnables.add(verifyAuditedModelRunnable);
 
@@ -351,17 +351,19 @@ public class VerifyAuditedModel extends VerifyProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		VerifyAuditedModel.class);
 
-	private class VerifyAuditedModelRunnable extends ThrowableAwareRunnable {
+	private class VerifyAuditedModelCallable implements Callable<Void> {
 
-		public VerifyAuditedModelRunnable(
+		@Override
+		public Void call() throws Exception {
+			verifyAuditedModel(_verifiableAuditedModel);
+
+			return null;
+		}
+
+		private VerifyAuditedModelCallable(
 			VerifiableAuditedModel verifiableAuditedModel) {
 
 			_verifiableAuditedModel = verifiableAuditedModel;
-		}
-
-		@Override
-		protected void doRun() throws Exception {
-			verifyAuditedModel(_verifiableAuditedModel);
 		}
 
 		private final VerifiableAuditedModel _verifiableAuditedModel;

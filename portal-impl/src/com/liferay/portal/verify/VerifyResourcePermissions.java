@@ -15,7 +15,6 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.concurrent.ThrowableAwareRunnable;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -45,6 +44,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 /**
  * @author Raymond Augé
@@ -61,14 +61,14 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			Role role = RoleLocalServiceUtil.getRole(
 				companyId, RoleConstants.OWNER);
 
-			List<VerifyResourcedModelRunnable> verifyResourcedModelRunnables =
+			List<VerifyResourcedModelCallable> verifyResourcedModelRunnables =
 				new ArrayList<>(verifiableResourcedModels.length);
 
 			for (VerifiableResourcedModel verifiableResourcedModel :
 					verifiableResourcedModels) {
 
-				VerifyResourcedModelRunnable verifyResourcedModelRunnable =
-					new VerifyResourcedModelRunnable(
+				VerifyResourcedModelCallable verifyResourcedModelRunnable =
+					new VerifyResourcedModelCallable(
 						role, verifiableResourcedModel);
 
 				verifyResourcedModelRunnables.add(verifyResourcedModelRunnable);
@@ -228,18 +228,20 @@ public class VerifyResourcePermissions extends VerifyProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		VerifyResourcePermissions.class);
 
-	private class VerifyResourcedModelRunnable extends ThrowableAwareRunnable {
+	private class VerifyResourcedModelCallable implements Callable<Void> {
 
-		public VerifyResourcedModelRunnable(
+		@Override
+		public Void call() throws Exception {
+			verifyResourcedModel(_role, _verifiableResourcedModel);
+
+			return null;
+		}
+
+		private VerifyResourcedModelCallable(
 			Role role, VerifiableResourcedModel verifiableResourcedModel) {
 
 			_role = role;
 			_verifiableResourcedModel = verifiableResourcedModel;
-		}
-
-		@Override
-		protected void doRun() throws Exception {
-			verifyResourcedModel(_role, _verifiableResourcedModel);
 		}
 
 		private final Role _role;

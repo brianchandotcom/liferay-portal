@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.DynamicResourceRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
@@ -44,7 +43,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ProgressTracker;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.usersadmin.search.UserSearch;
@@ -89,18 +87,6 @@ public class ExportUsersMVCResourceCommand extends BaseMVCResourceCommand {
 				resourceRequest,
 				_portal.getPortletId(resourceRequest) +
 					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
-
-			String keywords = ParamUtil.getString(resourceRequest, "keywords");
-
-			if (Validator.isNotNull(keywords)) {
-				DynamicResourceRequest dynamicResourceRequest =
-					new DynamicResourceRequest(resourceRequest);
-
-				dynamicResourceRequest.setParameter(
-					"keywords", StringPool.BLANK);
-
-				resourceRequest = dynamicResourceRequest;
-			}
 
 			String csv = getUsersCSV(resourceRequest, resourceResponse);
 

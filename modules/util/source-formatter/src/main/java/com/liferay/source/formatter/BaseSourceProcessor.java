@@ -463,26 +463,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			fileName, new SourceFormatterMessage(fileName, message, null, -1));
 	}
 
-	private String _processSourceChecks(
-			File file, String fileName, String absolutePath, String content)
-		throws Exception {
-
-		SourceChecksResult sourceChecksResult =
-			SourceChecksUtil.processSourceChecks(
-				file, fileName, absolutePath, content,
-				_isModulesFile(absolutePath), _sourceChecks,
-				_sourceChecksSuppressions,
-				sourceFormatterArgs.isShowDebugInformation());
-
-		for (SourceFormatterMessage sourceFormatterMessage :
-				sourceChecksResult.getSourceFormatterMessages()) {
-
-			processMessage(fileName, sourceFormatterMessage);
-		}
-
-		return sourceChecksResult.getContent();
-	}
-
 	protected boolean portalSource;
 	protected SourceFormatterArgs sourceFormatterArgs;
 	protected boolean subrepository;
@@ -622,6 +602,26 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return pattern;
+	}
+
+	private String _processSourceChecks(
+			File file, String fileName, String absolutePath, String content)
+		throws Exception {
+
+		SourceChecksResult sourceChecksResult =
+			SourceChecksUtil.processSourceChecks(
+				file, fileName, absolutePath, content,
+				_isModulesFile(absolutePath), _sourceChecks,
+				_sourceChecksSuppressions,
+				sourceFormatterArgs.isShowDebugInformation());
+
+		for (SourceFormatterMessage sourceFormatterMessage :
+				sourceChecksResult.getSourceFormatterMessages()) {
+
+			processMessage(fileName, sourceFormatterMessage);
+		}
+
+		return sourceChecksResult.getContent();
 	}
 
 	private List<String> _allFileNames;

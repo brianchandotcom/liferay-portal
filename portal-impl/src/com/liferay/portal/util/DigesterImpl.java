@@ -189,14 +189,14 @@ public class DigesterImpl implements Digester {
 	public byte[] digestRaw(String algorithm, InputStream inputStream) {
 		MessageDigest messageDigest = null;
 
-		try {
+		try (InputStream is = inputStream) {
 			messageDigest = MessageDigest.getInstance(algorithm);
 
 			byte[] buffer = new byte[StreamUtil.BUFFER_SIZE];
 
 			int read = 0;
 
-			while ((read = inputStream.read(buffer)) != -1) {
+			while ((read = is.read(buffer)) != -1) {
 				if (read > 0) {
 					messageDigest.update(buffer, 0, read);
 				}
@@ -207,9 +207,6 @@ public class DigesterImpl implements Digester {
 		}
 		catch (NoSuchAlgorithmException nsae) {
 			_log.error(nsae, nsae);
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
 		}
 
 		return messageDigest.digest();

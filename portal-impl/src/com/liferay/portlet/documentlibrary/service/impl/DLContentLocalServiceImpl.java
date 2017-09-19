@@ -20,11 +20,13 @@ import com.liferay.document.library.kernel.util.comparator.DLContentVersionCompa
 import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.documentlibrary.service.base.DLContentLocalServiceBaseImpl;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.List;
@@ -69,29 +71,33 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 		long companyId, long repositoryId, String path, String version,
 		InputStream inputStream, long size) {
 
-		try {
+		DLContent dlContent = null;
+
+		try (InputStream is = inputStream) {
 			long contentId = counterLocalService.increment();
 
-			DLContent dlContent = dlContentPersistence.create(contentId);
+			dlContent = dlContentPersistence.create(contentId);
 
 			dlContent.setCompanyId(companyId);
 			dlContent.setRepositoryId(repositoryId);
 			dlContent.setPath(path);
 			dlContent.setVersion(version);
 
-			OutputBlob dataOutputBlob = new OutputBlob(inputStream, size);
+			OutputBlob dataOutputBlob = new OutputBlob(is, size);
 
 			dlContent.setData(dataOutputBlob);
 
 			dlContent.setSize(size);
 
 			dlContentPersistence.update(dlContent);
+		}
+		catch (IOException ioe) {
+			if (_log.isWarnEnabled()) {
+				_log.error(ioe, ioe);
+			}
+		}
 
-			return dlContent;
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
-		}
+		return dlContent;
 	}
 
 	@Override
@@ -204,5 +210,8 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 			dlContentPersistence.update(dLContent);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLContentLocalServiceImpl.class);
 
 }

@@ -64,7 +64,6 @@ import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -381,8 +380,6 @@ public class S3Store extends BaseStore {
 			throw new SystemException(ioe);
 		}
 		finally {
-			StreamUtil.cleanUp(is);
-
 			FileUtil.delete(file);
 		}
 	}

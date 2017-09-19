@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.jmx.model;
 
-import com.liferay.portal.kernel.util.HashUtil;
-
 import java.io.Serializable;
 
 import java.util.List;
@@ -69,7 +67,7 @@ public class Domain implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, _domainName);
+		return _domainName.hashCode();
 	}
 
 	public boolean isLoaded() {

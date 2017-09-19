@@ -653,13 +653,10 @@ public class SourceFormatter {
 		public void run() {
 			int fileScansCompletedCount = 0;
 			int percentage = 0;
-			int processedCheckStyleFileCount = 0;
 			int processedSourceChecksFileCount = 0;
-			int totalCheckStyleFileCount = 0;
 			int totalSourceChecksFileCount = 0;
 
 			boolean sourceChecksInitialized = false;
-			boolean sourceChecksCompleted = false;
 
 			while (true) {
 				try {
@@ -670,30 +667,7 @@ public class SourceFormatter {
 						progressStatusUpdate.getProgressStatus();
 
 					if (progressStatus.equals(
-							ProgressStatus.CHECK_STYLE_FILE_COMPLETED)) {
-
-						processedCheckStyleFileCount++;
-
-						if (!sourceChecksCompleted) {
-
-							// Do not show progress for CheckStyle when there
-							// are still source checks that are not done yet.
-
-							continue;
-						}
-
-						percentage = _processCompletedPercentage(
-							percentage, processedCheckStyleFileCount,
-							totalCheckStyleFileCount, "CheckStyle checks");
-					}
-					else if (progressStatus.equals(
-								ProgressStatus.CHECK_STYLE_STARTING)) {
-
-						totalCheckStyleFileCount =
-							progressStatusUpdate.getCount();
-					}
-					else if (progressStatus.equals(
-								ProgressStatus.SOURCE_CHECKS_INITIALIZED)) {
+							ProgressStatus.SOURCE_CHECKS_INITIALIZED)) {
 
 						fileScansCompletedCount++;
 						totalSourceChecksFileCount +=
@@ -733,23 +707,6 @@ public class SourceFormatter {
 						percentage = _processCompletedPercentage(
 							percentage, processedSourceChecksFileCount,
 							totalSourceChecksFileCount, "source checks");
-
-						if (percentage == 100) {
-							sourceChecksCompleted = true;
-
-							// Checkstyle might already have processed files
-							// before all the source checks finished. In order
-							// to show the status for the remaining files, we
-							// deduct the processed files from the total count
-							// and reset the processed files count.
-
-							totalCheckStyleFileCount -=
-								processedCheckStyleFileCount;
-
-							processedCheckStyleFileCount = 0;
-
-							percentage = 0;
-						}
 					}
 					else if (progressStatus.equals(
 								ProgressStatus.SOURCE_FORMAT_COMPLETED)) {

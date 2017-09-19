@@ -80,10 +80,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void postFormat() throws Exception {
-		addProgressStatusUpdate(
-			new ProgressStatusUpdate(
-				ProgressStatus.CHECK_STYLE_STARTING, _ungeneratedFiles.size()));
-
 		_processCheckStyle();
 	}
 

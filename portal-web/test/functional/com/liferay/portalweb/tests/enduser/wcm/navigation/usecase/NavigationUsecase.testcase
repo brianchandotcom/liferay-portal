@@ -63,12 +63,9 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
-
-		<execute function="Select" locator1="Select#DISPLAY_TEMPLATE" value1="Split Button Dropdowns" />
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewSuccessMessage" />
-		<execute function="SelectFrame" value1="relative=top" />
+		<execute macro="NavigationMenu#selectAndSaveConfiguration">
+			<var name="displayTemplate" value="Split Button Dropdowns" />
+		</execute>
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Navigation Test Page1" />
@@ -256,12 +253,9 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
-
-		<execute function="Select" locator1="Select#DISPLAY_TEMPLATE" value1="Bar minimally styled" />
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewSuccessMessage" />
-		<execute function="SelectFrame" value1="relative=top" />
+		<execute macro="NavigationMenu#selectAndSaveConfiguration">
+			<var name="displayTemplate" value="Bar minimally styled" />
+		</execute>
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Navigation Display Test Page" />

@@ -463,7 +463,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return false;
 	}
 
-	private final String _format(
+	private String _format(
 			File file, String fileName, String absolutePath, String content,
 			String originalContent, Set<String> modifiedContents, int count)
 		throws Exception {
@@ -503,7 +503,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			modifiedContents, count);
 	}
 
-	private final void _format(String fileName) throws Exception {
+	private void _format(String fileName) throws Exception {
 		if (!_isMatchPath(fileName)) {
 			addProgressStatusUpdate(
 				new ProgressStatusUpdate(

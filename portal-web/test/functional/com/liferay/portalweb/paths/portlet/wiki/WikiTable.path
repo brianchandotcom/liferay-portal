@@ -21,7 +21,7 @@
 </tr>
 <tr>
 	<td>ALL_PAGES_WIKI_PAGE_TITLE</td>
-	<td>//a[contains(.,'${key_wikiPageTitle}')]</td>
+	<td>//a[normalize-space(.//text())='${key_wikiPageTitle}']</td>
 	<td></td>
 </tr>
 <tr>

@@ -958,6 +958,8 @@ public class PropsValues {
 
 	public static final boolean MAIL_MX_UPDATE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.MAIL_MX_UPDATE));
 
+	public static final boolean MAIL_SESSION_MAIL = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.MAIL_SESSION_MAIL));
+
 	public static final String MAIL_SESSION_MAIL_ADVANCED_PROPERTIES = PropsUtil.get(PropsKeys.MAIL_SESSION_MAIL_ADVANCED_PROPERTIES);
 
 	public static final String MAIL_SESSION_MAIL_POP3_HOST = PropsUtil.get(PropsKeys.MAIL_SESSION_MAIL_POP3_HOST);

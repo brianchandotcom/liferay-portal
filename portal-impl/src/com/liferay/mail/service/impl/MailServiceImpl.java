@@ -138,7 +138,9 @@ public class MailServiceImpl implements MailService, IdentifiableOSGiService {
 
 		Session session = InfrastructureUtil.getMailSession();
 
-		if (!PrefsPropsUtil.getBoolean(PropsKeys.MAIL_SESSION_MAIL)) {
+		if (!PrefsPropsUtil.getBoolean(
+				PropsKeys.MAIL_SESSION_MAIL, PropsValues.MAIL_SESSION_MAIL)) {
+
 			_session = session;
 
 			return _session;

@@ -25,7 +25,7 @@
 ### Changed
 - [LPS-74126]: Update the [Liferay CSS Builder] dependency to version 1.1.1.
 
-## 2.1.2 - 2017-08-30
+## 2.1.2 - 2017-09-18
 
 ### Changed
 - [LPS-74315]: Update the [Liferay CSS Builder] dependency to version 1.1.2.

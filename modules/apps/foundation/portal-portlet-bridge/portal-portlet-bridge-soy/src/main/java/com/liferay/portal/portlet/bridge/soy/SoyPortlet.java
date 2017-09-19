@@ -53,12 +53,14 @@ import com.liferay.portal.template.soy.utils.SoyContext;
 import com.liferay.portal.template.soy.utils.SoyTemplateResourcesProvider;
 import com.liferay.portlet.ActionRequestImpl;
 import com.liferay.portlet.ActionResponseImpl;
+import com.liferay.portlet.PortletRequestImpl;
 import com.liferay.portlet.RenderRequestImpl;
 
 import java.io.IOException;
 import java.io.Writer;
 
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -342,6 +344,8 @@ public class SoyPortlet extends MVCPortlet {
 
 		processAction(actionRequestImpl, actionResponseImpl);
 
+		_copyRequestAttributes(actionRequestImpl, resourceRequest);
+
 		String portletNamespace = resourceResponse.getNamespace();
 
 		String redirect = HttpUtil.setParameter(
@@ -371,6 +375,8 @@ public class SoyPortlet extends MVCPortlet {
 
 		render(renderRequestImpl, renderResponse);
 
+		_copyRequestAttributes(renderRequestImpl, resourceRequest);
+
 		String mvcRenderCommandName = ParamUtil.getString(
 			resourceRequest, "mvcRenderCommandName", "/");
 
@@ -381,6 +387,8 @@ public class SoyPortlet extends MVCPortlet {
 
 		if (mvcRenderCommand != MVCRenderCommand.EMPTY) {
 			path = mvcRenderCommand.render(renderRequestImpl, renderResponse);
+
+			_copyRequestAttributes(renderRequestImpl, resourceRequest);
 		}
 
 		resourceRequest.setAttribute(
@@ -393,6 +401,21 @@ public class SoyPortlet extends MVCPortlet {
 		SessionErrors.clear(portletRequest);
 
 		SessionMessages.clear(portletRequest);
+	}
+
+	private void _copyRequestAttributes(
+		PortletRequestImpl portletRequestImpl,
+		ResourceRequest resourceRequest) {
+
+		Enumeration<String> attributeNames =
+			portletRequestImpl.getAttributeNames();
+
+		while (attributeNames.hasMoreElements()) {
+			String attributeName = attributeNames.nextElement();
+
+			resourceRequest.setAttribute(
+				attributeName, portletRequestImpl.getAttribute(attributeName));
+		}
 	}
 
 	private Template _createRequestTemplate(PortletRequest portletRequest)

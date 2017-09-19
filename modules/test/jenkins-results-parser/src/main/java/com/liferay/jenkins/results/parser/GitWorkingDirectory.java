@@ -247,8 +247,8 @@ public class GitWorkingDirectory {
 		}
 	}
 
-	public void createLocalBranch(String branchName) {
-		createLocalBranch(branchName, false, null);
+	public Branch createLocalBranch(String branchName) {
+		return createLocalBranch(branchName, false, null);
 	}
 
 	public Branch createLocalBranch(

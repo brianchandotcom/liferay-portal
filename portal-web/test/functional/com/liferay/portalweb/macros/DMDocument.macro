@@ -464,7 +464,7 @@
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="DynamicUploader#ALL_FILES_READY_TO_BE_SAVED_DOCUMENT_SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addPG">
@@ -642,7 +642,8 @@
 		</if>
 
 		<execute macro="Button#clickSave" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="DynamicUploader#ALL_FILES_READY_TO_BE_SAVED_DOCUMENT_SUCCESS_MESSAGE" value1="Successfully saved." />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addPGViaMG">

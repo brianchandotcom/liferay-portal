@@ -16,8 +16,6 @@ package com.liferay.source.formatter.checkstyle.util;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checkstyle.Checker;
@@ -26,18 +24,12 @@ import com.liferay.source.formatter.util.DebugUtil;
 
 import com.puppycrawl.tools.checkstyle.ConfigurationLoader;
 import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
-import com.puppycrawl.tools.checkstyle.DefaultLogger;
 import com.puppycrawl.tools.checkstyle.PropertiesExpander;
-import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 import com.puppycrawl.tools.checkstyle.api.AuditListener;
 import com.puppycrawl.tools.checkstyle.api.Configuration;
 import com.puppycrawl.tools.checkstyle.filters.SuppressionsLoader;
 
 import java.io.File;
-import java.io.OutputStream;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -145,7 +137,7 @@ public class CheckStyleUtil {
 
 		checker.configure(configuration);
 
-		AuditListener listener = new SourceFormatterLogger(
+		AuditListener listener = new CheckStyleLogger(
 			new UnsyncByteArrayOutputStream(), true,
 			sourceFormatterArgs.getBaseDirName());
 
@@ -200,54 +192,5 @@ public class CheckStyleUtil {
 
 	private static final Set<SourceFormatterMessage> _sourceFormatterMessages =
 		new TreeSet<>();
-
-	private static class SourceFormatterLogger extends DefaultLogger {
-
-		public SourceFormatterLogger(
-			OutputStream outputStream, boolean closeStreamsAfterUse,
-			String baseDirName) {
-
-			super(outputStream, closeStreamsAfterUse);
-
-			_baseDirName = baseDirName;
-		}
-
-		@Override
-		public void addError(AuditEvent auditEvent) {
-			_sourceFormatterMessages.add(
-				new SourceFormatterMessage(
-					_getRelativizedFileName(auditEvent),
-					auditEvent.getMessage(), auditEvent.getLine()));
-
-			super.addError(auditEvent);
-		}
-
-		private Path _getAbsoluteNormalizedPath(String pathName) {
-			Path path = Paths.get(pathName);
-
-			path = path.toAbsolutePath();
-
-			return path.normalize();
-		}
-
-		private String _getRelativizedFileName(AuditEvent auditEvent) {
-			if (Validator.isNull(_baseDirName)) {
-				return auditEvent.getFileName();
-			}
-
-			Path baseDirPath = _getAbsoluteNormalizedPath(_baseDirName);
-
-			Path relativizedPath = baseDirPath.relativize(
-				_getAbsoluteNormalizedPath(auditEvent.getFileName()));
-
-			return _baseDirName +
-				StringUtil.replace(
-					relativizedPath.toString(), CharPool.BACK_SLASH,
-					CharPool.SLASH);
-		}
-
-		private final String _baseDirName;
-
-	}
 
 }

@@ -57,10 +57,10 @@ public class TestRelatedEntryIndexerRegistry
 	public List<RelatedEntryIndexer> getRelatedEntryIndexers() {
 		List<RelatedEntryIndexer> relatedEntryIndexers = new ArrayList<>();
 
-		for (List<RelatedEntryIndexer> relatedEntryIndexers :
+		for (List<RelatedEntryIndexer> currentRelatedEntryIndexers :
 				_relatedEntryIndexers.values()) {
 
-			relatedEntryIndexers.addAll(relatedEntryIndexers);
+			relatedEntryIndexers.addAll(currentRelatedEntryIndexers);
 		}
 
 		return relatedEntryIndexers;

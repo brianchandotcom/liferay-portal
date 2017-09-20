@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.service.impl;
 
-import com.liferay.commerce.model.CommerceTirePriceEntry;
-import com.liferay.commerce.service.base.CommerceTirePriceEntryLocalServiceBaseImpl;
+import com.liferay.commerce.model.CommerceTierPriceEntry;
+import com.liferay.commerce.service.base.CommerceTierPriceEntryLocalServiceBaseImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -50,135 +50,135 @@ import java.util.Map;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceTirePriceEntryLocalServiceImpl
-	extends CommerceTirePriceEntryLocalServiceBaseImpl {
+public class CommerceTierPriceEntryLocalServiceImpl
+	extends CommerceTierPriceEntryLocalServiceBaseImpl {
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public CommerceTirePriceEntry addCommerceTirePriceEntry(
+	public CommerceTierPriceEntry addCommerceTierPriceEntry(
 			long commercePriceEntryId, double price, int minQuantity,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		// Commerce tire price entry
+		// Commerce tier price entry
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
 
-		long commerceTirePriceEntryId = counterLocalService.increment();
+		long commerceTierPriceEntryId = counterLocalService.increment();
 
-		CommerceTirePriceEntry commerceTirePriceEntry =
-			commerceTirePriceEntryPersistence.create(commerceTirePriceEntryId);
+		CommerceTierPriceEntry commerceTierPriceEntry =
+			commerceTierPriceEntryPersistence.create(commerceTierPriceEntryId);
 
-		commerceTirePriceEntry.setUuid(serviceContext.getUuid());
-		commerceTirePriceEntry.setGroupId(groupId);
-		commerceTirePriceEntry.setCompanyId(user.getCompanyId());
-		commerceTirePriceEntry.setUserId(user.getUserId());
-		commerceTirePriceEntry.setUserName(user.getFullName());
-		commerceTirePriceEntry.setCommercePriceEntryId(commercePriceEntryId);
-		commerceTirePriceEntry.setPrice(price);
-		commerceTirePriceEntry.setMinQuantity(minQuantity);
-		commerceTirePriceEntry.setExpandoBridgeAttributes(serviceContext);
+		commerceTierPriceEntry.setUuid(serviceContext.getUuid());
+		commerceTierPriceEntry.setGroupId(groupId);
+		commerceTierPriceEntry.setCompanyId(user.getCompanyId());
+		commerceTierPriceEntry.setUserId(user.getUserId());
+		commerceTierPriceEntry.setUserName(user.getFullName());
+		commerceTierPriceEntry.setCommercePriceEntryId(commercePriceEntryId);
+		commerceTierPriceEntry.setPrice(price);
+		commerceTierPriceEntry.setMinQuantity(minQuantity);
+		commerceTierPriceEntry.setExpandoBridgeAttributes(serviceContext);
 
-		commerceTirePriceEntryPersistence.update(commerceTirePriceEntry);
+		commerceTierPriceEntryPersistence.update(commerceTierPriceEntry);
 
 		// Commerce price entry
 
-		commercePriceEntryLocalService.setHasTirePrice(
+		commercePriceEntryLocalService.setHasTierPrice(
 			commercePriceEntryId, true);
 
-		return commerceTirePriceEntry;
+		return commerceTierPriceEntry;
 	}
 
 	@Override
-	public void deleteCommerceTirePriceEntries(long commercePriceEntryId)
+	public void deleteCommerceTierPriceEntries(long commercePriceEntryId)
 		throws PortalException {
 
-		List<CommerceTirePriceEntry> commerceTirePriceEntries =
-			commerceTirePriceEntryLocalService.getCommerceTirePriceEntries(
+		List<CommerceTierPriceEntry> commerceTierPriceEntries =
+			commerceTierPriceEntryLocalService.getCommerceTierPriceEntries(
 				commercePriceEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		for (CommerceTirePriceEntry commerceTirePriceEntry :
-				commerceTirePriceEntries) {
+		for (CommerceTierPriceEntry commerceTierPriceEntry :
+				commerceTierPriceEntries) {
 
-			commerceTirePriceEntryLocalService.deleteCommerceTirePriceEntry(
-				commerceTirePriceEntry);
+			commerceTierPriceEntryLocalService.deleteCommerceTierPriceEntry(
+				commerceTierPriceEntry);
 		}
 	}
 
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public CommerceTirePriceEntry deleteCommerceTirePriceEntry(
-			CommerceTirePriceEntry commerceTirePriceEntry)
+	public CommerceTierPriceEntry deleteCommerceTierPriceEntry(
+			CommerceTierPriceEntry commerceTierPriceEntry)
 		throws PortalException {
 
-		// Commerce tire price entry
+		// Commerce tier price entry
 
-		commerceTirePriceEntryPersistence.remove(commerceTirePriceEntry);
+		commerceTierPriceEntryPersistence.remove(commerceTierPriceEntry);
 
 		// Commerce price entry
 
-		List<CommerceTirePriceEntry> commerceTirePriceEntries =
-			commerceTirePriceEntryLocalService.getCommerceTirePriceEntries(
-				commerceTirePriceEntry.getCommercePriceEntryId(),
+		List<CommerceTierPriceEntry> commerceTierPriceEntries =
+			commerceTierPriceEntryLocalService.getCommerceTierPriceEntries(
+				commerceTierPriceEntry.getCommercePriceEntryId(),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		if (commerceTirePriceEntries.isEmpty()) {
-			commercePriceEntryLocalService.setHasTirePrice(
-				commerceTirePriceEntry.getCommercePriceEntryId(), false);
+		if (commerceTierPriceEntries.isEmpty()) {
+			commercePriceEntryLocalService.setHasTierPrice(
+				commerceTierPriceEntry.getCommercePriceEntryId(), false);
 		}
 
 		// Expando
 
 		expandoRowLocalService.deleteRows(
-			commerceTirePriceEntry.getCommerceTirePriceEntryId());
+			commerceTierPriceEntry.getCommerceTierPriceEntryId());
 
-		return commerceTirePriceEntry;
+		return commerceTierPriceEntry;
 	}
 
 	@Override
-	public CommerceTirePriceEntry deleteCommerceTirePriceEntry(
-			long commerceTirePriceEntryId)
+	public CommerceTierPriceEntry deleteCommerceTierPriceEntry(
+			long commerceTierPriceEntryId)
 		throws PortalException {
 
-		CommerceTirePriceEntry commerceTirePriceEntry =
-			commerceTirePriceEntryPersistence.findByPrimaryKey(
-				commerceTirePriceEntryId);
+		CommerceTierPriceEntry commerceTierPriceEntry =
+			commerceTierPriceEntryPersistence.findByPrimaryKey(
+				commerceTierPriceEntryId);
 
-		return commerceTirePriceEntryLocalService.deleteCommerceTirePriceEntry(
-			commerceTirePriceEntry);
+		return commerceTierPriceEntryLocalService.deleteCommerceTierPriceEntry(
+			commerceTierPriceEntry);
 	}
 
 	@Override
-	public List<CommerceTirePriceEntry> getCommerceTirePriceEntries(
+	public List<CommerceTierPriceEntry> getCommerceTierPriceEntries(
 		long commercePriceEntryId, int start, int end) {
 
-		return commerceTirePriceEntryPersistence.findByCommercePriceEntryId(
+		return commerceTierPriceEntryPersistence.findByCommercePriceEntryId(
 			commercePriceEntryId, start, end);
 	}
 
 	@Override
-	public List<CommerceTirePriceEntry> getCommerceTirePriceEntries(
+	public List<CommerceTierPriceEntry> getCommerceTierPriceEntries(
 		long commercePriceEntryId, int start, int end,
-		OrderByComparator<CommerceTirePriceEntry> orderByComparator) {
+		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
 
-		return commerceTirePriceEntryPersistence.findByCommercePriceEntryId(
+		return commerceTierPriceEntryPersistence.findByCommercePriceEntryId(
 			commercePriceEntryId, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getCommerceTirePriceEntriesCount(long commercePriceEntryId) {
-		return commerceTirePriceEntryPersistence.countByCommercePriceEntryId(
+	public int getCommerceTierPriceEntriesCount(long commercePriceEntryId) {
+		return commerceTierPriceEntryPersistence.countByCommercePriceEntryId(
 			commercePriceEntryId);
 	}
 
 	@Override
 	public Hits search(SearchContext searchContext) {
 		try {
-			Indexer<CommerceTirePriceEntry> indexer =
+			Indexer<CommerceTierPriceEntry> indexer =
 				IndexerRegistryUtil.nullSafeGetIndexer(
-					CommerceTirePriceEntry.class);
+					CommerceTierPriceEntry.class);
 
 			return indexer.search(searchContext);
 		}
@@ -188,35 +188,35 @@ public class CommerceTirePriceEntryLocalServiceImpl
 	}
 
 	@Override
-	public BaseModelSearchResult<CommerceTirePriceEntry>
-			searchCommerceTirePriceEntries(
-				long companyId, long groupId, long commercePriceEntryId,
-				String keywords, int start, int end, Sort sort)
+	public BaseModelSearchResult<CommerceTierPriceEntry>
+		searchCommerceTierPriceEntries(
+			long companyId, long groupId, long commercePriceEntryId,
+			String keywords, int start, int end, Sort sort)
 		throws PortalException {
 
 		SearchContext searchContext = buildSearchContext(
 			companyId, groupId, commercePriceEntryId, keywords, start, end,
 			sort);
 
-		return searchCommerceTirePriceEntries(searchContext);
+		return searchCommerceTierPriceEntries(searchContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public CommerceTirePriceEntry updateCommerceTirePriceEntry(
-			long commerceTirePriceEntryId, double price, int minQuantity,
+	public CommerceTierPriceEntry updateCommerceTierPriceEntry(
+			long commerceTierPriceEntryId, double price, int minQuantity,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CommerceTirePriceEntry commerceTirePriceEntry =
-			commerceTirePriceEntryPersistence.findByPrimaryKey(
-				commerceTirePriceEntryId);
+		CommerceTierPriceEntry commerceTierPriceEntry =
+			commerceTierPriceEntryPersistence.findByPrimaryKey(
+				commerceTierPriceEntryId);
 
-		commerceTirePriceEntry.setPrice(price);
-		commerceTirePriceEntry.setMinQuantity(minQuantity);
-		commerceTirePriceEntry.setExpandoBridgeAttributes(serviceContext);
+		commerceTierPriceEntry.setPrice(price);
+		commerceTierPriceEntry.setMinQuantity(minQuantity);
+		commerceTierPriceEntry.setExpandoBridgeAttributes(serviceContext);
 
-		return commerceTirePriceEntryPersistence.update(commerceTirePriceEntry);
+		return commerceTierPriceEntryPersistence.update(commerceTierPriceEntry);
 	}
 
 	protected SearchContext buildSearchContext(
@@ -260,15 +260,15 @@ public class CommerceTirePriceEntryLocalServiceImpl
 		return searchContext;
 	}
 
-	protected BaseModelSearchResult<CommerceTirePriceEntry>
-			searchCommerceTirePriceEntries(SearchContext searchContext)
+	protected BaseModelSearchResult<CommerceTierPriceEntry>
+			searchCommerceTierPriceEntries(SearchContext searchContext)
 		throws PortalException {
 
-		Indexer<CommerceTirePriceEntry> indexer =
+		Indexer<CommerceTierPriceEntry> indexer =
 			IndexerRegistryUtil.nullSafeGetIndexer(
-				CommerceTirePriceEntry.class);
+				CommerceTierPriceEntry.class);
 
-		List<CommerceTirePriceEntry> commerceTirePriceEntries =
+		List<CommerceTierPriceEntry> commerceTierPriceEntries =
 			new ArrayList<>();
 
 		for (int i = 0; i < 10; i++) {
@@ -280,15 +280,15 @@ public class CommerceTirePriceEntryLocalServiceImpl
 				long classPK = GetterUtil.getLong(
 					document.get(Field.ENTRY_CLASS_PK));
 
-				CommerceTirePriceEntry commerceTirePriceEntry =
-					getCommerceTirePriceEntry(classPK);
+				CommerceTierPriceEntry commerceTierPriceEntry =
+					getCommerceTierPriceEntry(classPK);
 
-				commerceTirePriceEntries.add(commerceTirePriceEntry);
+				commerceTierPriceEntries.add(commerceTierPriceEntry);
 			}
 
-			if (commerceTirePriceEntries != null) {
+			if (commerceTierPriceEntries != null) {
 				return new BaseModelSearchResult<>(
-					commerceTirePriceEntries, hits.getLength());
+					commerceTierPriceEntries, hits.getLength());
 			}
 		}
 

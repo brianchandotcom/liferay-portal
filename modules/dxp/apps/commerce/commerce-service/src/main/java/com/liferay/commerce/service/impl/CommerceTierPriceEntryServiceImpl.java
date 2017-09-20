@@ -15,8 +15,8 @@
 package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.constants.CommerceActionKeys;
-import com.liferay.commerce.model.CommerceTirePriceEntry;
-import com.liferay.commerce.service.base.CommerceTirePriceEntryServiceBaseImpl;
+import com.liferay.commerce.model.CommerceTierPriceEntry;
+import com.liferay.commerce.service.base.CommerceTierPriceEntryServiceBaseImpl;
 import com.liferay.commerce.service.permission.CommercePriceListPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -31,11 +31,11 @@ import java.util.List;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceTirePriceEntryServiceImpl
-	extends CommerceTirePriceEntryServiceBaseImpl {
+public class CommerceTierPriceEntryServiceImpl
+	extends CommerceTierPriceEntryServiceBaseImpl {
 
 	@Override
-	public CommerceTirePriceEntry addCommerceTirePriceEntry(
+	public CommerceTierPriceEntry addCommerceTierPriceEntry(
 			long commercePriceEntryId, double price, int minQuantity,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -44,90 +44,90 @@ public class CommerceTirePriceEntryServiceImpl
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
 
-		return commerceTirePriceEntryLocalService.addCommerceTirePriceEntry(
+		return commerceTierPriceEntryLocalService.addCommerceTierPriceEntry(
 			commercePriceEntryId, price, minQuantity, serviceContext);
 	}
 
 	@Override
-	public void deleteCommerceTirePriceEntry(long commerceTirePriceEntryId)
+	public void deleteCommerceTierPriceEntry(long commerceTierPriceEntryId)
 		throws PortalException {
 
-		CommerceTirePriceEntry commerceTirePriceEntry =
-			commerceTirePriceEntryLocalService.fetchCommerceTirePriceEntry(
-				commerceTirePriceEntryId);
+		CommerceTierPriceEntry commerceTierPriceEntry =
+			commerceTierPriceEntryLocalService.fetchCommerceTierPriceEntry(
+				commerceTierPriceEntryId);
 
-		if (commerceTirePriceEntry != null) {
+		if (commerceTierPriceEntry != null) {
 			CommercePriceListPermission.check(
-				getPermissionChecker(), commerceTirePriceEntry.getGroupId(),
+				getPermissionChecker(), commerceTierPriceEntry.getGroupId(),
 				CommerceActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
 
-			commerceTirePriceEntryLocalService.deleteCommerceTirePriceEntry(
-				commerceTirePriceEntryId);
+			commerceTierPriceEntryLocalService.deleteCommerceTierPriceEntry(
+				commerceTierPriceEntryId);
 		}
 	}
 
 	@Override
-	public CommerceTirePriceEntry fetchCommerceTirePriceEntry(
-		long commerceTirePriceEntryId) {
+	public CommerceTierPriceEntry fetchCommerceTierPriceEntry(
+		long commerceTierPriceEntryId) {
 
-		return commerceTirePriceEntryLocalService.fetchCommerceTirePriceEntry(
-			commerceTirePriceEntryId);
+		return commerceTierPriceEntryLocalService.fetchCommerceTierPriceEntry(
+			commerceTierPriceEntryId);
 	}
 
 	@Override
-	public List<CommerceTirePriceEntry> getCommerceTirePriceEntries(
+	public List<CommerceTierPriceEntry> getCommerceTierPriceEntries(
 		long commercePriceEntryId, int start, int end) {
 
-		return commerceTirePriceEntryLocalService.getCommerceTirePriceEntries(
+		return commerceTierPriceEntryLocalService.getCommerceTierPriceEntries(
 			commercePriceEntryId, start, end);
 	}
 
 	@Override
-	public List<CommerceTirePriceEntry> getCommerceTirePriceEntries(
+	public List<CommerceTierPriceEntry> getCommerceTierPriceEntries(
 		long commercePriceEntryId, int start, int end,
-		OrderByComparator<CommerceTirePriceEntry> orderByComparator) {
+		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
 
-		return commerceTirePriceEntryLocalService.getCommerceTirePriceEntries(
+		return commerceTierPriceEntryLocalService.getCommerceTierPriceEntries(
 			commercePriceEntryId, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getCommerceTirePriceEntriesCount(long commercePriceEntryId) {
+	public int getCommerceTierPriceEntriesCount(long commercePriceEntryId) {
 		return
-			commerceTirePriceEntryLocalService.getCommerceTirePriceEntriesCount(
+			commerceTierPriceEntryLocalService.getCommerceTierPriceEntriesCount(
 				commercePriceEntryId);
 	}
 
 	@Override
 	public Hits search(SearchContext searchContext) {
-		return commerceTirePriceEntryLocalService.search(searchContext);
+		return commerceTierPriceEntryLocalService.search(searchContext);
 	}
 
 	@Override
-	public BaseModelSearchResult<CommerceTirePriceEntry>
-			searchCommerceTirePriceEntries(
-				long companyId, long groupId, long commercePriceEntryId,
-				String keywords, int start, int end, Sort sort)
+	public BaseModelSearchResult<CommerceTierPriceEntry>
+		searchCommerceTierPriceEntries(
+			long companyId, long groupId, long commercePriceEntryId,
+			String keywords, int start, int end, Sort sort)
 		throws PortalException {
 
 		return
-			commerceTirePriceEntryLocalService.searchCommerceTirePriceEntries(
+			commerceTierPriceEntryLocalService.searchCommerceTierPriceEntries(
 				companyId, groupId, commercePriceEntryId, keywords, start, end,
 				sort);
 	}
 
 	@Override
-	public CommerceTirePriceEntry updateCommerceTirePriceEntry(
-			long commerceTirePriceEntryId, double price, int minQuantity,
+	public CommerceTierPriceEntry updateCommerceTierPriceEntry(
+			long commerceTierPriceEntryId, double price, int minQuantity,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		CommercePriceListPermission.check(
-			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			CommerceActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
+				getPermissionChecker(), serviceContext.getScopeGroupId(),
+				CommerceActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
 
-		return commerceTirePriceEntryLocalService.updateCommerceTirePriceEntry(
-			commerceTirePriceEntryId, price, minQuantity, serviceContext);
+		return commerceTierPriceEntryLocalService.updateCommerceTierPriceEntry(
+			commerceTierPriceEntryId, price, minQuantity, serviceContext);
 	}
 
 }

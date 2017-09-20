@@ -91,7 +91,7 @@ public class GitWorkingDirectory {
 
 		if (remoteExists(remoteName)) {
 			if (force) {
-				removeGitRemote(getRemote(remoteName));
+				removeRemote(getRemote(remoteName));
 			}
 			else {
 				throw new IllegalArgumentException(
@@ -701,7 +701,7 @@ public class GitWorkingDirectory {
 		return false;
 	}
 
-	public void removeGitRemote(Remote remote) {
+	public void removeRemote(Remote remote) {
 		if (!remoteExists(remote.getName())) {
 			return;
 		}
@@ -717,9 +717,9 @@ public class GitWorkingDirectory {
 		}
 	}
 
-	public void removeGitRemotes(List<Remote> remotes) {
+	public void removeRemotes(List<Remote> remotes) {
 		for (Remote remote : remotes) {
-			removeGitRemote(remote);
+			removeRemote(remote);
 		}
 	}
 

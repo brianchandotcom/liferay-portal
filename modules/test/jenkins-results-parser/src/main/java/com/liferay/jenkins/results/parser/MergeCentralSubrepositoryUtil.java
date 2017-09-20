@@ -340,7 +340,7 @@ public class MergeCentralSubrepositoryUtil {
 				false, mergeBranch, mergeBranch.getName(), originRemote);
 		}
 		finally {
-			centralGitWorkingDirectory.removeGitRemote(originRemote);
+			centralGitWorkingDirectory.removeRemote(originRemote);
 		}
 	}
 

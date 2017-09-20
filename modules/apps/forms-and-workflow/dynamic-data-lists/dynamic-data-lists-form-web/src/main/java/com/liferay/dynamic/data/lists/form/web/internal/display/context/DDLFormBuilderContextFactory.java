@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.lists.form.web.internal.display.context;
 
-import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
@@ -63,14 +62,14 @@ import javax.servlet.http.HttpServletResponse;
 public class DDLFormBuilderContextFactory {
 
 	public DDLFormBuilderContextFactory(
-		Optional<DDLRecordSet> recordSetOptional,
+		Optional<DDMStructure> ddmStructureOptional,
 		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
 		DDMFormTemplateContextFactory ddmFormTemplateContextFactory,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, JSONFactory jsonFactory,
 		Locale locale, boolean readOnly) {
 
-		_recordSetOptional = recordSetOptional;
+		_ddmStructureOptional = ddmStructureOptional;
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
 		_ddmFormTemplateContextFactory = ddmFormTemplateContextFactory;
 		_httpServletRequest = httpServletRequest;
@@ -81,8 +80,8 @@ public class DDLFormBuilderContextFactory {
 	}
 
 	public Map<String, Object> create() {
-		Optional<Map<String, Object>> contextOptional = _recordSetOptional.map(
-			this::createFormContext);
+		Optional<Map<String, Object>> contextOptional =
+			_ddmStructureOptional.map(this::createFormContext);
 
 		return contextOptional.orElseGet(this::createEmptyStateContext);
 	}
@@ -102,17 +101,6 @@ public class DDLFormBuilderContextFactory {
 		emptyFormContext.put("successPage", successPage);
 
 		return emptyFormContext;
-	}
-
-	protected Map<String, Object> createFormContext(DDLRecordSet recordSet) {
-		try {
-			return doCreateFormContext(recordSet);
-		}
-		catch (PortalException pe) {
-			_log.error("Unable to create form context", pe);
-		}
-
-		return createEmptyStateContext();
 	}
 
 	protected Map<String, Object> createFormContext(
@@ -136,6 +124,17 @@ public class DDLFormBuilderContextFactory {
 			ddmFormTemplateContext, ddmForm.getDDMFormFieldsMap(true));
 
 		return ddmFormTemplateContext;
+	}
+
+	protected Map<String, Object> createFormContext(DDMStructure ddmStructure) {
+		try {
+			return doCreateFormContext(ddmStructure);
+		}
+		catch (PortalException pe) {
+			_log.error("Unable to create form context", pe);
+		}
+
+		return createEmptyStateContext();
 	}
 
 	protected JSONArray createOptions(
@@ -274,12 +273,10 @@ public class DDLFormBuilderContextFactory {
 		return new UnlocalizedValue(jsonObject.toString());
 	}
 
-	protected Map<String, Object> doCreateFormContext(DDLRecordSet recordSet)
+	protected Map<String, Object> doCreateFormContext(DDMStructure ddmStructure)
 		throws PortalException {
 
 		Map<String, Object> formContext = new HashMap<>();
-
-		DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 		DDMForm ddmForm = ddmStructure.getDDMForm();
 
@@ -355,12 +352,12 @@ public class DDLFormBuilderContextFactory {
 	private final DDMFormFieldTypeServicesTracker
 		_ddmFormFieldTypeServicesTracker;
 	private final DDMFormTemplateContextFactory _ddmFormTemplateContextFactory;
+	private final Optional<DDMStructure> _ddmStructureOptional;
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
 	private final JSONFactory _jsonFactory;
 	private final Locale _locale;
 	private final boolean _readOnly;
-	private final Optional<DDLRecordSet> _recordSetOptional;
 
 	private static class DDLFormBuilderContextFieldVisitor {
 

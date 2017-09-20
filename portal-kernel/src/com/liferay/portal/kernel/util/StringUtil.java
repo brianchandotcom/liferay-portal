@@ -5217,19 +5217,19 @@ public class StringUtil {
 
 	private static String _read(InputStream inputStream) throws IOException {
 		byte[] buffer = new byte[8192];
-		int length = 0;
+		int offset = 0;
 
 		while (true) {
-			int bytesRead = inputStream.read(
-				buffer, length, buffer.length - length);
+			int count = inputStream.read(
+				buffer, offset, buffer.length - offset);
 
-			if (bytesRead == -1) {
+			if (count == -1) {
 				break;
 			}
 
-			length += bytesRead;
+			offset += count;
 
-			if (length == buffer.length) {
+			if (offset == buffer.length) {
 				byte[] newBuffer = new byte[buffer.length << 1];
 
 				System.arraycopy(buffer, 0, newBuffer, 0, buffer.length);
@@ -5238,11 +5238,11 @@ public class StringUtil {
 			}
 		}
 
-		if (length == 0) {
+		if (offset == 0) {
 			return StringPool.BLANK;
 		}
 
-		return new String(buffer, 0, length, StringPool.UTF8);
+		return new String(buffer, 0, offset, StringPool.UTF8);
 	}
 
 	private static void _split(

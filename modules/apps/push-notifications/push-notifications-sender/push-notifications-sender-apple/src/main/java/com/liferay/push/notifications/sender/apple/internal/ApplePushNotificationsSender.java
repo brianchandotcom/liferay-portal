@@ -18,7 +18,6 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.push.notifications.constants.PushNotificationsConstants;
 import com.liferay.push.notifications.exception.PushNotificationsException;
@@ -32,6 +31,7 @@ import com.notnoop.apns.PayloadBuilder;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
@@ -95,18 +95,8 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 
 		ApnsServiceBuilder appleServiceBuilder = APNS.newService();
 
-		InputStream inputStream = null;
-
-		try {
-			try {
-				inputStream = new FileInputStream(certificatePath);
-			}
-			catch (FileNotFoundException fnfe) {
-				ClassLoader classLoader =
-					ApplePushNotificationsSender.class.getClassLoader();
-
-				inputStream = classLoader.getResourceAsStream(certificatePath);
-			}
+		try (InputStream inputStream =
+				_getCertificateInputStream(certificatePath)) {
 
 			if (inputStream == null) {
 				throw new IllegalArgumentException(
@@ -115,8 +105,7 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 
 			appleServiceBuilder.withCert(inputStream, certificatePassword);
 		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
+		catch (IOException ioe) {
 		}
 
 		appleServiceBuilder.withDelegate(new AppleDelegate());
@@ -211,6 +200,18 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 	@Deactivate
 	protected void deactivate() {
 		_apnsService = null;
+	}
+
+	private InputStream _getCertificateInputStream(String certificatePath) {
+		try {
+			return new FileInputStream(certificatePath);
+		}
+		catch (FileNotFoundException fnfe) {
+			ClassLoader classLoader =
+				ApplePushNotificationsSender.class.getClassLoader();
+
+			return classLoader.getResourceAsStream(certificatePath);
+		}
 	}
 
 	private volatile ApnsService _apnsService;

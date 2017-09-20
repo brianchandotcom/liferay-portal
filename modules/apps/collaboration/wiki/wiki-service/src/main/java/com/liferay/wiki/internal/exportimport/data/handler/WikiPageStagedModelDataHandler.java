@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
@@ -300,33 +299,10 @@ public class WikiPageStagedModelDataHandler
 				FileEntry fileEntry =
 					(FileEntry)portletDataContext.getZipEntryAsObject(path);
 
-				InputStream inputStream = null;
+				String binPath = attachmentElement.attributeValue("bin-path");
 
-				try {
-					String binPath = attachmentElement.attributeValue(
-						"bin-path");
-
-					if (Validator.isNull(binPath) &&
-						portletDataContext.isPerformDirectBinaryImport()) {
-
-						try {
-							inputStream = FileEntryUtil.getContentStream(
-								fileEntry);
-						}
-						catch (NoSuchFileException nsfe) {
-
-							// LPS-52675
-
-							if (_log.isDebugEnabled()) {
-								_log.debug(nsfe, nsfe);
-							}
-						}
-					}
-					else {
-						inputStream =
-							portletDataContext.getZipEntryAsInputStream(
-								binPath);
-					}
+				try (InputStream inputStream = _getPageAttachmentInputStream(
+						binPath, portletDataContext, fileEntry)) {
 
 					if (inputStream == null) {
 						if (_log.isWarnEnabled()) {
@@ -342,9 +318,6 @@ public class WikiPageStagedModelDataHandler
 						userId, importedPage.getNodeId(),
 						importedPage.getTitle(), fileEntry.getTitle(),
 						inputStream, null);
-				}
-				finally {
-					StreamUtil.cleanUp(inputStream);
 				}
 			}
 		}
@@ -402,6 +375,33 @@ public class WikiPageStagedModelDataHandler
 		WikiPageResourceLocalService wikiPageResourceLocalService) {
 
 		_wikiPageResourceLocalService = wikiPageResourceLocalService;
+	}
+
+	private InputStream _getPageAttachmentInputStream(
+			String binPath, PortletDataContext portletDataContext,
+			FileEntry fileEntry)
+		throws Exception {
+
+		if (Validator.isNull(binPath) &&
+			portletDataContext.isPerformDirectBinaryImport()) {
+
+			try {
+				return FileEntryUtil.getContentStream(fileEntry);
+			}
+			catch (NoSuchFileException nsfe) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(nsfe, nsfe);
+				}
+			}
+		}
+		else {
+			return portletDataContext.getZipEntryAsInputStream(binPath);
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

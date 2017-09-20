@@ -107,33 +107,24 @@ public class S3FileCacheImpl implements S3FileCache {
 
 		File cacheFile = new File(cacheFileName);
 
-		InputStream inputStream = s3Object.getObjectContent();
+		try (InputStream inputStream = s3Object.getObjectContent()) {
+			if (cacheFile.exists() &&
+				(cacheFile.lastModified() >= lastModifiedDate.getTime())) {
 
-		if (cacheFile.exists() &&
-			(cacheFile.lastModified() >= lastModifiedDate.getTime())) {
+				return cacheFile;
+			}
 
-			StreamUtil.cleanUp(inputStream);
+			if (inputStream == null) {
+				throw new IOException("S3 object input stream is null");
+			}
 
-			return cacheFile;
-		}
+			try (OutputStream outputStream = new FileOutputStream(cacheFile)) {
+				File parentFile = cacheFile.getParentFile();
 
-		if (inputStream == null) {
-			throw new IOException("S3 object input stream is null");
-		}
+				FileUtil.mkdirs(parentFile);
 
-		OutputStream outputStream = null;
-
-		try {
-			File parentFile = cacheFile.getParentFile();
-
-			FileUtil.mkdirs(parentFile);
-
-			outputStream = new FileOutputStream(cacheFile);
-
-			StreamUtil.transfer(inputStream, outputStream);
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream, outputStream);
+				StreamUtil.transfer(inputStream, outputStream);
+			}
 		}
 
 		return cacheFile;

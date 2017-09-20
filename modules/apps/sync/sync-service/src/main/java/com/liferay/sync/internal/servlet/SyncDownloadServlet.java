@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -489,39 +488,15 @@ public class SyncDownloadServlet extends HttpServlet {
 				continue;
 			}
 
-			InputStream inputStream = null;
+			try (InputStream inputStream = _getZipFileInputStream(
+					zipObjectJSONObject, userId, groupId)) {
 
-			try {
-				String uuid = zipObjectJSONObject.getString("uuid");
-
-				if (zipObjectJSONObject.getBoolean("patch")) {
-					long sourceVersionId = zipObjectJSONObject.getLong(
-						"sourceVersionId", 0);
-					long targetVersionId = zipObjectJSONObject.getLong(
-						"targetVersionId", 0);
-
-					inputStream = getPatchDownloadServletInputStream(
-						userId, groupId, uuid, sourceVersionId,
-						targetVersionId);
-
-					zipWriter.addEntry(zipFileId, inputStream);
-				}
-				else {
-					inputStream = getFileDownloadServletInputStream(
-						userId, groupId, uuid,
-						zipObjectJSONObject.getString("version"),
-						zipObjectJSONObject.getLong("versionId"));
-
-					zipWriter.addEntry(zipFileId, inputStream);
-				}
+				zipWriter.addEntry(zipFileId, inputStream);
 			}
 			catch (Exception e) {
 				Class<?> clazz = e.getClass();
 
 				processException(zipFileId, clazz.getName(), errorsJSONObject);
-			}
-			finally {
-				StreamUtil.cleanUp(inputStream);
 			}
 		}
 
@@ -581,6 +556,28 @@ public class SyncDownloadServlet extends HttpServlet {
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
+	}
+
+	private InputStream _getZipFileInputStream(
+			JSONObject zipObjectJSONObject, long userId, long groupId)
+		throws Exception {
+
+		String uuid = zipObjectJSONObject.getString("uuid");
+
+		if (zipObjectJSONObject.getBoolean("patch")) {
+			long sourceVersionId = zipObjectJSONObject.getLong(
+				"sourceVersionId", 0);
+			long targetVersionId = zipObjectJSONObject.getLong(
+				"targetVersionId", 0);
+
+			return getPatchDownloadServletInputStream(
+				userId, groupId, uuid, sourceVersionId, targetVersionId);
+		}
+		else {
+			return getFileDownloadServletInputStream(
+				userId, groupId, uuid, zipObjectJSONObject.getString("version"),
+				zipObjectJSONObject.getLong("versionId"));
+		}
 	}
 
 	private static final String _ERROR_HEADER = "Sync-Error";

@@ -24,7 +24,6 @@ DDLRecordSet recordSet = ddlFormAdminDisplayContext.getRecordSet();
 long recordSetId = BeanParamUtil.getLong(recordSet, request, "recordSetId");
 long groupId = BeanParamUtil.getLong(recordSet, request, "groupId", scopeGroupId);
 long ddmStructureId = BeanParamUtil.getLong(recordSet, request, "DDMStructureId");
-boolean showPublishModal = ParamUtil.getBoolean(request, "showPublishModal");
 
 String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
 
@@ -87,92 +86,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 		<aui:input name="ddmStructureId" type="hidden" value="<%= ddmStructureId %>" />
 		<aui:input name="serializedSettingsContext" type="hidden" value="" />
 
-		<liferay-ui:error exception="<%= DDMFormLayoutValidationException.class %>" message="please-enter-a-valid-form-layout" />
-
-		<liferay-ui:error exception="<%= DDMFormLayoutValidationException.MustNotDuplicateFieldName.class %>">
-
-			<%
-			DDMFormLayoutValidationException.MustNotDuplicateFieldName mndfn = (DDMFormLayoutValidationException.MustNotDuplicateFieldName)errorException;
-			%>
-
-			<liferay-ui:message arguments="<%= StringUtil.merge(mndfn.getDuplicatedFieldNames(), StringPool.COMMA_AND_SPACE) %>" key="the-definition-field-name-x-was-defined-more-than-once" translateArguments="<%= false %>" />
-		</liferay-ui:error>
-
-		<liferay-ui:error exception="<%= DDMFormValidationException.class %>" message="please-enter-a-valid-form-definition" />
-
-		<liferay-ui:error exception="<%= DDMFormValidationException.MustNotDuplicateFieldName.class %>">
-
-			<%
-			DDMFormValidationException.MustNotDuplicateFieldName mndfn = (DDMFormValidationException.MustNotDuplicateFieldName)errorException;
-			%>
-
-			<liferay-ui:message arguments="<%= mndfn.getFieldName() %>" key="the-definition-field-name-x-was-defined-more-than-once" translateArguments="<%= false %>" />
-		</liferay-ui:error>
-
-		<liferay-ui:error exception="<%= DDMFormValidationException.MustSetFieldsForForm.class %>" message="please-add-at-least-one-field" />
-
-		<liferay-ui:error exception="<%= DDMFormValidationException.MustSetOptionsForField.class %>">
-
-			<%
-			DDMFormValidationException.MustSetOptionsForField msoff = (DDMFormValidationException.MustSetOptionsForField)errorException;
-			%>
-
-			<liferay-ui:message arguments="<%= msoff.getFieldName() %>" key="at-least-one-option-should-be-set-for-field-x" translateArguments="<%= false %>" />
-		</liferay-ui:error>
-
-		<liferay-ui:error exception="<%= DDMFormValidationException.MustSetValidCharactersForFieldName.class %>">
-
-			<%
-			DDMFormValidationException.MustSetValidCharactersForFieldName msvcffn = (DDMFormValidationException.MustSetValidCharactersForFieldName)errorException;
-			%>
-
-			<liferay-ui:message arguments="<%= msvcffn.getFieldName() %>" key="invalid-characters-were-defined-for-field-name-x" translateArguments="<%= false %>" />
-		</liferay-ui:error>
-
-		<liferay-ui:error exception="<%= DDMFormValidationException.MustSetValidVisibilityExpression.class %>">
-
-			<%
-			DDMFormValidationException.MustSetValidVisibilityExpression msvve = (DDMFormValidationException.MustSetValidVisibilityExpression)errorException;
-			%>
-
-			<liferay-ui:message arguments="<%= new Object[] {msvve.getVisibilityExpression(), msvve.getFieldName()} %>" key="the-visibility-expression-x-set-for-field-x-is-invalid" translateArguments="<%= false %>" />
-		</liferay-ui:error>
-
-		<liferay-ui:error exception="<%= RecordSetDDMFormFieldSettingsException.MustSetValidValueForProperties.class %>">
-
-			<%
-			RecordSetDDMFormFieldSettingsException.MustSetValidValueForProperties msvvfp = (RecordSetDDMFormFieldSettingsException.MustSetValidValueForProperties)errorException;
-
-			Map<String, Set<String>> fieldNamePropertiesMap = msvvfp.getFieldNamePropertiesMap();
-
-			StringBundler sb = new StringBundler(fieldNamePropertiesMap.size());
-
-			for (Entry<String, Set<String>> fieldNameProperties : fieldNamePropertiesMap.entrySet()) {
-				Set<String> value = fieldNameProperties.getValue();
-
-				sb.append(
-					LanguageUtil.format(
-						request,
-						(value.size() == 1 ? "the-setting-x-set-for-field-x-is-invalid" :"the-settings-x-set-for-field-x-are-invalid"),
-						new Object[] {StringUtil.merge(value, StringPool.COMMA_AND_SPACE), fieldNameProperties.getKey()},
-						false
-					));
-
-				sb.append(StringPool.SPACE);
-			}
-
-			sb.setIndex(sb.index() - 1);
-			%>
-
-			<%= sb.toString() %>
-		</liferay-ui:error>
-
-		<liferay-ui:error exception="<%= RecordSetNameException.class %>" message="please-enter-a-valid-form-name" />
-		<liferay-ui:error exception="<%= RecordSetSettingsRedirectURLException.class %>" message="the-specified-redirect-url-is-not-allowed" />
-		<liferay-ui:error exception="<%= StorageException.class %>" message="please-enter-a-valid-form-settings" />
-		<liferay-ui:error exception="<%= StructureDefinitionException.class %>" message="please-enter-a-valid-form-definition" />
-		<liferay-ui:error exception="<%= StructureLayoutException.class %>" message="please-enter-a-valid-form-layout" />
-		<liferay-ui:error exception="<%= StructureNameException.class %>" message="please-enter-a-valid-form-name" />
+		<%@ include file="/admin/exceptions.jspf" %>
 
 		<aui:fieldset cssClass="ddl-form-basic-info">
 			<div class="container-fluid-1280">
@@ -243,6 +157,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 				portletNamespace: '<portlet:namespace />',
 				publishRecordSetURL: '<%= publishRecordSetURL.toString() %>',
 				restrictedFormURL: '<%= ddlFormAdminDisplayContext.getRestrictedFormURL() %>',
+				showPagination: true,
 				sharedFormURL: '<%= ddlFormAdminDisplayContext.getSharedFormURL() %>'
 			};
 
@@ -294,8 +209,8 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 							defaultLanguageId: '<%= ddlFormAdminDisplayContext.getDefaultLanguageId() %>',
 							editingLanguageId: '<%= ddlFormAdminDisplayContext.getDefaultLanguageId() %>',
 							editForm: form,
-							namespace: '<portlet:namespace />',
 							formBuilder: Liferay.component('<portlet:namespace />formBuilder'),
+							namespace: '<portlet:namespace />',
 							published: !!<%= ddlFormAdminDisplayContext.isFormPublished() %>,
 							publishRecordSetURL: '<%= publishRecordSetURL.toString() %>',
 							recordSetId: <%= recordSetId %>,
@@ -305,16 +220,6 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 					)
 				);
 			}
-
-			var clearPortletHandlers = function(event) {
-				if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
-					Liferay.namespace('DDL').destroySettings();
-
-					Liferay.detach('destroyPortlet', clearPortletHandlers);
-				}
-			};
-
-			Liferay.on('destroyPortlet', clearPortletHandlers);
 		</aui:script>
 	</aui:form>
 
@@ -330,6 +235,16 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 				Liferay.Util.getWindow('<portlet:namespace />settingsModal').destroy();
 			}
 		};
+
+		var clearPortletHandlers = function(event) {
+			if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+				Liferay.namespace('DDL').destroySettings();
+
+				Liferay.detach('destroyPortlet', clearPortletHandlers);
+			}
+		};
+
+		Liferay.on('destroyPortlet', clearPortletHandlers);
 
 		Liferay.namespace('DDL').openSettings = function() {
 			Liferay.Util.openWindow(

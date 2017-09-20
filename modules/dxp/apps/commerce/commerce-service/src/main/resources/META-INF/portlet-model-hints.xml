@@ -156,7 +156,9 @@
 		</field>
 		<field localized="true" name="title" type="String" />
 		<field name="sku" type="String" />
-		<field name="price" type="double" />
+		<field name="price" type="double">
+			<validator name="number" />
+		</field>
 	</model>
 	<model name="com.liferay.commerce.model.CommercePaymentMethod">
 		<field name="commercePaymentMethodId" type="long" />
@@ -173,6 +175,44 @@
 			<validator name="number" />
 		</field>
 		<field name="active" type="boolean" />
+	</model>
+	<model name="com.liferay.commerce.model.CommercePriceEntry">
+		<field name="uuid" type="String" />
+		<field name="commercePriceEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="CPInstanceId" type="long" />
+		<field name="commercePriceListId" type="long" />
+		<field name="price" type="double">
+			<validator name="number" />
+		</field>
+		<field name="hasTirePrice" type="boolean" />
+		<field name="lastPublishDate" type="Date" />
+	</model>
+	<model name="com.liferay.commerce.model.CommercePriceList">
+		<field name="uuid" type="String" />
+		<field name="commercePriceListId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="commerceCurrencyId" type="long" />
+		<field name="name" type="String">
+			<validator name="required" />
+		</field>
+		<field name="displayDate" type="Date" />
+		<field name="expirationDate" type="Date" />
+		<field name="lastPublishDate" type="Date" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.model.CommerceRegion">
 		<field name="uuid" type="String" />
@@ -211,6 +251,24 @@
 			<validator name="number" />
 		</field>
 		<field name="active" type="boolean" />
+	</model>
+	<model name="com.liferay.commerce.model.CommerceTirePriceEntry">
+		<field name="uuid" type="String" />
+		<field name="CommerceTirePriceEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="commercePriceEntryId" type="long" />
+		<field name="price" type="double">
+			<validator name="number" />
+		</field>
+		<field name="minQuantity" type="int">
+			<validator name="number" />
+		</field>
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.model.CommerceWarehouse">
 		<field name="commerceWarehouseId" type="long" />

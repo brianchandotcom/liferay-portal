@@ -99,6 +99,23 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
+		boolean hasDefaultInstance, ServiceContext serviceContext)
+		throws PortalException;
+
+	public CPDefinition addCPDefinition(
+		Map<Locale, java.lang.String> titleMap,
+		Map<Locale, java.lang.String> shortDescriptionMap,
+		Map<Locale, java.lang.String> descriptionMap,
+		Map<Locale, java.lang.String> metaTitleMap,
+		Map<Locale, java.lang.String> metaKeywordsMap,
+		Map<Locale, java.lang.String> metaDescriptionMap,
+		java.lang.String layoutUuid, java.lang.String productTypeName,
+		boolean canSellWithoutOptionsCombination, double width, double height,
+		double depth, double weight, java.lang.String ddmStructureKey,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
 	public CPDefinition addCPDefinition(
@@ -114,9 +131,6 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 		ServiceContext serviceContext) throws PortalException;
 
 	public void checkCPDefinitions() throws PortalException;
-
-	public void checkCPDefinitionStatus(long cpDefinitionId)
-		throws PortalException;
 
 	/**
 	* Creates a new cp definition with the primary key. Does not add the cp definition to the database.

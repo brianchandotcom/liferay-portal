@@ -67,6 +67,34 @@ public class CPDefinitionLocalServiceUtil {
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
+		boolean hasDefaultInstance,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCPDefinition(titleMap, shortDescriptionMap,
+			descriptionMap, metaTitleMap, metaKeywordsMap, metaDescriptionMap,
+			layoutUuid, productTypeName, canSellWithoutOptionsCombination,
+			width, height, depth, weight, ddmStructureKey, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, hasDefaultInstance, serviceContext);
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinition addCPDefinition(
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
+		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
+		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
+		java.lang.String layoutUuid, java.lang.String productTypeName,
+		boolean canSellWithoutOptionsCombination, double width, double height,
+		double depth, double weight, java.lang.String ddmStructureKey,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -104,11 +132,6 @@ public class CPDefinitionLocalServiceUtil {
 	public static void checkCPDefinitions()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().checkCPDefinitions();
-	}
-
-	public static void checkCPDefinitionStatus(long cpDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().checkCPDefinitionStatus(cpDefinitionId);
 	}
 
 	/**

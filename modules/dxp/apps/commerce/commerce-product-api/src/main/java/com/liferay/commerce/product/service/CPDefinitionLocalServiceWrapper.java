@@ -60,6 +60,35 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
+		boolean hasDefaultInstance,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionLocalService.addCPDefinition(titleMap,
+			shortDescriptionMap, descriptionMap, metaTitleMap, metaKeywordsMap,
+			metaDescriptionMap, layoutUuid, productTypeName,
+			canSellWithoutOptionsCombination, width, height, depth, weight,
+			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, hasDefaultInstance,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPDefinition addCPDefinition(
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
+		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
+		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
+		java.lang.String layoutUuid, java.lang.String productTypeName,
+		boolean canSellWithoutOptionsCombination, double width, double height,
+		double depth, double weight, java.lang.String ddmStructureKey,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionLocalService.addCPDefinition(titleMap,
@@ -98,12 +127,6 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 	public void checkCPDefinitions()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_cpDefinitionLocalService.checkCPDefinitions();
-	}
-
-	@Override
-	public void checkCPDefinitionStatus(long cpDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_cpDefinitionLocalService.checkCPDefinitionStatus(cpDefinitionId);
 	}
 
 	/**

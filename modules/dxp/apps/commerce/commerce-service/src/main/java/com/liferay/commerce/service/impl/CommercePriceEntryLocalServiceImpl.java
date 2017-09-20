@@ -118,9 +118,9 @@ public class CommercePriceEntryLocalServiceImpl
 
 		commercePriceEntryPersistence.remove(commercePriceEntry);
 
-		// Commerce tire price entries
+		// Commerce tier price entries
 
-		commerceTirePriceEntryLocalService.deleteCommerceTirePriceEntries(
+		commerceTierPriceEntryLocalService.deleteCommerceTierPriceEntries(
 			commercePriceEntry.getCommercePriceEntryId());
 
 		// Expando
@@ -196,15 +196,15 @@ public class CommercePriceEntryLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public CommercePriceEntry setHasTirePrice(
-			long commercePriceEntryId, boolean hasTirePrice)
+	public CommercePriceEntry setHasTierPrice(
+			long commercePriceEntryId, boolean hasTierPrice)
 		throws PortalException {
 
 		CommercePriceEntry commercePriceEntry =
 			commercePriceEntryPersistence.findByPrimaryKey(
 				commercePriceEntryId);
 
-		commercePriceEntry.setHasTirePrice(hasTirePrice);
+		commercePriceEntry.setHasTierPrice(hasTierPrice);
 
 		return commercePriceEntryPersistence.update(commercePriceEntry);
 	}

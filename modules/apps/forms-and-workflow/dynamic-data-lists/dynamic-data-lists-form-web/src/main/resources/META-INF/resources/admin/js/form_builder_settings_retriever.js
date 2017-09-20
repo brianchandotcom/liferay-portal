@@ -3,8 +3,6 @@ AUI.add(
 	function(A) {
 		var CACHE = {};
 
-		var Settings = Liferay.DDL.Settings;
-
 		var FormBuilderSettingsRetriever = A.Component.create(
 			{
 				EXTENDS: A.Base,
@@ -45,9 +43,9 @@ AUI.add(
 									};
 
 									A.io.request(
-										Settings.getFieldTypeSettingFormContextURL,
+										Liferay.DDL.Settings.getFieldTypeSettingFormContextURL,
 										{
-											data: Liferay.Util.ns(Settings.portletNamespace, payload),
+											data: Liferay.Util.ns(Liferay.DDL.Settings.portletNamespace, payload),
 											dataType: 'JSON',
 											method: 'GET',
 											on: {

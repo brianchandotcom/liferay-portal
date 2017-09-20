@@ -1,8 +1,6 @@
 AUI.add(
 	'liferay-ddl-form-builder-rule-builder',
 	function(A) {
-		var Settings = Liferay.DDL.Settings;
-
 		var SoyTemplateUtil = Liferay.DDM.SoyTemplateUtil;
 
 		var MAP_ACTION_DESCRIPTIONS = {
@@ -251,7 +249,7 @@ AUI.add(
 						var instance = this;
 
 						A.io.request(
-							Settings.getDataProviderInstancesURL,
+							Liferay.DDL.Settings.getDataProviderInstancesURL,
 							{
 								method: 'GET',
 								on: {
@@ -388,7 +386,7 @@ AUI.add(
 
 						if (!roles.length) {
 							A.io.request(
-								Settings.getRolesURL,
+								Liferay.DDL.Settings.getRolesURL,
 								{
 									method: 'GET',
 									on: {

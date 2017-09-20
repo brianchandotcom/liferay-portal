@@ -1,8 +1,6 @@
 AUI.add(
 	'liferay-ddl-form-builder-action-factory',
 	function(A) {
-		var Settings = Liferay.DDL.Settings;
-
 		var FormBuilderActionFactory = A.Component.create(
 			{
 				ATTRS: {

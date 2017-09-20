@@ -5,8 +5,6 @@ AUI.add(
 
 		var FieldTypes = Renderer.FieldTypes;
 
-		var Settings = Liferay.DDL.Settings;
-
 		var FormBuilderUtil = Liferay.DDL.FormBuilderUtil;
 
 		var CSS_FIELD = A.getClassName('form', 'builder', 'field');
@@ -81,9 +79,9 @@ AUI.add(
 					{
 						context: context,
 						editMode: builder.isEditMode() || instance.isPersisted(),
-						evaluatorURL: Settings.evaluatorURL,
+						evaluatorURL: Liferay.DDL.Settings.evaluatorURL,
 						field: instance,
-						portletNamespace: Settings.portletNamespace,
+						portletNamespace: Liferay.DDL.Settings.portletNamespace,
 						templateNamespace: 'ddm.settings_form'
 					}
 				);

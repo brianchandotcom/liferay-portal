@@ -11,8 +11,6 @@ AUI.add(
 
 		var Lang = A.Lang;
 
-		var Settings = Liferay.DDL.Settings;
-
 		var CSS_FIELD = A.getClassName('form', 'builder', 'field');
 
 		var CSS_FORM_BUILDER_TABS = A.getClassName('form', 'builder', 'tabs');
@@ -541,7 +539,7 @@ AUI.add(
 							{
 								label: '',
 								placeholder: '',
-								portletNamespace: Settings.portletNamespace,
+								portletNamespace: Liferay.DDL.Settings.portletNamespace,
 								readOnly: true,
 								showLabel: true,
 								type: field.get('type'),

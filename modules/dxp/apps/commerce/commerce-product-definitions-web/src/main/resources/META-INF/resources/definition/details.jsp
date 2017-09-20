@@ -26,8 +26,6 @@ CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
 
 <aui:model-context bean="<%= cpDefinition %>" model="<%= CPDefinition.class %>" />
 
-<liferay-ui:error exception="<%= CPDefinitionStatusException.class %>" message="no-skus-were-found-for-this-product" />
-
 <aui:fieldset>
 	<aui:input autoFocus="<%= true %>" label="title" localized="<%= true %>" name="titleMapAsXML" type="text" wrapperCssClass="commerce-product-definition-title">
 		<aui:validator name="required" />

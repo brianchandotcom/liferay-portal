@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -473,6 +474,69 @@ public class GroupServiceTest {
 			0,
 			GroupLocalServiceUtil.searchCount(
 				TestPropsValues.getCompanyId(), null, "cabina14", groupParams));
+	}
+
+	@Test
+	public void testFriendlyURLDefaults() throws Exception {
+		long companyId = _group.getCompanyId();
+
+		String defaultNewGroupFriendlyURL =
+			StringPool.SLASH +
+				FriendlyURLNormalizerUtil.normalize(
+					_group.getName(LocaleUtil.getDefault()));
+
+		Assert.assertNotNull(
+			GroupLocalServiceUtil.fetchFriendlyURLGroup(
+				companyId, defaultNewGroupFriendlyURL));
+
+		long groupId = _group.getGroupId();
+
+		GroupLocalServiceUtil.updateFriendlyURL(groupId, null);
+
+		Assert.assertNull(
+			GroupLocalServiceUtil.fetchFriendlyURLGroup(
+				companyId, defaultNewGroupFriendlyURL));
+
+		String defaultFriendlyURL = "/group-" + groupId;
+
+		Assert.assertNotNull(
+			GroupLocalServiceUtil.fetchFriendlyURLGroup(
+				companyId, defaultFriendlyURL));
+
+		GroupLocalServiceUtil.updateFriendlyURL(
+			groupId, StringPool.SLASH + RandomTestUtil.randomString());
+
+		Group group = GroupTestUtil.addGroup();
+
+		try {
+			GroupLocalServiceUtil.updateFriendlyURL(
+				group.getGroupId(), defaultFriendlyURL);
+
+			GroupLocalServiceUtil.updateFriendlyURL(groupId, null);
+
+			Assert.assertNotNull(
+				GroupLocalServiceUtil.fetchFriendlyURLGroup(
+					companyId, defaultFriendlyURL + "-1"));
+		}
+		finally {
+			GroupLocalServiceUtil.deleteGroup(group);
+		}
+	}
+
+	@Test(expected = GroupFriendlyURLException.class)
+	public void testFriendlyURLSetToGroupId() throws Exception {
+		String friendlyURL = "/" + _group.getGroupId();
+
+		GroupLocalServiceUtil.updateFriendlyURL(
+			_group.getGroupId(), friendlyURL);
+	}
+
+	@Test(expected = GroupFriendlyURLException.class)
+	public void testFriendlyURLSetToRandomLong() throws Exception {
+		String friendlyURL = "/" + RandomTestUtil.nextLong();
+
+		GroupLocalServiceUtil.updateFriendlyURL(
+			_group.getGroupId(), friendlyURL);
 	}
 
 	@Test
@@ -902,22 +966,6 @@ public class GroupServiceTest {
 		finally {
 			GroupLocalServiceUtil.deleteGroup(group);
 		}
-	}
-
-	@Test(expected = GroupFriendlyURLException.class)
-	public void testSetNumericFriendlyURLToGroupId() throws Exception {
-		String friendlyURL = "/" + _group.getGroupId();
-
-		GroupLocalServiceUtil.updateFriendlyURL(
-			_group.getGroupId(), friendlyURL);
-	}
-
-	@Test(expected = GroupFriendlyURLException.class)
-	public void testSetNumericFriendlyURLToRandomLong() throws Exception {
-		String friendlyURL = "/" + RandomTestUtil.nextLong();
-
-		GroupLocalServiceUtil.updateFriendlyURL(
-			_group.getGroupId(), friendlyURL);
 	}
 
 	@Test

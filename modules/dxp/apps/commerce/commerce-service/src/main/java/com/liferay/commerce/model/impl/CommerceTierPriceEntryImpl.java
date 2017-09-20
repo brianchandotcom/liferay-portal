@@ -24,9 +24,9 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Alessio Antonio Rendina
  */
 @ProviderType
-public class CommerceTirePriceEntryImpl extends CommerceTirePriceEntryBaseImpl {
+public class CommerceTierPriceEntryImpl extends CommerceTierPriceEntryBaseImpl {
 
-	public CommerceTirePriceEntryImpl() {
+	public CommerceTierPriceEntryImpl() {
 	}
 
 	@Override

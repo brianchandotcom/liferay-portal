@@ -21,12 +21,10 @@ import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.exception.CPDefinitionDisplayDateException;
 import com.liferay.commerce.product.exception.CPDefinitionExpirationDateException;
 import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException;
-import com.liferay.commerce.product.exception.CPDefinitionStatusException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLocalization;
 import com.liferay.commerce.product.model.CPDisplayLayout;
-import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.base.CPDefinitionLocalServiceBaseImpl;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
@@ -104,7 +102,7 @@ public class CPDefinitionLocalServiceImpl
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
+			boolean neverExpire, boolean hasDefaultInstance, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition
@@ -174,12 +172,14 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product instance
 
-		cpInstanceLocalService.addCPInstance(
-			cpDefinitionId, CPConstants.INSTANCE_DEFAULT_SKU, null, null, null,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, serviceContext);
+		if (hasDefaultInstance) {
+			cpInstanceLocalService.addCPInstance(
+				cpDefinitionId, CPConstants.INSTANCE_DEFAULT_SKU, null, null,
+				null, displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, expirationDateMonth,
+				expirationDateDay, expirationDateYear, expirationDateHour,
+				expirationDateMinute, neverExpire, serviceContext);
+		}
 
 		// Commerce product friendly URL
 
@@ -218,6 +218,34 @@ public class CPDefinitionLocalServiceImpl
 	public CPDefinition addCPDefinition(
 			Map<Locale, String> titleMap,
 			Map<Locale, String> shortDescriptionMap,
+			Map<Locale, String> descriptionMap,
+			Map<Locale, String> metaTitleMap,
+			Map<Locale, String> metaKeywordsMap,
+			Map<Locale, String> metaDescriptionMap, String layoutUuid,
+			String productTypeName, boolean ignoreSKUCombinations,
+			double width, double height, double depth, double weight,
+			String ddmStructureKey, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addCPDefinition(
+			titleMap, shortDescriptionMap, descriptionMap, metaTitleMap,
+			metaKeywordsMap, metaDescriptionMap, layoutUuid, productTypeName,
+			ignoreSKUCombinations, width, height, depth, weight,
+			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, true, serviceContext);
+	}
+
+	@Override
+	public CPDefinition addCPDefinition(
+			Map<Locale, String> titleMap,
+			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, String layoutUuid,
 			String productTypeName, boolean ignoreSKUCombinations,
 			String ddmStructureKey, int displayDateMonth, int displayDateDay,
@@ -241,27 +269,6 @@ public class CPDefinitionLocalServiceImpl
 	public void checkCPDefinitions() throws PortalException {
 		checkCPDefinitionsByDisplayDate();
 		checkCPDefinitionsByExpirationDate();
-	}
-
-	public void checkCPDefinitionStatus(long cpDefinitionId)
-		throws PortalException {
-
-		CPDefinition cpDefinition = cpDefinitionLocalService.fetchCPDefinition(
-			cpDefinitionId);
-
-		if (cpDefinition == null) {
-			return;
-		}
-
-		List<CPInstance> cpInstances =
-			cpInstanceLocalService.getCPDefinitionInstances(cpDefinitionId);
-
-		if (cpInstances.isEmpty()) {
-			cpDefinitionLocalService.updateStatus(
-				cpDefinition.getUserId(), cpDefinitionId,
-				WorkflowConstants.STATUS_INCOMPLETE, new ServiceContext(),
-				new HashMap<>());
-		}
 	}
 
 	@Override
@@ -1025,13 +1032,6 @@ public class CPDefinitionLocalServiceImpl
 
 			if ((expirationDate != null) && expirationDate.before(now)) {
 				cpDefinition.setExpirationDate(null);
-			}
-
-			List<CPInstance> cpInstances =
-				cpInstanceLocalService.getCPDefinitionInstances(cpDefinitionId);
-
-			if (cpInstances.isEmpty()) {
-				throw new CPDefinitionStatusException();
 			}
 		}
 

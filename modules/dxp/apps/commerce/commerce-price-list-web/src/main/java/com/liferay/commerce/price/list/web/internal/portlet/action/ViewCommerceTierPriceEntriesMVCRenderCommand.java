@@ -15,12 +15,9 @@
 package com.liferay.commerce.price.list.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.exception.NoSuchTirePriceEntryException;
-import com.liferay.commerce.price.list.web.internal.display.context.CommerceTirePriceEntryDisplayContext;
-import com.liferay.commerce.service.CommerceTirePriceEntryService;
+import com.liferay.commerce.price.list.web.internal.display.context.CommerceTierPriceEntryDisplayContext;
+import com.liferay.commerce.service.CommerceTierPriceEntryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
@@ -37,11 +34,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_PRICE_LIST,
-		"mvc.command.name=editCommerceTirePriceEntry"
+		"mvc.command.name=viewCommerceTierPriceEntries"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditCommerceTirePriceEntryMVCRenderCommand
+public class ViewCommerceTierPriceEntriesMVCRenderCommand
 	implements MVCRenderCommand {
 
 	@Override
@@ -49,37 +46,23 @@ public class EditCommerceTirePriceEntryMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		try {
-			CommerceTirePriceEntryDisplayContext
-				commerceTirePriceEntryDisplayContext =
-					new CommerceTirePriceEntryDisplayContext(
-						_actionHelper, _commerceTirePriceEntryService,
-						renderRequest, renderResponse);
+		CommerceTierPriceEntryDisplayContext
+				commerceTierPriceEntryDisplayContext =
+				new CommerceTierPriceEntryDisplayContext(
+					_actionHelper, _commerceTierPriceEntryService,
+					renderRequest, renderResponse);
 
-			renderRequest.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				commerceTirePriceEntryDisplayContext);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchTirePriceEntryException ||
-				e instanceof PrincipalException) {
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT,
+				commerceTierPriceEntryDisplayContext);
 
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return "/error.jsp";
-			}
-			else {
-				throw new PortletException(e);
-			}
-		}
-
-		return "/edit_tire_price_entry.jsp";
+		return "/tier_price_entries.jsp";
 	}
 
 	@Reference
 	private ActionHelper _actionHelper;
 
 	@Reference
-	private CommerceTirePriceEntryService _commerceTirePriceEntryService;
+	private CommerceTierPriceEntryService _commerceTierPriceEntryService;
 
 }

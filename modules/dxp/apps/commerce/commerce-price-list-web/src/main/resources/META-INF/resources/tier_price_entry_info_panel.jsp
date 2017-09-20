@@ -17,22 +17,22 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<CommerceTirePriceEntry> commerceTirePriceEntries = (List<CommerceTirePriceEntry>)request.getAttribute(CommerceWebKeys.COMMERCE_TIRE_PRICE_ENTRIES);
+List<CommerceTierPriceEntry> commerceTierPriceEntries = (List<CommerceTierPriceEntry>)request.getAttribute(CommerceWebKeys.COMMERCE_TIER_PRICE_ENTRIES);
 
-if (commerceTirePriceEntries == null) {
-	commerceTirePriceEntries = Collections.emptyList();
+if (commerceTierPriceEntries == null) {
+	commerceTierPriceEntries = Collections.emptyList();
 }
 %>
 
 <c:choose>
-	<c:when test="<%= commerceTirePriceEntries.size() == 1 %>">
+	<c:when test="<%= commerceTierPriceEntries.size() == 1 %>">
 
 		<%
-		CommerceTirePriceEntry commerceTirePriceEntry = commerceTirePriceEntries.get(0);
+		CommerceTierPriceEntry commerceTierPriceEntry = commerceTierPriceEntries.get(0);
 
-		request.setAttribute("info_panel.jsp-entry", commerceTirePriceEntries);
+		request.setAttribute("info_panel.jsp-entry", commerceTierPriceEntries);
 
-		CommercePriceEntry commercePriceEntry = commerceTirePriceEntry.getCommercePriceEntry();
+		CommercePriceEntry commercePriceEntry = commerceTierPriceEntry.getCommercePriceEntry();
 
 		CPInstance cpInstance = commercePriceEntry.getCPInstance();
 
@@ -43,7 +43,7 @@ if (commerceTirePriceEntries == null) {
 			<ul class="sidebar-header-actions">
 				<li>
 					<liferay-util:include
-						page="/tire_price_entry_action.jsp"
+						page="/tier_price_entry_action.jsp"
 						servletContext="<%= application %>"
 					/>
 				</li>
@@ -62,7 +62,7 @@ if (commerceTirePriceEntries == null) {
 			<h5><liferay-ui:message key="id" /></h5>
 
 			<p>
-				<%= HtmlUtil.escape(String.valueOf(commerceTirePriceEntry.getCommerceTirePriceEntryId())) %>
+				<%= HtmlUtil.escape(String.valueOf(commerceTierPriceEntry.getCommerceTierPriceEntryId())) %>
 			</p>
 
 			<h5><liferay-ui:message key="title" /></h5>
@@ -80,7 +80,7 @@ if (commerceTirePriceEntries == null) {
 	</c:when>
 	<c:otherwise>
 		<div class="sidebar-header">
-			<h4><liferay-ui:message arguments="<%= commerceTirePriceEntries.size() %>" key="x-items-are-selected" /></h4>
+			<h4><liferay-ui:message arguments="<%= commerceTierPriceEntries.size() %>" key="x-items-are-selected" /></h4>
 		</div>
 
 		<aui:nav-bar>
@@ -90,7 +90,7 @@ if (commerceTirePriceEntries == null) {
 		</aui:nav-bar>
 
 		<div class="sidebar-body">
-			<h5><liferay-ui:message arguments="<%= commerceTirePriceEntries.size() %>" key="x-items-are-selected" /></h5>
+			<h5><liferay-ui:message arguments="<%= commerceTierPriceEntries.size() %>" key="x-items-are-selected" /></h5>
 		</div>
 	</c:otherwise>
 </c:choose>

@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.internal.exportimport.staged.model.repository;
 
-import com.liferay.commerce.model.CommerceTirePriceEntry;
-import com.liferay.commerce.service.CommerceTirePriceEntryLocalService;
+import com.liferay.commerce.model.CommerceTierPriceEntry;
+import com.liferay.commerce.service.CommerceTierPriceEntryLocalService;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
@@ -35,37 +35,37 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.commerce.model.CommerceTirePriceEntry",
+	property = "model.class.name=com.liferay.commerce.model.CommerceTierPriceEntry",
 	service = StagedModelRepository.class
 )
-public class CommerceTirePriceEntryStagedModelRepository
-	extends BaseStagedModelRepository<CommerceTirePriceEntry> {
+public class CommerceTierPriceEntryStagedModelRepository
+	extends BaseStagedModelRepository<CommerceTierPriceEntry> {
 
 	@Override
-	public CommerceTirePriceEntry addStagedModel(
+	public CommerceTierPriceEntry addStagedModel(
 			PortletDataContext portletDataContext,
-			CommerceTirePriceEntry commerceTirePriceEntry)
+			CommerceTierPriceEntry commerceTierPriceEntry)
 		throws PortalException {
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			commerceTirePriceEntry);
+			commerceTierPriceEntry);
 
 		if (portletDataContext.isDataStrategyMirror()) {
-			serviceContext.setUuid(commerceTirePriceEntry.getUuid());
+			serviceContext.setUuid(commerceTierPriceEntry.getUuid());
 		}
 
-		return _commerceTirePriceEntryLocalService.addCommerceTirePriceEntry(
-			commerceTirePriceEntry.getCommercePriceEntryId(),
-			commerceTirePriceEntry.getPrice(),
-			commerceTirePriceEntry.getMinQuantity(), serviceContext);
+		return _commerceTierPriceEntryLocalService.addCommerceTierPriceEntry(
+			commerceTierPriceEntry.getCommercePriceEntryId(),
+			commerceTierPriceEntry.getPrice(),
+			commerceTierPriceEntry.getMinQuantity(), serviceContext);
 	}
 
 	@Override
-	public void deleteStagedModel(CommerceTirePriceEntry commerceTirePriceEntry)
+	public void deleteStagedModel(CommerceTierPriceEntry commerceTierPriceEntry)
 		throws PortalException {
 
-		_commerceTirePriceEntryLocalService.deleteCommerceTirePriceEntry(
-			commerceTirePriceEntry);
+		_commerceTierPriceEntryLocalService.deleteCommerceTierPriceEntry(
+			commerceTierPriceEntry);
 	}
 
 	@Override
@@ -73,11 +73,11 @@ public class CommerceTirePriceEntryStagedModelRepository
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		CommerceTirePriceEntry commerceTirePriceEntry =
+		CommerceTierPriceEntry commerceTierPriceEntry =
 			fetchStagedModelByUuidAndGroupId(uuid, groupId);
 
-		if (commerceTirePriceEntry != null) {
-			deleteStagedModel(commerceTirePriceEntry);
+		if (commerceTierPriceEntry != null) {
+			deleteStagedModel(commerceTierPriceEntry);
 		}
 	}
 
@@ -87,22 +87,22 @@ public class CommerceTirePriceEntryStagedModelRepository
 	}
 
 	@Override
-	public CommerceTirePriceEntry fetchStagedModelByUuidAndGroupId(
+	public CommerceTierPriceEntry fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return _commerceTirePriceEntryLocalService.
-			fetchCommerceTirePriceEntryByUuidAndGroupId(uuid, groupId);
+		return _commerceTierPriceEntryLocalService.
+			fetchCommerceTierPriceEntryByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override
-	public List<CommerceTirePriceEntry> fetchStagedModelsByUuidAndCompanyId(
+	public List<CommerceTierPriceEntry> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return _commerceTirePriceEntryLocalService.
-			getCommerceTirePriceEntriesByUuidAndCompanyId(
+		return _commerceTierPriceEntryLocalService.
+			getCommerceTierPriceEntriesByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				new StagedModelModifiedDateComparator
-					<CommerceTirePriceEntry>());
+					<CommerceTierPriceEntry>());
 	}
 
 	@Override
@@ -110,36 +110,36 @@ public class CommerceTirePriceEntryStagedModelRepository
 		PortletDataContext portletDataContext) {
 
 		return
-			_commerceTirePriceEntryLocalService.getExportActionableDynamicQuery(
+			_commerceTierPriceEntryLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 	}
 
 	@Override
-	public CommerceTirePriceEntry saveStagedModel(
-			CommerceTirePriceEntry commerceTirePriceEntry)
+	public CommerceTierPriceEntry saveStagedModel(
+			CommerceTierPriceEntry commerceTierPriceEntry)
 		throws PortalException {
 
-		return _commerceTirePriceEntryLocalService.updateCommerceTirePriceEntry(
-			commerceTirePriceEntry);
+		return _commerceTierPriceEntryLocalService.updateCommerceTierPriceEntry(
+			commerceTierPriceEntry);
 	}
 
 	@Override
-	public CommerceTirePriceEntry updateStagedModel(
+	public CommerceTierPriceEntry updateStagedModel(
 			PortletDataContext portletDataContext,
-			CommerceTirePriceEntry commerceTirePriceEntry)
+			CommerceTierPriceEntry commerceTierPriceEntry)
 		throws PortalException {
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			commerceTirePriceEntry);
+			commerceTierPriceEntry);
 
-		return _commerceTirePriceEntryLocalService.updateCommerceTirePriceEntry(
-			commerceTirePriceEntry.getCommerceTirePriceEntryId(),
-			commerceTirePriceEntry.getPrice(),
-			commerceTirePriceEntry.getMinQuantity(), serviceContext);
+		return _commerceTierPriceEntryLocalService.updateCommerceTierPriceEntry(
+			commerceTierPriceEntry.getCommerceTierPriceEntryId(),
+			commerceTierPriceEntry.getPrice(),
+			commerceTierPriceEntry.getMinQuantity(), serviceContext);
 	}
 
 	@Reference
-	private CommerceTirePriceEntryLocalService
-		_commerceTirePriceEntryLocalService;
+	private CommerceTierPriceEntryLocalService
+		_commerceTierPriceEntryLocalService;
 
 }

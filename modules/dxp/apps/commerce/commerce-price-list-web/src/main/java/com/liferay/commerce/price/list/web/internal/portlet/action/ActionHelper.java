@@ -17,10 +17,10 @@ package com.liferay.commerce.price.list.web.internal.portlet.action;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.model.CommercePriceEntry;
 import com.liferay.commerce.model.CommercePriceList;
-import com.liferay.commerce.model.CommerceTirePriceEntry;
+import com.liferay.commerce.model.CommerceTierPriceEntry;
 import com.liferay.commerce.service.CommercePriceEntryService;
 import com.liferay.commerce.service.CommercePriceListService;
-import com.liferay.commerce.service.CommerceTirePriceEntryService;
+import com.liferay.commerce.service.CommerceTierPriceEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -121,37 +121,37 @@ public class ActionHelper {
 		return commercePriceLists;
 	}
 
-	public List<CommerceTirePriceEntry> getCommerceTirePriceEntries(
+	public List<CommerceTierPriceEntry> getCommerceTierPriceEntries(
 			PortletRequest portletRequest)
 		throws PortalException {
 
-		List<CommerceTirePriceEntry> commerceTirePriceEntries =
+		List<CommerceTierPriceEntry> commerceTierPriceEntries =
 			new ArrayList<>();
 
-		long[] commerceTirePriceEntryIds = ParamUtil.getLongValues(
+		long[] commerceTierPriceEntryIds = ParamUtil.getLongValues(
 			portletRequest, "rowIds");
 
-		for (long commerceTirePriceEntryId : commerceTirePriceEntryIds) {
-			CommerceTirePriceEntry commerceTirePriceEntry =
-				_commerceTirePriceEntryService.fetchCommerceTirePriceEntry(
-					commerceTirePriceEntryId);
+		for (long commerceTierPriceEntryId : commerceTierPriceEntryIds) {
+			CommerceTierPriceEntry commerceTierPriceEntry =
+				_commerceTierPriceEntryService.fetchCommerceTierPriceEntry(
+					commerceTierPriceEntryId);
 
-			if (commerceTirePriceEntry != null) {
-				commerceTirePriceEntries.add(commerceTirePriceEntry);
+			if (commerceTierPriceEntry != null) {
+				commerceTierPriceEntries.add(commerceTierPriceEntry);
 			}
 		}
 
-		return commerceTirePriceEntries;
+		return commerceTierPriceEntries;
 	}
 
-	public CommerceTirePriceEntry getCommerceTirePriceEntry(
+	public CommerceTierPriceEntry getCommerceTierPriceEntry(
 		RenderRequest renderRequest) {
 
-		long commerceTirePriceEntryId = ParamUtil.getLong(
-			renderRequest, "commerceTirePriceEntryId");
+		long commerceTierPriceEntryId = ParamUtil.getLong(
+			renderRequest, "commerceTierPriceEntryId");
 
-		return _commerceTirePriceEntryService.fetchCommerceTirePriceEntry(
-			commerceTirePriceEntryId);
+		return _commerceTierPriceEntryService.fetchCommerceTierPriceEntry(
+			commerceTierPriceEntryId);
 	}
 
 	@Reference
@@ -161,6 +161,6 @@ public class ActionHelper {
 	private CommercePriceListService _commercePriceListService;
 
 	@Reference
-	private CommerceTirePriceEntryService _commerceTirePriceEntryService;
+	private CommerceTierPriceEntryService _commerceTierPriceEntryService;
 
 }

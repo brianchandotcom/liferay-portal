@@ -16,12 +16,12 @@ package com.liferay.commerce.price.list.web.internal.display.context;
 
 import com.liferay.commerce.model.CommercePriceEntry;
 import com.liferay.commerce.model.CommercePriceList;
-import com.liferay.commerce.model.CommerceTirePriceEntry;
+import com.liferay.commerce.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.price.list.web.internal.util.CommercePriceListPortletUtil;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.service.CommerceTirePriceEntryService;
+import com.liferay.commerce.service.CommerceTierPriceEntryService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -41,17 +41,17 @@ import javax.portlet.RenderResponse;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceTirePriceEntryDisplayContext
-	extends BaseCommercePriceListDisplayContext<CommerceTirePriceEntry> {
+public class CommerceTierPriceEntryDisplayContext
+	extends BaseCommercePriceListDisplayContext<CommerceTierPriceEntry> {
 
-	public CommerceTirePriceEntryDisplayContext(
+	public CommerceTierPriceEntryDisplayContext(
 		ActionHelper actionHelper,
-		CommerceTirePriceEntryService commerceTirePriceEntryService,
+		CommerceTierPriceEntryService commerceTierPriceEntryService,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		super(actionHelper, renderRequest, renderResponse);
 
-		_commerceTirePriceEntryService = commerceTirePriceEntryService;
+		_commerceTierPriceEntryService = commerceTierPriceEntryService;
 	}
 
 	public CommercePriceEntry getCommercePriceEntry() throws PortalException {
@@ -68,28 +68,28 @@ public class CommerceTirePriceEntryDisplayContext
 		return commercePriceEntry.getCommercePriceEntryId();
 	}
 
-	public CommerceTirePriceEntry getCommerceTirePriceEntry()
+	public CommerceTierPriceEntry getCommerceTierPriceEntry()
 		throws PortalException {
 
-		if (_commerceTirePriceEntry != null) {
-			return _commerceTirePriceEntry;
+		if (_commerceTierPriceEntry != null) {
+			return _commerceTierPriceEntry;
 		}
 
-		_commerceTirePriceEntry = actionHelper.getCommerceTirePriceEntry(
+		_commerceTierPriceEntry = actionHelper.getCommerceTierPriceEntry(
 			renderRequest);
 
-		return _commerceTirePriceEntry;
+		return _commerceTierPriceEntry;
 	}
 
-	public long getCommerceTirePriceEntryId() throws PortalException {
-		CommerceTirePriceEntry commerceTirePriceEntry =
-			getCommerceTirePriceEntry();
+	public long getCommerceTierPriceEntryId() throws PortalException {
+		CommerceTierPriceEntry commerceTierPriceEntry =
+			getCommerceTierPriceEntry();
 
-		if (commerceTirePriceEntry == null) {
+		if (commerceTierPriceEntry == null) {
 			return 0;
 		}
 
-		return commerceTirePriceEntry.getCommerceTirePriceEntryId();
+		return commerceTierPriceEntry.getCommerceTierPriceEntryId();
 	}
 
 	public String getContextTitle() throws PortalException {
@@ -122,14 +122,14 @@ public class CommerceTirePriceEntryDisplayContext
 			}
 		}
 
-		CommerceTirePriceEntry commerceTirePriceEntry =
-			getCommerceTirePriceEntry();
+		CommerceTierPriceEntry commerceTierPriceEntry =
+			getCommerceTierPriceEntry();
 
 		String contextTitle = sb.toString();
 
-		if (commerceTirePriceEntry == null) {
+		if (commerceTierPriceEntry == null) {
 			contextTitle = LanguageUtil.format(
-				themeDisplay.getRequest(), "add-tire-price-entry-to-x",
+				themeDisplay.getRequest(), "add-tier-price-entry-to-x",
 				sb.toString());
 		}
 
@@ -141,7 +141,7 @@ public class CommerceTirePriceEntryDisplayContext
 		PortletURL portletURL = super.getPortletURL();
 
 		portletURL.setParameter(
-			"mvcRenderCommandName", "viewCommerceTirePriceEntries");
+			"mvcRenderCommandName", "viewCommerceTierPriceEntries");
 
 		CommercePriceEntry commercePriceEntry = getCommercePriceEntry();
 
@@ -155,7 +155,7 @@ public class CommerceTirePriceEntryDisplayContext
 	}
 
 	@Override
-	public SearchContainer<CommerceTirePriceEntry> getSearchContainer()
+	public SearchContainer<CommerceTierPriceEntry> getSearchContainer()
 		throws PortalException {
 
 		if (searchContainer != null) {
@@ -166,9 +166,10 @@ public class CommerceTirePriceEntryDisplayContext
 			WebKeys.THEME_DISPLAY);
 
 		searchContainer = new SearchContainer<>(
-			renderRequest, getPortletURL(), null, "there-are-no-price-entries");
+			renderRequest, getPortletURL(), null,
+			"there-are-no-tier-price-entries");
 
-		OrderByComparator<CommerceTirePriceEntry> orderByComparator =
+		OrderByComparator<CommerceTierPriceEntry> orderByComparator =
 			CommercePriceListPortletUtil.getCommerceTypePriceOrderByComparator(
 				getOrderByCol(), getOrderByType());
 
@@ -181,10 +182,10 @@ public class CommerceTirePriceEntryDisplayContext
 			Sort sort = CommercePriceListPortletUtil.getCommercePriceEntrySort(
 				getOrderByCol(), getOrderByType());
 
-			BaseModelSearchResult<CommerceTirePriceEntry>
+			BaseModelSearchResult<CommerceTierPriceEntry>
 				commercePriceListBaseModelSearchResult =
-					_commerceTirePriceEntryService.
-						searchCommerceTirePriceEntries(
+					_commerceTierPriceEntryService.
+						searchCommerceTierPriceEntries(
 							themeDisplay.getCompanyId(),
 							themeDisplay.getScopeGroupId(),
 							getCommercePriceEntryId(), getKeywords(),
@@ -198,13 +199,13 @@ public class CommerceTirePriceEntryDisplayContext
 		}
 		else {
 			int total =
-				_commerceTirePriceEntryService.getCommerceTirePriceEntriesCount(
+				_commerceTierPriceEntryService.getCommerceTierPriceEntriesCount(
 					getCommercePriceEntryId());
 
 			searchContainer.setTotal(total);
 
-			List<CommerceTirePriceEntry> results =
-				_commerceTirePriceEntryService.getCommerceTirePriceEntries(
+			List<CommerceTierPriceEntry> results =
+				_commerceTierPriceEntryService.getCommerceTierPriceEntries(
 					getCommercePriceEntryId(), searchContainer.getStart(),
 					searchContainer.getEnd(), orderByComparator);
 
@@ -219,11 +220,11 @@ public class CommerceTirePriceEntryDisplayContext
 			WebKeys.THEME_DISPLAY);
 
 		return CustomAttributesUtil.hasCustomAttributes(
-			themeDisplay.getCompanyId(), CommerceTirePriceEntry.class.getName(),
-			getCommerceTirePriceEntryId(), null);
+			themeDisplay.getCompanyId(), CommerceTierPriceEntry.class.getName(),
+			getCommerceTierPriceEntryId(), null);
 	}
 
-	private CommerceTirePriceEntry _commerceTirePriceEntry;
-	private final CommerceTirePriceEntryService _commerceTirePriceEntryService;
+	private CommerceTierPriceEntry _commerceTierPriceEntry;
+	private final CommerceTierPriceEntryService _commerceTierPriceEntryService;
 
 }

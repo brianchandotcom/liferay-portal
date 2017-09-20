@@ -17,20 +17,20 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceTirePriceEntryDisplayContext commerceTirePriceEntryDisplayContext = (CommerceTirePriceEntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CommerceTierPriceEntryDisplayContext commerceTierPriceEntryDisplayContext = (CommerceTierPriceEntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CommercePriceList commercePriceList = commerceTirePriceEntryDisplayContext.getCommercePriceList();
+CommercePriceList commercePriceList = commerceTierPriceEntryDisplayContext.getCommercePriceList();
 
-CommercePriceEntry commercePriceEntry = commerceTirePriceEntryDisplayContext.getCommercePriceEntry();
+CommercePriceEntry commercePriceEntry = commerceTierPriceEntryDisplayContext.getCommercePriceEntry();
 
-long commercePriceEntryId = commerceTirePriceEntryDisplayContext.getCommercePriceEntryId();
-long commercePriceListId = commerceTirePriceEntryDisplayContext.getCommercePriceListId();
+long commercePriceEntryId = commerceTierPriceEntryDisplayContext.getCommercePriceEntryId();
+long commercePriceListId = commerceTierPriceEntryDisplayContext.getCommercePriceListId();
 
-SearchContainer<CommerceTirePriceEntry> commerceTirePriceEntriesSearchContainer = commerceTirePriceEntryDisplayContext.getSearchContainer();
+SearchContainer<CommerceTierPriceEntry> commerceTierPriceEntriesSearchContainer = commerceTierPriceEntryDisplayContext.getSearchContainer();
 
-PortletURL portletURL = commerceTirePriceEntryDisplayContext.getPortletURL();
+PortletURL portletURL = commerceTierPriceEntryDisplayContext.getPortletURL();
 
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-tire-price-entries");
+String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-tier-price-entries");
 
 portletURL.setParameter("toolbarItem", toolbarItem);
 
@@ -51,10 +51,10 @@ renderResponse.setTitle(commercePriceList.getName());
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"
-	searchContainerId="commerceTirePriceEntries"
+	searchContainerId="commerceTierPriceEntries"
 >
 	<liferay-frontend:management-bar-buttons>
-		<c:if test="<%= commerceTirePriceEntryDisplayContext.isShowInfoPanel() %>">
+		<c:if test="<%= commerceTierPriceEntryDisplayContext.isShowInfoPanel() %>">
 			<liferay-frontend:management-bar-sidenav-toggler-button
 				icon="info-circle"
 				label="info"
@@ -75,39 +75,39 @@ renderResponse.setTitle(commercePriceList.getName());
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= commerceTirePriceEntriesSearchContainer.getOrderByCol() %>"
-			orderByType="<%= commerceTirePriceEntriesSearchContainer.getOrderByType() %>"
+			orderByCol="<%= commerceTierPriceEntriesSearchContainer.getOrderByCol() %>"
+			orderByType="<%= commerceTierPriceEntriesSearchContainer.getOrderByType() %>"
 			orderColumns='<%= new String[] {"create-date"} %>'
 			portletURL="<%= portletURL %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<c:if test="<%= commerceTirePriceEntryDisplayContext.isShowInfoPanel() %>">
+		<c:if test="<%= commerceTierPriceEntryDisplayContext.isShowInfoPanel() %>">
 			<liferay-frontend:management-bar-sidenav-toggler-button
 				icon="info-circle"
 				label="info"
 			/>
 		</c:if>
 
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceTirePriceEntries();" %>' icon="times" label="delete" />
+		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceTierPriceEntries();" %>' icon="times" label="delete" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
-<div id="<portlet:namespace />tirePriceEntriesContainer">
+<div id="<portlet:namespace />tierPriceEntriesContainer">
 	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-		<c:if test="<%= commerceTirePriceEntryDisplayContext.isShowInfoPanel() %>">
+		<c:if test="<%= commerceTierPriceEntryDisplayContext.isShowInfoPanel() %>">
 			<liferay-portlet:resourceURL
 				copyCurrentRenderParameters="<%= false %>"
-				id="commerceTirePriceEntryInfoPanel"
+				id="commerceTierPriceEntryInfoPanel"
 				var="sidebarPanelURL"
 			/>
 
 			<liferay-frontend:sidebar-panel
 				resourceURL="<%= sidebarPanelURL %>"
-				searchContainerId="commerceTirePriceEntries"
+				searchContainerId="commerceTierPriceEntries"
 			>
-				<liferay-util:include page="/tire_price_entry_info_panel.jsp" servletContext="<%= application %>" />
+				<liferay-util:include page="/tier_price_entry_info_panel.jsp" servletContext="<%= application %>" />
 			</liferay-frontend:sidebar-panel>
 		</c:if>
 
@@ -115,33 +115,33 @@ renderResponse.setTitle(commercePriceList.getName());
 			<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 				<aui:input name="<%= Constants.CMD %>" type="hidden" />
 				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-				<aui:input name="deleteCommerceTirePriceEntryIds" type="hidden" />
+				<aui:input name="deleteCommerceTierPriceEntryIds" type="hidden" />
 
 				<div class="price-entries-container" id="<portlet:namespace />entriesContainer">
 					<liferay-ui:search-container
-						id="commerceTirePriceEntries"
+						id="commerceTierPriceEntries"
 						iteratorURL="<%= portletURL %>"
-						searchContainer="<%= commerceTirePriceEntriesSearchContainer %>"
+						searchContainer="<%= commerceTierPriceEntriesSearchContainer %>"
 					>
 						<liferay-ui:search-container-row
-							className="com.liferay.commerce.model.CommerceTirePriceEntry"
+							className="com.liferay.commerce.model.CommerceTierPriceEntry"
 							cssClass="entry-display-style"
-							keyProperty="commerceTirePriceEntryId"
-							modelVar="commerceTirePriceEntry"
+							keyProperty="commerceTierPriceEntryId"
+							modelVar="commerceTierPriceEntry"
 						>
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
 								name="id"
-								value="<%= String.valueOf(commerceTirePriceEntry.getCommerceTirePriceEntryId()) %>"
+								value="<%= String.valueOf(commerceTierPriceEntry.getCommerceTierPriceEntryId()) %>"
 							/>
 
 							<%
 							PortletURL rowURL = renderResponse.createRenderURL();
 
-							rowURL.setParameter("mvcRenderCommandName", "editCommerceTirePriceEntry");
+							rowURL.setParameter("mvcRenderCommandName", "editCommerceTierPriceEntry");
 							rowURL.setParameter("commercePriceEntryId", String.valueOf(commercePriceEntryId));
 							rowURL.setParameter("commercePriceListId", String.valueOf(commercePriceListId));
-							rowURL.setParameter("commerceTirePriceEntryId", String.valueOf(commerceTirePriceEntry.getCommerceTirePriceEntryId()));
+							rowURL.setParameter("commerceTierPriceEntryId", String.valueOf(commerceTierPriceEntry.getCommerceTierPriceEntryId()));
 
 							CPInstance cpInstance = commercePriceEntry.getCPInstance();
 
@@ -180,11 +180,11 @@ renderResponse.setTitle(commercePriceList.getName());
 
 							<liferay-ui:search-container-column-jsp
 								cssClass="entry-action-column"
-								path="/tire_price_entry_action.jsp"
+								path="/tier_price_entry_action.jsp"
 							/>
 						</liferay-ui:search-container-row>
 
-						<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= commerceTirePriceEntriesSearchContainer %>" />
+						<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= commerceTierPriceEntriesSearchContainer %>" />
 					</liferay-ui:search-container>
 				</div>
 			</aui:form>
@@ -192,28 +192,28 @@ renderResponse.setTitle(commercePriceList.getName());
 	</div>
 </div>
 
-<liferay-portlet:renderURL var="addCommerceTirePriceEntryURL">
+<liferay-portlet:renderURL var="addCommerceTierPriceEntryURL">
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
-	<portlet:param name="mvcRenderCommandName" value="editCommerceTirePriceEntry" />
+	<portlet:param name="mvcRenderCommandName" value="editCommerceTierPriceEntry" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="commercePriceEntryId" value="<%= String.valueOf(commercePriceEntryId) %>" />
 	<portlet:param name="commercePriceListId" value="<%= String.valueOf(commercePriceListId) %>" />
 </liferay-portlet:renderURL>
 
 <liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-tire-price-entry") %>' url="<%= addCommerceTirePriceEntryURL.toString() %>" />
+	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-tier-price-entry") %>' url="<%= addCommerceTierPriceEntryURL.toString() %>" />
 </liferay-frontend:add-menu>
 
 <aui:script>
-	function <portlet:namespace />deleteCommerceTirePriceEntries() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-tire-price-entries") %>')) {
+	function <portlet:namespace />deleteCommerceTierPriceEntries() {
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-tier-price-entries") %>')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.attr('method', 'post');
 			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
-			form.fm('deleteCommerceTirePriceEntryIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+			form.fm('deleteCommerceTierPriceEntryIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-			submitForm(form, '<portlet:actionURL name="editCommerceTirePriceEntry" />');
+			submitForm(form, '<portlet:actionURL name="editCommerceTierPriceEntry" />');
 		}
 	}
 </aui:script>

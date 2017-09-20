@@ -16,11 +16,11 @@ package com.liferay.commerce.price.list.web.internal.util;
 
 import com.liferay.commerce.model.CommercePriceEntry;
 import com.liferay.commerce.model.CommercePriceList;
-import com.liferay.commerce.model.CommerceTirePriceEntry;
+import com.liferay.commerce.model.CommerceTierPriceEntry;
 import com.liferay.commerce.util.comparator.CommercePriceEntryCreateDateComparator;
 import com.liferay.commerce.util.comparator.CommercePriceListCreateDateComparator;
 import com.liferay.commerce.util.comparator.CommercePriceListDisplayDateComparator;
-import com.liferay.commerce.util.comparator.CommerceTirePriceEntryCreateDateComparator;
+import com.liferay.commerce.util.comparator.CommerceTierPriceEntryCreateDateComparator;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
@@ -116,7 +116,7 @@ public class CommercePriceListPortletUtil {
 		return sort;
 	}
 
-	public static OrderByComparator<CommerceTirePriceEntry>
+	public static OrderByComparator<CommerceTierPriceEntry>
 		getCommerceTypePriceOrderByComparator(
 			String orderByCol, String orderByType) {
 
@@ -126,10 +126,10 @@ public class CommercePriceListPortletUtil {
 			orderByAsc = true;
 		}
 
-		OrderByComparator<CommerceTirePriceEntry> orderByComparator = null;
+		OrderByComparator<CommerceTierPriceEntry> orderByComparator = null;
 
 		if (orderByCol.equals("create-date")) {
-			orderByComparator = new CommerceTirePriceEntryCreateDateComparator(
+			orderByComparator = new CommerceTierPriceEntryCreateDateComparator(
 				orderByAsc);
 		}
 

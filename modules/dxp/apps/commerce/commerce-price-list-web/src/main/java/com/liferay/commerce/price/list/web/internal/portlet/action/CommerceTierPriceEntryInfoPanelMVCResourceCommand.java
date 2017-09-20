@@ -16,7 +16,7 @@ package com.liferay.commerce.price.list.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
-import com.liferay.commerce.model.CommerceTirePriceEntry;
+import com.liferay.commerce.model.CommerceTierPriceEntry;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 
@@ -35,11 +35,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_PRICE_LIST,
-		"mvc.command.name=commerceTirePriceEntryInfoPanel"
+		"mvc.command.name=commerceTierPriceEntryInfoPanel"
 	},
 	service = MVCResourceCommand.class
 )
-public class CommerceTirePriceEntryInfoPanelMVCResourceCommand
+public class CommerceTierPriceEntryInfoPanelMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
 	@Override
@@ -47,16 +47,16 @@ public class CommerceTirePriceEntryInfoPanelMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		List<CommerceTirePriceEntry> commerceTirePriceEntries =
-			_actionHelper.getCommerceTirePriceEntries(resourceRequest);
+		List<CommerceTierPriceEntry> commerceTierPriceEntries =
+			_actionHelper.getCommerceTierPriceEntries(resourceRequest);
 
 		resourceRequest.setAttribute(
-			CommerceWebKeys.COMMERCE_TIRE_PRICE_ENTRIES,
-			commerceTirePriceEntries);
+			CommerceWebKeys.COMMERCE_TIER_PRICE_ENTRIES,
+			commerceTierPriceEntries);
 
 		include(
 			resourceRequest, resourceResponse,
-			"/tire_price_entry_info_panel.jsp");
+			"/tier_price_entry_info_panel.jsp");
 	}
 
 	@Reference

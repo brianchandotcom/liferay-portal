@@ -19,16 +19,16 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-CommerceTirePriceEntry commerceTirePriceEntry = null;
+CommerceTierPriceEntry commerceTierPriceEntry = null;
 
 if (row != null) {
-	commerceTirePriceEntry = (CommerceTirePriceEntry)row.getObject();
+	commerceTierPriceEntry = (CommerceTierPriceEntry)row.getObject();
 }
 else {
-	commerceTirePriceEntry = (CommerceTirePriceEntry)request.getAttribute("info_panel.jsp-entry");
+	commerceTierPriceEntry = (CommerceTierPriceEntry)request.getAttribute("info_panel.jsp-entry");
 }
 
-CommercePriceEntry commercePriceEntry = commerceTirePriceEntry.getCommercePriceEntry();
+CommercePriceEntry commercePriceEntry = commerceTierPriceEntry.getCommercePriceEntry();
 
 long commercePriceListId = 0;
 
@@ -39,11 +39,11 @@ if (commercePriceEntry != null) {
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<portlet:renderURL var="editURL">
-		<portlet:param name="mvcRenderCommandName" value="editCommerceTirePriceEntry" />
+		<portlet:param name="mvcRenderCommandName" value="editCommerceTierPriceEntry" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="commercePriceEntryId" value="<%= String.valueOf(commerceTirePriceEntry.getCommercePriceEntryId()) %>" />
+		<portlet:param name="commercePriceEntryId" value="<%= String.valueOf(commerceTierPriceEntry.getCommercePriceEntryId()) %>" />
 		<portlet:param name="commercePriceListId" value="<%= String.valueOf(commercePriceListId) %>" />
-		<portlet:param name="commerceTirePriceEntryId" value="<%= String.valueOf(commerceTirePriceEntry.getCommerceTirePriceEntryId()) %>" />
+		<portlet:param name="commerceTierPriceEntryId" value="<%= String.valueOf(commerceTierPriceEntry.getCommerceTierPriceEntryId()) %>" />
 	</portlet:renderURL>
 
 	<liferay-ui:icon
@@ -51,11 +51,11 @@ if (commercePriceEntry != null) {
 		url="<%= editURL %>"
 	/>
 
-	<portlet:actionURL name="editCommerceTirePriceEntry" var="deleteURL">
+	<portlet:actionURL name="editCommerceTierPriceEntry" var="deleteURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="commercePriceEntryId" value="<%= String.valueOf(commerceTirePriceEntry.getCommercePriceEntryId()) %>" />
-		<portlet:param name="commerceTirePriceEntryId" value="<%= String.valueOf(commerceTirePriceEntry.getCommerceTirePriceEntryId()) %>" />
+		<portlet:param name="commercePriceEntryId" value="<%= String.valueOf(commerceTierPriceEntry.getCommercePriceEntryId()) %>" />
+		<portlet:param name="commerceTierPriceEntryId" value="<%= String.valueOf(commerceTierPriceEntry.getCommerceTierPriceEntryId()) %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon-delete

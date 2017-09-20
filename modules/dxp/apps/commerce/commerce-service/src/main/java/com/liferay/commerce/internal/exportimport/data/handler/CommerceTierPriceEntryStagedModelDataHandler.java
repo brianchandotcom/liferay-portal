@@ -15,7 +15,7 @@
 package com.liferay.commerce.internal.exportimport.data.handler;
 
 import com.liferay.commerce.model.CommercePriceEntry;
-import com.liferay.commerce.model.CommerceTirePriceEntry;
+import com.liferay.commerce.model.CommerceTierPriceEntry;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
@@ -34,11 +34,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(immediate = true, service = StagedModelDataHandler.class)
-public class CommerceTirePriceEntryStagedModelDataHandler
-	extends BaseStagedModelDataHandler<CommerceTirePriceEntry> {
+public class CommerceTierPriceEntryStagedModelDataHandler
+	extends BaseStagedModelDataHandler<CommerceTierPriceEntry> {
 
 	public static final String[] CLASS_NAMES =
-		{CommerceTirePriceEntry.class.getName()};
+		{CommerceTierPriceEntry.class.getName()};
 
 	@Override
 	public String[] getClassNames() {
@@ -47,53 +47,53 @@ public class CommerceTirePriceEntryStagedModelDataHandler
 
 	@Override
 	public String getDisplayName(
-		CommerceTirePriceEntry commerceTirePriceEntry) {
+		CommerceTierPriceEntry commerceTierPriceEntry) {
 
 		return String.valueOf(
-			commerceTirePriceEntry.getCommerceTirePriceEntryId());
+			commerceTierPriceEntry.getCommerceTierPriceEntryId());
 	}
 
 	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext,
-			CommerceTirePriceEntry commerceTirePriceEntry)
+			CommerceTierPriceEntry commerceTierPriceEntry)
 		throws Exception {
 
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
-			portletDataContext, commerceTirePriceEntry,
-			commerceTirePriceEntry.getCommercePriceEntry(),
+			portletDataContext, commerceTierPriceEntry,
+			commerceTierPriceEntry.getCommercePriceEntry(),
 			PortletDataContext.REFERENCE_TYPE_PARENT);
 
 		Element element = portletDataContext.getExportDataElement(
-			commerceTirePriceEntry);
+			commerceTierPriceEntry);
 
 		portletDataContext.addClassedModel(
-			element, ExportImportPathUtil.getModelPath(commerceTirePriceEntry),
-			commerceTirePriceEntry);
+			element, ExportImportPathUtil.getModelPath(commerceTierPriceEntry),
+			commerceTierPriceEntry);
 	}
 
 	@Override
 	protected void doImportMissingReference(
 			PortletDataContext portletDataContext, String uuid, long groupId,
-			long commerceTirePriceId)
+			long commerceTierPriceId)
 		throws Exception {
 
-		CommerceTirePriceEntry existingCommerceTirePriceEntry =
+		CommerceTierPriceEntry existingCommerceTierPriceEntry =
 			fetchMissingReference(uuid, groupId);
 
-		Map<Long, Long> commerceTirePriceEntryIds =
+		Map<Long, Long> commerceTierPriceEntryIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				CommerceTirePriceEntry.class);
+				CommerceTierPriceEntry.class);
 
-		commerceTirePriceEntryIds.put(
-			commerceTirePriceId,
-			existingCommerceTirePriceEntry.getCommerceTirePriceEntryId());
+		commerceTierPriceEntryIds.put(
+			commerceTierPriceId,
+			existingCommerceTierPriceEntry.getCommerceTierPriceEntryId());
 	}
 
 	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext,
-			CommerceTirePriceEntry commerceTirePriceEntry)
+			CommerceTierPriceEntry commerceTierPriceEntry)
 		throws Exception {
 
 		Map<Long, Long> commercePriceEntryIds =
@@ -102,60 +102,60 @@ public class CommerceTirePriceEntryStagedModelDataHandler
 
 		long commercePriceEntryId = MapUtil.getLong(
 			commercePriceEntryIds,
-			commerceTirePriceEntry.getCommercePriceEntryId(),
-			commerceTirePriceEntry.getCommercePriceEntryId());
+			commerceTierPriceEntry.getCommercePriceEntryId(),
+			commerceTierPriceEntry.getCommercePriceEntryId());
 
-		CommerceTirePriceEntry importedCommerceTirePriceEntry =
-			(CommerceTirePriceEntry)commerceTirePriceEntry.clone();
+		CommerceTierPriceEntry importedCommerceTierPriceEntry =
+			(CommerceTierPriceEntry)commerceTierPriceEntry.clone();
 
-		importedCommerceTirePriceEntry.setGroupId(
+		importedCommerceTierPriceEntry.setGroupId(
 			portletDataContext.getScopeGroupId());
-		importedCommerceTirePriceEntry.setCommercePriceEntryId(
+		importedCommerceTierPriceEntry.setCommercePriceEntryId(
 			commercePriceEntryId);
 
-		CommerceTirePriceEntry existingCommerceTirePriceEntry =
+		CommerceTierPriceEntry existingCommerceTierPriceEntry =
 			_stagedModelRepository.fetchStagedModelByUuidAndGroupId(
-				commerceTirePriceEntry.getUuid(),
+				commerceTierPriceEntry.getUuid(),
 				portletDataContext.getScopeGroupId());
 
-		if ((existingCommerceTirePriceEntry == null) ||
+		if ((existingCommerceTierPriceEntry == null) ||
 			!portletDataContext.isDataStrategyMirror()) {
 
-			importedCommerceTirePriceEntry =
+			importedCommerceTierPriceEntry =
 				_stagedModelRepository.addStagedModel(
-					portletDataContext, importedCommerceTirePriceEntry);
+					portletDataContext, importedCommerceTierPriceEntry);
 		}
 		else {
-			importedCommerceTirePriceEntry.setCommerceTirePriceEntryId(
-				existingCommerceTirePriceEntry.getCommerceTirePriceEntryId());
+			importedCommerceTierPriceEntry.setCommerceTierPriceEntryId(
+				existingCommerceTierPriceEntry.getCommerceTierPriceEntryId());
 
-			importedCommerceTirePriceEntry =
+			importedCommerceTierPriceEntry =
 				_stagedModelRepository.updateStagedModel(
-					portletDataContext, importedCommerceTirePriceEntry);
+					portletDataContext, importedCommerceTierPriceEntry);
 		}
 
 		portletDataContext.importClassedModel(
-			commerceTirePriceEntry, importedCommerceTirePriceEntry);
+			commerceTierPriceEntry, importedCommerceTierPriceEntry);
 	}
 
 	@Override
-	protected StagedModelRepository<CommerceTirePriceEntry>
+	protected StagedModelRepository<CommerceTierPriceEntry>
 		getStagedModelRepository() {
 
 		return _stagedModelRepository;
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.commerce.model.CommerceTirePriceEntry)",
+		target = "(model.class.name=com.liferay.commerce.model.CommerceTierPriceEntry)",
 		unbind = "-"
 	)
 	protected void setStagedModelRepository(
-		StagedModelRepository<CommerceTirePriceEntry> stagedModelRepository) {
+		StagedModelRepository<CommerceTierPriceEntry> stagedModelRepository) {
 
 		_stagedModelRepository = stagedModelRepository;
 	}
 
-	private StagedModelRepository<CommerceTirePriceEntry>
+	private StagedModelRepository<CommerceTierPriceEntry>
 		_stagedModelRepository;
 
 }

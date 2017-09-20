@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.search;
 
-import com.liferay.commerce.model.CommerceTirePriceEntry;
-import com.liferay.commerce.service.CommerceTirePriceEntryLocalService;
+import com.liferay.commerce.model.CommerceTierPriceEntry;
+import com.liferay.commerce.service.CommerceTierPriceEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -46,16 +46,16 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(immediate = true, service = Indexer.class)
-public class CommerceTirePriceEntryIndexer
-	extends BaseIndexer<CommerceTirePriceEntry> {
+public class CommerceTierPriceEntryIndexer
+	extends BaseIndexer<CommerceTierPriceEntry> {
 
 	public static final String CLASS_NAME =
-		CommerceTirePriceEntry.class.getName();
+		CommerceTierPriceEntry.class.getName();
 
 	public static final String FIELD_COMMERCE_PRICE_ENTRY_ID =
 		"commercePriceEntryId";
 
-	public CommerceTirePriceEntryIndexer() {
+	public CommerceTierPriceEntryIndexer() {
 		setDefaultSelectedFieldNames(
 			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
 			Field.GROUP_ID, Field.MODIFIED_DATE, Field.SCOPE_GROUP_ID,
@@ -105,33 +105,33 @@ public class CommerceTirePriceEntryIndexer
 	}
 
 	@Override
-	protected void doDelete(CommerceTirePriceEntry commerceTirePriceEntry)
+	protected void doDelete(CommerceTierPriceEntry commerceTierPriceEntry)
 		throws Exception {
 
 		deleteDocument(
-			commerceTirePriceEntry.getCompanyId(),
-			commerceTirePriceEntry.getCommercePriceEntryId());
+			commerceTierPriceEntry.getCompanyId(),
+			commerceTierPriceEntry.getCommercePriceEntryId());
 	}
 
 	@Override
 	protected Document doGetDocument(
-			CommerceTirePriceEntry commerceTirePriceEntry)
+			CommerceTierPriceEntry commerceTierPriceEntry)
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Indexing tire price entry " + commerceTirePriceEntry);
+			_log.debug("Indexing tier price entry " + commerceTierPriceEntry);
 		}
 
 		Document document = getBaseModelDocument(
-			CLASS_NAME, commerceTirePriceEntry);
+			CLASS_NAME, commerceTierPriceEntry);
 
 		document.addKeyword(
 			FIELD_COMMERCE_PRICE_ENTRY_ID,
-			commerceTirePriceEntry.getCommerceTirePriceEntryId());
+			commerceTierPriceEntry.getCommerceTierPriceEntryId());
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Document " + commerceTirePriceEntry + " indexed successfully");
+				"Document " + commerceTierPriceEntry + " indexed successfully");
 		}
 
 		return document;
@@ -152,59 +152,59 @@ public class CommerceTirePriceEntryIndexer
 	}
 
 	@Override
-	protected void doReindex(CommerceTirePriceEntry commerceTirePriceEntry)
+	protected void doReindex(CommerceTierPriceEntry commerceTierPriceEntry)
 		throws Exception {
 
-		Document document = getDocument(commerceTirePriceEntry);
+		Document document = getDocument(commerceTierPriceEntry);
 
 		_indexWriterHelper.updateDocument(
-			getSearchEngineId(), commerceTirePriceEntry.getCompanyId(),
+			getSearchEngineId(), commerceTierPriceEntry.getCompanyId(),
 			document, isCommitImmediately());
 	}
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		CommerceTirePriceEntry commerceTirePriceEntry =
-			_commerceTirePriceEntryLocalService.getCommerceTirePriceEntry(
+		CommerceTierPriceEntry commerceTierPriceEntry =
+			_commerceTierPriceEntryLocalService.getCommerceTierPriceEntry(
 				classPK);
 
-		doReindex(commerceTirePriceEntry);
+		doReindex(commerceTierPriceEntry);
 	}
 
 	@Override
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 
-		reindexCommerceTirePriceEntry(companyId);
+		reindexCommerceTierPriceEntry(companyId);
 	}
 
-	protected void reindexCommerceTirePriceEntry(long companyId)
+	protected void reindexCommerceTierPriceEntry(long companyId)
 		throws PortalException {
 
 		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			_commerceTirePriceEntryLocalService.
+			_commerceTierPriceEntryLocalService.
 				getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.
-				PerformActionMethod<CommerceTirePriceEntry>() {
+				PerformActionMethod<CommerceTierPriceEntry>() {
 
 				@Override
 				public void performAction(
-					CommerceTirePriceEntry commerceTirePriceEntry) {
+					CommerceTierPriceEntry commerceTierPriceEntry) {
 
 					try {
-						Document document = getDocument(commerceTirePriceEntry);
+						Document document = getDocument(commerceTierPriceEntry);
 
 						indexableActionableDynamicQuery.addDocuments(document);
 					}
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {
 							_log.warn(
-								"Unable to index commerce tire price entry " +
-									commerceTirePriceEntry.
-										getCommerceTirePriceEntryId(),
+								"Unable to index commerce tier price entry " +
+									commerceTierPriceEntry.
+										getCommerceTierPriceEntryId(),
 								pe);
 						}
 					}
@@ -217,11 +217,11 @@ public class CommerceTirePriceEntryIndexer
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceTirePriceEntryIndexer.class);
+		CommerceTierPriceEntryIndexer.class);
 
 	@Reference
-	private CommerceTirePriceEntryLocalService
-		_commerceTirePriceEntryLocalService;
+	private CommerceTierPriceEntryLocalService
+		_commerceTierPriceEntryLocalService;
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;

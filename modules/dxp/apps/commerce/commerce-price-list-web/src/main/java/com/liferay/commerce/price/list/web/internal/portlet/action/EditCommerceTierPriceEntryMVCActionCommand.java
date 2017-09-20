@@ -15,9 +15,9 @@
 package com.liferay.commerce.price.list.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.exception.NoSuchTirePriceEntryException;
-import com.liferay.commerce.model.CommerceTirePriceEntry;
-import com.liferay.commerce.service.CommerceTirePriceEntryService;
+import com.liferay.commerce.exception.NoSuchTierPriceEntryException;
+import com.liferay.commerce.model.CommerceTierPriceEntry;
+import com.liferay.commerce.service.CommerceTierPriceEntryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -41,35 +41,35 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_PRICE_LIST,
-		"mvc.command.name=editCommerceTirePriceEntry"
+		"mvc.command.name=editCommerceTierPriceEntry"
 	},
 	service = MVCActionCommand.class
 )
-public class EditCommerceTirePriceEntryMVCActionCommand
+public class EditCommerceTierPriceEntryMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void deleteCommerceTirePriceEntries(
-			long commerceTirePriceEntryId, ActionRequest actionRequest)
+	protected void deleteCommerceTierPriceEntries(
+			long commerceTierPriceEntryId, ActionRequest actionRequest)
 		throws Exception {
 
-		long[] deleteCommerceTirePriceEntryIds = null;
+		long[] deleteCommerceTierPriceEntryIds = null;
 
-		if (commerceTirePriceEntryId > 0) {
-			deleteCommerceTirePriceEntryIds =
-				new long[] {commerceTirePriceEntryId};
+		if (commerceTierPriceEntryId > 0) {
+			deleteCommerceTierPriceEntryIds =
+				new long[] {commerceTierPriceEntryId};
 		}
 		else {
-			deleteCommerceTirePriceEntryIds = StringUtil.split(
+			deleteCommerceTierPriceEntryIds = StringUtil.split(
 				ParamUtil.getString(
-					actionRequest, "deleteCommerceTirePriceEntryIds"),
+					actionRequest, "deleteCommerceTierPriceEntryIds"),
 				0L);
 		}
 
-		for (long deleteCommerceTirePriceEntryId :
-				deleteCommerceTirePriceEntryIds) {
+		for (long deleteCommerceTierPriceEntryId :
+				deleteCommerceTierPriceEntryIds) {
 
-			_commerceTirePriceEntryService.deleteCommerceTirePriceEntry(
-				deleteCommerceTirePriceEntryId);
+			_commerceTierPriceEntryService.deleteCommerceTierPriceEntry(
+				deleteCommerceTierPriceEntryId);
 		}
 	}
 
@@ -80,13 +80,13 @@ public class EditCommerceTirePriceEntryMVCActionCommand
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		long commerceTirePriceEntryId = ParamUtil.getLong(
-			actionRequest, "commerceTirePriceEntryId");
+		long commerceTierPriceEntryId = ParamUtil.getLong(
+			actionRequest, "commerceTierPriceEntryId");
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateCommerceTirePriceEntry(
-					commerceTirePriceEntryId, actionRequest);
+				updateCommerceTierPriceEntry(
+					commerceTierPriceEntryId, actionRequest);
 
 				String redirect = ParamUtil.getString(
 					actionRequest, "redirect");
@@ -94,12 +94,12 @@ public class EditCommerceTirePriceEntryMVCActionCommand
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteCommerceTirePriceEntries(
-					commerceTirePriceEntryId, actionRequest);
+				deleteCommerceTierPriceEntries(
+					commerceTierPriceEntryId, actionRequest);
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchTirePriceEntryException ||
+			if (e instanceof NoSuchTierPriceEntryException ||
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
@@ -112,8 +112,8 @@ public class EditCommerceTirePriceEntryMVCActionCommand
 		}
 	}
 
-	protected CommerceTirePriceEntry updateCommerceTirePriceEntry(
-			long commerceTirePriceEntryId, ActionRequest actionRequest)
+	protected CommerceTierPriceEntry updateCommerceTierPriceEntry(
+			long commerceTierPriceEntryId, ActionRequest actionRequest)
 		throws Exception {
 
 		long commercePriceEntryId = ParamUtil.getLong(
@@ -123,26 +123,26 @@ public class EditCommerceTirePriceEntryMVCActionCommand
 		int minQuantity = ParamUtil.getInteger(actionRequest, "minQuantity");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceTirePriceEntry.class.getName(), actionRequest);
+			CommerceTierPriceEntry.class.getName(), actionRequest);
 
-		CommerceTirePriceEntry commerceTirePriceEntry = null;
+		CommerceTierPriceEntry commerceTierPriceEntry = null;
 
-		if (commerceTirePriceEntryId <= 0) {
-			commerceTirePriceEntry =
-				_commerceTirePriceEntryService.addCommerceTirePriceEntry(
+		if (commerceTierPriceEntryId <= 0) {
+			commerceTierPriceEntry =
+				_commerceTierPriceEntryService.addCommerceTierPriceEntry(
 					commercePriceEntryId, price, minQuantity, serviceContext);
 		}
 		else {
-			commerceTirePriceEntry =
-				_commerceTirePriceEntryService.updateCommerceTirePriceEntry(
-					commerceTirePriceEntryId, price, minQuantity,
+			commerceTierPriceEntry =
+				_commerceTierPriceEntryService.updateCommerceTierPriceEntry(
+					commerceTierPriceEntryId, price, minQuantity,
 					serviceContext);
 		}
 
-		return commerceTirePriceEntry;
+		return commerceTierPriceEntry;
 	}
 
 	@Reference
-	private CommerceTirePriceEntryService _commerceTirePriceEntryService;
+	private CommerceTierPriceEntryService _commerceTierPriceEntryService;
 
 }

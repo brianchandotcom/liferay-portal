@@ -29,21 +29,21 @@
 			selected='<%= toolbarItem.equals("view-price-entry-details") %>'
 		/>
 
-		<liferay-portlet:renderURL varImpl="viewCommerceTirePriceEntriesURL">
-			<portlet:param name="mvcRenderCommandName" value="viewCommerceTirePriceEntries" />
+		<liferay-portlet:renderURL varImpl="viewCommerceTierPriceEntriesURL">
+			<portlet:param name="mvcRenderCommandName" value="viewCommerceTierPriceEntries" />
 			<portlet:param name="commercePriceEntryId" value="<%= String.valueOf(commercePriceEntryId) %>" />
 			<portlet:param name="commercePriceListId" value="<%= String.valueOf(commercePriceListId) %>" />
-			<portlet:param name="toolbarItem" value="view-tire-price-entries" />
+			<portlet:param name="toolbarItem" value="view-tier-price-entries" />
 		</liferay-portlet:renderURL>
 
 		<aui:nav-item
-			href="<%= viewCommerceTirePriceEntriesURL.toString() %>"
-			label='<%= LanguageUtil.get(request, "entries") %>'
-			selected='<%= toolbarItem.equals("view-tire-price-entries") %>'
+			href="<%= viewCommerceTierPriceEntriesURL.toString() %>"
+			label='<%= LanguageUtil.get(request, "tier-price-entries") %>'
+			selected='<%= toolbarItem.equals("view-tier-price-entries") %>'
 		/>
 	</aui:nav>
 
-	<c:if test='<%= toolbarItem.equals("view-tire-price-entries") %>'>
+	<c:if test='<%= toolbarItem.equals("view-tier-price-entries") %>'>
 		<aui:form action="<%= portletURL.toString() %>" name="searchFm">
 			<aui:nav-bar-search>
 				<liferay-ui:input-search markupView="lexicon" />

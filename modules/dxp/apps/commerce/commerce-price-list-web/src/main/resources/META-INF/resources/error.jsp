@@ -21,6 +21,6 @@
 <liferay-ui:error exception="<%= NoSuchCPInstanceException.class %>" message="the-sku-could-not-be-found" />
 <liferay-ui:error exception="<%= NoSuchPriceEntryException.class %>" message="the-entry-could-not-be-found" />
 <liferay-ui:error exception="<%= NoSuchPriceListException.class %>" message="the-price-list-could-not-be-found" />
-<liferay-ui:error exception="<%= NoSuchTirePriceEntryException.class %>" message="the-tire-price-entry-could-not-be-found" />
+<liferay-ui:error exception="<%= NoSuchTierPriceEntryException.class %>" message="the-tier-price-entry-could-not-be-found" />
 
 <liferay-ui:error-principal />

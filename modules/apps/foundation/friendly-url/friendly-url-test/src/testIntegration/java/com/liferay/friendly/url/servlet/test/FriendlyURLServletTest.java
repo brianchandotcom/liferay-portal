@@ -80,7 +80,6 @@ public class FriendlyURLServletTest {
 	public void setUp() throws Exception {
 		PropsValues.LOCALES_ENABLED = new String[] {"en_US", "hu_HU", "de_DE"};
 		PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE = true;
-		PropsValues.USERS_SCREEN_NAME_ALLOW_NUMERIC = true;
 
 		LanguageUtil.init();
 
@@ -120,8 +119,6 @@ public class FriendlyURLServletTest {
 			PropsKeys.LOCALES_ENABLED);
 		PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE = GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE));
-		PropsValues.USERS_SCREEN_NAME_ALLOW_NUMERIC = GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.USERS_SCREEN_NAME_ALLOW_NUMERIC));
 
 		LanguageUtil.init();
 

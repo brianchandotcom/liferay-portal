@@ -39,21 +39,21 @@ public class LocalGitSyncUtil {
 		String senderBranchName, String senderUsername, String senderBranchSHA,
 		String upstreamBranchSHA) {
 
-		List<GitWorkingDirectory.Remote> localGitRemoteConfigs = null;
+		List<GitWorkingDirectory.Remote> localGitRemotes = null;
 
 		try {
-			localGitRemoteConfigs = getLocalGitRemotes(gitWorkingDirectory);
+			localGitRemotes = getLocalGitRemotes(gitWorkingDirectory);
 
 			deleteCacheBranch(
 				getCacheBranchName(
 					receiverUsername, senderUsername, senderBranchSHA,
 					upstreamBranchSHA),
-				gitWorkingDirectory, localGitRemoteConfigs);
+				gitWorkingDirectory, localGitRemotes);
 		}
 		finally {
-			if (localGitRemoteConfigs != null) {
+			if (localGitRemotes != null) {
 				try {
-					gitWorkingDirectory.removeGitRemotes(localGitRemoteConfigs);
+					gitWorkingDirectory.removeRemotes(localGitRemotes);
 				}
 				catch (Exception e) {
 					e.printStackTrace();
@@ -738,7 +738,7 @@ public class LocalGitSyncUtil {
 			finally {
 				if (localGitRemotes != null) {
 					try {
-						gitWorkingDirectory.removeGitRemotes(localGitRemotes);
+						gitWorkingDirectory.removeRemotes(localGitRemotes);
 					}
 					catch (Exception e) {
 						e.printStackTrace();
@@ -760,7 +760,7 @@ public class LocalGitSyncUtil {
 		finally {
 			if (senderRemote != null) {
 				try {
-					gitWorkingDirectory.removeGitRemote(senderRemote);
+					gitWorkingDirectory.removeRemote(senderRemote);
 				}
 				catch (Exception e) {
 					e.printStackTrace();

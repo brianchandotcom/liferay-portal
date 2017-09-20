@@ -9,8 +9,6 @@ AUI.add(
 
 		var CSS_CAN_REMOVE_ITEM = A.getClassName('can', 'remove', 'item');
 
-		var Settings = Liferay.DDL.Settings;
-
 		var FormBuilderRenderRuleCondition = function(config) {};
 
 		FormBuilderRenderRuleCondition.ATTRS = {
@@ -667,7 +665,7 @@ AUI.add(
 
 				var operator = instance._getOperator(conditionIndex);
 
-				var operatorTypes = Settings.functionsMetadata;
+				var operatorTypes = Liferay.DDL.Settings.functionsMetadata;
 
 				var options = [];
 

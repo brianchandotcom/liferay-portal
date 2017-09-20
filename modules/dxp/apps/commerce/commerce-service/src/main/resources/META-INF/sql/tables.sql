@@ -168,6 +168,42 @@ create table CommercePaymentMethod (
 	active_ BOOLEAN
 );
 
+create table CommercePriceEntry (
+	uuid_ VARCHAR(75) null,
+	commercePriceEntryId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	CPInstanceId LONG,
+	commercePriceListId LONG,
+	price DOUBLE,
+	hasTirePrice BOOLEAN,
+	lastPublishDate DATE null
+);
+
+create table CommercePriceList (
+	uuid_ VARCHAR(75) null,
+	commercePriceListId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	commerceCurrencyId LONG,
+	name VARCHAR(75) null,
+	displayDate DATE null,
+	expirationDate DATE null,
+	lastPublishDate DATE null,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null
+);
+
 create table CommerceRegion (
 	uuid_ VARCHAR(75) null,
 	commerceRegionId LONG not null primary key,
@@ -198,6 +234,21 @@ create table CommerceShippingMethod (
 	engineKey VARCHAR(75) null,
 	priority DOUBLE,
 	active_ BOOLEAN
+);
+
+create table CommerceTirePriceEntry (
+	uuid_ VARCHAR(75) null,
+	CommerceTirePriceEntryId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	commercePriceEntryId LONG,
+	price DOUBLE,
+	minQuantity INTEGER,
+	lastPublishDate DATE null
 );
 
 create table CommerceWarehouse (

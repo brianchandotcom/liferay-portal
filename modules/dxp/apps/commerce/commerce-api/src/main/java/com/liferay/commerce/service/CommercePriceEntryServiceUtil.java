@@ -1,0 +1,120 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.commerce.service;
+
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
+import org.osgi.util.tracker.ServiceTracker;
+
+/**
+ * Provides the remote service utility for CommercePriceEntry. This utility wraps
+ * {@link com.liferay.commerce.service.impl.CommercePriceEntryServiceImpl} and is the
+ * primary access point for service operations in application layer code running
+ * on a remote server. Methods of this service are expected to have security
+ * checks based on the propagated JAAS credentials because this service can be
+ * accessed remotely.
+ *
+ * @author Alessio Antonio Rendina
+ * @see CommercePriceEntryService
+ * @see com.liferay.commerce.service.base.CommercePriceEntryServiceBaseImpl
+ * @see com.liferay.commerce.service.impl.CommercePriceEntryServiceImpl
+ * @generated
+ */
+@ProviderType
+public class CommercePriceEntryServiceUtil {
+	/*
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.service.impl.CommercePriceEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 */
+	public static com.liferay.commerce.model.CommercePriceEntry addCommercePriceEntry(
+		long cpInstanceId, long commercePriceListId, double price,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCommercePriceEntry(cpInstanceId, commercePriceListId,
+			price, serviceContext);
+	}
+
+	public static void deleteCommercePriceEntry(long commercePriceEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCommercePriceEntry(commercePriceEntryId);
+	}
+
+	public static com.liferay.commerce.model.CommercePriceEntry fetchCommercePriceEntry(
+		long commercePriceEntryId) {
+		return getService().fetchCommercePriceEntry(commercePriceEntryId);
+	}
+
+	public static java.util.List<com.liferay.commerce.model.CommercePriceEntry> getCommercePriceEntries(
+		long commercePriceListId, int start, int end) {
+		return getService()
+				   .getCommercePriceEntries(commercePriceListId, start, end);
+	}
+
+	public static java.util.List<com.liferay.commerce.model.CommercePriceEntry> getCommercePriceEntries(
+		long commercePriceListId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommercePriceEntry> orderByComparator) {
+		return getService()
+				   .getCommercePriceEntries(commercePriceListId, start, end,
+			orderByComparator);
+	}
+
+	public static int getCommercePriceEntriesCount(long commercePriceListId) {
+		return getService().getCommercePriceEntriesCount(commercePriceListId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.search.Hits search(
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return getService().search(searchContext);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.model.CommercePriceEntry> searchCommercePriceEntries(
+		long companyId, long groupId, long commercePriceListId,
+		java.lang.String keywords, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchCommercePriceEntries(companyId, groupId,
+			commercePriceListId, keywords, start, end, sort);
+	}
+
+	public static com.liferay.commerce.model.CommercePriceEntry updateCommercePriceEntry(
+		long commercePriceEntryId, double price,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCommercePriceEntry(commercePriceEntryId, price,
+			serviceContext);
+	}
+
+	public static CommercePriceEntryService getService() {
+		return _serviceTracker.getService();
+	}
+
+	private static ServiceTracker<CommercePriceEntryService, CommercePriceEntryService> _serviceTracker =
+		ServiceTrackerFactory.open(CommercePriceEntryService.class);
+}

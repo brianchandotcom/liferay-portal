@@ -29,8 +29,12 @@ import com.liferay.commerce.service.persistence.CommerceInventoryPersistence;
 import com.liferay.commerce.service.persistence.CommerceOrderItemPersistence;
 import com.liferay.commerce.service.persistence.CommerceOrderPersistence;
 import com.liferay.commerce.service.persistence.CommercePaymentMethodPersistence;
+import com.liferay.commerce.service.persistence.CommercePriceEntryPersistence;
+import com.liferay.commerce.service.persistence.CommercePriceListFinder;
+import com.liferay.commerce.service.persistence.CommercePriceListPersistence;
 import com.liferay.commerce.service.persistence.CommerceRegionPersistence;
 import com.liferay.commerce.service.persistence.CommerceShippingMethodPersistence;
+import com.liferay.commerce.service.persistence.CommerceTirePriceEntryPersistence;
 import com.liferay.commerce.service.persistence.CommerceWarehouseFinder;
 import com.liferay.commerce.service.persistence.CommerceWarehouseItemFinder;
 import com.liferay.commerce.service.persistence.CommerceWarehouseItemPersistence;
@@ -700,6 +704,101 @@ public abstract class CommercePaymentMethodLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the commerce price entry local service.
+	 *
+	 * @return the commerce price entry local service
+	 */
+	public com.liferay.commerce.service.CommercePriceEntryLocalService getCommercePriceEntryLocalService() {
+		return commercePriceEntryLocalService;
+	}
+
+	/**
+	 * Sets the commerce price entry local service.
+	 *
+	 * @param commercePriceEntryLocalService the commerce price entry local service
+	 */
+	public void setCommercePriceEntryLocalService(
+		com.liferay.commerce.service.CommercePriceEntryLocalService commercePriceEntryLocalService) {
+		this.commercePriceEntryLocalService = commercePriceEntryLocalService;
+	}
+
+	/**
+	 * Returns the commerce price entry persistence.
+	 *
+	 * @return the commerce price entry persistence
+	 */
+	public CommercePriceEntryPersistence getCommercePriceEntryPersistence() {
+		return commercePriceEntryPersistence;
+	}
+
+	/**
+	 * Sets the commerce price entry persistence.
+	 *
+	 * @param commercePriceEntryPersistence the commerce price entry persistence
+	 */
+	public void setCommercePriceEntryPersistence(
+		CommercePriceEntryPersistence commercePriceEntryPersistence) {
+		this.commercePriceEntryPersistence = commercePriceEntryPersistence;
+	}
+
+	/**
+	 * Returns the commerce price list local service.
+	 *
+	 * @return the commerce price list local service
+	 */
+	public com.liferay.commerce.service.CommercePriceListLocalService getCommercePriceListLocalService() {
+		return commercePriceListLocalService;
+	}
+
+	/**
+	 * Sets the commerce price list local service.
+	 *
+	 * @param commercePriceListLocalService the commerce price list local service
+	 */
+	public void setCommercePriceListLocalService(
+		com.liferay.commerce.service.CommercePriceListLocalService commercePriceListLocalService) {
+		this.commercePriceListLocalService = commercePriceListLocalService;
+	}
+
+	/**
+	 * Returns the commerce price list persistence.
+	 *
+	 * @return the commerce price list persistence
+	 */
+	public CommercePriceListPersistence getCommercePriceListPersistence() {
+		return commercePriceListPersistence;
+	}
+
+	/**
+	 * Sets the commerce price list persistence.
+	 *
+	 * @param commercePriceListPersistence the commerce price list persistence
+	 */
+	public void setCommercePriceListPersistence(
+		CommercePriceListPersistence commercePriceListPersistence) {
+		this.commercePriceListPersistence = commercePriceListPersistence;
+	}
+
+	/**
+	 * Returns the commerce price list finder.
+	 *
+	 * @return the commerce price list finder
+	 */
+	public CommercePriceListFinder getCommercePriceListFinder() {
+		return commercePriceListFinder;
+	}
+
+	/**
+	 * Sets the commerce price list finder.
+	 *
+	 * @param commercePriceListFinder the commerce price list finder
+	 */
+	public void setCommercePriceListFinder(
+		CommercePriceListFinder commercePriceListFinder) {
+		this.commercePriceListFinder = commercePriceListFinder;
+	}
+
+	/**
 	 * Returns the commerce region local service.
 	 *
 	 * @return the commerce region local service
@@ -773,6 +872,44 @@ public abstract class CommercePaymentMethodLocalServiceBaseImpl
 	public void setCommerceShippingMethodPersistence(
 		CommerceShippingMethodPersistence commerceShippingMethodPersistence) {
 		this.commerceShippingMethodPersistence = commerceShippingMethodPersistence;
+	}
+
+	/**
+	 * Returns the commerce tire price entry local service.
+	 *
+	 * @return the commerce tire price entry local service
+	 */
+	public com.liferay.commerce.service.CommerceTirePriceEntryLocalService getCommerceTirePriceEntryLocalService() {
+		return commerceTirePriceEntryLocalService;
+	}
+
+	/**
+	 * Sets the commerce tire price entry local service.
+	 *
+	 * @param commerceTirePriceEntryLocalService the commerce tire price entry local service
+	 */
+	public void setCommerceTirePriceEntryLocalService(
+		com.liferay.commerce.service.CommerceTirePriceEntryLocalService commerceTirePriceEntryLocalService) {
+		this.commerceTirePriceEntryLocalService = commerceTirePriceEntryLocalService;
+	}
+
+	/**
+	 * Returns the commerce tire price entry persistence.
+	 *
+	 * @return the commerce tire price entry persistence
+	 */
+	public CommerceTirePriceEntryPersistence getCommerceTirePriceEntryPersistence() {
+		return commerceTirePriceEntryPersistence;
+	}
+
+	/**
+	 * Sets the commerce tire price entry persistence.
+	 *
+	 * @param commerceTirePriceEntryPersistence the commerce tire price entry persistence
+	 */
+	public void setCommerceTirePriceEntryPersistence(
+		CommerceTirePriceEntryPersistence commerceTirePriceEntryPersistence) {
+		this.commerceTirePriceEntryPersistence = commerceTirePriceEntryPersistence;
 	}
 
 	/**
@@ -1130,6 +1267,16 @@ public abstract class CommercePaymentMethodLocalServiceBaseImpl
 	protected CommercePaymentMethodLocalService commercePaymentMethodLocalService;
 	@BeanReference(type = CommercePaymentMethodPersistence.class)
 	protected CommercePaymentMethodPersistence commercePaymentMethodPersistence;
+	@BeanReference(type = com.liferay.commerce.service.CommercePriceEntryLocalService.class)
+	protected com.liferay.commerce.service.CommercePriceEntryLocalService commercePriceEntryLocalService;
+	@BeanReference(type = CommercePriceEntryPersistence.class)
+	protected CommercePriceEntryPersistence commercePriceEntryPersistence;
+	@BeanReference(type = com.liferay.commerce.service.CommercePriceListLocalService.class)
+	protected com.liferay.commerce.service.CommercePriceListLocalService commercePriceListLocalService;
+	@BeanReference(type = CommercePriceListPersistence.class)
+	protected CommercePriceListPersistence commercePriceListPersistence;
+	@BeanReference(type = CommercePriceListFinder.class)
+	protected CommercePriceListFinder commercePriceListFinder;
 	@BeanReference(type = com.liferay.commerce.service.CommerceRegionLocalService.class)
 	protected com.liferay.commerce.service.CommerceRegionLocalService commerceRegionLocalService;
 	@BeanReference(type = CommerceRegionPersistence.class)
@@ -1138,6 +1285,10 @@ public abstract class CommercePaymentMethodLocalServiceBaseImpl
 	protected com.liferay.commerce.service.CommerceShippingMethodLocalService commerceShippingMethodLocalService;
 	@BeanReference(type = CommerceShippingMethodPersistence.class)
 	protected CommerceShippingMethodPersistence commerceShippingMethodPersistence;
+	@BeanReference(type = com.liferay.commerce.service.CommerceTirePriceEntryLocalService.class)
+	protected com.liferay.commerce.service.CommerceTirePriceEntryLocalService commerceTirePriceEntryLocalService;
+	@BeanReference(type = CommerceTirePriceEntryPersistence.class)
+	protected CommerceTirePriceEntryPersistence commerceTirePriceEntryPersistence;
 	@BeanReference(type = com.liferay.commerce.service.CommerceWarehouseLocalService.class)
 	protected com.liferay.commerce.service.CommerceWarehouseLocalService commerceWarehouseLocalService;
 	@BeanReference(type = CommerceWarehousePersistence.class)

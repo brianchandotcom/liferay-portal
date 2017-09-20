@@ -41,8 +41,11 @@ import org.gradle.api.internal.plugins.DslObject;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.plugins.PluginContainer;
+import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Sync;
+import org.gradle.api.tasks.bundling.War;
 
 /**
  * @author Andrea Di Giorgi
@@ -328,12 +331,24 @@ public class AppDockerPlugin implements Plugin<Project> {
 			return;
 		}
 
-		Configuration configuration = GradleUtil.getConfiguration(
-			subproject, Dependency.DEFAULT_CONFIGURATION);
+		PluginContainer pluginContainer = subproject.getPlugins();
 
-		PublishArtifactSet publishArtifactSet = configuration.getAllArtifacts();
+		if (pluginContainer.hasPlugin(WarPlugin.class)) {
+			War war = (War)GradleUtil.getTask(
+				subproject, WarPlugin.WAR_TASK_NAME);
 
-		prepareAppDockerImageInputDirTask.from(publishArtifactSet.getFiles());
+			prepareAppDockerImageInputDirTask.from(war);
+		}
+		else {
+			Configuration configuration = GradleUtil.getConfiguration(
+				subproject, Dependency.DEFAULT_CONFIGURATION);
+
+			PublishArtifactSet publishArtifactSet =
+				configuration.getAllArtifacts();
+
+			prepareAppDockerImageInputDirTask.from(
+				publishArtifactSet.getFiles());
+		}
 	}
 
 	private String _getImageRepository(AppDockerExtension appDockerExtension) {

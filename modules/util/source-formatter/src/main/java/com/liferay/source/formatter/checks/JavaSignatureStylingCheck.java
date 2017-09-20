@@ -39,7 +39,7 @@ public class JavaSignatureStylingCheck extends BaseJavaTermCheck {
 
 		Pattern pattern = Pattern.compile(
 			"(" + indent + javaTerm.getAccessModifier() +
-				" .*?[;{]\\s*\n)((\n*)([^\n]+)\n)?",
+				" .*?[;{]\\s*?\n)((\n*)([^\n]+)\n)?",
 			Pattern.DOTALL);
 
 		Matcher matcher = pattern.matcher(javaTermContent);

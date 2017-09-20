@@ -25,7 +25,6 @@ import com.liferay.portal.tools.bundle.support.util.StreamLogger;
 import java.io.File;
 import java.io.IOException;
 
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 
@@ -264,19 +263,8 @@ public class InitBundleCommand extends BaseCommand implements StreamLogger {
 			});
 	}
 
-	private static final URL _DEFAULT_URL;
-
 	private static final Set<PosixFilePermission> _shPosixFilePermissions =
 		PosixFilePermissions.fromString("rwxr-x---");
-
-	static {
-		try {
-			_DEFAULT_URL = new URL(BundleSupportConstants.DEFAULT_BUNDLE_URL);
-		}
-		catch (MalformedURLException murle) {
-			throw new ExceptionInInitializerError(murle);
-		}
-	}
 
 	@Parameter(
 		description = "The directory where to cache the downloaded bundles.",
@@ -326,7 +314,7 @@ public class InitBundleCommand extends BaseCommand implements StreamLogger {
 		description = "The URL of the Liferay Bundle to expand.",
 		names = "--url"
 	)
-	private URL _url = _DEFAULT_URL;
+	private URL _url = BundleSupportConstants.DEFAULT_BUNDLE_URL_OBJECT;
 
 	@Parameter(
 		description = "The user name if your URL requires authentication.",

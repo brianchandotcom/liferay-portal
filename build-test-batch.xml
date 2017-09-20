@@ -2322,20 +2322,22 @@ app.server.type=@{app.server.type}]]></echo>
 					<arg value="-Dbuild.exclude.dirs=private/apps/osb-lcs,private/apps/saml,third-party" />
 				</gradle-execute>
 
-				<propertyregex
-					input="${modules.compile.project.paths}"
-					property="modules.compile.task.groups"
-					regexp="(\S+)\r?\n"
-					replace="\1:assemble "
-				/>
+				<loadresource property="modules.compile.task.groups">
+					<filterchain>
+						<linecontainsregexp>
+							<regexp pattern="^:" />
+						</linecontainsregexp>
 
-				<propertyregex
-					input="${modules.compile.task.groups}:assemble"
-					override="true"
-					property="modules.compile.task.groups"
-					regexp="(\S+ ){${test.module.groups.size}}"
-					replace="\0,"
-				/>
+						<suffixlines suffix=":assemble " />
+
+						<striplinebreaks />
+
+						<tokenfilter>
+							<replaceregex flags="g" pattern="(\S+ ){${test.module.groups.size}}" replace="\0," />
+						</tokenfilter>
+					</filterchain>
+					<propertyresource name="modules.compile.project.paths" />
+				</loadresource>
 
 				<for list="${modules.compile.task.groups}" param="modules.compile.task.group" trim="true">
 					<sequential>

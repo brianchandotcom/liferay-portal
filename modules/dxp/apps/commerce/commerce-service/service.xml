@@ -468,7 +468,7 @@
 		<column name="CPInstanceId" type="long" />
 		<column name="commercePriceListId" type="long" />
 		<column name="price" type="double" />
-		<column name="hasTirePrice" type="boolean" />
+		<column name="hasTierPrice" type="boolean" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
@@ -651,11 +651,11 @@
 			<finder-column name="active" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="CommerceTirePriceEntry" remote-service="true" uuid="true">
+	<entity local-service="true" name="CommerceTierPriceEntry" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="CommerceTirePriceEntryId" primary="true" type="long" />
+		<column name="CommerceTierPriceEntryId" primary="true" type="long" />
 
 		<!-- Group instance -->
 

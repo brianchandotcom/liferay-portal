@@ -21,7 +21,7 @@ CPOptionCategoryDisplayContext cpOptionCategoryDisplayContext = (CPOptionCategor
 
 CPOptionCategory cpOptionCategory = (CPOptionCategory)request.getAttribute(CPWebKeys.CP_OPTION_CATEGORY);
 
-long cpOptionCategoryId = BeanParamUtil.getLong(cpOptionCategory, request, "cpOptionCategoryId");
+long cpOptionCategoryId = BeanParamUtil.getLong(cpOptionCategory, request, "CPOptionCategoryId");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(optionCategoriesURL);

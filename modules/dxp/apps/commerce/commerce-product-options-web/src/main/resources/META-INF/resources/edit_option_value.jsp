@@ -19,7 +19,7 @@
 <%
 CPOptionValue cpOptionValue = (CPOptionValue)request.getAttribute(CPWebKeys.CP_OPTION_VALUE);
 
-long cpOptionValueId = BeanParamUtil.getLong(cpOptionValue, request, "cpOptionValueId");
+long cpOptionValueId = BeanParamUtil.getLong(cpOptionValue, request, "CPOptionValueId");
 
 long cpOptionId = ParamUtil.getLong(request, "cpOptionId");
 

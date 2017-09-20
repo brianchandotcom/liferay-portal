@@ -114,17 +114,6 @@ public class FriendlyURLServlet extends HttpServlet {
 		}
 
 		if (group == null) {
-			long groupId = GetterUtil.getLong(friendlyURL.substring(1));
-
-			group = groupLocalService.fetchGroup(groupId);
-
-			if ((group == null) && _log.isDebugEnabled()) {
-				_log.debug(
-					"No group exists with friendly URL " + groupId + ".");
-			}
-		}
-
-		if (group == null) {
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("{companyId=");

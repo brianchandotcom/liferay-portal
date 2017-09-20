@@ -63,16 +63,13 @@ public class CommerceWishListContentDisplayContext
 
 		CPDefinition cpDefinition = commerceCartItem.getCPDefinition();
 
-		if (cpDefinition.isIgnoreSKUCombinations()) {
+		if (cpDefinition.isIgnoreSKUCombinations() ||
+			(commerceCartItem.getCPInstanceId() > 0)) {
+
 			return true;
 		}
-		else {
-			if (commerceCartItem.getCPInstanceId() > 0) {
-				return true;
-			}
 
-			return false;
-		}
+		return false;
 	}
 
 }

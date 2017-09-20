@@ -28,6 +28,8 @@ definition {
 			portlet = "Users and Organizations"
 		);
 
+		echo("This is a message.");
+
 		for (breadcrumbName : "${breadcrumbListVisible}") {
 			var key_breadcrumbName = "${breadcrumbName}";
 			var breadcrumbNameUppercase = "StringUtil.upperCase('${breadcrumbName}')";

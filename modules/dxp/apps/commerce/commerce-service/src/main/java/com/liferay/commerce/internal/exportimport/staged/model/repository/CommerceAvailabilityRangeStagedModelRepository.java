@@ -86,7 +86,7 @@ public class CommerceAvailabilityRangeStagedModelRepository
 	public void deleteStagedModels(PortletDataContext portletDataContext)
 		throws PortalException {
 
-		_commerceAvailabilityRangeLocalService.deleteCommerceAvailabilityRange(
+		_commerceAvailabilityRangeLocalService.deleteCommerceAvailabilityRanges(
 			portletDataContext.getScopeGroupId());
 	}
 

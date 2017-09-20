@@ -312,12 +312,12 @@ public class StringUtilTest {
 		Assert.assertEquals(
 			StringPool.BLANK,
 			StringUtil.read(
-				new ByteArrayInputStream(StringPool.BLANK.getBytes())));
+				new ByteArrayInputStream(new byte[0])));
 
 		Assert.assertEquals(
 			StringPool.BLANK,
 			StringUtil.read(
-				new ByteArrayInputStream(StringPool.SPACE.getBytes())));
+				new ByteArrayInputStream(new byte[0])));
 
 		Assert.assertEquals(
 			"A\nB",
@@ -344,7 +344,7 @@ public class StringUtilTest {
 		List<String> lines = new ArrayList<>();
 
 		StringUtil.readLines(
-			new ByteArrayInputStream(StringPool.BLANK.getBytes()), lines);
+			new ByteArrayInputStream(new byte[0]), lines);
 
 		Assert.assertEquals(lines.toString(), 0, lines.size());
 

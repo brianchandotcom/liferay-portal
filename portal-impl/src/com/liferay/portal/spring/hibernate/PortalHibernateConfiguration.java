@@ -212,7 +212,7 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 				PropsValues.
 					HIBERNATE_SESSION_FACTORY_IMPORTED_CLASS_NAME_REGEXP)) {
 
-			// For wildcard match, simply disable the optimization
+			// For wildcard match, simply disable the optimization.
 
 			return sessionFactory;
 		}

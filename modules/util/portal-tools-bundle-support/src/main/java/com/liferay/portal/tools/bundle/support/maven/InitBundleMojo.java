@@ -21,6 +21,7 @@ import com.liferay.portal.tools.bundle.support.internal.util.MavenUtil;
 
 import java.io.File;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.apache.maven.execution.MavenSession;
@@ -40,6 +41,19 @@ public class InitBundleMojo extends AbstractLiferayMojo {
 	public void execute() throws MojoExecutionException {
 		if (project.hasParent()) {
 			return;
+		}
+
+		if (environment == null) {
+			environment = BundleSupportConstants.DEFAULT_ENVIRONMENT;
+		}
+
+		if (url == null) {
+			try {
+				url = new URL(BundleSupportConstants.DEFAULT_BUNDLE_URL);
+			}
+			catch (MalformedURLException murle) {
+				throw new MojoExecutionException("URL is invalid", murle);
+			}
 		}
 
 		Proxy proxy = MavenUtil.getProxy(_mavenSession);
@@ -107,7 +121,9 @@ public class InitBundleMojo extends AbstractLiferayMojo {
 	@Parameter(defaultValue = BundleSupportConstants.DEFAULT_CONFIGS_DIR_NAME)
 	protected String configs;
 
-	@Parameter(defaultValue = BundleSupportConstants.DEFAULT_ENVIRONMENT)
+	@Parameter(
+		defaultValue = "${" + BundleSupportConstants.DEFAULT_ENVIRONMENT_PROPERTY + "}"
+	)
 	protected String environment;
 
 	@Parameter
@@ -127,8 +143,7 @@ public class InitBundleMojo extends AbstractLiferayMojo {
 	protected File tokenFile;
 
 	@Parameter(
-		defaultValue = BundleSupportConstants.DEFAULT_BUNDLE_URL,
-		required = true
+		defaultValue = "${" + BundleSupportConstants.DEFAULT_BUNDLE_URL_PROPERTY + "}"
 	)
 	protected URL url;
 

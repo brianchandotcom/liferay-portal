@@ -21,7 +21,6 @@ import com.liferay.portal.tools.bundle.support.internal.util.MavenUtil;
 
 import java.io.File;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.apache.maven.execution.MavenSession;
@@ -48,12 +47,7 @@ public class InitBundleMojo extends AbstractLiferayMojo {
 		}
 
 		if (url == null) {
-			try {
-				url = new URL(BundleSupportConstants.DEFAULT_BUNDLE_URL);
-			}
-			catch (MalformedURLException murle) {
-				throw new MojoExecutionException("URL is invalid", murle);
-			}
+			url = BundleSupportConstants.DEFAULT_BUNDLE_URL_OBJECT;
 		}
 
 		Proxy proxy = MavenUtil.getProxy(_mavenSession);

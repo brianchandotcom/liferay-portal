@@ -16,6 +16,9 @@ package com.liferay.portal.tools.bundle.support.constants;
 
 import java.io.File;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 /**
  * @author Andrea Di Giorgi
  */
@@ -29,6 +32,8 @@ public class BundleSupportConstants {
 	public static final String DEFAULT_BUNDLE_URL =
 		"https://cdn.lfrs.sl/releases.liferay.com/portal/7.0.3-ga4" +
 			"/liferay-ce-portal-tomcat-7.0-ga4-20170613175008905.zip";
+
+	public static final URL DEFAULT_BUNDLE_URL_OBJECT;
 
 	public static final String DEFAULT_CONFIGS_DIR_NAME = "configs";
 
@@ -49,6 +54,13 @@ public class BundleSupportConstants {
 			"/tokenauthentry/add-token-auth-entry";
 
 	static {
+		try {
+			DEFAULT_BUNDLE_URL_OBJECT = new URL(DEFAULT_BUNDLE_URL);
+		}
+		catch (MalformedURLException murle) {
+			throw new ExceptionInInitializerError(murle);
+		}
+
 		DEFAULT_TOKEN_FILE = new File(
 			System.getProperty("user.home"), DEFAULT_TOKEN_FILE_NAME);
 	}

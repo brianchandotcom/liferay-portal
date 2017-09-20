@@ -47,14 +47,14 @@ public class ViewCommerceTierPriceEntriesMVCRenderCommand
 		throws PortletException {
 
 		CommerceTierPriceEntryDisplayContext
-				commerceTierPriceEntryDisplayContext =
+			commerceTierPriceEntryDisplayContext =
 				new CommerceTierPriceEntryDisplayContext(
 					_actionHelper, _commerceTierPriceEntryService,
 					renderRequest, renderResponse);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
-				commerceTierPriceEntryDisplayContext);
+			commerceTierPriceEntryDisplayContext);
 
 		return "/tier_price_entries.jsp";
 	}

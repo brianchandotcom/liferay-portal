@@ -189,9 +189,9 @@ public class CommerceTierPriceEntryLocalServiceImpl
 
 	@Override
 	public BaseModelSearchResult<CommerceTierPriceEntry>
-		searchCommerceTierPriceEntries(
-			long companyId, long groupId, long commercePriceEntryId,
-			String keywords, int start, int end, Sort sort)
+			searchCommerceTierPriceEntries(
+				long companyId, long groupId, long commercePriceEntryId,
+				String keywords, int start, int end, Sort sort)
 		throws PortalException {
 
 		SearchContext searchContext = buildSearchContext(

@@ -105,9 +105,9 @@ public class CommerceTierPriceEntryServiceImpl
 
 	@Override
 	public BaseModelSearchResult<CommerceTierPriceEntry>
-		searchCommerceTierPriceEntries(
-			long companyId, long groupId, long commercePriceEntryId,
-			String keywords, int start, int end, Sort sort)
+			searchCommerceTierPriceEntries(
+				long companyId, long groupId, long commercePriceEntryId,
+				String keywords, int start, int end, Sort sort)
 		throws PortalException {
 
 		return
@@ -123,8 +123,8 @@ public class CommerceTierPriceEntryServiceImpl
 		throws PortalException {
 
 		CommercePriceListPermission.check(
-				getPermissionChecker(), serviceContext.getScopeGroupId(),
-				CommerceActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			CommerceActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
 
 		return commerceTierPriceEntryLocalService.updateCommerceTierPriceEntry(
 			commerceTierPriceEntryId, price, minQuantity, serviceContext);

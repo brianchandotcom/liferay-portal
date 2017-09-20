@@ -511,6 +511,8 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			Set<String> portletIds)
 		throws Exception {
 
+		portlet.unsetReady();
+
 		PortletApp portletApp = portlet.getPortletApp();
 
 		Set<PortletFilter> portletFilters = portletApp.getPortletFilters();

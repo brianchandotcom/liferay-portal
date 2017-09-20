@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.lists.form.web.internal.portlet;
 import com.liferay.dynamic.data.lists.form.web.configuration.DDLFormWebConfigurationActivator;
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.lists.form.web.internal.display.context.DDLFormAdminDisplayContext;
+import com.liferay.dynamic.data.lists.form.web.internal.display.context.DDLFormAdminFieldSetDisplayContext;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetSettings;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
@@ -28,12 +29,11 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.SessionParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowEngineManager;
 
@@ -57,6 +58,7 @@ import java.util.Map;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -213,20 +215,6 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	protected void setDDMFormJSONSerializer(
-		DDMFormJSONSerializer ddmFormJSONSerializer) {
-
-		_ddmFormJSONSerializer = ddmFormJSONSerializer;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormLayoutJSONSerializer(
-		DDMFormLayoutJSONSerializer ddmFormLayoutJSONSerializer) {
-
-		_ddmFormLayoutJSONSerializer = ddmFormLayoutJSONSerializer;
-	}
-
-	@Reference(unbind = "-")
 	protected void setDDMFormRenderer(DDMFormRenderer ddmFormRenderer) {
 		_ddmFormRenderer = ddmFormRenderer;
 	}
@@ -270,6 +258,13 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setDDMStructureService(
+		DDMStructureService ddmStructureService) {
+
+		_ddmStructureService = ddmStructureService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setJSONFactory(JSONFactory jsonFactory) {
 		_jsonFactory = jsonFactory;
 	}
@@ -278,44 +273,64 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		String currentTab = SessionParamUtil.getString(
+			renderRequest, "currentTab");
 
-		long recordSetId = ParamUtil.getLong(renderRequest, "recordSetId");
+		PortletSession portletSession = renderRequest.getPortletSession();
 
-		DDMForm ddmForm = createSettingsDDMForm(recordSetId, themeDisplay);
+		portletSession.setAttribute("currentTab", currentTab);
 
-		DDMFormRenderingContext ddmFormRenderingContext =
-			createDDMFormRenderingContext(renderRequest, renderResponse);
+		if (currentTab.equals("field-set")) {
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_DISPLAY_CONTEXT,
+				new DDLFormAdminFieldSetDisplayContext(
+					renderRequest, renderResponse,
+					_ddlFormWebConfigurationActivator.
+						getDDLFormWebConfiguration(), _ddlRecordLocalService,
+					_ddlRecordSetService, _ddmFormFieldTypeServicesTracker,
+					_ddmFormFieldTypesJSONSerializer, _ddmFormRenderer,
+					_ddmFormValuesFactory, _ddmFormValuesMerger,
+					_ddmStructureLocalService, _ddmStructureService,
+					_jsonFactory, _storageEngine, _workflowEngineManager));
+		}
+		else {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-		setDDMFormRenderingContextDDMFormValues(
-			ddmFormRenderingContext, ddmForm, recordSetId);
+			long recordSetId = ParamUtil.getLong(renderRequest, "recordSetId");
 
-		DDMFormLayout ddmFormLayout = DDMFormLayoutFactory.create(
-			DDLRecordSetSettings.class);
+			DDMForm ddmForm = createSettingsDDMForm(recordSetId, themeDisplay);
 
-		ddmFormLayout.setPaginationMode(DDMFormLayout.TABBED_MODE);
+			DDMFormRenderingContext ddmFormRenderingContext =
+				createDDMFormRenderingContext(renderRequest, renderResponse);
 
-		String ddmFormHTML = _ddmFormRenderer.render(
-			ddmForm, ddmFormLayout, ddmFormRenderingContext);
+			setDDMFormRenderingContextDDMFormValues(
+				ddmFormRenderingContext, ddmForm, recordSetId);
 
-		renderRequest.setAttribute(
-			DDMWebKeys.DYNAMIC_DATA_MAPPING_FORM_HTML, ddmFormHTML);
+			DDMFormLayout ddmFormLayout = DDMFormLayoutFactory.create(
+				DDLRecordSetSettings.class);
 
-		DDLFormAdminDisplayContext ddlFormAdminDisplayContext =
-			new DDLFormAdminDisplayContext(
-				renderRequest, renderResponse,
-				_ddlFormWebConfigurationActivator.getDDLFormWebConfiguration(),
-				_ddlRecordLocalService, _ddlRecordSetService,
-				_ddmFormFieldTypeServicesTracker,
-				_ddmFormFieldTypesJSONSerializer, _ddmFormJSONSerializer,
-				_ddmFormLayoutJSONSerializer, _ddmFormRenderer,
-				_ddmFormValuesFactory, _ddmFormValuesMerger,
-				_ddmStructureLocalService, _jsonFactory, _storageEngine,
-				_workflowEngineManager);
+			ddmFormLayout.setPaginationMode(DDMFormLayout.TABBED_MODE);
 
-		renderRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT, ddlFormAdminDisplayContext);
+			String ddmFormHTML = _ddmFormRenderer.render(
+				ddmForm, ddmFormLayout, ddmFormRenderingContext);
+
+			renderRequest.setAttribute(
+				DDMWebKeys.DYNAMIC_DATA_MAPPING_FORM_HTML, ddmFormHTML);
+
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_DISPLAY_CONTEXT,
+				new DDLFormAdminDisplayContext(
+					renderRequest, renderResponse,
+					_ddlFormWebConfigurationActivator.
+						getDDLFormWebConfiguration(),
+					_ddlRecordLocalService, _ddlRecordSetService,
+					_ddmFormFieldTypeServicesTracker,
+					_ddmFormFieldTypesJSONSerializer, _ddmFormRenderer,
+					_ddmFormValuesFactory, _ddmFormValuesMerger,
+					_ddmStructureLocalService, _ddmStructureService,
+					_jsonFactory, _storageEngine, _workflowEngineManager));
+		}
 	}
 
 	@Reference(unbind = "-")
@@ -345,12 +360,11 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 	private DDLRecordSetService _ddlRecordSetService;
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 	private DDMFormFieldTypesJSONSerializer _ddmFormFieldTypesJSONSerializer;
-	private DDMFormJSONSerializer _ddmFormJSONSerializer;
-	private DDMFormLayoutJSONSerializer _ddmFormLayoutJSONSerializer;
 	private DDMFormRenderer _ddmFormRenderer;
 	private DDMFormValuesFactory _ddmFormValuesFactory;
 	private DDMFormValuesMerger _ddmFormValuesMerger;
 	private DDMStructureLocalService _ddmStructureLocalService;
+	private DDMStructureService _ddmStructureService;
 	private JSONFactory _jsonFactory;
 
 	@Reference

@@ -101,6 +101,13 @@ File Name | Description
 `.lfrbuild-faro-connector` | Deploys the module to the Faro client portal directory.
 `.lfrbuild-faro-site` | Deploys the module to the Faro site portal directory.
 
+### LCS
+
+File Name | Description
+--------- | -----------
+`.lfrbuild-spark-job` | Configures the module as an Apache Spark job.
+`.lfrbuild-spring-boot` | Configures the module as a Spring Boot application.
+
 ### Release
 
 File Name | Description

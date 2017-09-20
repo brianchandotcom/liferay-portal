@@ -64,7 +64,7 @@ public class PortletRequestDispatcherImplTest {
 	public void testInclude() throws Exception {
 		PortletRequestDispatcherImpl portletRequestDispatcher =
 			new PortletRequestDispatcherImpl(
-				new TestRequestDispatcher("/testPath", null, "/testPath", ""),
+				new TestRequestDispatcher(null, null, "/testPath", "/testPath"),
 				true, _portletContext, "/testPath");
 
 		portletRequestDispatcher.include(_portletRequest, _portletResponse);
@@ -75,7 +75,7 @@ public class PortletRequestDispatcherImplTest {
 		PortletRequestDispatcherImpl portletRequestDispatcher =
 			new PortletRequestDispatcherImpl(
 				new TestRequestDispatcher(
-					"/testPath", null, "/test/testPath", ""),
+					null, null, "/test/testPath", "/testPath"),
 				true, _portletContext, "/testPath");
 
 		portletRequestDispatcher.include(
@@ -112,7 +112,7 @@ public class PortletRequestDispatcherImplTest {
 		PortletRequestDispatcherImpl portletRequestDispatcher =
 			new PortletRequestDispatcherImpl(
 				new TestRequestDispatcher(
-					"/unmatchedPath", null, "/unmatchedPath", ""),
+					null, null, "/unmatchedPath", "/unmatchedPath"),
 				true, _portletContext, "/unmatchedPath");
 
 		portletRequestDispatcher.include(_portletRequest, _portletResponse);
@@ -122,7 +122,8 @@ public class PortletRequestDispatcherImplTest {
 	public void testIncludeWithUnrecognizedSeparator() throws Exception {
 		PortletRequestDispatcherImpl portletRequestDispatcher =
 			new PortletRequestDispatcherImpl(
-				new TestRequestDispatcher("/testPath|", null, "/testPath|", ""),
+				new TestRequestDispatcher(
+					null, null, "/testPath|", "/testPath|"),
 				true, _portletContext, "/testPath|");
 
 		portletRequestDispatcher.include(_portletRequest, _portletResponse);

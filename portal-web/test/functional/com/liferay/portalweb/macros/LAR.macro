@@ -380,9 +380,7 @@
 				<if>
 					<equals arg1="${mirrorWithOverwriting}" arg2="true" />
 					<then>
-						<execute function="ScrollWebElementIntoView" locator1="Panel#PANEL_TITLE">
-							<var name="key_componentName" value="Update Data" />
-						</execute>
+						<execute function="ScrollWebElementIntoView" locator1="//div[contains(@class,'panel') and contains(@role,'tablist')]//a[normalize-space(text())='Update Data']" />
 
 						<execute macro="Panel#expandPanel">
 							<var name="panelHeading" value="Update Data" />

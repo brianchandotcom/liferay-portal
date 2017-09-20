@@ -30,15 +30,9 @@ public class BundleSupportConstants {
 		"https://cdn.lfrs.sl/releases.liferay.com/portal/7.0.3-ga4" +
 			"/liferay-ce-portal-tomcat-7.0-ga4-20170613175008905.zip";
 
-	public static final String DEFAULT_BUNDLE_URL_PROPERTY =
-		"liferay.workspace.bundle.url";
-
 	public static final String DEFAULT_CONFIGS_DIR_NAME = "configs";
 
 	public static final String DEFAULT_ENVIRONMENT = "local";
-
-	public static final String DEFAULT_ENVIRONMENT_PROPERTY =
-		"liferay.workspace.environment";
 
 	public static final boolean DEFAULT_INCLUDE_FOLDER = true;
 

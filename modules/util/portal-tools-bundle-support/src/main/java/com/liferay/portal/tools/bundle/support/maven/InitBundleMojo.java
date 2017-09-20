@@ -121,9 +121,7 @@ public class InitBundleMojo extends AbstractLiferayMojo {
 	@Parameter(defaultValue = BundleSupportConstants.DEFAULT_CONFIGS_DIR_NAME)
 	protected String configs;
 
-	@Parameter(
-		defaultValue = "${" + BundleSupportConstants.DEFAULT_ENVIRONMENT_PROPERTY + "}"
-	)
+	@Parameter(defaultValue = "${liferay.workspace.environment}")
 	protected String environment;
 
 	@Parameter
@@ -142,9 +140,7 @@ public class InitBundleMojo extends AbstractLiferayMojo {
 	)
 	protected File tokenFile;
 
-	@Parameter(
-		defaultValue = "${" + BundleSupportConstants.DEFAULT_BUNDLE_URL_PROPERTY + "}"
-	)
+	@Parameter(defaultValue = "${liferay.workspace.bundle.url}")
 	protected URL url;
 
 	@Parameter

@@ -1892,6 +1892,23 @@ public abstract class BaseBuild implements Build {
 		return null;
 	}
 
+	protected int getTestCountByStatus(String status) {
+		JSONObject testReportJSONObject = getTestReportJSONObject();
+
+		int failCount = testReportJSONObject.getInt("failCount");
+		int passCount = testReportJSONObject.getInt("passCount");
+
+		if (status.equals("FAILURE")) {
+			return failCount;
+		}
+
+		if (status.equals("SUCCESS")) {
+			return passCount;
+		}
+
+		throw new IllegalArgumentException("Invalid status: " + status);
+	}
+
 	protected boolean isCompareToUpstream() {
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 

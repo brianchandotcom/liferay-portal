@@ -59,7 +59,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				<%
 				CPDefinition cpDefinition = commerceCartItem.getCPDefinition();
 
-				String thumbnailSrc = commerceCartContentMiniDisplayContext.getCommerceCartItemThumb(commerceCartItem, themeDisplay);
+				String thumbnailSrc = commerceCartContentMiniDisplayContext.getCommerceCartItemThumbnailSrc(commerceCartItem, themeDisplay);
 				%>
 
 				<liferay-ui:search-container-column-image

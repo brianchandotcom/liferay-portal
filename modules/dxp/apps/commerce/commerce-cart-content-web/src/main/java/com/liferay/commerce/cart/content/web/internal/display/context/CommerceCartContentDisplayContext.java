@@ -99,7 +99,7 @@ public class CommerceCartContentDisplayContext {
 		return commerceCart.getCommerceCartId();
 	}
 
-	public String getCommerceCartItemThumb(
+	public String getCommerceCartItemThumbnailSrc(
 			CommerceCartItem commerceCartItem, ThemeDisplay themeDisplay)
 		throws Exception {
 

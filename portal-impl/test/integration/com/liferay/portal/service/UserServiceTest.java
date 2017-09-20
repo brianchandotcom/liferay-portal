@@ -173,11 +173,6 @@ public class UserServiceTest {
 		public static final AggregateTestRule aggregateTestRule =
 			new LiferayIntegrationTestRule();
 
-		@Before
-		public void setup() throws Exception {
-			PropsValues.USERS_SCREEN_NAME_ALLOW_NUMERIC = true;
-		}
-
 		@Test
 		public void shouldAddUser() throws Exception {
 			long numericScreenName = RandomTestUtil.nextLong();

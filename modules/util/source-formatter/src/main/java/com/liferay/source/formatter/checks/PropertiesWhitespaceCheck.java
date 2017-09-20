@@ -86,10 +86,6 @@ public class PropertiesWhitespaceCheck extends WhitespaceCheck {
 
 		content = sb.toString();
 
-		if (content.endsWith("\n")) {
-			content = content.substring(0, content.length() - 1);
-		}
-
 		return super.doProcess(fileName, absolutePath, content);
 	}
 

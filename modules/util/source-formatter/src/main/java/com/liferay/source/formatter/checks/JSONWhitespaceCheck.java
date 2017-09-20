@@ -67,10 +67,6 @@ public class JSONWhitespaceCheck extends WhitespaceCheck {
 
 		content = sb.toString();
 
-		if (content.endsWith("\n")) {
-			content = content.substring(0, content.length() - 1);
-		}
-
 		Matcher matcher = _missingWhitespacePattern.matcher(content);
 
 		while (matcher.find()) {

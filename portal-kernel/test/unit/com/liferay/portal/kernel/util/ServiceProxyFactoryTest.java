@@ -42,6 +42,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
@@ -430,6 +431,20 @@ public class ServiceProxyFactoryTest {
 				JDKLoggerTestUtil.configureJDKLogger(
 					ServiceProxyFactory.class.getName(), Level.SEVERE)) {
 
+			ReflectionTestUtil.setFieldValue(
+				captureHandler, "_logRecords",
+				new CopyOnWriteArrayList<LogRecord>() {
+
+					@Override
+					public boolean add(LogRecord e) {
+						Thread currentThread = Thread.currentThread();
+
+						currentThread.interrupt();
+
+						return super.add(e);
+					}
+
+				});
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			FutureTask<String> futureTask = new FutureTask<>(
@@ -439,11 +454,9 @@ public class ServiceProxyFactoryTest {
 
 			thread.start();
 
-			while (logRecords.isEmpty()) {
-			}
-
-			thread.interrupt();
 			thread.join();
+
+			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 

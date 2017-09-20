@@ -87,13 +87,15 @@ public class ServiceProxyFactoryTest {
 
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
-	public void testBlockingProxyWithTimeout() throws Exception {
+	public void testBlockingProxyWithTimeout() throws InterruptedException {
 		_testBlockingProxyWithTimeout(null);
 	}
 
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
-	public void testBlockingProxyWithTimeoutAndFilterString() throws Exception {
+	public void testBlockingProxyWithTimeoutAndFilterString()
+		throws InterruptedException {
+
 		_testBlockingProxyWithTimeout("filter.string");
 	}
 
@@ -412,7 +414,7 @@ public class ServiceProxyFactoryTest {
 	}
 
 	private void _testBlockingProxyWithTimeout(String filterString)
-		throws Exception {
+		throws InterruptedException {
 
 		System.setProperty(
 			ServiceProxyFactory.class.getName() + ".timeout", "0");

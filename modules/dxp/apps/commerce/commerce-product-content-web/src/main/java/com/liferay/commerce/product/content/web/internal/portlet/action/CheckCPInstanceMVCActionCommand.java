@@ -94,6 +94,9 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 			jsonObject.put("success", false);
 		}
 
+		hideDefaultErrorMessage(actionRequest);
+		hideDefaultSuccessMessage(actionRequest);
+
 		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 
 		writeJSON(actionRequest, actionResponse, jsonObject);

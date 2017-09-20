@@ -435,7 +435,7 @@ public class ServiceProxyFactoryTest {
 			FutureTask<String> futureTask = new FutureTask<>(
 				testService::getTestServiceName);
 
-			Thread thread = new Thread(futureTask);
+			Thread thread = new Thread(futureTask, "Invoke Service Thread");
 
 			thread.start();
 

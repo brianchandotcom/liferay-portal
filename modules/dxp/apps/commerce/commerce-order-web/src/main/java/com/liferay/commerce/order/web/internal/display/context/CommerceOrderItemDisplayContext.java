@@ -119,7 +119,6 @@ public class CommerceOrderItemDisplayContext
 		return searchContainer;
 	}
 
-	private CommerceOrderItem _commerceOrderItem;
 	private final CommerceOrderItemLocalService _commerceOrderItemLocalService;
 	private final CommercePriceFormatter _commercePriceFormatter;
 	private final CPDefinitionHelper _cpDefinitionHelper;

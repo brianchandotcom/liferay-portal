@@ -40,8 +40,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -707,9 +705,6 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		return outputMappingStatementStream.collect(
 			Collectors.joining(StringPool.SEMICOLON));
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CPInstanceHelperImpl.class);
 
 	@Reference
 	private CPAttachmentFileEntryService _cpAttachmentFileEntryService;

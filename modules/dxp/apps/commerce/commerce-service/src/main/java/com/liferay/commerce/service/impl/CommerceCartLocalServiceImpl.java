@@ -257,26 +257,6 @@ public class CommerceCartLocalServiceImpl
 		}
 	}
 
-	private CommerceCountry _getCommerceAddressCountry(long commerceAddressId)
-		throws PortalException {
-
-		if (commerceAddressId <= 0) {
-			return null;
-		}
-
-		CommerceAddress commerceAddress =
-			commerceAddressLocalService.getCommerceAddress(commerceAddressId);
-
-		long commerceCountryId = commerceAddress.getCommerceCountryId();
-
-		if (commerceCountryId <= 0) {
-			return null;
-		}
-
-		return commerceCountryLocalService.getCommerceCountry(
-			commerceCountryId);
-	}
-
 	@ServiceReference(type = DDMFormValuesHelper.class)
 	private DDMFormValuesHelper _ddmFormValuesHelper;
 

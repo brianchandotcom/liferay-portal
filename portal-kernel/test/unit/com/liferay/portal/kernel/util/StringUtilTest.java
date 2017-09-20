@@ -322,6 +322,10 @@ public class StringUtilTest {
 			StringUtil.read(new ByteArrayInputStream("A\rB".getBytes())));
 
 		Assert.assertEquals(
+			"A\nB",
+			StringUtil.read(new ByteArrayInputStream("A\r\nB".getBytes())));
+
+		Assert.assertEquals(
 			"Test",
 			StringUtil.read(new ByteArrayInputStream(" Test ".getBytes())));
 

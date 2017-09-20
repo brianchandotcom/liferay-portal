@@ -361,9 +361,7 @@ public class ModulesStructureTest {
 
 					String fileName = String.valueOf(path.getFileName());
 
-					if (StringUtil.startsWith(fileName, ".lfrbuild-") ||
-						StringUtil.startsWith(fileName, ".lfrrelease-")) {
-
+					if (StringUtil.startsWith(fileName, ".lfrbuild-")) {
 						fileNames.add(fileName);
 
 						Assert.assertEquals(

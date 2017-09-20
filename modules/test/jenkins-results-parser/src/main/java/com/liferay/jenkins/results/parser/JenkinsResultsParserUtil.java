@@ -255,7 +255,7 @@ public class JenkinsResultsParserUtil {
 
 		processBuilder.directory(basedir.getAbsoluteFile());
 
-		Process process = processBuilder.start();
+		Process process = new BufferedProcess(1000000, processBuilder.start());
 
 		long duration = 0;
 		long start = System.currentTimeMillis();

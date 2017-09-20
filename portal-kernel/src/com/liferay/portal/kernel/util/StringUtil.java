@@ -5219,9 +5219,14 @@ public class StringUtil {
 		byte[] buffer = new byte[8192];
 		int length = 0;
 
-		int bytesRead = inputStream.read(buffer, 0, buffer.length);
+		while (true) {
+			int bytesRead = inputStream.read(
+				buffer, length, buffer.length - length);
 
-		while (bytesRead != -1) {
+			if (bytesRead == -1) {
+				break;
+			}
+
 			length += bytesRead;
 
 			if (length == buffer.length) {
@@ -5231,9 +5236,6 @@ public class StringUtil {
 
 				buffer = newBuffer;
 			}
-
-			bytesRead = inputStream.read(
-				buffer, length, buffer.length - length);
 		}
 
 		if (length == 0) {

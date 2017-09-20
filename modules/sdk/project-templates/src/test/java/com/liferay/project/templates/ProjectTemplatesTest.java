@@ -55,6 +55,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -1067,14 +1069,31 @@ public class ProjectTemplatesTest {
 			gradleProjectDir,
 			"src/main/java/com/liferay/test/portlet/FooPortlet.java",
 			"public class FooPortlet extends SoyPortlet {");
+		_testContains(
+			gradleProjectDir,
+			"src/main/java/com/liferay/test/portlet/action" +
+				"/FooViewMVCRenderCommand.java",
+			"public class FooViewMVCRenderCommand");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"soy-portlet", "foo", "com.test", "-DclassName=Foo",
 			"-Dpackage=com.liferay.test");
 
+		String gradleBuildOutputPath = "build/libs/com.liferay.test-1.0.0.jar";
+		String mavenBuildOutputPath = "target/foo-1.0.0.jar";
+
 		_buildProjects(
-			gradleProjectDir, mavenProjectDir,
-			"build/libs/com.liferay.test-1.0.0.jar", "target/foo-1.0.0.jar");
+			gradleProjectDir, mavenProjectDir, gradleBuildOutputPath,
+			mavenBuildOutputPath);
+
+		try (JarFile gradleBuildOutputJar =
+				new JarFile(gradleBuildOutputPath)) {
+
+			JarEntry packageJsonEntry = gradleBuildOutputJar.getJarEntry(
+				"package.json");
+
+			Assert.assertNotNull(packageJsonEntry);
+		}
 	}
 
 	@Test

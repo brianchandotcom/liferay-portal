@@ -2317,6 +2317,8 @@ public class StringUtil {
 	public static String read(InputStream is) throws IOException {
 		String s = _read(is);
 
+		s = replace(s, "\r\n", StringPool.NEW_LINE);
+
 		s = s.replace(CharPool.RETURN, CharPool.NEW_LINE);
 
 		return s.trim();

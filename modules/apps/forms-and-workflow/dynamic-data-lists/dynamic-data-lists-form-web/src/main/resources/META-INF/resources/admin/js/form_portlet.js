@@ -9,6 +9,8 @@ AUI.add(
 
 		var STR_TRANSLATION_MANAGER = 'translationManager';
 
+		var STR_UNTITLED_FIELD_SET = Liferay.Language.get('untitled-field-set');
+
 		var STR_UNTITLED_FORM = Liferay.Language.get('untitled-form');
 
 		var TPL_BUTTON_SPINNER = '<span aria-hidden="true"><span class="icon-spinner icon-spin"></span></span>';
@@ -60,6 +62,10 @@ AUI.add(
 					},
 
 					translationManager: {
+					},
+
+					view: {
+						value: 'forms'
 					}
 				},
 
@@ -102,13 +108,15 @@ AUI.add(
 						instance.one('.portlet-forms').removeClass('hide');
 
 						instance.get('formBuilder').render(instance.one('#formBuilder'));
-						instance.get('ruleBuilder').render(instance.one('#ruleBuilder'));
 
 						instance.createEditor(instance.ns('descriptionEditor'));
 						instance.createEditor(instance.ns('nameEditor'));
 
-						instance.createCopyPublishFormURLPopover();
-						instance.createPublishTooltip();
+						if (instance._isFormView()) {
+							instance.get('ruleBuilder').render(instance.one('#ruleBuilder'));
+							instance.createCopyPublishFormURLPopover();
+							instance.createPublishTooltip();
+						}
 					},
 
 					bindUI: function() {
@@ -131,21 +139,26 @@ AUI.add(
 						instance._eventHandlers.push(
 							formBuilder._layoutBuilder.after('layout-builder:moveEnd', A.bind(instance._afterFormBuilderLayoutBuilderMoveEnd, instance)),
 							formBuilder._layoutBuilder.after('layout-builder:moveStart', A.bind(instance._afterFormBuilderLayoutBuilderMoveStart, instance)),
-							instance.after('autosave', instance._afterAutosave),
 							instance.one('.back-url-link').on('click', A.bind('_onBack', instance)),
-							instance.one('#preview').on('click', A.bind('_onPreviewButtonClick', instance)),
-							instance.one('#publish').on('click', A.bind('_onPublishButtonClick', instance)),
-							instance.one('#publishIcon').on('click', A.bind('_onPublishIconClick', instance)),
 							instance.one('#save').on('click', A.bind('_onSaveButtonClick', instance)),
-							instance.one('#showForm').on('click', A.bind('_onFormButtonClick', instance)),
-							instance.one('#showRules').on('click', A.bind('_onRulesButtonClick', instance)),
 							Liferay.on('destroyPortlet', A.bind('_onDestroyPortlet', instance))
 						);
 
-						var autosaveInterval = Settings.autosaveInterval;
+						if (instance._isFormView()) {
+							instance._eventHandlers.push(
+								instance.after('autosave', instance._afterAutosave),
+								instance.one('#preview').on('click', A.bind('_onPreviewButtonClick', instance)),
+								instance.one('#publish').on('click', A.bind('_onPublishButtonClick', instance)),
+								instance.one('#publishIcon').on('click', A.bind('_onPublishIconClick', instance)),
+								instance.one('#showForm').on('click', A.bind('_onFormButtonClick', instance)),
+								instance.one('#showRules').on('click', A.bind('_onRulesButtonClick', instance))
+							);
 
-						if (autosaveInterval > 0) {
-							instance._intervalId = setInterval(A.bind('_autosave', instance), autosaveInterval * MINUTE);
+							var autosaveInterval = Liferay.DDL.Settings.autosaveInterval;
+
+							if (autosaveInterval > 0) {
+								instance._intervalId = setInterval(A.bind('_autosave', instance), autosaveInterval * MINUTE);
+							}
 						}
 					},
 
@@ -155,12 +168,14 @@ AUI.add(
 						clearInterval(instance._intervalId);
 
 						instance.get('formBuilder').destroy();
-						instance.get('ruleBuilder').destroy();
+
+						if (instance._isFormView()) {
+							instance.get('ruleBuilder').destroy();
+							instance._copyPublishFormURLPopover.destroy();
+							instance._publishTooltip.destroy();
+						}
 
 						(new A.EventHandle(instance._eventHandlers)).detach();
-
-						instance._copyPublishFormURLPopover.destroy();
-						instance._publishTooltip.destroy();
 					},
 
 					createCopyPublishFormURLPopover: function() {
@@ -259,16 +274,26 @@ AUI.add(
 
 						var translationManager = instance.get('translationManager');
 
-						return {
+						var state = {
 							availableLanguageIds: translationManager.get('availableLocales'),
 							defaultLanguageId: translationManager.get('defaultLocale'),
 							description: instance.get('localizedDescription'),
 							name: instance._getLocalizedName(),
 							pages: instance.layoutVisitor.getPages(),
-							paginationMode: pageManager.get('mode'),
-							rules: ruleBuilder.get('rules'),
-							successPageSettings: pageManager.get('successPageSettings')
+							paginationMode: pageManager.get('mode')
 						};
+
+						if (instance._isFormView()) {
+							state = A.merge(
+								state,
+								{
+									rules: ruleBuilder.get('rules'),
+									successPageSettings: pageManager.get('successPageSettings')
+								}
+							);
+						}
+
+						return state;
 					},
 
 					isEmpty: function() {
@@ -348,17 +373,19 @@ AUI.add(
 
 						instance.one('#serializedFormBuilderContext').val(JSON.stringify(state));
 
-						var settingsDDMForm = Liferay.component('settingsDDMForm');
+						if (instance._isFormView()) {
+							var settingsDDMForm = Liferay.component('settingsDDMForm');
 
-						var publishedField = settingsDDMForm.getField('published');
+							var publishedField = settingsDDMForm.getField('published');
 
-						publishedField.set('value', instance.get('published'));
+							publishedField.set('value', instance.get('published'));
 
-						var settings = settingsDDMForm.get('context');
+							var settings = settingsDDMForm.get('context');
 
-						var settingsInput = instance.one('#serializedSettingsContext');
+							var settingsInput = instance.one('#serializedSettingsContext');
 
-						settingsInput.val(JSON.stringify(settings));
+							settingsInput.val(JSON.stringify(settings));
+						}
 					},
 
 					_afterAutosave: function(event) {
@@ -492,7 +519,7 @@ AUI.add(
 
 						var ddmStructureIdNode = instance.byId('ddmStructureId');
 
-						if (recordSetIdNode.val() === '0') {
+						if (recordSetIdNode && recordSetIdNode.val() === '0') {
 							recordSetIdNode.val(response.recordSetId);
 						}
 
@@ -523,7 +550,10 @@ AUI.add(
 						var state = instance.getState();
 
 						formObject[instance.ns('name')] = JSON.stringify(state.name);
-						formObject[instance.ns('published')] = JSON.stringify(instance.get('published'));
+
+						if (instance._isFormView()) {
+							formObject[instance.ns('published')] = JSON.stringify(instance.get('published'));
+						}
 
 						formString = A.QueryString.stringify(formObject);
 
@@ -537,7 +567,7 @@ AUI.add(
 						var localizedName = instance.get('localizedName');
 
 						if (!localizedName[defaultLanguageId]) {
-							localizedName[defaultLanguageId] = STR_UNTITLED_FORM;
+							localizedName[defaultLanguageId] = instance._isFormView() ? STR_UNTITLED_FORM : STR_UNTITLED_FIELD_SET;
 						}
 
 						return localizedName;
@@ -585,6 +615,12 @@ AUI.add(
 						instance._showAlert(Liferay.Language.get('the-form-was-unpublished-successfully'), 'success');
 
 						instance.one('#publish').html(Liferay.Language.get('publish-form'));
+					},
+
+					_isFormView: function() {
+						var instance = this;
+
+						return instance.get('view') === 'forms';
 					},
 
 					_isSameState: function(state1, state2) {
@@ -641,12 +677,15 @@ AUI.add(
 
 						instance.one('#formBuilder').show();
 
-						instance.get('ruleBuilder').hide();
+						if (instance._isFormView()) {
+							instance.get('ruleBuilder').hide();
+
+							instance.one('#showRules').removeClass('active');
+						}
 
 						A.one('.ddl-form-builder-buttons').removeClass('hide');
 						A.one('.portlet-forms').removeClass('liferay-ddl-form-rule-builder');
 
-						instance.one('#showRules').removeClass('active');
 						instance.one('#showForm').addClass('active');
 					},
 
@@ -787,19 +826,21 @@ AUI.add(
 					_setPublished: function(value) {
 						var instance = this;
 
-						var title;
+						if (instance._isFormView()) {
+							var title;
 
-						if (value) {
-							title = Liferay.Language.get('copy-url');
+							if (value) {
+								title = Liferay.Language.get('copy-url');
+							}
+							else {
+								title = Liferay.Language.get('publish-the-form-to-get-its-shareable-link');
+							}
+
+							var publishIcon = A.one('.publish-icon');
+
+							publishIcon.toggleClass('disabled', !value);
+							publishIcon.attr('title', title);
 						}
-						else {
-							title = Liferay.Language.get('publish-the-form-to-get-its-shareable-link');
-						}
-
-						var publishIcon = A.one('.publish-icon');
-
-						publishIcon.toggleClass('disabled', !value);
-						publishIcon.attr('title', title);
 					},
 
 					_showAlert: function(message, type) {

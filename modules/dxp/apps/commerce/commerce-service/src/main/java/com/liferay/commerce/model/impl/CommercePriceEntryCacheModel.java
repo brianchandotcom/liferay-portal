@@ -90,8 +90,8 @@ public class CommercePriceEntryCacheModel implements CacheModel<CommercePriceEnt
 		sb.append(commercePriceListId);
 		sb.append(", price=");
 		sb.append(price);
-		sb.append(", hasTirePrice=");
-		sb.append(hasTirePrice);
+		sb.append(", hasTierPrice=");
+		sb.append(hasTierPrice);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append("}");
@@ -139,7 +139,7 @@ public class CommercePriceEntryCacheModel implements CacheModel<CommercePriceEnt
 		commercePriceEntryImpl.setCPInstanceId(CPInstanceId);
 		commercePriceEntryImpl.setCommercePriceListId(commercePriceListId);
 		commercePriceEntryImpl.setPrice(price);
-		commercePriceEntryImpl.setHasTirePrice(hasTirePrice);
+		commercePriceEntryImpl.setHasTierPrice(hasTierPrice);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
 			commercePriceEntryImpl.setLastPublishDate(null);
@@ -174,7 +174,7 @@ public class CommercePriceEntryCacheModel implements CacheModel<CommercePriceEnt
 
 		price = objectInput.readDouble();
 
-		hasTirePrice = objectInput.readBoolean();
+		hasTierPrice = objectInput.readBoolean();
 		lastPublishDate = objectInput.readLong();
 	}
 
@@ -212,7 +212,7 @@ public class CommercePriceEntryCacheModel implements CacheModel<CommercePriceEnt
 
 		objectOutput.writeDouble(price);
 
-		objectOutput.writeBoolean(hasTirePrice);
+		objectOutput.writeBoolean(hasTierPrice);
 		objectOutput.writeLong(lastPublishDate);
 	}
 
@@ -227,6 +227,6 @@ public class CommercePriceEntryCacheModel implements CacheModel<CommercePriceEnt
 	public long CPInstanceId;
 	public long commercePriceListId;
 	public double price;
-	public boolean hasTirePrice;
+	public boolean hasTierPrice;
 	public long lastPublishDate;
 }

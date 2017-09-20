@@ -18,7 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.model.CommercePriceEntry;
 import com.liferay.commerce.service.CommercePriceEntryLocalService;
-import com.liferay.commerce.service.persistence.CPDefinitionAvailabilityRangePersistence;
+import com.liferay.commerce.service.persistence.CAvailabilityRangeEntryPersistence;
 import com.liferay.commerce.service.persistence.CommerceAddressPersistence;
 import com.liferay.commerce.service.persistence.CommerceAvailabilityRangePersistence;
 import com.liferay.commerce.service.persistence.CommerceCartItemPersistence;
@@ -34,7 +34,7 @@ import com.liferay.commerce.service.persistence.CommercePriceListFinder;
 import com.liferay.commerce.service.persistence.CommercePriceListPersistence;
 import com.liferay.commerce.service.persistence.CommerceRegionPersistence;
 import com.liferay.commerce.service.persistence.CommerceShippingMethodPersistence;
-import com.liferay.commerce.service.persistence.CommerceTirePriceEntryPersistence;
+import com.liferay.commerce.service.persistence.CommerceTierPriceEntryPersistence;
 import com.liferay.commerce.service.persistence.CommerceWarehouseFinder;
 import com.liferay.commerce.service.persistence.CommerceWarehouseItemFinder;
 import com.liferay.commerce.service.persistence.CommerceWarehouseItemPersistence;
@@ -457,6 +457,44 @@ public abstract class CommercePriceEntryLocalServiceBaseImpl
 	public CommercePriceEntry updateCommercePriceEntry(
 		CommercePriceEntry commercePriceEntry) {
 		return commercePriceEntryPersistence.update(commercePriceEntry);
+	}
+
+	/**
+	 * Returns the c availability range entry local service.
+	 *
+	 * @return the c availability range entry local service
+	 */
+	public com.liferay.commerce.service.CAvailabilityRangeEntryLocalService getCAvailabilityRangeEntryLocalService() {
+		return cAvailabilityRangeEntryLocalService;
+	}
+
+	/**
+	 * Sets the c availability range entry local service.
+	 *
+	 * @param cAvailabilityRangeEntryLocalService the c availability range entry local service
+	 */
+	public void setCAvailabilityRangeEntryLocalService(
+		com.liferay.commerce.service.CAvailabilityRangeEntryLocalService cAvailabilityRangeEntryLocalService) {
+		this.cAvailabilityRangeEntryLocalService = cAvailabilityRangeEntryLocalService;
+	}
+
+	/**
+	 * Returns the c availability range entry persistence.
+	 *
+	 * @return the c availability range entry persistence
+	 */
+	public CAvailabilityRangeEntryPersistence getCAvailabilityRangeEntryPersistence() {
+		return cAvailabilityRangeEntryPersistence;
+	}
+
+	/**
+	 * Sets the c availability range entry persistence.
+	 *
+	 * @param cAvailabilityRangeEntryPersistence the c availability range entry persistence
+	 */
+	public void setCAvailabilityRangeEntryPersistence(
+		CAvailabilityRangeEntryPersistence cAvailabilityRangeEntryPersistence) {
+		this.cAvailabilityRangeEntryPersistence = cAvailabilityRangeEntryPersistence;
 	}
 
 	/**
@@ -992,41 +1030,41 @@ public abstract class CommercePriceEntryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the commerce tire price entry local service.
+	 * Returns the commerce tier price entry local service.
 	 *
-	 * @return the commerce tire price entry local service
+	 * @return the commerce tier price entry local service
 	 */
-	public com.liferay.commerce.service.CommerceTirePriceEntryLocalService getCommerceTirePriceEntryLocalService() {
-		return commerceTirePriceEntryLocalService;
+	public com.liferay.commerce.service.CommerceTierPriceEntryLocalService getCommerceTierPriceEntryLocalService() {
+		return commerceTierPriceEntryLocalService;
 	}
 
 	/**
-	 * Sets the commerce tire price entry local service.
+	 * Sets the commerce tier price entry local service.
 	 *
-	 * @param commerceTirePriceEntryLocalService the commerce tire price entry local service
+	 * @param commerceTierPriceEntryLocalService the commerce tier price entry local service
 	 */
-	public void setCommerceTirePriceEntryLocalService(
-		com.liferay.commerce.service.CommerceTirePriceEntryLocalService commerceTirePriceEntryLocalService) {
-		this.commerceTirePriceEntryLocalService = commerceTirePriceEntryLocalService;
+	public void setCommerceTierPriceEntryLocalService(
+		com.liferay.commerce.service.CommerceTierPriceEntryLocalService commerceTierPriceEntryLocalService) {
+		this.commerceTierPriceEntryLocalService = commerceTierPriceEntryLocalService;
 	}
 
 	/**
-	 * Returns the commerce tire price entry persistence.
+	 * Returns the commerce tier price entry persistence.
 	 *
-	 * @return the commerce tire price entry persistence
+	 * @return the commerce tier price entry persistence
 	 */
-	public CommerceTirePriceEntryPersistence getCommerceTirePriceEntryPersistence() {
-		return commerceTirePriceEntryPersistence;
+	public CommerceTierPriceEntryPersistence getCommerceTierPriceEntryPersistence() {
+		return commerceTierPriceEntryPersistence;
 	}
 
 	/**
-	 * Sets the commerce tire price entry persistence.
+	 * Sets the commerce tier price entry persistence.
 	 *
-	 * @param commerceTirePriceEntryPersistence the commerce tire price entry persistence
+	 * @param commerceTierPriceEntryPersistence the commerce tier price entry persistence
 	 */
-	public void setCommerceTirePriceEntryPersistence(
-		CommerceTirePriceEntryPersistence commerceTirePriceEntryPersistence) {
-		this.commerceTirePriceEntryPersistence = commerceTirePriceEntryPersistence;
+	public void setCommerceTierPriceEntryPersistence(
+		CommerceTierPriceEntryPersistence commerceTierPriceEntryPersistence) {
+		this.commerceTierPriceEntryPersistence = commerceTierPriceEntryPersistence;
 	}
 
 	/**
@@ -1141,44 +1179,6 @@ public abstract class CommercePriceEntryLocalServiceBaseImpl
 	public void setCommerceWarehouseItemFinder(
 		CommerceWarehouseItemFinder commerceWarehouseItemFinder) {
 		this.commerceWarehouseItemFinder = commerceWarehouseItemFinder;
-	}
-
-	/**
-	 * Returns the cp definition availability range local service.
-	 *
-	 * @return the cp definition availability range local service
-	 */
-	public com.liferay.commerce.service.CPDefinitionAvailabilityRangeLocalService getCPDefinitionAvailabilityRangeLocalService() {
-		return cpDefinitionAvailabilityRangeLocalService;
-	}
-
-	/**
-	 * Sets the cp definition availability range local service.
-	 *
-	 * @param cpDefinitionAvailabilityRangeLocalService the cp definition availability range local service
-	 */
-	public void setCPDefinitionAvailabilityRangeLocalService(
-		com.liferay.commerce.service.CPDefinitionAvailabilityRangeLocalService cpDefinitionAvailabilityRangeLocalService) {
-		this.cpDefinitionAvailabilityRangeLocalService = cpDefinitionAvailabilityRangeLocalService;
-	}
-
-	/**
-	 * Returns the cp definition availability range persistence.
-	 *
-	 * @return the cp definition availability range persistence
-	 */
-	public CPDefinitionAvailabilityRangePersistence getCPDefinitionAvailabilityRangePersistence() {
-		return cpDefinitionAvailabilityRangePersistence;
-	}
-
-	/**
-	 * Sets the cp definition availability range persistence.
-	 *
-	 * @param cpDefinitionAvailabilityRangePersistence the cp definition availability range persistence
-	 */
-	public void setCPDefinitionAvailabilityRangePersistence(
-		CPDefinitionAvailabilityRangePersistence cpDefinitionAvailabilityRangePersistence) {
-		this.cpDefinitionAvailabilityRangePersistence = cpDefinitionAvailabilityRangePersistence;
 	}
 
 	/**
@@ -1384,6 +1384,10 @@ public abstract class CommercePriceEntryLocalServiceBaseImpl
 		}
 	}
 
+	@BeanReference(type = com.liferay.commerce.service.CAvailabilityRangeEntryLocalService.class)
+	protected com.liferay.commerce.service.CAvailabilityRangeEntryLocalService cAvailabilityRangeEntryLocalService;
+	@BeanReference(type = CAvailabilityRangeEntryPersistence.class)
+	protected CAvailabilityRangeEntryPersistence cAvailabilityRangeEntryPersistence;
 	@BeanReference(type = com.liferay.commerce.service.CommerceAddressLocalService.class)
 	protected com.liferay.commerce.service.CommerceAddressLocalService commerceAddressLocalService;
 	@BeanReference(type = CommerceAddressPersistence.class)
@@ -1440,10 +1444,10 @@ public abstract class CommercePriceEntryLocalServiceBaseImpl
 	protected com.liferay.commerce.service.CommerceShippingMethodLocalService commerceShippingMethodLocalService;
 	@BeanReference(type = CommerceShippingMethodPersistence.class)
 	protected CommerceShippingMethodPersistence commerceShippingMethodPersistence;
-	@BeanReference(type = com.liferay.commerce.service.CommerceTirePriceEntryLocalService.class)
-	protected com.liferay.commerce.service.CommerceTirePriceEntryLocalService commerceTirePriceEntryLocalService;
-	@BeanReference(type = CommerceTirePriceEntryPersistence.class)
-	protected CommerceTirePriceEntryPersistence commerceTirePriceEntryPersistence;
+	@BeanReference(type = com.liferay.commerce.service.CommerceTierPriceEntryLocalService.class)
+	protected com.liferay.commerce.service.CommerceTierPriceEntryLocalService commerceTierPriceEntryLocalService;
+	@BeanReference(type = CommerceTierPriceEntryPersistence.class)
+	protected CommerceTierPriceEntryPersistence commerceTierPriceEntryPersistence;
 	@BeanReference(type = com.liferay.commerce.service.CommerceWarehouseLocalService.class)
 	protected com.liferay.commerce.service.CommerceWarehouseLocalService commerceWarehouseLocalService;
 	@BeanReference(type = CommerceWarehousePersistence.class)
@@ -1456,10 +1460,6 @@ public abstract class CommercePriceEntryLocalServiceBaseImpl
 	protected CommerceWarehouseItemPersistence commerceWarehouseItemPersistence;
 	@BeanReference(type = CommerceWarehouseItemFinder.class)
 	protected CommerceWarehouseItemFinder commerceWarehouseItemFinder;
-	@BeanReference(type = com.liferay.commerce.service.CPDefinitionAvailabilityRangeLocalService.class)
-	protected com.liferay.commerce.service.CPDefinitionAvailabilityRangeLocalService cpDefinitionAvailabilityRangeLocalService;
-	@BeanReference(type = CPDefinitionAvailabilityRangePersistence.class)
-	protected CPDefinitionAvailabilityRangePersistence cpDefinitionAvailabilityRangePersistence;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)

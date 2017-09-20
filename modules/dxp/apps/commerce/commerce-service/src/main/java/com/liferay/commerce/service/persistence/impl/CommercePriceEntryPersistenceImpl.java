@@ -4075,7 +4075,7 @@ public class CommercePriceEntryPersistenceImpl extends BasePersistenceImpl<Comme
 		commercePriceEntryImpl.setCPInstanceId(commercePriceEntry.getCPInstanceId());
 		commercePriceEntryImpl.setCommercePriceListId(commercePriceEntry.getCommercePriceListId());
 		commercePriceEntryImpl.setPrice(commercePriceEntry.getPrice());
-		commercePriceEntryImpl.setHasTirePrice(commercePriceEntry.isHasTirePrice());
+		commercePriceEntryImpl.setHasTierPrice(commercePriceEntry.isHasTierPrice());
 		commercePriceEntryImpl.setLastPublishDate(commercePriceEntry.getLastPublishDate());
 
 		return commercePriceEntryImpl;

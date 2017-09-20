@@ -22,20 +22,20 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
  * @author Alessio Antonio Rendina
  */
 @ProviderType
-public class NoSuchTirePriceEntryException extends NoSuchModelException {
+public class NoSuchTierPriceEntryException extends NoSuchModelException {
 
-	public NoSuchTirePriceEntryException() {
+	public NoSuchTierPriceEntryException() {
 	}
 
-	public NoSuchTirePriceEntryException(String msg) {
+	public NoSuchTierPriceEntryException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchTirePriceEntryException(String msg, Throwable cause) {
+	public NoSuchTierPriceEntryException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoSuchTirePriceEntryException(Throwable cause) {
+	public NoSuchTierPriceEntryException(Throwable cause) {
 		super(cause);
 	}
 

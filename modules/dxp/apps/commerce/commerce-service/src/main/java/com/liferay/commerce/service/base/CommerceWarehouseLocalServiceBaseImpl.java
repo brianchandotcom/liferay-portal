@@ -34,7 +34,7 @@ import com.liferay.commerce.service.persistence.CommercePriceListFinder;
 import com.liferay.commerce.service.persistence.CommercePriceListPersistence;
 import com.liferay.commerce.service.persistence.CommerceRegionPersistence;
 import com.liferay.commerce.service.persistence.CommerceShippingMethodPersistence;
-import com.liferay.commerce.service.persistence.CommerceTirePriceEntryPersistence;
+import com.liferay.commerce.service.persistence.CommerceTierPriceEntryPersistence;
 import com.liferay.commerce.service.persistence.CommerceWarehouseFinder;
 import com.liferay.commerce.service.persistence.CommerceWarehouseItemFinder;
 import com.liferay.commerce.service.persistence.CommerceWarehouseItemPersistence;
@@ -870,41 +870,41 @@ public abstract class CommerceWarehouseLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the commerce tire price entry local service.
+	 * Returns the commerce tier price entry local service.
 	 *
-	 * @return the commerce tire price entry local service
+	 * @return the commerce tier price entry local service
 	 */
-	public com.liferay.commerce.service.CommerceTirePriceEntryLocalService getCommerceTirePriceEntryLocalService() {
-		return commerceTirePriceEntryLocalService;
+	public com.liferay.commerce.service.CommerceTierPriceEntryLocalService getCommerceTierPriceEntryLocalService() {
+		return commerceTierPriceEntryLocalService;
 	}
 
 	/**
-	 * Sets the commerce tire price entry local service.
+	 * Sets the commerce tier price entry local service.
 	 *
-	 * @param commerceTirePriceEntryLocalService the commerce tire price entry local service
+	 * @param commerceTierPriceEntryLocalService the commerce tier price entry local service
 	 */
-	public void setCommerceTirePriceEntryLocalService(
-		com.liferay.commerce.service.CommerceTirePriceEntryLocalService commerceTirePriceEntryLocalService) {
-		this.commerceTirePriceEntryLocalService = commerceTirePriceEntryLocalService;
+	public void setCommerceTierPriceEntryLocalService(
+		com.liferay.commerce.service.CommerceTierPriceEntryLocalService commerceTierPriceEntryLocalService) {
+		this.commerceTierPriceEntryLocalService = commerceTierPriceEntryLocalService;
 	}
 
 	/**
-	 * Returns the commerce tire price entry persistence.
+	 * Returns the commerce tier price entry persistence.
 	 *
-	 * @return the commerce tire price entry persistence
+	 * @return the commerce tier price entry persistence
 	 */
-	public CommerceTirePriceEntryPersistence getCommerceTirePriceEntryPersistence() {
-		return commerceTirePriceEntryPersistence;
+	public CommerceTierPriceEntryPersistence getCommerceTierPriceEntryPersistence() {
+		return commerceTierPriceEntryPersistence;
 	}
 
 	/**
-	 * Sets the commerce tire price entry persistence.
+	 * Sets the commerce tier price entry persistence.
 	 *
-	 * @param commerceTirePriceEntryPersistence the commerce tire price entry persistence
+	 * @param commerceTierPriceEntryPersistence the commerce tier price entry persistence
 	 */
-	public void setCommerceTirePriceEntryPersistence(
-		CommerceTirePriceEntryPersistence commerceTirePriceEntryPersistence) {
-		this.commerceTirePriceEntryPersistence = commerceTirePriceEntryPersistence;
+	public void setCommerceTierPriceEntryPersistence(
+		CommerceTierPriceEntryPersistence commerceTierPriceEntryPersistence) {
+		this.commerceTierPriceEntryPersistence = commerceTierPriceEntryPersistence;
 	}
 
 	/**
@@ -1280,10 +1280,10 @@ public abstract class CommerceWarehouseLocalServiceBaseImpl
 	protected com.liferay.commerce.service.CommerceShippingMethodLocalService commerceShippingMethodLocalService;
 	@BeanReference(type = CommerceShippingMethodPersistence.class)
 	protected CommerceShippingMethodPersistence commerceShippingMethodPersistence;
-	@BeanReference(type = com.liferay.commerce.service.CommerceTirePriceEntryLocalService.class)
-	protected com.liferay.commerce.service.CommerceTirePriceEntryLocalService commerceTirePriceEntryLocalService;
-	@BeanReference(type = CommerceTirePriceEntryPersistence.class)
-	protected CommerceTirePriceEntryPersistence commerceTirePriceEntryPersistence;
+	@BeanReference(type = com.liferay.commerce.service.CommerceTierPriceEntryLocalService.class)
+	protected com.liferay.commerce.service.CommerceTierPriceEntryLocalService commerceTierPriceEntryLocalService;
+	@BeanReference(type = CommerceTierPriceEntryPersistence.class)
+	protected CommerceTierPriceEntryPersistence commerceTierPriceEntryPersistence;
 	@BeanReference(type = CommerceWarehouseLocalService.class)
 	protected CommerceWarehouseLocalService commerceWarehouseLocalService;
 	@BeanReference(type = CommerceWarehousePersistence.class)

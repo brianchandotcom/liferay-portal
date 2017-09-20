@@ -23,20 +23,20 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.service.http.CommerceTirePriceEntryServiceSoap}.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.service.http.CommerceTierPriceEntryServiceSoap}.
  *
  * @author Alessio Antonio Rendina
- * @see com.liferay.commerce.service.http.CommerceTirePriceEntryServiceSoap
+ * @see com.liferay.commerce.service.http.CommerceTierPriceEntryServiceSoap
  * @generated
  */
 @ProviderType
-public class CommerceTirePriceEntrySoap implements Serializable {
-	public static CommerceTirePriceEntrySoap toSoapModel(
-		CommerceTirePriceEntry model) {
-		CommerceTirePriceEntrySoap soapModel = new CommerceTirePriceEntrySoap();
+public class CommerceTierPriceEntrySoap implements Serializable {
+	public static CommerceTierPriceEntrySoap toSoapModel(
+		CommerceTierPriceEntry model) {
+		CommerceTierPriceEntrySoap soapModel = new CommerceTierPriceEntrySoap();
 
 		soapModel.setUuid(model.getUuid());
-		soapModel.setCommerceTirePriceEntryId(model.getCommerceTirePriceEntryId());
+		soapModel.setCommerceTierPriceEntryId(model.getCommerceTierPriceEntryId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -51,9 +51,9 @@ public class CommerceTirePriceEntrySoap implements Serializable {
 		return soapModel;
 	}
 
-	public static CommerceTirePriceEntrySoap[] toSoapModels(
-		CommerceTirePriceEntry[] models) {
-		CommerceTirePriceEntrySoap[] soapModels = new CommerceTirePriceEntrySoap[models.length];
+	public static CommerceTierPriceEntrySoap[] toSoapModels(
+		CommerceTierPriceEntry[] models) {
+		CommerceTierPriceEntrySoap[] soapModels = new CommerceTierPriceEntrySoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -62,15 +62,15 @@ public class CommerceTirePriceEntrySoap implements Serializable {
 		return soapModels;
 	}
 
-	public static CommerceTirePriceEntrySoap[][] toSoapModels(
-		CommerceTirePriceEntry[][] models) {
-		CommerceTirePriceEntrySoap[][] soapModels = null;
+	public static CommerceTierPriceEntrySoap[][] toSoapModels(
+		CommerceTierPriceEntry[][] models) {
+		CommerceTierPriceEntrySoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new CommerceTirePriceEntrySoap[models.length][models[0].length];
+			soapModels = new CommerceTierPriceEntrySoap[models.length][models[0].length];
 		}
 		else {
-			soapModels = new CommerceTirePriceEntrySoap[0][0];
+			soapModels = new CommerceTierPriceEntrySoap[0][0];
 		}
 
 		for (int i = 0; i < models.length; i++) {
@@ -80,26 +80,26 @@ public class CommerceTirePriceEntrySoap implements Serializable {
 		return soapModels;
 	}
 
-	public static CommerceTirePriceEntrySoap[] toSoapModels(
-		List<CommerceTirePriceEntry> models) {
-		List<CommerceTirePriceEntrySoap> soapModels = new ArrayList<CommerceTirePriceEntrySoap>(models.size());
+	public static CommerceTierPriceEntrySoap[] toSoapModels(
+		List<CommerceTierPriceEntry> models) {
+		List<CommerceTierPriceEntrySoap> soapModels = new ArrayList<CommerceTierPriceEntrySoap>(models.size());
 
-		for (CommerceTirePriceEntry model : models) {
+		for (CommerceTierPriceEntry model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new CommerceTirePriceEntrySoap[soapModels.size()]);
+		return soapModels.toArray(new CommerceTierPriceEntrySoap[soapModels.size()]);
 	}
 
-	public CommerceTirePriceEntrySoap() {
+	public CommerceTierPriceEntrySoap() {
 	}
 
 	public long getPrimaryKey() {
-		return _CommerceTirePriceEntryId;
+		return _CommerceTierPriceEntryId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setCommerceTirePriceEntryId(pk);
+		setCommerceTierPriceEntryId(pk);
 	}
 
 	public String getUuid() {
@@ -110,12 +110,12 @@ public class CommerceTirePriceEntrySoap implements Serializable {
 		_uuid = uuid;
 	}
 
-	public long getCommerceTirePriceEntryId() {
-		return _CommerceTirePriceEntryId;
+	public long getCommerceTierPriceEntryId() {
+		return _CommerceTierPriceEntryId;
 	}
 
-	public void setCommerceTirePriceEntryId(long CommerceTirePriceEntryId) {
-		_CommerceTirePriceEntryId = CommerceTirePriceEntryId;
+	public void setCommerceTierPriceEntryId(long CommerceTierPriceEntryId) {
+		_CommerceTierPriceEntryId = CommerceTierPriceEntryId;
 	}
 
 	public long getGroupId() {
@@ -199,7 +199,7 @@ public class CommerceTirePriceEntrySoap implements Serializable {
 	}
 
 	private String _uuid;
-	private long _CommerceTirePriceEntryId;
+	private long _CommerceTierPriceEntryId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;

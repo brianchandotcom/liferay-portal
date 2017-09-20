@@ -252,25 +252,25 @@ public interface CommercePriceEntryModel extends BaseModel<CommercePriceEntry>,
 	public void setPrice(double price);
 
 	/**
-	 * Returns the has tire price of this commerce price entry.
+	 * Returns the has tier price of this commerce price entry.
 	 *
-	 * @return the has tire price of this commerce price entry
+	 * @return the has tier price of this commerce price entry
 	 */
-	public boolean getHasTirePrice();
+	public boolean getHasTierPrice();
 
 	/**
-	 * Returns <code>true</code> if this commerce price entry is has tire price.
+	 * Returns <code>true</code> if this commerce price entry is has tier price.
 	 *
-	 * @return <code>true</code> if this commerce price entry is has tire price; <code>false</code> otherwise
+	 * @return <code>true</code> if this commerce price entry is has tier price; <code>false</code> otherwise
 	 */
-	public boolean isHasTirePrice();
+	public boolean isHasTierPrice();
 
 	/**
-	 * Sets whether this commerce price entry is has tire price.
+	 * Sets whether this commerce price entry is has tier price.
 	 *
-	 * @param hasTirePrice the has tire price of this commerce price entry
+	 * @param hasTierPrice the has tier price of this commerce price entry
 	 */
-	public void setHasTirePrice(boolean hasTirePrice);
+	public void setHasTierPrice(boolean hasTierPrice);
 
 	/**
 	 * Returns the last publish date of this commerce price entry.

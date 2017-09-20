@@ -42,9 +42,9 @@
 	<bean class="com.liferay.commerce.service.impl.CommerceShippingMethodLocalServiceImpl" id="com.liferay.commerce.service.CommerceShippingMethodLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceShippingMethodServiceImpl" id="com.liferay.commerce.service.CommerceShippingMethodService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceShippingMethodPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceShippingMethodPersistence" parent="basePersistence" />
-	<bean class="com.liferay.commerce.service.impl.CommerceTirePriceEntryLocalServiceImpl" id="com.liferay.commerce.service.CommerceTirePriceEntryLocalService" />
-	<bean class="com.liferay.commerce.service.impl.CommerceTirePriceEntryServiceImpl" id="com.liferay.commerce.service.CommerceTirePriceEntryService" />
-	<bean class="com.liferay.commerce.service.persistence.impl.CommerceTirePriceEntryPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceTirePriceEntryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.service.impl.CommerceTierPriceEntryLocalServiceImpl" id="com.liferay.commerce.service.CommerceTierPriceEntryLocalService" />
+	<bean class="com.liferay.commerce.service.impl.CommerceTierPriceEntryServiceImpl" id="com.liferay.commerce.service.CommerceTierPriceEntryService" />
+	<bean class="com.liferay.commerce.service.persistence.impl.CommerceTierPriceEntryPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceTierPriceEntryPersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.service.impl.CommerceWarehouseLocalServiceImpl" id="com.liferay.commerce.service.CommerceWarehouseLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceWarehouseServiceImpl" id="com.liferay.commerce.service.CommerceWarehouseService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceWarehousePersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceWarehousePersistence" parent="basePersistence" />

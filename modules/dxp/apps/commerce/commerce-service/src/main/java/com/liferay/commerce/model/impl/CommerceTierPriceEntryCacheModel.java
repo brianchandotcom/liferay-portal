@@ -16,7 +16,7 @@ package com.liferay.commerce.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.model.CommerceTirePriceEntry;
+import com.liferay.commerce.model.CommerceTierPriceEntry;
 
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
@@ -31,14 +31,14 @@ import java.io.ObjectOutput;
 import java.util.Date;
 
 /**
- * The cache model class for representing CommerceTirePriceEntry in entity cache.
+ * The cache model class for representing CommerceTierPriceEntry in entity cache.
  *
  * @author Alessio Antonio Rendina
- * @see CommerceTirePriceEntry
+ * @see CommerceTierPriceEntry
  * @generated
  */
 @ProviderType
-public class CommerceTirePriceEntryCacheModel implements CacheModel<CommerceTirePriceEntry>,
+public class CommerceTierPriceEntryCacheModel implements CacheModel<CommerceTierPriceEntry>,
 	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
@@ -46,13 +46,13 @@ public class CommerceTirePriceEntryCacheModel implements CacheModel<CommerceTire
 			return true;
 		}
 
-		if (!(obj instanceof CommerceTirePriceEntryCacheModel)) {
+		if (!(obj instanceof CommerceTierPriceEntryCacheModel)) {
 			return false;
 		}
 
-		CommerceTirePriceEntryCacheModel commerceTirePriceEntryCacheModel = (CommerceTirePriceEntryCacheModel)obj;
+		CommerceTierPriceEntryCacheModel commerceTierPriceEntryCacheModel = (CommerceTierPriceEntryCacheModel)obj;
 
-		if (CommerceTirePriceEntryId == commerceTirePriceEntryCacheModel.CommerceTirePriceEntryId) {
+		if (CommerceTierPriceEntryId == commerceTierPriceEntryCacheModel.CommerceTierPriceEntryId) {
 			return true;
 		}
 
@@ -61,7 +61,7 @@ public class CommerceTirePriceEntryCacheModel implements CacheModel<CommerceTire
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, CommerceTirePriceEntryId);
+		return HashUtil.hash(0, CommerceTierPriceEntryId);
 	}
 
 	@Override
@@ -70,8 +70,8 @@ public class CommerceTirePriceEntryCacheModel implements CacheModel<CommerceTire
 
 		sb.append("{uuid=");
 		sb.append(uuid);
-		sb.append(", CommerceTirePriceEntryId=");
-		sb.append(CommerceTirePriceEntryId);
+		sb.append(", CommerceTierPriceEntryId=");
+		sb.append(CommerceTierPriceEntryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
@@ -98,64 +98,64 @@ public class CommerceTirePriceEntryCacheModel implements CacheModel<CommerceTire
 	}
 
 	@Override
-	public CommerceTirePriceEntry toEntityModel() {
-		CommerceTirePriceEntryImpl commerceTirePriceEntryImpl = new CommerceTirePriceEntryImpl();
+	public CommerceTierPriceEntry toEntityModel() {
+		CommerceTierPriceEntryImpl commerceTierPriceEntryImpl = new CommerceTierPriceEntryImpl();
 
 		if (uuid == null) {
-			commerceTirePriceEntryImpl.setUuid(StringPool.BLANK);
+			commerceTierPriceEntryImpl.setUuid(StringPool.BLANK);
 		}
 		else {
-			commerceTirePriceEntryImpl.setUuid(uuid);
+			commerceTierPriceEntryImpl.setUuid(uuid);
 		}
 
-		commerceTirePriceEntryImpl.setCommerceTirePriceEntryId(CommerceTirePriceEntryId);
-		commerceTirePriceEntryImpl.setGroupId(groupId);
-		commerceTirePriceEntryImpl.setCompanyId(companyId);
-		commerceTirePriceEntryImpl.setUserId(userId);
+		commerceTierPriceEntryImpl.setCommerceTierPriceEntryId(CommerceTierPriceEntryId);
+		commerceTierPriceEntryImpl.setGroupId(groupId);
+		commerceTierPriceEntryImpl.setCompanyId(companyId);
+		commerceTierPriceEntryImpl.setUserId(userId);
 
 		if (userName == null) {
-			commerceTirePriceEntryImpl.setUserName(StringPool.BLANK);
+			commerceTierPriceEntryImpl.setUserName(StringPool.BLANK);
 		}
 		else {
-			commerceTirePriceEntryImpl.setUserName(userName);
+			commerceTierPriceEntryImpl.setUserName(userName);
 		}
 
 		if (createDate == Long.MIN_VALUE) {
-			commerceTirePriceEntryImpl.setCreateDate(null);
+			commerceTierPriceEntryImpl.setCreateDate(null);
 		}
 		else {
-			commerceTirePriceEntryImpl.setCreateDate(new Date(createDate));
+			commerceTierPriceEntryImpl.setCreateDate(new Date(createDate));
 		}
 
 		if (modifiedDate == Long.MIN_VALUE) {
-			commerceTirePriceEntryImpl.setModifiedDate(null);
+			commerceTierPriceEntryImpl.setModifiedDate(null);
 		}
 		else {
-			commerceTirePriceEntryImpl.setModifiedDate(new Date(modifiedDate));
+			commerceTierPriceEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		commerceTirePriceEntryImpl.setCommercePriceEntryId(commercePriceEntryId);
-		commerceTirePriceEntryImpl.setPrice(price);
-		commerceTirePriceEntryImpl.setMinQuantity(minQuantity);
+		commerceTierPriceEntryImpl.setCommercePriceEntryId(commercePriceEntryId);
+		commerceTierPriceEntryImpl.setPrice(price);
+		commerceTierPriceEntryImpl.setMinQuantity(minQuantity);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
-			commerceTirePriceEntryImpl.setLastPublishDate(null);
+			commerceTierPriceEntryImpl.setLastPublishDate(null);
 		}
 		else {
-			commerceTirePriceEntryImpl.setLastPublishDate(new Date(
+			commerceTierPriceEntryImpl.setLastPublishDate(new Date(
 					lastPublishDate));
 		}
 
-		commerceTirePriceEntryImpl.resetOriginalValues();
+		commerceTierPriceEntryImpl.resetOriginalValues();
 
-		return commerceTirePriceEntryImpl;
+		return commerceTierPriceEntryImpl;
 	}
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
 
-		CommerceTirePriceEntryId = objectInput.readLong();
+		CommerceTierPriceEntryId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
 
@@ -184,7 +184,7 @@ public class CommerceTirePriceEntryCacheModel implements CacheModel<CommerceTire
 			objectOutput.writeUTF(uuid);
 		}
 
-		objectOutput.writeLong(CommerceTirePriceEntryId);
+		objectOutput.writeLong(CommerceTierPriceEntryId);
 
 		objectOutput.writeLong(groupId);
 
@@ -211,7 +211,7 @@ public class CommerceTirePriceEntryCacheModel implements CacheModel<CommerceTire
 	}
 
 	public String uuid;
-	public long CommerceTirePriceEntryId;
+	public long CommerceTierPriceEntryId;
 	public long groupId;
 	public long companyId;
 	public long userId;

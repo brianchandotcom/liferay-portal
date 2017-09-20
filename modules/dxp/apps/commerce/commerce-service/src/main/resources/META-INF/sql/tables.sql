@@ -180,7 +180,7 @@ create table CommercePriceEntry (
 	CPInstanceId LONG,
 	commercePriceListId LONG,
 	price DOUBLE,
-	hasTirePrice BOOLEAN,
+	hasTierPrice BOOLEAN,
 	lastPublishDate DATE null
 );
 
@@ -236,9 +236,9 @@ create table CommerceShippingMethod (
 	active_ BOOLEAN
 );
 
-create table CommerceTirePriceEntry (
+create table CommerceTierPriceEntry (
 	uuid_ VARCHAR(75) null,
-	CommerceTirePriceEntryId LONG not null primary key,
+	CommerceTierPriceEntryId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,

@@ -16,7 +16,7 @@ package com.liferay.commerce.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.service.CommerceTirePriceEntryServiceUtil;
+import com.liferay.commerce.service.CommerceTierPriceEntryServiceUtil;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,7 +25,7 @@ import java.rmi.RemoteException;
 
 /**
  * Provides the SOAP utility for the
- * {@link CommerceTirePriceEntryServiceUtil} service utility. The
+ * {@link CommerceTierPriceEntryServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -33,10 +33,10 @@ import java.rmi.RemoteException;
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
  * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link com.liferay.commerce.model.CommerceTirePriceEntrySoap}.
+ * is translated to an array of {@link com.liferay.commerce.model.CommerceTierPriceEntrySoap}.
  * If the method in the service utility returns a
- * {@link com.liferay.commerce.model.CommerceTirePriceEntry}, that is translated to a
- * {@link com.liferay.commerce.model.CommerceTirePriceEntrySoap}. Methods that SOAP cannot
+ * {@link com.liferay.commerce.model.CommerceTierPriceEntry}, that is translated to a
+ * {@link com.liferay.commerce.model.CommerceTierPriceEntrySoap}. Methods that SOAP cannot
  * safely wire are skipped.
  * </p>
  *
@@ -58,22 +58,22 @@ import java.rmi.RemoteException;
  * </p>
  *
  * @author Alessio Antonio Rendina
- * @see CommerceTirePriceEntryServiceHttp
- * @see com.liferay.commerce.model.CommerceTirePriceEntrySoap
- * @see CommerceTirePriceEntryServiceUtil
+ * @see CommerceTierPriceEntryServiceHttp
+ * @see com.liferay.commerce.model.CommerceTierPriceEntrySoap
+ * @see CommerceTierPriceEntryServiceUtil
  * @generated
  */
 @ProviderType
-public class CommerceTirePriceEntryServiceSoap {
-	public static com.liferay.commerce.model.CommerceTirePriceEntrySoap addCommerceTirePriceEntry(
+public class CommerceTierPriceEntryServiceSoap {
+	public static com.liferay.commerce.model.CommerceTierPriceEntrySoap addCommerceTierPriceEntry(
 		long commercePriceEntryId, double price, int minQuantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			com.liferay.commerce.model.CommerceTirePriceEntry returnValue = CommerceTirePriceEntryServiceUtil.addCommerceTirePriceEntry(commercePriceEntryId,
+			com.liferay.commerce.model.CommerceTierPriceEntry returnValue = CommerceTierPriceEntryServiceUtil.addCommerceTierPriceEntry(commercePriceEntryId,
 					price, minQuantity, serviceContext);
 
-			return com.liferay.commerce.model.CommerceTirePriceEntrySoap.toSoapModel(returnValue);
+			return com.liferay.commerce.model.CommerceTierPriceEntrySoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -82,10 +82,10 @@ public class CommerceTirePriceEntryServiceSoap {
 		}
 	}
 
-	public static void deleteCommerceTirePriceEntry(
-		long commerceTirePriceEntryId) throws RemoteException {
+	public static void deleteCommerceTierPriceEntry(
+		long commerceTierPriceEntryId) throws RemoteException {
 		try {
-			CommerceTirePriceEntryServiceUtil.deleteCommerceTirePriceEntry(commerceTirePriceEntryId);
+			CommerceTierPriceEntryServiceUtil.deleteCommerceTierPriceEntry(commerceTierPriceEntryId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -94,12 +94,12 @@ public class CommerceTirePriceEntryServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.model.CommerceTirePriceEntrySoap fetchCommerceTirePriceEntry(
-		long commerceTirePriceEntryId) throws RemoteException {
+	public static com.liferay.commerce.model.CommerceTierPriceEntrySoap fetchCommerceTierPriceEntry(
+		long commerceTierPriceEntryId) throws RemoteException {
 		try {
-			com.liferay.commerce.model.CommerceTirePriceEntry returnValue = CommerceTirePriceEntryServiceUtil.fetchCommerceTirePriceEntry(commerceTirePriceEntryId);
+			com.liferay.commerce.model.CommerceTierPriceEntry returnValue = CommerceTierPriceEntryServiceUtil.fetchCommerceTierPriceEntry(commerceTierPriceEntryId);
 
-			return com.liferay.commerce.model.CommerceTirePriceEntrySoap.toSoapModel(returnValue);
+			return com.liferay.commerce.model.CommerceTierPriceEntrySoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -108,15 +108,15 @@ public class CommerceTirePriceEntryServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.model.CommerceTirePriceEntrySoap[] getCommerceTirePriceEntries(
+	public static com.liferay.commerce.model.CommerceTierPriceEntrySoap[] getCommerceTierPriceEntries(
 		long commercePriceEntryId, int start, int end)
 		throws RemoteException {
 		try {
-			java.util.List<com.liferay.commerce.model.CommerceTirePriceEntry> returnValue =
-				CommerceTirePriceEntryServiceUtil.getCommerceTirePriceEntries(commercePriceEntryId,
+			java.util.List<com.liferay.commerce.model.CommerceTierPriceEntry> returnValue =
+				CommerceTierPriceEntryServiceUtil.getCommerceTierPriceEntries(commercePriceEntryId,
 					start, end);
 
-			return com.liferay.commerce.model.CommerceTirePriceEntrySoap.toSoapModels(returnValue);
+			return com.liferay.commerce.model.CommerceTierPriceEntrySoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -125,16 +125,16 @@ public class CommerceTirePriceEntryServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.model.CommerceTirePriceEntrySoap[] getCommerceTirePriceEntries(
+	public static com.liferay.commerce.model.CommerceTierPriceEntrySoap[] getCommerceTierPriceEntries(
 		long commercePriceEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceTirePriceEntry> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceTierPriceEntry> orderByComparator)
 		throws RemoteException {
 		try {
-			java.util.List<com.liferay.commerce.model.CommerceTirePriceEntry> returnValue =
-				CommerceTirePriceEntryServiceUtil.getCommerceTirePriceEntries(commercePriceEntryId,
+			java.util.List<com.liferay.commerce.model.CommerceTierPriceEntry> returnValue =
+				CommerceTierPriceEntryServiceUtil.getCommerceTierPriceEntries(commercePriceEntryId,
 					start, end, orderByComparator);
 
-			return com.liferay.commerce.model.CommerceTirePriceEntrySoap.toSoapModels(returnValue);
+			return com.liferay.commerce.model.CommerceTierPriceEntrySoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -143,10 +143,10 @@ public class CommerceTirePriceEntryServiceSoap {
 		}
 	}
 
-	public static int getCommerceTirePriceEntriesCount(
+	public static int getCommerceTierPriceEntriesCount(
 		long commercePriceEntryId) throws RemoteException {
 		try {
-			int returnValue = CommerceTirePriceEntryServiceUtil.getCommerceTirePriceEntriesCount(commercePriceEntryId);
+			int returnValue = CommerceTierPriceEntryServiceUtil.getCommerceTierPriceEntriesCount(commercePriceEntryId);
 
 			return returnValue;
 		}
@@ -157,15 +157,15 @@ public class CommerceTirePriceEntryServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.model.CommerceTirePriceEntrySoap updateCommerceTirePriceEntry(
-		long commerceTirePriceEntryId, double price, int minQuantity,
+	public static com.liferay.commerce.model.CommerceTierPriceEntrySoap updateCommerceTierPriceEntry(
+		long commerceTierPriceEntryId, double price, int minQuantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			com.liferay.commerce.model.CommerceTirePriceEntry returnValue = CommerceTirePriceEntryServiceUtil.updateCommerceTirePriceEntry(commerceTirePriceEntryId,
+			com.liferay.commerce.model.CommerceTierPriceEntry returnValue = CommerceTierPriceEntryServiceUtil.updateCommerceTierPriceEntry(commerceTierPriceEntryId,
 					price, minQuantity, serviceContext);
 
-			return com.liferay.commerce.model.CommerceTirePriceEntrySoap.toSoapModel(returnValue);
+			return com.liferay.commerce.model.CommerceTierPriceEntrySoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -174,5 +174,5 @@ public class CommerceTirePriceEntryServiceSoap {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(CommerceTirePriceEntryServiceSoap.class);
+	private static Log _log = LogFactoryUtil.getLog(CommerceTierPriceEntryServiceSoap.class);
 }

@@ -21,28 +21,28 @@ import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.Accessor;
 
 /**
- * The extended model interface for the CommerceTirePriceEntry service. Represents a row in the &quot;CommerceTirePriceEntry&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the CommerceTierPriceEntry service. Represents a row in the &quot;CommerceTierPriceEntry&quot; database table, with each column mapped to a property of this class.
  *
  * @author Alessio Antonio Rendina
- * @see CommerceTirePriceEntryModel
- * @see com.liferay.commerce.model.impl.CommerceTirePriceEntryImpl
- * @see com.liferay.commerce.model.impl.CommerceTirePriceEntryModelImpl
+ * @see CommerceTierPriceEntryModel
+ * @see com.liferay.commerce.model.impl.CommerceTierPriceEntryImpl
+ * @see com.liferay.commerce.model.impl.CommerceTierPriceEntryModelImpl
  * @generated
  */
-@ImplementationClassName("com.liferay.commerce.model.impl.CommerceTirePriceEntryImpl")
+@ImplementationClassName("com.liferay.commerce.model.impl.CommerceTierPriceEntryImpl")
 @ProviderType
-public interface CommerceTirePriceEntry extends CommerceTirePriceEntryModel,
+public interface CommerceTierPriceEntry extends CommerceTierPriceEntryModel,
 	PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.commerce.model.impl.CommerceTirePriceEntryImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to {@link com.liferay.commerce.model.impl.CommerceTierPriceEntryImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<CommerceTirePriceEntry, Long> COMMERCE_TIRE_PRICE_ENTRY_ID_ACCESSOR =
-		new Accessor<CommerceTirePriceEntry, Long>() {
+	public static final Accessor<CommerceTierPriceEntry, Long> COMMERCE_TIER_PRICE_ENTRY_ID_ACCESSOR =
+		new Accessor<CommerceTierPriceEntry, Long>() {
 			@Override
-			public Long get(CommerceTirePriceEntry commerceTirePriceEntry) {
-				return commerceTirePriceEntry.getCommerceTirePriceEntryId();
+			public Long get(CommerceTierPriceEntry commerceTierPriceEntry) {
+				return commerceTierPriceEntry.getCommerceTierPriceEntryId();
 			}
 
 			@Override
@@ -51,8 +51,8 @@ public interface CommerceTirePriceEntry extends CommerceTirePriceEntryModel,
 			}
 
 			@Override
-			public Class<CommerceTirePriceEntry> getTypeClass() {
-				return CommerceTirePriceEntry.class;
+			public Class<CommerceTierPriceEntry> getTypeClass() {
+				return CommerceTierPriceEntry.class;
 			}
 		};
 

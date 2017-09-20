@@ -71,7 +71,7 @@ public class CommercePriceEntryWrapper implements CommercePriceEntry,
 		attributes.put("CPInstanceId", getCPInstanceId());
 		attributes.put("commercePriceListId", getCommercePriceListId());
 		attributes.put("price", getPrice());
-		attributes.put("hasTirePrice", getHasTirePrice());
+		attributes.put("hasTierPrice", getHasTierPrice());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
@@ -145,10 +145,10 @@ public class CommercePriceEntryWrapper implements CommercePriceEntry,
 			setPrice(price);
 		}
 
-		Boolean hasTirePrice = (Boolean)attributes.get("hasTirePrice");
+		Boolean hasTierPrice = (Boolean)attributes.get("hasTierPrice");
 
-		if (hasTirePrice != null) {
-			setHasTirePrice(hasTirePrice);
+		if (hasTierPrice != null) {
+			setHasTierPrice(hasTierPrice);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -246,13 +246,13 @@ public class CommercePriceEntryWrapper implements CommercePriceEntry,
 	}
 
 	/**
-	* Returns the has tire price of this commerce price entry.
+	* Returns the has tier price of this commerce price entry.
 	*
-	* @return the has tire price of this commerce price entry
+	* @return the has tier price of this commerce price entry
 	*/
 	@Override
-	public boolean getHasTirePrice() {
-		return _commercePriceEntry.getHasTirePrice();
+	public boolean getHasTierPrice() {
+		return _commercePriceEntry.getHasTierPrice();
 	}
 
 	/**
@@ -356,13 +356,13 @@ public class CommercePriceEntryWrapper implements CommercePriceEntry,
 	}
 
 	/**
-	* Returns <code>true</code> if this commerce price entry is has tire price.
+	* Returns <code>true</code> if this commerce price entry is has tier price.
 	*
-	* @return <code>true</code> if this commerce price entry is has tire price; <code>false</code> otherwise
+	* @return <code>true</code> if this commerce price entry is has tier price; <code>false</code> otherwise
 	*/
 	@Override
-	public boolean isHasTirePrice() {
-		return _commercePriceEntry.isHasTirePrice();
+	public boolean isHasTierPrice() {
+		return _commercePriceEntry.isHasTierPrice();
 	}
 
 	@Override
@@ -457,13 +457,13 @@ public class CommercePriceEntryWrapper implements CommercePriceEntry,
 	}
 
 	/**
-	* Sets whether this commerce price entry is has tire price.
+	* Sets whether this commerce price entry is has tier price.
 	*
-	* @param hasTirePrice the has tire price of this commerce price entry
+	* @param hasTierPrice the has tier price of this commerce price entry
 	*/
 	@Override
-	public void setHasTirePrice(boolean hasTirePrice) {
-		_commercePriceEntry.setHasTirePrice(hasTirePrice);
+	public void setHasTierPrice(boolean hasTierPrice) {
+		_commercePriceEntry.setHasTierPrice(hasTierPrice);
 	}
 
 	/**

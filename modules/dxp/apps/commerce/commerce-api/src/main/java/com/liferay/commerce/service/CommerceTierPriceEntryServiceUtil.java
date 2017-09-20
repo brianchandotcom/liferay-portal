@@ -21,64 +21,64 @@ import com.liferay.osgi.util.ServiceTrackerFactory;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
- * Provides the remote service utility for CommerceTirePriceEntry. This utility wraps
- * {@link com.liferay.commerce.service.impl.CommerceTirePriceEntryServiceImpl} and is the
+ * Provides the remote service utility for CommerceTierPriceEntry. This utility wraps
+ * {@link com.liferay.commerce.service.impl.CommerceTierPriceEntryServiceImpl} and is the
  * primary access point for service operations in application layer code running
  * on a remote server. Methods of this service are expected to have security
  * checks based on the propagated JAAS credentials because this service can be
  * accessed remotely.
  *
  * @author Alessio Antonio Rendina
- * @see CommerceTirePriceEntryService
- * @see com.liferay.commerce.service.base.CommerceTirePriceEntryServiceBaseImpl
- * @see com.liferay.commerce.service.impl.CommerceTirePriceEntryServiceImpl
+ * @see CommerceTierPriceEntryService
+ * @see com.liferay.commerce.service.base.CommerceTierPriceEntryServiceBaseImpl
+ * @see com.liferay.commerce.service.impl.CommerceTierPriceEntryServiceImpl
  * @generated
  */
 @ProviderType
-public class CommerceTirePriceEntryServiceUtil {
+public class CommerceTierPriceEntryServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceTirePriceEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceTierPriceEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.commerce.model.CommerceTirePriceEntry addCommerceTirePriceEntry(
+	public static com.liferay.commerce.model.CommerceTierPriceEntry addCommerceTierPriceEntry(
 		long commercePriceEntryId, double price, int minQuantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addCommerceTirePriceEntry(commercePriceEntryId, price,
+				   .addCommerceTierPriceEntry(commercePriceEntryId, price,
 			minQuantity, serviceContext);
 	}
 
-	public static void deleteCommerceTirePriceEntry(
-		long commerceTirePriceEntryId)
+	public static void deleteCommerceTierPriceEntry(
+		long commerceTierPriceEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteCommerceTirePriceEntry(commerceTirePriceEntryId);
+		getService().deleteCommerceTierPriceEntry(commerceTierPriceEntryId);
 	}
 
-	public static com.liferay.commerce.model.CommerceTirePriceEntry fetchCommerceTirePriceEntry(
-		long commerceTirePriceEntryId) {
-		return getService().fetchCommerceTirePriceEntry(commerceTirePriceEntryId);
+	public static com.liferay.commerce.model.CommerceTierPriceEntry fetchCommerceTierPriceEntry(
+		long commerceTierPriceEntryId) {
+		return getService().fetchCommerceTierPriceEntry(commerceTierPriceEntryId);
 	}
 
-	public static java.util.List<com.liferay.commerce.model.CommerceTirePriceEntry> getCommerceTirePriceEntries(
+	public static java.util.List<com.liferay.commerce.model.CommerceTierPriceEntry> getCommerceTierPriceEntries(
 		long commercePriceEntryId, int start, int end) {
 		return getService()
-				   .getCommerceTirePriceEntries(commercePriceEntryId, start, end);
+				   .getCommerceTierPriceEntries(commercePriceEntryId, start, end);
 	}
 
-	public static java.util.List<com.liferay.commerce.model.CommerceTirePriceEntry> getCommerceTirePriceEntries(
+	public static java.util.List<com.liferay.commerce.model.CommerceTierPriceEntry> getCommerceTierPriceEntries(
 		long commercePriceEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceTirePriceEntry> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceTierPriceEntry> orderByComparator) {
 		return getService()
-				   .getCommerceTirePriceEntries(commercePriceEntryId, start,
+				   .getCommerceTierPriceEntries(commercePriceEntryId, start,
 			end, orderByComparator);
 	}
 
-	public static int getCommerceTirePriceEntriesCount(
+	public static int getCommerceTierPriceEntriesCount(
 		long commercePriceEntryId) {
 		return getService()
-				   .getCommerceTirePriceEntriesCount(commercePriceEntryId);
+				   .getCommerceTierPriceEntriesCount(commercePriceEntryId);
 	}
 
 	/**
@@ -95,29 +95,29 @@ public class CommerceTirePriceEntryServiceUtil {
 		return getService().search(searchContext);
 	}
 
-	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.model.CommerceTirePriceEntry> searchCommerceTirePriceEntries(
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.model.CommerceTierPriceEntry> searchCommerceTierPriceEntries(
 		long companyId, long groupId, long commercePriceEntryId,
 		java.lang.String keywords, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .searchCommerceTirePriceEntries(companyId, groupId,
+				   .searchCommerceTierPriceEntries(companyId, groupId,
 			commercePriceEntryId, keywords, start, end, sort);
 	}
 
-	public static com.liferay.commerce.model.CommerceTirePriceEntry updateCommerceTirePriceEntry(
-		long commerceTirePriceEntryId, double price, int minQuantity,
+	public static com.liferay.commerce.model.CommerceTierPriceEntry updateCommerceTierPriceEntry(
+		long commerceTierPriceEntryId, double price, int minQuantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateCommerceTirePriceEntry(commerceTirePriceEntryId,
+				   .updateCommerceTierPriceEntry(commerceTierPriceEntryId,
 			price, minQuantity, serviceContext);
 	}
 
-	public static CommerceTirePriceEntryService getService() {
+	public static CommerceTierPriceEntryService getService() {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CommerceTirePriceEntryService, CommerceTirePriceEntryService> _serviceTracker =
-		ServiceTrackerFactory.open(CommerceTirePriceEntryService.class);
+	private static ServiceTracker<CommerceTierPriceEntryService, CommerceTierPriceEntryService> _serviceTracker =
+		ServiceTrackerFactory.open(CommerceTierPriceEntryService.class);
 }

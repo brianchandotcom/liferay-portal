@@ -85,7 +85,7 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 			{ "CPInstanceId", Types.BIGINT },
 			{ "commercePriceListId", Types.BIGINT },
 			{ "price", Types.DOUBLE },
-			{ "hasTirePrice", Types.BOOLEAN },
+			{ "hasTierPrice", Types.BOOLEAN },
 			{ "lastPublishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -102,11 +102,11 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 		TABLE_COLUMNS_MAP.put("CPInstanceId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commercePriceListId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("price", Types.DOUBLE);
-		TABLE_COLUMNS_MAP.put("hasTirePrice", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("hasTierPrice", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommercePriceEntry (uuid_ VARCHAR(75) null,commercePriceEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPInstanceId LONG,commercePriceListId LONG,price DOUBLE,hasTirePrice BOOLEAN,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CommercePriceEntry (uuid_ VARCHAR(75) null,commercePriceEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPInstanceId LONG,commercePriceListId LONG,price DOUBLE,hasTierPrice BOOLEAN,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CommercePriceEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY commercePriceEntry.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommercePriceEntry.createDate DESC";
@@ -153,7 +153,7 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 		model.setCPInstanceId(soapModel.getCPInstanceId());
 		model.setCommercePriceListId(soapModel.getCommercePriceListId());
 		model.setPrice(soapModel.getPrice());
-		model.setHasTirePrice(soapModel.getHasTirePrice());
+		model.setHasTierPrice(soapModel.getHasTierPrice());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
@@ -231,7 +231,7 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 		attributes.put("CPInstanceId", getCPInstanceId());
 		attributes.put("commercePriceListId", getCommercePriceListId());
 		attributes.put("price", getPrice());
-		attributes.put("hasTirePrice", getHasTirePrice());
+		attributes.put("hasTierPrice", getHasTierPrice());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -308,10 +308,10 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 			setPrice(price);
 		}
 
-		Boolean hasTirePrice = (Boolean)attributes.get("hasTirePrice");
+		Boolean hasTierPrice = (Boolean)attributes.get("hasTierPrice");
 
-		if (hasTirePrice != null) {
-			setHasTirePrice(hasTirePrice);
+		if (hasTierPrice != null) {
+			setHasTierPrice(hasTierPrice);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -534,19 +534,19 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 
 	@JSON
 	@Override
-	public boolean getHasTirePrice() {
-		return _hasTirePrice;
+	public boolean getHasTierPrice() {
+		return _hasTierPrice;
 	}
 
 	@JSON
 	@Override
-	public boolean isHasTirePrice() {
-		return _hasTirePrice;
+	public boolean isHasTierPrice() {
+		return _hasTierPrice;
 	}
 
 	@Override
-	public void setHasTirePrice(boolean hasTirePrice) {
-		_hasTirePrice = hasTirePrice;
+	public void setHasTierPrice(boolean hasTierPrice) {
+		_hasTierPrice = hasTierPrice;
 	}
 
 	@JSON
@@ -608,7 +608,7 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 		commercePriceEntryImpl.setCPInstanceId(getCPInstanceId());
 		commercePriceEntryImpl.setCommercePriceListId(getCommercePriceListId());
 		commercePriceEntryImpl.setPrice(getPrice());
-		commercePriceEntryImpl.setHasTirePrice(getHasTirePrice());
+		commercePriceEntryImpl.setHasTierPrice(getHasTierPrice());
 		commercePriceEntryImpl.setLastPublishDate(getLastPublishDate());
 
 		commercePriceEntryImpl.resetOriginalValues();
@@ -748,7 +748,7 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 
 		commercePriceEntryCacheModel.price = getPrice();
 
-		commercePriceEntryCacheModel.hasTirePrice = getHasTirePrice();
+		commercePriceEntryCacheModel.hasTierPrice = getHasTierPrice();
 
 		Date lastPublishDate = getLastPublishDate();
 
@@ -788,8 +788,8 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 		sb.append(getCommercePriceListId());
 		sb.append(", price=");
 		sb.append(getPrice());
-		sb.append(", hasTirePrice=");
-		sb.append(getHasTirePrice());
+		sb.append(", hasTierPrice=");
+		sb.append(getHasTierPrice());
 		sb.append(", lastPublishDate=");
 		sb.append(getLastPublishDate());
 		sb.append("}");
@@ -850,8 +850,8 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 		sb.append(getPrice());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>hasTirePrice</column-name><column-value><![CDATA[");
-		sb.append(getHasTirePrice());
+			"<column><column-name>hasTierPrice</column-name><column-value><![CDATA[");
+		sb.append(getHasTierPrice());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
@@ -888,7 +888,7 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 	private long _originalCommercePriceListId;
 	private boolean _setOriginalCommercePriceListId;
 	private double _price;
-	private boolean _hasTirePrice;
+	private boolean _hasTierPrice;
 	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private CommercePriceEntry _escapedModel;

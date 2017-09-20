@@ -383,11 +383,11 @@ public class CommercePriceEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.model.CommercePriceEntry setHasTirePrice(
-		long commercePriceEntryId, boolean hasTirePrice)
+	public com.liferay.commerce.model.CommercePriceEntry setHasTierPrice(
+		long commercePriceEntryId, boolean hasTierPrice)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commercePriceEntryLocalService.setHasTirePrice(commercePriceEntryId,
-			hasTirePrice);
+		return _commercePriceEntryLocalService.setHasTierPrice(commercePriceEntryId,
+			hasTierPrice);
 	}
 
 	/**

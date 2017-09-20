@@ -45,7 +45,7 @@ public class CommercePriceEntrySoap implements Serializable {
 		soapModel.setCPInstanceId(model.getCPInstanceId());
 		soapModel.setCommercePriceListId(model.getCommercePriceListId());
 		soapModel.setPrice(model.getPrice());
-		soapModel.setHasTirePrice(model.getHasTirePrice());
+		soapModel.setHasTierPrice(model.getHasTierPrice());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
@@ -190,16 +190,16 @@ public class CommercePriceEntrySoap implements Serializable {
 		_price = price;
 	}
 
-	public boolean getHasTirePrice() {
-		return _hasTirePrice;
+	public boolean getHasTierPrice() {
+		return _hasTierPrice;
 	}
 
-	public boolean isHasTirePrice() {
-		return _hasTirePrice;
+	public boolean isHasTierPrice() {
+		return _hasTierPrice;
 	}
 
-	public void setHasTirePrice(boolean hasTirePrice) {
-		_hasTirePrice = hasTirePrice;
+	public void setHasTierPrice(boolean hasTierPrice) {
+		_hasTierPrice = hasTierPrice;
 	}
 
 	public Date getLastPublishDate() {
@@ -221,6 +221,6 @@ public class CommercePriceEntrySoap implements Serializable {
 	private long _CPInstanceId;
 	private long _commercePriceListId;
 	private double _price;
-	private boolean _hasTirePrice;
+	private boolean _hasTierPrice;
 	private Date _lastPublishDate;
 }

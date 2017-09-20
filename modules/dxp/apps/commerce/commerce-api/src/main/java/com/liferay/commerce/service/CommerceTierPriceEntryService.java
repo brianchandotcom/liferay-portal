@@ -16,7 +16,7 @@ package com.liferay.commerce.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.model.CommerceTirePriceEntry;
+import com.liferay.commerce.model.CommerceTierPriceEntry;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -37,51 +37,51 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.util.List;
 
 /**
- * Provides the remote service interface for CommerceTirePriceEntry. Methods of this
+ * Provides the remote service interface for CommerceTierPriceEntry. Methods of this
  * service are expected to have security checks based on the propagated JAAS
  * credentials because this service can be accessed remotely.
  *
  * @author Alessio Antonio Rendina
- * @see CommerceTirePriceEntryServiceUtil
- * @see com.liferay.commerce.service.base.CommerceTirePriceEntryServiceBaseImpl
- * @see com.liferay.commerce.service.impl.CommerceTirePriceEntryServiceImpl
+ * @see CommerceTierPriceEntryServiceUtil
+ * @see com.liferay.commerce.service.base.CommerceTierPriceEntryServiceBaseImpl
+ * @see com.liferay.commerce.service.impl.CommerceTierPriceEntryServiceImpl
  * @generated
  */
 @AccessControlled
 @JSONWebService
 @OSGiBeanProperties(property =  {
-	"json.web.service.context.name=commerce", "json.web.service.context.path=CommerceTirePriceEntry"}, service = CommerceTirePriceEntryService.class)
+	"json.web.service.context.name=commerce", "json.web.service.context.path=CommerceTierPriceEntry"}, service = CommerceTierPriceEntryService.class)
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
-public interface CommerceTirePriceEntryService extends BaseService {
+public interface CommerceTierPriceEntryService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceTirePriceEntryServiceUtil} to access the commerce tire price entry remote service. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceTirePriceEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link CommerceTierPriceEntryServiceUtil} to access the commerce tier price entry remote service. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceTierPriceEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public CommerceTirePriceEntry addCommerceTirePriceEntry(
+	public CommerceTierPriceEntry addCommerceTierPriceEntry(
 		long commercePriceEntryId, double price, int minQuantity,
 		ServiceContext serviceContext) throws PortalException;
 
-	public void deleteCommerceTirePriceEntry(long commerceTirePriceEntryId)
+	public void deleteCommerceTierPriceEntry(long commerceTierPriceEntryId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceTirePriceEntry fetchCommerceTirePriceEntry(
-		long commerceTirePriceEntryId);
+	public CommerceTierPriceEntry fetchCommerceTierPriceEntry(
+		long commerceTierPriceEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceTirePriceEntry> getCommerceTirePriceEntries(
+	public List<CommerceTierPriceEntry> getCommerceTierPriceEntries(
 		long commercePriceEntryId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceTirePriceEntry> getCommerceTirePriceEntries(
+	public List<CommerceTierPriceEntry> getCommerceTierPriceEntries(
 		long commercePriceEntryId, int start, int end,
-		OrderByComparator<CommerceTirePriceEntry> orderByComparator);
+		OrderByComparator<CommerceTierPriceEntry> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceTirePriceEntriesCount(long commercePriceEntryId);
+	public int getCommerceTierPriceEntriesCount(long commercePriceEntryId);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -94,12 +94,12 @@ public interface CommerceTirePriceEntryService extends BaseService {
 	public Hits search(SearchContext searchContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BaseModelSearchResult<CommerceTirePriceEntry> searchCommerceTirePriceEntries(
+	public BaseModelSearchResult<CommerceTierPriceEntry> searchCommerceTierPriceEntries(
 		long companyId, long groupId, long commercePriceEntryId,
 		java.lang.String keywords, int start, int end, Sort sort)
 		throws PortalException;
 
-	public CommerceTirePriceEntry updateCommerceTirePriceEntry(
-		long commerceTirePriceEntryId, double price, int minQuantity,
+	public CommerceTierPriceEntry updateCommerceTierPriceEntry(
+		long commerceTierPriceEntryId, double price, int minQuantity,
 		ServiceContext serviceContext) throws PortalException;
 }

@@ -190,7 +190,7 @@
 		<field name="price" type="double">
 			<validator name="number" />
 		</field>
-		<field name="hasTirePrice" type="boolean" />
+		<field name="hasTierPrice" type="boolean" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.model.CommercePriceList">
@@ -252,9 +252,9 @@
 		</field>
 		<field name="active" type="boolean" />
 	</model>
-	<model name="com.liferay.commerce.model.CommerceTirePriceEntry">
+	<model name="com.liferay.commerce.model.CommerceTierPriceEntry">
 		<field name="uuid" type="String" />
-		<field name="CommerceTirePriceEntryId" type="long" />
+		<field name="CommerceTierPriceEntryId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -262,12 +262,8 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="commercePriceEntryId" type="long" />
-		<field name="price" type="double">
-			<validator name="number" />
-		</field>
-		<field name="minQuantity" type="int">
-			<validator name="number" />
-		</field>
+		<field name="price" type="double" />
+		<field name="minQuantity" type="int" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.model.CommerceWarehouse">

@@ -359,10 +359,10 @@ public class CommercePriceEntryLocalServiceUtil {
 			commercePriceListId, keywords, start, end, sort);
 	}
 
-	public static com.liferay.commerce.model.CommercePriceEntry setHasTirePrice(
-		long commercePriceEntryId, boolean hasTirePrice)
+	public static com.liferay.commerce.model.CommercePriceEntry setHasTierPrice(
+		long commercePriceEntryId, boolean hasTierPrice)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().setHasTirePrice(commercePriceEntryId, hasTirePrice);
+		return getService().setHasTierPrice(commercePriceEntryId, hasTierPrice);
 	}
 
 	/**

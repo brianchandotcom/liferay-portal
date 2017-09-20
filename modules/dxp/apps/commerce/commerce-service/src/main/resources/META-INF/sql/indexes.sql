@@ -64,11 +64,11 @@ create unique index IX_DBA0714B on CommerceRegion (uuid_[$COLUMN_LENGTH:75$], gr
 create index IX_42E5F6EF on CommerceShippingMethod (groupId, active_);
 create unique index IX_C4557F93 on CommerceShippingMethod (groupId, engineKey[$COLUMN_LENGTH:75$]);
 
-create index IX_7E5B23A5 on CommerceTirePriceEntry (commercePriceEntryId);
-create index IX_E0351A16 on CommerceTirePriceEntry (companyId);
-create index IX_C7492E18 on CommerceTirePriceEntry (groupId);
-create index IX_91658446 on CommerceTirePriceEntry (uuid_[$COLUMN_LENGTH:75$], companyId);
-create unique index IX_4CEE6448 on CommerceTirePriceEntry (uuid_[$COLUMN_LENGTH:75$], groupId);
+create index IX_D027039F on CommerceTierPriceEntry (commercePriceEntryId);
+create index IX_F5D5725C on CommerceTierPriceEntry (companyId);
+create index IX_D78EDFDE on CommerceTierPriceEntry (groupId);
+create index IX_B6C47140 on CommerceTierPriceEntry (uuid_[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_5D3847C2 on CommerceTierPriceEntry (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create index IX_4500A0CA on CommerceWarehouse (groupId, commerceCountryId);
 

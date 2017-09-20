@@ -15,8 +15,11 @@
 package com.liferay.gradle.plugins.test.integration;
 
 import com.liferay.gradle.plugins.test.integration.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.test.integration.internal.util.ReflectionUtil;
 
 import java.io.File;
+
+import java.lang.reflect.Method;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -142,19 +145,37 @@ public class TestIntegrationBasePlugin implements Plugin<Project> {
 
 			});
 
-		conventionMapping.map(
-			"testClassesDir",
-			new Callable<File>() {
+		final SourceSetOutput sourceSetOutput =
+			testIntegrationSourceSet.getOutput();
 
-				@Override
-				public File call() throws Exception {
-					SourceSetOutput sourceSetOutput =
-						testIntegrationSourceSet.getOutput();
+		final Method getClassesDirsMethod = ReflectionUtil.getMethod(
+			sourceSetOutput, "getClassesDirs");
 
-					return sourceSetOutput.getClassesDir();
-				}
+		if (getClassesDirsMethod != null) {
+			conventionMapping.map(
+				"testClassesDirs",
+				new Callable<FileCollection>() {
 
-			});
+					@Override
+					public FileCollection call() throws Exception {
+						return (FileCollection)getClassesDirsMethod.invoke(
+							sourceSetOutput);
+					}
+
+				});
+		}
+		else {
+			conventionMapping.map(
+				"testClassesDir",
+				new Callable<File>() {
+
+					@Override
+					public File call() throws Exception {
+						return sourceSetOutput.getClassesDir();
+					}
+
+				});
+		}
 
 		project.afterEvaluate(
 			new Action<Project>() {

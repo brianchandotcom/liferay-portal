@@ -25,16 +25,17 @@ import java.io.OutputStream;
 public class BufferedProcess extends Process {
 
 	public BufferedProcess(int bufferSize, Process process) {
-		_bufferSize = bufferSize;
 		_process = process;
 
-		_errorStreamBuffer = new StreamBuffer(_process.getErrorStream());
+		_errorStreamBuffer = new StreamBuffer(
+			bufferSize, _process.getErrorStream());
 
 		_errorStream = new ByteArrayInputStream(_errorStreamBuffer._buffer);
 
 		_errorStreamBuffer.start();
 
-		_inputStreamBuffer = new StreamBuffer(_process.getInputStream());
+		_inputStreamBuffer = new StreamBuffer(
+			bufferSize, _process.getInputStream());
 
 		_inputStream = new ByteArrayInputStream(_inputStreamBuffer._buffer);
 
@@ -71,7 +72,6 @@ public class BufferedProcess extends Process {
 		return _process.waitFor();
 	}
 
-	private final int _bufferSize;
 	private final InputStream _errorStream;
 	private final StreamBuffer _errorStreamBuffer;
 	private final InputStream _inputStream;
@@ -80,9 +80,9 @@ public class BufferedProcess extends Process {
 
 	private class StreamBuffer extends Thread {
 
-		public StreamBuffer(InputStream inputStream) {
+		public StreamBuffer(int bufferSize, InputStream inputStream) {
 			_inputStream = inputStream;
-			_buffer = new byte[_bufferSize];
+			_buffer = new byte[bufferSize];
 		}
 
 		public void run() {

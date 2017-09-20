@@ -29,6 +29,7 @@ import groovy.lang.Closure;
 import java.io.File;
 
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 
 import java.util.HashSet;
@@ -140,6 +141,22 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	public void setDefaultRepositoryEnabled(boolean defaultRepositoryEnabled) {
 		_defaultRepositoryEnabled = defaultRepositoryEnabled;
+	}
+
+	private static File _getFileIfExists(String url) {
+		try {
+			URI uri = new URI(url);
+
+			File file = new File(uri);
+
+			if (file.exists()) {
+				return file;
+			}
+		}
+		catch (Throwable t) {
+		}
+
+		return null;
 	}
 
 	private Copy _addTaskCopyBundle(
@@ -382,6 +399,16 @@ public class RootProjectConfigurator implements Plugin<Project> {
 					String bundleUrl = workspaceExtension.getBundleUrl();
 
 					bundleUrl = bundleUrl.replace(" ", "%20");
+
+					File sourceBundleFile = _getFileIfExists(bundleUrl);
+
+					File destBundleFile = new File(
+						destinationDir, sourceBundleFile.getName());
+
+					if (sourceBundleFile.equals(destBundleFile)) {
+						throw new GradleException(
+							"Destination File cannot be the same as Source File");
+					}
 
 					try {
 						download.src(bundleUrl);

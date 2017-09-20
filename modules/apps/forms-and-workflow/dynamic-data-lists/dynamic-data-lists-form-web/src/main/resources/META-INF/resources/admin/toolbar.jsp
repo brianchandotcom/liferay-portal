@@ -18,11 +18,13 @@
 
 <%
 PortletURL portletURL = ddlFormAdminDisplayContext.getPortletURL();
+
+String currentTab = ParamUtil.getString(request, "currentTab", "forms");
 %>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"
-	searchContainerId="ddlRecordSet"
+	searchContainerId="<%= ddlFormAdminDisplayContext.getSearchContainerId() %>"
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-util:include page="/admin/display_style_buttons.jsp" servletContext="<%= application %>" />
@@ -43,21 +45,48 @@ PortletURL portletURL = ddlFormAdminDisplayContext.getPortletURL();
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteRecordSets();" %>' icon="trash" label="delete" />
+		<c:choose>
+			<c:when test='<%= currentTab.equals("forms") %>'>
+				<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteRecordSets();" %>' icon="trash" label="delete" />
+			</c:when>
+			<c:when test='<%= currentTab.equals("field-set") %>'>
+				<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteStructures();" %>' icon="trash" label="delete" />
+			</c:when>
+		</c:choose>
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
-<aui:script>
-	function <portlet:namespace />deleteRecordSets() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
-			var form = AUI.$(document.<portlet:namespace />searchContainerForm);
+<c:choose>
+	<c:when test='<%= currentTab.equals("forms") %>'>
+		<aui:script>
+			function <portlet:namespace />deleteRecordSets() {
+				if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
+					var form = AUI.$(document.<portlet:namespace />searchContainerForm);
 
-			var searchContainer = AUI.$('#<portlet:namespace />ddlRecordSet', form);
+					var searchContainer = AUI.$('#<portlet:namespace /><%= ddlFormAdminDisplayContext.getSearchContainerId() %>', form);
 
-			form.attr('method', 'post');
-			form.fm('deleteRecordSetIds').val(Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds'));
+					form.attr('method', 'post');
+					form.fm('deleteRecordSetIds').val(Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds'));
 
-			submitForm(form, '<portlet:actionURL name="deleteRecordSet"><portlet:param name="mvcPath" value="/admin/view.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
-		}
-	}
-</aui:script>
+					submitForm(form, '<portlet:actionURL name="deleteRecordSet"><portlet:param name="mvcPath" value="/admin/view.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+				}
+			}
+		</aui:script>
+	</c:when>
+	<c:when test='<%= currentTab.equals("field-set") %>'>
+		<aui:script>
+			function <portlet:namespace />deleteStructures() {
+				if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
+					var form = AUI.$(document.<portlet:namespace />searchContainerForm);
+
+					var searchContainer = AUI.$('#<portlet:namespace /><%= ddlFormAdminDisplayContext.getSearchContainerId() %>', form);
+
+					form.attr('method', 'post');
+					form.fm('deleteStructureIds').val(Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds'));
+
+					submitForm(form, '<portlet:actionURL name="deleteStructure"><portlet:param name="mvcPath" value="/admin/view.jsp" /><portlet:param name="currentTab" value="field-set" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+				}
+			}
+		</aui:script>
+	</c:when>
+</c:choose>

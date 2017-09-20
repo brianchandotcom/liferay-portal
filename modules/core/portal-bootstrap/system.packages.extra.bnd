@@ -276,9 +276,6 @@ Export-Package:\
 Import-Package: !*
 -includeresource:\
 	-@lib/com.liferay.portal.app.license.api.jar,\
-	-@lib/com.liferay.portal.impl.blogs.compat.jar,\
-	-@lib/com.liferay.portal.impl.trash.compat.jar,\
-	-@lib/com.liferay.portal.kernel.blogs.compat.jar,\
 	@../../../lib/development/jms.jar,\
 	@../../../lib/development/mail.jar,\
 	@../../../lib/development/persistence.jar,\
@@ -350,6 +347,8 @@ Import-Package: !*
 	@../../../portal-kernel/portal-kernel.jar,\
 	@lib/com.liferay.osgi.felix.util.jar,\
 	@lib/com.liferay.osgi.service.tracker.collections.jar,\
+	@lib/com.liferay.petra.concurrent.jar,\
+	@lib/com.liferay.petra.memory.jar,\
 	@lib/com.liferay.registry.api.jar
 -removeheaders:\
 	Private-Package,\

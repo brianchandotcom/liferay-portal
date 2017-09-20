@@ -14,10 +14,10 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.memory.PoolAction;
+import com.liferay.petra.memory.SoftReferencePool;
 import com.liferay.portal.kernel.io.OutputStreamWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
-import com.liferay.portal.kernel.memory.PoolAction;
-import com.liferay.portal.kernel.memory.SoftReferencePool;
 
 import java.io.OutputStream;
 import java.io.Writer;

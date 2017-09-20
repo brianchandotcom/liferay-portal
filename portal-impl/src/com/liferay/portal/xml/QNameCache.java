@@ -14,8 +14,8 @@
 
 package com.liferay.portal.xml;
 
-import com.liferay.portal.kernel.concurrent.ConcurrentReferenceKeyHashMap;
-import com.liferay.portal.kernel.memory.FinalizeManager;
+import com.liferay.petra.concurrent.ConcurrentReferenceKeyHashMap;
+import com.liferay.petra.memory.FinalizeManager;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

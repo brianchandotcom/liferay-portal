@@ -83,18 +83,12 @@ dependencies {
 	provided group: "org.springframework", name: "spring-beans", version: "4.1.9.RELEASE"
 	provided group: "org.springframework", name: "spring-context", version: "4.1.9.RELEASE"
 	provided group: "org.springframework", name: "spring-core", version: "4.1.9.RELEASE"
+	provided project(":apps:foundation:petra:petra-concurrent")
+	provided project(":apps:foundation:petra:petra-memory")
 	provided project(":core:jaxws-osgi-bridge")
 	provided project(":core:portal-app-license-api")
 	provided project(":core:registry-api")
 	provided project(":core:registry-impl")
-}
-
-if (buildProfile != "slim") {
-	dependencies {
-		provided project(":core:portal-compat:blogs:portal-impl-blogs-compat")
-		provided project(":core:portal-compat:trash:portal-impl-trash-compat")
-		provided project(":core:portal-compat:blogs:portal-kernel-blogs-compat")
-	}
 }
 
 liferay {

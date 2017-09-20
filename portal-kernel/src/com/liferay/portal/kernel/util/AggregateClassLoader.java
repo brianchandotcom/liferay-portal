@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.memory.EqualityWeakReference;
 import com.liferay.portal.kernel.exception.LoggedExceptionInInitializerError;
-import com.liferay.portal.kernel.memory.EqualityWeakReference;
 
 import java.io.IOException;
 

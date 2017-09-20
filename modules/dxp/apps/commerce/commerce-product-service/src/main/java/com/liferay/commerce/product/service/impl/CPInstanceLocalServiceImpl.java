@@ -300,9 +300,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			cpInstance.getCompanyId(), cpInstance.getGroupId(),
 			CPInstance.class.getName(), cpInstance.getCPInstanceId());
 
-		cpDefinitionLocalService.checkCPDefinitionStatus(
-			cpInstance.getCPDefinitionId());
-
 		reindexCPDefinition(cpInstance.getCPDefinitionId());
 
 		return cpInstance;

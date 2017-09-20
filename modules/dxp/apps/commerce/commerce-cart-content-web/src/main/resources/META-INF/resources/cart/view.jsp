@@ -45,7 +45,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				<%
 				CPDefinition cpDefinition = commerceCartItem.getCPDefinition();
 
-				String thumbnailSrc = cpDefinition.getDefaultImageThumbnailSrc(themeDisplay);
+					String thumbnailSrc = commerceCartContentDisplayContext.getCommerceCartItemThumb(commerceCartItem, themeDisplay);
 
 				List<KeyValuePair> keyValuePairs = commerceCartContentDisplayContext.parseJSONString(commerceCartItem.getJson(), locale);
 

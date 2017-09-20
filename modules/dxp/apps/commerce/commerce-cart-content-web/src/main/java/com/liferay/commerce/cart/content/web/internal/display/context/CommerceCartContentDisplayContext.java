@@ -17,17 +17,22 @@ package com.liferay.commerce.cart.content.web.internal.display.context;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
+import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceCartItemService;
 import com.liferay.commerce.util.CommerceCartHelper;
 import com.liferay.commerce.util.CommercePriceCalculationHelper;
 import com.liferay.commerce.util.CommercePriceFormatter;
+import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -92,6 +97,34 @@ public class CommerceCartContentDisplayContext {
 		}
 
 		return commerceCart.getCommerceCartId();
+	}
+
+	public String getCommerceCartItemThumb(
+			CommerceCartItem commerceCartItem, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
+			cpInstanceHelper.getCPAttachmentFileEntries(
+				commerceCartItem.getCPDefinitionId(),
+				commerceCartItem.getJson(),
+				CPConstants.ATTACHMENT_FILE_ENTRY_TYPE_IMAGE);
+
+		if (cpAttachmentFileEntries.isEmpty()) {
+			CPDefinition cpDefinition = commerceCartItem.getCPDefinition();
+
+			return cpDefinition.getDefaultImageThumbnailSrc(themeDisplay);
+		}
+
+		CPAttachmentFileEntry cpAttachmentFileEntry =
+			cpAttachmentFileEntries.get(0);
+
+		FileEntry fileEntry = cpAttachmentFileEntry.getFileEntry();
+
+		if (fileEntry == null) {
+			return null;
+		}
+
+		return DLUtil.getThumbnailSrc(fileEntry, themeDisplay);
 	}
 
 	public String getCommerceCartTotal() throws PortalException {

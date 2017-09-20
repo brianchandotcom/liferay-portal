@@ -38,15 +38,20 @@ by default.
 
 The logic that chooses the default deploy directory is as follows:
 
-1. If the project directory contains a `.lfrbuild-app-server-lib` marker file,
-the module is deployed to `${app.server.portal.dir}/WEB-INF/lib`.
-2. If the project directory contains a `.lfrbuild-tool` marker file, the module
-is deployed to `${liferay.home}/tools/${module.dir.name}`.
-3. If the project directory contains a `.lfrbuild-static` marker file, the
-module is deployed to `${liferay home}/osgi/static`.
-4. If the module symbolic name starts with `com.liferay.portal.`, the module is
-deployed to `${liferay home}/osgi/portal`.
-5. Otherwise, the module is deployed to `${liferay home}/osgi/modules`.
+- For OSGi modules:
+	1. If the project directory contains a `.lfrbuild-app-server-lib` marker
+	file, the module is deployed to `${app.server.portal.dir}/WEB-INF/lib`.
+	2. If the project directory contains a `.lfrbuild-tool` marker file, the
+	module is deployed to `${liferay.home}/tools/${module.dir.name}`.
+	3. If the project directory contains a `.lfrbuild-static` marker file, the
+	module is deployed to `${liferay home}/osgi/static`.
+	4. If the module symbolic name starts with `com.liferay.portal.`, the module
+	is deployed to `${liferay home}/osgi/portal`.
+	5. Otherwise, the module is deployed to `${liferay home}/osgi/modules`.
+- For themes:
+	1. If the `required-for-startup` property in the `src/WEB-INF/liferay-plugin-package.properties` file is `true`, the theme is
+	deployed to `${liferay home}/osgi/war`.
+	2. Otherwise, the theme is deployed to `${liferay home}/deploy`.
 
 If possible, you should always use these marker files to specify the deploy
 directory of your modules. If none of these cases apply to you, then add

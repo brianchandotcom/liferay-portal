@@ -306,22 +306,43 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 							"sequences.sql");
 						String indexesSQL = getSQLTemplateString("indexes.sql");
 
-						try {
-							if (tablesSQL != null) {
+						if (tablesSQL != null) {
+							try {
 								db.runSQLTemplateString(tablesSQL, true, true);
 							}
+							catch (Exception e) {
+								throw new UpgradeException(
+									"Unable to run tablesSQL: \"" + tablesSQL +
+										"\" for bundle: " + _bundle,
+									e);
+							}
+						}
 
-							if (sequencesSQL != null) {
+						if (sequencesSQL != null) {
+							try {
 								db.runSQLTemplateString(
 									sequencesSQL, true, true);
 							}
-
-							if (indexesSQL != null) {
-								db.runSQLTemplateString(indexesSQL, true, true);
+							catch (Exception e) {
+								throw new UpgradeException(
+									"Unable to run sequencesSQL: \"" +
+										sequencesSQL + "\" for bundle: " +
+											_bundle,
+									e);
 							}
 						}
-						catch (Exception e) {
-							throw new UpgradeException(e);
+
+						if (indexesSQL != null) {
+							try {
+								db.runSQLTemplateString(indexesSQL, true, true);
+							}
+							catch (Exception e) {
+								throw new UpgradeException(
+									"Unable to run indexesSQL: \"" +
+										indexesSQL + "\" for bundle: " +
+											_bundle,
+									e);
+							}
 						}
 					}
 

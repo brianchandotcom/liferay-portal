@@ -174,6 +174,19 @@ public class ModulesStructureTest {
 			new SimpleFileVisitor<Path>() {
 
 				@Override
+				public FileVisitResult preVisitDirectory(
+					Path dirPath, BasicFileAttributes basicFileAttributes) {
+
+					String dirName = String.valueOf(dirPath.getFileName());
+
+					if (dirName.equals("node_modules")) {
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
 				public FileVisitResult visitFile(
 					Path path, BasicFileAttributes basicFileAttributes) {
 

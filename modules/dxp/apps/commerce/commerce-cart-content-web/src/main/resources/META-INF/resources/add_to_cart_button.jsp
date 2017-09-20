@@ -97,10 +97,10 @@ dataMap.put("cp-instance-id", String.valueOf(cpInstanceId));
 			}
 
 			var data = {
-				'_<%= CommercePortletKeys.COMMERCE_CART_CONTENT %>_cpDefinitionId' : cpDefinitionId ,
-				'_<%= CommercePortletKeys.COMMERCE_CART_CONTENT %>_ddmFormValues' : ddmFormValues ,
-				'_<%= CommercePortletKeys.COMMERCE_CART_CONTENT %>_cpInstanceId' : cpInstanceId ,
-				'_<%= CommercePortletKeys.COMMERCE_CART_CONTENT %>_quantity' : quantity
+				'<%= PortalUtil.getPortletNamespace(CommercePortletKeys.COMMERCE_CART_CONTENT) %>cpDefinitionId' : cpDefinitionId ,
+				'<%= PortalUtil.getPortletNamespace(CommercePortletKeys.COMMERCE_CART_CONTENT) %>ddmFormValues' : ddmFormValues ,
+				'<%= PortalUtil.getPortletNamespace(CommercePortletKeys.COMMERCE_CART_CONTENT) %>cpInstanceId' : cpInstanceId ,
+				'<%= PortalUtil.getPortletNamespace(CommercePortletKeys.COMMERCE_CART_CONTENT) %>quantity' : quantity
 			};
 
 			A.io.request(

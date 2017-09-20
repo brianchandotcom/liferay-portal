@@ -5222,15 +5222,15 @@ public class StringUtil {
 		int bytesRead = inputStream.read(buffer, 0, buffer.length);
 
 		while (bytesRead != -1) {
-			if (bytesRead == buffer.length) {
+			length += bytesRead;
+
+			if (length == buffer.length) {
 				byte[] newBuffer = new byte[buffer.length << 1];
 
-				System.arraycopy(buffer, 0, newBuffer, 0, bytesRead);
+				System.arraycopy(buffer, 0, newBuffer, 0, buffer.length);
 
 				buffer = newBuffer;
 			}
-
-			length += bytesRead;
 
 			bytesRead = inputStream.read(
 				buffer, length, buffer.length - length);

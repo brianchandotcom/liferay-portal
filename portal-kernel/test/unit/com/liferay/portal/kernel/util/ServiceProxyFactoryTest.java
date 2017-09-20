@@ -419,10 +419,9 @@ public class ServiceProxyFactoryTest {
 		System.setProperty(
 			ServiceProxyFactory.class.getName() + ".timeout", "0");
 
-		final TestService testService =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				TestService.class, TestServiceUtil.class, "testService",
-				filterString, true);
+		TestService testService = ServiceProxyFactory.newServiceTrackedInstance(
+			TestService.class, TestServiceUtil.class, "testService",
+			filterString, true);
 
 		Assert.assertTrue(ProxyUtil.isProxyClass(testService.getClass()));
 		Assert.assertNotSame(TestServiceImpl.class, testService.getClass());
@@ -433,17 +432,8 @@ public class ServiceProxyFactoryTest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			FutureTask<Void> futureTask = new FutureTask<>(
-				new Callable<Void>() {
-
-					@Override
-					public Void call() {
-						testService.getTestServiceName();
-
-						return null;
-					}
-
-				});
+			FutureTask<String> futureTask = new FutureTask<>(
+				testService::getTestServiceName);
 
 			Thread thread = new Thread(futureTask);
 

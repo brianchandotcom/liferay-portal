@@ -43,7 +43,7 @@ public class InitBundleMojo extends AbstractLiferayMojo {
 			return;
 		}
 
-		if (environment == null) {
+		if ((environment == null) || environment.isEmpty()) {
 			environment = BundleSupportConstants.DEFAULT_ENVIRONMENT;
 		}
 

@@ -14,15 +14,15 @@
 
 package com.liferay.commerce.util.comparator;
 
-import com.liferay.commerce.model.CommerceTirePriceEntry;
+import com.liferay.commerce.model.CommerceTierPriceEntry;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceTirePriceEntryCreateDateComparator
-	extends OrderByComparator<CommerceTirePriceEntry> {
+public class CommerceTierPriceEntryCreateDateComparator
+	extends OrderByComparator<CommerceTierPriceEntry> {
 
 	public static final String ORDER_BY_ASC = "createDate ASC";
 
@@ -30,22 +30,22 @@ public class CommerceTirePriceEntryCreateDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
-	public CommerceTirePriceEntryCreateDateComparator() {
+	public CommerceTierPriceEntryCreateDateComparator() {
 		this(false);
 	}
 
-	public CommerceTirePriceEntryCreateDateComparator(boolean ascending) {
+	public CommerceTierPriceEntryCreateDateComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
 	@Override
 	public int compare(
-		CommerceTirePriceEntry commerceTirePriceEntry1,
-		CommerceTirePriceEntry commerceTirePriceEntry2) {
+		CommerceTierPriceEntry commerceTierPriceEntry1,
+		CommerceTierPriceEntry commerceTierPriceEntry2) {
 
 		int value = DateUtil.compareTo(
-			commerceTirePriceEntry1.getCreateDate(),
-			commerceTirePriceEntry2.getCreateDate());
+			commerceTierPriceEntry1.getCreateDate(),
+			commerceTierPriceEntry2.getCreateDate());
 
 		if (_ascending) {
 			return value;

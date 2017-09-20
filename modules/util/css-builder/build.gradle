@@ -35,6 +35,7 @@ configurations {
 	mavenCompile {
 		extendsFrom compile
 	}
+
 	mavenDistribution
 }
 

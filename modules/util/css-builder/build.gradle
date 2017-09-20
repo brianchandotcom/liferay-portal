@@ -77,8 +77,8 @@ liferay {
 }
 
 test {
-	dependsOn install
 	dependsOn copyPortalCommonCSSJar
+	dependsOn install
 	dependsOn unzipPortalCommonCSS
 
 	doFirst {

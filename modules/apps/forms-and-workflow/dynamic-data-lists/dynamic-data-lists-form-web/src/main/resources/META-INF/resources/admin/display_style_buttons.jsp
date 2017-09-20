@@ -17,17 +17,17 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-PortletURL displayStyleURL = renderResponse.createRenderURL();
+PortletURL portletURL = ddlFormAdminDisplayContext.getPortletURL();
 
 int delta = ParamUtil.getInteger(request, "delta");
 
 if (delta > 0) {
-	displayStyleURL.setParameter("delta", String.valueOf(delta));
+	portletURL.setParameter("delta", String.valueOf(delta));
 }
 %>
 
 <liferay-frontend:management-bar-display-buttons
 	displayViews="<%= ddlFormAdminDisplayContext.getDisplayViews() %>"
-	portletURL="<%= displayStyleURL %>"
+	portletURL="<%= portletURL %>"
 	selectedDisplayStyle="<%= ddlFormAdminDisplayContext.getDisplayStyle() %>"
 />

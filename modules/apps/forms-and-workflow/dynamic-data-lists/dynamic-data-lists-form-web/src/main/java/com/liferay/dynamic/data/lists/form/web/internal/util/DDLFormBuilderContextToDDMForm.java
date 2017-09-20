@@ -353,6 +353,10 @@ public class DDLFormBuilderContextToDDMForm {
 	protected void setDDMFormSuccessPageSettings(
 		JSONObject jsonObject, DDMForm ddmForm) {
 
+		if (jsonObject == null) {
+			return;
+		}
+
 		DDMFormSuccessPageSettings ddmFormSuccessPageSettings =
 			new DDMFormSuccessPageSettings();
 

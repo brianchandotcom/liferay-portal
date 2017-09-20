@@ -109,12 +109,6 @@ boolean hasManageCommerceCountriesPermission = CommercePermission.contains(permi
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-content"
-					name="subject-to-vat"
-					value='<%= LanguageUtil.get(request, commerceCountry.isSubjectToVAT() ? "yes" : "no") %>'
-				/>
-
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
 					name="active"
 					value='<%= LanguageUtil.get(request, commerceCountry.isActive() ? "yes" : "no") %>'
 				/>

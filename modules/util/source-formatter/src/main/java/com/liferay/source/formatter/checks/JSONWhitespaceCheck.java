@@ -34,10 +34,6 @@ public class JSONWhitespaceCheck extends WhitespaceCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (absolutePath.endsWith("/package.json")) {
-			return content;
-		}
-
 		StringBundler sb = new StringBundler();
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
@@ -65,10 +61,15 @@ public class JSONWhitespaceCheck extends WhitespaceCheck {
 			}
 		}
 
-		content = sb.toString();
+		if (isAllowTrailingEmptyLines(fileName) && content.endsWith("\n")) {
+			content = sb.toString();
+		}
+		else {
+			content = sb.toString();
 
-		if (content.endsWith("\n")) {
-			content = content.substring(0, content.length() - 1);
+			if (content.endsWith("\n")) {
+				content = content.substring(0, content.length() - 1);
+			}
 		}
 
 		Matcher matcher = _missingWhitespacePattern.matcher(content);
@@ -81,6 +82,15 @@ public class JSONWhitespaceCheck extends WhitespaceCheck {
 		}
 
 		return super.doProcess(fileName, absolutePath, content);
+	}
+
+	@Override
+	protected boolean isAllowTrailingEmptyLines(String fileName) {
+		if (fileName.endsWith("/package.json")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private final Pattern _leadingSpacesPattern = Pattern.compile(

@@ -253,6 +253,10 @@ public class WhitespaceCheck extends BaseFileCheck {
 		return _allowLeadingSpaces;
 	}
 
+	protected boolean isAllowTrailingEmptyLines(String fileName) {
+		return false;
+	}
+
 	protected String trimLine(String fileName, String line) {
 		if (line.trim().length() == 0) {
 			return StringPool.BLANK;
@@ -291,6 +295,10 @@ public class WhitespaceCheck extends BaseFileCheck {
 				sb.append(trimLine(fileName, line));
 				sb.append("\n");
 			}
+		}
+
+		if (isAllowTrailingEmptyLines(fileName) && content.endsWith("\n")) {
+			return sb.toString();
 		}
 
 		content = sb.toString();

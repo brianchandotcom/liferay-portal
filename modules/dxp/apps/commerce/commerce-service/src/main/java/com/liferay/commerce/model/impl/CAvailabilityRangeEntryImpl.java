@@ -17,23 +17,12 @@ package com.liferay.commerce.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 /**
- * The extended model implementation for the CAvailabilityRangeEntry service. Represents a row in the &quot;CAvailabilityRangeEntry&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.commerce.model.CAvailabilityRangeEntry} interface.
- * </p>
- *
  * @author Alessio Antonio Rendina
  */
 @ProviderType
 public class CAvailabilityRangeEntryImpl
 	extends CAvailabilityRangeEntryBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a c availability range entry model instance should use the {@link com.liferay.commerce.model.CAvailabilityRangeEntry} interface instead.
-	 */
 	public CAvailabilityRangeEntryImpl() {
 	}
 

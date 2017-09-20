@@ -38,4 +38,14 @@ public class CommerceWebKeys {
 
 	public static final String COMMERCE_ORDERS = "COMMERCE_ORDERS";
 
+	public static final String COMMERCE_PRICE_ENTRIES =
+		"COMMERCE_PRICE_ENTRIES";
+
+	public static final String COMMERCE_PRICE_LIST = "COMMERCE_PRICE_LIST";
+
+	public static final String COMMERCE_PRICE_LISTS = "COMMERCE_PRICE_LISTS";
+
+	public static final String COMMERCE_TIRE_PRICE_ENTRIES =
+		"COMMERCE_TIRE_PRICE_ENTRIES";
+
 }

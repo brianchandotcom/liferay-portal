@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -347,6 +348,8 @@ public class ModulesStructureTest {
 
 	@Test
 	public void testScanMarkerFiles() throws IOException {
+		final Set<String> fileNames = new HashSet<>();
+
 		Files.walkFileTree(
 			_modulesDirPath,
 			new SimpleFileVisitor<Path>() {
@@ -361,6 +364,8 @@ public class ModulesStructureTest {
 					if (StringUtil.startsWith(fileName, ".lfrbuild-") ||
 						StringUtil.startsWith(fileName, ".lfrrelease-")) {
 
+						fileNames.add(fileName);
+
 						Assert.assertEquals(
 							"Marker file " + path + " must be empty", 0,
 							basicFileAttributes.size());
@@ -370,6 +375,17 @@ public class ModulesStructureTest {
 				}
 
 			});
+
+		Path readmePath = _modulesDirPath.resolve("README.markdown");
+
+		String readme = ModulesStructureTestUtil.read(readmePath);
+
+		for (String fileName : fileNames) {
+			Assert.assertTrue(
+				"Please document the \"" + fileName + "\" marker file in " +
+					readmePath,
+				readme.contains("`" + fileName + "`"));
+		}
 	}
 
 	private void _addGradlePluginNames(

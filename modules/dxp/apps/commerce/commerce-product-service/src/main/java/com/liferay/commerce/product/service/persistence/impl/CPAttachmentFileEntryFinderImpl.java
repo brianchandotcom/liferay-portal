@@ -32,7 +32,8 @@ import java.util.List;
  * @author Alessio Antonio Rendina
  */
 public class CPAttachmentFileEntryFinderImpl
-	extends CPDefinitionFinderBaseImpl implements CPAttachmentFileEntryFinder {
+	extends CPAttachmentFileEntryFinderBaseImpl
+	implements CPAttachmentFileEntryFinder {
 
 	public static final String FIND_BY_EXPIRATION_DATE =
 		CPAttachmentFileEntryFinder.class.getName() + ".findByExpirationDate";

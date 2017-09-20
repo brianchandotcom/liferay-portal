@@ -32,7 +32,7 @@ import java.util.List;
  * @author Alessio Antonio Rendina
  */
 public class CPInstanceFinderImpl
-	extends CPDefinitionFinderBaseImpl implements CPInstanceFinder {
+	extends CPInstanceFinderBaseImpl implements CPInstanceFinder {
 
 	public static final String FIND_BY_EXPIRATION_DATE =
 		CPInstanceFinder.class.getName() + ".findByExpirationDate";

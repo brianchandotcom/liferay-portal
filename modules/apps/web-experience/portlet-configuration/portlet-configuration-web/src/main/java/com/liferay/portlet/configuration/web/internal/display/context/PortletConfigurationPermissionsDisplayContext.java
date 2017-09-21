@@ -463,25 +463,18 @@ public class PortletConfigurationPermissionsDisplayContext {
 			return _roleTypes;
 		}
 
-		Group parentOrActualGroup = null;
+		Group parentGroup = null;
 
 		if (_group.isLayout()) {
-			parentOrActualGroup = GroupLocalServiceUtil.fetchGroup(
+			parentGroup = GroupLocalServiceUtil.fetchGroup(
 				_group.getParentGroupId());
 		}
 
-		if (parentOrActualGroup == null) {
-			parentOrActualGroup = _group;
+		if (parentGroup != null) {
+			_roleTypes = _getGroupRoleTypes(parentGroup, _roleTypes);
 		}
-
-		if (parentOrActualGroup.isOrganization()) {
-			_roleTypes = RoleConstants.TYPES_ORGANIZATION_AND_REGULAR_AND_SITE;
-		}
-		else if (parentOrActualGroup.isCompany() ||
-				 parentOrActualGroup.isUser() ||
-				 parentOrActualGroup.isUserGroup()) {
-
-			_roleTypes = RoleConstants.TYPES_REGULAR;
+		else {
+			_roleTypes = _getGroupRoleTypes(_group, _roleTypes);
 		}
 
 		return _roleTypes;
@@ -560,6 +553,22 @@ public class PortletConfigurationPermissionsDisplayContext {
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return portletURL;
+	}
+
+	private int[] _getGroupRoleTypes(Group group, int[] defaultRoleTypes) {
+		if (group == null) {
+			return defaultRoleTypes;
+		}
+
+		if (group.isOrganization()) {
+			return RoleConstants.TYPES_ORGANIZATION_AND_REGULAR_AND_SITE;
+		}
+
+		if (group.isCompany() || group.isUser() || group.isUserGroup()) {
+			return RoleConstants.TYPES_REGULAR;
+		}
+
+		return defaultRoleTypes;
 	}
 
 	private String _getPortletResource() {

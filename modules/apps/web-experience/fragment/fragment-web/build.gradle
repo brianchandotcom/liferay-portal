@@ -18,10 +18,6 @@ dependencies {
 	provided project (":apps:web-experience:fragment:fragment-service")
 }
 
-node {
-	nodeVersion = "8.4.0"
-}
-
 transpileJS {
 	srcIncludes = "**/*.js"
 }

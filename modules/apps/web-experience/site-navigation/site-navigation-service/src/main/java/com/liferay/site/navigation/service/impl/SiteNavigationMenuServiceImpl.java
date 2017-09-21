@@ -14,27 +14,41 @@
 
 package com.liferay.site.navigation.service.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.base.SiteNavigationMenuServiceBaseImpl;
 
+import java.util.List;
+
 /**
- * The implementation of the site navigation menu remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.site.navigation.service.SiteNavigationMenuService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see SiteNavigationMenuServiceBaseImpl
- * @see com.liferay.site.navigation.service.SiteNavigationMenuServiceUtil
+ * @author Pavel Savinov
  */
 public class SiteNavigationMenuServiceImpl
 	extends SiteNavigationMenuServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.site.navigation.service.SiteNavigationMenuServiceUtil} to access the site navigation menu remote service.
-	 */
+
+	@Override
+	public SiteNavigationMenu addSiteNavigationMenu(
+			long groupId, long userId, String name,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return siteNavigationMenuLocalService.addSiteNavigationMenu(
+			groupId, userId, name, serviceContext);
+	}
+
+	@Override
+	public SiteNavigationMenu deleteSiteNavigationMenu(
+			long siteNavigationMenuId)
+		throws PortalException {
+
+		return siteNavigationMenuLocalService.deleteSiteNavigationMenu(
+			siteNavigationMenuId);
+	}
+
+	@Override
+	public List<SiteNavigationMenu> getSiteNavigationMenus(long groupId) {
+		return siteNavigationMenuLocalService.getSiteNavigationMenus(groupId);
+	}
+
 }

@@ -32,8 +32,8 @@ public class SiteNavigationMenuItemLocalServiceImpl
 	@Override
 	public SiteNavigationMenuItem addSiteNavigationMenuItem(
 			long groupId, long userId, long siteNavigationMenuId,
-			long parentMenuItemId, String type, String typeSettings,
-			ServiceContext serviceContext)
+			long parentSiteNavigationMenuItemId, String type,
+			String typeSettings, ServiceContext serviceContext)
 		throws PortalException {
 
 		long siteNavigationMenuItemId = counterLocalService.increment();
@@ -49,9 +49,9 @@ public class SiteNavigationMenuItemLocalServiceImpl
 		siteNavigationMenuItem.setUserName(user.getFullName());
 		siteNavigationMenuItem.setCreateDate(
 			serviceContext.getCreateDate(new Date()));
-
 		siteNavigationMenuItem.setSiteNavigationMenuId(siteNavigationMenuId);
-		siteNavigationMenuItem.setParentMenuItemId(parentMenuItemId);
+		siteNavigationMenuItem.setParentSiteNavigationMenuItemId(
+			parentSiteNavigationMenuItemId);
 		siteNavigationMenuItem.setType(type);
 		siteNavigationMenuItem.setTypeSettings(typeSettings);
 

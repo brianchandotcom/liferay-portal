@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
+package com.liferay.petra.lang;
 
 import java.util.HashMap;
 import java.util.HashSet;

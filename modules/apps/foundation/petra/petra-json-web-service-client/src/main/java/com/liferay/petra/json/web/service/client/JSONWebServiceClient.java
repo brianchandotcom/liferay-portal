@@ -20,6 +20,8 @@ import java.security.KeyStore;
 
 import java.util.Map;
 
+import org.apache.http.client.methods.HttpRequestBase;
+
 /**
  * @author Ivica Cardic
  * @author Igor Beslic
@@ -95,5 +97,8 @@ public interface JSONWebServiceClient {
 	public void setPassword(String password);
 
 	public void setProtocol(String protocol);
+
+	public void signRequest(HttpRequestBase httpRequestBase)
+		throws JSONWebServiceTransportException;
 
 }

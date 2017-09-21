@@ -531,6 +531,11 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 		_proxyWorkstation = proxyWorkstation;
 	}
 
+	@Override
+	public void signRequest(HttpRequestBase httpRequestBase)
+		throws JSONWebServiceTransportException {
+	}
+
 	protected void addHeaders(
 		HttpMessage httpMessage, Map<String, String> headers) {
 
@@ -545,6 +550,8 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 
 	protected String execute(HttpRequestBase httpRequestBase)
 		throws JSONWebServiceTransportException {
+
+		signRequest(httpRequestBase);
 
 		HttpHost httpHost = new HttpHost(_hostName, _hostPort, _protocol);
 

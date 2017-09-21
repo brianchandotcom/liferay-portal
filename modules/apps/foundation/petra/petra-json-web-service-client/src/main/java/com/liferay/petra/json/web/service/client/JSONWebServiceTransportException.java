@@ -83,6 +83,23 @@ public class JSONWebServiceTransportException extends RuntimeException {
 
 	}
 
+	public static class SigningFailure
+		extends JSONWebServiceTransportException {
+
+		public SigningFailure(String message, int status) {
+			super(message, status);
+		}
+
+		public SigningFailure(String message, Throwable cause) {
+			super(message, cause);
+		}
+
+		public SigningFailure(Throwable cause) {
+			super(cause);
+		}
+
+	}
+
 	private static final int _DEFAULT_STATUS = 0;
 
 	private final int _status;

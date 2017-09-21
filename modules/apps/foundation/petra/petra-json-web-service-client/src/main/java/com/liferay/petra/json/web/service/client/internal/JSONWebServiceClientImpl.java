@@ -474,6 +474,26 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 	}
 
 	@Override
+	public void setOAuthAccessSecret(String oAuthAccessSecret) {
+		_oAuthAccessSecret = oAuthAccessSecret;
+	}
+
+	@Override
+	public void setOAuthAccessToken(String oAuthAccessToken) {
+		_oAuthAccessToken = oAuthAccessToken;
+	}
+
+	@Override
+	public void setOAuthConsumerKey(String oAuthConsumerKey) {
+		_oAuthConsumerKey = oAuthConsumerKey;
+	}
+
+	@Override
+	public void setOAuthConsumerSecret(String oAuthConsumerSecret) {
+		_oAuthConsumerSecret = oAuthConsumerSecret;
+	}
+
+	@Override
 	public void setPassword(String password) {
 		_password = password;
 	}
@@ -511,6 +531,11 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 		_proxyWorkstation = proxyWorkstation;
 	}
 
+	@Override
+	public void signRequest(HttpRequestBase httpRequestBase)
+		throws JSONWebServiceTransportException {
+	}
+
 	protected void addHeaders(
 		HttpMessage httpMessage, Map<String, String> headers) {
 
@@ -525,6 +550,8 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 
 	protected String execute(HttpRequestBase httpRequestBase)
 		throws JSONWebServiceTransportException {
+
+		signRequest(httpRequestBase);
 
 		HttpHost httpHost = new HttpHost(_hostName, _hostPort, _protocol);
 
@@ -583,8 +610,13 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 						httpResponse.getEntity(), _CHARSET);
 				}
 			}
-			else if (statusCode == HttpServletResponse.SC_OK) {
+			else if ((statusCode == HttpServletResponse.SC_ACCEPTED) ||
+					 (statusCode == HttpServletResponse.SC_OK)) {
+
 				return EntityUtils.toString(httpResponse.getEntity(), _CHARSET);
+			}
+			else if (statusCode == HttpServletResponse.SC_NO_CONTENT) {
+				return null;
 			}
 			else if (statusCode == HttpServletResponse.SC_UNAUTHORIZED) {
 				throw new JSONWebServiceTransportException.
@@ -858,6 +890,10 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 	private IdleConnectionMonitorThread _idleConnectionMonitorThread;
 	private KeyStore _keyStore;
 	private String _login;
+	private String _oAuthAccessSecret;
+	private String _oAuthAccessToken;
+	private String _oAuthConsumerKey;
+	private String _oAuthConsumerSecret;
 	private String _password;
 	private String _protocol = "http";
 	private String _proxyAuthType;

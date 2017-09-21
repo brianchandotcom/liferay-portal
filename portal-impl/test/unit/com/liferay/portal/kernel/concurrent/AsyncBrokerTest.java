@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.concurrent;
 
-import com.liferay.portal.kernel.memory.FinalizeManager;
+import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.GCUtil;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;

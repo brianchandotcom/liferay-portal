@@ -583,8 +583,13 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 						httpResponse.getEntity(), _CHARSET);
 				}
 			}
-			else if (statusCode == HttpServletResponse.SC_OK) {
+			else if ((statusCode == HttpServletResponse.SC_ACCEPTED) ||
+					 (statusCode == HttpServletResponse.SC_OK)) {
+
 				return EntityUtils.toString(httpResponse.getEntity(), _CHARSET);
+			}
+			else if (statusCode == HttpServletResponse.SC_NO_CONTENT) {
+				return null;
 			}
 			else if (statusCode == HttpServletResponse.SC_UNAUTHORIZED) {
 				throw new JSONWebServiceTransportException.

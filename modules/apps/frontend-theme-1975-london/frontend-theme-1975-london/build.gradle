@@ -7,10 +7,6 @@ mergeLang {
 	]
 }
 
-node {
-	nodeVersion = "8.4.0"
-}
-
 publishNodeModule {
 	enabled = false
 }

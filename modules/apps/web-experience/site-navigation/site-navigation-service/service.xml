@@ -30,6 +30,9 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
+
+		<!-- References -->
+
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="SiteNavigationMenuItem" remote-service="true">
@@ -62,6 +65,9 @@
 		<finder name="SiteNavigationMenuId" return-type="Collection">
 			<finder-column name="siteNavigationMenuId" />
 		</finder>
+
+		<!-- References -->
+
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 </service-builder>

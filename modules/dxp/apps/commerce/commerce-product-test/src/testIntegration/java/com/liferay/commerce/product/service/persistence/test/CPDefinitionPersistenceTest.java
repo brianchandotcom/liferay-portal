@@ -144,7 +144,7 @@ public class CPDefinitionPersistenceTest {
 
 		newCPDefinition.setAvailableIndividually(RandomTestUtil.randomBoolean());
 
-		newCPDefinition.setCanSellWithoutOptionsCombination(RandomTestUtil.randomBoolean());
+		newCPDefinition.setIgnoreSKUCombinations(RandomTestUtil.randomBoolean());
 
 		newCPDefinition.setWidth(RandomTestUtil.nextDouble());
 
@@ -198,8 +198,8 @@ public class CPDefinitionPersistenceTest {
 			newCPDefinition.getProductTypeName());
 		Assert.assertEquals(existingCPDefinition.getAvailableIndividually(),
 			newCPDefinition.getAvailableIndividually());
-		Assert.assertEquals(existingCPDefinition.getCanSellWithoutOptionsCombination(),
-			newCPDefinition.getCanSellWithoutOptionsCombination());
+		Assert.assertEquals(existingCPDefinition.getIgnoreSKUCombinations(),
+			newCPDefinition.getIgnoreSKUCombinations());
 		AssertUtils.assertEquals(existingCPDefinition.getWidth(),
 			newCPDefinition.getWidth());
 		AssertUtils.assertEquals(existingCPDefinition.getHeight(),
@@ -330,8 +330,8 @@ public class CPDefinitionPersistenceTest {
 			true, "CPDefinitionId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "productTypeName", true,
-			"availableIndividually", true, "canSellWithoutOptionsCombination",
-			true, "width", true, "height", true, "depth", true, "weight", true,
+			"availableIndividually", true, "ignoreSKUCombinations", true,
+			"width", true, "height", true, "depth", true, "weight", true,
 			"DDMStructureKey", true, "displayDate", true, "expirationDate",
 			true, "lastPublishDate", true, "status", true, "statusByUserId",
 			true, "statusByUserName", true, "statusDate", true,
@@ -571,7 +571,7 @@ public class CPDefinitionPersistenceTest {
 
 		cpDefinition.setAvailableIndividually(RandomTestUtil.randomBoolean());
 
-		cpDefinition.setCanSellWithoutOptionsCombination(RandomTestUtil.randomBoolean());
+		cpDefinition.setIgnoreSKUCombinations(RandomTestUtil.randomBoolean());
 
 		cpDefinition.setWidth(RandomTestUtil.nextDouble());
 

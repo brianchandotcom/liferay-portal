@@ -70,8 +70,7 @@ public class CPDefinitionWrapper implements CPDefinition,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("productTypeName", getProductTypeName());
 		attributes.put("availableIndividually", getAvailableIndividually());
-		attributes.put("canSellWithoutOptionsCombination",
-			getCanSellWithoutOptionsCombination());
+		attributes.put("ignoreSKUCombinations", getIgnoreSKUCombinations());
 		attributes.put("width", getWidth());
 		attributes.put("height", getHeight());
 		attributes.put("depth", getDepth());
@@ -152,11 +151,11 @@ public class CPDefinitionWrapper implements CPDefinition,
 			setAvailableIndividually(availableIndividually);
 		}
 
-		Boolean canSellWithoutOptionsCombination = (Boolean)attributes.get(
-				"canSellWithoutOptionsCombination");
+		Boolean ignoreSKUCombinations = (Boolean)attributes.get(
+				"ignoreSKUCombinations");
 
-		if (canSellWithoutOptionsCombination != null) {
-			setCanSellWithoutOptionsCombination(canSellWithoutOptionsCombination);
+		if (ignoreSKUCombinations != null) {
+			setIgnoreSKUCombinations(ignoreSKUCombinations);
 		}
 
 		Double width = (Double)attributes.get("width");
@@ -261,16 +260,6 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public java.lang.String[] getAvailableLanguageIds() {
 		return _cpDefinition.getAvailableLanguageIds();
-	}
-
-	/**
-	* Returns the can sell without options combination of this cp definition.
-	*
-	* @return the can sell without options combination of this cp definition
-	*/
-	@Override
-	public boolean getCanSellWithoutOptionsCombination() {
-		return _cpDefinition.getCanSellWithoutOptionsCombination();
 	}
 
 	/**
@@ -419,6 +408,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public double getHeight() {
 		return _cpDefinition.getHeight();
+	}
+
+	/**
+	* Returns the ignore sku combinations of this cp definition.
+	*
+	* @return the ignore sku combinations of this cp definition
+	*/
+	@Override
+	public boolean getIgnoreSKUCombinations() {
+		return _cpDefinition.getIgnoreSKUCombinations();
 	}
 
 	@Override
@@ -815,16 +814,6 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	/**
-	* Returns <code>true</code> if this cp definition is can sell without options combination.
-	*
-	* @return <code>true</code> if this cp definition is can sell without options combination; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isCanSellWithoutOptionsCombination() {
-		return _cpDefinition.isCanSellWithoutOptionsCombination();
-	}
-
-	/**
 	* Returns <code>true</code> if this cp definition is denied.
 	*
 	* @return <code>true</code> if this cp definition is denied; <code>false</code> otherwise
@@ -857,6 +846,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public boolean isExpired() {
 		return _cpDefinition.isExpired();
+	}
+
+	/**
+	* Returns <code>true</code> if this cp definition is ignore sku combinations.
+	*
+	* @return <code>true</code> if this cp definition is ignore sku combinations; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isIgnoreSKUCombinations() {
+		return _cpDefinition.isIgnoreSKUCombinations();
 	}
 
 	/**
@@ -952,17 +951,6 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_cpDefinition.setCachedModel(cachedModel);
-	}
-
-	/**
-	* Sets whether this cp definition is can sell without options combination.
-	*
-	* @param canSellWithoutOptionsCombination the can sell without options combination of this cp definition
-	*/
-	@Override
-	public void setCanSellWithoutOptionsCombination(
-		boolean canSellWithoutOptionsCombination) {
-		_cpDefinition.setCanSellWithoutOptionsCombination(canSellWithoutOptionsCombination);
 	}
 
 	/**
@@ -1085,6 +1073,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public void setHeight(double height) {
 		_cpDefinition.setHeight(height);
+	}
+
+	/**
+	* Sets whether this cp definition is ignore sku combinations.
+	*
+	* @param ignoreSKUCombinations the ignore sku combinations of this cp definition
+	*/
+	@Override
+	public void setIgnoreSKUCombinations(boolean ignoreSKUCombinations) {
+		_cpDefinition.setIgnoreSKUCombinations(ignoreSKUCombinations);
 	}
 
 	/**

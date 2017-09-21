@@ -64,7 +64,7 @@ public class CPDefinitionServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
 		java.lang.String layoutUuid, java.lang.String productTypeName,
-		boolean canSellWithoutOptionsCombination, double width, double height,
+		boolean ignoreSKUCombinations, double width, double height,
 		double depth, double weight, java.lang.String ddmStructureKey,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
@@ -79,13 +79,12 @@ public class CPDefinitionServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					titleMap, shortDescriptionMap, descriptionMap,
 					metaTitleMap, metaKeywordsMap, metaDescriptionMap,
-					layoutUuid, productTypeName,
-					canSellWithoutOptionsCombination, width, height, depth,
-					weight, ddmStructureKey, displayDateMonth, displayDateDay,
-					displayDateYear, displayDateHour, displayDateMinute,
-					expirationDateMonth, expirationDateDay, expirationDateYear,
-					expirationDateHour, expirationDateMinute, neverExpire,
-					serviceContext);
+					layoutUuid, productTypeName, ignoreSKUCombinations, width,
+					height, depth, weight, ddmStructureKey, displayDateMonth,
+					displayDateDay, displayDateYear, displayDateHour,
+					displayDateMinute, expirationDateMonth, expirationDateDay,
+					expirationDateYear, expirationDateHour,
+					expirationDateMinute, neverExpire, serviceContext);
 
 			Object returnObj = null;
 
@@ -115,11 +114,10 @@ public class CPDefinitionServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String layoutUuid, java.lang.String productTypeName,
-		boolean canSellWithoutOptionsCombination,
-		java.lang.String ddmStructureKey, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
+		boolean ignoreSKUCombinations, java.lang.String ddmStructureKey,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -129,12 +127,11 @@ public class CPDefinitionServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					titleMap, shortDescriptionMap, descriptionMap, layoutUuid,
-					productTypeName, canSellWithoutOptionsCombination,
-					ddmStructureKey, displayDateMonth, displayDateDay,
-					displayDateYear, displayDateHour, displayDateMinute,
-					expirationDateMonth, expirationDateDay, expirationDateYear,
-					expirationDateHour, expirationDateMinute, neverExpire,
-					serviceContext);
+					productTypeName, ignoreSKUCombinations, ddmStructureKey,
+					displayDateMonth, displayDateDay, displayDateYear,
+					displayDateHour, displayDateMinute, expirationDateMonth,
+					expirationDateDay, expirationDateYear, expirationDateHour,
+					expirationDateMinute, neverExpire, serviceContext);
 
 			Object returnObj = null;
 
@@ -633,7 +630,7 @@ public class CPDefinitionServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> metaTitleMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
-		java.lang.String layoutUuid, boolean canSellWithoutOptionsCombination,
+		java.lang.String layoutUuid, boolean ignoreSKUCombinations,
 		double width, double height, double depth, double weight,
 		java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
@@ -649,13 +646,12 @@ public class CPDefinitionServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpDefinitionId, titleMap, shortDescriptionMap,
 					descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
-					metaDescriptionMap, layoutUuid,
-					canSellWithoutOptionsCombination, width, height, depth,
-					weight, ddmStructureKey, displayDateMonth, displayDateDay,
-					displayDateYear, displayDateHour, displayDateMinute,
-					expirationDateMonth, expirationDateDay, expirationDateYear,
-					expirationDateHour, expirationDateMinute, neverExpire,
-					serviceContext);
+					metaDescriptionMap, layoutUuid, ignoreSKUCombinations,
+					width, height, depth, weight, ddmStructureKey,
+					displayDateMonth, displayDateDay, displayDateYear,
+					displayDateHour, displayDateMinute, expirationDateMonth,
+					expirationDateDay, expirationDateYear, expirationDateHour,
+					expirationDateMinute, neverExpire, serviceContext);
 
 			Object returnObj = null;
 
@@ -684,7 +680,7 @@ public class CPDefinitionServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String layoutUuid, boolean canSellWithoutOptionsCombination,
+		java.lang.String layoutUuid, boolean ignoreSKUCombinations,
 		java.lang.String ddmStructureKey, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
@@ -698,12 +694,12 @@ public class CPDefinitionServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpDefinitionId, titleMap, shortDescriptionMap,
-					descriptionMap, layoutUuid,
-					canSellWithoutOptionsCombination, ddmStructureKey,
-					displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, expirationDateMonth,
-					expirationDateDay, expirationDateYear, expirationDateHour,
-					expirationDateMinute, neverExpire, serviceContext);
+					descriptionMap, layoutUuid, ignoreSKUCombinations,
+					ddmStructureKey, displayDateMonth, displayDateDay,
+					displayDateYear, displayDateHour, displayDateMinute,
+					expirationDateMonth, expirationDateDay, expirationDateYear,
+					expirationDateHour, expirationDateMinute, neverExpire,
+					serviceContext);
 
 			Object returnObj = null;
 

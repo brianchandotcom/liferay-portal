@@ -3004,6 +3004,1072 @@ public class CPInstancePersistenceImpl extends BasePersistenceImpl<CPInstance>
 	}
 
 	private static final String _FINDER_COLUMN_CPDEFINITIONID_CPDEFINITIONID_2 = "cpInstance.CPDefinitionId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_ST = new FinderPath(CPInstanceModelImpl.ENTITY_CACHE_ENABLED,
+			CPInstanceModelImpl.FINDER_CACHE_ENABLED, CPInstanceImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_ST",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_ST = new FinderPath(CPInstanceModelImpl.ENTITY_CACHE_ENABLED,
+			CPInstanceModelImpl.FINDER_CACHE_ENABLED, CPInstanceImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_ST",
+			new String[] { Long.class.getName(), Integer.class.getName() },
+			CPInstanceModelImpl.GROUPID_COLUMN_BITMASK |
+			CPInstanceModelImpl.STATUS_COLUMN_BITMASK |
+			CPInstanceModelImpl.DISPLAYDATE_COLUMN_BITMASK |
+			CPInstanceModelImpl.CREATEDATE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_ST = new FinderPath(CPInstanceModelImpl.ENTITY_CACHE_ENABLED,
+			CPInstanceModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ST",
+			new String[] { Long.class.getName(), Integer.class.getName() });
+
+	/**
+	 * Returns all the cp instances where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @return the matching cp instances
+	 */
+	@Override
+	public List<CPInstance> findByG_ST(long groupId, int status) {
+		return findByG_ST(groupId, status, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the cp instances where groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of cp instances
+	 * @param end the upper bound of the range of cp instances (not inclusive)
+	 * @return the range of matching cp instances
+	 */
+	@Override
+	public List<CPInstance> findByG_ST(long groupId, int status, int start,
+		int end) {
+		return findByG_ST(groupId, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp instances where groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of cp instances
+	 * @param end the upper bound of the range of cp instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp instances
+	 */
+	@Override
+	public List<CPInstance> findByG_ST(long groupId, int status, int start,
+		int end, OrderByComparator<CPInstance> orderByComparator) {
+		return findByG_ST(groupId, status, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp instances where groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of cp instances
+	 * @param end the upper bound of the range of cp instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching cp instances
+	 */
+	@Override
+	public List<CPInstance> findByG_ST(long groupId, int status, int start,
+		int end, OrderByComparator<CPInstance> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_ST;
+			finderArgs = new Object[] { groupId, status };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_ST;
+			finderArgs = new Object[] {
+					groupId, status,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<CPInstance> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<CPInstance>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CPInstance cpInstance : list) {
+					if ((groupId != cpInstance.getGroupId()) ||
+							(status != cpInstance.getStatus())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_CPINSTANCE_WHERE);
+
+			query.append(_FINDER_COLUMN_G_ST_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_ST_STATUS_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CPInstanceModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(status);
+
+				if (!pagination) {
+					list = (List<CPInstance>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<CPInstance>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first cp instance in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp instance
+	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
+	 */
+	@Override
+	public CPInstance findByG_ST_First(long groupId, int status,
+		OrderByComparator<CPInstance> orderByComparator)
+		throws NoSuchCPInstanceException {
+		CPInstance cpInstance = fetchByG_ST_First(groupId, status,
+				orderByComparator);
+
+		if (cpInstance != null) {
+			return cpInstance;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCPInstanceException(msg.toString());
+	}
+
+	/**
+	 * Returns the first cp instance in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp instance, or <code>null</code> if a matching cp instance could not be found
+	 */
+	@Override
+	public CPInstance fetchByG_ST_First(long groupId, int status,
+		OrderByComparator<CPInstance> orderByComparator) {
+		List<CPInstance> list = findByG_ST(groupId, status, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last cp instance in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp instance
+	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
+	 */
+	@Override
+	public CPInstance findByG_ST_Last(long groupId, int status,
+		OrderByComparator<CPInstance> orderByComparator)
+		throws NoSuchCPInstanceException {
+		CPInstance cpInstance = fetchByG_ST_Last(groupId, status,
+				orderByComparator);
+
+		if (cpInstance != null) {
+			return cpInstance;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCPInstanceException(msg.toString());
+	}
+
+	/**
+	 * Returns the last cp instance in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
+	 */
+	@Override
+	public CPInstance fetchByG_ST_Last(long groupId, int status,
+		OrderByComparator<CPInstance> orderByComparator) {
+		int count = countByG_ST(groupId, status);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CPInstance> list = findByG_ST(groupId, status, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the cp instances before and after the current cp instance in the ordered set where groupId = &#63; and status = &#63;.
+	 *
+	 * @param CPInstanceId the primary key of the current cp instance
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next cp instance
+	 * @throws NoSuchCPInstanceException if a cp instance with the primary key could not be found
+	 */
+	@Override
+	public CPInstance[] findByG_ST_PrevAndNext(long CPInstanceId, long groupId,
+		int status, OrderByComparator<CPInstance> orderByComparator)
+		throws NoSuchCPInstanceException {
+		CPInstance cpInstance = findByPrimaryKey(CPInstanceId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CPInstance[] array = new CPInstanceImpl[3];
+
+			array[0] = getByG_ST_PrevAndNext(session, cpInstance, groupId,
+					status, orderByComparator, true);
+
+			array[1] = cpInstance;
+
+			array[2] = getByG_ST_PrevAndNext(session, cpInstance, groupId,
+					status, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CPInstance getByG_ST_PrevAndNext(Session session,
+		CPInstance cpInstance, long groupId, int status,
+		OrderByComparator<CPInstance> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		query.append(_SQL_SELECT_CPINSTANCE_WHERE);
+
+		query.append(_FINDER_COLUMN_G_ST_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_ST_STATUS_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CPInstanceModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(cpInstance);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CPInstance> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the cp instances where groupId = &#63; and status = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 */
+	@Override
+	public void removeByG_ST(long groupId, int status) {
+		for (CPInstance cpInstance : findByG_ST(groupId, status,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(cpInstance);
+		}
+	}
+
+	/**
+	 * Returns the number of cp instances where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @return the number of matching cp instances
+	 */
+	@Override
+	public int countByG_ST(long groupId, int status) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_ST;
+
+		Object[] finderArgs = new Object[] { groupId, status };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_CPINSTANCE_WHERE);
+
+			query.append(_FINDER_COLUMN_G_ST_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_ST_STATUS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(status);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_ST_GROUPID_2 = "cpInstance.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_ST_STATUS_2 = "cpInstance.status = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_NOTST = new FinderPath(CPInstanceModelImpl.ENTITY_CACHE_ENABLED,
+			CPInstanceModelImpl.FINDER_CACHE_ENABLED, CPInstanceImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_NotST",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_NOTST = new FinderPath(CPInstanceModelImpl.ENTITY_CACHE_ENABLED,
+			CPInstanceModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_NotST",
+			new String[] { Long.class.getName(), Integer.class.getName() });
+
+	/**
+	 * Returns all the cp instances where groupId = &#63; and status &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @return the matching cp instances
+	 */
+	@Override
+	public List<CPInstance> findByG_NotST(long groupId, int status) {
+		return findByG_NotST(groupId, status, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the cp instances where groupId = &#63; and status &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of cp instances
+	 * @param end the upper bound of the range of cp instances (not inclusive)
+	 * @return the range of matching cp instances
+	 */
+	@Override
+	public List<CPInstance> findByG_NotST(long groupId, int status, int start,
+		int end) {
+		return findByG_NotST(groupId, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp instances where groupId = &#63; and status &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of cp instances
+	 * @param end the upper bound of the range of cp instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp instances
+	 */
+	@Override
+	public List<CPInstance> findByG_NotST(long groupId, int status, int start,
+		int end, OrderByComparator<CPInstance> orderByComparator) {
+		return findByG_NotST(groupId, status, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp instances where groupId = &#63; and status &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of cp instances
+	 * @param end the upper bound of the range of cp instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching cp instances
+	 */
+	@Override
+	public List<CPInstance> findByG_NotST(long groupId, int status, int start,
+		int end, OrderByComparator<CPInstance> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_NOTST;
+		finderArgs = new Object[] { groupId, status, start, end, orderByComparator };
+
+		List<CPInstance> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<CPInstance>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CPInstance cpInstance : list) {
+					if ((groupId != cpInstance.getGroupId()) ||
+							(status == cpInstance.getStatus())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_CPINSTANCE_WHERE);
+
+			query.append(_FINDER_COLUMN_G_NOTST_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_NOTST_STATUS_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CPInstanceModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(status);
+
+				if (!pagination) {
+					list = (List<CPInstance>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<CPInstance>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first cp instance in the ordered set where groupId = &#63; and status &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp instance
+	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
+	 */
+	@Override
+	public CPInstance findByG_NotST_First(long groupId, int status,
+		OrderByComparator<CPInstance> orderByComparator)
+		throws NoSuchCPInstanceException {
+		CPInstance cpInstance = fetchByG_NotST_First(groupId, status,
+				orderByComparator);
+
+		if (cpInstance != null) {
+			return cpInstance;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCPInstanceException(msg.toString());
+	}
+
+	/**
+	 * Returns the first cp instance in the ordered set where groupId = &#63; and status &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp instance, or <code>null</code> if a matching cp instance could not be found
+	 */
+	@Override
+	public CPInstance fetchByG_NotST_First(long groupId, int status,
+		OrderByComparator<CPInstance> orderByComparator) {
+		List<CPInstance> list = findByG_NotST(groupId, status, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last cp instance in the ordered set where groupId = &#63; and status &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp instance
+	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
+	 */
+	@Override
+	public CPInstance findByG_NotST_Last(long groupId, int status,
+		OrderByComparator<CPInstance> orderByComparator)
+		throws NoSuchCPInstanceException {
+		CPInstance cpInstance = fetchByG_NotST_Last(groupId, status,
+				orderByComparator);
+
+		if (cpInstance != null) {
+			return cpInstance;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCPInstanceException(msg.toString());
+	}
+
+	/**
+	 * Returns the last cp instance in the ordered set where groupId = &#63; and status &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
+	 */
+	@Override
+	public CPInstance fetchByG_NotST_Last(long groupId, int status,
+		OrderByComparator<CPInstance> orderByComparator) {
+		int count = countByG_NotST(groupId, status);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CPInstance> list = findByG_NotST(groupId, status, count - 1,
+				count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the cp instances before and after the current cp instance in the ordered set where groupId = &#63; and status &ne; &#63;.
+	 *
+	 * @param CPInstanceId the primary key of the current cp instance
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next cp instance
+	 * @throws NoSuchCPInstanceException if a cp instance with the primary key could not be found
+	 */
+	@Override
+	public CPInstance[] findByG_NotST_PrevAndNext(long CPInstanceId,
+		long groupId, int status,
+		OrderByComparator<CPInstance> orderByComparator)
+		throws NoSuchCPInstanceException {
+		CPInstance cpInstance = findByPrimaryKey(CPInstanceId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CPInstance[] array = new CPInstanceImpl[3];
+
+			array[0] = getByG_NotST_PrevAndNext(session, cpInstance, groupId,
+					status, orderByComparator, true);
+
+			array[1] = cpInstance;
+
+			array[2] = getByG_NotST_PrevAndNext(session, cpInstance, groupId,
+					status, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CPInstance getByG_NotST_PrevAndNext(Session session,
+		CPInstance cpInstance, long groupId, int status,
+		OrderByComparator<CPInstance> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		query.append(_SQL_SELECT_CPINSTANCE_WHERE);
+
+		query.append(_FINDER_COLUMN_G_NOTST_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_NOTST_STATUS_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CPInstanceModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(cpInstance);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CPInstance> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the cp instances where groupId = &#63; and status &ne; &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 */
+	@Override
+	public void removeByG_NotST(long groupId, int status) {
+		for (CPInstance cpInstance : findByG_NotST(groupId, status,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(cpInstance);
+		}
+	}
+
+	/**
+	 * Returns the number of cp instances where groupId = &#63; and status &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @return the number of matching cp instances
+	 */
+	@Override
+	public int countByG_NotST(long groupId, int status) {
+		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_NOTST;
+
+		Object[] finderArgs = new Object[] { groupId, status };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_CPINSTANCE_WHERE);
+
+			query.append(_FINDER_COLUMN_G_NOTST_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_NOTST_STATUS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(status);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_NOTST_GROUPID_2 = "cpInstance.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_NOTST_STATUS_2 = "cpInstance.status != ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_S = new FinderPath(CPInstanceModelImpl.ENTITY_CACHE_ENABLED,
 			CPInstanceModelImpl.FINDER_CACHE_ENABLED, CPInstanceImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_S",
@@ -4330,1072 +5396,6 @@ public class CPInstancePersistenceImpl extends BasePersistenceImpl<CPInstance>
 
 	private static final String _FINDER_COLUMN_C_NOTST_CPDEFINITIONID_2 = "cpInstance.CPDefinitionId = ? AND ";
 	private static final String _FINDER_COLUMN_C_NOTST_STATUS_2 = "cpInstance.status != ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_ST = new FinderPath(CPInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			CPInstanceModelImpl.FINDER_CACHE_ENABLED, CPInstanceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_ST",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_ST = new FinderPath(CPInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			CPInstanceModelImpl.FINDER_CACHE_ENABLED, CPInstanceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_ST",
-			new String[] { Long.class.getName(), Integer.class.getName() },
-			CPInstanceModelImpl.GROUPID_COLUMN_BITMASK |
-			CPInstanceModelImpl.STATUS_COLUMN_BITMASK |
-			CPInstanceModelImpl.DISPLAYDATE_COLUMN_BITMASK |
-			CPInstanceModelImpl.CREATEDATE_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_G_ST = new FinderPath(CPInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			CPInstanceModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ST",
-			new String[] { Long.class.getName(), Integer.class.getName() });
-
-	/**
-	 * Returns all the cp instances where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @return the matching cp instances
-	 */
-	@Override
-	public List<CPInstance> findByG_ST(long groupId, int status) {
-		return findByG_ST(groupId, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cp instances where groupId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param start the lower bound of the range of cp instances
-	 * @param end the upper bound of the range of cp instances (not inclusive)
-	 * @return the range of matching cp instances
-	 */
-	@Override
-	public List<CPInstance> findByG_ST(long groupId, int status, int start,
-		int end) {
-		return findByG_ST(groupId, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp instances where groupId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param start the lower bound of the range of cp instances
-	 * @param end the upper bound of the range of cp instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp instances
-	 */
-	@Override
-	public List<CPInstance> findByG_ST(long groupId, int status, int start,
-		int end, OrderByComparator<CPInstance> orderByComparator) {
-		return findByG_ST(groupId, status, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp instances where groupId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param start the lower bound of the range of cp instances
-	 * @param end the upper bound of the range of cp instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching cp instances
-	 */
-	@Override
-	public List<CPInstance> findByG_ST(long groupId, int status, int start,
-		int end, OrderByComparator<CPInstance> orderByComparator,
-		boolean retrieveFromCache) {
-		boolean pagination = true;
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_ST;
-			finderArgs = new Object[] { groupId, status };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_ST;
-			finderArgs = new Object[] {
-					groupId, status,
-					
-					start, end, orderByComparator
-				};
-		}
-
-		List<CPInstance> list = null;
-
-		if (retrieveFromCache) {
-			list = (List<CPInstance>)finderCache.getResult(finderPath,
-					finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CPInstance cpInstance : list) {
-					if ((groupId != cpInstance.getGroupId()) ||
-							(status != cpInstance.getStatus())) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				query = new StringBundler(4);
-			}
-
-			query.append(_SQL_SELECT_CPINSTANCE_WHERE);
-
-			query.append(_FINDER_COLUMN_G_ST_GROUPID_2);
-
-			query.append(_FINDER_COLUMN_G_ST_STATUS_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(CPInstanceModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				qPos.add(status);
-
-				if (!pagination) {
-					list = (List<CPInstance>)QueryUtil.list(q, getDialect(),
-							start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<CPInstance>)QueryUtil.list(q, getDialect(),
-							start, end);
-				}
-
-				cacheResult(list);
-
-				finderCache.putResult(finderPath, finderArgs, list);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first cp instance in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching cp instance
-	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
-	 */
-	@Override
-	public CPInstance findByG_ST_First(long groupId, int status,
-		OrderByComparator<CPInstance> orderByComparator)
-		throws NoSuchCPInstanceException {
-		CPInstance cpInstance = fetchByG_ST_First(groupId, status,
-				orderByComparator);
-
-		if (cpInstance != null) {
-			return cpInstance;
-		}
-
-		StringBundler msg = new StringBundler(6);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("groupId=");
-		msg.append(groupId);
-
-		msg.append(", status=");
-		msg.append(status);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchCPInstanceException(msg.toString());
-	}
-
-	/**
-	 * Returns the first cp instance in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching cp instance, or <code>null</code> if a matching cp instance could not be found
-	 */
-	@Override
-	public CPInstance fetchByG_ST_First(long groupId, int status,
-		OrderByComparator<CPInstance> orderByComparator) {
-		List<CPInstance> list = findByG_ST(groupId, status, 0, 1,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp instance in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance
-	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
-	 */
-	@Override
-	public CPInstance findByG_ST_Last(long groupId, int status,
-		OrderByComparator<CPInstance> orderByComparator)
-		throws NoSuchCPInstanceException {
-		CPInstance cpInstance = fetchByG_ST_Last(groupId, status,
-				orderByComparator);
-
-		if (cpInstance != null) {
-			return cpInstance;
-		}
-
-		StringBundler msg = new StringBundler(6);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("groupId=");
-		msg.append(groupId);
-
-		msg.append(", status=");
-		msg.append(status);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchCPInstanceException(msg.toString());
-	}
-
-	/**
-	 * Returns the last cp instance in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
-	 */
-	@Override
-	public CPInstance fetchByG_ST_Last(long groupId, int status,
-		OrderByComparator<CPInstance> orderByComparator) {
-		int count = countByG_ST(groupId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPInstance> list = findByG_ST(groupId, status, count - 1, count,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the cp instances before and after the current cp instance in the ordered set where groupId = &#63; and status = &#63;.
-	 *
-	 * @param CPInstanceId the primary key of the current cp instance
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp instance
-	 * @throws NoSuchCPInstanceException if a cp instance with the primary key could not be found
-	 */
-	@Override
-	public CPInstance[] findByG_ST_PrevAndNext(long CPInstanceId, long groupId,
-		int status, OrderByComparator<CPInstance> orderByComparator)
-		throws NoSuchCPInstanceException {
-		CPInstance cpInstance = findByPrimaryKey(CPInstanceId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CPInstance[] array = new CPInstanceImpl[3];
-
-			array[0] = getByG_ST_PrevAndNext(session, cpInstance, groupId,
-					status, orderByComparator, true);
-
-			array[1] = cpInstance;
-
-			array[2] = getByG_ST_PrevAndNext(session, cpInstance, groupId,
-					status, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected CPInstance getByG_ST_PrevAndNext(Session session,
-		CPInstance cpInstance, long groupId, int status,
-		OrderByComparator<CPInstance> orderByComparator, boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(5 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
-					(orderByComparator.getOrderByFields().length * 3));
-		}
-		else {
-			query = new StringBundler(4);
-		}
-
-		query.append(_SQL_SELECT_CPINSTANCE_WHERE);
-
-		query.append(_FINDER_COLUMN_G_ST_GROUPID_2);
-
-		query.append(_FINDER_COLUMN_G_ST_STATUS_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			query.append(CPInstanceModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(groupId);
-
-		qPos.add(status);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(cpInstance);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<CPInstance> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the cp instances where groupId = &#63; and status = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 */
-	@Override
-	public void removeByG_ST(long groupId, int status) {
-		for (CPInstance cpInstance : findByG_ST(groupId, status,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-			remove(cpInstance);
-		}
-	}
-
-	/**
-	 * Returns the number of cp instances where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @return the number of matching cp instances
-	 */
-	@Override
-	public int countByG_ST(long groupId, int status) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_ST;
-
-		Object[] finderArgs = new Object[] { groupId, status };
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(3);
-
-			query.append(_SQL_COUNT_CPINSTANCE_WHERE);
-
-			query.append(_FINDER_COLUMN_G_ST_GROUPID_2);
-
-			query.append(_FINDER_COLUMN_G_ST_STATUS_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				qPos.add(status);
-
-				count = (Long)q.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_G_ST_GROUPID_2 = "cpInstance.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_ST_STATUS_2 = "cpInstance.status = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_NOTST = new FinderPath(CPInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			CPInstanceModelImpl.FINDER_CACHE_ENABLED, CPInstanceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_NotST",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_NOTST = new FinderPath(CPInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			CPInstanceModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_NotST",
-			new String[] { Long.class.getName(), Integer.class.getName() });
-
-	/**
-	 * Returns all the cp instances where groupId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @return the matching cp instances
-	 */
-	@Override
-	public List<CPInstance> findByG_NotST(long groupId, int status) {
-		return findByG_NotST(groupId, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cp instances where groupId = &#63; and status &ne; &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param start the lower bound of the range of cp instances
-	 * @param end the upper bound of the range of cp instances (not inclusive)
-	 * @return the range of matching cp instances
-	 */
-	@Override
-	public List<CPInstance> findByG_NotST(long groupId, int status, int start,
-		int end) {
-		return findByG_NotST(groupId, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp instances where groupId = &#63; and status &ne; &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param start the lower bound of the range of cp instances
-	 * @param end the upper bound of the range of cp instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp instances
-	 */
-	@Override
-	public List<CPInstance> findByG_NotST(long groupId, int status, int start,
-		int end, OrderByComparator<CPInstance> orderByComparator) {
-		return findByG_NotST(groupId, status, start, end, orderByComparator,
-			true);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp instances where groupId = &#63; and status &ne; &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param start the lower bound of the range of cp instances
-	 * @param end the upper bound of the range of cp instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching cp instances
-	 */
-	@Override
-	public List<CPInstance> findByG_NotST(long groupId, int status, int start,
-		int end, OrderByComparator<CPInstance> orderByComparator,
-		boolean retrieveFromCache) {
-		boolean pagination = true;
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_NOTST;
-		finderArgs = new Object[] { groupId, status, start, end, orderByComparator };
-
-		List<CPInstance> list = null;
-
-		if (retrieveFromCache) {
-			list = (List<CPInstance>)finderCache.getResult(finderPath,
-					finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CPInstance cpInstance : list) {
-					if ((groupId != cpInstance.getGroupId()) ||
-							(status == cpInstance.getStatus())) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				query = new StringBundler(4);
-			}
-
-			query.append(_SQL_SELECT_CPINSTANCE_WHERE);
-
-			query.append(_FINDER_COLUMN_G_NOTST_GROUPID_2);
-
-			query.append(_FINDER_COLUMN_G_NOTST_STATUS_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(CPInstanceModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				qPos.add(status);
-
-				if (!pagination) {
-					list = (List<CPInstance>)QueryUtil.list(q, getDialect(),
-							start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<CPInstance>)QueryUtil.list(q, getDialect(),
-							start, end);
-				}
-
-				cacheResult(list);
-
-				finderCache.putResult(finderPath, finderArgs, list);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first cp instance in the ordered set where groupId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching cp instance
-	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
-	 */
-	@Override
-	public CPInstance findByG_NotST_First(long groupId, int status,
-		OrderByComparator<CPInstance> orderByComparator)
-		throws NoSuchCPInstanceException {
-		CPInstance cpInstance = fetchByG_NotST_First(groupId, status,
-				orderByComparator);
-
-		if (cpInstance != null) {
-			return cpInstance;
-		}
-
-		StringBundler msg = new StringBundler(6);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("groupId=");
-		msg.append(groupId);
-
-		msg.append(", status=");
-		msg.append(status);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchCPInstanceException(msg.toString());
-	}
-
-	/**
-	 * Returns the first cp instance in the ordered set where groupId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching cp instance, or <code>null</code> if a matching cp instance could not be found
-	 */
-	@Override
-	public CPInstance fetchByG_NotST_First(long groupId, int status,
-		OrderByComparator<CPInstance> orderByComparator) {
-		List<CPInstance> list = findByG_NotST(groupId, status, 0, 1,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp instance in the ordered set where groupId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance
-	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
-	 */
-	@Override
-	public CPInstance findByG_NotST_Last(long groupId, int status,
-		OrderByComparator<CPInstance> orderByComparator)
-		throws NoSuchCPInstanceException {
-		CPInstance cpInstance = fetchByG_NotST_Last(groupId, status,
-				orderByComparator);
-
-		if (cpInstance != null) {
-			return cpInstance;
-		}
-
-		StringBundler msg = new StringBundler(6);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("groupId=");
-		msg.append(groupId);
-
-		msg.append(", status=");
-		msg.append(status);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchCPInstanceException(msg.toString());
-	}
-
-	/**
-	 * Returns the last cp instance in the ordered set where groupId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
-	 */
-	@Override
-	public CPInstance fetchByG_NotST_Last(long groupId, int status,
-		OrderByComparator<CPInstance> orderByComparator) {
-		int count = countByG_NotST(groupId, status);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPInstance> list = findByG_NotST(groupId, status, count - 1,
-				count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the cp instances before and after the current cp instance in the ordered set where groupId = &#63; and status &ne; &#63;.
-	 *
-	 * @param CPInstanceId the primary key of the current cp instance
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp instance
-	 * @throws NoSuchCPInstanceException if a cp instance with the primary key could not be found
-	 */
-	@Override
-	public CPInstance[] findByG_NotST_PrevAndNext(long CPInstanceId,
-		long groupId, int status,
-		OrderByComparator<CPInstance> orderByComparator)
-		throws NoSuchCPInstanceException {
-		CPInstance cpInstance = findByPrimaryKey(CPInstanceId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CPInstance[] array = new CPInstanceImpl[3];
-
-			array[0] = getByG_NotST_PrevAndNext(session, cpInstance, groupId,
-					status, orderByComparator, true);
-
-			array[1] = cpInstance;
-
-			array[2] = getByG_NotST_PrevAndNext(session, cpInstance, groupId,
-					status, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected CPInstance getByG_NotST_PrevAndNext(Session session,
-		CPInstance cpInstance, long groupId, int status,
-		OrderByComparator<CPInstance> orderByComparator, boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(5 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
-					(orderByComparator.getOrderByFields().length * 3));
-		}
-		else {
-			query = new StringBundler(4);
-		}
-
-		query.append(_SQL_SELECT_CPINSTANCE_WHERE);
-
-		query.append(_FINDER_COLUMN_G_NOTST_GROUPID_2);
-
-		query.append(_FINDER_COLUMN_G_NOTST_STATUS_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			query.append(CPInstanceModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(groupId);
-
-		qPos.add(status);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(cpInstance);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<CPInstance> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the cp instances where groupId = &#63; and status &ne; &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 */
-	@Override
-	public void removeByG_NotST(long groupId, int status) {
-		for (CPInstance cpInstance : findByG_NotST(groupId, status,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-			remove(cpInstance);
-		}
-	}
-
-	/**
-	 * Returns the number of cp instances where groupId = &#63; and status &ne; &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @return the number of matching cp instances
-	 */
-	@Override
-	public int countByG_NotST(long groupId, int status) {
-		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_NOTST;
-
-		Object[] finderArgs = new Object[] { groupId, status };
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(3);
-
-			query.append(_SQL_COUNT_CPINSTANCE_WHERE);
-
-			query.append(_FINDER_COLUMN_G_NOTST_GROUPID_2);
-
-			query.append(_FINDER_COLUMN_G_NOTST_STATUS_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				qPos.add(status);
-
-				count = (Long)q.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_G_NOTST_GROUPID_2 = "cpInstance.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_NOTST_STATUS_2 = "cpInstance.status != ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_LTD_S = new FinderPath(CPInstanceModelImpl.ENTITY_CACHE_ENABLED,
 			CPInstanceModelImpl.FINDER_CACHE_ENABLED, CPInstanceImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtD_S",
@@ -6339,21 +6339,21 @@ public class CPInstancePersistenceImpl extends BasePersistenceImpl<CPInstance>
 				args);
 
 			args = new Object[] {
-					cpInstanceModelImpl.getCPDefinitionId(),
-					cpInstanceModelImpl.getStatus()
-				};
-
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_ST, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_ST,
-				args);
-
-			args = new Object[] {
 					cpInstanceModelImpl.getGroupId(),
 					cpInstanceModelImpl.getStatus()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_ST, args);
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_ST,
+				args);
+
+			args = new Object[] {
+					cpInstanceModelImpl.getCPDefinitionId(),
+					cpInstanceModelImpl.getStatus()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_ST, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_ST,
 				args);
 
 			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
@@ -6454,27 +6454,6 @@ public class CPInstancePersistenceImpl extends BasePersistenceImpl<CPInstance>
 			}
 
 			if ((cpInstanceModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_ST.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						cpInstanceModelImpl.getOriginalCPDefinitionId(),
-						cpInstanceModelImpl.getOriginalStatus()
-					};
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_ST, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_ST,
-					args);
-
-				args = new Object[] {
-						cpInstanceModelImpl.getCPDefinitionId(),
-						cpInstanceModelImpl.getStatus()
-					};
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_ST, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_ST,
-					args);
-			}
-
-			if ((cpInstanceModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_ST.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						cpInstanceModelImpl.getOriginalGroupId(),
@@ -6492,6 +6471,27 @@ public class CPInstancePersistenceImpl extends BasePersistenceImpl<CPInstance>
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_ST, args);
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_ST,
+					args);
+			}
+
+			if ((cpInstanceModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_ST.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						cpInstanceModelImpl.getOriginalCPDefinitionId(),
+						cpInstanceModelImpl.getOriginalStatus()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_ST, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_ST,
+					args);
+
+				args = new Object[] {
+						cpInstanceModelImpl.getCPDefinitionId(),
+						cpInstanceModelImpl.getStatus()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_ST, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_ST,
 					args);
 			}
 		}

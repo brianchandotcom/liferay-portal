@@ -40,7 +40,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="productTypeName" type="String" />
 		<field name="availableIndividually" type="boolean" />
-		<field name="canSellWithoutOptionsCombination" type="boolean" />
+		<field name="ignoreSKUCombinations" type="boolean" />
 		<field name="width" type="double">
 			<validator name="number" />
 		</field>

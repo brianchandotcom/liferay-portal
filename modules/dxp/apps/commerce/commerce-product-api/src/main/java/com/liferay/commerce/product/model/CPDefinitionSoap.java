@@ -44,7 +44,7 @@ public class CPDefinitionSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setProductTypeName(model.getProductTypeName());
 		soapModel.setAvailableIndividually(model.getAvailableIndividually());
-		soapModel.setCanSellWithoutOptionsCombination(model.getCanSellWithoutOptionsCombination());
+		soapModel.setIgnoreSKUCombinations(model.getIgnoreSKUCombinations());
 		soapModel.setWidth(model.getWidth());
 		soapModel.setHeight(model.getHeight());
 		soapModel.setDepth(model.getDepth());
@@ -194,17 +194,16 @@ public class CPDefinitionSoap implements Serializable {
 		_availableIndividually = availableIndividually;
 	}
 
-	public boolean getCanSellWithoutOptionsCombination() {
-		return _canSellWithoutOptionsCombination;
+	public boolean getIgnoreSKUCombinations() {
+		return _ignoreSKUCombinations;
 	}
 
-	public boolean isCanSellWithoutOptionsCombination() {
-		return _canSellWithoutOptionsCombination;
+	public boolean isIgnoreSKUCombinations() {
+		return _ignoreSKUCombinations;
 	}
 
-	public void setCanSellWithoutOptionsCombination(
-		boolean canSellWithoutOptionsCombination) {
-		_canSellWithoutOptionsCombination = canSellWithoutOptionsCombination;
+	public void setIgnoreSKUCombinations(boolean ignoreSKUCombinations) {
+		_ignoreSKUCombinations = ignoreSKUCombinations;
 	}
 
 	public double getWidth() {
@@ -321,7 +320,7 @@ public class CPDefinitionSoap implements Serializable {
 	private Date _modifiedDate;
 	private String _productTypeName;
 	private boolean _availableIndividually;
-	private boolean _canSellWithoutOptionsCombination;
+	private boolean _ignoreSKUCombinations;
 	private double _width;
 	private double _height;
 	private double _depth;

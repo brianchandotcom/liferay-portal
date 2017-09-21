@@ -56,7 +56,7 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="productTypeName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="availableIndividually" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="canSellWithoutOptionsCombination" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="ignoreSKUCombinations" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="width" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="height" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="depth" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />

@@ -250,26 +250,25 @@ public interface CPDefinitionModel extends BaseModel<CPDefinition>, ShardedModel
 	public void setAvailableIndividually(boolean availableIndividually);
 
 	/**
-	 * Returns the can sell without options combination of this cp definition.
+	 * Returns the ignore sku combinations of this cp definition.
 	 *
-	 * @return the can sell without options combination of this cp definition
+	 * @return the ignore sku combinations of this cp definition
 	 */
-	public boolean getCanSellWithoutOptionsCombination();
+	public boolean getIgnoreSKUCombinations();
 
 	/**
-	 * Returns <code>true</code> if this cp definition is can sell without options combination.
+	 * Returns <code>true</code> if this cp definition is ignore sku combinations.
 	 *
-	 * @return <code>true</code> if this cp definition is can sell without options combination; <code>false</code> otherwise
+	 * @return <code>true</code> if this cp definition is ignore sku combinations; <code>false</code> otherwise
 	 */
-	public boolean isCanSellWithoutOptionsCombination();
+	public boolean isIgnoreSKUCombinations();
 
 	/**
-	 * Sets whether this cp definition is can sell without options combination.
+	 * Sets whether this cp definition is ignore sku combinations.
 	 *
-	 * @param canSellWithoutOptionsCombination the can sell without options combination of this cp definition
+	 * @param ignoreSKUCombinations the ignore sku combinations of this cp definition
 	 */
-	public void setCanSellWithoutOptionsCombination(
-		boolean canSellWithoutOptionsCombination);
+	public void setIgnoreSKUCombinations(boolean ignoreSKUCombinations);
 
 	/**
 	 * Returns the width of this cp definition.

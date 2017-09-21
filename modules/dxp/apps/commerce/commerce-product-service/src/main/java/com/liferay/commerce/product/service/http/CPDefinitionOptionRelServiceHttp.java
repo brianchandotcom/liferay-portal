@@ -299,13 +299,79 @@ public class CPDefinitionOptionRelServiceHttp {
 		}
 	}
 
+	public static int getCPDefinitionOptionRelCount(
+		HttpPrincipal httpPrincipal, long cpDefinitionId, boolean skuContributor)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CPDefinitionOptionRelServiceUtil.class,
+					"getCPDefinitionOptionRelCount",
+					_getCPDefinitionOptionRelCountParameterTypes7);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					cpDefinitionId, skuContributor);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionRel> getCPDefinitionOptionRels(
+		HttpPrincipal httpPrincipal, long cpDefinitionId, boolean skuContributor)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CPDefinitionOptionRelServiceUtil.class,
+					"getCPDefinitionOptionRels",
+					_getCPDefinitionOptionRelsParameterTypes8);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					cpDefinitionId, skuContributor);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionRel>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionRel> getCPDefinitionOptionRels(
 		HttpPrincipal httpPrincipal, long cpDefinitionId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionOptionRelServiceUtil.class,
 					"getCPDefinitionOptionRels",
-					_getCPDefinitionOptionRelsParameterTypes7);
+					_getCPDefinitionOptionRelsParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpDefinitionId, start, end);
@@ -339,7 +405,7 @@ public class CPDefinitionOptionRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionOptionRelServiceUtil.class,
 					"getCPDefinitionOptionRels",
-					_getCPDefinitionOptionRelsParameterTypes8);
+					_getCPDefinitionOptionRelsParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpDefinitionId, start, end, orderByComparator);
@@ -372,7 +438,7 @@ public class CPDefinitionOptionRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionOptionRelServiceUtil.class,
 					"getCPDefinitionOptionRelsCount",
-					_getCPDefinitionOptionRelsCountParameterTypes9);
+					_getCPDefinitionOptionRelsCountParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpDefinitionId);
@@ -391,72 +457,6 @@ public class CPDefinitionOptionRelServiceHttp {
 			}
 
 			return ((Integer)returnObj).intValue();
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static int getCPDefinitionOptionRelCount(
-		HttpPrincipal httpPrincipal, long cpDefinitionId, boolean skuContributor)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(CPDefinitionOptionRelServiceUtil.class,
-					"getCPDefinitionOptionRelCount",
-					_getCPDefinitionOptionRelCountParameterTypes10);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpDefinitionId, skuContributor);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return ((Integer)returnObj).intValue();
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionRel> getCPDefinitionOptionRels(
-		HttpPrincipal httpPrincipal, long cpDefinitionId, boolean skuContributor)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(CPDefinitionOptionRelServiceUtil.class,
-					"getCPDefinitionOptionRels",
-					_getCPDefinitionOptionRelsParameterTypes11);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpDefinitionId, skuContributor);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (java.util.List<com.liferay.commerce.product.model.CPDefinitionOptionRel>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -696,20 +696,20 @@ public class CPDefinitionOptionRelServiceHttp {
 	private static final Class<?>[] _getCPDefinitionOptionRelParameterTypes6 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getCPDefinitionOptionRelsParameterTypes7 = new Class[] {
+	private static final Class<?>[] _getCPDefinitionOptionRelCountParameterTypes7 =
+		new Class[] { long.class, boolean.class };
+	private static final Class<?>[] _getCPDefinitionOptionRelsParameterTypes8 = new Class[] {
+			long.class, boolean.class
+		};
+	private static final Class<?>[] _getCPDefinitionOptionRelsParameterTypes9 = new Class[] {
 			long.class, int.class, int.class
 		};
-	private static final Class<?>[] _getCPDefinitionOptionRelsParameterTypes8 = new Class[] {
+	private static final Class<?>[] _getCPDefinitionOptionRelsParameterTypes10 = new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getCPDefinitionOptionRelsCountParameterTypes9 =
+	private static final Class<?>[] _getCPDefinitionOptionRelsCountParameterTypes11 =
 		new Class[] { long.class };
-	private static final Class<?>[] _getCPDefinitionOptionRelCountParameterTypes10 =
-		new Class[] { long.class, boolean.class };
-	private static final Class<?>[] _getCPDefinitionOptionRelsParameterTypes11 = new Class[] {
-			long.class, boolean.class
-		};
 	private static final Class<?>[] _searchParameterTypes12 = new Class[] {
 			com.liferay.portal.kernel.search.SearchContext.class
 		};

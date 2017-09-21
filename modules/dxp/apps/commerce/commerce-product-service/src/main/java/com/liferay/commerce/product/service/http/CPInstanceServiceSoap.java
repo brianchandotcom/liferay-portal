@@ -177,20 +177,6 @@ public class CPInstanceServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.product.model.CPInstanceSoap getCPInstance(
-		long cpInstanceId) throws RemoteException {
-		try {
-			com.liferay.commerce.product.model.CPInstance returnValue = CPInstanceServiceUtil.getCPInstance(cpInstanceId);
-
-			return com.liferay.commerce.product.model.CPInstanceSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static com.liferay.commerce.product.model.CPInstanceSoap[] getCPDefinitionInstances(
 		long cpDefinitionId, int start, int end) throws RemoteException {
 		try {
@@ -232,6 +218,20 @@ public class CPInstanceServiceSoap {
 					status);
 
 			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPInstanceSoap getCPInstance(
+		long cpInstanceId) throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPInstance returnValue = CPInstanceServiceUtil.getCPInstance(cpInstanceId);
+
+			return com.liferay.commerce.product.model.CPInstanceSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

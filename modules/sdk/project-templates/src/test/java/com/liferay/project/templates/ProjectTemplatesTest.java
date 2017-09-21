@@ -55,7 +55,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
-import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -1079,20 +1078,15 @@ public class ProjectTemplatesTest {
 			"soy-portlet", "foo", "com.test", "-DclassName=Foo",
 			"-Dpackage=com.liferay.test");
 
-		String gradleBuildOutputPath = "build/libs/com.liferay.test-1.0.0.jar";
-		String mavenBuildOutputPath = "target/foo-1.0.0.jar";
+		String gradleBundleFileName = "build/libs/com.liferay.test-1.0.0.jar";
+		String mavenBundleFileName = "target/foo-1.0.0.jar";
 
 		_buildProjects(
-			gradleProjectDir, mavenProjectDir, gradleBuildOutputPath,
-			mavenBuildOutputPath);
+			gradleProjectDir, mavenProjectDir, gradleBundleFileName,
+			mavenBundleFileName);
 
-		try (JarFile gradleBuildOutputJar =
-				new JarFile(gradleBuildOutputPath)) {
-
-			JarEntry packageJsonEntry = gradleBuildOutputJar.getJarEntry(
-				"package.json");
-
-			Assert.assertNotNull(packageJsonEntry);
+		try (JarFile jarFile = new JarFile(gradleBundleFileName)) {
+			Assert.assertNotNull(jarFile.getJarEntry("package.json"));
 		}
 	}
 

@@ -26,13 +26,14 @@ import org.osgi.service.component.annotations.Component;
  * @author Jürgen Kappler
  */
 @Component(
-	property = {"resource.name=" + FragmentPermission.RESOURCE_NAME},
+	property = {"resource.name=" + LayoutPageTemplateResourcePermission.RESOURCE_NAME},
 	service = ResourcePermissionChecker.class
 )
 public class LayoutPageTemplateResourcePermission
 	extends BaseResourcePermissionChecker {
 
-	public static final String RESOURCE_NAME = "com.liferay.fragment";
+	public static final String RESOURCE_NAME =
+		"com.liferay.layout.page.template";
 
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String actionId)

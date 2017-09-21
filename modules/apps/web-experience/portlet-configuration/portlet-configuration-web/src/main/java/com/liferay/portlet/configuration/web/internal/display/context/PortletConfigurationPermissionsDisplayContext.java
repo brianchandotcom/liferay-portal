@@ -317,7 +317,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		SearchContainer roleSearchContainer = new RoleSearch(
+		SearchContainer<Role> roleSearchContainer = new RoleSearch(
 			_renderRequest, getIteratorURL());
 
 		RoleSearchTerms searchTerms =

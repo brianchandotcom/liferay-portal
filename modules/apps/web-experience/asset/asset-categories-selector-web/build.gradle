@@ -12,7 +12,3 @@ dependencies {
 
 	soyCompile group: "com.liferay", name: "com.liferay.journal.web", version: "2.0.0-20170516.162247-22"
 }
-
-node {
-	nodeVersion = "8.4.0"
-}

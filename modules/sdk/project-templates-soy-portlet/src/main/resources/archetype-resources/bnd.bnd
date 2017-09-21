@@ -6,6 +6,7 @@ Require-Capability:\
 		filter:="(type=metal)"
 -includeresource: package.json
 #if (${buildType} != "gradle")
+-plugin.npm: com.liferay.ant.bnd.npm.NpmAnalyzerPlugin
 -plugin.resourcebundle: com.liferay.ant.bnd.resource.bundle.ResourceBundleLoaderAnalyzerPlugin
 -plugin.sass: com.liferay.ant.bnd.sass.SassAnalyzerPlugin
 -sass: *#end

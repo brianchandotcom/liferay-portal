@@ -599,7 +599,7 @@ public class GitWorkingDirectory {
 			break;
 		}
 
-		lines = Arrays.copyOfRange(lines, x, lines.length - 1);
+		lines = Arrays.copyOfRange(lines, x, lines.length);
 
 		try {
 			for (int i = 0; i < lines.length; i = i + 2) {
@@ -851,6 +851,14 @@ public class GitWorkingDirectory {
 				throw new IllegalArgumentException(
 					"Duplicate remote input lines detected. " +
 						remoteInputLines[0]);
+			}
+
+			if ((remoteInputLines[0] == null) ||
+				(remoteInputLines[1] == null)) {
+
+				throw new IllegalArgumentException(
+					"Neither of the remoteInputLines may be NULL" +
+						Arrays.toString(remoteInputLines));
 			}
 
 			String name = null;

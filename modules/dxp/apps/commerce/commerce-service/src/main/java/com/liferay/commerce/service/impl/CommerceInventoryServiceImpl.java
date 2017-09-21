@@ -17,7 +17,7 @@ package com.liferay.commerce.service.impl;
 import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.model.CommerceInventory;
 import com.liferay.commerce.service.base.CommerceInventoryServiceBaseImpl;
-import com.liferay.commerce.service.permission.CommerceInventoryPermission;
+import com.liferay.commerce.service.permission.CommercePermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -37,7 +37,7 @@ public class CommerceInventoryServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CommerceInventoryPermission.check(
+		CommercePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_INVENTORY);
 
@@ -55,7 +55,7 @@ public class CommerceInventoryServiceImpl
 		CommerceInventory commerceInventory =
 			commerceInventoryPersistence.findByPrimaryKey(commerceInventoryId);
 
-		CommerceInventoryPermission.check(
+		CommercePermission.check(
 			getPermissionChecker(), commerceInventory.getGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_INVENTORY);
 
@@ -88,7 +88,7 @@ public class CommerceInventoryServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CommerceInventoryPermission.check(
+		CommercePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_INVENTORY);
 

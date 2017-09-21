@@ -14,11 +14,6 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-
-import java.lang.reflect.Method;
-
 import java.util.function.Supplier;
 
 /**
@@ -46,24 +41,6 @@ public class InitialThreadLocal<T> extends CentralizedThreadLocal<T> {
 		}
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #InitialThreadLocal(String,
-	 *             Supplier, boolean)}
-	 */
-	@Deprecated
-	public InitialThreadLocal(String name, T initialValue) {
-		this(name, new CloneableSupplier<>(initialValue), false);
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #InitialThreadLocal(String,
-	 *             Supplier, boolean)}
-	 */
-	@Deprecated
-	public InitialThreadLocal(String name, T initialValue, boolean shortLived) {
-		this(name, new CloneableSupplier<>(initialValue), shortLived);
-	}
-
 	@Override
 	public String toString() {
 		if (_name == null) {
@@ -78,52 +55,7 @@ public class InitialThreadLocal<T> extends CentralizedThreadLocal<T> {
 		return _supplier.get();
 	}
 
-	private static final String _METHOD_CLONE = "clone";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		InitialThreadLocal.class);
-
 	private final String _name;
 	private final Supplier<T> _supplier;
-
-	private static class CloneableSupplier<T> implements Supplier<T> {
-
-		@Override
-		@SuppressWarnings("unchecked")
-		public T get() {
-			if (_cloneMethod != null) {
-				try {
-					return (T)_cloneMethod.invoke(_initialValue);
-				}
-				catch (Exception e) {
-					_log.error(e, e);
-				}
-			}
-
-			return _initialValue;
-		}
-
-		private CloneableSupplier(T initialValue) {
-			Method cloneMethod = null;
-
-			if (initialValue instanceof Cloneable) {
-				try {
-					Class<?> clazz = initialValue.getClass();
-
-					cloneMethod = clazz.getMethod(_METHOD_CLONE);
-				}
-				catch (Exception e) {
-					_log.error(e, e);
-				}
-			}
-
-			_cloneMethod = cloneMethod;
-			_initialValue = initialValue;
-		}
-
-		private final Method _cloneMethod;
-		private final T _initialValue;
-
-	}
 
 }

@@ -41,6 +41,19 @@ public class SiteNavigationMenuServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.site.navigation.service.impl.SiteNavigationMenuServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.site.navigation.model.SiteNavigationMenu addSiteNavigationMenu(
+		long groupId, long userId, java.lang.String name,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addSiteNavigationMenu(groupId, userId, name, serviceContext);
+	}
+
+	public static com.liferay.site.navigation.model.SiteNavigationMenu deleteSiteNavigationMenu(
+		long siteNavigationMenuId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteSiteNavigationMenu(siteNavigationMenuId);
+	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -49,6 +62,11 @@ public class SiteNavigationMenuServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.site.navigation.model.SiteNavigationMenu> getSiteNavigationMenus(
+		long groupId) {
+		return getService().getSiteNavigationMenus(groupId);
 	}
 
 	public static SiteNavigationMenuService getService() {

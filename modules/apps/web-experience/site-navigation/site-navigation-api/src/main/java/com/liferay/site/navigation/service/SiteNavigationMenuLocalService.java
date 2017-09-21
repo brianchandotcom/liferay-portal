@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -60,6 +61,9 @@ public interface SiteNavigationMenuLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SiteNavigationMenuLocalServiceUtil} to access the site navigation menu local service. Add custom service methods to {@link com.liferay.site.navigation.service.impl.SiteNavigationMenuLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public SiteNavigationMenu addSiteNavigationMenu(long groupId, long userId,
+		java.lang.String name, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Adds the site navigation menu to the database. Also notifies the appropriate model listeners.
@@ -103,10 +107,11 @@ public interface SiteNavigationMenuLocalService extends BaseLocalService,
 	*
 	* @param siteNavigationMenu the site navigation menu
 	* @return the site navigation menu that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public SiteNavigationMenu deleteSiteNavigationMenu(
-		SiteNavigationMenu siteNavigationMenu);
+		SiteNavigationMenu siteNavigationMenu) throws PortalException;
 
 	public DynamicQuery dynamicQuery();
 
@@ -212,6 +217,9 @@ public interface SiteNavigationMenuLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SiteNavigationMenu> getSiteNavigationMenus(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SiteNavigationMenu> getSiteNavigationMenus(long groupId);
 
 	/**
 	* Returns the number of site navigation menus.

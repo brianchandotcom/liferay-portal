@@ -34,6 +34,31 @@ public class SiteNavigationMenuItemServiceWrapper
 		_siteNavigationMenuItemService = siteNavigationMenuItemService;
 	}
 
+	@Override
+	public com.liferay.site.navigation.model.SiteNavigationMenuItem addSiteNavigationMenuItem(
+		long groupId, long userId, long siteNavigationMenuId,
+		long parentMenuItemId, java.lang.String type,
+		java.lang.String typeSettings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _siteNavigationMenuItemService.addSiteNavigationMenuItem(groupId,
+			userId, siteNavigationMenuId, parentMenuItemId, type, typeSettings,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.site.navigation.model.SiteNavigationMenuItem deleteSiteNavigationMenuItem(
+		long siteNavigationMenuItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _siteNavigationMenuItemService.deleteSiteNavigationMenuItem(siteNavigationMenuItemId);
+	}
+
+	@Override
+	public void deleteSiteNavigationMenuItems(long siteNavigationMenuId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_siteNavigationMenuItemService.deleteSiteNavigationMenuItems(siteNavigationMenuId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -42,6 +67,12 @@ public class SiteNavigationMenuItemServiceWrapper
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _siteNavigationMenuItemService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.site.navigation.model.SiteNavigationMenuItem> getSiteNavigationMenuItems(
+		long siteNavigationMenuId) {
+		return _siteNavigationMenuItemService.getSiteNavigationMenuItems(siteNavigationMenuId);
 	}
 
 	@Override

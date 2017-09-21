@@ -41,6 +41,13 @@ public class SiteNavigationMenuLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.site.navigation.service.impl.SiteNavigationMenuLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.site.navigation.model.SiteNavigationMenu addSiteNavigationMenu(
+		long groupId, long userId, java.lang.String name,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addSiteNavigationMenu(groupId, userId, name, serviceContext);
+	}
 
 	/**
 	* Adds the site navigation menu to the database. Also notifies the appropriate model listeners.
@@ -91,9 +98,11 @@ public class SiteNavigationMenuLocalServiceUtil {
 	*
 	* @param siteNavigationMenu the site navigation menu
 	* @return the site navigation menu that was removed
+	* @throws PortalException
 	*/
 	public static com.liferay.site.navigation.model.SiteNavigationMenu deleteSiteNavigationMenu(
-		com.liferay.site.navigation.model.SiteNavigationMenu siteNavigationMenu) {
+		com.liferay.site.navigation.model.SiteNavigationMenu siteNavigationMenu)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteSiteNavigationMenu(siteNavigationMenu);
 	}
 
@@ -230,6 +239,11 @@ public class SiteNavigationMenuLocalServiceUtil {
 	public static java.util.List<com.liferay.site.navigation.model.SiteNavigationMenu> getSiteNavigationMenus(
 		int start, int end) {
 		return getService().getSiteNavigationMenus(start, end);
+	}
+
+	public static java.util.List<com.liferay.site.navigation.model.SiteNavigationMenu> getSiteNavigationMenus(
+		long groupId) {
+		return getService().getSiteNavigationMenus(groupId);
 	}
 
 	/**

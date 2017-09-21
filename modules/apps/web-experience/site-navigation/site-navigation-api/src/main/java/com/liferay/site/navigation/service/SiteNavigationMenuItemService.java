@@ -21,9 +21,15 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
+import com.liferay.site.navigation.model.SiteNavigationMenuItem;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for SiteNavigationMenuItem. Methods of this
@@ -49,6 +55,16 @@ public interface SiteNavigationMenuItemService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SiteNavigationMenuItemServiceUtil} to access the site navigation menu item remote service. Add custom service methods to {@link com.liferay.site.navigation.service.impl.SiteNavigationMenuItemServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public SiteNavigationMenuItem addSiteNavigationMenuItem(long groupId,
+		long userId, long siteNavigationMenuId, long parentMenuItemId,
+		java.lang.String type, java.lang.String typeSettings,
+		ServiceContext serviceContext) throws PortalException;
+
+	public SiteNavigationMenuItem deleteSiteNavigationMenuItem(
+		long siteNavigationMenuItemId) throws PortalException;
+
+	public void deleteSiteNavigationMenuItems(long siteNavigationMenuId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -56,4 +72,8 @@ public interface SiteNavigationMenuItemService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SiteNavigationMenuItem> getSiteNavigationMenuItems(
+		long siteNavigationMenuId);
 }

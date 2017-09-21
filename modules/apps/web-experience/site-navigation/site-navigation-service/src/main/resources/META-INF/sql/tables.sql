@@ -20,5 +20,5 @@ create table SiteNavigationMenuItem (
 	siteNavigationMenuId LONG,
 	parentMenuItemId LONG,
 	type_ VARCHAR(75) null,
-	typeSettings VARCHAR(75) null
+	typeSettings TEXT null
 );

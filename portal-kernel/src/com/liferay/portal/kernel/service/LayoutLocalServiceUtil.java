@@ -1092,7 +1092,9 @@ public class LayoutLocalServiceUtil {
 	*
 	* @param roleId the primary key of the role
 	* @return all the layouts without resource permissions
+	* @deprecated As of 7.0.0, with no direct replacement
 	*/
+	@Deprecated
 	public static java.util.List<com.liferay.portal.kernel.model.Layout> getNoPermissionLayouts(
 		long roleId) {
 		return getService().getNoPermissionLayouts(roleId);

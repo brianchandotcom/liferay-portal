@@ -1563,7 +1563,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 *
 	 * @param  roleId the primary key of the role
 	 * @return all the layouts without resource permissions
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
+	@Deprecated
 	@Override
 	public List<Layout> getNoPermissionLayouts(long roleId) {
 		return layoutFinder.findByNoPermissions(roleId);

@@ -1139,7 +1139,9 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	*
 	* @param roleId the primary key of the role
 	* @return all the layouts without resource permissions
+	* @deprecated As of 7.0.0, with no direct replacement
 	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Layout> getNoPermissionLayouts(
 		long roleId) {

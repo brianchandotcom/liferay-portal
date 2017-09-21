@@ -914,7 +914,9 @@ public interface LayoutLocalService extends BaseLocalService,
 	*
 	* @param roleId the primary key of the role
 	* @return all the layouts without resource permissions
+	* @deprecated As of 7.0.0, with no direct replacement
 	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Layout> getNoPermissionLayouts(long roleId);
 

@@ -30,4 +30,8 @@ page import="com.liferay.portal.kernel.portlet.LiferayPortletResponse" %><%@
 page import="com.liferay.portal.kernel.webserver.WebServerServletTokenUtil" %><%@
 page import="com.liferay.portlet.asset.util.AssetUtil" %><%@
 page import="com.liferay.portlet.usersadmin.search.GroupSearch" %><%@
-page import="com.liferay.portlet.usersadmin.search.GroupSearchTerms" %>
+page import="com.liferay.portlet.usersadmin.search.GroupSearchTerms" %><%@
+page import="com.liferay.trash.kernel.model.TrashEntry" %><%@
+page import="com.liferay.trash.kernel.util.TrashUtil" %>
+
+<%@ page import="java.util.Iterator" %>

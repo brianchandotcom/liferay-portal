@@ -3,5 +3,5 @@ dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "3.0.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.test.util", version: "2.0.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.portlet.display.template", version: "2.0.0"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 }

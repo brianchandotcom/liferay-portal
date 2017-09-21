@@ -564,16 +564,37 @@ public class GitWorkingDirectory {
 	public Map<String, Remote> getRemotes() {
 		Map<String, Remote> remotes = new HashMap<>();
 
-		ExecutionResult executionResult = executeBashCommands("git remote -v");
+		int retries = 0;
 
-		if (executionResult.getExitValue() != 0) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to get list of remotes\n",
-					executionResult.getStandardErr()));
+		String standardOut = null;
+
+		while (true) {
+			if (retries > 1) {
+				return remotes;
+			}
+
+			ExecutionResult executionResult = executeBashCommands(
+				"git remote -v");
+
+			if (executionResult.getExitValue() != 0) {
+				throw new RuntimeException(
+					JenkinsResultsParserUtil.combine(
+						"Unable to get list of remotes\n",
+						executionResult.getStandardErr()));
+			}
+
+			standardOut = executionResult.getStandardOut();
+
+			standardOut = standardOut.trim();
+
+			if (!standardOut.isEmpty()) {
+				break;
+			}
+
+			retries++;
+
+			JenkinsResultsParserUtil.sleep(1000);
 		}
-
-		String standardOut = executionResult.getStandardOut();
 
 		String[] lines = standardOut.split("\n");
 

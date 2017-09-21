@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 public class DDMFormValuesHelperImpl implements DDMFormValuesHelper {
 
 	@Override
-	public String cleanDDMFormValuesJSONON(String json) throws PortalException {
+	public String cleanDDMFormValuesJSON(String json) throws PortalException {
 		JSONArray newJSONArray = _jsonFactory.createJSONArray();
 		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
 
@@ -103,7 +103,7 @@ public class DDMFormValuesHelperImpl implements DDMFormValuesHelper {
 			DDMForm ddmForm, String json, Locale locale)
 		throws PortalException {
 
-		json = cleanDDMFormValuesJSONON(json);
+		json = cleanDDMFormValuesJSON(json);
 
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 

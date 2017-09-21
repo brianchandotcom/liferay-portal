@@ -217,7 +217,7 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
 		int type = ParamUtil.getInteger(actionRequest, "type");
 
-		ddmFormValues = _ddmFormValuesHelper.cleanDDMFormValuesJSONON(
+		ddmFormValues = _ddmFormValuesHelper.cleanDDMFormValuesJSON(
 			ddmFormValues);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(

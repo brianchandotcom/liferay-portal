@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.security.RandomUtil;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -102,6 +100,10 @@ public class StringUtil_IW {
 	public boolean equalsIgnoreBreakLine(java.lang.String s1,
 		java.lang.String s2) {
 		return StringUtil.equalsIgnoreBreakLine(s1, s2);
+	}
+
+	public boolean equalsIgnoreCase(char c1, char c2) {
+		return StringUtil.equalsIgnoreCase(c1, c2);
 	}
 
 	public boolean equalsIgnoreCase(java.lang.String s1, java.lang.String s2) {
@@ -339,8 +341,12 @@ public class StringUtil_IW {
 		return StringUtil.randomId();
 	}
 
+	/**
+	 * @deprecated
+	 */
+	@Deprecated
 	public java.lang.String randomize(java.lang.String s) {
-		return RandomUtil.shuffle(s);
+		return StringUtil.randomize(s);
 	}
 
 	public java.lang.String randomString() {
@@ -349,6 +355,10 @@ public class StringUtil_IW {
 
 	public java.lang.String randomString(int length) {
 		return StringUtil.randomString(length);
+	}
+
+	public java.lang.String read(java.lang.Class<?> clazz, java.lang.String name) {
+		return StringUtil.read(clazz, name);
 	}
 
 	public java.lang.String read(java.lang.ClassLoader classLoader,
@@ -608,6 +618,14 @@ public class StringUtil_IW {
 		return StringUtil.split(s, delimiter, x);
 	}
 
+	public java.lang.String[] splitByLines(java.lang.String s) {
+		return StringUtil.splitByLines(s);
+	}
+
+	/**
+	 * @deprecated
+	 */
+	@Deprecated
 	public java.lang.String[] splitLines(java.lang.String s) {
 		return StringUtil.splitLines(s);
 	}
@@ -739,10 +757,18 @@ public class StringUtil_IW {
 			multipleWildcardCharacter, escapeWildcardCharacter, caseSensitive);
 	}
 
+	/**
+	 * @deprecated
+	 */
+	@Deprecated
 	public java.lang.String wrap(java.lang.String text) {
 		return StringUtil.wrap(text);
 	}
 
+	/**
+	 * @deprecated
+	 */
+	@Deprecated
 	public java.lang.String wrap(java.lang.String text, int width,
 		java.lang.String lineSeparator) {
 		return StringUtil.wrap(text, width, lineSeparator);

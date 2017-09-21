@@ -3947,6 +3947,38 @@ public class StringUtil {
 	 * <p>
 	 * <pre>
 	 * <code>
+	 * splitByLines("Red\rBlue\nGreen") returns {"Red","Blue","Green"}
+	 * </code>
+	 * </pre>
+	 * </p>
+	 *
+	 * @param  s the string to split
+	 * @return the array of strings resulting from splitting string
+	 *         <code>s</code> around return and newline characters, or an empty
+	 *         string array if string <code>s</code> is <code>null</code>
+	 */
+	public static String[] splitByLines(String s) {
+		if (Validator.isNull(s)) {
+			return _emptyStringArray;
+		}
+
+		List<String> lines = new ArrayList<>();
+
+		_splitLines(s, lines);
+
+		return lines.toArray(new String[lines.size()]);
+	}
+
+	/**
+	 * Splits string <code>s</code> around return and newline characters.
+	 *
+	 * <p>
+	 * Example:
+	 * </p>
+	 *
+	 * <p>
+	 * <pre>
+	 * <code>
 	 * splitLines("Red\rBlue\nGreen") returns {"Red","Blue","Green"}
 	 * </code>
 	 * </pre>

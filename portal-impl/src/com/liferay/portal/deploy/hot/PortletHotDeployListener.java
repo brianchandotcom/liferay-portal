@@ -321,14 +321,12 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 
 		Set<String> portletIds = new HashSet<>();
 
-		if (portlets != null) {
-			if (_log.isInfoEnabled()) {
-				_log.info("Unregistering portlets for " + servletContextName);
-			}
+		if (_log.isInfoEnabled()) {
+			_log.info("Unregistering portlets for " + servletContextName);
+		}
 
-			for (Portlet portlet : portlets) {
-				_destroyPortlet(servletContext, portlet, portletIds);
-			}
+		for (Portlet portlet : portlets) {
+			_destroyPortlet(servletContext, portlet, portletIds);
 		}
 
 		ServletContextPool.remove(servletContextName);
@@ -512,6 +510,8 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			ServletContext servletContext, Portlet portlet,
 			Set<String> portletIds)
 		throws Exception {
+
+		portlet.unsetReady();
 
 		PortletApp portletApp = portlet.getPortletApp();
 

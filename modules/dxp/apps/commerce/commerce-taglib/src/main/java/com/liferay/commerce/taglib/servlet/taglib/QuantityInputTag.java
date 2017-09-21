@@ -53,8 +53,8 @@ public class QuantityInputTag extends IncludeTag {
 					COMMERCE_INVENTORY_DEFAULT_MULTIPLE_CART_QUANTITY;
 
 			CommerceInventory commerceInventory =
-				CommerceInventoryServiceUtil.fetchCommerceInventory(
-					themeDisplay.getScopeGroupId(), _cpDefinitionId);
+				CommerceInventoryServiceUtil.
+					fetchCommerceInventoryByCPDefinitionId(_cpDefinitionId);
 
 			if (commerceInventory != null) {
 				_allowedCartQuantity =

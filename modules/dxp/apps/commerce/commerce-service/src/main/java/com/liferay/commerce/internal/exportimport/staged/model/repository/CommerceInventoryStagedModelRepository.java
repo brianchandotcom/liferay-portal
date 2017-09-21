@@ -92,9 +92,6 @@ public class CommerceInventoryStagedModelRepository
 	@Override
 	public void deleteStagedModels(PortletDataContext portletDataContext)
 		throws PortalException {
-
-		_commerceInventoryLocalService.deleteCommerceInventories(
-			portletDataContext.getScopeGroupId());
 	}
 
 	@Override

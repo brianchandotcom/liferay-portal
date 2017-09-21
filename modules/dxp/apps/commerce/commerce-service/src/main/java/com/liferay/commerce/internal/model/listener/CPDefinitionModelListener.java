@@ -42,8 +42,8 @@ public class CPDefinitionModelListener extends BaseModelListener<CPDefinition> {
 
 			_commerceCartItemLocalService.
 				deleteCommerceCartItemsByCPDefinitionId(cpDefinitionId);
-			_commerceInventoryLocalService.deleteCommerceInventory(
-				cpDefinition.getGroupId(), cpDefinitionId);
+			_commerceInventoryLocalService.
+				deleteCommerceInventoryByCPDefinitionId(cpDefinitionId);
 			_commerceOrderItemLocalService.
 				deleteCommerceOrderItemsByCPDefinitionId(cpDefinitionId);
 			_commerceWarehouseItemLocalService.deleteCommerceWarehouseItems(

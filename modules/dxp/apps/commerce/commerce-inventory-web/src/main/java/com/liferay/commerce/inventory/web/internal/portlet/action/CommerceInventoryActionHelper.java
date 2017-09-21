@@ -52,8 +52,8 @@ public class CommerceInventoryActionHelper {
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			commerceInventory =
-				_commerceInventoryService.fetchCommerceInventory(
-					themeDisplay.getScopeGroupId(), cpDefinitionId);
+				_commerceInventoryService.
+					fetchCommerceInventoryByCPDefinitionId(cpDefinitionId);
 		}
 
 		if (commerceInventory != null) {

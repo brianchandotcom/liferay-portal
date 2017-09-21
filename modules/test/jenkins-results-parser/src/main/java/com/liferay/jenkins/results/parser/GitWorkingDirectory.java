@@ -577,11 +577,42 @@ public class GitWorkingDirectory {
 
 		String[] lines = standardOut.split("\n");
 
-		for (int i = 0; i < lines.length; i = i + 2) {
-			Remote remote = new Remote(
-				this, Arrays.copyOfRange(lines, i, i + 2));
+		Arrays.sort(lines);
 
-			remotes.put(remote.getName(), remote);
+		int x = 0;
+
+		for (int i = 0; i < lines.length; i++) {
+			String line = lines[i];
+
+			if (line == null) {
+				continue;
+			}
+
+			line = line.trim();
+
+			if (line.isEmpty()) {
+				continue;
+			}
+
+			x = i;
+
+			break;
+		}
+
+		lines = Arrays.copyOfRange(lines, x, lines.length - 1);
+
+		try {
+			for (int i = 0; i < lines.length; i = i + 2) {
+				Remote remote = new Remote(
+					this, Arrays.copyOfRange(lines, i, i + 2));
+
+				remotes.put(remote.getName(), remote);
+			}
+		}
+		catch (Throwable t) {
+			System.out.println("Unable to parse remotes\n" + standardOut);
+
+			throw t;
 		}
 
 		return remotes;

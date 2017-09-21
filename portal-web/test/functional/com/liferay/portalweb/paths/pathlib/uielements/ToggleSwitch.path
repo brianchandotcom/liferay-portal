@@ -89,6 +89,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>STAGED_CONTENT</td>
+	<td>//li[contains(.,'${key_contentName}')]//input/..//span[contains(@class,'toggle-switch')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USE_CUSTOM_TITLE</td>
 	<td>//label[contains(.,'Use Custom Title')]/input[@type='checkbox']</td>
 	<td></td>

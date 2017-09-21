@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
+import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.base.SiteNavigationMenuLocalServiceBaseImpl;
 
 import java.util.Date;
@@ -61,10 +62,10 @@ public class SiteNavigationMenuLocalServiceImpl
 			long siteNavigationMenuId)
 		throws PortalException {
 
-		siteNavigationMenuItemLocalService.deleteSiteNavigationMenuItems(
+		SiteNavigationMenu siteNavigationMenu = getSiteNavigationMenu(
 			siteNavigationMenuId);
 
-		return siteNavigationMenuPersistence.remove(siteNavigationMenuId);
+		return deleteSiteNavigationMenu(siteNavigationMenu);
 	}
 
 	@Override
@@ -72,8 +73,25 @@ public class SiteNavigationMenuLocalServiceImpl
 			SiteNavigationMenu siteNavigationMenu)
 		throws PortalException {
 
-		return deleteSiteNavigationMenu(
+		// Menu
+
+		siteNavigationMenuPersistence.remove(
 			siteNavigationMenu.getSiteNavigationMenuId());
+
+		// Menu Items
+
+		List<SiteNavigationMenuItem> siteNavigationMenuItems =
+			siteNavigationMenuItemLocalService.getSiteNavigationMenuItems(
+				siteNavigationMenu.getSiteNavigationMenuId());
+
+		for (SiteNavigationMenuItem siteNavigationMenuItem :
+				siteNavigationMenuItems) {
+
+			siteNavigationMenuItemLocalService.deleteSiteNavigationMenuItem(
+				siteNavigationMenuItem.getSiteNavigationMenuItemId());
+		}
+
+		return siteNavigationMenu;
 	}
 
 	@Override

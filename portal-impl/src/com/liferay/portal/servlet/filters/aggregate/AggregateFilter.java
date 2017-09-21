@@ -317,6 +317,10 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 
 		FileUtil.write(cacheFile, content);
 
+		cacheFile.setLastModified(
+			PortalWebResourcesUtil.getLastModified(
+				PortalWebResourceConstants.RESOURCE_TYPE_JS));
+
 		return content;
 	}
 
@@ -447,6 +451,8 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		}
 
 		FileUtil.write(cacheDataFile, content);
+
+		cacheDataFile.setLastModified(URLUtil.getLastModifiedTime(resourceURL));
 
 		return content;
 	}

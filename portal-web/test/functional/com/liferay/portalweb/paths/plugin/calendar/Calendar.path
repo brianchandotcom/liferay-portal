@@ -500,7 +500,7 @@
 </tr>
 <tr>
 	<td>SCHEDULER_VIEW_WEEK_CURRENT_DAY</td>
-	<td>//td[contains(@class,'scheduler-today')]//div</td>
+	<td>//td[contains(@class,'scheduler-today')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -32,7 +32,7 @@ public class ${className}ViewMVCRenderCommand
 
 		Template template = (Template)renderRequest.getAttribute(
 			WebKeys.TEMPLATE);
-		
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -43,7 +43,7 @@ public class ${className}ViewMVCRenderCommand
 		navigationURL.setParameter("mvcRenderCommandName", "Navigation");
 
 		template.put("navigationURL", navigationURL.toString());
-		
+
 		template.put("releaseInfo", ReleaseInfo.getReleaseInfo());
 
 		return "View";

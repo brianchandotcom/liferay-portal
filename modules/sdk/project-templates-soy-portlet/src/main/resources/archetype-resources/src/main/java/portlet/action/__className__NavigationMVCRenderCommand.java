@@ -36,7 +36,7 @@ public class ${className}NavigationMVCRenderCommand
 		navigationURL.setParameter("mvcRenderCommandName", "View");
 
 		template.put("navigationURL", navigationURL.toString());
-		
+
 		template.put("releaseInfo", ReleaseInfo.getReleaseInfo());
 
 		return "Navigation";

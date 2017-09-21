@@ -34,6 +34,18 @@ public class SiteNavigationMenuItemLocalServiceWrapper
 		_siteNavigationMenuItemLocalService = siteNavigationMenuItemLocalService;
 	}
 
+	@Override
+	public com.liferay.site.navigation.model.SiteNavigationMenuItem addSiteNavigationMenuItem(
+		long groupId, long userId, long siteNavigationMenuId,
+		long parentMenuItemId, java.lang.String type,
+		java.lang.String typeSettings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(groupId,
+			userId, siteNavigationMenuId, parentMenuItemId, type, typeSettings,
+			serviceContext);
+	}
+
 	/**
 	* Adds the site navigation menu item to the database. Also notifies the appropriate model listeners.
 	*
@@ -92,6 +104,12 @@ public class SiteNavigationMenuItemLocalServiceWrapper
 	public com.liferay.site.navigation.model.SiteNavigationMenuItem deleteSiteNavigationMenuItem(
 		com.liferay.site.navigation.model.SiteNavigationMenuItem siteNavigationMenuItem) {
 		return _siteNavigationMenuItemLocalService.deleteSiteNavigationMenuItem(siteNavigationMenuItem);
+	}
+
+	@Override
+	public void deleteSiteNavigationMenuItems(long siteNavigationMenuId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_siteNavigationMenuItemLocalService.deleteSiteNavigationMenuItems(siteNavigationMenuId);
 	}
 
 	@Override
@@ -243,6 +261,12 @@ public class SiteNavigationMenuItemLocalServiceWrapper
 		int start, int end) {
 		return _siteNavigationMenuItemLocalService.getSiteNavigationMenuItems(start,
 			end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.site.navigation.model.SiteNavigationMenuItem> getSiteNavigationMenuItems(
+		long siteNavigationMenuId) {
+		return _siteNavigationMenuItemLocalService.getSiteNavigationMenuItems(siteNavigationMenuId);
 	}
 
 	/**

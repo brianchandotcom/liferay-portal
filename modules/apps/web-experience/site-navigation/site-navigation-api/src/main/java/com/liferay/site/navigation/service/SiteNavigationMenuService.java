@@ -21,9 +21,15 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
+import com.liferay.site.navigation.model.SiteNavigationMenu;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for SiteNavigationMenu. Methods of this
@@ -49,6 +55,12 @@ public interface SiteNavigationMenuService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SiteNavigationMenuServiceUtil} to access the site navigation menu remote service. Add custom service methods to {@link com.liferay.site.navigation.service.impl.SiteNavigationMenuServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public SiteNavigationMenu addSiteNavigationMenu(long groupId, long userId,
+		java.lang.String name, ServiceContext serviceContext)
+		throws PortalException;
+
+	public SiteNavigationMenu deleteSiteNavigationMenu(
+		long siteNavigationMenuId) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -56,4 +68,7 @@ public interface SiteNavigationMenuService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SiteNavigationMenu> getSiteNavigationMenus(long groupId);
 }

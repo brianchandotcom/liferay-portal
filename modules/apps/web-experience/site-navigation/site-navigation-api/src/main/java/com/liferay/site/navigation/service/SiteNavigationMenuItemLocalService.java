@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -60,6 +61,10 @@ public interface SiteNavigationMenuItemLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SiteNavigationMenuItemLocalServiceUtil} to access the site navigation menu item local service. Add custom service methods to {@link com.liferay.site.navigation.service.impl.SiteNavigationMenuItemLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public SiteNavigationMenuItem addSiteNavigationMenuItem(long groupId,
+		long userId, long siteNavigationMenuId, long parentMenuItemId,
+		java.lang.String type, java.lang.String typeSettings,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the site navigation menu item to the database. Also notifies the appropriate model listeners.
@@ -107,6 +112,9 @@ public interface SiteNavigationMenuItemLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public SiteNavigationMenuItem deleteSiteNavigationMenuItem(
 		SiteNavigationMenuItem siteNavigationMenuItem);
+
+	public void deleteSiteNavigationMenuItems(long siteNavigationMenuId)
+		throws PortalException;
 
 	public DynamicQuery dynamicQuery();
 
@@ -214,6 +222,10 @@ public interface SiteNavigationMenuItemLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SiteNavigationMenuItem> getSiteNavigationMenuItems(int start,
 		int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SiteNavigationMenuItem> getSiteNavigationMenuItems(
+		long siteNavigationMenuId);
 
 	/**
 	* Returns the number of site navigation menu items.

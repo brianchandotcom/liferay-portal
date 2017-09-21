@@ -16,12 +16,21 @@ package com.liferay.site.navigation.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.http.TunnelUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
+
+import com.liferay.site.navigation.service.SiteNavigationMenuItemServiceUtil;
+
 /**
  * Provides the HTTP utility for the
- * {@link com.liferay.site.navigation.service.SiteNavigationMenuItemServiceUtil} service utility. The
+ * {@link SiteNavigationMenuItemServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * {@link com.liferay.portal.kernel.security.auth.HttpPrincipal} parameter.
+ * {@link HttpPrincipal} parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -40,10 +49,150 @@ import aQute.bnd.annotation.ProviderType;
  *
  * @author Brian Wing Shun Chan
  * @see SiteNavigationMenuItemServiceSoap
- * @see com.liferay.portal.kernel.security.auth.HttpPrincipal
- * @see com.liferay.site.navigation.service.SiteNavigationMenuItemServiceUtil
+ * @see HttpPrincipal
+ * @see SiteNavigationMenuItemServiceUtil
  * @generated
  */
 @ProviderType
 public class SiteNavigationMenuItemServiceHttp {
+	public static com.liferay.site.navigation.model.SiteNavigationMenuItem addSiteNavigationMenuItem(
+		HttpPrincipal httpPrincipal, long groupId, long userId,
+		long siteNavigationMenuId, long parentMenuItemId,
+		java.lang.String type, java.lang.String typeSettings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(SiteNavigationMenuItemServiceUtil.class,
+					"addSiteNavigationMenuItem",
+					_addSiteNavigationMenuItemParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					userId, siteNavigationMenuId, parentMenuItemId, type,
+					typeSettings, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.site.navigation.model.SiteNavigationMenuItem)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.site.navigation.model.SiteNavigationMenuItem deleteSiteNavigationMenuItem(
+		HttpPrincipal httpPrincipal, long siteNavigationMenuItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(SiteNavigationMenuItemServiceUtil.class,
+					"deleteSiteNavigationMenuItem",
+					_deleteSiteNavigationMenuItemParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					siteNavigationMenuItemId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.site.navigation.model.SiteNavigationMenuItem)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static void deleteSiteNavigationMenuItems(
+		HttpPrincipal httpPrincipal, long siteNavigationMenuId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(SiteNavigationMenuItemServiceUtil.class,
+					"deleteSiteNavigationMenuItems",
+					_deleteSiteNavigationMenuItemsParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					siteNavigationMenuId);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.util.List<com.liferay.site.navigation.model.SiteNavigationMenuItem> getSiteNavigationMenuItems(
+		HttpPrincipal httpPrincipal, long siteNavigationMenuId) {
+		try {
+			MethodKey methodKey = new MethodKey(SiteNavigationMenuItemServiceUtil.class,
+					"getSiteNavigationMenuItems",
+					_getSiteNavigationMenuItemsParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					siteNavigationMenuId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.site.navigation.model.SiteNavigationMenuItem>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(SiteNavigationMenuItemServiceHttp.class);
+	private static final Class<?>[] _addSiteNavigationMenuItemParameterTypes0 = new Class[] {
+			long.class, long.class, long.class, long.class,
+			java.lang.String.class, java.lang.String.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _deleteSiteNavigationMenuItemParameterTypes1 =
+		new Class[] { long.class };
+	private static final Class<?>[] _deleteSiteNavigationMenuItemsParameterTypes2 =
+		new Class[] { long.class };
+	private static final Class<?>[] _getSiteNavigationMenuItemsParameterTypes3 = new Class[] {
+			long.class
+		};
 }

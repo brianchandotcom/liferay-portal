@@ -16,9 +16,16 @@ package com.liferay.site.navigation.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import com.liferay.site.navigation.service.SiteNavigationMenuItemServiceUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.site.navigation.service.SiteNavigationMenuItemServiceUtil} service utility. The
+ * {@link SiteNavigationMenuItemServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,73 @@ import aQute.bnd.annotation.ProviderType;
  * @author Brian Wing Shun Chan
  * @see SiteNavigationMenuItemServiceHttp
  * @see com.liferay.site.navigation.model.SiteNavigationMenuItemSoap
- * @see com.liferay.site.navigation.service.SiteNavigationMenuItemServiceUtil
+ * @see SiteNavigationMenuItemServiceUtil
  * @generated
  */
 @ProviderType
 public class SiteNavigationMenuItemServiceSoap {
+	public static com.liferay.site.navigation.model.SiteNavigationMenuItemSoap addSiteNavigationMenuItem(
+		long groupId, long userId, long siteNavigationMenuId,
+		long parentMenuItemId, java.lang.String type,
+		java.lang.String typeSettings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.site.navigation.model.SiteNavigationMenuItem returnValue =
+				SiteNavigationMenuItemServiceUtil.addSiteNavigationMenuItem(groupId,
+					userId, siteNavigationMenuId, parentMenuItemId, type,
+					typeSettings, serviceContext);
+
+			return com.liferay.site.navigation.model.SiteNavigationMenuItemSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.site.navigation.model.SiteNavigationMenuItemSoap deleteSiteNavigationMenuItem(
+		long siteNavigationMenuItemId) throws RemoteException {
+		try {
+			com.liferay.site.navigation.model.SiteNavigationMenuItem returnValue =
+				SiteNavigationMenuItemServiceUtil.deleteSiteNavigationMenuItem(siteNavigationMenuItemId);
+
+			return com.liferay.site.navigation.model.SiteNavigationMenuItemSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void deleteSiteNavigationMenuItems(long siteNavigationMenuId)
+		throws RemoteException {
+		try {
+			SiteNavigationMenuItemServiceUtil.deleteSiteNavigationMenuItems(siteNavigationMenuId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.site.navigation.model.SiteNavigationMenuItemSoap[] getSiteNavigationMenuItems(
+		long siteNavigationMenuId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.site.navigation.model.SiteNavigationMenuItem> returnValue =
+				SiteNavigationMenuItemServiceUtil.getSiteNavigationMenuItems(siteNavigationMenuId);
+
+			return com.liferay.site.navigation.model.SiteNavigationMenuItemSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(SiteNavigationMenuItemServiceSoap.class);
 }

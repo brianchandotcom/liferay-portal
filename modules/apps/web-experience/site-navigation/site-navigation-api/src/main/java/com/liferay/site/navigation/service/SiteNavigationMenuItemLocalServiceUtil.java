@@ -41,6 +41,17 @@ public class SiteNavigationMenuItemLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.site.navigation.service.impl.SiteNavigationMenuItemLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.site.navigation.model.SiteNavigationMenuItem addSiteNavigationMenuItem(
+		long groupId, long userId, long siteNavigationMenuId,
+		long parentMenuItemId, java.lang.String type,
+		java.lang.String typeSettings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addSiteNavigationMenuItem(groupId, userId,
+			siteNavigationMenuId, parentMenuItemId, type, typeSettings,
+			serviceContext);
+	}
 
 	/**
 	* Adds the site navigation menu item to the database. Also notifies the appropriate model listeners.
@@ -97,6 +108,11 @@ public class SiteNavigationMenuItemLocalServiceUtil {
 	public static com.liferay.site.navigation.model.SiteNavigationMenuItem deleteSiteNavigationMenuItem(
 		com.liferay.site.navigation.model.SiteNavigationMenuItem siteNavigationMenuItem) {
 		return getService().deleteSiteNavigationMenuItem(siteNavigationMenuItem);
+	}
+
+	public static void deleteSiteNavigationMenuItems(long siteNavigationMenuId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteSiteNavigationMenuItems(siteNavigationMenuId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -232,6 +248,11 @@ public class SiteNavigationMenuItemLocalServiceUtil {
 	public static java.util.List<com.liferay.site.navigation.model.SiteNavigationMenuItem> getSiteNavigationMenuItems(
 		int start, int end) {
 		return getService().getSiteNavigationMenuItems(start, end);
+	}
+
+	public static java.util.List<com.liferay.site.navigation.model.SiteNavigationMenuItem> getSiteNavigationMenuItems(
+		long siteNavigationMenuId) {
+		return getService().getSiteNavigationMenuItems(siteNavigationMenuId);
 	}
 
 	/**

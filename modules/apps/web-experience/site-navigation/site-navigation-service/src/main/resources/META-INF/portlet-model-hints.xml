@@ -20,7 +20,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="siteNavigationMenuId" type="long" />
-		<field name="parentMenuItemId" type="long" />
+		<field name="parentSiteNavigationMenuItemId" type="long" />
 		<field name="type" type="String" />
 		<field name="typeSettings" type="String">
 			<hint-collection name="CLOB" />

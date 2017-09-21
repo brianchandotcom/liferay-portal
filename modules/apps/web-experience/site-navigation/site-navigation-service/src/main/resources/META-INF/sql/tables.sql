@@ -18,7 +18,7 @@ create table SiteNavigationMenuItem (
 	createDate DATE null,
 	modifiedDate DATE null,
 	siteNavigationMenuId LONG,
-	parentMenuItemId LONG,
+	parentSiteNavigationMenuItemId LONG,
 	type_ VARCHAR(75) null,
 	typeSettings TEXT null
 );

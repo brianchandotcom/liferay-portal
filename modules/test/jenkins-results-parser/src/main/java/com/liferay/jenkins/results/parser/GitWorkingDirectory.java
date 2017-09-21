@@ -911,6 +911,8 @@ public class GitWorkingDirectory {
 
 				process = JenkinsResultsParserUtil.executeBashCommands(
 					true, _workingDirectory, timeout, commands);
+
+				break;
 			}
 			catch (InterruptedException | IOException | TimeoutException e) {
 				if (retries == maxRetries) {
@@ -918,6 +920,10 @@ public class GitWorkingDirectory {
 						"Unable to execute bash commands: " +
 							Arrays.toString(commands),
 						e);
+				}
+				else {
+					System.out.println("Fetch attempt failed retrying... ");
+					e.printStackTrace();
 				}
 			}
 		}

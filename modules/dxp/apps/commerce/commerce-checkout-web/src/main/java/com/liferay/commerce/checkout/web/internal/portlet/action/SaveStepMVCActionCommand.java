@@ -54,7 +54,7 @@ public class SaveStepMVCActionCommand extends BaseMVCActionCommand {
 			_commerceCheckoutStepServicesTracker.getCommerceCheckoutStep(
 				checkoutStepName);
 
-		commerceCheckoutStep.action(actionRequest, actionResponse);
+		commerceCheckoutStep.processAction(actionRequest, actionResponse);
 
 		hideDefaultSuccessMessage(actionRequest);
 	}

@@ -27,10 +27,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface CommerceCheckoutStep {
 
-	public boolean action(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception;
-
 	public String getLabel(Locale locale);
 
 	public String getName();
@@ -43,6 +39,10 @@ public interface CommerceCheckoutStep {
 	public boolean isVisible(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
+		throws Exception;
+
+	public boolean processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception;
 
 	public void render(

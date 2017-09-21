@@ -47,14 +47,6 @@ public class OrderConfirmationCommerceCheckoutStep
 	implements CommerceCheckoutStep {
 
 	@Override
-	public boolean action(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		return false;
-	}
-
-	@Override
 	public String getLabel(Locale locale) {
 		return "ORDER_CONFIRMATION_TO_CHANGE";
 	}
@@ -80,6 +72,14 @@ public class OrderConfirmationCommerceCheckoutStep
 		throws Exception {
 
 		return true;
+	}
+
+	@Override
+	public boolean processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		return false;
 	}
 
 	@Override

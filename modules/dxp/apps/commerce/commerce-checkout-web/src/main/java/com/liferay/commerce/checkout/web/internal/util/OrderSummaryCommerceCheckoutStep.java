@@ -53,7 +53,35 @@ import org.osgi.service.component.annotations.Reference;
 public class OrderSummaryCommerceCheckoutStep implements CommerceCheckoutStep {
 
 	@Override
-	public boolean action(
+	public String getLabel(Locale locale) {
+		return "ORDER_SUMMARY_TO_CHANGE";
+	}
+
+	@Override
+	public String getName() {
+		return "orderSummary";
+	}
+
+	@Override
+	public boolean isActive(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws Exception {
+
+		return true;
+	}
+
+	@Override
+	public boolean isVisible(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws Exception {
+
+		return true;
+	}
+
+	@Override
+	public boolean processAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -80,34 +108,6 @@ public class OrderSummaryCommerceCheckoutStep implements CommerceCheckoutStep {
 		portletURL.setParameter("checkoutStepName", "orderConfirmation");
 
 		actionRequest.setAttribute(WebKeys.REDIRECT, portletURL.toString());
-
-		return true;
-	}
-
-	@Override
-	public String getLabel(Locale locale) {
-		return "ORDER_SUMMARY_TO_CHANGE";
-	}
-
-	@Override
-	public String getName() {
-		return "orderSummary";
-	}
-
-	@Override
-	public boolean isActive(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws Exception {
-
-		return true;
-	}
-
-	@Override
-	public boolean isVisible(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws Exception {
 
 		return true;
 	}

@@ -58,33 +58,6 @@ import org.osgi.service.component.annotations.Reference;
 public class BillingCommerceCheckoutStep implements CommerceCheckoutStep {
 
 	@Override
-	public boolean action(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		try {
-			updateCommerceCartBilling(actionRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof CommerceAddressCityException ||
-				e instanceof CommerceAddressCountryException ||
-				e instanceof CommerceAddressNameException ||
-				e instanceof CommerceAddressStreetException ||
-				e instanceof CommerceCartBillingAddressException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				return false;
-			}
-			else {
-				throw e;
-			}
-		}
-
-		return true;
-	}
-
-	@Override
 	public String getLabel(Locale locale) {
 		return "BILLING_TO_CHANGE";
 	}
@@ -108,6 +81,33 @@ public class BillingCommerceCheckoutStep implements CommerceCheckoutStep {
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {
+
+		return true;
+	}
+
+	@Override
+	public boolean processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		try {
+			updateCommerceCartBilling(actionRequest);
+		}
+		catch (Exception e) {
+			if (e instanceof CommerceAddressCityException ||
+				e instanceof CommerceAddressCountryException ||
+				e instanceof CommerceAddressNameException ||
+				e instanceof CommerceAddressStreetException ||
+				e instanceof CommerceCartBillingAddressException) {
+
+				SessionErrors.add(actionRequest, e.getClass());
+
+				return false;
+			}
+			else {
+				throw e;
+			}
+		}
 
 		return true;
 	}

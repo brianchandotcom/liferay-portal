@@ -102,7 +102,7 @@ long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 	</div>
 
 	<aui:fieldset cssClass='<%= (billingAddressId > 0) ? "hide" : StringPool.BLANK %>' id='<%= renderResponse.getNamespace() + "newAddressContainer" %>'>
-		<aui:input name="newAddress" type="hidden" value="<%= commerceAddresses.isEmpty() ? '1' : '0' %>" />
+		<aui:input name="newAddress" type="hidden" value='<%= commerceAddresses.isEmpty() ? "1" : "0" %>' />
 
 		<c:if test="<%= !commerceAddresses.isEmpty() %>">
 			<aui:button-row>

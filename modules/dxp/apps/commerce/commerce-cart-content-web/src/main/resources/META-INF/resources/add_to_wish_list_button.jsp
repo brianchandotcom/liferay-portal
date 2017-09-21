@@ -40,11 +40,11 @@ dataMap.put("cp-instance-id", "");
 			var ddmFormValues = JSON.stringify(productContent.getFormValues());
 
 			var data = {
-				'<%= PortalUtil.getPortletNamespace(CommercePortletKeys.COMMERCE_CART_CONTENT) %>cpDefinitionId' : cpDefinitionId ,
-				'<%= PortalUtil.getPortletNamespace(CommercePortletKeys.COMMERCE_CART_CONTENT) %>ddmFormValues' : ddmFormValues ,
-				'<%= PortalUtil.getPortletNamespace(CommercePortletKeys.COMMERCE_CART_CONTENT) %>cpInstanceId' : cpInstanceId ,
-				'<%= PortalUtil.getPortletNamespace(CommercePortletKeys.COMMERCE_CART_CONTENT) %>quantity' : 1 ,
-				'<%= PortalUtil.getPortletNamespace(CommercePortletKeys.COMMERCE_CART_CONTENT) %>type' : <%= CommerceConstants.COMMERCE_CART_TYPE_WISH_LIST %>
+				'<%= PortalUtil.getPortletNamespace(CommercePortletKeys.COMMERCE_CART_CONTENT) %>cpDefinitionId': cpDefinitionId,
+				'<%= PortalUtil.getPortletNamespace(CommercePortletKeys.COMMERCE_CART_CONTENT) %>ddmFormValues': ddmFormValues,
+				'<%= PortalUtil.getPortletNamespace(CommercePortletKeys.COMMERCE_CART_CONTENT) %>cpInstanceId': cpInstanceId,
+				'<%= PortalUtil.getPortletNamespace(CommercePortletKeys.COMMERCE_CART_CONTENT) %>quantity': 1,
+				'<%= PortalUtil.getPortletNamespace(CommercePortletKeys.COMMERCE_CART_CONTENT) %>type': <%= CommerceConstants.COMMERCE_CART_TYPE_WISH_LIST %>
 			};
 
 			A.io.request(

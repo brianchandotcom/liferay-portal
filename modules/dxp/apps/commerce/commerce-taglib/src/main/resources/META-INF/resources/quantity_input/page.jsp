@@ -28,12 +28,11 @@ long cpDefinitionId = cpDefinition.getCPDefinitionId();
 
 int[] allowedCartQuantities = null;
 
-if (Validator.isNotNull(allowedCartQuantity))
+if (Validator.isNotNull(allowedCartQuantity)) {
 	allowedCartQuantities = StringUtil.split(allowedCartQuantity, 0);
 
-	if (allowedCartQuantities != null) {
-		Arrays.sort(allowedCartQuantities);
-	}
+	Arrays.sort(allowedCartQuantities);
+}
 %>
 
 <div class="commerce-quantity-container">
@@ -47,9 +46,17 @@ if (Validator.isNotNull(allowedCartQuantity))
 		</c:when>
 		<c:when test="<%= allowedCartQuantities != null %>">
 			<aui:select label="quantity" name='<%= cpDefinitionId + "Quantity" %>'>
-				<% for(int curQuantity : allowedCartQuantities){ %>
-				<aui:option label="<%= curQuantity %>" value="<%= curQuantity %>" />
-				<%} %>
+
+				<%
+				for (int curQuantity : allowedCartQuantities) {
+				%>
+
+					<aui:option label="<%= curQuantity %>" value="<%= curQuantity %>" />
+
+				<%
+				}
+				%>
+
 			</aui:select>
 		</c:when>
 		<c:otherwise>

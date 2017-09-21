@@ -554,9 +554,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		Date now = new Date();
 
-		Date modifiedDate = serviceContext.getModifiedDate(now);
-
-		cpInstance.setModifiedDate(modifiedDate);
+		cpInstance.setModifiedDate(serviceContext.getModifiedDate(now));
 
 		cpInstance.setCost(cost);
 		cpInstance.setPrice(price);
@@ -575,9 +573,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		Date now = new Date();
 
-		Date modifiedDate = serviceContext.getModifiedDate(now);
-
-		cpInstance.setModifiedDate(modifiedDate);
+		cpInstance.setModifiedDate(serviceContext.getModifiedDate(now));
 
 		cpInstance.setWidth(width);
 		cpInstance.setHeight(height);

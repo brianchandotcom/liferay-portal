@@ -42,28 +42,32 @@ dataMap.put("cp-instance-id", String.valueOf(cpInstanceId));
 <aui:button cssClass="btn-lg btn-primary" data="<%= dataMap %>" disabled="<%= disabled %>" name="<%= buttonId %>" value="add-to-cart" />
 
 <aui:script use="aui-io-request,aui-parse-content,liferay-notification">
-	<% if(!cpDefinition.isIgnoreSKUCombinations()){ %>
 
-	Liferay.on(
-		'<%= cpDefinition.getCPDefinitionId() %>CPInstance:change',
-		function(event) {
+	<%
+	if (!cpDefinition.isIgnoreSKUCombinations()) {
+	%>
 
-			var cartButton = A.one('#<portlet:namespace /><%= buttonId %>');
+		Liferay.on(
+			'<%= cpDefinition.getCPDefinitionId() %>CPInstance:change',
+			function(event) {
+				var cartButton = A.one('#<portlet:namespace /><%= buttonId %>');
 
-			if (event.cpInstanceExist) {
-				Liferay.Util.toggleDisabled(cartButton, false);
+				if (event.cpInstanceExist) {
+					Liferay.Util.toggleDisabled(cartButton, false);
+				}
+				else {
+					Liferay.Util.toggleDisabled(cartButton, true);
+				}
 			}
-			else {
-				Liferay.Util.toggleDisabled(cartButton, true);
-			}
-		}
-	);
-	<% } %>
+		);
+
+	<%
+	}
+	%>
 
 	Liferay.on(
 		'<%= cpDefinition.getCPDefinitionId() %>AddToCart',
 		function(cpInstanceId) {
-
 			var cpDefinitionId = <%= cpDefinition.getCPDefinitionId() %>;
 
 			var addToCartNode = A.one('#<portlet:namespace /><%= buttonId %>');
@@ -97,10 +101,10 @@ dataMap.put("cp-instance-id", String.valueOf(cpInstanceId));
 			}
 
 			var data = {
-				'<%= PortalUtil.getPortletNamespace(CommercePortletKeys.COMMERCE_CART_CONTENT) %>cpDefinitionId' : cpDefinitionId ,
-				'<%= PortalUtil.getPortletNamespace(CommercePortletKeys.COMMERCE_CART_CONTENT) %>ddmFormValues' : ddmFormValues ,
-				'<%= PortalUtil.getPortletNamespace(CommercePortletKeys.COMMERCE_CART_CONTENT) %>cpInstanceId' : cpInstanceId ,
-				'<%= PortalUtil.getPortletNamespace(CommercePortletKeys.COMMERCE_CART_CONTENT) %>quantity' : quantity
+				'<%= PortalUtil.getPortletNamespace(CommercePortletKeys.COMMERCE_CART_CONTENT) %>cpDefinitionId': cpDefinitionId,
+				'<%= PortalUtil.getPortletNamespace(CommercePortletKeys.COMMERCE_CART_CONTENT) %>ddmFormValues': ddmFormValues,
+				'<%= PortalUtil.getPortletNamespace(CommercePortletKeys.COMMERCE_CART_CONTENT) %>cpInstanceId': cpInstanceId,
+				'<%= PortalUtil.getPortletNamespace(CommercePortletKeys.COMMERCE_CART_CONTENT) %>quantity': quantity
 			};
 
 			A.io.request(
@@ -150,7 +154,6 @@ dataMap.put("cp-instance-id", String.valueOf(cpInstanceId));
 			else {
 				Liferay.fire('<%= cpDefinition.getCPDefinitionId() %>AddToCart');
 			}
-
 		}
 	);
 </aui:script>

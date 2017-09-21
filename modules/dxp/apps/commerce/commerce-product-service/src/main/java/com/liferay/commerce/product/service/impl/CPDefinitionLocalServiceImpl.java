@@ -964,9 +964,7 @@ public class CPDefinitionLocalServiceImpl
 
 		Date now = new Date();
 
-		Date modifiedDate = serviceContext.getModifiedDate(now);
-
-		cpDefinition.setModifiedDate(modifiedDate);
+		cpDefinition.setModifiedDate(serviceContext.getModifiedDate(now));
 
 		return cpDefinitionPersistence.update(cpDefinition);
 	}
@@ -983,9 +981,7 @@ public class CPDefinitionLocalServiceImpl
 
 		Date now = new Date();
 
-		Date modifiedDate = serviceContext.getModifiedDate(now);
-
-		cpDefinition.setModifiedDate(modifiedDate);
+		cpDefinition.setModifiedDate(serviceContext.getModifiedDate(now));
 
 		cpDefinition.setWidth(width);
 		cpDefinition.setHeight(height);

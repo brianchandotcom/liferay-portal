@@ -130,8 +130,8 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 			String[] values = new String[valuesJSONArray.length()];
 
-			for (int ii = 0; ii < valuesJSONArray.length(); ii++) {
-				values[ii] = valuesJSONArray.getString(ii);
+			for (int j = 0; j < valuesJSONArray.length(); j++) {
+				values[j] = valuesJSONArray.getString(j);
 			}
 
 			attributes.put(fieldName, values);
@@ -664,11 +664,9 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 	protected String createDDMFormRuleInputMapping(
 		DDMForm ddmForm, long cpDefinitionId) {
 
-		/*
-		 * The input information will be transformed in parameter request of
-		 *  DDMDataProviderRequest class and it'll be accessible in the data
-		 *  provider implementation
-		 * */
+		// The input information will be transformed in parameter request of
+		// DDMDataProviderRequest class and it'll be accessible in the data
+		// provider implementation.
 
 		String inputMappingStatement = "'%s=', getValue('%s')";
 		String delimiter = ", ';',";

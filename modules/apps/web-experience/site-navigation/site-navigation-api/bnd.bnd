@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Site Navigation API
+Bundle-SymbolicName: com.liferay.site.navigation.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.site.navigation.exception,\
+	com.liferay.site.navigation.model,\
+	com.liferay.site.navigation.service,\
+	com.liferay.site.navigation.service.persistence
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Site Navigation

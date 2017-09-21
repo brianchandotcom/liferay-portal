@@ -1,6 +1,7 @@
-create unique index IX_E729B1F2 on CAvailabilityRangeEntry (groupId, CPDefinitionId, commerceAvailabilityRangeId);
-create index IX_EDE139CD on CAvailabilityRangeEntry (uuid_[$COLUMN_LENGTH:75$], companyId);
-create unique index IX_4E17CF8F on CAvailabilityRangeEntry (uuid_[$COLUMN_LENGTH:75$], groupId);
+create unique index IX_726123B7 on CPDefinitionAvailabilityRange (CPDefinitionId);
+create index IX_9032BB82 on CPDefinitionAvailabilityRange (groupId);
+create index IX_58536E1C on CPDefinitionAvailabilityRange (uuid_[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_64D8CB9E on CPDefinitionAvailabilityRange (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create index IX_6DCF2DAB on CommerceAddress (addressUserId);
 create index IX_CD76FE87 on CommerceAddress (commerceCountryId);

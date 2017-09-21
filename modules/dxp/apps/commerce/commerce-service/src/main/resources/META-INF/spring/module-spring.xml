@@ -1,9 +1,6 @@
 <?xml version="1.0"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-	<bean class="com.liferay.commerce.service.impl.CAvailabilityRangeEntryLocalServiceImpl" id="com.liferay.commerce.service.CAvailabilityRangeEntryLocalService" />
-	<bean class="com.liferay.commerce.service.impl.CAvailabilityRangeEntryServiceImpl" id="com.liferay.commerce.service.CAvailabilityRangeEntryService" />
-	<bean class="com.liferay.commerce.service.persistence.impl.CAvailabilityRangeEntryPersistenceImpl" id="com.liferay.commerce.service.persistence.CAvailabilityRangeEntryPersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.service.impl.CommerceAddressLocalServiceImpl" id="com.liferay.commerce.service.CommerceAddressLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceAddressServiceImpl" id="com.liferay.commerce.service.CommerceAddressService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceAddressPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceAddressPersistence" parent="basePersistence" />
@@ -46,4 +43,7 @@
 	<bean class="com.liferay.commerce.service.impl.CommerceWarehouseItemServiceImpl" id="com.liferay.commerce.service.CommerceWarehouseItemService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceWarehouseItemPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceWarehouseItemPersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceWarehouseItemFinderImpl" id="com.liferay.commerce.service.persistence.CommerceWarehouseItemFinder" parent="basePersistence" />
+	<bean class="com.liferay.commerce.service.impl.CPDefinitionAvailabilityRangeLocalServiceImpl" id="com.liferay.commerce.service.CPDefinitionAvailabilityRangeLocalService" />
+	<bean class="com.liferay.commerce.service.impl.CPDefinitionAvailabilityRangeServiceImpl" id="com.liferay.commerce.service.CPDefinitionAvailabilityRangeService" />
+	<bean class="com.liferay.commerce.service.persistence.impl.CPDefinitionAvailabilityRangePersistenceImpl" id="com.liferay.commerce.service.persistence.CPDefinitionAvailabilityRangePersistence" parent="basePersistence" />
 </beans>

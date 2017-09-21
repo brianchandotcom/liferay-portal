@@ -23,20 +23,20 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.service.http.CAvailabilityRangeEntryServiceSoap}.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.service.http.CPDefinitionAvailabilityRangeServiceSoap}.
  *
  * @author Alessio Antonio Rendina
- * @see com.liferay.commerce.service.http.CAvailabilityRangeEntryServiceSoap
+ * @see com.liferay.commerce.service.http.CPDefinitionAvailabilityRangeServiceSoap
  * @generated
  */
 @ProviderType
-public class CAvailabilityRangeEntrySoap implements Serializable {
-	public static CAvailabilityRangeEntrySoap toSoapModel(
-		CAvailabilityRangeEntry model) {
-		CAvailabilityRangeEntrySoap soapModel = new CAvailabilityRangeEntrySoap();
+public class CPDefinitionAvailabilityRangeSoap implements Serializable {
+	public static CPDefinitionAvailabilityRangeSoap toSoapModel(
+		CPDefinitionAvailabilityRange model) {
+		CPDefinitionAvailabilityRangeSoap soapModel = new CPDefinitionAvailabilityRangeSoap();
 
 		soapModel.setUuid(model.getUuid());
-		soapModel.setCAvailabilityRangeEntryId(model.getCAvailabilityRangeEntryId());
+		soapModel.setCPDefinitionAvailabilityRangeId(model.getCPDefinitionAvailabilityRangeId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -50,9 +50,9 @@ public class CAvailabilityRangeEntrySoap implements Serializable {
 		return soapModel;
 	}
 
-	public static CAvailabilityRangeEntrySoap[] toSoapModels(
-		CAvailabilityRangeEntry[] models) {
-		CAvailabilityRangeEntrySoap[] soapModels = new CAvailabilityRangeEntrySoap[models.length];
+	public static CPDefinitionAvailabilityRangeSoap[] toSoapModels(
+		CPDefinitionAvailabilityRange[] models) {
+		CPDefinitionAvailabilityRangeSoap[] soapModels = new CPDefinitionAvailabilityRangeSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -61,15 +61,15 @@ public class CAvailabilityRangeEntrySoap implements Serializable {
 		return soapModels;
 	}
 
-	public static CAvailabilityRangeEntrySoap[][] toSoapModels(
-		CAvailabilityRangeEntry[][] models) {
-		CAvailabilityRangeEntrySoap[][] soapModels = null;
+	public static CPDefinitionAvailabilityRangeSoap[][] toSoapModels(
+		CPDefinitionAvailabilityRange[][] models) {
+		CPDefinitionAvailabilityRangeSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new CAvailabilityRangeEntrySoap[models.length][models[0].length];
+			soapModels = new CPDefinitionAvailabilityRangeSoap[models.length][models[0].length];
 		}
 		else {
-			soapModels = new CAvailabilityRangeEntrySoap[0][0];
+			soapModels = new CPDefinitionAvailabilityRangeSoap[0][0];
 		}
 
 		for (int i = 0; i < models.length; i++) {
@@ -79,26 +79,26 @@ public class CAvailabilityRangeEntrySoap implements Serializable {
 		return soapModels;
 	}
 
-	public static CAvailabilityRangeEntrySoap[] toSoapModels(
-		List<CAvailabilityRangeEntry> models) {
-		List<CAvailabilityRangeEntrySoap> soapModels = new ArrayList<CAvailabilityRangeEntrySoap>(models.size());
+	public static CPDefinitionAvailabilityRangeSoap[] toSoapModels(
+		List<CPDefinitionAvailabilityRange> models) {
+		List<CPDefinitionAvailabilityRangeSoap> soapModels = new ArrayList<CPDefinitionAvailabilityRangeSoap>(models.size());
 
-		for (CAvailabilityRangeEntry model : models) {
+		for (CPDefinitionAvailabilityRange model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new CAvailabilityRangeEntrySoap[soapModels.size()]);
+		return soapModels.toArray(new CPDefinitionAvailabilityRangeSoap[soapModels.size()]);
 	}
 
-	public CAvailabilityRangeEntrySoap() {
+	public CPDefinitionAvailabilityRangeSoap() {
 	}
 
 	public long getPrimaryKey() {
-		return _CAvailabilityRangeEntryId;
+		return _CPDefinitionAvailabilityRangeId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setCAvailabilityRangeEntryId(pk);
+		setCPDefinitionAvailabilityRangeId(pk);
 	}
 
 	public String getUuid() {
@@ -109,12 +109,13 @@ public class CAvailabilityRangeEntrySoap implements Serializable {
 		_uuid = uuid;
 	}
 
-	public long getCAvailabilityRangeEntryId() {
-		return _CAvailabilityRangeEntryId;
+	public long getCPDefinitionAvailabilityRangeId() {
+		return _CPDefinitionAvailabilityRangeId;
 	}
 
-	public void setCAvailabilityRangeEntryId(long CAvailabilityRangeEntryId) {
-		_CAvailabilityRangeEntryId = CAvailabilityRangeEntryId;
+	public void setCPDefinitionAvailabilityRangeId(
+		long CPDefinitionAvailabilityRangeId) {
+		_CPDefinitionAvailabilityRangeId = CPDefinitionAvailabilityRangeId;
 	}
 
 	public long getGroupId() {
@@ -190,7 +191,7 @@ public class CAvailabilityRangeEntrySoap implements Serializable {
 	}
 
 	private String _uuid;
-	private long _CAvailabilityRangeEntryId;
+	private long _CPDefinitionAvailabilityRangeId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;

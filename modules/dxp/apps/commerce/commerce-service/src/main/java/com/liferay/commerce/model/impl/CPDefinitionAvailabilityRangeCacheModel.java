@@ -16,7 +16,7 @@ package com.liferay.commerce.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.model.CAvailabilityRangeEntry;
+import com.liferay.commerce.model.CPDefinitionAvailabilityRange;
 
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
@@ -31,14 +31,14 @@ import java.io.ObjectOutput;
 import java.util.Date;
 
 /**
- * The cache model class for representing CAvailabilityRangeEntry in entity cache.
+ * The cache model class for representing CPDefinitionAvailabilityRange in entity cache.
  *
  * @author Alessio Antonio Rendina
- * @see CAvailabilityRangeEntry
+ * @see CPDefinitionAvailabilityRange
  * @generated
  */
 @ProviderType
-public class CAvailabilityRangeEntryCacheModel implements CacheModel<CAvailabilityRangeEntry>,
+public class CPDefinitionAvailabilityRangeCacheModel implements CacheModel<CPDefinitionAvailabilityRange>,
 	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
@@ -46,13 +46,14 @@ public class CAvailabilityRangeEntryCacheModel implements CacheModel<CAvailabili
 			return true;
 		}
 
-		if (!(obj instanceof CAvailabilityRangeEntryCacheModel)) {
+		if (!(obj instanceof CPDefinitionAvailabilityRangeCacheModel)) {
 			return false;
 		}
 
-		CAvailabilityRangeEntryCacheModel cAvailabilityRangeEntryCacheModel = (CAvailabilityRangeEntryCacheModel)obj;
+		CPDefinitionAvailabilityRangeCacheModel cpDefinitionAvailabilityRangeCacheModel =
+			(CPDefinitionAvailabilityRangeCacheModel)obj;
 
-		if (CAvailabilityRangeEntryId == cAvailabilityRangeEntryCacheModel.CAvailabilityRangeEntryId) {
+		if (CPDefinitionAvailabilityRangeId == cpDefinitionAvailabilityRangeCacheModel.CPDefinitionAvailabilityRangeId) {
 			return true;
 		}
 
@@ -61,7 +62,7 @@ public class CAvailabilityRangeEntryCacheModel implements CacheModel<CAvailabili
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, CAvailabilityRangeEntryId);
+		return HashUtil.hash(0, CPDefinitionAvailabilityRangeId);
 	}
 
 	@Override
@@ -70,8 +71,8 @@ public class CAvailabilityRangeEntryCacheModel implements CacheModel<CAvailabili
 
 		sb.append("{uuid=");
 		sb.append(uuid);
-		sb.append(", CAvailabilityRangeEntryId=");
-		sb.append(CAvailabilityRangeEntryId);
+		sb.append(", CPDefinitionAvailabilityRangeId=");
+		sb.append(CPDefinitionAvailabilityRangeId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
@@ -96,63 +97,64 @@ public class CAvailabilityRangeEntryCacheModel implements CacheModel<CAvailabili
 	}
 
 	@Override
-	public CAvailabilityRangeEntry toEntityModel() {
-		CAvailabilityRangeEntryImpl cAvailabilityRangeEntryImpl = new CAvailabilityRangeEntryImpl();
+	public CPDefinitionAvailabilityRange toEntityModel() {
+		CPDefinitionAvailabilityRangeImpl cpDefinitionAvailabilityRangeImpl = new CPDefinitionAvailabilityRangeImpl();
 
 		if (uuid == null) {
-			cAvailabilityRangeEntryImpl.setUuid(StringPool.BLANK);
+			cpDefinitionAvailabilityRangeImpl.setUuid(StringPool.BLANK);
 		}
 		else {
-			cAvailabilityRangeEntryImpl.setUuid(uuid);
+			cpDefinitionAvailabilityRangeImpl.setUuid(uuid);
 		}
 
-		cAvailabilityRangeEntryImpl.setCAvailabilityRangeEntryId(CAvailabilityRangeEntryId);
-		cAvailabilityRangeEntryImpl.setGroupId(groupId);
-		cAvailabilityRangeEntryImpl.setCompanyId(companyId);
-		cAvailabilityRangeEntryImpl.setUserId(userId);
+		cpDefinitionAvailabilityRangeImpl.setCPDefinitionAvailabilityRangeId(CPDefinitionAvailabilityRangeId);
+		cpDefinitionAvailabilityRangeImpl.setGroupId(groupId);
+		cpDefinitionAvailabilityRangeImpl.setCompanyId(companyId);
+		cpDefinitionAvailabilityRangeImpl.setUserId(userId);
 
 		if (userName == null) {
-			cAvailabilityRangeEntryImpl.setUserName(StringPool.BLANK);
+			cpDefinitionAvailabilityRangeImpl.setUserName(StringPool.BLANK);
 		}
 		else {
-			cAvailabilityRangeEntryImpl.setUserName(userName);
+			cpDefinitionAvailabilityRangeImpl.setUserName(userName);
 		}
 
 		if (createDate == Long.MIN_VALUE) {
-			cAvailabilityRangeEntryImpl.setCreateDate(null);
+			cpDefinitionAvailabilityRangeImpl.setCreateDate(null);
 		}
 		else {
-			cAvailabilityRangeEntryImpl.setCreateDate(new Date(createDate));
+			cpDefinitionAvailabilityRangeImpl.setCreateDate(new Date(createDate));
 		}
 
 		if (modifiedDate == Long.MIN_VALUE) {
-			cAvailabilityRangeEntryImpl.setModifiedDate(null);
+			cpDefinitionAvailabilityRangeImpl.setModifiedDate(null);
 		}
 		else {
-			cAvailabilityRangeEntryImpl.setModifiedDate(new Date(modifiedDate));
+			cpDefinitionAvailabilityRangeImpl.setModifiedDate(new Date(
+					modifiedDate));
 		}
 
-		cAvailabilityRangeEntryImpl.setCPDefinitionId(CPDefinitionId);
-		cAvailabilityRangeEntryImpl.setCommerceAvailabilityRangeId(commerceAvailabilityRangeId);
+		cpDefinitionAvailabilityRangeImpl.setCPDefinitionId(CPDefinitionId);
+		cpDefinitionAvailabilityRangeImpl.setCommerceAvailabilityRangeId(commerceAvailabilityRangeId);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
-			cAvailabilityRangeEntryImpl.setLastPublishDate(null);
+			cpDefinitionAvailabilityRangeImpl.setLastPublishDate(null);
 		}
 		else {
-			cAvailabilityRangeEntryImpl.setLastPublishDate(new Date(
+			cpDefinitionAvailabilityRangeImpl.setLastPublishDate(new Date(
 					lastPublishDate));
 		}
 
-		cAvailabilityRangeEntryImpl.resetOriginalValues();
+		cpDefinitionAvailabilityRangeImpl.resetOriginalValues();
 
-		return cAvailabilityRangeEntryImpl;
+		return cpDefinitionAvailabilityRangeImpl;
 	}
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
 
-		CAvailabilityRangeEntryId = objectInput.readLong();
+		CPDefinitionAvailabilityRangeId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
 
@@ -179,7 +181,7 @@ public class CAvailabilityRangeEntryCacheModel implements CacheModel<CAvailabili
 			objectOutput.writeUTF(uuid);
 		}
 
-		objectOutput.writeLong(CAvailabilityRangeEntryId);
+		objectOutput.writeLong(CPDefinitionAvailabilityRangeId);
 
 		objectOutput.writeLong(groupId);
 
@@ -204,7 +206,7 @@ public class CAvailabilityRangeEntryCacheModel implements CacheModel<CAvailabili
 	}
 
 	public String uuid;
-	public long CAvailabilityRangeEntryId;
+	public long CPDefinitionAvailabilityRangeId;
 	public long groupId;
 	public long companyId;
 	public long userId;

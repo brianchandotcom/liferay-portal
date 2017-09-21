@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.highlight.HighlightUtil;
@@ -3967,7 +3966,7 @@ public class StringUtil {
 	 * <p>
 	 * <pre>
 	 * <code>
-	 * splitLines("Red\rBlue\nGreen") returns {"Red","Blue","Green"}
+	 * splitByLines("Red\rBlue\nGreen") returns {"Red","Blue","Green"}
 	 * </code>
 	 * </pre>
 	 * </p>
@@ -3977,12 +3976,10 @@ public class StringUtil {
 	 *         <code>s</code> around return and newline characters, or an empty
 	 *         string array if string <code>s</code> is <code>null</code>
 	 */
-	public static String[] splitLines(String s) {
+	public static String[] splitByLines(String s) {
 		if (Validator.isNull(s)) {
 			return _emptyStringArray;
 		}
-
-		s = s.trim();
 
 		List<String> lines = new ArrayList<>();
 
@@ -4020,6 +4017,18 @@ public class StringUtil {
 				}
 			}
 		}
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #splitByLines(String)}
+	 */
+	@Deprecated
+	public static String[] splitLines(String s) {
+		if (Validator.isNull(s)) {
+			return _emptyStringArray;
+		}
+
+		return splitByLines(s.trim());
 	}
 
 	/**
@@ -5232,46 +5241,35 @@ public class StringUtil {
 
 		StringBundler sb = new StringBundler();
 
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(text))) {
+		for (String s : splitByLines(text)) {
+			if (s.length() == 0) {
+				sb.append(lineSeparator);
 
-			String s = StringPool.BLANK;
+				continue;
+			}
 
-			while ((s = unsyncBufferedReader.readLine()) != null) {
-				if (s.length() == 0) {
-					sb.append(lineSeparator);
+			int lineLength = 0;
 
-					continue;
-				}
+			String[] tokens = s.split(StringPool.SPACE);
 
-				int lineLength = 0;
+			for (String token : tokens) {
+				if ((lineLength + token.length() + 1) > width) {
+					if (lineLength > 0) {
+						sb.append(lineSeparator);
+					}
 
-				String[] tokens = s.split(StringPool.SPACE);
+					if (token.length() > width) {
+						int pos = token.indexOf(CharPool.OPEN_PARENTHESIS);
 
-				for (String token : tokens) {
-					if ((lineLength + token.length() + 1) > width) {
-						if (lineLength > 0) {
+						if (pos != -1) {
+							sb.append(token.substring(0, pos + 1));
 							sb.append(lineSeparator);
-						}
 
-						if (token.length() > width) {
-							int pos = token.indexOf(CharPool.OPEN_PARENTHESIS);
+							token = token.substring(pos + 1);
 
-							if (pos != -1) {
-								sb.append(token.substring(0, pos + 1));
-								sb.append(lineSeparator);
+							sb.append(token);
 
-								token = token.substring(pos + 1);
-
-								sb.append(token);
-
-								lineLength = token.length();
-							}
-							else {
-								sb.append(token);
-
-								lineLength = token.length();
-							}
+							lineLength = token.length();
 						}
 						else {
 							sb.append(token);
@@ -5280,20 +5278,25 @@ public class StringUtil {
 						}
 					}
 					else {
-						if (lineLength > 0) {
-							sb.append(StringPool.SPACE);
-
-							lineLength++;
-						}
-
 						sb.append(token);
 
-						lineLength += token.length();
+						lineLength = token.length();
 					}
 				}
+				else {
+					if (lineLength > 0) {
+						sb.append(StringPool.SPACE);
 
-				sb.append(lineSeparator);
+						lineLength++;
+					}
+
+					sb.append(token);
+
+					lineLength += token.length();
+				}
 			}
+
+			sb.append(lineSeparator);
 		}
 
 		return sb.toString();

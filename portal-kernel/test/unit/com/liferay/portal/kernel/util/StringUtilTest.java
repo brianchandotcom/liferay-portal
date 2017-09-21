@@ -550,17 +550,17 @@ public class StringUtilTest {
 	}
 
 	@Test
-	public void testSplitLines() {
+	public void testSplitByLines() {
 		String singleLine = "abcdefg";
 
-		String[] lines = StringUtil.splitLines(singleLine);
+		String[] lines = StringUtil.splitByLines(singleLine);
 
 		Assert.assertEquals(Arrays.toString(lines), 1, lines.length);
 		Assert.assertEquals(singleLine, lines[0]);
 
 		String splitByReturn = "abcd\refg\rhijk\rlmn\r";
 
-		lines = StringUtil.splitLines(splitByReturn);
+		lines = StringUtil.splitByLines(splitByReturn);
 
 		Assert.assertEquals(Arrays.toString(lines), 4, lines.length);
 		Assert.assertEquals("abcd", lines[0]);
@@ -570,7 +570,7 @@ public class StringUtilTest {
 
 		String splitByNewLine = "abcd\nefg\nhijk\nlmn\n";
 
-		lines = StringUtil.splitLines(splitByNewLine);
+		lines = StringUtil.splitByLines(splitByNewLine);
 
 		Assert.assertEquals(Arrays.toString(lines), 4, lines.length);
 		Assert.assertEquals("abcd", lines[0]);
@@ -580,7 +580,7 @@ public class StringUtilTest {
 
 		String splitByBoth = "abcd\r\nefg\r\nhijk\r\nlmn\r\n";
 
-		lines = StringUtil.splitLines(splitByBoth);
+		lines = StringUtil.splitByLines(splitByBoth);
 
 		Assert.assertEquals(Arrays.toString(lines), 4, lines.length);
 		Assert.assertEquals("abcd", lines[0]);
@@ -590,7 +590,7 @@ public class StringUtilTest {
 
 		String splitByMix = "abcd\refg\nhijk\n\rlmn\r\n";
 
-		lines = StringUtil.splitLines(splitByMix);
+		lines = StringUtil.splitByLines(splitByMix);
 
 		Assert.assertEquals(Arrays.toString(lines), 5, lines.length);
 		Assert.assertEquals("abcd", lines[0]);

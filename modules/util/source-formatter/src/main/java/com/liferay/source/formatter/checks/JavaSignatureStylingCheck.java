@@ -50,7 +50,7 @@ public class JavaSignatureStylingCheck extends BaseJavaTermCheck {
 
 		String signature = matcher.group(1);
 
-		String[] signatureLines = StringUtil.splitLines(signature);
+		String[] signatureLines = StringUtil.splitByLines(signature);
 
 		String newLineChars = matcher.group(3);
 		String nextLine = StringUtil.trim(matcher.group(4));

@@ -27,7 +27,7 @@ public class SQLStylingCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		for (String line : StringUtil.splitLines(content)) {
+		for (String line : StringUtil.splitByLines(content)) {
 			String strippedQuotesLine = stripQuotes(line, CharPool.APOSTROPHE);
 
 			if (strippedQuotesLine.contains(StringPool.QUOTE)) {

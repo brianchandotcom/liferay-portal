@@ -109,7 +109,7 @@ public class BNDIncludeResourceCheck extends BaseFileCheck {
 	private String _sortDefinitionProperties(
 		String content, String properties, Comparator<String> comparator) {
 
-		String[] lines = StringUtil.splitLines(properties);
+		String[] lines = StringUtil.splitByLines(properties);
 
 		if (lines.length == 1) {
 			return content;

@@ -817,7 +817,7 @@ public class DefaultExportImportContentProcessorTest {
 	}
 
 	protected String replaceTimestampParameters(String content) {
-		List<String> urls = ListUtil.toList(StringUtil.splitLines(content));
+		List<String> urls = ListUtil.toList(StringUtil.splitByLines(content));
 
 		String timestampParameter = "t=123456789";
 

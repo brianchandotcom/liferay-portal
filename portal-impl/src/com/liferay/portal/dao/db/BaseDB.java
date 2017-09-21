@@ -81,37 +81,31 @@ public abstract class BaseDB implements DB {
 			_log.info("Adding indexes");
 		}
 
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(indexesSQL))) {
+		for (String sql : StringUtil.splitByLines(indexesSQL)) {
+			if (Validator.isNull(sql)) {
+				continue;
+			}
 
-			String sql = null;
+			int y = sql.indexOf(" on ");
 
-			while ((sql = unsyncBufferedReader.readLine()) != null) {
-				if (Validator.isNull(sql)) {
-					continue;
-				}
+			int x = sql.lastIndexOf(" ", y - 1);
 
-				int y = sql.indexOf(" on ");
+			String indexName = sql.substring(x + 1, y);
 
-				int x = sql.lastIndexOf(" ", y - 1);
+			if (validIndexNames.contains(indexName)) {
+				continue;
+			}
 
-				String indexName = sql.substring(x + 1, y);
+			if (_log.isInfoEnabled()) {
+				_log.info(sql);
+			}
 
-				if (validIndexNames.contains(indexName)) {
-					continue;
-				}
-
-				if (_log.isInfoEnabled()) {
-					_log.info(sql);
-				}
-
-				try {
-					runSQL(con, sql);
-				}
-				catch (Exception e) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(e.getMessage() + ": " + sql);
-					}
+			try {
+				runSQL(con, sql);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(e.getMessage() + ": " + sql);
 				}
 			}
 		}
@@ -761,7 +755,7 @@ public abstract class BaseDB implements DB {
 		String tablesSQLLowerCase = StringUtil.toLowerCase(tablesSQL);
 		String indexesSQLLowerCase = StringUtil.toLowerCase(indexesSQL);
 
-		String[] lines = StringUtil.splitLines(indexesSQL);
+		String[] lines = StringUtil.splitByLines(indexesSQL);
 
 		Set<String> indexNames = new HashSet<>();
 

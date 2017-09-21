@@ -1,7 +1,5 @@
-import { core } from 'metal';
-import Component from 'metal-component';
+import { Config } from 'metal-state';
 import dom from 'metal-dom';
-import { EventHandler } from 'metal-events';
 import Modal from 'metal-modal';
 
 import Soy from 'metal-soy';
@@ -31,34 +29,12 @@ class Flags extends PortletBase {
 	}
 
 	/**
-	 * @inheritDoc
-	 */
-	created() {
-		this.eventHandler_ = new EventHandler();
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	detached() {
-		super.detached();
-		this.eventHandler_.removeAllListeners();
-	}
-
-	/**
 	 * Closes the dialog to flag the page.
 	 */
-	closeReportDialog() {
+	_closeReportDialog() {
 		this._reportDialogOpen = false;
 		this._showConfirmationMessage = false;
 		this._showErrorMessage = false;
-	}
-
-	/**
-	 * Opens a dialog where the user can flag the page.
-	 */
-	openReportDialog() {
-		this._reportDialogOpen = true;
 	}
 
 	/**
@@ -85,7 +61,7 @@ class Flags extends PortletBase {
 	 * @param {Event} event
 	 * @protected
 	 */
-	_onReasonChange(event) {
+	_handleOnReasonChange(event) {
 		let reason = event.delegateTarget.value;
 
 		let otherReasonContainer = this.one('#otherReasonContainer');
@@ -104,7 +80,7 @@ class Flags extends PortletBase {
 	 * @param {Event} event
 	 * @protected
 	 */
-	_onSubmitForm(event) {
+	_handleOnSubmitForm(event) {
 		event.preventDefault();
 
 		let form = this.one('form[name="' + this.ns('flagsForm') +'"]');
@@ -138,10 +114,17 @@ class Flags extends PortletBase {
 	 * @internal
 	 * @protected
 	 */
-	_reportButton() {
+	_handleReportButtonClick() {
 		let input = this.one('input[type="submit"]');
 
 		input.click();
+	}
+
+	/**
+	 * Opens a dialog where the user can flag the page.
+	 */
+	_openReportDialog() {
+		this._reportDialogOpen = true;
 	}
 };
 
@@ -159,9 +142,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {String}
 	 */
-	companyName: {
-		validator: core.isString
-	},
+	companyName: Config.string().required(),
 
 	/**
 	 * CSS classes.
@@ -170,9 +151,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {String}
 	 */
-	cssClass: {
-		validator: core.isString
-	},
+	cssClass: Config.string().required(),
 
 	/**
 	 * Portlet's data.
@@ -180,9 +159,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {!Object}
 	 */
-	data: {
-		validator: core.isObject
-	},
+	data: Config.object().required(),
 
 	/**
 	 * Whether the form to flag is enabled
@@ -192,9 +169,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {Boolean}
 	 */
-	enabled: {
-		validator: core.isBoolean
-	},
+	enabled: Config.bool().required(),
 
 	/**
 	 * Whether the user is able to flag the page.
@@ -202,9 +177,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {!Boolean}
 	 */
-	flagsEnabled: {
-		validator: core.isBoolean
-	},
+	flagsEnabled: Config.bool().required(),
 
 	/**
 	 * Component id.
@@ -213,9 +186,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {String}
 	 */
-	id: {
-		validator: core.isString
-	},
+	id: Config.string().required(),
 
 	/**
 	 * Whether to show message text as a label next
@@ -225,9 +196,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {Boolean}
 	 */
-	label: {
-		validator: core.isBoolean
-	},
+	label: Config.bool().required(),
 
 	/**
 	 * Text to display next to the flag icon.
@@ -236,9 +205,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {String}
 	 */
-	message: {
-		validator: core.isString
-	},
+	message: Config.string().required(),
 
 	/**
 	 * Path to Terms of Use.
@@ -247,9 +214,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {String}
 	 */
-	pathTermsOfUse: {
-		validator: core.isString
-	},
+	pathTermsOfUse: Config.string().required(),
 
 	/**
 	 * Path to images.
@@ -258,9 +223,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {String}
 	 */
-	pathThemeImages: {
-		validator: core.isString
-	}
+	pathThemeImages: Config.string().required(),
 
 	/**
 	 * Portlet's namespace
@@ -269,9 +232,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {String}
 	 */
-	portletNamespace: {
-		validator: core.isString
-	},
+	portletNamespace: Config.string().required(),
 
 	/**
 	 * List of possible reasons to flag
@@ -281,9 +242,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {List}
 	 */
-	reasons: {
-		validator: core.isObject //CORE.LIST??
-	},
+	reasons: Config.array().required(),
 
 	/**
 	 * Email of the user who reports
@@ -293,9 +252,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {String}
 	 */
-	reporterEmailAddress: {
-		validator: core.isString
-	},
+	reporterEmailAddress: Config.string(),
 
 	/**
 	 * Wheter the user is signed in or not.
@@ -304,9 +261,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {Boolean}
 	 */
-	signedIn: {
-		validator: core.isBoolean
-	},
+	signedIn: Config.bool().required(),
 
 	/**
 	 * Title to show in the Modal.
@@ -315,9 +270,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {String}
 	 */
-	title: {
-		validator: core.isString
-	}
+	title: Config.string().required(),
 
 	/**
 	 * Uri of the page that will be opened
@@ -327,9 +280,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {String}
 	 */
-	uri: {
-		validator: core.isString
-	}
+	uri: Config.string().required()
 };
 
 // Register component

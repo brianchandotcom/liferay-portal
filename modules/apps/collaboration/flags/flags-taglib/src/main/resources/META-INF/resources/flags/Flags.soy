@@ -4,7 +4,6 @@
  * Prints the Flag component.
  */
 {template .render}
-	{@param closeReportDialog: any}
 	{@param companyName: string}
 	{@param cssClass: string}
 	{@param enabled: bool}
@@ -16,44 +15,60 @@
 	{@param pathThemeImages: string}
 	{@param portletNamespace: string}
 	{@param reasons: list<string>}
-	{@param? reporterEmailAddress: string | null}
 	{@param signedIn: bool}
 	{@param title: string}
-	{@param? _onReasonChange: any}
-	{@param? _onSubmitForm: any}
+	{@param? reporterEmailAddress: string | null}
+	{@param? _closeReportDialog: any}
+	{@param? _handleOnReasonChange: any}
+	{@param? _handleOnSubmitForm: any}
 	{@param? _reportDialogOpen: bool}
-	{@param? _reportButton: any}
+	{@param? _handleReportButtonClick: any}
 	{@param? _showConfirmationMessage: bool}
 	{@param? _showErrorMessage: bool}
 
 	{let $tooltip: not $label and $message!='' /}
+
 	<div class="taglib-flags" id="{$id}" title="{$title}">
-		<span class="{$cssClass} {if $tooltip}lfr-portal-tooltip{/if}" {if $tooltip}title="{$message}"{/if}>
+
+		{let $attributes kind="attributes"}
+			class="{$cssClass}
+			{if $tooltip}
+				{sp}lfr-portal-tooltip
+			{/if}
+			"
+
+			{if $tooltip}
+			{sp}title="{$message}"
+			{/if}
+		{/let}
+
+		<span {$attributes}>
 			{if $enabled}
-				<a class="taglib-icon" href="javascript:;" data-onclick="openReportDialog" >
+				<a class="taglib-icon" href="javascript:;" data-onclick="_openReportDialog" >
 					{call .icon}
 						{param label: $label /}
 						{param message: $message /}
 						{param pathThemeImages: $pathThemeImages /}
 					{/call}
 				</a>
-				{call .reportDialog}
-					{param closeReportDialog: $closeReportDialog /}
-					{param companyName: $companyName /}
-					{param flagsEnabled: $flagsEnabled /}
-					{param portletNamespace: $portletNamespace /}
-					{param pathTermsOfUse: $pathTermsOfUse /}
-					{param pathThemeImages: $pathThemeImages /}
-					{param reporterEmailAddress: $reporterEmailAddress /}
-					{param signedIn: $signedIn /}
-					{param reasons: $reasons /}
-					{param _onReasonChange: $_onReasonChange /}
-					{param _onSubmitForm: $_onSubmitForm /}
-					{param _reportButton: $_reportButton /}
-					{param _reportDialogOpen: $_reportDialogOpen /}
-					{param _showConfirmationMessage: $_showConfirmationMessage /}
-					{param _showErrorMessage: $_showErrorMessage /}
-				{/call}
+				{if $_reportDialogOpen}
+					{call .reportDialog}
+						{param companyName: $companyName /}
+						{param flagsEnabled: $flagsEnabled /}
+						{param pathTermsOfUse: $pathTermsOfUse /}
+						{param pathThemeImages: $pathThemeImages /}
+						{param portletNamespace: $portletNamespace /}
+						{param reasons: $reasons /}
+						{param reporterEmailAddress: $reporterEmailAddress /}
+						{param signedIn: $signedIn /}
+						{param _closeReportDialog: $_closeReportDialog /}
+						{param _handleOnReasonChange: $_handleOnReasonChange /}
+						{param _handleOnSubmitForm: $_handleOnSubmitForm /}
+						{param _handleReportButtonClick: $_handleReportButtonClick /}
+						{param _showConfirmationMessage: $_showConfirmationMessage /}
+						{param _showErrorMessage: $_showErrorMessage /}
+					{/call}
+				{/if}
 			{else}
 				{call .icon}
 					{param label: $label /}
@@ -77,69 +92,95 @@
 		<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#flag-full"></use>
 	</svg>
 
-	<span class="taglib-text {if not $label}hide-accessible{/if}">{$message}</span>
+	{let $attributes kind="attributes"}
+		class="taglib-text
+		{if not $label}
+			{sp}hide-accessible
+		{/if}"
+	{/let}
+	<span {$attributes}>{$message}</span>
 {/template}
 
 /**
  * Prints the modal component.
  */
 {template .reportDialog}
-	{@param closeReportDialog: any}
 	{@param companyName: string}
 	{@param flagsEnabled: bool}
-	{@param portletNamespace: string}
 	{@param pathTermsOfUse: string}
 	{@param pathThemeImages: string}
+	{@param portletNamespace: string}
 	{@param reasons: list<string>}
-	{@param? reporterEmailAddress: string | null}
 	{@param signedIn: bool}
-	{@param? _onReasonChange: any}
-	{@param? _onSubmitForm: any}
-	{@param? _reportButton: any}
-	{@param? _reportDialogOpen: bool}
+	{@param? reporterEmailAddress: string}
+	{@param? _closeReportDialog: any}
+	{@param? _handleOnReasonChange: any}
+	{@param? _handleOnSubmitForm: any}
+	{@param? _handleReportButtonClick: any}
 	{@param? _showConfirmationMessage: bool}
 	{@param? _showErrorMessage: bool}
 
-	{if $_reportDialogOpen}
-		{call Modal.render}
-			{param header kind="html"}
-				<button type="button" class="close" data-onclick="{$closeReportDialog}" aria-label="Close">
-					<span aria-hidden="true">x</span>
-				</button>
-				{msg desc=""}report-inappropriate-content{/msg}
-			{/param}
+	{call Modal.render}
+		{param header kind="html"}
+			<button type="button" class="close" data-onclick="{$_closeReportDialog}" aria-label="Close">
+				<span aria-hidden="true">X</span>
+			</button>
 
-			{param body kind="html"}
-				<div class="portlet-flags">
-					{call .reportDialogBody}
-						{param companyName: $companyName /}
-						{param flagsEnabled: $flagsEnabled /}
-						{param portletNamespace: $portletNamespace /}
-						{param pathTermsOfUse: $pathTermsOfUse /}
-						{param pathThemeImages: $pathThemeImages /}
-						{param reasons: $reasons /}
-						{param reporterEmailAddress: $reporterEmailAddress /}
-						{param signedIn: $signedIn /}
-						{param _onReasonChange: $_onReasonChange /}
-						{param _onSubmitForm: $_onSubmitForm /}
-						{param _showConfirmationMessage: $_showConfirmationMessage /}
-						{param _showErrorMessage: $_showErrorMessage /}
-					{/call}
-				</div>
-			{/param}
+			{msg desc=""}report-inappropriate-content{/msg}
+		{/param}
 
-			{param footer kind="html"}
-				{let $showCloseButton: $_showConfirmationMessage or $_showErrorMessage /}
-				<button class="btn btn-primary {if $showCloseButton}hidden{/if}" data-onclick="{$_reportButton}" type="button">{msg desc=""}report{/msg}</button>
+		{param body kind="html"}
+			<div class="portlet-flags">
+				{call .reportDialogBody}
+					{param companyName: $companyName /}
+					{param flagsEnabled: $flagsEnabled /}
+					{param pathTermsOfUse: $pathTermsOfUse /}
+					{param pathThemeImages: $pathThemeImages /}
+					{param portletNamespace: $portletNamespace /}
+					{param reasons: $reasons /}
+					{param reporterEmailAddress: $reporterEmailAddress /}
+					{param signedIn: $signedIn /}
+					{param _handleOnReasonChange: $_handleOnReasonChange /}
+					{param _handleOnSubmitForm: $_handleOnSubmitForm /}
+					{param _showConfirmationMessage: $_showConfirmationMessage /}
+					{param _showErrorMessage: $_showErrorMessage /}
+				{/call}
+			</div>
+		{/param}
 
-				<button class="btn btn-link {if $showCloseButton}hidden{/if}" data-onclick="{$closeReportDialog}" type="button">{msg desc=""}cancel{/msg}</button>
+		{param footer kind="html"}
+			{let $showCloseButton: $_showConfirmationMessage or $_showErrorMessage or (not $signedIn and not $flagsEnabled) /}
 
-				<button class="btn btn-default {if not $showCloseButton}hidden{/if}" data-onclick="{$closeReportDialog}" type="button">{msg desc=""}close{/msg}</button>
-			{/param}
+			{let $reportButtonClasses kind="text"}
+				btn btn-primary
+				{if $showCloseButton}
+					{sp}hide
+				{/if}
+			{/let}
 
-			{param noCloseButton: true /}
-		{/call}
-	{/if}
+			<button class="{$reportButtonClasses}" data-onclick="{$_handleReportButtonClick}" type="button">{msg desc=""}report{/msg}</button>
+
+			{let $cancelButtonClasses kind="text"}
+				btn btn-link
+				{if $showCloseButton}
+					{sp}hide
+				{/if}
+			{/let}
+
+			<button class="{$cancelButtonClasses}" data-onclick="{$_closeReportDialog}" type="button">{msg desc=""}cancel{/msg}</button>
+
+			{let $closeButtonClasses kind="text"}
+				btn btn-default
+				{if not $showCloseButton}
+					{sp}hide
+				{/if}
+			{/let}
+
+			<button class="{$closeButtonClasses}" data-onclick="{$_closeReportDialog}" type="button">{msg desc=""}close{/msg}</button>
+		{/param}
+
+		{param noCloseButton: true /}
+	{/call}
 {/template}
 
 /**
@@ -148,14 +189,14 @@
 {template .reportDialogBody}
 	{@param companyName: string}
 	{@param flagsEnabled: bool}
-	{@param portletNamespace: string}
 	{@param pathTermsOfUse: string}
 	{@param pathThemeImages: string}
+	{@param portletNamespace: string}
 	{@param reasons: list<string>}
-	{@param? reporterEmailAddress: string | null}
 	{@param signedIn: bool}
-	{@param? _onReasonChange: any}
-	{@param? _onSubmitForm: any}
+	{@param? reporterEmailAddress: string | null}
+	{@param? _handleOnReasonChange: any}
+	{@param? _handleOnSubmitForm: any}
 	{@param? _showConfirmationMessage: bool}
 	{@param? _showErrorMessage: bool}
 
@@ -168,14 +209,14 @@
 			{/call}
 		{else}
 			{call .reportForm}
-				{param portletNamespace: $portletNamespace /}
 				{param pathTermsOfUse: $pathTermsOfUse /}
 				{param pathThemeImages: $pathThemeImages /}
+				{param portletNamespace: $portletNamespace /}
+				{param reasons: $reasons /}
 				{param reporterEmailAddress: $reporterEmailAddress /}
 				{param signedIn: $signedIn /}
-				{param reasons: $reasons /}
-				{param _onReasonChange: $_onReasonChange /}
-				{param _onSubmitForm: $_onSubmitForm /}
+				{param _handleOnReasonChange: $_handleOnReasonChange /}
+				{param _handleOnSubmitForm: $_handleOnSubmitForm /}
 			{/call}
 		{/if}
 	{else}
@@ -191,13 +232,12 @@
 	{@param pathTermsOfUse: string}
 	{@param pathThemeImages: string}
 	{@param reasons: list<string>}
-	{@param? reporterEmailAddress: string | null}
+	{@param? reporterEmailAddress: string}
 	{@param signedIn: bool}
-	{@param? _onReasonChange: any}
-	{@param? _onSubmitForm: any}
+	{@param? _handleOnReasonChange: any}
+	{@param? _handleOnSubmitForm: any}
 
-	<form class="container-fluid-1280" method="post" name="{$portletNamespace}flagsForm" onsubmit="{$_onSubmitForm}" >
-		<p>
+	<form class="container-fluid-1280" method="post" name="{$portletNamespace}flagsForm" onsubmit="{$_handleOnSubmitForm}" >
 		{let $linkText kind="text"}
 			{msg desc=""}terms-of-use{/msg}
 		{/let}
@@ -206,19 +246,21 @@
 			<a href="{$pathTermsOfUse}" target="_blank">{$linkText}</a>
 		{/let}
 
-		{msg desc=""}
-		you-are-about-to-report-a-violation-of-our-{$termsOfUse}-all-reports-are-strictly-confidential
-		{/msg}
+		<p>
+		{msg desc=""}you-are-about-to-report-a-violation-of-our-{$termsOfUse}-all-reports-are-strictly-confidential{/msg}
 		</p>
 
 		<fieldset>
 			<div class="form-group">
-				<label class="control-label" for="{$portletNamespace}reason">{msg desc=""}reason-for-the-report{/msg}</label>
+				<label class="control-label" for="{$portletNamespace}reason">
+					{msg desc=""}reason-for-the-report{/msg}
+				</label>
 
-				<select class="form-control" id="{$portletNamespace}reason" name="{$portletNamespace}reason" data-onchange="{$_onReasonChange}">
+				<select class="form-control" id="{$portletNamespace}reason" name="{$portletNamespace}reason" data-onchange="{$_handleOnReasonChange}">
 					{foreach $reason in $reasons}
 						<option value="{$reason}">{$reason}</option>
 					{/foreach}
+
 					<option value="other">Other</option>
 				</select>
 			</div>
@@ -226,6 +268,7 @@
 			<span class="hide" id="{$portletNamespace}otherReasonContainer">
 				<div class="form-group">
 					<label class="control-label" for="{$portletNamespace}otherReason">{msg desc=""}other-reason{/msg}</label>
+
 					<input class="form-control" id="{$portletNamespace}otherReason" name="{$portletNamespace}otherReason" />
 				</div>
 			</span>
@@ -240,6 +283,7 @@
 						</svg>
 					</span>
 				</label>
+
 				<input class="form-control" id="{$portletNamespace}reporterEmailAddress" name="{$portletNamespace}reporterEmailAddress" required type="email"/>
 			{/if}
 		</fieldset>
@@ -266,8 +310,6 @@
  */
 {template .showError}
 	<p>
-		<strong>
-		{msg desc=""}an-error-occurred-while-sending-the-report-please-try-again-in-a-few-minutes{/msg}
-		</strong>
+		<strong>{msg desc=""}an-error-occurred-while-sending-the-report-please-try-again-in-a-few-minutes{/msg}</strong>
 	</p>
 {/template}

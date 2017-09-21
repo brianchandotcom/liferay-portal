@@ -104,25 +104,6 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 		}
 
 		_shortLived = shortLived;
-
-		boolean hasInitialValueMethod = false;
-
-		Class<?> clazz = getClass();
-
-		while (clazz != CentralizedThreadLocal.class) {
-			try {
-				clazz.getDeclaredMethod("initialValue");
-
-				hasInitialValueMethod = true;
-
-				break;
-			}
-			catch (ReflectiveOperationException roe) {
-				clazz = clazz.getSuperclass();
-			}
-		}
-
-		_hasInitialValueMethod = hasInitialValueMethod;
 	}
 
 	@Override
@@ -141,15 +122,11 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 		Entry entry = threadLocalMap.getEntry(this);
 
 		if (entry == null) {
-			if (_hasInitialValueMethod) {
-				T value = initialValue();
+			T value = initialValue();
 
-				threadLocalMap.putEntry(this, value);
+			threadLocalMap.putEntry(this, value);
 
-				return value;
-			}
-
-			return null;
+			return value;
 		}
 
 		return (T)entry._value;
@@ -254,7 +231,6 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 	}
 
 	private final int _hashCode;
-	private final boolean _hasInitialValueMethod;
 	private final String _name;
 	private final boolean _shortLived;
 	private final Supplier<T> _supplier;

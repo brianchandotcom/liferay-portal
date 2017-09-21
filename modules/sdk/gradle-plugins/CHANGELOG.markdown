@@ -2475,11 +2475,12 @@ to version 2.2.9.
 - [LPS-74738]: Update the [Liferay Source Formatter] dependency to version
 1.0.467.
 
-## 3.4.68 - 2017-09-20
+## 3.4.68 - 2017-09-21
 
 ### Changed
 - [LPS-71117]: Update the [Liferay Gradle Plugins Test Integration] dependency
 to version 2.1.1.
+- [LPS-73070]: Set default Node.js version to 8.4.0.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
@@ -2645,6 +2646,7 @@ to version 2.1.1.
 [LPS-72868]: https://issues.liferay.com/browse/LPS-72868
 [LPS-72914]: https://issues.liferay.com/browse/LPS-72914
 [LPS-73058]: https://issues.liferay.com/browse/LPS-73058
+[LPS-73070]: https://issues.liferay.com/browse/LPS-73070
 [LPS-73124]: https://issues.liferay.com/browse/LPS-73124
 [LPS-73147]: https://issues.liferay.com/browse/LPS-73147
 [LPS-73148]: https://issues.liferay.com/browse/LPS-73148

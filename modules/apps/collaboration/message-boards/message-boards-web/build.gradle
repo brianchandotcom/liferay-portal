@@ -32,7 +32,3 @@ dependencies {
 	provided project(":apps:web-experience:trash:trash-api")
 	provided project(":apps:web-experience:trash:trash-taglib")
 }
-
-node {
-	nodeVersion = "8.4.0"
-}

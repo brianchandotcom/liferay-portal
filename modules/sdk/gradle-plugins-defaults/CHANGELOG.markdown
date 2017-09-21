@@ -2137,10 +2137,10 @@ belong to a different sub-repository.
 ### Changed
 - [LPS-74738]: Update the [Liferay Gradle Plugins] dependency to version 3.4.67.
 
-## 5.0.55 - 2017-09-20
+## 5.0.55 - 2017-09-21
 
 ### Changed
-- [LPS-71117]: Update the [Liferay Gradle Plugins] dependency to version 3.4.68.
+- [LPS-73070]: Update the [Liferay Gradle Plugins] dependency to version 3.4.68.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -2270,7 +2270,6 @@ belong to a different sub-repository.
 [LPS-70941]: https://issues.liferay.com/browse/LPS-70941
 [LPS-71005]: https://issues.liferay.com/browse/LPS-71005
 [LPS-71048]: https://issues.liferay.com/browse/LPS-71048
-[LPS-71117]: https://issues.liferay.com/browse/LPS-71117
 [LPS-71118]: https://issues.liferay.com/browse/LPS-71118
 [LPS-71164]: https://issues.liferay.com/browse/LPS-71164
 [LPS-71201]: https://issues.liferay.com/browse/LPS-71201
@@ -2316,6 +2315,7 @@ belong to a different sub-repository.
 [LPS-72914]: https://issues.liferay.com/browse/LPS-72914
 [LPS-72989]: https://issues.liferay.com/browse/LPS-72989
 [LPS-73058]: https://issues.liferay.com/browse/LPS-73058
+[LPS-73070]: https://issues.liferay.com/browse/LPS-73070
 [LPS-73070]: https://issues.liferay.com/browse/LPS-73070
 [LPS-73124]: https://issues.liferay.com/browse/LPS-73124
 [LPS-73128]: https://issues.liferay.com/browse/LPS-73128

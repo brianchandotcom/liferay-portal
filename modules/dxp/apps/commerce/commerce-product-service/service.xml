@@ -95,7 +95,7 @@
 
 		<column name="productTypeName" type="String" />
 		<column name="availableIndividually" type="boolean" />
-		<column name="canSellWithoutOptionsCombination" type="boolean" />
+		<column name="ignoreSKUCombinations" type="boolean" />
 		<column name="width" type="double" />
 		<column name="height" type="double" />
 		<column name="depth" type="double" />

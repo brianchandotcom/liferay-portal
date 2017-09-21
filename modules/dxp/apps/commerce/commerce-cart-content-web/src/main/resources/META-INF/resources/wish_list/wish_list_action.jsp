@@ -28,7 +28,7 @@ request.setAttribute("cpInstance", commerceCartItem.fetchCPInstance());
 %>
 
 <c:choose>
-	<c:when test="<%= commerceWishListContentDisplayContext.canSellWithoutOptionsCombination(commerceCartItem) %>">
+	<c:when test="<%= commerceWishListContentDisplayContext.isIgnoreSKUCombinations(commerceCartItem) %>">
 		<aui:button cssClass="btn-lg btn-primary" value="add-to-cart" />
 	</c:when>
 	<c:otherwise>

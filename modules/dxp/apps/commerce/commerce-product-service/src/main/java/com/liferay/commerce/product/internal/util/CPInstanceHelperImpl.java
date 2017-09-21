@@ -547,7 +547,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 		return render(
 			cpDefinitionId, null, false, renderRequest, renderResponse,
-			!cpDefinition.isCanSellWithoutOptionsCombination());
+			!cpDefinition.isIgnoreSKUCombinations());
 	}
 
 	@Override
@@ -561,7 +561,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 		return render(
 			cpDefinitionId, null, skuContributor, renderRequest, renderResponse,
-			!cpDefinition.isCanSellWithoutOptionsCombination());
+			!cpDefinition.isIgnoreSKUCombinations());
 	}
 
 	@Override

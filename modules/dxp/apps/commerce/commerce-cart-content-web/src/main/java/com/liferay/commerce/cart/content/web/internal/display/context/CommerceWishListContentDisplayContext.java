@@ -51,13 +51,19 @@ public class CommerceWishListContentDisplayContext
 			commercePriceFormatter, cpDefinitionHelper, cpInstanceHelper);
 	}
 
-	public boolean canSellWithoutOptionsCombination(
-			CommerceCartItem commerceCartItem)
+	@Override
+	public int getCommerceCartType() {
+		return ParamUtil.getInteger(
+			httpServletRequest, "type",
+			CommerceConstants.COMMERCE_CART_TYPE_WISH_LIST);
+	}
+
+	public boolean isIgnoreSKUCombinations(CommerceCartItem commerceCartItem)
 		throws PortalException {
 
 		CPDefinition cpDefinition = commerceCartItem.getCPDefinition();
 
-		if (cpDefinition.getCanSellWithoutOptionsCombination()) {
+		if (cpDefinition.isIgnoreSKUCombinations()) {
 			return true;
 		}
 		else {
@@ -67,13 +73,6 @@ public class CommerceWishListContentDisplayContext
 
 			return false;
 		}
-	}
-
-	@Override
-	public int getCommerceCartType() {
-		return ParamUtil.getInteger(
-			httpServletRequest, "type",
-			CommerceConstants.COMMERCE_CART_TYPE_WISH_LIST);
 	}
 
 }

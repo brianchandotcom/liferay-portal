@@ -20,7 +20,7 @@
 CPDefinition cpDefinition = (CPDefinition)request.getAttribute("cpDefinition");
 CPInstance cpInstance = (CPInstance)request.getAttribute("cpInstance");
 
-boolean disabled = !cpDefinition.getCanSellWithoutOptionsCombination();
+boolean disabled = !cpDefinition.isIgnoreSKUCombinations();
 
 long cpInstanceId = 0;
 
@@ -42,7 +42,7 @@ dataMap.put("cp-instance-id", String.valueOf(cpInstanceId));
 <aui:button cssClass="btn-lg btn-primary" data="<%= dataMap %>" disabled="<%= disabled %>" name="<%= buttonId %>" value="add-to-cart" />
 
 <aui:script use="aui-io-request,aui-parse-content,liferay-notification">
-	<% if(!cpDefinition.getCanSellWithoutOptionsCombination()){ %>
+	<% if(!cpDefinition.isIgnoreSKUCombinations()){ %>
 
 	Liferay.on(
 		'<%= cpDefinition.getCPDefinitionId() %>CPInstance:change',

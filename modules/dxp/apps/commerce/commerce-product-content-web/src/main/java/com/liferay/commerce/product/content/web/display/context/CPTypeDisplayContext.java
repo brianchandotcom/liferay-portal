@@ -109,7 +109,7 @@ public class CPTypeDisplayContext {
 			return null;
 		}
 
-		if (!cpDefinition.isCanSellWithoutOptionsCombination()) {
+		if (!cpDefinition.isIgnoreSKUCombinations()) {
 			return null;
 		}
 

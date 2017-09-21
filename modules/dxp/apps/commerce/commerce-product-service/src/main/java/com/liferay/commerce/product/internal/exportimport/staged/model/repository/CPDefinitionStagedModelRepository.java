@@ -123,14 +123,13 @@ public class CPDefinitionStagedModelRepository
 			cpDefinition.getMetaKeywordsMap(),
 			cpDefinition.getMetaDescriptionMap(), cpDefinition.getLayoutUuid(),
 			cpDefinition.getProductTypeName(),
-			cpDefinition.getCanSellWithoutOptionsCombination(),
-			cpDefinition.getWidth(), cpDefinition.getHeight(),
-			cpDefinition.getDepth(), cpDefinition.getWeight(),
-			cpDefinition.getDDMStructureKey(), displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			cpDefinition.isIgnoreSKUCombinations(), cpDefinition.getWidth(),
+			cpDefinition.getHeight(), cpDefinition.getDepth(),
+			cpDefinition.getWeight(), cpDefinition.getDDMStructureKey(),
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	@Override
@@ -295,14 +294,13 @@ public class CPDefinitionStagedModelRepository
 			cpDefinition.getDescriptionMap(), cpDefinition.getUrlTitleMap(),
 			cpDefinition.getMetaTitleMap(), cpDefinition.getMetaKeywordsMap(),
 			cpDefinition.getMetaDescriptionMap(), cpDefinition.getLayoutUuid(),
-			cpDefinition.getCanSellWithoutOptionsCombination(),
-			cpDefinition.getWidth(), cpDefinition.getHeight(),
-			cpDefinition.getDepth(), cpDefinition.getWeight(),
-			cpDefinition.getDDMStructureKey(), displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			cpDefinition.isIgnoreSKUCombinations(), cpDefinition.getWidth(),
+			cpDefinition.getHeight(), cpDefinition.getDepth(),
+			cpDefinition.getWeight(), cpDefinition.getDDMStructureKey(),
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	@Reference

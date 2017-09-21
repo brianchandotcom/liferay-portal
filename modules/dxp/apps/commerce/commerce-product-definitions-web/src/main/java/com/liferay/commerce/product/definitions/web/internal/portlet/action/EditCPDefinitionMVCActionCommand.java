@@ -217,8 +217,8 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		String productTypeName = ParamUtil.getString(
 			actionRequest, "productTypeName");
 		String layoutUuid = ParamUtil.getString(actionRequest, "layoutUuid");
-		boolean canSellWithoutOptionsCombination = ParamUtil.getBoolean(
-			actionRequest, "canSellWithoutOptionsCombination");
+		boolean ignoreSKUCombinations = ParamUtil.getBoolean(
+			actionRequest, "ignoreSKUCombinations");
 
 		int displayDateMonth = ParamUtil.getInteger(
 			actionRequest, "displayDateMonth");
@@ -268,11 +268,11 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 			cpDefinition = _cpDefinitionService.addCPDefinition(
 				titleMap, shortDescriptionMap, descriptionMap, layoutUuid,
-				productTypeName, canSellWithoutOptionsCombination, null,
-				displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, expirationDateMonth,
-				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, serviceContext);
+				productTypeName, ignoreSKUCombinations, null, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, expirationDateMonth, expirationDateDay,
+				expirationDateYear, expirationDateHour, expirationDateMinute,
+				neverExpire, serviceContext);
 		}
 		else {
 
@@ -280,11 +280,11 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 			cpDefinition = _cpDefinitionService.updateCPDefinition(
 				cpDefinitionId, titleMap, shortDescriptionMap, descriptionMap,
-				layoutUuid, canSellWithoutOptionsCombination, null,
-				displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, expirationDateMonth,
-				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, serviceContext);
+				layoutUuid, ignoreSKUCombinations, null, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, expirationDateMonth, expirationDateDay,
+				expirationDateYear, expirationDateHour, expirationDateMinute,
+				neverExpire, serviceContext);
 		}
 
 		return cpDefinition;

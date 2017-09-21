@@ -80,7 +80,7 @@ if (Validator.isNotNull(layoutUuid)) {
 		<aui:button name="chooseDisplayPage" value="choose" />
 	</aui:button-row>
 
-	<aui:input helpMessage="can-sell-without-options-combination-help" name="canSellWithoutOptionsCombination" />
+	<aui:input helpMessage="can-sell-without-options-combination-help" name="ignoreSKUCombinations" />
 </aui:fieldset>
 
 <aui:script use="liferay-item-selector-dialog">

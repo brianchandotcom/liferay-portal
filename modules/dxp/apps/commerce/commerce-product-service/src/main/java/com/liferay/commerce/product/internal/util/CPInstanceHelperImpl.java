@@ -232,11 +232,8 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			}
 		}
 
-		Stream<Long> stream = cpDefinitionOptionValueRelIsList.stream();
-
-		long[] cpDefinitionOptionValueRelIds = stream.mapToLong(
-			l -> l
-		).toArray();
+		long[] cpDefinitionOptionValueRelIds = ArrayUtil.toLongArray(
+			cpDefinitionOptionValueRelIsList);
 
 		return _cpDefinitionOptionValueRelLocalService.
 			getCPDefinitionOptionValueRels(cpDefinitionOptionValueRelIds);

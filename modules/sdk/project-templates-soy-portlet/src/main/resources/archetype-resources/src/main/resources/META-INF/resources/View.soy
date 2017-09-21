@@ -2,12 +2,15 @@
 
 /**
  * Prints the portlet main view.
- *
- * @param id
- * @param navigationURL
- * @param themeDisplay
  */
 {template .render}
+	{@param id: string}
+	{@param layouts: list<[
+		friendlyURL: string,
+		nameCurrentValue: string
+	]>}
+	{@param navigationURL: string}
+
 	<div id="{$id}">
 		{call Header.render data="all"}{/call}
 
@@ -18,7 +21,7 @@
 		<div class="list-group">
 			<div class="list-group-heading">{msg desc=""}navigate-to{/msg}</div>
 
-			{foreach $layout in $themeDisplay.layouts}
+			{foreach $layout in $layouts}
 				<a class="list-group-item" href="{$layout.friendlyURL}">{$layout.nameCurrentValue}</a>
 			{/foreach}
 		</div>

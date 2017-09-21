@@ -235,18 +235,10 @@ public class CommerceInventoryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByGroupId() throws Exception {
-		_persistence.countByGroupId(RandomTestUtil.nextLong());
+	public void testCountByCPDefinitionId() throws Exception {
+		_persistence.countByCPDefinitionId(RandomTestUtil.nextLong());
 
-		_persistence.countByGroupId(0L);
-	}
-
-	@Test
-	public void testCountByG_C() throws Exception {
-		_persistence.countByG_C(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
-
-		_persistence.countByG_C(0L, 0L);
+		_persistence.countByCPDefinitionId(0L);
 	}
 
 	@Test
@@ -492,9 +484,6 @@ public class CommerceInventoryPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(existingCommerceInventory,
 				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(Long.valueOf(existingCommerceInventory.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(existingCommerceInventory,
-				"getOriginalGroupId", new Class<?>[0]));
 		Assert.assertEquals(Long.valueOf(
 				existingCommerceInventory.getCPDefinitionId()),
 			ReflectionTestUtil.<Long>invoke(existingCommerceInventory,

@@ -74,11 +74,6 @@ public class CommerceInventoryLocalServiceWrapper
 		return _commerceInventoryLocalService.createCommerceInventory(commerceInventoryId);
 	}
 
-	@Override
-	public void deleteCommerceInventories(long groupId) {
-		_commerceInventoryLocalService.deleteCommerceInventories(groupId);
-	}
-
 	/**
 	* Deletes the commerce inventory from the database. Also notifies the appropriate model listeners.
 	*
@@ -106,9 +101,8 @@ public class CommerceInventoryLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCommerceInventory(long groupId, long cpDefinitionId) {
-		_commerceInventoryLocalService.deleteCommerceInventory(groupId,
-			cpDefinitionId);
+	public void deleteCommerceInventoryByCPDefinitionId(long cpDefinitionId) {
+		_commerceInventoryLocalService.deleteCommerceInventoryByCPDefinitionId(cpDefinitionId);
 	}
 
 	/**
@@ -214,11 +208,10 @@ public class CommerceInventoryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.model.CommerceInventory fetchCommerceInventory(
-		long groupId, long cpDefinitionId)
+	public com.liferay.commerce.model.CommerceInventory fetchCommerceInventoryByCPDefinitionId(
+		long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceInventoryLocalService.fetchCommerceInventory(groupId,
-			cpDefinitionId);
+		return _commerceInventoryLocalService.fetchCommerceInventoryByCPDefinitionId(cpDefinitionId);
 	}
 
 	/**

@@ -62,11 +62,10 @@ public class CommerceInventoryServiceWrapper implements CommerceInventoryService
 	}
 
 	@Override
-	public com.liferay.commerce.model.CommerceInventory fetchCommerceInventory(
-		long groupId, long cpDefinitionId)
+	public com.liferay.commerce.model.CommerceInventory fetchCommerceInventoryByCPDefinitionId(
+		long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceInventoryService.fetchCommerceInventory(groupId,
-			cpDefinitionId);
+		return _commerceInventoryService.fetchCommerceInventoryByCPDefinitionId(cpDefinitionId);
 	}
 
 	/**

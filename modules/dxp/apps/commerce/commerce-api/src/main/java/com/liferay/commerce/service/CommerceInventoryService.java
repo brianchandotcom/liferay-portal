@@ -68,7 +68,7 @@ public interface CommerceInventoryService extends BaseService {
 	public CommerceInventory fetchCommerceInventory(long commerceInventoryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceInventory fetchCommerceInventory(long groupId,
+	public CommerceInventory fetchCommerceInventoryByCPDefinitionId(
 		long cpDefinitionId) throws PortalException;
 
 	/**

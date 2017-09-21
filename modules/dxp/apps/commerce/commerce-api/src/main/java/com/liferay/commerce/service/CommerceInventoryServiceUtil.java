@@ -67,10 +67,11 @@ public class CommerceInventoryServiceUtil {
 		return getService().fetchCommerceInventory(commerceInventoryId);
 	}
 
-	public static com.liferay.commerce.model.CommerceInventory fetchCommerceInventory(
-		long groupId, long cpDefinitionId)
+	public static com.liferay.commerce.model.CommerceInventory fetchCommerceInventoryByCPDefinitionId(
+		long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().fetchCommerceInventory(groupId, cpDefinitionId);
+		return getService()
+				   .fetchCommerceInventoryByCPDefinitionId(cpDefinitionId);
 	}
 
 	/**

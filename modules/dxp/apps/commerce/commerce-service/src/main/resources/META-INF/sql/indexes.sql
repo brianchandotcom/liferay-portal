@@ -30,7 +30,7 @@ create index IX_158112E8 on CommerceCountry (groupId, shippingAllowed, active_);
 create index IX_91EA24D5 on CommerceCountry (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_7EFDC97 on CommerceCountry (uuid_[$COLUMN_LENGTH:75$], groupId);
 
-create unique index IX_52B563F2 on CommerceInventory (groupId, CPDefinitionId);
+create unique index IX_819B13B6 on CommerceInventory (CPDefinitionId);
 create index IX_80D15A5B on CommerceInventory (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_7412BB9D on CommerceInventory (uuid_[$COLUMN_LENGTH:75$], groupId);
 

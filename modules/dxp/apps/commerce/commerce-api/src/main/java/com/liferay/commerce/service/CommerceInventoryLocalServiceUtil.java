@@ -80,10 +80,6 @@ public class CommerceInventoryLocalServiceUtil {
 		return getService().createCommerceInventory(commerceInventoryId);
 	}
 
-	public static void deleteCommerceInventories(long groupId) {
-		getService().deleteCommerceInventories(groupId);
-	}
-
 	/**
 	* Deletes the commerce inventory from the database. Also notifies the appropriate model listeners.
 	*
@@ -108,8 +104,9 @@ public class CommerceInventoryLocalServiceUtil {
 		return getService().deleteCommerceInventory(commerceInventoryId);
 	}
 
-	public static void deleteCommerceInventory(long groupId, long cpDefinitionId) {
-		getService().deleteCommerceInventory(groupId, cpDefinitionId);
+	public static void deleteCommerceInventoryByCPDefinitionId(
+		long cpDefinitionId) {
+		getService().deleteCommerceInventoryByCPDefinitionId(cpDefinitionId);
 	}
 
 	/**
@@ -204,10 +201,11 @@ public class CommerceInventoryLocalServiceUtil {
 		return getService().fetchCommerceInventory(commerceInventoryId);
 	}
 
-	public static com.liferay.commerce.model.CommerceInventory fetchCommerceInventory(
-		long groupId, long cpDefinitionId)
+	public static com.liferay.commerce.model.CommerceInventory fetchCommerceInventoryByCPDefinitionId(
+		long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().fetchCommerceInventory(groupId, cpDefinitionId);
+		return getService()
+				   .fetchCommerceInventoryByCPDefinitionId(cpDefinitionId);
 	}
 
 	/**

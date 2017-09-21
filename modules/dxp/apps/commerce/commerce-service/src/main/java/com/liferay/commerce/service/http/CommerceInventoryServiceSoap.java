@@ -116,11 +116,10 @@ public class CommerceInventoryServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.model.CommerceInventorySoap fetchCommerceInventory(
-		long groupId, long cpDefinitionId) throws RemoteException {
+	public static com.liferay.commerce.model.CommerceInventorySoap fetchCommerceInventoryByCPDefinitionId(
+		long cpDefinitionId) throws RemoteException {
 		try {
-			com.liferay.commerce.model.CommerceInventory returnValue = CommerceInventoryServiceUtil.fetchCommerceInventory(groupId,
-					cpDefinitionId);
+			com.liferay.commerce.model.CommerceInventory returnValue = CommerceInventoryServiceUtil.fetchCommerceInventoryByCPDefinitionId(cpDefinitionId);
 
 			return com.liferay.commerce.model.CommerceInventorySoap.toSoapModel(returnValue);
 		}

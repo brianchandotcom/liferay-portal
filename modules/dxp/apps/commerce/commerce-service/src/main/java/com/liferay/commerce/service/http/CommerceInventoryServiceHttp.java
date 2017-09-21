@@ -154,15 +154,15 @@ public class CommerceInventoryServiceHttp {
 		}
 	}
 
-	public static com.liferay.commerce.model.CommerceInventory fetchCommerceInventory(
-		HttpPrincipal httpPrincipal, long groupId, long cpDefinitionId)
+	public static com.liferay.commerce.model.CommerceInventory fetchCommerceInventoryByCPDefinitionId(
+		HttpPrincipal httpPrincipal, long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceInventoryServiceUtil.class,
-					"fetchCommerceInventory",
-					_fetchCommerceInventoryParameterTypes3);
+					"fetchCommerceInventoryByCPDefinitionId",
+					_fetchCommerceInventoryByCPDefinitionIdParameterTypes3);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpDefinitionId);
 
 			Object returnObj = null;
@@ -243,9 +243,8 @@ public class CommerceInventoryServiceHttp {
 	private static final Class<?>[] _fetchCommerceInventoryParameterTypes2 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _fetchCommerceInventoryParameterTypes3 = new Class[] {
-			long.class, long.class
-		};
+	private static final Class<?>[] _fetchCommerceInventoryByCPDefinitionIdParameterTypes3 =
+		new Class[] { long.class };
 	private static final Class<?>[] _updateCommerceInventoryParameterTypes4 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			boolean.class, boolean.class, int.class, boolean.class, int.class,

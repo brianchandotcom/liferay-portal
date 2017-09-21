@@ -372,186 +372,49 @@ public interface CommerceInventoryPersistence extends BasePersistence<CommerceIn
 	public int countByUuid_C(java.lang.String uuid, long companyId);
 
 	/**
-	* Returns all the commerce inventories where groupId = &#63;.
+	* Returns the commerce inventory where CPDefinitionId = &#63; or throws a {@link NoSuchInventoryException} if it could not be found.
 	*
-	* @param groupId the group ID
-	* @return the matching commerce inventories
-	*/
-	public java.util.List<CommerceInventory> findByGroupId(long groupId);
-
-	/**
-	* Returns a range of all the commerce inventories where groupId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceInventoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param start the lower bound of the range of commerce inventories
-	* @param end the upper bound of the range of commerce inventories (not inclusive)
-	* @return the range of matching commerce inventories
-	*/
-	public java.util.List<CommerceInventory> findByGroupId(long groupId,
-		int start, int end);
-
-	/**
-	* Returns an ordered range of all the commerce inventories where groupId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceInventoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param start the lower bound of the range of commerce inventories
-	* @param end the upper bound of the range of commerce inventories (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching commerce inventories
-	*/
-	public java.util.List<CommerceInventory> findByGroupId(long groupId,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventory> orderByComparator);
-
-	/**
-	* Returns an ordered range of all the commerce inventories where groupId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceInventoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param groupId the group ID
-	* @param start the lower bound of the range of commerce inventories
-	* @param end the upper bound of the range of commerce inventories (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching commerce inventories
-	*/
-	public java.util.List<CommerceInventory> findByGroupId(long groupId,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventory> orderByComparator,
-		boolean retrieveFromCache);
-
-	/**
-	* Returns the first commerce inventory in the ordered set where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching commerce inventory
-	* @throws NoSuchInventoryException if a matching commerce inventory could not be found
-	*/
-	public CommerceInventory findByGroupId_First(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventory> orderByComparator)
-		throws NoSuchInventoryException;
-
-	/**
-	* Returns the first commerce inventory in the ordered set where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching commerce inventory, or <code>null</code> if a matching commerce inventory could not be found
-	*/
-	public CommerceInventory fetchByGroupId_First(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventory> orderByComparator);
-
-	/**
-	* Returns the last commerce inventory in the ordered set where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching commerce inventory
-	* @throws NoSuchInventoryException if a matching commerce inventory could not be found
-	*/
-	public CommerceInventory findByGroupId_Last(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventory> orderByComparator)
-		throws NoSuchInventoryException;
-
-	/**
-	* Returns the last commerce inventory in the ordered set where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching commerce inventory, or <code>null</code> if a matching commerce inventory could not be found
-	*/
-	public CommerceInventory fetchByGroupId_Last(long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventory> orderByComparator);
-
-	/**
-	* Returns the commerce inventories before and after the current commerce inventory in the ordered set where groupId = &#63;.
-	*
-	* @param commerceInventoryId the primary key of the current commerce inventory
-	* @param groupId the group ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next commerce inventory
-	* @throws NoSuchInventoryException if a commerce inventory with the primary key could not be found
-	*/
-	public CommerceInventory[] findByGroupId_PrevAndNext(
-		long commerceInventoryId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceInventory> orderByComparator)
-		throws NoSuchInventoryException;
-
-	/**
-	* Removes all the commerce inventories where groupId = &#63; from the database.
-	*
-	* @param groupId the group ID
-	*/
-	public void removeByGroupId(long groupId);
-
-	/**
-	* Returns the number of commerce inventories where groupId = &#63;.
-	*
-	* @param groupId the group ID
-	* @return the number of matching commerce inventories
-	*/
-	public int countByGroupId(long groupId);
-
-	/**
-	* Returns the commerce inventory where groupId = &#63; and CPDefinitionId = &#63; or throws a {@link NoSuchInventoryException} if it could not be found.
-	*
-	* @param groupId the group ID
 	* @param CPDefinitionId the cp definition ID
 	* @return the matching commerce inventory
 	* @throws NoSuchInventoryException if a matching commerce inventory could not be found
 	*/
-	public CommerceInventory findByG_C(long groupId, long CPDefinitionId)
+	public CommerceInventory findByCPDefinitionId(long CPDefinitionId)
 		throws NoSuchInventoryException;
 
 	/**
-	* Returns the commerce inventory where groupId = &#63; and CPDefinitionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the commerce inventory where CPDefinitionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
-	* @param groupId the group ID
 	* @param CPDefinitionId the cp definition ID
 	* @return the matching commerce inventory, or <code>null</code> if a matching commerce inventory could not be found
 	*/
-	public CommerceInventory fetchByG_C(long groupId, long CPDefinitionId);
+	public CommerceInventory fetchByCPDefinitionId(long CPDefinitionId);
 
 	/**
-	* Returns the commerce inventory where groupId = &#63; and CPDefinitionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the commerce inventory where CPDefinitionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
-	* @param groupId the group ID
 	* @param CPDefinitionId the cp definition ID
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching commerce inventory, or <code>null</code> if a matching commerce inventory could not be found
 	*/
-	public CommerceInventory fetchByG_C(long groupId, long CPDefinitionId,
+	public CommerceInventory fetchByCPDefinitionId(long CPDefinitionId,
 		boolean retrieveFromCache);
 
 	/**
-	* Removes the commerce inventory where groupId = &#63; and CPDefinitionId = &#63; from the database.
+	* Removes the commerce inventory where CPDefinitionId = &#63; from the database.
 	*
-	* @param groupId the group ID
 	* @param CPDefinitionId the cp definition ID
 	* @return the commerce inventory that was removed
 	*/
-	public CommerceInventory removeByG_C(long groupId, long CPDefinitionId)
+	public CommerceInventory removeByCPDefinitionId(long CPDefinitionId)
 		throws NoSuchInventoryException;
 
 	/**
-	* Returns the number of commerce inventories where groupId = &#63; and CPDefinitionId = &#63;.
+	* Returns the number of commerce inventories where CPDefinitionId = &#63;.
 	*
-	* @param groupId the group ID
 	* @param CPDefinitionId the cp definition ID
 	* @return the number of matching commerce inventories
 	*/
-	public int countByG_C(long groupId, long CPDefinitionId);
+	public int countByCPDefinitionId(long CPDefinitionId);
 
 	/**
 	* Caches the commerce inventory in the entity cache if it is enabled.

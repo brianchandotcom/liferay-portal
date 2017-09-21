@@ -93,8 +93,6 @@ public interface CommerceInventoryLocalService extends BaseLocalService,
 	*/
 	public CommerceInventory createCommerceInventory(long commerceInventoryId);
 
-	public void deleteCommerceInventories(long groupId);
-
 	/**
 	* Deletes the commerce inventory from the database. Also notifies the appropriate model listeners.
 	*
@@ -117,7 +115,7 @@ public interface CommerceInventoryLocalService extends BaseLocalService,
 	public CommerceInventory deleteCommerceInventory(long commerceInventoryId)
 		throws PortalException;
 
-	public void deleteCommerceInventory(long groupId, long cpDefinitionId);
+	public void deleteCommerceInventoryByCPDefinitionId(long cpDefinitionId);
 
 	/**
 	* @throws PortalException
@@ -189,7 +187,7 @@ public interface CommerceInventoryLocalService extends BaseLocalService,
 	public CommerceInventory fetchCommerceInventory(long commerceInventoryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceInventory fetchCommerceInventory(long groupId,
+	public CommerceInventory fetchCommerceInventoryByCPDefinitionId(
 		long cpDefinitionId) throws PortalException;
 
 	/**

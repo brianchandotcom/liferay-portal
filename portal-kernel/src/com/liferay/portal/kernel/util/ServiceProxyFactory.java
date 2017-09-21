@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.memory.FinalizeAction;
 import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.registry.Registry;
@@ -28,6 +30,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -138,7 +141,8 @@ public class ServiceProxyFactory {
 
 			T awaitService = (T)ProxyUtil.newProxyInstance(
 				serviceClass.getClassLoader(), new Class<?>[] {serviceClass},
-				new AwaitServiceInvocationHandler(field, realServiceSet, lock));
+				new AwaitServiceInvocationHandler(
+					serviceClass, filterString, field, realServiceSet, lock));
 
 			field.set(declaringInstance, awaitService);
 
@@ -206,6 +210,13 @@ public class ServiceProxyFactory {
 		return serviceTracker;
 	}
 
+	private static final long _TIMEOUT = GetterUtil.getLong(
+		System.getProperty(ServiceProxyFactory.class.getName() + ".timeout"),
+		60000);
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ServiceProxyFactory.class);
+
 	private static class AwaitServiceInvocationHandler
 		implements InvocationHandler {
 
@@ -225,7 +236,34 @@ public class ServiceProxyFactory {
 						return method.invoke(service, arguments);
 					}
 
-					_realServiceSet.await();
+					if (!_realServiceSet.await(
+							_TIMEOUT, TimeUnit.MILLISECONDS)) {
+
+						StringBundler sb = new StringBundler(12);
+
+						sb.append("Service \"");
+						sb.append(_serviceClass.getName());
+
+						if (Validator.isNotNull(_filterString)) {
+							sb.append("{");
+							sb.append(_filterString);
+							sb.append("}");
+						}
+
+						sb.append("\" is unavaiable in ");
+						sb.append(_TIMEOUT);
+						sb.append(" milliseconds while setting field \"");
+						sb.append(_field.getName());
+						sb.append("\" for class \"");
+
+						Class<?> declaringClass = _field.getDeclaringClass();
+
+						sb.append(declaringClass.getName());
+
+						sb.append("\", will retry...");
+
+						_log.error(sb.toString());
+					}
 				}
 				finally {
 					_lock.unlock();
@@ -234,16 +272,21 @@ public class ServiceProxyFactory {
 		}
 
 		private AwaitServiceInvocationHandler(
-			Field field, Condition realServiceSet, Lock lock) {
+			Class<?> serviceClass, String filterString, Field field,
+			Condition realServiceSet, Lock lock) {
 
+			_serviceClass = serviceClass;
+			_filterString = filterString;
 			_field = field;
 			_realServiceSet = realServiceSet;
 			_lock = lock;
 		}
 
 		private final Field _field;
+		private final String _filterString;
 		private final Lock _lock;
 		private final Condition _realServiceSet;
+		private final Class<?> _serviceClass;
 
 	}
 

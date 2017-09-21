@@ -14,12 +14,10 @@
 
 package com.liferay.site.navigation.service.impl;
 
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
-import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.base.SiteNavigationMenuLocalServiceBaseImpl;
 
 import java.util.Date;
@@ -63,7 +61,7 @@ public class SiteNavigationMenuLocalServiceImpl
 			long siteNavigationMenuId)
 		throws PortalException {
 
-		_siteNavigationMenuItemLocalService.deleteSiteNavigationMenuItems(
+		siteNavigationMenuItemLocalService.deleteSiteNavigationMenuItems(
 			siteNavigationMenuId);
 
 		return siteNavigationMenuPersistence.remove(siteNavigationMenuId);
@@ -82,9 +80,5 @@ public class SiteNavigationMenuLocalServiceImpl
 	public List<SiteNavigationMenu> getSiteNavigationMenus(long groupId) {
 		return siteNavigationMenuPersistence.findByGroupId(groupId);
 	}
-
-	@BeanReference(type = SiteNavigationMenuItemLocalService.class)
-	private SiteNavigationMenuItemLocalService
-		_siteNavigationMenuItemLocalService;
 
 }

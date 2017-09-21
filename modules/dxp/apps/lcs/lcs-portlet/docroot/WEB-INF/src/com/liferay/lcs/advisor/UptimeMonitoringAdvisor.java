@@ -97,8 +97,6 @@ public class UptimeMonitoringAdvisor {
 
 			_storeUptimesJSONArray(jsonArray);
 
-			_uptimes.clear();
-
 			_readyForUpdates = true;
 
 			if (_log.isDebugEnabled()) {

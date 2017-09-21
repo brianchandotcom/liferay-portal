@@ -4,45 +4,6 @@
 <service-builder auto-namespace-tables="false" package-path="com.liferay.commerce">
 	<author>Alessio Antonio Rendina</author>
 	<namespace>Commerce</namespace>
-	<entity local-service="true" name="CAvailabilityRangeEntry" remote-service="true" uuid="true">
-
-		<!-- PK fields -->
-
-		<column name="CAvailabilityRangeEntryId" primary="true" type="long" />
-
-		<!-- Group instance -->
-
-		<column name="groupId" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
-
-		<!-- Other fields -->
-
-		<column name="CPDefinitionId" type="long" />
-		<column name="commerceAvailabilityRangeId" type="long" />
-		<column name="lastPublishDate" type="Date" />
-
-		<!-- Finder methods -->
-
-		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
-		</finder>
-		<finder name="G_C" return-type="CAvailabilityRangeEntry">
-			<finder-column name="groupId" />
-			<finder-column name="CPDefinitionId" />
-		</finder>
-		<finder name="G_C_C" return-type="CAvailabilityRangeEntry" unique="true">
-			<finder-column name="groupId" />
-			<finder-column name="CPDefinitionId" />
-			<finder-column name="commerceAvailabilityRangeId" />
-		</finder>
-	</entity>
 	<entity local-service="true" name="CommerceAddress" remote-service="true">
 
 		<!-- PK fields -->
@@ -661,6 +622,39 @@
 			<finder-column name="commerceWarehouseId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="CPDefinitionAvailabilityRange" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column db-name="CPDAvailabilityRangeId" name="CPDefinitionAvailabilityRangeId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="CPDefinitionId" type="long" />
+		<column name="commerceAvailabilityRangeId" type="long" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="CPDefinitionId" return-type="CPDefinitionAvailabilityRange" unique="true">
+			<finder-column name="CPDefinitionId" />
 		</finder>
 	</entity>
 	<exceptions>

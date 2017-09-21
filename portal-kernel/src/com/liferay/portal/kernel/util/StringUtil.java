@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.highlight.HighlightUtil;
@@ -23,7 +21,6 @@ import com.liferay.portal.kernel.security.RandomUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import java.net.URL;
 
@@ -2318,34 +2315,19 @@ public class StringUtil {
 	}
 
 	public static String read(InputStream is) throws IOException {
-		StringBundler sb = new StringBundler();
+		String s = _read(is);
 
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new InputStreamReader(is))) {
+		s = replace(s, "\r\n", StringPool.NEW_LINE);
 
-			String line = null;
+		s = s.replace(CharPool.RETURN, CharPool.NEW_LINE);
 
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				sb.append(line);
-				sb.append(CharPool.NEW_LINE);
-			}
-		}
-
-		return sb.toString().trim();
+		return s.trim();
 	}
 
 	public static void readLines(InputStream is, Collection<String> lines)
 		throws IOException {
 
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new InputStreamReader(is))) {
-
-			String line = null;
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				lines.add(line);
-			}
-		}
+		_splitLines(_read(is), lines);
 	}
 
 	/**
@@ -3986,40 +3968,9 @@ public class StringUtil {
 
 		List<String> lines = new ArrayList<>();
 
-		int lastIndex = 0;
+		_splitLines(s, lines);
 
-		while (true) {
-			int returnIndex = s.indexOf(CharPool.RETURN, lastIndex);
-
-			if (returnIndex == -1) {
-				_split(lines, s, lastIndex, CharPool.NEW_LINE);
-
-				return lines.toArray(new String[lines.size()]);
-			}
-
-			int newLineIndex = s.indexOf(CharPool.NEW_LINE, lastIndex);
-
-			if (newLineIndex == -1) {
-				_split(lines, s, lastIndex, CharPool.RETURN);
-
-				return lines.toArray(new String[lines.size()]);
-			}
-
-			if (newLineIndex < returnIndex) {
-				lines.add(s.substring(lastIndex, newLineIndex));
-
-				lastIndex = newLineIndex + 1;
-			}
-			else {
-				lines.add(s.substring(lastIndex, returnIndex));
-
-				lastIndex = returnIndex + 1;
-
-				if (lastIndex == newLineIndex) {
-					lastIndex++;
-				}
-			}
-		}
+		return lines.toArray(new String[lines.size()]);
 	}
 
 	/**
@@ -5152,10 +5103,12 @@ public class StringUtil {
 	 * Wraps the text when it exceeds the <code>80</code> column width limit,
 	 * using a {@link StringPool#NEW_LINE} to break each wrapped line.
 	 *
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 * @param  text the text to wrap
 	 * @return the wrapped text following the column width limit, or
 	 *         <code>null</code> if the text is <code>null</code>
 	 */
+	@Deprecated
 	public static String wrap(String text) {
 		return wrap(text, 80, StringPool.NEW_LINE);
 	}
@@ -5164,21 +5117,78 @@ public class StringUtil {
 	 * Wraps the text when it exceeds the column width limit, using the line
 	 * separator to break each wrapped line.
 	 *
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 * @param  text the text to wrap
 	 * @param  width the column width limit for the text
 	 * @param  lineSeparator the string to use in breaking each wrapped line
 	 * @return the wrapped text and line separators, following the column width
 	 *         limit, or <code>null</code> if the text is <code>null</code>
 	 */
+	@Deprecated
 	public static String wrap(String text, int width, String lineSeparator) {
-		try {
-			return _wrap(text, width, lineSeparator);
+		if (text == null) {
+			return null;
 		}
-		catch (IOException ioe) {
-			_log.error(ioe.getMessage());
 
-			return text;
+		StringBundler sb = new StringBundler();
+
+		for (String line : splitLines(text)) {
+			if (line.isEmpty()) {
+				sb.append(lineSeparator);
+
+				continue;
+			}
+
+			int lineLength = 0;
+
+			for (String token : split(line, CharPool.SPACE)) {
+				if ((lineLength + token.length() + 1) > width) {
+					if (lineLength > 0) {
+						sb.append(lineSeparator);
+					}
+
+					if (token.length() > width) {
+						int pos = token.indexOf(CharPool.OPEN_PARENTHESIS);
+
+						if (pos != -1) {
+							sb.append(token.substring(0, pos + 1));
+							sb.append(lineSeparator);
+
+							token = token.substring(pos + 1);
+
+							sb.append(token);
+
+							lineLength = token.length();
+						}
+						else {
+							sb.append(token);
+
+							lineLength = token.length();
+						}
+					}
+					else {
+						sb.append(token);
+
+						lineLength = token.length();
+					}
+				}
+				else {
+					if (lineLength > 0) {
+						sb.append(StringPool.SPACE);
+
+						lineLength++;
+					}
+
+					sb.append(token);
+
+					lineLength += token.length();
+				}
+			}
+
+			sb.append(lineSeparator);
 		}
+
+		return sb.toString();
 	}
 
 	protected static final char[] HEX_DIGITS = {
@@ -5205,8 +5215,38 @@ public class StringUtil {
 		return Character.isWhitespace(c);
 	}
 
+	private static String _read(InputStream inputStream) throws IOException {
+		byte[] buffer = new byte[8192];
+		int offset = 0;
+
+		while (true) {
+			int count = inputStream.read(
+				buffer, offset, buffer.length - offset);
+
+			if (count == -1) {
+				break;
+			}
+
+			offset += count;
+
+			if (offset == buffer.length) {
+				byte[] newBuffer = new byte[buffer.length << 1];
+
+				System.arraycopy(buffer, 0, newBuffer, 0, buffer.length);
+
+				buffer = newBuffer;
+			}
+		}
+
+		if (offset == 0) {
+			return StringPool.BLANK;
+		}
+
+		return new String(buffer, 0, offset, StringPool.UTF8);
+	}
+
 	private static void _split(
-		List<String> values, String s, int offset, char delimiter) {
+		Collection<String> values, String s, int offset, char delimiter) {
 
 		int pos = s.indexOf(delimiter, offset);
 
@@ -5223,80 +5263,41 @@ public class StringUtil {
 		}
 	}
 
-	private static String _wrap(String text, int width, String lineSeparator)
-		throws IOException {
+	private static void _splitLines(String s, Collection<String> lines) {
+		int lastIndex = 0;
 
-		if (text == null) {
-			return null;
-		}
+		while (true) {
+			int returnIndex = s.indexOf(CharPool.RETURN, lastIndex);
 
-		StringBundler sb = new StringBundler();
+			if (returnIndex == -1) {
+				_split(lines, s, lastIndex, CharPool.NEW_LINE);
 
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(text))) {
+				return;
+			}
 
-			String s = StringPool.BLANK;
+			int newLineIndex = s.indexOf(CharPool.NEW_LINE, lastIndex);
 
-			while ((s = unsyncBufferedReader.readLine()) != null) {
-				if (s.length() == 0) {
-					sb.append(lineSeparator);
+			if (newLineIndex == -1) {
+				_split(lines, s, lastIndex, CharPool.RETURN);
 
-					continue;
+				return;
+			}
+
+			if (newLineIndex < returnIndex) {
+				lines.add(s.substring(lastIndex, newLineIndex));
+
+				lastIndex = newLineIndex + 1;
+			}
+			else {
+				lines.add(s.substring(lastIndex, returnIndex));
+
+				lastIndex = returnIndex + 1;
+
+				if (lastIndex == newLineIndex) {
+					lastIndex++;
 				}
-
-				int lineLength = 0;
-
-				String[] tokens = s.split(StringPool.SPACE);
-
-				for (String token : tokens) {
-					if ((lineLength + token.length() + 1) > width) {
-						if (lineLength > 0) {
-							sb.append(lineSeparator);
-						}
-
-						if (token.length() > width) {
-							int pos = token.indexOf(CharPool.OPEN_PARENTHESIS);
-
-							if (pos != -1) {
-								sb.append(token.substring(0, pos + 1));
-								sb.append(lineSeparator);
-
-								token = token.substring(pos + 1);
-
-								sb.append(token);
-
-								lineLength = token.length();
-							}
-							else {
-								sb.append(token);
-
-								lineLength = token.length();
-							}
-						}
-						else {
-							sb.append(token);
-
-							lineLength = token.length();
-						}
-					}
-					else {
-						if (lineLength > 0) {
-							sb.append(StringPool.SPACE);
-
-							lineLength++;
-						}
-
-						sb.append(token);
-
-						lineLength += token.length();
-					}
-				}
-
-				sb.append(lineSeparator);
 			}
 		}
-
-		return sb.toString();
 	}
 
 	private static final char[] _RANDOM_STRING_CHAR_TABLE = {

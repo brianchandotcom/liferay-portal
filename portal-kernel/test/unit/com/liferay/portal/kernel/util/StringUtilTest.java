@@ -14,12 +14,25 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.test.randomizerbumpers.RandomizerBumper;
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
+import java.lang.reflect.Method;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
@@ -28,6 +41,30 @@ import org.junit.Test;
  * @author Hugo Huijser
  */
 public class StringUtilTest {
+
+	@ClassRule
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		new CodeCoverageAssertor() {
+
+			@Override
+			public void appendAssertClasses(List<Class<?>> assertClasses) {
+				assertClasses.clear();
+			}
+
+			@Override
+			public List<Method> getAssertMethods()
+				throws ReflectiveOperationException {
+
+				return Arrays.asList(
+					StringUtil.class.getDeclaredMethod(
+						"read", InputStream.class),
+					StringUtil.class.getDeclaredMethod(
+						"readLines", InputStream.class, Collection.class),
+					StringUtil.class.getDeclaredMethod(
+						"_read", InputStream.class));
+			}
+
+		};
 
 	@Test
 	public void testAppendParentheticalSuffixInteger() {
@@ -268,6 +305,67 @@ public class StringUtilTest {
 		Assert.assertEquals("%PATH%", StringUtil.quote("PATH", '%'));
 		Assert.assertEquals(
 			"Hello World Hello", StringUtil.quote(" World ", "Hello"));
+	}
+
+	@Test
+	public void testRead() throws Exception {
+		Assert.assertEquals(
+			StringPool.BLANK,
+			StringUtil.read(new ByteArrayInputStream(new byte[0])));
+
+		Assert.assertEquals(
+			StringPool.BLANK,
+			StringUtil.read(new ByteArrayInputStream(new byte[0])));
+
+		Assert.assertEquals(
+			"A\nB",
+			StringUtil.read(new ByteArrayInputStream("A\rB".getBytes())));
+
+		Assert.assertEquals(
+			"A\nB",
+			StringUtil.read(new ByteArrayInputStream("A\r\nB".getBytes())));
+
+		Assert.assertEquals(
+			"Test",
+			StringUtil.read(new ByteArrayInputStream(" Test ".getBytes())));
+
+		String expected = RandomTestUtil.randomString(
+			8193,
+			(RandomizerBumper<String>)randomValue ->
+				(randomValue.indexOf(CharPool.RETURN) == -1) &&
+				!Character.isWhitespace(randomValue.charAt(0)) &&
+				!Character.isWhitespace(randomValue.charAt(8192)));
+
+		Assert.assertEquals(
+			expected,
+			StringUtil.read(new ByteArrayInputStream(expected.getBytes())));
+	}
+
+	@Test
+	public void testReadLines() throws Exception {
+		List<String> lines = new ArrayList<>();
+
+		StringUtil.readLines(new ByteArrayInputStream(new byte[0]), lines);
+
+		Assert.assertEquals(lines.toString(), 0, lines.size());
+
+		StringUtil.readLines(
+			new ByteArrayInputStream(StringPool.SPACE.getBytes()), lines);
+
+		Assert.assertEquals(lines.toString(), 1, lines.size());
+		Assert.assertEquals(StringPool.SPACE, lines.get(0));
+
+		StringUtil.readLines(
+			new ByteArrayInputStream(StringPool.RETURN.getBytes()), lines);
+
+		Assert.assertEquals(lines.toString(), 2, lines.size());
+		Assert.assertEquals(StringPool.BLANK, lines.get(1));
+
+		StringUtil.readLines(
+			new ByteArrayInputStream(" Test ".getBytes()), lines);
+
+		Assert.assertEquals(lines.toString(), 3, lines.size());
+		Assert.assertEquals(" Test ", lines.get(2));
 	}
 
 	@Test

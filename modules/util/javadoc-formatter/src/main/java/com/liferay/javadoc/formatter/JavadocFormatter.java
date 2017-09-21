@@ -2210,6 +2210,72 @@ public class JavadocFormatter {
 			"Updating " + _languagePropertiesFile + " key " + key);
 	}
 
+	private String _wrap(String text, int width) {
+		if (text == null) {
+			return null;
+		}
+
+		StringBundler sb = new StringBundler();
+
+		for (String line : StringUtil.splitLines(text)) {
+			if (line.isEmpty()) {
+				sb.append("\n");
+
+				continue;
+			}
+
+			int lineLength = 0;
+
+			for (String token : StringUtil.split(line, CharPool.SPACE)) {
+				if ((lineLength + token.length() + 1) > width) {
+					if (lineLength > 0) {
+						sb.append("\n");
+					}
+
+					if (token.length() > width) {
+						int pos = token.indexOf(CharPool.OPEN_PARENTHESIS);
+
+						if (pos != -1) {
+							sb.append(token.substring(0, pos + 1));
+							sb.append("\n");
+
+							token = token.substring(pos + 1);
+
+							sb.append(token);
+
+							lineLength = token.length();
+						}
+						else {
+							sb.append(token);
+
+							lineLength = token.length();
+						}
+					}
+					else {
+						sb.append(token);
+
+						lineLength = token.length();
+					}
+				}
+				else {
+					if (lineLength > 0) {
+						sb.append(StringPool.SPACE);
+
+						lineLength++;
+					}
+
+					sb.append(token);
+
+					lineLength += token.length();
+				}
+			}
+
+			sb.append("\n");
+		}
+
+		return sb.toString();
+	}
+
 	private String _wrapText(String text, int indentLength, String exclude) {
 		StringBuffer sb = new StringBuffer();
 
@@ -2227,7 +2293,7 @@ public class JavadocFormatter {
 		while (matcher.find()) {
 			String wrapped = _formatInlines(matcher.group());
 
-			wrapped = StringUtil.wrap(wrapped, 80 - indentLength, "\n");
+			wrapped = _wrap(wrapped, 80 - indentLength);
 
 			matcher.appendReplacement(sb, wrapped);
 		}
@@ -2248,7 +2314,7 @@ public class JavadocFormatter {
 		}
 		else {
 			text = _formatInlines(text);
-			text = StringUtil.wrap(text, 80 - indentLength, "\n");
+			text = _wrap(text, 80 - indentLength);
 		}
 
 		text = text.replaceAll("(?m)^", indent);

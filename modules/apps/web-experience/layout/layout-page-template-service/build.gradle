@@ -1,0 +1,9 @@
+buildService {
+	apiDir = "../layout-page-template-api/src/main/java"
+	testDir = "../layout-page-template-test/src/testIntegration/java"
+}
+
+dependencies {
+	provided project (":apps:web-experience:fragment:fragment-api")
+	provided project (":apps:web-experience:layout:layout-page-template-api")
+}

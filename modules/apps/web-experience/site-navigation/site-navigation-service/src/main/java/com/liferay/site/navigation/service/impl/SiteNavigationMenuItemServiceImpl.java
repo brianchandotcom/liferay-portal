@@ -14,27 +14,54 @@
 
 package com.liferay.site.navigation.service.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.base.SiteNavigationMenuItemServiceBaseImpl;
 
+import java.util.List;
+
 /**
- * The implementation of the site navigation menu item remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.site.navigation.service.SiteNavigationMenuItemService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see SiteNavigationMenuItemServiceBaseImpl
- * @see com.liferay.site.navigation.service.SiteNavigationMenuItemServiceUtil
+ * @author Pavel Savinov
  */
 public class SiteNavigationMenuItemServiceImpl
 	extends SiteNavigationMenuItemServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.site.navigation.service.SiteNavigationMenuItemServiceUtil} to access the site navigation menu item remote service.
-	 */
+
+	@Override
+	public SiteNavigationMenuItem addSiteNavigationMenuItem(
+			long groupId, long userId, long siteNavigationMenuId,
+			long parentMenuItemId, String type, String typeSettings,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
+			groupId, userId, siteNavigationMenuId, parentMenuItemId, type,
+			typeSettings, serviceContext);
+	}
+
+	@Override
+	public SiteNavigationMenuItem deleteSiteNavigationMenuItem(
+			long siteNavigationMenuItemId)
+		throws PortalException {
+
+		return siteNavigationMenuItemLocalService.deleteSiteNavigationMenuItem(
+			siteNavigationMenuItemId);
+	}
+
+	@Override
+	public void deleteSiteNavigationMenuItems(long siteNavigationMenuId)
+		throws PortalException {
+
+		siteNavigationMenuItemLocalService.deleteSiteNavigationMenuItems(
+			siteNavigationMenuId);
+	}
+
+	@Override
+	public List<SiteNavigationMenuItem> getSiteNavigationMenuItems(
+		long siteNavigationMenuId) {
+
+		return siteNavigationMenuItemLocalService.getSiteNavigationMenuItems(
+			siteNavigationMenuId);
+	}
+
 }

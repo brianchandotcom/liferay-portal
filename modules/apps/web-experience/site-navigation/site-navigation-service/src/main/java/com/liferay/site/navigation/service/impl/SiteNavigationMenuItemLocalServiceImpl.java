@@ -14,27 +14,75 @@
 
 package com.liferay.site.navigation.service.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.base.SiteNavigationMenuItemLocalServiceBaseImpl;
 
+import java.util.Date;
+import java.util.List;
+
 /**
- * The implementation of the site navigation menu item local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see SiteNavigationMenuItemLocalServiceBaseImpl
- * @see com.liferay.site.navigation.service.SiteNavigationMenuItemLocalServiceUtil
+ * @author Pavel Savinov
  */
 public class SiteNavigationMenuItemLocalServiceImpl
 	extends SiteNavigationMenuItemLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.site.navigation.service.SiteNavigationMenuItemLocalServiceUtil} to access the site navigation menu item local service.
-	 */
+
+	@Override
+	public SiteNavigationMenuItem addSiteNavigationMenuItem(
+			long groupId, long userId, long siteNavigationMenuId,
+			long parentMenuItemId, String type, String typeSettings,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		long siteNavigationMenuItemId = counterLocalService.increment();
+
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			siteNavigationMenuItemPersistence.create(siteNavigationMenuItemId);
+
+		User user = userLocalService.getUser(userId);
+
+		siteNavigationMenuItem.setGroupId(groupId);
+		siteNavigationMenuItem.setCompanyId(user.getCompanyId());
+		siteNavigationMenuItem.setUserId(userId);
+		siteNavigationMenuItem.setUserName(user.getFullName());
+		siteNavigationMenuItem.setCreateDate(
+			serviceContext.getCreateDate(new Date()));
+
+		siteNavigationMenuItem.setSiteNavigationMenuId(siteNavigationMenuId);
+		siteNavigationMenuItem.setParentMenuItemId(parentMenuItemId);
+		siteNavigationMenuItem.setType(type);
+		siteNavigationMenuItem.setTypeSettings(typeSettings);
+
+		siteNavigationMenuItemPersistence.update(siteNavigationMenuItem);
+
+		return siteNavigationMenuItem;
+	}
+
+	@Override
+	public SiteNavigationMenuItem deleteSiteNavigationMenuItem(
+			long siteNavigationMenuItemId)
+		throws PortalException {
+
+		return siteNavigationMenuItemPersistence.remove(
+			siteNavigationMenuItemId);
+	}
+
+	@Override
+	public void deleteSiteNavigationMenuItems(long siteNavigationMenuId)
+		throws PortalException {
+
+		siteNavigationMenuItemPersistence.removeBySiteNavigationMenuId(
+			siteNavigationMenuId);
+	}
+
+	@Override
+	public List<SiteNavigationMenuItem> getSiteNavigationMenuItems(
+		long siteNavigationMenuId) {
+
+		return siteNavigationMenuItemPersistence.findBySiteNavigationMenuId(
+			siteNavigationMenuId);
+	}
+
 }

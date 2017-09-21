@@ -14,27 +14,77 @@
 
 package com.liferay.site.navigation.service.impl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.site.navigation.model.SiteNavigationMenu;
+import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.base.SiteNavigationMenuLocalServiceBaseImpl;
 
+import java.util.Date;
+import java.util.List;
+
 /**
- * The implementation of the site navigation menu local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.site.navigation.service.SiteNavigationMenuLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see SiteNavigationMenuLocalServiceBaseImpl
- * @see com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil
+ * @author Pavel Savinov
  */
 public class SiteNavigationMenuLocalServiceImpl
 	extends SiteNavigationMenuLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil} to access the site navigation menu local service.
-	 */
+
+	@Override
+	public SiteNavigationMenu addSiteNavigationMenu(
+			long groupId, long userId, String name,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		long siteNavigationMenuId = counterLocalService.increment();
+
+		SiteNavigationMenu siteNavigationMenu =
+			siteNavigationMenuPersistence.create(siteNavigationMenuId);
+
+		User user = userLocalService.getUser(userId);
+
+		siteNavigationMenu.setGroupId(groupId);
+		siteNavigationMenu.setCompanyId(user.getCompanyId());
+		siteNavigationMenu.setUserId(userId);
+		siteNavigationMenu.setUserName(user.getFullName());
+		siteNavigationMenu.setCreateDate(
+			serviceContext.getCreateDate(new Date()));
+
+		siteNavigationMenu.setName(name);
+
+		siteNavigationMenuPersistence.update(siteNavigationMenu);
+
+		return siteNavigationMenu;
+	}
+
+	@Override
+	public SiteNavigationMenu deleteSiteNavigationMenu(
+			long siteNavigationMenuId)
+		throws PortalException {
+
+		_siteNavigationMenuItemLocalService.deleteSiteNavigationMenuItems(
+			siteNavigationMenuId);
+
+		return siteNavigationMenuPersistence.remove(siteNavigationMenuId);
+	}
+
+	@Override
+	public SiteNavigationMenu deleteSiteNavigationMenu(
+			SiteNavigationMenu siteNavigationMenu)
+		throws PortalException {
+
+		return deleteSiteNavigationMenu(
+			siteNavigationMenu.getSiteNavigationMenuId());
+	}
+
+	@Override
+	public List<SiteNavigationMenu> getSiteNavigationMenus(long groupId) {
+		return siteNavigationMenuPersistence.findByGroupId(groupId);
+	}
+
+	@BeanReference(type = SiteNavigationMenuItemLocalService.class)
+	private SiteNavigationMenuItemLocalService
+		_siteNavigationMenuItemLocalService;
+
 }

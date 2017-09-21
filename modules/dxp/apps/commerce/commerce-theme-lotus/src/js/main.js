@@ -9,7 +9,7 @@
 
 			var cartIcon = A.one('#cartIcon > a');
 
-			var wishlistIcon = A.one('#wishlistIcon > a');
+			var wishListIcon = A.one('#wishListIcon > a');
 
 			var ScrollPos = function(e) {
 				var ScrollPosY = (WIN.get('docScrollY'));
@@ -65,24 +65,24 @@
 				function(event) {
 					Liferay.Portlet.refresh('#p_p_id_com_liferay_commerce_cart_content_web_internal_portlet_CommerceCartContentMiniPortlet_INSTANCE_commerceCartContentMiniPortlet_1_');
 
-					if (wishlistIcon) {
-						wishlistIcon.addClass('animBounce');
+					if (wishListIcon) {
+						wishListIcon.addClass('animBounce');
 
-						var wishlistIconCount = A.one('#wishlistIcon > a .sticker');
+						var wishListIconCount = A.one('#wishListIcon > a .sticker');
 
-						if (wishlistIconCount) {
+						if (wishListIconCount) {
 							var cartItemCount = event.commerceCartItemsCount;
 
-							wishlistIconCount.html(cartItemCount);
+							wishListIconCount.html(cartItemCount);
 						}
 						else {
-							var bagFullIcon = A.one('#wishlistIcon > a .icon-heart-full');
-							var bagIcon = A.one('#wishlistIcon > a .icon-heart');
+							var bagFullIcon = A.one('#wishListIcon > a .icon-heart-full');
+							var bagIcon = A.one('#wishListIcon > a .icon-heart');
 
 							bagFullIcon.show();
 							bagIcon.remove();
 
-							wishlistIcon.append('<span class="sticker sticker-outside">' + event.commerceCartItemsCount + '</span>');
+							wishListIcon.append('<span class="sticker sticker-outside">' + event.commerceCartItemsCount + '</span>');
 						}
 					}
 				}

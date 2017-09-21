@@ -1,23 +1,23 @@
 <ul class="nav navbar-nav navbar-right navbar-recursive">
-	<#if show_wishlist_icon>
-		<li class="collapse-hover" id="wishlistIcon">
+	<#if show_wish_list_icon>
+		<li class="collapse-hover" id="wishListIcon">
 			<a class="btn hidden-xs animate" href="/wishlist">
 				<#if wishListItemsCount != 0>
 					<svg class="lexicon-icon">
-						<use xlink:href="${images_folder}/theme-icons.svg#icon-whislist-full" />
+						<use xlink:href="${images_folder}/theme-icons.svg#icon-wish-list-full" />
 					</svg>
 
 					<span class="sticker sticker-outside">${wishListItemsCount}</span>
 				<#else>
 					<svg class="lexicon-icon">
-						<use xlink:href="${images_folder}/theme-icons.svg#icon-whislist" />
+						<use xlink:href="${images_folder}/theme-icons.svg#icon-wish-list" />
 					</svg>
 				</#if>
 			</a>
 
 			<div class="collapse dropdown-menu">
 				<div class="small">
-					<#include "${full_templates_path}/wishlist.ftl" />
+					<#include "${full_templates_path}/wish_list.ftl" />
 				</div>
 			</div>
 		</li>

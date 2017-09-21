@@ -23,10 +23,10 @@ dataMap.put("cp-definition-id", "");
 dataMap.put("cp-instance-id", "");
 %>
 
-<aui:button cssClass="btn-lg" data="<%= dataMap %>" name="add-to-wishlist" value="add-to-wishlist" />
+<aui:button cssClass="btn-lg" data="<%= dataMap %>" name="add-to-wish-list" value="add-to-wish-list" />
 
 <aui:script use="aui-io-request,aui-parse-content,liferay-notification">
-	A.one('#<portlet:namespace />add-to-wishlist').on(
+	A.one('#<portlet:namespace />add-to-wish-list').on(
 		'click',
 		function(event) {
 			var currentTarget = event.currentTarget;

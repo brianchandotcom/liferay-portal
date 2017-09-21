@@ -56,7 +56,7 @@
 		<!-- Other fields -->
 
 		<column name="siteNavigationMenuId" type="long" />
-		<column name="parentMenuItemId" type="long" />
+		<column name="parentSiteNavigationMenuItemId" type="long" />
 		<column name="type" type="String" />
 		<column name="typeSettings" type="String" />
 

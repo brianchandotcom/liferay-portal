@@ -69,11 +69,6 @@ public class CommerceInventoryLocalServiceImpl
 	}
 
 	@Override
-	public void deleteCommerceInventories(long groupId) {
-		commerceInventoryPersistence.removeByGroupId(groupId);
-	}
-
-	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceInventory deleteCommerceInventory(
 		CommerceInventory commerceInventory) {
@@ -93,9 +88,9 @@ public class CommerceInventoryLocalServiceImpl
 	}
 
 	@Override
-	public void deleteCommerceInventory(long groupId, long cpDefinitionId) {
+	public void deleteCommerceInventoryByCPDefinitionId(long cpDefinitionId) {
 		CommerceInventory commerceInventory =
-			commerceInventoryPersistence.fetchByG_C(groupId, cpDefinitionId);
+			commerceInventoryPersistence.fetchByCPDefinitionId(cpDefinitionId);
 
 		if (commerceInventory != null) {
 			deleteCommerceInventory(commerceInventory);
@@ -103,11 +98,12 @@ public class CommerceInventoryLocalServiceImpl
 	}
 
 	@Override
-	public CommerceInventory fetchCommerceInventory(
-			long groupId, long cpDefinitionId)
+	public CommerceInventory fetchCommerceInventoryByCPDefinitionId(
+			long cpDefinitionId)
 		throws PortalException {
 
-		return commerceInventoryPersistence.fetchByG_C(groupId, cpDefinitionId);
+		return commerceInventoryPersistence.fetchByCPDefinitionId(
+			cpDefinitionId);
 	}
 
 	@Override

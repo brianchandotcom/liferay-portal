@@ -70,12 +70,12 @@ public class CommerceInventoryServiceImpl
 	}
 
 	@Override
-	public CommerceInventory fetchCommerceInventory(
-			long groupId, long cpDefinitionId)
+	public CommerceInventory fetchCommerceInventoryByCPDefinitionId(
+			long cpDefinitionId)
 		throws PortalException {
 
-		return commerceInventoryLocalService.fetchCommerceInventory(
-			groupId, cpDefinitionId);
+		return commerceInventoryLocalService.
+			fetchCommerceInventoryByCPDefinitionId(cpDefinitionId);
 	}
 
 	@Override

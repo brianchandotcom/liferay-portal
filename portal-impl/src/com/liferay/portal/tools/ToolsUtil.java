@@ -14,8 +14,6 @@
 
 package com.liferay.portal.tools;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -318,72 +316,64 @@ public class ToolsUtil {
 			break;
 		}
 
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(imports))) {
+		for (String line : StringUtil.splitByLines(imports)) {
+			int x = line.indexOf("import ");
 
-			String line = null;
+			if (x == -1) {
+				continue;
+			}
 
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				int x = line.indexOf("import ");
+			String importPackageAndClassName = line.substring(
+				x + 7, line.lastIndexOf(StringPool.SEMICOLON));
+
+			if (importPackageAndClassName.contains(StringPool.STAR)) {
+				continue;
+			}
+
+			while (true) {
+				x = afterImportsContent.indexOf(
+					importPackageAndClassName, x + 1);
 
 				if (x == -1) {
+					break;
+				}
+
+				char nextChar = afterImportsContent.charAt(
+					x + importPackageAndClassName.length());
+
+				if (Character.isLetterOrDigit(nextChar)) {
 					continue;
 				}
 
-				String importPackageAndClassName = line.substring(
-					x + 7, line.lastIndexOf(StringPool.SEMICOLON));
+				int y = afterImportsContent.lastIndexOf(CharPool.NEW_LINE, x);
 
-				if (importPackageAndClassName.contains(StringPool.STAR)) {
+				String s = afterImportsContent.substring(y, x + 1);
+
+				if (isInsideQuotes(s, x - y)) {
 					continue;
 				}
 
-				while (true) {
-					x = afterImportsContent.indexOf(
-						importPackageAndClassName, x + 1);
+				s = StringUtil.trim(s);
 
-					if (x == -1) {
-						break;
-					}
-
-					char nextChar = afterImportsContent.charAt(
-						x + importPackageAndClassName.length());
-
-					if (Character.isLetterOrDigit(nextChar)) {
-						continue;
-					}
-
-					int y = afterImportsContent.lastIndexOf(
-						CharPool.NEW_LINE, x);
-
-					String s = afterImportsContent.substring(y, x + 1);
-
-					if (isInsideQuotes(s, x - y)) {
-						continue;
-					}
-
-					s = StringUtil.trim(s);
-
-					if (s.startsWith("//")) {
-						continue;
-					}
-
-					String importClassName =
-						importPackageAndClassName.substring(
-							importPackageAndClassName.lastIndexOf(
-								StringPool.PERIOD) + 1);
-
-					afterImportsContent = StringUtil.replaceFirst(
-						afterImportsContent, importPackageAndClassName,
-						importClassName, x);
+				if (s.startsWith("//")) {
+					continue;
 				}
-			}
 
-			if (pos == -1) {
-				return afterImportsContent;
-			}
+				String importClassName = importPackageAndClassName.substring(
+					importPackageAndClassName.lastIndexOf(StringPool.PERIOD) +
+						1);
 
-			return content.substring(0, pos) + afterImportsContent;
+				afterImportsContent = StringUtil.replaceFirst(
+					afterImportsContent, importPackageAndClassName,
+					importClassName, x);
+			}
 		}
+
+		if (pos == -1) {
+			return afterImportsContent;
+		}
+
+		return content.substring(0, pos) + afterImportsContent;
 	}
 
 	public static void writeFile(

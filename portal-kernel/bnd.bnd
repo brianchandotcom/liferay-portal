@@ -9,5 +9,6 @@ Import-Package: *
 Include-Resource:\
 	classes,\
 	@../tmp/lib-pre/com.liferay.portal.kernel.blogs.compat.jar,\
+	@../tmp/lib-pre/com.liferay.portal.kernel.concurrent.compat.jar,\
 	@../tmp/lib-pre/com.liferay.portal.kernel.memory.compat.jar
 -baseline: *;file=${project.dir}/.bnd/ant-baseline-cache/com.liferay.portal.kernel-2.48.0.jar

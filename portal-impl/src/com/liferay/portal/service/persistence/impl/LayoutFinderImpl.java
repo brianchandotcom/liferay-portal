@@ -55,6 +55,10 @@ public class LayoutFinderImpl
 	public static final String FIND_BY_C_P_P =
 		LayoutFinder.class.getName() + ".findByC_P_P";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public List<Layout> findByNoPermissions(long roleId) {
 		Session session = null;

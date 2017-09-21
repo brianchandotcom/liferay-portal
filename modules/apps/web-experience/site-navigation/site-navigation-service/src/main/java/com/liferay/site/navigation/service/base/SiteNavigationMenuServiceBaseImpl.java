@@ -28,6 +28,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuService;
+import com.liferay.site.navigation.service.persistence.SiteNavigationMenuItemPersistence;
 import com.liferay.site.navigation.service.persistence.SiteNavigationMenuPersistence;
 
 import javax.sql.DataSource;
@@ -184,6 +185,63 @@ public abstract class SiteNavigationMenuServiceBaseImpl extends BaseServiceImpl
 		this.userPersistence = userPersistence;
 	}
 
+	/**
+	 * Returns the site navigation menu item local service.
+	 *
+	 * @return the site navigation menu item local service
+	 */
+	public com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService getSiteNavigationMenuItemLocalService() {
+		return siteNavigationMenuItemLocalService;
+	}
+
+	/**
+	 * Sets the site navigation menu item local service.
+	 *
+	 * @param siteNavigationMenuItemLocalService the site navigation menu item local service
+	 */
+	public void setSiteNavigationMenuItemLocalService(
+		com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService siteNavigationMenuItemLocalService) {
+		this.siteNavigationMenuItemLocalService = siteNavigationMenuItemLocalService;
+	}
+
+	/**
+	 * Returns the site navigation menu item remote service.
+	 *
+	 * @return the site navigation menu item remote service
+	 */
+	public com.liferay.site.navigation.service.SiteNavigationMenuItemService getSiteNavigationMenuItemService() {
+		return siteNavigationMenuItemService;
+	}
+
+	/**
+	 * Sets the site navigation menu item remote service.
+	 *
+	 * @param siteNavigationMenuItemService the site navigation menu item remote service
+	 */
+	public void setSiteNavigationMenuItemService(
+		com.liferay.site.navigation.service.SiteNavigationMenuItemService siteNavigationMenuItemService) {
+		this.siteNavigationMenuItemService = siteNavigationMenuItemService;
+	}
+
+	/**
+	 * Returns the site navigation menu item persistence.
+	 *
+	 * @return the site navigation menu item persistence
+	 */
+	public SiteNavigationMenuItemPersistence getSiteNavigationMenuItemPersistence() {
+		return siteNavigationMenuItemPersistence;
+	}
+
+	/**
+	 * Sets the site navigation menu item persistence.
+	 *
+	 * @param siteNavigationMenuItemPersistence the site navigation menu item persistence
+	 */
+	public void setSiteNavigationMenuItemPersistence(
+		SiteNavigationMenuItemPersistence siteNavigationMenuItemPersistence) {
+		this.siteNavigationMenuItemPersistence = siteNavigationMenuItemPersistence;
+	}
+
 	public void afterPropertiesSet() {
 	}
 
@@ -246,4 +304,10 @@ public abstract class SiteNavigationMenuServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portal.kernel.service.UserService userService;
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
+	@BeanReference(type = com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService.class)
+	protected com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService siteNavigationMenuItemLocalService;
+	@BeanReference(type = com.liferay.site.navigation.service.SiteNavigationMenuItemService.class)
+	protected com.liferay.site.navigation.service.SiteNavigationMenuItemService siteNavigationMenuItemService;
+	@BeanReference(type = SiteNavigationMenuItemPersistence.class)
+	protected SiteNavigationMenuItemPersistence siteNavigationMenuItemPersistence;
 }

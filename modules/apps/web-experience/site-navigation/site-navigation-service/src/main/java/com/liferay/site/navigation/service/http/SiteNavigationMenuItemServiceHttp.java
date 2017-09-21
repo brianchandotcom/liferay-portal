@@ -57,7 +57,7 @@ import com.liferay.site.navigation.service.SiteNavigationMenuItemServiceUtil;
 public class SiteNavigationMenuItemServiceHttp {
 	public static com.liferay.site.navigation.model.SiteNavigationMenuItem addSiteNavigationMenuItem(
 		HttpPrincipal httpPrincipal, long groupId, long userId,
-		long siteNavigationMenuId, long parentMenuItemId,
+		long siteNavigationMenuId, long parentSiteNavigationMenuItemId,
 		java.lang.String type, java.lang.String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -67,8 +67,9 @@ public class SiteNavigationMenuItemServiceHttp {
 					_addSiteNavigationMenuItemParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					userId, siteNavigationMenuId, parentMenuItemId, type,
-					typeSettings, serviceContext);
+					userId, siteNavigationMenuId,
+					parentSiteNavigationMenuItemId, type, typeSettings,
+					serviceContext);
 
 			Object returnObj = null;
 

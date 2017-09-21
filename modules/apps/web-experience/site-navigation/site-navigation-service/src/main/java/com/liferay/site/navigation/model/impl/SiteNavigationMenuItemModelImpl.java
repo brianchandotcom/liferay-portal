@@ -78,7 +78,7 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "siteNavigationMenuId", Types.BIGINT },
-			{ "parentMenuItemId", Types.BIGINT },
+			{ "parentSiteNavigationMenuItemId", Types.BIGINT },
 			{ "type_", Types.VARCHAR },
 			{ "typeSettings", Types.CLOB }
 		};
@@ -93,12 +93,12 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("siteNavigationMenuId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("parentMenuItemId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("parentSiteNavigationMenuItemId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SiteNavigationMenuItem (siteNavigationMenuItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,siteNavigationMenuId LONG,parentMenuItemId LONG,type_ VARCHAR(75) null,typeSettings TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table SiteNavigationMenuItem (siteNavigationMenuItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,siteNavigationMenuId LONG,parentSiteNavigationMenuItemId LONG,type_ VARCHAR(75) null,typeSettings TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table SiteNavigationMenuItem";
 	public static final String ORDER_BY_JPQL = " ORDER BY siteNavigationMenuItem.siteNavigationMenuItemId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY SiteNavigationMenuItem.siteNavigationMenuItemId ASC";
@@ -139,7 +139,7 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setSiteNavigationMenuId(soapModel.getSiteNavigationMenuId());
-		model.setParentMenuItemId(soapModel.getParentMenuItemId());
+		model.setParentSiteNavigationMenuItemId(soapModel.getParentSiteNavigationMenuItemId());
 		model.setType(soapModel.getType());
 		model.setTypeSettings(soapModel.getTypeSettings());
 
@@ -215,7 +215,8 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("siteNavigationMenuId", getSiteNavigationMenuId());
-		attributes.put("parentMenuItemId", getParentMenuItemId());
+		attributes.put("parentSiteNavigationMenuItemId",
+			getParentSiteNavigationMenuItemId());
 		attributes.put("type", getType());
 		attributes.put("typeSettings", getTypeSettings());
 
@@ -276,10 +277,11 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 			setSiteNavigationMenuId(siteNavigationMenuId);
 		}
 
-		Long parentMenuItemId = (Long)attributes.get("parentMenuItemId");
+		Long parentSiteNavigationMenuItemId = (Long)attributes.get(
+				"parentSiteNavigationMenuItemId");
 
-		if (parentMenuItemId != null) {
-			setParentMenuItemId(parentMenuItemId);
+		if (parentSiteNavigationMenuItemId != null) {
+			setParentSiteNavigationMenuItemId(parentSiteNavigationMenuItemId);
 		}
 
 		String type = (String)attributes.get("type");
@@ -424,13 +426,14 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 
 	@JSON
 	@Override
-	public long getParentMenuItemId() {
-		return _parentMenuItemId;
+	public long getParentSiteNavigationMenuItemId() {
+		return _parentSiteNavigationMenuItemId;
 	}
 
 	@Override
-	public void setParentMenuItemId(long parentMenuItemId) {
-		_parentMenuItemId = parentMenuItemId;
+	public void setParentSiteNavigationMenuItemId(
+		long parentSiteNavigationMenuItemId) {
+		_parentSiteNavigationMenuItemId = parentSiteNavigationMenuItemId;
 	}
 
 	@JSON
@@ -504,7 +507,7 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 		siteNavigationMenuItemImpl.setCreateDate(getCreateDate());
 		siteNavigationMenuItemImpl.setModifiedDate(getModifiedDate());
 		siteNavigationMenuItemImpl.setSiteNavigationMenuId(getSiteNavigationMenuId());
-		siteNavigationMenuItemImpl.setParentMenuItemId(getParentMenuItemId());
+		siteNavigationMenuItemImpl.setParentSiteNavigationMenuItemId(getParentSiteNavigationMenuItemId());
 		siteNavigationMenuItemImpl.setType(getType());
 		siteNavigationMenuItemImpl.setTypeSettings(getTypeSettings());
 
@@ -618,7 +621,7 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 
 		siteNavigationMenuItemCacheModel.siteNavigationMenuId = getSiteNavigationMenuId();
 
-		siteNavigationMenuItemCacheModel.parentMenuItemId = getParentMenuItemId();
+		siteNavigationMenuItemCacheModel.parentSiteNavigationMenuItemId = getParentSiteNavigationMenuItemId();
 
 		siteNavigationMenuItemCacheModel.type = getType();
 
@@ -659,8 +662,8 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 		sb.append(getModifiedDate());
 		sb.append(", siteNavigationMenuId=");
 		sb.append(getSiteNavigationMenuId());
-		sb.append(", parentMenuItemId=");
-		sb.append(getParentMenuItemId());
+		sb.append(", parentSiteNavigationMenuItemId=");
+		sb.append(getParentSiteNavigationMenuItemId());
 		sb.append(", type=");
 		sb.append(getType());
 		sb.append(", typeSettings=");
@@ -711,8 +714,8 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 		sb.append(getSiteNavigationMenuId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>parentMenuItemId</column-name><column-value><![CDATA[");
-		sb.append(getParentMenuItemId());
+			"<column><column-name>parentSiteNavigationMenuItemId</column-name><column-value><![CDATA[");
+		sb.append(getParentSiteNavigationMenuItemId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>type</column-name><column-value><![CDATA[");
@@ -743,7 +746,7 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 	private long _siteNavigationMenuId;
 	private long _originalSiteNavigationMenuId;
 	private boolean _setOriginalSiteNavigationMenuId;
-	private long _parentMenuItemId;
+	private long _parentSiteNavigationMenuItemId;
 	private String _type;
 	private String _typeSettings;
 	private long _columnBitmask;

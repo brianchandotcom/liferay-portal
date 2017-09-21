@@ -207,18 +207,19 @@ public interface SiteNavigationMenuItemModel extends BaseModel<SiteNavigationMen
 	public void setSiteNavigationMenuId(long siteNavigationMenuId);
 
 	/**
-	 * Returns the parent menu item ID of this site navigation menu item.
+	 * Returns the parent site navigation menu item ID of this site navigation menu item.
 	 *
-	 * @return the parent menu item ID of this site navigation menu item
+	 * @return the parent site navigation menu item ID of this site navigation menu item
 	 */
-	public long getParentMenuItemId();
+	public long getParentSiteNavigationMenuItemId();
 
 	/**
-	 * Sets the parent menu item ID of this site navigation menu item.
+	 * Sets the parent site navigation menu item ID of this site navigation menu item.
 	 *
-	 * @param parentMenuItemId the parent menu item ID of this site navigation menu item
+	 * @param parentSiteNavigationMenuItemId the parent site navigation menu item ID of this site navigation menu item
 	 */
-	public void setParentMenuItemId(long parentMenuItemId);
+	public void setParentSiteNavigationMenuItemId(
+		long parentSiteNavigationMenuItemId);
 
 	/**
 	 * Returns the type of this site navigation menu item.

@@ -47,6 +47,7 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 					<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
+					<portlet:param name="ignoreRootFolder" value="<%= Boolean.TRUE.toString() %>" />
 				</portlet:renderURL>
 
 				<aui:button href="<%= editFolderURL %>" value='<%= (folder == null) ? "add-folder" : "add-subfolder" %>' />

@@ -136,7 +136,7 @@ public class SiteNavigationMenuItemPersistenceTest {
 
 		newSiteNavigationMenuItem.setSiteNavigationMenuId(RandomTestUtil.nextLong());
 
-		newSiteNavigationMenuItem.setParentMenuItemId(RandomTestUtil.nextLong());
+		newSiteNavigationMenuItem.setParentSiteNavigationMenuItemId(RandomTestUtil.nextLong());
 
 		newSiteNavigationMenuItem.setType(RandomTestUtil.randomString());
 
@@ -165,8 +165,8 @@ public class SiteNavigationMenuItemPersistenceTest {
 			Time.getShortTimestamp(newSiteNavigationMenuItem.getModifiedDate()));
 		Assert.assertEquals(existingSiteNavigationMenuItem.getSiteNavigationMenuId(),
 			newSiteNavigationMenuItem.getSiteNavigationMenuId());
-		Assert.assertEquals(existingSiteNavigationMenuItem.getParentMenuItemId(),
-			newSiteNavigationMenuItem.getParentMenuItemId());
+		Assert.assertEquals(existingSiteNavigationMenuItem.getParentSiteNavigationMenuItemId(),
+			newSiteNavigationMenuItem.getParentSiteNavigationMenuItemId());
 		Assert.assertEquals(existingSiteNavigationMenuItem.getType(),
 			newSiteNavigationMenuItem.getType());
 		Assert.assertEquals(existingSiteNavigationMenuItem.getTypeSettings(),
@@ -208,7 +208,7 @@ public class SiteNavigationMenuItemPersistenceTest {
 			"siteNavigationMenuItemId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "siteNavigationMenuId", true,
-			"parentMenuItemId", true, "type", true);
+			"parentSiteNavigationMenuItemId", true, "type", true);
 	}
 
 	@Test
@@ -436,7 +436,7 @@ public class SiteNavigationMenuItemPersistenceTest {
 
 		siteNavigationMenuItem.setSiteNavigationMenuId(RandomTestUtil.nextLong());
 
-		siteNavigationMenuItem.setParentMenuItemId(RandomTestUtil.nextLong());
+		siteNavigationMenuItem.setParentSiteNavigationMenuItemId(RandomTestUtil.nextLong());
 
 		siteNavigationMenuItem.setType(RandomTestUtil.randomString());
 

@@ -84,8 +84,8 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 		sb.append(modifiedDate);
 		sb.append(", siteNavigationMenuId=");
 		sb.append(siteNavigationMenuId);
-		sb.append(", parentMenuItemId=");
-		sb.append(parentMenuItemId);
+		sb.append(", parentSiteNavigationMenuItemId=");
+		sb.append(parentSiteNavigationMenuItemId);
 		sb.append(", type=");
 		sb.append(type);
 		sb.append(", typeSettings=");
@@ -126,7 +126,7 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 		}
 
 		siteNavigationMenuItemImpl.setSiteNavigationMenuId(siteNavigationMenuId);
-		siteNavigationMenuItemImpl.setParentMenuItemId(parentMenuItemId);
+		siteNavigationMenuItemImpl.setParentSiteNavigationMenuItemId(parentSiteNavigationMenuItemId);
 
 		if (type == null) {
 			siteNavigationMenuItemImpl.setType(StringPool.BLANK);
@@ -162,7 +162,7 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 
 		siteNavigationMenuId = objectInput.readLong();
 
-		parentMenuItemId = objectInput.readLong();
+		parentSiteNavigationMenuItemId = objectInput.readLong();
 		type = objectInput.readUTF();
 		typeSettings = objectInput.readUTF();
 	}
@@ -190,7 +190,7 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 
 		objectOutput.writeLong(siteNavigationMenuId);
 
-		objectOutput.writeLong(parentMenuItemId);
+		objectOutput.writeLong(parentSiteNavigationMenuItemId);
 
 		if (type == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -215,7 +215,7 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 	public long createDate;
 	public long modifiedDate;
 	public long siteNavigationMenuId;
-	public long parentMenuItemId;
+	public long parentSiteNavigationMenuItemId;
 	public String type;
 	public String typeSettings;
 }

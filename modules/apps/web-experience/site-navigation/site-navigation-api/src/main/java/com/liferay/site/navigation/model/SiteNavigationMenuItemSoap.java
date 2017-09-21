@@ -43,7 +43,7 @@ public class SiteNavigationMenuItemSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setSiteNavigationMenuId(model.getSiteNavigationMenuId());
-		soapModel.setParentMenuItemId(model.getParentMenuItemId());
+		soapModel.setParentSiteNavigationMenuItemId(model.getParentSiteNavigationMenuItemId());
 		soapModel.setType(model.getType());
 		soapModel.setTypeSettings(model.getTypeSettings());
 
@@ -165,12 +165,13 @@ public class SiteNavigationMenuItemSoap implements Serializable {
 		_siteNavigationMenuId = siteNavigationMenuId;
 	}
 
-	public long getParentMenuItemId() {
-		return _parentMenuItemId;
+	public long getParentSiteNavigationMenuItemId() {
+		return _parentSiteNavigationMenuItemId;
 	}
 
-	public void setParentMenuItemId(long parentMenuItemId) {
-		_parentMenuItemId = parentMenuItemId;
+	public void setParentSiteNavigationMenuItemId(
+		long parentSiteNavigationMenuItemId) {
+		_parentSiteNavigationMenuItemId = parentSiteNavigationMenuItemId;
 	}
 
 	public String getType() {
@@ -197,7 +198,7 @@ public class SiteNavigationMenuItemSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _siteNavigationMenuId;
-	private long _parentMenuItemId;
+	private long _parentSiteNavigationMenuItemId;
 	private String _type;
 	private String _typeSettings;
 }

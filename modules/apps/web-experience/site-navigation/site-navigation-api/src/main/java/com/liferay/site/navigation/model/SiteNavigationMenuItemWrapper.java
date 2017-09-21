@@ -67,7 +67,8 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("siteNavigationMenuId", getSiteNavigationMenuId());
-		attributes.put("parentMenuItemId", getParentMenuItemId());
+		attributes.put("parentSiteNavigationMenuItemId",
+			getParentSiteNavigationMenuItemId());
 		attributes.put("type", getType());
 		attributes.put("typeSettings", getTypeSettings());
 
@@ -125,10 +126,11 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 			setSiteNavigationMenuId(siteNavigationMenuId);
 		}
 
-		Long parentMenuItemId = (Long)attributes.get("parentMenuItemId");
+		Long parentSiteNavigationMenuItemId = (Long)attributes.get(
+				"parentSiteNavigationMenuItemId");
 
-		if (parentMenuItemId != null) {
-			setParentMenuItemId(parentMenuItemId);
+		if (parentSiteNavigationMenuItemId != null) {
+			setParentSiteNavigationMenuItemId(parentSiteNavigationMenuItemId);
 		}
 
 		String type = (String)attributes.get("type");
@@ -200,13 +202,13 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	}
 
 	/**
-	* Returns the parent menu item ID of this site navigation menu item.
+	* Returns the parent site navigation menu item ID of this site navigation menu item.
 	*
-	* @return the parent menu item ID of this site navigation menu item
+	* @return the parent site navigation menu item ID of this site navigation menu item
 	*/
 	@Override
-	public long getParentMenuItemId() {
-		return _siteNavigationMenuItem.getParentMenuItemId();
+	public long getParentSiteNavigationMenuItemId() {
+		return _siteNavigationMenuItem.getParentSiteNavigationMenuItemId();
 	}
 
 	/**
@@ -386,13 +388,14 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	}
 
 	/**
-	* Sets the parent menu item ID of this site navigation menu item.
+	* Sets the parent site navigation menu item ID of this site navigation menu item.
 	*
-	* @param parentMenuItemId the parent menu item ID of this site navigation menu item
+	* @param parentSiteNavigationMenuItemId the parent site navigation menu item ID of this site navigation menu item
 	*/
 	@Override
-	public void setParentMenuItemId(long parentMenuItemId) {
-		_siteNavigationMenuItem.setParentMenuItemId(parentMenuItemId);
+	public void setParentSiteNavigationMenuItemId(
+		long parentSiteNavigationMenuItemId) {
+		_siteNavigationMenuItem.setParentSiteNavigationMenuItemId(parentSiteNavigationMenuItemId);
 	}
 
 	/**

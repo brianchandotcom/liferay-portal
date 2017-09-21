@@ -1494,72 +1494,24 @@ public class CalendarBookingLocalServiceImpl
 
 		// Child calendar bookings
 
-		if (status == CalendarBookingWorkflowConstants.STATUS_IN_TRASH) {
-			List<CalendarBooking> childCalendarBookings =
-				calendarBooking.getChildCalendarBookings();
+		List<CalendarBooking> childCalendarBookings =
+			calendarBooking.getChildCalendarBookings();
 
-			for (CalendarBooking childCalendarBooking : childCalendarBookings) {
-				if (childCalendarBooking.equals(calendarBooking)) {
-					continue;
-				}
-
-				updateStatus(
-					userId, childCalendarBooking,
-					CalendarBookingWorkflowConstants.STATUS_IN_TRASH,
-					serviceContext);
+		for (CalendarBooking childCalendarBooking : childCalendarBookings) {
+			if (childCalendarBooking.equals(calendarBooking)) {
+				continue;
 			}
-		}
-		else if (oldStatus ==
-					CalendarBookingWorkflowConstants.STATUS_IN_TRASH) {
 
-			List<CalendarBooking> childCalendarBookings =
-				calendarBooking.getChildCalendarBookings();
+			int newStatus = getNewChildStatus(
+				status, oldStatus, childCalendarBooking.getStatus(),
+				isStagingCalendarBooking(calendarBooking));
 
-			for (CalendarBooking childCalendarBooking : childCalendarBookings) {
-				if (childCalendarBooking.equals(calendarBooking)) {
-					continue;
-				}
-
-				updateStatus(
-					userId, childCalendarBooking,
-					CalendarBookingWorkflowConstants.STATUS_PENDING,
-					serviceContext);
+			if (newStatus == childCalendarBooking.getStatus()) {
+				continue;
 			}
-		}
-		else if (status == CalendarBookingWorkflowConstants.STATUS_APPROVED) {
-			List<CalendarBooking> childCalendarBookings =
-				calendarBooking.getChildCalendarBookings();
 
-			for (CalendarBooking childCalendarBooking : childCalendarBookings) {
-				if (childCalendarBooking.equals(calendarBooking)) {
-					continue;
-				}
-
-				if (childCalendarBooking.getStatus() ==
-						CalendarBookingWorkflowConstants.
-							STATUS_MASTER_PENDING) {
-
-					updateStatus(
-						userId, childCalendarBooking,
-						CalendarBookingWorkflowConstants.STATUS_PENDING,
-						serviceContext);
-				}
-			}
-		}
-		else {
-			List<CalendarBooking> childCalendarBookings =
-				calendarBooking.getChildCalendarBookings();
-
-			for (CalendarBooking childCalendarBooking : childCalendarBookings) {
-				if (childCalendarBooking.equals(calendarBooking)) {
-					continue;
-				}
-
-				updateStatus(
-					userId, childCalendarBooking,
-					CalendarBookingWorkflowConstants.STATUS_MASTER_PENDING,
-					serviceContext);
-			}
+			updateStatus(
+				userId, childCalendarBooking, newStatus, serviceContext);
 		}
 
 		// Asset
@@ -1776,6 +1728,41 @@ public class CalendarBookingLocalServiceImpl
 		jsonObject.put("title", calendarBooking.getTitle());
 
 		return jsonObject.toString();
+	}
+
+	protected int getNewChildStatus(
+		int newParentStatus, int oldParentStatus, int oldChildStatus,
+		boolean parentStaged) {
+
+		if (newParentStatus ==
+				CalendarBookingWorkflowConstants.STATUS_IN_TRASH) {
+
+			return CalendarBookingWorkflowConstants.STATUS_IN_TRASH;
+		}
+
+		if (oldParentStatus ==
+				CalendarBookingWorkflowConstants.STATUS_IN_TRASH) {
+
+			return CalendarBookingWorkflowConstants.STATUS_PENDING;
+		}
+
+		if (newParentStatus !=
+				CalendarBookingWorkflowConstants.STATUS_APPROVED) {
+
+			return CalendarBookingWorkflowConstants.STATUS_MASTER_PENDING;
+		}
+
+		if (oldChildStatus !=
+				CalendarBookingWorkflowConstants.STATUS_MASTER_PENDING) {
+
+			return oldChildStatus;
+		}
+
+		if (parentStaged) {
+			return CalendarBookingWorkflowConstants.STATUS_MASTER_STAGING;
+		}
+
+		return CalendarBookingWorkflowConstants.STATUS_PENDING;
 	}
 
 	protected Calendar getNotLiveCalendar(Calendar calendar)

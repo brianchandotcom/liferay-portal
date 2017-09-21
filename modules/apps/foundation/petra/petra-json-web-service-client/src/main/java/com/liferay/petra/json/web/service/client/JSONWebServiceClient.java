@@ -84,6 +84,14 @@ public interface JSONWebServiceClient {
 
 	public void setLogin(String login);
 
+	public void setOAuthAccessSecret(String oAuthAccessSecret);
+
+	public void setOAuthAccessToken(String oAuthAccessToken);
+
+	public void setOAuthConsumerKey(String oAuthConsumerKey);
+
+	public void setOAuthConsumerSecret(String oAuthConsumerSecret);
+
 	public void setPassword(String password);
 
 	public void setProtocol(String protocol);

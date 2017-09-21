@@ -474,6 +474,26 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 	}
 
 	@Override
+	public void setOAuthAccessSecret(String oAuthAccessSecret) {
+		_oAuthAccessSecret = oAuthAccessSecret;
+	}
+
+	@Override
+	public void setOAuthAccessToken(String oAuthAccessToken) {
+		_oAuthAccessToken = oAuthAccessToken;
+	}
+
+	@Override
+	public void setOAuthConsumerKey(String oAuthConsumerKey) {
+		_oAuthConsumerKey = oAuthConsumerKey;
+	}
+
+	@Override
+	public void setOAuthConsumerSecret(String oAuthConsumerSecret) {
+		_oAuthConsumerSecret = oAuthConsumerSecret;
+	}
+
+	@Override
 	public void setPassword(String password) {
 		_password = password;
 	}
@@ -863,6 +883,10 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 	private IdleConnectionMonitorThread _idleConnectionMonitorThread;
 	private KeyStore _keyStore;
 	private String _login;
+	private String _oAuthAccessSecret;
+	private String _oAuthAccessToken;
+	private String _oAuthConsumerKey;
+	private String _oAuthConsumerSecret;
 	private String _password;
 	private String _protocol = "http";
 	private String _proxyAuthType;

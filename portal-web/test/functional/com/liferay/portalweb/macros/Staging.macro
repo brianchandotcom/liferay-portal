@@ -226,13 +226,11 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="Select" locator1="Staging#VARIATIONS_SELECTOR" value1="${pageVariationNameMenulistName}">
-			<var name="key_pageVariationName" value="${pageVariationNameMenulistName}" />
-		</execute>
+		<execute function="Click" locator1="Staging#VARIATIONS_SELECTOR_DROPDOWN" />
 
-		<execute function="SelectFrame" value1="relative=top" />
+		<var name="key_pageVariationName" value="${pageVariationNameMenulistName}" />
 
-		<execute function="Click" locator1="Icon#CLOSE" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="Staging#VARIATIONS_SELECTOR" value1="${pageVariationNameMenulistName}" />
 	</command>
 
 	<command name="changePageVariationPG">

@@ -1085,9 +1085,10 @@ public class ProjectTemplatesTest {
 			gradleProjectDir, mavenProjectDir, gradleBundleFileName,
 			mavenBundleFileName);
 
-		try (JarFile jarFile = new JarFile(gradleBundleFileName)) {
-			Assert.assertNotNull(jarFile.getJarEntry("package.json"));
-		}
+		_testContainsJarEntry(
+			new File(gradleProjectDir, gradleBundleFileName), "package.json");
+		_testContainsJarEntry(
+			new File(mavenProjectDir, mavenBundleFileName), "package.json");
 	}
 
 	@Test
@@ -2086,6 +2087,14 @@ public class ProjectTemplatesTest {
 		throws IOException {
 
 		return _testContains(dir, fileName, false, strings);
+	}
+
+	private static void _testContainsJarEntry(File file, String name)
+		throws IOException {
+
+		try (JarFile jarFile = new JarFile(file)) {
+			Assert.assertNotNull(jarFile.getJarEntry(name));
+		}
 	}
 
 	private static File _testEquals(

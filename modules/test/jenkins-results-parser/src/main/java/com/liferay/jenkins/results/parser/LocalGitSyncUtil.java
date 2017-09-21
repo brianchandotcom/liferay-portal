@@ -614,6 +614,15 @@ public class LocalGitSyncUtil {
 		GitWorkingDirectory.Branch originalBranch =
 			gitWorkingDirectory.getCurrentBranch();
 
+		if (originalBranch == null) {
+			gitWorkingDirectory.reset("--hard");
+
+			originalBranch = gitWorkingDirectory.getBranch(
+				gitWorkingDirectory.getUpstreamBranchName(), null);
+
+			gitWorkingDirectory.checkoutBranch(originalBranch);
+		}
+
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
 				"Starting synchronization with local-git. Current repository ",

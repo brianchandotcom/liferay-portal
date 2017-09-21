@@ -90,7 +90,7 @@ public class SplitPackagesTest {
 		Map<ExportPackage, Set<String>> allowedSplitPackageNames =
 			new HashMap<>();
 
-		for (String line : StringUtil.splitLines(
+		for (String line : StringUtil.splitByLines(
 				StringUtil.read(
 					SplitPackagesTest.class.getResourceAsStream(
 						"dependencies/allowed_split_packages.txt")))) {

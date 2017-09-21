@@ -74,7 +74,7 @@ public class BNDExportsCheck extends BaseFileCheck {
 			return;
 		}
 
-		String[] lines = StringUtil.splitLines(matcher.group(2));
+		String[] lines = StringUtil.splitByLines(matcher.group(2));
 
 		for (int i = 0; i < lines.length; i++) {
 			String line = StringUtil.removeChar(

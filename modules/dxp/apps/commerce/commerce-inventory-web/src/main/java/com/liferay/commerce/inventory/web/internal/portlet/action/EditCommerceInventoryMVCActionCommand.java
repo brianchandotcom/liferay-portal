@@ -17,7 +17,7 @@ package com.liferay.commerce.inventory.web.internal.portlet.action;
 import com.liferay.commerce.exception.NoSuchInventoryException;
 import com.liferay.commerce.model.CommerceInventory;
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.service.CAvailabilityRangeEntryService;
+import com.liferay.commerce.service.CPDefinitionAvailabilityRangeService;
 import com.liferay.commerce.service.CommerceInventoryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -86,8 +86,8 @@ public class EditCommerceInventoryMVCActionCommand
 		long commerceInventoryId = ParamUtil.getLong(
 			actionRequest, "commerceInventoryId");
 
-		long cAvailabilityRangeEntryId = ParamUtil.getLong(
-			actionRequest, "cAvailabilityRangeEntryId");
+		long cpDefinitionAvailabilityRangeEntryId = ParamUtil.getLong(
+			actionRequest, "cpDefinitionAvailabilityRangeEntryId");
 
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
@@ -132,15 +132,17 @@ public class EditCommerceInventoryMVCActionCommand
 				allowedCartQuantities, multipleCartQuantity, serviceContext);
 		}
 
-		_cAvailabilityRangeEntryService.updateCAvailabilityRangeEntry(
-			cAvailabilityRangeEntryId, cpDefinitionId,
-			commerceAvailabilityRangeId, serviceContext);
+		_cpDefinitionAvailabilityRangeService.
+			updateCPDefinitionAvailabilityRange(
+				cpDefinitionAvailabilityRangeEntryId, cpDefinitionId,
+				commerceAvailabilityRangeId, serviceContext);
 	}
 
 	@Reference
-	private CAvailabilityRangeEntryService _cAvailabilityRangeEntryService;
+	private CommerceInventoryService _commerceInventoryService;
 
 	@Reference
-	private CommerceInventoryService _commerceInventoryService;
+	private CPDefinitionAvailabilityRangeService
+		_cpDefinitionAvailabilityRangeService;
 
 }

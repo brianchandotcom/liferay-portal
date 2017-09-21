@@ -405,6 +405,8 @@ public class GitWorkingDirectory {
 				return null;
 			}
 
+			System.out.println(executionResult.getStandardOut());
+
 			if (branchName.equals("HEAD")) {
 				branchName = executionResult.getStandardOut();
 			}

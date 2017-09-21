@@ -980,7 +980,7 @@ public abstract class BaseBuild implements Build {
 					message, "jenkins", "Slave Offline",
 					slaveOfflineRule.notificationList);
 			}
-			catch (InterruptedException | IOException e) {
+			catch (InterruptedException | IOException | TimeoutException e) {
 				throw new RuntimeException(
 					"Unable to send offline slave notification", e);
 			}

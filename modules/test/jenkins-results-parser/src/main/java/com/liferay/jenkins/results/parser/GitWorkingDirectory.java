@@ -221,7 +221,8 @@ public class GitWorkingDirectory {
 			workingDirectory = _workingDirectory;
 		}
 
-		ExecutionResult executionResult = executeBashCommands("git clean -dfx");
+		ExecutionResult executionResult = executeBashCommands(
+			1, 1000 * 60 * 10, "git clean -dfx");
 
 		if (executionResult.getExitValue() != 0) {
 			throw new RuntimeException(

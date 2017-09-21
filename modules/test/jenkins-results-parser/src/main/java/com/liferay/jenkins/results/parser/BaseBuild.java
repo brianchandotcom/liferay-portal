@@ -873,13 +873,16 @@ public abstract class BaseBuild implements Build {
 					topLevelBuild.getBuildURL());
 			}
 
-			String notificationList = reinvokeRule.getNotificationList();
+			String notificationRecipients =
+				reinvokeRule.getNotificationRecipients();
 
-			if ((notificationList != null) && !notificationList.isEmpty()) {
+			if ((notificationRecipients != null) &&
+				!notificationRecipients.isEmpty()) {
+
 				try {
 					JenkinsResultsParserUtil.sendEmail(
 						message, "jenkins", "Build Reinvoked",
-						reinvokeRule.notificationList);
+						reinvokeRule.notificationRecipients);
 				}
 				catch (InterruptedException | IOException e) {
 					throw new RuntimeException(
@@ -969,13 +972,16 @@ public abstract class BaseBuild implements Build {
 
 		JenkinsResultsParserUtil.takeSlavesOffline(master, message, slave);
 
-		String notificationList = slaveOfflineRule.getNotificationList();
+		String notificationRecipients =
+			slaveOfflineRule.getNotificationRecipients();
 
-		if ((notificationList != null) && !notificationList.isEmpty()) {
+		if ((notificationRecipients != null) &&
+			!notificationRecipients.isEmpty()) {
+
 			try {
 				JenkinsResultsParserUtil.sendEmail(
 					message, "jenkins", "Slave Offline",
-					slaveOfflineRule.notificationList);
+					slaveOfflineRule.notificationRecipients);
 			}
 			catch (InterruptedException | IOException e) {
 				throw new RuntimeException(

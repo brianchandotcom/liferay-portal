@@ -66,8 +66,8 @@ public class SlaveOfflineRule {
 		return name;
 	}
 
-	public String getNotificationList() {
-		return notificationList;
+	public String getNotificationRecipients() {
+		return notificationRecipients;
 	}
 
 	public boolean matches(Build build) {
@@ -104,9 +104,9 @@ public class SlaveOfflineRule {
 		sb.append(name);
 		sb.append("\n");
 
-		if (notificationList != null) {
-			sb.append("notificationList=");
-			sb.append(notificationList);
+		if (notificationRecipients != null) {
+			sb.append("notificationRecipients=");
+			sb.append(notificationRecipients);
 			sb.append("\n");
 		}
 
@@ -115,7 +115,7 @@ public class SlaveOfflineRule {
 
 	protected Pattern consolePattern;
 	protected String name;
-	protected String notificationList;
+	protected String notificationRecipients;
 
 	private SlaveOfflineRule(String configurations, String ruleName) {
 		name = ruleName;
@@ -136,8 +136,8 @@ public class SlaveOfflineRule {
 
 				continue;
 			}
-			else if (name.equals("notificationList")) {
-				notificationList = value;
+			else if (name.equals("notificationRecipients")) {
+				notificationRecipients = value;
 
 				continue;
 			}

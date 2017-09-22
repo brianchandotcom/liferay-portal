@@ -117,7 +117,7 @@ renderResponse.setTitle(commercePriceList.getName());
 				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 				<aui:input name="deleteCommerceTierPriceEntryIds" type="hidden" />
 
-				<div class="price-entries-container" id="<portlet:namespace />entriesContainer">
+				<div class="tier-price-entries-container" id="<portlet:namespace />entriesContainer">
 					<liferay-ui:search-container
 						id="commerceTierPriceEntries"
 						iteratorURL="<%= portletURL %>"

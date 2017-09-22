@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.model.PublicRenderParameter;
@@ -837,14 +836,9 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (!layout.isSupportsEmbeddedPortlets()) {
-			return null;
-		}
+		if (!layout.isSupportsEmbeddedPortlets() ||
+			!themeDisplay.isPortletEmbedded(portletId)) {
 
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
-
-		if (!layoutTypePortlet.isPortletEmbedded(portletId)) {
 			return null;
 		}
 

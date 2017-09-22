@@ -14,11 +14,11 @@
 
 package com.liferay.wsrp.internal.axis;
 
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.InitialThreadLocal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -181,11 +181,12 @@ public class WSRPHTTPSender extends HTTPSender {
 	private static final Log _log = LogFactoryUtil.getLog(WSRPHTTPSender.class);
 
 	private static final ThreadLocal<String> _currentCookie =
-		new InitialThreadLocal<>(
-			SimpleHTTPSender.class + "._currentCookie", () -> StringPool.BLANK);
+		new CentralizedThreadLocal<>(
+			SimpleHTTPSender.class + "._currentCookie", () -> StringPool.BLANK,
+			false);
 	private static final ThreadLocal<HttpServletRequest> _currentRequest =
-		new InitialThreadLocal<>(
-			SimpleHTTPSender.class + "._currentRequest", () -> null);
+		new CentralizedThreadLocal<>(
+			SimpleHTTPSender.class + "._currentRequest", () -> null, false);
 
 	private final String[] _forwardCookies;
 	private final String[] _forwardHeaders;

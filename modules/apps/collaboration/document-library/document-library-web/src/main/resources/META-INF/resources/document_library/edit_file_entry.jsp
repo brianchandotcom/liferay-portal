@@ -119,11 +119,9 @@ else {
 	dlEditFileEntryDisplayContext = dlDisplayContextProvider.getDLEditFileEntryDisplayContext(request, response, fileEntry);
 }
 
-ObjectValuePair<String, Locale[]> defaultLocaleAvailableLocalesOVP = DLFileEntryTypeUtil.getDLFileEntryTypeAvailableLocales(fileVersion, dlFileEntryType, dlEditFileEntryDisplayContext, themeDisplay);
+String defaultLanguageId = themeDisplay.getLanguageId();
 
-String defaultLanguageId = defaultLocaleAvailableLocalesOVP.getKey();
-
-Locale[] availableLocales = defaultLocaleAvailableLocalesOVP.getValue();
+Locale[] availableLocales = DLFileEntryTypeUtil.getDLFileEntryTypeAvailableLocales(fileVersion, dlFileEntryType, dlEditFileEntryDisplayContext, defaultLanguageId);
 
 String headerTitle = LanguageUtil.get(request, "new-document");
 

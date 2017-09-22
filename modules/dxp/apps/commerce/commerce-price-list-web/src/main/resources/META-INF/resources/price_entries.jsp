@@ -180,7 +180,7 @@ renderResponse.setTitle(commercePriceList.getName());
 <portlet:actionURL name="editCommercePriceEntry" var="addCommercePriceEntryURL" />
 
 <aui:form action="<%= addCommercePriceEntryURL %>" cssClass="hide" name="addCommercePriceEntryFm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD_MULTIPLE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="commercePriceListId" type="hidden" value="<%= commercePriceListId %>" />
 	<aui:input name="cpInstanceIds" type="hidden" value="" />

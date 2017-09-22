@@ -168,6 +168,29 @@ public class CommercePriceEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<CommercePriceEntry> getInstanceCommercePriceEntries(
+		long cpInstanceId, int start, int end) {
+
+		return commercePriceEntryPersistence.findByCPInstanceId(
+			cpInstanceId, start, end);
+	}
+
+	@Override
+	public List<CommercePriceEntry> getInstanceCommercePriceEntries(
+		long cpInstanceId, int start, int end,
+		OrderByComparator<CommercePriceEntry> orderByComparator) {
+
+		return commercePriceEntryPersistence.findByCPInstanceId(
+			cpInstanceId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getInstanceCommercePriceEntriesCount(long cpInstanceId) {
+		return commercePriceEntryPersistence.countByCPInstanceId(
+			cpInstanceId);
+	}
+
+	@Override
 	public Hits search(SearchContext searchContext) {
 		try {
 			Indexer<CommercePriceEntry> indexer =

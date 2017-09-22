@@ -92,9 +92,33 @@ public class CommercePriceEntryServiceImpl
 	}
 
 	@Override
+	public List<CommercePriceEntry> getInstanceCommercePriceEntries(
+		long cpInstanceId, int start, int end) {
+
+		return commercePriceEntryLocalService.getInstanceCommercePriceEntries(
+			cpInstanceId, start, end);
+	}
+
+	@Override
+	public List<CommercePriceEntry> getInstanceCommercePriceEntries(
+		long cpInstanceId, int start, int end,
+		OrderByComparator<CommercePriceEntry> orderByComparator) {
+
+		return commercePriceEntryLocalService.getInstanceCommercePriceEntries(
+			cpInstanceId, start, end, orderByComparator);
+	}
+
+	@Override
 	public int getCommercePriceEntriesCount(long commercePriceListId) {
 		return commercePriceEntryLocalService.getCommercePriceEntriesCount(
 			commercePriceListId);
+	}
+
+	@Override
+	public int getInstanceCommercePriceEntriesCount(long cpInstanceId) {
+		return
+			commercePriceEntryLocalService.getInstanceCommercePriceEntriesCount(
+				cpInstanceId);
 	}
 
 	@Override

@@ -144,7 +144,7 @@
 </tr>
 <tr>
 	<td>ENTRY_DESCRIPTIVE_TITLE</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//div[@class=' list-group-item-content']//a</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//div[@class=' list-group-item-content']//h5</td>
 	<td></td>
 </tr>
 <tr>

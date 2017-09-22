@@ -3106,6 +3106,28 @@ go</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="setup-testable-jboss">
+		<sequential>
+			<setup-testable-jboss-jsp-configuration />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="setup-testable-jboss-jsp-configuration">
+		<sequential>
+			<if>
+				<not>
+					<resourcecontains resource="${app.server.jboss.instance.dir}/configuration/standalone.xml" substring="source-vm" />
+				</not>
+				<then>
+					<replace file="${app.server.jboss.instance.dir}/configuration/standalone.xml">
+						<replacetoken><![CDATA[jsp-configuration development="true"]]></replacetoken>
+						<replacevalue><![CDATA[jsp-configuration development="true" source-vm="1.8" target-vm="1.8"]]></replacevalue>
+					</replace>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="setup-testable-tomcat">
 		<sequential>
 			<setup-testable-tomcat-logging />

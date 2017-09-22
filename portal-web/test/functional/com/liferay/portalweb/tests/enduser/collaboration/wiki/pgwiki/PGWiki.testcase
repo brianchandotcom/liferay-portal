@@ -1196,6 +1196,10 @@
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
+		<execute function="Click" locator1="AlloyEditor#CONTENT_FIELD" />
+
+		<execute function="AssertElementPresent" locator1="AlloyEditor#CONTENT_ADD_BUTTON" />
+
 		<execute macro="WikiEntry#addPageContent">
 			<var name="wikiPageContent" value="Edited Wiki Page Content" />
 		</execute>

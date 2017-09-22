@@ -36,8 +36,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(service = ActionHelper.class)
-public class ActionHelper {
+@Component(service = CommercePriceListActionHelper.class)
+public class CommercePriceListActionHelper {
 
 	public List<CommercePriceEntry> getCommercePriceEntries(
 			PortletRequest portletRequest)
@@ -64,11 +64,29 @@ public class ActionHelper {
 	public CommercePriceEntry getCommercePriceEntry(
 		RenderRequest renderRequest) {
 
+		CommercePriceEntry commercePriceEntry =
+			(CommercePriceEntry)renderRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_PRICE_ENTRY);
+
+		if (commercePriceEntry != null) {
+			return commercePriceEntry;
+		}
+
 		long commercePriceEntryId = ParamUtil.getLong(
 			renderRequest, "commercePriceEntryId");
 
-		return _commercePriceEntryService.fetchCommercePriceEntry(
-			commercePriceEntryId);
+		if (commercePriceEntryId > 0) {
+			commercePriceEntry =
+				_commercePriceEntryService.fetchCommercePriceEntry(
+					commercePriceEntryId);
+		}
+
+		if (commercePriceEntry != null) {
+			renderRequest.setAttribute(
+				CommerceWebKeys.COMMERCE_PRICE_ENTRY, commercePriceEntry);
+		}
+
+		return commercePriceEntry;
 	}
 
 	public CommercePriceList getCommercePriceList(PortletRequest portletRequest)

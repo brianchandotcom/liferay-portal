@@ -853,6 +853,8 @@ public class ProjectTemplateFilesTest {
 			_addXmlDeclaration(
 				"liferay-display.xml", "liferay_display_xml_declaration.tmpl");
 			_addXmlDeclaration(
+				"liferay-hook.xml", "liferay_hook_xml_declaration.tmpl");
+			_addXmlDeclaration(
 				"liferay-layout-templates.xml",
 				"liferay_layout_templates_xml_declaration.tmpl");
 			_addXmlDeclaration(

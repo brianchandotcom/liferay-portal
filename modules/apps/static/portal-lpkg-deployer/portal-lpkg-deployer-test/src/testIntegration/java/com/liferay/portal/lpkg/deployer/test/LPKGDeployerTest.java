@@ -161,11 +161,13 @@ public class LPKGDeployerTest {
 							StaticLPKGResolver.
 								getStaticLPKGBundleSymbolicName())) {
 
-						Bundle bundle = bundleContext.getBundle(
-							"reference:" + StringPool.SLASH + name);
+						String location =
+							"file:/" + name + "?protocol=lpkg&static=true";
+
+						Bundle bundle = bundleContext.getBundle(location);
 
 						Assert.assertNotNull(
-							"No matching static bundle for reference:/" + name,
+							"No matching static bundle for " + location,
 							bundle);
 					}
 					else {

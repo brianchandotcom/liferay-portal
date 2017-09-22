@@ -628,7 +628,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 			Bundle bundle = null;
 
-			if (location.startsWith("reference:")) {
+			if (location.contains("static=true")) {
 				bundle = _getStaticBundle(
 					bundleContext, unsyncBufferedInputStream, location);
 			}
@@ -949,8 +949,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				_log.debug("Adding initial bundle " + location.toString());
 			}
 
-			Bundle bundle = _addBundle(
-				"reference:" + location, inputStream, false);
+			Bundle bundle = _addBundle(location, inputStream, false);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Added initial bundle " + bundle);
@@ -1208,20 +1207,18 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		Collections.sort(jarPaths);
 
-		String prefix = "reference:".concat(_STATIC_JAR);
-
 		List<Bundle> refreshBundles = new ArrayList<>();
 
 		for (Bundle bundle : bundleContext.getBundles()) {
 			String location = bundle.getLocation();
 
-			if (!location.startsWith(prefix)) {
+			if (!location.contains("static=true")) {
 				continue;
 			}
 
-			Path filePath = Paths.get(location.substring(prefix.length()));
+			URI uri = new URI(location);
 
-			if (jarPaths.contains(filePath)) {
+			if (jarPaths.contains(Paths.get(uri.getPath()))) {
 				bundles.put(bundle.getLocation(), bundle);
 
 				continue;
@@ -1246,16 +1243,20 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		for (Path jarPath : jarPaths) {
 			try (InputStream inputStream = Files.newInputStream(jarPath)) {
-				String path = jarPath.toString();
+				URI uri = jarPath.toUri();
 
-				Bundle bundle = _installInitialBundle(
-					_STATIC_JAR.concat(path), inputStream);
+				String uriString = uri.toString();
+
+				String location = uriString.concat("?protocol=jar&static=true");
+
+				Bundle bundle = _installInitialBundle(location, inputStream);
 
 				if (bundle != null) {
-					bundles.put(bundle.getLocation(), bundle);
+					bundles.put(location, bundle);
 
 					overrideStaticFileNames.add(
-						path.substring(path.lastIndexOf(StringPool.SLASH) + 1));
+						uriString.substring(
+							uriString.lastIndexOf(StringPool.SLASH) + 1));
 				}
 			}
 		}
@@ -1332,11 +1333,15 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 							}
 						}
 
+						String location =
+							"file:/" + zipEntryName +
+								"?protocol=lpkg&static=true";
+
 						Bundle bundle = _installInitialBundle(
-							StringPool.SLASH.concat(zipEntryName), inputStream);
+							location, inputStream);
 
 						if (bundle != null) {
-							bundles.put(bundle.getLocation(), bundle);
+							bundles.put(location, bundle);
 						}
 					}
 				}
@@ -1593,8 +1598,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			_log.warn(sb.toString());
 		}
 	}
-
-	private static final String _STATIC_JAR = "Static-Jar::";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ModuleFrameworkImpl.class);

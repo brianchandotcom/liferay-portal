@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.concurrent;
 
-import com.liferay.portal.kernel.util.CentralizedThreadLocal;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 
 /**
  * @author Shuyang Zhou

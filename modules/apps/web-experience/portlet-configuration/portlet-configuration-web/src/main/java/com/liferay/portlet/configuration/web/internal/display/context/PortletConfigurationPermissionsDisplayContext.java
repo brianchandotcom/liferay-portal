@@ -317,7 +317,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		SearchContainer roleSearchContainer = new RoleSearch(
+		SearchContainer<Role> roleSearchContainer = new RoleSearch(
 			_renderRequest, getIteratorURL());
 
 		RoleSearchTerms searchTerms =
@@ -470,23 +470,11 @@ public class PortletConfigurationPermissionsDisplayContext {
 				_group.getParentGroupId());
 		}
 
-		if (parentGroup == null) {
-			if (_group.isOrganization()) {
-				_roleTypes =
-					RoleConstants.TYPES_ORGANIZATION_AND_REGULAR_AND_SITE;
-			}
-			else if (_group.isUser()) {
-				_roleTypes = RoleConstants.TYPES_REGULAR;
-			}
+		if (parentGroup != null) {
+			_roleTypes = _getGroupRoleTypes(parentGroup, _roleTypes);
 		}
 		else {
-			if (parentGroup.isOrganization()) {
-				_roleTypes =
-					RoleConstants.TYPES_ORGANIZATION_AND_REGULAR_AND_SITE;
-			}
-			else if (parentGroup.isUser()) {
-				_roleTypes = RoleConstants.TYPES_REGULAR;
-			}
+			_roleTypes = _getGroupRoleTypes(_group, _roleTypes);
 		}
 
 		return _roleTypes;
@@ -565,6 +553,22 @@ public class PortletConfigurationPermissionsDisplayContext {
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return portletURL;
+	}
+
+	private int[] _getGroupRoleTypes(Group group, int[] defaultRoleTypes) {
+		if (group == null) {
+			return defaultRoleTypes;
+		}
+
+		if (group.isOrganization()) {
+			return RoleConstants.TYPES_ORGANIZATION_AND_REGULAR_AND_SITE;
+		}
+
+		if (group.isCompany() || group.isUser() || group.isUserGroup()) {
+			return RoleConstants.TYPES_REGULAR;
+		}
+
+		return defaultRoleTypes;
 	}
 
 	private String _getPortletResource() {

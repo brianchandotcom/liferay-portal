@@ -14,13 +14,21 @@
 
 package com.liferay.commerce.util;
 
+import com.liferay.commerce.model.CommercePriceList;
 import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.model.CommerceWarehouseItem;
+import com.liferay.commerce.util.comparator.CommercePriceListCreateDateComparator;
+import com.liferay.commerce.util.comparator.CommercePriceListDisplayDateComparator;
 import com.liferay.commerce.util.comparator.CommerceWarehouseCityComparator;
 import com.liferay.commerce.util.comparator.CommerceWarehouseItemQuantityComparator;
 import com.liferay.commerce.util.comparator.CommerceWarehouseItemWarehouseNameComparator;
 import com.liferay.commerce.util.comparator.CommerceWarehouseNameComparator;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.Objects;
 
 /**
  * @author Andrea Di Giorgi
@@ -71,6 +79,49 @@ public class CommerceUtil {
 		}
 
 		return orderByComparator;
+	}
+
+	public static OrderByComparator<CommercePriceList>
+		getCommercePriceListOrderByComparator(
+			String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<CommercePriceList> orderByComparator = null;
+
+		if (orderByCol.equals("create-date")) {
+			orderByComparator = new CommercePriceListCreateDateComparator(orderByAsc);
+		}
+		else if (orderByCol.equals("display-date")) {
+			orderByComparator = new CommercePriceListDisplayDateComparator(orderByAsc);
+		}
+
+		return orderByComparator;
+	}
+
+	public static Sort getCommercePriceListSort(
+		String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (Objects.equals(orderByType, "asc")) {
+			orderByAsc = true;
+		}
+
+		Sort sort = null;
+
+		if (orderByCol.equals("create-date")) {
+			sort = SortFactoryUtil.create(Field.CREATE_DATE, orderByAsc);
+		}
+		else if (orderByCol.equals("display-date")) {
+			sort = SortFactoryUtil.create("display-date", orderByAsc);
+		}
+
+		return sort;
 	}
 
 }

@@ -142,10 +142,58 @@ public class CommercePriceEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommercePriceEntrySoap[] getInstanceCommercePriceEntries(
+		long cpInstanceId, int start, int end) throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.model.CommercePriceEntry> returnValue =
+				CommercePriceEntryServiceUtil.getInstanceCommercePriceEntries(cpInstanceId,
+					start, end);
+
+			return com.liferay.commerce.model.CommercePriceEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommercePriceEntrySoap[] getInstanceCommercePriceEntries(
+		long cpInstanceId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommercePriceEntry> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.model.CommercePriceEntry> returnValue =
+				CommercePriceEntryServiceUtil.getInstanceCommercePriceEntries(cpInstanceId,
+					start, end, orderByComparator);
+
+			return com.liferay.commerce.model.CommercePriceEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getCommercePriceEntriesCount(long commercePriceListId)
 		throws RemoteException {
 		try {
 			int returnValue = CommercePriceEntryServiceUtil.getCommercePriceEntriesCount(commercePriceListId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getInstanceCommercePriceEntriesCount(long cpInstanceId)
+		throws RemoteException {
+		try {
+			int returnValue = CommercePriceEntryServiceUtil.getInstanceCommercePriceEntriesCount(cpInstanceId);
 
 			return returnValue;
 		}

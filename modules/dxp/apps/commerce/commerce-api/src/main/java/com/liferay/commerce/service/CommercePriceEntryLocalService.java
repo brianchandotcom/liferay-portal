@@ -297,6 +297,18 @@ public interface CommercePriceEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommercePriceEntry> getInstanceCommercePriceEntries(
+		long cpInstanceId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommercePriceEntry> getInstanceCommercePriceEntries(
+		long cpInstanceId, int start, int end,
+		OrderByComparator<CommercePriceEntry> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getInstanceCommercePriceEntriesCount(long cpInstanceId);
+
 	/**
 	* Returns the OSGi service identifier.
 	*

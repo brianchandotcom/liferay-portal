@@ -349,6 +349,26 @@ public class CommercePriceEntryLocalServiceWrapper
 		return _commercePriceEntryLocalService.getIndexableActionableDynamicQuery();
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommercePriceEntry> getInstanceCommercePriceEntries(
+		long cpInstanceId, int start, int end) {
+		return _commercePriceEntryLocalService.getInstanceCommercePriceEntries(cpInstanceId,
+			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommercePriceEntry> getInstanceCommercePriceEntries(
+		long cpInstanceId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommercePriceEntry> orderByComparator) {
+		return _commercePriceEntryLocalService.getInstanceCommercePriceEntries(cpInstanceId,
+			start, end, orderByComparator);
+	}
+
+	@Override
+	public int getInstanceCommercePriceEntriesCount(long cpInstanceId) {
+		return _commercePriceEntryLocalService.getInstanceCommercePriceEntriesCount(cpInstanceId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

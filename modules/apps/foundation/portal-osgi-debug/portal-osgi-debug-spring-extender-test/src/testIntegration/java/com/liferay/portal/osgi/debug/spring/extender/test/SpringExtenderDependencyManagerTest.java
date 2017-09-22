@@ -118,18 +118,18 @@ public class SpringExtenderDependencyManagerTest {
 
 			LoggingEvent loggingEvent = loggingEvents.get(0);
 
-			Assert.assertEquals(Level.INFO, loggingEvent.getLevel());
 			Assert.assertEquals(
 				"All Spring extender dependency manager components are " +
 					"registered",
 				loggingEvent.getMessage());
+			Assert.assertEquals(Level.INFO, loggingEvent.getLevel());
 
 			loggingEvent = loggingEvents.get(1);
 
-			Assert.assertEquals(Level.INFO, loggingEvent.getLevel());
 			Assert.assertEquals(
 				"Stopped scanning for unavailable components",
 				loggingEvent.getMessage());
+			Assert.assertEquals(Level.INFO, loggingEvent.getLevel());
 		}
 	}
 
@@ -153,8 +153,6 @@ public class SpringExtenderDependencyManagerTest {
 
 			LoggingEvent loggingEvent = loggingEvents.get(0);
 
-			Assert.assertEquals(Level.WARN, loggingEvent.getLevel());
-
 			String message = (String)loggingEvent.getMessage();
 
 			StringBundler sb = new StringBundler(4);
@@ -166,12 +164,14 @@ public class SpringExtenderDependencyManagerTest {
 
 			Assert.assertTrue(message.contains(sb.toString()));
 
+			Assert.assertEquals(Level.WARN, loggingEvent.getLevel());
+
 			loggingEvent = loggingEvents.get(1);
 
-			Assert.assertEquals(Level.INFO, loggingEvent.getLevel());
 			Assert.assertEquals(
 				"Stopped scanning for unavailable components",
 				loggingEvent.getMessage());
+			Assert.assertEquals(Level.INFO, loggingEvent.getLevel());
 		}
 		finally {
 			bundle.uninstall();

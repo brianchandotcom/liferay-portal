@@ -30,8 +30,8 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Provides a base abstract class to implement servlets that return JavaScript
- * modules tracked by the {@link
- * com.liferay.frontend.js.loader.modules.extender.internal.npm.NPMRegistry}.
+ * modules tracked by the
+ * {@link com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry}.
  *
  * @author Adolfo Pérez
  */

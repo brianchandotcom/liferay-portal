@@ -17,25 +17,8 @@ package com.liferay.layout.page.template.service.impl;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateFolderLocalServiceBaseImpl;
 
 /**
- * The implementation of the layout page template folder local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.layout.page.template.service.LayoutPageTemplateFolderLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see LayoutPageTemplateFolderLocalServiceBaseImpl
- * @see com.liferay.layout.page.template.service.LayoutPageTemplateFolderLocalServiceUtil
+ * @author Jürgen Kappler
  */
 public class LayoutPageTemplateFolderLocalServiceImpl
 	extends LayoutPageTemplateFolderLocalServiceBaseImpl {
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.layout.page.template.service.LayoutPageTemplateFolderLocalServiceUtil} to access the layout page template folder local service.
-	 */
 }

@@ -252,7 +252,7 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 	private static class ThreadLocalMap {
 
 		public void expand(int newCapacity) {
-			if (_table.length == _MAXIMUM_CAPACITY) {
+			if (newCapacity == (_MAXIMUM_CAPACITY * 2)) {
 				_threshold = Integer.MAX_VALUE;
 
 				return;

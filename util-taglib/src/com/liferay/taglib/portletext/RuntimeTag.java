@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.portletext;
 
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -39,7 +40,6 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -425,7 +425,7 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 	private static final Log _log = LogFactoryUtil.getLog(RuntimeTag.class);
 
 	private static final ThreadLocal<Stack<String>> _embeddedPortletIds =
-		new AutoResetThreadLocal<>(RuntimeTag.class + "._embeddedPortletIds");
+		new CentralizedThreadLocal<>(RuntimeTag.class + "._embeddedPortletIds");
 
 	private String _defaultPreferences;
 	private String _instanceId;

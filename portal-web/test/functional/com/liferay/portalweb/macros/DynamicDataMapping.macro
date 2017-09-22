@@ -731,7 +731,7 @@
 			<elseif>
 				<equals arg1="${field}" arg2="Paragraph" />
 				<then>
-					<execute function="AssertTextEquals" locator1="DDMEditStructure#FORM_FIELD" value1="${field}" />
+					<execute function="AssertTextEquals#assertPartialText" locator1="DDMEditStructure#FORM_FIELD" value1="${field}" />
 				</then>
 			</elseif>
 			<elseif>

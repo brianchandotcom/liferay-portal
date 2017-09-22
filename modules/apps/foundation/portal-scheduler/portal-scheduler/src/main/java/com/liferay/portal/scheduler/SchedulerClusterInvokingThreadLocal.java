@@ -14,7 +14,7 @@
 
 package com.liferay.portal.scheduler;
 
-import com.liferay.portal.kernel.util.InitialThreadLocal;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 
 /**
  * @author Tina Tian
@@ -30,8 +30,8 @@ public class SchedulerClusterInvokingThreadLocal {
 	}
 
 	private static final ThreadLocal<Boolean> _enabled =
-		new InitialThreadLocal<>(
+		new CentralizedThreadLocal<>(
 			SchedulerClusterInvokingThreadLocal.class + "._enabled",
-			() -> Boolean.TRUE);
+			() -> Boolean.TRUE, false);
 
 }

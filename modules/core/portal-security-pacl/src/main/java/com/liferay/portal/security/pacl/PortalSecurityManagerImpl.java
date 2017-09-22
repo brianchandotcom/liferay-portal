@@ -415,6 +415,7 @@ public class PortalSecurityManagerImpl
 		initClass(ActivePACLPolicy.class);
 		initClass(BaseTemplateManager.class);
 		initClass(com.liferay.portal.kernel.util.CentralizedThreadLocal.class);
+		initClass(CentralizedThreadLocal.class);
 		initClass(ConcurrentIdentityHashMap.class);
 		initClass(ConcurrentReferenceKeyHashMap.class);
 		initClass(ConcurrentReferenceValueHashMap.class);

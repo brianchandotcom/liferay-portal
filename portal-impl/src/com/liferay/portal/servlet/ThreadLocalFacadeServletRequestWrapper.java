@@ -14,7 +14,7 @@
 
 package com.liferay.portal.servlet;
 
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.Closeable;
@@ -131,7 +131,7 @@ public class ThreadLocalFacadeServletRequestWrapper
 
 	private static final ThreadLocal<ServletRequest>
 		_nextServletRequestThreadLocal =
-			new AutoResetThreadLocal<ServletRequest>(
+			new CentralizedThreadLocal<ServletRequest>(
 				ThreadLocalFacadeServletRequestWrapper.class +
 					"._nextServletRequestThreadLocal") {
 

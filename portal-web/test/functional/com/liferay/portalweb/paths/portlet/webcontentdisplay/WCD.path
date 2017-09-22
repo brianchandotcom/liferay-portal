@@ -61,8 +61,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>WEB_CONTENT_CONTENT_IMAGE</td>
-	<td>//div[@class='journal-content-article']/img</td>
+	<td>WEB_CONTENT_CONTENT_2</td>
+	<td>xPath=(//div[@class='journal-content-article'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_CONTENT_3</td>
+	<td>xPath=(//div[@class='journal-content-article'])[3]</td>
 	<td></td>
 </tr>
 <tr>

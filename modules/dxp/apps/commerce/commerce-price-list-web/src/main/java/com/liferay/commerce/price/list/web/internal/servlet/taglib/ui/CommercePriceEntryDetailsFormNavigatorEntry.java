@@ -19,9 +19,18 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 
+import java.io.IOException;
+
 import java.util.Locale;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -56,8 +65,29 @@ public class CommercePriceEntryDetailsFormNavigatorEntry
 	}
 
 	@Override
+	public void include(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		RequestDispatcher requestDispatcher =
+			_servletContext.getRequestDispatcher(getJspPath());
+
+		try {
+			requestDispatcher.include(request, response);
+		}
+		catch (ServletException se) {
+			throw new IOException("Unable to include " + getJspPath(), se);
+		}
+	}
+
+	@Override
 	protected String getJspPath() {
 		return "/price_entry/details.jsp";
 	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.price.list.web)"
+	)
+	private ServletContext _servletContext;
 
 }

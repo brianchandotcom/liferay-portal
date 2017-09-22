@@ -17,9 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommercePriceEntryDisplayContext commercePriceEntryDisplayContext = (CommercePriceEntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-CommercePriceEntry commercePriceEntry = commercePriceEntryDisplayContext.getCommercePriceEntry();
+CommercePriceEntry commercePriceEntry = (CommercePriceEntry)request.getAttribute(CommerceWebKeys.COMMERCE_PRICE_ENTRY);
 %>
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />

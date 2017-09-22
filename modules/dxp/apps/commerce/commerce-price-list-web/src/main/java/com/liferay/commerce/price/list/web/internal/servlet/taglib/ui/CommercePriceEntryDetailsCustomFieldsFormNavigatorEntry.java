@@ -21,9 +21,18 @@ import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.taglib.util.CustomAttributesUtil;
 
+import java.io.IOException;
+
 import java.util.Locale;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -58,6 +67,22 @@ public class CommercePriceEntryDetailsCustomFieldsFormNavigatorEntry
 	}
 
 	@Override
+	public void include(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		RequestDispatcher requestDispatcher =
+			_servletContext.getRequestDispatcher(getJspPath());
+
+		try {
+			requestDispatcher.include(request, response);
+		}
+		catch (ServletException se) {
+			throw new IOException("Unable to include " + getJspPath(), se);
+		}
+	}
+
+	@Override
 	public boolean isVisible(User user, CommercePriceEntry commercePriceEntry) {
 		boolean hasCustomAttributesAvailable = false;
 
@@ -83,5 +108,10 @@ public class CommercePriceEntryDetailsCustomFieldsFormNavigatorEntry
 	protected String getJspPath() {
 		return "/price_entry/custom_fields.jsp";
 	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.price.list.web)"
+	)
+	private ServletContext _servletContext;
 
 }

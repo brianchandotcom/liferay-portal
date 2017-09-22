@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Function;
 
 /**
  * @author Brian Wing Shun Chan
@@ -115,18 +116,9 @@ public class PermissionThreadLocal {
 			PermissionThreadLocal.class +
 				"._flushResourcePermissionEnabled",
 			HashSet::new);
-
 	private static final ThreadLocal<PermissionChecker> _permissionChecker =
-		new CentralizedThreadLocal<PermissionChecker>(
-			PermissionThreadLocal.class + "._permissionChecker") {
-
-			@Override
-			protected PermissionChecker copy(
-				PermissionChecker permissionChecker) {
-
-				return permissionChecker;
-			}
-
-		};
+		new CentralizedThreadLocal<>(
+			PermissionThreadLocal.class + "._permissionChecker", null,
+			Function.identity(), true);
 
 }

@@ -26,6 +26,7 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.locks.Lock;
+import java.util.function.Function;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletRequest;
@@ -155,19 +156,10 @@ public class ThreadLocalFacadeHttpServletRequestWrapper
 	}
 
 	private static final ThreadLocal<HttpServletRequest>
-		_nextHttpServletRequestThreadLocal =
-			new CentralizedThreadLocal<HttpServletRequest>(
-				ThreadLocalFacadeHttpServletRequestWrapper.class +
-					"._nextHttpServletRequestThreadLocal") {
-
-				@Override
-				protected HttpServletRequest copy(
-					HttpServletRequest httpServletRequest) {
-
-					return httpServletRequest;
-				}
-
-			};
+		_nextHttpServletRequestThreadLocal = new CentralizedThreadLocal<>(
+			ThreadLocalFacadeHttpServletRequestWrapper.class +
+				"._nextHttpServletRequestThreadLocal",
+			null, Function.identity(), true);
 
 	private final List<Locale> _locales;
 	private final ServletRequestWrapper _servletRequestWrapper;

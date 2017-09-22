@@ -111,8 +111,19 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpInstance.g
 						value="<%= String.valueOf(commerceTierPriceEntry.getCommerceTierPriceEntryId()) %>"
 					/>
 
+					<%
+					PortletURL rowURL = renderResponse.createRenderURL();
+
+					rowURL.setParameter("mvcRenderCommandName", "editCPInstanceCommerceTierPriceEntry");
+					rowURL.setParameter("commercePriceEntryId", String.valueOf(commercePriceEntryId));
+					rowURL.setParameter("commerceTierPriceEntryId", String.valueOf(commerceTierPriceEntry.getCommerceTierPriceEntryId()));
+					rowURL.setParameter("cpDefinitionId", String.valueOf(cpDefinitionId));
+					rowURL.setParameter("cpInstanceId", String.valueOf(cpInstanceId));
+					%>
+
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-content"
+						href="<%= rowURL %>"
 						name="product-title"
 						value="<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>"
 					/>

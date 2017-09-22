@@ -94,10 +94,18 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId) + " - " + cpInstance.g
 
 					<%
 					CommercePriceList commercePriceList = commercePriceEntry.getCommercePriceList();
+
+					PortletURL rowURL = renderResponse.createRenderURL();
+
+					rowURL.setParameter("mvcRenderCommandName", "editCPInstanceCommercePriceEntry");
+					rowURL.setParameter("commercePriceEntryId", String.valueOf(commercePriceEntry.getCommercePriceEntryId()));
+					rowURL.setParameter("cpDefinitionId", String.valueOf(cpDefinitionId));
+					rowURL.setParameter("cpInstanceId", String.valueOf(cpInstanceId));
 					%>
 
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-content"
+						href="<%= rowURL %>"
 						name="name"
 						value="<%= HtmlUtil.escape(commercePriceList.getName()) %>"
 					/>

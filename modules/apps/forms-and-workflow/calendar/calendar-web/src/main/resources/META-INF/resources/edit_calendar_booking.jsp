@@ -284,12 +284,12 @@ while (manageableCalendarsIterator.hasNext()) {
 <aui:form action="<%= updateFormCalendarBookingURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "updateCalendarBooking();" %>'>
 	<aui:input name="mvcPath" type="hidden" value="/edit_calendar_booking.jsp" />
 
-	<liferay-portlet:renderURL var="customRedirect">
+	<liferay-portlet:renderURL var="editCalendarBookingURL">
 		<liferay-portlet:param name="mvcPath" value="/edit_calendar_booking.jsp" />
 		<liferay-portlet:param name="calendarBookingId" value="<%= String.valueOf(calendarBookingId) %>" />
 	</liferay-portlet:renderURL>
 
-	<aui:input name="redirect" type="hidden" value="<%= useRedirect ? redirect : customRedirect %>" />
+	<aui:input name="redirect" type="hidden" value="<%= useRedirect ? redirect : editCalendarBookingURL %>" />
 	<aui:input name="calendarBookingId" type="hidden" value="<%= calendarBookingId %>" />
 	<aui:input name="instanceIndex" type="hidden" value="<%= instanceIndex %>" />
 	<aui:input name="childCalendarIds" type="hidden" />
@@ -490,7 +490,7 @@ while (manageableCalendarsIterator.hasNext()) {
 			<liferay-security:permissionsURL
 				modelResource="<%= CalendarBooking.class.getName() %>"
 				modelResourceDescription="<%= calendarBooking.getTitle(locale) %>"
-				redirect="<%= customRedirect %>"
+				redirect="<%= editCalendarBookingURL %>"
 				resourceGroupId="<%= calendarBooking.getGroupId() %>"
 				resourcePrimKey="<%= String.valueOf(calendarBooking.getCalendarBookingId()) %>"
 				var="permissionsCalendarBookingURL"

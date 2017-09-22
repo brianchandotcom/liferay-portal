@@ -1,0 +1,19 @@
+diff --git a/org/apache/jasper/JspCompilationContext.java b/org/apache/jasper/JspCompilationContext.java
+index 0d7877b..e23aed2 100644
+--- a/org/apache/jasper/JspCompilationContext.java
++++ b/org/apache/jasper/JspCompilationContext.java
+@@ -706,7 +706,7 @@ public class JspCompilationContext {
+             // Append servlet or tag handler path to scratch dir
+             File f = new File( options.getScratchDir(), path );
+             makeOutputDir(f.getPath() + File.separator);
+-            baseUrl = options.getScratchDir().toURL();
++            baseUrl = options.getScratchDir().toURI().toURL();
+         } catch (Exception e) {
+             throw new IllegalStateException("No output directory: " +
+                                             e.getMessage());
+@@ -781,4 +781,4 @@ public class JspCompilationContext {
+        return result.toString();
+     }
+ }
+-
++/* @generated */

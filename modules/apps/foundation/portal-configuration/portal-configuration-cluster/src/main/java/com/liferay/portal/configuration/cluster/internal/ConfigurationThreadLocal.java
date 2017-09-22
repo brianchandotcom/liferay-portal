@@ -31,7 +31,7 @@ public class ConfigurationThreadLocal {
 
 	private static final ThreadLocal<Boolean> _localUpdate =
 		new CentralizedThreadLocal<>(
-			CentralizedThreadLocal.class + "._localUpdate", () -> Boolean.FALSE,
-			false);
+			ConfigurationThreadLocal.class + "._localUpdate",
+			() -> Boolean.FALSE, false);
 
 }

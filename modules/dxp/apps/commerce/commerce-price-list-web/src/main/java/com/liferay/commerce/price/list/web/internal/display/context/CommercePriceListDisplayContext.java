@@ -18,9 +18,9 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.currency.util.comparator.CommerceCurrencyPriorityComparator;
 import com.liferay.commerce.model.CommercePriceList;
-import com.liferay.commerce.price.list.web.internal.portlet.action.ActionHelper;
-import com.liferay.commerce.price.list.web.internal.util.CommercePriceListPortletUtil;
+import com.liferay.commerce.price.list.web.internal.portlet.action.CommercePriceListActionHelper;
 import com.liferay.commerce.service.CommercePriceListService;
+import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -44,12 +44,12 @@ public class CommercePriceListDisplayContext
 	extends BaseCommercePriceListDisplayContext<CommercePriceList> {
 
 	public CommercePriceListDisplayContext(
-		ActionHelper actionHelper,
+		CommercePriceListActionHelper commercePriceListActionHelper,
 		CommerceCurrencyService commerceCurrencyService,
 		CommercePriceListService commercePriceListService,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		super(actionHelper, renderRequest, renderResponse);
+		super(commercePriceListActionHelper, renderRequest, renderResponse);
 
 		_commerceCurrencyService = commerceCurrencyService;
 		_commercePriceListService = commercePriceListService;
@@ -79,7 +79,7 @@ public class CommercePriceListDisplayContext
 			renderRequest, getPortletURL(), null, "there-are-no-price-lists");
 
 		OrderByComparator<CommercePriceList> orderByComparator =
-			CommercePriceListPortletUtil.getCommercePriceListOrderByComparator(
+			CommerceUtil.getCommercePriceListOrderByComparator(
 				getOrderByCol(), getOrderByType());
 
 		searchContainer.setOrderByCol(getOrderByCol());
@@ -88,7 +88,7 @@ public class CommercePriceListDisplayContext
 		searchContainer.setRowChecker(getRowChecker());
 
 		if (isSearch()) {
-			Sort sort = CommercePriceListPortletUtil.getCommercePriceListSort(
+			Sort sort = CommerceUtil.getCommercePriceListSort(
 				getOrderByCol(), getOrderByType());
 
 			BaseModelSearchResult<CommercePriceList>

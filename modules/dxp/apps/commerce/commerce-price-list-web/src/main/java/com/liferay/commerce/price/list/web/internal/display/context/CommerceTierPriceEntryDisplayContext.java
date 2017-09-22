@@ -17,11 +17,11 @@ package com.liferay.commerce.price.list.web.internal.display.context;
 import com.liferay.commerce.model.CommercePriceEntry;
 import com.liferay.commerce.model.CommercePriceList;
 import com.liferay.commerce.model.CommerceTierPriceEntry;
-import com.liferay.commerce.price.list.web.internal.portlet.action.ActionHelper;
-import com.liferay.commerce.price.list.web.internal.util.CommercePriceListPortletUtil;
+import com.liferay.commerce.price.list.web.internal.portlet.action.CommercePriceListActionHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.service.CommerceTierPriceEntryService;
+import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -45,17 +45,18 @@ public class CommerceTierPriceEntryDisplayContext
 	extends BaseCommercePriceListDisplayContext<CommerceTierPriceEntry> {
 
 	public CommerceTierPriceEntryDisplayContext(
-		ActionHelper actionHelper,
+		CommercePriceListActionHelper commercePriceListActionHelper,
 		CommerceTierPriceEntryService commerceTierPriceEntryService,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		super(actionHelper, renderRequest, renderResponse);
+		super(commercePriceListActionHelper, renderRequest, renderResponse);
 
 		_commerceTierPriceEntryService = commerceTierPriceEntryService;
 	}
 
 	public CommercePriceEntry getCommercePriceEntry() throws PortalException {
-		return actionHelper.getCommercePriceEntry(renderRequest);
+		return commercePriceListActionHelper.getCommercePriceEntry(
+			renderRequest);
 	}
 
 	public long getCommercePriceEntryId() throws PortalException {
@@ -75,8 +76,9 @@ public class CommerceTierPriceEntryDisplayContext
 			return _commerceTierPriceEntry;
 		}
 
-		_commerceTierPriceEntry = actionHelper.getCommerceTierPriceEntry(
-			renderRequest);
+		_commerceTierPriceEntry =
+			commercePriceListActionHelper.getCommerceTierPriceEntry(
+				renderRequest);
 
 		return _commerceTierPriceEntry;
 	}
@@ -170,7 +172,7 @@ public class CommerceTierPriceEntryDisplayContext
 			"there-are-no-tier-price-entries");
 
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator =
-			CommercePriceListPortletUtil.getCommerceTypePriceOrderByComparator(
+			CommerceUtil.getCommerceTierPriceEntryOrderByComparator(
 				getOrderByCol(), getOrderByType());
 
 		searchContainer.setOrderByCol(getOrderByCol());
@@ -179,7 +181,7 @@ public class CommerceTierPriceEntryDisplayContext
 		searchContainer.setRowChecker(getRowChecker());
 
 		if (isSearch()) {
-			Sort sort = CommercePriceListPortletUtil.getCommercePriceEntrySort(
+			Sort sort = CommerceUtil.getCommercePriceEntrySort(
 				getOrderByCol(), getOrderByType());
 
 			BaseModelSearchResult<CommerceTierPriceEntry>
@@ -215,7 +217,7 @@ public class CommerceTierPriceEntryDisplayContext
 		return searchContainer;
 	}
 
-	public boolean hasCustomAttributesAvailable() throws Exception {
+	public boolean hasCustomAttributes() throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

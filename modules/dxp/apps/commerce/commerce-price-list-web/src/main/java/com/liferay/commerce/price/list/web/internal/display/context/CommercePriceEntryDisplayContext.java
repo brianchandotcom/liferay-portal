@@ -15,10 +15,10 @@
 package com.liferay.commerce.price.list.web.internal.display.context;
 
 import com.liferay.commerce.model.CommercePriceEntry;
-import com.liferay.commerce.price.list.web.internal.portlet.action.ActionHelper;
-import com.liferay.commerce.price.list.web.internal.util.CommercePriceListPortletUtil;
+import com.liferay.commerce.price.list.web.internal.portlet.action.CommercePriceListActionHelper;
 import com.liferay.commerce.product.item.selector.criterion.CPInstanceItemSelectorCriterion;
 import com.liferay.commerce.service.CommercePriceEntryService;
+import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
@@ -50,12 +50,12 @@ public class CommercePriceEntryDisplayContext
 	extends BaseCommercePriceListDisplayContext<CommercePriceEntry> {
 
 	public CommercePriceEntryDisplayContext(
-		ActionHelper actionHelper,
+		CommercePriceListActionHelper commercePriceListActionHelper,
 		CommercePriceEntryService commercePriceEntryService,
 		ItemSelector itemSelector, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 
-		super(actionHelper, renderRequest, renderResponse);
+		super(commercePriceListActionHelper, renderRequest, renderResponse);
 
 		_commercePriceEntryService = commercePriceEntryService;
 		_itemSelector = itemSelector;
@@ -66,7 +66,8 @@ public class CommercePriceEntryDisplayContext
 			return _commercePriceEntry;
 		}
 
-		_commercePriceEntry = actionHelper.getCommercePriceEntry(renderRequest);
+		_commercePriceEntry =
+			commercePriceListActionHelper.getCommercePriceEntry(renderRequest);
 
 		return _commercePriceEntry;
 	}
@@ -130,7 +131,7 @@ public class CommercePriceEntryDisplayContext
 			renderRequest, getPortletURL(), null, "there-are-no-price-entries");
 
 		OrderByComparator<CommercePriceEntry> orderByComparator =
-			CommercePriceListPortletUtil.getCommercePriceEntryOrderByComparator(
+			CommerceUtil.getCommercePriceEntryOrderByComparator(
 				getOrderByCol(), getOrderByType());
 
 		searchContainer.setOrderByCol(getOrderByCol());
@@ -139,7 +140,7 @@ public class CommercePriceEntryDisplayContext
 		searchContainer.setRowChecker(getRowChecker());
 
 		if (isSearch()) {
-			Sort sort = CommercePriceListPortletUtil.getCommercePriceEntrySort(
+			Sort sort = CommerceUtil.getCommercePriceEntrySort(
 				getOrderByCol(), getOrderByType());
 
 			BaseModelSearchResult<CommercePriceEntry>

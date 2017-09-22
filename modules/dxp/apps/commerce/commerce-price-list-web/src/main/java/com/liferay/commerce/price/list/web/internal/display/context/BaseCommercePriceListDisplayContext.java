@@ -15,7 +15,7 @@
 package com.liferay.commerce.price.list.web.internal.display.context;
 
 import com.liferay.commerce.model.CommercePriceList;
-import com.liferay.commerce.price.list.web.internal.portlet.action.ActionHelper;
+import com.liferay.commerce.price.list.web.internal.portlet.action.CommercePriceListActionHelper;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -33,10 +33,10 @@ import javax.portlet.RenderResponse;
 public abstract class BaseCommercePriceListDisplayContext<T> {
 
 	public BaseCommercePriceListDisplayContext(
-		ActionHelper actionHelper, RenderRequest renderRequest,
-		RenderResponse renderResponse) {
+		CommercePriceListActionHelper commercePriceListActionHelper,
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		this.actionHelper = actionHelper;
+		this.commercePriceListActionHelper = commercePriceListActionHelper;
 		this.renderRequest = renderRequest;
 		this.renderResponse = renderResponse;
 
@@ -49,7 +49,8 @@ public abstract class BaseCommercePriceListDisplayContext<T> {
 			return _commercePriceList;
 		}
 
-		_commercePriceList = actionHelper.getCommercePriceList(renderRequest);
+		_commercePriceList = commercePriceListActionHelper.getCommercePriceList(
+			renderRequest);
 
 		return _commercePriceList;
 	}
@@ -175,7 +176,7 @@ public abstract class BaseCommercePriceListDisplayContext<T> {
 		return ParamUtil.getString(renderRequest, "navigation");
 	}
 
-	protected final ActionHelper actionHelper;
+	protected final CommercePriceListActionHelper commercePriceListActionHelper;
 	protected final RenderRequest renderRequest;
 	protected final RenderResponse renderResponse;
 	protected SearchContainer<T> searchContainer;

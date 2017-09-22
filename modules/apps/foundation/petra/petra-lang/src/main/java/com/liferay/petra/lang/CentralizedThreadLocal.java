@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
@@ -82,6 +83,13 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 	public CentralizedThreadLocal(
 		String name, Supplier<T> supplier, boolean shortLived) {
 
+		this(name, supplier, null, shortLived);
+	}
+
+	public CentralizedThreadLocal(
+		String name, Supplier<T> supplier, Function<T, T> copyFunction,
+		boolean shortLived) {
+
 		if (shortLived) {
 			_hashCode = _shortLivedNextHasCode.getAndAdd(_HASH_INCREMENT);
 		}
@@ -101,6 +109,13 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 		}
 		else {
 			_supplier = supplier;
+		}
+
+		if (copyFunction == null) {
+			_copyFunction = this::_copy;
+		}
+		else {
+			_copyFunction = copyFunction;
 		}
 
 		_shortLived = shortLived;
@@ -156,18 +171,6 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 		return _name;
 	}
 
-	protected T copy(T value) {
-		if (value != null) {
-			Class<?> clazz = value.getClass();
-
-			if (_immutableTypes.contains(clazz)) {
-				return value;
-			}
-		}
-
-		return null;
-	}
-
 	@Override
 	protected T initialValue() {
 		return _supplier.get();
@@ -184,7 +187,8 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 				CentralizedThreadLocal<Object> centralizedThreadLocal =
 					(CentralizedThreadLocal<Object>)entry._key;
 
-				Object value = centralizedThreadLocal.copy(entry._value);
+				Object value = centralizedThreadLocal._copyFunction.apply(
+					entry._value);
 
 				if (value != null) {
 					map.put(centralizedThreadLocal, value);
@@ -195,6 +199,18 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 		}
 
 		return map;
+	}
+
+	private T _copy(T value) {
+		if (value != null) {
+			Class<?> clazz = value.getClass();
+
+			if (_immutableTypes.contains(clazz)) {
+				return value;
+			}
+		}
+
+		return null;
 	}
 
 	private ThreadLocalMap _getThreadLocalMap() {
@@ -230,6 +246,7 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 		_immutableTypes.add(String.class);
 	}
 
+	private final Function<T, T> _copyFunction;
 	private final int _hashCode;
 	private final String _name;
 	private final boolean _shortLived;

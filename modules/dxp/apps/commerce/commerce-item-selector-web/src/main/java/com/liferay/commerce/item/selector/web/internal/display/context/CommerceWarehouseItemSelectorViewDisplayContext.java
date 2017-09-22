@@ -17,7 +17,6 @@ package com.liferay.commerce.item.selector.web.internal.display.context;
 import com.liferay.commerce.item.selector.web.internal.search.CommerceWarehouseChecker;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceWarehouse;
-import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceWarehouseService;
 import com.liferay.commerce.util.CommerceUtil;
@@ -42,8 +41,10 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
-public class CommerceWarehouseItemSelectorViewDisplayContext {
+public class CommerceWarehouseItemSelectorViewDisplayContext
+	extends BaseCommerceItemSelectorViewDisplayContext<CommerceWarehouse> {
 
 	public CommerceWarehouseItemSelectorViewDisplayContext(
 		CommerceCountryService commerceCountryService,
@@ -51,22 +52,16 @@ public class CommerceWarehouseItemSelectorViewDisplayContext {
 		HttpServletRequest httpServletRequest, PortletURL portletURL,
 		String itemSelectedEventName, boolean search) {
 
+		super(httpServletRequest, portletURL, itemSelectedEventName);
+
 		_commerceCountryService = commerceCountryService;
 		_commerceWarehouseService = commerceWarehouseService;
-		_portletURL = portletURL;
-		_itemSelectedEventName = itemSelectedEventName;
 		_search = search;
-
-		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
 	}
 
 	public long getCommerceCountryId() {
 		return ParamUtil.getLong(
-			_cpRequestHelper.getRenderRequest(), "commerceCountryId", -1);
-	}
-
-	public String getItemSelectedEventName() {
-		return _itemSelectedEventName;
+			cpRequestHelper.getRenderRequest(), "commerceCountryId", -1);
 	}
 
 	public List<ManagementBarFilterItem> getManagementBarFilterItems()
@@ -74,7 +69,7 @@ public class CommerceWarehouseItemSelectorViewDisplayContext {
 
 		List<CommerceCountry> commerceCountries =
 			_commerceCountryService.getWarehouseCommerceCountries(
-				_cpRequestHelper.getScopeGroupId());
+				cpRequestHelper.getScopeGroupId());
 
 		List<ManagementBarFilterItem> managementBarFilterItems =
 			new ArrayList<>(commerceCountries.size() + 2);
@@ -86,36 +81,26 @@ public class CommerceWarehouseItemSelectorViewDisplayContext {
 			managementBarFilterItems.add(
 				getManagementBarFilterItem(
 					commerceCountry.getCommerceCountryId(),
-					commerceCountry.getName(_cpRequestHelper.getLocale())));
+					commerceCountry.getName(cpRequestHelper.getLocale())));
 		}
 
 		return managementBarFilterItems;
 	}
 
-	public String getOrderByCol() {
-		return ParamUtil.getString(
-			_cpRequestHelper.getRenderRequest(),
-			SearchContainer.DEFAULT_ORDER_BY_COL_PARAM, "name");
-	}
-
-	public String getOrderByType() {
-		return ParamUtil.getString(
-			_cpRequestHelper.getRenderRequest(),
-			SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM, "asc");
-	}
-
 	public PortletURL getPortletURL() {
-		_portletURL.setParameter(
+		PortletURL portletURL = super.getPortletURL();
+
+		portletURL.setParameter(
 			"commerceCountryId", String.valueOf(getCommerceCountryId()));
 
-		return _portletURL;
+		return portletURL;
 	}
 
 	public SearchContainer<CommerceWarehouse> getSearchContainer()
 		throws PortalException {
 
-		if (_searchContainer != null) {
-			return _searchContainer;
+		if (searchContainer != null) {
+			return searchContainer;
 		}
 
 		long commerceCountryId = getCommerceCountryId();
@@ -132,7 +117,7 @@ public class CommerceWarehouseItemSelectorViewDisplayContext {
 			CommerceCountry commerceCountry =
 				_commerceCountryService.getCommerceCountry(commerceCountryId);
 
-			Locale locale = _cpRequestHelper.getLocale();
+			Locale locale = cpRequestHelper.getLocale();
 
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 				"content.Language", locale, getClass());
@@ -142,8 +127,8 @@ public class CommerceWarehouseItemSelectorViewDisplayContext {
 				commerceCountry.getName(locale), false);
 		}
 
-		_searchContainer = new SearchContainer<>(
-			_cpRequestHelper.getRenderRequest(), getPortletURL(), null,
+		searchContainer = new SearchContainer<>(
+			cpRequestHelper.getRenderRequest(), getPortletURL(), null,
 			emptyResultsMessage);
 
 		String orderByCol = getOrderByCol();
@@ -153,64 +138,52 @@ public class CommerceWarehouseItemSelectorViewDisplayContext {
 			CommerceUtil.getCommerceWarehouseOrderByComparator(
 				orderByCol, orderByType);
 
-		_searchContainer.setOrderByCol(orderByCol);
-		_searchContainer.setOrderByComparator(orderByComparator);
-		_searchContainer.setOrderByType(orderByType);
-		_searchContainer.setRowChecker(
+		searchContainer.setOrderByCol(orderByCol);
+		searchContainer.setOrderByComparator(orderByComparator);
+		searchContainer.setOrderByType(orderByType);
+		searchContainer.setRowChecker(
 			new CommerceWarehouseChecker(
-				_cpRequestHelper.getRenderResponse(),
+				cpRequestHelper.getRenderResponse(),
 				getCheckedCommerceWarehouseIds(),
 				getDisabledCommerceWarehouseIds()));
-		_searchContainer.setSearch(_search);
+		searchContainer.setSearch(_search);
 
 		int total;
 		List<CommerceWarehouse> results;
 
-		if (_searchContainer.isSearch()) {
+		if (searchContainer.isSearch()) {
 			total = _commerceWarehouseService.searchCount(
-				_cpRequestHelper.getScopeGroupId(), getKeywords(),
+				cpRequestHelper.getScopeGroupId(), getKeywords(),
 				commerceCountryId);
 			results = _commerceWarehouseService.search(
-				_cpRequestHelper.getScopeGroupId(), getKeywords(),
-				commerceCountryId, _searchContainer.getStart(),
-				_searchContainer.getEnd(),
-				_searchContainer.getOrderByComparator());
+				cpRequestHelper.getScopeGroupId(), getKeywords(),
+				commerceCountryId, searchContainer.getStart(),
+				searchContainer.getEnd(),
+				searchContainer.getOrderByComparator());
 		}
 		else {
 			total = _commerceWarehouseService.getCommerceWarehousesCount(
-				_cpRequestHelper.getScopeGroupId(), commerceCountryId);
+				cpRequestHelper.getScopeGroupId(), commerceCountryId);
 			results = _commerceWarehouseService.getCommerceWarehouses(
-				_cpRequestHelper.getScopeGroupId(), commerceCountryId,
-				_searchContainer.getStart(), _searchContainer.getEnd(),
-				_searchContainer.getOrderByComparator());
+				cpRequestHelper.getScopeGroupId(), commerceCountryId,
+				searchContainer.getStart(), searchContainer.getEnd(),
+				searchContainer.getOrderByComparator());
 		}
 
-		_searchContainer.setTotal(total);
-		_searchContainer.setResults(results);
+		searchContainer.setTotal(total);
+		searchContainer.setResults(results);
 
-		return _searchContainer;
+		return searchContainer;
 	}
 
 	protected long[] getCheckedCommerceWarehouseIds() {
 		return ParamUtil.getLongValues(
-			_cpRequestHelper.getRenderRequest(), "checkedCommerceWarehouseIds");
+			cpRequestHelper.getRenderRequest(), "checkedCommerceWarehouseIds");
 	}
 
 	protected long[] getDisabledCommerceWarehouseIds() {
 		return ParamUtil.getLongValues(
-			_cpRequestHelper.getRenderRequest(),
-			"disabledCommerceWarehouseIds");
-	}
-
-	protected String getKeywords() {
-		if (_keywords != null) {
-			return _keywords;
-		}
-
-		_keywords = ParamUtil.getString(
-			_cpRequestHelper.getRenderRequest(), "keywords");
-
-		return _keywords;
+			cpRequestHelper.getRenderRequest(), "disabledCommerceWarehouseIds");
 	}
 
 	protected ManagementBarFilterItem getManagementBarFilterItem(
@@ -224,7 +197,7 @@ public class CommerceWarehouseItemSelectorViewDisplayContext {
 		}
 
 		PortletURL portletURL = PortletURLUtil.clone(
-			getPortletURL(), _cpRequestHelper.getRenderResponse());
+			getPortletURL(), cpRequestHelper.getRenderResponse());
 
 		portletURL.setParameter(
 			"commerceCountryId", String.valueOf(commerceCountryId));
@@ -236,11 +209,6 @@ public class CommerceWarehouseItemSelectorViewDisplayContext {
 
 	private final CommerceCountryService _commerceCountryService;
 	private final CommerceWarehouseService _commerceWarehouseService;
-	private final CPRequestHelper _cpRequestHelper;
-	private final String _itemSelectedEventName;
-	private String _keywords;
-	private final PortletURL _portletURL;
 	private final boolean _search;
-	private SearchContainer<CommerceWarehouse> _searchContainer;
 
 }

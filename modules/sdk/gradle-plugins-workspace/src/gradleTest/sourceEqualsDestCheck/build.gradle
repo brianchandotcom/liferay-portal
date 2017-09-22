@@ -7,11 +7,13 @@ gradle.liferayWorkspace {
 runGradleTest {
 	doLast {
 		try {
-			downloadBundle.execute()
+			tasks.downloadBundle.execute()
 		}
 		catch (Exception e) {
+			assert downloadBundle.state.didWork == true
+			assert downloadBundle.state.executed == true
+			assert e.message.contains("Execution failed for task ':downloadBundle'")
 		}
 
-		assert downloadBundle.state.failure.contains("Destination Dir cannot be the same as Source Dir")
 	}
 }

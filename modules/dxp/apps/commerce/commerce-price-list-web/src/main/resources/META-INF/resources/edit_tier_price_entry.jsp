@@ -57,7 +57,7 @@ renderResponse.setTitle(commerceTierPriceEntryDisplayContext.getContextTitle());
 			<aui:input name="minQuantity" />
 		</aui:fieldset>
 
-		<c:if test="<%= commerceTierPriceEntryDisplayContext.hasCustomAttributesAvailable() %>">
+		<c:if test="<%= commerceTierPriceEntryDisplayContext.hasCustomAttributes() %>">
 			<aui:fieldset>
 				<liferay-expando:custom-attribute-list
 					className="<%= CommerceTierPriceEntry.class.getName() %>"

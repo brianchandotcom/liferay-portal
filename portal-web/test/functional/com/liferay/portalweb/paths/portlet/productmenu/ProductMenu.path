@@ -9,6 +9,36 @@
 </thead>
 <tbody>
 <tr>
+	<td>PANEL</td>
+	<td>//div[contains(@id,'${key_panel}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PANEL_COLLAPSED</td>
+	<td>//div[contains(@id,'${key_panel}')]/div/a[@aria-expanded='false']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PANEL_EXPANDED</td>
+	<td>//div[contains(@id,'${key_panel}')]/div/a[@aria-expanded='true']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY</td>
+	<td>//div[@class='panel'][div/div/a[@aria-expanded='true']]//a[@data-qa-id='appGroup'][normalize-space(.//text())='${key_category}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_COLLAPSED</td>
+	<td>//div[@class='panel'][div/div/a[@aria-expanded='true']]//a[@data-qa-id='appGroup'][normalize-space(.//text())='${key_category}'][@aria-expanded='false']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_EXPANDED</td>
+	<td>//div[@class='panel'][div/div/a[@aria-expanded='true']]//a[@data-qa-id='appGroup'][normalize-space(.//text())='${key_category}'][@aria-expanded='true']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TOGGLE</td>
 	<td>//*[@data-qa-id='productMenu']</td>
 	<td></td>
@@ -66,16 +96,6 @@
 <tr>
 	<td>GO_TO_SITES_LINK</td>
 	<td>//a[contains(.,'Go to Site')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CATEGORY_COLLAPSED</td>
-	<td>//div[a[@aria-expanded='true']]/../..//a[@aria-expanded='false' and contains(.,'${key_category}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CATEGORY_EXPANDED</td>
-	<td>//div[a[@aria-expanded='true']]/../..//a[@aria-expanded='true' and contains(.,'${key_category}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -204,16 +224,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TAB_COLLAPSED</td>
-	<td>//div[@role='tab' and contains(.,'${key_tab}')]//div[@aria-expanded='false']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TAB_EXPANDED</td>
-	<td>//div[@role='tab' and contains(.,'${key_tab}')]//div[@aria-expanded='true']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>USER_PROFILE_PICTURE</td>
 	<td>//div[contains(@class,'user-icon')]</td>
 	<td></td>
@@ -226,67 +236,6 @@
 <tr>
 	<td>USER_PROFILE</td>
 	<td>//div[contains(@class,'list-group')]//a[contains(.,'Profile')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--PRODUCT_MENU_TABS-->
-<tr>
-	<td>PRODUCT_MENU_TABS_TAB_ICON</td>
-	<td>//div[contains(.,'${tabName}')]/../div[contains(@class,'tab-icon')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PRODUCT_MENU_TABS_SITES_COLLAPSED</td>
-	<td>//*[@data-qa-id='productMenuSiteAdministrationPanelCategory'][@aria-expanded='false']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PRODUCT_MENU_TABS_SITES_EXPANDED</td>
-	<td>//*[@data-qa-id='productMenuSiteAdministrationPanelCategory'][@aria-expanded='true']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PRODUCT_MENU_TABS_SITES_NAVIGATION</td>
-	<td>//div[contains(.,'Sites')]/../div[contains(@class,'tab-text')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PRODUCT_MENU_TABS_USER_COLLAPSED</td>
-	<td>//*[@data-qa-id='productMenuUserPanelCategory'][@aria-expanded='false']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PRODUCT_MENU_TABS_USER_EXPANDED</td>
-	<td>//*[@data-qa-id='productMenuUserPanelCategory'][@aria-expanded='true']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PRODUCT_MENU_TABS_USER_NAVIGATION</td>
-	<td>//div[contains(@class,'user-tab')]//div[contains(@class,'user-icon')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PRODUCT_MENU_TABS_CONTROL_PANEL_COLLAPSED</td>
-	<td>//*[@data-qa-id='productMenuControlPanelCategory'][@aria-expanded='false']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PRODUCT_MENU_TABS_CONTROL_PANEL_EXPANDED</td>
-	<td>//*[@data-qa-id='productMenuControlPanelCategory'][@aria-expanded='true']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PRODUCT_MENU_TABS_CONTROL_PANEL_NAVIGATION</td>
-	<td>//div[contains(.,'Control Panel')]/../div[contains(@class,'tab-text')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PRODUCT_MENU_TABS_EXPANDED_PANEL</td>
-	<td>//div[(@class='collapse panel-collapse in' or @class='panel-collapse collapse in' or @class='panel-collapse collapse show') and contains(@id,'${key_panelId}')]</td>
 	<td></td>
 </tr>
 <tr>

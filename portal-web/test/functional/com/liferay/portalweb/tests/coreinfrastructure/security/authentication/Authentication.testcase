@@ -29,7 +29,9 @@
 		<property name="apacheds.enabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="Authentication#TestLDAPConnectionAndEntries" />
 
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="Instance Settings" />
 		</execute>
 
@@ -51,7 +53,9 @@
 	<command name="ViewAuthenticationCAS" priority="3">
 		<property name="test.name.skip.portal.instance" value="Authentication#ViewAuthenticationCAS" />
 
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="Instance Settings" />
 		</execute>
 
@@ -61,7 +65,9 @@
 	<command name="ViewAuthenticationGeneral" priority="3">
 		<property name="test.name.skip.portal.instance" value="Authentication#ViewAuthenticationGeneral" />
 
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="Instance Settings" />
 		</execute>
 
@@ -73,7 +79,9 @@
 		<property name="test.name.skip.portal.instance" value="Authentication#ViewAuthenticationLDAP" />
 		<property name="testray.component.names" value="Training" />
 
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="Instance Settings" />
 		</execute>
 
@@ -83,7 +91,9 @@
 	<command name="ViewAuthenticationNTLM" priority="3">
 		<property name="test.name.skip.portal.instance" value="Authentication#ViewAuthenticationNTLM" />
 
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="Instance Settings" />
 		</execute>
 
@@ -93,7 +103,9 @@
 	<command name="ViewAuthenticationOpenID" priority="3">
 		<property name="test.name.skip.portal.instance" value="Authentication#ViewAuthenticationOpenID" />
 
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="Instance Settings" />
 		</execute>
 
@@ -103,7 +115,9 @@
 	<command name="ViewAuthenticationOpenSSO" priority="3">
 		<property name="test.name.skip.portal.instance" value="Authentication#ViewAuthenticationOpenSSO" />
 
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="Instance Settings" />
 		</execute>
 
@@ -113,7 +127,9 @@
 	<command name="ViewInstanceSettingEnableLDAPAuthNotAffectSystemSetting" priority="3">
 		<property name="test.name.skip.portal.instance" value="Authentication#ViewInstanceSettingEnableLDAPAuthNotAffectSystemSetting" />
 
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="System Settings" />
 		</execute>
 
@@ -126,7 +142,9 @@
 			<var name="enableLDAP" value="false" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="Instance Settings" />
 		</execute>
 
@@ -142,7 +160,9 @@
 			<var name="enableCheckboxKey" value="ENABLED" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="System Settings" />
 		</execute>
 

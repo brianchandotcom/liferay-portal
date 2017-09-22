@@ -67,7 +67,9 @@ discoveryZenPingUnicastHostsPort=&quot;9300-9400&quot;" />
 
 		<property name="remote.elasticsearch.enabled" value="true" />
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
@@ -82,7 +84,9 @@ discoveryZenPingUnicastHostsPort=&quot;9300-9400&quot;" />
 	<command name="AssertSystemSettingsPropogateToModule" priority="4">
 		<property name="test.name.skip.portal.instance" value="Elasticsearch#AssertSystemSettingsPropogateToModule" />
 
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="System Settings" />
 		</execute>
 

@@ -30,7 +30,9 @@
 		<if>
 			<equals arg1="${themeContainsResources}" arg2="true" />
 			<then>
-				<execute macro="ProductMenu#gotoControlPanelSites">
+				<execute macro="ProductMenu#gotoPortlet">
+					<var name="category" value="Sites" />
+					<var name="panel" value="Control Panel" />
 					<var name="portlet" value="Sites" />
 				</execute>
 
@@ -54,7 +56,9 @@
 			<else>
 				<var name="appName" value="fjord-theme" />
 
-				<execute macro="ProductMenu#gotoControlPanelApps">
+				<execute macro="ProductMenu#gotoPortlet">
+					<var name="category" value="Apps" />
+					<var name="panel" value="Control Panel" />
 					<var name="portlet" value="App Manager" />
 				</execute>
 

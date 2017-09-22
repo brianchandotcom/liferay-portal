@@ -12,7 +12,9 @@
 	<command name="MarketplacePortletContentTargetingSmoke" priority="4">
 		<property name="extraapps.plugins.includes" value="content-targeting" />
 
-		<execute macro="ProductMenu#gotoSitesConfiguration">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 	</command>

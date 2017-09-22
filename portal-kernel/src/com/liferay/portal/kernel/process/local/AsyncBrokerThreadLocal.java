@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.process.local;
 
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.concurrent.AsyncBroker;
-import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 
 import java.io.Serializable;
 

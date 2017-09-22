@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.executor;
 
-import com.liferay.portal.kernel.util.CentralizedThreadLocal;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.ThreadLocalBinder;
 
 import java.util.Collections;

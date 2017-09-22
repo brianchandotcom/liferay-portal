@@ -116,16 +116,9 @@ public class TransactionCommitCallbackUtil {
 		TransactionCommitCallbackUtil.class);
 
 	private static final ThreadLocal<List<List<Callable<?>>>>
-		_callbackListListThreadLocal =
-			new CentralizedThreadLocal<List<List<Callable<?>>>>(
-				TransactionCommitCallbackUtil.class +
-					"._callbackListListThreadLocal") {
-
-				@Override
-				protected List<List<Callable<?>>> initialValue() {
-					return new ArrayList<>();
-				}
-
-			};
+		_callbackListListThreadLocal = new CentralizedThreadLocal<>(
+			TransactionCommitCallbackUtil.class +
+				"._callbackListListThreadLocal",
+			ArrayList::new);
 
 }

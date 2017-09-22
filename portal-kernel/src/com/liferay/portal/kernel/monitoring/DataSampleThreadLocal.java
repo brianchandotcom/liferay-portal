@@ -68,18 +68,14 @@ public class DataSampleThreadLocal {
 	private static final ThreadLocal<DataSampleThreadLocal>
 		_dataSampleThreadLocal =
 			new CentralizedThreadLocal<DataSampleThreadLocal>(
-				DataSampleThreadLocal.class + "._dataSampleThreadLocal") {
+				DataSampleThreadLocal.class + "._dataSampleThreadLocal",
+				DataSampleThreadLocal::new) {
 
 				@Override
 				protected DataSampleThreadLocal copy(
 					DataSampleThreadLocal dataSampleThreadLocal) {
 
 					return dataSampleThreadLocal;
-				}
-
-				@Override
-				protected DataSampleThreadLocal initialValue() {
-					return new DataSampleThreadLocal();
 				}
 
 			};

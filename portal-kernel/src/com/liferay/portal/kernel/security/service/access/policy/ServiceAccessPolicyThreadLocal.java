@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.security.service.access.policy;
 
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +50,8 @@ public class ServiceAccessPolicyThreadLocal {
 	}
 
 	private static final ThreadLocal<List<String>>
-		_activeServiceAccessPolicyNames = new AutoResetThreadLocal<>(
-			AutoResetThreadLocal.class + "._activeServiceAccessPolicyNames");
+		_activeServiceAccessPolicyNames = new CentralizedThreadLocal<>(
+			ServiceAccessPolicyThreadLocal.class +
+				"._activeServiceAccessPolicyNames");
 
 }

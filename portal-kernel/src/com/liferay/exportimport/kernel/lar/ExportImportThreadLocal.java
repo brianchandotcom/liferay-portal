@@ -16,7 +16,7 @@ package com.liferay.exportimport.kernel.lar;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 
 /**
  * @author Michael C. Han
@@ -170,49 +170,49 @@ public class ExportImportThreadLocal {
 	}
 
 	private static final ThreadLocal<Boolean> _initialLayoutStagingInProcess =
-		new AutoResetThreadLocal<>(
+		new CentralizedThreadLocal<>(
 			ExportImportThreadLocal.class + "._initialLayoutStagingInProcess",
 			() -> Boolean.FALSE);
 	private static final ThreadLocal<Boolean>
-		_layoutDataDeletionImportInProcess = new AutoResetThreadLocal<>(
+		_layoutDataDeletionImportInProcess = new CentralizedThreadLocal<>(
 			ExportImportThreadLocal.class +
 				"._layoutDataDeletionImportInProcess",
 			() -> Boolean.FALSE);
 	private static final ThreadLocal<Boolean> _layoutExportInProcess =
-		new AutoResetThreadLocal<>(
+		new CentralizedThreadLocal<>(
 			ExportImportThreadLocal.class + "._layoutExportInProcess",
 			() -> Boolean.FALSE);
 	private static final ThreadLocal<Boolean> _layoutImportInProcess =
-		new AutoResetThreadLocal<>(
+		new CentralizedThreadLocal<>(
 			ExportImportThreadLocal.class + "._layoutImportInProcess",
 			() -> Boolean.FALSE);
 	private static final ThreadLocal<Boolean> _layoutStagingInProcess =
-		new AutoResetThreadLocal<>(
+		new CentralizedThreadLocal<>(
 			ExportImportThreadLocal.class + "._layoutStagingInProcess",
 			() -> Boolean.FALSE);
 	private static final ThreadLocal<Boolean> _layoutValidationInProcess =
-		new AutoResetThreadLocal<>(
+		new CentralizedThreadLocal<>(
 			ExportImportThreadLocal.class + "._layoutValidationInProcess",
 			() -> Boolean.FALSE);
 	private static final ThreadLocal<Boolean>
-		_portletDataDeletionImportInProcess = new AutoResetThreadLocal<>(
+		_portletDataDeletionImportInProcess = new CentralizedThreadLocal<>(
 			ExportImportThreadLocal.class +
 				"._portletDataDeletionImportInProcess",
 			() -> Boolean.FALSE);
 	private static final ThreadLocal<Boolean> _portletExportInProcess =
-		new AutoResetThreadLocal<>(
+		new CentralizedThreadLocal<>(
 			ExportImportThreadLocal.class + "._portletExportInProcess",
 			() -> Boolean.FALSE);
 	private static final ThreadLocal<Boolean> _portletImportInProcess =
-		new AutoResetThreadLocal<>(
+		new CentralizedThreadLocal<>(
 			ExportImportThreadLocal.class + "._portletImportInProcess",
 			() -> Boolean.FALSE);
 	private static final ThreadLocal<Boolean> _portletStagingInProcess =
-		new AutoResetThreadLocal<>(
+		new CentralizedThreadLocal<>(
 			ExportImportThreadLocal.class + "._portletStagingInProcess",
 			() -> Boolean.FALSE);
 	private static final ThreadLocal<Boolean> _portletValidationInProcess =
-		new AutoResetThreadLocal<>(
+		new CentralizedThreadLocal<>(
 			ExportImportThreadLocal.class + "._portletValidationInProcess",
 			() -> Boolean.FALSE);
 

@@ -1,9 +1,9 @@
 .modal-header {
-	.btn-toolbar + .modal-title {
-		@extend .order-1;
-	}
-
 	.btn-toolbar {
 		@extend .order-2;
+	}
+
+	.btn-toolbar + .modal-title {
+		@extend .order-1;
 	}
 }

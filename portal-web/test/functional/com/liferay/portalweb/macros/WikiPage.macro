@@ -760,6 +760,10 @@
 			<var name="key_menuItem" value="Edit" />
 		</execute>
 
+		<execute function="Click" locator1="AlloyEditor#CONTENT_FIELD" />
+
+		<execute function="AssertElementPresent" locator1="AlloyEditor#CONTENT_ADD_BUTTON" />
+
 		<execute macro="AlloyEditor#addContent">
 			<var name="content" value="${wikiPageContentEdit}" />
 		</execute>

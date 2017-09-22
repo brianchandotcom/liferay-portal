@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.lang.CentralizedThreadLocal;
+
 /**
  * @author Jorge Ferrer
  */
@@ -28,7 +30,7 @@ public class NotificationThreadLocal {
 	}
 
 	private static final ThreadLocal<Boolean> _enabled =
-		new AutoResetThreadLocal<>(
+		new CentralizedThreadLocal<>(
 			NotificationThreadLocal.class + "._enabled", () -> Boolean.TRUE);
 
 }

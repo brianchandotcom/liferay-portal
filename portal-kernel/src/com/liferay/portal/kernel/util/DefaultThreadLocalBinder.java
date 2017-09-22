@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -138,7 +139,7 @@ public class DefaultThreadLocalBinder implements ThreadLocalBinder {
 		DefaultThreadLocalBinder.class);
 
 	private static final ThreadLocal<Map<ThreadLocal<?>, ?>>
-		_threadLocalValues = new AutoResetThreadLocal<Map<ThreadLocal<?>, ?>>(
+		_threadLocalValues = new CentralizedThreadLocal<Map<ThreadLocal<?>, ?>>(
 			DefaultThreadLocalBinder.class + "._threadLocalValueMap") {
 
 			@Override

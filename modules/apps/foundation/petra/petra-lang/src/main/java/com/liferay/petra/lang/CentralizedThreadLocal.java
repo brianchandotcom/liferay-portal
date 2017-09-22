@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Supplier;
 
 /**
  * @author Shuyang Zhou
@@ -67,7 +68,19 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 	}
 
 	public CentralizedThreadLocal(boolean shortLived) {
-		_shortLived = shortLived;
+		this(null, () -> null, shortLived);
+	}
+
+	public CentralizedThreadLocal(String name) {
+		this(name, () -> null, true);
+	}
+
+	public CentralizedThreadLocal(String name, Supplier<T> supplier) {
+		this(name, supplier, true);
+	}
+
+	public CentralizedThreadLocal(
+		String name, Supplier<T> supplier, boolean shortLived) {
 
 		if (shortLived) {
 			_hashCode = _shortLivedNextHasCode.getAndAdd(_HASH_INCREMENT);
@@ -75,6 +88,22 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 		else {
 			_hashCode = _longLivedNextHasCode.getAndAdd(_HASH_INCREMENT);
 		}
+
+		if (name == null) {
+			_name = super.toString();
+		}
+		else {
+			_name = name;
+		}
+
+		if (supplier == null) {
+			_supplier = () -> null;
+		}
+		else {
+			_supplier = supplier;
+		}
+
+		_shortLived = shortLived;
 
 		boolean hasInitialValueMethod = false;
 
@@ -145,6 +174,11 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 		threadLocalMap.putEntry(this, value);
 	}
 
+	@Override
+	public String toString() {
+		return _name;
+	}
+
 	protected T copy(T value) {
 		if (value != null) {
 			Class<?> clazz = value.getClass();
@@ -155,6 +189,11 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 		}
 
 		return null;
+	}
+
+	@Override
+	protected T initialValue() {
+		return _supplier.get();
 	}
 
 	private static Map<CentralizedThreadLocal<?>, Object> _toMap(
@@ -216,7 +255,9 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 
 	private final int _hashCode;
 	private final boolean _hasInitialValueMethod;
+	private final String _name;
 	private final boolean _shortLived;
+	private final Supplier<T> _supplier;
 
 	private static class Entry {
 

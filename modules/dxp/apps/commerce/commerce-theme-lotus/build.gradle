@@ -1,3 +1,0 @@
-node {
-	npmVersion = "4.5.0"
-}

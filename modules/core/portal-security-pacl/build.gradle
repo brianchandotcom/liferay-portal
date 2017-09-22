@@ -16,6 +16,7 @@ dependencies {
 	provided group: "org.springframework", name: "spring-context", version: "4.1.9.RELEASE"
 	provided group: "org.springframework", name: "spring-core", version: "4.1.9.RELEASE"
 	provided group: "org.springframework", name: "spring-web", version: "4.1.9.RELEASE"
+	provided group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 }
 
 liferay {

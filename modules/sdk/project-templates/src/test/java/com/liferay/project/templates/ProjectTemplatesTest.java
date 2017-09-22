@@ -1395,11 +1395,9 @@ public class ProjectTemplatesTest {
 			gradleProjectDir,
 			"src/main/java/warhook/WarHookLoginPostAction.java",
 			"public class WarHookLoginPostAction extends Action");
-
 		_testContains(
 			gradleProjectDir, "src/main/java/warhook/WarHookStartupAction.java",
 			"public class WarHookStartupAction extends SimpleAction");
-
 		_testContains(
 			gradleProjectDir,
 			"src/main/webapp/WEB-INF/liferay-plugin-package.properties",

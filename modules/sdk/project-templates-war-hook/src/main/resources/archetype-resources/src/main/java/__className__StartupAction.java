@@ -19,7 +19,6 @@ public class ${className}StartupAction extends SimpleAction {
 		).forEach(
 			System.out::println
 		);
-
 	}
 
 }

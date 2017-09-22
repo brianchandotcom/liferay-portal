@@ -111,17 +111,7 @@ public class RandomTestUtil {
 	}
 
 	public static int randomInt() {
-		int value = _random.nextInt();
-
-		if (value > 0) {
-			return value;
-		}
-		else if (value == 0) {
-			return randomInt();
-		}
-		else {
-			return -value;
-		}
+		return randomInt(1, Integer.MAX_VALUE);
 	}
 
 	public static int randomInt(int min, int max)

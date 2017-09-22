@@ -228,11 +228,11 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 	private static final AtomicInteger _longLivedNextHasCode =
 		new AtomicInteger();
 	private static final ThreadLocal<ThreadLocalMap> _longLivedThreadLocals =
-		new ThreadLocalMapThreadLocal();
+		ThreadLocal.withInitial(ThreadLocalMap::new);
 	private static final AtomicInteger _shortLivedNextHasCode =
 		new AtomicInteger();
 	private static final ThreadLocal<ThreadLocalMap> _shortLivedThreadLocals =
-		new ThreadLocalMapThreadLocal();
+		ThreadLocal.withInitial(ThreadLocalMap::new);
 
 	static {
 		_immutableTypes.add(Boolean.class);
@@ -382,16 +382,6 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 		private int _size;
 		private Entry[] _table = new Entry[_INITIAL_CAPACITY];
 		private int _threshold = _INITIAL_CAPACITY * 2 / 3;
-
-	}
-
-	private static class ThreadLocalMapThreadLocal
-		extends ThreadLocal<ThreadLocalMap> {
-
-		@Override
-		protected ThreadLocalMap initialValue() {
-			return new ThreadLocalMap();
-		}
 
 	}
 

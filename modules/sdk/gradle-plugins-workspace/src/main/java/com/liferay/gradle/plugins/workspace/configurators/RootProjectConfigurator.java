@@ -14,16 +14,30 @@
 
 package com.liferay.gradle.plugins.workspace.configurators;
 
+import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
+import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
+import com.liferay.gradle.plugins.workspace.internal.util.FileUtil;
+import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.workspace.tasks.CreateTokenTask;
+import com.liferay.gradle.util.Validator;
+import com.liferay.gradle.util.copy.StripPathSegmentsAction;
+
+import de.undercouch.gradle.tasks.download.Download;
+
+import groovy.lang.Closure;
+
 import java.io.File;
+
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.apache.http.HttpHeaders;
+
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
@@ -45,17 +59,6 @@ import org.gradle.api.tasks.bundling.Compression;
 import org.gradle.api.tasks.bundling.Tar;
 import org.gradle.api.tasks.bundling.Zip;
 import org.gradle.language.base.plugins.LifecycleBasePlugin;
-
-import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
-import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
-import com.liferay.gradle.plugins.workspace.internal.util.FileUtil;
-import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.workspace.tasks.CreateTokenTask;
-import com.liferay.gradle.util.Validator;
-import com.liferay.gradle.util.copy.StripPathSegmentsAction;
-
-import de.undercouch.gradle.tasks.download.Download;
-import groovy.lang.Closure;
 
 /**
  * @author Andrea Di Giorgi
@@ -137,22 +140,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	public void setDefaultRepositoryEnabled(boolean defaultRepositoryEnabled) {
 		_defaultRepositoryEnabled = defaultRepositoryEnabled;
-	}
-
-	private static File _getFileIfExists(String url) {
-		try {
-			URI uri = new URI(url);
-
-			File file = new File(uri);
-
-			if (file.exists()) {
-				return file;
-			}
-		}
-		catch (Throwable t) {
-		}
-
-		return null;
 	}
 
 	private Copy _addTaskCopyBundle(
@@ -357,19 +344,18 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 					String bundleUrl = workspaceExtension.getBundleUrl();
 
-					File destinationDir = workspaceExtension.getBundleCacheDir();
+					File bundleCacheDir =
+						workspaceExtension.getBundleCacheDir();
 
-					File sourceBundleFile = _getFileIfExists(bundleUrl);
+					File bundleFile = FileUtil.urlToFile(bundleUrl);
 
 					File destBundleFile = new File(
-						destinationDir, sourceBundleFile.getName());
+						bundleCacheDir, bundleFile.getName());
 
-					if (sourceBundleFile.equals(destBundleFile)) {
+					if (bundleFile.equals(destBundleFile)) {
 						throw new GradleException(
-							"Destination File cannot be the same as Source File");
+							"Destination cannot be the same as bundle url");
 					}
-
-
 				}
 
 			});

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.audit;
 
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 
 /**
  * @author Michael C. Han
@@ -103,7 +103,7 @@ public class AuditRequestThreadLocal {
 	}
 
 	private static final ThreadLocal<AuditRequestThreadLocal>
-		_auditRequestThreadLocal = new AutoResetThreadLocal<>(
+		_auditRequestThreadLocal = new CentralizedThreadLocal<>(
 			AuditRequestThreadLocal.class + "._auditRequestThreadLocal");
 
 	private String _clientHost;

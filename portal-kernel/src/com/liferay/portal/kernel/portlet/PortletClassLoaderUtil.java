@@ -16,8 +16,8 @@ package com.liferay.portal.kernel.portlet;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 
 import javax.servlet.ServletContext;
@@ -65,7 +65,7 @@ public class PortletClassLoaderUtil {
 	}
 
 	private static final ThreadLocal<String> _servletContextName =
-		new AutoResetThreadLocal<>(
+		new CentralizedThreadLocal<>(
 			PortletClassLoaderUtil.class + "._servletContextName");
 
 }

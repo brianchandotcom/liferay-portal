@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.backgroundtask;
 
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 
 /**
  * @author Michael C. Han
@@ -42,7 +42,7 @@ public class BackgroundTaskThreadLocal {
 	}
 
 	private static final ThreadLocal<Long> _backgroundTaskId =
-		new AutoResetThreadLocal<>(
+		new CentralizedThreadLocal<>(
 			BackgroundTaskThreadLocal.class + "._backgroundTaskId", () -> 0L);
 
 }

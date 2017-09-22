@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.service;
 
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 
 import java.util.LinkedList;
 
@@ -50,7 +50,7 @@ public class ServiceContextThreadLocal {
 
 	private static final ThreadLocal<LinkedList<ServiceContext>>
 		_serviceContextThreadLocal =
-			new AutoResetThreadLocal<LinkedList<ServiceContext>>(
+			new CentralizedThreadLocal<LinkedList<ServiceContext>>(
 				ServiceContextThreadLocal.class + "._serviceContextThreadLocal",
 				LinkedList::new) {
 

@@ -70,6 +70,12 @@
 	<td>//div[@class='sidenav-menu-slider' and contains(@style,'width: 320px')]</td>
 	<td></td>
 </tr>
+<!--TRANSLATION-->
+<tr>
+	<td>ADD_TRANSLATION</td>
+	<td>//div[contains(@id,'translationManager')]//div[contains(@class,'translation-manager-icon-menu')]/a</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -1,0 +1,25 @@
+<definition>
+	<command name="addFragment">
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<execute function="AssertTextEquals" locator1="Modal#HEADER" value1="Add Fragment" />
+
+		<execute macro="Fragment#editFragment">
+			<var name="fragmentName" value="${fragmentName}" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+	</command>
+
+	<command name="editFragment">
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${fragmentName}" />
+		</execute>
+	</command>
+
+	<command name="typeFragmentEditor">
+		<var method="StringUtil#toUpperCase('${editor}')" name="key_editor" />
+
+		<execute function="Type#typeAceEditorNoError" locator1="Fragment#${key_editor}_EDITOR" value1="${templateScript}" />"
+	</command>
+</definition>

@@ -1,0 +1,35 @@
+<definition>
+	<command name="addCollection">
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<execute macro="Collection#editCollection">
+			<var name="collectionDescription" value="${collectionDescription}" />
+			<var name="collectionName" value="${collectionName}" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+	</command>
+
+	<command name="editCollection">
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${collectionName}" />
+		</execute>
+
+		<if>
+			<not>
+				<equals arg1="${collectionDescription}" arg2="{collectionDescription}" />
+			</not>
+			<then>
+				<execute macro="PortletEntry#inputDescription">
+					<var name="description" value="${collectionDescription}" />
+				</execute>
+			</then>
+		</if>
+	</command>
+
+	<command name="gotoCollection">
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="${collectionName}" />
+		</execute>
+	</command>
+</definition>

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.io;
 
-import com.liferay.portal.kernel.util.CentralizedThreadLocal;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 
 import java.io.IOException;

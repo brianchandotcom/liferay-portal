@@ -49,8 +49,8 @@ public class ViewCommercePriceEntriesMVCRenderCommand
 
 		CommercePriceEntryDisplayContext commercePriceEntryDisplayContext =
 			new CommercePriceEntryDisplayContext(
-				_actionHelper, _commercePriceEntryService, _itemSelector,
-				renderRequest, renderResponse);
+				_commercePriceListActionHelper, _commercePriceEntryService,
+				_itemSelector, renderRequest, renderResponse);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commercePriceEntryDisplayContext);
@@ -59,10 +59,10 @@ public class ViewCommercePriceEntriesMVCRenderCommand
 	}
 
 	@Reference
-	private ActionHelper _actionHelper;
+	private CommercePriceEntryService _commercePriceEntryService;
 
 	@Reference
-	private CommercePriceEntryService _commercePriceEntryService;
+	private CommercePriceListActionHelper _commercePriceListActionHelper;
 
 	@Reference
 	private ItemSelector _itemSelector;

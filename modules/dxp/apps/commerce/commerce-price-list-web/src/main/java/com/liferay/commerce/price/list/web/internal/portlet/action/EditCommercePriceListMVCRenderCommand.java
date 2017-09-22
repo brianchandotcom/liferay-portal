@@ -52,7 +52,7 @@ public class EditCommercePriceListMVCRenderCommand implements MVCRenderCommand {
 		try {
 			CommercePriceListDisplayContext commercePriceListDisplayContext =
 				new CommercePriceListDisplayContext(
-					_actionHelper, _commerceCurrencyService,
+					_commercePriceListActionHelper, _commerceCurrencyService,
 					_commercePriceListService, renderRequest, renderResponse);
 
 			renderRequest.setAttribute(
@@ -76,10 +76,10 @@ public class EditCommercePriceListMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference
-	private ActionHelper _actionHelper;
+	private CommerceCurrencyService _commerceCurrencyService;
 
 	@Reference
-	private CommerceCurrencyService _commerceCurrencyService;
+	private CommercePriceListActionHelper _commercePriceListActionHelper;
 
 	@Reference
 	private CommercePriceListService _commercePriceListService;

@@ -48,7 +48,8 @@ public class CommercePriceListInfoPanelMVCResourceCommand
 		throws Exception {
 
 		List<CommercePriceList> commercePriceLists =
-			_actionHelper.getCommercePriceLists(resourceRequest);
+			_commercePriceListActionHelper.getCommercePriceLists(
+				resourceRequest);
 
 		resourceRequest.setAttribute(
 			CommerceWebKeys.COMMERCE_PRICE_LISTS, commercePriceLists);
@@ -58,6 +59,6 @@ public class CommercePriceListInfoPanelMVCResourceCommand
 	}
 
 	@Reference
-	private ActionHelper _actionHelper;
+	private CommercePriceListActionHelper _commercePriceListActionHelper;
 
 }

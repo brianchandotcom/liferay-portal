@@ -18,7 +18,6 @@ import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.exception.NoSuchPriceEntryException;
 import com.liferay.commerce.model.CommercePriceEntry;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
-import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.service.CommercePriceEntryService;
@@ -70,7 +69,7 @@ public class EditCommercePriceEntryMVCActionCommand
 		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CPDefinitionOptionRel.class.getName(), actionRequest);
+			CommercePriceEntry.class.getName(), actionRequest);
 
 		for (long addCPInstanceId : addCPInstanceIds) {
 			CPInstance cpInstance = _cpInstanceService.getCPInstance(

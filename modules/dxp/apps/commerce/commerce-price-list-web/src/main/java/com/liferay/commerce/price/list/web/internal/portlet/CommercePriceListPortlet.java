@@ -17,7 +17,7 @@ package com.liferay.commerce.price.list.web.internal.portlet;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.price.list.web.internal.display.context.CommercePriceListDisplayContext;
-import com.liferay.commerce.price.list.web.internal.portlet.action.ActionHelper;
+import com.liferay.commerce.price.list.web.internal.portlet.action.CommercePriceListActionHelper;
 import com.liferay.commerce.service.CommercePriceListService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -67,7 +67,7 @@ public class CommercePriceListPortlet extends MVCPortlet {
 
 		CommercePriceListDisplayContext commercePriceListDisplayContext =
 			new CommercePriceListDisplayContext(
-				_actionHelper, _commerceCurrencyService,
+				_commercePriceListActionHelper, _commerceCurrencyService,
 				_commercePriceListService, renderRequest, renderResponse);
 
 		renderRequest.setAttribute(
@@ -77,10 +77,10 @@ public class CommercePriceListPortlet extends MVCPortlet {
 	}
 
 	@Reference
-	private ActionHelper _actionHelper;
+	private CommerceCurrencyService _commerceCurrencyService;
 
 	@Reference
-	private CommerceCurrencyService _commerceCurrencyService;
+	private CommercePriceListActionHelper _commercePriceListActionHelper;
 
 	@Reference
 	private CommercePriceListService _commercePriceListService;

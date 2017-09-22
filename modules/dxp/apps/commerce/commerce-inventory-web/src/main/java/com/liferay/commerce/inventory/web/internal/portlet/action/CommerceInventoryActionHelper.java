@@ -18,9 +18,7 @@ import com.liferay.commerce.inventory.web.internal.constants.CommerceInventoryWe
 import com.liferay.commerce.model.CommerceInventory;
 import com.liferay.commerce.service.CommerceInventoryService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.RenderRequest;
 
@@ -48,9 +46,6 @@ public class CommerceInventoryActionHelper {
 			renderRequest, "cpDefinitionId");
 
 		if (cpDefinitionId > 0) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
 			commerceInventory =
 				_commerceInventoryService.
 					fetchCommerceInventoryByCPDefinitionId(cpDefinitionId);

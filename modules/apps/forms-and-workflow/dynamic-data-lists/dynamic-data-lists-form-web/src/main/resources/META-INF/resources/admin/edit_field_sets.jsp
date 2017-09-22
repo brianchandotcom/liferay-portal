@@ -19,11 +19,16 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-DDLRecordSet recordSet = ddlFormAdminDisplayContext.getRecordSet();
+DDMStructure structure = ddlFormAdminDisplayContext.getDDMStructure();
 
-long recordSetId = BeanParamUtil.getLong(recordSet, request, "recordSetId");
-long groupId = BeanParamUtil.getLong(recordSet, request, "groupId", scopeGroupId);
-long ddmStructureId = BeanParamUtil.getLong(recordSet, request, "DDMStructureId");
+long groupId = BeanParamUtil.getLong(structure, request, "groupId", scopeGroupId);
+long structureId = ParamUtil.getLong(request, "structureId");
+
+if (structure != null) {
+	structureId = structure.getStructureId();
+}
+
+String structureKey = BeanParamUtil.getString(structure, request, "structureKey");
 
 String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
 
@@ -32,44 +37,16 @@ Locale[] availableLocales = ddlFormAdminDisplayContext.getAvailableLocales();
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-form") : LanguageUtil.get(request, "edit-form"));
+renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-field-set") : LanguageUtil.get(request, "edit-field-set"));
 %>
 
 <div class="loading-animation" id="<portlet:namespace />loader"></div>
 
-<portlet:actionURL name="saveRecordSet" var="saveRecordSetURL">
-	<portlet:param name="mvcPath" value="/admin/edit_record_set.jsp" />
+<portlet:actionURL name="saveStructure" var="saveStructureURL">
+	<portlet:param name="mvcPath" value="/admin/edit_field_sets.jsp" />
 </portlet:actionURL>
 
 <div class="hide portlet-forms" id="<portlet:namespace />formContainer">
-	<aui:nav-bar cssClass="collapse-basic-search" id="toolbar" markupView="lexicon">
-		<aui:nav cssClass="navbar-nav">
-			<aui:nav-item id="showForm" label='<%= LanguageUtil.get(request, "builder") %>' selected="<%= true %>" />
-			<aui:nav-item id="showRules" label='<%= LanguageUtil.get(request, "rules") %>' />
-		</aui:nav>
-	</aui:nav-bar>
-
-	<div class="autosave-bar management-bar management-bar-default">
-		<div class="container-fluid-1280">
-			<div class="toolbar">
-				<div class="toolbar-group-field">
-				</div>
-
-				<div class="toolbar-group-content">
-					<span class="autosave-feedback management-bar-text" id="<portlet:namespace />autosaveMessage"></span>
-				</div>
-
-				<div class="toolbar-group-field">
-					<button class="btn btn-link publish-icon <%= (recordSet == null) ? "hide" : "" %>" data-original-title="<liferay-ui:message key="copy-url" />" id="<portlet:namespace />publishIcon" type="button" title="<liferay-ui:message key="copy-url" />">
-						<svg class="lexicon-icon">
-							<use xlink:href="<%= ddlFormAdminDisplayContext.getLexiconIconsPath() %>link" />
-						</svg>
-					</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
 	<div class="container-fluid-1280">
 		<aui:translation-manager
 			availableLocales="<%= availableLocales %>"
@@ -79,12 +56,11 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 		/>
 	</div>
 
-	<aui:form action="<%= saveRecordSetURL %>" cssClass="ddl-form-builder-form" enctype="multipart/form-data" method="post" name="editForm">
+	<aui:form action="<%= saveStructureURL %>" cssClass="ddl-form-builder-form" method="post" name="editForm">
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="recordSetId" type="hidden" value="<%= recordSetId %>" />
 		<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
-		<aui:input name="ddmStructureId" type="hidden" value="<%= ddmStructureId %>" />
-		<aui:input name="serializedSettingsContext" type="hidden" value="" />
+		<aui:input name="structureId" type="hidden" value="<%= structureId %>" />
+		<aui:input name="structureKey" type="hidden" value="<%= structureKey %>" />
 
 		<%@ include file="/admin/exceptions.jspf" %>
 
@@ -97,7 +73,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 						cssClass="ddl-form-name"
 						editorName="alloyeditor"
 						name="nameEditor"
-						placeholder="untitled-form"
+						placeholder="untitled-field-set"
 						showSource="<%= false %>"
 					/>
 				</h1>
@@ -111,7 +87,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 						cssClass="ddl-form-description h5"
 						editorName="alloyeditor"
 						name="descriptionEditor"
-						placeholder="add-a-short-description-for-this-form"
+						placeholder="add-a-short-description-for-this-field-set"
 						showSource="<%= false %>"
 					/>
 				</h5>
@@ -124,24 +100,14 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 			<aui:input name="serializedFormBuilderContext" type="hidden" />
 
 			<div id="<portlet:namespace />formBuilder"></div>
-			<div id="<portlet:namespace />ruleBuilder"></div>
 		</aui:fieldset>
 
 		<div class="container-fluid-1280">
 			<aui:button-row cssClass="ddl-form-builder-buttons">
-				<aui:button cssClass="btn-lg btn-primary ddl-button" id="publish" value='<%= ddlFormAdminDisplayContext.isFormPublished() ? "unpublish-form": "publish-form" %>' />
-
-				<aui:button cssClass="btn-lg ddl-button" id="save" value="save-form" />
-
-				<aui:button cssClass="btn-lg btn-link" id="preview" value="preview-form" />
+				<aui:button cssClass="btn-lg" id="save" type="submit" value="save" />
+				<aui:button cssClass="btn-lg" href="<%= redirect %>" name="cancelButton" type="cancel" />
 			</aui:button-row>
 		</div>
-
-		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="publishRecordSet" var="publishRecordSetURL" />
-
-		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="saveRecordSet" var="autoSaveRecordSetURL">
-			<portlet:param name="autoSave" value="<%= Boolean.TRUE.toString() %>" />
-		</liferay-portlet:resourceURL>
 
 		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="getDataProviderInstances" var="getDataProviderInstancesURL" />
 
@@ -155,8 +121,6 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 
 		<aui:script>
 			Liferay.namespace('DDL').Settings = {
-				autosaveInterval: '<%= ddlFormAdminDisplayContext.getAutosaveInterval() %>',
-				autosaveURL: '<%= autoSaveRecordSetURL.toString() %>',
 				evaluatorURL: '<%= ddlFormAdminDisplayContext.getDDMFormContextProviderServletURL() %>',
 				functionsMetadata: <%= ddlFormAdminDisplayContext.getSerializedDDMExpressionFunctionsMetadata() %>,
 				getDataProviderInstancesURL: '<%= getDataProviderInstancesURL.toString() %>',
@@ -165,10 +129,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 				getFunctionsURL: '<%= getFunctions.toString() %>',
 				getRolesURL: '<%= getRoles.toString() %>',
 				portletNamespace: '<portlet:namespace />',
-				publishRecordSetURL: '<%= publishRecordSetURL.toString() %>',
-				restrictedFormURL: '<%= ddlFormAdminDisplayContext.getRestrictedFormURL() %>',
-				showPagination: true,
-				sharedFormURL: '<%= ddlFormAdminDisplayContext.getSharedFormURL() %>'
+				showPagination: false
 			};
 
 			var initHandler = Liferay.after(
@@ -227,11 +188,8 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 							editingLanguageId: '<%= ddlFormAdminDisplayContext.getDefaultLanguageId() %>',
 							editForm: form,
 							namespace: '<portlet:namespace />',
-							published: !!<%= ddlFormAdminDisplayContext.isFormPublished() %>,
-							publishRecordSetURL: '<%= publishRecordSetURL.toString() %>',
-							recordSetId: <%= recordSetId %>,
-							rules: <%= ddlFormAdminDisplayContext.getSerializedDDMFormRules() %>,
-							translationManager: Liferay.component('<portlet:namespace />translationManager')
+							translationManager: Liferay.component('<portlet:namespace />translationManager'),
+							view: 'fieldSets'
 						}
 					)
 				);
@@ -248,72 +206,4 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 			Liferay.on('destroyPortlet', clearPortletHandlers);
 		</aui:script>
 	</aui:form>
-
-	<div class="container-fluid-1280 ddl-record-set-settings hide" id="<portlet:namespace />settings">
-		<%= request.getAttribute(DDMWebKeys.DYNAMIC_DATA_MAPPING_FORM_HTML) %>
-	</div>
-
-	<aui:script use="aui-base">
-		Liferay.namespace('DDL').destroySettings = function() {
-			var settingsNode = A.one('#<portlet:namespace />settingsModal');
-
-			if (settingsNode) {
-				Liferay.Util.getWindow('<portlet:namespace />settingsModal').destroy();
-			}
-		};
-
-		Liferay.namespace('DDL').openSettings = function() {
-			Liferay.Util.openWindow(
-				{
-					dialog: {
-						cssClass: 'ddl-form-settings-modal',
-						height: 620,
-						resizable: false,
-						'toolbars.footer': [
-							{
-								cssClass: 'btn-lg btn-primary',
-								label: '<liferay-ui:message key="done" />',
-								on: {
-									click: function() {
-										var ddmForm = Liferay.component('settingsDDMForm');
-
-										ddmForm.validate(
-											function(hasErrors) {
-												if (!hasErrors) {
-													Liferay.Util.getWindow('<portlet:namespace />settingsModal').hide();
-												}
-											}
-										);
-									}
-								}
-							},
-							{
-								cssClass: 'btn-lg btn-link',
-								label: '<liferay-ui:message key="cancel" />',
-								on: {
-									click: function() {
-										Liferay.Util.getWindow('<portlet:namespace />settingsModal').hide();
-									}
-								}
-							}
-						],
-						width: 720
-					},
-					id: '<portlet:namespace />settingsModal',
-					title: '<liferay-ui:message key="form-settings" />'
-				},
-				function(dialogWindow) {
-					var bodyNode = dialogWindow.bodyNode;
-
-					var settingsNode = A.one('#<portlet:namespace />settings');
-
-					settingsNode.show();
-
-					bodyNode.append(settingsNode);
-				}
-			);
-		};
-	</aui:script>
-
-	<%@ include file="/admin/copy_form_publish_url.jspf" %>
 </div>

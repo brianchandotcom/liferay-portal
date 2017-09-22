@@ -14,7 +14,7 @@
 
 package com.liferay.portal.spring.hibernate;
 
-import com.liferay.portal.kernel.util.CentralizedThreadLocal;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.InitialThreadLocal;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 

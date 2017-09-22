@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.function.Function;
 
 /**
  * @author Michael C. Han
@@ -66,19 +67,9 @@ public class DataSampleThreadLocal {
 	}
 
 	private static final ThreadLocal<DataSampleThreadLocal>
-		_dataSampleThreadLocal =
-			new CentralizedThreadLocal<DataSampleThreadLocal>(
-				DataSampleThreadLocal.class + "._dataSampleThreadLocal",
-				DataSampleThreadLocal::new) {
-
-				@Override
-				protected DataSampleThreadLocal copy(
-					DataSampleThreadLocal dataSampleThreadLocal) {
-
-					return dataSampleThreadLocal;
-				}
-
-			};
+		_dataSampleThreadLocal = new CentralizedThreadLocal<>(
+			DataSampleThreadLocal.class + "._dataSampleThreadLocal",
+			DataSampleThreadLocal::new, Function.identity(), true);
 
 	private final Queue<DataSample> _dataSamples =
 		new ConcurrentLinkedQueue<>();

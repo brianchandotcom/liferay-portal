@@ -14,7 +14,7 @@
 
 package com.liferay.portal.spring.context;
 
-import com.liferay.portal.kernel.util.InitialThreadLocal;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 
 /**
  * @author Shuyang Zhou
@@ -38,14 +38,14 @@ public class PortalContextLoaderLifecycleThreadLocal {
 	}
 
 	private static final ThreadLocal<Boolean> _destroying =
-		new InitialThreadLocal<>(
+		new CentralizedThreadLocal<>(
 			PortalContextLoaderLifecycleThreadLocal.class +
 				"._destroying",
-			() -> Boolean.FALSE);
+			() -> Boolean.FALSE, false);
 	private static final ThreadLocal<Boolean> _initializing =
-		new InitialThreadLocal<>(
+		new CentralizedThreadLocal<>(
 			PortalContextLoaderLifecycleThreadLocal.class +
 				"._initializing",
-			() -> Boolean.FALSE);
+			() -> Boolean.FALSE, false);
 
 }

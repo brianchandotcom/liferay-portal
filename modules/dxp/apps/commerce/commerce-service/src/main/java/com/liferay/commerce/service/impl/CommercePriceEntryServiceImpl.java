@@ -92,6 +92,12 @@ public class CommercePriceEntryServiceImpl
 	}
 
 	@Override
+	public int getCommercePriceEntriesCount(long commercePriceListId) {
+		return commercePriceEntryLocalService.getCommercePriceEntriesCount(
+			commercePriceListId);
+	}
+
+	@Override
 	public List<CommercePriceEntry> getInstanceCommercePriceEntries(
 		long cpInstanceId, int start, int end) {
 
@@ -106,12 +112,6 @@ public class CommercePriceEntryServiceImpl
 
 		return commercePriceEntryLocalService.getInstanceCommercePriceEntries(
 			cpInstanceId, start, end, orderByComparator);
-	}
-
-	@Override
-	public int getCommercePriceEntriesCount(long commercePriceListId) {
-		return commercePriceEntryLocalService.getCommercePriceEntriesCount(
-			commercePriceListId);
 	}
 
 	@Override

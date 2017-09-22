@@ -186,8 +186,7 @@ public class CommercePriceEntryLocalServiceImpl
 
 	@Override
 	public int getInstanceCommercePriceEntriesCount(long cpInstanceId) {
-		return commercePriceEntryPersistence.countByCPInstanceId(
-			cpInstanceId);
+		return commercePriceEntryPersistence.countByCPInstanceId(cpInstanceId);
 	}
 
 	@Override

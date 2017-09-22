@@ -17,6 +17,7 @@ package com.liferay.commerce.item.selector.internal.handler;
 import com.liferay.commerce.item.selector.criterion.CommercePriceListItemSelectorCriterion;
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;

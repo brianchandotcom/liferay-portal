@@ -32,11 +32,11 @@ import java.util.regex.Pattern;
 /**
  * @author Igor Beslic
  */
-public abstract class BaseJSONWebServiceClientHandler {
+public abstract class BaseJSONWebServiceClientImpl {
 
 	public abstract JSONWebServiceClient getJSONWebServiceClient();
 
-	protected BaseJSONWebServiceClientHandler() {
+	protected BaseJSONWebServiceClientImpl() {
 		objectMapper.configure(
 			DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 

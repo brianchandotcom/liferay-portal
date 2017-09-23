@@ -7,6 +7,7 @@
 	<property name="war.file" value="${ant.project.name}" />
 
 	<path id="jspc.common.classpath">
+		<path refid="lib.pre.classpath" />
 		<pathelement path="docroot/WEB-INF/classes" />
 		<pathelement location="${project.dir}/modules/core/registry-api/classes" />
 		<pathelement location="${project.dir}/portal-impl/portal-impl.jar" />

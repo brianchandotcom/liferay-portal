@@ -64,7 +64,8 @@ public interface Build {
 
 	public List<Build> getDownstreamBuilds(String status);
 
-	public List<Build> getDownstreamBuildsByJobVariants(List<String> jobVariants);
+	public List<Build> getDownstreamBuildsByJobVariants(
+		List<String> jobVariants);
 
 	public long getDuration();
 

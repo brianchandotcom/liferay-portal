@@ -29,6 +29,7 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
+import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -36,6 +37,7 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.internal.ConventionMapping;
+import org.gradle.api.invocation.Gradle;
 import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
@@ -49,6 +51,7 @@ import org.gradle.plugins.ide.eclipse.model.EclipseModel;
 import org.gradle.plugins.ide.idea.IdeaPlugin;
 import org.gradle.plugins.ide.idea.model.IdeaModel;
 import org.gradle.plugins.ide.idea.model.IdeaModule;
+import org.gradle.util.VersionNumber;
 
 /**
  * @author Andrea Di Giorgi
@@ -152,6 +155,35 @@ public class TestIntegrationBasePlugin implements Plugin<Project> {
 			sourceSetOutput, "getClassesDirs");
 
 		if (getClassesDirsMethod != null) {
+
+			// https://github.com/gradle/gradle/issues/2343
+
+			Gradle gradle = project.getGradle();
+
+			VersionNumber versionNumber = VersionNumber.parse(
+				gradle.getGradleVersion());
+
+			if ((versionNumber.getMajor() == 4) &&
+				(versionNumber.getMinor() < 1)) {
+
+				Method setTestClassesDirsMethod = ReflectionUtil.getMethod(
+					test, "setTestClassesDirs", FileCollection.class);
+
+				try {
+					FileCollection testClassesDirs =
+						(FileCollection)getClassesDirsMethod.invoke(
+							sourceSetOutput);
+
+					setTestClassesDirsMethod.invoke(test, testClassesDirs);
+				}
+				catch (Exception e) {
+					throw new GradleException(
+						"Unable to set the \"testClassesDirs\" property of " +
+							test,
+						e);
+				}
+			}
+
 			conventionMapping.map(
 				"testClassesDirs",
 				new Callable<FileCollection>() {

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.language;
 
-import com.liferay.portal.kernel.concurrent.ConcurrentReferenceValueHashMap;
-import com.liferay.portal.kernel.memory.FinalizeManager;
+import com.liferay.petra.concurrent.ConcurrentReferenceValueHashMap;
+import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;

@@ -417,6 +417,18 @@ public class StringBundlerTest {
 	}
 
 	@Test
+	public void testConcat() {
+		Assert.assertSame("test1", StringBundler.concat("test1"));
+		Assert.assertEquals(
+			"test1test2", StringBundler.concat("test1", "test2"));
+		Assert.assertEquals(
+			"test1test2test3", StringBundler.concat("test1", "test2", "test3"));
+		Assert.assertEquals(
+			"test1test2test3test4",
+			StringBundler.concat("test1", "test2", "test3", "test4"));
+	}
+
+	@Test
 	public void testConstructor() {
 		StringBundler sb = new StringBundler();
 

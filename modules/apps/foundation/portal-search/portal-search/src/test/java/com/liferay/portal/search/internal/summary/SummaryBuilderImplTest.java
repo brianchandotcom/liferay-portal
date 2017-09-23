@@ -42,7 +42,7 @@ public class SummaryBuilderImplTest {
 	@Test
 	public void testContentHighlight() {
 		_summaryBuilder.setContent(
-			concat(
+			StringBundler.concat(
 				"AAA<strong>BBB</strong>CCC", HighlightUtil.HIGHLIGHT_TAG_OPEN,
 				"DDD<strong>EEE</strong>FFF", HighlightUtil.HIGHLIGHT_TAG_CLOSE,
 				"GGG<strong>HHH</strong>III"));
@@ -52,7 +52,7 @@ public class SummaryBuilderImplTest {
 		Summary summary = _summaryBuilder.build();
 
 		Assert.assertEquals(
-			concat(
+			StringBundler.concat(
 				"AAA&lt;strong&gt;BBB&lt;/strong&gt;CCC",
 				HighlightUtil.HIGHLIGHTS[0],
 				"DDD&lt;strong&gt;EEE&lt;/strong&gt;FFF",
@@ -64,7 +64,7 @@ public class SummaryBuilderImplTest {
 	@Test
 	public void testContentHighlightUnescaped() {
 		_summaryBuilder.setContent(
-			concat(
+			StringBundler.concat(
 				"AAA<strong>BBB</strong>CCC", HighlightUtil.HIGHLIGHT_TAG_OPEN,
 				"DDD<strong>EEE</strong>FFF", HighlightUtil.HIGHLIGHT_TAG_CLOSE,
 				"GGG<strong>HHH</strong>III"));
@@ -75,7 +75,7 @@ public class SummaryBuilderImplTest {
 		Summary summary = _summaryBuilder.build();
 
 		Assert.assertEquals(
-			concat(
+			StringBundler.concat(
 				"AAA<strong>BBB</strong>CCC", HighlightUtil.HIGHLIGHTS[0],
 				"DDD<strong>EEE</strong>FFF", HighlightUtil.HIGHLIGHTS[1],
 				"GGG<strong>HHH</strong>III"),
@@ -138,7 +138,7 @@ public class SummaryBuilderImplTest {
 	@Test
 	public void testTitleHighlight() {
 		_summaryBuilder.setTitle(
-			concat(
+			StringBundler.concat(
 				"AAA<strong>BBB</strong>CCC", HighlightUtil.HIGHLIGHT_TAG_OPEN,
 				"DDD<strong>EEE</strong>FFF", HighlightUtil.HIGHLIGHT_TAG_CLOSE,
 				"GGG<strong>HHH</strong>III"));
@@ -148,7 +148,7 @@ public class SummaryBuilderImplTest {
 		Summary summary = _summaryBuilder.build();
 
 		Assert.assertEquals(
-			concat(
+			StringBundler.concat(
 				"AAA&lt;strong&gt;BBB&lt;/strong&gt;CCC",
 				HighlightUtil.HIGHLIGHTS[0],
 				"DDD&lt;strong&gt;EEE&lt;/strong&gt;FFF",
@@ -160,7 +160,7 @@ public class SummaryBuilderImplTest {
 	@Test
 	public void testTitleHighlightUnescaped() {
 		_summaryBuilder.setTitle(
-			concat(
+			StringBundler.concat(
 				"AAA<strong>BBB</strong>CCC", HighlightUtil.HIGHLIGHT_TAG_OPEN,
 				"DDD<strong>EEE</strong>FFF", HighlightUtil.HIGHLIGHT_TAG_CLOSE,
 				"GGG<strong>HHH</strong>III"));
@@ -171,19 +171,11 @@ public class SummaryBuilderImplTest {
 		Summary summary = _summaryBuilder.build();
 
 		Assert.assertEquals(
-			concat(
+			StringBundler.concat(
 				"AAA<strong>BBB</strong>CCC", HighlightUtil.HIGHLIGHTS[0],
 				"DDD<strong>EEE</strong>FFF", HighlightUtil.HIGHLIGHTS[1],
 				"GGG<strong>HHH</strong>III"),
 			summary.getTitle());
-	}
-
-	protected String concat(String... strings) {
-		StringBundler sb = new StringBundler(strings.length);
-
-		sb.append(strings);
-
-		return sb.toString();
 	}
 
 	protected void testMaxContentLength(

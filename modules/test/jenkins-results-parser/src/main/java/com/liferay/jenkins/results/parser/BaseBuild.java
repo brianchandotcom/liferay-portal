@@ -367,6 +367,23 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public List<Build> getDownstreamBuildsByJobVariants(List<String> jobVariants){
+		List<Build> filteredDownstreamBuilds = new ArrayList<>();
+
+		for (String jobVariant : jobVariants) {
+			for (Build downstreamBuild : downstreamBuilds) {
+				String jobVariantName = downstreamBuild.getJobVariant();
+				
+				if (jobVariantName.contains(jobVariant) ){
+					filteredDownstreamBuilds.add(downstreamBuild);
+				}
+			}
+		}
+
+		return filteredDownstreamBuilds;
+	}
+
+	@Override
 	public long getDuration() {
 		JSONObject buildJSONObject = getBuildJSONObject("duration,timestamp");
 

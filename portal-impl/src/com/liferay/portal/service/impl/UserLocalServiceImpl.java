@@ -3670,10 +3670,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				companyPortletPreferences, "adminEmailVerificationBody",
 				PropsKeys.ADMIN_EMAIL_VERIFICATION_BODY);
 
-		String subject = MapUtil.getWithFallbackKey(
+		String subject = _getLocalizedValue(
 			localizedSubjectMap, user.getLocale(), LocaleUtil.getDefault());
 
-		String body = MapUtil.getWithFallbackKey(
+		String body = _getLocalizedValue(
 			localizedBodyMap, user.getLocale(), LocaleUtil.getDefault());
 
 		Company company = companyLocalService.getCompany(user.getCompanyId());
@@ -6232,10 +6232,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				PropsKeys.ADMIN_EMAIL_USER_ADDED_NO_PASSWORD_BODY);
 		}
 
-		String subject = MapUtil.getWithFallbackKey(
+		String subject = _getLocalizedValue(
 			localizedSubjectMap, user.getLocale(), LocaleUtil.getDefault());
 
-		String body = MapUtil.getWithFallbackKey(
+		String body = _getLocalizedValue(
 			localizedBodyMap, user.getLocale(), LocaleUtil.getDefault());
 
 		String portalURL = null;
@@ -6399,7 +6399,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				LocalizationUtil.getLocalizationMap(
 					companyPortletPreferences, prefix + "Body", bodyProperty);
 
-			localizedBody = MapUtil.getWithFallbackKey(
+			localizedBody = _getLocalizedValue(
 				localizedBodyMap, user.getLocale(), LocaleUtil.getDefault());
 		}
 
@@ -6411,7 +6411,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					companyPortletPreferences, prefix + "Subject",
 					subjectProperty);
 
-			localizedSubject = MapUtil.getWithFallbackKey(
+			localizedSubject = _getLocalizedValue(
 				localizedSubjectMap, user.getLocale(), LocaleUtil.getDefault());
 		}
 
@@ -6988,6 +6988,23 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		return user;
+	}
+
+	private String _getLocalizedValue(
+		Map<Locale, String> localizedValueMap, Locale locale,
+		Locale fallbackLocale) {
+
+		if (localizedValueMap == null) {
+			return null;
+		}
+
+		String localizedValue = localizedValueMap.get(locale);
+
+		if (Validator.isNotNull(localizedValue)) {
+			return localizedValue;
+		}
+
+		return localizedValueMap.get(fallbackLocale);
 	}
 
 	private void _sendNotificationEmail(

@@ -1383,6 +1383,38 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateWarHook() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle("war-hook", "WarHook");
+
+		_testExists(gradleProjectDir, "src/main/resources/portal.properties");
+		_testExists(
+			gradleProjectDir, "src/main/webapp/WEB-INF/liferay-hook.xml");
+		_testExists(gradleProjectDir, "build.gradle");
+
+		_testContains(
+			gradleProjectDir,
+			"src/main/java/warhook/WarHookLoginPostAction.java",
+			"public class WarHookLoginPostAction extends Action");
+		_testContains(
+			gradleProjectDir, "src/main/java/warhook/WarHookStartupAction.java",
+			"public class WarHookStartupAction extends SimpleAction");
+		_testContains(
+			gradleProjectDir,
+			"src/main/webapp/WEB-INF/liferay-plugin-package.properties",
+			"name=WarHook");
+
+		File mavenProjectDir = _buildTemplateWithMaven(
+			"war-hook", "WarHook", "warhook", "-DclassName=WarHook",
+			"-Dpackage=warhook");
+
+		_testContains(mavenProjectDir, "pom.xml");
+
+		_buildProjects(
+			gradleProjectDir, mavenProjectDir, "build/libs/WarHook.war",
+			"target/WarHook-1.0.0.war");
+	}
+
+	@Test
 	public void testBuildTemplateWarMVCPortlet() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"war-mvc-portlet", "WarMVCPortlet");

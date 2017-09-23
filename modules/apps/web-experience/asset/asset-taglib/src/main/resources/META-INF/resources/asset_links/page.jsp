@@ -46,8 +46,6 @@ PortletURL portletURL = (PortletURL)request.getAttribute("liferay-asset:asset-li
 				continue;
 			}
 
-			assetLinkEntry = assetLinkEntry.toEscapedModel();
-
 			AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassNameId(assetLinkEntry.getClassNameId());
 
 			if (Validator.isNull(assetRendererFactory)) {
@@ -108,7 +106,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("liferay-asset:asset-li
 
 				<li class="asset-links-list-item">
 					<aui:a href="<%= urlViewInContext %>" target='<%= themeDisplay.isStatePopUp() ? "_blank" : "_self" %>'>
-						<%= assetLinkEntry.getTitle(locale) %>
+						<%= HtmlUtil.escape(assetLinkEntry.getTitle(locale)) %>
 					</aui:a>
 				</li>
 

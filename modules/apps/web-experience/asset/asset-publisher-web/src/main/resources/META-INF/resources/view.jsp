@@ -22,9 +22,7 @@ long assetCategoryId = ParamUtil.getLong(request, "categoryId");
 if (assetCategoryId > 0) {
 	AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getCategory(assetCategoryId);
 
-	assetCategory = assetCategory.toEscapedModel();
-
-	PortalUtil.setPageKeywords(assetCategory.getTitle(locale), request);
+	PortalUtil.setPageKeywords(HtmlUtil.escape(assetCategory.getTitle(locale)), request);
 }
 
 String assetTagName = ParamUtil.getString(request, "tag");

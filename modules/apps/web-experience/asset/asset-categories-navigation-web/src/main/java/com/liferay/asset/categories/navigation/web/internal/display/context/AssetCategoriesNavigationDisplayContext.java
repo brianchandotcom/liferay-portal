@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.KeyValuePairComparator;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -151,8 +152,6 @@ public class AssetCategoriesNavigationDisplayContext {
 					AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
 						assetVocabularyId);
 
-				assetVocabulary = assetVocabulary.toEscapedModel();
-
 				availableVocabularNames.add(
 					new KeyValuePair(
 						String.valueOf(assetVocabularyId),
@@ -171,8 +170,6 @@ public class AssetCategoriesNavigationDisplayContext {
 			AssetVocabulary assetVocabulary =
 				AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
 					assetVocabularyId);
-
-			assetVocabulary = assetVocabulary.toEscapedModel();
 
 			currentVocabularNames.add(
 				new KeyValuePair(
@@ -242,7 +239,8 @@ public class AssetCategoriesNavigationDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String title = assetVocabulary.getTitle(themeDisplay.getLanguageId());
+		String title = HtmlUtil.escape(
+			assetVocabulary.getTitle(themeDisplay.getLanguageId()));
 
 		if (assetVocabulary.getGroupId() == themeDisplay.getCompanyGroupId()) {
 			title += " (" + LanguageUtil.get(_request, "global") + ")";

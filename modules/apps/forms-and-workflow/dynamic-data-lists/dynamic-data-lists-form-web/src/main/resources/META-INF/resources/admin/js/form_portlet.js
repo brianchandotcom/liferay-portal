@@ -87,10 +87,18 @@ AUI.add(
 							}
 						);
 
-						instance.renderUI();
-						instance.bindUI();
+						if (!instance._eventHandlers) {
+							instance._eventHandlers = [];
+						}
 
-						instance.savedState = instance.getState();
+						if (window.DDLRuleBuilder) {
+							instance._onRuleBuilderLoaded();
+						}
+						else {
+							instance._eventHandlers.push(
+								Liferay.on('RuleBuilderLoaded', A.bind('_onRuleBuilderLoaded', instance))
+							);
+						}
 					},
 
 					renderUI: function() {
@@ -127,7 +135,7 @@ AUI.add(
 
 						nameEditor.on('change', A.bind('_onNameEditorChange', instance));
 
-						instance._eventHandlers = [
+						instance._eventHandlers.push(
 							formBuilder._layoutBuilder.after('layout-builder:moveEnd', A.bind(instance._afterFormBuilderLayoutBuilderMoveEnd, instance)),
 							formBuilder._layoutBuilder.after('layout-builder:moveStart', A.bind(instance._afterFormBuilderLayoutBuilderMoveStart, instance)),
 							instance.after('autosave', instance._afterAutosave),
@@ -139,7 +147,7 @@ AUI.add(
 							instance.one('#showForm').on('click', A.bind('_onFormButtonClick', instance)),
 							instance.one('#showRules').on('click', A.bind('_onRulesButtonClick', instance)),
 							Liferay.on('destroyPortlet', A.bind('_onDestroyPortlet', instance))
-						];
+						);
 
 						var autosaveInterval = Settings.autosaveInterval;
 
@@ -736,6 +744,15 @@ AUI.add(
 						instance._copyPublishFormURLPopover.set('publishURL', instance._createFormURL());
 
 						instance._copyPublishFormURLPopover.show();
+					},
+
+					_onRuleBuilderLoaded: function() {
+						var instance = this;
+
+						instance.renderUI();
+						instance.bindUI();
+
+						instance.savedState = instance.getState();
 					},
 
 					_onRulesButtonClick: function() {

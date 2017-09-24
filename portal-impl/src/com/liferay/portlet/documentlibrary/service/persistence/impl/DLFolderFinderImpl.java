@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
+import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -68,6 +69,9 @@ public class DLFolderFinderImpl
 
 	public static final String FIND_F_BY_NO_ASSETS =
 		DLFolderFinder.class.getName() + ".findF_ByNoAssets";
+
+	public static final String FIND_F_BY_C_T =
+		DLFolderFinder.class.getName() + ".findF_ByC_T";
 
 	public static final String FIND_F_BY_G_M_F =
 		DLFolderFinder.class.getName() + ".findF_ByG_M_F";
@@ -161,6 +165,35 @@ public class DLFolderFinderImpl
 		long groupId, long folderId, QueryDefinition<?> queryDefinition) {
 
 		return doFindFE_FS_ByG_F(groupId, folderId, queryDefinition, true);
+	}
+
+	@Override
+	public List<DLFolder> findByDLFolderC_T(long classNameId, String treePath) {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_F_BY_C_T);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(
+				CustomSQLUtil.keywords(treePath, WildcardMode.TRAILING)[0]);
+			qPos.add(classNameId);
+
+			q.addEntity("DLFolder", DLFolderImpl.class);
+
+			return q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	@Override

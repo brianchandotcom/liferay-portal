@@ -180,6 +180,11 @@ public class DLFileEntryFinderUtil {
 		return getFinder().findByOrphanedFileEntries();
 	}
 
+	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> findByDLFileEntryC_T(
+		long classNameId, java.lang.String treePath) {
+		return getFinder().findByDLFileEntryC_T(classNameId, treePath);
+	}
+
 	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> findByG_F(
 		long groupId, java.util.List<java.lang.Long> folderIds,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.document.library.kernel.model.DLFileEntry> queryDefinition) {

@@ -916,37 +916,31 @@ public class Validator {
 			return false;
 		}
 
-		number = StringUtil.reverse(number);
+		int luhnSum = 0;
+		boolean useTable = false;
 
-		int total = 0;
+		for (int i = number.length() - 1; i >= 0; i--, useTable = !useTable) {
+			char c = number.charAt(i);
 
-		for (int i = 0; i < number.length(); i++) {
-			int x = 0;
+			int x = c - CharPool.NUMBER_0;
 
-			if (((i + 1) % 2) == 0) {
-				x = GetterUtil.getInteger(number.substring(i, i + 1)) * 2;
+			if ((x > 9) || (x < 0)) {
+				return false;
+			}
 
-				if (x >= 10) {
-					String s = String.valueOf(x);
-
-					x =
-						GetterUtil.getInteger(s.substring(0, 1)) +
-							GetterUtil.getInteger(s.substring(1, 2));
-				}
+			if (useTable) {
+				luhnSum += _LUHN_TABLE[x];
 			}
 			else {
-				x = GetterUtil.getInteger(number.substring(i, i + 1));
+				luhnSum += x;
 			}
-
-			total = total + x;
 		}
 
-		if ((total % 10) == 0) {
+		if ((luhnSum % 10) == 0) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	/**
@@ -1337,6 +1331,8 @@ public class Validator {
 		"synchronized", "this", "throw", "throws", "transient", "true", "try",
 		"void", "volatile", "while"
 	};
+
+	private static final int[] _LUHN_TABLE = {0, 2, 4, 6, 8, 1, 3, 5, 7, 9};
 
 	private static final String _VARIABLE_TERM_BEGIN = "[$";
 

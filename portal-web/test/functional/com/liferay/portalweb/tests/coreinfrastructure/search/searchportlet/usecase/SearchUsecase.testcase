@@ -1123,13 +1123,13 @@
 			<var name="searchTerm" value="${searchTerm}" />
 		</execute>
 
-		<execute macro="Search#gotoUserSearchResultPG">
+		<!--		<execute macro="Search#gotoUserSearchResultPG">
 			<var name="searchAssetTitle" value="${searchTerm}" />
 		</execute>
 
 		<execute macro="NewSearchPortlet#viewResultDetails">
 			<var name="searchTerm" value="${searchTerm}" />
-		</execute>
+		</execute>-->
 	</command>
 
 	<command name="SearchXSSAsset" priority="4">

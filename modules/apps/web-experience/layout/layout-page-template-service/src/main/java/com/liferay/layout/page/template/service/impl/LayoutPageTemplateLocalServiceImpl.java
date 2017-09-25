@@ -135,7 +135,7 @@ public class LayoutPageTemplateLocalServiceImpl
 	}
 
 	@Override
-	public List<LayoutPageTemplate> fetchLayoutPageTemplates(
+	public List<LayoutPageTemplate> getLayoutPageTemplates(
 		long layoutPageTemplateFolderId) {
 
 		return layoutPageTemplatePersistence.findByLayoutPageTemplateFolderId(

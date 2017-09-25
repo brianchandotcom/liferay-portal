@@ -15,12 +15,14 @@
 package com.liferay.petra.json.web.service.client.internal;
 
 import com.liferay.petra.json.web.service.client.BaseJSONWebServiceClientImpl;
+import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 
 import java.security.KeyStore;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.nio.reactor.IOReactorException;
 
 import org.osgi.service.component.annotations.Activate;
@@ -71,6 +73,11 @@ public class JSONWebServiceClientImpl extends BaseJSONWebServiceClientImpl {
 
 	public void afterPropertiesSet() throws IOReactorException {
 		super.afterPropertiesSet();
+	}
+
+	@Override
+	protected void signRequest(HttpRequestBase httpRequestBase)
+		throws JSONWebServiceTransportException.SigningFailure {
 	}
 
 	private void _setHeaders(String headersString) {

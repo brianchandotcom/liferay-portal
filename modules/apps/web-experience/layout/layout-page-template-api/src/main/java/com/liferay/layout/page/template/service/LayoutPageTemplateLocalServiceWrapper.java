@@ -50,10 +50,12 @@ public class LayoutPageTemplateLocalServiceWrapper
 	public com.liferay.layout.page.template.model.LayoutPageTemplate addLayoutPageTemplate(
 		long groupId, long userId, long layoutPageTemplateFolderId,
 		java.lang.String name,
+		java.util.Map<java.lang.Integer, com.liferay.fragment.model.FragmentEntry> layoutPageTemplateFragments,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPageTemplateLocalService.addLayoutPageTemplate(groupId,
-			userId, layoutPageTemplateFolderId, name, serviceContext);
+			userId, layoutPageTemplateFolderId, name,
+			layoutPageTemplateFragments, serviceContext);
 	}
 
 	/**
@@ -312,10 +314,12 @@ public class LayoutPageTemplateLocalServiceWrapper
 
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplate updateLayoutPageTemplate(
-		long layoutPageTemplateId, java.lang.String name)
+		long layoutPageTemplateId, java.lang.String name,
+		java.util.Map<java.lang.Integer, com.liferay.fragment.model.FragmentEntry> layoutPageTemplateFragments,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPageTemplateLocalService.updateLayoutPageTemplate(layoutPageTemplateId,
-			name);
+			name, layoutPageTemplateFragments, serviceContext);
 	}
 
 	@Override

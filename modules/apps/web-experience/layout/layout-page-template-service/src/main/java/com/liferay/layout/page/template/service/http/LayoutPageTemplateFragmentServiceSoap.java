@@ -16,9 +16,16 @@ package com.liferay.layout.page.template.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.layout.page.template.service.LayoutPageTemplateFragmentServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.layout.page.template.service.LayoutPageTemplateFragmentServiceUtil} service utility. The
+ * {@link LayoutPageTemplateFragmentServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,96 @@ import aQute.bnd.annotation.ProviderType;
  * @author Brian Wing Shun Chan
  * @see LayoutPageTemplateFragmentServiceHttp
  * @see com.liferay.layout.page.template.model.LayoutPageTemplateFragmentSoap
- * @see com.liferay.layout.page.template.service.LayoutPageTemplateFragmentServiceUtil
+ * @see LayoutPageTemplateFragmentServiceUtil
  * @generated
  */
 @ProviderType
 public class LayoutPageTemplateFragmentServiceSoap {
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateFragmentSoap addLayoutPageTemplateFragment(
+		com.liferay.layout.page.template.model.LayoutPageTemplateFragmentSoap layoutPageTemplateFragment,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.layout.page.template.model.LayoutPageTemplateFragment returnValue =
+				LayoutPageTemplateFragmentServiceUtil.addLayoutPageTemplateFragment(com.liferay.layout.page.template.model.impl.LayoutPageTemplateFragmentModelImpl.toModel(
+						layoutPageTemplateFragment), serviceContext);
+
+			return com.liferay.layout.page.template.model.LayoutPageTemplateFragmentSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateFragmentSoap addLayoutPageTemplateFragment(
+		long groupId, long layoutPageTemplateId, long fragmentId, int position,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.layout.page.template.model.LayoutPageTemplateFragment returnValue =
+				LayoutPageTemplateFragmentServiceUtil.addLayoutPageTemplateFragment(groupId,
+					layoutPageTemplateId, fragmentId, position, serviceContext);
+
+			return com.liferay.layout.page.template.model.LayoutPageTemplateFragmentSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateFragmentSoap[] deleteByLayoutPageTemplate(
+		long groupId, long layoutPageTemplateId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateFragment> returnValue =
+				LayoutPageTemplateFragmentServiceUtil.deleteByLayoutPageTemplate(groupId,
+					layoutPageTemplateId);
+
+			return com.liferay.layout.page.template.model.LayoutPageTemplateFragmentSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateFragmentSoap deleteLayoutPageTemplateFragment(
+		long groupId, long layoutPageTemplateId, long fragmentId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.layout.page.template.model.LayoutPageTemplateFragment returnValue =
+				LayoutPageTemplateFragmentServiceUtil.deleteLayoutPageTemplateFragment(groupId,
+					layoutPageTemplateId, fragmentId, serviceContext);
+
+			return com.liferay.layout.page.template.model.LayoutPageTemplateFragmentSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateFragmentSoap[] getLayoutPageTemplateFragmentsByPageTemplate(
+		long groupId, long layoutPageTemplateId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateFragment> returnValue =
+				LayoutPageTemplateFragmentServiceUtil.getLayoutPageTemplateFragmentsByPageTemplate(groupId,
+					layoutPageTemplateId);
+
+			return com.liferay.layout.page.template.model.LayoutPageTemplateFragmentSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(LayoutPageTemplateFragmentServiceSoap.class);
 }

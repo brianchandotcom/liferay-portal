@@ -16,14 +16,20 @@ package com.liferay.layout.page.template.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.layout.page.template.model.LayoutPageTemplateFragment;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for LayoutPageTemplateFragment. Methods of this
@@ -49,6 +55,24 @@ public interface LayoutPageTemplateFragmentService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutPageTemplateFragmentServiceUtil} to access the layout page template fragment remote service. Add custom service methods to {@link com.liferay.layout.page.template.service.impl.LayoutPageTemplateFragmentServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public LayoutPageTemplateFragment addLayoutPageTemplateFragment(
+		LayoutPageTemplateFragment layoutPageTemplateFragment,
+		ServiceContext serviceContext) throws PortalException;
+
+	public LayoutPageTemplateFragment addLayoutPageTemplateFragment(
+		long groupId, long layoutPageTemplateId, long fragmentId, int position,
+		ServiceContext serviceContext) throws PortalException;
+
+	public List<LayoutPageTemplateFragment> deleteByLayoutPageTemplate(
+		long groupId, long layoutPageTemplateId) throws PortalException;
+
+	public LayoutPageTemplateFragment deleteLayoutPageTemplateFragment(
+		long groupId, long layoutPageTemplateId, long fragmentId,
+		ServiceContext serviceContext) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutPageTemplateFragment> getLayoutPageTemplateFragmentsByPageTemplate(
+		long groupId, long layoutPageTemplateId);
 
 	/**
 	* Returns the OSGi service identifier.

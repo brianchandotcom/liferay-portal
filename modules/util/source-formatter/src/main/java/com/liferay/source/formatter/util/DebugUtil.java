@@ -75,9 +75,9 @@ public class DebugUtil {
 		String modifiedContent) {
 
 		List<String> originalLines = ListUtil.fromArray(
-			StringUtil.splitLines(originalContent));
+			StringUtil.splitByLines(originalContent));
 		List<String> modifiedLines = ListUtil.fromArray(
-			StringUtil.splitLines(modifiedContent));
+			StringUtil.splitByLines(modifiedContent));
 
 		Patch<String> patch = DiffUtils.diff(originalLines, modifiedLines);
 

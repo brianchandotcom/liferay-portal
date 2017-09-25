@@ -672,7 +672,7 @@ public class JavadocBuilder {
 
 		String oldContent = _fileUtil.read(file);
 
-		String[] lines = StringUtil.splitLines(oldContent);
+		String[] lines = StringUtil.splitByLines(oldContent);
 
 		JavaClass javaClass = _getJavaClass(
 			fileName, new UnsyncStringReader(oldContent));
@@ -772,7 +772,7 @@ public class JavadocBuilder {
 			oldContent = _fileUtil.read(file);
 		}
 
-		String[] lines = StringUtil.splitLines(oldContent);
+		String[] lines = StringUtil.splitByLines(oldContent);
 
 		JavaClass javaClass = _getJavaClass(
 			fileName, new UnsyncStringReader(oldContent));

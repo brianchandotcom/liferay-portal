@@ -220,7 +220,7 @@ public class SetUtil {
 	}
 
 	public static Set<String> fromString(String s) {
-		return fromArray(StringUtil.splitLines(s));
+		return fromArray(StringUtil.splitByLines(s));
 	}
 
 	public static <T> Set<T> intersect(

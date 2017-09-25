@@ -225,7 +225,7 @@ public class ListUtil {
 	}
 
 	public static List<String> fromString(String s) {
-		return fromArray(StringUtil.splitLines(s));
+		return fromArray(StringUtil.splitByLines(s));
 	}
 
 	public static List<String> fromString(String s, String delimiter) {

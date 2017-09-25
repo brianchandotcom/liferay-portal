@@ -3947,7 +3947,7 @@ public class StringUtil {
 	 * <p>
 	 * <pre>
 	 * <code>
-	 * splitLines("Red\rBlue\nGreen") returns {"Red","Blue","Green"}
+	 * splitByLines("Red\rBlue\nGreen") returns {"Red","Blue","Green"}
 	 * </code>
 	 * </pre>
 	 * </p>
@@ -3957,18 +3957,28 @@ public class StringUtil {
 	 *         <code>s</code> around return and newline characters, or an empty
 	 *         string array if string <code>s</code> is <code>null</code>
 	 */
-	public static String[] splitLines(String s) {
+	public static String[] splitByLines(String s) {
 		if (Validator.isNull(s)) {
 			return _emptyStringArray;
 		}
-
-		s = s.trim();
 
 		List<String> lines = new ArrayList<>();
 
 		_splitLines(s, lines);
 
 		return lines.toArray(new String[lines.size()]);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #splitByLines(String)}
+	 */
+	@Deprecated
+	public static String[] splitLines(String s) {
+		if (Validator.isNull(s)) {
+			return _emptyStringArray;
+		}
+
+		return splitByLines(s.trim());
 	}
 
 	/**

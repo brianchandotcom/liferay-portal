@@ -47,7 +47,7 @@ public class CSSPropertiesOrderCheck extends BaseFileCheck {
 				parameters, CharPool.TAB);
 
 			List<String> parameterList = ListUtil.fromArray(
-				StringUtil.splitLines(newParameters));
+				StringUtil.splitByLines(newParameters));
 
 			Collections.sort(parameterList, new PropertyComparator());
 

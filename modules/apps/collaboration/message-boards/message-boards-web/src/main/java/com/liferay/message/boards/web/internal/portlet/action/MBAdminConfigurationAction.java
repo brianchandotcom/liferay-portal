@@ -131,7 +131,7 @@ public class MBAdminConfigurationAction
 
 			String languageId = LocaleUtil.toLanguageId(locale);
 
-			String[] ranks = StringUtil.splitLines(
+			String[] ranks = StringUtil.splitByLines(
 				ParamUtil.getString(actionRequest, "ranks_" + languageId));
 
 			Map<String, String> map = new TreeMap<>(

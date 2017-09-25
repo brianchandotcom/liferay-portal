@@ -54,64 +54,68 @@ public class LayoutPageTemplateServiceImpl
 	}
 
 	@Override
-	public LayoutPageTemplate deleteLayoutPageTemplate(long pageTemplateId)
+	public LayoutPageTemplate deleteLayoutPageTemplate(
+			long layoutPageTemplateId)
 		throws PortalException {
 
 		LayoutPageTemplatePermission.check(
-			getPermissionChecker(), pageTemplateId, ActionKeys.DELETE);
+			getPermissionChecker(), layoutPageTemplateId, ActionKeys.DELETE);
 
 		return layoutPageTemplateLocalService.deleteLayoutPageTemplate(
-			pageTemplateId);
+			layoutPageTemplateId);
 	}
 
 	@Override
-	public List<LayoutPageTemplate> deletePageTemplates(long[] pageTemplatesIds)
+	public List<LayoutPageTemplate> deleteLayoutPageTemplates(
+			long[] layoutPageTemplateIds)
 		throws PortalException {
 
-		List<LayoutPageTemplate> undeletablePageTemplates = new ArrayList<>();
+		List<LayoutPageTemplate> undeletableLayoutPageTemplates =
+			new ArrayList<>();
 
-		for (long pageTemplateId : pageTemplatesIds) {
+		for (long layoutPageTemplateId : layoutPageTemplateIds) {
 			try {
 				LayoutPageTemplatePermission.check(
-					getPermissionChecker(), pageTemplateId, ActionKeys.DELETE);
+					getPermissionChecker(), layoutPageTemplateId,
+					ActionKeys.DELETE);
 
 				layoutPageTemplateLocalService.deleteLayoutPageTemplate(
-					pageTemplateId);
+					layoutPageTemplateId);
 			}
 			catch (PortalException pe) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(pe, pe);
 				}
 
-				LayoutPageTemplate pageTemplate =
+				LayoutPageTemplate layoutPageTemplate =
 					layoutPageTemplatePersistence.fetchByPrimaryKey(
-						pageTemplateId);
+						layoutPageTemplateId);
 
-				undeletablePageTemplates.add(pageTemplate);
+				undeletableLayoutPageTemplates.add(layoutPageTemplate);
 			}
 		}
 
-		return undeletablePageTemplates;
+		return undeletableLayoutPageTemplates;
 	}
 
 	@Override
-	public LayoutPageTemplate fetchLayoutPageTemplate(long pageTemplateId)
+	public LayoutPageTemplate fetchLayoutPageTemplate(long layoutPageTemplateId)
 		throws PortalException {
 
-		LayoutPageTemplate pageTemplate =
+		LayoutPageTemplate layoutPageTemplate =
 			layoutPageTemplateLocalService.fetchLayoutPageTemplate(
-				pageTemplateId);
+				layoutPageTemplateId);
 
-		if (pageTemplate != null) {
+		if (layoutPageTemplate != null) {
 			LayoutPageTemplatePermission.check(
-				getPermissionChecker(), pageTemplate, ActionKeys.VIEW);
+				getPermissionChecker(), layoutPageTemplate, ActionKeys.VIEW);
 		}
 
-		return pageTemplate;
+		return layoutPageTemplate;
 	}
 
 	@Override
-	public List<LayoutPageTemplate> fetchPageTemplates(
+	public List<LayoutPageTemplate> fetchLayoutPageTemplates(
 			long layoutPageTemplateFolderId)
 		throws PortalException {
 
@@ -136,7 +140,7 @@ public class LayoutPageTemplateServiceImpl
 	}
 
 	@Override
-	public List<LayoutPageTemplate> getPageTemplates(
+	public List<LayoutPageTemplate> getLayoutPageTemplates(
 			long groupId, long layoutPageTemplateFolderId, int start, int end)
 		throws PortalException {
 
@@ -145,7 +149,7 @@ public class LayoutPageTemplateServiceImpl
 	}
 
 	@Override
-	public List<LayoutPageTemplate> getPageTemplates(
+	public List<LayoutPageTemplate> getLayoutPageTemplates(
 			long groupId, long layoutPageTemplateFolderId, int start, int end,
 			OrderByComparator<LayoutPageTemplate> orderByComparator)
 		throws PortalException {
@@ -155,7 +159,7 @@ public class LayoutPageTemplateServiceImpl
 	}
 
 	@Override
-	public List<LayoutPageTemplate> getPageTemplates(
+	public List<LayoutPageTemplate> getLayoutPageTemplates(
 		long groupId, long layoutPageTemplateFolderId, String name, int start,
 		int end, OrderByComparator<LayoutPageTemplate> orderByComparator) {
 
@@ -166,17 +170,17 @@ public class LayoutPageTemplateServiceImpl
 
 	@Override
 	public LayoutPageTemplate updateLayoutPageTemplate(
-			long pageTemplateId, String name,
+			long layoutPageTemplateId, String name,
 			Map<Integer, FragmentEntry> layoutPageTemplateFragments,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		LayoutPageTemplatePermission.check(
-			getPermissionChecker(), pageTemplateId, ActionKeys.UPDATE);
+			getPermissionChecker(), layoutPageTemplateId, ActionKeys.UPDATE);
 
 		return layoutPageTemplateLocalService.updateLayoutPageTemplate(
-			getUserId(), pageTemplateId, name, layoutPageTemplateFragments,
-			serviceContext);
+			getUserId(), layoutPageTemplateId, name,
+			layoutPageTemplateFragments, serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

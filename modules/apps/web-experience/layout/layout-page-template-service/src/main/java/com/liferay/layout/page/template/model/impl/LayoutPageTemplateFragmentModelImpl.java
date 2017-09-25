@@ -18,12 +18,10 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.layout.page.template.model.LayoutPageTemplateFragment;
 import com.liferay.layout.page.template.model.LayoutPageTemplateFragmentModel;
-import com.liferay.layout.page.template.model.LayoutPageTemplateFragmentSoap;
 import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateFragmentPK;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -37,10 +35,8 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -56,7 +52,6 @@ import java.util.Map;
  * @see LayoutPageTemplateFragmentModel
  * @generated
  */
-@JSON(strict = true)
 @ProviderType
 public class LayoutPageTemplateFragmentModelImpl extends BaseModelImpl<LayoutPageTemplateFragment>
 	implements LayoutPageTemplateFragmentModel {
@@ -110,55 +105,6 @@ public class LayoutPageTemplateFragmentModelImpl extends BaseModelImpl<LayoutPag
 	public static final long FRAGMENTENTRYID_COLUMN_BITMASK = 1L;
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
 	public static final long LAYOUTPAGETEMPLATEID_COLUMN_BITMASK = 4L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 */
-	public static LayoutPageTemplateFragment toModel(
-		LayoutPageTemplateFragmentSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		LayoutPageTemplateFragment model = new LayoutPageTemplateFragmentImpl();
-
-		model.setGroupId(soapModel.getGroupId());
-		model.setLayoutPageTemplateId(soapModel.getLayoutPageTemplateId());
-		model.setFragmentEntryId(soapModel.getFragmentEntryId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setPosition(soapModel.getPosition());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 */
-	public static List<LayoutPageTemplateFragment> toModels(
-		LayoutPageTemplateFragmentSoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<LayoutPageTemplateFragment> models = new ArrayList<LayoutPageTemplateFragment>(soapModels.length);
-
-		for (LayoutPageTemplateFragmentSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.layout.page.template.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.layout.page.template.model.LayoutPageTemplateFragment"));
 
@@ -276,7 +222,6 @@ public class LayoutPageTemplateFragmentModelImpl extends BaseModelImpl<LayoutPag
 		}
 	}
 
-	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -299,7 +244,6 @@ public class LayoutPageTemplateFragmentModelImpl extends BaseModelImpl<LayoutPag
 		return _originalGroupId;
 	}
 
-	@JSON
 	@Override
 	public long getLayoutPageTemplateId() {
 		return _layoutPageTemplateId;
@@ -322,7 +266,6 @@ public class LayoutPageTemplateFragmentModelImpl extends BaseModelImpl<LayoutPag
 		return _originalLayoutPageTemplateId;
 	}
 
-	@JSON
 	@Override
 	public long getFragmentEntryId() {
 		return _fragmentEntryId;
@@ -345,7 +288,6 @@ public class LayoutPageTemplateFragmentModelImpl extends BaseModelImpl<LayoutPag
 		return _originalFragmentEntryId;
 	}
 
-	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -356,7 +298,6 @@ public class LayoutPageTemplateFragmentModelImpl extends BaseModelImpl<LayoutPag
 		_companyId = companyId;
 	}
 
-	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -383,7 +324,6 @@ public class LayoutPageTemplateFragmentModelImpl extends BaseModelImpl<LayoutPag
 	public void setUserUuid(String userUuid) {
 	}
 
-	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -399,7 +339,6 @@ public class LayoutPageTemplateFragmentModelImpl extends BaseModelImpl<LayoutPag
 		_userName = userName;
 	}
 
-	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -410,7 +349,6 @@ public class LayoutPageTemplateFragmentModelImpl extends BaseModelImpl<LayoutPag
 		_createDate = createDate;
 	}
 
-	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -427,7 +365,6 @@ public class LayoutPageTemplateFragmentModelImpl extends BaseModelImpl<LayoutPag
 		_modifiedDate = modifiedDate;
 	}
 
-	@JSON
 	@Override
 	public int getPosition() {
 		return _position;

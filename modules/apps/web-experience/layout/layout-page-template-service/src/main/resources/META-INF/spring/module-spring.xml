@@ -8,6 +8,5 @@
 	<bean class="com.liferay.layout.page.template.service.impl.LayoutPageTemplateFolderServiceImpl" id="com.liferay.layout.page.template.service.LayoutPageTemplateFolderService" />
 	<bean class="com.liferay.layout.page.template.service.persistence.impl.LayoutPageTemplateFolderPersistenceImpl" id="com.liferay.layout.page.template.service.persistence.LayoutPageTemplateFolderPersistence" parent="basePersistence" />
 	<bean class="com.liferay.layout.page.template.service.impl.LayoutPageTemplateFragmentLocalServiceImpl" id="com.liferay.layout.page.template.service.LayoutPageTemplateFragmentLocalService" />
-	<bean class="com.liferay.layout.page.template.service.impl.LayoutPageTemplateFragmentServiceImpl" id="com.liferay.layout.page.template.service.LayoutPageTemplateFragmentService" />
 	<bean class="com.liferay.layout.page.template.service.persistence.impl.LayoutPageTemplateFragmentPersistenceImpl" id="com.liferay.layout.page.template.service.persistence.LayoutPageTemplateFragmentPersistence" parent="basePersistence" />
 </beans>

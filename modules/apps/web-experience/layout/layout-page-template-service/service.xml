@@ -109,7 +109,7 @@
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="LayoutPageTemplateFragment" remote-service="true">
+	<entity local-service="true" name="LayoutPageTemplateFragment" remote-service="false">
 
 		<!-- PK fields -->
 

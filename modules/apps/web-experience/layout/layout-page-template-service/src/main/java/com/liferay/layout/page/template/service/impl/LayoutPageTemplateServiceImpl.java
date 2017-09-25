@@ -14,6 +14,7 @@
 
 package com.liferay.layout.page.template.service.impl;
 
+import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplate;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateServiceBaseImpl;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Jürgen Kappler
@@ -38,6 +40,7 @@ public class LayoutPageTemplateServiceImpl
 	@Override
 	public LayoutPageTemplate addLayoutPageTemplate(
 			long groupId, long layoutPageTemplateFolderId, String name,
+			Map<Integer, FragmentEntry> layoutPageTemplateFragments,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -47,7 +50,7 @@ public class LayoutPageTemplateServiceImpl
 
 		return layoutPageTemplateLocalService.addLayoutPageTemplate(
 			groupId, getUserId(), layoutPageTemplateFolderId, name,
-			serviceContext);
+			layoutPageTemplateFragments, serviceContext);
 	}
 
 	@Override
@@ -163,14 +166,16 @@ public class LayoutPageTemplateServiceImpl
 
 	@Override
 	public LayoutPageTemplate updateLayoutPageTemplate(
-			long pageTemplateId, String name)
+			long pageTemplateId, String name,
+			Map<Integer, FragmentEntry> layoutPageTemplateFragments,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		LayoutPageTemplatePermission.check(
 			getPermissionChecker(), pageTemplateId, ActionKeys.UPDATE);
 
 		return layoutPageTemplateLocalService.updateLayoutPageTemplate(
-			pageTemplateId, name);
+			pageTemplateId, name, layoutPageTemplateFragments, serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

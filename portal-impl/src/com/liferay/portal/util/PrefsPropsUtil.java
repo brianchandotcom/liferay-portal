@@ -123,7 +123,8 @@ public class PrefsPropsUtil {
 			return value;
 		}
 
-		return ContentUtil.get(PropsUtil.get(name));
+		return ContentUtil.get(
+			PrefsPropsUtil.class.getClassLoader(), PropsUtil.get(name));
 	}
 
 	public static String getContent(String name) {

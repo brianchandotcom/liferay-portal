@@ -1,7 +1,7 @@
 task runGradleTest
 
 gradle.liferayWorkspace {
-	bundleUrl = uri("bundlesDir/bundles.zip")
+	bundleUrl = uri("bundlesDir/bundle.zip")
 }
 
 runGradleTest {
@@ -10,9 +10,7 @@ runGradleTest {
 			tasks.downloadBundle.execute()
 		}
 		catch (Exception e) {
-			assert downloadBundle.state.didWork == true
-			assert downloadBundle.state.executed == true
-			assert e.message.contains("Execution failed for task ':downloadBundle'")
+			assert e.cause.message.equals("Destination cannot be the same as bundle url")
 		}
 
 	}

@@ -1127,12 +1127,12 @@ public class MBUtil {
 
 		String parentMessageId = null;
 
-		String subject = StringUtil.reverse(message.getSubject());
+		String subject = message.getSubject();
 
-		int pos = subject.indexOf(CharPool.LESS_THAN);
+		int pos = subject.lastIndexOf(CharPool.LESS_THAN);
 
 		if (pos != -1) {
-			parentMessageId = StringUtil.reverse(subject.substring(0, pos + 1));
+			parentMessageId = subject.substring(pos + 1);
 		}
 
 		return parentMessageId;

@@ -15,3 +15,28 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<%
+Map<String, Object> data = new HashMap<>();
+
+data.put("qa-id", "navigation");
+%>
+
+<aui:nav-bar cssClass="collapse-basic-search" data="<%= data %>" markupView="lexicon">
+	<portlet:renderURL var="mainURL" />
+
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item href="<%= mainURL.toString() %>" label="menus" selected="<%= true %>" />
+	</aui:nav>
+
+	<aui:nav-bar-search>
+
+		<%
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+		%>
+
+		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
+			<liferay-ui:input-search markupView="lexicon" />
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>

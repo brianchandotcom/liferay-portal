@@ -69,14 +69,23 @@
 			<var name="rowEntry" value="Fragment Name" />
 		</execute>
 
-		<var name="htmlSnippet"><![CDATA[<!DOCTYPE html><html><div><span class="test">This is a test.</span></div></html>]]></var>
+		<var name="htmlSnippet"><![CDATA[
+<!DOCTYPE html>${line.separator}
+<html>${line.separator}
+<div>${line.separator}
+<span class="test">This is a test.</span>${line.separator}
+</div>${line.separator}
+</html>]]></var>
 
 		<execute macro="Fragment#typeFragmentEditor">
 			<var name="editor" value="html" />
 			<var name="templateScript" value="${htmlSnippet}" />
 		</execute>
 
-		<var name="cssSnippet"><![CDATA[.test{color:red}]]></var>
+		<var name="cssSnippet"><![CDATA[
+.test{${line.separator}
+	color:red${line.separator}
+}]]></var>
 
 		<execute macro="Fragment#typeFragmentEditor">
 			<var name="editor" value="css" />
@@ -84,17 +93,9 @@
 		</execute>
 
 		<var name="javascriptSnippet"><![CDATA[
-function getWebElement(path) {
-	return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-}
-
-var element = getWebElement("//span[@class='test']");
-
-var highlight = function(){
-  element.style.border='2px dashed red';
-};
-
-highlight();]]></var>
+var element = document.querySelector(".test");${line.separator}${line.separator}
+element.style.border='2px dashed red';
+]]></var>
 
 		<execute macro="Fragment#typeFragmentEditor">
 			<var name="editor" value="javascript" />

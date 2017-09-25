@@ -14,11 +14,11 @@
 
 package com.liferay.upload.web.internal;
 
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.upload.AttachmentContentUpdater;
 import com.liferay.upload.AttachmentElementHandler;
-import com.liferay.upload.util.CheckedFunction;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -40,7 +40,7 @@ public class DefaultAttachmentContentUpdater
 	@Override
 	public String updateContent(
 			String content,
-			CheckedFunction<FileEntry, FileEntry, PortalException> saveFile)
+			UnsafeFunction<FileEntry, FileEntry, PortalException> saveFile)
 		throws PortalException {
 
 		for (AttachmentElementHandler attachmentElementHandler :

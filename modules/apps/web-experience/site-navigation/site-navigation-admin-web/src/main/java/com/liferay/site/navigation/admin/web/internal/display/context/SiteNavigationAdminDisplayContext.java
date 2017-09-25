@@ -256,6 +256,26 @@ public class SiteNavigationAdminDisplayContext {
 		return _searchContainer;
 	}
 
+	public SiteNavigationMenu getSiteNavigationMenu() throws PortalException {
+		if (getSiteNavigationMenuId() == 0) {
+			return null;
+		}
+
+		return SiteNavigationMenuServiceUtil.fetchSiteNavigationMenu(
+			getSiteNavigationMenuId());
+	}
+
+	public long getSiteNavigationMenuId() {
+		if (_siteNavigationMenuId != null) {
+			return _siteNavigationMenuId;
+		}
+
+		_siteNavigationMenuId = ParamUtil.getLong(
+			_request, "siteNavigationMenuId");
+
+		return _siteNavigationMenuId;
+	}
+
 	public boolean isShowAddButton() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -283,5 +303,7 @@ public class SiteNavigationAdminDisplayContext {
 	private final PortletPreferences _portletPreferences;
 	private final HttpServletRequest _request;
 	private SearchContainer _searchContainer;
+	private SiteNavigationMenu _siteNavigationMenu;
+	private Long _siteNavigationMenuId;
 
 }

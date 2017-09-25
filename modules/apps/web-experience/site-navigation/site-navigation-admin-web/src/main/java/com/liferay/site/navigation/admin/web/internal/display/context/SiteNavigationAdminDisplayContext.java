@@ -14,16 +14,29 @@
 
 package com.liferay.site.navigation.admin.web.internal.display.context;
 
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.navigation.admin.web.internal.util.SiteNavigationMenuPortletUtil;
+import com.liferay.site.navigation.constants.SiteNavigationActionKeys;
 import com.liferay.site.navigation.constants.SiteNavigationAdminPortletKeys;
+import com.liferay.site.navigation.model.SiteNavigationMenu;
+import com.liferay.site.navigation.service.SiteNavigationMenuServiceUtil;
+import com.liferay.site.navigation.service.permission.SiteNavigationPermission;
+
+import java.util.List;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
@@ -36,10 +49,12 @@ import javax.servlet.http.HttpServletRequest;
 public class SiteNavigationAdminDisplayContext {
 
 	public SiteNavigationAdminDisplayContext(
+			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
 			HttpServletRequest request)
 		throws PortalException {
 
+		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_request = request;
 
@@ -63,7 +78,7 @@ public class SiteNavigationAdminDisplayContext {
 		if (Validator.isNull(_displayStyle)) {
 			_displayStyle = portalPreferences.getValue(
 				SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN,
-				"display-style", "icon");
+				"display-style", "list");
 		}
 		else if (ArrayUtil.contains(displayViews, _displayStyle)) {
 			portalPreferences.setValue(
@@ -87,6 +102,16 @@ public class SiteNavigationAdminDisplayContext {
 		}
 
 		return _displayViews;
+	}
+
+	public String getKeywords() {
+		if (Validator.isNotNull(_keywords)) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(_request, "keywords");
+
+		return _keywords;
 	}
 
 	public String getOrderByCol() throws Exception {
@@ -162,12 +187,102 @@ public class SiteNavigationAdminDisplayContext {
 		return portletURL;
 	}
 
+	public SearchContainer getSearchContainer() throws Exception {
+		if (_searchContainer != null) {
+			return _searchContainer;
+		}
+
+		SearchContainer searchContainer = new SearchContainer(
+			_liferayPortletRequest, getPortletURL(), null,
+			"there-are-no-navigation-menus");
+
+		if (Validator.isNull(getKeywords())) {
+			if (isShowAddButton()) {
+				searchContainer.setEmptyResultsMessageCssClass(
+					"there-are-no-navigation-menus-you-can-add-a-menu-by-" +
+						"clicking-the-plus-button-on-the-bottom-right-corner");
+				searchContainer.setEmptyResultsMessageCssClass(
+					"taglib-empty-result-message-header-has-plus-btn");
+			}
+		}
+		else {
+			searchContainer.setSearch(true);
+		}
+
+		OrderByComparator<SiteNavigationMenu> orderByComparator =
+			SiteNavigationMenuPortletUtil.getOrderByComparator(
+				getOrderByCol(), getOrderByType());
+
+		searchContainer.setOrderByCol(getOrderByCol());
+		searchContainer.setOrderByComparator(orderByComparator);
+		searchContainer.setOrderByType(getOrderByType());
+
+		EmptyOnClickRowChecker emptyOnClickRowChecker =
+			new EmptyOnClickRowChecker(_liferayPortletResponse);
+
+		searchContainer.setRowChecker(emptyOnClickRowChecker);
+
+		List<SiteNavigationMenu> menus = null;
+		int menusCount = 0;
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long scopeGroupId = themeDisplay.getScopeGroupId();
+
+		if (Validator.isNotNull(getKeywords())) {
+			menus = SiteNavigationMenuServiceUtil.getSiteNavigationMenus(
+				scopeGroupId, getKeywords(), searchContainer.getStart(),
+				searchContainer.getEnd(), orderByComparator);
+
+			menusCount =
+				SiteNavigationMenuServiceUtil.getSiteNavigationMenusCount(
+					scopeGroupId, getKeywords());
+		}
+		else {
+			menus = SiteNavigationMenuServiceUtil.getSiteNavigationMenus(
+				themeDisplay.getScopeGroupId(), searchContainer.getStart(),
+				searchContainer.getEnd(), orderByComparator);
+
+			menusCount =
+				SiteNavigationMenuServiceUtil.getSiteNavigationMenusCount(
+					scopeGroupId);
+		}
+
+		searchContainer.setResults(menus);
+		searchContainer.setTotal(menusCount);
+
+		_searchContainer = searchContainer;
+
+		return _searchContainer;
+	}
+
+	public boolean isShowAddButton() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (SiteNavigationPermission.contains(
+				themeDisplay.getPermissionChecker(),
+				SiteNavigationPermission.RESOURCE_NAME,
+				SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN,
+				themeDisplay.getSiteGroupId(),
+				SiteNavigationActionKeys.ADD_SITE_NAVIGATION_MENU)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private String _displayStyle;
 	private String[] _displayViews;
+	private String _keywords;
+	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _orderByCol;
 	private String _orderByType;
 	private final PortletPreferences _portletPreferences;
 	private final HttpServletRequest _request;
+	private SearchContainer _searchContainer;
 
 }

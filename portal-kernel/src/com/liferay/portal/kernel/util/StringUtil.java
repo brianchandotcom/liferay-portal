@@ -3313,10 +3313,12 @@ public class StringUtil {
 	/**
 	 * Reverses the order of the characters of the string.
 	 *
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 * @param  s the original string
 	 * @return a string representing the original string with characters in
 	 *         reverse order
 	 */
+	@Deprecated
 	public static String reverse(String s) {
 		if (s == null) {
 			return null;

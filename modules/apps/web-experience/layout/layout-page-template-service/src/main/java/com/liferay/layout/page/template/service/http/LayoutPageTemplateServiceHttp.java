@@ -58,6 +58,7 @@ public class LayoutPageTemplateServiceHttp {
 	public static com.liferay.layout.page.template.model.LayoutPageTemplate addLayoutPageTemplate(
 		HttpPrincipal httpPrincipal, long groupId,
 		long layoutPageTemplateFolderId, java.lang.String name,
+		java.util.Map<java.lang.Integer, com.liferay.fragment.model.FragmentEntry> layoutPageTemplateFragments,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -66,7 +67,8 @@ public class LayoutPageTemplateServiceHttp {
 					_addLayoutPageTemplateParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					layoutPageTemplateFolderId, name, serviceContext);
+					layoutPageTemplateFolderId, name,
+					layoutPageTemplateFragments, serviceContext);
 
 			Object returnObj = null;
 
@@ -377,7 +379,10 @@ public class LayoutPageTemplateServiceHttp {
 	}
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplate updateLayoutPageTemplate(
-		HttpPrincipal httpPrincipal, long pageTemplateId, java.lang.String name)
+		HttpPrincipal httpPrincipal, long pageTemplateId,
+		java.lang.String name,
+		java.util.Map<java.lang.Integer, com.liferay.fragment.model.FragmentEntry> layoutPageTemplateFragments,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateServiceUtil.class,
@@ -385,7 +390,8 @@ public class LayoutPageTemplateServiceHttp {
 					_updateLayoutPageTemplateParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					pageTemplateId, name);
+					pageTemplateId, name, layoutPageTemplateFragments,
+					serviceContext);
 
 			Object returnObj = null;
 
@@ -411,7 +417,7 @@ public class LayoutPageTemplateServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(LayoutPageTemplateServiceHttp.class);
 	private static final Class<?>[] _addLayoutPageTemplateParameterTypes0 = new Class[] {
-			long.class, long.class, java.lang.String.class,
+			long.class, long.class, java.lang.String.class, java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteLayoutPageTemplateParameterTypes1 = new Class[] {
@@ -442,6 +448,7 @@ public class LayoutPageTemplateServiceHttp {
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _updateLayoutPageTemplateParameterTypes10 = new Class[] {
-			long.class, java.lang.String.class
+			long.class, java.lang.String.class, java.util.Map.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

@@ -16,6 +16,8 @@ package com.liferay.layout.page.template.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.fragment.model.FragmentEntry;
+
 import com.liferay.layout.page.template.model.LayoutPageTemplate;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -38,6 +40,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service interface for LayoutPageTemplate. Methods of this
@@ -74,6 +77,7 @@ public interface LayoutPageTemplateLocalService extends BaseLocalService,
 
 	public LayoutPageTemplate addLayoutPageTemplate(long groupId, long userId,
 		long layoutPageTemplateFolderId, java.lang.String name,
+		Map<java.lang.Integer, FragmentEntry> layoutPageTemplateFragments,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -258,6 +262,7 @@ public interface LayoutPageTemplateLocalService extends BaseLocalService,
 		LayoutPageTemplate layoutPageTemplate);
 
 	public LayoutPageTemplate updateLayoutPageTemplate(
-		long layoutPageTemplateId, java.lang.String name)
-		throws PortalException;
+		long layoutPageTemplateId, java.lang.String name,
+		Map<java.lang.Integer, FragmentEntry> layoutPageTemplateFragments,
+		ServiceContext serviceContext) throws PortalException;
 }

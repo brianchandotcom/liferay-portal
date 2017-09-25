@@ -37,10 +37,12 @@ public class LayoutPageTemplateServiceWrapper
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplate addLayoutPageTemplate(
 		long groupId, long layoutPageTemplateFolderId, java.lang.String name,
+		java.util.Map<java.lang.Integer, com.liferay.fragment.model.FragmentEntry> layoutPageTemplateFragments,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPageTemplateService.addLayoutPageTemplate(groupId,
-			layoutPageTemplateFolderId, name, serviceContext);
+			layoutPageTemplateFolderId, name, layoutPageTemplateFragments,
+			serviceContext);
 	}
 
 	@Override
@@ -123,10 +125,12 @@ public class LayoutPageTemplateServiceWrapper
 
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplate updateLayoutPageTemplate(
-		long pageTemplateId, java.lang.String name)
+		long pageTemplateId, java.lang.String name,
+		java.util.Map<java.lang.Integer, com.liferay.fragment.model.FragmentEntry> layoutPageTemplateFragments,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPageTemplateService.updateLayoutPageTemplate(pageTemplateId,
-			name);
+			name, layoutPageTemplateFragments, serviceContext);
 	}
 
 	@Override

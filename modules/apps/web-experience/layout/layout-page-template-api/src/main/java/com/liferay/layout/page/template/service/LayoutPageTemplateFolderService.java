@@ -16,14 +16,21 @@ package com.liferay.layout.page.template.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.layout.page.template.model.LayoutPageTemplateFolder;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for LayoutPageTemplateFolder. Methods of this
@@ -49,6 +56,42 @@ public interface LayoutPageTemplateFolderService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutPageTemplateFolderServiceUtil} to access the layout page template folder remote service. Add custom service methods to {@link com.liferay.layout.page.template.service.impl.LayoutPageTemplateFolderServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public LayoutPageTemplateFolder addLayoutPageTemplateFolder(long groupId,
+		java.lang.String name, java.lang.String description,
+		ServiceContext serviceContext) throws PortalException;
+
+	public LayoutPageTemplateFolder deleteLayoutPageTemplateFolder(
+		long layoutPageTemplateFolderId) throws PortalException;
+
+	public List<LayoutPageTemplateFolder> deleteLayoutPageTemplateFolders(
+		long[] layoutPageTemplateFolderIds) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutPageTemplateFolder fetchLayoutPageTemplateFolder(
+		long layoutPageTemplateFolderId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutPageTemplateFolder> getLayoutPageTemplateFolders(
+		long groupId, int start, int end) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutPageTemplateFolder> getLayoutPageTemplateFolders(
+		long groupId, int start, int end,
+		OrderByComparator<LayoutPageTemplateFolder> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutPageTemplateFolder> getLayoutPageTemplateFolders(
+		long groupId, java.lang.String name, int start, int end,
+		OrderByComparator<LayoutPageTemplateFolder> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getLayoutPageTemplateFoldersCount(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getLayoutPageTemplateFoldersCount(long groupId,
+		java.lang.String name);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -56,4 +99,8 @@ public interface LayoutPageTemplateFolderService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	public LayoutPageTemplateFolder updateLayoutPageTemplateFolder(
+		long layoutPageTemplateFolderId, java.lang.String name,
+		java.lang.String description) throws PortalException;
 }

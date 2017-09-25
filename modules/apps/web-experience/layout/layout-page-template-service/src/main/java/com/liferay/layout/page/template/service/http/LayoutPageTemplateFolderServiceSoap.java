@@ -16,9 +16,16 @@ package com.liferay.layout.page.template.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.layout.page.template.service.LayoutPageTemplateFolderServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.layout.page.template.service.LayoutPageTemplateFolderServiceUtil} service utility. The
+ * {@link LayoutPageTemplateFolderServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,171 @@ import aQute.bnd.annotation.ProviderType;
  * @author Brian Wing Shun Chan
  * @see LayoutPageTemplateFolderServiceHttp
  * @see com.liferay.layout.page.template.model.LayoutPageTemplateFolderSoap
- * @see com.liferay.layout.page.template.service.LayoutPageTemplateFolderServiceUtil
+ * @see LayoutPageTemplateFolderServiceUtil
  * @generated
  */
 @ProviderType
 public class LayoutPageTemplateFolderServiceSoap {
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateFolderSoap addLayoutPageTemplateFolder(
+		long groupId, java.lang.String name, java.lang.String description,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.layout.page.template.model.LayoutPageTemplateFolder returnValue =
+				LayoutPageTemplateFolderServiceUtil.addLayoutPageTemplateFolder(groupId,
+					name, description, serviceContext);
+
+			return com.liferay.layout.page.template.model.LayoutPageTemplateFolderSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateFolderSoap deleteLayoutPageTemplateFolder(
+		long layoutPageTemplateFolderId) throws RemoteException {
+		try {
+			com.liferay.layout.page.template.model.LayoutPageTemplateFolder returnValue =
+				LayoutPageTemplateFolderServiceUtil.deleteLayoutPageTemplateFolder(layoutPageTemplateFolderId);
+
+			return com.liferay.layout.page.template.model.LayoutPageTemplateFolderSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateFolderSoap[] deleteLayoutPageTemplateFolders(
+		long[] layoutPageTemplateFolderIds) throws RemoteException {
+		try {
+			java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateFolder> returnValue =
+				LayoutPageTemplateFolderServiceUtil.deleteLayoutPageTemplateFolders(layoutPageTemplateFolderIds);
+
+			return com.liferay.layout.page.template.model.LayoutPageTemplateFolderSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateFolderSoap fetchLayoutPageTemplateFolder(
+		long layoutPageTemplateFolderId) throws RemoteException {
+		try {
+			com.liferay.layout.page.template.model.LayoutPageTemplateFolder returnValue =
+				LayoutPageTemplateFolderServiceUtil.fetchLayoutPageTemplateFolder(layoutPageTemplateFolderId);
+
+			return com.liferay.layout.page.template.model.LayoutPageTemplateFolderSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateFolderSoap[] getLayoutPageTemplateFolders(
+		long groupId, int start, int end) throws RemoteException {
+		try {
+			java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateFolder> returnValue =
+				LayoutPageTemplateFolderServiceUtil.getLayoutPageTemplateFolders(groupId,
+					start, end);
+
+			return com.liferay.layout.page.template.model.LayoutPageTemplateFolderSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateFolderSoap[] getLayoutPageTemplateFolders(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplateFolder> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateFolder> returnValue =
+				LayoutPageTemplateFolderServiceUtil.getLayoutPageTemplateFolders(groupId,
+					start, end, orderByComparator);
+
+			return com.liferay.layout.page.template.model.LayoutPageTemplateFolderSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateFolderSoap[] getLayoutPageTemplateFolders(
+		long groupId, java.lang.String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplateFolder> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateFolder> returnValue =
+				LayoutPageTemplateFolderServiceUtil.getLayoutPageTemplateFolders(groupId,
+					name, start, end, orderByComparator);
+
+			return com.liferay.layout.page.template.model.LayoutPageTemplateFolderSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getLayoutPageTemplateFoldersCount(long groupId)
+		throws RemoteException {
+		try {
+			int returnValue = LayoutPageTemplateFolderServiceUtil.getLayoutPageTemplateFoldersCount(groupId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getLayoutPageTemplateFoldersCount(long groupId,
+		java.lang.String name) throws RemoteException {
+		try {
+			int returnValue = LayoutPageTemplateFolderServiceUtil.getLayoutPageTemplateFoldersCount(groupId,
+					name);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateFolderSoap updateLayoutPageTemplateFolder(
+		long layoutPageTemplateFolderId, java.lang.String name,
+		java.lang.String description) throws RemoteException {
+		try {
+			com.liferay.layout.page.template.model.LayoutPageTemplateFolder returnValue =
+				LayoutPageTemplateFolderServiceUtil.updateLayoutPageTemplateFolder(layoutPageTemplateFolderId,
+					name, description);
+
+			return com.liferay.layout.page.template.model.LayoutPageTemplateFolderSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(LayoutPageTemplateFolderServiceSoap.class);
 }

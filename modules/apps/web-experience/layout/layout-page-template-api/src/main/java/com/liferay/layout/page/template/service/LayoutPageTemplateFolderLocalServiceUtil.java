@@ -53,6 +53,16 @@ public class LayoutPageTemplateFolderLocalServiceUtil {
 		return getService().addLayoutPageTemplateFolder(layoutPageTemplateFolder);
 	}
 
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateFolder addLayoutPageTemplateFolder(
+		long groupId, long userId, java.lang.String name,
+		java.lang.String description,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addLayoutPageTemplateFolder(groupId, userId, name,
+			description, serviceContext);
+	}
+
 	/**
 	* Creates a new layout page template folder with the primary key. Does not add the layout page template folder to the database.
 	*
@@ -70,9 +80,11 @@ public class LayoutPageTemplateFolderLocalServiceUtil {
 	*
 	* @param layoutPageTemplateFolder the layout page template folder
 	* @return the layout page template folder that was removed
+	* @throws PortalException
 	*/
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateFolder deleteLayoutPageTemplateFolder(
-		com.liferay.layout.page.template.model.LayoutPageTemplateFolder layoutPageTemplateFolder) {
+		com.liferay.layout.page.template.model.LayoutPageTemplateFolder layoutPageTemplateFolder)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .deleteLayoutPageTemplateFolder(layoutPageTemplateFolder);
 	}
@@ -222,6 +234,29 @@ public class LayoutPageTemplateFolderLocalServiceUtil {
 		return getService().getLayoutPageTemplateFolders(start, end);
 	}
 
+	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateFolder> getLayoutPageTemplateFolders(
+		long groupId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLayoutPageTemplateFolders(groupId, start, end);
+	}
+
+	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateFolder> getLayoutPageTemplateFolders(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplateFolder> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getLayoutPageTemplateFolders(groupId, start, end,
+			orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateFolder> getLayoutPageTemplateFolders(
+		long groupId, java.lang.String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplateFolder> orderByComparator) {
+		return getService()
+				   .getLayoutPageTemplateFolders(groupId, name, start, end,
+			orderByComparator);
+	}
+
 	/**
 	* Returns the number of layout page template folders.
 	*
@@ -256,6 +291,15 @@ public class LayoutPageTemplateFolderLocalServiceUtil {
 		com.liferay.layout.page.template.model.LayoutPageTemplateFolder layoutPageTemplateFolder) {
 		return getService()
 				   .updateLayoutPageTemplateFolder(layoutPageTemplateFolder);
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateFolder updateLayoutPageTemplateFolder(
+		long layoutPageTemplateFolderId, java.lang.String name,
+		java.lang.String description)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateLayoutPageTemplateFolder(layoutPageTemplateFolderId,
+			name, description);
 	}
 
 	public static LayoutPageTemplateFolderLocalService getService() {

@@ -48,12 +48,12 @@ public class LayoutPageTemplateFolderLocalServiceWrapper
 
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplateFolder addLayoutPageTemplateFolder(
-		long groupId, long userId, java.lang.String name,
+		long userId, long groupId, java.lang.String name,
 		java.lang.String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutPageTemplateFolderLocalService.addLayoutPageTemplateFolder(groupId,
-			userId, name, description, serviceContext);
+		return _layoutPageTemplateFolderLocalService.addLayoutPageTemplateFolder(userId,
+			groupId, name, description, serviceContext);
 	}
 
 	/**

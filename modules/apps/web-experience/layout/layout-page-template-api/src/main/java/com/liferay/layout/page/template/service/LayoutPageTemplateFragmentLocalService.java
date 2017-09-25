@@ -74,8 +74,9 @@ public interface LayoutPageTemplateFragmentLocalService extends BaseLocalService
 		LayoutPageTemplateFragment layoutPageTemplateFragment);
 
 	public LayoutPageTemplateFragment addLayoutPageTemplateFragment(
-		long groupId, long userId, long layoutPageTemplateId, long fragmentId,
-		int position, ServiceContext serviceContext) throws PortalException;
+		long userId, long groupId, long layoutPageTemplateEntryId,
+		long fragmentId, int position, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Creates a new layout page template fragment with the primary key. Does not add the layout page template fragment to the database.
@@ -85,6 +86,9 @@ public interface LayoutPageTemplateFragmentLocalService extends BaseLocalService
 	*/
 	public LayoutPageTemplateFragment createLayoutPageTemplateFragment(
 		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK);
+
+	public List<LayoutPageTemplateFragment> deleteByLayoutPageTemplateEntry(
+		long groupId, long layoutPageTemplateEntryId) throws PortalException;
 
 	/**
 	* Deletes the layout page template fragment from the database. Also notifies the appropriate model listeners.
@@ -111,7 +115,7 @@ public interface LayoutPageTemplateFragmentLocalService extends BaseLocalService
 		throws PortalException;
 
 	public LayoutPageTemplateFragment deleteLayoutPageTemplateFragment(
-		long groupId, long layoutPageTemplateId, long fragmentId)
+		long groupId, long layoutPageTemplateEntryId, long fragmentId)
 		throws PortalException;
 
 	/**
@@ -216,6 +220,10 @@ public interface LayoutPageTemplateFragmentLocalService extends BaseLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutPageTemplateFragment> getLayoutPageTemplateFragments(
 		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutPageTemplateFragment> getLayoutPageTemplateFragmentsByPageTemplate(
+		long groupId, long layoutPageTemplateEntryId);
 
 	/**
 	* Returns the number of layout page template fragments.

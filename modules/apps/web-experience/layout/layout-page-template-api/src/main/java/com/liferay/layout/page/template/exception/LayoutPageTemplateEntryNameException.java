@@ -22,20 +22,20 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class LayoutPageTemplateNameException extends PortalException {
+public class LayoutPageTemplateEntryNameException extends PortalException {
 
-	public LayoutPageTemplateNameException() {
+	public LayoutPageTemplateEntryNameException() {
 	}
 
-	public LayoutPageTemplateNameException(String msg) {
+	public LayoutPageTemplateEntryNameException(String msg) {
 		super(msg);
 	}
 
-	public LayoutPageTemplateNameException(String msg, Throwable cause) {
+	public LayoutPageTemplateEntryNameException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public LayoutPageTemplateNameException(Throwable cause) {
+	public LayoutPageTemplateEntryNameException(Throwable cause) {
 		super(cause);
 	}
 

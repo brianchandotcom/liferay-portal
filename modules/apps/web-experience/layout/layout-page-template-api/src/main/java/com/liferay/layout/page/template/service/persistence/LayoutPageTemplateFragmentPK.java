@@ -30,16 +30,16 @@ import java.io.Serializable;
 public class LayoutPageTemplateFragmentPK implements Comparable<LayoutPageTemplateFragmentPK>,
 	Serializable {
 	public long groupId;
-	public long layoutPageTemplateId;
+	public long layoutPageTemplateEntryId;
 	public long fragmentEntryId;
 
 	public LayoutPageTemplateFragmentPK() {
 	}
 
 	public LayoutPageTemplateFragmentPK(long groupId,
-		long layoutPageTemplateId, long fragmentEntryId) {
+		long layoutPageTemplateEntryId, long fragmentEntryId) {
 		this.groupId = groupId;
-		this.layoutPageTemplateId = layoutPageTemplateId;
+		this.layoutPageTemplateEntryId = layoutPageTemplateEntryId;
 		this.fragmentEntryId = fragmentEntryId;
 	}
 
@@ -51,12 +51,12 @@ public class LayoutPageTemplateFragmentPK implements Comparable<LayoutPageTempla
 		this.groupId = groupId;
 	}
 
-	public long getLayoutPageTemplateId() {
-		return layoutPageTemplateId;
+	public long getLayoutPageTemplateEntryId() {
+		return layoutPageTemplateEntryId;
 	}
 
-	public void setLayoutPageTemplateId(long layoutPageTemplateId) {
-		this.layoutPageTemplateId = layoutPageTemplateId;
+	public void setLayoutPageTemplateEntryId(long layoutPageTemplateEntryId) {
+		this.layoutPageTemplateEntryId = layoutPageTemplateEntryId;
 	}
 
 	public long getFragmentEntryId() {
@@ -89,10 +89,10 @@ public class LayoutPageTemplateFragmentPK implements Comparable<LayoutPageTempla
 			return value;
 		}
 
-		if (layoutPageTemplateId < pk.layoutPageTemplateId) {
+		if (layoutPageTemplateEntryId < pk.layoutPageTemplateEntryId) {
 			value = -1;
 		}
-		else if (layoutPageTemplateId > pk.layoutPageTemplateId) {
+		else if (layoutPageTemplateEntryId > pk.layoutPageTemplateEntryId) {
 			value = 1;
 		}
 		else {
@@ -133,7 +133,7 @@ public class LayoutPageTemplateFragmentPK implements Comparable<LayoutPageTempla
 		LayoutPageTemplateFragmentPK pk = (LayoutPageTemplateFragmentPK)obj;
 
 		if ((groupId == pk.groupId) &&
-				(layoutPageTemplateId == pk.layoutPageTemplateId) &&
+				(layoutPageTemplateEntryId == pk.layoutPageTemplateEntryId) &&
 				(fragmentEntryId == pk.fragmentEntryId)) {
 			return true;
 		}
@@ -147,7 +147,7 @@ public class LayoutPageTemplateFragmentPK implements Comparable<LayoutPageTempla
 		int hashCode = 0;
 
 		hashCode = HashUtil.hash(hashCode, groupId);
-		hashCode = HashUtil.hash(hashCode, layoutPageTemplateId);
+		hashCode = HashUtil.hash(hashCode, layoutPageTemplateEntryId);
 		hashCode = HashUtil.hash(hashCode, fragmentEntryId);
 
 		return hashCode;
@@ -165,9 +165,9 @@ public class LayoutPageTemplateFragmentPK implements Comparable<LayoutPageTempla
 
 		sb.append(StringPool.COMMA);
 		sb.append(StringPool.SPACE);
-		sb.append("layoutPageTemplateId");
+		sb.append("layoutPageTemplateEntryId");
 		sb.append(StringPool.EQUAL);
-		sb.append(layoutPageTemplateId);
+		sb.append(layoutPageTemplateEntryId);
 
 		sb.append(StringPool.COMMA);
 		sb.append(StringPool.SPACE);

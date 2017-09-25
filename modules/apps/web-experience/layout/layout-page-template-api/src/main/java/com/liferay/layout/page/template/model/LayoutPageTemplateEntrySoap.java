@@ -23,18 +23,19 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services, specifically {@link com.liferay.layout.page.template.service.http.LayoutPageTemplateServiceSoap}.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.layout.page.template.service.http.LayoutPageTemplateEntryServiceSoap}.
  *
  * @author Brian Wing Shun Chan
- * @see com.liferay.layout.page.template.service.http.LayoutPageTemplateServiceSoap
+ * @see com.liferay.layout.page.template.service.http.LayoutPageTemplateEntryServiceSoap
  * @generated
  */
 @ProviderType
-public class LayoutPageTemplateSoap implements Serializable {
-	public static LayoutPageTemplateSoap toSoapModel(LayoutPageTemplate model) {
-		LayoutPageTemplateSoap soapModel = new LayoutPageTemplateSoap();
+public class LayoutPageTemplateEntrySoap implements Serializable {
+	public static LayoutPageTemplateEntrySoap toSoapModel(
+		LayoutPageTemplateEntry model) {
+		LayoutPageTemplateEntrySoap soapModel = new LayoutPageTemplateEntrySoap();
 
-		soapModel.setLayoutPageTemplateId(model.getLayoutPageTemplateId());
+		soapModel.setLayoutPageTemplateEntryId(model.getLayoutPageTemplateEntryId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -47,9 +48,9 @@ public class LayoutPageTemplateSoap implements Serializable {
 		return soapModel;
 	}
 
-	public static LayoutPageTemplateSoap[] toSoapModels(
-		LayoutPageTemplate[] models) {
-		LayoutPageTemplateSoap[] soapModels = new LayoutPageTemplateSoap[models.length];
+	public static LayoutPageTemplateEntrySoap[] toSoapModels(
+		LayoutPageTemplateEntry[] models) {
+		LayoutPageTemplateEntrySoap[] soapModels = new LayoutPageTemplateEntrySoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -58,15 +59,15 @@ public class LayoutPageTemplateSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static LayoutPageTemplateSoap[][] toSoapModels(
-		LayoutPageTemplate[][] models) {
-		LayoutPageTemplateSoap[][] soapModels = null;
+	public static LayoutPageTemplateEntrySoap[][] toSoapModels(
+		LayoutPageTemplateEntry[][] models) {
+		LayoutPageTemplateEntrySoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new LayoutPageTemplateSoap[models.length][models[0].length];
+			soapModels = new LayoutPageTemplateEntrySoap[models.length][models[0].length];
 		}
 		else {
-			soapModels = new LayoutPageTemplateSoap[0][0];
+			soapModels = new LayoutPageTemplateEntrySoap[0][0];
 		}
 
 		for (int i = 0; i < models.length; i++) {
@@ -76,34 +77,34 @@ public class LayoutPageTemplateSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static LayoutPageTemplateSoap[] toSoapModels(
-		List<LayoutPageTemplate> models) {
-		List<LayoutPageTemplateSoap> soapModels = new ArrayList<LayoutPageTemplateSoap>(models.size());
+	public static LayoutPageTemplateEntrySoap[] toSoapModels(
+		List<LayoutPageTemplateEntry> models) {
+		List<LayoutPageTemplateEntrySoap> soapModels = new ArrayList<LayoutPageTemplateEntrySoap>(models.size());
 
-		for (LayoutPageTemplate model : models) {
+		for (LayoutPageTemplateEntry model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new LayoutPageTemplateSoap[soapModels.size()]);
+		return soapModels.toArray(new LayoutPageTemplateEntrySoap[soapModels.size()]);
 	}
 
-	public LayoutPageTemplateSoap() {
+	public LayoutPageTemplateEntrySoap() {
 	}
 
 	public long getPrimaryKey() {
-		return _layoutPageTemplateId;
+		return _layoutPageTemplateEntryId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setLayoutPageTemplateId(pk);
+		setLayoutPageTemplateEntryId(pk);
 	}
 
-	public long getLayoutPageTemplateId() {
-		return _layoutPageTemplateId;
+	public long getLayoutPageTemplateEntryId() {
+		return _layoutPageTemplateEntryId;
 	}
 
-	public void setLayoutPageTemplateId(long layoutPageTemplateId) {
-		_layoutPageTemplateId = layoutPageTemplateId;
+	public void setLayoutPageTemplateEntryId(long layoutPageTemplateEntryId) {
+		_layoutPageTemplateEntryId = layoutPageTemplateEntryId;
 	}
 
 	public long getGroupId() {
@@ -170,7 +171,7 @@ public class LayoutPageTemplateSoap implements Serializable {
 		_name = name;
 	}
 
-	private long _layoutPageTemplateId;
+	private long _layoutPageTemplateEntryId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;

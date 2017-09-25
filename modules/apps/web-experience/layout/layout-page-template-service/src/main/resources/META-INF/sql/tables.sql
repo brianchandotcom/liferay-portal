@@ -1,5 +1,5 @@
-create table LayoutPageTemplate (
-	layoutPageTemplateId LONG not null primary key,
+create table LayoutPageTemplateEntry (
+	layoutPageTemplateEntryId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -24,7 +24,7 @@ create table LayoutPageTemplateFolder (
 
 create table LayoutPageTemplateFragment (
 	groupId LONG not null,
-	layoutPageTemplateId LONG not null,
+	layoutPageTemplateEntryId LONG not null,
 	fragmentEntryId LONG not null,
 	companyId LONG,
 	userId LONG,
@@ -32,5 +32,5 @@ create table LayoutPageTemplateFragment (
 	createDate DATE null,
 	modifiedDate DATE null,
 	position INTEGER,
-	primary key (groupId, layoutPageTemplateId, fragmentEntryId)
+	primary key (groupId, layoutPageTemplateEntryId, fragmentEntryId)
 );

@@ -55,13 +55,13 @@ public class LayoutPageTemplateFragmentLocalServiceUtil {
 	}
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateFragment addLayoutPageTemplateFragment(
-		long groupId, long userId, long layoutPageTemplateId, long fragmentId,
-		int position,
+		long userId, long groupId, long layoutPageTemplateEntryId,
+		long fragmentId, int position,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addLayoutPageTemplateFragment(groupId, userId,
-			layoutPageTemplateId, fragmentId, position, serviceContext);
+				   .addLayoutPageTemplateFragment(userId, groupId,
+			layoutPageTemplateEntryId, fragmentId, position, serviceContext);
 	}
 
 	/**
@@ -74,6 +74,14 @@ public class LayoutPageTemplateFragmentLocalServiceUtil {
 		com.liferay.layout.page.template.service.persistence.LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK) {
 		return getService()
 				   .createLayoutPageTemplateFragment(layoutPageTemplateFragmentPK);
+	}
+
+	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateFragment> deleteByLayoutPageTemplateEntry(
+		long groupId, long layoutPageTemplateEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .deleteByLayoutPageTemplateEntry(groupId,
+			layoutPageTemplateEntryId);
 	}
 
 	/**
@@ -105,11 +113,11 @@ public class LayoutPageTemplateFragmentLocalServiceUtil {
 	}
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateFragment deleteLayoutPageTemplateFragment(
-		long groupId, long layoutPageTemplateId, long fragmentId)
+		long groupId, long layoutPageTemplateEntryId, long fragmentId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .deleteLayoutPageTemplateFragment(groupId,
-			layoutPageTemplateId, fragmentId);
+			layoutPageTemplateEntryId, fragmentId);
 	}
 
 	/**
@@ -241,6 +249,13 @@ public class LayoutPageTemplateFragmentLocalServiceUtil {
 	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateFragment> getLayoutPageTemplateFragments(
 		int start, int end) {
 		return getService().getLayoutPageTemplateFragments(start, end);
+	}
+
+	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateFragment> getLayoutPageTemplateFragmentsByPageTemplate(
+		long groupId, long layoutPageTemplateEntryId) {
+		return getService()
+				   .getLayoutPageTemplateFragmentsByPageTemplate(groupId,
+			layoutPageTemplateEntryId);
 	}
 
 	/**

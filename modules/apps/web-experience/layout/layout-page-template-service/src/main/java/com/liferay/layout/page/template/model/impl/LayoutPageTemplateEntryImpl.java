@@ -17,23 +17,24 @@ package com.liferay.layout.page.template.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 /**
- * The extended model implementation for the LayoutPageTemplate service. Represents a row in the &quot;LayoutPageTemplate&quot; database table, with each column mapped to a property of this class.
+ * The extended model implementation for the LayoutPageTemplateEntry service. Represents a row in the &quot;LayoutPageTemplateEntry&quot; database table, with each column mapped to a property of this class.
  *
  * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.layout.page.template.model.LayoutPageTemplate} interface.
+ * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.layout.page.template.model.LayoutPageTemplateEntry} interface.
  * </p>
  *
  * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class LayoutPageTemplateImpl extends LayoutPageTemplateBaseImpl {
+public class LayoutPageTemplateEntryImpl
+	extends LayoutPageTemplateEntryBaseImpl {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this class directly. All methods that expect a layout page template model instance should use the {@link com.liferay.layout.page.template.model.LayoutPageTemplate} interface instead.
+	 * Never reference this class directly. All methods that expect a layout page template model instance should use the {@link com.liferay.layout.page.template.model.LayoutPageTemplateEntry} interface instead.
 	 */
-	public LayoutPageTemplateImpl() {
+	public LayoutPageTemplateEntryImpl() {
 	}
 
 }

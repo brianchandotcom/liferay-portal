@@ -18,7 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.fragment.model.FragmentEntry;
 
-import com.liferay.layout.page.template.model.LayoutPageTemplate;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -33,50 +33,62 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
-import java.util.Map;
 
 /**
- * Provides the remote service interface for LayoutPageTemplate. Methods of this
+ * Provides the remote service interface for LayoutPageTemplateEntry. Methods of this
  * service are expected to have security checks based on the propagated JAAS
  * credentials because this service can be accessed remotely.
  *
  * @author Brian Wing Shun Chan
- * @see LayoutPageTemplateServiceUtil
- * @see com.liferay.layout.page.template.service.base.LayoutPageTemplateServiceBaseImpl
- * @see com.liferay.layout.page.template.service.impl.LayoutPageTemplateServiceImpl
+ * @see LayoutPageTemplateEntryServiceUtil
+ * @see com.liferay.layout.page.template.service.base.LayoutPageTemplateEntryServiceBaseImpl
+ * @see com.liferay.layout.page.template.service.impl.LayoutPageTemplateEntryServiceImpl
  * @generated
  */
 @AccessControlled
 @JSONWebService
 @OSGiBeanProperties(property =  {
-	"json.web.service.context.name=layout", "json.web.service.context.path=LayoutPageTemplate"}, service = LayoutPageTemplateService.class)
+	"json.web.service.context.name=layout", "json.web.service.context.path=LayoutPageTemplateEntry"}, service = LayoutPageTemplateEntryService.class)
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
-public interface LayoutPageTemplateService extends BaseService {
+public interface LayoutPageTemplateEntryService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link LayoutPageTemplateServiceUtil} to access the layout page template remote service. Add custom service methods to {@link com.liferay.layout.page.template.service.impl.LayoutPageTemplateServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link LayoutPageTemplateEntryServiceUtil} to access the layout page template entry remote service. Add custom service methods to {@link com.liferay.layout.page.template.service.impl.LayoutPageTemplateEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public LayoutPageTemplate addLayoutPageTemplate(long groupId,
+	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(long groupId,
 		long layoutPageTemplateFolderId, java.lang.String name,
-		Map<java.lang.Integer, FragmentEntry> layoutPageTemplateFragments,
+		List<FragmentEntry> layoutPageTemplateFragments,
 		ServiceContext serviceContext) throws PortalException;
 
-	public LayoutPageTemplate deleteLayoutPageTemplate(long pageTemplateId)
-		throws PortalException;
+	public List<LayoutPageTemplateEntry> deleteLayoutPageTemplateEntries(
+		long[] layoutPageTemplateEntryIds) throws PortalException;
 
-	public List<LayoutPageTemplate> deletePageTemplates(long[] pageTemplatesIds)
+	public LayoutPageTemplateEntry deleteLayoutPageTemplateEntry(
+		long layoutPageTemplateEntryId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntry(
+		long layoutPageTemplateEntryId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
+		long groupId, long layoutPageTemplateFolderId, int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutPageTemplate fetchLayoutPageTemplate(long pageTemplateId)
+	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
+		long groupId, long layoutPageTemplateFolderId, int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<LayoutPageTemplate> fetchPageTemplates(
-		long layoutPageTemplateFolderId) throws PortalException;
+	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
+		long groupId, long layoutPageTemplateFolderId, java.lang.String name,
+		int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLayoutPageTemplateFoldersCount(long groupId,
@@ -93,24 +105,8 @@ public interface LayoutPageTemplateService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<LayoutPageTemplate> getPageTemplates(long groupId,
-		long layoutPageTemplateFolderId, int start, int end)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<LayoutPageTemplate> getPageTemplates(long groupId,
-		long layoutPageTemplateFolderId, int start, int end,
-		OrderByComparator<LayoutPageTemplate> orderByComparator)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<LayoutPageTemplate> getPageTemplates(long groupId,
-		long layoutPageTemplateFolderId, java.lang.String name, int start,
-		int end, OrderByComparator<LayoutPageTemplate> orderByComparator);
-
-	public LayoutPageTemplate updateLayoutPageTemplate(long pageTemplateId,
-		java.lang.String name,
-		Map<java.lang.Integer, FragmentEntry> layoutPageTemplateFragments,
+	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
+		long layoutPageTemplateEntryId, java.lang.String name,
+		List<FragmentEntry> layoutPageTemplateFragments,
 		ServiceContext serviceContext) throws PortalException;
 }

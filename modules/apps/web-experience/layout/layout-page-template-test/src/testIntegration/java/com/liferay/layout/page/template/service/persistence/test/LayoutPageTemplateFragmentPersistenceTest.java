@@ -141,8 +141,8 @@ public class LayoutPageTemplateFragmentPersistenceTest {
 
 		Assert.assertEquals(existingLayoutPageTemplateFragment.getGroupId(),
 			newLayoutPageTemplateFragment.getGroupId());
-		Assert.assertEquals(existingLayoutPageTemplateFragment.getLayoutPageTemplateId(),
-			newLayoutPageTemplateFragment.getLayoutPageTemplateId());
+		Assert.assertEquals(existingLayoutPageTemplateFragment.getLayoutPageTemplateEntryId(),
+			newLayoutPageTemplateFragment.getLayoutPageTemplateEntryId());
 		Assert.assertEquals(existingLayoutPageTemplateFragment.getFragmentEntryId(),
 			newLayoutPageTemplateFragment.getFragmentEntryId());
 		Assert.assertEquals(existingLayoutPageTemplateFragment.getCompanyId(),
@@ -349,8 +349,9 @@ public class LayoutPageTemplateFragmentPersistenceTest {
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.groupId",
 				newLayoutPageTemplateFragment.getGroupId()));
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.layoutPageTemplateId",
-				newLayoutPageTemplateFragment.getLayoutPageTemplateId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq(
+				"id.layoutPageTemplateEntryId",
+				newLayoutPageTemplateFragment.getLayoutPageTemplateEntryId()));
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.fragmentEntryId",
 				newLayoutPageTemplateFragment.getFragmentEntryId()));
 
@@ -371,8 +372,8 @@ public class LayoutPageTemplateFragmentPersistenceTest {
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.groupId",
 				RandomTestUtil.nextLong()));
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.layoutPageTemplateId",
-				RandomTestUtil.nextLong()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq(
+				"id.layoutPageTemplateEntryId", RandomTestUtil.nextLong()));
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.fragmentEntryId",
 				RandomTestUtil.nextLong()));
 

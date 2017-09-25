@@ -183,11 +183,11 @@ public class LayoutPageTemplatePersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_LPTFI() throws Exception {
-		_persistence.countByG_LPTFI(RandomTestUtil.nextLong(),
+	public void testCountByG_L() throws Exception {
+		_persistence.countByG_L(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong());
 
-		_persistence.countByG_LPTFI(0L, 0L);
+		_persistence.countByG_L(0L, 0L);
 	}
 
 	@Test
@@ -200,13 +200,13 @@ public class LayoutPageTemplatePersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_LPTFI_LikeN() throws Exception {
-		_persistence.countByG_LPTFI_LikeN(RandomTestUtil.nextLong(),
+	public void testCountByG_L_LikeN() throws Exception {
+		_persistence.countByG_L_LikeN(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), StringPool.BLANK);
 
-		_persistence.countByG_LPTFI_LikeN(0L, 0L, StringPool.NULL);
+		_persistence.countByG_L_LikeN(0L, 0L, StringPool.NULL);
 
-		_persistence.countByG_LPTFI_LikeN(0L, 0L, (String)null);
+		_persistence.countByG_L_LikeN(0L, 0L, (String)null);
 	}
 
 	@Test

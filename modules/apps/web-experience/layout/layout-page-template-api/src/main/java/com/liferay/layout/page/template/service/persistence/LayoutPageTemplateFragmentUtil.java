@@ -283,9 +283,9 @@ public class LayoutPageTemplateFragmentUtil {
 	* @param layoutPageTemplateId the layout page template ID
 	* @return the matching layout page template fragments
 	*/
-	public static List<LayoutPageTemplateFragment> findByG_LPTI(long groupId,
+	public static List<LayoutPageTemplateFragment> findByG_L(long groupId,
 		long layoutPageTemplateId) {
-		return getPersistence().findByG_LPTI(groupId, layoutPageTemplateId);
+		return getPersistence().findByG_L(groupId, layoutPageTemplateId);
 	}
 
 	/**
@@ -301,10 +301,10 @@ public class LayoutPageTemplateFragmentUtil {
 	* @param end the upper bound of the range of layout page template fragments (not inclusive)
 	* @return the range of matching layout page template fragments
 	*/
-	public static List<LayoutPageTemplateFragment> findByG_LPTI(long groupId,
+	public static List<LayoutPageTemplateFragment> findByG_L(long groupId,
 		long layoutPageTemplateId, int start, int end) {
 		return getPersistence()
-				   .findByG_LPTI(groupId, layoutPageTemplateId, start, end);
+				   .findByG_L(groupId, layoutPageTemplateId, start, end);
 	}
 
 	/**
@@ -321,11 +321,11 @@ public class LayoutPageTemplateFragmentUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout page template fragments
 	*/
-	public static List<LayoutPageTemplateFragment> findByG_LPTI(long groupId,
+	public static List<LayoutPageTemplateFragment> findByG_L(long groupId,
 		long layoutPageTemplateId, int start, int end,
 		OrderByComparator<LayoutPageTemplateFragment> orderByComparator) {
 		return getPersistence()
-				   .findByG_LPTI(groupId, layoutPageTemplateId, start, end,
+				   .findByG_L(groupId, layoutPageTemplateId, start, end,
 			orderByComparator);
 	}
 
@@ -344,12 +344,12 @@ public class LayoutPageTemplateFragmentUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching layout page template fragments
 	*/
-	public static List<LayoutPageTemplateFragment> findByG_LPTI(long groupId,
+	public static List<LayoutPageTemplateFragment> findByG_L(long groupId,
 		long layoutPageTemplateId, int start, int end,
 		OrderByComparator<LayoutPageTemplateFragment> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .findByG_LPTI(groupId, layoutPageTemplateId, start, end,
+				   .findByG_L(groupId, layoutPageTemplateId, start, end,
 			orderByComparator, retrieveFromCache);
 	}
 
@@ -362,12 +362,12 @@ public class LayoutPageTemplateFragmentUtil {
 	* @return the first matching layout page template fragment
 	* @throws NoSuchPageTemplateFragmentException if a matching layout page template fragment could not be found
 	*/
-	public static LayoutPageTemplateFragment findByG_LPTI_First(long groupId,
+	public static LayoutPageTemplateFragment findByG_L_First(long groupId,
 		long layoutPageTemplateId,
 		OrderByComparator<LayoutPageTemplateFragment> orderByComparator)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateFragmentException {
 		return getPersistence()
-				   .findByG_LPTI_First(groupId, layoutPageTemplateId,
+				   .findByG_L_First(groupId, layoutPageTemplateId,
 			orderByComparator);
 	}
 
@@ -379,11 +379,11 @@ public class LayoutPageTemplateFragmentUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout page template fragment, or <code>null</code> if a matching layout page template fragment could not be found
 	*/
-	public static LayoutPageTemplateFragment fetchByG_LPTI_First(long groupId,
+	public static LayoutPageTemplateFragment fetchByG_L_First(long groupId,
 		long layoutPageTemplateId,
 		OrderByComparator<LayoutPageTemplateFragment> orderByComparator) {
 		return getPersistence()
-				   .fetchByG_LPTI_First(groupId, layoutPageTemplateId,
+				   .fetchByG_L_First(groupId, layoutPageTemplateId,
 			orderByComparator);
 	}
 
@@ -396,12 +396,12 @@ public class LayoutPageTemplateFragmentUtil {
 	* @return the last matching layout page template fragment
 	* @throws NoSuchPageTemplateFragmentException if a matching layout page template fragment could not be found
 	*/
-	public static LayoutPageTemplateFragment findByG_LPTI_Last(long groupId,
+	public static LayoutPageTemplateFragment findByG_L_Last(long groupId,
 		long layoutPageTemplateId,
 		OrderByComparator<LayoutPageTemplateFragment> orderByComparator)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateFragmentException {
 		return getPersistence()
-				   .findByG_LPTI_Last(groupId, layoutPageTemplateId,
+				   .findByG_L_Last(groupId, layoutPageTemplateId,
 			orderByComparator);
 	}
 
@@ -413,11 +413,11 @@ public class LayoutPageTemplateFragmentUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout page template fragment, or <code>null</code> if a matching layout page template fragment could not be found
 	*/
-	public static LayoutPageTemplateFragment fetchByG_LPTI_Last(long groupId,
+	public static LayoutPageTemplateFragment fetchByG_L_Last(long groupId,
 		long layoutPageTemplateId,
 		OrderByComparator<LayoutPageTemplateFragment> orderByComparator) {
 		return getPersistence()
-				   .fetchByG_LPTI_Last(groupId, layoutPageTemplateId,
+				   .fetchByG_L_Last(groupId, layoutPageTemplateId,
 			orderByComparator);
 	}
 
@@ -431,13 +431,13 @@ public class LayoutPageTemplateFragmentUtil {
 	* @return the previous, current, and next layout page template fragment
 	* @throws NoSuchPageTemplateFragmentException if a layout page template fragment with the primary key could not be found
 	*/
-	public static LayoutPageTemplateFragment[] findByG_LPTI_PrevAndNext(
+	public static LayoutPageTemplateFragment[] findByG_L_PrevAndNext(
 		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK,
 		long groupId, long layoutPageTemplateId,
 		OrderByComparator<LayoutPageTemplateFragment> orderByComparator)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateFragmentException {
 		return getPersistence()
-				   .findByG_LPTI_PrevAndNext(layoutPageTemplateFragmentPK,
+				   .findByG_L_PrevAndNext(layoutPageTemplateFragmentPK,
 			groupId, layoutPageTemplateId, orderByComparator);
 	}
 
@@ -447,8 +447,8 @@ public class LayoutPageTemplateFragmentUtil {
 	* @param groupId the group ID
 	* @param layoutPageTemplateId the layout page template ID
 	*/
-	public static void removeByG_LPTI(long groupId, long layoutPageTemplateId) {
-		getPersistence().removeByG_LPTI(groupId, layoutPageTemplateId);
+	public static void removeByG_L(long groupId, long layoutPageTemplateId) {
+		getPersistence().removeByG_L(groupId, layoutPageTemplateId);
 	}
 
 	/**
@@ -458,8 +458,8 @@ public class LayoutPageTemplateFragmentUtil {
 	* @param layoutPageTemplateId the layout page template ID
 	* @return the number of matching layout page template fragments
 	*/
-	public static int countByG_LPTI(long groupId, long layoutPageTemplateId) {
-		return getPersistence().countByG_LPTI(groupId, layoutPageTemplateId);
+	public static int countByG_L(long groupId, long layoutPageTemplateId) {
+		return getPersistence().countByG_L(groupId, layoutPageTemplateId);
 	}
 
 	/**
@@ -469,9 +469,9 @@ public class LayoutPageTemplateFragmentUtil {
 	* @param fragmentEntryId the fragment entry ID
 	* @return the matching layout page template fragments
 	*/
-	public static List<LayoutPageTemplateFragment> findByG_FEI(long groupId,
+	public static List<LayoutPageTemplateFragment> findByG_F(long groupId,
 		long fragmentEntryId) {
-		return getPersistence().findByG_FEI(groupId, fragmentEntryId);
+		return getPersistence().findByG_F(groupId, fragmentEntryId);
 	}
 
 	/**
@@ -487,9 +487,9 @@ public class LayoutPageTemplateFragmentUtil {
 	* @param end the upper bound of the range of layout page template fragments (not inclusive)
 	* @return the range of matching layout page template fragments
 	*/
-	public static List<LayoutPageTemplateFragment> findByG_FEI(long groupId,
+	public static List<LayoutPageTemplateFragment> findByG_F(long groupId,
 		long fragmentEntryId, int start, int end) {
-		return getPersistence().findByG_FEI(groupId, fragmentEntryId, start, end);
+		return getPersistence().findByG_F(groupId, fragmentEntryId, start, end);
 	}
 
 	/**
@@ -506,11 +506,11 @@ public class LayoutPageTemplateFragmentUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout page template fragments
 	*/
-	public static List<LayoutPageTemplateFragment> findByG_FEI(long groupId,
+	public static List<LayoutPageTemplateFragment> findByG_F(long groupId,
 		long fragmentEntryId, int start, int end,
 		OrderByComparator<LayoutPageTemplateFragment> orderByComparator) {
 		return getPersistence()
-				   .findByG_FEI(groupId, fragmentEntryId, start, end,
+				   .findByG_F(groupId, fragmentEntryId, start, end,
 			orderByComparator);
 	}
 
@@ -529,12 +529,12 @@ public class LayoutPageTemplateFragmentUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching layout page template fragments
 	*/
-	public static List<LayoutPageTemplateFragment> findByG_FEI(long groupId,
+	public static List<LayoutPageTemplateFragment> findByG_F(long groupId,
 		long fragmentEntryId, int start, int end,
 		OrderByComparator<LayoutPageTemplateFragment> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .findByG_FEI(groupId, fragmentEntryId, start, end,
+				   .findByG_F(groupId, fragmentEntryId, start, end,
 			orderByComparator, retrieveFromCache);
 	}
 
@@ -547,13 +547,12 @@ public class LayoutPageTemplateFragmentUtil {
 	* @return the first matching layout page template fragment
 	* @throws NoSuchPageTemplateFragmentException if a matching layout page template fragment could not be found
 	*/
-	public static LayoutPageTemplateFragment findByG_FEI_First(long groupId,
+	public static LayoutPageTemplateFragment findByG_F_First(long groupId,
 		long fragmentEntryId,
 		OrderByComparator<LayoutPageTemplateFragment> orderByComparator)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateFragmentException {
 		return getPersistence()
-				   .findByG_FEI_First(groupId, fragmentEntryId,
-			orderByComparator);
+				   .findByG_F_First(groupId, fragmentEntryId, orderByComparator);
 	}
 
 	/**
@@ -564,12 +563,11 @@ public class LayoutPageTemplateFragmentUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout page template fragment, or <code>null</code> if a matching layout page template fragment could not be found
 	*/
-	public static LayoutPageTemplateFragment fetchByG_FEI_First(long groupId,
+	public static LayoutPageTemplateFragment fetchByG_F_First(long groupId,
 		long fragmentEntryId,
 		OrderByComparator<LayoutPageTemplateFragment> orderByComparator) {
 		return getPersistence()
-				   .fetchByG_FEI_First(groupId, fragmentEntryId,
-			orderByComparator);
+				   .fetchByG_F_First(groupId, fragmentEntryId, orderByComparator);
 	}
 
 	/**
@@ -581,12 +579,12 @@ public class LayoutPageTemplateFragmentUtil {
 	* @return the last matching layout page template fragment
 	* @throws NoSuchPageTemplateFragmentException if a matching layout page template fragment could not be found
 	*/
-	public static LayoutPageTemplateFragment findByG_FEI_Last(long groupId,
+	public static LayoutPageTemplateFragment findByG_F_Last(long groupId,
 		long fragmentEntryId,
 		OrderByComparator<LayoutPageTemplateFragment> orderByComparator)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateFragmentException {
 		return getPersistence()
-				   .findByG_FEI_Last(groupId, fragmentEntryId, orderByComparator);
+				   .findByG_F_Last(groupId, fragmentEntryId, orderByComparator);
 	}
 
 	/**
@@ -597,12 +595,11 @@ public class LayoutPageTemplateFragmentUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout page template fragment, or <code>null</code> if a matching layout page template fragment could not be found
 	*/
-	public static LayoutPageTemplateFragment fetchByG_FEI_Last(long groupId,
+	public static LayoutPageTemplateFragment fetchByG_F_Last(long groupId,
 		long fragmentEntryId,
 		OrderByComparator<LayoutPageTemplateFragment> orderByComparator) {
 		return getPersistence()
-				   .fetchByG_FEI_Last(groupId, fragmentEntryId,
-			orderByComparator);
+				   .fetchByG_F_Last(groupId, fragmentEntryId, orderByComparator);
 	}
 
 	/**
@@ -615,13 +612,13 @@ public class LayoutPageTemplateFragmentUtil {
 	* @return the previous, current, and next layout page template fragment
 	* @throws NoSuchPageTemplateFragmentException if a layout page template fragment with the primary key could not be found
 	*/
-	public static LayoutPageTemplateFragment[] findByG_FEI_PrevAndNext(
+	public static LayoutPageTemplateFragment[] findByG_F_PrevAndNext(
 		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK,
 		long groupId, long fragmentEntryId,
 		OrderByComparator<LayoutPageTemplateFragment> orderByComparator)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateFragmentException {
 		return getPersistence()
-				   .findByG_FEI_PrevAndNext(layoutPageTemplateFragmentPK,
+				   .findByG_F_PrevAndNext(layoutPageTemplateFragmentPK,
 			groupId, fragmentEntryId, orderByComparator);
 	}
 
@@ -631,8 +628,8 @@ public class LayoutPageTemplateFragmentUtil {
 	* @param groupId the group ID
 	* @param fragmentEntryId the fragment entry ID
 	*/
-	public static void removeByG_FEI(long groupId, long fragmentEntryId) {
-		getPersistence().removeByG_FEI(groupId, fragmentEntryId);
+	public static void removeByG_F(long groupId, long fragmentEntryId) {
+		getPersistence().removeByG_F(groupId, fragmentEntryId);
 	}
 
 	/**
@@ -642,8 +639,8 @@ public class LayoutPageTemplateFragmentUtil {
 	* @param fragmentEntryId the fragment entry ID
 	* @return the number of matching layout page template fragments
 	*/
-	public static int countByG_FEI(long groupId, long fragmentEntryId) {
-		return getPersistence().countByG_FEI(groupId, fragmentEntryId);
+	public static int countByG_F(long groupId, long fragmentEntryId) {
+		return getPersistence().countByG_F(groupId, fragmentEntryId);
 	}
 
 	/**

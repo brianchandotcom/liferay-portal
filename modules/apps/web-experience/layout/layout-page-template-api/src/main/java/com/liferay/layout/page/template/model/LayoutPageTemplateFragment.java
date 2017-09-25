@@ -57,12 +57,12 @@ public interface LayoutPageTemplateFragment
 			}
 		};
 
-	public static final Accessor<LayoutPageTemplateFragment, Long> LAYOUT_PAGE_TEMPLATE_ID_ACCESSOR =
+	public static final Accessor<LayoutPageTemplateFragment, Long> LAYOUT_PAGE_TEMPLATE_ENTRY_ID_ACCESSOR =
 		new Accessor<LayoutPageTemplateFragment, Long>() {
 			@Override
 			public Long get(
 				LayoutPageTemplateFragment layoutPageTemplateFragment) {
-				return layoutPageTemplateFragment.getLayoutPageTemplateId();
+				return layoutPageTemplateFragment.getLayoutPageTemplateEntryId();
 			}
 
 			@Override

@@ -16,26 +16,26 @@ package com.liferay.layout.page.template.exception;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class DuplicateLayoutPageTemplateException extends PortalException {
+public class NoSuchPageTemplateEntryException extends NoSuchModelException {
 
-	public DuplicateLayoutPageTemplateException() {
+	public NoSuchPageTemplateEntryException() {
 	}
 
-	public DuplicateLayoutPageTemplateException(String msg) {
+	public NoSuchPageTemplateEntryException(String msg) {
 		super(msg);
 	}
 
-	public DuplicateLayoutPageTemplateException(String msg, Throwable cause) {
+	public NoSuchPageTemplateEntryException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public DuplicateLayoutPageTemplateException(Throwable cause) {
+	public NoSuchPageTemplateEntryException(Throwable cause) {
 		super(cause);
 	}
 

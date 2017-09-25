@@ -16,8 +16,8 @@ package com.liferay.layout.page.template.service.base;
 
 import com.liferay.layout.page.template.model.LayoutPageTemplateFolder;
 import com.liferay.layout.page.template.service.LayoutPageTemplateFolderService;
+import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateEntryPersistence;
 import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateFolderPersistence;
-import com.liferay.layout.page.template.service.persistence.LayoutPageTemplatePersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -131,60 +131,60 @@ public abstract class LayoutPageTemplateFolderServiceBaseImpl
 	}
 
 	/**
-	 * Returns the layout page template local service.
+	 * Returns the layout page template entry local service.
 	 *
-	 * @return the layout page template local service
+	 * @return the layout page template entry local service
 	 */
-	public com.liferay.layout.page.template.service.LayoutPageTemplateLocalService getLayoutPageTemplateLocalService() {
-		return layoutPageTemplateLocalService;
+	public com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService getLayoutPageTemplateEntryLocalService() {
+		return layoutPageTemplateEntryLocalService;
 	}
 
 	/**
-	 * Sets the layout page template local service.
+	 * Sets the layout page template entry local service.
 	 *
-	 * @param layoutPageTemplateLocalService the layout page template local service
+	 * @param layoutPageTemplateEntryLocalService the layout page template entry local service
 	 */
-	public void setLayoutPageTemplateLocalService(
-		com.liferay.layout.page.template.service.LayoutPageTemplateLocalService layoutPageTemplateLocalService) {
-		this.layoutPageTemplateLocalService = layoutPageTemplateLocalService;
+	public void setLayoutPageTemplateEntryLocalService(
+		com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService) {
+		this.layoutPageTemplateEntryLocalService = layoutPageTemplateEntryLocalService;
 	}
 
 	/**
-	 * Returns the layout page template remote service.
+	 * Returns the layout page template entry remote service.
 	 *
-	 * @return the layout page template remote service
+	 * @return the layout page template entry remote service
 	 */
-	public com.liferay.layout.page.template.service.LayoutPageTemplateService getLayoutPageTemplateService() {
-		return layoutPageTemplateService;
+	public com.liferay.layout.page.template.service.LayoutPageTemplateEntryService getLayoutPageTemplateEntryService() {
+		return layoutPageTemplateEntryService;
 	}
 
 	/**
-	 * Sets the layout page template remote service.
+	 * Sets the layout page template entry remote service.
 	 *
-	 * @param layoutPageTemplateService the layout page template remote service
+	 * @param layoutPageTemplateEntryService the layout page template entry remote service
 	 */
-	public void setLayoutPageTemplateService(
-		com.liferay.layout.page.template.service.LayoutPageTemplateService layoutPageTemplateService) {
-		this.layoutPageTemplateService = layoutPageTemplateService;
+	public void setLayoutPageTemplateEntryService(
+		com.liferay.layout.page.template.service.LayoutPageTemplateEntryService layoutPageTemplateEntryService) {
+		this.layoutPageTemplateEntryService = layoutPageTemplateEntryService;
 	}
 
 	/**
-	 * Returns the layout page template persistence.
+	 * Returns the layout page template entry persistence.
 	 *
-	 * @return the layout page template persistence
+	 * @return the layout page template entry persistence
 	 */
-	public LayoutPageTemplatePersistence getLayoutPageTemplatePersistence() {
-		return layoutPageTemplatePersistence;
+	public LayoutPageTemplateEntryPersistence getLayoutPageTemplateEntryPersistence() {
+		return layoutPageTemplateEntryPersistence;
 	}
 
 	/**
-	 * Sets the layout page template persistence.
+	 * Sets the layout page template entry persistence.
 	 *
-	 * @param layoutPageTemplatePersistence the layout page template persistence
+	 * @param layoutPageTemplateEntryPersistence the layout page template entry persistence
 	 */
-	public void setLayoutPageTemplatePersistence(
-		LayoutPageTemplatePersistence layoutPageTemplatePersistence) {
-		this.layoutPageTemplatePersistence = layoutPageTemplatePersistence;
+	public void setLayoutPageTemplateEntryPersistence(
+		LayoutPageTemplateEntryPersistence layoutPageTemplateEntryPersistence) {
+		this.layoutPageTemplateEntryPersistence = layoutPageTemplateEntryPersistence;
 	}
 
 	/**
@@ -318,12 +318,12 @@ public abstract class LayoutPageTemplateFolderServiceBaseImpl
 	protected LayoutPageTemplateFolderPersistence layoutPageTemplateFolderPersistence;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.layout.page.template.service.LayoutPageTemplateLocalService.class)
-	protected com.liferay.layout.page.template.service.LayoutPageTemplateLocalService layoutPageTemplateLocalService;
-	@BeanReference(type = com.liferay.layout.page.template.service.LayoutPageTemplateService.class)
-	protected com.liferay.layout.page.template.service.LayoutPageTemplateService layoutPageTemplateService;
-	@BeanReference(type = LayoutPageTemplatePersistence.class)
-	protected LayoutPageTemplatePersistence layoutPageTemplatePersistence;
+	@BeanReference(type = com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService.class)
+	protected com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService;
+	@BeanReference(type = com.liferay.layout.page.template.service.LayoutPageTemplateEntryService.class)
+	protected com.liferay.layout.page.template.service.LayoutPageTemplateEntryService layoutPageTemplateEntryService;
+	@BeanReference(type = LayoutPageTemplateEntryPersistence.class)
+	protected LayoutPageTemplateEntryPersistence layoutPageTemplateEntryPersistence;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
 	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)

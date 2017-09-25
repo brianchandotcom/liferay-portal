@@ -73,8 +73,8 @@ public class LayoutPageTemplateFragmentCacheModel implements CacheModel<LayoutPa
 
 		sb.append("{groupId=");
 		sb.append(groupId);
-		sb.append(", layoutPageTemplateId=");
-		sb.append(layoutPageTemplateId);
+		sb.append(", layoutPageTemplateEntryId=");
+		sb.append(layoutPageTemplateEntryId);
 		sb.append(", fragmentEntryId=");
 		sb.append(fragmentEntryId);
 		sb.append(", companyId=");
@@ -99,7 +99,7 @@ public class LayoutPageTemplateFragmentCacheModel implements CacheModel<LayoutPa
 		LayoutPageTemplateFragmentImpl layoutPageTemplateFragmentImpl = new LayoutPageTemplateFragmentImpl();
 
 		layoutPageTemplateFragmentImpl.setGroupId(groupId);
-		layoutPageTemplateFragmentImpl.setLayoutPageTemplateId(layoutPageTemplateId);
+		layoutPageTemplateFragmentImpl.setLayoutPageTemplateEntryId(layoutPageTemplateEntryId);
 		layoutPageTemplateFragmentImpl.setFragmentEntryId(fragmentEntryId);
 		layoutPageTemplateFragmentImpl.setCompanyId(companyId);
 		layoutPageTemplateFragmentImpl.setUserId(userId);
@@ -137,7 +137,7 @@ public class LayoutPageTemplateFragmentCacheModel implements CacheModel<LayoutPa
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		groupId = objectInput.readLong();
 
-		layoutPageTemplateId = objectInput.readLong();
+		layoutPageTemplateEntryId = objectInput.readLong();
 
 		fragmentEntryId = objectInput.readLong();
 
@@ -151,7 +151,7 @@ public class LayoutPageTemplateFragmentCacheModel implements CacheModel<LayoutPa
 		position = objectInput.readInt();
 
 		layoutPageTemplateFragmentPK = new LayoutPageTemplateFragmentPK(groupId,
-				layoutPageTemplateId, fragmentEntryId);
+				layoutPageTemplateEntryId, fragmentEntryId);
 	}
 
 	@Override
@@ -159,7 +159,7 @@ public class LayoutPageTemplateFragmentCacheModel implements CacheModel<LayoutPa
 		throws IOException {
 		objectOutput.writeLong(groupId);
 
-		objectOutput.writeLong(layoutPageTemplateId);
+		objectOutput.writeLong(layoutPageTemplateEntryId);
 
 		objectOutput.writeLong(fragmentEntryId);
 
@@ -181,7 +181,7 @@ public class LayoutPageTemplateFragmentCacheModel implements CacheModel<LayoutPa
 	}
 
 	public long groupId;
-	public long layoutPageTemplateId;
+	public long layoutPageTemplateEntryId;
 	public long fragmentEntryId;
 	public long companyId;
 	public long userId;

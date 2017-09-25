@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<model name="com.liferay.layout.page.template.model.LayoutPageTemplate">
-		<field name="layoutPageTemplateId" type="long" />
+	<model name="com.liferay.layout.page.template.model.LayoutPageTemplateEntry">
+		<field name="layoutPageTemplateEntryId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -25,7 +25,7 @@
 	</model>
 	<model name="com.liferay.layout.page.template.model.LayoutPageTemplateFragment">
 		<field name="groupId" type="long" />
-		<field name="layoutPageTemplateId" type="long" />
+		<field name="layoutPageTemplateEntryId" type="long" />
 		<field name="fragmentEntryId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

@@ -37,7 +37,7 @@ public class LayoutPageTemplateFragmentSoap implements Serializable {
 		LayoutPageTemplateFragmentSoap soapModel = new LayoutPageTemplateFragmentSoap();
 
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setLayoutPageTemplateId(model.getLayoutPageTemplateId());
+		soapModel.setLayoutPageTemplateEntryId(model.getLayoutPageTemplateEntryId());
 		soapModel.setFragmentEntryId(model.getFragmentEntryId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -94,12 +94,12 @@ public class LayoutPageTemplateFragmentSoap implements Serializable {
 
 	public LayoutPageTemplateFragmentPK getPrimaryKey() {
 		return new LayoutPageTemplateFragmentPK(_groupId,
-			_layoutPageTemplateId, _fragmentEntryId);
+			_layoutPageTemplateEntryId, _fragmentEntryId);
 	}
 
 	public void setPrimaryKey(LayoutPageTemplateFragmentPK pk) {
 		setGroupId(pk.groupId);
-		setLayoutPageTemplateId(pk.layoutPageTemplateId);
+		setLayoutPageTemplateEntryId(pk.layoutPageTemplateEntryId);
 		setFragmentEntryId(pk.fragmentEntryId);
 	}
 
@@ -111,12 +111,12 @@ public class LayoutPageTemplateFragmentSoap implements Serializable {
 		_groupId = groupId;
 	}
 
-	public long getLayoutPageTemplateId() {
-		return _layoutPageTemplateId;
+	public long getLayoutPageTemplateEntryId() {
+		return _layoutPageTemplateEntryId;
 	}
 
-	public void setLayoutPageTemplateId(long layoutPageTemplateId) {
-		_layoutPageTemplateId = layoutPageTemplateId;
+	public void setLayoutPageTemplateEntryId(long layoutPageTemplateEntryId) {
+		_layoutPageTemplateEntryId = layoutPageTemplateEntryId;
 	}
 
 	public long getFragmentEntryId() {
@@ -176,7 +176,7 @@ public class LayoutPageTemplateFragmentSoap implements Serializable {
 	}
 
 	private long _groupId;
-	private long _layoutPageTemplateId;
+	private long _layoutPageTemplateEntryId;
 	private long _fragmentEntryId;
 	private long _companyId;
 	private long _userId;

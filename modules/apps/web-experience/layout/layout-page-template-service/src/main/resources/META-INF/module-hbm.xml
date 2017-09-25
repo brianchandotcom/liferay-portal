@@ -2,11 +2,11 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping auto-import="false" default-lazy="false">
-	<import class="com.liferay.layout.page.template.model.LayoutPageTemplate" />
+	<import class="com.liferay.layout.page.template.model.LayoutPageTemplateEntry" />
 	<import class="com.liferay.layout.page.template.model.LayoutPageTemplateFolder" />
 	<import class="com.liferay.layout.page.template.model.LayoutPageTemplateFragment" />
-	<class name="com.liferay.layout.page.template.model.impl.LayoutPageTemplateImpl" table="LayoutPageTemplate">
-		<id name="layoutPageTemplateId" type="long">
+	<class name="com.liferay.layout.page.template.model.impl.LayoutPageTemplateEntryImpl" table="LayoutPageTemplateEntry">
+		<id name="layoutPageTemplateEntryId" type="long">
 			<generator class="assigned" />
 		</id>
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -34,7 +34,7 @@
 	<class name="com.liferay.layout.page.template.model.impl.LayoutPageTemplateFragmentImpl" table="LayoutPageTemplateFragment">
 		<composite-id class="com.liferay.layout.page.template.service.persistence.LayoutPageTemplateFragmentPK" name="primaryKey">
 			<key-property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-			<key-property name="layoutPageTemplateId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="layoutPageTemplateEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 			<key-property name="fragmentEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		</composite-id>
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

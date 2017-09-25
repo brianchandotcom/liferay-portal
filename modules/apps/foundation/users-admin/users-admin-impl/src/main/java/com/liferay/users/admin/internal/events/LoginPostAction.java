@@ -17,9 +17,12 @@ package com.liferay.users.admin.internal.events;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.LifecycleAction;
+import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,12 +46,34 @@ public class LoginPostAction extends Action {
 		try {
 			User user = _portal.getUser(request);
 
-			if (!user.isSetupComplete()) {
-				String redirect =
-					_portal.getPathMain() + _PATH_PORTAL_SELECT_LANGUAGE;
-
-				response.sendRedirect(redirect);
+			if ((user == null) || user.isSetupComplete()) {
+				return;
 			}
+
+			boolean termsOfUseRequired = PrefsPropsUtil.getBoolean(
+				user.getCompanyId(), PropsKeys.TERMS_OF_USE_REQUIRED,
+				PropsValues.TERMS_OF_USE_REQUIRED);
+
+			if (termsOfUseRequired && user.isAgreedToTermsOfUse()) {
+				return;
+			}
+
+			if (PropsValues.USERS_REMINDER_QUERIES_ENABLED &&
+				user.isReminderQueryComplete()) {
+
+				return;
+			}
+
+			PasswordPolicy passwordPolicy = user.getPasswordPolicy();
+
+			if (passwordPolicy.isChangeRequired() && !user.isPasswordReset()) {
+				return;
+			}
+
+			String redirect =
+				_portal.getPathMain() + _PATH_PORTAL_SELECT_LANGUAGE;
+
+			response.sendRedirect(redirect);
 		}
 		catch (Exception e) {
 			throw new ActionException(e);

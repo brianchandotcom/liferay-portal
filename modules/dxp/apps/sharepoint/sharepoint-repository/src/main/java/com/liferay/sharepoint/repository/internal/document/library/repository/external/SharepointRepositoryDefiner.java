@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.RepositoryConfiguration;
 import com.liferay.portal.kernel.repository.RepositoryConfigurationBuilder;
+import com.liferay.portal.kernel.repository.capabilities.PortalCapabilityLocator;
 import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.util.CacheResourceBundleLoader;
 import com.liferay.portal.kernel.util.ClassResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.repository.capabilities.LiferayProcessorCapability;
 import com.liferay.sharepoint.repository.internal.configuration.SharepointRepositoryConfiguration;
 import com.liferay.sharepoint.repository.internal.document.library.repository.authorization.capability.SharepointRepositoryAuthorizationCapability;
 import com.liferay.sharepoint.repository.internal.document.library.repository.authorization.oauth2.SharepointRepositoryTokenBrokerFactory;
@@ -94,7 +94,11 @@ public class SharepointRepositoryDefiner implements RepositoryDefiner {
 		CapabilityRegistry<DocumentRepository> capabilityRegistry) {
 
 		capabilityRegistry.addSupportedCapability(
-			ProcessorCapability.class, _processorCapability);
+			ProcessorCapability.class,
+			_portalCapabilityLocator.getProcessorCapability(
+				capabilityRegistry.getTarget(),
+				ProcessorCapability.
+					ResourceGenerationStrategy.ALWAYS_GENERATE));
 
 		capabilityRegistry.addExportedCapability(
 			AuthorizationCapability.class,
@@ -125,10 +129,8 @@ public class SharepointRepositoryDefiner implements RepositoryDefiner {
 				SharepointRepositoryConfiguration.class, properties);
 	}
 
-	private final LiferayProcessorCapability _processorCapability =
-		new LiferayProcessorCapability(
-			LiferayProcessorCapability.ResourceGenerationStrategy.
-				ALWAYS_GENERATE);
+	@Reference
+	private PortalCapabilityLocator _portalCapabilityLocator;
 
 	@Reference
 	private SharepointRepositoryFactoryProvider _repositoryFactoryProvider;

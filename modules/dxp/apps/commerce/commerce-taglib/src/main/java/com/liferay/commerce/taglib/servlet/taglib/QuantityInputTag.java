@@ -15,10 +15,10 @@
 package com.liferay.commerce.taglib.servlet.taglib;
 
 import com.liferay.commerce.constants.CommerceConstants;
-import com.liferay.commerce.model.CommerceInventory;
+import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionServiceUtil;
-import com.liferay.commerce.service.CommerceInventoryServiceUtil;
+import com.liferay.commerce.service.CPDefinitionInventoryServiceUtil;
 import com.liferay.commerce.taglib.servlet.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -40,24 +40,26 @@ public class QuantityInputTag extends IncludeTag {
 		try {
 			_allowedCartQuantity = StringPool.BLANK;
 			_maxCartQuantity =
-				CommerceConstants.COMMERCE_INVENTORY_DEFAULT_MAX_CART_QUANTITY;
+				CommerceConstants.
+					CP_DEFINITION_INVENTORY_DEFAULT_MAX_CART_QUANTITY;
 			_minCartQuantity =
-				CommerceConstants.COMMERCE_INVENTORY_DEFAULT_MIN_CART_QUANTITY;
+				CommerceConstants.
+					CP_DEFINITION_INVENTORY_DEFAULT_MIN_CART_QUANTITY;
 			_multipleCartQuantity =
 				CommerceConstants.
-					COMMERCE_INVENTORY_DEFAULT_MULTIPLE_CART_QUANTITY;
+					CP_DEFINITION_INVENTORY_DEFAULT_MULTIPLE_CART_QUANTITY;
 
-			CommerceInventory commerceInventory =
-				CommerceInventoryServiceUtil.
-					fetchCommerceInventoryByCPDefinitionId(_cpDefinitionId);
+			CPDefinitionInventory cpDefinitionInventory =
+				CPDefinitionInventoryServiceUtil.
+					fetchCPDefinitionInventoryByCPDefinitionId(_cpDefinitionId);
 
-			if (commerceInventory != null) {
+			if (cpDefinitionInventory != null) {
 				_allowedCartQuantity =
-					commerceInventory.getAllowedCartQuantities();
-				_maxCartQuantity = commerceInventory.getMaxCartQuantity();
-				_minCartQuantity = commerceInventory.getMinCartQuantity();
+					cpDefinitionInventory.getAllowedCartQuantities();
+				_maxCartQuantity = cpDefinitionInventory.getMaxCartQuantity();
+				_minCartQuantity = cpDefinitionInventory.getMinCartQuantity();
 				_multipleCartQuantity =
-					commerceInventory.getMultipleCartQuantity();
+					cpDefinitionInventory.getMultipleCartQuantity();
 			}
 
 			_cpDefinition = CPDefinitionServiceUtil.getCPDefinition(

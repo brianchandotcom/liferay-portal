@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 )
 public class SiteNavigationPermission extends BaseResourcePermissionChecker {
 
-	public static final String RESOURCE_NAME = "com.liferay.fragment";
+	public static final String RESOURCE_NAME = "com.liferay.site.navigation";
 
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String actionId)

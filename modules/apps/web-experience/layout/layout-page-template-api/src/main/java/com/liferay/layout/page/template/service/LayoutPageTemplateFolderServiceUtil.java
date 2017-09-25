@@ -41,6 +41,68 @@ public class LayoutPageTemplateFolderServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.layout.page.template.service.impl.LayoutPageTemplateFolderServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateFolder addLayoutPageTemplateFolder(
+		long groupId, java.lang.String name, java.lang.String description,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addLayoutPageTemplateFolder(groupId, name, description,
+			serviceContext);
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateFolder deleteLayoutPageTemplateFolder(
+		long layoutPageTemplateFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .deleteLayoutPageTemplateFolder(layoutPageTemplateFolderId);
+	}
+
+	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateFolder> deleteLayoutPageTemplateFolders(
+		long[] layoutPageTemplateFolderIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .deleteLayoutPageTemplateFolders(layoutPageTemplateFolderIds);
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateFolder fetchLayoutPageTemplateFolder(
+		long layoutPageTemplateFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .fetchLayoutPageTemplateFolder(layoutPageTemplateFolderId);
+	}
+
+	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateFolder> getLayoutPageTemplateFolders(
+		long groupId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLayoutPageTemplateFolders(groupId, start, end);
+	}
+
+	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateFolder> getLayoutPageTemplateFolders(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplateFolder> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getLayoutPageTemplateFolders(groupId, start, end,
+			orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateFolder> getLayoutPageTemplateFolders(
+		long groupId, java.lang.String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplateFolder> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getLayoutPageTemplateFolders(groupId, name, start, end,
+			orderByComparator);
+	}
+
+	public static int getLayoutPageTemplateFoldersCount(long groupId) {
+		return getService().getLayoutPageTemplateFoldersCount(groupId);
+	}
+
+	public static int getLayoutPageTemplateFoldersCount(long groupId,
+		java.lang.String name) {
+		return getService().getLayoutPageTemplateFoldersCount(groupId, name);
+	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -49,6 +111,15 @@ public class LayoutPageTemplateFolderServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateFolder updateLayoutPageTemplateFolder(
+		long layoutPageTemplateFolderId, java.lang.String name,
+		java.lang.String description)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateLayoutPageTemplateFolder(layoutPageTemplateFolderId,
+			name, description);
 	}
 
 	public static LayoutPageTemplateFolderService getService() {

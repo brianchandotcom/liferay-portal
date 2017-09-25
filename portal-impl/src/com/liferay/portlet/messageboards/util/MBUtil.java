@@ -1132,7 +1132,7 @@ public class MBUtil {
 		int pos = subject.lastIndexOf(CharPool.LESS_THAN);
 
 		if (pos != -1) {
-			parentMessageId = subject.substring(pos + 1);
+			parentMessageId = subject.substring(pos);
 		}
 
 		return parentMessageId;

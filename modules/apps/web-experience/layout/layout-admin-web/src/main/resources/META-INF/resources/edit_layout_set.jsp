@@ -17,6 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
+String backURL = ParamUtil.getString(request, "backURL", redirect);
+
 Group selGroup = (Group)request.getAttribute(WebKeys.GROUP);
 
 long liveGroupId = layoutsAdminDisplayContext.getLiveGroupId();
@@ -47,6 +51,7 @@ renderResponse.setTitle(selGroup.getLayoutRootNodeName(privateLayout, locale));
 	<aui:input name="<%= PortletDataHandlerKeys.SELECTED_LAYOUTS %>" type="hidden" />
 
 	<liferay-ui:form-navigator
+		backURL="<%= backURL %>"
 		formModelBean="<%= selLayoutSet %>"
 		id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT_SET %>"
 		markupView="lexicon"

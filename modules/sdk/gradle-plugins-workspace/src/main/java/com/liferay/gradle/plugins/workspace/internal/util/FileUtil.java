@@ -17,8 +17,6 @@ package com.liferay.gradle.plugins.workspace.internal.util;
 import java.io.File;
 import java.io.IOException;
 
-import java.net.URI;
-
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -50,22 +48,6 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 		catch (IOException ioe) {
 			throw new UncheckedIOException(ioe);
 		}
-	}
-
-	public static File urlToFile(String url) {
-		try {
-			URI uri = new URI(url);
-
-			File file = new File(uri);
-
-			if (file.exists()) {
-				return file;
-			}
-		}
-		catch (Throwable t) {
-		}
-
-		return null;
 	}
 
 	private static void _moveTree(

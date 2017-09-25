@@ -29,8 +29,10 @@ import groovy.lang.Closure;
 import java.io.File;
 
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -332,6 +334,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 				@Override
 				public void execute(Task task) {
+					Logger logger = download.getLogger();
+					Project project = download.getProject();
+
 					if (workspaceExtension.isBundleTokenDownload()) {
 						String token = FileUtil.read(
 							createTokenTask.getTokenFile());
@@ -342,18 +347,36 @@ public class RootProjectConfigurator implements Plugin<Project> {
 							HttpHeaders.AUTHORIZATION, "Bearer " + token);
 					}
 
-					String bundleUrl = workspaceExtension.getBundleUrl();
+					for (Object src : _getSrcList(download)) {
+						File file = null;
 
-					File bundleFile = FileUtil.urlToFile(bundleUrl);
+						try {
+							URI uri = project.uri(src);
 
-					if (bundleFile != null) {
-						File destBundleFile = new File(
-							workspaceExtension.getBundleCacheDir(),
-							bundleFile.getName());
+							file = project.file(uri);
+						}
+						catch (Exception e) {
+							if (logger.isDebugEnabled()) {
+								logger.debug(e.getMessage(), e);
+							}
+						}
 
-						if (bundleFile.equals(destBundleFile)) {
+						if ((file == null) || !file.exists()) {
+							continue;
+						}
+
+						File destinationFile = download.getDest();
+
+						if (destinationFile.isDirectory()) {
+							destinationFile = new File(
+								destinationFile, file.getName());
+						}
+
+						if (destinationFile.equals(file)) {
 							throw new GradleException(
-								"Destination cannot be the same as bundle url");
+								"Download source " + file +
+									" and destination " + destinationFile +
+										" cannot be the same");
 						}
 					}
 				}
@@ -590,6 +613,20 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	private List<?> _getSrcList(Download download) {
+		Object src = download.getSrc();
+
+		if (src == null) {
+			return Collections.emptyList();
+		}
+
+		if (src instanceof List<?>) {
+			return (List<?>)src;
+		}
+
+		return Collections.singletonList(src);
 	}
 
 	private static final boolean _DEFAULT_REPOSITORY_ENABLED = true;

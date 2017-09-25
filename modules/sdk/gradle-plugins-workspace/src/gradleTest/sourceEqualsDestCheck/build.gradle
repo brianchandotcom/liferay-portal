@@ -11,7 +11,7 @@ runGradleTest {
 			downloadBundle.execute()
 		}
 		catch (Exception e) {
-			assert e.cause.message == "Destination cannot be the same as bundle url"
+			assert e.cause.message.endsWith(" cannot be the same")
 		}
 	}
 }

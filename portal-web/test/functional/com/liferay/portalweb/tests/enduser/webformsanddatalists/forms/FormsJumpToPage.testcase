@@ -248,7 +248,7 @@
 
 		<var name="key_conditionRowNumber" value="1" />
 
-		<execute function="AssertTextEquals" locator1="FormRules#RULE_BUILDER_CONDITION_FIELD" value1="Edit Label" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="FormRules#RULE_BUILDER_CONDITION_FIELD" value1="Edit Label" />
 	</command>
 
 	<command name="ViewRuleAfterOptionValueEdit" priority="3">
@@ -276,7 +276,7 @@
 
 		<var name="key_conditionRowNumber" value="1" />
 
-		<execute function="AssertTextEquals" locator1="FormRules#RULE_BUILDER_CONDITION_VALUE_FIELD" value1="Edited Destiny" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="FormRules#RULE_BUILDER_CONDITION_VALUE_FIELD" value1="Edited Destiny" />
 	</command>
 
 	<command name="ViewRuleAfterPageNameChange" priority="4">
@@ -300,6 +300,6 @@
 
 		<var name="key_actionRowNumber" value="1" />
 
-		<execute function="AssertTextEquals" locator1="FormRules#RULE_BUILDER_JUMP_TO_PAGE_ACTION_TARGET" value1="3 Renamed Page" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="FormRules#RULE_BUILDER_JUMP_TO_PAGE_ACTION_TARGET" value1="3 Renamed Page" />
 	</command>
 </definition>

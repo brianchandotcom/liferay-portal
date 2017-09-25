@@ -50,6 +50,13 @@ public class SiteNavigationMenuServiceWrapper
 		return _siteNavigationMenuService.deleteSiteNavigationMenu(siteNavigationMenuId);
 	}
 
+	@Override
+	public com.liferay.site.navigation.model.SiteNavigationMenu fetchSiteNavigationMenu(
+		long siteNavigationMenuId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _siteNavigationMenuService.fetchSiteNavigationMenu(siteNavigationMenuId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -64,6 +71,43 @@ public class SiteNavigationMenuServiceWrapper
 	public java.util.List<com.liferay.site.navigation.model.SiteNavigationMenu> getSiteNavigationMenus(
 		long groupId) {
 		return _siteNavigationMenuService.getSiteNavigationMenus(groupId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.site.navigation.model.SiteNavigationMenu> getSiteNavigationMenus(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return _siteNavigationMenuService.getSiteNavigationMenus(groupId,
+			start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.site.navigation.model.SiteNavigationMenu> getSiteNavigationMenus(
+		long groupId, java.lang.String keywords, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
+		return _siteNavigationMenuService.getSiteNavigationMenus(groupId,
+			keywords, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getSiteNavigationMenusCount(long groupId) {
+		return _siteNavigationMenuService.getSiteNavigationMenusCount(groupId);
+	}
+
+	@Override
+	public int getSiteNavigationMenusCount(long groupId,
+		java.lang.String keywords) {
+		return _siteNavigationMenuService.getSiteNavigationMenusCount(groupId,
+			keywords);
+	}
+
+	@Override
+	public com.liferay.site.navigation.model.SiteNavigationMenu updateSiteNavigationMenu(
+		long siteNavigationMenuId, java.lang.String name,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _siteNavigationMenuService.updateSiteNavigationMenu(siteNavigationMenuId,
+			name, serviceContext);
 	}
 
 	@Override

@@ -109,7 +109,8 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 				"value.object.column.bitmask.enabled.com.liferay.site.navigation.model.SiteNavigationMenu"),
 			true);
 	public static final long GROUPID_COLUMN_BITMASK = 1L;
-	public static final long SITENAVIGATIONMENUID_COLUMN_BITMASK = 2L;
+	public static final long NAME_COLUMN_BITMASK = 2L;
+	public static final long SITENAVIGATIONMENUID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -392,7 +393,17 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 
 	@Override
 	public void setName(String name) {
+		_columnBitmask |= NAME_COLUMN_BITMASK;
+
+		if (_originalName == null) {
+			_originalName = _name;
+		}
+
 		_name = name;
+	}
+
+	public String getOriginalName() {
+		return GetterUtil.getString(_originalName);
 	}
 
 	public long getColumnBitmask() {
@@ -501,6 +512,8 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 		siteNavigationMenuModelImpl._setOriginalGroupId = false;
 
 		siteNavigationMenuModelImpl._setModifiedDate = false;
+
+		siteNavigationMenuModelImpl._originalName = siteNavigationMenuModelImpl._name;
 
 		siteNavigationMenuModelImpl._columnBitmask = 0;
 	}
@@ -640,6 +653,7 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _name;
+	private String _originalName;
 	private long _columnBitmask;
 	private SiteNavigationMenu _escapedModel;
 }

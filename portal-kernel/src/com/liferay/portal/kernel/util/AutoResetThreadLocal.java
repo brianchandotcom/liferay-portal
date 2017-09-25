@@ -18,7 +18,9 @@ import java.util.function.Supplier;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.petra.lang.CentralizedThreadLocal}
  */
+@Deprecated
 public class AutoResetThreadLocal<T> extends InitialThreadLocal<T> {
 
 	public AutoResetThreadLocal(String name) {

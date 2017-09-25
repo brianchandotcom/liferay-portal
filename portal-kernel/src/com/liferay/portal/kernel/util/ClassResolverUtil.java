@@ -40,6 +40,10 @@ public class ClassResolverUtil {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static Class<?> resolveByContextClassLoader(String className) {
 		Thread thread = Thread.currentThread();
 
@@ -53,6 +57,10 @@ public class ClassResolverUtil {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static Class<?> resolveByPortalClassLoader(String className) {
 		ClassLoader portalClassLoader = PortalClassLoaderUtil.getClassLoader();
 
@@ -64,6 +72,10 @@ public class ClassResolverUtil {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static Class<?> resolveByPortletClassLoader(
 		String className, String servletContextName) {
 

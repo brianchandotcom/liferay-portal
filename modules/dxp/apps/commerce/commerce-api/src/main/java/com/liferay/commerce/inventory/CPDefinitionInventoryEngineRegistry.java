@@ -19,10 +19,12 @@ import java.util.Map;
 /**
  * @author Alessio Antonio Rendina
  */
-public interface CommerceInventoryEngineRegistry {
+public interface CPDefinitionInventoryEngineRegistry {
 
-	public CommerceInventoryEngine getCommerceInventoryEngine(String key);
+	public CPDefinitionInventoryEngine getCPDefinitionInventoryEngine(
+		String key);
 
-	public Map<String, CommerceInventoryEngine> getCommerceInventoryEngines();
+	public Map<String, CPDefinitionInventoryEngine>
+		getCPDefinitionInventoryEngines();
 
 }

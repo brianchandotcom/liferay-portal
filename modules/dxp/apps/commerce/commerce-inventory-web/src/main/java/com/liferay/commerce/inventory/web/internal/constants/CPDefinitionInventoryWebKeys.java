@@ -17,8 +17,9 @@ package com.liferay.commerce.inventory.web.internal.constants;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceInventoryWebKeys {
+public class CPDefinitionInventoryWebKeys {
 
-	public static final String COMMERCE_INVENTORY = "COMMERCE_INVENTORY";
+	public static final String CP_DEFINITION_INVENTORY =
+		"CP_DEFINITION_INVENTORY";
 
 }

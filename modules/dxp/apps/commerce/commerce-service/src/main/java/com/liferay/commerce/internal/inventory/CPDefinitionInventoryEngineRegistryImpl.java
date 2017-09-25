@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.internal.inventory;
 
-import com.liferay.commerce.inventory.CommerceInventoryEngine;
-import com.liferay.commerce.inventory.CommerceInventoryEngineRegistry;
+import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
+import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
@@ -31,33 +31,39 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(immediate = true, service = CommerceInventoryEngineRegistry.class)
-public class CommerceInventoryEngineRegistryImpl
-	implements CommerceInventoryEngineRegistry {
+@Component(
+	immediate = true, service = CPDefinitionInventoryEngineRegistry.class
+)
+public class CPDefinitionInventoryEngineRegistryImpl
+	implements CPDefinitionInventoryEngineRegistry {
 
 	@Override
-	public CommerceInventoryEngine getCommerceInventoryEngine(String key) {
+	public CPDefinitionInventoryEngine getCPDefinitionInventoryEngine(
+		String key) {
+
 		return _serviceTrackerMap.getService(key);
 	}
 
 	@Override
-	public Map<String, CommerceInventoryEngine> getCommerceInventoryEngines() {
-		Map<String, CommerceInventoryEngine> commerceInventoryEngines =
+	public Map<String, CPDefinitionInventoryEngine>
+		getCPDefinitionInventoryEngines() {
+
+		Map<String, CPDefinitionInventoryEngine> cpDefinitionInventoryEngines =
 			new HashMap<>();
 
 		for (String key : _serviceTrackerMap.keySet()) {
-			commerceInventoryEngines.put(
+			cpDefinitionInventoryEngines.put(
 				key, _serviceTrackerMap.getService(key));
 		}
 
-		return Collections.unmodifiableMap(commerceInventoryEngines);
+		return Collections.unmodifiableMap(cpDefinitionInventoryEngines);
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, CommerceInventoryEngine.class,
-			"commerce.inventory.engine.key");
+			bundleContext, CPDefinitionInventoryEngine.class,
+			"cp.definition.inventory.engine.key");
 	}
 
 	@Deactivate
@@ -65,7 +71,7 @@ public class CommerceInventoryEngineRegistryImpl
 		_serviceTrackerMap.close();
 	}
 
-	private ServiceTrackerMap<String, CommerceInventoryEngine>
+	private ServiceTrackerMap<String, CPDefinitionInventoryEngine>
 		_serviceTrackerMap;
 
 }

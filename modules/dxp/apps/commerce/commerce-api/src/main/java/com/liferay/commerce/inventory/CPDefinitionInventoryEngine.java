@@ -17,7 +17,7 @@ package com.liferay.commerce.inventory;
 /**
  * @author Alessio Antonio Rendina
  */
-public interface CommerceInventoryEngine {
+public interface CPDefinitionInventoryEngine {
 
 	public String getName();
 

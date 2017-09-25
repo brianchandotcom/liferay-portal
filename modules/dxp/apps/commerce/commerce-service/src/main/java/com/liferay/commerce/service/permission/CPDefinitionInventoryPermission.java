@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.service.permission;
+package com.liferay.commerce.service.permission;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -24,15 +24,16 @@ import com.liferay.portal.kernel.security.permission.ResourcePermissionChecker;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 @Component(
-	property = "resource.name=" + CPPermission.RESOURCE_NAME,
+	property = "resource.name=" + CPDefinitionInventoryPermission.RESOURCE_NAME,
 	service = ResourcePermissionChecker.class
 )
-public class CPPermission extends BaseResourcePermissionChecker {
+public class CPDefinitionInventoryPermission
+	extends BaseResourcePermissionChecker {
 
-	public static final String RESOURCE_NAME = "com.liferay.commerce.product";
+	public static final String RESOURCE_NAME = "com.liferay.commerce";
 
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String actionId)

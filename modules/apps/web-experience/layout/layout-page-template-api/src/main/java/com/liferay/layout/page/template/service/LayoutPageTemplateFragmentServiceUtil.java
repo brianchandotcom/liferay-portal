@@ -41,6 +41,46 @@ public class LayoutPageTemplateFragmentServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.layout.page.template.service.impl.LayoutPageTemplateFragmentServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateFragment addLayoutPageTemplateFragment(
+		com.liferay.layout.page.template.model.LayoutPageTemplateFragment layoutPageTemplateFragment,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addLayoutPageTemplateFragment(layoutPageTemplateFragment,
+			serviceContext);
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateFragment addLayoutPageTemplateFragment(
+		long groupId, long layoutPageTemplateId, long fragmentId, int position,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addLayoutPageTemplateFragment(groupId,
+			layoutPageTemplateId, fragmentId, position, serviceContext);
+	}
+
+	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateFragment> deleteByLayoutPageTemplate(
+		long groupId, long layoutPageTemplateId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .deleteByLayoutPageTemplate(groupId, layoutPageTemplateId);
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateFragment deleteLayoutPageTemplateFragment(
+		long groupId, long layoutPageTemplateId, long fragmentId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .deleteLayoutPageTemplateFragment(groupId,
+			layoutPageTemplateId, fragmentId, serviceContext);
+	}
+
+	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateFragment> getLayoutPageTemplateFragmentsByPageTemplate(
+		long groupId, long layoutPageTemplateId) {
+		return getService()
+				   .getLayoutPageTemplateFragmentsByPageTemplate(groupId,
+			layoutPageTemplateId);
+	}
 
 	/**
 	* Returns the OSGi service identifier.

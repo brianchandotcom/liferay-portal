@@ -49,6 +49,17 @@ public class JSONWebServiceTransportException extends RuntimeException {
 		return _status;
 	}
 
+	@Override
+	public String toString() {
+		String message = super.getMessage();
+
+		if ((message != null) && (message.length() > 0)) {
+			return message;
+		}
+
+		return "Server returned status " + _status;
+	}
+
 	public static class AuthenticationFailure
 		extends JSONWebServiceTransportException {
 
@@ -78,6 +89,23 @@ public class JSONWebServiceTransportException extends RuntimeException {
 		}
 
 		public CommunicationFailure(Throwable cause) {
+			super(cause);
+		}
+
+	}
+
+	public static class SigningFailure
+		extends JSONWebServiceTransportException {
+
+		public SigningFailure(String message, int status) {
+			super(message, status);
+		}
+
+		public SigningFailure(String message, Throwable cause) {
+			super(message, cause);
+		}
+
+		public SigningFailure(Throwable cause) {
 			super(cause);
 		}
 

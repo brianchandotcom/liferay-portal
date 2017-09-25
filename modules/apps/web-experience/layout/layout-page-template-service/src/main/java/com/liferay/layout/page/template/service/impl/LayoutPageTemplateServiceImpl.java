@@ -115,15 +115,6 @@ public class LayoutPageTemplateServiceImpl
 	}
 
 	@Override
-	public List<LayoutPageTemplate> fetchLayoutPageTemplates(
-			long layoutPageTemplateFolderId)
-		throws PortalException {
-
-		return layoutPageTemplateLocalService.fetchLayoutPageTemplates(
-			layoutPageTemplateFolderId);
-	}
-
-	@Override
 	public int getLayoutPageTemplateFoldersCount(
 		long groupId, long layoutPageTemplateFolderId) {
 
@@ -137,6 +128,15 @@ public class LayoutPageTemplateServiceImpl
 
 		return layoutPageTemplatePersistence.filterCountByG_L_LikeN(
 			groupId, layoutPageTemplateFolderId, name);
+	}
+
+	@Override
+	public List<LayoutPageTemplate> getLayoutPageTemplates(
+			long layoutPageTemplateFolderId)
+		throws PortalException {
+
+		return layoutPageTemplateLocalService.getLayoutPageTemplates(
+			layoutPageTemplateFolderId);
 	}
 
 	@Override

@@ -63,7 +63,7 @@ public class LayoutPageTemplateFragmentModelImpl extends BaseModelImpl<LayoutPag
 	public static final String TABLE_NAME = "LayoutPageTemplateFragment";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "groupId", Types.BIGINT },
-			{ "layoutPageTemplateId", Types.BIGINT },
+			{ "layoutPageTemplateEntryId", Types.BIGINT },
 			{ "fragmentEntryId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
@@ -76,7 +76,7 @@ public class LayoutPageTemplateFragmentModelImpl extends BaseModelImpl<LayoutPag
 
 	static {
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("layoutPageTemplateId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("layoutPageTemplateEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("fragmentEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -86,10 +86,10 @@ public class LayoutPageTemplateFragmentModelImpl extends BaseModelImpl<LayoutPag
 		TABLE_COLUMNS_MAP.put("position", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table LayoutPageTemplateFragment (groupId LONG not null,layoutPageTemplateId LONG not null,fragmentEntryId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,position INTEGER,primary key (groupId, layoutPageTemplateId, fragmentEntryId))";
+	public static final String TABLE_SQL_CREATE = "create table LayoutPageTemplateFragment (groupId LONG not null,layoutPageTemplateEntryId LONG not null,fragmentEntryId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,position INTEGER,primary key (groupId, layoutPageTemplateEntryId, fragmentEntryId))";
 	public static final String TABLE_SQL_DROP = "drop table LayoutPageTemplateFragment";
-	public static final String ORDER_BY_JPQL = " ORDER BY layoutPageTemplateFragment.id.groupId ASC, layoutPageTemplateFragment.id.layoutPageTemplateId ASC, layoutPageTemplateFragment.id.fragmentEntryId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY LayoutPageTemplateFragment.groupId ASC, LayoutPageTemplateFragment.layoutPageTemplateId ASC, LayoutPageTemplateFragment.fragmentEntryId ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY layoutPageTemplateFragment.id.groupId ASC, layoutPageTemplateFragment.id.layoutPageTemplateEntryId ASC, layoutPageTemplateFragment.id.fragmentEntryId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY LayoutPageTemplateFragment.groupId ASC, LayoutPageTemplateFragment.layoutPageTemplateEntryId ASC, LayoutPageTemplateFragment.fragmentEntryId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -104,7 +104,7 @@ public class LayoutPageTemplateFragmentModelImpl extends BaseModelImpl<LayoutPag
 			true);
 	public static final long FRAGMENTENTRYID_COLUMN_BITMASK = 1L;
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
-	public static final long LAYOUTPAGETEMPLATEID_COLUMN_BITMASK = 4L;
+	public static final long LAYOUTPAGETEMPLATEENTRYID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.layout.page.template.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.layout.page.template.model.LayoutPageTemplateFragment"));
 
@@ -114,20 +114,20 @@ public class LayoutPageTemplateFragmentModelImpl extends BaseModelImpl<LayoutPag
 	@Override
 	public LayoutPageTemplateFragmentPK getPrimaryKey() {
 		return new LayoutPageTemplateFragmentPK(_groupId,
-			_layoutPageTemplateId, _fragmentEntryId);
+			_layoutPageTemplateEntryId, _fragmentEntryId);
 	}
 
 	@Override
 	public void setPrimaryKey(LayoutPageTemplateFragmentPK primaryKey) {
 		setGroupId(primaryKey.groupId);
-		setLayoutPageTemplateId(primaryKey.layoutPageTemplateId);
+		setLayoutPageTemplateEntryId(primaryKey.layoutPageTemplateEntryId);
 		setFragmentEntryId(primaryKey.fragmentEntryId);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
 		return new LayoutPageTemplateFragmentPK(_groupId,
-			_layoutPageTemplateId, _fragmentEntryId);
+			_layoutPageTemplateEntryId, _fragmentEntryId);
 	}
 
 	@Override
@@ -150,7 +150,8 @@ public class LayoutPageTemplateFragmentModelImpl extends BaseModelImpl<LayoutPag
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("groupId", getGroupId());
-		attributes.put("layoutPageTemplateId", getLayoutPageTemplateId());
+		attributes.put("layoutPageTemplateEntryId",
+			getLayoutPageTemplateEntryId());
 		attributes.put("fragmentEntryId", getFragmentEntryId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -173,10 +174,11 @@ public class LayoutPageTemplateFragmentModelImpl extends BaseModelImpl<LayoutPag
 			setGroupId(groupId);
 		}
 
-		Long layoutPageTemplateId = (Long)attributes.get("layoutPageTemplateId");
+		Long layoutPageTemplateEntryId = (Long)attributes.get(
+				"layoutPageTemplateEntryId");
 
-		if (layoutPageTemplateId != null) {
-			setLayoutPageTemplateId(layoutPageTemplateId);
+		if (layoutPageTemplateEntryId != null) {
+			setLayoutPageTemplateEntryId(layoutPageTemplateEntryId);
 		}
 
 		Long fragmentEntryId = (Long)attributes.get("fragmentEntryId");
@@ -245,25 +247,25 @@ public class LayoutPageTemplateFragmentModelImpl extends BaseModelImpl<LayoutPag
 	}
 
 	@Override
-	public long getLayoutPageTemplateId() {
-		return _layoutPageTemplateId;
+	public long getLayoutPageTemplateEntryId() {
+		return _layoutPageTemplateEntryId;
 	}
 
 	@Override
-	public void setLayoutPageTemplateId(long layoutPageTemplateId) {
-		_columnBitmask |= LAYOUTPAGETEMPLATEID_COLUMN_BITMASK;
+	public void setLayoutPageTemplateEntryId(long layoutPageTemplateEntryId) {
+		_columnBitmask |= LAYOUTPAGETEMPLATEENTRYID_COLUMN_BITMASK;
 
-		if (!_setOriginalLayoutPageTemplateId) {
-			_setOriginalLayoutPageTemplateId = true;
+		if (!_setOriginalLayoutPageTemplateEntryId) {
+			_setOriginalLayoutPageTemplateEntryId = true;
 
-			_originalLayoutPageTemplateId = _layoutPageTemplateId;
+			_originalLayoutPageTemplateEntryId = _layoutPageTemplateEntryId;
 		}
 
-		_layoutPageTemplateId = layoutPageTemplateId;
+		_layoutPageTemplateEntryId = layoutPageTemplateEntryId;
 	}
 
-	public long getOriginalLayoutPageTemplateId() {
-		return _originalLayoutPageTemplateId;
+	public long getOriginalLayoutPageTemplateEntryId() {
+		return _originalLayoutPageTemplateEntryId;
 	}
 
 	@Override
@@ -394,7 +396,7 @@ public class LayoutPageTemplateFragmentModelImpl extends BaseModelImpl<LayoutPag
 		LayoutPageTemplateFragmentImpl layoutPageTemplateFragmentImpl = new LayoutPageTemplateFragmentImpl();
 
 		layoutPageTemplateFragmentImpl.setGroupId(getGroupId());
-		layoutPageTemplateFragmentImpl.setLayoutPageTemplateId(getLayoutPageTemplateId());
+		layoutPageTemplateFragmentImpl.setLayoutPageTemplateEntryId(getLayoutPageTemplateEntryId());
 		layoutPageTemplateFragmentImpl.setFragmentEntryId(getFragmentEntryId());
 		layoutPageTemplateFragmentImpl.setCompanyId(getCompanyId());
 		layoutPageTemplateFragmentImpl.setUserId(getUserId());
@@ -460,9 +462,9 @@ public class LayoutPageTemplateFragmentModelImpl extends BaseModelImpl<LayoutPag
 
 		layoutPageTemplateFragmentModelImpl._setOriginalGroupId = false;
 
-		layoutPageTemplateFragmentModelImpl._originalLayoutPageTemplateId = layoutPageTemplateFragmentModelImpl._layoutPageTemplateId;
+		layoutPageTemplateFragmentModelImpl._originalLayoutPageTemplateEntryId = layoutPageTemplateFragmentModelImpl._layoutPageTemplateEntryId;
 
-		layoutPageTemplateFragmentModelImpl._setOriginalLayoutPageTemplateId = false;
+		layoutPageTemplateFragmentModelImpl._setOriginalLayoutPageTemplateEntryId = false;
 
 		layoutPageTemplateFragmentModelImpl._originalFragmentEntryId = layoutPageTemplateFragmentModelImpl._fragmentEntryId;
 
@@ -482,7 +484,7 @@ public class LayoutPageTemplateFragmentModelImpl extends BaseModelImpl<LayoutPag
 
 		layoutPageTemplateFragmentCacheModel.groupId = getGroupId();
 
-		layoutPageTemplateFragmentCacheModel.layoutPageTemplateId = getLayoutPageTemplateId();
+		layoutPageTemplateFragmentCacheModel.layoutPageTemplateEntryId = getLayoutPageTemplateEntryId();
 
 		layoutPageTemplateFragmentCacheModel.fragmentEntryId = getFragmentEntryId();
 
@@ -527,8 +529,8 @@ public class LayoutPageTemplateFragmentModelImpl extends BaseModelImpl<LayoutPag
 
 		sb.append("{groupId=");
 		sb.append(getGroupId());
-		sb.append(", layoutPageTemplateId=");
-		sb.append(getLayoutPageTemplateId());
+		sb.append(", layoutPageTemplateEntryId=");
+		sb.append(getLayoutPageTemplateEntryId());
 		sb.append(", fragmentEntryId=");
 		sb.append(getFragmentEntryId());
 		sb.append(", companyId=");
@@ -562,8 +564,8 @@ public class LayoutPageTemplateFragmentModelImpl extends BaseModelImpl<LayoutPag
 		sb.append(getGroupId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>layoutPageTemplateId</column-name><column-value><![CDATA[");
-		sb.append(getLayoutPageTemplateId());
+			"<column><column-name>layoutPageTemplateEntryId</column-name><column-value><![CDATA[");
+		sb.append(getLayoutPageTemplateEntryId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>fragmentEntryId</column-name><column-value><![CDATA[");
@@ -606,9 +608,9 @@ public class LayoutPageTemplateFragmentModelImpl extends BaseModelImpl<LayoutPag
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _layoutPageTemplateId;
-	private long _originalLayoutPageTemplateId;
-	private boolean _setOriginalLayoutPageTemplateId;
+	private long _layoutPageTemplateEntryId;
+	private long _originalLayoutPageTemplateEntryId;
+	private boolean _setOriginalLayoutPageTemplateEntryId;
 	private long _fragmentEntryId;
 	private long _originalFragmentEntryId;
 	private boolean _setOriginalFragmentEntryId;

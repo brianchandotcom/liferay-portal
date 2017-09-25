@@ -48,12 +48,13 @@ public class LayoutPageTemplateFragmentLocalServiceWrapper
 
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplateFragment addLayoutPageTemplateFragment(
-		long groupId, long userId, long layoutPageTemplateId, long fragmentId,
-		int position,
+		long userId, long groupId, long layoutPageTemplateEntryId,
+		long fragmentId, int position,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutPageTemplateFragmentLocalService.addLayoutPageTemplateFragment(groupId,
-			userId, layoutPageTemplateId, fragmentId, position, serviceContext);
+		return _layoutPageTemplateFragmentLocalService.addLayoutPageTemplateFragment(userId,
+			groupId, layoutPageTemplateEntryId, fragmentId, position,
+			serviceContext);
 	}
 
 	/**
@@ -66,6 +67,14 @@ public class LayoutPageTemplateFragmentLocalServiceWrapper
 	public com.liferay.layout.page.template.model.LayoutPageTemplateFragment createLayoutPageTemplateFragment(
 		com.liferay.layout.page.template.service.persistence.LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK) {
 		return _layoutPageTemplateFragmentLocalService.createLayoutPageTemplateFragment(layoutPageTemplateFragmentPK);
+	}
+
+	@Override
+	public java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateFragment> deleteByLayoutPageTemplateEntry(
+		long groupId, long layoutPageTemplateEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutPageTemplateFragmentLocalService.deleteByLayoutPageTemplateEntry(groupId,
+			layoutPageTemplateEntryId);
 	}
 
 	/**
@@ -98,10 +107,10 @@ public class LayoutPageTemplateFragmentLocalServiceWrapper
 
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplateFragment deleteLayoutPageTemplateFragment(
-		long groupId, long layoutPageTemplateId, long fragmentId)
+		long groupId, long layoutPageTemplateEntryId, long fragmentId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPageTemplateFragmentLocalService.deleteLayoutPageTemplateFragment(groupId,
-			layoutPageTemplateId, fragmentId);
+			layoutPageTemplateEntryId, fragmentId);
 	}
 
 	/**
@@ -246,6 +255,13 @@ public class LayoutPageTemplateFragmentLocalServiceWrapper
 		int start, int end) {
 		return _layoutPageTemplateFragmentLocalService.getLayoutPageTemplateFragments(start,
 			end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateFragment> getLayoutPageTemplateFragmentsByPageTemplate(
+		long groupId, long layoutPageTemplateEntryId) {
+		return _layoutPageTemplateFragmentLocalService.getLayoutPageTemplateFragmentsByPageTemplate(groupId,
+			layoutPageTemplateEntryId);
 	}
 
 	/**

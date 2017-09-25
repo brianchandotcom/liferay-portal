@@ -16,7 +16,7 @@ package com.liferay.layout.page.template.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.layout.page.template.model.LayoutPageTemplate;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
@@ -31,14 +31,14 @@ import java.io.ObjectOutput;
 import java.util.Date;
 
 /**
- * The cache model class for representing LayoutPageTemplate in entity cache.
+ * The cache model class for representing LayoutPageTemplateEntry in entity cache.
  *
  * @author Brian Wing Shun Chan
- * @see LayoutPageTemplate
+ * @see LayoutPageTemplateEntry
  * @generated
  */
 @ProviderType
-public class LayoutPageTemplateCacheModel implements CacheModel<LayoutPageTemplate>,
+public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageTemplateEntry>,
 	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
@@ -46,13 +46,13 @@ public class LayoutPageTemplateCacheModel implements CacheModel<LayoutPageTempla
 			return true;
 		}
 
-		if (!(obj instanceof LayoutPageTemplateCacheModel)) {
+		if (!(obj instanceof LayoutPageTemplateEntryCacheModel)) {
 			return false;
 		}
 
-		LayoutPageTemplateCacheModel layoutPageTemplateCacheModel = (LayoutPageTemplateCacheModel)obj;
+		LayoutPageTemplateEntryCacheModel layoutPageTemplateEntryCacheModel = (LayoutPageTemplateEntryCacheModel)obj;
 
-		if (layoutPageTemplateId == layoutPageTemplateCacheModel.layoutPageTemplateId) {
+		if (layoutPageTemplateEntryId == layoutPageTemplateEntryCacheModel.layoutPageTemplateEntryId) {
 			return true;
 		}
 
@@ -61,15 +61,15 @@ public class LayoutPageTemplateCacheModel implements CacheModel<LayoutPageTempla
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, layoutPageTemplateId);
+		return HashUtil.hash(0, layoutPageTemplateEntryId);
 	}
 
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(19);
 
-		sb.append("{layoutPageTemplateId=");
-		sb.append(layoutPageTemplateId);
+		sb.append("{layoutPageTemplateEntryId=");
+		sb.append(layoutPageTemplateEntryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
@@ -92,52 +92,52 @@ public class LayoutPageTemplateCacheModel implements CacheModel<LayoutPageTempla
 	}
 
 	@Override
-	public LayoutPageTemplate toEntityModel() {
-		LayoutPageTemplateImpl layoutPageTemplateImpl = new LayoutPageTemplateImpl();
+	public LayoutPageTemplateEntry toEntityModel() {
+		LayoutPageTemplateEntryImpl layoutPageTemplateEntryImpl = new LayoutPageTemplateEntryImpl();
 
-		layoutPageTemplateImpl.setLayoutPageTemplateId(layoutPageTemplateId);
-		layoutPageTemplateImpl.setGroupId(groupId);
-		layoutPageTemplateImpl.setCompanyId(companyId);
-		layoutPageTemplateImpl.setUserId(userId);
+		layoutPageTemplateEntryImpl.setLayoutPageTemplateEntryId(layoutPageTemplateEntryId);
+		layoutPageTemplateEntryImpl.setGroupId(groupId);
+		layoutPageTemplateEntryImpl.setCompanyId(companyId);
+		layoutPageTemplateEntryImpl.setUserId(userId);
 
 		if (userName == null) {
-			layoutPageTemplateImpl.setUserName(StringPool.BLANK);
+			layoutPageTemplateEntryImpl.setUserName(StringPool.BLANK);
 		}
 		else {
-			layoutPageTemplateImpl.setUserName(userName);
+			layoutPageTemplateEntryImpl.setUserName(userName);
 		}
 
 		if (createDate == Long.MIN_VALUE) {
-			layoutPageTemplateImpl.setCreateDate(null);
+			layoutPageTemplateEntryImpl.setCreateDate(null);
 		}
 		else {
-			layoutPageTemplateImpl.setCreateDate(new Date(createDate));
+			layoutPageTemplateEntryImpl.setCreateDate(new Date(createDate));
 		}
 
 		if (modifiedDate == Long.MIN_VALUE) {
-			layoutPageTemplateImpl.setModifiedDate(null);
+			layoutPageTemplateEntryImpl.setModifiedDate(null);
 		}
 		else {
-			layoutPageTemplateImpl.setModifiedDate(new Date(modifiedDate));
+			layoutPageTemplateEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		layoutPageTemplateImpl.setLayoutPageTemplateFolderId(layoutPageTemplateFolderId);
+		layoutPageTemplateEntryImpl.setLayoutPageTemplateFolderId(layoutPageTemplateFolderId);
 
 		if (name == null) {
-			layoutPageTemplateImpl.setName(StringPool.BLANK);
+			layoutPageTemplateEntryImpl.setName(StringPool.BLANK);
 		}
 		else {
-			layoutPageTemplateImpl.setName(name);
+			layoutPageTemplateEntryImpl.setName(name);
 		}
 
-		layoutPageTemplateImpl.resetOriginalValues();
+		layoutPageTemplateEntryImpl.resetOriginalValues();
 
-		return layoutPageTemplateImpl;
+		return layoutPageTemplateEntryImpl;
 	}
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		layoutPageTemplateId = objectInput.readLong();
+		layoutPageTemplateEntryId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
 
@@ -155,7 +155,7 @@ public class LayoutPageTemplateCacheModel implements CacheModel<LayoutPageTempla
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeLong(layoutPageTemplateId);
+		objectOutput.writeLong(layoutPageTemplateEntryId);
 
 		objectOutput.writeLong(groupId);
 
@@ -183,7 +183,7 @@ public class LayoutPageTemplateCacheModel implements CacheModel<LayoutPageTempla
 		}
 	}
 
-	public long layoutPageTemplateId;
+	public long layoutPageTemplateEntryId;
 	public long groupId;
 	public long companyId;
 	public long userId;

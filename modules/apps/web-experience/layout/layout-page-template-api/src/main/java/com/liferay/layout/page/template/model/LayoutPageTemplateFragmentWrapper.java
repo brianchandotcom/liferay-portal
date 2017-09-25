@@ -61,7 +61,8 @@ public class LayoutPageTemplateFragmentWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("groupId", getGroupId());
-		attributes.put("layoutPageTemplateId", getLayoutPageTemplateId());
+		attributes.put("layoutPageTemplateEntryId",
+			getLayoutPageTemplateEntryId());
 		attributes.put("fragmentEntryId", getFragmentEntryId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -81,10 +82,11 @@ public class LayoutPageTemplateFragmentWrapper
 			setGroupId(groupId);
 		}
 
-		Long layoutPageTemplateId = (Long)attributes.get("layoutPageTemplateId");
+		Long layoutPageTemplateEntryId = (Long)attributes.get(
+				"layoutPageTemplateEntryId");
 
-		if (layoutPageTemplateId != null) {
-			setLayoutPageTemplateId(layoutPageTemplateId);
+		if (layoutPageTemplateEntryId != null) {
+			setLayoutPageTemplateEntryId(layoutPageTemplateEntryId);
 		}
 
 		Long fragmentEntryId = (Long)attributes.get("fragmentEntryId");
@@ -186,13 +188,13 @@ public class LayoutPageTemplateFragmentWrapper
 	}
 
 	/**
-	* Returns the layout page template ID of this layout page template fragment.
+	* Returns the layout page template entry ID of this layout page template fragment.
 	*
-	* @return the layout page template ID of this layout page template fragment
+	* @return the layout page template entry ID of this layout page template fragment
 	*/
 	@Override
-	public long getLayoutPageTemplateId() {
-		return _layoutPageTemplateFragment.getLayoutPageTemplateId();
+	public long getLayoutPageTemplateEntryId() {
+		return _layoutPageTemplateFragment.getLayoutPageTemplateEntryId();
 	}
 
 	/**
@@ -347,13 +349,13 @@ public class LayoutPageTemplateFragmentWrapper
 	}
 
 	/**
-	* Sets the layout page template ID of this layout page template fragment.
+	* Sets the layout page template entry ID of this layout page template fragment.
 	*
-	* @param layoutPageTemplateId the layout page template ID of this layout page template fragment
+	* @param layoutPageTemplateEntryId the layout page template entry ID of this layout page template fragment
 	*/
 	@Override
-	public void setLayoutPageTemplateId(long layoutPageTemplateId) {
-		_layoutPageTemplateFragment.setLayoutPageTemplateId(layoutPageTemplateId);
+	public void setLayoutPageTemplateEntryId(long layoutPageTemplateEntryId) {
+		_layoutPageTemplateFragment.setLayoutPageTemplateEntryId(layoutPageTemplateEntryId);
 	}
 
 	/**

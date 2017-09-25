@@ -277,67 +277,67 @@ public class LayoutPageTemplateFragmentUtil {
 	}
 
 	/**
-	* Returns all the layout page template fragments where groupId = &#63; and layoutPageTemplateId = &#63;.
+	* Returns all the layout page template fragments where groupId = &#63; and layoutPageTemplateEntryId = &#63;.
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateId the layout page template ID
+	* @param layoutPageTemplateEntryId the layout page template entry ID
 	* @return the matching layout page template fragments
 	*/
 	public static List<LayoutPageTemplateFragment> findByG_L(long groupId,
-		long layoutPageTemplateId) {
-		return getPersistence().findByG_L(groupId, layoutPageTemplateId);
+		long layoutPageTemplateEntryId) {
+		return getPersistence().findByG_L(groupId, layoutPageTemplateEntryId);
 	}
 
 	/**
-	* Returns a range of all the layout page template fragments where groupId = &#63; and layoutPageTemplateId = &#63;.
+	* Returns a range of all the layout page template fragments where groupId = &#63; and layoutPageTemplateEntryId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateFragmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateId the layout page template ID
+	* @param layoutPageTemplateEntryId the layout page template entry ID
 	* @param start the lower bound of the range of layout page template fragments
 	* @param end the upper bound of the range of layout page template fragments (not inclusive)
 	* @return the range of matching layout page template fragments
 	*/
 	public static List<LayoutPageTemplateFragment> findByG_L(long groupId,
-		long layoutPageTemplateId, int start, int end) {
+		long layoutPageTemplateEntryId, int start, int end) {
 		return getPersistence()
-				   .findByG_L(groupId, layoutPageTemplateId, start, end);
+				   .findByG_L(groupId, layoutPageTemplateEntryId, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the layout page template fragments where groupId = &#63; and layoutPageTemplateId = &#63;.
+	* Returns an ordered range of all the layout page template fragments where groupId = &#63; and layoutPageTemplateEntryId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateFragmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateId the layout page template ID
+	* @param layoutPageTemplateEntryId the layout page template entry ID
 	* @param start the lower bound of the range of layout page template fragments
 	* @param end the upper bound of the range of layout page template fragments (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout page template fragments
 	*/
 	public static List<LayoutPageTemplateFragment> findByG_L(long groupId,
-		long layoutPageTemplateId, int start, int end,
+		long layoutPageTemplateEntryId, int start, int end,
 		OrderByComparator<LayoutPageTemplateFragment> orderByComparator) {
 		return getPersistence()
-				   .findByG_L(groupId, layoutPageTemplateId, start, end,
+				   .findByG_L(groupId, layoutPageTemplateEntryId, start, end,
 			orderByComparator);
 	}
 
 	/**
-	* Returns an ordered range of all the layout page template fragments where groupId = &#63; and layoutPageTemplateId = &#63;.
+	* Returns an ordered range of all the layout page template fragments where groupId = &#63; and layoutPageTemplateEntryId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateFragmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateId the layout page template ID
+	* @param layoutPageTemplateEntryId the layout page template entry ID
 	* @param start the lower bound of the range of layout page template fragments
 	* @param end the upper bound of the range of layout page template fragments (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -345,121 +345,121 @@ public class LayoutPageTemplateFragmentUtil {
 	* @return the ordered range of matching layout page template fragments
 	*/
 	public static List<LayoutPageTemplateFragment> findByG_L(long groupId,
-		long layoutPageTemplateId, int start, int end,
+		long layoutPageTemplateEntryId, int start, int end,
 		OrderByComparator<LayoutPageTemplateFragment> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .findByG_L(groupId, layoutPageTemplateId, start, end,
+				   .findByG_L(groupId, layoutPageTemplateEntryId, start, end,
 			orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	* Returns the first layout page template fragment in the ordered set where groupId = &#63; and layoutPageTemplateId = &#63;.
+	* Returns the first layout page template fragment in the ordered set where groupId = &#63; and layoutPageTemplateEntryId = &#63;.
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateId the layout page template ID
+	* @param layoutPageTemplateEntryId the layout page template entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout page template fragment
 	* @throws NoSuchPageTemplateFragmentException if a matching layout page template fragment could not be found
 	*/
 	public static LayoutPageTemplateFragment findByG_L_First(long groupId,
-		long layoutPageTemplateId,
+		long layoutPageTemplateEntryId,
 		OrderByComparator<LayoutPageTemplateFragment> orderByComparator)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateFragmentException {
 		return getPersistence()
-				   .findByG_L_First(groupId, layoutPageTemplateId,
+				   .findByG_L_First(groupId, layoutPageTemplateEntryId,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the first layout page template fragment in the ordered set where groupId = &#63; and layoutPageTemplateId = &#63;.
+	* Returns the first layout page template fragment in the ordered set where groupId = &#63; and layoutPageTemplateEntryId = &#63;.
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateId the layout page template ID
+	* @param layoutPageTemplateEntryId the layout page template entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout page template fragment, or <code>null</code> if a matching layout page template fragment could not be found
 	*/
 	public static LayoutPageTemplateFragment fetchByG_L_First(long groupId,
-		long layoutPageTemplateId,
+		long layoutPageTemplateEntryId,
 		OrderByComparator<LayoutPageTemplateFragment> orderByComparator) {
 		return getPersistence()
-				   .fetchByG_L_First(groupId, layoutPageTemplateId,
+				   .fetchByG_L_First(groupId, layoutPageTemplateEntryId,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the last layout page template fragment in the ordered set where groupId = &#63; and layoutPageTemplateId = &#63;.
+	* Returns the last layout page template fragment in the ordered set where groupId = &#63; and layoutPageTemplateEntryId = &#63;.
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateId the layout page template ID
+	* @param layoutPageTemplateEntryId the layout page template entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout page template fragment
 	* @throws NoSuchPageTemplateFragmentException if a matching layout page template fragment could not be found
 	*/
 	public static LayoutPageTemplateFragment findByG_L_Last(long groupId,
-		long layoutPageTemplateId,
+		long layoutPageTemplateEntryId,
 		OrderByComparator<LayoutPageTemplateFragment> orderByComparator)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateFragmentException {
 		return getPersistence()
-				   .findByG_L_Last(groupId, layoutPageTemplateId,
+				   .findByG_L_Last(groupId, layoutPageTemplateEntryId,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the last layout page template fragment in the ordered set where groupId = &#63; and layoutPageTemplateId = &#63;.
+	* Returns the last layout page template fragment in the ordered set where groupId = &#63; and layoutPageTemplateEntryId = &#63;.
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateId the layout page template ID
+	* @param layoutPageTemplateEntryId the layout page template entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout page template fragment, or <code>null</code> if a matching layout page template fragment could not be found
 	*/
 	public static LayoutPageTemplateFragment fetchByG_L_Last(long groupId,
-		long layoutPageTemplateId,
+		long layoutPageTemplateEntryId,
 		OrderByComparator<LayoutPageTemplateFragment> orderByComparator) {
 		return getPersistence()
-				   .fetchByG_L_Last(groupId, layoutPageTemplateId,
+				   .fetchByG_L_Last(groupId, layoutPageTemplateEntryId,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the layout page template fragments before and after the current layout page template fragment in the ordered set where groupId = &#63; and layoutPageTemplateId = &#63;.
+	* Returns the layout page template fragments before and after the current layout page template fragment in the ordered set where groupId = &#63; and layoutPageTemplateEntryId = &#63;.
 	*
 	* @param layoutPageTemplateFragmentPK the primary key of the current layout page template fragment
 	* @param groupId the group ID
-	* @param layoutPageTemplateId the layout page template ID
+	* @param layoutPageTemplateEntryId the layout page template entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout page template fragment
 	* @throws NoSuchPageTemplateFragmentException if a layout page template fragment with the primary key could not be found
 	*/
 	public static LayoutPageTemplateFragment[] findByG_L_PrevAndNext(
 		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK,
-		long groupId, long layoutPageTemplateId,
+		long groupId, long layoutPageTemplateEntryId,
 		OrderByComparator<LayoutPageTemplateFragment> orderByComparator)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateFragmentException {
 		return getPersistence()
 				   .findByG_L_PrevAndNext(layoutPageTemplateFragmentPK,
-			groupId, layoutPageTemplateId, orderByComparator);
+			groupId, layoutPageTemplateEntryId, orderByComparator);
 	}
 
 	/**
-	* Removes all the layout page template fragments where groupId = &#63; and layoutPageTemplateId = &#63; from the database.
+	* Removes all the layout page template fragments where groupId = &#63; and layoutPageTemplateEntryId = &#63; from the database.
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateId the layout page template ID
+	* @param layoutPageTemplateEntryId the layout page template entry ID
 	*/
-	public static void removeByG_L(long groupId, long layoutPageTemplateId) {
-		getPersistence().removeByG_L(groupId, layoutPageTemplateId);
+	public static void removeByG_L(long groupId, long layoutPageTemplateEntryId) {
+		getPersistence().removeByG_L(groupId, layoutPageTemplateEntryId);
 	}
 
 	/**
-	* Returns the number of layout page template fragments where groupId = &#63; and layoutPageTemplateId = &#63;.
+	* Returns the number of layout page template fragments where groupId = &#63; and layoutPageTemplateEntryId = &#63;.
 	*
 	* @param groupId the group ID
-	* @param layoutPageTemplateId the layout page template ID
+	* @param layoutPageTemplateEntryId the layout page template entry ID
 	* @return the number of matching layout page template fragments
 	*/
-	public static int countByG_L(long groupId, long layoutPageTemplateId) {
-		return getPersistence().countByG_L(groupId, layoutPageTemplateId);
+	public static int countByG_L(long groupId, long layoutPageTemplateEntryId) {
+		return getPersistence().countByG_L(groupId, layoutPageTemplateEntryId);
 	}
 
 	/**

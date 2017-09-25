@@ -84,18 +84,18 @@ public interface LayoutPageTemplateFragmentModel extends BaseModel<LayoutPageTem
 	public void setGroupId(long groupId);
 
 	/**
-	 * Returns the layout page template ID of this layout page template fragment.
+	 * Returns the layout page template entry ID of this layout page template fragment.
 	 *
-	 * @return the layout page template ID of this layout page template fragment
+	 * @return the layout page template entry ID of this layout page template fragment
 	 */
-	public long getLayoutPageTemplateId();
+	public long getLayoutPageTemplateEntryId();
 
 	/**
-	 * Sets the layout page template ID of this layout page template fragment.
+	 * Sets the layout page template entry ID of this layout page template fragment.
 	 *
-	 * @param layoutPageTemplateId the layout page template ID of this layout page template fragment
+	 * @param layoutPageTemplateEntryId the layout page template entry ID of this layout page template fragment
 	 */
-	public void setLayoutPageTemplateId(long layoutPageTemplateId);
+	public void setLayoutPageTemplateEntryId(long layoutPageTemplateEntryId);
 
 	/**
 	 * Returns the fragment entry ID of this layout page template fragment.

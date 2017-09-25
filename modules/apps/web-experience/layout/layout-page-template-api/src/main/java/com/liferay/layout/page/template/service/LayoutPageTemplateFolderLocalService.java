@@ -72,8 +72,8 @@ public interface LayoutPageTemplateFolderLocalService extends BaseLocalService,
 	public LayoutPageTemplateFolder addLayoutPageTemplateFolder(
 		LayoutPageTemplateFolder layoutPageTemplateFolder);
 
-	public LayoutPageTemplateFolder addLayoutPageTemplateFolder(long groupId,
-		long userId, java.lang.String name, java.lang.String description,
+	public LayoutPageTemplateFolder addLayoutPageTemplateFolder(long userId,
+		long groupId, java.lang.String name, java.lang.String description,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**

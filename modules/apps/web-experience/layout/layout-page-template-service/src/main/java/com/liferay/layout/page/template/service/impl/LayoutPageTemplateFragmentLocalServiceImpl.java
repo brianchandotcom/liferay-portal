@@ -25,9 +25,13 @@ import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateFr
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Jürgen Kappler
@@ -72,6 +76,34 @@ public class LayoutPageTemplateFragmentLocalServiceImpl
 	}
 
 	@Override
+	public List<LayoutPageTemplateFragment> deleteByLayoutPageTemplate(
+			long groupId, long layoutPageTemplateId)
+		throws PortalException {
+
+		List<LayoutPageTemplateFragment> deletedLayoutPageTemplateFragments =
+			new ArrayList<>();
+
+		List<LayoutPageTemplateFragment> layoutPageTemplateFragments =
+			getLayoutPageTemplateFragmentsByPageTemplate(
+				groupId, layoutPageTemplateId);
+
+		if (ListUtil.isEmpty(layoutPageTemplateFragments)) {
+			return Collections.emptyList();
+		}
+
+		for (LayoutPageTemplateFragment layoutPageTemplateFragment :
+				layoutPageTemplateFragments) {
+
+			layoutPageTemplateFragmentPersistence.remove(
+				layoutPageTemplateFragment);
+
+			deletedLayoutPageTemplateFragments.add(layoutPageTemplateFragment);
+		}
+
+		return deletedLayoutPageTemplateFragments;
+	}
+
+	@Override
 	public LayoutPageTemplateFragment deleteLayoutPageTemplateFragment(
 			LayoutPageTemplateFragment layoutPageTemplateFragment)
 		throws PortalException {
@@ -100,6 +132,15 @@ public class LayoutPageTemplateFragmentLocalServiceImpl
 			layoutPageTemplateFragment);
 
 		return layoutPageTemplateFragment;
+	}
+
+	@Override
+	public List<LayoutPageTemplateFragment>
+		getLayoutPageTemplateFragmentsByPageTemplate(
+			long groupId, long layoutPageTemplateId) {
+
+		return layoutPageTemplateFragmentPersistence.findByG_L(
+			groupId, layoutPageTemplateId);
 	}
 
 	private void _validateFragment(long fragmentId) throws PortalException {

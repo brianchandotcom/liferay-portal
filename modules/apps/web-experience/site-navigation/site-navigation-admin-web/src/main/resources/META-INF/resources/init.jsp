@@ -21,6 +21,8 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
+<%@ page import="com.liferay.site.navigation.admin.web.internal.display.context.SiteNavigationAdminDisplayContext" %>
+
 <%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />
@@ -30,3 +32,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <portlet:defineObjects />
 
 <%@ include file="/init-ext.jsp" %>
+
+<%
+SiteNavigationAdminDisplayContext siteNavigationAdminDisplayContext = new SiteNavigationAdminDisplayContext(liferayPortletResponse, request);
+%>

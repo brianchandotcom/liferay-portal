@@ -49,7 +49,7 @@ public class LayoutPageTemplateServiceImpl
 			LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE);
 
 		return layoutPageTemplateLocalService.addLayoutPageTemplate(
-			groupId, getUserId(), layoutPageTemplateFolderId, name,
+			getUserId(), groupId, layoutPageTemplateFolderId, name,
 			layoutPageTemplateFragments, serviceContext);
 	}
 
@@ -175,7 +175,8 @@ public class LayoutPageTemplateServiceImpl
 			getPermissionChecker(), pageTemplateId, ActionKeys.UPDATE);
 
 		return layoutPageTemplateLocalService.updateLayoutPageTemplate(
-			pageTemplateId, name, layoutPageTemplateFragments, serviceContext);
+			getUserId(), pageTemplateId, name, layoutPageTemplateFragments,
+			serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

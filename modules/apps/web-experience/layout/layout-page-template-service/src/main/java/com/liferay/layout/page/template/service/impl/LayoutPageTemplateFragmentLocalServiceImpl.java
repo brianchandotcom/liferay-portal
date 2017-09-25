@@ -37,7 +37,7 @@ public class LayoutPageTemplateFragmentLocalServiceImpl
 
 	@Override
 	public LayoutPageTemplateFragment addLayoutPageTemplateFragment(
-			long groupId, long userId, long layoutPageTemplateId,
+			long userId, long groupId, long layoutPageTemplateId,
 			long fragmentId, int position, ServiceContext serviceContext)
 		throws PortalException {
 

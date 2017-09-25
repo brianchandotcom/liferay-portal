@@ -46,7 +46,7 @@ public class LayoutPageTemplateFolderServiceImpl
 			LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_FOLDER);
 
 		return layoutPageTemplateFolderLocalService.addLayoutPageTemplateFolder(
-			groupId, getUserId(), name, description, serviceContext);
+			getUserId(), groupId, name, description, serviceContext);
 	}
 
 	@Override

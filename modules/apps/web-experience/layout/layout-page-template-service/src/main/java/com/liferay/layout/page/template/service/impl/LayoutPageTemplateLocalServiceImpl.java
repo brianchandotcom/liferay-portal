@@ -41,7 +41,7 @@ public class LayoutPageTemplateLocalServiceImpl
 
 	@Override
 	public LayoutPageTemplate addLayoutPageTemplate(
-			long groupId, long userId, long layoutPageTemplateFolderId,
+			long userId, long groupId, long layoutPageTemplateFolderId,
 			String name,
 			Map<Integer, FragmentEntry> layoutPageTemplateFragments,
 			ServiceContext serviceContext)

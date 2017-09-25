@@ -74,7 +74,7 @@ public interface LayoutPageTemplateFragmentLocalService extends BaseLocalService
 		LayoutPageTemplateFragment layoutPageTemplateFragment);
 
 	public LayoutPageTemplateFragment addLayoutPageTemplateFragment(
-		long groupId, long userId, long layoutPageTemplateId, long fragmentId,
+		long userId, long groupId, long layoutPageTemplateId, long fragmentId,
 		int position, ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -85,6 +85,9 @@ public interface LayoutPageTemplateFragmentLocalService extends BaseLocalService
 	*/
 	public LayoutPageTemplateFragment createLayoutPageTemplateFragment(
 		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK);
+
+	public List<LayoutPageTemplateFragment> deleteByLayoutPageTemplate(
+		long groupId, long layoutPageTemplateId) throws PortalException;
 
 	/**
 	* Deletes the layout page template fragment from the database. Also notifies the appropriate model listeners.
@@ -216,6 +219,10 @@ public interface LayoutPageTemplateFragmentLocalService extends BaseLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutPageTemplateFragment> getLayoutPageTemplateFragments(
 		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutPageTemplateFragment> getLayoutPageTemplateFragmentsByPageTemplate(
+		long groupId, long layoutPageTemplateId);
 
 	/**
 	* Returns the number of layout page template fragments.

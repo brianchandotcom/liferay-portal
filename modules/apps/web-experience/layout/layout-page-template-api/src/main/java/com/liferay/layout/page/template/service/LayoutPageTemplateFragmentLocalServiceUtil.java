@@ -55,12 +55,12 @@ public class LayoutPageTemplateFragmentLocalServiceUtil {
 	}
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateFragment addLayoutPageTemplateFragment(
-		long groupId, long userId, long layoutPageTemplateId, long fragmentId,
+		long userId, long groupId, long layoutPageTemplateId, long fragmentId,
 		int position,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addLayoutPageTemplateFragment(groupId, userId,
+				   .addLayoutPageTemplateFragment(userId, groupId,
 			layoutPageTemplateId, fragmentId, position, serviceContext);
 	}
 
@@ -74,6 +74,13 @@ public class LayoutPageTemplateFragmentLocalServiceUtil {
 		com.liferay.layout.page.template.service.persistence.LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK) {
 		return getService()
 				   .createLayoutPageTemplateFragment(layoutPageTemplateFragmentPK);
+	}
+
+	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateFragment> deleteByLayoutPageTemplate(
+		long groupId, long layoutPageTemplateId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .deleteByLayoutPageTemplate(groupId, layoutPageTemplateId);
 	}
 
 	/**
@@ -241,6 +248,13 @@ public class LayoutPageTemplateFragmentLocalServiceUtil {
 	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateFragment> getLayoutPageTemplateFragments(
 		int start, int end) {
 		return getService().getLayoutPageTemplateFragments(start, end);
+	}
+
+	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateFragment> getLayoutPageTemplateFragmentsByPageTemplate(
+		long groupId, long layoutPageTemplateId) {
+		return getService()
+				   .getLayoutPageTemplateFragmentsByPageTemplate(groupId,
+			layoutPageTemplateId);
 	}
 
 	/**

@@ -58,7 +58,7 @@ public class LayoutPageTemplateServiceHttp {
 	public static com.liferay.layout.page.template.model.LayoutPageTemplate addLayoutPageTemplate(
 		HttpPrincipal httpPrincipal, long groupId,
 		long layoutPageTemplateFolderId, java.lang.String name,
-		java.util.Map<java.lang.Integer, com.liferay.fragment.model.FragmentEntry> layoutPageTemplateFragments,
+		java.util.List<com.liferay.fragment.model.FragmentEntry> layoutPageTemplateFragments,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -93,7 +93,7 @@ public class LayoutPageTemplateServiceHttp {
 	}
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplate deleteLayoutPageTemplate(
-		HttpPrincipal httpPrincipal, long pageTemplateId)
+		HttpPrincipal httpPrincipal, long layoutPageTemplateId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateServiceUtil.class,
@@ -101,7 +101,7 @@ public class LayoutPageTemplateServiceHttp {
 					_deleteLayoutPageTemplateParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					pageTemplateId);
+					layoutPageTemplateId);
 
 			Object returnObj = null;
 
@@ -125,15 +125,16 @@ public class LayoutPageTemplateServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplate> deletePageTemplates(
-		HttpPrincipal httpPrincipal, long[] pageTemplatesIds)
+	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplate> deleteLayoutPageTemplates(
+		HttpPrincipal httpPrincipal, long[] layoutPageTemplateIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateServiceUtil.class,
-					"deletePageTemplates", _deletePageTemplatesParameterTypes2);
+					"deleteLayoutPageTemplates",
+					_deleteLayoutPageTemplatesParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					pageTemplatesIds);
+					layoutPageTemplateIds);
 
 			Object returnObj = null;
 
@@ -158,7 +159,7 @@ public class LayoutPageTemplateServiceHttp {
 	}
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplate fetchLayoutPageTemplate(
-		HttpPrincipal httpPrincipal, long pageTemplateId)
+		HttpPrincipal httpPrincipal, long layoutPageTemplateId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateServiceUtil.class,
@@ -166,7 +167,7 @@ public class LayoutPageTemplateServiceHttp {
 					_fetchLayoutPageTemplateParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					pageTemplateId);
+					layoutPageTemplateId);
 
 			Object returnObj = null;
 
@@ -190,45 +191,13 @@ public class LayoutPageTemplateServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplate> fetchPageTemplates(
-		HttpPrincipal httpPrincipal, long layoutPageTemplateFolderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(LayoutPageTemplateServiceUtil.class,
-					"fetchPageTemplates", _fetchPageTemplatesParameterTypes4);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					layoutPageTemplateFolderId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplate>)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
 	public static int getLayoutPageTemplateFoldersCount(
 		HttpPrincipal httpPrincipal, long groupId,
 		long layoutPageTemplateFolderId) {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateServiceUtil.class,
 					"getLayoutPageTemplateFoldersCount",
-					_getLayoutPageTemplateFoldersCountParameterTypes5);
+					_getLayoutPageTemplateFoldersCountParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					layoutPageTemplateFolderId);
@@ -257,7 +226,7 @@ public class LayoutPageTemplateServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateServiceUtil.class,
 					"getLayoutPageTemplateFoldersCount",
-					_getLayoutPageTemplateFoldersCountParameterTypes6);
+					_getLayoutPageTemplateFoldersCountParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					layoutPageTemplateFolderId, name);
@@ -280,13 +249,14 @@ public class LayoutPageTemplateServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplate> getPageTemplates(
+	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplate> getLayoutPageTemplates(
 		HttpPrincipal httpPrincipal, long groupId,
 		long layoutPageTemplateFolderId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateServiceUtil.class,
-					"getPageTemplates", _getPageTemplatesParameterTypes7);
+					"getLayoutPageTemplates",
+					_getLayoutPageTemplatesParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					layoutPageTemplateFolderId, start, end);
@@ -313,14 +283,15 @@ public class LayoutPageTemplateServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplate> getPageTemplates(
+	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplate> getLayoutPageTemplates(
 		HttpPrincipal httpPrincipal, long groupId,
 		long layoutPageTemplateFolderId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplate> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateServiceUtil.class,
-					"getPageTemplates", _getPageTemplatesParameterTypes8);
+					"getLayoutPageTemplates",
+					_getLayoutPageTemplatesParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					layoutPageTemplateFolderId, start, end, orderByComparator);
@@ -347,14 +318,15 @@ public class LayoutPageTemplateServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplate> getPageTemplates(
+	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplate> getLayoutPageTemplates(
 		HttpPrincipal httpPrincipal, long groupId,
 		long layoutPageTemplateFolderId, java.lang.String name, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplate> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateServiceUtil.class,
-					"getPageTemplates", _getPageTemplatesParameterTypes9);
+					"getLayoutPageTemplates",
+					_getLayoutPageTemplatesParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					layoutPageTemplateFolderId, name, start, end,
@@ -379,18 +351,18 @@ public class LayoutPageTemplateServiceHttp {
 	}
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplate updateLayoutPageTemplate(
-		HttpPrincipal httpPrincipal, long pageTemplateId,
+		HttpPrincipal httpPrincipal, long layoutPageTemplateId,
 		java.lang.String name,
-		java.util.Map<java.lang.Integer, com.liferay.fragment.model.FragmentEntry> layoutPageTemplateFragments,
+		java.util.List<com.liferay.fragment.model.FragmentEntry> layoutPageTemplateFragments,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateServiceUtil.class,
 					"updateLayoutPageTemplate",
-					_updateLayoutPageTemplateParameterTypes10);
+					_updateLayoutPageTemplateParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					pageTemplateId, name, layoutPageTemplateFragments,
+					layoutPageTemplateId, name, layoutPageTemplateFragments,
 					serviceContext);
 
 			Object returnObj = null;
@@ -417,38 +389,35 @@ public class LayoutPageTemplateServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(LayoutPageTemplateServiceHttp.class);
 	private static final Class<?>[] _addLayoutPageTemplateParameterTypes0 = new Class[] {
-			long.class, long.class, java.lang.String.class, java.util.Map.class,
+			long.class, long.class, java.lang.String.class, java.util.List.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteLayoutPageTemplateParameterTypes1 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _deletePageTemplatesParameterTypes2 = new Class[] {
+	private static final Class<?>[] _deleteLayoutPageTemplatesParameterTypes2 = new Class[] {
 			long[].class
 		};
 	private static final Class<?>[] _fetchLayoutPageTemplateParameterTypes3 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _fetchPageTemplatesParameterTypes4 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[] _getLayoutPageTemplateFoldersCountParameterTypes5 =
+	private static final Class<?>[] _getLayoutPageTemplateFoldersCountParameterTypes4 =
 		new Class[] { long.class, long.class };
-	private static final Class<?>[] _getLayoutPageTemplateFoldersCountParameterTypes6 =
+	private static final Class<?>[] _getLayoutPageTemplateFoldersCountParameterTypes5 =
 		new Class[] { long.class, long.class, java.lang.String.class };
-	private static final Class<?>[] _getPageTemplatesParameterTypes7 = new Class[] {
+	private static final Class<?>[] _getLayoutPageTemplatesParameterTypes6 = new Class[] {
 			long.class, long.class, int.class, int.class
 		};
-	private static final Class<?>[] _getPageTemplatesParameterTypes8 = new Class[] {
+	private static final Class<?>[] _getLayoutPageTemplatesParameterTypes7 = new Class[] {
 			long.class, long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getPageTemplatesParameterTypes9 = new Class[] {
+	private static final Class<?>[] _getLayoutPageTemplatesParameterTypes8 = new Class[] {
 			long.class, long.class, java.lang.String.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _updateLayoutPageTemplateParameterTypes10 = new Class[] {
-			long.class, java.lang.String.class, java.util.Map.class,
+	private static final Class<?>[] _updateLayoutPageTemplateParameterTypes9 = new Class[] {
+			long.class, java.lang.String.class, java.util.List.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

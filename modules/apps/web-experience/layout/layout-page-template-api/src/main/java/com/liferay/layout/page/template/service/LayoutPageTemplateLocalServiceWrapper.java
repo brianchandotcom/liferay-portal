@@ -48,13 +48,13 @@ public class LayoutPageTemplateLocalServiceWrapper
 
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplate addLayoutPageTemplate(
-		long groupId, long userId, long layoutPageTemplateFolderId,
+		long userId, long groupId, long layoutPageTemplateFolderId,
 		java.lang.String name,
-		java.util.Map<java.lang.Integer, com.liferay.fragment.model.FragmentEntry> layoutPageTemplateFragments,
+		java.util.List<com.liferay.fragment.model.FragmentEntry> layoutPageTemplateFragments,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutPageTemplateLocalService.addLayoutPageTemplate(groupId,
-			userId, layoutPageTemplateFolderId, name,
+		return _layoutPageTemplateLocalService.addLayoutPageTemplate(userId,
+			groupId, layoutPageTemplateFolderId, name,
 			layoutPageTemplateFragments, serviceContext);
 	}
 
@@ -201,12 +201,6 @@ public class LayoutPageTemplateLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplate> fetchLayoutPageTemplates(
-		long layoutPageTemplateFolderId) {
-		return _layoutPageTemplateLocalService.fetchLayoutPageTemplates(layoutPageTemplateFolderId);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _layoutPageTemplateLocalService.getActionableDynamicQuery();
 	}
@@ -249,10 +243,17 @@ public class LayoutPageTemplateLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplate> getLayoutPageTemplates(
-		long layoutPageTemplateFolderId, int start, int end)
+		long groupId, long layoutPageTemplateFolderId) {
+		return _layoutPageTemplateLocalService.getLayoutPageTemplates(groupId,
+			layoutPageTemplateFolderId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplate> getLayoutPageTemplates(
+		long groupId, long layoutPageTemplateFolderId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutPageTemplateLocalService.getLayoutPageTemplates(layoutPageTemplateFolderId,
-			start, end);
+		return _layoutPageTemplateLocalService.getLayoutPageTemplates(groupId,
+			layoutPageTemplateFolderId, start, end);
 	}
 
 	@Override
@@ -314,12 +315,13 @@ public class LayoutPageTemplateLocalServiceWrapper
 
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplate updateLayoutPageTemplate(
-		long layoutPageTemplateId, java.lang.String name,
-		java.util.Map<java.lang.Integer, com.liferay.fragment.model.FragmentEntry> layoutPageTemplateFragments,
+		long userId, long layoutPageTemplateId, java.lang.String name,
+		java.util.List<com.liferay.fragment.model.FragmentEntry> layoutPageTemplateFragments,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutPageTemplateLocalService.updateLayoutPageTemplate(layoutPageTemplateId,
-			name, layoutPageTemplateFragments, serviceContext);
+		return _layoutPageTemplateLocalService.updateLayoutPageTemplate(userId,
+			layoutPageTemplateId, name, layoutPageTemplateFragments,
+			serviceContext);
 	}
 
 	@Override

@@ -175,14 +175,6 @@ public class LayoutPageTemplatePersistenceTest {
 	}
 
 	@Test
-	public void testCountByLayoutPageTemplateFolderId()
-		throws Exception {
-		_persistence.countByLayoutPageTemplateFolderId(RandomTestUtil.nextLong());
-
-		_persistence.countByLayoutPageTemplateFolderId(0L);
-	}
-
-	@Test
 	public void testCountByG_L() throws Exception {
 		_persistence.countByG_L(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong());

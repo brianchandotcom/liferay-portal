@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Provides the local service interface for LayoutPageTemplate. Methods of this
@@ -75,9 +74,9 @@ public interface LayoutPageTemplateLocalService extends BaseLocalService,
 	public LayoutPageTemplate addLayoutPageTemplate(
 		LayoutPageTemplate layoutPageTemplate);
 
-	public LayoutPageTemplate addLayoutPageTemplate(long groupId, long userId,
+	public LayoutPageTemplate addLayoutPageTemplate(long userId, long groupId,
 		long layoutPageTemplateFolderId, java.lang.String name,
-		Map<java.lang.Integer, FragmentEntry> layoutPageTemplateFragments,
+		List<FragmentEntry> layoutPageTemplateFragments,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -181,10 +180,6 @@ public interface LayoutPageTemplateLocalService extends BaseLocalService,
 	public LayoutPageTemplate fetchLayoutPageTemplate(long layoutPageTemplateId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<LayoutPageTemplate> fetchLayoutPageTemplates(
-		long layoutPageTemplateFolderId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -216,7 +211,11 @@ public interface LayoutPageTemplateLocalService extends BaseLocalService,
 	public List<LayoutPageTemplate> getLayoutPageTemplates(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<LayoutPageTemplate> getLayoutPageTemplates(
+	public List<LayoutPageTemplate> getLayoutPageTemplates(long groupId,
+		long layoutPageTemplateFolderId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutPageTemplate> getLayoutPageTemplates(long groupId,
 		long layoutPageTemplateFolderId, int start, int end)
 		throws PortalException;
 
@@ -261,8 +260,8 @@ public interface LayoutPageTemplateLocalService extends BaseLocalService,
 	public LayoutPageTemplate updateLayoutPageTemplate(
 		LayoutPageTemplate layoutPageTemplate);
 
-	public LayoutPageTemplate updateLayoutPageTemplate(
+	public LayoutPageTemplate updateLayoutPageTemplate(long userId,
 		long layoutPageTemplateId, java.lang.String name,
-		Map<java.lang.Integer, FragmentEntry> layoutPageTemplateFragments,
+		List<FragmentEntry> layoutPageTemplateFragments,
 		ServiceContext serviceContext) throws PortalException;
 }

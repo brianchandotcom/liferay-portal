@@ -48,12 +48,12 @@ public class LayoutPageTemplateFragmentLocalServiceWrapper
 
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplateFragment addLayoutPageTemplateFragment(
-		long groupId, long userId, long layoutPageTemplateId, long fragmentId,
+		long userId, long groupId, long layoutPageTemplateId, long fragmentId,
 		int position,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutPageTemplateFragmentLocalService.addLayoutPageTemplateFragment(groupId,
-			userId, layoutPageTemplateId, fragmentId, position, serviceContext);
+		return _layoutPageTemplateFragmentLocalService.addLayoutPageTemplateFragment(userId,
+			groupId, layoutPageTemplateId, fragmentId, position, serviceContext);
 	}
 
 	/**
@@ -66,6 +66,14 @@ public class LayoutPageTemplateFragmentLocalServiceWrapper
 	public com.liferay.layout.page.template.model.LayoutPageTemplateFragment createLayoutPageTemplateFragment(
 		com.liferay.layout.page.template.service.persistence.LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK) {
 		return _layoutPageTemplateFragmentLocalService.createLayoutPageTemplateFragment(layoutPageTemplateFragmentPK);
+	}
+
+	@Override
+	public java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateFragment> deleteByLayoutPageTemplate(
+		long groupId, long layoutPageTemplateId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutPageTemplateFragmentLocalService.deleteByLayoutPageTemplate(groupId,
+			layoutPageTemplateId);
 	}
 
 	/**
@@ -246,6 +254,13 @@ public class LayoutPageTemplateFragmentLocalServiceWrapper
 		int start, int end) {
 		return _layoutPageTemplateFragmentLocalService.getLayoutPageTemplateFragments(start,
 			end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateFragment> getLayoutPageTemplateFragmentsByPageTemplate(
+		long groupId, long layoutPageTemplateId) {
+		return _layoutPageTemplateFragmentLocalService.getLayoutPageTemplateFragmentsByPageTemplate(groupId,
+			layoutPageTemplateId);
 	}
 
 	/**

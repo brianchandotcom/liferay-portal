@@ -91,7 +91,7 @@ public class LayoutPageTemplateFolderLocalServiceImpl
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			layoutPageTemplateFolder.getLayoutPageTemplateFolderId());
 
-		// Page Templates
+		// Layout Page Templates
 
 		List<LayoutPageTemplate> layoutPageTemplates =
 			layoutPageTemplatePersistence.findByLayoutPageTemplateFolderId(

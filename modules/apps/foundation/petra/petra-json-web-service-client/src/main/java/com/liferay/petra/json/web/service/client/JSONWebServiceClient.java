@@ -34,20 +34,20 @@ public interface JSONWebServiceClient {
 			JSONWebServiceInvocationException, JSONWebServiceTransportException;
 
 	public String doDelete(
-			String url, Map<String, String> parameters,
-			Map<String, String> headers)
-		throws
-			JSONWebServiceInvocationException, JSONWebServiceTransportException;
+		String url, Map<String, String> parameters, Map<String, String> headers)
+			throws
+				JSONWebServiceInvocationException,
+		JSONWebServiceTransportException;
 
 	public String doGet(String url, Map<String, String> parameters)
 		throws
 			JSONWebServiceInvocationException, JSONWebServiceTransportException;
 
 	public String doGet(
-			String url, Map<String, String> parameters,
-			Map<String, String> headers)
-		throws
-			JSONWebServiceInvocationException, JSONWebServiceTransportException;
+		String url, Map<String, String> parameters, Map<String, String> headers)
+			throws
+				JSONWebServiceInvocationException,
+		JSONWebServiceTransportException;
 
 	public String doPost(String url, Map<String, String> parameters)
 		throws
@@ -56,6 +56,10 @@ public interface JSONWebServiceClient {
 	public String doPost(
 			String url, Map<String, String> parameters,
 			Map<String, String> headers)
+		throws JSONWebServiceInvocationException,
+			JSONWebServiceTransportException;
+
+	public String doPostAsJSON(String url, Object object)
 		throws
 			JSONWebServiceInvocationException, JSONWebServiceTransportException;
 
@@ -64,23 +68,20 @@ public interface JSONWebServiceClient {
 			JSONWebServiceInvocationException, JSONWebServiceTransportException;
 
 	public String doPostAsJSON(
-			String url, String json, Map<String, String> headers)
-		throws
-			JSONWebServiceInvocationException, JSONWebServiceTransportException;
-
-	public String doPostAsJSON(String url, Object object)
-		throws
-			JSONWebServiceInvocationException, JSONWebServiceTransportException;
+		String url, String json, Map<String, String> headers)
+			throws
+				JSONWebServiceInvocationException,
+		JSONWebServiceTransportException;
 
 	public String doPut(String url, Map<String, String> parameters)
 		throws
 			JSONWebServiceInvocationException, JSONWebServiceTransportException;
 
 	public String doPut(
-			String url, Map<String, String> parameters,
-			Map<String, String> headers)
-		throws
-			JSONWebServiceInvocationException, JSONWebServiceTransportException;
+		String url, Map<String, String> parameters, Map<String, String> headers)
+			throws
+				JSONWebServiceInvocationException,
+		JSONWebServiceTransportException;
 
 	public String getHostName();
 

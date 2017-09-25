@@ -18,9 +18,34 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
+
 import com.liferay.petra.json.web.service.client.internal.IdleConnectionMonitorThread;
 import com.liferay.petra.json.web.service.client.internal.JSONWebServiceClientImpl;
 import com.liferay.petra.json.web.service.client.internal.X509TrustManagerImpl;
+
+import java.io.IOException;
+
+import java.nio.charset.Charset;
+
+import java.security.KeyStore;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
@@ -71,27 +96,9 @@ import org.apache.http.nio.reactor.IOReactorException;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.ssl.SSLContexts;
 import org.apache.http.util.EntityUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-
-import java.nio.charset.Charset;
-import java.security.KeyStore;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Igor Beslic
@@ -170,11 +177,10 @@ public abstract class BaseJSONWebServiceClientImpl
 
 	@Override
 	public String doDelete(
-			String url, Map<String, String> parameters,
-			Map<String, String> headers)
-		throws
-			JSONWebServiceInvocationException,
-			JSONWebServiceTransportException {
+		String url, Map<String, String> parameters, Map<String, String> headers)
+			throws
+				JSONWebServiceInvocationException,
+		JSONWebServiceTransportException {
 
 		if (!isNull(_contextPath)) {
 			url = _contextPath + url;
@@ -216,11 +222,10 @@ public abstract class BaseJSONWebServiceClientImpl
 
 	@Override
 	public String doGet(
-			String url, Map<String, String> parameters,
-			Map<String, String> headers)
-		throws
-			JSONWebServiceInvocationException,
-			JSONWebServiceTransportException {
+		String url, Map<String, String> parameters, Map<String, String> headers)
+			throws
+				JSONWebServiceInvocationException,
+		JSONWebServiceTransportException {
 
 		if (!isNull(_contextPath)) {
 			url = _contextPath + url;
@@ -262,11 +267,10 @@ public abstract class BaseJSONWebServiceClientImpl
 
 	@Override
 	public String doPost(
-			String url, Map<String, String> parameters,
-			Map<String, String> headers)
-		throws
-			JSONWebServiceInvocationException,
-			JSONWebServiceTransportException {
+		String url, Map<String, String> parameters, Map<String, String> headers)
+			throws
+				JSONWebServiceInvocationException,
+		JSONWebServiceTransportException {
 
 		if (!isNull(_contextPath)) {
 			url = _contextPath + url;
@@ -295,6 +299,19 @@ public abstract class BaseJSONWebServiceClientImpl
 		return execute(httpPost);
 	}
 
+	public String doPostAsJSON(String url, Object object)
+		throws JSONWebServiceInvocationException {
+
+		try {
+			String json = objectMapper.writeValueAsString(object);
+
+			return doPostAsJSON(url, json);
+		}
+		catch (IOException ioe) {
+			throw new JSONWebServiceInvocationException(ioe);
+		}
+	}
+
 	@Override
 	public String doPostAsJSON(String url, String json)
 		throws
@@ -306,10 +323,10 @@ public abstract class BaseJSONWebServiceClientImpl
 
 	@Override
 	public String doPostAsJSON(
-			String url, String json, Map<String, String> headers)
-		throws
-			JSONWebServiceInvocationException,
-			JSONWebServiceTransportException {
+		String url, String json, Map<String, String> headers)
+			throws
+				JSONWebServiceInvocationException,
+		JSONWebServiceTransportException {
 
 		HttpPost httpPost = new HttpPost(url);
 
@@ -335,11 +352,10 @@ public abstract class BaseJSONWebServiceClientImpl
 
 	@Override
 	public String doPut(
-			String url, Map<String, String> parameters,
-			Map<String, String> headers)
-		throws
-			JSONWebServiceInvocationException,
-			JSONWebServiceTransportException {
+		String url, Map<String, String> parameters, Map<String, String> headers)
+			throws
+				JSONWebServiceInvocationException,
+		JSONWebServiceTransportException {
 
 		if (!isNull(_contextPath)) {
 			url = _contextPath + url;
@@ -513,6 +529,14 @@ public abstract class BaseJSONWebServiceClientImpl
 		_proxyWorkstation = proxyWorkstation;
 	}
 
+	protected BaseJSONWebServiceClientImpl() {
+		objectMapper.configure(
+			DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+		objectMapper.enableDefaultTypingAsProperty(
+			ObjectMapper.DefaultTyping.JAVA_LANG_OBJECT, "class");
+	}
+
 	protected void addHeaders(
 		HttpMessage httpMessage, Map<String, String> headers) {
 
@@ -523,372 +547,6 @@ public abstract class BaseJSONWebServiceClientImpl
 		for (Map.Entry<String, String> entry : _headers.entrySet()) {
 			httpMessage.addHeader(entry.getKey(), entry.getValue());
 		}
-	}
-
-	protected String execute(HttpRequestBase httpRequestBase)
-		throws
-		JSONWebServiceInvocationException, JSONWebServiceTransportException {
-
-		HttpHost httpHost = new HttpHost(_hostName, _hostPort, _protocol);
-
-		try {
-			if (_closeableHttpAsyncClient == null) {
-				afterPropertiesSet();
-			}
-
-			Future<HttpResponse> future = null;
-
-			if (!isNull(_login) && !isNull(_password)) {
-				HttpClientContext httpClientContext =
-					HttpClientContext.create();
-
-				AuthCache authCache = new BasicAuthCache();
-
-				AuthScheme authScheme = null;
-
-				if (!isNull(_proxyHostName)) {
-					authScheme = new BasicScheme(ChallengeState.PROXY);
-				}
-				else {
-					authScheme = new BasicScheme(ChallengeState.TARGET);
-				}
-
-				authCache.put(httpHost, authScheme);
-
-				httpClientContext.setAttribute(
-					ClientContext.AUTH_CACHE, authCache);
-
-				future = _closeableHttpAsyncClient.execute(
-					httpHost, httpRequestBase, httpClientContext, null);
-			}
-			else {
-				future = _closeableHttpAsyncClient.execute(
-					httpHost, httpRequestBase, null);
-			}
-
-			HttpResponse httpResponse = future.get();
-
-			StatusLine statusLine = httpResponse.getStatusLine();
-
-			int statusCode = statusLine.getStatusCode();
-
-			if (_logger.isTraceEnabled()) {
-				_logger.trace("Server returned status " + statusCode);
-			}
-
-			HttpEntity httpEntity = httpResponse.getEntity();
-
-			if ((statusCode == HttpServletResponse.SC_NO_CONTENT) ||
-				(((httpEntity == null) || (httpEntity.getContentLength() == 0))
-					&& _isStatus2XX(statusCode))) {
-
-				return null;
-			}
-
-			String content = EntityUtils.toString(httpEntity, _CHARSET);
-
-			if ((httpEntity.getContentType() != null) &&
-					_isApplicationJSONContentType(httpEntity)) {
-
-				content = updateJSON(content);
-			}
-
-			if (_isStatus2XX(statusCode)) {
-				return content;
-			}
-			else if ((statusCode == HttpServletResponse.SC_BAD_REQUEST) ||
-				(statusCode == HttpServletResponse.SC_FORBIDDEN) ||
-				(statusCode == HttpServletResponse.SC_METHOD_NOT_ALLOWED) ||
-				(statusCode == HttpServletResponse.SC_NOT_ACCEPTABLE) ||
-				(statusCode == HttpServletResponse.SC_NOT_FOUND)) {
-
-				throw new JSONWebServiceInvocationException(
-					content, statusCode);
-			}
-			else if (statusCode == HttpServletResponse.SC_UNAUTHORIZED) {
-				throw new JSONWebServiceTransportException.
-					AuthenticationFailure(
-					"Not authorized to access JSON web service");
-			}
-
-			throw new JSONWebServiceTransportException.CommunicationFailure(
-				"Server returned status " + statusCode, statusCode);
-		}
-		catch (IOException ioe) {
-			throw new JSONWebServiceTransportException.CommunicationFailure(
-				"Unable to transmit request", ioe);
-		}
-		catch (InterruptedException ie) {
-			throw new JSONWebServiceTransportException.CommunicationFailure(
-				"Unable to transmit request", ie);
-		}
-		catch (ExecutionException ee) {
-			throw new JSONWebServiceTransportException.CommunicationFailure(
-				"Unable to transmit request", ee);
-		}
-		finally {
-			httpRequestBase.releaseConnection();
-		}
-	}
-
-	private boolean _isApplicationJSONContentType(HttpEntity httpEntity) {
-		Header contentTypeHeader = httpEntity.getContentType();
-
-		String contentTypeHeaderValue = contentTypeHeader.getValue();
-
-		if (contentTypeHeaderValue.contains("application/json")) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private boolean _isStatus2XX(int statusCode) {
-		if ((statusCode == 200) || (statusCode == 201) || (statusCode == 202) ||
-			(statusCode == 203) || (statusCode == 204)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	protected PoolingNHttpClientConnectionManager
-	getPoolingNHttpClientConnectionManager() throws IOReactorException {
-
-		PoolingNHttpClientConnectionManager
-			poolingNHttpClientConnectionManager = null;
-
-		ConnectingIOReactor connectingIOReactor =
-			new DefaultConnectingIOReactor();
-
-		if (_keyStore != null) {
-			poolingNHttpClientConnectionManager =
-				new PoolingNHttpClientConnectionManager(
-					connectingIOReactor, null,
-					getSchemeIOSessionStrategyRegistry(), null, null, 60000,
-					TimeUnit.MILLISECONDS);
-		}
-		else {
-			poolingNHttpClientConnectionManager =
-				new PoolingNHttpClientConnectionManager(connectingIOReactor);
-		}
-
-		poolingNHttpClientConnectionManager.setMaxTotal(20);
-
-		return poolingNHttpClientConnectionManager;
-	}
-
-	protected Registry<SchemeIOSessionStrategy>
-	getSchemeIOSessionStrategyRegistry() {
-
-		RegistryBuilder<SchemeIOSessionStrategy> registryBuilder =
-			RegistryBuilder.<SchemeIOSessionStrategy>create();
-
-		registryBuilder.register("http", NoopIOSessionStrategy.INSTANCE);
-		registryBuilder.register("https", getSSLIOSessionStrategy());
-
-		return registryBuilder.build();
-	}
-
-	protected SSLIOSessionStrategy getSSLIOSessionStrategy() {
-		SSLContextBuilder sslContextBuilder = SSLContexts.custom();
-
-		SSLContext sslContext = null;
-
-		try {
-			sslContextBuilder.loadTrustMaterial(
-				_keyStore, new TrustSelfSignedStrategy());
-
-			sslContext = sslContextBuilder.build();
-
-			sslContext.init(
-				null, new TrustManager[] {new X509TrustManagerImpl()}, null);
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-
-		return new SSLIOSessionStrategy(
-			sslContext, new String[] {"TLSv1"}, null,
-			SSLConnectionSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER);
-	}
-
-	protected boolean isNull(String s) {
-		if ((s == null) || s.equals("")) {
-			return true;
-		}
-
-		return false;
-	}
-
-	protected void log(String message, Map<String, String> map) {
-		if (!_logger.isDebugEnabled() || map.isEmpty()) {
-			return;
-		}
-
-		StringBuilder sb = new StringBuilder((map.size() * 4) + 2);
-
-		sb.append(message);
-		sb.append(":");
-
-		for (Map.Entry<String, String> entry : map.entrySet()) {
-			String key = entry.getKey();
-			String value = entry.getValue();
-
-			if (value == null) {
-				key = "-" + key;
-				value = "";
-			}
-
-			sb.append("\n");
-			sb.append(key);
-			sb.append("=");
-			sb.append(value);
-		}
-
-		_logger.debug(sb.toString());
-	}
-
-	protected void setProxyHost(HttpClientBuilder httpClientBuilder) {
-		if ((_proxyHostName == null) || _proxyHostName.equals("")) {
-			return;
-		}
-
-		httpClientBuilder.setProxy(
-			new HttpHost(_proxyHostName, _proxyHostPort));
-		httpClientBuilder.setProxyAuthenticationStrategy(
-			new ProxyAuthenticationStrategy());
-	}
-
-	protected List<NameValuePair> toNameValuePairs(
-		Map<String, String> parameters) {
-
-		List<NameValuePair> nameValuePairs = new LinkedList<NameValuePair>();
-
-		for (Map.Entry<String, String> entry : parameters.entrySet()) {
-			String key = entry.getKey();
-
-			String value = entry.getValue();
-
-			if (value == null) {
-				key = "-" + key;
-
-				value = "";
-			}
-
-			NameValuePair nameValuePair = new BasicNameValuePair(key, value);
-
-			nameValuePairs.add(nameValuePair);
-		}
-
-		return nameValuePairs;
-	}
-
-	private CredentialsProvider _getCredentialsProvider() {
-		if ((isNull(_login) || isNull(_password)) &&
-			(isNull(_proxyLogin) || isNull(_proxyPassword))) {
-
-			return null;
-		}
-
-		CredentialsProvider credentialsProvider =
-			new BasicCredentialsProvider();
-
-		if (!isNull(_login)) {
-			credentialsProvider.setCredentials(
-				new AuthScope(_hostName, _hostPort),
-				new UsernamePasswordCredentials(_login, _password));
-
-			if (_logger.isDebugEnabled()) {
-				StringBuilder sb = new StringBuilder();
-
-				sb.append("Basic credentials are used for ");
-				sb.append(_hostName);
-				sb.append(":");
-				sb.append(_hostPort);
-
-				_logger.debug(sb.toString());
-			}
-		}
-
-		if (isNull(_proxyLogin)) {
-			return credentialsProvider;
-		}
-
-		credentialsProvider.setCredentials(
-			new AuthScope(_proxyHostName, _proxyHostPort),
-			_getProxyCredentials());
-
-		if (_logger.isDebugEnabled()) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("Proxy credentials are used for ");
-			sb.append(_hostName);
-			sb.append(":");
-			sb.append(_hostPort);
-
-			_logger.debug(sb.toString());
-		}
-
-		return credentialsProvider;
-	}
-
-	private Credentials _getProxyCredentials() {
-		if ("ntlm".equalsIgnoreCase(_proxyAuthType)) {
-			return new NTCredentials(
-				_proxyLogin, _proxyPassword, _proxyWorkstation, _proxyDomain);
-		}
-
-		return new UsernamePasswordCredentials(_proxyLogin, _proxyPassword);
-	}
-
-	private RequestConfig _getProxyRequestConfig() {
-		if (isNull(_proxyLogin) || isNull(_proxyPassword)) {
-			return null;
-		}
-
-		RequestConfig.Builder builder = RequestConfig.custom();
-
-		builder.setProxy(
-			new HttpHost(_proxyHostName, _proxyHostPort, _protocol));
-
-		return builder.build();
-	}
-
-	private static final Charset _CHARSET = Charset.forName("UTF-8");
-
-	private static final Logger _logger = LoggerFactory.getLogger(
-		JSONWebServiceClientImpl.class);
-
-	private CloseableHttpAsyncClient _closeableHttpAsyncClient;
-	private String _contextPath;
-	private Map<String, String> _headers = Collections.emptyMap();
-	private String _hostName;
-	private int _hostPort = 80;
-	private IdleConnectionMonitorThread _idleConnectionMonitorThread;
-	private KeyStore _keyStore;
-	private String _login;
-	private String _oAuthAccessSecret;
-	private String _oAuthAccessToken;
-	private String _oAuthConsumerKey;
-	private String _oAuthConsumerSecret;
-	private String _password;
-	private String _protocol = "http";
-	private String _proxyAuthType;
-	private String _proxyDomain;
-	private String _proxyHostName;
-	private int _proxyHostPort;
-	private String _proxyLogin;
-	private String _proxyPassword;
-	private String _proxyWorkstation;
-
-	protected BaseJSONWebServiceClientImpl() {
-		objectMapper.configure(
-			DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
-		objectMapper.enableDefaultTypingAsProperty(
-			ObjectMapper.DefaultTyping.JAVA_LANG_OBJECT, "class");
 	}
 
 	protected String doDelete(String url, String... parametersArray)
@@ -986,19 +644,6 @@ public abstract class BaseJSONWebServiceClientImpl
 		return doPost(url, parameters, Collections.<String, String>emptyMap());
 	}
 
-	public String doPostAsJSON(String url, Object object)
-		throws JSONWebServiceInvocationException {
-
-		try {
-			String json = objectMapper.writeValueAsString(object);
-
-			return doPostAsJSON(url, json);
-		}
-		catch (IOException ioe) {
-			throw new JSONWebServiceInvocationException(ioe);
-		}
-	}
-
 	protected <T> T doPostToObject(
 			Class<T> clazz, String url, String... parametersArray)
 		throws JSONWebServiceInvocationException {
@@ -1029,12 +674,181 @@ public abstract class BaseJSONWebServiceClientImpl
 		return doPut(url, parameters, Collections.<String, String>emptyMap());
 	}
 
+	protected String execute(HttpRequestBase httpRequestBase)
+		throws
+		JSONWebServiceInvocationException, JSONWebServiceTransportException {
+
+		HttpHost httpHost = new HttpHost(_hostName, _hostPort, _protocol);
+
+		try {
+			if (_closeableHttpAsyncClient == null) {
+				afterPropertiesSet();
+			}
+
+			Future<HttpResponse> future = null;
+
+			if (!isNull(_login) && !isNull(_password)) {
+				HttpClientContext httpClientContext =
+					HttpClientContext.create();
+
+				AuthCache authCache = new BasicAuthCache();
+
+				AuthScheme authScheme = null;
+
+				if (!isNull(_proxyHostName)) {
+					authScheme = new BasicScheme(ChallengeState.PROXY);
+				}
+				else {
+					authScheme = new BasicScheme(ChallengeState.TARGET);
+				}
+
+				authCache.put(httpHost, authScheme);
+
+				httpClientContext.setAttribute(
+					ClientContext.AUTH_CACHE, authCache);
+
+				future = _closeableHttpAsyncClient.execute(
+					httpHost, httpRequestBase, httpClientContext, null);
+			}
+			else {
+				future = _closeableHttpAsyncClient.execute(
+					httpHost, httpRequestBase, null);
+			}
+
+			HttpResponse httpResponse = future.get();
+
+			StatusLine statusLine = httpResponse.getStatusLine();
+
+			int statusCode = statusLine.getStatusCode();
+
+			if (_logger.isTraceEnabled()) {
+				_logger.trace("Server returned status " + statusCode);
+			}
+
+			HttpEntity httpEntity = httpResponse.getEntity();
+
+			if ((statusCode == HttpServletResponse.SC_NO_CONTENT) ||
+				(((httpEntity == null) ||
+				  (httpEntity.getContentLength() == 0)) &&
+				 _isStatus2XX(statusCode))) {
+
+				return null;
+			}
+
+			String content = EntityUtils.toString(httpEntity, _CHARSET);
+
+			if ((httpEntity.getContentType() != null) &&
+				_isApplicationJSONContentType(httpEntity)) {
+
+				content = updateJSON(content);
+			}
+
+			if (_isStatus2XX(statusCode)) {
+				return content;
+			}
+			else if ((statusCode == HttpServletResponse.SC_BAD_REQUEST) ||
+					 (statusCode == HttpServletResponse.SC_FORBIDDEN) ||
+					 (statusCode ==
+						 HttpServletResponse.SC_METHOD_NOT_ALLOWED) ||
+					 (statusCode == HttpServletResponse.SC_NOT_ACCEPTABLE) ||
+					 (statusCode == HttpServletResponse.SC_NOT_FOUND)) {
+
+				throw new JSONWebServiceInvocationException(
+					content, statusCode);
+			}
+			else if (statusCode == HttpServletResponse.SC_UNAUTHORIZED) {
+				throw new JSONWebServiceTransportException.
+					AuthenticationFailure(
+					"Not authorized to access JSON web service");
+			}
+
+			throw new JSONWebServiceTransportException.CommunicationFailure(
+				"Server returned status " + statusCode, statusCode);
+		}
+		catch (IOException ioe) {
+			throw new JSONWebServiceTransportException.CommunicationFailure(
+				"Unable to transmit request", ioe);
+		}
+		catch (InterruptedException ie) {
+			throw new JSONWebServiceTransportException.CommunicationFailure(
+				"Unable to transmit request", ie);
+		}
+		catch (ExecutionException ee) {
+			throw new JSONWebServiceTransportException.CommunicationFailure(
+				"Unable to transmit request", ee);
+		}
+		finally {
+			httpRequestBase.releaseConnection();
+		}
+	}
+
 	protected String getExceptionMessage(String json) {
 		int exceptionMessageStart = json.indexOf("exception\":\"") + 12;
 
 		int exceptionMessageEnd = json.indexOf("\"", exceptionMessageStart);
 
 		return json.substring(exceptionMessageStart, exceptionMessageEnd);
+	}
+
+	protected PoolingNHttpClientConnectionManager
+	getPoolingNHttpClientConnectionManager() throws IOReactorException {
+
+		PoolingNHttpClientConnectionManager
+			poolingNHttpClientConnectionManager = null;
+
+		ConnectingIOReactor connectingIOReactor =
+			new DefaultConnectingIOReactor();
+
+		if (_keyStore != null) {
+			poolingNHttpClientConnectionManager =
+				new PoolingNHttpClientConnectionManager(
+					connectingIOReactor, null,
+					getSchemeIOSessionStrategyRegistry(), null, null, 60000,
+					TimeUnit.MILLISECONDS);
+		}
+		else {
+			poolingNHttpClientConnectionManager =
+				new PoolingNHttpClientConnectionManager(connectingIOReactor);
+		}
+
+		poolingNHttpClientConnectionManager.setMaxTotal(20);
+
+		return poolingNHttpClientConnectionManager;
+	}
+
+	protected Registry<SchemeIOSessionStrategy>
+	getSchemeIOSessionStrategyRegistry() {
+
+		RegistryBuilder<SchemeIOSessionStrategy> registryBuilder =
+			RegistryBuilder.<SchemeIOSessionStrategy>create();
+
+		registryBuilder.register("http", NoopIOSessionStrategy.INSTANCE);
+		registryBuilder.register("https", getSSLIOSessionStrategy());
+
+		return registryBuilder.build();
+	}
+
+	protected SSLIOSessionStrategy getSSLIOSessionStrategy() {
+		SSLContextBuilder sslContextBuilder = SSLContexts.custom();
+
+		SSLContext sslContext = null;
+
+		try {
+			sslContextBuilder.loadTrustMaterial(
+				_keyStore, new TrustSelfSignedStrategy());
+
+			sslContext = sslContextBuilder.build();
+
+			sslContext.init(
+				null, new TrustManager[] {new X509TrustManagerImpl()}, null);
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
+		return new SSLIOSessionStrategy(
+			sslContext, new String[] {"TLSv1"}, null,
+			SSLConnectionSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER);
 	}
 
 	protected int getStatus(String json) {
@@ -1045,6 +859,77 @@ public abstract class BaseJSONWebServiceClientImpl
 		}
 
 		return Integer.parseInt(statusMatcher.group(1));
+	}
+
+	protected boolean isNull(String s) {
+		if ((s == null) || s.equals("")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected void log(String message, Map<String, String> map) {
+		if (!_logger.isDebugEnabled() || map.isEmpty()) {
+			return;
+		}
+
+		StringBuilder sb = new StringBuilder((map.size() * 4) + 2);
+
+		sb.append(message);
+		sb.append(":");
+
+		for (Map.Entry<String, String> entry : map.entrySet()) {
+			String key = entry.getKey();
+			String value = entry.getValue();
+
+			if (value == null) {
+				key = "-" + key;
+				value = "";
+			}
+
+			sb.append("\n");
+			sb.append(key);
+			sb.append("=");
+			sb.append(value);
+		}
+
+		_logger.debug(sb.toString());
+	}
+
+	protected void setProxyHost(HttpClientBuilder httpClientBuilder) {
+		if ((_proxyHostName == null) || _proxyHostName.equals("")) {
+			return;
+		}
+
+		httpClientBuilder.setProxy(
+			new HttpHost(_proxyHostName, _proxyHostPort));
+		httpClientBuilder.setProxyAuthenticationStrategy(
+			new ProxyAuthenticationStrategy());
+	}
+
+	protected List<NameValuePair> toNameValuePairs(
+		Map<String, String> parameters) {
+
+		List<NameValuePair> nameValuePairs = new LinkedList<NameValuePair>();
+
+		for (Map.Entry<String, String> entry : parameters.entrySet()) {
+			String key = entry.getKey();
+
+			String value = entry.getValue();
+
+			if (value == null) {
+				key = "-" + key;
+
+				value = "";
+			}
+
+			NameValuePair nameValuePair = new BasicNameValuePair(key, value);
+
+			nameValuePairs.add(nameValuePair);
+		}
+
+		return nameValuePairs;
 	}
 
 	protected String updateJSON(String json)
@@ -1072,8 +957,127 @@ public abstract class BaseJSONWebServiceClientImpl
 
 	protected ObjectMapper objectMapper = new ObjectMapper();
 
+	private CredentialsProvider _getCredentialsProvider() {
+		if ((isNull(_login) || isNull(_password)) &&
+			(isNull(_proxyLogin) || isNull(_proxyPassword))) {
+
+			return null;
+		}
+
+		CredentialsProvider credentialsProvider =
+			new BasicCredentialsProvider();
+
+		if (!isNull(_login)) {
+			credentialsProvider.setCredentials(
+				new AuthScope(_hostName, _hostPort),
+				new UsernamePasswordCredentials(_login, _password));
+
+			if (_logger.isDebugEnabled()) {
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("Basic credentials are used for ");
+				sb.append(_hostName);
+				sb.append(":");
+				sb.append(_hostPort);
+
+				_logger.debug(sb.toString());
+			}
+		}
+
+		if (isNull(_proxyLogin)) {
+			return credentialsProvider;
+		}
+
+		credentialsProvider.setCredentials(
+			new AuthScope(_proxyHostName, _proxyHostPort),
+			_getProxyCredentials());
+
+		if (_logger.isDebugEnabled()) {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("Proxy credentials are used for ");
+			sb.append(_hostName);
+			sb.append(":");
+			sb.append(_hostPort);
+
+			_logger.debug(sb.toString());
+		}
+
+		return credentialsProvider;
+	}
+
+	private Credentials _getProxyCredentials() {
+		if ("ntlm".equalsIgnoreCase(_proxyAuthType)) {
+			return new NTCredentials(
+				_proxyLogin, _proxyPassword, _proxyWorkstation, _proxyDomain);
+		}
+
+		return new UsernamePasswordCredentials(_proxyLogin, _proxyPassword);
+	}
+
+	private RequestConfig _getProxyRequestConfig() {
+		if (isNull(_proxyLogin) || isNull(_proxyPassword)) {
+			return null;
+		}
+
+		RequestConfig.Builder builder = RequestConfig.custom();
+
+		builder.setProxy(
+			new HttpHost(_proxyHostName, _proxyHostPort, _protocol));
+
+		return builder.build();
+	}
+
+	private boolean _isApplicationJSONContentType(HttpEntity httpEntity) {
+		Header contentTypeHeader = httpEntity.getContentType();
+
+		String contentTypeHeaderValue = contentTypeHeader.getValue();
+
+		if (contentTypeHeaderValue.contains("application/json")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isStatus2XX(int statusCode) {
+		if ((statusCode == 200) || (statusCode == 201) || (statusCode == 202) ||
+			(statusCode == 203) || (statusCode == 204)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private static final Charset _CHARSET = Charset.forName("UTF-8");
+
+	private static final Logger _logger = LoggerFactory.getLogger(
+		JSONWebServiceClientImpl.class);
+
+	private CloseableHttpAsyncClient _closeableHttpAsyncClient;
+	private String _contextPath;
 	private final Pattern _errorMessagePattern = Pattern.compile(
 		"errorCode\":\\s*(\\d+).+message\":.+status\":\\s*(\\d+)");
+	private Map<String, String> _headers = Collections.emptyMap();
+	private String _hostName;
+	private int _hostPort = 80;
+	private IdleConnectionMonitorThread _idleConnectionMonitorThread;
+	private KeyStore _keyStore;
+	private String _login;
+	private String _oAuthAccessSecret;
+	private String _oAuthAccessToken;
+	private String _oAuthConsumerKey;
+	private String _oAuthConsumerSecret;
+	private String _password;
+	private String _protocol = "http";
+	private String _proxyAuthType;
+	private String _proxyDomain;
+	private String _proxyHostName;
+	private int _proxyHostPort;
+	private String _proxyLogin;
+	private String _proxyPassword;
+	private String _proxyWorkstation;
 	private final Pattern _statusPattern = Pattern.compile("status\":(\\d+)");
 
 }

@@ -69,6 +69,10 @@ public class JSONWebServiceClientImpl extends BaseJSONWebServiceClientImpl {
 		afterPropertiesSet();
 	}
 
+	public void afterPropertiesSet() throws IOReactorException {
+		super.afterPropertiesSet();
+	}
+
 	private void _setHeaders(String headersString) {
 		if (headersString == null) {
 			return;
@@ -97,10 +101,6 @@ public class JSONWebServiceClientImpl extends BaseJSONWebServiceClientImpl {
 		}
 
 		setHeaders(headers);
-	}
-
-	public void afterPropertiesSet() throws IOReactorException {
-		super.afterPropertiesSet();
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(

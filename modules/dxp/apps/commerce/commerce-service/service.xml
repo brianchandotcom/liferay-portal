@@ -270,44 +270,6 @@
 			<finder-column name="active" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="CommerceInventory" remote-service="true" uuid="true">
-
-		<!-- PK fields -->
-
-		<column name="commerceInventoryId" primary="true" type="long" />
-
-		<!-- Group instance -->
-
-		<column name="groupId" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
-
-		<!-- Other fields -->
-
-		<column name="CPDefinitionId" type="long" />
-		<column name="commerceInventoryEngine" type="String" />
-		<column name="lowStockActivity" type="String" />
-		<column name="displayAvailability" type="boolean" />
-		<column name="displayStockQuantity" type="boolean" />
-		<column name="minStockQuantity" type="int" />
-		<column name="backOrders" type="boolean" />
-		<column name="minCartQuantity" type="int" />
-		<column name="maxCartQuantity" type="int" />
-		<column name="allowedCartQuantities" type="String" />
-		<column name="multipleCartQuantity" type="int" />
-
-		<!-- Finder methods -->
-
-		<finder name="CPDefinitionId" return-type="CommerceInventory" unique="true">
-			<finder-column name="CPDefinitionId" />
-		</finder>
-	</entity>
 	<entity local-service="true" name="CommerceOrder" remote-service="true">
 
 		<!-- PK fields -->
@@ -814,6 +776,44 @@
 			<finder-column name="groupId" />
 		</finder>
 		<finder name="CPDefinitionId" return-type="CPDefinitionAvailabilityRange" unique="true">
+			<finder-column name="CPDefinitionId" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="CPDefinitionInventory" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="CPDefinitionInventoryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="CPDefinitionId" type="long" />
+		<column name="CPDefinitionInventoryEngine" type="String" />
+		<column name="lowStockActivity" type="String" />
+		<column name="displayAvailability" type="boolean" />
+		<column name="displayStockQuantity" type="boolean" />
+		<column name="minStockQuantity" type="int" />
+		<column name="backOrders" type="boolean" />
+		<column name="minCartQuantity" type="int" />
+		<column name="maxCartQuantity" type="int" />
+		<column name="allowedCartQuantities" type="String" />
+		<column name="multipleCartQuantity" type="int" />
+
+		<!-- Finder methods -->
+
+		<finder name="CPDefinitionId" return-type="CPDefinitionInventory" unique="true">
 			<finder-column name="CPDefinitionId" />
 		</finder>
 	</entity>

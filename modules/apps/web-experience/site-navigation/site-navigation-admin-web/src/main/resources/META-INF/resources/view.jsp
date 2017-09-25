@@ -167,3 +167,14 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
+
+<c:if test="<%= siteNavigationAdminDisplayContext.isShowAddButton() %>">
+	<portlet:renderURL var="addMenuURL">
+		<portlet:param name="mvcPath" value="/edit_menu.jsp" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+	</portlet:renderURL>
+
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-menu") %>' url="<%= addMenuURL %>" />
+	</liferay-frontend:add-menu>
+</c:if>

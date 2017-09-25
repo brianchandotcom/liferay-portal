@@ -17,6 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
+String backURL = ParamUtil.getString(request, "backURL", redirect);
+
 Group selGroup = (Group)request.getAttribute(WebKeys.GROUP);
 
 long liveGroupId = layoutsAdminDisplayContext.getLiveGroupId();
@@ -28,10 +32,6 @@ PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 if (selGroup.isLayoutSetPrototype()) {
 	privateLayout = true;
 }
-
-String redirect = ParamUtil.getString(request, "redirect");
-
-String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 renderResponse.setTitle(selGroup.getLayoutRootNodeName(privateLayout, locale));
 %>

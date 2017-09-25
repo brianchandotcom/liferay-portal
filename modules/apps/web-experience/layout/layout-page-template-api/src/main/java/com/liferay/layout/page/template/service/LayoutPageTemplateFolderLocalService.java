@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -71,6 +72,10 @@ public interface LayoutPageTemplateFolderLocalService extends BaseLocalService,
 	public LayoutPageTemplateFolder addLayoutPageTemplateFolder(
 		LayoutPageTemplateFolder layoutPageTemplateFolder);
 
+	public LayoutPageTemplateFolder addLayoutPageTemplateFolder(long groupId,
+		long userId, java.lang.String name, java.lang.String description,
+		ServiceContext serviceContext) throws PortalException;
+
 	/**
 	* Creates a new layout page template folder with the primary key. Does not add the layout page template folder to the database.
 	*
@@ -85,10 +90,12 @@ public interface LayoutPageTemplateFolderLocalService extends BaseLocalService,
 	*
 	* @param layoutPageTemplateFolder the layout page template folder
 	* @return the layout page template folder that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public LayoutPageTemplateFolder deleteLayoutPageTemplateFolder(
-		LayoutPageTemplateFolder layoutPageTemplateFolder);
+		LayoutPageTemplateFolder layoutPageTemplateFolder)
+		throws PortalException;
 
 	/**
 	* Deletes the layout page template folder with the primary key from the database. Also notifies the appropriate model listeners.
@@ -203,6 +210,21 @@ public interface LayoutPageTemplateFolderLocalService extends BaseLocalService,
 	public List<LayoutPageTemplateFolder> getLayoutPageTemplateFolders(
 		int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutPageTemplateFolder> getLayoutPageTemplateFolders(
+		long groupId, int start, int end) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutPageTemplateFolder> getLayoutPageTemplateFolders(
+		long groupId, int start, int end,
+		OrderByComparator<LayoutPageTemplateFolder> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutPageTemplateFolder> getLayoutPageTemplateFolders(
+		long groupId, java.lang.String name, int start, int end,
+		OrderByComparator<LayoutPageTemplateFolder> orderByComparator);
+
 	/**
 	* Returns the number of layout page template folders.
 	*
@@ -232,4 +254,8 @@ public interface LayoutPageTemplateFolderLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public LayoutPageTemplateFolder updateLayoutPageTemplateFolder(
 		LayoutPageTemplateFolder layoutPageTemplateFolder);
+
+	public LayoutPageTemplateFolder updateLayoutPageTemplateFolder(
+		long layoutPageTemplateFolderId, java.lang.String name,
+		java.lang.String description) throws PortalException;
 }

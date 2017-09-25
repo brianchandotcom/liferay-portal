@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -71,6 +72,10 @@ public interface LayoutPageTemplateLocalService extends BaseLocalService,
 	public LayoutPageTemplate addLayoutPageTemplate(
 		LayoutPageTemplate layoutPageTemplate);
 
+	public LayoutPageTemplate addLayoutPageTemplate(long groupId, long userId,
+		long layoutPageTemplateFolderId, java.lang.String name,
+		ServiceContext serviceContext) throws PortalException;
+
 	/**
 	* Creates a new layout page template with the primary key. Does not add the layout page template to the database.
 	*
@@ -85,10 +90,11 @@ public interface LayoutPageTemplateLocalService extends BaseLocalService,
 	*
 	* @param layoutPageTemplate the layout page template
 	* @return the layout page template that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public LayoutPageTemplate deleteLayoutPageTemplate(
-		LayoutPageTemplate layoutPageTemplate);
+		LayoutPageTemplate layoutPageTemplate) throws PortalException;
 
 	/**
 	* Deletes the layout page template with the primary key from the database. Also notifies the appropriate model listeners.
@@ -171,6 +177,10 @@ public interface LayoutPageTemplateLocalService extends BaseLocalService,
 	public LayoutPageTemplate fetchLayoutPageTemplate(long layoutPageTemplateId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutPageTemplate> fetchLayoutPageTemplates(
+		long layoutPageTemplateFolderId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -201,6 +211,22 @@ public interface LayoutPageTemplateLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutPageTemplate> getLayoutPageTemplates(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutPageTemplate> getLayoutPageTemplates(
+		long layoutPageTemplateFolderId, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutPageTemplate> getLayoutPageTemplates(long groupId,
+		long layoutPageTemplateFolderId, int start, int end,
+		OrderByComparator<LayoutPageTemplate> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutPageTemplate> getLayoutPageTemplates(long groupId,
+		long layoutPageTemplateFolderId, java.lang.String name, int start,
+		int end, OrderByComparator<LayoutPageTemplate> orderByComparator);
+
 	/**
 	* Returns the number of layout page templates.
 	*
@@ -230,4 +256,8 @@ public interface LayoutPageTemplateLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public LayoutPageTemplate updateLayoutPageTemplate(
 		LayoutPageTemplate layoutPageTemplate);
+
+	public LayoutPageTemplate updateLayoutPageTemplate(
+		long layoutPageTemplateId, java.lang.String name)
+		throws PortalException;
 }

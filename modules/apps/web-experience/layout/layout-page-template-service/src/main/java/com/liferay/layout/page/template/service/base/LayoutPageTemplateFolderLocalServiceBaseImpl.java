@@ -119,11 +119,13 @@ public abstract class LayoutPageTemplateFolderLocalServiceBaseImpl
 	 *
 	 * @param layoutPageTemplateFolder the layout page template folder
 	 * @return the layout page template folder that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public LayoutPageTemplateFolder deleteLayoutPageTemplateFolder(
-		LayoutPageTemplateFolder layoutPageTemplateFolder) {
+		LayoutPageTemplateFolder layoutPageTemplateFolder)
+		throws PortalException {
 		return layoutPageTemplateFolderPersistence.remove(layoutPageTemplateFolder);
 	}
 

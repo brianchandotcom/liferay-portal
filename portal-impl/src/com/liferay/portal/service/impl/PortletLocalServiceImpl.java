@@ -16,6 +16,7 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.admin.kernel.util.PortalMyAccountApplicationType;
 import com.liferay.expando.kernel.model.CustomAttributesDisplay;
+import com.liferay.petra.content.ContentUtil;
 import com.liferay.portal.kernel.application.type.ApplicationType;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -99,7 +100,6 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
-import com.liferay.util.ContentUtil;
 
 import java.net.URL;
 

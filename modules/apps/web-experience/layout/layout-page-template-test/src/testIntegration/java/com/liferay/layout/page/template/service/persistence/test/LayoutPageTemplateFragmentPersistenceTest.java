@@ -171,19 +171,19 @@ public class LayoutPageTemplateFragmentPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_LPTI() throws Exception {
-		_persistence.countByG_LPTI(RandomTestUtil.nextLong(),
+	public void testCountByG_L() throws Exception {
+		_persistence.countByG_L(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong());
 
-		_persistence.countByG_LPTI(0L, 0L);
+		_persistence.countByG_L(0L, 0L);
 	}
 
 	@Test
-	public void testCountByG_FEI() throws Exception {
-		_persistence.countByG_FEI(RandomTestUtil.nextLong(),
+	public void testCountByG_F() throws Exception {
+		_persistence.countByG_F(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong());
 
-		_persistence.countByG_FEI(0L, 0L);
+		_persistence.countByG_F(0L, 0L);
 	}
 
 	@Test

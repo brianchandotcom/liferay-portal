@@ -100,7 +100,7 @@ public class LayoutPageTemplateFragmentServiceImpl
 		getLayoutPageTemplateFragmentsByPageTemplate(
 			long groupId, long layoutPageTemplateId) {
 
-		return layoutPageTemplateFragmentPersistence.findByG_LPTI(
+		return layoutPageTemplateFragmentPersistence.findByG_L(
 			groupId, layoutPageTemplateId);
 	}
 

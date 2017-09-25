@@ -96,6 +96,44 @@ public class Utilities {
 		return byteArrayOutputStream.toString("UTF-8");
 	}
 
+	public static List<String> split(String s) {
+		if (s == null) {
+			return Collections.emptyList();
+		}
+
+		List<String> values = new ArrayList<>();
+
+		int offset = 0;
+
+		while (true) {
+			int pos = s.indexOf(',', offset);
+
+			if (pos == -1) {
+				String value = s.substring(offset);
+
+				value = value.trim();
+
+				if (!value.isEmpty()) {
+					values.add(value);
+				}
+
+				break;
+			}
+
+			String value = s.substring(offset, pos);
+
+			value = value.trim();
+
+			if (!value.isEmpty()) {
+				values.add(value);
+			}
+
+			offset = pos + 1;
+		}
+
+		return values;
+	}
+
 	public static String toChecksum(URI uri) throws Exception {
 		String content = readURL(uri.toURL());
 

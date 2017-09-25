@@ -40,7 +40,7 @@
 		<finder name="LayoutPageTemplateFolderId" return-type="Collection">
 			<finder-column name="layoutPageTemplateFolderId" />
 		</finder>
-		<finder name="G_LPTFI" return-type="Collection">
+		<finder name="G_L" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="layoutPageTemplateFolderId" />
 		</finder>
@@ -48,7 +48,7 @@
 			<finder-column name="groupId" />
 			<finder-column name="name" />
 		</finder>
-		<finder name="G_LPTFI_LikeN" return-type="Collection">
+		<finder name="G_L_LikeN" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="layoutPageTemplateFolderId" />
 			<finder-column case-sensitive="false" comparator="LIKE" name="name" />
@@ -134,11 +134,11 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
-		<finder name="G_LPTI" return-type="Collection">
+		<finder name="G_L" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="layoutPageTemplateId" />
 		</finder>
-		<finder name="G_FEI" return-type="Collection">
+		<finder name="G_F" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="fragmentEntryId" />
 		</finder>

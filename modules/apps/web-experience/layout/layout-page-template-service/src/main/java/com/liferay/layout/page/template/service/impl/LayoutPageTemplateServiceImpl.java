@@ -123,7 +123,7 @@ public class LayoutPageTemplateServiceImpl
 	public int getLayoutPageTemplateFoldersCount(
 		long groupId, long layoutPageTemplateFolderId) {
 
-		return layoutPageTemplatePersistence.filterCountByG_LPTFI(
+		return layoutPageTemplatePersistence.filterCountByG_L(
 			groupId, layoutPageTemplateFolderId);
 	}
 
@@ -131,7 +131,7 @@ public class LayoutPageTemplateServiceImpl
 	public int getLayoutPageTemplateFoldersCount(
 		long groupId, long layoutPageTemplateFolderId, String name) {
 
-		return layoutPageTemplatePersistence.filterCountByG_LPTFI_LikeN(
+		return layoutPageTemplatePersistence.filterCountByG_L_LikeN(
 			groupId, layoutPageTemplateFolderId, name);
 	}
 
@@ -140,7 +140,7 @@ public class LayoutPageTemplateServiceImpl
 			long groupId, long layoutPageTemplateFolderId, int start, int end)
 		throws PortalException {
 
-		return layoutPageTemplatePersistence.filterFindByG_LPTFI(
+		return layoutPageTemplatePersistence.filterFindByG_L(
 			groupId, layoutPageTemplateFolderId, start, end);
 	}
 
@@ -150,7 +150,7 @@ public class LayoutPageTemplateServiceImpl
 			OrderByComparator<LayoutPageTemplate> orderByComparator)
 		throws PortalException {
 
-		return layoutPageTemplatePersistence.filterFindByG_LPTFI(
+		return layoutPageTemplatePersistence.filterFindByG_L(
 			groupId, layoutPageTemplateFolderId, start, end, orderByComparator);
 	}
 
@@ -159,7 +159,7 @@ public class LayoutPageTemplateServiceImpl
 		long groupId, long layoutPageTemplateFolderId, String name, int start,
 		int end, OrderByComparator<LayoutPageTemplate> orderByComparator) {
 
-		return layoutPageTemplatePersistence.filterFindByG_LPTFI_LikeN(
+		return layoutPageTemplatePersistence.filterFindByG_L_LikeN(
 			groupId, layoutPageTemplateFolderId, name, start, end,
 			orderByComparator);
 	}

@@ -18,7 +18,7 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplate;
-import com.liferay.layout.page.template.service.LayoutPageTemplateFragmentService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateFragmentLocalService;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateLocalServiceBaseImpl;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -84,9 +84,9 @@ public class LayoutPageTemplateLocalServiceImpl
 				FragmentEntry fragmentEntry = layoutPageTemplateFragments.get(
 					key);
 
-				_layoutPageTemplateFragmentService.
+				_layoutPageTemplateFragmentLocalService.
 					addLayoutPageTemplateFragment(
-						groupId, layoutPageTemplateId,
+						userId, groupId, layoutPageTemplateId,
 						fragmentEntry.getFragmentEntryId(), key,
 						serviceContext);
 			}
@@ -179,7 +179,7 @@ public class LayoutPageTemplateLocalServiceImpl
 
 	@Override
 	public LayoutPageTemplate updateLayoutPageTemplate(
-			long layoutPageTemplateId, String name,
+			long userId, long layoutPageTemplateId, String name,
 			Map<Integer, FragmentEntry> layoutPageTemplateFragments,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -199,7 +199,7 @@ public class LayoutPageTemplateLocalServiceImpl
 
 		// Layout Page Template Fragments
 
-		_layoutPageTemplateFragmentService.deleteByLayoutPageTemplate(
+		_layoutPageTemplateFragmentLocalService.deleteByLayoutPageTemplate(
 			layoutPageTemplate.getGroupId(), layoutPageTemplateId);
 
 		if (layoutPageTemplateFragments != null) {
@@ -207,9 +207,10 @@ public class LayoutPageTemplateLocalServiceImpl
 				FragmentEntry fragmentEntry = layoutPageTemplateFragments.get(
 					key);
 
-				_layoutPageTemplateFragmentService.
+				_layoutPageTemplateFragmentLocalService.
 					addLayoutPageTemplateFragment(
-						layoutPageTemplate.getGroupId(), layoutPageTemplateId,
+						userId, layoutPageTemplate.getGroupId(),
+						layoutPageTemplateId,
 						fragmentEntry.getFragmentEntryId(), key,
 						serviceContext);
 			}
@@ -232,8 +233,8 @@ public class LayoutPageTemplateLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = LayoutPageTemplateFragmentService.class)
-	private LayoutPageTemplateFragmentService
-		_layoutPageTemplateFragmentService;
+	@BeanReference(type = LayoutPageTemplateFragmentLocalService.class)
+	private LayoutPageTemplateFragmentLocalService
+		_layoutPageTemplateFragmentLocalService;
 
 }

@@ -178,3 +178,14 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-menu") %>' url="<%= addMenuURL %>" />
 	</liferay-frontend:add-menu>
 </c:if>
+
+<aui:script sandbox="<%= true %>">
+	$('#<portlet:namespace />deleteSelectedMenus').on(
+		'click',
+		function() {
+			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+				submitForm($(document.<portlet:namespace />fm));
+			}
+		}
+	);
+</aui:script>

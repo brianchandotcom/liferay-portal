@@ -108,7 +108,7 @@ public class GitWorkingDirectory {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
 					"Unable to add remote ", remoteName, "\n",
-					executionResult.getStandardErr()));
+					executionResult.getStandardError()));
 		}
 
 		return getRemote(false, remoteName);
@@ -165,7 +165,7 @@ public class GitWorkingDirectory {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
 					"Unable to checkout ", branchName, "\n",
-					executionResult.getStandardErr()));
+					executionResult.getStandardError()));
 		}
 
 		int timeout = 0;
@@ -228,7 +228,7 @@ public class GitWorkingDirectory {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
 					"Unable to clean repository\n",
-					executionResult.getStandardErr()));
+					executionResult.getStandardError()));
 		}
 	}
 
@@ -242,7 +242,7 @@ public class GitWorkingDirectory {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
 					"Unable to commit file ", fileName, "\n",
-					executionResult.getStandardErr()));
+					executionResult.getStandardError()));
 		}
 	}
 
@@ -256,7 +256,7 @@ public class GitWorkingDirectory {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
 					"Unable to commit staged files", "\n",
-					executionResult.getStandardErr()));
+					executionResult.getStandardError()));
 		}
 	}
 
@@ -288,7 +288,7 @@ public class GitWorkingDirectory {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
 					"Unable to create local branch ", branchName, " at ",
-					startPoint, "\n", executionResult.getStandardErr()));
+					startPoint, "\n", executionResult.getStandardError()));
 		}
 
 		return getBranch(branchName, null);
@@ -339,7 +339,7 @@ public class GitWorkingDirectory {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
 					"Unable to delete local branch ", branch.getName(), "\n",
-					executionResult.getStandardErr()));
+					executionResult.getStandardError()));
 		}
 	}
 
@@ -383,7 +383,7 @@ public class GitWorkingDirectory {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
 					"Unable to fetch remote branch ", remoteBranch.getName(),
-					"\n", executionResult.getStandardErr()));
+					"\n", executionResult.getStandardError()));
 		}
 
 		System.out.println(
@@ -458,7 +458,7 @@ public class GitWorkingDirectory {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
 					"Unable to get branches with sha ", sha, "\n",
-					executionResult.getStandardErr()));
+					executionResult.getStandardError()));
 		}
 
 		String standardOut = executionResult.getStandardOut();
@@ -496,7 +496,7 @@ public class GitWorkingDirectory {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
 					"Unable to determine SHA of branch ", localBranchName, "\n",
-					executionResult.getStandardErr()));
+					executionResult.getStandardError()));
 		}
 
 		return executionResult.getStandardOut();
@@ -517,7 +517,7 @@ public class GitWorkingDirectory {
 				JenkinsResultsParserUtil.combine(
 					"Unable to read git config property ",
 					gitConfigPropertyName, "\n",
-					executionResult.getStandardErr()));
+					executionResult.getStandardError()));
 		}
 
 		String configProperty = executionResult.getStandardOut();
@@ -582,7 +582,7 @@ public class GitWorkingDirectory {
 				throw new RuntimeException(
 					JenkinsResultsParserUtil.combine(
 						"Unable to get list of remotes\n",
-						executionResult.getStandardErr()));
+						executionResult.getStandardError()));
 			}
 
 			standardOut = executionResult.getStandardOut();
@@ -728,7 +728,7 @@ public class GitWorkingDirectory {
 				JenkinsResultsParserUtil.combine(
 					"Unable to rebase ", targetBranch.getName(), " to ",
 					sourceBranch.getName(), "\n",
-					executionResult.getStandardErr()));
+					executionResult.getStandardError()));
 		}
 	}
 
@@ -744,7 +744,7 @@ public class GitWorkingDirectory {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
 					"Unable to abort rebase\n",
-					executionResult.getStandardErr()));
+					executionResult.getStandardError()));
 		}
 	}
 
@@ -768,7 +768,7 @@ public class GitWorkingDirectory {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
 					"Unable to remove remote ", remote.getName(), "\n",
-					executionResult.getStandardErr()));
+					executionResult.getStandardError()));
 		}
 	}
 
@@ -786,7 +786,7 @@ public class GitWorkingDirectory {
 		if (executionResult.getExitValue() != 0) {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
-					"Unable to reset\n", executionResult.getStandardErr()));
+					"Unable to reset\n", executionResult.getStandardError()));
 		}
 	}
 
@@ -996,7 +996,7 @@ public class GitWorkingDirectory {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
 					"Unable to get local branch names\n",
-					executionResult.getStandardErr()));
+					executionResult.getStandardError()));
 		}
 
 		String standardOut = executionResult.getStandardOut();
@@ -1071,7 +1071,7 @@ public class GitWorkingDirectory {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
 					"Unable to get remote branches from ", remote.getName(),
-					"\n", executionResult.getStandardErr()));
+					"\n", executionResult.getStandardError()));
 		}
 
 		String input = executionResult.getStandardOut();
@@ -1103,7 +1103,7 @@ public class GitWorkingDirectory {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
 					"Unable to get remote branches from ", remote.getName(),
-					"\n", executionResult.getStandardErr()));
+					"\n", executionResult.getStandardError()));
 		}
 
 		String input = executionResult.getStandardOut();
@@ -1219,8 +1219,8 @@ public class GitWorkingDirectory {
 			return _exitValue;
 		}
 
-		public String getStandardErr() {
-			return _standardErr;
+		public String getStandardError() {
+			return _standardError;
 		}
 
 		public String getStandardOut() {
@@ -1228,10 +1228,10 @@ public class GitWorkingDirectory {
 		}
 
 		protected ExecutionResult(
-			int exitValue, String standardErr, String standardOut) {
+			int exitValue, String standardError, String standardOut) {
 
 			_exitValue = exitValue;
-			_standardErr = standardErr;
+			_standardError = standardError;
 
 			if (standardOut.endsWith("\nFinished executing Bash commands.")) {
 				_standardOut = standardOut.substring(
@@ -1244,7 +1244,7 @@ public class GitWorkingDirectory {
 		}
 
 		private final int _exitValue;
-		private final String _standardErr;
+		private final String _standardError;
 		private final String _standardOut;
 
 	};

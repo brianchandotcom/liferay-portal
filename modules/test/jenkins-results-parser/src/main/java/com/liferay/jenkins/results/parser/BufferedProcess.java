@@ -27,19 +27,21 @@ public class BufferedProcess extends Process {
 	public BufferedProcess(int bufferSize, Process process) {
 		_process = process;
 
-		_errorStreamBuffer = new StreamBuffer(
+		_standardErrorInputStreamBuffer = new InputStreamBuffer(
 			bufferSize, _process.getErrorStream());
 
-		_errorStream = new ByteArrayInputStream(_errorStreamBuffer._buffer);
+		_standardErrorInputStream = new ByteArrayInputStream(
+			_standardErrorInputStreamBuffer._buffer);
 
-		_errorStreamBuffer.start();
+		_standardErrorInputStreamBuffer.start();
 
-		_inputStreamBuffer = new StreamBuffer(
+		_standardOutInputStreamBuffer = new InputStreamBuffer(
 			bufferSize, _process.getInputStream());
 
-		_inputStream = new ByteArrayInputStream(_inputStreamBuffer._buffer);
+		_standardOutInputStream = new ByteArrayInputStream(
+			_standardOutInputStreamBuffer._buffer);
 
-		_inputStreamBuffer.start();
+		_standardOutInputStreamBuffer.start();
 	}
 
 	@Override
@@ -54,12 +56,12 @@ public class BufferedProcess extends Process {
 
 	@Override
 	public InputStream getErrorStream() {
-		return _errorStream;
+		return _standardErrorInputStream;
 	}
 
 	@Override
 	public InputStream getInputStream() {
-		return _inputStream;
+		return _standardOutInputStream;
 	}
 
 	@Override
@@ -72,15 +74,15 @@ public class BufferedProcess extends Process {
 		return _process.waitFor();
 	}
 
-	private final InputStream _errorStream;
-	private final StreamBuffer _errorStreamBuffer;
-	private final InputStream _inputStream;
-	private final StreamBuffer _inputStreamBuffer;
 	private final Process _process;
+	private final InputStream _standardErrorInputStream;
+	private final InputStreamBuffer _standardErrorInputStreamBuffer;
+	private final InputStream _standardOutInputStream;
+	private final InputStreamBuffer _standardOutInputStreamBuffer;
 
-	private class StreamBuffer extends Thread {
+	private class InputStreamBuffer extends Thread {
 
-		public StreamBuffer(int bufferSize, InputStream inputStream) {
+		public InputStreamBuffer(int bufferSize, InputStream inputStream) {
 			_buffer = new byte[bufferSize];
 			_inputStream = inputStream;
 		}

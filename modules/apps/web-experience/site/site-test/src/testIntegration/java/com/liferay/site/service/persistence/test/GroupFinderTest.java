@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
@@ -90,8 +89,7 @@ public class GroupFinderTest {
 		_resourcePermission = ResourcePermissionTestUtil.addResourcePermission(
 			_arbitraryResourceAction.getBitwiseValue(),
 			_arbitraryResourceAction.getName(),
-			StringUtil.valueOf(_group.getGroupId()),
-			ResourceConstants.SCOPE_GROUP);
+			String.valueOf(_group.getGroupId()), ResourceConstants.SCOPE_GROUP);
 
 		_modelResourceAction = getModelResourceAction();
 
@@ -102,8 +100,7 @@ public class GroupFinderTest {
 
 		ResourcePermissionTestUtil.addResourcePermission(
 			_modelResourceAction.getBitwiseValue(),
-			_modelResourceAction.getName(),
-			StringUtil.valueOf(_group.getGroupId()),
+			_modelResourceAction.getName(), String.valueOf(_group.getGroupId()),
 			_resourceTypePermission.getRoleId(), ResourceConstants.SCOPE_GROUP);
 	}
 

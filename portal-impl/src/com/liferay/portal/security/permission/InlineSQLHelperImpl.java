@@ -287,7 +287,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			new String[] {
 				String.valueOf(permissionChecker.getCompanyId()),
 				String.valueOf(checkGroupId), className,
-				StringUtil.valueOf(permissionChecker.getOwnerRoleId())
+				String.valueOf(permissionChecker.getOwnerRoleId())
 			});
 	}
 

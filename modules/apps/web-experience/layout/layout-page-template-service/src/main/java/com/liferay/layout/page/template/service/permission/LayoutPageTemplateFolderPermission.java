@@ -41,13 +41,14 @@ public class LayoutPageTemplateFolderPermission
 
 	public static void check(
 			PermissionChecker permissionChecker,
-			LayoutPageTemplateFolder pageTemplateFolder, String actionId)
+			LayoutPageTemplateFolder layoutPageTemplateFolder, String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, pageTemplateFolder, actionId)) {
+		if (!contains(permissionChecker, layoutPageTemplateFolder, actionId)) {
 			throw new PrincipalException.MustHavePermission(
 				permissionChecker, LayoutPageTemplateFolder.class.getName(),
-				pageTemplateFolder.getLayoutPageTemplateFolderId(), actionId);
+				layoutPageTemplateFolder.getLayoutPageTemplateFolderId(),
+				actionId);
 		}
 	}
 

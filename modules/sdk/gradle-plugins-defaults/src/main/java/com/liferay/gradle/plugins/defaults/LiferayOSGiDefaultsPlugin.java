@@ -36,6 +36,7 @@ import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.IncrementVersionClosure;
 import com.liferay.gradle.plugins.defaults.internal.util.XMLUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.copy.RenameDependencyAction;
+import com.liferay.gradle.plugins.defaults.internal.util.copy.ReplaceContentFilterReader;
 import com.liferay.gradle.plugins.defaults.tasks.CheckOSGiBundleStateTask;
 import com.liferay.gradle.plugins.defaults.tasks.InstallCacheTask;
 import com.liferay.gradle.plugins.defaults.tasks.ReplaceRegexTask;
@@ -97,6 +98,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -254,6 +256,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	public static final String JAR_JSP_TASK_NAME = "jarJSP";
 
+	public static final String JAR_SOURCES_COMMERCIAL_TASK_NAME =
+		"jarSourcesCommercial";
+
 	public static final String JAR_SOURCES_TASK_NAME = "jarSources";
 
 	public static final String JAR_TLDDOC_TASK_NAME = "jarTLDDoc";
@@ -287,6 +292,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			project, LiferayExtension.class);
 
 		final GitRepo gitRepo = _getGitRepo(project.getProjectDir());
+		boolean privateProject = _isPrivateProject(project);
 		final boolean testProject = GradleUtil.isTestProject(project);
 
 		File versionOverrideFile = _getVersionOverrideFile(project, gitRepo);
@@ -396,6 +402,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		final Jar jarJSPsTask = _addTaskJarJSP(project);
 		final Jar jarJavadocTask = _addTaskJarJavadoc(project);
 		final Jar jarSourcesTask = _addTaskJarSources(project, testProject);
+		final Jar jarSourcesCommercialTask = _addTaskJarSourcesCommercial(
+			project, privateProject, testProject);
 		final Jar jarTLDDocTask = _addTaskJarTLDDoc(project);
 
 		final ReplaceRegexTask updateFileVersionsTask =
@@ -487,8 +495,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 					_configureArtifacts(
 						project, jarJSPsTask, jarJavadocTask, jarSourcesTask,
-						jarTLDDocTask);
+						jarSourcesCommercialTask, jarTLDDocTask);
 					_configureTaskJarSources(jarSourcesTask);
+					_configureTaskJarSources(jarSourcesCommercialTask);
 					_configureTaskUpdateFileVersions(
 						updateFileVersionsTask, portalRootDir);
 
@@ -1029,13 +1038,23 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private Jar _addTaskJarSources(Project project, boolean testProject) {
-		Jar jar = GradleUtil.addTask(project, JAR_SOURCES_TASK_NAME, Jar.class);
+		Jar jar = _addTaskJarSources(
+			project, JAR_SOURCES_TASK_NAME, testProject);
 
 		jar.setClassifier("sources");
-		jar.setGroup(BasePlugin.BUILD_GROUP);
 		jar.setDescription(
 			"Assembles a jar archive containing the main source files.");
+
+		return jar;
+	}
+
+	private Jar _addTaskJarSources(
+		Project project, String taskName, boolean testProject) {
+
+		Jar jar = GradleUtil.addTask(project, taskName, Jar.class);
+
 		jar.setDuplicatesStrategy(DuplicatesStrategy.EXCLUDE);
+		jar.setGroup(BasePlugin.BUILD_GROUP);
 
 		File docrootDir = project.file("docroot");
 
@@ -1061,6 +1080,61 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				jar.from(sourceSet.getAllSource());
 			}
 		}
+
+		return jar;
+	}
+
+	private Jar _addTaskJarSourcesCommercial(
+		Project project, boolean privateProject, boolean testProject) {
+
+		Jar jar = _addTaskJarSources(
+			project, JAR_SOURCES_COMMERCIAL_TASK_NAME, testProject);
+
+		if (!privateProject) {
+			final Map<String, Object> args = new HashMap<>();
+
+			args.put(
+				"from",
+				"com/liferay/gradle/plugins/defaults/dependencies" +
+					"/copyright.txt");
+			args.put("resources", Boolean.TRUE);
+			args.put(
+				"to",
+				"com/liferay/gradle/plugins/defaults/dependencies" +
+					"/copyright-commercial.txt");
+
+			jar.eachFile(
+				new Action<FileCopyDetails>() {
+
+					@Override
+					public void execute(FileCopyDetails fileCopyDetails) {
+						String name = fileCopyDetails.getName();
+
+						int pos = name.lastIndexOf('.');
+
+						if (pos == -1) {
+							return;
+						}
+
+						String extension = name.substring(pos + 1);
+
+						if (_copyrightedExtensions.contains(
+								extension.toLowerCase())) {
+
+							fileCopyDetails.filter(
+								args, ReplaceContentFilterReader.class);
+						}
+					}
+
+				});
+
+			jar.setFilteringCharset(StandardCharsets.UTF_8.name());
+		}
+
+		jar.setClassifier("sources-commercial");
+		jar.setDescription(
+			"Assembles a jar archive containing the main source files with a " +
+				"commercial license.");
 
 		return jar;
 	}
@@ -1534,7 +1608,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	private void _configureArtifacts(
 		Project project, Jar jarJSPTask, Jar jarJavadocTask, Jar jarSourcesTask,
-		Jar jarTLDDocTask) {
+		Jar jarSourcesCommercialTask, Jar jarTLDDocTask) {
 
 		ArtifactHandler artifactHandler = project.getArtifacts();
 
@@ -1586,6 +1660,11 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		if (FileUtil.hasSourceFiles(jarSourcesTask, spec)) {
 			artifactHandler.add(
 				Dependency.ARCHIVES_CONFIGURATION, jarSourcesTask);
+		}
+
+		if (FileUtil.hasSourceFiles(jarSourcesCommercialTask, spec)) {
+			artifactHandler.add(
+				Dependency.ARCHIVES_CONFIGURATION, jarSourcesCommercialTask);
 		}
 
 		Task javadocTask = GradleUtil.getTask(
@@ -3775,6 +3854,16 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		return false;
 	}
 
+	private boolean _isPrivateProject(Project project) {
+		String path = project.getPath();
+
+		if (path.startsWith(":private:")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _isPublishing(Project project) {
 		Gradle gradle = project.getGradle();
 
@@ -4051,6 +4140,23 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	private static final BackupFilesBuildAdapter _backupFilesBuildAdapter =
 		new BackupFilesBuildAdapter();
+	private static final Set<String> _copyrightedExtensions;
+
+	static {
+		_copyrightedExtensions = new HashSet<>();
+
+		_copyrightedExtensions.add("ftl");
+		_copyrightedExtensions.add("groovy");
+		_copyrightedExtensions.add("htm");
+		_copyrightedExtensions.add("html");
+		_copyrightedExtensions.add("java");
+		_copyrightedExtensions.add("js");
+		_copyrightedExtensions.add("jsp");
+		_copyrightedExtensions.add("jspf");
+		_copyrightedExtensions.add("txt");
+		_copyrightedExtensions.add("vm");
+		_copyrightedExtensions.add("xml");
+	}
 
 	private static class GitRepo {
 

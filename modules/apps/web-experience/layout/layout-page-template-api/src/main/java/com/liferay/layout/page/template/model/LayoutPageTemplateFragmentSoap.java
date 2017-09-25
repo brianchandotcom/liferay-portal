@@ -25,10 +25,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services, specifically {@link com.liferay.layout.page.template.service.http.LayoutPageTemplateFragmentServiceSoap}.
+ * This class is used by SOAP remote services.
  *
  * @author Brian Wing Shun Chan
- * @see com.liferay.layout.page.template.service.http.LayoutPageTemplateFragmentServiceSoap
  * @generated
  */
 @ProviderType

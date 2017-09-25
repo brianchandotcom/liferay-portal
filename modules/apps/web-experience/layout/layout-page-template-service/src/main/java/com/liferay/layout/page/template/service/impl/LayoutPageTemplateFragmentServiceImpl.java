@@ -17,25 +17,8 @@ package com.liferay.layout.page.template.service.impl;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateFragmentServiceBaseImpl;
 
 /**
- * The implementation of the layout page template fragment remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.layout.page.template.service.LayoutPageTemplateFragmentService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see LayoutPageTemplateFragmentServiceBaseImpl
- * @see com.liferay.layout.page.template.service.LayoutPageTemplateFragmentServiceUtil
+ * @author Jürgen Kappler
  */
 public class LayoutPageTemplateFragmentServiceImpl
 	extends LayoutPageTemplateFragmentServiceBaseImpl {
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.layout.page.template.service.LayoutPageTemplateFragmentServiceUtil} to access the layout page template fragment remote service.
-	 */
 }

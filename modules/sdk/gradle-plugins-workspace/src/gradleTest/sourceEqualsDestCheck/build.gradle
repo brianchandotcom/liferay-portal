@@ -7,11 +7,10 @@ gradle.liferayWorkspace {
 runGradleTest {
 	doLast {
 		try {
-			tasks.downloadBundle.execute()
+			downloadBundle.execute()
 		}
 		catch (Exception e) {
-			assert e.cause.message.equals("Destination cannot be the same as bundle url")
+			assert e.cause.message == "Destination cannot be the same as bundle url"
 		}
-
 	}
 }

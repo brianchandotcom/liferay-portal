@@ -14,11 +14,11 @@
 
 package com.liferay.commerce.inventory.web.internal.portlet.action;
 
-import com.liferay.commerce.exception.NoSuchInventoryException;
-import com.liferay.commerce.model.CommerceInventory;
+import com.liferay.commerce.exception.NoSuchCPDefinitionInventoryException;
+import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.service.CPDefinitionAvailabilityRangeService;
-import com.liferay.commerce.service.CommerceInventoryService;
+import com.liferay.commerce.service.CPDefinitionInventoryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCActionCommand.class
 )
-public class EditCommerceInventoryMVCActionCommand
+public class EditCPDefinitionInventoryMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override
@@ -57,11 +57,11 @@ public class EditCommerceInventoryMVCActionCommand
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateCommerceInventory(actionRequest);
+				updateCPDefinitionInventory(actionRequest);
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchInventoryException ||
+			if (e instanceof NoSuchCPDefinitionInventoryException ||
 				e instanceof PrincipalException) {
 
 				hideDefaultErrorMessage(actionRequest);
@@ -80,11 +80,11 @@ public class EditCommerceInventoryMVCActionCommand
 		}
 	}
 
-	protected void updateCommerceInventory(ActionRequest actionRequest)
+	protected void updateCPDefinitionInventory(ActionRequest actionRequest)
 		throws Exception {
 
-		long commerceInventoryId = ParamUtil.getLong(
-			actionRequest, "commerceInventoryId");
+		long cpDefinitionInventoryId = ParamUtil.getLong(
+			actionRequest, "cpDefinitionInventoryId");
 
 		long cpDefinitionAvailabilityRangeEntryId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionAvailabilityRangeEntryId");
@@ -92,8 +92,8 @@ public class EditCommerceInventoryMVCActionCommand
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
 
-		String commerceInventoryEngine = ParamUtil.getString(
-			actionRequest, "commerceInventoryEngine");
+		String cpDefinitionInventoryEngine = ParamUtil.getString(
+			actionRequest, "cpDefinitionInventoryEngine");
 		String lowStockActivity = ParamUtil.getString(
 			actionRequest, "lowStockActivity");
 		long commerceAvailabilityRangeId = ParamUtil.getLong(
@@ -115,20 +115,20 @@ public class EditCommerceInventoryMVCActionCommand
 			actionRequest, "multipleCartQuantity");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceInventory.class.getName(), actionRequest);
+			CPDefinitionInventory.class.getName(), actionRequest);
 
-		if (commerceInventoryId <= 0) {
-			_commerceInventoryService.addCommerceInventory(
-				cpDefinitionId, commerceInventoryEngine, lowStockActivity,
+		if (cpDefinitionInventoryId <= 0) {
+			_cpDefintionInventoryService.addCPDefinitionInventory(
+				cpDefinitionId, cpDefinitionInventoryEngine, lowStockActivity,
 				displayAvailability, displayStockQuantity, minStockQuantity,
 				backOrders, minCartQuantity, maxCartQuantity,
 				allowedCartQuantities, multipleCartQuantity, serviceContext);
 		}
 		else {
-			_commerceInventoryService.updateCommerceInventory(
-				commerceInventoryId, commerceInventoryEngine, lowStockActivity,
-				displayAvailability, displayStockQuantity, minStockQuantity,
-				backOrders, minCartQuantity, maxCartQuantity,
+			_cpDefintionInventoryService.updateCPDefinitionInventory(
+				cpDefinitionInventoryId, cpDefinitionInventoryEngine,
+				lowStockActivity, displayAvailability, displayStockQuantity,
+				minStockQuantity, backOrders, minCartQuantity, maxCartQuantity,
 				allowedCartQuantities, multipleCartQuantity, serviceContext);
 		}
 
@@ -139,10 +139,10 @@ public class EditCommerceInventoryMVCActionCommand
 	}
 
 	@Reference
-	private CommerceInventoryService _commerceInventoryService;
-
-	@Reference
 	private CPDefinitionAvailabilityRangeService
 		_cpDefinitionAvailabilityRangeService;
+
+	@Reference
+	private CPDefinitionInventoryService _cpDefintionInventoryService;
 
 }

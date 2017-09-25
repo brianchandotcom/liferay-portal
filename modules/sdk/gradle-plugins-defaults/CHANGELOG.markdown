@@ -2658,6 +2658,13 @@ with the `install` and `uploadArchives` tasks.
 ### Changed
 - [LPS-76747]: Update the [Liferay Gradle Plugins] dependency to version 3.5.77.
 
+## 5.2.32 - 2018-01-02
+
+### Changed
+- [LPS-74904]: Update the [Liferay Gradle Plugins] dependency to version 3.5.78.
+- [LPS-74904]: Update the [Liferay Gradle Plugins JSDoc] dependency to version
+1.0.1.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -2912,6 +2919,7 @@ with the `install` and `uploadArchives` tasks.
 [LPS-74867]: https://issues.liferay.com/browse/LPS-74867
 [LPS-74884]: https://issues.liferay.com/browse/LPS-74884
 [LPS-74892]: https://issues.liferay.com/browse/LPS-74892
+[LPS-74904]: https://issues.liferay.com/browse/LPS-74904
 [LPS-74933]: https://issues.liferay.com/browse/LPS-74933
 [LPS-75009]: https://issues.liferay.com/browse/LPS-75009
 [LPS-75010]: https://issues.liferay.com/browse/LPS-75010

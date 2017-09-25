@@ -1,6 +1,7 @@
 task runGradleTest
 
 gradle.liferayWorkspace {
+	bundleCacheDir = "bundlesDir"
 	bundleUrl = uri("bundlesDir/bundle.zip")
 }
 

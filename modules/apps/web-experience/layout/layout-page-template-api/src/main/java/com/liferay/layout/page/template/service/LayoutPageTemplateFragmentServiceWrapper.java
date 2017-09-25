@@ -34,6 +34,48 @@ public class LayoutPageTemplateFragmentServiceWrapper
 		_layoutPageTemplateFragmentService = layoutPageTemplateFragmentService;
 	}
 
+	@Override
+	public com.liferay.layout.page.template.model.LayoutPageTemplateFragment addLayoutPageTemplateFragment(
+		com.liferay.layout.page.template.model.LayoutPageTemplateFragment layoutPageTemplateFragment,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutPageTemplateFragmentService.addLayoutPageTemplateFragment(layoutPageTemplateFragment,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.layout.page.template.model.LayoutPageTemplateFragment addLayoutPageTemplateFragment(
+		long groupId, long layoutPageTemplateId, long fragmentId, int position,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutPageTemplateFragmentService.addLayoutPageTemplateFragment(groupId,
+			layoutPageTemplateId, fragmentId, position, serviceContext);
+	}
+
+	@Override
+	public java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateFragment> deleteByLayoutPageTemplate(
+		long groupId, long layoutPageTemplateId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutPageTemplateFragmentService.deleteByLayoutPageTemplate(groupId,
+			layoutPageTemplateId);
+	}
+
+	@Override
+	public com.liferay.layout.page.template.model.LayoutPageTemplateFragment deleteLayoutPageTemplateFragment(
+		long groupId, long layoutPageTemplateId, long fragmentId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutPageTemplateFragmentService.deleteLayoutPageTemplateFragment(groupId,
+			layoutPageTemplateId, fragmentId, serviceContext);
+	}
+
+	@Override
+	public java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateFragment> getLayoutPageTemplateFragmentsByPageTemplate(
+		long groupId, long layoutPageTemplateId) {
+		return _layoutPageTemplateFragmentService.getLayoutPageTemplateFragmentsByPageTemplate(groupId,
+			layoutPageTemplateId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

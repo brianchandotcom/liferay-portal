@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -72,6 +73,10 @@ public interface LayoutPageTemplateFragmentLocalService extends BaseLocalService
 	public LayoutPageTemplateFragment addLayoutPageTemplateFragment(
 		LayoutPageTemplateFragment layoutPageTemplateFragment);
 
+	public LayoutPageTemplateFragment addLayoutPageTemplateFragment(
+		long groupId, long userId, long layoutPageTemplateId, long fragmentId,
+		int position, ServiceContext serviceContext) throws PortalException;
+
 	/**
 	* Creates a new layout page template fragment with the primary key. Does not add the layout page template fragment to the database.
 	*
@@ -86,10 +91,12 @@ public interface LayoutPageTemplateFragmentLocalService extends BaseLocalService
 	*
 	* @param layoutPageTemplateFragment the layout page template fragment
 	* @return the layout page template fragment that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public LayoutPageTemplateFragment deleteLayoutPageTemplateFragment(
-		LayoutPageTemplateFragment layoutPageTemplateFragment);
+		LayoutPageTemplateFragment layoutPageTemplateFragment)
+		throws PortalException;
 
 	/**
 	* Deletes the layout page template fragment with the primary key from the database. Also notifies the appropriate model listeners.
@@ -101,6 +108,10 @@ public interface LayoutPageTemplateFragmentLocalService extends BaseLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public LayoutPageTemplateFragment deleteLayoutPageTemplateFragment(
 		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK)
+		throws PortalException;
+
+	public LayoutPageTemplateFragment deleteLayoutPageTemplateFragment(
+		long groupId, long layoutPageTemplateId, long fragmentId)
 		throws PortalException;
 
 	/**

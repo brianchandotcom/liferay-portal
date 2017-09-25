@@ -54,6 +54,16 @@ public class LayoutPageTemplateFragmentLocalServiceUtil {
 				   .addLayoutPageTemplateFragment(layoutPageTemplateFragment);
 	}
 
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateFragment addLayoutPageTemplateFragment(
+		long groupId, long userId, long layoutPageTemplateId, long fragmentId,
+		int position,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addLayoutPageTemplateFragment(groupId, userId,
+			layoutPageTemplateId, fragmentId, position, serviceContext);
+	}
+
 	/**
 	* Creates a new layout page template fragment with the primary key. Does not add the layout page template fragment to the database.
 	*
@@ -71,9 +81,11 @@ public class LayoutPageTemplateFragmentLocalServiceUtil {
 	*
 	* @param layoutPageTemplateFragment the layout page template fragment
 	* @return the layout page template fragment that was removed
+	* @throws PortalException
 	*/
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateFragment deleteLayoutPageTemplateFragment(
-		com.liferay.layout.page.template.model.LayoutPageTemplateFragment layoutPageTemplateFragment) {
+		com.liferay.layout.page.template.model.LayoutPageTemplateFragment layoutPageTemplateFragment)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .deleteLayoutPageTemplateFragment(layoutPageTemplateFragment);
 	}
@@ -90,6 +102,14 @@ public class LayoutPageTemplateFragmentLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .deleteLayoutPageTemplateFragment(layoutPageTemplateFragmentPK);
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateFragment deleteLayoutPageTemplateFragment(
+		long groupId, long layoutPageTemplateId, long fragmentId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .deleteLayoutPageTemplateFragment(groupId,
+			layoutPageTemplateId, fragmentId);
 	}
 
 	/**

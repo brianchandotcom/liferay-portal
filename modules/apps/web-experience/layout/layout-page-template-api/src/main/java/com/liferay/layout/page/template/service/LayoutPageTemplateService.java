@@ -16,6 +16,8 @@ package com.liferay.layout.page.template.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.fragment.model.FragmentEntry;
+
 import com.liferay.layout.page.template.model.LayoutPageTemplate;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -31,6 +33,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the remote service interface for LayoutPageTemplate. Methods of this
@@ -58,6 +61,7 @@ public interface LayoutPageTemplateService extends BaseService {
 	 */
 	public LayoutPageTemplate addLayoutPageTemplate(long groupId,
 		long layoutPageTemplateFolderId, java.lang.String name,
+		Map<java.lang.Integer, FragmentEntry> layoutPageTemplateFragments,
 		ServiceContext serviceContext) throws PortalException;
 
 	public LayoutPageTemplate deleteLayoutPageTemplate(long pageTemplateId)
@@ -106,5 +110,7 @@ public interface LayoutPageTemplateService extends BaseService {
 		int end, OrderByComparator<LayoutPageTemplate> orderByComparator);
 
 	public LayoutPageTemplate updateLayoutPageTemplate(long pageTemplateId,
-		java.lang.String name) throws PortalException;
+		java.lang.String name,
+		Map<java.lang.Integer, FragmentEntry> layoutPageTemplateFragments,
+		ServiceContext serviceContext) throws PortalException;
 }

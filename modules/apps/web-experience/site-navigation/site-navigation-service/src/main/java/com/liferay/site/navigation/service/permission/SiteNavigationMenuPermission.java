@@ -14,8 +14,6 @@
 
 package com.liferay.site.navigation.service.permission;
 
-import com.liferay.fragment.model.FragmentCollection;
-import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -23,6 +21,8 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.HashUtil;
+import com.liferay.site.navigation.model.SiteNavigationMenu;
+import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
 
 import java.util.Map;
 import java.util.Objects;
@@ -33,75 +33,75 @@ import org.osgi.service.component.annotations.Component;
  * @author Pavel Savinov
  */
 @Component(
-	property = {"model.class.name=com.liferay.fragment.model.FragmentCollection"},
+	property = {"model.class.name=com.liferay.site.navigation.model.SiteNavigationMenu"},
 	service = BaseModelPermissionChecker.class
 )
 public class SiteNavigationMenuPermission
 	implements BaseModelPermissionChecker {
 
 	public static void check(
-			PermissionChecker permissionChecker,
-			FragmentCollection fragmentCollection, String actionId)
+			PermissionChecker permissionChecker, long siteNavigationMenuId,
+			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, fragmentCollection, actionId)) {
+		if (!contains(permissionChecker, siteNavigationMenuId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, FragmentCollection.class.getName(),
-				fragmentCollection.getFragmentCollectionId(), actionId);
+				permissionChecker, SiteNavigationMenu.class.getName(),
+				siteNavigationMenuId, actionId);
 		}
 	}
 
 	public static void check(
-			PermissionChecker permissionChecker, long fragmentCollectionId,
-			String actionId)
+			PermissionChecker permissionChecker,
+			SiteNavigationMenu siteNavigationMenu, String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, fragmentCollectionId, actionId)) {
+		if (!contains(permissionChecker, siteNavigationMenu, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, FragmentCollection.class.getName(),
-				fragmentCollectionId, actionId);
+				permissionChecker, SiteNavigationMenu.class.getName(),
+				siteNavigationMenu.getSiteNavigationMenuId(), actionId);
 		}
 	}
 
 	public static boolean contains(
+			PermissionChecker permissionChecker, long siteNavigationMenuId,
+			String actionId)
+		throws PortalException {
+
+		SiteNavigationMenu siteNavigationMenu =
+			SiteNavigationMenuLocalServiceUtil.fetchSiteNavigationMenu(
+				siteNavigationMenuId);
+
+		if (siteNavigationMenu == null) {
+			_log.error(
+				"Unable to get site navitation menu " + siteNavigationMenuId);
+
+			return false;
+		}
+
+		return contains(permissionChecker, siteNavigationMenu, actionId);
+	}
+
+	public static boolean contains(
 		PermissionChecker permissionChecker,
-		FragmentCollection fragmentCollection, String actionId) {
+		SiteNavigationMenu siteNavigationMenu, String actionId) {
 
 		Map<Object, Object> permissionChecksMap =
 			permissionChecker.getPermissionChecksMap();
 
 		PermissionCacheKey permissionCacheKey = new PermissionCacheKey(
-			fragmentCollection.getFragmentCollectionId(), actionId);
+			siteNavigationMenu.getSiteNavigationMenuId(), actionId);
 
 		Boolean contains = (Boolean)permissionChecksMap.get(permissionCacheKey);
 
 		if (contains == null) {
 			contains = _contains(
-				permissionChecker, fragmentCollection, actionId);
+				permissionChecker, siteNavigationMenu, actionId);
 
 			permissionChecksMap.put(permissionCacheKey, contains);
 		}
 
 		return contains;
-	}
-
-	public static boolean contains(
-			PermissionChecker permissionChecker, long fragmentCollectionId,
-			String actionId)
-		throws PortalException {
-
-		FragmentCollection fragmentCollection =
-			FragmentCollectionLocalServiceUtil.fetchFragmentCollection(
-				fragmentCollectionId);
-
-		if (fragmentCollection == null) {
-			_log.error(
-				"Unable to get fragment collection " + fragmentCollectionId);
-
-			return false;
-		}
-
-		return contains(permissionChecker, fragmentCollection, actionId);
 	}
 
 	@Override
@@ -115,17 +115,17 @@ public class SiteNavigationMenuPermission
 
 	private static boolean _contains(
 		PermissionChecker permissionChecker,
-		FragmentCollection fragmentCollection, String actionId) {
+		SiteNavigationMenu siteNavigationMenu, String actionId) {
 
 		if (permissionChecker.hasOwnerPermission(
-				fragmentCollection.getCompanyId(),
-				FragmentCollection.class.getName(),
-				fragmentCollection.getFragmentCollectionId(),
-				fragmentCollection.getUserId(), actionId) ||
+				siteNavigationMenu.getCompanyId(),
+				SiteNavigationMenu.class.getName(),
+				siteNavigationMenu.getSiteNavigationMenuId(),
+				siteNavigationMenu.getUserId(), actionId) ||
 			permissionChecker.hasPermission(
-				fragmentCollection.getGroupId(),
-				FragmentCollection.class.getName(),
-				fragmentCollection.getFragmentCollectionId(), actionId)) {
+				siteNavigationMenu.getGroupId(),
+				SiteNavigationMenu.class.getName(),
+				siteNavigationMenu.getSiteNavigationMenuId(), actionId)) {
 
 			return true;
 		}
@@ -150,8 +150,8 @@ public class SiteNavigationMenuPermission
 
 			PermissionCacheKey permissionCacheKey = (PermissionCacheKey)obj;
 
-			if ((_fragmentCollectionId ==
-					permissionCacheKey._fragmentCollectionId) &&
+			if ((_siteNavigationMenuId ==
+					permissionCacheKey._siteNavigationMenuId) &&
 				Objects.equals(_actionId, permissionCacheKey._actionId)) {
 
 				return true;
@@ -162,18 +162,18 @@ public class SiteNavigationMenuPermission
 
 		@Override
 		public int hashCode() {
-			int hash = HashUtil.hash(0, _fragmentCollectionId);
+			int hash = HashUtil.hash(0, _siteNavigationMenuId);
 
 			return HashUtil.hash(hash, _actionId);
 		}
 
-		private PermissionCacheKey(long fragmentCollectionId, String actionId) {
-			_fragmentCollectionId = fragmentCollectionId;
+		private PermissionCacheKey(long siteNavigationMenuId, String actionId) {
+			_siteNavigationMenuId = siteNavigationMenuId;
 			_actionId = actionId;
 		}
 
 		private final String _actionId;
-		private final long _fragmentCollectionId;
+		private final long _siteNavigationMenuId;
 
 	}
 

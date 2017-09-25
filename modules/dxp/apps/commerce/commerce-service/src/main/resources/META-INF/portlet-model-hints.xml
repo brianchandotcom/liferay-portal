@@ -98,35 +98,6 @@
 		<field name="active" type="boolean" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
-	<model name="com.liferay.commerce.model.CommerceInventory">
-		<field name="uuid" type="String" />
-		<field name="commerceInventoryId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="CPDefinitionId" type="long" />
-		<field name="commerceInventoryEngine" type="String" />
-		<field name="lowStockActivity" type="String" />
-		<field name="displayAvailability" type="boolean" />
-		<field name="displayStockQuantity" type="boolean" />
-		<field name="minStockQuantity" type="int">
-			<validator name="number" />
-		</field>
-		<field name="backOrders" type="boolean" />
-		<field name="minCartQuantity" type="int">
-			<validator name="number" />
-		</field>
-		<field name="maxCartQuantity" type="int">
-			<validator name="number" />
-		</field>
-		<field name="allowedCartQuantities" type="String" />
-		<field name="multipleCartQuantity" type="int">
-			<validator name="number" />
-		</field>
-	</model>
 	<model name="com.liferay.commerce.model.CommerceOrder">
 		<field name="commerceOrderId" type="long" />
 		<field name="groupId" type="long" />
@@ -309,5 +280,34 @@
 		<field name="CPDefinitionId" type="long" />
 		<field name="commerceAvailabilityRangeId" type="long" />
 		<field name="lastPublishDate" type="Date" />
+	</model>
+	<model name="com.liferay.commerce.model.CPDefinitionInventory">
+		<field name="uuid" type="String" />
+		<field name="CPDefinitionInventoryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="CPDefinitionId" type="long" />
+		<field name="CPDefinitionInventoryEngine" type="String" />
+		<field name="lowStockActivity" type="String" />
+		<field name="displayAvailability" type="boolean" />
+		<field name="displayStockQuantity" type="boolean" />
+		<field name="minStockQuantity" type="int">
+			<validator name="number" />
+		</field>
+		<field name="backOrders" type="boolean" />
+		<field name="minCartQuantity" type="int">
+			<validator name="number" />
+		</field>
+		<field name="maxCartQuantity" type="int">
+			<validator name="number" />
+		</field>
+		<field name="allowedCartQuantities" type="String" />
+		<field name="multipleCartQuantity" type="int">
+			<validator name="number" />
+		</field>
 	</model>
 </model-hints>

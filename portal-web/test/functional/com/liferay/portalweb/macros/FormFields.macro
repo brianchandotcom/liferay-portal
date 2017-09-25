@@ -388,7 +388,7 @@
 	</command>
 
 	<command name="viewOptionsRowFieldName">
-		<execute function="AssertTextEquals" locator1="FormFields#OPTIONS_OPTION_NAME_FIELD" value1="Field Name:${fieldName}">
+		<execute function="AssertTextEquals" locator1="FormFields#OPTIONS_OPTION_NAME_FIELD_EDIT" value1="${fieldName}">
 			<var name="key_rowNumber" value="${rowNumber}" />
 		</execute>
 	</command>

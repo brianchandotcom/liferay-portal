@@ -14,7 +14,6 @@
 
 package com.liferay.petra.json.web.service.client.internal;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -23,14 +22,14 @@ import org.junit.Test;
 /**
  * @author Igor Beslic
  */
-public class JSONWebServiceClientImplTest {
+public class JSONWebServiceClientImplTest extends JSONWebServiceClientBaseTest {
 
 	@Test
 	public void testActivateForBasicProxy() throws Exception {
 		JSONWebServiceClientImpl jsonWebServiceClientImpl =
 			new JSONWebServiceClientImpl();
 
-		Map<String, Object> properties = _getBaseProperties();
+		Map<String, Object> properties = getBaseProperties();
 
 		properties.put("proxyHostName", "proxyhost.net");
 		properties.put("proxyHostPort", "443");
@@ -65,7 +64,7 @@ public class JSONWebServiceClientImplTest {
 		JSONWebServiceClientImpl jsonWebServiceClientImpl =
 			new JSONWebServiceClientImpl();
 
-		Map<String, Object> properties = _getBaseProperties();
+		Map<String, Object> properties = getBaseProperties();
 
 		properties.put("proxyAuthType", "ntlm");
 		properties.put("proxyDomain", "liferay.com");
@@ -89,7 +88,7 @@ public class JSONWebServiceClientImplTest {
 		JSONWebServiceClientImpl jsonWebServiceClientImpl =
 			new JSONWebServiceClientImpl();
 
-		Map<String, Object> properties = _getBaseProperties();
+		Map<String, Object> properties = getBaseProperties();
 
 		properties.put(
 			"headers", "headerKey1=headerValue1;headerKey2=headerValue2");
@@ -99,16 +98,6 @@ public class JSONWebServiceClientImplTest {
 		Map<String, String> headers = jsonWebServiceClientImpl.getHeaders();
 
 		Assert.assertTrue(headers.containsKey("headerKey1"));
-	}
-
-	private Map<String, Object> _getBaseProperties() {
-		Map<String, Object> properties = new HashMap<String, Object>();
-
-		properties.put("hostName", "localhost");
-		properties.put("hostPort", "9090");
-		properties.put("protocol", "https");
-
-		return properties;
 	}
 
 }

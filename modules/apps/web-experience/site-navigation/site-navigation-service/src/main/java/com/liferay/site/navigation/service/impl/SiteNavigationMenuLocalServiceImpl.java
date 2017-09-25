@@ -17,6 +17,7 @@ package com.liferay.site.navigation.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.base.SiteNavigationMenuLocalServiceBaseImpl;
@@ -96,6 +97,33 @@ public class SiteNavigationMenuLocalServiceImpl
 	@Override
 	public List<SiteNavigationMenu> getSiteNavigationMenus(long groupId) {
 		return siteNavigationMenuPersistence.findByGroupId(groupId);
+	}
+
+	@Override
+	public List<SiteNavigationMenu> getSiteNavigationMenus(
+		long groupId, int start, int end, OrderByComparator orderByComparator) {
+
+		return siteNavigationMenuPersistence.findByGroupId(
+			groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<SiteNavigationMenu> getSiteNavigationMenus(
+		long groupId, String keywords, int start, int end,
+		OrderByComparator orderByComparator) {
+
+		return siteNavigationMenuPersistence.findByG_N(
+			groupId, keywords, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getSiteNavigationMenusCount(long groupId) {
+		return siteNavigationMenuPersistence.countByGroupId(groupId);
+	}
+
+	@Override
+	public int getSiteNavigationMenusCount(long groupId, String keywords) {
+		return siteNavigationMenuPersistence.countByG_N(groupId, keywords);
 	}
 
 }

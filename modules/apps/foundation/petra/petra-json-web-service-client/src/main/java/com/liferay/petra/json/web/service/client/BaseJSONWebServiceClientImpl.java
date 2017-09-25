@@ -678,6 +678,8 @@ public abstract class BaseJSONWebServiceClientImpl
 		throws
 		JSONWebServiceInvocationException, JSONWebServiceTransportException {
 
+		signRequest(httpRequestBase);
+
 		HttpHost httpHost = new HttpHost(_hostName, _hostPort, _protocol);
 
 		try {
@@ -907,6 +909,9 @@ public abstract class BaseJSONWebServiceClientImpl
 		httpClientBuilder.setProxyAuthenticationStrategy(
 			new ProxyAuthenticationStrategy());
 	}
+
+	protected abstract void signRequest(HttpRequestBase httpRequestBase)
+		throws JSONWebServiceTransportException.SigningFailure;
 
 	protected List<NameValuePair> toNameValuePairs(
 		Map<String, String> parameters) {

@@ -28,9 +28,6 @@ public class CommerceActionKeys {
 	public static final String MANAGE_COMMERCE_COUNTRIES =
 		"MANAGE_COMMERCE_COUNTRIES";
 
-	public static final String MANAGE_COMMERCE_INVENTORY =
-		"MANAGE_COMMERCE_INVENTORY";
-
 	public static final String MANAGE_COMMERCE_ORDERS =
 		"MANAGE_COMMERCE_ORDERS";
 
@@ -45,5 +42,8 @@ public class CommerceActionKeys {
 
 	public static final String MANAGE_COMMERCE_WAREHOUSES =
 		"MANAGE_COMMERCE_WAREHOUSES";
+
+	public static final String MANAGE_CP_DEFINITION_INVENTORY =
+		"MANAGE_CP_DEFINITION_INVENTORY";
 
 }

@@ -2480,7 +2480,7 @@ to version 2.2.9.
 ### Changed
 - [LPS-71117]: Update the [Liferay Gradle Plugins Test Integration] dependency
 to version 2.1.1.
-- [LPS-73070]: Set default Node.js version to 8.4.0.
+- [LPS-73070]: Set the default Node.js version to 8.4.0.
 
 ## 3.4.69 - 2017-09-23
 

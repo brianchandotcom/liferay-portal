@@ -44,7 +44,7 @@ property.
 ## 2.1.2 - 2017-09-23
 
 ### Fixed
-- [LPS-71117]: Bypass Gradle 4.0 [issue](https://github.com/gradle/gradle/issues/2343).
+- [LPS-71117]: Bypass the following Gradle 4.0 [issue](https://github.com/gradle/gradle/issues/2343).
 
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-69492]: https://issues.liferay.com/browse/LPS-69492

@@ -109,6 +109,46 @@
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
+	<entity local-service="true" name="LayoutPageTemplateFragment" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="groupId" primary="true" type="long" />
+		<column name="layoutPageTemplateId" primary="true" type="long" />
+		<column name="fragmentEntryId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="position" type="int" />
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="G_LPTI" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="layoutPageTemplateId" />
+		</finder>
+		<finder name="G_FEI" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="fragmentEntryId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="LayoutPageTemplate" package-path="com.liferay.layout.page.template" />
+		<reference entity="Resource" package-path="com.liferay.portal" />
+		<reference entity="User" package-path="com.liferay.portal" />
+	</entity>
 	<exceptions>
 		<exception>DuplicateLayoutPageTemplate</exception>
 		<exception>DuplicateLayoutPageTemplateFolder</exception>

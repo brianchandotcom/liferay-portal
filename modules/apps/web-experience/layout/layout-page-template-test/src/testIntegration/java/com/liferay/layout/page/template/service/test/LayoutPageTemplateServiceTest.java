@@ -25,7 +25,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplate;
 import com.liferay.layout.page.template.model.LayoutPageTemplateFolder;
 import com.liferay.layout.page.template.model.LayoutPageTemplateFragment;
 import com.liferay.layout.page.template.service.LayoutPageTemplateFolderServiceUtil;
-import com.liferay.layout.page.template.service.LayoutPageTemplateFragmentServiceUtil;
+import com.liferay.layout.page.template.service.LayoutPageTemplateFragmentLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -190,7 +190,7 @@ public class LayoutPageTemplateServiceTest {
 				serviceContext);
 
 		List<LayoutPageTemplateFragment> actualLayoutPageTemplatesCount =
-			LayoutPageTemplateFragmentServiceUtil.
+			LayoutPageTemplateFragmentLocalServiceUtil.
 				getLayoutPageTemplateFragmentsByPageTemplate(
 					_group.getGroupId(),
 					layoutPageTemplate.getLayoutPageTemplateId());
@@ -308,7 +308,7 @@ public class LayoutPageTemplateServiceTest {
 			new HashMap<Integer, FragmentEntry>(), serviceContext);
 
 		List<LayoutPageTemplateFragment> actualLayoutPageTemplatesCount =
-			LayoutPageTemplateFragmentServiceUtil.
+			LayoutPageTemplateFragmentLocalServiceUtil.
 				getLayoutPageTemplateFragmentsByPageTemplate(
 					_group.getGroupId(),
 					layoutPageTemplate.getLayoutPageTemplateId());

@@ -2488,6 +2488,12 @@ to version 2.1.1.
 - [LPS-71117]: Update the [Liferay Gradle Plugins Test Integration] dependency
 to version 2.1.2.
 
+## 3.4.70 - 2017-09-25
+
+### Added
+- [LPS-74884]: Exclude `node_modules` directory in Idea's `.iml` file to speed
+up indexing.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -2707,4 +2713,5 @@ to version 2.1.2.
 [LPS-74752]: https://issues.liferay.com/browse/LPS-74752
 [LPS-74770]: https://issues.liferay.com/browse/LPS-74770
 [LPS-74789]: https://issues.liferay.com/browse/LPS-74789
+[LPS-74884]: https://issues.liferay.com/browse/LPS-74884
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

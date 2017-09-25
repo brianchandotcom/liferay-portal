@@ -3,3 +3,6 @@ create unique index IX_9A7FC30 on LayoutPageTemplate (groupId, name[$COLUMN_LENG
 create index IX_BA45D349 on LayoutPageTemplate (layoutPageTemplateFolderId);
 
 create unique index IX_952693A2 on LayoutPageTemplateFolder (groupId, name[$COLUMN_LENGTH:75$]);
+
+create index IX_F1F89D0C on LayoutPageTemplateFragment (groupId, fragmentEntryId);
+create index IX_32570663 on LayoutPageTemplateFragment (groupId, layoutPageTemplateId);

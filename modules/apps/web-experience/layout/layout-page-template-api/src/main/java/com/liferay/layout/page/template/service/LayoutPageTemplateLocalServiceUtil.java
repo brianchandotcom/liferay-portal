@@ -53,6 +53,16 @@ public class LayoutPageTemplateLocalServiceUtil {
 		return getService().addLayoutPageTemplate(layoutPageTemplate);
 	}
 
+	public static com.liferay.layout.page.template.model.LayoutPageTemplate addLayoutPageTemplate(
+		long groupId, long userId, long layoutPageTemplateFolderId,
+		java.lang.String name,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addLayoutPageTemplate(groupId, userId,
+			layoutPageTemplateFolderId, name, serviceContext);
+	}
+
 	/**
 	* Creates a new layout page template with the primary key. Does not add the layout page template to the database.
 	*
@@ -69,9 +79,11 @@ public class LayoutPageTemplateLocalServiceUtil {
 	*
 	* @param layoutPageTemplate the layout page template
 	* @return the layout page template that was removed
+	* @throws PortalException
 	*/
 	public static com.liferay.layout.page.template.model.LayoutPageTemplate deleteLayoutPageTemplate(
-		com.liferay.layout.page.template.model.LayoutPageTemplate layoutPageTemplate) {
+		com.liferay.layout.page.template.model.LayoutPageTemplate layoutPageTemplate)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteLayoutPageTemplate(layoutPageTemplate);
 	}
 
@@ -180,6 +192,11 @@ public class LayoutPageTemplateLocalServiceUtil {
 		return getService().fetchLayoutPageTemplate(layoutPageTemplateId);
 	}
 
+	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplate> fetchLayoutPageTemplates(
+		long layoutPageTemplateFolderId) {
+		return getService().fetchLayoutPageTemplates(layoutPageTemplateFolderId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -217,6 +234,32 @@ public class LayoutPageTemplateLocalServiceUtil {
 		return getService().getLayoutPageTemplates(start, end);
 	}
 
+	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplate> getLayoutPageTemplates(
+		long layoutPageTemplateFolderId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getLayoutPageTemplates(layoutPageTemplateFolderId, start,
+			end);
+	}
+
+	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplate> getLayoutPageTemplates(
+		long groupId, long layoutPageTemplateFolderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplate> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getLayoutPageTemplates(groupId, layoutPageTemplateFolderId,
+			start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplate> getLayoutPageTemplates(
+		long groupId, long layoutPageTemplateFolderId, java.lang.String name,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplate> orderByComparator) {
+		return getService()
+				   .getLayoutPageTemplates(groupId, layoutPageTemplateFolderId,
+			name, start, end, orderByComparator);
+	}
+
 	/**
 	* Returns the number of layout page templates.
 	*
@@ -250,6 +293,12 @@ public class LayoutPageTemplateLocalServiceUtil {
 	public static com.liferay.layout.page.template.model.LayoutPageTemplate updateLayoutPageTemplate(
 		com.liferay.layout.page.template.model.LayoutPageTemplate layoutPageTemplate) {
 		return getService().updateLayoutPageTemplate(layoutPageTemplate);
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplate updateLayoutPageTemplate(
+		long layoutPageTemplateId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateLayoutPageTemplate(layoutPageTemplateId, name);
 	}
 
 	public static LayoutPageTemplateLocalService getService() {

@@ -46,6 +46,16 @@ public class LayoutPageTemplateLocalServiceWrapper
 		return _layoutPageTemplateLocalService.addLayoutPageTemplate(layoutPageTemplate);
 	}
 
+	@Override
+	public com.liferay.layout.page.template.model.LayoutPageTemplate addLayoutPageTemplate(
+		long groupId, long userId, long layoutPageTemplateFolderId,
+		java.lang.String name,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutPageTemplateLocalService.addLayoutPageTemplate(groupId,
+			userId, layoutPageTemplateFolderId, name, serviceContext);
+	}
+
 	/**
 	* Creates a new layout page template with the primary key. Does not add the layout page template to the database.
 	*
@@ -63,10 +73,12 @@ public class LayoutPageTemplateLocalServiceWrapper
 	*
 	* @param layoutPageTemplate the layout page template
 	* @return the layout page template that was removed
+	* @throws PortalException
 	*/
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplate deleteLayoutPageTemplate(
-		com.liferay.layout.page.template.model.LayoutPageTemplate layoutPageTemplate) {
+		com.liferay.layout.page.template.model.LayoutPageTemplate layoutPageTemplate)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPageTemplateLocalService.deleteLayoutPageTemplate(layoutPageTemplate);
 	}
 
@@ -187,6 +199,12 @@ public class LayoutPageTemplateLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplate> fetchLayoutPageTemplates(
+		long layoutPageTemplateFolderId) {
+		return _layoutPageTemplateLocalService.fetchLayoutPageTemplates(layoutPageTemplateFolderId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _layoutPageTemplateLocalService.getActionableDynamicQuery();
 	}
@@ -227,6 +245,32 @@ public class LayoutPageTemplateLocalServiceWrapper
 		return _layoutPageTemplateLocalService.getLayoutPageTemplates(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplate> getLayoutPageTemplates(
+		long layoutPageTemplateFolderId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutPageTemplateLocalService.getLayoutPageTemplates(layoutPageTemplateFolderId,
+			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplate> getLayoutPageTemplates(
+		long groupId, long layoutPageTemplateFolderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplate> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutPageTemplateLocalService.getLayoutPageTemplates(groupId,
+			layoutPageTemplateFolderId, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplate> getLayoutPageTemplates(
+		long groupId, long layoutPageTemplateFolderId, java.lang.String name,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplate> orderByComparator) {
+		return _layoutPageTemplateLocalService.getLayoutPageTemplates(groupId,
+			layoutPageTemplateFolderId, name, start, end, orderByComparator);
+	}
+
 	/**
 	* Returns the number of layout page templates.
 	*
@@ -264,6 +308,14 @@ public class LayoutPageTemplateLocalServiceWrapper
 	public com.liferay.layout.page.template.model.LayoutPageTemplate updateLayoutPageTemplate(
 		com.liferay.layout.page.template.model.LayoutPageTemplate layoutPageTemplate) {
 		return _layoutPageTemplateLocalService.updateLayoutPageTemplate(layoutPageTemplate);
+	}
+
+	@Override
+	public com.liferay.layout.page.template.model.LayoutPageTemplate updateLayoutPageTemplate(
+		long layoutPageTemplateId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutPageTemplateLocalService.updateLayoutPageTemplate(layoutPageTemplateId,
+			name);
 	}
 
 	@Override

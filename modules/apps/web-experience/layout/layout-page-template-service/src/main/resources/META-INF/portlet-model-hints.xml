@@ -23,4 +23,15 @@
 		<field name="name" type="String" />
 		<field name="description" type="String" />
 	</model>
+	<model name="com.liferay.layout.page.template.model.LayoutPageTemplateFragment">
+		<field name="groupId" type="long" />
+		<field name="layoutPageTemplateId" type="long" />
+		<field name="fragmentEntryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="position" type="int" />
+	</model>
 </model-hints>

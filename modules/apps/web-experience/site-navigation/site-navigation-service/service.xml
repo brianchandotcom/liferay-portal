@@ -30,6 +30,10 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
+		<finder name="G_N" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column comparator="LIKE" name="name" />
+		</finder>
 
 		<!-- References -->
 

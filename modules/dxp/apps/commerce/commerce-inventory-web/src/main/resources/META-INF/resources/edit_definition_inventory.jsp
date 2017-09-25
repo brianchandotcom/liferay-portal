@@ -17,15 +17,15 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceInventoryDisplayContext commerceInventoryDisplayContext = (CommerceInventoryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CPDefinitionInventoryDisplayContext cpDefinitionInventoryDisplayContext = (CPDefinitionInventoryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CommerceInventory commerceInventory = commerceInventoryDisplayContext.getCommerceInventory();
+CPDefinitionInventory cpDefinitionInventory = cpDefinitionInventoryDisplayContext.getCPDefinitionInventory();
 
-CPDefinitionAvailabilityRange cpDefinitionAvailabilityRange = commerceInventoryDisplayContext.getCPDefinitionAvailabilityRange();
+CPDefinitionAvailabilityRange cpDefinitionAvailabilityRange = cpDefinitionInventoryDisplayContext.getCPDefinitionAvailabilityRange();
 
-CPDefinition cpDefinition = commerceInventoryDisplayContext.getCPDefinition();
+CPDefinition cpDefinition = cpDefinitionInventoryDisplayContext.getCPDefinition();
 
-long cpDefinitionId = commerceInventoryDisplayContext.getCPDefinitionId();
+long cpDefinitionId = cpDefinitionInventoryDisplayContext.getCPDefinitionId();
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(catalogURL);
@@ -36,30 +36,30 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 <portlet:actionURL name="editProductDefinitionInventory" var="editProductDefinitionInventoryActionURL" />
 
 <aui:form action="<%= editProductDefinitionInventoryActionURL %>" cssClass="container-fluid-1280" method="post" name="fm1">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceInventory == null) ? Constants.ADD : Constants.UPDATE %>" />
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpDefinitionInventory == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="commerceInventoryId" type="hidden" value="<%= (commerceInventory == null) ? StringPool.BLANK : commerceInventory.getCommerceInventoryId() %>" />
+	<aui:input name="cpDefinitionInventoryId" type="hidden" value="<%= (cpDefinitionInventory == null) ? StringPool.BLANK : cpDefinitionInventory.getCPDefinitionInventoryId() %>" />
 	<aui:input name="cpDefinitionAvailabilityRangeId" type="hidden" value="<%= (cpDefinitionAvailabilityRange == null) ? StringPool.BLANK : cpDefinitionAvailabilityRange.getCPDefinitionAvailabilityRangeId() %>" />
 	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinitionId %>" />
 
 	<div class="lfr-form-content">
-		<aui:model-context bean="<%= commerceInventory %>" model="<%= CommerceInventory.class %>" />
+		<aui:model-context bean="<%= cpDefinitionInventory %>" model="<%= CPDefinitionInventory.class %>" />
 
 		<aui:fieldset>
-			<aui:select label="inventory-engine" name="commerceInventoryEngine" showEmptyOption="<%= true %>">
+			<aui:select label="inventory-engine" name="CPDefinitionInventoryEngine" showEmptyOption="<%= true %>">
 
 				<%
-				Map<String, CommerceInventoryEngine> commerceInventoryEngines = commerceInventoryDisplayContext.getCommerceInventoryEngines();
+				Map<String, CPDefinitionInventoryEngine> cpDefinitionInventoryEngines = cpDefinitionInventoryDisplayContext.getCPDefinitionInventoryEngines();
 
-				for (Map.Entry<String, CommerceInventoryEngine> commerceInventoryEngineEntry : commerceInventoryEngines.entrySet()) {
-					CommerceInventoryEngine commerceInventoryEngine = commerceInventoryEngineEntry.getValue();
+				for (Map.Entry<String, CPDefinitionInventoryEngine> cpDefinitionInventoryEngineEntry : cpDefinitionInventoryEngines.entrySet()) {
+					CPDefinitionInventoryEngine cpDefinitionInventoryEngine = cpDefinitionInventoryEngineEntry.getValue();
 
-					String commerceInventoryEngineName = commerceInventoryEngine.getName();
+					String cpDefinitionInventoryEngineName = cpDefinitionInventoryEngine.getName();
 				%>
 
 					<aui:option
-						label="<%= commerceInventoryEngineName %>"
-						selected="<%= (commerceInventory != null) && commerceInventoryEngineName.equals(commerceInventory.getCommerceInventoryEngine()) %>"
+						label="<%= cpDefinitionInventoryEngineName %>"
+						selected="<%= (cpDefinitionInventory != null) && cpDefinitionInventoryEngineName.equals(cpDefinitionInventory.getCPDefinitionInventoryEngine()) %>"
 					/>
 
 				<%
@@ -71,7 +71,7 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 			<aui:select name="lowStockActivity" showEmptyOption="<%= true %>">
 
 				<%
-				Map<String, CommerceLowStockActivity> commerceLowStockActivities = commerceInventoryDisplayContext.getCommerceLowStockActivities();
+				Map<String, CommerceLowStockActivity> commerceLowStockActivities = cpDefinitionInventoryDisplayContext.getCommerceLowStockActivities();
 
 				for (Map.Entry<String, CommerceLowStockActivity> commerceLowStockActivityEntry : commerceLowStockActivities.entrySet()) {
 					CommerceLowStockActivity commerceLowStockActivity = commerceLowStockActivityEntry.getValue();
@@ -81,7 +81,7 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 
 					<aui:option
 						label="<%= commerceLowStockActivityName %>"
-						selected="<%= (commerceInventory != null) && commerceLowStockActivityName.equals(commerceInventory.getLowStockActivity()) %>"
+						selected="<%= (cpDefinitionInventory != null) && commerceLowStockActivityName.equals(cpDefinitionInventory.getLowStockActivity()) %>"
 					/>
 
 				<%
@@ -93,7 +93,7 @@ renderResponse.setTitle(cpDefinition.getTitle(languageId));
 			<aui:select label="availability-range" name="commerceAvailabilityRangeId" showEmptyOption="<%= true %>">
 
 				<%
-				List<CommerceAvailabilityRange> commerceAvailabilityRanges = commerceInventoryDisplayContext.getCommerceAvailabilityRanges();
+				List<CommerceAvailabilityRange> commerceAvailabilityRanges = cpDefinitionInventoryDisplayContext.getCommerceAvailabilityRanges();
 
 				for (CommerceAvailabilityRange commerceAvailabilityRange : commerceAvailabilityRanges) {
 				%>

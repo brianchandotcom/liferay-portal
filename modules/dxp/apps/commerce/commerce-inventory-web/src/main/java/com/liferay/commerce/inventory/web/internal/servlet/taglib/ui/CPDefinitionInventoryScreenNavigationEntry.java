@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.inventory.web.internal.servlet.taglib.ui;
 
-import com.liferay.commerce.inventory.CommerceInventoryEngineRegistry;
-import com.liferay.commerce.inventory.web.internal.display.context.CommerceInventoryDisplayContext;
-import com.liferay.commerce.inventory.web.internal.portlet.action.CommerceInventoryActionHelper;
+import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
+import com.liferay.commerce.inventory.web.internal.display.context.CPDefinitionInventoryDisplayContext;
+import com.liferay.commerce.inventory.web.internal.portlet.action.CPDefinitionInventoryActionHelper;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.service.CPDefinitionAvailabilityRangeService;
@@ -96,18 +96,19 @@ public class CPDefinitionInventoryScreenNavigationEntry
 		throws IOException {
 
 		try {
-			CommerceInventoryDisplayContext commerceInventoryDisplayContext =
-				new CommerceInventoryDisplayContext(
-					_actionHelper, httpServletRequest,
-					_commerceAvailabilityRangeService,
-					_commerceInventoryActionHelper,
-					_commerceInventoryEngineRegistry,
-					_commerceLowStockActivityRegistry,
-					_cpDefinitionAvailabilityRangeService);
+			CPDefinitionInventoryDisplayContext
+				cpDefinitionInventoryDisplayContext =
+					new CPDefinitionInventoryDisplayContext(
+						_actionHelper, httpServletRequest,
+						_commerceAvailabilityRangeService,
+						_commerceLowStockActivityRegistry,
+						_cpDefinitionAvailabilityRangeService,
+						_cpDefinitionInventoryActionHelper,
+						_cpDefinitionInventoryEngineRegistry);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				commerceInventoryDisplayContext);
+				cpDefinitionInventoryDisplayContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -128,17 +129,19 @@ public class CPDefinitionInventoryScreenNavigationEntry
 	private CommerceAvailabilityRangeService _commerceAvailabilityRangeService;
 
 	@Reference
-	private CommerceInventoryActionHelper _commerceInventoryActionHelper;
-
-	@Reference
-	private CommerceInventoryEngineRegistry _commerceInventoryEngineRegistry;
-
-	@Reference
 	private CommerceLowStockActivityRegistry _commerceLowStockActivityRegistry;
 
 	@Reference
 	private CPDefinitionAvailabilityRangeService
 		_cpDefinitionAvailabilityRangeService;
+
+	@Reference
+	private CPDefinitionInventoryActionHelper
+		_cpDefinitionInventoryActionHelper;
+
+	@Reference
+	private CPDefinitionInventoryEngineRegistry
+		_cpDefinitionInventoryEngineRegistry;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

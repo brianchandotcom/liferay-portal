@@ -65,7 +65,6 @@ public class OSGiBundleBuilderCommandTest {
 
 	@Test
 	public void testJarCommand() throws Exception {
-
 		File tempFolder = temporaryFolder.getRoot();
 
 		File baseDir = new File(tempFolder, "project");
@@ -104,7 +103,6 @@ public class OSGiBundleBuilderCommandTest {
 
 	@Test
 	public void testManifestCommand() throws Exception {
-
 		File tempFolder = temporaryFolder.getRoot();
 
 		File baseDir = new File(tempFolder, "project");

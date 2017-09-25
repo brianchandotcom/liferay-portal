@@ -7,11 +7,15 @@ gradle.liferayWorkspace {
 
 runGradleTest {
 	doLast {
+		String errorMessage = ""
+
 		try {
 			downloadBundle.execute()
 		}
 		catch (Exception e) {
-			assert e.cause.message.endsWith(" cannot be the same")
+			errorMessage = e.cause.message
 		}
+
+		assert errorMessage.endsWith(" cannot be the same")
 	}
 }

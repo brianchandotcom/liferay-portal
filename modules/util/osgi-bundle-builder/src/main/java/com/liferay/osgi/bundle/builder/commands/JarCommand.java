@@ -26,7 +26,6 @@ import java.nio.file.Files;
 public class JarCommand extends BaseCommand {
 
 	public void writeOutput(Jar jar) throws Exception {
-
 		File output = getOutput();
 
 		Files.createDirectories(output.toPath());

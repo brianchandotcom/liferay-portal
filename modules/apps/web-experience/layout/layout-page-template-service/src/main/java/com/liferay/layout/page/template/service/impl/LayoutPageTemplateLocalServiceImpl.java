@@ -157,7 +157,7 @@ public class LayoutPageTemplateLocalServiceImpl
 			OrderByComparator<LayoutPageTemplate> orderByComparator)
 		throws PortalException {
 
-		return layoutPageTemplatePersistence.findByG_LPTFI(
+		return layoutPageTemplatePersistence.findByG_L(
 			groupId, layoutPageTemplateFolderId, start, end, orderByComparator);
 	}
 
@@ -167,12 +167,12 @@ public class LayoutPageTemplateLocalServiceImpl
 		int end, OrderByComparator<LayoutPageTemplate> orderByComparator) {
 
 		if (Validator.isNull(name)) {
-			return layoutPageTemplatePersistence.findByG_LPTFI(
+			return layoutPageTemplatePersistence.findByG_L(
 				groupId, layoutPageTemplateFolderId, start, end,
 				orderByComparator);
 		}
 
-		return layoutPageTemplatePersistence.findByG_LPTFI_LikeN(
+		return layoutPageTemplatePersistence.findByG_L_LikeN(
 			groupId, layoutPageTemplateFolderId, name, start, end,
 			orderByComparator);
 	}

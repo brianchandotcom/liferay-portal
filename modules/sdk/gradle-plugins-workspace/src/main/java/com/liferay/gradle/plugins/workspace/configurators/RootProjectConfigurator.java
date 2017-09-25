@@ -402,19 +402,10 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 					download.dest(destinationDir);
 
-					Object src = download.getSrc();
+					List<?> srcList = _getSrcList(download);
 
-					if (src != null) {
-						if (src instanceof List<?>) {
-							List<?> srcList = (List<?>)src;
-
-							if (!srcList.isEmpty()) {
-								return;
-							}
-						}
-						else {
-							return;
-						}
+					if (!srcList.isEmpty()) {
+						return;
 					}
 
 					String bundleUrl = workspaceExtension.getBundleUrl();

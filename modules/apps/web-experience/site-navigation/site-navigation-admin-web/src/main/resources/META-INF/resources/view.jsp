@@ -104,6 +104,10 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 							<liferay-ui:message arguments="<%= new String[] {siteNavigationMenu.getUserName(), createDateDescription} %>" key="x-created-x-ago" />
 						</h5>
 					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-jsp
+						path="/menu_action.jsp"
+					/>
 				</c:when>
 				<c:when test='<%= displayStyle.equals("icon") %>'>
 
@@ -113,6 +117,7 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 
 					<liferay-ui:search-container-column-text>
 						<liferay-frontend:icon-vertical-card
+							actionJsp="/menu_action.jsp"
 							actionJspServletContext="<%= application %>"
 							icon="list"
 							resultRow="<%= row %>"
@@ -150,6 +155,10 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 						name="create-date"
 						orderable="<%= false %>"
 						property="createDate"
+					/>
+
+					<liferay-ui:search-container-column-jsp
+						path="/menu_action.jsp"
 					/>
 				</c:otherwise>
 			</c:choose>

@@ -59,8 +59,11 @@ public class PortalLoginModule extends BasicLoginModule {
 			Object role = InstanceFactory.newInstance(
 				_JROLE, String.class, "users");
 
+			Thread thread = Thread.currentThread();
+
 			MethodKey methodKey = new MethodKey(
-				ClassResolverUtil.resolveByContextClassLoader(_JGROUP),
+				ClassResolverUtil.resolve(
+					_JGROUP, thread.getContextClassLoader()),
 				"addMember", role.getClass());
 
 			Method method = methodKey.getMethod();

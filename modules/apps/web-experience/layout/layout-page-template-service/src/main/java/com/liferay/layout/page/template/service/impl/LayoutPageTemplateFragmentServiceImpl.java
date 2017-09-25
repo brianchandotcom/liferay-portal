@@ -14,11 +14,94 @@
 
 package com.liferay.layout.page.template.service.impl;
 
+import com.liferay.layout.page.template.model.LayoutPageTemplateFragment;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateFragmentServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ListUtil;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Jürgen Kappler
  */
 public class LayoutPageTemplateFragmentServiceImpl
 	extends LayoutPageTemplateFragmentServiceBaseImpl {
+
+	@Override
+	public LayoutPageTemplateFragment addLayoutPageTemplateFragment(
+			LayoutPageTemplateFragment layoutPageTemplateFragment,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return layoutPageTemplateFragmentService.addLayoutPageTemplateFragment(
+			layoutPageTemplateFragment.getGroupId(),
+			layoutPageTemplateFragment.getLayoutPageTemplateId(),
+			layoutPageTemplateFragment.getFragmentEntryId(),
+			layoutPageTemplateFragment.getPosition(), serviceContext);
+	}
+
+	@Override
+	public LayoutPageTemplateFragment addLayoutPageTemplateFragment(
+			long groupId, long layoutPageTemplateId, long fragmentId,
+			int position, ServiceContext serviceContext)
+		throws PortalException {
+
+		return layoutPageTemplateFragmentLocalService.
+			addLayoutPageTemplateFragment(
+				groupId, getUserId(), layoutPageTemplateId, fragmentId,
+				position, serviceContext);
+	}
+
+	@Override
+	public List<LayoutPageTemplateFragment> deleteByLayoutPageTemplate(
+			long groupId, long layoutPageTemplateId)
+		throws PortalException {
+
+		List<LayoutPageTemplateFragment> deletedLayoutPageTemplateFragments =
+			new ArrayList<>();
+
+		List<LayoutPageTemplateFragment> layoutPageTemplateFragments =
+			layoutPageTemplateFragmentService.
+				getLayoutPageTemplateFragmentsByPageTemplate(
+					groupId, layoutPageTemplateId);
+
+		if (ListUtil.isEmpty(layoutPageTemplateFragments)) {
+			return Collections.emptyList();
+		}
+
+		for (LayoutPageTemplateFragment layoutPageTemplateFragment :
+				layoutPageTemplateFragments) {
+
+			layoutPageTemplateFragmentPersistence.remove(
+				layoutPageTemplateFragment);
+
+			deletedLayoutPageTemplateFragments.add(layoutPageTemplateFragment);
+		}
+
+		return deletedLayoutPageTemplateFragments;
+	}
+
+	@Override
+	public LayoutPageTemplateFragment deleteLayoutPageTemplateFragment(
+			long groupId, long layoutPageTemplateId, long fragmentId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return layoutPageTemplateFragmentLocalService.
+			deleteLayoutPageTemplateFragment(
+				groupId, layoutPageTemplateId, fragmentId);
+	}
+
+	@Override
+	public List<LayoutPageTemplateFragment>
+		getLayoutPageTemplateFragmentsByPageTemplate(
+			long groupId, long layoutPageTemplateId) {
+
+		return layoutPageTemplateFragmentPersistence.findByG_LPTI(
+			groupId, layoutPageTemplateId);
+	}
+
 }

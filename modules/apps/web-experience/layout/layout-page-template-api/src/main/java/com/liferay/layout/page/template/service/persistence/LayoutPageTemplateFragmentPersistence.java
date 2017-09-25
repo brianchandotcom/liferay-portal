@@ -182,8 +182,8 @@ public interface LayoutPageTemplateFragmentPersistence extends BasePersistence<L
 	* @param layoutPageTemplateId the layout page template ID
 	* @return the matching layout page template fragments
 	*/
-	public java.util.List<LayoutPageTemplateFragment> findByG_LPTI(
-		long groupId, long layoutPageTemplateId);
+	public java.util.List<LayoutPageTemplateFragment> findByG_L(long groupId,
+		long layoutPageTemplateId);
 
 	/**
 	* Returns a range of all the layout page template fragments where groupId = &#63; and layoutPageTemplateId = &#63;.
@@ -198,8 +198,8 @@ public interface LayoutPageTemplateFragmentPersistence extends BasePersistence<L
 	* @param end the upper bound of the range of layout page template fragments (not inclusive)
 	* @return the range of matching layout page template fragments
 	*/
-	public java.util.List<LayoutPageTemplateFragment> findByG_LPTI(
-		long groupId, long layoutPageTemplateId, int start, int end);
+	public java.util.List<LayoutPageTemplateFragment> findByG_L(long groupId,
+		long layoutPageTemplateId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the layout page template fragments where groupId = &#63; and layoutPageTemplateId = &#63;.
@@ -215,8 +215,8 @@ public interface LayoutPageTemplateFragmentPersistence extends BasePersistence<L
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout page template fragments
 	*/
-	public java.util.List<LayoutPageTemplateFragment> findByG_LPTI(
-		long groupId, long layoutPageTemplateId, int start, int end,
+	public java.util.List<LayoutPageTemplateFragment> findByG_L(long groupId,
+		long layoutPageTemplateId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateFragment> orderByComparator);
 
 	/**
@@ -234,8 +234,8 @@ public interface LayoutPageTemplateFragmentPersistence extends BasePersistence<L
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching layout page template fragments
 	*/
-	public java.util.List<LayoutPageTemplateFragment> findByG_LPTI(
-		long groupId, long layoutPageTemplateId, int start, int end,
+	public java.util.List<LayoutPageTemplateFragment> findByG_L(long groupId,
+		long layoutPageTemplateId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateFragment> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -248,7 +248,7 @@ public interface LayoutPageTemplateFragmentPersistence extends BasePersistence<L
 	* @return the first matching layout page template fragment
 	* @throws NoSuchPageTemplateFragmentException if a matching layout page template fragment could not be found
 	*/
-	public LayoutPageTemplateFragment findByG_LPTI_First(long groupId,
+	public LayoutPageTemplateFragment findByG_L_First(long groupId,
 		long layoutPageTemplateId,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateFragment> orderByComparator)
 		throws NoSuchPageTemplateFragmentException;
@@ -261,7 +261,7 @@ public interface LayoutPageTemplateFragmentPersistence extends BasePersistence<L
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout page template fragment, or <code>null</code> if a matching layout page template fragment could not be found
 	*/
-	public LayoutPageTemplateFragment fetchByG_LPTI_First(long groupId,
+	public LayoutPageTemplateFragment fetchByG_L_First(long groupId,
 		long layoutPageTemplateId,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateFragment> orderByComparator);
 
@@ -274,7 +274,7 @@ public interface LayoutPageTemplateFragmentPersistence extends BasePersistence<L
 	* @return the last matching layout page template fragment
 	* @throws NoSuchPageTemplateFragmentException if a matching layout page template fragment could not be found
 	*/
-	public LayoutPageTemplateFragment findByG_LPTI_Last(long groupId,
+	public LayoutPageTemplateFragment findByG_L_Last(long groupId,
 		long layoutPageTemplateId,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateFragment> orderByComparator)
 		throws NoSuchPageTemplateFragmentException;
@@ -287,7 +287,7 @@ public interface LayoutPageTemplateFragmentPersistence extends BasePersistence<L
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout page template fragment, or <code>null</code> if a matching layout page template fragment could not be found
 	*/
-	public LayoutPageTemplateFragment fetchByG_LPTI_Last(long groupId,
+	public LayoutPageTemplateFragment fetchByG_L_Last(long groupId,
 		long layoutPageTemplateId,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateFragment> orderByComparator);
 
@@ -301,7 +301,7 @@ public interface LayoutPageTemplateFragmentPersistence extends BasePersistence<L
 	* @return the previous, current, and next layout page template fragment
 	* @throws NoSuchPageTemplateFragmentException if a layout page template fragment with the primary key could not be found
 	*/
-	public LayoutPageTemplateFragment[] findByG_LPTI_PrevAndNext(
+	public LayoutPageTemplateFragment[] findByG_L_PrevAndNext(
 		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK,
 		long groupId, long layoutPageTemplateId,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateFragment> orderByComparator)
@@ -313,7 +313,7 @@ public interface LayoutPageTemplateFragmentPersistence extends BasePersistence<L
 	* @param groupId the group ID
 	* @param layoutPageTemplateId the layout page template ID
 	*/
-	public void removeByG_LPTI(long groupId, long layoutPageTemplateId);
+	public void removeByG_L(long groupId, long layoutPageTemplateId);
 
 	/**
 	* Returns the number of layout page template fragments where groupId = &#63; and layoutPageTemplateId = &#63;.
@@ -322,7 +322,7 @@ public interface LayoutPageTemplateFragmentPersistence extends BasePersistence<L
 	* @param layoutPageTemplateId the layout page template ID
 	* @return the number of matching layout page template fragments
 	*/
-	public int countByG_LPTI(long groupId, long layoutPageTemplateId);
+	public int countByG_L(long groupId, long layoutPageTemplateId);
 
 	/**
 	* Returns all the layout page template fragments where groupId = &#63; and fragmentEntryId = &#63;.
@@ -331,8 +331,8 @@ public interface LayoutPageTemplateFragmentPersistence extends BasePersistence<L
 	* @param fragmentEntryId the fragment entry ID
 	* @return the matching layout page template fragments
 	*/
-	public java.util.List<LayoutPageTemplateFragment> findByG_FEI(
-		long groupId, long fragmentEntryId);
+	public java.util.List<LayoutPageTemplateFragment> findByG_F(long groupId,
+		long fragmentEntryId);
 
 	/**
 	* Returns a range of all the layout page template fragments where groupId = &#63; and fragmentEntryId = &#63;.
@@ -347,8 +347,8 @@ public interface LayoutPageTemplateFragmentPersistence extends BasePersistence<L
 	* @param end the upper bound of the range of layout page template fragments (not inclusive)
 	* @return the range of matching layout page template fragments
 	*/
-	public java.util.List<LayoutPageTemplateFragment> findByG_FEI(
-		long groupId, long fragmentEntryId, int start, int end);
+	public java.util.List<LayoutPageTemplateFragment> findByG_F(long groupId,
+		long fragmentEntryId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the layout page template fragments where groupId = &#63; and fragmentEntryId = &#63;.
@@ -364,8 +364,8 @@ public interface LayoutPageTemplateFragmentPersistence extends BasePersistence<L
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout page template fragments
 	*/
-	public java.util.List<LayoutPageTemplateFragment> findByG_FEI(
-		long groupId, long fragmentEntryId, int start, int end,
+	public java.util.List<LayoutPageTemplateFragment> findByG_F(long groupId,
+		long fragmentEntryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateFragment> orderByComparator);
 
 	/**
@@ -383,8 +383,8 @@ public interface LayoutPageTemplateFragmentPersistence extends BasePersistence<L
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching layout page template fragments
 	*/
-	public java.util.List<LayoutPageTemplateFragment> findByG_FEI(
-		long groupId, long fragmentEntryId, int start, int end,
+	public java.util.List<LayoutPageTemplateFragment> findByG_F(long groupId,
+		long fragmentEntryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateFragment> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -397,7 +397,7 @@ public interface LayoutPageTemplateFragmentPersistence extends BasePersistence<L
 	* @return the first matching layout page template fragment
 	* @throws NoSuchPageTemplateFragmentException if a matching layout page template fragment could not be found
 	*/
-	public LayoutPageTemplateFragment findByG_FEI_First(long groupId,
+	public LayoutPageTemplateFragment findByG_F_First(long groupId,
 		long fragmentEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateFragment> orderByComparator)
 		throws NoSuchPageTemplateFragmentException;
@@ -410,7 +410,7 @@ public interface LayoutPageTemplateFragmentPersistence extends BasePersistence<L
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout page template fragment, or <code>null</code> if a matching layout page template fragment could not be found
 	*/
-	public LayoutPageTemplateFragment fetchByG_FEI_First(long groupId,
+	public LayoutPageTemplateFragment fetchByG_F_First(long groupId,
 		long fragmentEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateFragment> orderByComparator);
 
@@ -423,7 +423,7 @@ public interface LayoutPageTemplateFragmentPersistence extends BasePersistence<L
 	* @return the last matching layout page template fragment
 	* @throws NoSuchPageTemplateFragmentException if a matching layout page template fragment could not be found
 	*/
-	public LayoutPageTemplateFragment findByG_FEI_Last(long groupId,
+	public LayoutPageTemplateFragment findByG_F_Last(long groupId,
 		long fragmentEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateFragment> orderByComparator)
 		throws NoSuchPageTemplateFragmentException;
@@ -436,7 +436,7 @@ public interface LayoutPageTemplateFragmentPersistence extends BasePersistence<L
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout page template fragment, or <code>null</code> if a matching layout page template fragment could not be found
 	*/
-	public LayoutPageTemplateFragment fetchByG_FEI_Last(long groupId,
+	public LayoutPageTemplateFragment fetchByG_F_Last(long groupId,
 		long fragmentEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateFragment> orderByComparator);
 
@@ -450,7 +450,7 @@ public interface LayoutPageTemplateFragmentPersistence extends BasePersistence<L
 	* @return the previous, current, and next layout page template fragment
 	* @throws NoSuchPageTemplateFragmentException if a layout page template fragment with the primary key could not be found
 	*/
-	public LayoutPageTemplateFragment[] findByG_FEI_PrevAndNext(
+	public LayoutPageTemplateFragment[] findByG_F_PrevAndNext(
 		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK,
 		long groupId, long fragmentEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateFragment> orderByComparator)
@@ -462,7 +462,7 @@ public interface LayoutPageTemplateFragmentPersistence extends BasePersistence<L
 	* @param groupId the group ID
 	* @param fragmentEntryId the fragment entry ID
 	*/
-	public void removeByG_FEI(long groupId, long fragmentEntryId);
+	public void removeByG_F(long groupId, long fragmentEntryId);
 
 	/**
 	* Returns the number of layout page template fragments where groupId = &#63; and fragmentEntryId = &#63;.
@@ -471,7 +471,7 @@ public interface LayoutPageTemplateFragmentPersistence extends BasePersistence<L
 	* @param fragmentEntryId the fragment entry ID
 	* @return the number of matching layout page template fragments
 	*/
-	public int countByG_FEI(long groupId, long fragmentEntryId);
+	public int countByG_F(long groupId, long fragmentEntryId);
 
 	/**
 	* Caches the layout page template fragment in the entity cache if it is enabled.

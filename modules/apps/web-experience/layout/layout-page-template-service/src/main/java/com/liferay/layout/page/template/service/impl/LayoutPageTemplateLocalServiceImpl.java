@@ -14,10 +14,13 @@
 
 package com.liferay.layout.page.template.service.impl;
 
+import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplate;
+import com.liferay.layout.page.template.service.LayoutPageTemplateFragmentService;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateLocalServiceBaseImpl;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
@@ -27,6 +30,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -38,7 +42,9 @@ public class LayoutPageTemplateLocalServiceImpl
 	@Override
 	public LayoutPageTemplate addLayoutPageTemplate(
 			long groupId, long userId, long layoutPageTemplateFolderId,
-			String name, ServiceContext serviceContext)
+			String name,
+			Map<Integer, FragmentEntry> layoutPageTemplateFragments,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Layout Page Template
@@ -70,6 +76,21 @@ public class LayoutPageTemplateLocalServiceImpl
 
 		resourceLocalService.addModelResources(
 			layoutPageTemplate, serviceContext);
+
+		// Layout Page Template Fragments
+
+		if (layoutPageTemplateFragments != null) {
+			for (int key : layoutPageTemplateFragments.keySet()) {
+				FragmentEntry fragmentEntry = layoutPageTemplateFragments.get(
+					key);
+
+				_layoutPageTemplateFragmentService.
+					addLayoutPageTemplateFragment(
+						groupId, layoutPageTemplateId,
+						fragmentEntry.getFragmentEntryId(), key,
+						serviceContext);
+			}
+		}
 
 		return layoutPageTemplate;
 	}
@@ -158,7 +179,9 @@ public class LayoutPageTemplateLocalServiceImpl
 
 	@Override
 	public LayoutPageTemplate updateLayoutPageTemplate(
-			long layoutPageTemplateId, String name)
+			long layoutPageTemplateId, String name,
+			Map<Integer, FragmentEntry> layoutPageTemplateFragments,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		LayoutPageTemplate layoutPageTemplate =
@@ -173,6 +196,24 @@ public class LayoutPageTemplateLocalServiceImpl
 		layoutPageTemplate.setName(name);
 
 		layoutPageTemplatePersistence.update(layoutPageTemplate);
+
+		// Layout Page Template Fragments
+
+		_layoutPageTemplateFragmentService.deleteByLayoutPageTemplate(
+			layoutPageTemplate.getGroupId(), layoutPageTemplateId);
+
+		if (layoutPageTemplateFragments != null) {
+			for (int key : layoutPageTemplateFragments.keySet()) {
+				FragmentEntry fragmentEntry = layoutPageTemplateFragments.get(
+					key);
+
+				_layoutPageTemplateFragmentService.
+					addLayoutPageTemplateFragment(
+						layoutPageTemplate.getGroupId(), layoutPageTemplateId,
+						fragmentEntry.getFragmentEntryId(), key,
+						serviceContext);
+			}
+		}
 
 		return layoutPageTemplate;
 	}
@@ -190,5 +231,9 @@ public class LayoutPageTemplateLocalServiceImpl
 			throw new DuplicateLayoutPageTemplateException(name);
 		}
 	}
+
+	@BeanReference(type = LayoutPageTemplateFragmentService.class)
+	private LayoutPageTemplateFragmentService
+		_layoutPageTemplateFragmentService;
 
 }

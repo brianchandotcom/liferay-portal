@@ -380,12 +380,14 @@ public abstract class BaseBuild implements Build {
 
 		List<Build> filteredDownstreamBuilds = new ArrayList<>();
 
-		for (String jobVariant : jobVariants) {
-			for (Build downstreamBuild : downstreamBuilds) {
-				String jobVariantName = downstreamBuild.getJobVariant();
+		for (Build downstreamBuild : downstreamBuilds) {
+			String jobVariantName = downstreamBuild.getJobVariant();
 
+			for (String jobVariant : jobVariants) {
 				if (jobVariantName.contains(jobVariant)) {
 					filteredDownstreamBuilds.add(downstreamBuild);
+
+					break;
 				}
 			}
 		}

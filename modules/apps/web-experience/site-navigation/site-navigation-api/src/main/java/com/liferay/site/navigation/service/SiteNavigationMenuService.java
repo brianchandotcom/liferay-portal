@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 
@@ -62,6 +63,10 @@ public interface SiteNavigationMenuService extends BaseService {
 	public SiteNavigationMenu deleteSiteNavigationMenu(
 		long siteNavigationMenuId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SiteNavigationMenu fetchSiteNavigationMenu(long siteNavigationMenuId)
+		throws PortalException;
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -71,4 +76,24 @@ public interface SiteNavigationMenuService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SiteNavigationMenu> getSiteNavigationMenus(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SiteNavigationMenu> getSiteNavigationMenus(long groupId,
+		int start, int end, OrderByComparator orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SiteNavigationMenu> getSiteNavigationMenus(long groupId,
+		java.lang.String keywords, int start, int end,
+		OrderByComparator orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSiteNavigationMenusCount(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSiteNavigationMenusCount(long groupId,
+		java.lang.String keywords);
+
+	public SiteNavigationMenu updateSiteNavigationMenu(
+		long siteNavigationMenuId, java.lang.String name,
+		ServiceContext serviceContext) throws PortalException;
 }

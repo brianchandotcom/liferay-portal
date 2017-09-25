@@ -1386,7 +1386,10 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		PortletCategory portletCategory = new PortletCategory();
 
 		if (xml == null) {
+			Class<?> clazz = getClass();
+
 			xml = ContentUtil.get(
+				clazz.getClassLoader(),
 				"com/liferay/portal/deploy/dependencies/liferay-display.xml");
 		}
 

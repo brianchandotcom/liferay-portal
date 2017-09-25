@@ -35,6 +35,7 @@ public class RobotsUtil {
 	public static String getDefaultRobots(String virtualHost) {
 		if (Validator.isNotNull(virtualHost)) {
 			String content = ContentUtil.get(
+				RobotsUtil.class.getClassLoader(),
 				PropsValues.ROBOTS_TXT_WITH_SITEMAP);
 
 			content = StringUtil.replace(content, "[$HOST$]", virtualHost);
@@ -42,7 +43,9 @@ public class RobotsUtil {
 			return content;
 		}
 
-		return ContentUtil.get(PropsValues.ROBOTS_TXT_WITHOUT_SITEMAP);
+		return ContentUtil.get(
+			RobotsUtil.class.getClassLoader(),
+			PropsValues.ROBOTS_TXT_WITHOUT_SITEMAP);
 	}
 
 	public static String getRobots(LayoutSet layoutSet) throws PortalException {

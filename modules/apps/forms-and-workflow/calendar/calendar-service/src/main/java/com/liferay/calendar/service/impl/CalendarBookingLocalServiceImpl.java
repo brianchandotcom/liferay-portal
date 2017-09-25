@@ -1652,8 +1652,9 @@ public class CalendarBookingLocalServiceImpl
 						calendarId);
 				}
 
-				recurringCalendarBookingId =
-					childMasterRecurringBooking.getCalendarBookingId();
+				if(childMasterRecurringBooking != null) {
+					recurringCalendarBookingId = childMasterRecurringBooking.getCalendarBookingId();
+				}
 			}
 
 			serviceContext.setAttribute("sendNotification", Boolean.FALSE);

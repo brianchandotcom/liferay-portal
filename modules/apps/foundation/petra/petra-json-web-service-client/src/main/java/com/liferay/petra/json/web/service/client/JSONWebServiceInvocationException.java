@@ -54,6 +54,17 @@ public class JSONWebServiceInvocationException extends Exception {
 		_status = status;
 	}
 
+	@Override
+	public String toString() {
+		String message = super.getMessage();
+
+		if ((message != null) && (message.length() > 0)) {
+			return message;
+		}
+
+		return "Server returned status " + _status;
+	}
+
 	private int _status;
 
 }

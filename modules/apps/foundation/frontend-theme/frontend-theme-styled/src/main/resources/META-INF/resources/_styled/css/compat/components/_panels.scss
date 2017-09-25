@@ -1,3 +1,7 @@
+.panel {
+	position: inherit;
+}
+
 // .panel-header styling from lexicon-base/_panels.scss
 .panel-heading {
 	border-bottom: $panel-header-border-bottom-width solid transparent;

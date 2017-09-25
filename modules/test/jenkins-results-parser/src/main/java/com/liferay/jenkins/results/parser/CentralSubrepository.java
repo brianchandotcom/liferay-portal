@@ -21,9 +21,6 @@ import java.io.IOException;
 
 import java.util.Properties;
 
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.transport.RemoteConfig;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -55,40 +52,33 @@ public class CentralSubrepository {
 
 		String tempBranchName = "temp-" + System.currentTimeMillis();
 
-		GitWorkingDirectory gitWorkingDirectory = null;
+		GitWorkingDirectory gitWorkingDirectory = new GitWorkingDirectory(
+			"master", _subrepositoryDirectory);
+
+		GitWorkingDirectory.Branch tempBranch = null;
+		GitWorkingDirectory.Branch localMasterBranch = null;
 
 		try {
-			gitWorkingDirectory = new GitWorkingDirectory(
-				"master", _subrepositoryDirectory);
+			tempBranch = gitWorkingDirectory.createLocalBranch(tempBranchName);
 
-			gitWorkingDirectory.createLocalBranch(tempBranchName);
+			gitWorkingDirectory.checkoutBranch(tempBranch);
 
-			gitWorkingDirectory.checkoutBranch(tempBranchName);
+			GitWorkingDirectory.Remote upstreamRemote =
+				gitWorkingDirectory.getRemote("upstream");
 
-			RemoteConfig remoteConfig = gitWorkingDirectory.getRemoteConfig(
-				"upstream");
+			localMasterBranch = gitWorkingDirectory.getBranch("master", null);
 
-			gitWorkingDirectory.fetch("master", "master", remoteConfig);
-		}
-		catch (GitAPIException gapie) {
-			throw new RuntimeException(
-				"Unable to refresh master branch in repo " + _subrepositoryName,
-				gapie);
+			gitWorkingDirectory.fetch(
+				localMasterBranch,
+				gitWorkingDirectory.getBranch("master", upstreamRemote));
 		}
 		finally {
-			try {
-				if ((gitWorkingDirectory != null) &&
-					gitWorkingDirectory.branchExists(tempBranchName, null)) {
+			if ((localMasterBranch != null) && (tempBranch != null) &&
+				gitWorkingDirectory.branchExists(tempBranch.getName(), null)) {
 
-					gitWorkingDirectory.checkoutBranch("master");
+				gitWorkingDirectory.checkoutBranch(localMasterBranch);
 
-					gitWorkingDirectory.deleteLocalBranch(tempBranchName);
-				}
-			}
-			catch (GitAPIException gapie) {
-				throw new RuntimeException(
-					"Unable to delete temporary branch " + tempBranchName,
-					gapie);
+				gitWorkingDirectory.deleteBranch(tempBranch);
 			}
 		}
 

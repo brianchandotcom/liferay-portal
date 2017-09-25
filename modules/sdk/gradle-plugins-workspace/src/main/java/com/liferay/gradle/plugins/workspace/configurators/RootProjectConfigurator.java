@@ -344,17 +344,17 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 					String bundleUrl = workspaceExtension.getBundleUrl();
 
-					File bundleCacheDir =
-						workspaceExtension.getBundleCacheDir();
-
 					File bundleFile = FileUtil.urlToFile(bundleUrl);
 
-					File destBundleFile = new File(
-						bundleCacheDir, bundleFile.getName());
+					if (bundleFile != null) {
+						File destBundleFile = new File(
+							workspaceExtension.getBundleCacheDir(),
+							bundleFile.getName());
 
-					if (bundleFile.equals(destBundleFile)) {
-						throw new GradleException(
-							"Destination cannot be the same as bundle url");
+						if (bundleFile.equals(destBundleFile)) {
+							throw new GradleException(
+								"Destination cannot be the same as bundle url");
+						}
 					}
 				}
 

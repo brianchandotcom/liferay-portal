@@ -14,6 +14,7 @@
 
 package com.liferay.upload.web.internal;
 
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.upload.AttachmentElementHandler;
 import com.liferay.upload.AttachmentFileEntryReference;
-import com.liferay.upload.util.CheckedFunction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +50,7 @@ public class ImageAttachmentElementHandler implements AttachmentElementHandler {
 	@Override
 	public String replaceContentElements(
 			String content,
-			CheckedFunction<FileEntry, FileEntry, PortalException> saveFile)
+			UnsafeFunction<FileEntry, FileEntry, PortalException> saveFile)
 		throws PortalException {
 
 		for (AttachmentFileEntryReference attachmentFileEntryReference :
@@ -79,7 +79,7 @@ public class ImageAttachmentElementHandler implements AttachmentElementHandler {
 
 	private List<AttachmentFileEntryReference> _addAttachmentFileEntries(
 			String content,
-			CheckedFunction<FileEntry, FileEntry, PortalException> saveFile)
+			UnsafeFunction<FileEntry, FileEntry, PortalException> saveFile)
 		throws PortalException {
 
 		List<FileEntry> tempFileEntries = _getAttachmentFileEntries(content);

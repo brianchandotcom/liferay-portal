@@ -5,6 +5,10 @@
 	}
 }
 
+[class*="-offset-"] {
+	@extend .mx-auto;
+}
+
 .container-fluid-1280 {
 	@include clearfix;
 }

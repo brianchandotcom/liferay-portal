@@ -35,6 +35,7 @@
 ### Changed
 - [LPS-74789]: Update the [Liferay CSS Builder] dependency to version 1.1.3.
 
+[Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-69223]: https://issues.liferay.com/browse/LPS-69223
 [LPS-73495]: https://issues.liferay.com/browse/LPS-73495

@@ -49,7 +49,8 @@ The logic that chooses the default deploy directory is as follows:
 	is deployed to `${liferay home}/osgi/portal`.
 	5. Otherwise, the module is deployed to `${liferay home}/osgi/modules`.
 - For themes:
-	1. If the `required-for-startup` property in the `src/WEB-INF/liferay-plugin-package.properties` file is `true`, the theme is
+	1. If the `required-for-startup` property in the
+  `src/WEB-INF/liferay-plugin-package.properties` file is `true`, the theme is
 	deployed to `${liferay home}/osgi/war`.
 	2. Otherwise, the theme is deployed to `${liferay home}/deploy`.
 

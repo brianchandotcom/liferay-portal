@@ -44,7 +44,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item
 			href="<%= viewProductDefinitionsURL.toString() %>"
-			label="Catalog"
+			label="catalog"
 			selected='<%= toolbarItem.equals("view-all-product-definitions") %>'
 		/>
 	</aui:nav>

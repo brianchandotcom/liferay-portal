@@ -167,9 +167,8 @@ public abstract class BaseJSONWebServiceClientImpl
 
 	@Override
 	public String doDelete(String url, Map<String, String> parameters)
-		throws
-			JSONWebServiceInvocationException,
-			JSONWebServiceTransportException {
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceTransportException {
 
 		return doDelete(
 			url, parameters, Collections.<String, String>emptyMap());
@@ -177,10 +176,10 @@ public abstract class BaseJSONWebServiceClientImpl
 
 	@Override
 	public String doDelete(
-		String url, Map<String, String> parameters, Map<String, String> headers)
-			throws
-				JSONWebServiceInvocationException,
-		JSONWebServiceTransportException {
+			String url, Map<String, String> parameters,
+			Map<String, String> headers)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceTransportException {
 
 		if (!isNull(_contextPath)) {
 			url = _contextPath + url;
@@ -213,19 +212,18 @@ public abstract class BaseJSONWebServiceClientImpl
 
 	@Override
 	public String doGet(String url, Map<String, String> parameters)
-		throws
-			JSONWebServiceInvocationException,
-			JSONWebServiceTransportException {
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceTransportException {
 
 		return doGet(url, parameters, Collections.<String, String>emptyMap());
 	}
 
 	@Override
 	public String doGet(
-		String url, Map<String, String> parameters, Map<String, String> headers)
-			throws
-				JSONWebServiceInvocationException,
-		JSONWebServiceTransportException {
+			String url, Map<String, String> parameters,
+			Map<String, String> headers)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceTransportException {
 
 		if (!isNull(_contextPath)) {
 			url = _contextPath + url;
@@ -258,19 +256,18 @@ public abstract class BaseJSONWebServiceClientImpl
 
 	@Override
 	public String doPost(String url, Map<String, String> parameters)
-		throws
-			JSONWebServiceInvocationException,
-			JSONWebServiceTransportException {
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceTransportException {
 
 		return doPost(url, parameters, Collections.<String, String>emptyMap());
 	}
 
 	@Override
 	public String doPost(
-		String url, Map<String, String> parameters, Map<String, String> headers)
-			throws
-				JSONWebServiceInvocationException,
-		JSONWebServiceTransportException {
+			String url, Map<String, String> parameters,
+			Map<String, String> headers)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceTransportException {
 
 		if (!isNull(_contextPath)) {
 			url = _contextPath + url;
@@ -314,19 +311,17 @@ public abstract class BaseJSONWebServiceClientImpl
 
 	@Override
 	public String doPostAsJSON(String url, String json)
-		throws
-		JSONWebServiceInvocationException,
-		JSONWebServiceTransportException {
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceTransportException {
 
 		return doPostAsJSON(url, json, Collections.<String, String>emptyMap());
 	}
 
 	@Override
 	public String doPostAsJSON(
-		String url, String json, Map<String, String> headers)
-			throws
-				JSONWebServiceInvocationException,
-		JSONWebServiceTransportException {
+			String url, String json, Map<String, String> headers)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceTransportException {
 
 		HttpPost httpPost = new HttpPost(url);
 
@@ -343,19 +338,18 @@ public abstract class BaseJSONWebServiceClientImpl
 
 	@Override
 	public String doPut(String url, Map<String, String> parameters)
-		throws
-			JSONWebServiceInvocationException,
-			JSONWebServiceTransportException {
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceTransportException {
 
 		return doPut(url, parameters, Collections.<String, String>emptyMap());
 	}
 
 	@Override
 	public String doPut(
-		String url, Map<String, String> parameters, Map<String, String> headers)
-			throws
-				JSONWebServiceInvocationException,
-		JSONWebServiceTransportException {
+			String url, Map<String, String> parameters,
+			Map<String, String> headers)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceTransportException {
 
 		if (!isNull(_contextPath)) {
 			url = _contextPath + url;
@@ -675,8 +669,8 @@ public abstract class BaseJSONWebServiceClientImpl
 	}
 
 	protected String execute(HttpRequestBase httpRequestBase)
-		throws
-		JSONWebServiceInvocationException, JSONWebServiceTransportException {
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceTransportException {
 
 		signRequest(httpRequestBase);
 
@@ -761,7 +755,7 @@ public abstract class BaseJSONWebServiceClientImpl
 			else if (statusCode == HttpServletResponse.SC_UNAUTHORIZED) {
 				throw new JSONWebServiceTransportException.
 					AuthenticationFailure(
-					"Not authorized to access JSON web service");
+						"Not authorized to access JSON web service");
 			}
 
 			throw new JSONWebServiceTransportException.CommunicationFailure(
@@ -793,7 +787,8 @@ public abstract class BaseJSONWebServiceClientImpl
 	}
 
 	protected PoolingNHttpClientConnectionManager
-	getPoolingNHttpClientConnectionManager() throws IOReactorException {
+			getPoolingNHttpClientConnectionManager()
+		throws IOReactorException {
 
 		PoolingNHttpClientConnectionManager
 			poolingNHttpClientConnectionManager = null;
@@ -819,7 +814,7 @@ public abstract class BaseJSONWebServiceClientImpl
 	}
 
 	protected Registry<SchemeIOSessionStrategy>
-	getSchemeIOSessionStrategyRegistry() {
+		getSchemeIOSessionStrategyRegistry() {
 
 		RegistryBuilder<SchemeIOSessionStrategy> registryBuilder =
 			RegistryBuilder.<SchemeIOSessionStrategy>create();

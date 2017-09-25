@@ -68,13 +68,17 @@ public class ExecuteNodeTask extends DefaultTask {
 
 		Logger logger = getLogger();
 
-		for (int i = 0; i < npmInstallRetries; i++) {
+		for (int i = 1; i <= npmInstallRetries; i++) {
 			try {
 				_nodeExecutor.execute();
 
 				break;
 			}
 			catch (IOException ioe) {
+				if (i == npmInstallRetries) {
+					throw ioe;
+				}
+
 				if (logger.isWarnEnabled()) {
 					logger.warn(
 						ioe.getMessage() + ". Running \"npm install\" again");

@@ -15,6 +15,7 @@
 package com.liferay.site.navigation.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -37,6 +38,8 @@ public class SiteNavigationMenuLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		// Site navigation menu
+
 		long siteNavigationMenuId = counterLocalService.increment();
 
 		SiteNavigationMenu siteNavigationMenu =
@@ -53,6 +56,13 @@ public class SiteNavigationMenuLocalServiceImpl
 		siteNavigationMenu.setName(name);
 
 		siteNavigationMenuPersistence.update(siteNavigationMenu);
+
+		// Resources
+
+		resourceLocalService.addResources(
+			siteNavigationMenu.getCompanyId(), siteNavigationMenu.getGroupId(),
+			siteNavigationMenu.getUserId(), SiteNavigationMenu.class.getName(),
+			siteNavigationMenu.getSiteNavigationMenuId(), false, true, true);
 
 		return siteNavigationMenu;
 	}
@@ -91,6 +101,14 @@ public class SiteNavigationMenuLocalServiceImpl
 				siteNavigationMenuItem.getSiteNavigationMenuItemId());
 		}
 
+		// Resources
+
+		resourceLocalService.deleteResource(
+			siteNavigationMenu.getCompanyId(),
+			SiteNavigationMenuItem.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			siteNavigationMenu.getSiteNavigationMenuId());
+
 		return siteNavigationMenu;
 	}
 
@@ -124,6 +142,26 @@ public class SiteNavigationMenuLocalServiceImpl
 	@Override
 	public int getSiteNavigationMenusCount(long groupId, String keywords) {
 		return siteNavigationMenuPersistence.countByG_N(groupId, keywords);
+	}
+
+	@Override
+	public SiteNavigationMenu updateSiteNavigationMenu(
+			long userId, long siteNavigationMenuId, String name,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		SiteNavigationMenu siteNavigationMenu = getSiteNavigationMenu(
+			siteNavigationMenuId);
+
+		User user = userLocalService.getUser(userId);
+
+		siteNavigationMenu.setModifiedDate(
+			serviceContext.getModifiedDate(new Date()));
+		siteNavigationMenu.setUserId(userId);
+		siteNavigationMenu.setUserName(user.getFullName());
+		siteNavigationMenu.setName(name);
+
+		return siteNavigationMenuPersistence.update(siteNavigationMenu);
 	}
 
 }

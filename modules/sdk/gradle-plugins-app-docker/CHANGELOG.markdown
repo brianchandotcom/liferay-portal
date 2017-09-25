@@ -3,7 +3,7 @@
 ## 1.0.1 - 2017-09-19
 
 ### Changed
-- [LPS-74785]: Avoid failing the build in case of a Git error.
+- [LPS-74785]: Avoid failing the build in the case of a Git error.
 
 ## 1.0.2 - 2017-09-20
 

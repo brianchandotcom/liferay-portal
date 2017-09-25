@@ -15,11 +15,17 @@
 package com.liferay.layout.page.template.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.service.FragmentCollectionServiceUtil;
+import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplate;
 import com.liferay.layout.page.template.model.LayoutPageTemplateFolder;
+import com.liferay.layout.page.template.model.LayoutPageTemplateFragment;
 import com.liferay.layout.page.template.service.LayoutPageTemplateFolderServiceUtil;
+import com.liferay.layout.page.template.service.LayoutPageTemplateFragmentServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -34,7 +40,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -139,6 +147,60 @@ public class LayoutPageTemplateServiceTest {
 	}
 
 	@Test
+	public void testAddLayoutPageTemplateWithFragmentEntries()
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		LayoutPageTemplateFolder layoutPageTemplateFolder =
+			LayoutPageTemplateFolderServiceUtil.addLayoutPageTemplateFolder(
+				_group.getGroupId(), "Page Template Folder", null,
+				serviceContext);
+
+		FragmentCollection fragmentCollection =
+			FragmentCollectionServiceUtil.addFragmentCollection(
+				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
+				serviceContext);
+
+		FragmentEntry fragmentEntry1 =
+			FragmentEntryServiceUtil.addFragmentEntry(
+				_group.getGroupId(),
+				fragmentCollection.getFragmentCollectionId(),
+				"Fragment Entry 1", null, null, null, serviceContext);
+
+		FragmentEntry fragmentEntry2 =
+			FragmentEntryServiceUtil.addFragmentEntry(
+				_group.getGroupId(),
+				fragmentCollection.getFragmentCollectionId(),
+				"Fragment Entry 2", null, null, null, serviceContext);
+
+		Map<Integer, FragmentEntry> layoutPageTemplateFragmentEntries =
+			new HashMap<>();
+
+		layoutPageTemplateFragmentEntries.put(1, fragmentEntry1);
+		layoutPageTemplateFragmentEntries.put(2, fragmentEntry2);
+
+		LayoutPageTemplate layoutPageTemplate =
+			LayoutPageTemplateServiceUtil.addLayoutPageTemplate(
+				_group.getGroupId(),
+				layoutPageTemplateFolder.getLayoutPageTemplateFolderId(),
+				"Page Template", layoutPageTemplateFragmentEntries,
+				serviceContext);
+
+		List<LayoutPageTemplateFragment> actualLayoutPageTemplatesCount =
+			LayoutPageTemplateFragmentServiceUtil.
+				getLayoutPageTemplateFragmentsByPageTemplate(
+					_group.getGroupId(),
+					layoutPageTemplate.getLayoutPageTemplateId());
+
+		Assert.assertEquals(
+			actualLayoutPageTemplatesCount.toString(), 2,
+			actualLayoutPageTemplatesCount.size());
+	}
+
+	@Test
 	public void testAddMultipleLayoutPageTemplates() throws PortalException {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -196,6 +258,64 @@ public class LayoutPageTemplateServiceTest {
 		Assert.assertNull(
 			LayoutPageTemplateServiceUtil.fetchLayoutPageTemplate(
 				layoutPageTemplate.getLayoutPageTemplateId()));
+	}
+
+	@Test
+	public void testRemoveFragmentsFromLayoutPageTemplate()
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		LayoutPageTemplateFolder layoutPageTemplateFolder =
+			LayoutPageTemplateFolderServiceUtil.addLayoutPageTemplateFolder(
+				_group.getGroupId(), "Page Template Folder", null,
+				serviceContext);
+
+		FragmentCollection fragmentCollection =
+			FragmentCollectionServiceUtil.addFragmentCollection(
+				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
+				serviceContext);
+
+		FragmentEntry fragmentEntry1 =
+			FragmentEntryServiceUtil.addFragmentEntry(
+				_group.getGroupId(),
+				fragmentCollection.getFragmentCollectionId(),
+				"Fragment Entry 1", null, null, null, serviceContext);
+
+		FragmentEntry fragmentEntry2 =
+			FragmentEntryServiceUtil.addFragmentEntry(
+				_group.getGroupId(),
+				fragmentCollection.getFragmentCollectionId(),
+				"Fragment Entry 2", null, null, null, serviceContext);
+
+		Map<Integer, FragmentEntry> layoutPageTemplateFragmentEntries =
+			new HashMap<>();
+
+		layoutPageTemplateFragmentEntries.put(1, fragmentEntry1);
+		layoutPageTemplateFragmentEntries.put(2, fragmentEntry2);
+
+		LayoutPageTemplate layoutPageTemplate =
+			LayoutPageTemplateServiceUtil.addLayoutPageTemplate(
+				_group.getGroupId(),
+				layoutPageTemplateFolder.getLayoutPageTemplateFolderId(),
+				"Page Template", layoutPageTemplateFragmentEntries,
+				serviceContext);
+
+		LayoutPageTemplateServiceUtil.updateLayoutPageTemplate(
+			layoutPageTemplate.getLayoutPageTemplateId(), "New name",
+			new HashMap<Integer, FragmentEntry>(), serviceContext);
+
+		List<LayoutPageTemplateFragment> actualLayoutPageTemplatesCount =
+			LayoutPageTemplateFragmentServiceUtil.
+				getLayoutPageTemplateFragmentsByPageTemplate(
+					_group.getGroupId(),
+					layoutPageTemplate.getLayoutPageTemplateId());
+
+		Assert.assertEquals(
+			actualLayoutPageTemplatesCount.toString(), 0,
+			actualLayoutPageTemplatesCount.size());
 	}
 
 	@DeleteAfterTestRun

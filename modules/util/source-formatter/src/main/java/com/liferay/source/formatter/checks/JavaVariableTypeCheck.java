@@ -308,12 +308,15 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 					return false;
 				}
 			}
-			else if (found &&
-					 ((childJavaTerm instanceof JavaMethod) ||
-					  ((childJavaTerm instanceof JavaVariable) &&
-					   content.contains("{\n\n")))) {
-
-				return false;
+			else if (childJavaTerm instanceof JavaMethod) {
+				if (found) {
+					return false;
+				}
+			}
+			else if (childJavaTerm instanceof JavaVariable) {
+				if (found && content.contains("{\n\n")) {
+					return false;
+				}
 			}
 		}
 

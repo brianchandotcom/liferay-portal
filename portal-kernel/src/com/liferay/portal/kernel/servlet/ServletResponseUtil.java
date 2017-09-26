@@ -282,7 +282,7 @@ public class ServletResponseUtil {
 					request, response, fileName, contentType, null, fullRange);
 
 				copyRange(
-					inputStream, outputStream, fullRange.getStart(),
+					fullRange.getStart(), inputStream, outputStream, true,
 					fullRange.getLength());
 			}
 			else if (ranges.size() == 1) {
@@ -300,7 +300,7 @@ public class ServletResponseUtil {
 				response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);
 
 				copyRange(
-					inputStream, outputStream, range.getStart(),
+					range.getStart(), inputStream, outputStream, true,
 					range.getLength());
 			}
 			else if (ranges.size() > 1) {
@@ -621,6 +621,18 @@ public class ServletResponseUtil {
 		return copyRange(
 			new RandomAccessInputStream(inputStream), outputStream, start,
 			length);
+	}
+
+	protected static InputStream copyRange(
+			long offset, InputStream inputStream, OutputStream outputStream,
+			boolean cleanUp, long length)
+		throws IOException {
+
+		inputStream.skip(offset);
+		StreamUtil.transfer(
+			inputStream, outputStream, StreamUtil.BUFFER_SIZE, cleanUp, length);
+
+		return inputStream;
 	}
 
 	protected static void setContentLength(

@@ -185,8 +185,6 @@ public class OSGiBundleBuilderCommandTest {
 
 					Path fileInActual = actual.resolve(relativize);
 
-					//System.out.println(file.toString());
-
 					Assert.assertTrue(Files.exists(fileInActual));
 
 					return FileVisitResult.CONTINUE;

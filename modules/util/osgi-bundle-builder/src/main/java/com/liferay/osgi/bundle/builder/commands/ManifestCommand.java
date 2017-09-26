@@ -34,15 +34,15 @@ public class ManifestCommand extends BaseCommand {
 		Files.createDirectories(output.toPath());
 
 		if (output.isFile()) {
-			try (OutputStream manifestOut = new FileOutputStream(output)) {
-				jar.writeManifest(manifestOut);
+			try (OutputStream outputStream = new FileOutputStream(output)) {
+				jar.writeManifest(outputStream);
 			}
 		}
 		else {
-			try (OutputStream manifestOut = new FileOutputStream(
+			try (OutputStream outputStream = new FileOutputStream(
 					new File(output, "MANIFEST.MF"))) {
 
-				jar.writeManifest(manifestOut);
+				jar.writeManifest(outputStream);
 			}
 		}
 	}

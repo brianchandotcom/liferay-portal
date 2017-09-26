@@ -1,0 +1,21 @@
+task runGradleTest
+
+gradle.liferayWorkspace {
+	bundleCacheDir = "bundlesDir"
+	bundleUrl = uri("bundlesDir/bundle.zip")
+}
+
+runGradleTest {
+	doLast {
+		String errorMessage = ""
+
+		try {
+			downloadBundle.execute()
+		}
+		catch (Exception e) {
+			errorMessage = e.cause.message
+		}
+
+		assert errorMessage.endsWith(" cannot be the same")
+	}
+}

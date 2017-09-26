@@ -17,17 +17,13 @@ package com.liferay.sync.internal.model.listener;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.sync.constants.SyncDeviceConstants;
-import com.liferay.sync.model.SyncDLObject;
 import com.liferay.sync.model.SyncDevice;
 import com.liferay.sync.service.SyncDeviceLocalService;
 
-import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -62,24 +58,8 @@ public class UserModelListener extends SyncBaseModelListener<User> {
 			Object associationClassPK)
 		throws ModelListenerException {
 
-		if (!associationClassName.equals(Role.class.getName())) {
-			return;
-		}
-
-		List<ResourcePermission> resourcePermissions =
-			resourcePermissionLocalService.getRoleResourcePermissions(
-				(Long)associationClassPK);
-
-		for (ResourcePermission resourcePermission : resourcePermissions) {
-			if (resourcePermission.hasActionId(ActionKeys.VIEW)) {
-				SyncDLObject syncDLObject = getSyncDLObject(resourcePermission);
-
-				if (syncDLObject == null) {
-					continue;
-				}
-
-				updateSyncDLObject(syncDLObject);
-			}
+		if (associationClassName.equals(Role.class.getName())) {
+			onAddRoleAssociation(associationClassPK);
 		}
 	}
 
@@ -89,29 +69,8 @@ public class UserModelListener extends SyncBaseModelListener<User> {
 			Object associationClassPK)
 		throws ModelListenerException {
 
-		if (!associationClassName.equals(Role.class.getName())) {
-			return;
-		}
-
-		List<ResourcePermission> resourcePermissions =
-			resourcePermissionLocalService.getRoleResourcePermissions(
-				(Long)associationClassPK);
-
-		for (ResourcePermission resourcePermission : resourcePermissions) {
-			if (resourcePermission.hasActionId(ActionKeys.VIEW)) {
-				SyncDLObject syncDLObject = getSyncDLObject(resourcePermission);
-
-				if (syncDLObject == null) {
-					continue;
-				}
-
-				Date date = new Date();
-
-				syncDLObject.setModifiedTime(date.getTime());
-				syncDLObject.setLastPermissionChangeDate(date);
-
-				syncDLObjectLocalService.updateSyncDLObject(syncDLObject);
-			}
+		if (associationClassName.equals(Role.class.getName())) {
+			onRemoveRoleAssociation(associationClassPK);
 		}
 	}
 

@@ -16,13 +16,7 @@ package com.liferay.sync.internal.model.listener;
 
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.UserGroupRole;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.sync.model.SyncDLObject;
-
-import java.util.Date;
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -37,47 +31,14 @@ public class UserGroupRoleModelListener
 	public void onAfterCreate(UserGroupRole userGroupRole)
 		throws ModelListenerException {
 
-		List<ResourcePermission> resourcePermissions =
-			resourcePermissionLocalService.getRoleResourcePermissions(
-				userGroupRole.getRoleId());
-
-		for (ResourcePermission resourcePermission : resourcePermissions) {
-			if (resourcePermission.hasActionId(ActionKeys.VIEW)) {
-				SyncDLObject syncDLObject = getSyncDLObject(resourcePermission);
-
-				if (syncDLObject == null) {
-					continue;
-				}
-
-				updateSyncDLObject(syncDLObject);
-			}
-		}
+		onAddRoleAssociation(userGroupRole.getRoleId());
 	}
 
 	@Override
 	public void onAfterRemove(UserGroupRole userGroupRole)
 		throws ModelListenerException {
 
-		List<ResourcePermission> resourcePermissions =
-			resourcePermissionLocalService.getRoleResourcePermissions(
-				userGroupRole.getRoleId());
-
-		for (ResourcePermission resourcePermission : resourcePermissions) {
-			if (resourcePermission.hasActionId(ActionKeys.VIEW)) {
-				SyncDLObject syncDLObject = getSyncDLObject(resourcePermission);
-
-				if (syncDLObject == null) {
-					continue;
-				}
-
-				Date date = new Date();
-
-				syncDLObject.setModifiedTime(date.getTime());
-				syncDLObject.setLastPermissionChangeDate(date);
-
-				syncDLObjectLocalService.updateSyncDLObject(syncDLObject);
-			}
-		}
+		onRemoveRoleAssociation(userGroupRole.getRoleId());
 	}
 
 }

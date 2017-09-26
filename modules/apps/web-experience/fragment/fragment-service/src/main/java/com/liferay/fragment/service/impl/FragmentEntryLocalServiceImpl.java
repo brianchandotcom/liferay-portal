@@ -37,7 +37,7 @@ public class FragmentEntryLocalServiceImpl
 
 	@Override
 	public FragmentEntry addFragmentEntry(
-			long groupId, long userId, long fragmentCollectionId, String name,
+			long userId, long groupId, long fragmentCollectionId, String name,
 			String css, String html, String js, ServiceContext serviceContext)
 		throws PortalException {
 

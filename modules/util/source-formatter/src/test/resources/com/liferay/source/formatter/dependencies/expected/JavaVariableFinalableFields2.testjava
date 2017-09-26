@@ -28,6 +28,6 @@ public class JavaVariableFinalableFields2 {
 	}
 
 	private final Integer _ableInteger = 1;
-	private final Integer _bakerInteger;
+	private Integer _bakerInteger;
 
 }

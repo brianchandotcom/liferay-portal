@@ -63,7 +63,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
@@ -787,13 +786,23 @@ public class AssetPublisherDisplayContext {
 			liferayPortletRequest, liferayPortletResponse);
 
 		for (long groupId : groupIds) {
-			Map<String, PortletURL> addPortletURLs =
-				AssetUtil.getAddPortletURLs(
+			List<AssetPublisherAddItemHolder> assetPublisherAddItemHolders =
+				AssetUtil.getAssetPublisherAddItemHolders(
 					liferayPortletRequest, liferayPortletResponse, groupId,
 					getClassNameIds(), getClassTypeIds(),
 					getAllAssetCategoryIds(), getAllAssetTagNames(), redirect);
 
-			if (MapUtil.isNotEmpty(addPortletURLs)) {
+			if (ListUtil.isNotEmpty(assetPublisherAddItemHolders)) {
+				Map<String, PortletURL> addPortletURLs = new HashMap<>();
+
+				for (AssetPublisherAddItemHolder assetPublisherAddItemHolder :
+						assetPublisherAddItemHolders) {
+
+					addPortletURLs.put(
+						assetPublisherAddItemHolder.getName(),
+						assetPublisherAddItemHolder.getPortletURL());
+				}
+
 				scopeAddPortletURLs.put(groupId, addPortletURLs);
 			}
 

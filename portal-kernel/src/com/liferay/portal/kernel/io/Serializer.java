@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.io;
 
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
-import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -381,10 +380,8 @@ public class Serializer {
 		bufferQueueThreadLocal = new CentralizedThreadLocal<>(false);
 
 	static {
-		int threadLocalBufferCountLimit = GetterUtil.getInteger(
-			System.getProperty(
-				Serializer.class.getName() +
-					".thread.local.buffer.count.limit"));
+		int threadLocalBufferCountLimit = Integer.getInteger(
+			Serializer.class.getName() + ".thread.local.buffer.count.limit", 0);
 
 		if (threadLocalBufferCountLimit < THREADLOCAL_BUFFER_COUNT_MIN) {
 			threadLocalBufferCountLimit = THREADLOCAL_BUFFER_COUNT_MIN;
@@ -392,10 +389,8 @@ public class Serializer {
 
 		THREADLOCAL_BUFFER_COUNT_LIMIT = threadLocalBufferCountLimit;
 
-		int threadLocalBufferSizeLimit = GetterUtil.getInteger(
-			System.getProperty(
-				Serializer.class.getName() +
-					".thread.local.buffer.size.limit"));
+		int threadLocalBufferSizeLimit = Integer.getInteger(
+			Serializer.class.getName() + ".thread.local.buffer.size.limit", 0);
 
 		if (threadLocalBufferSizeLimit < THREADLOCAL_BUFFER_SIZE_MIN) {
 			threadLocalBufferSizeLimit = THREADLOCAL_BUFFER_SIZE_MIN;

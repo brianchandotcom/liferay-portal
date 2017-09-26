@@ -450,7 +450,7 @@
 </tr>
 <tr>
 	<td>SETTINGS_CELL_EDITOR_YES_RADIO</td>
-	<td>//input[(@name='value') and (@value='true') ]</td>
+	<td>//input[(@name='value') and (@value='true')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -92,12 +92,14 @@ public class EqualsPoshiElement extends BasePoshiElement {
 
 		if (!(parentPoshiElement instanceof AndPoshiElement ||
 			parentPoshiElement instanceof IfPoshiElement ||
-			parentPoshiElement instanceof NotPoshiElement) {
+			parentPoshiElement instanceof NotPoshiElement ||
+			parentPoshiElement instanceof OrPoshiElement)) {
 
 			return false;
 		}
 
 		if (readableSyntax.contains(" && ") ||
+			readableSyntax.contains(" || ") ||
 			readableSyntax.startsWith("!(")) {
 
 			return false;

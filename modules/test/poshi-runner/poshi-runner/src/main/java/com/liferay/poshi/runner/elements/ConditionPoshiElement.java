@@ -76,13 +76,14 @@ public class ConditionPoshiElement extends ExecutePoshiElement {
 
 		if (!(parentPoshiElement instanceof AndPoshiElement ||
 			parentPoshiElement instanceof IfPoshiElement ||
-			parentPoshiElement instanceof NotPoshiElement) {
+			parentPoshiElement instanceof NotPoshiElement ||
+			parentPoshiElement instanceof OrPoshiElement)) {
 
 			return false;
 		}
 
 		if (readableSyntax.contains(" && ") ||
-			readableSyntax.startsWith("!")) {
+			readableSyntax.contains(" || ") || readableSyntax.startsWith("!")) {
 
 			return false;
 		}
@@ -92,7 +93,6 @@ public class ConditionPoshiElement extends ExecutePoshiElement {
 
 			return true;
 		}
-
 
 		return false;
 	}

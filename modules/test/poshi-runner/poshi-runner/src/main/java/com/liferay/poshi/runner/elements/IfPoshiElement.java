@@ -179,6 +179,6 @@ public class IfPoshiElement extends BasePoshiElement {
 	private static final String _ELEMENT_NAME = "if";
 
 	private static final String[] _conditionNames =
-		{"and", "condition", "equals", "isset", "not"};
+		{"and", "condition", "equals", "isset", "not", "or"};
 
 }

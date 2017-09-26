@@ -19,6 +19,7 @@ import com.liferay.osgi.bundle.builder.OSGiBundleBuilderArgs;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.net.URL;
 
@@ -45,91 +46,119 @@ import org.junit.rules.TemporaryFolder;
 
 /**
  * @author David Truong
+ * @author Andrea Di Giorgi
  */
 public class OSGiBundleBuilderCommandTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_unzip("dependencies/expected.jar", "expected");
-		_unzip("dependencies/project.zip", "project");
+		_expectedDir = _unzip("dependencies/expected.jar", "expected");
+		_projectDir = _unzip("dependencies/project.zip", "project");
 	}
 
 	@Test
 	public void testJarCommand() throws Exception {
-		File tempFolder = temporaryFolder.getRoot();
-
-		File baseDir = new File(tempFolder, "project");
-
-		OSGiBundleBuilderArgs osgiBundleBuilderArgs =
-			new OSGiBundleBuilderArgs();
-
-		osgiBundleBuilderArgs.setBaseDir(baseDir);
-		osgiBundleBuilderArgs.setBndFile(new File(baseDir, "bnd.bnd"));
-		osgiBundleBuilderArgs.setClassesDir(new File(baseDir, "classes"));
-		osgiBundleBuilderArgs.setClasspath(
-			Arrays.asList(
-				new File(baseDir, "com.liferay.portal.kernel-2.0.0.jar"),
-				new File(
-					baseDir,
-					"org.osgi.service.component.annotations-1.3.0.jar"),
-				new File(baseDir, "shiro-core-1.1.0.jar")));
-		osgiBundleBuilderArgs.setOutputDir(new File(baseDir, "build"));
-		osgiBundleBuilderArgs.setResourcesDir(new File(baseDir, "resources"));
-
 		JarCommand jarCommand = new JarCommand();
 
-		jarCommand.build(osgiBundleBuilderArgs);
+		jarCommand.build(_getOSGiBundleBuilderArgs());
 
 		File jarFile = new File(
-			baseDir, "build/com.liferay.blade.authenticator.shiro.jar");
+			_projectDir, "build/com.liferay.blade.authenticator.shiro.jar");
 
 		Assert.assertTrue(jarFile.exists());
 
-		File actualFile = temporaryFolder.newFolder("actual");
+		File actualDir = temporaryFolder.newFolder("actual");
 
-		_unzip(jarFile, actualFile);
+		_unzip(jarFile, actualDir);
 
-		File expectedFile = new File(tempFolder, "expected");
-
-		_compareJarFiles(expectedFile.toPath(), actualFile.toPath());
+		_compareJarDirs(_expectedDir, actualDir);
 	}
 
 	@Test
 	public void testManifestCommand() throws Exception {
-		File tempFolder = temporaryFolder.getRoot();
-
-		File baseDir = new File(tempFolder, "project");
-
-		OSGiBundleBuilderArgs osgiBundleBuilderArgs =
-			new OSGiBundleBuilderArgs();
-
-		osgiBundleBuilderArgs.setBaseDir(baseDir);
-		osgiBundleBuilderArgs.setBndFile(new File(baseDir, "bnd.bnd"));
-		osgiBundleBuilderArgs.setClassesDir(new File(baseDir, "classes"));
-		osgiBundleBuilderArgs.setClasspath(
-			Arrays.asList(
-				new File(baseDir, "com.liferay.portal.kernel-2.0.0.jar"),
-				new File(
-					baseDir,
-					"org.osgi.service.component.annotations-1.3.0.jar"),
-				new File(baseDir, "shiro-core-1.1.0.jar")));
-		osgiBundleBuilderArgs.setOutputDir(new File(baseDir, "build"));
-		osgiBundleBuilderArgs.setResourcesDir(new File(baseDir, "resources"));
-
 		ManifestCommand manifestCommand = new ManifestCommand();
 
-		manifestCommand.build(osgiBundleBuilderArgs);
+		manifestCommand.build(_getOSGiBundleBuilderArgs());
 
-		File actualFile = new File(baseDir, "build/MANIFEST.MF");
+		File actualFile = new File(_projectDir, "build/MANIFEST.MF");
 
 		Assert.assertTrue(actualFile.exists());
 
 		_compareManifestFiles(
-			new File(tempFolder, "expected/META-INF/MANIFEST.MF"), actualFile);
+			new File(_expectedDir, "META-INF/MANIFEST.MF"), actualFile);
 	}
 
 	@Rule
 	public final TemporaryFolder temporaryFolder = new TemporaryFolder();
+
+	private static void _compareJarDirs(File expectedDir, File actualDir)
+		throws IOException {
+
+		final Path expectedDirPath = expectedDir.toPath();
+		final Path actualDirPath = actualDir.toPath();
+
+		Files.walkFileTree(
+			expectedDirPath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+					Path dirPath, BasicFileAttributes basicFileAttributes) {
+
+					String dirName = String.valueOf(dirPath.getFileName());
+
+					if (_ignoredJarDirNames.contains(dirName)) {
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFile(
+					Path path, BasicFileAttributes basicFileAttributes) {
+
+					Path relatedPath = expectedDirPath.relativize(path);
+
+					Path actualPath = actualDirPath.resolve(relatedPath);
+
+					Assert.assertTrue(
+						"File " + relatedPath + " does not exist",
+						Files.exists(actualPath));
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+	}
+
+	private static void _compareManifestFiles(
+			File expectedFile, File actualFile)
+		throws IOException {
+
+		Attributes expectedAttributes = _getManifestAttributes(expectedFile);
+		Attributes actualAttributes = _getManifestAttributes(actualFile);
+
+		for (Object name : expectedAttributes.keySet()) {
+			if (_ignoredManifestAttributeNames.contains(String.valueOf(name))) {
+				continue;
+			}
+
+			Assert.assertEquals(
+				"Value of attribute \"" + name + "\" does not match",
+				expectedAttributes.get(name), actualAttributes.get(name));
+		}
+	}
+
+	private static Attributes _getManifestAttributes(File file)
+		throws IOException {
+
+		try (InputStream inputStream = new FileInputStream(file)) {
+			Manifest manifest = new Manifest(inputStream);
+
+			return manifest.getMainAttributes();
+		}
+	}
 
 	private static void _unzip(File file, File outputDir) throws IOException {
 		Path outputDirPath = outputDir.toPath();
@@ -155,81 +184,50 @@ public class OSGiBundleBuilderCommandTest {
 		}
 	}
 
-	private void _compareJarFiles(final Path expected, final Path actual)
-		throws IOException {
+	private OSGiBundleBuilderArgs _getOSGiBundleBuilderArgs() {
+		OSGiBundleBuilderArgs osgiBundleBuilderArgs =
+			new OSGiBundleBuilderArgs();
 
-		Files.walkFileTree(
-			expected,
-			new SimpleFileVisitor<Path>() {
+		osgiBundleBuilderArgs.setBaseDir(_projectDir);
+		osgiBundleBuilderArgs.setBndFile(new File(_projectDir, "bnd.bnd"));
+		osgiBundleBuilderArgs.setClassesDir(new File(_projectDir, "classes"));
+		osgiBundleBuilderArgs.setClasspath(
+			Arrays.asList(
+				new File(_projectDir, "com.liferay.portal.kernel-2.0.0.jar"),
+				new File(
+					_projectDir,
+					"org.osgi.service.component.annotations-1.3.0.jar"),
+				new File(_projectDir, "shiro-core-1.1.0.jar")));
+		osgiBundleBuilderArgs.setOutputDir(new File(_projectDir, "build"));
+		osgiBundleBuilderArgs.setResourcesDir(
+			new File(_projectDir, "resources"));
 
-				@Override
-				public FileVisitResult preVisitDirectory(
-					Path dir, BasicFileAttributes attrs) {
-
-					Path fileName = dir.getFileName();
-
-					if (_ignoredDirectories.contains(fileName.toString())) {
-						return FileVisitResult.SKIP_SUBTREE;
-					}
-
-					return FileVisitResult.CONTINUE;
-				}
-
-				@Override
-				public FileVisitResult visitFile(
-					Path file, BasicFileAttributes attrs) {
-
-					Path relativize = expected.relativize(file);
-
-					Path fileInActual = actual.resolve(relativize);
-
-					Assert.assertTrue(Files.exists(fileInActual));
-
-					return FileVisitResult.CONTINUE;
-				}
-
-			});
+		return osgiBundleBuilderArgs;
 	}
 
-	private void _compareManifestFiles(File expected, File actual)
-		throws IOException {
-
-		Manifest expectedManifest = new Manifest(new FileInputStream(expected));
-
-		Manifest actualManifest = new Manifest(new FileInputStream(actual));
-
-		Attributes expectedAttributes = expectedManifest.getMainAttributes();
-
-		Attributes actualAttributes = actualManifest.getMainAttributes();
-
-		for (Object name : expectedAttributes.keySet()) {
-			if (_ignoredAttributes.contains(String.valueOf(name))) {
-				continue;
-			}
-
-			String expectedValue = (String)expectedAttributes.get(name);
-
-			String actualValue = (String)actualAttributes.get(name);
-
-			Assert.assertEquals(expectedValue, actualValue);
-		}
-	}
-
-	private void _unzip(String resourceName, String outputDirName)
+	private File _unzip(String resourceName, String outputDirName)
 		throws IOException {
 
 		URL url = OSGiBundleBuilderCommandTest.class.getResource(resourceName);
 
 		File file = new File(url.getFile());
 
-		_unzip(file, temporaryFolder.newFolder(outputDirName));
+		File outputDir = temporaryFolder.newFolder(outputDirName);
+
+		_unzip(file, outputDir);
+
+		return outputDir;
 	}
 
-	private static final Set<String> _ignoredAttributes = new HashSet<>(
-		Arrays.asList(
-			"Bnd-LastModified", "Javac-Debug", "Javac-Deprecation",
-			"Javac-Encoding"));
-	private static final Set<String> _ignoredDirectories = new HashSet<>(
+	private static final Set<String> _ignoredJarDirNames = new HashSet<>(
 		Arrays.asList("OSGI-INF", "OSGI-OPT"));
+	private static final Set<String> _ignoredManifestAttributeNames =
+		new HashSet<>(
+			Arrays.asList(
+				"Bnd-LastModified", "Javac-Debug", "Javac-Deprecation",
+				"Javac-Encoding"));
+
+	private File _expectedDir;
+	private File _projectDir;
 
 }

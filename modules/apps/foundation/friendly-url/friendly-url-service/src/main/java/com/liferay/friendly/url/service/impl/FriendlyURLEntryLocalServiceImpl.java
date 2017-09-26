@@ -486,7 +486,7 @@ public class FriendlyURLEntryLocalServiceImpl
 					friendlyURLEntryLocalization.setUrlTitle(
 						normalizedUrlTitle);
 
-					friendlyURLEntryLocalizationPersistence.updateImpl(
+					friendlyURLEntryLocalizationPersistence.update(
 						friendlyURLEntryLocalization);
 				}
 

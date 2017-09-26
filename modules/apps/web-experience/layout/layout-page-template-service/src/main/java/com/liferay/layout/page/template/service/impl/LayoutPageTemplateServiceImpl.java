@@ -132,15 +132,6 @@ public class LayoutPageTemplateServiceImpl
 
 	@Override
 	public List<LayoutPageTemplate> getLayoutPageTemplates(
-			long layoutPageTemplateFolderId)
-		throws PortalException {
-
-		return layoutPageTemplateLocalService.getLayoutPageTemplates(
-			layoutPageTemplateFolderId);
-	}
-
-	@Override
-	public List<LayoutPageTemplate> getLayoutPageTemplates(
 			long groupId, long layoutPageTemplateFolderId, int start, int end)
 		throws PortalException {
 

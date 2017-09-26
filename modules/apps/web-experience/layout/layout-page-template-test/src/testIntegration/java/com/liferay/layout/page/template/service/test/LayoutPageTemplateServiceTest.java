@@ -27,6 +27,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateFragment;
 import com.liferay.layout.page.template.service.LayoutPageTemplateFolderServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateFragmentLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateServiceUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -212,8 +213,10 @@ public class LayoutPageTemplateServiceTest {
 				serviceContext);
 
 		List<LayoutPageTemplate> originalLayoutPageTemplates =
-			LayoutPageTemplateServiceUtil.fetchPageTemplates(
-				layoutPageTemplateFolder.getLayoutPageTemplateFolderId());
+			LayoutPageTemplateServiceUtil.getLayoutPageTemplates(
+				layoutPageTemplateFolder.getGroupId(),
+				layoutPageTemplateFolder.getLayoutPageTemplateFolderId(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		LayoutPageTemplateServiceUtil.addLayoutPageTemplate(
 			_group.getGroupId(),
@@ -226,8 +229,10 @@ public class LayoutPageTemplateServiceTest {
 			"Page Template 2", null, serviceContext);
 
 		List<LayoutPageTemplate> actualLayoutPageTemplates =
-			LayoutPageTemplateServiceUtil.fetchPageTemplates(
-				layoutPageTemplateFolder.getLayoutPageTemplateFolderId());
+			LayoutPageTemplateServiceUtil.getLayoutPageTemplates(
+				layoutPageTemplateFolder.getGroupId(),
+				layoutPageTemplateFolder.getLayoutPageTemplateFolderId(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(
 			actualLayoutPageTemplates.toString(),

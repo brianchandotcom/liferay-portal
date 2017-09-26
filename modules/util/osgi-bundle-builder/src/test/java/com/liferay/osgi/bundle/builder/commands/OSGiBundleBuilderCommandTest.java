@@ -156,7 +156,7 @@ public class OSGiBundleBuilderCommandTest {
 	}
 
 	private void _compareJarFiles(final Path expected, final Path actual)
-		throws Exception {
+		throws IOException {
 
 		Files.walkFileTree(
 			expected,
@@ -164,8 +164,7 @@ public class OSGiBundleBuilderCommandTest {
 
 				@Override
 				public FileVisitResult preVisitDirectory(
-						Path dir, BasicFileAttributes attrs)
-					throws IOException {
+					Path dir, BasicFileAttributes attrs) {
 
 					Path fileName = dir.getFileName();
 
@@ -178,8 +177,7 @@ public class OSGiBundleBuilderCommandTest {
 
 				@Override
 				public FileVisitResult visitFile(
-						Path file, BasicFileAttributes attrs)
-					throws IOException {
+					Path file, BasicFileAttributes attrs) {
 
 					Path relativize = expected.relativize(file);
 
@@ -194,7 +192,7 @@ public class OSGiBundleBuilderCommandTest {
 	}
 
 	private void _compareManifestFiles(File expected, File actual)
-		throws Exception {
+		throws IOException {
 
 		Manifest expectedManifest = new Manifest(new FileInputStream(expected));
 

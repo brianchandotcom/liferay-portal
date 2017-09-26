@@ -47,7 +47,9 @@ public class ProtectedObjectInputStream extends ObjectInputStream {
 
 		String name = objectStreamClass.getName();
 
-		return ClassResolverUtil.resolveByContextClassLoader(name);
+		Thread thread = Thread.currentThread();
+
+		return ClassResolverUtil.resolve(name, thread.getContextClassLoader());
 	}
 
 	@Override

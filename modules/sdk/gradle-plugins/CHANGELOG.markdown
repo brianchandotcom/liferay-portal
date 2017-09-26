@@ -2481,6 +2481,10 @@ to version 2.2.9.
 - [LPS-71117]: Update the [Liferay Gradle Plugins Test Integration] dependency
 to version 2.1.1.
 - [LPS-73070]: Set the default Node.js version to 8.4.0.
+- [LPS-74503]: Update the [Liferay Gradle Plugins Javadoc Formatter] dependency
+to version 1.0.16.
+- [LPS-74503]: Update the [Liferay Javadoc Formatter] dependency to version
+1.0.22.
 
 ## 3.4.69 - 2017-09-23
 
@@ -2704,6 +2708,7 @@ up indexing.
 [LPS-74433]: https://issues.liferay.com/browse/LPS-74433
 [LPS-74475]: https://issues.liferay.com/browse/LPS-74475
 [LPS-74490]: https://issues.liferay.com/browse/LPS-74490
+[LPS-74503]: https://issues.liferay.com/browse/LPS-74503
 [LPS-74538]: https://issues.liferay.com/browse/LPS-74538
 [LPS-74544]: https://issues.liferay.com/browse/LPS-74544
 [LPS-74614]: https://issues.liferay.com/browse/LPS-74614

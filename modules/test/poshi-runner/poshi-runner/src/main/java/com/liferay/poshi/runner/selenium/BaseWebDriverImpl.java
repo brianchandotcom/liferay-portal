@@ -1111,7 +1111,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	public String getFirstNumberIncrement(String locator) {
 		String firstNumber = getFirstNumber(locator);
 
-		return StringUtil.valueOf(GetterUtil.getInteger(firstNumber) + 1);
+		return String.valueOf(GetterUtil.getInteger(firstNumber) + 1);
 	}
 
 	public Node getHtmlNode(String locator) {

@@ -4919,10 +4919,12 @@ public class StringUtil {
 	/**
 	 * Returns the string value of the object.
 	 *
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 * @param  obj the object whose string value is to be returned
 	 * @return the string value of the object
 	 * @see    String#valueOf(Object obj)
 	 */
+	@Deprecated
 	public static String valueOf(Object obj) {
 		return String.valueOf(obj);
 	}

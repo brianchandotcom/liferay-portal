@@ -16,6 +16,8 @@ package com.liferay.osgi.bundle.builder.commands;
 
 import aQute.bnd.osgi.Jar;
 
+import com.beust.jcommander.Parameters;
+
 import java.io.File;
 
 import java.nio.file.Files;
@@ -23,6 +25,10 @@ import java.nio.file.Files;
 /**
  * @author David Truong
  */
+@Parameters(
+	commandDescription = "Generates the JAR file of the OSGi bundle.",
+	commandNames = "jar"
+)
 public class JarCommand extends BaseCommand {
 
 	@Override

@@ -57,33 +57,37 @@ public abstract class BaseCommand implements Command {
 				builder.setJar(classesJar);
 			}
 
-			List<Object> buildPath = new ArrayList<>(_classpath.size());
+			if ((_classpath != null) && !_classpath.isEmpty()) {
+				List<Object> buildPath = new ArrayList<>(_classpath.size());
 
-			for (File file : _classpath) {
-				if (!file.exists()) {
-					continue;
+				for (File file : _classpath) {
+					if (!file.exists()) {
+						continue;
+					}
+
+					if (file.isDirectory()) {
+						Jar jar = new Jar(file);
+
+						builder.addClose(jar);
+
+						builder.updateModified(
+							jar.lastModified(), file.getPath());
+
+						buildPath.add(jar);
+					}
+					else {
+						builder.updateModified(
+							file.lastModified(), file.getPath());
+
+						buildPath.add(file);
+					}
 				}
 
-				if (file.isDirectory()) {
-					Jar jar = new Jar(file);
-
-					builder.addClose(jar);
-
-					builder.updateModified(jar.lastModified(), file.getPath());
-
-					buildPath.add(jar);
-				}
-				else {
-					builder.updateModified(file.lastModified(), file.getPath());
-
-					buildPath.add(file);
-				}
+				builder.setClasspath(buildPath);
+				builder.setProperty(
+					"project.buildpath",
+					Strings.join(File.pathSeparator, buildPath));
 			}
-
-			builder.setClasspath(buildPath);
-			builder.setProperty(
-				"project.buildpath",
-				Strings.join(File.pathSeparator, buildPath));
 
 			Jar jar = builder.build();
 

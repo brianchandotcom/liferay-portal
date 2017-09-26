@@ -433,7 +433,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 	protected String buildIncludePath(String viewPath) {
 		StringBundler sb = new StringBundler(5);
 
-		sb.append("/WEB-INF/jsp/");
+		sb.append("/alloy_mvc/jsp/");
 		sb.append(portlet.getFriendlyURLMapping());
 		sb.append("/views/");
 
@@ -1549,7 +1549,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		}
 
 		String touchPath =
-			"/WEB-INF/jsp/" + portlet.getFriendlyURLMapping() +
+			"/alloy_mvc/jsp/" + portlet.getFriendlyURLMapping() +
 				"/views/touch.jsp";
 
 		if (log.isDebugEnabled()) {

@@ -136,19 +136,19 @@ public class LayoutPageTemplateLocalServiceImpl
 
 	@Override
 	public List<LayoutPageTemplate> getLayoutPageTemplates(
-		long layoutPageTemplateFolderId) {
+		long groupId, long layoutPageTemplateFolderId) {
 
-		return layoutPageTemplatePersistence.findByLayoutPageTemplateFolderId(
-			layoutPageTemplateFolderId);
+		return layoutPageTemplatePersistence.findByG_L(
+			groupId, layoutPageTemplateFolderId);
 	}
 
 	@Override
 	public List<LayoutPageTemplate> getLayoutPageTemplates(
-			long layoutPageTemplateFolderId, int start, int end)
+			long groupId, long layoutPageTemplateFolderId, int start, int end)
 		throws PortalException {
 
-		return layoutPageTemplatePersistence.findByLayoutPageTemplateFolderId(
-			layoutPageTemplateFolderId, start, end);
+		return layoutPageTemplatePersistence.findByG_L(
+			groupId, layoutPageTemplateFolderId, start, end);
 	}
 
 	@Override

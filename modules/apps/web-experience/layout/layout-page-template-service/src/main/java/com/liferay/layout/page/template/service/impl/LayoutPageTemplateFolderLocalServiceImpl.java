@@ -94,7 +94,8 @@ public class LayoutPageTemplateFolderLocalServiceImpl
 		// Layout Page Templates
 
 		List<LayoutPageTemplate> layoutPageTemplates =
-			layoutPageTemplatePersistence.findByLayoutPageTemplateFolderId(
+			layoutPageTemplateLocalService.getLayoutPageTemplates(
+				layoutPageTemplateFolder.getGroupId(),
 				layoutPageTemplateFolder.getLayoutPageTemplateFolderId());
 
 		for (LayoutPageTemplate layoutPageTemplate : layoutPageTemplates) {

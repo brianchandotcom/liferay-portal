@@ -46,7 +46,9 @@ public class LoginPostAction extends Action {
 		try {
 			User user = _portal.getUser(request);
 
-			if ((user == null) || user.isSetupComplete()) {
+			if ((user == null) || user.isSetupComplete() ||
+				!PropsValues.LANGUAGE_SELECTION_REQUIRED) {
+
 				return;
 			}
 

@@ -94,68 +94,13 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 	}
 
 	@Override
-	public FriendlyURLEntryMapping toEscapedModel() {
-		return new FriendlyURLEntryMappingWrapper(_friendlyURLEntryMapping.toEscapedModel());
-	}
-
-	@Override
-	public FriendlyURLEntryMapping toUnescapedModel() {
-		return new FriendlyURLEntryMappingWrapper(_friendlyURLEntryMapping.toUnescapedModel());
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _friendlyURLEntryMapping.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _friendlyURLEntryMapping.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _friendlyURLEntryMapping.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _friendlyURLEntryMapping.getExpandoBridge();
-	}
-
-	/**
-	* Returns the primary key of this friendly url entry mapping.
-	*
-	* @return the primary key of this friendly url entry mapping
-	*/
-	@Override
-	public com.liferay.friendly.url.service.persistence.FriendlyURLEntryMappingPK getPrimaryKey() {
-		return _friendlyURLEntryMapping.getPrimaryKey();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<FriendlyURLEntryMapping> toCacheModel() {
-		return _friendlyURLEntryMapping.toCacheModel();
+	public java.lang.Object clone() {
+		return new FriendlyURLEntryMappingWrapper((FriendlyURLEntryMapping)_friendlyURLEntryMapping.clone());
 	}
 
 	@Override
 	public int compareTo(FriendlyURLEntryMapping friendlyURLEntryMapping) {
 		return _friendlyURLEntryMapping.compareTo(friendlyURLEntryMapping);
-	}
-
-	@Override
-	public int hashCode() {
-		return _friendlyURLEntryMapping.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _friendlyURLEntryMapping.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new FriendlyURLEntryMappingWrapper((FriendlyURLEntryMapping)_friendlyURLEntryMapping.clone());
 	}
 
 	/**
@@ -166,16 +111,6 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 	@Override
 	public java.lang.String getClassName() {
 		return _friendlyURLEntryMapping.getClassName();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _friendlyURLEntryMapping.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _friendlyURLEntryMapping.toXmlString();
 	}
 
 	/**
@@ -198,6 +133,11 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 		return _friendlyURLEntryMapping.getClassPK();
 	}
 
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _friendlyURLEntryMapping.getExpandoBridge();
+	}
+
 	/**
 	* Returns the friendly url entry ID of this friendly url entry mapping.
 	*
@@ -216,6 +156,41 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 	@Override
 	public long getMvccVersion() {
 		return _friendlyURLEntryMapping.getMvccVersion();
+	}
+
+	/**
+	* Returns the primary key of this friendly url entry mapping.
+	*
+	* @return the primary key of this friendly url entry mapping
+	*/
+	@Override
+	public com.liferay.friendly.url.service.persistence.FriendlyURLEntryMappingPK getPrimaryKey() {
+		return _friendlyURLEntryMapping.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _friendlyURLEntryMapping.getPrimaryKeyObj();
+	}
+
+	@Override
+	public int hashCode() {
+		return _friendlyURLEntryMapping.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _friendlyURLEntryMapping.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _friendlyURLEntryMapping.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _friendlyURLEntryMapping.isNew();
 	}
 
 	@Override
@@ -249,14 +224,14 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_friendlyURLEntryMapping.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_friendlyURLEntryMapping.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_friendlyURLEntryMapping.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -303,6 +278,31 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_friendlyURLEntryMapping.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<FriendlyURLEntryMapping> toCacheModel() {
+		return _friendlyURLEntryMapping.toCacheModel();
+	}
+
+	@Override
+	public FriendlyURLEntryMapping toEscapedModel() {
+		return new FriendlyURLEntryMappingWrapper(_friendlyURLEntryMapping.toEscapedModel());
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _friendlyURLEntryMapping.toString();
+	}
+
+	@Override
+	public FriendlyURLEntryMapping toUnescapedModel() {
+		return new FriendlyURLEntryMappingWrapper(_friendlyURLEntryMapping.toUnescapedModel());
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _friendlyURLEntryMapping.toXmlString();
 	}
 
 	@Override

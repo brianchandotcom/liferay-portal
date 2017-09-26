@@ -128,6 +128,117 @@
 		<execute function="AssertTextEquals" locator1="Home#USER_NAME_HEADER" value1="&lt;userfn&gt; userln" />
 	</command>
 
+	<command name="AssignImportedUserGroupToSubOrgnisationSites" priority="4">
+		<property name="testray.component.names" value="Training" />
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Mock LDAP Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Mock LDAP Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="Mock LDAP Page" />
+			<var name="portletName" value="Mock LDAP" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Mock LDAP Page" />
+		</execute>
+
+		<execute macro="MockLDAP#selectJsonFile">
+			<var name="fileName" value="space-groups.json" />
+			<var name="tabName" value="User Groups" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="User Groups" />
+		</execute>
+
+		<execute macro="Pagination#changePagination">
+			<var name="itemsPerPage" value="20" />
+		</execute>
+
+		<execute macro="Pagination#viewResults">
+			<var name="results" value="Showing 1 to 11 of 11 entries." />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
+		<execute macro="LAR#importPortlet">
+			<var name="larFileName" value="organizations-7.0.lar" />
+			<var name="uploadFrom" value="dependencies" />
+		</execute>
+
+		<for list="Accounting,Business Administration,College of Agricultural Science,College of Business,College of Engineering" param="suborgName">
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoControlPanelUsers">
+				<var name="portlet" value="Users and Organizations" />
+			</execute>
+
+			<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
+			<execute macro="Organization#addSiteCP">
+				<var name="orgName" value="${suborgName}" />
+				<var name="orgType" value="Organization" />
+			</execute>
+
+			<execute macro="Navigator#gotoBack" />
+
+			<execute macro="Organization#manageMembershipOptionsInSites">
+				<var name="allowManualMembershipManagement" value="true" />
+				<var name="orgName" value="${suborgName}" />
+			</execute>
+		</for>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="College of Agricultural Science" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesMembers">
+			<var name="portlet" value="Site Memberships" />
+		</execute>
+
+		<execute macro="Site#assignUserGroupAsMemberCP">
+			<var name="userGroupName" value="Agricultural Science" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="College of Business" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesMembers">
+			<var name="portlet" value="Site Memberships" />
+		</execute>
+
+		<for list="Business: Accounting,Business: Business Administration" param="userGroupName">
+			<execute macro="Site#assignUserGroupAsMemberCP">
+				<var name="userGroupName" value="${userGroupName}" />
+			</execute>
+		</for>
+
+		<for list="Accounting,Business Administration" param="siteName">
+			<execute macro="ProductMenu#gotoSite">
+				<var name="site" value="${siteName}" />
+			</execute>
+
+			<execute macro="ProductMenu#gotoSitesMembers">
+				<var name="portlet" value="Site Memberships" />
+			</execute>
+
+			<execute macro="Site#assignUserGroupAsMemberCP">
+				<var name="userGroupName" value="Business: ${siteName}" />
+			</execute>
+		</for>
+	</command>
+
 	<command name="CannotViewSiteSettingsInUserPersonalSite" priority="4">
 		<execute macro="ProductMenu#gotoPersonalSite" />
 

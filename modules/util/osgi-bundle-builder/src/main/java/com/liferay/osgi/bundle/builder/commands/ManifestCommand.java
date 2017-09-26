@@ -24,6 +24,7 @@ import java.io.OutputStream;
 
 /**
  * @author David Truong
+ * @author Andrea Di Giorgi
  */
 @Parameters(
 	commandDescription = "Generates the MANIFEST.MF file of the OSGi bundle.",
@@ -33,19 +34,10 @@ public class ManifestCommand extends BaseCommand {
 
 	@Override
 	protected void writeOutput(Jar jar) throws Exception {
-		File outputFile = getOutputFile();
+		File file = new File(getOutputDir(), "MANIFEST.MF");
 
-		if (outputFile.isDirectory()) {
-			try (OutputStream outputStream = new FileOutputStream(
-					new File(outputFile, "MANIFEST.MF"))) {
-
-				jar.writeManifest(outputStream);
-			}
-		}
-		else {
-			try (OutputStream outputStream = new FileOutputStream(outputFile)) {
-				jar.writeManifest(outputStream);
-			}
+		try (OutputStream outputStream = new FileOutputStream(file)) {
+			jar.writeManifest(outputStream);
 		}
 	}
 

@@ -22,6 +22,7 @@ import java.io.File;
 
 /**
  * @author David Truong
+ * @author Andrea Di Giorgi
  */
 @Parameters(
 	commandDescription = "Generates the JAR file of the OSGi bundle.",
@@ -31,14 +32,7 @@ public class JarCommand extends BaseCommand {
 
 	@Override
 	protected void writeOutput(Jar jar) throws Exception {
-		File outputFile = getOutputFile();
-
-		if (outputFile.isDirectory()) {
-			jar.write(new File(outputFile, jar.getName() + ".jar"));
-		}
-		else {
-			jar.write(outputFile);
-		}
+		jar.write(new File(getOutputDir(), jar.getName() + ".jar"));
 	}
 
 }

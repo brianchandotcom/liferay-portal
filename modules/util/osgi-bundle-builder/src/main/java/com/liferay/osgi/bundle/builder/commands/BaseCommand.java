@@ -60,39 +60,37 @@ public abstract class BaseCommand implements Command {
 
 			List<Object> buildPath = new ArrayList<>(_classpath.length);
 
-			for (String artifact : _classpath) {
-				File artifactFile = new File(artifact);
+			for (String fileName : _classpath) {
+				File file = new File(fileName);
 
-				if (!artifactFile.exists()) {
+				if (!file.exists()) {
 					continue;
 				}
 
-				if (artifactFile.isDirectory()) {
-					Jar artifactJar = new Jar(artifactFile);
+				if (file.isDirectory()) {
+					Jar jar = new Jar(file);
 
-					builder.addClose(artifactJar);
+					builder.addClose(jar);
 
-					builder.updateModified(
-						artifactJar.lastModified(), artifactFile.getPath());
+					builder.updateModified(jar.lastModified(), file.getPath());
 
-					buildPath.add(artifactJar);
+					buildPath.add(jar);
 				}
 				else {
-					builder.updateModified(
-						artifactFile.lastModified(), artifactFile.getPath());
+					builder.updateModified(file.lastModified(), file.getPath());
 
-					buildPath.add(artifactFile);
+					buildPath.add(file);
 				}
 			}
 
+			builder.setClasspath(buildPath);
 			builder.setProperty(
 				"project.buildpath",
 				Strings.join(File.pathSeparator, buildPath));
-			builder.setClasspath(buildPath);
 
-			Jar bndJar = builder.build();
+			Jar jar = builder.build();
 
-			writeOutput(bndJar);
+			writeOutput(jar);
 		}
 	}
 
@@ -144,7 +142,7 @@ public abstract class BaseCommand implements Command {
 		_resourcesDir = resourcesDir;
 	}
 
-	public abstract void writeOutput(Jar jar)throws Exception;
+	public abstract void writeOutput(Jar jar) throws Exception;
 
 	@Parameter(description = "Base directory.", names = {"--baseDir"})
 	private File _baseDir;

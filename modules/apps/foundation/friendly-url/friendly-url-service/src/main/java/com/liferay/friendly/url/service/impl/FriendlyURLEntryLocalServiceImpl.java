@@ -78,6 +78,10 @@ public class FriendlyURLEntryLocalServiceImpl
 			friendlyURLEntryMapping = friendlyURLEntryMappingPersistence.create(
 				friendlyURLEntryMappingPK);
 		}
+		else if (_isLocalizationsEqual(friendlyURLEntryMapping, urlTitleMap)) {
+			return fetchFriendlyURLEntry(
+				friendlyURLEntryMapping.getFriendlyURLEntryId());
+		}
 
 		long friendlyURLEntryId = counterLocalService.increment();
 
@@ -444,6 +448,28 @@ public class FriendlyURLEntryLocalServiceImpl
 		throws PortalException {
 
 		validate(groupId, classNameId, 0, urlTitle);
+	}
+
+	private boolean _isLocalizationsEqual(
+		FriendlyURLEntryMapping friendlyURLEntryMapping,
+		Map<String, String> urlTitleMap) {
+
+		List<FriendlyURLEntryLocalization> friendlyURLEntryLocalizations =
+			friendlyURLEntryLocalizationPersistence.findByFriendlyURLEntryId(
+				friendlyURLEntryMapping.getFriendlyURLEntryId());
+
+		for (FriendlyURLEntryLocalization friendlyURLEntryLocalization :
+				friendlyURLEntryLocalizations) {
+
+			String urlTitle = FriendlyURLNormalizerUtil.normalize(
+				urlTitleMap.get(friendlyURLEntryLocalization.getLanguageId()));
+
+			if (!urlTitle.equals(friendlyURLEntryLocalization.getUrlTitle())) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	private void _updateFriendlyURLEntryLocalizations(

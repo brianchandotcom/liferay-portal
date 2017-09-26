@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Document Library Content API
+Bundle-SymbolicName: com.liferay.document.library.content.api
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Document Library

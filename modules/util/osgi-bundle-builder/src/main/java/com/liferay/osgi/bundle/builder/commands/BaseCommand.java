@@ -147,11 +147,15 @@ public abstract class BaseCommand implements Command {
 
 	protected abstract void writeOutput(Jar jar) throws Exception;
 
-	@Parameter(description = "The base directory.", names = {"--base-dir"})
+	@Parameter(
+		description = "The base directory.", names = {"--base-dir"},
+		required = true
+	)
 	private File _baseDir;
 
 	@Parameter(
-		description = "The location of the Bnd file.", names = {"--bnd-file"}
+		description = "The location of the Bnd file.", names = {"--bnd-file"},
+		required = true
 	)
 	private File _bndFile;
 
@@ -169,7 +173,7 @@ public abstract class BaseCommand implements Command {
 
 	@Parameter(
 		description = "The output directory or file.",
-		names = {"-o", "--output"}
+		names = {"-o", "--output"}, required = true
 	)
 	private File _outputFile;
 

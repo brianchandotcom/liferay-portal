@@ -17,11 +17,16 @@ package com.liferay.osgi.bundle.builder.internal.util;
 import com.liferay.osgi.bundle.builder.OSGiBundleBuilder;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.net.URL;
 
 import java.security.CodeSource;
 import java.security.ProtectionDomain;
+
+import java.util.Properties;
 
 /**
  * @author David Truong
@@ -37,6 +42,16 @@ public class FileUtil {
 		URL url = codeSource.getLocation();
 
 		return new File(url.toURI());
+	}
+
+	public static Properties readProperties(File file) throws IOException {
+		Properties properties = new Properties();
+
+		try (InputStream inputStream = new FileInputStream(file)) {
+			properties.load(inputStream);
+		}
+
+		return properties;
 	}
 
 }

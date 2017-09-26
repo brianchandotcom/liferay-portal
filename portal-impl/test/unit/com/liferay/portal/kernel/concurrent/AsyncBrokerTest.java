@@ -19,19 +19,20 @@ import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.GCUtil;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.SwappableSecurityManager;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
+import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.test.aspects.ReflectionUtilAdvice;
-import com.liferay.portal.test.rule.AdviseWith;
-import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 
 import java.lang.reflect.Field;
 
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
@@ -50,7 +51,7 @@ public class AsyncBrokerTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			AspectJNewEnvTestRule.INSTANCE, CodeCoverageAssertor.INSTANCE);
+			CodeCoverageAssertor.INSTANCE, NewEnvTestRule.INSTANCE);
 
 	@After
 	public void tearDown() {
@@ -201,7 +202,6 @@ public class AsyncBrokerTest {
 		}
 	}
 
-	@AdviseWith(adviceClasses = ReflectionUtilAdvice.class)
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testPhantomReferenceResurrectionNotSupportedWithLog()
@@ -210,7 +210,6 @@ public class AsyncBrokerTest {
 		testPhantomReferenceResurrectionNotSupported(true);
 	}
 
-	@AdviseWith(adviceClasses = ReflectionUtilAdvice.class)
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testPhantomReferenceResurrectionNotSupportedWithoutLog()
@@ -221,11 +220,7 @@ public class AsyncBrokerTest {
 
 	@Test
 	public void testPost() throws Exception {
-		ReflectionUtilAdvice.setDeclaredFieldThrowable(new Throwable());
-
 		AsyncBroker<String, String> asyncBroker = new AsyncBroker<>();
-
-		ReflectionUtilAdvice.setDeclaredFieldThrowable(null);
 
 		Map<String, DefaultNoticeableFuture<String>> defaultNoticeableFutures =
 			ReflectionTestUtil.getFieldValue(
@@ -245,15 +240,34 @@ public class AsyncBrokerTest {
 		Assert.assertTrue(defaultNoticeableFutures.isEmpty());
 	}
 
-	@AdviseWith(adviceClasses = ReflectionUtilAdvice.class)
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testPostPhantomReferenceResurrectionNotSupported()
 		throws Exception {
 
-		try (CaptureHandler captureHandler =
+		Throwable throwable = new Throwable();
+
+		AtomicBoolean flag = new AtomicBoolean();
+
+		try (SwappableSecurityManager swappableSecurityManager =
+				new SwappableSecurityManager() {
+
+					@Override
+					public void checkPackageAccess(String pkg) {
+						if ("java.lang.ref".equals(pkg) && !flag.get()) {
+							flag.set(true);
+
+							ReflectionUtil.throwException(throwable);
+						}
+					}
+
+				};
+
+			CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
 					AsyncBroker.class.getName(), Level.WARNING)) {
+
+			swappableSecurityManager.install();
 
 			testPost();
 
@@ -268,10 +282,7 @@ public class AsyncBrokerTest {
 					"because the JVM does not support phantom reference " +
 						"resurrection",
 				logRecord.getMessage());
-
-			Throwable throwable = logRecord.getThrown();
-
-			Assert.assertSame(Throwable.class, throwable.getClass());
+			Assert.assertSame(throwable, logRecord.getThrown());
 		}
 	}
 
@@ -363,17 +374,28 @@ public class AsyncBrokerTest {
 
 		Throwable throwable = new Throwable();
 
-		ReflectionUtilAdvice.setDeclaredFieldThrowable(throwable);
-
 		Level level = Level.OFF;
 
 		if (withLog) {
 			level = Level.WARNING;
 		}
 
-		try (CaptureHandler captureHandler =
+		try (SwappableSecurityManager swappableSecurityManager =
+				new SwappableSecurityManager() {
+
+					@Override
+					public void checkPackageAccess(String pkg) {
+						if ("java.lang.ref".equals(pkg)) {
+							ReflectionUtil.throwException(throwable);
+						}
+					}
+
+				};
+			CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
 					AsyncBroker.class.getName(), level)) {
+
+			swappableSecurityManager.install();
 
 			Class.forName(
 				AsyncBroker.class.getName(), true,
@@ -397,8 +419,6 @@ public class AsyncBrokerTest {
 			else {
 				Assert.assertTrue(logRecords.isEmpty());
 			}
-
-			ReflectionUtilAdvice.setDeclaredFieldThrowable(null);
 
 			Assert.assertNull(
 				ReflectionTestUtil.getFieldValue(

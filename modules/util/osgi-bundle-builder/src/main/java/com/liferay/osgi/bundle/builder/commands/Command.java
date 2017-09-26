@@ -14,11 +14,14 @@
 
 package com.liferay.osgi.bundle.builder.commands;
 
+import com.liferay.osgi.bundle.builder.OSGiBundleBuilderArgs;
+
 /**
  * @author David Truong
  */
 public interface Command {
 
-	public void build() throws Exception;
+	public void build(OSGiBundleBuilderArgs osgiBundleBuilderArgs)
+		throws Exception;
 
 }

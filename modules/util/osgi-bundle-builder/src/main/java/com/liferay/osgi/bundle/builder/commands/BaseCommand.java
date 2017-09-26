@@ -20,9 +20,7 @@ import aQute.bnd.osgi.Processor;
 
 import aQute.lib.strings.Strings;
 
-import com.beust.jcommander.Parameter;
-
-import com.liferay.osgi.bundle.builder.internal.converters.PathParameterSplitter;
+import com.liferay.osgi.bundle.builder.OSGiBundleBuilderArgs;
 import com.liferay.osgi.bundle.builder.internal.util.FileUtil;
 
 import java.io.File;
@@ -38,19 +36,26 @@ import java.util.jar.Manifest;
 public abstract class BaseCommand implements Command {
 
 	@Override
-	public void build() throws Exception {
-		Properties properties = FileUtil.readProperties(_bndFile);
+	public void build(OSGiBundleBuilderArgs osgiBundleBuilderArgs)
+		throws Exception {
+
+		Properties properties = FileUtil.readProperties(
+			osgiBundleBuilderArgs.getBndFile());
 
 		try (Builder builder = new Builder(new Processor(properties, false))) {
-			builder.setBase(_baseDir);
+			builder.setBase(osgiBundleBuilderArgs.getBaseDir());
 
-			if ((_classesDir != null) && _classesDir.exists()) {
-				Jar classesJar = new Jar(_classesDir);
+			File classesDir = osgiBundleBuilderArgs.getClassesDir();
+
+			if ((classesDir != null) && classesDir.exists()) {
+				Jar classesJar = new Jar(classesDir);
 
 				classesJar.setManifest(new Manifest());
 
-				if ((_resourcesDir != null) && _resourcesDir.exists()) {
-					Jar resourcesJar = new Jar(_resourcesDir);
+				File resourcesDir = osgiBundleBuilderArgs.getResourcesDir();
+
+				if ((resourcesDir != null) && resourcesDir.exists()) {
+					Jar resourcesJar = new Jar(resourcesDir);
 
 					classesJar.addAll(resourcesJar);
 				}
@@ -58,10 +63,12 @@ public abstract class BaseCommand implements Command {
 				builder.setJar(classesJar);
 			}
 
-			if ((_classpath != null) && !_classpath.isEmpty()) {
-				List<Object> buildPath = new ArrayList<>(_classpath.size());
+			List<File> classpath = osgiBundleBuilderArgs.getClasspath();
 
-				for (File file : _classpath) {
+			if ((classpath != null) && !classpath.isEmpty()) {
+				List<Object> buildPath = new ArrayList<>(classpath.size());
+
+				for (File file : classpath) {
 					if (!file.exists()) {
 						continue;
 					}
@@ -92,96 +99,16 @@ public abstract class BaseCommand implements Command {
 
 			Jar jar = builder.build();
 
-			_outputDir.mkdirs();
+			File outputDir = osgiBundleBuilderArgs.getOutputDir();
 
-			writeOutput(jar);
+			outputDir.mkdirs();
+
+			writeOutput(jar, osgiBundleBuilderArgs);
 		}
 	}
 
-	public File getBaseDir() {
-		return _baseDir;
-	}
-
-	public File getBndFile() {
-		return _bndFile;
-	}
-
-	public File getClassesDir() {
-		return _classesDir;
-	}
-
-	public List<File> getClasspath() {
-		return _classpath;
-	}
-
-	public File getOutputDir() {
-		return _outputDir;
-	}
-
-	public File getResourcesDir() {
-		return _resourcesDir;
-	}
-
-	public void setBaseDir(File baseDir) {
-		_baseDir = baseDir;
-	}
-
-	public void setBndFile(File bndFile) {
-		_bndFile = bndFile;
-	}
-
-	public void setClassesDir(File classesDir) {
-		_classesDir = classesDir;
-	}
-
-	public void setClasspath(List<File> classpath) {
-		_classpath = classpath;
-	}
-
-	public void setOutputDir(File outputDir) {
-		_outputDir = outputDir;
-	}
-
-	public void setResourcesDir(File resourcesDir) {
-		_resourcesDir = resourcesDir;
-	}
-
-	protected abstract void writeOutput(Jar jar) throws Exception;
-
-	@Parameter(
-		description = "The base directory.", names = {"--base-dir"},
-		required = true
-	)
-	private File _baseDir;
-
-	@Parameter(
-		description = "The location of the Bnd file.", names = {"--bnd-file"},
-		required = true
-	)
-	private File _bndFile;
-
-	@Parameter(
-		description = "The directory which contains the class files.",
-		names = {"--classes-dir"}
-	)
-	private File _classesDir;
-
-	@Parameter(
-		description = "The list of directories and JAR files to include in the classpath.",
-		names = {"--classpath"}, splitter = PathParameterSplitter.class
-	)
-	private List<File> _classpath;
-
-	@Parameter(
-		description = "The output directory.", names = {"-o", "--output-dir"},
-		required = true
-	)
-	private File _outputDir;
-
-	@Parameter(
-		description = "The directory that contains the processed resources.",
-		names = {"--resources-dir"}
-	)
-	private File _resourcesDir;
+	protected abstract void writeOutput(
+			Jar jar, OSGiBundleBuilderArgs osgiBundleBuilderArgs)
+		throws Exception;
 
 }

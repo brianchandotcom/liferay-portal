@@ -70,7 +70,7 @@ public class OSGiBundleBuilder {
 
 				Command command = (Command)commandObjects.get(0);
 
-				command.build();
+				command.build(osgiBundleBuilderArgs);
 			}
 		}
 		catch (ParameterException pe) {

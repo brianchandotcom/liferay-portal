@@ -18,6 +18,8 @@ import aQute.bnd.osgi.Jar;
 
 import com.beust.jcommander.Parameters;
 
+import com.liferay.osgi.bundle.builder.OSGiBundleBuilderArgs;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -33,8 +35,12 @@ import java.io.OutputStream;
 public class ManifestCommand extends BaseCommand {
 
 	@Override
-	protected void writeOutput(Jar jar) throws Exception {
-		File file = new File(getOutputDir(), "MANIFEST.MF");
+	protected void writeOutput(
+			Jar jar, OSGiBundleBuilderArgs osgiBundleBuilderArgs)
+		throws Exception {
+
+		File file = new File(
+			osgiBundleBuilderArgs.getOutputDir(), "MANIFEST.MF");
 
 		try (OutputStream outputStream = new FileOutputStream(file)) {
 			jar.writeManifest(outputStream);

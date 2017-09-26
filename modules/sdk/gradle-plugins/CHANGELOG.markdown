@@ -2485,6 +2485,10 @@ to version 2.1.1.
 to version 1.0.16.
 - [LPS-74503]: Update the [Liferay Javadoc Formatter] dependency to version
 1.0.22.
+- [LPS-74657]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.2.10.
+- [LPS-74657]: Update the [Liferay Source Formatter] dependency to version
+1.0.468.
 
 ## 3.4.69 - 2017-09-23
 

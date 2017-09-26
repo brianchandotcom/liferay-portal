@@ -57,11 +57,9 @@ public abstract class BaseCommand implements Command {
 				builder.setJar(classesJar);
 			}
 
-			List<Object> buildPath = new ArrayList<>(_classpath.length);
+			List<Object> buildPath = new ArrayList<>(_classpath.size());
 
-			for (String fileName : _classpath) {
-				File file = new File(fileName);
-
+			for (File file : _classpath) {
 				if (!file.exists()) {
 					continue;
 				}
@@ -105,7 +103,7 @@ public abstract class BaseCommand implements Command {
 		return _classesDir;
 	}
 
-	public String[] getClasspath() {
+	public List<File> getClasspath() {
 		return _classpath;
 	}
 
@@ -129,7 +127,7 @@ public abstract class BaseCommand implements Command {
 		_classesDir = classesDir;
 	}
 
-	public void setClasspath(String[] classpath) {
+	public void setClasspath(List<File> classpath) {
 		_classpath = classpath;
 	}
 
@@ -161,7 +159,7 @@ public abstract class BaseCommand implements Command {
 		description = "The list of directories and JAR files to include in the classpath.",
 		names = {"--classpath"}
 	)
-	private String[] _classpath;
+	private List<File> _classpath;
 
 	@Parameter(
 		description = "The output directory.", names = {"-o", "--output-dir"}

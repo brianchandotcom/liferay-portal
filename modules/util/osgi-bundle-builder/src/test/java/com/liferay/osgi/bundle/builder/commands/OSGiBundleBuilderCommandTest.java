@@ -75,13 +75,12 @@ public class OSGiBundleBuilderCommandTest {
 		jarCommand.setBndFile(new File(baseDir, "bnd.bnd"));
 		jarCommand.setClassesDir(new File(baseDir, "classes"));
 		jarCommand.setClasspath(
-			new String[] {
-				baseDir.getAbsolutePath() +
-					"/com.liferay.portal.kernel-2.0.0.jar",
-				baseDir.getAbsolutePath() +
-					"/org.osgi.service.component.annotations-1.3.0.jar",
-				baseDir.getAbsolutePath() + "/shiro-core-1.1.0.jar"
-			});
+			Arrays.asList(
+				new File(baseDir, "com.liferay.portal.kernel-2.0.0.jar"),
+				new File(
+					baseDir,
+					"org.osgi.service.component.annotations-1.3.0.jar"),
+				new File(baseDir, "shiro-core-1.1.0.jar")));
 		jarCommand.setOutput(new File(baseDir, "build"));
 		jarCommand.setResourcesDir(new File(baseDir, "resources"));
 
@@ -113,13 +112,12 @@ public class OSGiBundleBuilderCommandTest {
 		manifestCommand.setBndFile(new File(baseDir, "bnd.bnd"));
 		manifestCommand.setClassesDir(new File(baseDir, "classes"));
 		manifestCommand.setClasspath(
-			new String[] {
-				baseDir.getAbsolutePath() +
-					"/com.liferay.portal.kernel-2.0.0.jar",
-				baseDir.getAbsolutePath() +
-					"/org.osgi.service.component.annotations-1.3.0.jar",
-				baseDir.getAbsolutePath() + "/shiro-core-1.1.0.jar"
-			});
+			Arrays.asList(
+				new File(baseDir, "com.liferay.portal.kernel-2.0.0.jar"),
+				new File(
+					baseDir,
+					"org.osgi.service.component.annotations-1.3.0.jar"),
+				new File(baseDir, "shiro-core-1.1.0.jar")));
 		manifestCommand.setOutput(new File(baseDir, "build"));
 		manifestCommand.setResourcesDir(new File(baseDir, "resources"));
 

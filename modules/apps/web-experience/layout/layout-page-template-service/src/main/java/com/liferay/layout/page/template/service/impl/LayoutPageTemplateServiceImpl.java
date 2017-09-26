@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Jürgen Kappler
@@ -40,7 +39,7 @@ public class LayoutPageTemplateServiceImpl
 	@Override
 	public LayoutPageTemplate addLayoutPageTemplate(
 			long groupId, long layoutPageTemplateFolderId, String name,
-			Map<Integer, FragmentEntry> layoutPageTemplateFragments,
+			List<FragmentEntry> layoutPageTemplateFragments,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -162,7 +161,7 @@ public class LayoutPageTemplateServiceImpl
 	@Override
 	public LayoutPageTemplate updateLayoutPageTemplate(
 			long layoutPageTemplateId, String name,
-			Map<Integer, FragmentEntry> layoutPageTemplateFragments,
+			List<FragmentEntry> layoutPageTemplateFragments,
 			ServiceContext serviceContext)
 		throws PortalException {
 

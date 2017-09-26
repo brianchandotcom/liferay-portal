@@ -1,1 +1,2 @@
-com.liferay.bundle.builder.command.
+com.liferay.osgi.bundle.builder.commands.JarCommand
+com.liferay.osgi.bundle.builder.commands.ManifestCommand

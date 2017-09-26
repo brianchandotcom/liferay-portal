@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -42,8 +41,7 @@ public class LayoutPageTemplateLocalServiceImpl
 	@Override
 	public LayoutPageTemplate addLayoutPageTemplate(
 			long userId, long groupId, long layoutPageTemplateFolderId,
-			String name,
-			Map<Integer, FragmentEntry> layoutPageTemplateFragments,
+			String name, List<FragmentEntry> layoutPageTemplateFragments,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -80,14 +78,13 @@ public class LayoutPageTemplateLocalServiceImpl
 		// Layout Page Template Fragments
 
 		if (layoutPageTemplateFragments != null) {
-			for (int key : layoutPageTemplateFragments.keySet()) {
-				FragmentEntry fragmentEntry = layoutPageTemplateFragments.get(
-					key);
+			int position = 0;
 
+			for (FragmentEntry fragmentEntry : layoutPageTemplateFragments) {
 				_layoutPageTemplateFragmentLocalService.
 					addLayoutPageTemplateFragment(
 						userId, groupId, layoutPageTemplateId,
-						fragmentEntry.getFragmentEntryId(), key,
+						fragmentEntry.getFragmentEntryId(), position++,
 						serviceContext);
 			}
 		}
@@ -180,7 +177,7 @@ public class LayoutPageTemplateLocalServiceImpl
 	@Override
 	public LayoutPageTemplate updateLayoutPageTemplate(
 			long userId, long layoutPageTemplateId, String name,
-			Map<Integer, FragmentEntry> layoutPageTemplateFragments,
+			List<FragmentEntry> layoutPageTemplateFragments,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -203,15 +200,14 @@ public class LayoutPageTemplateLocalServiceImpl
 			layoutPageTemplate.getGroupId(), layoutPageTemplateId);
 
 		if (layoutPageTemplateFragments != null) {
-			for (int key : layoutPageTemplateFragments.keySet()) {
-				FragmentEntry fragmentEntry = layoutPageTemplateFragments.get(
-					key);
+			int position = 0;
 
+			for (FragmentEntry fragmentEntry : layoutPageTemplateFragments) {
 				_layoutPageTemplateFragmentLocalService.
 					addLayoutPageTemplateFragment(
 						userId, layoutPageTemplate.getGroupId(),
 						layoutPageTemplateId,
-						fragmentEntry.getFragmentEntryId(), key,
+						fragmentEntry.getFragmentEntryId(), position++,
 						serviceContext);
 			}
 		}

@@ -41,9 +41,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -177,11 +176,11 @@ public class LayoutPageTemplateServiceTest {
 				fragmentCollection.getFragmentCollectionId(),
 				"Fragment Entry 2", null, null, null, serviceContext);
 
-		Map<Integer, FragmentEntry> layoutPageTemplateFragmentEntries =
-			new HashMap<>();
+		List<FragmentEntry> layoutPageTemplateFragmentEntries =
+			new ArrayList<>();
 
-		layoutPageTemplateFragmentEntries.put(1, fragmentEntry1);
-		layoutPageTemplateFragmentEntries.put(2, fragmentEntry2);
+		layoutPageTemplateFragmentEntries.add(fragmentEntry1);
+		layoutPageTemplateFragmentEntries.add(fragmentEntry2);
 
 		LayoutPageTemplate layoutPageTemplate =
 			LayoutPageTemplateServiceUtil.addLayoutPageTemplate(
@@ -295,11 +294,11 @@ public class LayoutPageTemplateServiceTest {
 				fragmentCollection.getFragmentCollectionId(),
 				"Fragment Entry 2", null, null, null, serviceContext);
 
-		Map<Integer, FragmentEntry> layoutPageTemplateFragmentEntries =
-			new HashMap<>();
+		List<FragmentEntry> layoutPageTemplateFragmentEntries =
+			new ArrayList<>();
 
-		layoutPageTemplateFragmentEntries.put(1, fragmentEntry1);
-		layoutPageTemplateFragmentEntries.put(2, fragmentEntry2);
+		layoutPageTemplateFragmentEntries.add(fragmentEntry1);
+		layoutPageTemplateFragmentEntries.add(fragmentEntry2);
 
 		LayoutPageTemplate layoutPageTemplate =
 			LayoutPageTemplateServiceUtil.addLayoutPageTemplate(
@@ -310,7 +309,7 @@ public class LayoutPageTemplateServiceTest {
 
 		LayoutPageTemplateServiceUtil.updateLayoutPageTemplate(
 			layoutPageTemplate.getLayoutPageTemplateId(), "New name",
-			new HashMap<Integer, FragmentEntry>(), serviceContext);
+			new ArrayList<FragmentEntry>(), serviceContext);
 
 		List<LayoutPageTemplateFragment> actualLayoutPageTemplatesCount =
 			LayoutPageTemplateFragmentLocalServiceUtil.

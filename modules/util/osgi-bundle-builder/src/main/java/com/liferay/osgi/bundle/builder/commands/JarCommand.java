@@ -25,6 +25,7 @@ import java.nio.file.Files;
  */
 public class JarCommand extends BaseCommand {
 
+	@Override
 	public void writeOutput(Jar jar) throws Exception {
 		File output = getOutput();
 

@@ -27,6 +27,7 @@ import java.nio.file.Files;
  */
 public class ManifestCommand extends BaseCommand {
 
+	@Override
 	public void writeOutput(Jar jar) throws Exception {
 		File output = getOutput();
 

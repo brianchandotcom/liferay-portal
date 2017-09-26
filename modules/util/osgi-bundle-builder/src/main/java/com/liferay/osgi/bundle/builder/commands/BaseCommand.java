@@ -36,6 +36,7 @@ import java.util.jar.Manifest;
  */
 public abstract class BaseCommand implements Command {
 
+	@Override
 	public void build() throws Exception {
 		Properties properties = new Properties();
 

@@ -475,9 +475,6 @@ public class FriendlyURLEntryLocalServiceImpl
 					fetchByFriendlyURLEntryId_LanguageId(
 						friendlyURLEntryId, languageId);
 
-			normalizedUrlTitle = getUniqueUrlTitle(
-				groupId, classNameId, classPK, urlTitle);
-
 			if (friendlyURLEntryLocalization != null) {
 				if (!Objects.equals(
 						normalizedUrlTitle,

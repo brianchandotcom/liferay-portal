@@ -62,6 +62,14 @@
 					<var name="errorMessage" value="A configuration with this ID already exists. Please enter a unique ID." />
 				</execute>
 			</then>
+			<elseif>
+				<isset var="zero" />
+				<then>
+					<execute macro="Alert#viewErrorMessage">
+						<var name="errorMessage" value="Please enter a max width or max height value larger than 0." />
+					</execute>
+				</then>
+			</elseif>
 			<else>
 				<execute macro="Alert#viewSuccessMessage" />
 			</else>

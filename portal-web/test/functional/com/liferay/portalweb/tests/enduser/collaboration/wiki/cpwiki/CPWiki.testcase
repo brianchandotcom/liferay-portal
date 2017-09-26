@@ -510,7 +510,7 @@
 
 		<execute macro="LAR#importPortlet">
 			<var name="larFileName" value="space-history-wiki.lar" />
-			<var name="portletName" value="Wiki" />
+			<var name="uploadFrom" value="dependencies" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">

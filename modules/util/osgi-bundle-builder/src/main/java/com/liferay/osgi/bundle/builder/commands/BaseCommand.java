@@ -142,7 +142,7 @@ public abstract class BaseCommand implements Command {
 		_resourcesDir = resourcesDir;
 	}
 
-	public abstract void writeOutput(Jar jar) throws Exception;
+	protected abstract void writeOutput(Jar jar) throws Exception;
 
 	@Parameter(description = "Base directory.", names = {"--baseDir"})
 	private File _baseDir;

@@ -2506,6 +2506,14 @@ to version 2.1.2.
 - [LPS-74884]: Exclude `node_modules` directory in Idea's `.iml` file to speed
 up indexing.
 
+## 3.4.71 - 2017-09-26
+
+### Changed
+- [LPS-74749]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.2.11.
+- [LPS-74749]: Update the [Liferay Source Formatter] dependency to version
+1.0.469.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -2723,6 +2731,7 @@ up indexing.
 [LPS-74637]: https://issues.liferay.com/browse/LPS-74637
 [LPS-74657]: https://issues.liferay.com/browse/LPS-74657
 [LPS-74738]: https://issues.liferay.com/browse/LPS-74738
+[LPS-74749]: https://issues.liferay.com/browse/LPS-74749
 [LPS-74752]: https://issues.liferay.com/browse/LPS-74752
 [LPS-74770]: https://issues.liferay.com/browse/LPS-74770
 [LPS-74789]: https://issues.liferay.com/browse/LPS-74789

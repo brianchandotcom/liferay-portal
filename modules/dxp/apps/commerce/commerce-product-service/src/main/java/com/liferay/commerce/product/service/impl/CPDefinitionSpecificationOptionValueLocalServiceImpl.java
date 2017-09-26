@@ -19,6 +19,8 @@ import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.service.base.CPDefinitionSpecificationOptionValueLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.List;
@@ -77,18 +79,53 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 
 	@Override
 	public void deleteCPDefinitionSpecificationOptionValues(
-		long cpDefinitionId) {
+			long cpDefinitionId)
+		throws PortalException {
 
-		cpDefinitionSpecificationOptionValuePersistence.removeByCPDefinitionId(
-			cpDefinitionId);
+		List<CPDefinitionSpecificationOptionValue>
+			cpDefinitionSpecificationOptionValues =
+				getCPDefinitionSpecificationOptionValues(cpDefinitionId);
+
+		for (CPDefinitionSpecificationOptionValue
+				cpDefinitionSpecificationOptionValue :
+					cpDefinitionSpecificationOptionValues) {
+
+			// Commerce product definition specification option value
+
+			cpDefinitionSpecificationOptionValueLocalService.
+				deleteCPDefinitionSpecificationOptionValue(
+					cpDefinitionSpecificationOptionValue);
+
+			// Commerce product definition
+
+			reindexCPDefinition(cpDefinitionSpecificationOptionValue);
+		}
 	}
 
 	@Override
 	public void deleteCPSpecificationOptionDefinitionValues(
-		long cpSpecificationOptionId) {
+			long cpSpecificationOptionId)
+		throws PortalException {
 
-		cpDefinitionSpecificationOptionValuePersistence.
-			removeByCPSpecificationOptionId(cpSpecificationOptionId);
+		List<CPDefinitionSpecificationOptionValue>
+			cpDefinitionSpecificationOptionValues =
+				getCPSpecificationOptionDefinitionValues(
+					cpSpecificationOptionId);
+
+		for (CPDefinitionSpecificationOptionValue
+				cpDefinitionSpecificationOptionValue :
+					cpDefinitionSpecificationOptionValues) {
+
+			// Commerce product definition specification option value
+
+			cpDefinitionSpecificationOptionValueLocalService.
+				deleteCPDefinitionSpecificationOptionValue(
+					cpDefinitionSpecificationOptionValue);
+
+			// Commerce product definition
+
+			reindexCPDefinition(cpDefinitionSpecificationOptionValue);
+		}
 	}
 
 	@Override
@@ -118,12 +155,22 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 	}
 
 	@Override
+	public List<CPDefinitionSpecificationOptionValue>
+		getCPSpecificationOptionDefinitionValues(long cpSpecificationOptionId) {
+
+		return cpDefinitionSpecificationOptionValuePersistence.
+			findByCPSpecificationOptionId(cpSpecificationOptionId);
+	}
+
+	@Override
 	public CPDefinitionSpecificationOptionValue
 			updateCPDefinitionSpecificationOptionValue(
 				long cpDefinitionSpecificationOptionValueId,
 				long cpOptionCategoryId, Map<Locale, String> valueMap,
 				double priority, ServiceContext serviceContext)
 		throws PortalException {
+
+		// Commerce product definition specification option value
 
 		CPDefinitionSpecificationOptionValue
 			cpDefinitionSpecificationOptionValue =
@@ -140,6 +187,10 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 		cpDefinitionSpecificationOptionValuePersistence.update(
 			cpDefinitionSpecificationOptionValue);
 
+		// Commerce product definition
+
+		reindexCPDefinition(cpDefinitionSpecificationOptionValue);
+
 		return cpDefinitionSpecificationOptionValue;
 	}
 
@@ -148,6 +199,8 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 			long cpDefinitionSpecificationOptionValueId,
 			long cpOptionCategoryId)
 		throws PortalException {
+
+		// Commerce product definition specification option value
 
 		CPDefinitionSpecificationOptionValue
 			cpDefinitionSpecificationOptionValue =
@@ -160,7 +213,24 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 		cpDefinitionSpecificationOptionValuePersistence.update(
 			cpDefinitionSpecificationOptionValue);
 
+		// Commerce product definition
+
+		reindexCPDefinition(cpDefinitionSpecificationOptionValue);
+
 		return cpDefinitionSpecificationOptionValue;
+	}
+
+	protected void reindexCPDefinition(
+			CPDefinitionSpecificationOptionValue
+				cpDefinitionSpecificationOptionValue)
+		throws PortalException {
+
+		Indexer<CPDefinition> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			CPDefinition.class);
+
+		indexer.reindex(
+			CPDefinition.class.getName(),
+			cpDefinitionSpecificationOptionValue.getCPDefinitionId());
 	}
 
 }

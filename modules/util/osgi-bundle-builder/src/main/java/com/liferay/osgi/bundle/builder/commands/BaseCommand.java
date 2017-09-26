@@ -87,6 +87,12 @@ public abstract class BaseCommand implements Command {
 
 			Jar jar = builder.build();
 
+			if (!_outputFile.isDirectory()) {
+				File outputDir = _outputFile.getParentFile();
+
+				outputDir.mkdirs();
+			}
+
 			writeOutput(jar);
 		}
 	}
@@ -107,8 +113,8 @@ public abstract class BaseCommand implements Command {
 		return _classpath;
 	}
 
-	public File getOutput() {
-		return _output;
+	public File getOutputFile() {
+		return _outputFile;
 	}
 
 	public File getResourcesDir() {
@@ -131,8 +137,8 @@ public abstract class BaseCommand implements Command {
 		_classpath = classpath;
 	}
 
-	public void setOutput(File output) {
-		_output = output;
+	public void setOutputFile(File outputFile) {
+		_outputFile = outputFile;
 	}
 
 	public void setResourcesDir(File resourcesDir) {
@@ -162,9 +168,10 @@ public abstract class BaseCommand implements Command {
 	private List<File> _classpath;
 
 	@Parameter(
-		description = "The output directory.", names = {"-o", "--output-dir"}
+		description = "The output directory or file.",
+		names = {"-o", "--output"}
 	)
-	private File _output;
+	private File _outputFile;
 
 	@Parameter(
 		description = "The directory that contains the processed resources.",

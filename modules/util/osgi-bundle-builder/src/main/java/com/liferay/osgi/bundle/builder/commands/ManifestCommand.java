@@ -22,8 +22,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
-import java.nio.file.Files;
-
 /**
  * @author David Truong
  */
@@ -35,19 +33,17 @@ public class ManifestCommand extends BaseCommand {
 
 	@Override
 	protected void writeOutput(Jar jar) throws Exception {
-		File output = getOutput();
+		File outputFile = getOutputFile();
 
-		Files.createDirectories(output.toPath());
+		if (outputFile.isDirectory()) {
+			try (OutputStream outputStream = new FileOutputStream(
+					new File(outputFile, "MANIFEST.MF"))) {
 
-		if (output.isFile()) {
-			try (OutputStream outputStream = new FileOutputStream(output)) {
 				jar.writeManifest(outputStream);
 			}
 		}
 		else {
-			try (OutputStream outputStream = new FileOutputStream(
-					new File(output, "MANIFEST.MF"))) {
-
+			try (OutputStream outputStream = new FileOutputStream(outputFile)) {
 				jar.writeManifest(outputStream);
 			}
 		}

@@ -20,8 +20,6 @@ import com.beust.jcommander.Parameters;
 
 import java.io.File;
 
-import java.nio.file.Files;
-
 /**
  * @author David Truong
  */
@@ -33,15 +31,13 @@ public class JarCommand extends BaseCommand {
 
 	@Override
 	protected void writeOutput(Jar jar) throws Exception {
-		File output = getOutput();
+		File outputFile = getOutputFile();
 
-		Files.createDirectories(output.toPath());
-
-		if (output.isFile()) {
-			jar.write(output);
+		if (outputFile.isDirectory()) {
+			jar.write(new File(outputFile, jar.getName() + ".jar"));
 		}
 		else {
-			jar.write(new File(output, jar.getName() + ".jar"));
+			jar.write(outputFile);
 		}
 	}
 

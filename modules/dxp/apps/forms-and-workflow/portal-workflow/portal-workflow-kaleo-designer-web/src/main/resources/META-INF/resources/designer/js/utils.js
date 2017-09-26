@@ -112,15 +112,15 @@ AUI.add(
 							if ((type === 'checkbox' || type === 'radio') && !checked) {
 								value = null;
 							}
-							
+
 							if (type === 'select-multiple') {
 								value = [];
-								
-								item.all('option:selected').each(option => {
-									value.push({
-										notificationType: option.val()
-									});
-								});
+
+								item.all('option:selected').each(
+									function(option) {
+										value.push({ notificationType: option.val() });
+									}
+								);
 							}
 
 							data[name].push(value);

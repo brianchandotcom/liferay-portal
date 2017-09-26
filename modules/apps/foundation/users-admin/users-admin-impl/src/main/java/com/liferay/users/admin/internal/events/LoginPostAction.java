@@ -70,10 +70,8 @@ public class LoginPostAction extends Action {
 				return;
 			}
 
-			String redirect =
-				_portal.getPathMain() + _PATH_PORTAL_SELECT_LANGUAGE;
-
-			response.sendRedirect(redirect);
+			response.sendRedirect(
+				_portal.getPathMain() + _PATH_PORTAL_SELECT_LANGUAGE);
 		}
 		catch (Exception e) {
 			throw new ActionException(e);

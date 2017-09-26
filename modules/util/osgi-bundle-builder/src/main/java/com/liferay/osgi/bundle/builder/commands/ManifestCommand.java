@@ -16,6 +16,8 @@ package com.liferay.osgi.bundle.builder.commands;
 
 import aQute.bnd.osgi.Jar;
 
+import com.beust.jcommander.Parameters;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -25,6 +27,10 @@ import java.nio.file.Files;
 /**
  * @author David Truong
  */
+@Parameters(
+	commandDescription = "Generates the MANIFEST.MF file of the OSGi bundle.",
+	commandNames = "manifest"
+)
 public class ManifestCommand extends BaseCommand {
 
 	@Override

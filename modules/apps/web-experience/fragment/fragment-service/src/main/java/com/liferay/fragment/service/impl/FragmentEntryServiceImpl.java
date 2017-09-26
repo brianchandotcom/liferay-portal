@@ -45,7 +45,7 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 			FragmentActionKeys.ADD_FRAGMENT_ENTRY);
 
 		return fragmentEntryLocalService.addFragmentEntry(
-			groupId, getUserId(), fragmentCollectionId, name, css, html, js,
+			getUserId(), groupId, fragmentCollectionId, name, css, html, js,
 			serviceContext);
 	}
 

@@ -54,13 +54,13 @@ public class FragmentEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.fragment.model.FragmentEntry addFragmentEntry(
-		long groupId, long userId, long fragmentCollectionId,
+		long userId, long groupId, long fragmentCollectionId,
 		java.lang.String name, java.lang.String css, java.lang.String html,
 		java.lang.String js,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addFragmentEntry(groupId, userId, fragmentCollectionId,
+				   .addFragmentEntry(userId, groupId, fragmentCollectionId,
 			name, css, html, js, serviceContext);
 	}
 

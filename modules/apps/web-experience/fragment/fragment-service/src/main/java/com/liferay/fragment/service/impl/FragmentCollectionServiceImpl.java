@@ -46,7 +46,7 @@ public class FragmentCollectionServiceImpl
 			FragmentActionKeys.ADD_FRAGMENT_COLLECTION);
 
 		return fragmentCollectionLocalService.addFragmentCollection(
-			groupId, getUserId(), name, description, serviceContext);
+			getUserId(), groupId, name, description, serviceContext);
 	}
 
 	@Override

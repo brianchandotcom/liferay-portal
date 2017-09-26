@@ -54,12 +54,12 @@ public class FragmentCollectionLocalServiceUtil {
 	}
 
 	public static com.liferay.fragment.model.FragmentCollection addFragmentCollection(
-		long groupId, long userId, java.lang.String name,
+		long userId, long groupId, java.lang.String name,
 		java.lang.String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addFragmentCollection(groupId, userId, name, description,
+				   .addFragmentCollection(userId, groupId, name, description,
 			serviceContext);
 	}
 

@@ -1,3 +1,7 @@
-.btn-group.dropdown {
-	display: inline-flex;
+.btn-group {
+	flex-flow: wrap;
+
+	&.dropdown {
+		display: inline-flex;
+	}
 }

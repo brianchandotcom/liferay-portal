@@ -276,6 +276,16 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testJavaVariableFinalableFields1() throws Exception {
+		test("JavaVariableFinalableFields1.testjava");
+	}
+
+	@Test
+	public void testJavaVariableFinalableFields2() throws Exception {
+		test("JavaVariableFinalableFields2.testjava");
+	}
+
+	@Test
 	public void testLogLevels() throws Exception {
 		test(
 			"Levels.testjava",

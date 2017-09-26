@@ -350,6 +350,14 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public int getDownstreamBuildCountByJobVariants(List<String> jobVariants) {
+		List<Build> filteredDownstreamBuilds = getDownstreamBuildsByJobVariants(
+			jobVariants);
+
+		return filteredDownstreamBuilds.size();
+	}
+
+	@Override
 	public List<Build> getDownstreamBuilds(String status) {
 		if (status == null) {
 			return downstreamBuilds;
@@ -360,6 +368,27 @@ public abstract class BaseBuild implements Build {
 		for (Build downstreamBuild : downstreamBuilds) {
 			if (status.equals(downstreamBuild.getStatus())) {
 				filteredDownstreamBuilds.add(downstreamBuild);
+			}
+		}
+
+		return filteredDownstreamBuilds;
+	}
+
+	@Override
+	public List<Build> getDownstreamBuildsByJobVariants(
+		List<String> jobVariants) {
+
+		List<Build> filteredDownstreamBuilds = new ArrayList<>();
+
+		for (Build downstreamBuild : downstreamBuilds) {
+			String downstreamBuildJobVariant = downstreamBuild.getJobVariant();
+
+			for (String jobVariant : jobVariants) {
+				if (downstreamBuildJobVariant.contains(jobVariant)) {
+					filteredDownstreamBuilds.add(downstreamBuild);
+
+					break;
+				}
 			}
 		}
 

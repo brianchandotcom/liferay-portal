@@ -61,7 +61,7 @@ public class DDMFormContextToDDMFormLayout
 
 		if (Validator.isNull(serializedFormContext)) {
 			throw new IllegalStateException(
-				"serializedFormContext property is required");
+				"The property \"serializedFormContext\" is required");
 		}
 
 		return deserialize(serializedFormContext);

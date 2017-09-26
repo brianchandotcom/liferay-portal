@@ -17,6 +17,7 @@ AUI.add(
 		var isObject = Lang.isObject;
 		var isString = Lang.isString;
 		var isValue = Lang.isValue;
+		var isArray = Lang.isArray;
 
 		var cdata = Liferay.KaleoDesignerUtils.cdata;
 		var jsonParse = Liferay.KaleoDesignerUtils.jsonParse;

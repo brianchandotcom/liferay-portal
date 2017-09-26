@@ -24,6 +24,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import org.apache.commons.lang.StringUtils;
+
 import org.dom4j.Element;
 
 import org.json.JSONObject;
@@ -407,6 +409,80 @@ public class JenkinsReportUtil {
 		scriptElement.addText(resource);
 
 		return scriptElement;
+	}
+
+	protected static List<Element> getCommonBuildInfoElementList(
+		Build build, String buildName, String elementTag) {
+
+		String buildURL = build.getBuildURL();
+
+		String buildConsoleURL = buildURL + "console";
+
+		String buildTestReportURL = buildURL + "testReport";
+
+		long buildDuration = build.getDuration();
+
+		Date buildStartDate = new Date(build.getStartTimestamp());
+
+		Element buildConsoleElement = Dom4JUtil.getNewElement(
+			elementTag, null,
+			Dom4JUtil.getNewAnchorElement(buildConsoleURL, null, "Console"));
+
+		Element buildDurationElement = Dom4JUtil.getNewElement(
+			elementTag, null,
+			JenkinsResultsParserUtil.toDurationString(buildDuration));
+
+		Element buildNameElement = Dom4JUtil.getNewElement(
+			elementTag, null,
+			Dom4JUtil.getNewAnchorElement(buildURL, null, buildName));
+
+		Element buildStartTimeElement = Dom4JUtil.getNewElement(
+			elementTag, null, buildStartDate.toLocaleString());
+
+		Element buildTestReportElement = Dom4JUtil.getNewElement(
+			elementTag, null,
+			Dom4JUtil.getNewAnchorElement(
+				buildTestReportURL, null, "Test Report"));
+
+		Element buildStatusElement = Dom4JUtil.getNewElement(elementTag);
+
+		String status = build.getStatus();
+
+		if (status != null) {
+			buildStatusElement.addText(StringUtils.upperCase(status));
+		}
+		else {
+			buildStatusElement.addText("");
+		}
+
+		Element buildResultElement = Dom4JUtil.getNewElement(elementTag);
+
+		String result = build.getResult();
+
+		if (result != null) {
+			buildResultElement.addText(result);
+		}
+		else {
+			buildResultElement.addText("");
+		}
+
+		List<Element> elementList = new ArrayList();
+
+		elementList.add(buildNameElement);
+
+		elementList.add(buildConsoleElement);
+
+		elementList.add(buildTestReportElement);
+
+		elementList.add(buildStartTimeElement);
+
+		elementList.add(buildDurationElement);
+
+		elementList.add(buildStatusElement);
+
+		elementList.add(buildResultElement);
+
+		return elementList;
 	}
 
 	protected static Element getLongestAxisElement(

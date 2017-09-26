@@ -28,10 +28,10 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 import java.util.zip.ZipEntry;
@@ -225,11 +225,11 @@ public class OSGiBundleBuilderCommandTest {
 		_unzip(file, temporaryFolder.newFolder(outputDirName));
 	}
 
-	private static final List<String> _ignoredAttributes = new ArrayList<>(
+	private static final Set<String> _ignoredAttributes = new HashSet<>(
 		Arrays.asList(
 			"Bnd-LastModified", "Javac-Debug", "Javac-Deprecation",
 			"Javac-Encoding"));
-	private static final List<String> _ignoredDirectories = new ArrayList<>(
+	private static final Set<String> _ignoredDirectories = new HashSet<>(
 		Arrays.asList("OSGI-INF", "OSGI-OPT"));
 
 }

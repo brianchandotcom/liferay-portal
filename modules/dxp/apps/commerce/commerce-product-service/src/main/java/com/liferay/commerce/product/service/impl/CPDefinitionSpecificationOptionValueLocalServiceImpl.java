@@ -78,8 +78,7 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 	}
 
 	@Override
-	public void deleteCPDefinitionSpecificationOptionValues(
-			long cpDefinitionId)
+	public void deleteCPDefinitionSpecificationOptionValues(long cpDefinitionId)
 		throws PortalException {
 
 		List<CPDefinitionSpecificationOptionValue>

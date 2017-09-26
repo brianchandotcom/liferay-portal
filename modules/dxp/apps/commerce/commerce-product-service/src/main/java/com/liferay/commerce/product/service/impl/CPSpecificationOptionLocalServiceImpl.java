@@ -105,13 +105,6 @@ public class CPSpecificationOptionLocalServiceImpl
 
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public CPSpecificationOption fetchCPSpecificationOption(
-		long groupId, String key) {
-
-		return cpSpecificationOptionPersistence.fetchByG_K(groupId, key);
-	}
-
-	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CPSpecificationOption deleteCPSpecificationOption(
 			CPSpecificationOption cpSpecificationOption)
@@ -169,6 +162,13 @@ public class CPSpecificationOptionLocalServiceImpl
 			cpSpecificationOptionLocalService.deleteCPSpecificationOption(
 				cpSpecificationOption);
 		}
+	}
+
+	@Override
+	public CPSpecificationOption fetchCPSpecificationOption(
+		long groupId, String key) {
+
+		return cpSpecificationOptionPersistence.fetchByG_K(groupId, key);
 	}
 
 	@Override

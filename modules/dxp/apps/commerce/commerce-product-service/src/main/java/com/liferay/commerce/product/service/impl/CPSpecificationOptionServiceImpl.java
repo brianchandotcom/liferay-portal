@@ -73,6 +73,23 @@ public class CPSpecificationOptionServiceImpl
 	}
 
 	@Override
+	public CPSpecificationOption fetchCPSpecificationOption(
+			long groupId, String key)
+		throws PortalException {
+
+		CPSpecificationOption cpSpecificationOption =
+			cpSpecificationOptionLocalService.fetchCPSpecificationOption(
+				groupId, key);
+
+		if (cpSpecificationOption != null) {
+			CPSpecificationOptionPermission.check(
+				getPermissionChecker(), cpSpecificationOption, ActionKeys.VIEW);
+		}
+
+		return cpSpecificationOption;
+	}
+
+	@Override
 	public CPSpecificationOption getCPSpecificationOption(
 			long cpSpecificationOptionId)
 		throws PortalException {
@@ -82,23 +99,6 @@ public class CPSpecificationOptionServiceImpl
 
 		return cpSpecificationOptionLocalService.getCPSpecificationOption(
 			cpSpecificationOptionId);
-	}
-
-	@Override
-	public CPSpecificationOption fetchCPSpecificationOption(
-			long groupId, String key)
-		throws PortalException {
-
-		CPSpecificationOption cpSpecificationOption =
-			cpSpecificationOptionLocalService.fetchCPSpecificationOption(
-				groupId, key);
-
-		if (cpSpecificationOption !=  null) {
-			CPSpecificationOptionPermission.check(
-				getPermissionChecker(), cpSpecificationOption, ActionKeys.VIEW);
-		}
-
-		return cpSpecificationOption;
 	}
 
 	@Override

@@ -14,17 +14,20 @@
 
 package com.liferay.poshi.runner.elements;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.dom4j.Element;
 
 /**
  * @author Kenji Heigel
  */
-public class ConditionPoshiElement extends ExecutePoshiElement {
+public class AndPoshiElement extends BasePoshiElement {
 
 	@Override
 	public PoshiElement clone(Element element) {
 		if (isElementType(_ELEMENT_NAME, element)) {
-			return new ConditionPoshiElement(element);
+			return new AndPoshiElement(element);
 		}
 
 		return null;
@@ -35,40 +38,64 @@ public class ConditionPoshiElement extends ExecutePoshiElement {
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
 		if (_isElementType(parentPoshiElement, readableSyntax)) {
-			return new ConditionPoshiElement(readableSyntax);
+			return new AndPoshiElement(readableSyntax);
 		}
 
 		return null;
 	}
 
-	protected ConditionPoshiElement() {
+	@Override
+	public void parseReadableSyntax(String readableSyntax) {
+		for (String readableBlock : getReadableBlocks(readableSyntax)) {
+			add(PoshiElementFactory.newPoshiElement(this, readableBlock));
+		}
 	}
 
-	protected ConditionPoshiElement(Element element) {
+	@Override
+	public String toReadableSyntax() {
+		StringBuilder sb = new StringBuilder();
+
+		for (PoshiElement poshiElement : toPoshiElements(elements())) {
+			poshiElement.toReadableSyntax();
+
+			sb.append("(");
+
+			sb.append(poshiElement.toReadableSyntax());
+
+			sb.append(") && ");
+		}
+
+		sb.setLength(sb.length() - 4);
+
+		return sb.toString();
+	}
+
+	protected AndPoshiElement() {
+	}
+
+	protected AndPoshiElement(Element element) {
 		super(_ELEMENT_NAME, element);
 	}
 
-	protected ConditionPoshiElement(String readableSyntax) {
+	protected AndPoshiElement(String readableSyntax) {
 		super(_ELEMENT_NAME, readableSyntax);
 	}
 
 	@Override
-	protected String createReadableBlock(String content) {
-		String readableBlock = super.createReadableBlock(content);
-
-		readableBlock = readableBlock.trim();
-
-		if (readableBlock.endsWith(";")) {
-			readableBlock = readableBlock.substring(
-				0, readableBlock.length() - 1);
-		}
-
-		return readableBlock;
+	protected String getBlockName() {
+		return "and";
 	}
 
-	@Override
-	protected String getBlockName() {
-		return attributeValue("function");
+	protected List<String> getReadableBlocks(String readableSyntax) {
+		List<String> readableBlocks = new ArrayList<>();
+
+		for (String condition : readableSyntax.split(" && ")) {
+			condition = getParentheticalContent(condition);
+
+			readableBlocks.add(condition);
+		}
+
+		return readableBlocks;
 	}
 
 	private boolean _isElementType(
@@ -76,27 +103,18 @@ public class ConditionPoshiElement extends ExecutePoshiElement {
 
 		if (!(parentPoshiElement instanceof AndPoshiElement ||
 			parentPoshiElement instanceof IfPoshiElement ||
-			parentPoshiElement instanceof NotPoshiElement) {
+			parentPoshiElement instanceof NotPoshiElement)) {
 
 			return false;
 		}
 
-		if (readableSyntax.contains(" && ") ||
-			readableSyntax.startsWith("!")) {
-
-			return false;
-		}
-
-		if (readableSyntax.endsWith(")") &&
-			!readableSyntax.startsWith("isSet(")) {
-
+		if (readableSyntax.contains(" && ")) {
 			return true;
 		}
-
 
 		return false;
 	}
 
-	private static final String _ELEMENT_NAME = "condition";
+	private static final String _ELEMENT_NAME = "and";
 
 }

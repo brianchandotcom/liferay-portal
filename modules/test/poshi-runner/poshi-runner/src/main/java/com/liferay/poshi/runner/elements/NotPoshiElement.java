@@ -82,7 +82,9 @@ public class NotPoshiElement extends BasePoshiElement {
 	private boolean _isElementType(
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
-		if (!(parentPoshiElement instanceof IfPoshiElement) {
+		if (!(parentPoshiElement instanceof AndPoshiElement ||
+			parentPoshiElement instanceof IfPoshiElement)) {
+
 			return false;
 		}
 

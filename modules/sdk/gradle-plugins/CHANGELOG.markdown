@@ -2039,7 +2039,7 @@ to version 2.0.44.
 - [LPS-73124]: Update the [Liferay Portal Tools DB Support] dependency to
 version 1.0.5.
 - [LPS-73855]: Update the [Liferay Gradle Plugins Javadoc Formatter] dependency
-to version 1.0.14.
+to version 1.0.15.
 - [LPS-73855]: Update the [Liferay Javadoc Formatter] dependency to version
 1.0.21.
 
@@ -2481,6 +2481,18 @@ to version 2.2.9.
 - [LPS-71117]: Update the [Liferay Gradle Plugins Test Integration] dependency
 to version 2.1.1.
 - [LPS-73070]: Set the default Node.js version to 8.4.0.
+- [LPS-74503]: Update the [Liferay Gradle Plugins Javadoc Formatter] dependency
+to version 1.0.16.
+- [LPS-74503]: Update the [Liferay Javadoc Formatter] dependency to version
+1.0.22.
+- [LPS-74657]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.2.10.
+- [LPS-74657]: Update the [Liferay Source Formatter] dependency to version
+1.0.468.
+- [LPS-74824]: Update the [Liferay Gradle Plugins Service Builder] dependency
+to version 1.0.52.
+- [LPS-74824]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.168.
 
 ## 3.4.69 - 2017-09-23
 
@@ -2493,6 +2505,14 @@ to version 2.1.2.
 ### Added
 - [LPS-74884]: Exclude `node_modules` directory in Idea's `.iml` file to speed
 up indexing.
+
+## 3.4.71 - 2017-09-26
+
+### Changed
+- [LPS-74749]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.2.11.
+- [LPS-74749]: Update the [Liferay Source Formatter] dependency to version
+1.0.469.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
@@ -2704,14 +2724,17 @@ up indexing.
 [LPS-74433]: https://issues.liferay.com/browse/LPS-74433
 [LPS-74475]: https://issues.liferay.com/browse/LPS-74475
 [LPS-74490]: https://issues.liferay.com/browse/LPS-74490
+[LPS-74503]: https://issues.liferay.com/browse/LPS-74503
 [LPS-74538]: https://issues.liferay.com/browse/LPS-74538
 [LPS-74544]: https://issues.liferay.com/browse/LPS-74544
 [LPS-74614]: https://issues.liferay.com/browse/LPS-74614
 [LPS-74637]: https://issues.liferay.com/browse/LPS-74637
 [LPS-74657]: https://issues.liferay.com/browse/LPS-74657
 [LPS-74738]: https://issues.liferay.com/browse/LPS-74738
+[LPS-74749]: https://issues.liferay.com/browse/LPS-74749
 [LPS-74752]: https://issues.liferay.com/browse/LPS-74752
 [LPS-74770]: https://issues.liferay.com/browse/LPS-74770
 [LPS-74789]: https://issues.liferay.com/browse/LPS-74789
+[LPS-74824]: https://issues.liferay.com/browse/LPS-74824
 [LPS-74884]: https://issues.liferay.com/browse/LPS-74884
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

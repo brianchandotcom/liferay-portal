@@ -2140,7 +2140,7 @@ belong to a different sub-repository.
 ## 5.0.55 - 2017-09-21
 
 ### Changed
-- [LPS-73070]: Update the [Liferay Gradle Plugins] dependency to version 3.4.68.
+- [LPS-74824]: Update the [Liferay Gradle Plugins] dependency to version 3.4.68.
 
 ## 5.0.56 - 2017-09-23
 
@@ -2152,9 +2152,10 @@ belong to a different sub-repository.
 ### Changed
 - [LPS-74884]: Update the [Liferay Gradle Plugins] dependency to version 3.4.70.
 
-## 5.1.0 - 2017-09-25
+## 5.1.0 - 2017-09-26
 
 ### Added
+- [LPS-74749]: Update the [Liferay Gradle Plugins] dependency to version 3.4.71.
 - [LPS-74892]: For OSGi modules, publish an additional `sources-commercial` jar.
 If the module is public, the original copyright in the source files is replaced
 with a commercial copyright.
@@ -2334,7 +2335,6 @@ with a commercial copyright.
 [LPS-72989]: https://issues.liferay.com/browse/LPS-72989
 [LPS-73058]: https://issues.liferay.com/browse/LPS-73058
 [LPS-73070]: https://issues.liferay.com/browse/LPS-73070
-[LPS-73070]: https://issues.liferay.com/browse/LPS-73070
 [LPS-73124]: https://issues.liferay.com/browse/LPS-73124
 [LPS-73128]: https://issues.liferay.com/browse/LPS-73128
 [LPS-73141]: https://issues.liferay.com/browse/LPS-73141
@@ -2392,9 +2392,11 @@ with a commercial copyright.
 [LPS-74637]: https://issues.liferay.com/browse/LPS-74637
 [LPS-74657]: https://issues.liferay.com/browse/LPS-74657
 [LPS-74738]: https://issues.liferay.com/browse/LPS-74738
+[LPS-74749]: https://issues.liferay.com/browse/LPS-74749
 [LPS-74752]: https://issues.liferay.com/browse/LPS-74752
 [LPS-74770]: https://issues.liferay.com/browse/LPS-74770
 [LPS-74789]: https://issues.liferay.com/browse/LPS-74789
+[LPS-74824]: https://issues.liferay.com/browse/LPS-74824
 [LPS-74884]: https://issues.liferay.com/browse/LPS-74884
 [LPS-74892]: https://issues.liferay.com/browse/LPS-74892
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594

@@ -81,7 +81,7 @@ public class OSGiBundleBuilderCommandTest {
 					baseDir,
 					"org.osgi.service.component.annotations-1.3.0.jar"),
 				new File(baseDir, "shiro-core-1.1.0.jar")));
-		jarCommand.setOutputFile(new File(baseDir, "build"));
+		jarCommand.setOutputDir(new File(baseDir, "build"));
 		jarCommand.setResourcesDir(new File(baseDir, "resources"));
 
 		jarCommand.build();
@@ -118,7 +118,7 @@ public class OSGiBundleBuilderCommandTest {
 					baseDir,
 					"org.osgi.service.component.annotations-1.3.0.jar"),
 				new File(baseDir, "shiro-core-1.1.0.jar")));
-		manifestCommand.setOutputFile(new File(baseDir, "build"));
+		manifestCommand.setOutputDir(new File(baseDir, "build"));
 		manifestCommand.setResourcesDir(new File(baseDir, "resources"));
 
 		manifestCommand.build();

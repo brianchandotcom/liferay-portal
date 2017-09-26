@@ -23,8 +23,9 @@ import aQute.lib.strings.Strings;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.converters.FileConverter;
 
+import com.liferay.osgi.bundle.builder.internal.util.FileUtil;
+
 import java.io.File;
-import java.io.FileInputStream;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,9 +39,7 @@ public abstract class BaseCommand implements Command {
 
 	@Override
 	public void build() throws Exception {
-		Properties properties = new Properties();
-
-		properties.load(new FileInputStream(_bndFile));
+		Properties properties = FileUtil.readProperties(_bndFile);
 
 		try (Builder builder = new Builder(new Processor(properties, false))) {
 			builder.setBase(_baseDir);

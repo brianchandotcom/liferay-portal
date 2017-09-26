@@ -419,10 +419,10 @@ AUI.add(
 
 				var strings = instance.get('strings');
 
-				var logicOperatorString = strings.and;
+				var logicOperatorString = strings['and'];
 
 				if (event.newVal === 'or') {
-					logicOperatorString = strings.or;
+					logicOperatorString = strings['or'];
 				}
 
 				A.all('.operator .panel-body').each(

@@ -72,7 +72,7 @@ public class DDMFormContextToDDMForm
 
 		if (Validator.isNull(serializedFormContext)) {
 			throw new IllegalStateException(
-				"serializedFormContext property is required");
+				"The property \"serializedFormContext\" is required");
 		}
 
 		return deserialize(serializedFormContext);
@@ -110,7 +110,6 @@ public class DDMFormContextToDDMForm
 			jsonObject.getString("defaultLanguageId"), ddmForm);
 		setDDMFormFields(jsonObject.getJSONArray("pages"), ddmForm);
 		setDDMFormRules(jsonObject.getJSONArray("rules"), ddmForm);
-
 		setDDMFormSuccessPageSettings(
 			jsonObject.getJSONObject("successPageSettings"), ddmForm);
 
@@ -219,10 +218,10 @@ public class DDMFormContextToDDMForm
 
 		JSONObject jsonObject = jsonFactory.createJSONObject(serializedValue);
 
-		ddmFormFieldValidation.setExpression(
-			jsonObject.getString("expression"));
 		ddmFormFieldValidation.setErrorMessage(
 			jsonObject.getString("errorMessage"));
+		ddmFormFieldValidation.setExpression(
+			jsonObject.getString("expression"));
 
 		return ddmFormFieldValidation;
 	}

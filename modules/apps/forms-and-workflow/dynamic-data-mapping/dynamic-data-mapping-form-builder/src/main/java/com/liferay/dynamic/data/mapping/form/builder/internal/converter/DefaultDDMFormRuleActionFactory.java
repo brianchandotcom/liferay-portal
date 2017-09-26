@@ -28,9 +28,9 @@ public class DefaultDDMFormRuleActionFactory {
 
 	public static DDMFormRuleAction create(
 		String action, List<Expression> expressions,
-		ActionExpressionVisitor visitor) {
+		ActionExpressionVisitor actionExpressionVisitor) {
 
-		String target = visitor.doVisit(expressions.get(0));
+		String target = actionExpressionVisitor.doVisit(expressions.get(0));
 
 		return new DefaultDDMFormRuleAction(action, target);
 	}

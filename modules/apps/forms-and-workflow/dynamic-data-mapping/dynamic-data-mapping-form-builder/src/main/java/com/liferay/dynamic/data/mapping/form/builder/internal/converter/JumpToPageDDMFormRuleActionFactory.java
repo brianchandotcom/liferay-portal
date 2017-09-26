@@ -27,10 +27,11 @@ import java.util.List;
 public class JumpToPageDDMFormRuleActionFactory {
 
 	public static DDMFormRuleAction create(
-		List<Expression> expressions, ActionExpressionVisitor visitor) {
+		List<Expression> expressions,
+		ActionExpressionVisitor actionExpressionVisitor) {
 
-		String source = visitor.doVisit(expressions.get(0));
-		String target = visitor.doVisit(expressions.get(1));
+		String source = actionExpressionVisitor.doVisit(expressions.get(0));
+		String target = actionExpressionVisitor.doVisit(expressions.get(1));
 
 		return new JumpToPageDDMFormRuleAction(source, target);
 	}

@@ -27,23 +27,23 @@ public class DDMFormRuleActionFactory {
 
 	public static DDMFormRuleAction create(
 		String action, List<Expression> expressions,
-		ActionExpressionVisitor visitor) {
+		ActionExpressionVisitor actionExpressionVisitor) {
 
 		if (action.equals("auto-fill")) {
 			return AutoFillDDMFormRuleActionFactory.create(
-				expressions, visitor);
+				expressions, actionExpressionVisitor);
 		}
 		else if (action.equals("calculate")) {
 			return CalculateDDMFormRuleActionFactory.create(
-				expressions, visitor);
+				expressions, actionExpressionVisitor);
 		}
 		else if (action.equals("jump-to-page")) {
 			return JumpToPageDDMFormRuleActionFactory.create(
-				expressions, visitor);
+				expressions, actionExpressionVisitor);
 		}
 
 		return DefaultDDMFormRuleActionFactory.create(
-			action, expressions, visitor);
+			action, expressions, actionExpressionVisitor);
 	}
 
 }

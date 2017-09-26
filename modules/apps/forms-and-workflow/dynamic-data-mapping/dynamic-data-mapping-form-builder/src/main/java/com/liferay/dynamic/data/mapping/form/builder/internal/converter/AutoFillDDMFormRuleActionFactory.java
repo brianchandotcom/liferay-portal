@@ -32,12 +32,15 @@ import java.util.Map;
 public class AutoFillDDMFormRuleActionFactory {
 
 	public static DDMFormRuleAction create(
-		List<Expression> expressions, ActionExpressionVisitor visitor) {
+		List<Expression> expressions,
+		ActionExpressionVisitor actionExpressionVisitor) {
 
-		String ddmDataProviderInstanceUUID = visitor.doVisit(
+		String ddmDataProviderInstanceUUID = actionExpressionVisitor.doVisit(
 			expressions.get(0));
-		String paramsExpression = visitor.doVisit(expressions.get(1));
-		String resultMapExpression = visitor.doVisit(expressions.get(2));
+		String paramsExpression = actionExpressionVisitor.doVisit(
+			expressions.get(1));
+		String resultMapExpression = actionExpressionVisitor.doVisit(
+			expressions.get(2));
 
 		return new AutoFillDDMFormRuleAction(
 			ddmDataProviderInstanceUUID,

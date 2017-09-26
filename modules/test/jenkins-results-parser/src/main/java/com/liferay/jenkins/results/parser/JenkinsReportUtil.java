@@ -116,74 +116,14 @@ public class JenkinsReportUtil {
 			String axisName =
 				"AXIS_VARIABLE=" + ((AxisBuild)axisBuild).getAxisNumber();
 
-			String axisBuildURL = axisBuild.getBuildURL();
-
-			String axisConsoleURL = axisBuildURL + "console";
-
-			String axisTestReportURL = axisBuildURL + "testReport";
-
-			long axisDuration = axisBuild.getDuration();
-
-			String axisDurationString =
-				JenkinsResultsParserUtil.toDurationString(axisDuration);
-
-			long axisStartTime = axisBuild.getStartTimestamp();
-
-			Date axisStartDate = new Date(axisStartTime);
-
-			String status = axisBuild.getStatus();
-
-			String result = axisBuild.getResult();
-
-			Element axisNameElement = Dom4JUtil.getNewAnchorElement(
-				axisBuildURL, null, axisName);
-
-			Element axisConsoleElement = Dom4JUtil.getNewAnchorElement(
-				axisConsoleURL, null, "Console");
-
-			Element axisTestReportElement = Dom4JUtil.getNewAnchorElement(
-				axisTestReportURL, null, "Test Report");
-
-			Element tdAxisNameElement = Dom4JUtil.getNewElement("td");
-
-			tdAxisNameElement.add(axisNameElement);
-
-			Element tdAxisConsoleElement = Dom4JUtil.getNewElement("td");
-
-			tdAxisConsoleElement.add(axisConsoleElement);
-
-			Element tdAxisTestReportElement = Dom4JUtil.getNewElement("td");
-
-			tdAxisTestReportElement.add(axisTestReportElement);
-
-			Element tdStartTimeStringElement = Dom4JUtil.getNewElement(
-				"td", null, "START TIME:");
-
-			Element tdStartTimeElement = Dom4JUtil.getNewElement(
-				"td", null, axisStartDate.toLocaleString());
-
-			Element tdBuildTimeStringElement = Dom4JUtil.getNewElement(
-				"td", null, "BUILD TIME:");
-
-			Element tdBuildTimeElement = Dom4JUtil.getNewElement(
-				"td", null, axisDurationString);
-
-			Element tdStatusResultElement = Dom4JUtil.getNewElement("td");
-
-			if (result != null) {
-				tdStatusResultElement.addText(result);
-			}
-			else {
-				tdStatusResultElement.addText(status);
-			}
-
 			Element trAxisInfoElement = Dom4JUtil.getNewElement("tr");
 
-			Dom4JUtil.addToElement(
-				trAxisInfoElement, tdAxisNameElement, tdAxisConsoleElement,
-				tdAxisTestReportElement, tdStartTimeStringElement,
-				tdStartTimeElement, tdBuildTimeStringElement,
-				tdBuildTimeElement, tdStatusResultElement);
+			List<Element> axisInfoElements = getCommonBuildInfoElementList(
+				axisBuild, axisName, "td");
+
+			for (Element axisInfoElement : axisInfoElements) {
+				trAxisInfoElement.add(axisInfoElement);
+			}
 
 			tableElement.add(trAxisInfoElement);
 		}
@@ -209,74 +149,14 @@ public class JenkinsReportUtil {
 				batchName = batchName.replace(jobName + "/", "");
 			}
 
-			String batchBuildURL = batchBuild.getBuildURL();
-
-			String batchConsoleURL = batchBuildURL + "console";
-
-			String batchTestReportURL = batchBuildURL + "testReport";
-
-			long batchDuration = batchBuild.getDuration();
-
-			String batchDurationString =
-				JenkinsResultsParserUtil.toDurationString(batchDuration);
-
-			long batchStartTime = batchBuild.getStartTimestamp();
-
-			Date batchStartDate = new Date(batchStartTime);
-
-			Element batchNameElement = Dom4JUtil.getNewAnchorElement(
-				batchBuildURL, null, batchName);
-
-			Element batchConsoleElement = Dom4JUtil.getNewAnchorElement(
-				batchConsoleURL, null, "Console");
-
-			Element batchTestReportElement = Dom4JUtil.getNewAnchorElement(
-				batchTestReportURL, null, "Test Report");
-
-			Element thBatchNameElement = Dom4JUtil.getNewElement("th");
-
-			thBatchNameElement.add(batchNameElement);
-
-			Element thBatchConsoleElement = Dom4JUtil.getNewElement("th");
-
-			thBatchConsoleElement.add(batchConsoleElement);
-
-			Element thTestReportElement = Dom4JUtil.getNewElement("th");
-
-			thTestReportElement.add(batchTestReportElement);
-
-			Element thStartTimeStringElement = Dom4JUtil.getNewElement(
-				"th", null, "START TIME:");
-
-			Element thStartTimeElement = Dom4JUtil.getNewElement(
-				"th", null, batchStartDate.toLocaleString());
-
-			Element thBuildTimeStringElement = Dom4JUtil.getNewElement(
-				"th", null, "BUILD TIME:");
-
-			Element thBuildTimeElement = Dom4JUtil.getNewElement(
-				"th", null, batchDurationString);
-
-			Element thStatusResultElement = Dom4JUtil.getNewElement("th");
-
-			String status = batchBuild.getStatus();
-
-			String result = batchBuild.getResult();
-
-			if (result != null) {
-				thStatusResultElement.addText(result);
-			}
-			else {
-				thStatusResultElement.addText(status);
-			}
-
 			Element trBatchElement = Dom4JUtil.getNewElement("tr");
 
-			Dom4JUtil.addToElement(
-				trBatchElement, thBatchNameElement, thBatchConsoleElement,
-				thTestReportElement, thStartTimeStringElement,
-				thStartTimeElement, thBuildTimeStringElement,
-				thBuildTimeElement, thStatusResultElement);
+			List<Element> batchInfoElements = getCommonBuildInfoElementList(
+				batchBuild, batchName, "th");
+
+			for (Element batchInfoElement : batchInfoElements) {
+				trBatchElement.add(batchInfoElement);
+			}
 
 			tableElement.add(trBatchElement);
 
@@ -774,70 +654,14 @@ public class JenkinsReportUtil {
 
 		topLevelName = topLevelName.replace(jobName + "/", "");
 
-		String topLevelBuildURL = topLevelBuild.getBuildURL();
-
-		String topLevelConsoleURL = topLevelBuildURL + "console";
-
-		String topLevelTestReportURL = topLevelBuildURL + "testReport";
-
-		long topLevelDuration = topLevelBuild.getDuration();
-
-		String topLevelDurationString =
-			JenkinsResultsParserUtil.toDurationString(topLevelDuration);
-
-		long topLevelStartTime = topLevelBuild.getStartTimestamp();
-
-		Date topLevelStartDate = new Date(topLevelStartTime);
-
-		Element topLevelNameElement = Dom4JUtil.getNewAnchorElement(
-			topLevelBuildURL, null, topLevelName);
-
-		Element topLevelConsoleElement = Dom4JUtil.getNewAnchorElement(
-			topLevelConsoleURL, null, "Console");
-
-		Element topLevelTestReportElement = Dom4JUtil.getNewAnchorElement(
-			topLevelTestReportURL, null, "Test Report");
-
-		Element thTopLevelNameElement = Dom4JUtil.getNewElement("th");
-
-		thTopLevelNameElement.add(topLevelNameElement);
-
-		Element thTopLevelConsoleElement = Dom4JUtil.getNewElement("th");
-
-		thTopLevelConsoleElement.add(topLevelConsoleElement);
-
-		Element thTestReportElement = Dom4JUtil.getNewElement("th");
-
-		thTestReportElement.add(topLevelTestReportElement);
-
-		Element thStartTimeStringElement = Dom4JUtil.getNewElement(
-			"th", null, "START TIME:");
-
-		Element thStartTimeElement = Dom4JUtil.getNewElement(
-			"th", null, topLevelStartDate.toLocaleString());
-
-		Element thBuildTimeStringElement = Dom4JUtil.getNewElement(
-			"th", null, "BUILD TIME:");
-
-		Element thBuildTimeElement = Dom4JUtil.getNewElement(
-			"th", null, topLevelDurationString);
-
-		Element thStatusResultElement = Dom4JUtil.getNewElement("th");
-
-		if (result != null) {
-			thStatusResultElement.addText(result);
-		}
-		else {
-			thStatusResultElement.addText(status);
-		}
-
 		Element trTopLevelElement = Dom4JUtil.getNewElement("tr");
 
-		Dom4JUtil.addToElement(
-			trTopLevelElement, thTopLevelNameElement, thTopLevelConsoleElement,
-			thTestReportElement, thStartTimeStringElement, thStartTimeElement,
-			thBuildTimeStringElement, thBuildTimeElement,
-			thStatusResultElement);
+		List<Element> topLevelInfoElements = getCommonBuildInfoElementList(
+			topLevelBuild, topLevelName, "th");
+
+		for (Element topLevelInfoElement : topLevelInfoElements) {
+			trTopLevelElement.add(topLevelInfoElement);
+		}
 
 		topLevelTableElement.add(trTopLevelElement);
 

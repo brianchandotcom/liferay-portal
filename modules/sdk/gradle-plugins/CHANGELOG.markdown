@@ -2489,6 +2489,10 @@ to version 1.0.16.
 to version 2.2.10.
 - [LPS-74657]: Update the [Liferay Source Formatter] dependency to version
 1.0.468.
+- [LPS-74824]: Update the [Liferay Gradle Plugins Service Builder] dependency
+to version 1.0.52.
+- [LPS-74824]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.168.
 
 ## 3.4.69 - 2017-09-23
 
@@ -2722,5 +2726,6 @@ up indexing.
 [LPS-74752]: https://issues.liferay.com/browse/LPS-74752
 [LPS-74770]: https://issues.liferay.com/browse/LPS-74770
 [LPS-74789]: https://issues.liferay.com/browse/LPS-74789
+[LPS-74824]: https://issues.liferay.com/browse/LPS-74824
 [LPS-74884]: https://issues.liferay.com/browse/LPS-74884
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

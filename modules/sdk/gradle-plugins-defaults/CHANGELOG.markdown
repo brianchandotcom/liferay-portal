@@ -2140,7 +2140,7 @@ belong to a different sub-repository.
 ## 5.0.55 - 2017-09-21
 
 ### Changed
-- [LPS-73070]: Update the [Liferay Gradle Plugins] dependency to version 3.4.68.
+- [LPS-74824]: Update the [Liferay Gradle Plugins] dependency to version 3.4.68.
 
 ## 5.0.56 - 2017-09-23
 
@@ -2394,6 +2394,7 @@ with a commercial copyright.
 [LPS-74752]: https://issues.liferay.com/browse/LPS-74752
 [LPS-74770]: https://issues.liferay.com/browse/LPS-74770
 [LPS-74789]: https://issues.liferay.com/browse/LPS-74789
+[LPS-74824]: https://issues.liferay.com/browse/LPS-74824
 [LPS-74884]: https://issues.liferay.com/browse/LPS-74884
 [LPS-74892]: https://issues.liferay.com/browse/LPS-74892
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594

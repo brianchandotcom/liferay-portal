@@ -19,11 +19,11 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
-import com.liferay.asset.util.impl.AssetUtil;
 import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.OpenSearch;
 import com.liferay.portal.kernel.search.OpenSearchRegistryUtil;
 import com.liferay.portal.kernel.search.OpenSearchUtil;
@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
@@ -198,7 +199,7 @@ public class SearchUtil {
 					(ThemeDisplay)renderRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				return AssetUtil.checkViewURL(
+				return _checkViewURL(
 					assetEntry, viewInContext, viewURL, currentURL,
 					themeDisplay);
 			}
@@ -213,6 +214,31 @@ public class SearchUtil {
 
 			return "";
 		}
+	}
+
+	private static String _checkViewURL(
+		AssetEntry assetEntry, boolean viewInContext, String viewURL,
+		String currentURL, ThemeDisplay themeDisplay) {
+
+		if (Validator.isNull(viewURL)) {
+			return viewURL;
+		}
+
+		viewURL = HttpUtil.setParameter(
+			viewURL, "inheritRedirect", viewInContext);
+
+		Layout layout = themeDisplay.getLayout();
+
+		String assetEntryLayoutUuid = assetEntry.getLayoutUuid();
+
+		if (!viewInContext ||
+			(Validator.isNotNull(assetEntryLayoutUuid) &&
+			 !assetEntryLayoutUuid.equals(layout.getUuid()))) {
+
+			viewURL = HttpUtil.setParameter(viewURL, "redirect", currentURL);
+		}
+
+		return viewURL;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(SearchUtil.class);

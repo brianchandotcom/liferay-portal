@@ -1,0 +1,49 @@
+{
+	"User Groups": [
+		{
+		"Name": "Business: Accounting",
+		"Description": "Accounting"
+		},
+		{
+		"Name": "Business: Business Administration",
+		"Description": "Business Administration"
+		},
+		{
+		"Name": "Agricultural Science",
+		"Description": "Agricultural Science"
+		},
+		{
+		"Name": "Engineering: Electrical Engineering",
+		"Description": "Electrical Engineering"
+		},
+		{
+		"Name": "Engineering: Mechanical Engineering",
+		"Description": "Mechanical Engineering"
+		},
+		{
+		"Name": "Engineering: Computer Engineering",
+		"Description": "Computer Engineering"
+		},
+		{
+		"Name": "Engineering: Civil Engineering",
+		"Description": "Civil Engineering"
+		},
+		{
+		"Name": "Engineering: Aerospace Engineering: Aeronautics",
+		"Description": "Aeronautics"
+		},
+		{
+		"Name": "Engineering: Aerospace Engineering: Astronautics",
+		"Description": "Astronautics"
+		},
+		{
+		"Name": "Human Resources",
+		"Description": "Human Resources"
+		},
+		{
+		"Name": "Board Member",
+		"Description": "Board Member"
+		}
+	]
+}
+  

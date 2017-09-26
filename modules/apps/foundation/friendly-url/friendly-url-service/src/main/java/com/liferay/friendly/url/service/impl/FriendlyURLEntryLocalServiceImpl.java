@@ -471,14 +471,27 @@ public class FriendlyURLEntryLocalServiceImpl
 			friendlyURLEntryLocalizationPersistence.findByFriendlyURLEntryId(
 				friendlyURLEntryMapping.getFriendlyURLEntryId());
 
-		for (FriendlyURLEntryLocalization friendlyURLEntryLocalization :
-				friendlyURLEntryLocalizations) {
+		iterate:
+		for (Map.Entry<String, String> entry : urlTitleMap.entrySet()) {
+			String languageId = entry.getKey();
+			String urlTitle = entry.getValue();
 
-			String urlTitle = FriendlyURLNormalizerUtil.normalize(
-				urlTitleMap.get(friendlyURLEntryLocalization.getLanguageId()));
+			for (FriendlyURLEntryLocalization friendlyURLEntryLocalization :
+					friendlyURLEntryLocalizations) {
 
-			if (!urlTitle.equals(friendlyURLEntryLocalization.getUrlTitle())) {
-				return false;
+				if (languageId.equals(
+						friendlyURLEntryLocalization.getLanguageId())) {
+
+					urlTitle = FriendlyURLNormalizerUtil.normalize(urlTitle);
+
+					if (urlTitle.equals(
+							friendlyURLEntryLocalization.getUrlTitle())) {
+
+						continue iterate;
+					}
+
+					return false;
+				}
 			}
 		}
 

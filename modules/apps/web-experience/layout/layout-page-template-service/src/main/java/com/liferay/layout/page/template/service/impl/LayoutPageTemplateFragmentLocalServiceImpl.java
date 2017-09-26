@@ -128,10 +128,7 @@ public class LayoutPageTemplateFragmentLocalServiceImpl
 			layoutPageTemplateFragmentPersistence.fetchByPrimaryKey(
 				layoutPageTemplateFragmentPK);
 
-		layoutPageTemplateFragmentLocalService.deleteLayoutPageTemplateFragment(
-			layoutPageTemplateFragment);
-
-		return layoutPageTemplateFragment;
+		return deleteLayoutPageTemplateFragment(layoutPageTemplateFragment);
 	}
 
 	@Override

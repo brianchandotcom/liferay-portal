@@ -2039,7 +2039,7 @@ to version 2.0.44.
 - [LPS-73124]: Update the [Liferay Portal Tools DB Support] dependency to
 version 1.0.5.
 - [LPS-73855]: Update the [Liferay Gradle Plugins Javadoc Formatter] dependency
-to version 1.0.14.
+to version 1.0.15.
 - [LPS-73855]: Update the [Liferay Javadoc Formatter] dependency to version
 1.0.21.
 

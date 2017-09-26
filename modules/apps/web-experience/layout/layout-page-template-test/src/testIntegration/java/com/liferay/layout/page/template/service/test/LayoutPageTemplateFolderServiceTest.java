@@ -66,10 +66,12 @@ public class LayoutPageTemplateFolderServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		LayoutPageTemplateFolderServiceUtil.addLayoutPageTemplateFolder(
-			_group.getGroupId(), "Page Template Folder", null, serviceContext);
+			_group.getGroupId(), "Layout Page Template Folder", null,
+			serviceContext);
 
 		LayoutPageTemplateFolderServiceUtil.addLayoutPageTemplateFolder(
-			_group.getGroupId(), "Page Template Folder", null, serviceContext);
+			_group.getGroupId(), "Layout Page Template Folder", null,
+			serviceContext);
 	}
 
 	@Test
@@ -80,11 +82,11 @@ public class LayoutPageTemplateFolderServiceTest {
 
 		LayoutPageTemplateFolder layoutPageTemplateFolder =
 			LayoutPageTemplateFolderServiceUtil.addLayoutPageTemplateFolder(
-				_group.getGroupId(), "Page Template Folder", null,
+				_group.getGroupId(), "Layout Page Template Folder", null,
 				serviceContext);
 
 		Assert.assertEquals(
-			"Page Template Folder", layoutPageTemplateFolder.getName());
+			"Layout Page Template Folder", layoutPageTemplateFolder.getName());
 	}
 
 	@Test(expected = LayoutPageTemplateFolderNameException.class)
@@ -122,12 +124,12 @@ public class LayoutPageTemplateFolderServiceTest {
 				getLayoutPageTemplateFoldersCount(_group.getGroupId());
 
 		LayoutPageTemplateFolderServiceUtil.addLayoutPageTemplateFolder(
-			_group.getGroupId(), "Page Template Folder 1", StringPool.BLANK,
-			serviceContext);
+			_group.getGroupId(), "Layout Page Template Folder 1",
+			StringPool.BLANK, serviceContext);
 
 		LayoutPageTemplateFolderServiceUtil.addLayoutPageTemplateFolder(
-			_group.getGroupId(), "Page Template Folder 2", StringPool.BLANK,
-			serviceContext);
+			_group.getGroupId(), "Layout Page Template Folder 2",
+			StringPool.BLANK, serviceContext);
 
 		int actualLayoutPageTemplateFoldersCount =
 			LayoutPageTemplateFolderServiceUtil.
@@ -146,7 +148,7 @@ public class LayoutPageTemplateFolderServiceTest {
 
 		LayoutPageTemplateFolder layoutPageTemplateFolder =
 			LayoutPageTemplateFolderServiceUtil.addLayoutPageTemplateFolder(
-				_group.getGroupId(), "Page Template Folder", null,
+				_group.getGroupId(), "Layout Page Template Folder", null,
 				serviceContext);
 
 		LayoutPageTemplateFolderServiceUtil.deleteLayoutPageTemplateFolder(
@@ -167,13 +169,13 @@ public class LayoutPageTemplateFolderServiceTest {
 
 		LayoutPageTemplateFolder layoutPageTemplateFolder =
 			LayoutPageTemplateFolderServiceUtil.addLayoutPageTemplateFolder(
-				_group.getGroupId(), "Page Template Folder", null,
+				_group.getGroupId(), "Layout Page Template Folder", null,
 				serviceContext);
 
 		LayoutPageTemplateServiceUtil.addLayoutPageTemplate(
 			_group.getGroupId(),
 			layoutPageTemplateFolder.getLayoutPageTemplateFolderId(),
-			"Page Template", null, serviceContext);
+			"Layout Page Template", null, serviceContext);
 
 		LayoutPageTemplateFolderServiceUtil.deleteLayoutPageTemplateFolder(
 			layoutPageTemplateFolder.getLayoutPageTemplateFolderId());

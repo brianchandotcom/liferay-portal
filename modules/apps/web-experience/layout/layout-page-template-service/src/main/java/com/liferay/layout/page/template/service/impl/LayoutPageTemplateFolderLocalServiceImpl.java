@@ -130,7 +130,8 @@ public class LayoutPageTemplateFolderLocalServiceImpl
 			long groupId, int start, int end)
 		throws PortalException {
 
-		return getLayoutPageTemplateFolders(groupId, start, end, null);
+		return layoutPageTemplateFolderPersistence.findByGroupId(
+			groupId, start, end);
 	}
 
 	@Override

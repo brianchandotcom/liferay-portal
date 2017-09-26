@@ -131,6 +131,13 @@ if (liveLayout != null) {
 
 								<liferay-ui:icon icon="exclamation-full" markupView="lexicon" message="an-error-occurred-while-authenticating-user" toolTip="<%= true %>" />
 							</c:when>
+							<c:when test="<%= SessionErrors.contains(renderRequest, RemoteExportException.class) %>">
+								<a class="control-menu-icon" value="go-to-remote-live">
+									<aui:icon image="home" label="go-to-remote-live" markupView="lexicon" />
+								</a>
+
+								<liferay-ui:icon icon="exclamation-full" markupView="lexicon" message="unable-to-connect-to-remote-live" toolTip="<%= true %>" />
+							</c:when>
 							<c:otherwise>
 								<a class="control-menu-icon" value="go-to-remote-live">
 									<aui:icon image="home" label="go-to-remote-live" markupView="lexicon" />

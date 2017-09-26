@@ -90,9 +90,18 @@ public class EqualsPoshiElement extends BasePoshiElement {
 	private boolean _isElementType(
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
-		if ((parentPoshiElement instanceof IfPoshiElement) &&
-			readableSyntax.contains("==")) {
+		if (!(parentPoshiElement instanceof IfPoshiElement ||
+			parentPoshiElement instanceof NotPoshiElement) {
 
+			return false;
+		}
+
+		if (readableSyntax.startsWith("!(")) {
+
+			return false;
+		}
+
+		if (readableSyntax.contains("==")) {
 			return true;
 		}
 

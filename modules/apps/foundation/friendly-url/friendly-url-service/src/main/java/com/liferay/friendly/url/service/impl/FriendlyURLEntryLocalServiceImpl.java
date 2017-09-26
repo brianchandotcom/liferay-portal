@@ -40,7 +40,6 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Adolfo Pérez
@@ -470,30 +469,10 @@ public class FriendlyURLEntryLocalServiceImpl
 				continue;
 			}
 
-			FriendlyURLEntryLocalization friendlyURLEntryLocalization =
-				friendlyURLEntryLocalizationPersistence.
-					fetchByFriendlyURLEntryId_LanguageId(
-						friendlyURLEntryId, languageId);
-
-			if (friendlyURLEntryLocalization != null) {
-				if (!Objects.equals(
-						normalizedUrlTitle,
-						friendlyURLEntryLocalization.getUrlTitle())) {
-
-					friendlyURLEntryLocalization.setUrlTitle(
-						normalizedUrlTitle);
-
-					friendlyURLEntryLocalizationPersistence.update(
-						friendlyURLEntryLocalization);
-				}
-
-				continue;
-			}
-
 			long friendlyURLEntryLocalizationId =
 				counterLocalService.increment();
 
-			friendlyURLEntryLocalization =
+			FriendlyURLEntryLocalization friendlyURLEntryLocalization =
 				friendlyURLEntryLocalizationPersistence.create(
 					friendlyURLEntryLocalizationId);
 

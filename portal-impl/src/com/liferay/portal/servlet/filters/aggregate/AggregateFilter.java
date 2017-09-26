@@ -292,7 +292,7 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 			long lastModified = PortalWebResourcesUtil.getLastModified(
 				PortalWebResourceConstants.RESOURCE_TYPE_JS);
 
-			if (lastModified <= cacheFile.lastModified()) {
+			if (lastModified == cacheFile.lastModified()) {
 				response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 
 				return cacheFile;
@@ -316,6 +316,10 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 
 		FileUtil.write(cacheFile, content);
+
+		cacheFile.setLastModified(
+			PortalWebResourcesUtil.getLastModified(
+				PortalWebResourceConstants.RESOURCE_TYPE_JS));
 
 		return content;
 	}
@@ -376,7 +380,7 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 			_tempDir, cacheCommonFileName + "_E_DATA");
 
 		if (cacheDataFile.exists() &&
-			(cacheDataFile.lastModified() >=
+			(cacheDataFile.lastModified() ==
 				URLUtil.getLastModifiedTime(resourceURL)) &&
 			!_isLegacyIe(request)) {
 
@@ -447,6 +451,8 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		}
 
 		FileUtil.write(cacheDataFile, content);
+
+		cacheDataFile.setLastModified(URLUtil.getLastModifiedTime(resourceURL));
 
 		return content;
 	}

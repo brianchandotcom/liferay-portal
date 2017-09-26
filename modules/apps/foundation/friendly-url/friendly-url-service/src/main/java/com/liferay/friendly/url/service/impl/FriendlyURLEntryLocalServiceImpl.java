@@ -65,6 +65,21 @@ public class FriendlyURLEntryLocalServiceImpl
 			Map<String, String> urlTitleMap, ServiceContext serviceContext)
 		throws PortalException {
 
+		String defaultLanguageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getSiteDefault());
+
+		return addFriendlyURLEntry(
+			groupId, classNameId, classPK, defaultLanguageId, urlTitleMap,
+			serviceContext);
+	}
+
+	@Override
+	public FriendlyURLEntry addFriendlyURLEntry(
+			long groupId, long classNameId, long classPK,
+			String defaultLanguageId, Map<String, String> urlTitleMap,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		validate(groupId, classNameId, classPK, urlTitleMap);
 
 		FriendlyURLEntryMappingPK friendlyURLEntryMappingPK =
@@ -87,9 +102,6 @@ public class FriendlyURLEntryLocalServiceImpl
 
 		FriendlyURLEntry friendlyURLEntry = friendlyURLEntryPersistence.create(
 			friendlyURLEntryId);
-
-		String defaultLanguageId = LocaleUtil.toLanguageId(
-			LocaleUtil.getSiteDefault());
 
 		friendlyURLEntry.setUuid(serviceContext.getUuid());
 
@@ -123,7 +135,7 @@ public class FriendlyURLEntryLocalServiceImpl
 			LocaleUtil.getSiteDefault());
 
 		return addFriendlyURLEntry(
-			groupId, classNameId, classPK,
+			groupId, classNameId, classPK, defaultLanguageId,
 			Collections.singletonMap(defaultLanguageId, urlTitle),
 			serviceContext);
 	}
@@ -351,7 +363,7 @@ public class FriendlyURLEntryLocalServiceImpl
 	@Override
 	public FriendlyURLEntry updateFriendlyURLEntry(
 			long friendlyURLEntryId, long classNameId, long classPK,
-			Map<String, String> urlTitleMap)
+			String defaultLanguageId, Map<String, String> urlTitleMap)
 		throws PortalException {
 
 		FriendlyURLEntry friendlyURLEntry = getFriendlyURLEntry(
@@ -362,6 +374,7 @@ public class FriendlyURLEntryLocalServiceImpl
 
 		friendlyURLEntry.setClassNameId(classNameId);
 		friendlyURLEntry.setClassPK(classPK);
+		friendlyURLEntry.setDefaultLanguageId(defaultLanguageId);
 
 		_updateFriendlyURLEntryLocalizations(
 			friendlyURLEntryId, friendlyURLEntry.getCompanyId(),

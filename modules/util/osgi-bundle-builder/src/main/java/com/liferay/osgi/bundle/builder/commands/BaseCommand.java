@@ -21,7 +21,6 @@ import aQute.bnd.osgi.Processor;
 import aQute.lib.strings.Strings;
 
 import com.beust.jcommander.Parameter;
-import com.beust.jcommander.converters.FileConverter;
 
 import com.liferay.osgi.bundle.builder.internal.util.FileUtil;
 
@@ -153,7 +152,6 @@ public abstract class BaseCommand implements Command {
 	private File _bndFile;
 
 	@Parameter(
-		converter = FileConverter.class,
 		description = "The directory which contains the class files.",
 		names = {"--classes-dir"}
 	)
@@ -171,7 +169,6 @@ public abstract class BaseCommand implements Command {
 	private File _output;
 
 	@Parameter(
-		converter = FileConverter.class,
 		description = "The directory that contains the processed resources.",
 		names = {"--resources-dir"}
 	)

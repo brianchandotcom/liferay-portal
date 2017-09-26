@@ -351,6 +351,11 @@ public interface FriendlyURLEntryLocalService extends BaseLocalService,
 	public FriendlyURLEntry updateFriendlyURLEntry(
 		FriendlyURLEntry friendlyURLEntry);
 
+	public FriendlyURLEntry updateFriendlyURLEntry(long friendlyURLEntryId,
+		long classNameId, long classPK,
+		Map<java.lang.String, java.lang.String> urlTitleMap)
+		throws PortalException;
+
 	public FriendlyURLEntryLocalization updateFriendlyURLLocalization(
 		FriendlyURLEntryLocalization friendlyURLEntryLocalization);
 

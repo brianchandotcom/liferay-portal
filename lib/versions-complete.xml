@@ -2242,7 +2242,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!aws-java-sdk-core.jar</file-name>
-				<version>1.10.11</version>
+				<version>1.10.51</version>
 				<project-name>AWS SDK for Java - Core</project-name>
 				<project-url>https://aws.amazon.com/sdkforjava</project-url>
 				<licenses>
@@ -2254,7 +2254,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!aws-java-sdk-kms.jar</file-name>
-				<version>1.10.11</version>
+				<version>1.10.51</version>
 				<project-name>AWS Java SDK for AWS KMS</project-name>
 				<project-url>https://aws.amazon.com/sdkforjava</project-url>
 				<licenses>
@@ -2266,7 +2266,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!aws-java-sdk-s3.jar</file-name>
-				<version>1.10.11</version>
+				<version>1.10.51</version>
 				<project-name>AWS Java SDK for Amazon S3</project-name>
 				<project-url>https://aws.amazon.com/sdkforjava</project-url>
 				<licenses>

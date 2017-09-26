@@ -276,13 +276,23 @@ public class S3Store extends BaseStore {
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
 
-		S3Object s3Object = null;
-
 		try {
-			s3Object = getS3Object(
+			if (Validator.isNull(versionLabel)) {
+				versionLabel = getHeadVersionLabel(
+					companyId, repositoryId, fileName);
+			}
+
+			String key = _s3KeyTransformer.getFileVersionKey(
 				companyId, repositoryId, fileName, versionLabel);
 
-			return true;
+			return _amazonS3.doesObjectExist(_bucketName, key);
+		}
+		catch (AmazonClientException ace) {
+			if (isFileNotFound(ace)) {
+				return false;
+			}
+
+			throw transform(ace);
 		}
 		catch (NoSuchFileException nsfe) {
 
@@ -293,18 +303,6 @@ public class S3Store extends BaseStore {
 			}
 
 			return false;
-		}
-		finally {
-			try {
-				if (s3Object != null) {
-					s3Object.close();
-				}
-			}
-			catch (IOException ioe) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Uanble to to close S3 object", ioe);
-				}
-			}
 		}
 	}
 

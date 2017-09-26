@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -186,25 +187,40 @@ public class SearchUtil {
 				"assetEntryId", String.valueOf(assetEntry.getEntryId()));
 			viewContentURL.setParameter("type", assetRendererFactory.getType());
 
-			if (viewInContext) {
-				AssetRenderer<?> assetRenderer =
-					assetRendererFactory.getAssetRenderer(classPK);
-
-				String viewURL = assetRenderer.getURLViewInContext(
-					PortalUtil.getLiferayPortletRequest(renderRequest),
-					PortalUtil.getLiferayPortletResponse(renderResponse),
-					viewContentURL.toString());
-
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)renderRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
-				return _checkViewURL(
-					assetEntry, viewInContext, viewURL, currentURL,
-					themeDisplay);
+			if (!viewInContext) {
+				return viewContentURL.toString();
 			}
 
-			return viewContentURL.toString();
+			AssetRenderer<?> assetRenderer =
+				assetRendererFactory.getAssetRenderer(classPK);
+
+			String viewURL = assetRenderer.getURLViewInContext(
+				PortalUtil.getLiferayPortletRequest(renderRequest),
+				PortalUtil.getLiferayPortletResponse(renderResponse),
+				viewContentURL.toString());
+
+			if (Validator.isNull(viewURL)) {
+				return viewURL;
+			}
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			viewURL = HttpUtil.setParameter(
+				viewURL, "inheritRedirect", viewInContext);
+
+			Layout layout = themeDisplay.getLayout();
+
+			String assetEntryLayoutUuid = assetEntry.getLayoutUuid();
+
+			if (Validator.isNotNull(assetEntryLayoutUuid) &&
+				!assetEntryLayoutUuid.equals(layout.getUuid())) {
+
+				viewURL = HttpUtil.setParameter(
+					viewURL, "redirect", currentURL);
+			}
+
+			return viewURL;
 		}
 		catch (Exception e) {
 			_log.error(
@@ -212,33 +228,8 @@ public class SearchUtil {
 					" with primary key " + classPK,
 				e);
 
-			return "";
+			return StringPool.BLANK;
 		}
-	}
-
-	private static String _checkViewURL(
-		AssetEntry assetEntry, boolean viewInContext, String viewURL,
-		String currentURL, ThemeDisplay themeDisplay) {
-
-		if (Validator.isNull(viewURL)) {
-			return viewURL;
-		}
-
-		viewURL = HttpUtil.setParameter(
-			viewURL, "inheritRedirect", viewInContext);
-
-		Layout layout = themeDisplay.getLayout();
-
-		String assetEntryLayoutUuid = assetEntry.getLayoutUuid();
-
-		if (!viewInContext ||
-			(Validator.isNotNull(assetEntryLayoutUuid) &&
-			 !assetEntryLayoutUuid.equals(layout.getUuid()))) {
-
-			viewURL = HttpUtil.setParameter(viewURL, "redirect", currentURL);
-		}
-
-		return viewURL;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(SearchUtil.class);

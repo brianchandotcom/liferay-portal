@@ -103,7 +103,7 @@ public class FriendlyURLEntryLocalServiceImpl
 
 		friendlyURLEntryMappingPersistence.update(friendlyURLEntryMapping);
 
-		updateFriendlyURLEntryLocalizations(
+		_updateFriendlyURLEntryLocalizations(
 			friendlyURLEntryId, group.getCompanyId(), groupId, classNameId,
 			classPK, urlTitleMap);
 
@@ -346,6 +346,28 @@ public class FriendlyURLEntryLocalServiceImpl
 	}
 
 	@Override
+	public FriendlyURLEntry updateFriendlyURLEntry(
+			long friendlyURLEntryId, long classNameId, long classPK,
+			Map<String, String> urlTitleMap)
+		throws PortalException {
+
+		FriendlyURLEntry friendlyURLEntry = getFriendlyURLEntry(
+			friendlyURLEntryId);
+
+		validate(
+			friendlyURLEntry.getGroupId(), classNameId, classPK, urlTitleMap);
+
+		friendlyURLEntry.setClassNameId(classNameId);
+		friendlyURLEntry.setClassPK(classPK);
+
+		_updateFriendlyURLEntryLocalizations(
+			friendlyURLEntryId, friendlyURLEntry.getCompanyId(),
+			friendlyURLEntry.getGroupId(), classNameId, classPK, urlTitleMap);
+
+		return friendlyURLEntryPersistence.update(friendlyURLEntry);
+	}
+
+	@Override
 	public FriendlyURLEntryLocalization updateFriendlyURLLocalization(
 		FriendlyURLEntryLocalization friendlyURLEntryLocalization) {
 
@@ -425,7 +447,7 @@ public class FriendlyURLEntryLocalServiceImpl
 		validate(groupId, classNameId, 0, urlTitle);
 	}
 
-	protected void updateFriendlyURLEntryLocalizations(
+	private void _updateFriendlyURLEntryLocalizations(
 		long friendlyURLEntryId, long companyId, long groupId, long classNameId,
 		long classPK, Map<String, String> urlTitleMap) {
 

@@ -50,19 +50,8 @@ public class OSGiBundleBuilderCommandTest {
 
 	@Before
 	public void setUp() throws Exception {
-		Class<?> clazz = getClass();
-
-		URL projectURL = clazz.getResource("dependencies/project.zip");
-
-		File projectFile = new File(projectURL.getFile());
-
-		_unzip(projectFile, temporaryFolder.newFolder("project"));
-
-		URL expectedURL = clazz.getResource("dependencies/expected.jar");
-
-		File expectedFile = new File(expectedURL.getFile());
-
-		_unzip(expectedFile, temporaryFolder.newFolder("expected"));
+		_unzip("dependencies/expected.jar", "expected");
+		_unzip("dependencies/project.zip", "project");
 	}
 
 	@Test
@@ -228,6 +217,16 @@ public class OSGiBundleBuilderCommandTest {
 
 			Assert.assertEquals(expectedValue, actualValue);
 		}
+	}
+
+	private void _unzip(String resourceName, String outputDirName)
+		throws IOException {
+
+		URL url = OSGiBundleBuilderCommandTest.class.getResource(resourceName);
+
+		File file = new File(url.getFile());
+
+		_unzip(file, temporaryFolder.newFolder(outputDirName));
 	}
 
 	private static final List<String> _ignoredAttributes = new ArrayList<>(

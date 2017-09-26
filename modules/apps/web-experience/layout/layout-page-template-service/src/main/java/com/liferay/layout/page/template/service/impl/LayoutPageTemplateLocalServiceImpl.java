@@ -109,6 +109,12 @@ public class LayoutPageTemplateLocalServiceImpl
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			layoutPageTemplate.getLayoutPageTemplateId());
 
+		// Layout Page Template Fragments
+
+		_layoutPageTemplateFragmentLocalService.deleteByLayoutPageTemplate(
+			layoutPageTemplate.getGroupId(),
+			layoutPageTemplate.getLayoutPageTemplateId());
+
 		return layoutPageTemplate;
 	}
 

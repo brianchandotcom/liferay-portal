@@ -86,6 +86,11 @@ public interface FriendlyURLEntryLocalService extends BaseLocalService,
 		ServiceContext serviceContext) throws PortalException;
 
 	public FriendlyURLEntry addFriendlyURLEntry(long groupId, long classNameId,
+		long classPK, java.lang.String defaultLanguageId,
+		Map<java.lang.String, java.lang.String> urlTitleMap,
+		ServiceContext serviceContext) throws PortalException;
+
+	public FriendlyURLEntry addFriendlyURLEntry(long groupId, long classNameId,
 		long classPK, java.lang.String urlTitle, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -119,7 +124,7 @@ public interface FriendlyURLEntryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public void deleteFriendlyURLEntry(long groupId, java.lang.Class<?> clazz,
-		long classPK);
+		long classPK) throws PortalException;
 
 	public void deleteFriendlyURLEntry(long groupId, java.lang.Class<?> clazz,
 		long classPK, java.lang.String urlTitle) throws PortalException;
@@ -352,7 +357,7 @@ public interface FriendlyURLEntryLocalService extends BaseLocalService,
 		FriendlyURLEntry friendlyURLEntry);
 
 	public FriendlyURLEntry updateFriendlyURLEntry(long friendlyURLEntryId,
-		long classNameId, long classPK,
+		long classNameId, long classPK, java.lang.String defaultLanguageId,
 		Map<java.lang.String, java.lang.String> urlTitleMap)
 		throws PortalException;
 

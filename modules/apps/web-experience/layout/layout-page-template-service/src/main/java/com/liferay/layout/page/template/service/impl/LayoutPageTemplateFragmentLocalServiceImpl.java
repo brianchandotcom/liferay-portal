@@ -49,8 +49,8 @@ public class LayoutPageTemplateFragmentLocalServiceImpl
 
 		User user = userLocalService.getUser(userId);
 
-		_validateFragment(fragmentId);
-		_validateLayoutPageTemplate(layoutPageTemplateId);
+		validateFragment(fragmentId);
+		validateLayoutPageTemplate(layoutPageTemplateId);
 
 		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK =
 			new LayoutPageTemplateFragmentPK(
@@ -140,7 +140,7 @@ public class LayoutPageTemplateFragmentLocalServiceImpl
 			groupId, layoutPageTemplateId);
 	}
 
-	private void _validateFragment(long fragmentId) throws PortalException {
+	protected void validateFragment(long fragmentId) throws PortalException {
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.fetchFragmentEntry(fragmentId);
 
@@ -149,7 +149,7 @@ public class LayoutPageTemplateFragmentLocalServiceImpl
 		}
 	}
 
-	private void _validateLayoutPageTemplate(long layoutPageTemplateId)
+	protected void validateLayoutPageTemplate(long layoutPageTemplateId)
 		throws PortalException {
 
 		LayoutPageTemplate layoutPageTemplate =

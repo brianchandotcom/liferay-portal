@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServiceUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.TextFormatter;
 
@@ -42,17 +44,22 @@ public class AlloyServiceInvoker {
 
 		String serviceClassName =
 			className.substring(0, pos) + ".service." + simpleClassName +
-				"LocalServiceUtil";
+				"LocalService";
 
 		try {
-			Class<?> serviceClass = classLoader.loadClass(serviceClassName);
-			Class<?> modelClass = classLoader.loadClass(className);
+			service = IdentifiableOSGiServiceUtil.getIdentifiableOSGiService(
+				serviceClassName);
+
+			Class<?> serviceClass = service.getClass();
+
+			createModelMethod = serviceClass.getMethod(
+				"create" + simpleClassName, new Class<?>[] {long.class});
+
+			Class<?> modelClass = createModelMethod.getReturnType();
 
 			addModelMethod = serviceClass.getMethod(
 				"add" + simpleClassName, new Class<?>[] {modelClass});
 
-			createModelMethod = serviceClass.getMethod(
-				"create" + simpleClassName, new Class<?>[] {long.class});
 			deleteModelMethod = serviceClass.getMethod(
 				"delete" + simpleClassName, new Class<?>[] {long.class});
 			dynamicQueryCountMethod1 = serviceClass.getMethod(
@@ -92,11 +99,11 @@ public class AlloyServiceInvoker {
 	}
 
 	public BaseModel addModel(BaseModel baseModel) throws Exception {
-		return (BaseModel<?>)addModelMethod.invoke(false, baseModel);
+		return (BaseModel<?>)addModelMethod.invoke(service, baseModel);
 	}
 
 	public DynamicQuery buildDynamicQuery() throws Exception {
-		return (DynamicQuery)dynamicQueryMethod1.invoke(false);
+		return (DynamicQuery)dynamicQueryMethod1.invoke(service);
 	}
 
 	public DynamicQuery buildDynamicQuery(Object[] properties)
@@ -123,16 +130,16 @@ public class AlloyServiceInvoker {
 	}
 
 	public BaseModel createModel(long id) throws Exception {
-		return (BaseModel<?>)createModelMethod.invoke(false, id);
+		return (BaseModel<?>)createModelMethod.invoke(service, id);
 	}
 
 	public BaseModel<?> deleteModel(BaseModel<?> baseModel) throws Exception {
 		return (BaseModel<?>)deleteModelMethod.invoke(
-			false, baseModel.getPrimaryKeyObj());
+			service, baseModel.getPrimaryKeyObj());
 	}
 
 	public BaseModel<?> deleteModel(long classPK) throws Exception {
-		return (BaseModel<?>)deleteModelMethod.invoke(false, classPK);
+		return (BaseModel<?>)deleteModelMethod.invoke(service, classPK);
 	}
 
 	/**
@@ -158,7 +165,7 @@ public class AlloyServiceInvoker {
 	public List executeDynamicQuery(DynamicQuery dynamicQuery)
 		throws Exception {
 
-		return (List)dynamicQueryMethod2.invoke(false, dynamicQuery);
+		return (List)dynamicQueryMethod2.invoke(service, dynamicQuery);
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -167,7 +174,7 @@ public class AlloyServiceInvoker {
 		throws Exception {
 
 		return (List)dynamicQueryMethod3.invoke(
-			false, dynamicQuery, start, end);
+			service, dynamicQuery, start, end);
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -177,7 +184,7 @@ public class AlloyServiceInvoker {
 		throws Exception {
 
 		return (List)dynamicQueryMethod4.invoke(
-			false, dynamicQuery, start, end, obc);
+			service, dynamicQuery, start, end, obc);
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -204,7 +211,7 @@ public class AlloyServiceInvoker {
 	public long executeDynamicQueryCount(DynamicQuery dynamicQuery)
 		throws Exception {
 
-		return (Long)dynamicQueryCountMethod1.invoke(false, dynamicQuery);
+		return (Long)dynamicQueryCountMethod1.invoke(service, dynamicQuery);
 	}
 
 	public long executeDynamicQueryCount(
@@ -212,7 +219,7 @@ public class AlloyServiceInvoker {
 		throws Exception {
 
 		return (Long)dynamicQueryCountMethod2.invoke(
-			false, dynamicQuery, projection);
+			service, dynamicQuery, projection);
 	}
 
 	public long executeDynamicQueryCount(Object[] properties) throws Exception {
@@ -220,24 +227,24 @@ public class AlloyServiceInvoker {
 	}
 
 	public BaseModel<?> fetchModel(long classPK) throws Exception {
-		return (BaseModel<?>)fetchModelMethod.invoke(false, classPK);
+		return (BaseModel<?>)fetchModelMethod.invoke(service, classPK);
 	}
 
 	public BaseModel<?> getModel(long classPK) throws Exception {
-		return (BaseModel<?>)getModelMethod.invoke(false, classPK);
+		return (BaseModel<?>)getModelMethod.invoke(service, classPK);
 	}
 
 	@SuppressWarnings("rawtypes")
 	public List getModels(int start, int end) throws Exception {
-		return (List)getModelsMethod.invoke(false, start, end);
+		return (List)getModelsMethod.invoke(service, start, end);
 	}
 
 	public int getModelsCount() throws Exception {
-		return (Integer)getModelsCountMethod.invoke(false);
+		return (Integer)getModelsCountMethod.invoke(service);
 	}
 
-	public BaseModel updateModel(BaseModel baseModel) throws Exception {
-		return (BaseModel<?>)updateModelMethod.invoke(false, baseModel);
+	public BaseModel<?> updateModel(BaseModel baseModel) throws Exception {
+		return (BaseModel<?>)updateModelMethod.invoke(service, baseModel);
 	}
 
 	protected Method addModelMethod;
@@ -253,6 +260,7 @@ public class AlloyServiceInvoker {
 	protected Method getModelMethod;
 	protected Method getModelsCountMethod;
 	protected Method getModelsMethod;
+	protected IdentifiableOSGiService service;
 	protected Method updateModelMethod;
 
 }

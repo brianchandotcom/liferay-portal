@@ -3717,14 +3717,14 @@
 			<var name="fieldName" value="Text" />
 		</execute>
 
+		<execute macro="DynamicDataMapping#editFieldRepeatable">
+			<var name="fieldFieldLabel" value="Text" />
+		</execute>
+
 		<execute macro="DynamicDataMapping#addFieldNested">
 			<var name="field" value="Documents and Media" />
 			<var name="fieldFieldLabel" value="Documents and Media" />
 			<var name="fieldName" value="DocumentsAndMedia" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#editFieldRepeatable">
-			<var name="fieldFieldLabel" value="Text" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#save" />

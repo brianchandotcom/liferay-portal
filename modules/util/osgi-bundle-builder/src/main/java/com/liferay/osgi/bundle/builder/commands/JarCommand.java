@@ -18,6 +18,8 @@ import aQute.bnd.osgi.Jar;
 
 import com.beust.jcommander.Parameters;
 
+import com.liferay.osgi.bundle.builder.OSGiBundleBuilderArgs;
+
 import java.io.File;
 
 /**
@@ -31,8 +33,13 @@ import java.io.File;
 public class JarCommand extends BaseCommand {
 
 	@Override
-	protected void writeOutput(Jar jar) throws Exception {
-		jar.write(new File(getOutputDir(), jar.getName() + ".jar"));
+	protected void writeOutput(
+			Jar jar, OSGiBundleBuilderArgs osgiBundleBuilderArgs)
+		throws Exception {
+
+		jar.write(
+			new File(
+				osgiBundleBuilderArgs.getOutputDir(), jar.getName() + ".jar"));
 	}
 
 }

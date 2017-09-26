@@ -14,6 +14,8 @@
 
 package com.liferay.osgi.bundle.builder.commands;
 
+import com.liferay.osgi.bundle.builder.OSGiBundleBuilderArgs;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -69,22 +71,25 @@ public class OSGiBundleBuilderCommandTest {
 
 		File baseDir = new File(tempFolder, "project");
 
-		JarCommand jarCommand = new JarCommand();
+		OSGiBundleBuilderArgs osgiBundleBuilderArgs =
+			new OSGiBundleBuilderArgs();
 
-		jarCommand.setBaseDir(baseDir);
-		jarCommand.setBndFile(new File(baseDir, "bnd.bnd"));
-		jarCommand.setClassesDir(new File(baseDir, "classes"));
-		jarCommand.setClasspath(
+		osgiBundleBuilderArgs.setBaseDir(baseDir);
+		osgiBundleBuilderArgs.setBndFile(new File(baseDir, "bnd.bnd"));
+		osgiBundleBuilderArgs.setClassesDir(new File(baseDir, "classes"));
+		osgiBundleBuilderArgs.setClasspath(
 			Arrays.asList(
 				new File(baseDir, "com.liferay.portal.kernel-2.0.0.jar"),
 				new File(
 					baseDir,
 					"org.osgi.service.component.annotations-1.3.0.jar"),
 				new File(baseDir, "shiro-core-1.1.0.jar")));
-		jarCommand.setOutputDir(new File(baseDir, "build"));
-		jarCommand.setResourcesDir(new File(baseDir, "resources"));
+		osgiBundleBuilderArgs.setOutputDir(new File(baseDir, "build"));
+		osgiBundleBuilderArgs.setResourcesDir(new File(baseDir, "resources"));
 
-		jarCommand.build();
+		JarCommand jarCommand = new JarCommand();
+
+		jarCommand.build(osgiBundleBuilderArgs);
 
 		File jarFile = new File(
 			baseDir, "build/com.liferay.blade.authenticator.shiro.jar");
@@ -106,22 +111,25 @@ public class OSGiBundleBuilderCommandTest {
 
 		File baseDir = new File(tempFolder, "project");
 
-		ManifestCommand manifestCommand = new ManifestCommand();
+		OSGiBundleBuilderArgs osgiBundleBuilderArgs =
+			new OSGiBundleBuilderArgs();
 
-		manifestCommand.setBaseDir(baseDir);
-		manifestCommand.setBndFile(new File(baseDir, "bnd.bnd"));
-		manifestCommand.setClassesDir(new File(baseDir, "classes"));
-		manifestCommand.setClasspath(
+		osgiBundleBuilderArgs.setBaseDir(baseDir);
+		osgiBundleBuilderArgs.setBndFile(new File(baseDir, "bnd.bnd"));
+		osgiBundleBuilderArgs.setClassesDir(new File(baseDir, "classes"));
+		osgiBundleBuilderArgs.setClasspath(
 			Arrays.asList(
 				new File(baseDir, "com.liferay.portal.kernel-2.0.0.jar"),
 				new File(
 					baseDir,
 					"org.osgi.service.component.annotations-1.3.0.jar"),
 				new File(baseDir, "shiro-core-1.1.0.jar")));
-		manifestCommand.setOutputDir(new File(baseDir, "build"));
-		manifestCommand.setResourcesDir(new File(baseDir, "resources"));
+		osgiBundleBuilderArgs.setOutputDir(new File(baseDir, "build"));
+		osgiBundleBuilderArgs.setResourcesDir(new File(baseDir, "resources"));
 
-		manifestCommand.build();
+		ManifestCommand manifestCommand = new ManifestCommand();
+
+		manifestCommand.build(osgiBundleBuilderArgs);
 
 		File actualFile = new File(baseDir, "build/MANIFEST.MF");
 

@@ -22,6 +22,7 @@ import aQute.lib.strings.Strings;
 
 import com.beust.jcommander.Parameter;
 
+import com.liferay.osgi.bundle.builder.internal.converters.PathParameterSplitter;
 import com.liferay.osgi.bundle.builder.internal.util.FileUtil;
 
 import java.io.File;
@@ -171,7 +172,7 @@ public abstract class BaseCommand implements Command {
 
 	@Parameter(
 		description = "The list of directories and JAR files to include in the classpath.",
-		names = {"--classpath"}
+		names = {"--classpath"}, splitter = PathParameterSplitter.class
 	)
 	private List<File> _classpath;
 

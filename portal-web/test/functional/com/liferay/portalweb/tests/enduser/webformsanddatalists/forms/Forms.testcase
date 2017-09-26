@@ -988,6 +988,11 @@
 			<var name="configurationName" value="Forms" />
 		</execute>
 
+		<execute macro="FormFields#viewSelectOption">
+			<var name="fieldName" value="DisplayView" />
+			<var name="selectOption" value="Descriptive" />
+		</execute>
+
 		<execute macro="FormFields#selectSelectOption">
 			<var name="fieldName" value="DisplayView" />
 			<var name="selectOption" value="List" />

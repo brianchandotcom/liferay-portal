@@ -48,12 +48,12 @@ public class FragmentEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.fragment.model.FragmentEntry addFragmentEntry(
-		long groupId, long userId, long fragmentCollectionId,
+		long userId, long groupId, long fragmentCollectionId,
 		java.lang.String name, java.lang.String css, java.lang.String html,
 		java.lang.String js,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _fragmentEntryLocalService.addFragmentEntry(groupId, userId,
+		return _fragmentEntryLocalService.addFragmentEntry(userId, groupId,
 			fragmentCollectionId, name, css, html, js, serviceContext);
 	}
 

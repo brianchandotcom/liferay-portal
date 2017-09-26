@@ -72,7 +72,7 @@ public interface FragmentCollectionLocalService extends BaseLocalService,
 	public FragmentCollection addFragmentCollection(
 		FragmentCollection fragmentCollection);
 
-	public FragmentCollection addFragmentCollection(long groupId, long userId,
+	public FragmentCollection addFragmentCollection(long userId, long groupId,
 		java.lang.String name, java.lang.String description,
 		ServiceContext serviceContext) throws PortalException;
 

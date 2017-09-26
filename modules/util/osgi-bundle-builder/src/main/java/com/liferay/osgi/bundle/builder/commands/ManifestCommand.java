@@ -28,8 +28,6 @@ import java.nio.file.Files;
 public class ManifestCommand extends BaseCommand {
 
 	public void writeOutput(Jar jar) throws Exception {
-		final long lastModified = jar.lastModified();
-
 		File output = getOutput();
 
 		Files.createDirectories(output.toPath());

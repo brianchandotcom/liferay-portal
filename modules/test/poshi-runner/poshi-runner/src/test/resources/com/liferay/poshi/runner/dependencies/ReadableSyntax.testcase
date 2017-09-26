@@ -66,7 +66,7 @@ definition {
 				errorMessage = "A configuration with this ID already exists. Please enter a unique ID."
 			);
 
-			if (isSet(duplicate)) {
+			if (!(isSet(duplicate))) {
 				Alert.viewErrorMessage(
 					errorMessage = "A configuration with this ID already exists. Please enter a unique ID."
 				);
@@ -93,6 +93,14 @@ definition {
 		}
 
 		if (IsElementPresent(locator1 = "Blogs#ADD_BLOGS_ENTRY")) {
+			Alert.viewSuccessMessage();
+		}
+
+		if ((IsElementPresent(locator1 = "Blogs#ADD_BLOGS_ENTRY")) && ("${check}" == "true") && (isSet(duplicate))) {
+			Alert.viewSuccessMessage();
+		}
+
+		if ((IsElementPresent(locator1 = "Blogs#ADD_BLOGS_ENTRY")) || ("${check}" == "true") || (isSet(duplicate))) {
 			Alert.viewSuccessMessage();
 		}
 

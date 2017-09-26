@@ -1291,6 +1291,8 @@
 			</execute>
 
 			<execute macro="FormPortlet#submit" />
+
+			<execute function="Refresh" />
 		</for>
 
 		<execute macro="Navigator#openURL" />

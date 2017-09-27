@@ -155,7 +155,7 @@
 </tr>
 <tr>
 	<td>FLAG</td>
-	<td>//div[@title='Flag']//i[@class='icon-flag']</td>
+	<td>//div[@title='Flag']//*[name()='svg'][contains(@class,'lexicon-icon')]</td>
 	<td></td>
 </tr>
 <tr>

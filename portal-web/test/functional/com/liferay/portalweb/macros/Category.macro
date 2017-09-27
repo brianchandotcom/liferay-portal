@@ -454,7 +454,7 @@
 
 		<execute function="AssertClick" locator1="CategoriesNavigation#CATEGORY_NAME" value1="${categoryName}" />
 
-		<execute function="AssertTextEquals" locator1="AP#CATEGORIES_FILTER_CATEGORY" value1="${categoryName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="AP#CATEGORIES_FILTER_CATEGORY" value1="${categoryName}" />
 	</command>
 
 	<command name="viewNavigationCP">

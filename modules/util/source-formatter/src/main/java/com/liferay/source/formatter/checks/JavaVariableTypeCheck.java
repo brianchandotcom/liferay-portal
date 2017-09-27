@@ -291,7 +291,7 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 			boolean found = matcher.find();
 
 			if (found) {
-				assignmentCount = assignmentCount + 1;
+				assignmentCount++;
 			}
 
 			if (childJavaTerm instanceof JavaConstructor) {

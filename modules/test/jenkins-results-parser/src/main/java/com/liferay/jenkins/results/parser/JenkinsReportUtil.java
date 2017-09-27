@@ -137,6 +137,10 @@ public class JenkinsReportUtil {
 		tableElement.add(
 			Dom4JUtil.getNewElement("caption", null, statusCountCaption));
 
+		if (!batchBuilds.isEmpty()) {
+			tableElement.add(getTableColumnHeaderElement());
+		}
+
 		for (Build batchBuild : batchBuilds) {
 			String jobName = batchBuild.getJobName();
 
@@ -673,8 +677,11 @@ public class JenkinsReportUtil {
 			topLevelTableElement.add(
 				Dom4JUtil.getNewElement(
 					"caption", null,
-					"Top Level Build - <strong>" + status + "</strong>"));
+					"Top Level Build - <strong>" +
+						StringUtils.upperCase(status) + "</strong>"));
 		}
+
+		topLevelTableElement.add(getTableColumnHeaderElement());
 
 		String jobName = topLevelBuild.getJobName();
 

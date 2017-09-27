@@ -3364,10 +3364,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			return;
 		}
 
-		if (GradleUtil.isSnapshot(project)) {
-			return;
-		}
-
 		TaskContainer taskContainer = project.getTasks();
 
 		TaskCollection<PublishNodeModuleTask> publishNodeModuleTasks =
@@ -3375,8 +3371,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		uploadArchivesTask.dependsOn(publishNodeModuleTasks);
 
-		uploadArchivesTask.finalizedBy(
-			updateFileVersionsTask, updateVersionTask);
+		if (!GradleUtil.isSnapshot(project)) {
+			uploadArchivesTask.finalizedBy(
+				updateFileVersionsTask, updateVersionTask);
+		}
 	}
 
 	private void _forceProjectDependenciesEvaluation(Project project) {

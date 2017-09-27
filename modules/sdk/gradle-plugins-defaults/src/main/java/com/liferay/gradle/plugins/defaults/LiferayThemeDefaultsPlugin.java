@@ -711,11 +711,11 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 			uploadArchivesTask.doFirst(action);
 		}
 
-		if (!GradleUtil.isSnapshot(project)) {
-			if (publishNodeModuleTask != null) {
-				uploadArchivesTask.dependsOn(publishNodeModuleTask);
-			}
+		if (publishNodeModuleTask != null) {
+			uploadArchivesTask.dependsOn(publishNodeModuleTask);
+		}
 
+		if (!GradleUtil.isSnapshot(project)) {
 			uploadArchivesTask.finalizedBy(updateVersionTask);
 		}
 	}

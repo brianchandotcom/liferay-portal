@@ -2,3 +2,14 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.portal.target.platform.indexer", version: "4.0.0"
 	provided group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
 }
+
+distributions {
+	main {
+		contents {
+			from (projectDir) {
+				include "run.sh"
+				into ("lib")
+			}
+		}
+	}
+}

@@ -14,8 +14,8 @@
 
 package com.liferay.layout.page.template.service.permission;
 
-import com.liferay.layout.page.template.model.LayoutPageTemplate;
-import com.liferay.layout.page.template.service.LayoutPageTemplateLocalServiceUtil;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -33,51 +33,52 @@ import org.osgi.service.component.annotations.Component;
  * @author Jürgen Kappler
  */
 @Component(
-	property = {"model.class.name=com.liferay.layout.page.template.model.LayoutPageTemplate"},
+	property = {"model.class.name=com.liferay.layout.page.template.model.LayoutPageTemplateEntry"},
 	service = BaseModelPermissionChecker.class
 )
-public class LayoutPageTemplatePermission
+public class LayoutPageTemplateEntryPermission
 	implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker,
-			LayoutPageTemplate layoutPageTemplate, String actionId)
+			LayoutPageTemplateEntry layoutPageTemplateEntry, String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, layoutPageTemplate, actionId)) {
+		if (!contains(permissionChecker, layoutPageTemplateEntry, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, LayoutPageTemplate.class.getName(),
-				layoutPageTemplate.getLayoutPageTemplateId(), actionId);
+				permissionChecker, LayoutPageTemplateEntry.class.getName(),
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				actionId);
 		}
 	}
 
 	public static void check(
-			PermissionChecker permissionChecker, long layoutPageTemplateId,
+			PermissionChecker permissionChecker, long layoutPageTemplateEntryId,
 			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, layoutPageTemplateId, actionId)) {
+		if (!contains(permissionChecker, layoutPageTemplateEntryId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, LayoutPageTemplate.class.getName(),
-				layoutPageTemplateId, actionId);
+				permissionChecker, LayoutPageTemplateEntry.class.getName(),
+				layoutPageTemplateEntryId, actionId);
 		}
 	}
 
 	public static boolean contains(
 		PermissionChecker permissionChecker,
-		LayoutPageTemplate layoutPageTemplate, String actionId) {
+		LayoutPageTemplateEntry layoutPageTemplateEntry, String actionId) {
 
 		Map<Object, Object> permissionChecksMap =
 			permissionChecker.getPermissionChecksMap();
 
 		PermissionCacheKey permissionCacheKey = new PermissionCacheKey(
-			layoutPageTemplate.getLayoutPageTemplateId(), actionId);
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), actionId);
 
 		Boolean contains = (Boolean)permissionChecksMap.get(permissionCacheKey);
 
 		if (contains == null) {
 			contains = _contains(
-				permissionChecker, layoutPageTemplate, actionId);
+				permissionChecker, layoutPageTemplateEntry, actionId);
 
 			permissionChecksMap.put(permissionCacheKey, contains);
 		}
@@ -86,22 +87,23 @@ public class LayoutPageTemplatePermission
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, long layoutPageTemplateId,
+			PermissionChecker permissionChecker, long layoutPageTemplateEntryId,
 			String actionId)
 		throws PortalException {
 
-		LayoutPageTemplate layoutPageTemplate =
-			LayoutPageTemplateLocalServiceUtil.fetchLayoutPageTemplate(
-				layoutPageTemplateId);
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateEntryLocalServiceUtil.
+				fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
 
-		if (layoutPageTemplate == null) {
+		if (layoutPageTemplateEntry == null) {
 			_log.error(
-				"Unable to get layout page template " + layoutPageTemplateId);
+				"Unable to get layout page template " +
+					layoutPageTemplateEntryId);
 
 			return false;
 		}
 
-		return contains(permissionChecker, layoutPageTemplate, actionId);
+		return contains(permissionChecker, layoutPageTemplateEntry, actionId);
 	}
 
 	@Override
@@ -115,18 +117,19 @@ public class LayoutPageTemplatePermission
 
 	private static boolean _contains(
 		PermissionChecker permissionChecker,
-		LayoutPageTemplate layoutPageTemplate, String actionId) {
+		LayoutPageTemplateEntry layoutPageTemplateEntry, String actionId) {
 
 		if (permissionChecker.hasOwnerPermission(
-				layoutPageTemplate.getCompanyId(),
-				LayoutPageTemplate.class.getName(),
-				layoutPageTemplate.getLayoutPageTemplateId(),
-				layoutPageTemplate.getUserId(),
+				layoutPageTemplateEntry.getCompanyId(),
+				LayoutPageTemplateEntry.class.getName(),
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				layoutPageTemplateEntry.getUserId(),
 				actionId) ||
 			permissionChecker.hasPermission(
-				layoutPageTemplate.getGroupId(),
-				LayoutPageTemplate.class.getName(),
-				layoutPageTemplate.getLayoutPageTemplateId(), actionId)) {
+				layoutPageTemplateEntry.getGroupId(),
+				LayoutPageTemplateEntry.class.getName(),
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				actionId)) {
 
 			return true;
 		}
@@ -135,7 +138,7 @@ public class LayoutPageTemplatePermission
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutPageTemplatePermission.class);
+		LayoutPageTemplateEntryPermission.class);
 
 	private static class PermissionCacheKey {
 
@@ -151,8 +154,8 @@ public class LayoutPageTemplatePermission
 
 			PermissionCacheKey permissionCacheKey = (PermissionCacheKey)obj;
 
-			if ((_layoutPageTemplateId ==
-					permissionCacheKey._layoutPageTemplateId) &&
+			if ((_layoutPageTemplateEntryId ==
+					permissionCacheKey._layoutPageTemplateEntryId) &&
 				Objects.equals(_actionId, permissionCacheKey._actionId)) {
 
 				return true;
@@ -163,18 +166,20 @@ public class LayoutPageTemplatePermission
 
 		@Override
 		public int hashCode() {
-			int hash = HashUtil.hash(0, _layoutPageTemplateId);
+			int hash = HashUtil.hash(0, _layoutPageTemplateEntryId);
 
 			return HashUtil.hash(hash, _actionId);
 		}
 
-		private PermissionCacheKey(long layoutPageTemplateId, String actionId) {
-			_layoutPageTemplateId = layoutPageTemplateId;
+		private PermissionCacheKey(
+			long layoutPageTemplateEntryId, String actionId) {
+
+			_layoutPageTemplateEntryId = layoutPageTemplateEntryId;
 			_actionId = actionId;
 		}
 
 		private final String _actionId;
-		private final long _layoutPageTemplateId;
+		private final long _layoutPageTemplateEntryId;
 
 	}
 

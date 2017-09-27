@@ -22,9 +22,9 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.model.NullClassTypeReader;
-import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
-import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
@@ -49,17 +49,17 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -87,6 +87,7 @@ import javax.portlet.PortletURL;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -131,7 +132,7 @@ public class AssetHelperImpl implements AssetHelper {
 		}
 
 		if (groupId > 0) {
-			Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+			Group group = _groupLocalService.fetchGroup(groupId);
 
 			liferayPortletRequest.setAttribute(
 				WebKeys.ASSET_RENDERER_FACTORY_GROUP, group);
@@ -167,7 +168,7 @@ public class AssetHelperImpl implements AssetHelper {
 
 				for (long assetCategoryId : allAssetCategoryIds) {
 					AssetCategory assetCategory =
-						AssetCategoryLocalServiceUtil.fetchAssetCategory(
+						_assetCategoryLocalService.fetchAssetCategory(
 							assetCategoryId);
 
 					if (assetCategory == null) {
@@ -240,7 +241,7 @@ public class AssetHelperImpl implements AssetHelper {
 			return portletURLImpl.toString();
 		}
 
-		return HttpUtil.addParameter(
+		return _http.addParameter(
 			addPortletURL.toString(), "refererPlid", plid);
 	}
 
@@ -259,7 +260,7 @@ public class AssetHelperImpl implements AssetHelper {
 				document.get(Field.ENTRY_CLASS_PK));
 
 			try {
-				AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+				AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 					className, classPK);
 
 				assetEntries.add(assetEntry);
@@ -273,10 +274,10 @@ public class AssetHelperImpl implements AssetHelper {
 
 	@Override
 	public String getAssetKeywords(String className, long classPK) {
-		List<AssetTag> tags = AssetTagLocalServiceUtil.getTags(
+		List<AssetTag> tags = _assetTagLocalService.getTags(
 			className, classPK);
 		List<AssetCategory> categories =
-			AssetCategoryLocalServiceUtil.getCategories(className, classPK);
+			_assetCategoryLocalService.getCategories(className, classPK);
 
 		StringBuffer sb = new StringBuffer();
 
@@ -310,7 +311,7 @@ public class AssetHelperImpl implements AssetHelper {
 			new ArrayList<>();
 
 		for (long classNameId : classNameIds) {
-			String className = PortalUtil.getClassName(classNameId);
+			String className = _portal.getClassName(classNameId);
 
 			AssetRendererFactory<?> assetRendererFactory =
 				AssetRendererFactoryRegistryUtil.
@@ -320,7 +321,7 @@ public class AssetHelperImpl implements AssetHelper {
 				continue;
 			}
 
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			Portlet portlet = _portletLocalService.getPortletById(
 				themeDisplay.getCompanyId(),
 				assetRendererFactory.getPortletId());
 
@@ -345,7 +346,7 @@ public class AssetHelperImpl implements AssetHelper {
 
 			if (!(classTypeReader instanceof NullClassTypeReader)) {
 				classTypes = classTypeReader.getAvailableClassTypes(
-					PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId),
+					_portal.getCurrentAndAncestorSiteGroupIds(groupId),
 					themeDisplay.getLocale());
 			}
 
@@ -641,5 +642,26 @@ public class AssetHelperImpl implements AssetHelper {
 
 		return sortType;
 	}
+
+	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Http _http;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private PortletLocalService _portletLocalService;
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.users.admin.web.servlet.taglib.ui;
 
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 
@@ -38,6 +40,11 @@ public class OrganizationCategorizationFormNavigatorEntry
 	@Override
 	public String getKey() {
 		return "categorization";
+	}
+
+	@Override
+	public boolean isVisible(User user, Organization organization) {
+		return true;
 	}
 
 	@Override

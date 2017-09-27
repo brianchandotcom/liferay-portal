@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -251,6 +252,12 @@ public class VirtualHostFilter extends BasePortalFilter {
 
 					forwardURL = forwardURL.concat(friendlyURL);
 
+					forwardURL = _getQueryString(request, forwardURL);
+
+					if (_log.isDebugEnabled()) {
+						_log.debug("Forward to " + forwardURL);
+					}
+
 					RequestDispatcher requestDispatcher =
 						_servletContext.getRequestDispatcher(forwardURL);
 
@@ -362,6 +369,8 @@ public class VirtualHostFilter extends BasePortalFilter {
 				forwardURLString = forwardURL.toString();
 			}
 
+			forwardURLString = _getQueryString(request, forwardURLString);
+
 			if (_log.isDebugEnabled()) {
 				_log.debug("Forward to " + forwardURLString);
 			}
@@ -406,6 +415,22 @@ public class VirtualHostFilter extends BasePortalFilter {
 		}
 
 		return languageId;
+	}
+
+	private String _getQueryString(HttpServletRequest request, String path) {
+		String queryString = request.getQueryString();
+
+		if (Validator.isNull(queryString)) {
+			queryString = (String)request.getAttribute(
+				JavaConstants.JAVAX_SERVLET_FORWARD_QUERY_STRING);
+		}
+
+		if (Validator.isNotNull(queryString)) {
+			return path + StringPool.QUESTION + queryString;
+		}
+		else {
+			return path;
+		}
 	}
 
 	private static final String _PATH_DOCUMENTS = "/documents/";

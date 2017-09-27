@@ -20,7 +20,9 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
+import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPOption;
+import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
@@ -84,6 +86,12 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 	public static final String FIELD_PRODUCT_TYPE_NAME = "productTypeName";
 
 	public static final String FIELD_SKUS = "skus";
+
+	public static final String FIELD_SPECIFICATION_IDS =
+		"specificationOptionsIds";
+
+	public static final String FIELD_SPECIFICATION_NAMES =
+		"specificationOptionsNames";
 
 	public CPDefinitionIndexer() {
 		setDefaultSelectedFieldNames(
@@ -288,6 +296,61 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 			cpDefinition.getCPDefinitionId());
 
 		document.addText(FIELD_SKUS, skus);
+
+		List<String> specificationOptionNames = new ArrayList<>();
+		List<Long> specificationOptionIds = new ArrayList<>();
+
+		List<CPDefinitionSpecificationOptionValue>
+			cpDefinitionSpecificationOptionValues =
+				cpDefinition.getCPDefinitionSpecificationOptionValues();
+
+		for (CPDefinitionSpecificationOptionValue
+				cpDefinitionSpecificationOptionValue :
+					cpDefinitionSpecificationOptionValues) {
+
+			CPSpecificationOption cpSpecificationOption =
+				cpDefinitionSpecificationOptionValue.getCPSpecificationOption();
+
+			if (!cpSpecificationOption.isFacetable()) {
+				continue;
+			}
+
+			specificationOptionNames.add(cpSpecificationOption.getKey());
+			specificationOptionIds.add(
+				cpSpecificationOption.getCPSpecificationOptionId());
+
+			document.addText(
+				"SPECIFICATION_" + cpSpecificationOption.getKey() +
+					"_VALUE_NAME",
+				cpDefinitionSpecificationOptionValue.getValue());
+
+			document.addText(
+				"SPECIFICATION_" +
+					cpSpecificationOption.getCPSpecificationOptionId() +
+						"_VALUE_NAME",
+				cpDefinitionSpecificationOptionValue.getValue(
+					cpDefinitionDefaultLanguageId));
+
+			document.addNumber(
+				"SPECIFICATION_" + cpSpecificationOption.getKey() +
+					"_VALUE_ID",
+				cpDefinitionSpecificationOptionValue.
+					getCPDefinitionSpecificationOptionValueId());
+
+			document.addNumber(
+				"SPECIFICATION_" +
+					cpSpecificationOption.getCPSpecificationOptionId() +
+						"_VALUE_ID",
+				cpDefinitionSpecificationOptionValue.
+					getCPDefinitionSpecificationOptionValueId());
+		}
+
+		document.addText(
+			FIELD_SPECIFICATION_NAMES,
+			ArrayUtil.toStringArray(specificationOptionNames));
+		document.addNumber(
+			FIELD_SPECIFICATION_IDS,
+			ArrayUtil.toLongArray(specificationOptionIds));
 
 		List<String> types = _cpDefinitionLinkTypeRegistry.getTypes();
 

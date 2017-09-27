@@ -20,11 +20,25 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 
 /**
  * @author Bruno Basto
  */
-@DDMForm
+@DDMForm(
+	rules = {
+		@DDMFormRule(
+			actions = {
+				"setVisible('emailFromAddress', getValue('sendEmailNotification'))",
+				"setVisible('emailFromName', getValue('sendEmailNotification'))",
+				"setVisible('emailSubject', getValue('sendEmailNotification'))",
+				"setVisible('emailToAddress', getValue('sendEmailNotification'))",
+				"setVisible('published', FALSE)"
+			},
+			condition = "TRUE"
+		)
+	}
+)
 @DDMFormLayout(
 	{
 		@DDMFormLayoutPage(
@@ -68,32 +82,24 @@ public interface DDLRecordSetSettings {
 	@DDMFormField(
 		label = "%from-address",
 		validationErrorMessage = "%please-enter-a-valid-email-address",
-		validationExpression = "isEmailAddress(emailFromAddress)",
-		visibilityExpression = "sendEmailNotification == TRUE"
+		validationExpression = "isEmailAddress(emailFromAddress)"
 	)
 	public String emailFromAddress();
 
-	@DDMFormField(
-		label = "%from-name",
-		visibilityExpression = "sendEmailNotification == TRUE"
-	)
+	@DDMFormField(label = "%from-name")
 	public String emailFromName();
 
-	@DDMFormField(
-		label = "%subject",
-		visibilityExpression = "sendEmailNotification == TRUE"
-	)
+	@DDMFormField(label = "%subject")
 	public String emailSubject();
 
 	@DDMFormField(
 		label = "%to-address",
-		validationErrorMessage = "%please-enter-a-valid-email-address",
-		validationExpression = "isEmailAddress(emailToAddress)",
-		visibilityExpression = "sendEmailNotification == TRUE"
+		validationErrorMessage = "%please-enter-valid-email-addresses-separated-by-comma",
+		validationExpression = "isEmailAddress(emailToAddress)"
 	)
 	public String emailToAddress();
 
-	@DDMFormField(visibilityExpression = "FALSE")
+	@DDMFormField
 	public boolean published();
 
 	@DDMFormField(

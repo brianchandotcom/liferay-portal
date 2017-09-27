@@ -329,6 +329,10 @@ public class ServletResponseUtil {
 				final boolean rangesSortedAndNotOverlapped =
 					rangesSortedAndNotOverlapped(ranges);
 
+				if (!rangesSortedAndNotOverlapped) {
+					inputStream = _toRandomAccessInputStream(inputStream);
+				}
+
 				for (int i = 0; i < ranges.size(); i++) {
 					Range curRange = ranges.get(i);
 

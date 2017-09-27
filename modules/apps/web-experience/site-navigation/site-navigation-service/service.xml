@@ -30,9 +30,14 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
+		<finder name="G_N" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column comparator="LIKE" name="name" />
+		</finder>
 
 		<!-- References -->
 
+		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="SiteNavigationMenuItem" package-path="com.liferay.site.navigation" />
 	</entity>
@@ -69,6 +74,7 @@
 
 		<!-- References -->
 
+		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 </service-builder>

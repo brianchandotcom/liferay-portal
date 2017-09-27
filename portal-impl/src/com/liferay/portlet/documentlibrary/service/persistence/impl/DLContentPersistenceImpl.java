@@ -70,7 +70,10 @@ import java.util.Set;
  * @see DLContentPersistence
  * @see com.liferay.document.library.kernel.service.persistence.DLContentUtil
  * @generated
+ *
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.document.library.content.service.impl.DLContentPersistenceImpl}
  */
+@Deprecated
 @ProviderType
 public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	implements DLContentPersistence {

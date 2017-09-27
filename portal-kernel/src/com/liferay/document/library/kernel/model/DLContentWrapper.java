@@ -37,7 +37,10 @@ import java.util.Objects;
  * @author Brian Wing Shun Chan
  * @see DLContent
  * @generated
+ *
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.document.library.content.model.DLContentWrapper}
  */
+@Deprecated
 @ProviderType
 public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	public DLContentWrapper(DLContent dlContent) {

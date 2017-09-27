@@ -187,7 +187,7 @@
 	<command name="gotoPollPermissionsCP">
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
 			<var name="menuItem" value="Permissions" />
-			<var name="rowEntry" value="pollsQuestionTitle" />
+			<var name="rowEntry" value="${pollsQuestionTitle}" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />

@@ -1,0 +1,8 @@
+Bundle-Name: Liferay OSGi Bundle Builder
+Bundle-SymbolicName: com.liferay.osgi.bundle.builder
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.osgi.bundle.builder,\
+	com.liferay.osgi.bundle.builder.commands
+JPM-Command: liferay-osgi-bundle-builder
+Main-Class: com.liferay.osgi.bundle.builder.OSGiBundleBuilder

@@ -324,13 +324,13 @@ public class ServletResponseUtil {
 
 				response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);
 
-				Range previousRange = null;
-
 				boolean sequentialRangeList = _isSequentialRangeList(ranges);
 
 				if (!sequentialRangeList) {
 					inputStream = _toRandomAccessInputStream(inputStream);
 				}
+
+				Range previousRange = null;
 
 				for (int i = 0; i < ranges.size(); i++) {
 					Range curRange = ranges.get(i);
@@ -345,18 +345,18 @@ public class ServletResponseUtil {
 							curRange.getContentRange());
 					servletOutputStream.println();
 
-					long offset = curRange.getStart();
+					long start = curRange.getStart();
 
 					if (sequentialRangeList) {
 						if (previousRange != null) {
-							offset -= previousRange.getEnd() + 1;
+							start -= previousRange.getEnd() + 1;
 						}
 
 						previousRange = curRange;
 					}
 
 					inputStream = _copyRange(
-						inputStream, servletOutputStream, offset,
+						inputStream, servletOutputStream, start,
 						curRange.getLength());
 				}
 

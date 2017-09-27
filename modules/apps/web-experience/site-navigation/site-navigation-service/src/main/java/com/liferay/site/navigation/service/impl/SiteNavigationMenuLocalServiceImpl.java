@@ -88,6 +88,14 @@ public class SiteNavigationMenuLocalServiceImpl
 		siteNavigationMenuPersistence.remove(
 			siteNavigationMenu.getSiteNavigationMenuId());
 
+		// Resources
+
+		resourceLocalService.deleteResource(
+			siteNavigationMenu.getCompanyId(),
+			SiteNavigationMenuItem.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			siteNavigationMenu.getSiteNavigationMenuId());
+
 		// Site navigation menu items
 
 		List<SiteNavigationMenuItem> siteNavigationMenuItems =
@@ -100,14 +108,6 @@ public class SiteNavigationMenuLocalServiceImpl
 			siteNavigationMenuItemLocalService.deleteSiteNavigationMenuItem(
 				siteNavigationMenuItem.getSiteNavigationMenuItemId());
 		}
-
-		// Resources
-
-		resourceLocalService.deleteResource(
-			siteNavigationMenu.getCompanyId(),
-			SiteNavigationMenuItem.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			siteNavigationMenu.getSiteNavigationMenuId());
 
 		return siteNavigationMenu;
 	}

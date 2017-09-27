@@ -67,7 +67,7 @@
 <!--LIST_VIEW-->
 <tr>
 	<td>LIST_VIEW_DOCUMENT</td>
-	<td>//div[contains(@aria-label,'Files and folders list view.')]//span[contains(.,'${key_googleDocName}')]</td>
+	<td>//div[contains(@aria-label,'Files and folders list view.')]//div[contains(@aria-label,'${key_googleDocName}')]</td>
 	<td></td>
 </tr>
 <tr>

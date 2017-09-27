@@ -225,7 +225,7 @@
 </tr>
 <tr>
 	<td>GOOGLE_CLIENT_ID</td>
-	<td>//div[label[contains(.,'Google Client ID')]]/input[@type='text'] | //input[contains(@id,'google-client-id')]</td>
+	<td>//input[contains(@id,'googleClientId')]</td>
 	<td></td>
 </tr>
 <tr>

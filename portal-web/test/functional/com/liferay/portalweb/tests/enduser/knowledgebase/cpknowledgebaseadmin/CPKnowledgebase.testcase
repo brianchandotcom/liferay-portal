@@ -331,8 +331,18 @@
 	<command name="AddKBArticleWithInvalidAttachmentSize" priority="3">
 		<property name="test.name.skip.portal.instance" value="CPKnowledgebase#AddKBArticleWithInvalidAttachmentSize" />
 
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Server Administration" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="System Settings" />
+		</execute>
+
+		<execute macro="SystemSettings#gotoCategory">
+			<var name="category" value="Foundation" />
+		</execute>
+
+		<execute macro="SystemSettings#editConfiguration">
+			<var name="configurationName" value="Upload Servlet Request" />
 		</execute>
 
 		<execute macro="ServerAdministration#configureFileUploadOverallMaximumFileSize">

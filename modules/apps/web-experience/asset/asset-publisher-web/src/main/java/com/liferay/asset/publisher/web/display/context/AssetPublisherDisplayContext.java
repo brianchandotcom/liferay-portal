@@ -35,6 +35,7 @@ import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfigurat
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.web.internal.action.AssetEntryActionRegistry;
+import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.asset.util.impl.AssetPublisherAddItemHolder;
@@ -1013,7 +1014,7 @@ public class AssetPublisherDisplayContext {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		_defaultAssetPublisher = AssetUtil.isDefaultAssetPublisher(
+		_defaultAssetPublisher = AssetPublisherWebUtil.isDefaultAssetPublisher(
 			themeDisplay.getLayout(), portletDisplay.getId(),
 			getPortletResource());
 
@@ -1329,7 +1330,8 @@ public class AssetPublisherDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		String defaultAssetPublisherPortletId =
-			AssetUtil.getDefaultAssetPublisherId(themeDisplay.getLayout());
+			AssetPublisherWebUtil.getDefaultAssetPublisherId(
+				themeDisplay.getLayout());
 
 		if (isDefaultAssetPublisher() ||
 			Validator.isNull(defaultAssetPublisherPortletId) ||

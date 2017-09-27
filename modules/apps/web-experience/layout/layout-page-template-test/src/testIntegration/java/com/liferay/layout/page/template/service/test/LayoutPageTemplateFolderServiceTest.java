@@ -18,8 +18,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateFolderException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateFolderNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateFolder;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateFolderServiceUtil;
-import com.liferay.layout.page.template.service.LayoutPageTemplateServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -172,10 +172,10 @@ public class LayoutPageTemplateFolderServiceTest {
 				_group.getGroupId(), "Layout Page Template Folder", null,
 				serviceContext);
 
-		LayoutPageTemplateServiceUtil.addLayoutPageTemplate(
+		LayoutPageTemplateEntryServiceUtil.addLayoutPageTemplateEntry(
 			_group.getGroupId(),
 			layoutPageTemplateFolder.getLayoutPageTemplateFolderId(),
-			"Layout Page Template", null, serviceContext);
+			"Layout Page Template Entry", null, serviceContext);
 
 		LayoutPageTemplateFolderServiceUtil.deleteLayoutPageTemplateFolder(
 			layoutPageTemplateFolder.getLayoutPageTemplateFolderId());

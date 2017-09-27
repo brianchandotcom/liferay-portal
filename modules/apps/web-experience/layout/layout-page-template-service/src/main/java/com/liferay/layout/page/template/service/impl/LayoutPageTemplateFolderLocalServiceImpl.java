@@ -16,7 +16,7 @@ package com.liferay.layout.page.template.service.impl;
 
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateFolderException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateFolderNameException;
-import com.liferay.layout.page.template.model.LayoutPageTemplate;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateFolder;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateFolderLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -91,16 +91,18 @@ public class LayoutPageTemplateFolderLocalServiceImpl
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			layoutPageTemplateFolder.getLayoutPageTemplateFolderId());
 
-		// Layout Page Templates
+		// Layout Page Template Entries
 
-		List<LayoutPageTemplate> layoutPageTemplates =
-			layoutPageTemplateLocalService.getLayoutPageTemplates(
+		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
+			layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntries(
 				layoutPageTemplateFolder.getGroupId(),
 				layoutPageTemplateFolder.getLayoutPageTemplateFolderId());
 
-		for (LayoutPageTemplate layoutPageTemplate : layoutPageTemplates) {
-			layoutPageTemplateLocalService.deleteLayoutPageTemplate(
-				layoutPageTemplate);
+		for (LayoutPageTemplateEntry layoutPageTemplateEntry :
+				layoutPageTemplateEntries) {
+
+			layoutPageTemplateEntryLocalService.deleteLayoutPageTemplateEntry(
+				layoutPageTemplateEntry);
 		}
 
 		return layoutPageTemplateFolder;

@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.navigation.constants.SiteNavigationAdminPortletKeys;
+import com.liferay.site.navigation.admin.web.internal.constants.SiteNavigationAdminPortletKeys;
 import com.liferay.site.navigation.service.SiteNavigationMenuService;
 
 import javax.portlet.ActionRequest;

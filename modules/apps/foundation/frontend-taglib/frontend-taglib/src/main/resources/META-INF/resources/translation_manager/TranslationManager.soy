@@ -7,10 +7,10 @@
 	 {@param availableLocales: list<string>}
 	 {@param changeableDefaultLanguage: bool}
 	 {@param defaultLocale: string}
-	 {@param editingLocale: string}
 	 {@param locales: ?}
 	 {@param? addLocale: any}
 	 {@param? changeDefaultLocale: any}
+	 {@param? editingLocale: string}
 	 {@param? elementClasses: string}
 	 {@param? id: string}
 	 {@param? removeAvailableLocale: any}
@@ -92,10 +92,10 @@
  * Renders the required locale element
  */
 {template .locale}
-	{@param editingLocale: string}
 	{@param locale: ?}
 	{@param optionIcon: html}
 	{@param pathThemeImages: string}
+	{@param? editingLocale: string}
 
 	<li class="{$editingLocale == $locale.id ? 'active' : ''}">
 		<a href="javascript:;">

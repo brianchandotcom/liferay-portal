@@ -108,6 +108,10 @@
 	}
 }
 
+.panel-body > .card-row {
+	display: table;
+}
+
 // Checkbox and Radio Cards
 
 .checkbox-card,

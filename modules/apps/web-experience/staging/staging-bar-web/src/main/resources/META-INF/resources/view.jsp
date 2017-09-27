@@ -136,7 +136,7 @@ if (liveLayout != null) {
 									<aui:icon image="home" label="go-to-remote-live" markupView="lexicon" />
 								</a>
 
-								<liferay-ui:icon icon="exclamation-full" markupView="lexicon" message="unable-to-connect-to-remote-live" toolTip="<%= true %>" />
+								<liferay-ui:icon icon="exclamation-full" markupView="lexicon" message="the-connection-to-the-remote-live-site-cannot-be-established-due-to-a-network-problem" toolTip="<%= true %>" />
 							</c:when>
 							<c:otherwise>
 								<a class="control-menu-icon" value="go-to-remote-live">

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.Router;
@@ -28,7 +27,6 @@ import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.servlet.HttpMethods;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -167,20 +165,12 @@ public abstract class AlloyPortlet extends GenericPortlet {
 	}
 
 	protected String getPath(PortletRequest portletRequest) {
-		LiferayPortletConfig liferayPortletConfig =
-			(LiferayPortletConfig)portletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_CONFIG);
-
-		Portlet portlet = liferayPortletConfig.getPortlet();
-
-		String controllerPath = getControllerPath(portletRequest);
-
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("/alloy_mvc/jsp/");
 		sb.append(friendlyURLMapper.getMapping());
 		sb.append("/controllers/");
-		sb.append(controllerPath);
+		sb.append(getControllerPath(portletRequest));
 		sb.append("_controller.jsp");
 
 		return sb.toString();

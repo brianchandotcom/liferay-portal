@@ -34,10 +34,6 @@ import java.util.List;
 public class AlloyServiceInvoker {
 
 	public AlloyServiceInvoker(String className) {
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
 		int pos = className.indexOf(".model.");
 
 		String simpleClassName = className.substring(pos + 7);

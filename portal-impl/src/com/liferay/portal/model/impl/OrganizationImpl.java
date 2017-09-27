@@ -40,7 +40,6 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -172,14 +171,8 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 
 	@Override
 	public List<Organization> getDescendants() {
-		Set<Organization> descendants = new LinkedHashSet<>();
-
-		for (Organization suborganization : getSuborganizations()) {
-			descendants.add(suborganization);
-			descendants.addAll(suborganization.getDescendants());
-		}
-
-		return new ArrayList<>(descendants);
+		return OrganizationLocalServiceUtil.getOrganizations(
+			getCompanyId(), getTreePath().concat("_%"));
 	}
 
 	@Override

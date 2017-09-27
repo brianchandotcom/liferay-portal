@@ -469,6 +469,11 @@
 			<finder-column name="liveGroupId" />
 			<finder-column name="groupKey" />
 		</finder>
+		<finder db-index="false" name="C_T_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column comparator="LIKE" name="treePath" />
+			<finder-column name="site" />
+		</finder>
 		<finder db-index="false" name="G_C_C_P" return-type="Collection">
 			<finder-column comparator="&gt;" name="groupId" />
 			<finder-column name="companyId" />

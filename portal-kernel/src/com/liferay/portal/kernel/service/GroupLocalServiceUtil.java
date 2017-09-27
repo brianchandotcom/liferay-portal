@@ -708,6 +708,11 @@ public class GroupLocalServiceUtil {
 				   .getGroups(companyId, parentGroupId, site, inheritContent);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.Group> getGroups(
+		long companyId, java.lang.String treePath, boolean site) {
+		return getService().getGroups(companyId, treePath, site);
+	}
+
 	/**
 	* Returns all the groups that are direct children of the parent group with
 	* the matching className.

@@ -543,6 +543,10 @@ public interface GroupLocalService extends BaseLocalService,
 	public List<Group> getGroups(long companyId, long parentGroupId,
 		boolean site, boolean inheritContent);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Group> getGroups(long companyId, java.lang.String treePath,
+		boolean site);
+
 	/**
 	* Returns all the groups that are direct children of the parent group with
 	* the matching className.

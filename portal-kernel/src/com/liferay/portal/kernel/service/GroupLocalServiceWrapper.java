@@ -767,6 +767,12 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 			inheritContent);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Group> getGroups(
+		long companyId, java.lang.String treePath, boolean site) {
+		return _groupLocalService.getGroups(companyId, treePath, site);
+	}
+
 	/**
 	* Returns all the groups that are direct children of the parent group with
 	* the matching className.

@@ -18,11 +18,15 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -39,11 +43,60 @@ public class GroupLocalServiceTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@Before
+	public void setUp() throws Exception {
+		_group1 = GroupTestUtil.addGroup();
+
+		_group2 = GroupTestUtil.addGroup(_group1.getGroupId());
+
+		_group3 = GroupTestUtil.addGroup(_group2.getGroupId());
+
+		_group4 = GroupTestUtil.addGroup(_group1.getGroupId());
+
+		_groups.add(_group4);
+
+		_groups.add(_group3);
+		_groups.add(_group2);
+		_groups.add(_group1);
+	}
+
+	@Test
+	public void testGetGroupDescendantSites() throws Exception {
+		_assertDescendantSites(_group1, _group2, _group3, _group4);
+		_assertDescendantSites(_group2, _group3);
+		_assertDescendantSites(_group3);
+		_assertDescendantSites(_group4);
+	}
+
 	@Test
 	public void testGetStagedSites() {
 		List<Group> groups = GroupLocalServiceUtil.getStagedSites();
 
 		Assert.assertTrue(groups.isEmpty());
 	}
+
+	private void _assertDescendantSites(
+		Group parentGroup, Group... expectedDescendants) {
+
+		List<Group> actualDescendants = parentGroup.getDescendants(true);
+
+		Assert.assertEquals(
+			actualDescendants.toString(), expectedDescendants.length,
+			actualDescendants.size());
+
+		for (Group expectedDescendant : expectedDescendants) {
+			Assert.assertTrue(
+				"Missing descendant: " + expectedDescendant.toString(),
+				actualDescendants.contains(expectedDescendant));
+		}
+	}
+
+	private Group _group1;
+	private Group _group2;
+	private Group _group3;
+	private Group _group4;
+
+	@DeleteAfterTestRun
+	private final List<Group> _groups = new ArrayList<>();
 
 }

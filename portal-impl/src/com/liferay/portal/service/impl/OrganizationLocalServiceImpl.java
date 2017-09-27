@@ -595,6 +595,13 @@ public class OrganizationLocalServiceImpl
 		}
 	}
 
+	@Override
+	public List<Organization> getOrganizations(
+		long companyId, String treePath) {
+
+		return organizationPersistence.findByC_T(companyId, treePath);
+	}
+
 	/**
 	 * Returns the organizations with the primary keys.
 	 *

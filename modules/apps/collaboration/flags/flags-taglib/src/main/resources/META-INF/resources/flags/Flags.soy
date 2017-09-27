@@ -79,9 +79,9 @@
 		{/let}
 
 		{if $enabled}
-			<a class="taglib-icon" data-onclick="_openReportDialog" href="javascript:;">
+			<button aria-label="{$message}" class="btn btn-link" data-onclick="_openReportDialog">
 				{$icon}
-			</a>
+			</button>
 		{else}
 			{$icon}
 		{/if}

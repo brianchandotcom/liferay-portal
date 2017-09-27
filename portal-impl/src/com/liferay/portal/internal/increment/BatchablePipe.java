@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.concurrent;
+package com.liferay.portal.internal.increment;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,9 +21,7 @@ import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author Shuyang Zhou
- * @deprecated As of 7.0.0, with no direct replacement
  */
-@Deprecated
 public class BatchablePipe<K, V> {
 
 	public boolean put(IncreasableEntry<K, V> increasableEntry) {

@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.increment;
+package com.liferay.portal.internal.increment;
 
 import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
-import com.liferay.portal.kernel.concurrent.BatchablePipe;
 import com.liferay.portal.kernel.increment.Increment;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -29,9 +28,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Shuyang Zhou
- * @deprecated As of 7.0.0, with no direct replacement
  */
-@Deprecated
 public class BufferedIncrementRunnable implements Runnable {
 
 	public BufferedIncrementRunnable(

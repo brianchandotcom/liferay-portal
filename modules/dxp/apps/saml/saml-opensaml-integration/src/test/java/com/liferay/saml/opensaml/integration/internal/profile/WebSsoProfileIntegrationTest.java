@@ -176,7 +176,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		prepareIdentityProvider(IDP_ENTITY_ID);
 
 		MockHttpServletRequest mockHttpServletRequest =
-			getMockHttpServletRequest(SSO_URL);
+			getMockHttpServletRequest(SSO_URL + "?entityId=" + SP_ENTITY_ID);
 
 		HttpSession mockSession = mockHttpServletRequest.getSession();
 
@@ -258,7 +258,8 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		String inboundSamlMessageId =
 			samlMessageContext.getInboundSAMLMessageId();
 
-		mockHttpServletRequest = getMockHttpServletRequest(SSO_URL);
+		mockHttpServletRequest = getMockHttpServletRequest(
+			SSO_URL + "?saml_message_id=" + inboundSamlMessageId);
 
 		HttpSession mockSession = mockHttpServletRequest.getSession();
 

@@ -96,6 +96,10 @@ public class ModelAdapterUtil {
 	public static <T, V> QueryDefinition<T> adapt(
 		Class<V> clazz, QueryDefinition<V> queryDefinition) {
 
+		if (queryDefinition == null) {
+			return null;
+		}
+
 		QueryDefinition<T> adaptedQueryDefinition = new QueryDefinition<>(
 			queryDefinition.getStatus(), queryDefinition.isExcludeStatus(),
 			queryDefinition.getOwnerUserId(), queryDefinition.isIncludeOwner(),

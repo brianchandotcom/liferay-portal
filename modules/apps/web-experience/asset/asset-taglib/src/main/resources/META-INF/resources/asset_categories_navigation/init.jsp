@@ -24,7 +24,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.asset.kernel.model.AssetVocabulary" %><%@
 page import="com.liferay.asset.kernel.service.AssetCategoryServiceUtil" %><%@
 page import="com.liferay.asset.kernel.service.AssetVocabularyServiceUtil" %><%@
-page import="com.liferay.asset.util.impl.AssetUtil" %><%@
+page import="com.liferay.asset.taglib.internal.util.AssetCategoryUtil" %><%@
 page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %><%@
 page import="com.liferay.portal.kernel.exception.PortalException" %><%@
 page import="com.liferay.portal.kernel.theme.ThemeDisplay" %><%@

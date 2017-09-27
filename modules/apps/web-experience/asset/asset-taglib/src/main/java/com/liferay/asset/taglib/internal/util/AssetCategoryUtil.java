@@ -16,16 +16,24 @@ package com.liferay.asset.taglib.internal.util;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -33,6 +41,59 @@ import java.util.List;
 public class AssetCategoryUtil {
 
 	public static final String CATEGORY_SEPARATOR = "_CATEGORY_";
+
+	public static void addPortletBreadcrumbEntries(
+			long assetCategoryId, HttpServletRequest request,
+			PortletURL portletURL)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		boolean portletBreadcrumbEntry = false;
+
+		if (Validator.isNotNull(portletDisplay.getId()) &&
+			!portletDisplay.isFocused()) {
+
+			portletBreadcrumbEntry = true;
+		}
+
+		addPortletBreadcrumbEntries(
+			assetCategoryId, request, portletURL, portletBreadcrumbEntry);
+	}
+
+	public static void addPortletBreadcrumbEntries(
+			long assetCategoryId, HttpServletRequest request,
+			PortletURL portletURL, boolean portletBreadcrumbEntry)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getCategory(
+			assetCategoryId);
+
+		List<AssetCategory> ancestorCategories = assetCategory.getAncestors();
+
+		Collections.reverse(ancestorCategories);
+
+		for (AssetCategory ancestorCategory : ancestorCategories) {
+			portletURL.setParameter(
+				"categoryId", String.valueOf(ancestorCategory.getCategoryId()));
+
+			PortalUtil.addPortletBreadcrumbEntry(
+				request, ancestorCategory.getTitle(themeDisplay.getLocale()),
+				portletURL.toString(), null, portletBreadcrumbEntry);
+		}
+
+		portletURL.setParameter("categoryId", String.valueOf(assetCategoryId));
+
+		PortalUtil.addPortletBreadcrumbEntry(
+			request, assetCategory.getTitle(themeDisplay.getLocale()),
+			portletURL.toString(), null, portletBreadcrumbEntry);
+	}
 
 	public static long[] filterCategoryIds(
 		long vocabularyId, long[] categoryIds) {

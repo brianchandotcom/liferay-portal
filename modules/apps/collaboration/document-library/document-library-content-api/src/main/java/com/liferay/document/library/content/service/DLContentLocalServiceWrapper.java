@@ -34,6 +34,27 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService,
 	}
 
 	/**
+	* NOTE FOR DEVELOPERS:
+	*
+	* Never reference this class directly. Always use {@link DLContentLocalServiceUtil} to access the document library content local service.
+	*/
+	@Override
+	public com.liferay.document.library.content.model.DLContent addContent(
+		long companyId, long repositoryId, java.lang.String path,
+		java.lang.String version, byte[] bytes) {
+		return _dlContentLocalService.addContent(companyId, repositoryId, path,
+			version, bytes);
+	}
+
+	@Override
+	public com.liferay.document.library.content.model.DLContent addContent(
+		long companyId, long repositoryId, java.lang.String path,
+		java.lang.String version, java.io.InputStream inputStream, long size) {
+		return _dlContentLocalService.addContent(companyId, repositoryId, path,
+			version, inputStream, size);
+	}
+
+	/**
 	* Adds the document library content to the database. Also notifies the appropriate model listeners.
 	*
 	* @param dlContent the document library content
@@ -55,6 +76,27 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService,
 	public com.liferay.document.library.content.model.DLContent createDLContent(
 		long contentId) {
 		return _dlContentLocalService.createDLContent(contentId);
+	}
+
+	@Override
+	public void deleteContent(long companyId, long repositoryId,
+		java.lang.String path, java.lang.String version)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlContentLocalService.deleteContent(companyId, repositoryId, path,
+			version);
+	}
+
+	@Override
+	public void deleteContents(long companyId, long repositoryId,
+		java.lang.String path) {
+		_dlContentLocalService.deleteContents(companyId, repositoryId, path);
+	}
+
+	@Override
+	public void deleteContentsByDirectory(long companyId, long repositoryId,
+		java.lang.String dirName) {
+		_dlContentLocalService.deleteContentsByDirectory(companyId,
+			repositoryId, dirName);
 	}
 
 	/**
@@ -189,6 +231,41 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService,
 	}
 
 	@Override
+	public com.liferay.document.library.content.model.DLContent getContent(
+		long companyId, long repositoryId, java.lang.String path)
+		throws com.liferay.document.library.content.exception.NoSuchContentException {
+		return _dlContentLocalService.getContent(companyId, repositoryId, path);
+	}
+
+	@Override
+	public com.liferay.document.library.content.model.DLContent getContent(
+		long companyId, long repositoryId, java.lang.String path,
+		java.lang.String version)
+		throws com.liferay.document.library.content.exception.NoSuchContentException {
+		return _dlContentLocalService.getContent(companyId, repositoryId, path,
+			version);
+	}
+
+	@Override
+	public java.util.List<com.liferay.document.library.content.model.DLContent> getContents(
+		long companyId, long repositoryId) {
+		return _dlContentLocalService.getContents(companyId, repositoryId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.document.library.content.model.DLContent> getContents(
+		long companyId, long repositoryId, java.lang.String path) {
+		return _dlContentLocalService.getContents(companyId, repositoryId, path);
+	}
+
+	@Override
+	public java.util.List<com.liferay.document.library.content.model.DLContent> getContentsByDirectory(
+		long companyId, long repositoryId, java.lang.String dirName) {
+		return _dlContentLocalService.getContentsByDirectory(companyId,
+			repositoryId, dirName);
+	}
+
+	@Override
 	public com.liferay.document.library.content.model.DLContentDataBlobModel getDataBlobModel(
 		java.io.Serializable primaryKey) {
 		return _dlContentLocalService.getDataBlobModel(primaryKey);
@@ -257,6 +334,13 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService,
 		return _dlContentLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public boolean hasContent(long companyId, long repositoryId,
+		java.lang.String path, java.lang.String version) {
+		return _dlContentLocalService.hasContent(companyId, repositoryId, path,
+			version);
+	}
+
 	/**
 	* Updates the document library content in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -267,6 +351,13 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService,
 	public com.liferay.document.library.content.model.DLContent updateDLContent(
 		com.liferay.document.library.content.model.DLContent dlContent) {
 		return _dlContentLocalService.updateDLContent(dlContent);
+	}
+
+	@Override
+	public void updateDLContent(long companyId, long oldRepositoryId,
+		long newRepositoryId, java.lang.String oldPath, java.lang.String newPath) {
+		_dlContentLocalService.updateDLContent(companyId, oldRepositoryId,
+			newRepositoryId, oldPath, newPath);
 	}
 
 	@Override

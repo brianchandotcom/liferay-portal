@@ -115,8 +115,6 @@ public class KnowledgeBaseUtil {
 			return MimeTypesUtil.getContentType(inputStream, fileName);
 		}
 		catch (IOException ioe) {
-			ioe.addSuppressed(ioe);
-
 			if (_log.isWarnEnabled()) {
 				_log.warn(ioe, ioe);
 			}

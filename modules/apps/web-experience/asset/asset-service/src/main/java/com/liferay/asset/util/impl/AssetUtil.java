@@ -101,7 +101,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
+ * @deprecated As of 1.2.0, replaced by {@link
+ *             com.liferay.asset.util.AssetHelper}
  */
+@Deprecated
 public class AssetUtil {
 
 	public static final int ASSET_ENTRY_ABSTRACT_LENGTH = 200;

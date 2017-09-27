@@ -3,11 +3,11 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.layout.page.template">
 	<namespace>Layout</namespace>
-	<entity local-service="true" name="LayoutPageTemplate" remote-service="true">
+	<entity local-service="true" name="LayoutPageTemplateEntry" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="layoutPageTemplateId" primary="true" type="long" />
+		<column name="layoutPageTemplateEntryId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -41,7 +41,7 @@
 			<finder-column name="groupId" />
 			<finder-column name="layoutPageTemplateFolderId" />
 		</finder>
-		<finder name="G_N" return-type="LayoutPageTemplate" unique="true">
+		<finder name="G_N" return-type="LayoutPageTemplateEntry" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="name" />
 		</finder>
@@ -102,7 +102,7 @@
 
 		<!-- References -->
 
-		<reference entity="LayoutPageTemplate" package-path="com.liferay.layout.page.template" />
+		<reference entity="LayoutPageTemplateEntry" package-path="com.liferay.layout.page.template" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
@@ -111,7 +111,7 @@
 		<!-- PK fields -->
 
 		<column name="groupId" primary="true" type="long" />
-		<column name="layoutPageTemplateId" primary="true" type="long" />
+		<column name="layoutPageTemplateEntryId" primary="true" type="long" />
 		<column name="fragmentEntryId" primary="true" type="long" />
 
 		<!-- Audit fields -->
@@ -133,7 +133,7 @@
 		</finder>
 		<finder name="G_L" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="layoutPageTemplateId" />
+			<finder-column name="layoutPageTemplateEntryId" />
 		</finder>
 		<finder name="G_F" return-type="Collection">
 			<finder-column name="groupId" />
@@ -142,14 +142,14 @@
 
 		<!-- References -->
 
-		<reference entity="LayoutPageTemplate" package-path="com.liferay.layout.page.template" />
+		<reference entity="LayoutPageTemplateEntry" package-path="com.liferay.layout.page.template" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<exceptions>
-		<exception>DuplicateLayoutPageTemplate</exception>
+		<exception>DuplicateLayoutPageTemplateEntry</exception>
 		<exception>DuplicateLayoutPageTemplateFolder</exception>
+		<exception>LayoutPageTemplateEntryName</exception>
 		<exception>LayoutPageTemplateFolderName</exception>
-		<exception>LayoutPageTemplateName</exception>
 	</exceptions>
 </service-builder>

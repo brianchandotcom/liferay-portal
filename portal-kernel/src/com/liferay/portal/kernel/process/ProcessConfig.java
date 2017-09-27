@@ -39,8 +39,16 @@ public class ProcessConfig implements Serializable {
 			getBootstrapClassPathElements(), File.pathSeparator);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public String[] getBootstrapClassPathElements() {
 		return ArrayUtil.toStringArray(_bootstrapClassPathHolders);
+	}
+
+	public PathHolder[] getBootstrapClassPathHolders() {
+		return _bootstrapClassPathHolders;
 	}
 
 	public Map<String, String> getEnvironment() {
@@ -60,8 +68,16 @@ public class ProcessConfig implements Serializable {
 			getRuntimeClassPathElements(), File.pathSeparator);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public String[] getRuntimeClassPathElements() {
 		return ArrayUtil.toStringArray(_runtimeClassPathHolders);
+	}
+
+	public PathHolder[] getRuntimeClassPathHolders() {
+		return _runtimeClassPathHolders;
 	}
 
 	public static class Builder {

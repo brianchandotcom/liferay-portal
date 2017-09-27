@@ -85,6 +85,11 @@ public class GroupFinderUtil {
 		return getFinder().findBySystem(companyId);
 	}
 
+	public static java.util.List<java.lang.Long> findByUserActiveGroupIds(
+		long userId) {
+		return getFinder().findByUserActiveGroupIds(userId);
+	}
+
 	public static java.util.List<java.lang.Long> findByC_P(long companyId,
 		long parentGroupId, long previousGroupId, int size) {
 		return getFinder()

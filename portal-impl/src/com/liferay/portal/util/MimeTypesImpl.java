@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -95,16 +94,13 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 		try (InputStream is = TikaInputStream.get(file)) {
 			return getContentType(is, fileName);
 		}
-		catch (FileNotFoundException fnfe) {
-			return getContentType(fileName);
-		}
 		catch (IOException ioe) {
 			if (_log.isWarnEnabled()) {
 				_log.error(ioe, ioe);
 			}
-
-			return getContentType(fileName);
 		}
+
+		return getContentType(fileName);
 	}
 
 	@Override

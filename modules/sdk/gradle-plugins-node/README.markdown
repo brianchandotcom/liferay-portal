@@ -119,7 +119,7 @@ Property Name | Type | Default Value | Description
 `nodeDir` | `File` | <p>**If [`node.download`](#download) is `true`:** [`node.nodeDir`](#nodedir)</p><p>**Otherwise:** `null`</p> | The directory that contains the executable to invoke. If `null`, the executable must be available in the system `PATH`.
 <a name="npminstallretries"></a>`npmInstallRetries` | `int` | `0` | The number of times the `node_modules` is deleted and `npm install` is retried in case the Node.js invocation defined by this task fails. This can help solving corrupted `node_modules` directories by re-downloading the project's dependencies.
 `useGradleExec` | `boolean` | <p>**If running in a [Gradle Daemon](https://docs.gradle.org/current/userguide/gradle_daemon.html):** `true`</p><p>**Otherwise:** `false`</p> | Whether to invoke Node.js using [`project.exec`](https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:exec(org.gradle.api.Action)), which can solve hanging problems with the Gradle Daemon.
-`workingDir` | `File` | `project.projectDir` | The working directory to use in the Node.js invocation.
+<a name="workingdir"></a>`workingDir` | `File` | `project.projectDir` | The working directory to use in the Node.js invocation.
 
 The properties of type `File` support any type that can be resolved by
 [`project.file`](https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:file(java.css.Object)).
@@ -251,10 +251,17 @@ The purpose of this task is to publish a package to the
 extend [`ExecuteNpmTask`](#executenpmtask) in order to execute the command
 [`npm publish`](https://docs.npmjs.com/cli/publish).
 
-These tasks generate a new temporary `package.json` file in the root of the
-project directory, based on the values provided for the task properties. If the
-project already includes a custom `package.json` file, it is easier to use
-`npm publish` directly.
+These tasks generate a new temporary `package.json` file in the directory
+pointed by the [`workingDir`](#workingdir) property, then execute the
+`npm publish` command. If the `package.json` file in that location does not
+exist, the one in the root of the project directory (if found) is copied;
+otherwise, a new file is created.
+
+The `package.json` is then processed by adding the values provided by the task
+properties, if not already present if the file itself. It is still possible to
+override one or more fields of the `package.json` file with the values provided
+by the task properties by adding one or more keys (e.g., `"version"`) to  the
+`overriddenPackageJsonKeys` property.
 
 #### Task Properties
 
@@ -272,6 +279,14 @@ Property Name | Type | Default Value | Description
 `npmEmailAddress` | `String` | `null` | The email address of the npmjs.com user that publishes the package.
 `npmPassword` | `String` | `null` | The password of the npmjs.com user that publishes the package.
 `npmUserName` | `String` | `null` | The name of the npmjs.com user that publishes the package.
+`overriddenPackageJsonKeys` | `Set<String>` | `[]` | The fields whose values to override in the generated `package.json` file.
+
+#### Task Methods
+
+Method | Description
+------ | -----------
+`PublishNodeModuleTask overriddenPackageJsonKeys(Iterable<String> overriddenPackageJsonKeys)` | Adds fields whose values to override in the generated `package.json` file.
+`PublishNodeModuleTask overriddenPackageJsonKeys(String... overriddenPackageJsonKeys)` | Adds fields whose values to override in the generated `package.json` file.
 
 ### npmRun${script} Task
 

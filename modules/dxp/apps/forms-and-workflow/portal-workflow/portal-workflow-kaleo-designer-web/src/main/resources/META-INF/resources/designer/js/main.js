@@ -330,8 +330,8 @@ AUI.add(
 								}
 
 								instance._appendXMLAssignments(buffer, item.assignments);
-								instance._appendXMLTaskTimers(buffer, item.taskTimers);
 								instance._appendXMLTransitions(buffer, item.transitions);
+								instance._appendXMLTaskTimers(buffer, item.taskTimers);
 
 								buffer.push(xmlNode.close);
 							}
@@ -563,7 +563,12 @@ AUI.add(
 								buffer.push('<assignees/>');
 							}
 							else if (!dataAssignments.address || dataAssignments.address.filter(isValue).length === 0) {
-								buffer.push('<user/>');
+								if (wrapperNodeName === 'recipients') {
+									buffer.push('<assignees/>');
+								}
+								else {
+									buffer.push('<user/>');
+								}
 							}
 
 							buffer.push(xmlAssignments.close);
@@ -576,7 +581,7 @@ AUI.add(
 						if (notifications && notifications.name && notifications.name.length > 0) {
 							var description = notifications.description;
 							var executionType = notifications.executionType;
-							var notificationType = notifications.notificationType;
+							var notificationTypes = notifications.notificationTypes;
 							var recipients = notifications.recipients;
 							var template = notifications.template;
 							var templateLanguage = notifications.templateLanguage;
@@ -599,8 +604,12 @@ AUI.add(
 										buffer.push(XMLUtil.create('templateLanguage', templateLanguage[index]));
 									}
 
-									if (notificationType) {
-										buffer.push(XMLUtil.create('notificationType', notificationType[index]));
+									if (notificationTypes && notificationTypes[index]) {
+										notificationTypes[index].forEach(
+											function(item) {
+												buffer.push(XMLUtil.create('notificationType', item.notificationType));
+											}
+										);
 									}
 
 									instance._appendXMLAssignments(
@@ -931,8 +940,16 @@ AUI.add(
 										locator: 'name'
 									},
 									{
-										key: 'notificationType',
-										locator: 'notification-type'
+										key: 'notificationTypes',
+										schema: {
+											resultFields: [
+												{
+													key: 'notificationType',
+													locator: '.'
+												}
+											],
+											resultListLocator: 'notification-type'
+										}
 									},
 									{
 										key: 'template',

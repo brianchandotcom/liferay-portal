@@ -355,7 +355,7 @@ public class ServletResponseUtil {
 						previousRange = curRange;
 					}
 
-					inputStream = _copyRange(
+					_copyRange(
 						inputStream, servletOutputStream, start,
 						curRange.getLength());
 				}

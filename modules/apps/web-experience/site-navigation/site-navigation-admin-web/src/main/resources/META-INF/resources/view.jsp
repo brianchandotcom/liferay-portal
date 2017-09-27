@@ -16,13 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-Map<String, Object> data = new HashMap<>();
-
-data.put("qa-id", "navigation");
-%>
-
-<aui:nav-bar cssClass="collapse-basic-search" data="<%= data %>" markupView="lexicon">
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<portlet:renderURL var="mainURL" />
 
 	<aui:nav cssClass="navbar-nav">

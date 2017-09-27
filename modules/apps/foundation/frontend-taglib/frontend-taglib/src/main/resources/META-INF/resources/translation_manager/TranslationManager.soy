@@ -88,7 +88,7 @@
 					<span class="icon-monospaced" data-onclick="{$removeAvailableLocale}" data-locale-id="{$locale.id}" href="javascript:;">
 						<svg class="lexicon-icon">
 							<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#times"></use>
-							<title>{$locale.close}</title>
+							<title>{$locale.close ?: $locale.id}</title>
 						</svg>
 					</span>
 				{/param}

@@ -24,7 +24,10 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @author Brian Wing Shun Chan
  * @see DLContentLocalService
  * @generated
+ *
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.document.library.content.service.DLContentLocalServiceWrapper}
  */
+@Deprecated
 @ProviderType
 public class DLContentLocalServiceWrapper implements DLContentLocalService,
 	ServiceWrapper<DLContentLocalService> {

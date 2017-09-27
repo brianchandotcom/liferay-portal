@@ -1583,7 +1583,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 
 	protected static final String VIEW_PATH_ERROR = "VIEW_PATH_ERROR";
 
-	protected static Log log = LogFactoryUtil.getLog(
+	protected static final Log log = LogFactoryUtil.getLog(
 		BaseAlloyControllerImpl.class);
 
 	protected String actionPath;

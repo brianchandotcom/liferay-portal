@@ -20,13 +20,14 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -67,10 +68,12 @@ public class PublishPortletMVCRenderCommand implements MVCRenderCommand {
 			renderRequest = ActionUtil.getWrappedRenderRequest(
 				renderRequest, null);
 
+			String portletId = _portal.getPortletId(renderRequest);
+
 			SessionMessages.add(
 				renderRequest,
-				PortalUtil.getPortletId(
-					renderRequest) + SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
+				portletId +
+					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
 
 			return "/publish_portlet.jsp";
 		}
@@ -80,5 +83,8 @@ public class PublishPortletMVCRenderCommand implements MVCRenderCommand {
 			return "/error.jsp";
 		}
 	}
+
+	@Reference
+	private Portal _portal;
 
 }

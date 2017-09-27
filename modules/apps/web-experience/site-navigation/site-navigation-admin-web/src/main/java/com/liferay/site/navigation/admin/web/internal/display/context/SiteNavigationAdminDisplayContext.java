@@ -303,7 +303,6 @@ public class SiteNavigationAdminDisplayContext {
 	private final PortletPreferences _portletPreferences;
 	private final HttpServletRequest _request;
 	private SearchContainer _searchContainer;
-	private SiteNavigationMenu _siteNavigationMenu;
 	private Long _siteNavigationMenuId;
 
 }

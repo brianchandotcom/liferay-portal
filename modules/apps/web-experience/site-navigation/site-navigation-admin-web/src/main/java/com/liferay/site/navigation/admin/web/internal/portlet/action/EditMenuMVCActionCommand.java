@@ -48,13 +48,13 @@ public class EditMenuMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String name = ParamUtil.getString(actionRequest, "name");
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		long siteNavigationMenuId = ParamUtil.getLong(
 			actionRequest, "siteNavigationMenuId");
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		String name = ParamUtil.getString(actionRequest, "name");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);

@@ -16,6 +16,7 @@ package com.liferay.lcs.rest.client.internal;
 
 import com.liferay.lcs.rest.client.LCSMessageClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+import com.liferay.portal.kernel.util.StringPool;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -43,9 +44,8 @@ public class LCSMessageClientImpl
 
 		try {
 			doDelete(
-				_URL_LCS_MESSAGE, "corpProjectId",
-				String.valueOf(corpProjectId), "sourceMessageId",
-				String.valueOf(sourceMessageId));
+				_URL_LCS_MESSAGE + StringPool.SLASH + corpProjectId +
+					StringPool.SLASH + sourceMessageId);
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
 			throw new RuntimeException(jsonwsie);

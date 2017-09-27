@@ -41,12 +41,23 @@ public class LCSProjectClientImpl
 	}
 
 	@Override
+	public LCSProject getLCSProject(String key) {
+		try {
+			return doGetToObject(
+				LCSProject.class, _URL_LCS_PROJECT + "/find", "key", key);
+		}
+		catch (JSONWebServiceInvocationException jsonwsie) {
+			throw new RuntimeException(jsonwsie);
+		}
+	}
+
+	@Override
 	public List<LCSProject> getUserManageableLCSProjects() {
 		List<LCSProject> remoteLCSProjects = null;
 
 		try {
 			remoteLCSProjects = doGetToList(
-				LCSProject.class, _URL_LCS_PROJECT, "manage", "true");
+				LCSProject.class, _URL_LCS_PROJECT + "/find", "manage", "true");
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
 			throw new RuntimeException(jsonwsie);

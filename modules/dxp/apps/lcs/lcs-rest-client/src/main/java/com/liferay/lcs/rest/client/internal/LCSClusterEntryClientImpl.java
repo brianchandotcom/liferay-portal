@@ -19,6 +19,7 @@ import com.liferay.lcs.rest.client.LCSClusterEntryClient;
 import com.liferay.lcs.rest.client.exception.DuplicateLCSClusterEntryNameException;
 import com.liferay.lcs.rest.client.exception.RequiredLCSClusterEntryNameException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,8 +65,8 @@ public class LCSClusterEntryClientImpl
 	public LCSClusterEntry getLCSClusterEntry(long lcsClusterEntryId) {
 		try {
 			return doGetToObject(
-				LCSClusterEntry.class, _URL_LCS_CLUSTER_ENTRY,
-				"lcsClusterEntryId", String.valueOf(lcsClusterEntryId));
+				LCSClusterEntry.class,
+				_URL_LCS_CLUSTER_ENTRY + StringPool.SLASH + lcsClusterEntryId);
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
 			throw new RuntimeException(jsonwsie);
@@ -79,9 +80,16 @@ public class LCSClusterEntryClientImpl
 		List<LCSClusterEntry> remoteLcsClusterEntries = null;
 
 		try {
+			StringBuilder sb = new StringBuilder(5);
+
+			sb.append(_URL_LCS_CLUSTER_ENTRY);
+			sb.append("/find/");
+			sb.append(lcsProjectId);
+			sb.append(StringPool.SLASH);
+			sb.append("true");
+
 			remoteLcsClusterEntries = doGetToList(
-				LCSClusterEntry.class, _URL_LCS_CLUSTER_ENTRY, "lcsProjectId",
-				String.valueOf(lcsProjectId), "manage", "true");
+				LCSClusterEntry.class, sb.toString());
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
 			throw new RuntimeException(jsonwsie);
@@ -125,8 +133,8 @@ public class LCSClusterEntryClientImpl
 
 		try {
 			remoteLcsClusterEntries = doGetToList(
-				LCSClusterEntry.class, _URL_LCS_CLUSTER_ENTRY, "lcsProjectId",
-				String.valueOf(lcsProjectId));
+				LCSClusterEntry.class,
+				_URL_LCS_CLUSTER_ENTRY + "/find/" + lcsProjectId);
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
 			throw new RuntimeException(jsonwsie);

@@ -17,6 +17,7 @@ package com.liferay.lcs.rest.client.internal;
 import com.liferay.lcs.rest.client.LCSSubscriptionEntry;
 import com.liferay.lcs.rest.client.LCSSubscriptionEntryClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+import com.liferay.portal.kernel.util.StringPool;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -58,8 +59,8 @@ public class LCSSubscriptionEntryClientImpl
 	public LCSSubscriptionEntry fetchLCSSubscriptionEntry(String key) {
 		try {
 			return doGetToObject(
-				LCSSubscriptionEntry.class, _URL_LCS_SUBSCRIPTION_ENTRY, "key",
-				key);
+				LCSSubscriptionEntry.class,
+				_URL_LCS_SUBSCRIPTION_ENTRY + "/find/" + key);
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
 			if (jsonwsie.getStatus() == HttpServletResponse.SC_NOT_FOUND) {
@@ -74,7 +75,9 @@ public class LCSSubscriptionEntryClientImpl
 	public void incrementServerUsed(String key)
 		throws JSONWebServiceInvocationException {
 
-		doPost(_URL_LCS_SUBSCRIPTION_ENTRY, "key", key);
+		doPost(
+			_URL_LCS_SUBSCRIPTION_ENTRY + StringPool.SLASH + key +
+				"/incrementServerUsed");
 	}
 
 	private static final String _URL_LCS_SUBSCRIPTION_ENTRY =

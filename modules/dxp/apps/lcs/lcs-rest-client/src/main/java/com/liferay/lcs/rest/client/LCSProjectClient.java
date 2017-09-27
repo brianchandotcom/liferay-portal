@@ -23,6 +23,8 @@ public interface LCSProjectClient {
 
 	public LCSProject addDefaultLCSProject();
 
+	public LCSProject getLCSProject(String key);
+
 	public List<LCSProject> getUserManageableLCSProjects();
 
 }

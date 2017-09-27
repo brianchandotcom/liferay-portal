@@ -15,6 +15,7 @@
 package com.liferay.lcs.rest.client.internal;
 
 import com.liferay.lcs.rest.client.LCSPatchingAdvisorClient;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.List;
 
@@ -32,7 +33,15 @@ public class LCSPatchingAdvisorClientImpl
 			String key, int patchingToolVersion, String[] installedPatchIds)
 		throws Exception {
 
-		StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder(
+			6 + installedPatchIds.length * 2 - 1);
+
+		sb.append(_URL_PATCHING_ADVISOR);
+		sb.append("/find/");
+		sb.append(key);
+		sb.append(StringPool.SLASH);
+		sb.append(patchingToolVersion);
+		sb.append(StringPool.SLASH);
 
 		for (int i = 0; i < installedPatchIds.length; i++) {
 			sb.append(installedPatchIds[i]);
@@ -42,10 +51,7 @@ public class LCSPatchingAdvisorClientImpl
 			}
 		}
 
-		return doGetToList(
-			String.class, _URL_PATCHING_ADVISOR, "key", key,
-			"patchingToolVersion", String.valueOf(patchingToolVersion),
-			"installedPatchIds", sb.toString());
+		return doGetToList(String.class, sb.toString());
 	}
 
 	private static final String _URL_PATCHING_ADVISOR =

@@ -77,18 +77,18 @@ public class LCSMembersClientImpl
 
 	private static final String
 		_URL_LCS_MEMBERS_SEND_MONITORING_UNAVAILABLE_EMAIL =
-			_URL_LCS_MEMBERS + "/send-monitoring-unavailable-email";
+			_URL_LCS_MEMBERS + "/sendMonitoringUnavailableEmail";
 
 	private static final String
 		_URL_LCS_MEMBERS_SEND_PATCHING_TOOL_UNAVAILABLE_EMAIL =
-			_URL_LCS_MEMBERS + "/send-patching-tool-unavailable-email";
+			_URL_LCS_MEMBERS + "/sendPatchingToolUnavailableEmail";
 
 	private static final String
 		_URL_LCS_MEMBERS_SEND_SERVER_MANUALLY_SHUTDOWN_EMAIL =
-			_URL_LCS_MEMBERS + "/send-server-manually-shutdown-email";
+			_URL_LCS_MEMBERS + "/sendServerManuallyShutdownEmail";
 
 	private static final String
 		_URL_LCS_MEMBERS_SEND_SERVER_UNEXPECTEDLY_SHUTDOWN_EMAIL =
-			_URL_LCS_MEMBERS + "/send-server-unexpectedly-shutdown-email";
+			_URL_LCS_MEMBERS + "/sendServerUnexpectedlyShutdownEmail";
 
 }

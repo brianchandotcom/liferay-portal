@@ -18,6 +18,7 @@ import com.liferay.lcs.rest.client.LCSMetadata;
 import com.liferay.lcs.rest.client.LCSMetadataClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,9 +51,16 @@ public class LCSMetadataClientImpl
 
 		if (supportedLCSPortlet == null) {
 			try {
+				sb = new StringBuilder(5);
+
+				sb.append(_URL_LCS_METADATA);
+				sb.append(StringPool.SLASH);
+				sb.append(buildNumber);
+				sb.append(StringPool.SLASH);
+				sb.append(portalEdition);
+
 				LCSMetadata lcsMetadata = doGetToObject(
-					LCSMetadata.class, _URL_LCS_METADATA, "buildNumber",
-					buildNumber, "portalEdition", portalEdition);
+					LCSMetadata.class, sb.toString());
 
 				_supportedLCSPortletMap.put(
 					sb.toString(), lcsMetadata.getSupportedLCSPortlet());

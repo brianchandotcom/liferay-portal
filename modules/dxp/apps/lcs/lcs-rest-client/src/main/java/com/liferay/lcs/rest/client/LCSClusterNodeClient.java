@@ -44,8 +44,6 @@ public interface LCSClusterNodeClient {
 
 	public void updateBuildNumber(String key, int buildNumber);
 
-	public void updateConfigurationModifiedDate(String key);
-
 	public void updateStatus(String key, int status);
 
 	public void verifyLCSClusterEntryLCSClusterNodesPropertiesDifferences(

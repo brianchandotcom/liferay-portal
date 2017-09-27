@@ -321,7 +321,7 @@ public class MediaWikiImporter implements WikiImporter {
 	}
 
 	protected String normalize(String categoryName, int length) {
-		categoryName = AssetUtil.toWord(categoryName.trim());
+		categoryName = toWord(categoryName.trim());
 
 		return StringUtil.shorten(categoryName, length);
 	}
@@ -728,6 +728,28 @@ public class MediaWikiImporter implements WikiImporter {
 		WikiPageTitleValidator wikiPageTitleValidator) {
 
 		_wikiPageTitleValidator = wikiPageTitleValidator;
+	}
+
+	protected String toWord(String text) {
+		if (Validator.isNull(text)) {
+			return text;
+		}
+
+		char[] textCharArray = text.toCharArray();
+
+		for (int i = 0; i < textCharArray.length; i++) {
+			char c = textCharArray[i];
+
+			for (char invalidChar : AssetUtil.INVALID_CHARACTERS) {
+				if (c == invalidChar) {
+					textCharArray[i] = CharPool.SPACE;
+
+					break;
+				}
+			}
+		}
+
+		return new String(textCharArray);
 	}
 
 	protected String translateMediaWikiImagePaths(String content) {

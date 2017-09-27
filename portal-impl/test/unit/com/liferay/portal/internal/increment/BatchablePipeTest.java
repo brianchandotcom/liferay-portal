@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.kernel.concurrent;
+package com.liferay.portal.internal.increment;
 
-import com.liferay.portal.kernel.concurrent.BatchablePipe.IncreasableEntryWrapper;
+import com.liferay.portal.internal.increment.BatchablePipe.IncreasableEntryWrapper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 

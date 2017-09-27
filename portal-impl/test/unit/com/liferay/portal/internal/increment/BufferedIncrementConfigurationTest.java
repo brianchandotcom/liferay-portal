@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.increment;
+package com.liferay.portal.internal.increment;
 
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.test.CaptureHandler;

@@ -2173,7 +2173,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		Map<String, Object> args = new HashMap<>();
 
 		args.put("configuration", SourceFormatterPlugin.CONFIGURATION_NAME);
-		args.put("group", GradleUtil.PORTAL_TOOL_GROUP);
+		args.put("group", _GROUP);
 		args.put("maxAge", _PORTAL_TOOL_MAX_AGE);
 		args.put("name", _SOURCE_FORMATTER_PORTAL_TOOL_NAME);
 		args.put("throwError", Boolean.TRUE);
@@ -3893,7 +3893,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private boolean _isTaglibDependency(String group, String name) {
-		if (group.equals("com.liferay") && name.startsWith("com.liferay.") &&
+		if (group.equals(_GROUP) && name.startsWith("com.liferay.") &&
 			name.contains(".taglib")) {
 
 			return true;

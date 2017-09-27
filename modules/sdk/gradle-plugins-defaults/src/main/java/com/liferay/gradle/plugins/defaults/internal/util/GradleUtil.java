@@ -55,8 +55,6 @@ import org.gradle.util.GUtil;
  */
 public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 
-	public static final String PORTAL_TOOL_GROUP = "com.liferay";
-
 	public static MavenArtifactRepository addMavenArtifactRepository(
 		RepositoryHandler repositoryHandler, final Object url) {
 

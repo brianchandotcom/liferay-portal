@@ -173,7 +173,8 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 						writeDigestTask.setEnabled(false);
 					}
 
-					GradleUtil.setProjectSnapshotVersion(project);
+					GradlePluginsDefaultsUtil.setProjectSnapshotVersion(
+						project);
 
 					// setProjectSnapshotVersion must be called before
 					// configureTaskUploadArchives, because the latter one needs
@@ -715,7 +716,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 			uploadArchivesTask.dependsOn(publishNodeModuleTask);
 		}
 
-		if (!GradleUtil.isSnapshot(project)) {
+		if (!GradlePluginsDefaultsUtil.isSnapshot(project)) {
 			uploadArchivesTask.finalizedBy(updateVersionTask);
 		}
 	}

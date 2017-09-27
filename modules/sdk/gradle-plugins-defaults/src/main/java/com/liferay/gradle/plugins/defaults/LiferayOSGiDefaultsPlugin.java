@@ -292,8 +292,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			project, LiferayExtension.class);
 
 		final GitRepo gitRepo = _getGitRepo(project.getProjectDir());
-		boolean privateProject = _isPrivateProject(project);
-		final boolean testProject = GradleUtil.isTestProject(project);
+		boolean privateProject = GradlePluginsDefaultsUtil.isPrivateProject(
+			project);
+		final boolean testProject = GradlePluginsDefaultsUtil.isTestProject(
+			project);
 
 		File versionOverrideFile = _getVersionOverrideFile(project, gitRepo);
 
@@ -500,7 +502,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					_configureTaskUpdateFileVersions(
 						updateFileVersionsTask, portalRootDir);
 
-					GradleUtil.setProjectSnapshotVersion(
+					GradlePluginsDefaultsUtil.setProjectSnapshotVersion(
 						project, _SNAPSHOT_PROPERTY_NAMES);
 
 					if (GradleUtil.hasPlugin(project, CachePlugin.class)) {
@@ -1611,7 +1613,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		ArtifactHandler artifactHandler = project.getArtifacts();
 
-		if (!GradleUtil.isSnapshot(project, _SNAPSHOT_PROPERTY_NAMES)) {
+		if (!GradlePluginsDefaultsUtil.isSnapshot(
+				project, _SNAPSHOT_PROPERTY_NAMES)) {
+
 			SourceSet sourceSet = GradleUtil.getSourceSet(
 				project, SourceSet.MAIN_SOURCE_SET_NAME);
 
@@ -1836,7 +1840,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				public void execute(ExternalDependency externalDependency) {
 					String version = externalDependency.getVersion();
 
-					if (version.endsWith(GradleUtil.SNAPSHOT_VERSION_SUFFIX)) {
+					if (version.endsWith(
+							GradlePluginsDefaultsUtil.
+								SNAPSHOT_VERSION_SUFFIX)) {
+
 						throw new GradleException(
 							"Please use a timestamp version for " +
 								externalDependency);
@@ -3341,7 +3348,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		uploadArchivesTask.dependsOn(publishNodeModuleTasks);
 
-		if (!GradleUtil.isSnapshot(project)) {
+		if (!GradlePluginsDefaultsUtil.isSnapshot(project)) {
 			uploadArchivesTask.finalizedBy(
 				updateFileVersionsTask, updateVersionTask);
 		}
@@ -3816,16 +3823,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		sourceDirectorySet = sourceSet.getAllSource();
 
 		if (!sourceDirectorySet.isEmpty()) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private boolean _isPrivateProject(Project project) {
-		String path = project.getPath();
-
-		if (path.startsWith(":private:")) {
 			return true;
 		}
 

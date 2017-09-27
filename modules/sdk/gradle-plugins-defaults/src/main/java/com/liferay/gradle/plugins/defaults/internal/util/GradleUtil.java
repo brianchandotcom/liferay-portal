@@ -57,10 +57,6 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 
 	public static final String PORTAL_TOOL_GROUP = "com.liferay";
 
-	public static final String SNAPSHOT_PROPERTY_NAME = "snapshot";
-
-	public static final String SNAPSHOT_VERSION_SUFFIX = "-SNAPSHOT";
-
 	public static MavenArtifactRepository addMavenArtifactRepository(
 		RepositoryHandler repositoryHandler, final Object url) {
 
@@ -308,60 +304,6 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 		}
 
 		return false;
-	}
-
-	public static boolean isSnapshot(Project project) {
-		String version = String.valueOf(project.getVersion());
-
-		if (version.endsWith(SNAPSHOT_VERSION_SUFFIX)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public static boolean isSnapshot(Project project, String... propertyNames) {
-		boolean snapshot = false;
-
-		if (project.hasProperty(SNAPSHOT_PROPERTY_NAME)) {
-			snapshot = getProperty(project, SNAPSHOT_PROPERTY_NAME, true);
-		}
-
-		if (!snapshot) {
-			for (String propertyName : propertyNames) {
-				if (project.hasProperty(propertyName) &&
-					getProperty(project, propertyName, true)) {
-
-					snapshot = true;
-
-					break;
-				}
-			}
-		}
-
-		return snapshot;
-	}
-
-	public static boolean isTestProject(Project project) {
-		String projectName = project.getName();
-
-		if (projectName.endsWith("-test")) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public static void setProjectSnapshotVersion(
-		Project project, String... propertyNames) {
-
-		String version = String.valueOf(project.getVersion());
-
-		if (isSnapshot(project, propertyNames) &&
-			!version.endsWith(SNAPSHOT_VERSION_SUFFIX)) {
-
-			project.setVersion(version + SNAPSHOT_VERSION_SUFFIX);
-		}
 	}
 
 	public static void substituteModuleDependencyWithProject(

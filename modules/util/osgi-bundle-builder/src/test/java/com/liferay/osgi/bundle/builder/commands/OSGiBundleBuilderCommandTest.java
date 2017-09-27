@@ -224,8 +224,8 @@ public class OSGiBundleBuilderCommandTest {
 	private static final Set<String> _ignoredManifestAttributeNames =
 		new HashSet<>(
 			Arrays.asList(
-				"Bnd-LastModified", "Javac-Debug", "Javac-Deprecation",
-				"Javac-Encoding"));
+				"Bnd-LastModified", "Created-By", "Javac-Debug",
+				"Javac-Deprecation", "Javac-Encoding"));
 
 	private File _expectedDir;
 	private File _projectDir;

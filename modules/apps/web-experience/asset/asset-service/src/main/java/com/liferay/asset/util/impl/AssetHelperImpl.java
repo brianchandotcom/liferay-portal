@@ -27,9 +27,9 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.util.AssetHelper;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -527,7 +527,7 @@ public class AssetHelperImpl implements AssetHelper {
 		long ddmStructureId = GetterUtil.getLong(sortFields[2]);
 		String fieldName = sortFields[3];
 
-		DDMStructure ddmStructure = DDMStructureManagerUtil.getStructure(
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			ddmStructureId);
 
 		return ddmStructure.getFieldType(fieldName);
@@ -636,6 +636,9 @@ public class AssetHelperImpl implements AssetHelper {
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

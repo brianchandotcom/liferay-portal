@@ -437,7 +437,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		_configureTasksFindBugs(project);
 		_configureTasksJavaCompile(project);
 		_configureTasksPmd(project);
-		_configureTasksPublishNodeModule(project);
 
 		_addTaskUpdateFileSnapshotVersions(project);
 
@@ -3087,18 +3086,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		pmd.setClasspath(null);
 	}
 
-	private void _configureTaskPublishNodeModule(
-		PublishNodeModuleTask publishNodeModuleTask) {
-
-		publishNodeModuleTask.setModuleAuthor(
-			"Nathan Cavanaugh <nathan.cavanaugh@liferay.com> " +
-				"(https://github.com/natecavanaugh)");
-		publishNodeModuleTask.setModuleBugsUrl("https://issues.liferay.com/");
-		publishNodeModuleTask.setModuleLicense("LGPL");
-		publishNodeModuleTask.setModuleMain("package.json");
-		publishNodeModuleTask.setModuleRepository("liferay/liferay-portal");
-	}
-
 	private void _configureTaskReplaceRegexJSMatches(
 		ReplaceRegexTask replaceRegexTask) {
 
@@ -3215,23 +3202,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				@Override
 				public void execute(Pmd pmd) {
 					_configureTaskPmd(pmd);
-				}
-
-			});
-	}
-
-	private void _configureTasksPublishNodeModule(Project project) {
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			PublishNodeModuleTask.class,
-			new Action<PublishNodeModuleTask>() {
-
-				@Override
-				public void execute(
-					PublishNodeModuleTask publishNodeModuleTask) {
-
-					_configureTaskPublishNodeModule(publishNodeModuleTask);
 				}
 
 			});

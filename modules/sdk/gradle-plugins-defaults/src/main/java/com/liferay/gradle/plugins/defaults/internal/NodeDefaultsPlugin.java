@@ -76,6 +76,14 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 
 		publishNodeModuleTask.doFirst(
 			MavenDefaultsPlugin.failReleaseOnWrongBranchAction);
+
+		publishNodeModuleTask.setModuleAuthor(
+			"Nathan Cavanaugh <nathan.cavanaugh@liferay.com> " +
+				"(https://github.com/natecavanaugh)");
+		publishNodeModuleTask.setModuleBugsUrl("https://issues.liferay.com/");
+		publishNodeModuleTask.setModuleLicense("LGPL");
+		publishNodeModuleTask.setModuleMain("package.json");
+		publishNodeModuleTask.setModuleRepository("liferay/liferay-portal");
 	}
 
 	private void _configureTasksPublishNodeModule(Project project) {

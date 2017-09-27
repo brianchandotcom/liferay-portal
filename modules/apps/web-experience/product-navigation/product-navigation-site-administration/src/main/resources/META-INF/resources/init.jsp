@@ -30,6 +30,7 @@ page import="com.liferay.application.list.PanelCategory" %><%@
 page import="com.liferay.application.list.constants.ApplicationListWebKeys" %><%@
 page import="com.liferay.application.list.constants.PanelCategoryKeys" %><%@
 page import="com.liferay.application.list.display.context.logic.PanelCategoryHelper" %><%@
+page import="com.liferay.exportimport.kernel.exception.RemoteExportException" %><%@
 page import="com.liferay.item.selector.ItemSelector" %><%@
 page import="com.liferay.item.selector.ItemSelectorReturnType" %><%@
 page import="com.liferay.item.selector.criteria.URLItemSelectorReturnType" %><%@

@@ -322,6 +322,30 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			}
 		}
 
+		String entityId = ParamUtil.getString(request, "entityId");
+		String samlRequest = ParamUtil.getString(request, "SAMLRequest");
+
+		boolean idpInitiatedSSO = false;
+
+		if (Validator.isNotNull(entityId) && Validator.isNull(samlRequest)) {
+			idpInitiatedSSO = true;
+		}
+
+		if (idpInitiatedSSO) {
+			SamlSsoRequestContext samlSsoRequestContext =
+				decodeAuthnConversationAfterLogin(request, response);
+
+			SAMLMessageContext<AuthnRequest, Response, NameID>
+				samlMessageContext =
+					samlSsoRequestContext.getSAMLMessageContext();
+
+			if ((samlMessageContext != null) &&
+				entityId.equals(samlMessageContext.getPeerEntityId())) {
+
+				return samlSsoRequestContext;
+			}
+		}
+
 		SAMLMessageContext<AuthnRequest, Response, NameID> samlMessageContext =
 			null;
 
@@ -335,12 +359,9 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			samlBinding = getSamlBinding(SAMLConstants.SAML2_POST_BINDING_URI);
 		}
 
-		String entityId = ParamUtil.getString(request, "entityId");
-		String samlRequest = ParamUtil.getString(request, "SAMLRequest");
-
 		SamlSsoRequestContext samlSsoRequestContext = null;
 
-		if (Validator.isNotNull(entityId) && Validator.isNull(samlRequest)) {
+		if (idpInitiatedSSO) {
 			samlMessageContext =
 				(SAMLMessageContext<AuthnRequest, Response, NameID>)
 					getSamlMessageContext(request, response, entityId);
@@ -1044,6 +1065,11 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			redirectSB.append(
 				URLCodec.encodeURL(
 					samlMessageContext.getInboundSAMLMessageId()));
+		}
+		else if (samlMessageContext.getPeerEntityId() != null) {
+			redirectSB.append("?entityId=");
+			redirectSB.append(
+				URLCodec.encodeURL(samlMessageContext.getPeerEntityId()));
 		}
 
 		sb.append(URLCodec.encodeURL(redirectSB.toString()));

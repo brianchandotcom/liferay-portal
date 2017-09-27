@@ -84,6 +84,8 @@ if (Validator.isNull(publisherName)) {
 }
 
 String lastImportLayoutSetBranchDisplayName = HtmlUtil.escape(layoutSetBranchDisplayContext.getLayoutSetBranchDisplayName(lastImportLayoutSetBranchName));
+
+String lastImportDateDescription = StringUtil.toLowerCase(LanguageUtil.getTimeDescription(request, (System.currentTimeMillis() - lastImportDate), true));
 %>
 
 <c:choose>
@@ -109,7 +111,7 @@ String lastImportLayoutSetBranchDisplayName = HtmlUtil.escape(layoutSetBranchDis
 				</c:if>
 			</span>
 			<span class="last-publication-user">
-				<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(request, (System.currentTimeMillis() - lastImportDate), true), HtmlUtil.escape(publisherName)} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
+				<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(lastImportDateDescription), HtmlUtil.escape(publisherName)} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
 			</span>
 		</c:if>
 	</c:when>

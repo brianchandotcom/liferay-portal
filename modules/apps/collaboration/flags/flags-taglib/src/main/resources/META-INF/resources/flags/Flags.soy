@@ -26,81 +26,76 @@
 	{@param? _showConfirmationMessage: bool}
 	{@param? _showErrorMessage: bool}
 
-	{let $tooltip: not $label and $message!='' /}
+	<div class="taglib-flags {$cssClass}" id="{$id}" title="{$title}">
+		{call .flagIcon}
+			{param enabled: $enabled /}
+			{param label: $label /}
+			{param message: $message /}
+			{param pathThemeImages: $pathThemeImages /}
+		{/call}
 
-	<div class="taglib-flags" id="{$id}" title="{$title}">
-		{let $attributes kind="attributes"}
-			class="{$cssClass}
-				{if $tooltip}
-					{sp}lfr-portal-tooltip
-				{/if}
-			"
-
-			{if $tooltip}
-				{sp}title="{$message}"
-			{/if}
-		{/let}
-
-		<span {$attributes}>
-			{if $enabled}
-				<a class="taglib-icon" data-onclick="_openReportDialog" href="javascript:;">
-					{call .icon}
-						{param label: $label /}
-						{param message: $message /}
-						{param pathThemeImages: $pathThemeImages /}
-					{/call}
-				</a>
-
-				{if $_reportDialogOpen}
-					{call .reportDialog}
-						{param companyName: $companyName /}
-						{param flagsEnabled: $flagsEnabled /}
-						{param pathTermsOfUse: $pathTermsOfUse /}
-						{param pathThemeImages: $pathThemeImages /}
-						{param portletNamespace: $portletNamespace /}
-						{param reasons: $reasons /}
-						{param reporterEmailAddress: $reporterEmailAddress /}
-						{param signedIn: $signedIn /}
-						{param _closeReportDialog: $_closeReportDialog /}
-						{param _handleOnReasonChange: $_handleOnReasonChange /}
-						{param _handleOnSubmitForm: $_handleOnSubmitForm /}
-						{param _handleReportButtonClick: $_handleReportButtonClick /}
-						{param _showConfirmationMessage: $_showConfirmationMessage /}
-						{param _showErrorMessage: $_showErrorMessage /}
-					{/call}
-				{/if}
-			{else}
-				{call .icon}
-					{param label: $label /}
-					{param message: $message /}
-					{param pathThemeImages: $pathThemeImages /}
-				{/call}
-			{/if}
-		</span>
+		{if $_reportDialogOpen}
+			{call .reportDialog}
+				{param companyName: $companyName /}
+				{param flagsEnabled: $flagsEnabled /}
+				{param pathTermsOfUse: $pathTermsOfUse /}
+				{param pathThemeImages: $pathThemeImages /}
+				{param portletNamespace: $portletNamespace /}
+				{param reasons: $reasons /}
+				{param reporterEmailAddress: $reporterEmailAddress /}
+				{param signedIn: $signedIn /}
+				{param _closeReportDialog: $_closeReportDialog /}
+				{param _handleOnReasonChange: $_handleOnReasonChange /}
+				{param _handleOnSubmitForm: $_handleOnSubmitForm /}
+				{param _handleReportButtonClick: $_handleReportButtonClick /}
+				{param _showConfirmationMessage: $_showConfirmationMessage /}
+				{param _showErrorMessage: $_showErrorMessage /}
+			{/call}
+		{/if}
 	</div>
 {/template}
 
 /**
  * Prints the flag icon and the text message.
  */
-{template .icon}
+{template .flagIcon}
 	{@param label: bool}
 	{@param message: string}
 	{@param pathThemeImages: string}
+	{@param? enabled: bool}
 
-	<svg class="lexicon-icon">
-		<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#flag-full"></use>
-	</svg>
-
-	{let $attributes kind="attributes"}
-		class="taglib-text
-			{if not $label}
-				{sp}hide-accessible
-			{/if}
-		"
+	{let $wrapperAttributes kind="attributes"}
+		{if not $label and $message != ''}
+			class="lfr-portal-tooltip"
+			title="{$message}"
+		{/if}
 	{/let}
 
-	<span {$attributes}>{$message}</span>
+	<span {$wrapperAttributes}>
+		{let $icon kind="html"}
+			<svg class="lexicon-icon">
+				<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#flag-full"></use>
+			</svg>
+		{/let}
+
+		{if $enabled}
+			<a class="taglib-icon" data-onclick="_openReportDialog" href="javascript:;">
+				{$icon}
+			</a>
+		{else}
+			{$icon}
+		{/if}
+		
+		{let $spanAttributes kind="attributes"}
+			class="taglib-text
+				{if not $label}
+					{sp}hide-accessible
+				{/if}
+			"
+		{/let}
+
+		<span {$spanAttributes}>{$message}</span>
+	</span>
 {/template}
 
 /**

@@ -48,6 +48,8 @@ writeReleases {
 			Writer writer ->
 
 			configurations.compile.each {
+				println "Adding release information from ${it} into ${releasesTxtFile}"
+
 				JarFile jarFile = new JarFile(it)
 
 				Attributes mainAttributes = jarFile.manifest.mainAttributes

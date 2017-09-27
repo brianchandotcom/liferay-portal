@@ -310,15 +310,17 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			SamlSsoRequestContext samlSsoRequestContext =
 				decodeAuthnConversationAfterLogin(request, response);
 
-			SAMLMessageContext<AuthnRequest, Response, NameID>
-				samlMessageContext =
-					samlSsoRequestContext.getSAMLMessageContext();
+			if (samlSsoRequestContext != null) {
+				SAMLMessageContext<AuthnRequest, Response, NameID>
+					samlMessageContext =
+						samlSsoRequestContext.getSAMLMessageContext();
 
-			if ((samlMessageContext != null) &&
-				samlMessageId.equals(
-					samlMessageContext.getInboundSAMLMessageId())) {
+				if ((samlMessageContext != null) &&
+					samlMessageId.equals(
+						samlMessageContext.getInboundSAMLMessageId())) {
 
-				return samlSsoRequestContext;
+					return samlSsoRequestContext;
+				}
 			}
 		}
 
@@ -335,14 +337,16 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			SamlSsoRequestContext samlSsoRequestContext =
 				decodeAuthnConversationAfterLogin(request, response);
 
-			SAMLMessageContext<AuthnRequest, Response, NameID>
-				samlMessageContext =
-					samlSsoRequestContext.getSAMLMessageContext();
+			if (samlSsoRequestContext != null) {
+				SAMLMessageContext<AuthnRequest, Response, NameID>
+					samlMessageContext =
+						samlSsoRequestContext.getSAMLMessageContext();
 
-			if ((samlMessageContext != null) &&
-				entityId.equals(samlMessageContext.getPeerEntityId())) {
+				if ((samlMessageContext != null) &&
+					entityId.equals(samlMessageContext.getPeerEntityId())) {
 
-				return samlSsoRequestContext;
+					return samlSsoRequestContext;
+				}
 			}
 		}
 

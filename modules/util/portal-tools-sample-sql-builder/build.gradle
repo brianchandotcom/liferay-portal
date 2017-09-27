@@ -39,6 +39,8 @@ classes {
 }
 
 writeReleases {
+	dependsOn configurations.compile
+
 	doLast {
 		File releasesTxtFile = new File(processResources.destinationDir, "com/liferay/portal/tools/sample/sql/builder/dependencies/releases.txt")
 

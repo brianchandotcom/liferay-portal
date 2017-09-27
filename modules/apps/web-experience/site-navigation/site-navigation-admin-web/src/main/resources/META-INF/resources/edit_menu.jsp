@@ -38,7 +38,11 @@ renderResponse.setTitle(((siteNavigationMenu == null) ? LanguageUtil.get(request
 
 	<aui:model-context bean="<%= siteNavigationMenu %>" model="<%= SiteNavigationMenu.class %>" />
 
-	<aui:input autoFocus="<%= true %>" label="name" name="name" placeholder="name" />
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:input autoFocus="<%= true %>" label="name" name="name" placeholder="name" />
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

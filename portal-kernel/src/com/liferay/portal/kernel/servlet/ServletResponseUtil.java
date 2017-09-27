@@ -358,7 +358,7 @@ public class ServletResponseUtil {
 							curRange.getLength());
 					}
 					else {
-						inputStream = copyRange(
+						inputStream = _copyRange(
 							inputStream, servletOutputStream,
 							curRange.getStart(), curRange.getLength());
 					}
@@ -600,48 +600,17 @@ public class ServletResponseUtil {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected static InputStream copyRange(
 			InputStream inputStream, OutputStream outputStream, long start,
 			long length)
 		throws IOException {
 
-		if (inputStream instanceof FileInputStream) {
-			FileInputStream fileInputStream = (FileInputStream)inputStream;
-
-			FileChannel fileChannel = fileInputStream.getChannel();
-
-			fileChannel.transferTo(
-				start, length, Channels.newChannel(outputStream));
-
-			return fileInputStream;
-		}
-		else if (inputStream instanceof ByteArrayInputStream) {
-			ByteArrayInputStream byteArrayInputStream =
-				(ByteArrayInputStream)inputStream;
-
-			byteArrayInputStream.reset();
-
-			byteArrayInputStream.skip(start);
-
-			StreamUtil.transfer(byteArrayInputStream, outputStream, length);
-
-			return byteArrayInputStream;
-		}
-		else if (inputStream instanceof RandomAccessInputStream) {
-			RandomAccessInputStream randomAccessInputStream =
-				(RandomAccessInputStream)inputStream;
-
-			randomAccessInputStream.seek(start);
-
-			StreamUtil.transfer(
-				randomAccessInputStream, outputStream, StreamUtil.BUFFER_SIZE,
-				false, length);
-
-			return randomAccessInputStream;
-		}
-
-		return copyRange(
-			new RandomAccessInputStream(inputStream), outputStream, start,
+		return _copyRange(
+			_toRandomAccessInputStream(inputStream), outputStream, start,
 			length);
 	}
 
@@ -792,6 +761,64 @@ public class ServletResponseUtil {
 			response.setHeader(
 				HttpHeaders.CONTENT_LENGTH, String.valueOf(range.getLength()));
 		}
+	}
+
+	private static InputStream _copyRange(
+			InputStream inputStream, OutputStream outputStream, long start,
+			long length)
+		throws IOException {
+
+		if (inputStream instanceof FileInputStream) {
+			FileInputStream fileInputStream = (FileInputStream)inputStream;
+
+			FileChannel fileChannel = fileInputStream.getChannel();
+
+			fileChannel.transferTo(
+				start, length, Channels.newChannel(outputStream));
+
+			return fileInputStream;
+		}
+		else if (inputStream instanceof ByteArrayInputStream) {
+			ByteArrayInputStream byteArrayInputStream =
+				(ByteArrayInputStream)inputStream;
+
+			byteArrayInputStream.reset();
+
+			byteArrayInputStream.skip(start);
+
+			StreamUtil.transfer(byteArrayInputStream, outputStream, length);
+
+			return byteArrayInputStream;
+		}
+		else if (inputStream instanceof RandomAccessInputStream) {
+			RandomAccessInputStream randomAccessInputStream =
+				(RandomAccessInputStream)inputStream;
+
+			randomAccessInputStream.seek(start);
+
+			StreamUtil.transfer(
+				randomAccessInputStream, outputStream, StreamUtil.BUFFER_SIZE,
+				false, length);
+
+			return randomAccessInputStream;
+		}
+
+		throw new IllegalArgumentException(
+			"InputStream must support random access");
+	}
+
+	private static InputStream _toRandomAccessInputStream(
+			InputStream inputStream)
+		throws IOException {
+
+		if (inputStream instanceof ByteArrayInputStream ||
+			inputStream instanceof FileInputStream ||
+			inputStream instanceof RandomAccessInputStream) {
+
+			return inputStream;
+		}
+
+		return new RandomAccessInputStream(inputStream);
 	}
 
 	private static final String _CLIENT_ABORT_EXCEPTION =

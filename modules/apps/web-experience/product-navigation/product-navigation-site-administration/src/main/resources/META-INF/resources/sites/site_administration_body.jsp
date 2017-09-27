@@ -80,7 +80,7 @@ SiteAdministrationPanelCategoryDisplayContext siteAdministrationPanelCategoryDis
 						<aui:script use="aui-tooltip">
 							new A.Tooltip(
 								{
-									bodyContent: Liferay.Language.get('an-unexpected-error-occurred'),
+									bodyContent: Liferay.Language.get('the-connection-to-the-remote-live-site-cannot-be-established-due-to-a-network-problem'),
 									position: 'right',
 									trigger: A.one('#<portlet:namespace />remoteLiveLink'),
 									visible: false,

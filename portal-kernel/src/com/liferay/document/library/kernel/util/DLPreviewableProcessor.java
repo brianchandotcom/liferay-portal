@@ -530,10 +530,15 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 		fileEntryElement.addAttribute(binPathName, binPath);
 
-		int realFileIndex = fileIndex < 0 ? 0 : fileIndex + 1;
+		if (fileIndex < 0) {
+			fileIndex = 0;
+		}
+		else {
+			fileIndex++;
+		}
 
-		try (InputStream is =
-				doGetPreviewAsStream(fileVersion, realFileIndex, previewType)) {
+		try (InputStream is = doGetPreviewAsStream(
+				fileVersion, fileIndex, previewType)) {
 
 			exportBinary(
 				portletDataContext, fileEntryElement, fileVersion, is, binPath,
@@ -983,10 +988,15 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 				return;
 			}
 
-			int realFileIndex = fileIndex < 0 ? 0 : fileIndex + 1;
+			if (fileIndex < 0) {
+				fileIndex = 0;
+			}
+			else {
+				fileIndex++;
+			}
 
 			try (InputStream is = doGetPreviewAsStream(
-					fileVersion, realFileIndex, previewType)) {
+					fileVersion, fileIndex, previewType)) {
 
 				addFileToStore(
 					portletDataContext.getCompanyId(), PREVIEW_PATH,

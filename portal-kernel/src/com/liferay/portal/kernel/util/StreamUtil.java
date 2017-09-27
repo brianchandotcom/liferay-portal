@@ -75,7 +75,7 @@ public class StreamUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by try-with-resource statement
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public static void cleanUp(Closeable... closeables) {

@@ -2,22 +2,19 @@
 
 /**
  * Translation Manager Component
- *
- * @param editingLocale
- * @param availableLocales
- * @param changeableDefaultLanguage
- * @param defaultLocale
- * @param? elementClasses
- * @param? id
- * @param locales
- *
- * Function References
- *
- * @param? addLocale
- * @param? changeDefaultLocale
- * @param? removeAvailableLocale
  **/
 {template .render}
+	 {@param availableLocales: list<string>}
+	 {@param changeableDefaultLanguage: bool}
+	 {@param defaultLocale: string}
+	 {@param editingLocale: string}
+	 {@param locales: ?}
+	 {@param? addLocale: any}
+	 {@param? changeDefaultLocale: any}
+	 {@param? elementClasses: string}
+	 {@param? id: string}
+	 {@param? removeAvailableLocale: any}
+
 	<div class="lfr-translationmanager{$elementClasses ? ' ' + $elementClasses : ''}" id="{$id}">
 		<ul class="nav nav-tabs nav-tabs-default">
 			{call .defaultLocale data="all" /}
@@ -36,16 +33,13 @@
 
 /**
  * Renders the default locale element
- *
- * @param changeableDefaultLanguage
- * @param defaultLocale
- * @param locales
- *
- * Function References
- *
- * @param? changeDefaultLocale
  */
 {template .defaultLocale}
+	{@param changeableDefaultLanguage: any}
+	{@param defaultLocale: string}
+	{@param locales: ?}
+	{@param? changeDefaultLocale: any}
+
 	{let $defaultLocaleObject: $locales[$defaultLocale] /}
 
 	{let $optionIcon kind="html"}
@@ -67,17 +61,14 @@
 
 /**
  * Renders the required list of available locale elements
- *
- * @param availableLocales
- * @param defaultLocale
- * @param locales
- * @param pathThemeImages
- *
- * Function References
- *
- * @param? removeAvailableLocale
  */
 {template .availableLocales}
+	{@param availableLocales: list<string>}
+	{@param defaultLocale: string}
+	{@param locales: ?}
+	{@param pathThemeImages: string}
+	{@param? removeAvailableLocale: any}
+
 	{foreach $availableLocale in $availableLocales}
 		{if $availableLocale != $defaultLocale}
 			{let $locale: $locales[$availableLocale] /}
@@ -99,14 +90,12 @@
 
 /**
  * Renders the required locale element
- *
- * @param editingLocale
- * @param locale
- * @param pathThemeImages
- *
  */
 {template .locale}
+	{@param editingLocale: string}
+	{@param locale: ?}
 	{@param optionIcon: html}
+	{@param pathThemeImages: string}
 
 	<li class="{$editingLocale == $locale.id ? 'active' : ''}">
 		<a href="javascript:;">
@@ -128,16 +117,13 @@
 
 /**
  * Renders a dropdown with require locale elements
- *
- * @param icon
- * @param locales
- * @param pathThemeImages
- *
- * Function References
- *
- * @param? onClickDropdownElement
  */
 {template .localesDropdown}
+	{@param icon: string}
+	{@param locales: ?}
+	{@param pathThemeImages: string}
+	{@param? onClickDropdownElement: any}
+
 	{call Dropdown.render}
 		{param header kind="html"}
 			<a class="icon-monospaced" data-onclick="toggle" href="javascript:;">

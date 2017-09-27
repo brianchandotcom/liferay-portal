@@ -68,8 +68,6 @@
 	</command>
 
 	<command name="configureFileUploadOverallMaximumFileSize">
-		<execute function="AssertClick" locator1="NavBar#FILE_UPLOADS" value1="File Uploads" />
-
 		<execute function="Type" locator1="ServerAdministrationFileUploads#GENERAL_OVERALL_MAX_FILE_SIZE_FIELD" value1="${maxFileSize}" />
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />

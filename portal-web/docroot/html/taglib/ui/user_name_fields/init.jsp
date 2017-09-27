@@ -36,9 +36,7 @@ if (Validator.isNull(languageId)) {
 		languageId = selUser.getLanguageId();
 	}
 	else {
-		User defaultUser = company.getDefaultUser();
-
-		languageId = defaultUser.getLanguageId();
+		languageId = themeDisplay.getLanguageId();
 	}
 }
 

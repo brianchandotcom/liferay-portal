@@ -17,8 +17,8 @@ package com.liferay.layout.page.template.service.impl;
 import com.liferay.fragment.exception.NoSuchEntryException;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLocalService;
-import com.liferay.layout.page.template.exception.NoSuchPageTemplateException;
-import com.liferay.layout.page.template.model.LayoutPageTemplate;
+import com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateFragment;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateFragmentLocalServiceBaseImpl;
 import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateFragmentPK;
@@ -41,7 +41,7 @@ public class LayoutPageTemplateFragmentLocalServiceImpl
 
 	@Override
 	public LayoutPageTemplateFragment addLayoutPageTemplateFragment(
-			long userId, long groupId, long layoutPageTemplateId,
+			long userId, long groupId, long layoutPageTemplateEntryId,
 			long fragmentId, int position, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -50,11 +50,11 @@ public class LayoutPageTemplateFragmentLocalServiceImpl
 		User user = userLocalService.getUser(userId);
 
 		validateFragment(fragmentId);
-		validateLayoutPageTemplate(layoutPageTemplateId);
+		validateLayoutPageTemplateEntry(layoutPageTemplateEntryId);
 
 		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK =
 			new LayoutPageTemplateFragmentPK(
-				groupId, layoutPageTemplateId, fragmentId);
+				groupId, layoutPageTemplateEntryId, fragmentId);
 
 		LayoutPageTemplateFragment layoutPageTemplateFragment =
 			layoutPageTemplateFragmentPersistence.create(
@@ -76,8 +76,8 @@ public class LayoutPageTemplateFragmentLocalServiceImpl
 	}
 
 	@Override
-	public List<LayoutPageTemplateFragment> deleteByLayoutPageTemplate(
-			long groupId, long layoutPageTemplateId)
+	public List<LayoutPageTemplateFragment> deleteByLayoutPageTemplateEntry(
+			long groupId, long layoutPageTemplateEntryId)
 		throws PortalException {
 
 		List<LayoutPageTemplateFragment> deletedLayoutPageTemplateFragments =
@@ -85,7 +85,7 @@ public class LayoutPageTemplateFragmentLocalServiceImpl
 
 		List<LayoutPageTemplateFragment> layoutPageTemplateFragments =
 			getLayoutPageTemplateFragmentsByPageTemplate(
-				groupId, layoutPageTemplateId);
+				groupId, layoutPageTemplateEntryId);
 
 		if (ListUtil.isEmpty(layoutPageTemplateFragments)) {
 			return Collections.emptyList();
@@ -110,19 +110,19 @@ public class LayoutPageTemplateFragmentLocalServiceImpl
 
 		// Layout Page Template Fragment
 
-		layoutPageTemplatePersistence.remove(layoutPageTemplateFragment);
+		layoutPageTemplateEntryPersistence.remove(layoutPageTemplateFragment);
 
 		return layoutPageTemplateFragment;
 	}
 
 	@Override
 	public LayoutPageTemplateFragment deleteLayoutPageTemplateFragment(
-			long groupId, long layoutPageTemplateId, long fragmentId)
+			long groupId, long layoutPageTemplateEntryId, long fragmentId)
 		throws PortalException {
 
 		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK =
 			new LayoutPageTemplateFragmentPK(
-				groupId, layoutPageTemplateId, fragmentId);
+				groupId, layoutPageTemplateEntryId, fragmentId);
 
 		LayoutPageTemplateFragment layoutPageTemplateFragment =
 			layoutPageTemplateFragmentPersistence.fetchByPrimaryKey(
@@ -134,10 +134,10 @@ public class LayoutPageTemplateFragmentLocalServiceImpl
 	@Override
 	public List<LayoutPageTemplateFragment>
 		getLayoutPageTemplateFragmentsByPageTemplate(
-			long groupId, long layoutPageTemplateId) {
+			long groupId, long layoutPageTemplateEntryId) {
 
 		return layoutPageTemplateFragmentPersistence.findByG_L(
-			groupId, layoutPageTemplateId);
+			groupId, layoutPageTemplateEntryId);
 	}
 
 	protected void validateFragment(long fragmentId) throws PortalException {
@@ -149,15 +149,16 @@ public class LayoutPageTemplateFragmentLocalServiceImpl
 		}
 	}
 
-	protected void validateLayoutPageTemplate(long layoutPageTemplateId)
+	protected void validateLayoutPageTemplateEntry(
+			long layoutPageTemplateEntryId)
 		throws PortalException {
 
-		LayoutPageTemplate layoutPageTemplate =
-			layoutPageTemplateLocalService.fetchLayoutPageTemplate(
-				layoutPageTemplateId);
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				layoutPageTemplateEntryId);
 
-		if (layoutPageTemplate == null) {
-			throw new NoSuchPageTemplateException();
+		if (layoutPageTemplateEntry == null) {
+			throw new NoSuchPageTemplateEntryException();
 		}
 	}
 

@@ -24,15 +24,6 @@ class Flags extends PortletBase {
 	}
 
 	/**
-	 * Closes the dialog to flag the page.
-	 */
-	_closeReportDialog() {
-		this._reportDialogOpen = false;
-		this._showConfirmationMessage = false;
-		this._showErrorMessage = false;
-	}
-
-	/**
 	 * Gets the reason selected by the user.
 	 * @return {String} reason
 	 */
@@ -46,6 +37,22 @@ class Flags extends PortletBase {
 		}
 
 		return reason;
+	}
+
+	/**
+	 * Closes the dialog to flag the page.
+	 */
+	_handleCloseDialogClick() {
+		this._reportDialogOpen = false;
+		this._showConfirmationMessage = false;
+		this._showErrorMessage = false;
+	}
+
+	/**
+	 * Opens a dialog where the user can flag the page.
+	 */
+	_handleFlagButtonClick() {
+		this._reportDialogOpen = true;
 	}
 
 	/**
@@ -113,13 +120,6 @@ class Flags extends PortletBase {
 
 		input.click();
 	}
-
-	/**
-	 * Opens a dialog where the user can flag the page.
-	 */
-	_openReportDialog() {
-		this._reportDialogOpen = true;
-	}
 };
 
 /**
@@ -154,8 +154,7 @@ Flags.STATE = {
 	data: Config.object().required(),
 
 	/**
-	 * Whether the form to flag is enabled
-	 * or not.
+	 * Whether the form to flag is enabled or not.
 	 * @instance
 	 * @memberof Flags
 	 * @type {Boolean}

@@ -1,18 +1,13 @@
-import { Config } from 'metal-state';
+import {Config} from 'metal-state';
 import dom from 'metal-dom';
 import Modal from 'metal-modal';
-
+import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import Soy from 'metal-soy';
 
 import templates from './Flags.soy';
 
-import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
-
 /**
- * Flags
- *
  * It opens a dialog where the user can flag the page.
- *
  * @abstract
  * @extends {PortletBase}
  */
@@ -39,7 +34,6 @@ class Flags extends PortletBase {
 
 	/**
 	 * Gets the reason selected by the user.
-	 *
 	 * @return {String} reason
 	 */
 	_getReason() {
@@ -57,7 +51,6 @@ class Flags extends PortletBase {
 	/**
 	 * Checks the reason selected by the user, and allows
 	 * to introduce a specific reasons if necessary.
-	 *
 	 * @param {Event} event
 	 * @protected
 	 */
@@ -76,7 +69,6 @@ class Flags extends PortletBase {
 
 	/**
 	 * Makes an ajax request to submit the data.
-	 *
 	 * @param {Event} event
 	 * @protected
 	 */
@@ -86,7 +78,9 @@ class Flags extends PortletBase {
 		let form = this.one('form[name="' + this.ns('flagsForm') +'"]');
 
 		this.data[this.ns('reason')] = this._getReason();
-		this.data[this.ns('reporterEmailAddress')] = this.one('#reporterEmailAddress').value;
+		this.data[this.ns('reporterEmailAddress')] = this.one(
+      '#reporterEmailAddress'
+    ).value;
 
 		let formData = new FormData();
 
@@ -137,7 +131,6 @@ class Flags extends PortletBase {
 Flags.STATE = {
 	/**
 	 * Company name.
-	 *
 	 * @instance
 	 * @memberof Flags
 	 * @type {String}
@@ -146,7 +139,6 @@ Flags.STATE = {
 
 	/**
 	 * CSS classes.
-	 *
 	 * @instance
 	 * @memberof Flags
 	 * @type {String}
@@ -164,7 +156,6 @@ Flags.STATE = {
 	/**
 	 * Whether the form to flag is enabled
 	 * or not.
-	 *
 	 * @instance
 	 * @memberof Flags
 	 * @type {Boolean}
@@ -181,7 +172,6 @@ Flags.STATE = {
 
 	/**
 	 * Component id.
-	 *
 	 * @instance
 	 * @memberof Flags
 	 * @type {String}
@@ -191,7 +181,6 @@ Flags.STATE = {
 	/**
 	 * Whether to show message text as a label next
 	 * to the flag icon or as a tooltip.
-	 *
 	 * @instance
 	 * @memberof Flags
 	 * @type {Boolean}
@@ -200,7 +189,6 @@ Flags.STATE = {
 
 	/**
 	 * Text to display next to the flag icon.
-	 *
 	 * @instance
 	 * @memberof Flags
 	 * @type {String}
@@ -209,7 +197,6 @@ Flags.STATE = {
 
 	/**
 	 * Path to Terms of Use.
-	 *
 	 * @instance
 	 * @memberof Flags
 	 * @type {String}
@@ -218,7 +205,6 @@ Flags.STATE = {
 
 	/**
 	 * Path to images.
-	 *
 	 * @instance
 	 * @memberof Flags
 	 * @type {String}
@@ -227,7 +213,6 @@ Flags.STATE = {
 
 	/**
 	 * Portlet's namespace
-	 *
 	 * @instance
 	 * @memberof Flags
 	 * @type {String}
@@ -237,7 +222,6 @@ Flags.STATE = {
 	/**
 	 * List of possible reasons to flag
 	 * a content.
-	 *
 	 * @instance
 	 * @memberof Flags
 	 * @type {List}
@@ -247,7 +231,6 @@ Flags.STATE = {
 	/**
 	 * Email of the user who reports
 	 * the flag.
-	 *
 	 * @instance
 	 * @memberof Flags
 	 * @type {String}
@@ -256,7 +239,6 @@ Flags.STATE = {
 
 	/**
 	 * Wheter the user is signed in or not.
-	 *
 	 * @instance
 	 * @memberof Flags
 	 * @type {Boolean}
@@ -265,7 +247,6 @@ Flags.STATE = {
 
 	/**
 	 * Title to show in the Modal.
-	 *
 	 * @instance
 	 * @memberof Flags
 	 * @type {String}
@@ -275,7 +256,6 @@ Flags.STATE = {
 	/**
 	 * Uri of the page that will be opened
 	 * in the dialog.
-	 *
 	 * @instance
 	 * @memberof Flags
 	 * @type {String}

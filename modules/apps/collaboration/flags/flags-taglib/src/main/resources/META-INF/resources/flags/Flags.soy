@@ -29,28 +29,28 @@
 	{let $tooltip: not $label and $message!='' /}
 
 	<div class="taglib-flags" id="{$id}" title="{$title}">
-
 		{let $attributes kind="attributes"}
 			class="{$cssClass}
-			{if $tooltip}
-				{sp}lfr-portal-tooltip
-			{/if}
+				{if $tooltip}
+					{sp}lfr-portal-tooltip
+				{/if}
 			"
 
 			{if $tooltip}
-			{sp}title="{$message}"
+				{sp}title="{$message}"
 			{/if}
 		{/let}
 
 		<span {$attributes}>
 			{if $enabled}
-				<a class="taglib-icon" href="javascript:;" data-onclick="_openReportDialog" >
+				<a class="taglib-icon" data-onclick="_openReportDialog" href="javascript:;">
 					{call .icon}
 						{param label: $label /}
 						{param message: $message /}
 						{param pathThemeImages: $pathThemeImages /}
 					{/call}
 				</a>
+
 				{if $_reportDialogOpen}
 					{call .reportDialog}
 						{param companyName: $companyName /}
@@ -94,10 +94,12 @@
 
 	{let $attributes kind="attributes"}
 		class="taglib-text
-		{if not $label}
-			{sp}hide-accessible
-		{/if}"
+			{if not $label}
+				{sp}hide-accessible
+			{/if}
+		"
 	{/let}
+
 	<span {$attributes}>{$message}</span>
 {/template}
 
@@ -122,7 +124,7 @@
 
 	{call Modal.render}
 		{param header kind="html"}
-			<button type="button" class="close" data-onclick="{$_closeReportDialog}" aria-label="Close">
+			<button aria-label="Close" class="close" data-onclick="{$_closeReportDialog}" type="button">
 				<span aria-hidden="true">X</span>
 			</button>
 
@@ -238,16 +240,14 @@
 	{@param? _handleOnSubmitForm: any}
 
 	<form class="container-fluid-1280" method="post" name="{$portletNamespace}flagsForm" onsubmit="{$_handleOnSubmitForm}" >
-		{let $linkText kind="text"}
-			{msg desc=""}terms-of-use{/msg}
-		{/let}
-
 		{let $termsOfUse kind="html"}
-			<a href="{$pathTermsOfUse}" target="_blank">{$linkText}</a>
+			<a href="{$pathTermsOfUse}" target="_blank">
+				{msg desc=""}terms-of-use{/msg}
+			</a>
 		{/let}
 
 		<p>
-		{msg desc=""}you-are-about-to-report-a-violation-of-our-{$termsOfUse}-all-reports-are-strictly-confidential{/msg}
+			{msg desc=""}you-are-about-to-report-a-violation-of-our-{$termsOfUse}-all-reports-are-strictly-confidential{/msg}
 		</p>
 
 		<fieldset>
@@ -256,7 +256,7 @@
 					{msg desc=""}reason-for-the-report{/msg}
 				</label>
 
-				<select class="form-control" id="{$portletNamespace}reason" name="{$portletNamespace}reason" data-onchange="{$_handleOnReasonChange}">
+				<select class="form-control" data-onchange="{$_handleOnReasonChange}" id="{$portletNamespace}reason" name="{$portletNamespace}reason">
 					{foreach $reason in $reasons}
 						<option value="{$reason}">{$reason}</option>
 					{/foreach}
@@ -268,7 +268,6 @@
 			<span class="hide" id="{$portletNamespace}otherReasonContainer">
 				<div class="form-group">
 					<label class="control-label" for="{$portletNamespace}otherReason">{msg desc=""}other-reason{/msg}</label>
-
 					<input class="form-control" id="{$portletNamespace}otherReason" name="{$portletNamespace}otherReason" />
 				</div>
 			</span>
@@ -298,7 +297,9 @@
 {template .showConfirmation}
 	{@param companyName: string}
 
-	<p><strong>{msg desc=""}thank-you-for-your-report{/msg}</strong></p>
+	<p>
+		<strong>{msg desc=""}thank-you-for-your-report{/msg}</strong>
+	</p>
 
 	<p>
 		{msg desc=""}although-we-cannot-disclose-our-final-decision-we-do-review-every-report-and-appreciate-your-effort-to-make-sure-{$companyName}-is-a-safe-environment-for-everyone{/msg}

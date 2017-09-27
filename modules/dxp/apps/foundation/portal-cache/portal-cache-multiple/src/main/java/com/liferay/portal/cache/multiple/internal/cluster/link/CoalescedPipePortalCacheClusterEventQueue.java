@@ -16,7 +16,6 @@ package com.liferay.portal.cache.multiple.internal.cluster.link;
 
 import com.liferay.portal.cache.multiple.internal.PortalCacheClusterEvent;
 import com.liferay.portal.cache.multiple.internal.PortalCacheClusterEventCoalesceComparator;
-import com.liferay.portal.kernel.concurrent.CoalescedPipe;
 
 import java.util.HashSet;
 import java.util.Set;

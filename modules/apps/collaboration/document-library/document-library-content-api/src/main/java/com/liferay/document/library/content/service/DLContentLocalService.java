@@ -16,6 +16,7 @@ package com.liferay.document.library.content.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.document.library.content.exception.NoSuchContentException;
 import com.liferay.document.library.content.model.DLContent;
 import com.liferay.document.library.content.model.DLContentDataBlobModel;
 
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.List;
@@ -63,6 +65,18 @@ public interface DLContentLocalService extends BaseLocalService,
 	 */
 
 	/**
+	* NOTE FOR DEVELOPERS:
+	*
+	* Never reference this class directly. Always use {@link DLContentLocalServiceUtil} to access the document library content local service.
+	*/
+	public DLContent addContent(long companyId, long repositoryId,
+		java.lang.String path, java.lang.String version, byte[] bytes);
+
+	public DLContent addContent(long companyId, long repositoryId,
+		java.lang.String path, java.lang.String version,
+		InputStream inputStream, long size);
+
+	/**
 	* Adds the document library content to the database. Also notifies the appropriate model listeners.
 	*
 	* @param dlContent the document library content
@@ -78,6 +92,16 @@ public interface DLContentLocalService extends BaseLocalService,
 	* @return the new document library content
 	*/
 	public DLContent createDLContent(long contentId);
+
+	public void deleteContent(long companyId, long repositoryId,
+		java.lang.String path, java.lang.String version)
+		throws PortalException;
+
+	public void deleteContents(long companyId, long repositoryId,
+		java.lang.String path);
+
+	public void deleteContentsByDirectory(long companyId, long repositoryId,
+		java.lang.String dirName);
 
 	/**
 	* Deletes the document library content from the database. Also notifies the appropriate model listeners.
@@ -171,6 +195,26 @@ public interface DLContentLocalService extends BaseLocalService,
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLContent getContent(long companyId, long repositoryId,
+		java.lang.String path) throws NoSuchContentException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLContent getContent(long companyId, long repositoryId,
+		java.lang.String path, java.lang.String version)
+		throws NoSuchContentException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DLContent> getContents(long companyId, long repositoryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DLContent> getContents(long companyId, long repositoryId,
+		java.lang.String path);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DLContent> getContentsByDirectory(long companyId,
+		long repositoryId, java.lang.String dirName);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLContentDataBlobModel getDataBlobModel(Serializable primaryKey);
 
 	/**
@@ -220,6 +264,10 @@ public interface DLContentLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasContent(long companyId, long repositoryId,
+		java.lang.String path, java.lang.String version);
+
 	/**
 	* Updates the document library content in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -228,4 +276,7 @@ public interface DLContentLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public DLContent updateDLContent(DLContent dlContent);
+
+	public void updateDLContent(long companyId, long oldRepositoryId,
+		long newRepositoryId, java.lang.String oldPath, java.lang.String newPath);
 }

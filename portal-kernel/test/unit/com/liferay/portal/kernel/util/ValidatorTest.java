@@ -15,13 +15,16 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+
+import java.lang.reflect.Method;
+
+import java.util.Collections;
+import java.util.List;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Shuyang Zhou
@@ -29,8 +32,26 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author Igor Beslic
  * @author Manuel de la Peña
  */
-@RunWith(PowerMockRunner.class)
-public class ValidatorTest extends PowerMockito {
+public class ValidatorTest {
+
+	@ClassRule
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		new CodeCoverageAssertor() {
+
+			@Override
+			public void appendAssertClasses(List<Class<?>> assertClasses) {
+				assertClasses.clear();
+			}
+
+			@Override
+			public List<Method> getAssertMethods()
+				throws ReflectiveOperationException {
+
+				return Collections.singletonList(
+					Validator.class.getDeclaredMethod("isLUHN", String.class));
+			}
+
+		};
 
 	@Test
 	public void testIsContent() throws Exception {
@@ -371,18 +392,23 @@ public class ValidatorTest extends PowerMockito {
 
 	@Test
 	public void testIsLUHN() {
+		Assert.assertTrue(Validator.isLUHN("059"));
 		Assert.assertTrue(Validator.isLUHN("0000"));
 		Assert.assertTrue(Validator.isLUHN("0042"));
 		Assert.assertTrue(Validator.isLUHN("0901"));
 		Assert.assertTrue(Validator.isLUHN("00620"));
 		Assert.assertTrue(Validator.isLUHN("9876543001"));
 
+		Assert.assertFalse(Validator.isLUHN("095"));
 		Assert.assertFalse(Validator.isLUHN("0001"));
 		Assert.assertFalse(Validator.isLUHN("0205"));
 		Assert.assertFalse(Validator.isLUHN("9999"));
 		Assert.assertFalse(Validator.isLUHN("02050"));
 		Assert.assertFalse(Validator.isLUHN("0123456789"));
+
 		Assert.assertFalse(Validator.isLUHN("ABC"));
+		Assert.assertFalse(Validator.isLUHN("\n"));
+		Assert.assertFalse(Validator.isLUHN(null));
 	}
 
 	@Test

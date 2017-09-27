@@ -520,6 +520,10 @@ public class StringUtil_IW {
 		return StringUtil.replaceWithStringBundler(s, begin, end, values);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public java.lang.String reverse(java.lang.String s) {
 		return StringUtil.reverse(s);
 	}

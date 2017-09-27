@@ -916,37 +916,32 @@ public class Validator {
 			return false;
 		}
 
-		number = StringUtil.reverse(number);
+		int sum = 0;
+		int length = number.length();
 
-		int total = 0;
+		for (int i = 0; i < length; i++) {
+			int x = number.charAt(length - 1 - i) - CharPool.NUMBER_0;
 
-		for (int i = 0; i < number.length(); i++) {
-			int x = 0;
+			if ((x > 9) || (x < 0)) {
+				return false;
+			}
 
-			if (((i + 1) % 2) == 0) {
-				x = GetterUtil.getInteger(number.substring(i, i + 1)) * 2;
+			if ((i % 2) == 1) {
+				x *= 2;
 
-				if (x >= 10) {
-					String s = String.valueOf(x);
-
-					x =
-						GetterUtil.getInteger(s.substring(0, 1)) +
-							GetterUtil.getInteger(s.substring(1, 2));
+				if (x > 9) {
+					x -= 9;
 				}
 			}
-			else {
-				x = GetterUtil.getInteger(number.substring(i, i + 1));
-			}
 
-			total = total + x;
+			sum += x;
 		}
 
-		if ((total % 10) == 0) {
+		if ((sum % 10) == 0) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	/**

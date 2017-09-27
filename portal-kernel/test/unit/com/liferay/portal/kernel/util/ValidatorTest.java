@@ -370,6 +370,22 @@ public class ValidatorTest extends PowerMockito {
 	}
 
 	@Test
+	public void testIsLUHN() {
+		Assert.assertTrue(Validator.isLUHN("0000"));
+		Assert.assertTrue(Validator.isLUHN("0042"));
+		Assert.assertTrue(Validator.isLUHN("0901"));
+		Assert.assertTrue(Validator.isLUHN("00620"));
+		Assert.assertTrue(Validator.isLUHN("9876543001"));
+
+		Assert.assertFalse(Validator.isLUHN("0001"));
+		Assert.assertFalse(Validator.isLUHN("0205"));
+		Assert.assertFalse(Validator.isLUHN("9999"));
+		Assert.assertFalse(Validator.isLUHN("02050"));
+		Assert.assertFalse(Validator.isLUHN("0123456789"));
+		Assert.assertFalse(Validator.isLUHN("ABC"));
+	}
+
+	@Test
 	public void testIsNull() throws Exception {
 		String[] nullStrings =
 			{null, "", "  ", "null", " null", "null ", "  null  "};

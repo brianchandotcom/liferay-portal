@@ -1685,7 +1685,9 @@
 			<var name="displayStyle" value="List" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="WC#ENTRY_LIST_TITLE" />
+		<execute function="AssertElementPresent" locator1="WC#ENTRY_LIST_TITLE">
+			<var name="key_webContentTitle" value="${webContentTitle}" />
+		</execute>
 	</command>
 
 	<command name="viewEditWCViaWCD">

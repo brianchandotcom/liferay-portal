@@ -71,6 +71,13 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 			_NPM_SHRINKWRAP_EXCLUDED_DEPENDENCIES);
 	}
 
+	private void _configureTaskPublishNodeModule(
+		PublishNodeModuleTask publishNodeModuleTask) {
+
+		publishNodeModuleTask.doFirst(
+			MavenDefaultsPlugin.failReleaseOnWrongBranchAction);
+	}
+
 	private void _configureTasksPublishNodeModule(Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
@@ -82,8 +89,7 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 				public void execute(
 					PublishNodeModuleTask publishNodeModuleTask) {
 
-					publishNodeModuleTask.doFirst(
-						MavenDefaultsPlugin.failReleaseOnWrongBranchAction);
+					_configureTaskPublishNodeModule(publishNodeModuleTask);
 				}
 
 			});

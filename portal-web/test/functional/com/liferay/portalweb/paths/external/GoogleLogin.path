@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>HEADER</td>
+	<td>//h1[normalize-space()='Choose an account']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -68,6 +73,11 @@
 <tr>
 	<td>ACCOUNT_MENULIST_ADD_ACCOUNT</td>
 	<td>//a[contains(.,'Add account')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACCOUNT_MENULIST_USE_ANOTHER_ACCOUNT</td>
+	<td>//div[@role='button']//p[contains(.,'Use another account')]</td>
 	<td></td>
 </tr>
 </tbody>

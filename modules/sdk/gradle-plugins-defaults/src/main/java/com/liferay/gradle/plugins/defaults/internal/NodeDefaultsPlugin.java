@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.defaults.internal;
 
 import com.liferay.gradle.plugins.BaseDefaultsPlugin;
+import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.node.tasks.NpmShrinkwrapTask;
@@ -76,6 +77,12 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 
 		publishNodeModuleTask.doFirst(
 			MavenDefaultsPlugin.failReleaseOnWrongBranchAction);
+
+		if (GradlePluginsDefaultsUtil.isPrivateProject(
+				publishNodeModuleTask.getProject())) {
+
+			publishNodeModuleTask.setEnabled(false);
+		}
 
 		publishNodeModuleTask.setModuleAuthor(
 			"Nathan Cavanaugh <nathan.cavanaugh@liferay.com> " +

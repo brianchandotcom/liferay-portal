@@ -22,6 +22,7 @@ import com.liferay.gradle.plugins.node.tasks.NpmShrinkwrapTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 
 import java.util.Collections;
+import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
@@ -75,12 +76,12 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 	private void _configureTaskPublishNodeModule(
 		PublishNodeModuleTask publishNodeModuleTask) {
 
+		final Project project = publishNodeModuleTask.getProject();
+
 		publishNodeModuleTask.doFirst(
 			MavenDefaultsPlugin.failReleaseOnWrongBranchAction);
 
-		if (GradlePluginsDefaultsUtil.isPrivateProject(
-				publishNodeModuleTask.getProject())) {
-
+		if (GradlePluginsDefaultsUtil.isPrivateProject(project)) {
 			publishNodeModuleTask.setEnabled(false);
 		}
 
@@ -91,6 +92,33 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 		publishNodeModuleTask.setModuleLicense("LGPL");
 		publishNodeModuleTask.setModuleMain("package.json");
 		publishNodeModuleTask.setModuleRepository("liferay/liferay-portal");
+
+		publishNodeModuleTask.setModuleVersion(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					String version = String.valueOf(project.getVersion());
+
+					if (version.endsWith(
+							GradlePluginsDefaultsUtil.
+								SNAPSHOT_VERSION_SUFFIX)) {
+
+						version = version.substring(
+							0,
+							version.length() -
+								GradlePluginsDefaultsUtil.
+									SNAPSHOT_VERSION_SUFFIX.length());
+
+						version += "-alpha." + System.currentTimeMillis();
+					}
+
+					return version;
+				}
+
+			});
+
+		publishNodeModuleTask.setOverriddenPackageJsonKeys("version");
 	}
 
 	private void _configureTasksPublishNodeModule(Project project) {

@@ -56,7 +56,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -99,13 +98,20 @@ public class AssetHelperImpl implements AssetHelper {
 	public Set<String> addLayoutTags(
 		HttpServletRequest request, List<AssetTag> tags) {
 
-		Set<String> layoutTags = getLayoutTagNames(request);
+		Set<String> tagNames = (Set<String>)request.getAttribute(
+			WebKeys.ASSET_LAYOUT_TAG_NAMES);
 
-		for (AssetTag tag : tags) {
-			layoutTags.add(tag.getName());
+		if (tagNames == null) {
+			tagNames = new HashSet<>();
+
+			request.setAttribute(WebKeys.ASSET_LAYOUT_TAG_NAMES, tagNames);
 		}
 
-		return layoutTags;
+		for (AssetTag tag : tags) {
+			tagNames.add(tag.getName());
+		}
+
+		return tagNames;
 	}
 
 	@Override
@@ -247,11 +253,11 @@ public class AssetHelperImpl implements AssetHelper {
 
 	@Override
 	public List<AssetEntry> getAssetEntries(Hits hits) {
-		List<AssetEntry> assetEntries = new ArrayList<>();
-
 		if (hits.getDocs() == null) {
-			return assetEntries;
+			return Collections.emptyList();
 		}
+
+		List<AssetEntry> assetEntries = new ArrayList<>();
 
 		for (Document document : hits.getDocs()) {
 			String className = GetterUtil.getString(
@@ -259,13 +265,11 @@ public class AssetHelperImpl implements AssetHelper {
 			long classPK = GetterUtil.getLong(
 				document.get(Field.ENTRY_CLASS_PK));
 
-			try {
-				AssetEntry assetEntry = _assetEntryLocalService.getEntry(
-					className, classPK);
+			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+				className, classPK);
 
+			if (assetEntry != null) {
 				assetEntries.add(assetEntry);
-			}
-			catch (Exception e) {
 			}
 		}
 
@@ -274,22 +278,16 @@ public class AssetHelperImpl implements AssetHelper {
 
 	@Override
 	public String getAssetKeywords(String className, long classPK) {
-		List<AssetTag> tags = _assetTagLocalService.getTags(
+		String[] tagNames = _assetTagLocalService.getTagNames(
 			className, classPK);
-		List<AssetCategory> categories =
-			_assetCategoryLocalService.getCategories(className, classPK);
+		String[] categoryNames = _assetCategoryLocalService.getCategoryNames(
+			className, classPK);
 
-		StringBuffer sb = new StringBuffer();
+		String[] keywords = new String[tagNames.length + categoryNames.length];
 
-		sb.append(ListUtil.toString(tags, AssetTag.NAME_ACCESSOR));
+		ArrayUtil.combine(tagNames, categoryNames, keywords);
 
-		if (!tags.isEmpty()) {
-			sb.append(StringPool.COMMA);
-		}
-
-		sb.append(ListUtil.toString(categories, AssetCategory.NAME_ACCESSOR));
-
-		return sb.toString();
+		return StringUtil.merge(keywords);
 	}
 
 	@Override
@@ -392,19 +390,6 @@ public class AssetHelperImpl implements AssetHelper {
 		assetPublisherAddItemHolders.sort(null);
 
 		return assetPublisherAddItemHolders;
-	}
-
-	public Set<String> getLayoutTagNames(HttpServletRequest request) {
-		Set<String> tagNames = (Set<String>)request.getAttribute(
-			WebKeys.ASSET_LAYOUT_TAG_NAMES);
-
-		if (tagNames == null) {
-			tagNames = new HashSet<>();
-
-			request.setAttribute(WebKeys.ASSET_LAYOUT_TAG_NAMES, tagNames);
-		}
-
-		return tagNames;
 	}
 
 	@Override

@@ -4,6 +4,5 @@ task publishNodeModule(type: PublishNodeModuleTask)
 
 publishNodeModule {
 	dependsOn jar
-	enabled = false
 	workingDir = "src/main/resources/META-INF/resources/_styled"
 }

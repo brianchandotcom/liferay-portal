@@ -1632,6 +1632,8 @@ public class ProjectTemplatesTest {
 		File workspaceProjectDir = _buildTemplateWithGradle(
 			WorkspaceUtil.WORKSPACE, "foo");
 
+		_testExists(workspaceProjectDir, "gradle-local.properties");
+
 		Properties gradleLocalProperties = new Properties();
 
 		String homeDirName = "foo/bar/baz";

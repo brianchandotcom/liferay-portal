@@ -45,12 +45,12 @@
 </tr>
 <tr>
 	<td>CONTENT_FIELD_ITALIC</td>
-	<td>//div[contains(@class,'alloy-editor-container')]//div[(contains(@data-placeholder,'Write your content here...') or contains(@data-placeholder,'Content')) and contains(@title,'Rich Text Editor')]//em[contains(.,'${key_blodContent}')]</td>
+	<td>//div[contains(@class,'alloy-editor-container')]//div[(contains(@data-placeholder,'Write your content here...') or contains(@data-placeholder,'Content')) and contains(@title,'Rich Text Editor')]//em[contains(.,'${key_italicContent}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_FIELD_UNDERLINE</td>
-	<td>//div[contains(@class,'alloy-editor-container')]//div[(contains(@data-placeholder,'Write your content here...') or contains(@data-placeholder,'Content')) and contains(@title,'Rich Text Editor')]//u[contains(.,'${key_blodContent}')]</td>
+	<td>//div[contains(@class,'alloy-editor-container')]//div[(contains(@data-placeholder,'Write your content here...') or contains(@data-placeholder,'Content')) and contains(@title,'Rich Text Editor')]//u[contains(.,'${key_underlineContent}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -401,7 +401,7 @@
 			<var name="kbArticleAttachment" value="Document_1.png" />
 			<var name="kbArticleContent" value="Knowledge Base Article Content" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="maxFileSize" value="2048" />
+			<var name="maxFileSize" value="2" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />

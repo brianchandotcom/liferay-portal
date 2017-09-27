@@ -26,12 +26,12 @@ KaleoDefinition kaleoDefinition = kaleoDesignerDisplayContext.getKaleoDefinition
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.VIEW) %>">
-		<portlet:renderURL var="viewURL">
+		<liferay-portlet:renderURL portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="viewURL">
 			<portlet:param name="mvcPath" value="/designer/view_kaleo_definition_version.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
 			<portlet:param name="draftVersion" value="<%= kaleoDefinitionVersion.getVersion() %>" />
-		</portlet:renderURL>
+		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon
 			message="view"
@@ -40,12 +40,12 @@ KaleoDefinition kaleoDefinition = kaleoDesignerDisplayContext.getKaleoDefinition
 	</c:if>
 
 	<c:if test="<%= KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE) %>">
-		<portlet:renderURL var="editURL">
+		<liferay-portlet:renderURL portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="editURL">
 			<portlet:param name="mvcPath" value='<%= "/designer/edit_kaleo_definition_version.jsp" %>' />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
 			<portlet:param name="draftVersion" value="<%= kaleoDefinitionVersion.getVersion() %>" />
-		</portlet:renderURL>
+		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon
 			message="edit"
@@ -73,11 +73,11 @@ KaleoDefinition kaleoDefinition = kaleoDesignerDisplayContext.getKaleoDefinition
 
 	<c:choose>
 		<c:when test="<%= (kaleoDefinition != null) && kaleoDefinition.isActive() && KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE) %>">
-			<portlet:actionURL name="unpublishKaleoDefinitionVersion" var="unpublishURL">
+			<liferay-portlet:actionURL name="unpublishKaleoDefinitionVersion" portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="unpublishURL">
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
 				<portlet:param name="version" value="<%= String.valueOf(kaleoDefinition.getVersion()) %>" />
-			</portlet:actionURL>
+			</liferay-portlet:actionURL>
 
 			<liferay-ui:icon
 				message="unpublish"
@@ -86,11 +86,11 @@ KaleoDefinition kaleoDefinition = kaleoDesignerDisplayContext.getKaleoDefinition
 		</c:when>
 		<c:otherwise>
 			<c:if test="<%= KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.DELETE) %>">
-				<portlet:actionURL name="deleteKaleoDefinitionVersion" var="deleteURL">
+				<liferay-portlet:actionURL name="deleteKaleoDefinitionVersion" portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="deleteURL">
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
 					<portlet:param name="draftVersion" value="<%= kaleoDefinitionVersion.getVersion() %>" />
-				</portlet:actionURL>
+				</liferay-portlet:actionURL>
 
 				<liferay-ui:icon
 					message="delete"

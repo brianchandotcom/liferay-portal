@@ -108,15 +108,12 @@ KaleoDefinitionVersionSearch kaleoDefinitionVersionSearch = new KaleoDefinitionV
 			keyProperty="kaleoDefinitionVersionId"
 			modelVar="kaleoDefinitionVersion"
 		>
-
-			<%
-			PortletURL rowURL = renderResponse.createRenderURL();
-
-			rowURL.setParameter("mvcPath", "/designer/edit_kaleo_definition_version.jsp");
-			rowURL.setParameter("redirect", currentURL);
-			rowURL.setParameter("name", kaleoDefinitionVersion.getName());
-			rowURL.setParameter("draftVersion", kaleoDefinitionVersion.getVersion());
-			%>
+			<liferay-portlet:renderURL portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="rowURL">
+				<portlet:param name="mvcPath" value='<%= "/designer/edit_kaleo_definition_version.jsp" %>' />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
+				<portlet:param name="draftVersion" value="<%= kaleoDefinitionVersion.getVersion() %>" />
+			</liferay-portlet:renderURL>
 
 			<liferay-ui:search-container-column-text
 				href="<%= rowURL %>"
@@ -148,10 +145,10 @@ KaleoDefinitionVersionSearch kaleoDefinitionVersionSearch = new KaleoDefinitionV
 </div>
 
 <c:if test="<%= KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), KaleoDesignerActionKeys.ADD_DRAFT) %>">
-	<portlet:renderURL var="editKaleoDefinitionVersionURL">
+	<liferay-portlet:renderURL portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="editKaleoDefinitionVersionURL">
 		<portlet:param name="mvcPath" value='<%= "/designer/edit_kaleo_definition_version.jsp" %>' />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-	</portlet:renderURL>
+	</liferay-portlet:renderURL>
 
 	<liferay-frontend:add-menu>
 		<liferay-frontend:add-menu-item title='<%= LanguageUtil.format(request, "add-new-x", "definition") %>' url="<%= editKaleoDefinitionVersionURL.toString() %>" />

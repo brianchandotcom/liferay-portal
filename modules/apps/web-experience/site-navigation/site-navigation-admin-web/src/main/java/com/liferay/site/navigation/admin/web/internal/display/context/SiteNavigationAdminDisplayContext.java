@@ -192,6 +192,9 @@ public class SiteNavigationAdminDisplayContext {
 			return _searchContainer;
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		SearchContainer searchContainer = new SearchContainer(
 			_liferayPortletRequest, getPortletURL(), null,
 			"there-are-no-navigation-menus");
@@ -225,19 +228,15 @@ public class SiteNavigationAdminDisplayContext {
 		List<SiteNavigationMenu> menus = null;
 		int menusCount = 0;
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long scopeGroupId = themeDisplay.getScopeGroupId();
-
 		if (Validator.isNotNull(getKeywords())) {
 			menus = SiteNavigationMenuServiceUtil.getSiteNavigationMenus(
-				scopeGroupId, getKeywords(), searchContainer.getStart(),
-				searchContainer.getEnd(), orderByComparator);
+				themeDisplay.getScopeGroupId(), getKeywords(),
+				searchContainer.getStart(), searchContainer.getEnd(),
+				orderByComparator);
 
 			menusCount =
 				SiteNavigationMenuServiceUtil.getSiteNavigationMenusCount(
-					scopeGroupId, getKeywords());
+					themeDisplay.getScopeGroupId(), getKeywords());
 		}
 		else {
 			menus = SiteNavigationMenuServiceUtil.getSiteNavigationMenus(
@@ -246,7 +245,7 @@ public class SiteNavigationAdminDisplayContext {
 
 			menusCount =
 				SiteNavigationMenuServiceUtil.getSiteNavigationMenusCount(
-					scopeGroupId);
+					themeDisplay.getScopeGroupId());
 		}
 
 		searchContainer.setResults(menus);

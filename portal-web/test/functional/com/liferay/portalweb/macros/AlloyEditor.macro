@@ -4,7 +4,7 @@
 	</command>
 
 	<command name="addSourceContent">
-		<execute function="Click" locator1="AlloyEditor#CONTENT_FIELD" />
+		<execute macro="AlloyEditor#clickContentField" />
 
 		<execute function="Click" locator1="Button#EDITOR_SWITCH" />
 
@@ -23,5 +23,96 @@
 		<execute macro="AlloyEditor#addContent">
 			<var name="content" value="${content}" />
 		</execute>
+	</command>
+
+	<command name="clickContentField">
+		<execute function="Click" locator1="AlloyEditor#CONTENT_FIELD" />
+	</command>
+
+	<command name="toggleStylingInAlloyEditor">
+		<execute function="SelectFieldText" locator1="AlloyEditor#CONTENT_FIELD" />
+
+		<if>
+			<isset var="boldContent" />
+			<then>
+				<execute function="Click" locator1="AlloyEditor#TEXT_FORMATTING_BOLD" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="italicContent" />
+			<then>
+				<execute function="Click" locator1="AlloyEditor#TEXT_FORMATTING_ITALIC" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="underlineContent" />
+			<then>
+				<execute function="Click" locator1="AlloyEditor#TEXT_FORMATTING_UNDERLINE" />
+			</then>
+		</if>
+	</command>
+
+	<command name="viewNoStylingInAlloyEditor">
+		<execute macro="AlloyEditor#clickContentField" />
+
+		<if>
+			<isset var="boldContent" />
+			<then>
+				<execute function="AssertElementNotPresent" locator1="AlloyEditor#CONTENT_FIELD_BOLD">
+					<var name="key_boldContent" value="${boldContent}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<isset var="italicContent" />
+			<then>
+				<execute function="AssertElementNotPresent" locator1="AlloyEditor#CONTENT_FIELD_ITALIC">
+					<var name="key_italicContent" value="${italicContent}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<isset var="underlineContent" />
+			<then>
+				<execute function="AssertElementNotPresent" locator1="AlloyEditor#CONTENT_FIELD_UNDERLINE">
+					<var name="key_underlineContent" value="${underlineContent}" />
+				</execute>
+			</then>
+		</if>
+	</command>
+
+	<command name="viewStylingInAlloyEditor">
+		<execute macro="AlloyEditor#clickContentField" />
+
+		<if>
+			<isset var="boldContent" />
+			<then>
+				<execute function="AssertElementPresent" locator1="AlloyEditor#CONTENT_FIELD_BOLD">
+					<var name="key_boldContent" value="${boldContent}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<isset var="italicContent" />
+			<then>
+				<execute function="AssertElementPresent" locator1="AlloyEditor#CONTENT_FIELD_ITALIC">
+					<var name="key_italicContent" value="${italicContent}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<isset var="underlineContent" />
+			<then>
+				<execute function="AssertElementPresent" locator1="AlloyEditor#CONTENT_FIELD_UNDERLINE">
+					<var name="key_underlineContent" value="${underlineContent}" />
+				</execute>
+			</then>
+		</if>
 	</command>
 </definition>

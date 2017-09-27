@@ -132,6 +132,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--SELECT_MORE_THAN_ONE_ASSET_SUBTYPE-->
+<tr>
+	<td>SELECT_MORE_THAN_ONE_ASSET_SUBTYPE_MOVE_AVAILABLE</td>
+	<td>xpath=(//button[contains(@class,'move-left') and contains(@title,'Move selected items from Selected to Available.')])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_MORE_THAN_ONE_ASSET_SUBTYPE_MOVE_SELECTED</td>
+	<td>xpath=(//button[contains(@class,'move-right') and contains(@title,'Move selected items from Available to Selected.')])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--FILTER-->
 <tr>
 	<td>FILTER_DROPDOWN</td>

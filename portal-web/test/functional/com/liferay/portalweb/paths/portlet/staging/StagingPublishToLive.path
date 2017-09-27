@@ -65,8 +65,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DATE_SCHEDULE_REPEAT_DAILY_RADIO</td>
-	<td>//input[contains(@id,'recurrenceTypeDaily')]</td>
+	<td>DATE_SCHEDULE_END_DATE_END_BY_RADIO</td>
+	<td>//input[contains(@id,'schedulerEndBy')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATE_SCHEDULE_END_DATE_INPUT</td>
+	<td>//input[contains(@id,'schedulerEndDate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATE_SCHEDULE_REPEAT_RADIO</td>
+	<td>//input[contains(@id,'recurrenceType${key_frequency}')]</td>
 	<td></td>
 </tr>
 <tr>

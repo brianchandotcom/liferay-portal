@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>IMAGE_PREVIEW_PNG</td>
+	<td>portal/screenshots/ddm/spaceport_image_preview.png</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INTEGER</td>
 	<td>//div[@data-fieldname='${key_fieldName}']//input</td>
 	<td></td>

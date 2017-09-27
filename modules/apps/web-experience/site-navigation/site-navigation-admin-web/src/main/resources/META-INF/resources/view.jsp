@@ -119,7 +119,16 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 							rowChecker="<%= searchContainer.getRowChecker() %>"
 							title="<%= siteNavigationMenu.getName() %>"
 						>
-							<%@ include file="/menu_vertical_card.jspf" %>
+							<liferay-frontend:vertical-card-sticker-bottom>
+								<liferay-ui:user-portrait
+									cssClass="sticker sticker-bottom user-icon-lg"
+									userId="<%= siteNavigationMenu.getUserId() %>"
+								/>
+							</liferay-frontend:vertical-card-sticker-bottom>
+
+							<liferay-frontend:vertical-card-header>
+								<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - siteNavigationMenu.getModifiedDate().getTime(), true), HtmlUtil.escape(siteNavigationMenu.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= true %>" />
+							</liferay-frontend:vertical-card-header>
 						</liferay-frontend:icon-vertical-card>
 					</liferay-ui:search-container-column-text>
 				</c:when>

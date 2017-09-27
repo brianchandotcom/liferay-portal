@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String searchContainerId = "siteNavigationMenus";
-%>
-
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<portlet:renderURL var="mainURL" />
 
@@ -39,7 +35,7 @@ String searchContainerId = "siteNavigationMenus";
 	</aui:nav-bar-search>
 </aui:nav-bar>
 
-<liferay-frontend:management-bar searchContainerId="<%= searchContainerId %>">
+<liferay-frontend:management-bar searchContainerId="siteNavigationMenus">
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews="<%= siteNavigationAdminDisplayContext.getDisplayViews() %>"

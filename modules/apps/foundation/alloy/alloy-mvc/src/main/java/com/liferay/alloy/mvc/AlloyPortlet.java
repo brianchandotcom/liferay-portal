@@ -56,7 +56,7 @@ import javax.portlet.ResourceResponse;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AlloyPortlet extends GenericPortlet {
+public abstract class AlloyPortlet extends GenericPortlet {
 
 	@Override
 	public void destroy() {
@@ -103,20 +103,12 @@ public class AlloyPortlet extends GenericPortlet {
 	public void init(PortletConfig portletConfig) throws PortletException {
 		super.init(portletConfig);
 
-		LiferayPortletConfig liferayPortletConfig =
-			(LiferayPortletConfig)portletConfig;
-
-		Portlet portlet = liferayPortletConfig.getPortlet();
-
-		FriendlyURLMapper friendlyURLMapper =
-			portlet.getFriendlyURLMapperInstance();
-
 		Router router = friendlyURLMapper.getRouter();
 
 		router.urlToParameters(HttpMethods.GET, _defaultRouteParameters);
 
 		_alloyControllerInvokerManager = new AlloyControllerInvokerManager(
-			liferayPortletConfig);
+			(LiferayPortletConfig)portletConfig);
 	}
 
 	@Override
@@ -185,8 +177,8 @@ public class AlloyPortlet extends GenericPortlet {
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append("/WEB-INF/jsp/");
-		sb.append(portlet.getFriendlyURLMapping());
+		sb.append("/alloy_mvc/jsp/");
+		sb.append(friendlyURLMapper.getMapping());
 		sb.append("/controllers/");
 		sb.append(controllerPath);
 		sb.append("_controller.jsp");
@@ -243,6 +235,11 @@ public class AlloyPortlet extends GenericPortlet {
 			}
 		}
 	}
+
+	protected abstract void setFriendlyURLMapper(
+		FriendlyURLMapper friendlyURLMapper);
+
+	protected FriendlyURLMapper friendlyURLMapper;
 
 	private static final Log _log = LogFactoryUtil.getLog(AlloyPortlet.class);
 

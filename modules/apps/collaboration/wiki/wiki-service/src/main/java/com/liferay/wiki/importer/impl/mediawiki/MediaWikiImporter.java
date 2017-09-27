@@ -321,7 +321,7 @@ public class MediaWikiImporter implements WikiImporter {
 	}
 
 	protected String normalize(String categoryName, int length) {
-		categoryName = AssetUtil.toWord(categoryName.trim());
+		categoryName = _toWord(categoryName.trim());
 
 		return StringUtil.shorten(categoryName, length);
 	}
@@ -742,6 +742,28 @@ public class MediaWikiImporter implements WikiImporter {
 		_translator.setStrictImportMode(strictImportMode);
 
 		return _translator.translate(content);
+	}
+
+	private String _toWord(String text) {
+		if (Validator.isNull(text)) {
+			return text;
+		}
+
+		char[] textCharArray = text.toCharArray();
+
+		for (int i = 0; i < textCharArray.length; i++) {
+			char c = textCharArray[i];
+
+			for (char invalidChar : AssetUtil.INVALID_CHARACTERS) {
+				if (c == invalidChar) {
+					textCharArray[i] = CharPool.SPACE;
+
+					break;
+				}
+			}
+		}
+
+		return new String(textCharArray);
 	}
 
 	private static final String _WORK_IN_PROGRESS = "{{Work in progress}}";

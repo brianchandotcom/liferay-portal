@@ -48,14 +48,14 @@ public class SiteNavigationMenuServiceImpl
 
 	@Override
 	public List<SiteNavigationMenu> getSiteNavigationMenus(long groupId) {
-		return siteNavigationMenuLocalService.getSiteNavigationMenus(groupId);
+		return siteNavigationMenuPersistence.filterFindByGroupId(groupId);
 	}
 
 	@Override
 	public List<SiteNavigationMenu> getSiteNavigationMenus(
 		long groupId, int start, int end, OrderByComparator orderByComparator) {
 
-		return siteNavigationMenuLocalService.getSiteNavigationMenus(
+		return siteNavigationMenuPersistence.filterFindByGroupId(
 			groupId, start, end, orderByComparator);
 	}
 
@@ -64,19 +64,18 @@ public class SiteNavigationMenuServiceImpl
 		long groupId, String keywords, int start, int end,
 		OrderByComparator orderByComparator) {
 
-		return siteNavigationMenuLocalService.getSiteNavigationMenus(
+		return siteNavigationMenuPersistence.filterFindByG_N(
 			groupId, keywords, start, end, orderByComparator);
 	}
 
 	@Override
 	public int getSiteNavigationMenusCount(long groupId) {
-		return siteNavigationMenuLocalService.getSiteNavigationMenusCount(
-			groupId);
+		return siteNavigationMenuPersistence.filterCountByGroupId(groupId);
 	}
 
 	@Override
 	public int getSiteNavigationMenusCount(long groupId, String keywords) {
-		return siteNavigationMenuLocalService.getSiteNavigationMenusCount(
+		return siteNavigationMenuPersistence.filterCountByG_N(
 			groupId, keywords);
 	}
 

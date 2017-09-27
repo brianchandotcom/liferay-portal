@@ -328,9 +328,7 @@ public class ServletResponseUtil {
 
 				Range previousRange = null;
 
-				for (int i = 0; i < ranges.size(); i++) {
-					Range curRange = ranges.get(i);
-
+				for (Range curRange : ranges) {
 					servletOutputStream.println();
 					servletOutputStream.println(
 						StringPool.DOUBLE_DASH + boundary);

@@ -423,7 +423,7 @@ public class AssetHelperImpl implements AssetHelper {
 			int start, int end)
 		throws Exception {
 
-		AssetSearcher assetSearcher = getAssetSearcher(
+		AssetSearcher assetSearcher = _getAssetSearcher(
 			searchContext, assetEntryQuery, start, end);
 
 		return assetSearcher.search(searchContext);
@@ -462,7 +462,7 @@ public class AssetHelperImpl implements AssetHelper {
 			int start, int end)
 		throws Exception {
 
-		AssetSearcher assetSearcher = getAssetSearcher(
+		AssetSearcher assetSearcher = _getAssetSearcher(
 			searchContext, assetEntryQuery, start, end);
 
 		Hits hits = assetSearcher.search(searchContext);
@@ -472,7 +472,7 @@ public class AssetHelperImpl implements AssetHelper {
 		return new BaseModelSearchResult<>(assetEntries, hits.getLength());
 	}
 
-	protected AssetSearcher getAssetSearcher(
+	private AssetSearcher _getAssetSearcher(
 			SearchContext searchContext, AssetEntryQuery assetEntryQuery,
 			int start, int end)
 		throws Exception {
@@ -526,13 +526,13 @@ public class AssetHelperImpl implements AssetHelper {
 		}
 
 		searchContext.setSorts(
-			getSorts(assetEntryQuery, searchContext.getLocale()));
+			_getSorts(assetEntryQuery, searchContext.getLocale()));
 		searchContext.setStart(start);
 
 		return assetSearcher;
 	}
 
-	protected String getDDMFormFieldType(String sortField)
+	private String _getDDMFormFieldType(String sortField)
 		throws PortalException {
 
 		String[] sortFields = sortField.split(
@@ -547,7 +547,7 @@ public class AssetHelperImpl implements AssetHelper {
 		return ddmStructure.getFieldType(fieldName);
 	}
 
-	protected String getOrderByCol(
+	private String _getOrderByCol(
 		String sortField, String fieldType, int sortType, Locale locale) {
 
 		if (sortField.startsWith(
@@ -585,7 +585,7 @@ public class AssetHelperImpl implements AssetHelper {
 		return sortField;
 	}
 
-	protected Sort getSort(String orderByType, String sortField, Locale locale)
+	private Sort _getSort(String orderByType, String sortField, Locale locale)
 		throws Exception {
 
 		String ddmFormFieldType = sortField;
@@ -593,33 +593,33 @@ public class AssetHelperImpl implements AssetHelper {
 		if (ddmFormFieldType.startsWith(
 				DDMStructureManager.STRUCTURE_INDEXER_FIELD_PREFIX)) {
 
-			ddmFormFieldType = getDDMFormFieldType(ddmFormFieldType);
+			ddmFormFieldType = _getDDMFormFieldType(ddmFormFieldType);
 		}
 
-		int sortType = getSortType(ddmFormFieldType);
+		int sortType = _getSortType(ddmFormFieldType);
 
 		return SortFactoryUtil.getSort(
 			AssetEntry.class, sortType,
-			getOrderByCol(sortField, ddmFormFieldType, sortType, locale),
+			_getOrderByCol(sortField, ddmFormFieldType, sortType, locale),
 			!sortField.startsWith(
 				DDMStructureManager.STRUCTURE_INDEXER_FIELD_PREFIX),
 			orderByType);
 	}
 
-	protected Sort[] getSorts(AssetEntryQuery assetEntryQuery, Locale locale)
+	private Sort[] _getSorts(AssetEntryQuery assetEntryQuery, Locale locale)
 		throws Exception {
 
-		Sort sort1 = getSort(
+		Sort sort1 = _getSort(
 			assetEntryQuery.getOrderByType1(), assetEntryQuery.getOrderByCol1(),
 			locale);
-		Sort sort2 = getSort(
+		Sort sort2 = _getSort(
 			assetEntryQuery.getOrderByType2(), assetEntryQuery.getOrderByCol2(),
 			locale);
 
 		return new Sort[] {sort1, sort2};
 	}
 
-	protected int getSortType(String fieldType) {
+	private int _getSortType(String fieldType) {
 		int sortType = Sort.STRING_TYPE;
 
 		if (fieldType.equals(Field.CREATE_DATE) ||

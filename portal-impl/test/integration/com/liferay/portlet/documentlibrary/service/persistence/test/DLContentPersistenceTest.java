@@ -61,8 +61,11 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
+ * @deprecated As of 7.0.0, replaced by {@link
+           com.liferay.document.library.content.model.impl.DLContentImpl}
  * @generated
  */
+@Deprecated
 public class DLContentPersistenceTest {
 	@ClassRule
 	@Rule

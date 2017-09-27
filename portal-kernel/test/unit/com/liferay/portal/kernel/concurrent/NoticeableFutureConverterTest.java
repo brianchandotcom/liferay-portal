@@ -114,8 +114,8 @@ public class NoticeableFutureConverterTest {
 
 			};
 
-		RecordedFutureListener<Object> recordedFutureListener =
-			new RecordedFutureListener<>();
+		TestFutureListener<Object> recordedFutureListener =
+			new TestFutureListener<>();
 
 		Assert.assertTrue(
 			noticeableFutureConverter.addFutureListener(
@@ -167,8 +167,8 @@ public class NoticeableFutureConverterTest {
 		NoticeableFuture<Object> noticeableFutureConverter =
 			new NopNoticeableFutureConverter(_defaultNoticeableFuture);
 
-		RecordedFutureListener<Object> recordedFutureListener =
-			new RecordedFutureListener<>();
+		TestFutureListener<Object> recordedFutureListener =
+			new TestFutureListener<>();
 
 		Assert.assertTrue(
 			noticeableFutureConverter.addFutureListener(
@@ -208,8 +208,8 @@ public class NoticeableFutureConverterTest {
 		NoticeableFuture<Object> noticeableFutureConverter =
 			new NopNoticeableFutureConverter(_defaultNoticeableFuture);
 
-		RecordedFutureListener<Object> recordedFutureListener =
-			new RecordedFutureListener<>();
+		TestFutureListener<Object> recordedFutureListener =
+			new TestFutureListener<>();
 
 		Assert.assertTrue(
 			noticeableFutureConverter.addFutureListener(

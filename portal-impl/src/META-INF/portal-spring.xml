@@ -38,8 +38,6 @@
 	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLAppLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLAppLocalService" />
 	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLAppServiceImpl" id="com.liferay.document.library.kernel.service.DLAppService" />
 	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLAppHelperLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLAppHelperLocalService" />
-	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLContentLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLContentLocalService" />
-	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLContentPersistenceImpl" id="com.liferay.document.library.kernel.service.persistence.DLContentPersistence" parent="basePersistence" />
 	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLFileEntryLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLFileEntryLocalService" />
 	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLFileEntryServiceImpl" id="com.liferay.document.library.kernel.service.DLFileEntryService" />
 	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileEntryPersistenceImpl" id="com.liferay.document.library.kernel.service.persistence.DLFileEntryPersistence" parent="basePersistence" />

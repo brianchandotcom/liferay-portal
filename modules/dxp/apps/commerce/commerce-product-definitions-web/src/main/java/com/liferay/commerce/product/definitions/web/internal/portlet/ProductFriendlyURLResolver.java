@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPWebKeys;
+import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPFriendlyURLEntry;
 import com.liferay.commerce.product.service.CPDefinitionService;
@@ -81,6 +82,11 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 
 		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
 			cpFriendlyURLEntry.getClassPK());
+
+		if ((cpDefinition!= null) && !cpDefinition.isApproved()) {
+			throw new NoSuchCPDefinitionException(
+				"{cpDefinitionId=" + cpFriendlyURLEntry.getClassPK() + "}");
+		}
 
 		Layout layout = getProductLayout(
 			groupId, privateLayout, cpDefinition.getCPDefinitionId());

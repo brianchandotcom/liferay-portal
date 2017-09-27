@@ -29,6 +29,7 @@
 
 	<command name="gotoCollection">
 		<execute macro="LexiconEntry#gotoEntry">
+			<var name="displayStyle" value="card" />
 			<var name="rowEntry" value="${collectionName}" />
 		</execute>
 	</command>

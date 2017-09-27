@@ -281,10 +281,18 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 		JavaClass javaClass, Pattern pattern,
 		List<JavaTerm> allChildJavaTerms) {
 
+		int assignmentCount = 0;
+
 		for (JavaTerm childJavaTerm : allChildJavaTerms) {
 			String content = childJavaTerm.getContent();
 
 			Matcher matcher = pattern.matcher(content);
+
+			boolean found = matcher.find();
+
+			if (found) {
+				assignmentCount++;
+			}
 
 			if (childJavaTerm instanceof JavaConstructor) {
 				JavaClass constructorClass = childJavaTerm.getParentJavaClass();
@@ -292,21 +300,28 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 				String constructorClassName = constructorClass.getName();
 
 				if (constructorClassName.equals(javaClass.getName())) {
-					if (!matcher.find()) {
+					if (!found) {
 						return false;
 					}
 				}
-				else if (matcher.find()) {
+				else if (found) {
 					return false;
 				}
 			}
-			else if (matcher.find() &&
-					 ((childJavaTerm instanceof JavaMethod) ||
-					  ((childJavaTerm instanceof JavaVariable) &&
-					   content.contains("{\n\n")))) {
-
-				return false;
+			else if (childJavaTerm instanceof JavaMethod) {
+				if (found) {
+					return false;
+				}
 			}
+			else if (childJavaTerm instanceof JavaVariable) {
+				if (found && content.contains("{\n\n")) {
+					return false;
+				}
+			}
+		}
+
+		if (assignmentCount == 0) {
+			return false;
 		}
 
 		return true;

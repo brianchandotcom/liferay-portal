@@ -600,22 +600,6 @@ public class ServletResponseUtil {
 			length);
 	}
 
-	private static boolean _isSequentialRangeList(List<Range> ranges) {
-		Range previousRange = null;
-
-		for (Range range : ranges) {
-			if ((previousRange != null) &&
-				(range.getStart() <= previousRange.getEnd())) {
-
-				return false;
-			}
-
-			previousRange = range;
-		}
-
-		return true;
-	}
-
 	protected static void setContentLength(
 		HttpServletResponse response, long contentLength) {
 
@@ -787,14 +771,38 @@ public class ServletResponseUtil {
 		return inputStream;
 	}
 
-	private static InputStream _toRandomAccessInputStream(
-			InputStream inputStream)
-		throws IOException {
-
+	private static boolean _isRandomAccessSupported(InputStream inputStream) {
 		if (inputStream instanceof ByteArrayInputStream ||
 			inputStream instanceof FileInputStream ||
 			inputStream instanceof RandomAccessInputStream) {
 
+			return true;
+		}
+
+		return false;
+	}
+
+	private static boolean _isSequentialRangeList(List<Range> ranges) {
+		Range previousRange = null;
+
+		for (Range range : ranges) {
+			if ((previousRange != null) &&
+				(range.getStart() <= previousRange.getEnd())) {
+
+				return false;
+			}
+
+			previousRange = range;
+		}
+
+		return true;
+	}
+
+	private static InputStream _toRandomAccessInputStream(
+			InputStream inputStream)
+		throws IOException {
+
+		if (_isRandomAccessSupported(inputStream)) {
 			return inputStream;
 		}
 

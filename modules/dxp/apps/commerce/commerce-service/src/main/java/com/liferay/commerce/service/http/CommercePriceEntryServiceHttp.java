@@ -206,12 +206,40 @@ public class CommercePriceEntryServiceHttp {
 		}
 	}
 
+	public static int getCommercePriceEntriesCount(
+		HttpPrincipal httpPrincipal, long commercePriceListId) {
+		try {
+			MethodKey methodKey = new MethodKey(CommercePriceEntryServiceUtil.class,
+					"getCommercePriceEntriesCount",
+					_getCommercePriceEntriesCountParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commercePriceListId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static java.util.List<com.liferay.commerce.model.CommercePriceEntry> getInstanceCommercePriceEntries(
 		HttpPrincipal httpPrincipal, long cpInstanceId, int start, int end) {
 		try {
 			MethodKey methodKey = new MethodKey(CommercePriceEntryServiceUtil.class,
 					"getInstanceCommercePriceEntries",
-					_getInstanceCommercePriceEntriesParameterTypes5);
+					_getInstanceCommercePriceEntriesParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpInstanceId, start, end);
@@ -240,7 +268,7 @@ public class CommercePriceEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommercePriceEntryServiceUtil.class,
 					"getInstanceCommercePriceEntries",
-					_getInstanceCommercePriceEntriesParameterTypes6);
+					_getInstanceCommercePriceEntriesParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpInstanceId, start, end, orderByComparator);
@@ -255,34 +283,6 @@ public class CommercePriceEntryServiceHttp {
 			}
 
 			return (java.util.List<com.liferay.commerce.model.CommercePriceEntry>)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static int getCommercePriceEntriesCount(
-		HttpPrincipal httpPrincipal, long commercePriceListId) {
-		try {
-			MethodKey methodKey = new MethodKey(CommercePriceEntryServiceUtil.class,
-					"getCommercePriceEntriesCount",
-					_getCommercePriceEntriesCountParameterTypes7);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					commercePriceListId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return ((Integer)returnObj).intValue();
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -435,15 +435,15 @@ public class CommercePriceEntryServiceHttp {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getInstanceCommercePriceEntriesParameterTypes5 =
-		new Class[] { long.class, int.class, int.class };
+	private static final Class<?>[] _getCommercePriceEntriesCountParameterTypes5 =
+		new Class[] { long.class };
 	private static final Class<?>[] _getInstanceCommercePriceEntriesParameterTypes6 =
+		new Class[] { long.class, int.class, int.class };
+	private static final Class<?>[] _getInstanceCommercePriceEntriesParameterTypes7 =
 		new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getCommercePriceEntriesCountParameterTypes7 =
-		new Class[] { long.class };
 	private static final Class<?>[] _getInstanceCommercePriceEntriesCountParameterTypes8 =
 		new Class[] { long.class };
 	private static final Class<?>[] _searchParameterTypes9 = new Class[] {

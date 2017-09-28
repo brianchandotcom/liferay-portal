@@ -12,6 +12,28 @@ create table CPDefinitionAvailabilityRange (
 	lastPublishDate DATE null
 );
 
+create table CPDefinitionInventory (
+	uuid_ VARCHAR(75) null,
+	CPDefinitionInventoryId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	CPDefinitionId LONG,
+	CPDefinitionInventoryEngine VARCHAR(75) null,
+	lowStockActivity VARCHAR(75) null,
+	displayAvailability BOOLEAN,
+	displayStockQuantity BOOLEAN,
+	minStockQuantity INTEGER,
+	backOrders BOOLEAN,
+	minCartQuantity INTEGER,
+	maxCartQuantity INTEGER,
+	allowedCartQuantities VARCHAR(75) null,
+	multipleCartQuantity INTEGER
+);
+
 create table CommerceAddress (
 	commerceAddressId LONG not null primary key,
 	groupId LONG,

@@ -19,13 +19,13 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.commerce.model.CPDefinitionAvailabilityRange;
 import com.liferay.commerce.service.CPDefinitionAvailabilityRangeLocalService;
 import com.liferay.commerce.service.persistence.CPDefinitionAvailabilityRangePersistence;
+import com.liferay.commerce.service.persistence.CPDefinitionInventoryPersistence;
 import com.liferay.commerce.service.persistence.CommerceAddressPersistence;
 import com.liferay.commerce.service.persistence.CommerceAvailabilityRangePersistence;
 import com.liferay.commerce.service.persistence.CommerceCartItemPersistence;
 import com.liferay.commerce.service.persistence.CommerceCartPersistence;
 import com.liferay.commerce.service.persistence.CommerceCountryFinder;
 import com.liferay.commerce.service.persistence.CommerceCountryPersistence;
-import com.liferay.commerce.service.persistence.CommerceInventoryPersistence;
 import com.liferay.commerce.service.persistence.CommerceOrderItemPersistence;
 import com.liferay.commerce.service.persistence.CommerceOrderPersistence;
 import com.liferay.commerce.service.persistence.CommercePaymentMethodPersistence;
@@ -676,44 +676,6 @@ public abstract class CPDefinitionAvailabilityRangeLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the commerce inventory local service.
-	 *
-	 * @return the commerce inventory local service
-	 */
-	public com.liferay.commerce.service.CommerceInventoryLocalService getCommerceInventoryLocalService() {
-		return commerceInventoryLocalService;
-	}
-
-	/**
-	 * Sets the commerce inventory local service.
-	 *
-	 * @param commerceInventoryLocalService the commerce inventory local service
-	 */
-	public void setCommerceInventoryLocalService(
-		com.liferay.commerce.service.CommerceInventoryLocalService commerceInventoryLocalService) {
-		this.commerceInventoryLocalService = commerceInventoryLocalService;
-	}
-
-	/**
-	 * Returns the commerce inventory persistence.
-	 *
-	 * @return the commerce inventory persistence
-	 */
-	public CommerceInventoryPersistence getCommerceInventoryPersistence() {
-		return commerceInventoryPersistence;
-	}
-
-	/**
-	 * Sets the commerce inventory persistence.
-	 *
-	 * @param commerceInventoryPersistence the commerce inventory persistence
-	 */
-	public void setCommerceInventoryPersistence(
-		CommerceInventoryPersistence commerceInventoryPersistence) {
-		this.commerceInventoryPersistence = commerceInventoryPersistence;
-	}
-
-	/**
 	 * Returns the commerce order local service.
 	 *
 	 * @return the commerce order local service
@@ -1189,6 +1151,44 @@ public abstract class CPDefinitionAvailabilityRangeLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the cp definition inventory local service.
+	 *
+	 * @return the cp definition inventory local service
+	 */
+	public com.liferay.commerce.service.CPDefinitionInventoryLocalService getCPDefinitionInventoryLocalService() {
+		return cpDefinitionInventoryLocalService;
+	}
+
+	/**
+	 * Sets the cp definition inventory local service.
+	 *
+	 * @param cpDefinitionInventoryLocalService the cp definition inventory local service
+	 */
+	public void setCPDefinitionInventoryLocalService(
+		com.liferay.commerce.service.CPDefinitionInventoryLocalService cpDefinitionInventoryLocalService) {
+		this.cpDefinitionInventoryLocalService = cpDefinitionInventoryLocalService;
+	}
+
+	/**
+	 * Returns the cp definition inventory persistence.
+	 *
+	 * @return the cp definition inventory persistence
+	 */
+	public CPDefinitionInventoryPersistence getCPDefinitionInventoryPersistence() {
+		return cpDefinitionInventoryPersistence;
+	}
+
+	/**
+	 * Sets the cp definition inventory persistence.
+	 *
+	 * @param cpDefinitionInventoryPersistence the cp definition inventory persistence
+	 */
+	public void setCPDefinitionInventoryPersistence(
+		CPDefinitionInventoryPersistence cpDefinitionInventoryPersistence) {
+		this.cpDefinitionInventoryPersistence = cpDefinitionInventoryPersistence;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -1375,10 +1375,6 @@ public abstract class CPDefinitionAvailabilityRangeLocalServiceBaseImpl
 	protected CommerceCountryPersistence commerceCountryPersistence;
 	@BeanReference(type = CommerceCountryFinder.class)
 	protected CommerceCountryFinder commerceCountryFinder;
-	@BeanReference(type = com.liferay.commerce.service.CommerceInventoryLocalService.class)
-	protected com.liferay.commerce.service.CommerceInventoryLocalService commerceInventoryLocalService;
-	@BeanReference(type = CommerceInventoryPersistence.class)
-	protected CommerceInventoryPersistence commerceInventoryPersistence;
 	@BeanReference(type = com.liferay.commerce.service.CommerceOrderLocalService.class)
 	protected com.liferay.commerce.service.CommerceOrderLocalService commerceOrderLocalService;
 	@BeanReference(type = CommerceOrderPersistence.class)
@@ -1429,6 +1425,10 @@ public abstract class CPDefinitionAvailabilityRangeLocalServiceBaseImpl
 	protected CPDefinitionAvailabilityRangeLocalService cpDefinitionAvailabilityRangeLocalService;
 	@BeanReference(type = CPDefinitionAvailabilityRangePersistence.class)
 	protected CPDefinitionAvailabilityRangePersistence cpDefinitionAvailabilityRangePersistence;
+	@BeanReference(type = com.liferay.commerce.service.CPDefinitionInventoryLocalService.class)
+	protected com.liferay.commerce.service.CPDefinitionInventoryLocalService cpDefinitionInventoryLocalService;
+	@BeanReference(type = CPDefinitionInventoryPersistence.class)
+	protected CPDefinitionInventoryPersistence cpDefinitionInventoryPersistence;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)

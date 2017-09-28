@@ -5,6 +5,7 @@
  */
 {template .render}
 	{@param layoutColumn: list<[
+		actions: map<string, ?>,
 		active: bool,
 		hasChild: bool,
 		plid: string,
@@ -42,6 +43,7 @@
  */
 {template .layoutColumnItem}
 	{@param layoutColumnItem: [
+		actions: map<string, ?>,
 		active: bool,
 		hasChild: bool,
 		plid: string,
@@ -77,8 +79,40 @@
 			</h4>
 		</div>
 
+		{if $layoutColumnItem.actions['add']}
+			<div class="flex-col pt-1">
+				<a href="{$layoutColumnItem.actions['add'].url}">
+					{call .lexiconIcon}
+						{param name: 'plus' /}
+						{param pathThemeImages: $pathThemeImages /}
+					{/call}
+				</a>
+			</div>
+		{/if}
+
+		<div class="flex-col">
+			<div class="dropdown dropdown-action">
+				<a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle text-primary" data-toggle="dropdown" href="javascript:;" role="button">
+					{call .lexiconIcon}
+						{param name: 'ellipsis-v' /}
+						{param pathThemeImages: $pathThemeImages /}
+					{/call}
+				</a>
+
+				<div class="dropdown-menu">
+					{foreach $action in keys($layoutColumnItem.actions)}
+						{if $action != 'add'}
+							<a class="dropdown-item" href="{$layoutColumnItem.actions[$action].url}">
+								{$layoutColumnItem.actions[$action].label}
+							</a>
+						{/if}
+					{/foreach}
+				</div>
+			</div>
+		</div>
+
 		{if $layoutColumnItem.hasChild}
-			<div class="flex-col">
+			<div class="flex-col pt-1">
 				<a href="{$layoutColumnItem.url}">
 					{call .lexiconIcon}
 						{param name: 'angle-right' /}

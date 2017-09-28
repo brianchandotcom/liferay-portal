@@ -67,12 +67,12 @@ public class UserModelListener extends BaseLDAPExportModelListener<User> {
 	}
 
 	@Override
-	public void onAfterCreate(User user) {
+	public void onAfterCreate(User user) throws ModelListenerException {
 		try {
 			exportToLDAP(user);
 		}
 		catch (Exception e) {
-			_log.error(
+			throw new ModelListenerException(
 				"Unable to export user " + user.getUserId() +
 					" to LDAP on after create",
 				e);
@@ -80,12 +80,12 @@ public class UserModelListener extends BaseLDAPExportModelListener<User> {
 	}
 
 	@Override
-	public void onAfterUpdate(User user) {
+	public void onAfterUpdate(User user) throws ModelListenerException {
 		try {
 			exportToLDAP(user);
 		}
 		catch (Exception e) {
-			_log.error(
+			throw new ModelListenerException(
 				"Unable to export user " + user.getUserId() +
 					" to LDAP on after update",
 				e);

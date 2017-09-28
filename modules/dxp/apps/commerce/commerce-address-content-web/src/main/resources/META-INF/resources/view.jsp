@@ -57,7 +57,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						modelVar="commerceAddress"
 					>
 						<liferay-ui:search-container-column-text
-							cssClass="table-cell-content"
 							href="<%= commerceAddressDisplayContext.getEditCommerceAddressURL(commerceAddress.getCommerceAddressId()) %>"
 							property="name"
 						/>
@@ -68,23 +67,19 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						/>
 
 						<liferay-ui:search-container-column-text
-							cssClass="table-cell-content"
 							property="city"
 						/>
 
 						<liferay-ui:search-container-column-text
-							cssClass="table-cell-content"
 							property="zip"
 						/>
 
 						<liferay-ui:search-container-column-date
-							cssClass="table-cell-content"
 							name="create-date"
 							property="createDate"
 						/>
 
 						<liferay-ui:search-container-column-date
-							cssClass="table-cell-content"
 							name="modified-date"
 							property="modifiedDate"
 						/>

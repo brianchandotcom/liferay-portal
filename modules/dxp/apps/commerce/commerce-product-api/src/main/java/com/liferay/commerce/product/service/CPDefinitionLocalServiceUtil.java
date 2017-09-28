@@ -73,12 +73,12 @@ public class CPDefinitionLocalServiceUtil {
 		return getService()
 				   .addCPDefinition(titleMap, shortDescriptionMap,
 			descriptionMap, metaTitleMap, metaKeywordsMap, metaDescriptionMap,
-			layoutUuid, productTypeName, canSellWithoutOptionsCombination,
-			width, height, depth, weight, ddmStructureKey, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, hasDefaultInstance, serviceContext);
+			layoutUuid, productTypeName, ignoreSKUCombinations, width, height,
+			depth, weight, ddmStructureKey, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			hasDefaultInstance, serviceContext);
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinition addCPDefinition(
@@ -89,7 +89,7 @@ public class CPDefinitionLocalServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
 		java.lang.String layoutUuid, java.lang.String productTypeName,
-		boolean canSellWithoutOptionsCombination, double width, double height,
+		boolean ignoreSKUCombinations, double width, double height,
 		double depth, double weight, java.lang.String ddmStructureKey,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,

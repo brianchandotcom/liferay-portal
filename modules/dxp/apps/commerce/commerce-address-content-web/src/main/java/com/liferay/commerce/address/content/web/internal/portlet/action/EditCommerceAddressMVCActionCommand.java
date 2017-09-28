@@ -75,10 +75,6 @@ public class EditCommerceAddressMVCActionCommand extends BaseMVCActionCommand {
 					 cmd.equals(Constants.UPDATE)) {
 
 				updateCommerceAddress(actionRequest);
-
-				String backURL = ParamUtil.getString(actionRequest, "backURL");
-
-				sendRedirect(actionRequest, actionResponse, backURL);
 			}
 		}
 		catch (Exception e) {

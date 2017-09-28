@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class PlusStatementCheck extends BaseCheck {
+public class ConcatCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {

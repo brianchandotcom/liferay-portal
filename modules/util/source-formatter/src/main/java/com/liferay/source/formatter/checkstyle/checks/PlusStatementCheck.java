@@ -31,7 +31,7 @@ public class PlusStatementCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.PLUS};
+		return new int[] {TokenTypes.CLASS_DEF, TokenTypes.PLUS};
 	}
 
 	public void setMaxLineLength(int maxLineLength) {
@@ -40,7 +40,104 @@ public class PlusStatementCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+		if (detailAST.getType() == TokenTypes.CLASS_DEF) {
+			List<DetailAST> methodCallASTList = DetailASTUtil.getMethodCalls(
+				detailAST, "StringBundler", "concat");
+
+			for (DetailAST methodCallAST : methodCallASTList) {
+				_checkConcatMethodCall(methodCallAST);
+			}
+
+			return;
+		}
+
 		_checkPlusOperator(detailAST);
+	}
+
+	private void _checkConcatMethodCall(DetailAST methodCallAST) {
+		DetailAST elistAST = methodCallAST.findFirstToken(TokenTypes.ELIST);
+
+		DetailAST previousLiteralStringAST = null;
+
+		DetailAST childAST = elistAST.getFirstChild();
+
+		while (true) {
+			if (childAST == null) {
+				break;
+			}
+
+			if (childAST.getType() == TokenTypes.EXPR) {
+				DetailAST grandChildAST = childAST.getFirstChild();
+
+				if (grandChildAST.getType() != TokenTypes.STRING_LITERAL) {
+					previousLiteralStringAST = null;
+				}
+				else {
+					if (previousLiteralStringAST != null) {
+						_checkConcatMethodCallLiteralStrings(
+							previousLiteralStringAST, grandChildAST);
+					}
+
+					previousLiteralStringAST = grandChildAST;
+				}
+			}
+
+			childAST = childAST.getNextSibling();
+		}
+	}
+
+	private void _checkConcatMethodCallLiteralStrings(
+		DetailAST literalStringAST1, DetailAST literalStringAST2) {
+
+		String literalStringValue1 = literalStringAST1.getText();
+
+		literalStringValue1 = literalStringValue1.substring(
+			1, literalStringValue1.length() - 1);
+
+		String literalStringValue2 = literalStringAST2.getText();
+
+		literalStringValue2 = literalStringValue2.substring(
+			1, literalStringValue2.length() - 1);
+
+		if (literalStringAST1.getLineNo() == literalStringAST2.getLineNo()) {
+			log(
+				literalStringAST1.getLineNo(), _MSG_COMBINE_LITERAL_STRINGS,
+				literalStringValue1, literalStringValue2);
+
+			return;
+		}
+
+		if (literalStringValue1.endsWith(StringPool.SLASH)) {
+			log(
+				literalStringAST1.getLineNo(), _MSG_INVALID_END_CHARACTER,
+				literalStringValue1.charAt(literalStringValue1.length() - 1));
+		}
+
+		if (literalStringValue2.startsWith(StringPool.SPACE) ||
+			(!literalStringValue1.endsWith(StringPool.SPACE) &&
+			 literalStringValue2.matches("^[-:;.].*"))) {
+
+			log(
+				literalStringAST2.getLineNo(), _MSG_INVALID_START_CHARACTER,
+				literalStringValue2.charAt(0));
+
+			return;
+		}
+
+		String line = getLine(literalStringAST1.getLineNo() - 1);
+
+		int lineLength = CommonUtils.lengthExpandedTabs(
+			line, line.length(), getTabWidth());
+
+		int pos = _getStringBreakPos(
+			literalStringValue1, literalStringValue2,
+			_maxLineLength - lineLength);
+
+		if (pos != -1) {
+			log(
+				literalStringAST2.getLineNo(), _MSG_MOVE_LITERAL_STRING,
+				literalStringValue2.substring(0, pos + 1));
+		}
 	}
 
 	private void _checkMultiPlusStatement(DetailAST detailAST) {

@@ -6235,7 +6235,7 @@
 		</execute>
 	</command>
 
-	<command ignore="true" name="ViewNoDuplicatesCreatedByAddFormSaveAndContinue" priority="3">
+	<command name="ViewNoDuplicatesCreatedByAddFormSaveAndContinue" priority="3">
 		<description message="This is a use case for LPS-48995." />
 
 		<execute macro="Navigator#openURL" />

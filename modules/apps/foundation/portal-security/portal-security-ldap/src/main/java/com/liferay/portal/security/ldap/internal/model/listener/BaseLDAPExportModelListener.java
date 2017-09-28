@@ -17,6 +17,7 @@ package com.liferay.portal.security.ldap.internal.model.listener;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PasswordModificationThreadLocal;
 import com.liferay.portal.kernel.security.ldap.LDAPSettings;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -68,7 +69,7 @@ public abstract class BaseLDAPExportModelListener<T extends BaseModel<T>>
 		};
 
 		if (ldapSettings.isPasswordPolicyEnabled(user.getCompanyId()) &&
-			user.isPasswordModified()) {
+			PasswordModificationThreadLocal.isPasswordModified()) {
 
 			callable.call();
 		}

@@ -237,7 +237,7 @@ public class TextFormatter {
 	}
 
 	private static String _formatB(String s) {
-		return StringUtil.strip(StringUtil.toLowerCase(s), CharPool.SPACE);
+		return StringUtil.removeChar(StringUtil.toLowerCase(s), CharPool.SPACE);
 	}
 
 	private static String _formatC(String s) {
@@ -246,7 +246,7 @@ public class TextFormatter {
 	}
 
 	private static String _formatD(String s) {
-		return StringUtil.strip(s, CharPool.SPACE);
+		return StringUtil.removeChar(s, CharPool.SPACE);
 	}
 
 	private static String _formatE(String s) {
@@ -254,7 +254,7 @@ public class TextFormatter {
 	}
 
 	private static String _formatF(String s) {
-		s = StringUtil.strip(s, CharPool.SPACE);
+		s = StringUtil.removeChar(s, CharPool.SPACE);
 
 		if (Character.isUpperCase(s.charAt(0))) {
 			s = StringUtil.toLowerCase(s.substring(0, 1)).concat(

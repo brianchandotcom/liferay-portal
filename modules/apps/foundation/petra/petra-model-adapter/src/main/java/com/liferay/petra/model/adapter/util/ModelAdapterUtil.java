@@ -42,6 +42,10 @@ public class ModelAdapterUtil {
 	}
 
 	public static <T> T adapt(Class<T> clazz, Object delegateObject) {
+		if (delegateObject == null) {
+			return null;
+		}
+
 		Class<?> delegateClass = delegateObject.getClass();
 
 		return (T)ProxyUtil.newProxyInstance(
@@ -75,6 +79,10 @@ public class ModelAdapterUtil {
 	public static <T, V> OrderByComparator<T> adapt(
 		Class<V> clazz, OrderByComparator<V> orderByComparator) {
 
+		if (orderByComparator == null) {
+			return null;
+		}
+
 		return new OrderByComparatorAdapter<T, V>(orderByComparator) {
 
 			@Override
@@ -87,6 +95,10 @@ public class ModelAdapterUtil {
 
 	public static <T, V> QueryDefinition<T> adapt(
 		Class<V> clazz, QueryDefinition<V> queryDefinition) {
+
+		if (queryDefinition == null) {
+			return null;
+		}
 
 		QueryDefinition<T> adaptedQueryDefinition = new QueryDefinition<>(
 			queryDefinition.getStatus(), queryDefinition.isExcludeStatus(),

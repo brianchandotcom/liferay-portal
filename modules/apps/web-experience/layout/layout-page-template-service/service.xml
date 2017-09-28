@@ -1,0 +1,164 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
+
+<service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.layout.page.template">
+	<namespace>Layout</namespace>
+	<entity local-service="true" name="LayoutPageTemplateEntry" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="layoutPageTemplateEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="layoutPageTemplateFolderId" type="long" />
+		<column name="name" type="String" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="name" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="G_L" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="layoutPageTemplateFolderId" />
+		</finder>
+		<finder name="G_N" return-type="LayoutPageTemplateEntry" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="name" />
+		</finder>
+		<finder name="G_L_LikeN" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="layoutPageTemplateFolderId" />
+			<finder-column case-sensitive="false" comparator="LIKE" name="name" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="LayoutPageTemplateFolder" package-path="com.liferay.layout.page.template" />
+		<reference entity="Resource" package-path="com.liferay.portal" />
+		<reference entity="User" package-path="com.liferay.portal" />
+	</entity>
+	<entity local-service="true" name="LayoutPageTemplateFolder" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="layoutPageTemplateFolderId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+		<column name="description" type="String" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="name" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="G_N" return-type="LayoutPageTemplateFolder" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="name" />
+		</finder>
+		<finder name="G_LikeN" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column case-sensitive="false" comparator="LIKE" name="name" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="LayoutPageTemplateEntry" package-path="com.liferay.layout.page.template" />
+		<reference entity="Resource" package-path="com.liferay.portal" />
+		<reference entity="User" package-path="com.liferay.portal" />
+	</entity>
+	<entity local-service="true" name="LayoutPageTemplateFragment" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="layoutPageTemplateFragmentId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="layoutPageTemplateEntryId" type="long" />
+		<column name="fragmentEntryId" type="long" />
+		<column name="position" type="int" />
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="G_L" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="layoutPageTemplateEntryId" />
+		</finder>
+		<finder name="G_F" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="fragmentEntryId" />
+		</finder>
+		<finder name="G_L_F" return-type="LayoutPageTemplateFragment" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="layoutPageTemplateEntryId" />
+			<finder-column name="fragmentEntryId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="LayoutPageTemplateEntry" package-path="com.liferay.layout.page.template" />
+		<reference entity="Resource" package-path="com.liferay.portal" />
+		<reference entity="User" package-path="com.liferay.portal" />
+	</entity>
+	<exceptions>
+		<exception>DuplicateLayoutPageTemplateEntry</exception>
+		<exception>DuplicateLayoutPageTemplateFolder</exception>
+		<exception>LayoutPageTemplateEntryName</exception>
+		<exception>LayoutPageTemplateFolderName</exception>
+	</exceptions>
+</service-builder>

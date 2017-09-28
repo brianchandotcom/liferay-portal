@@ -43,6 +43,51 @@ public class PlusStatementCheck extends BaseCheck {
 		_checkPlusOperator(detailAST);
 	}
 
+	private void _checkMultiPlusStatement(DetailAST detailAST) {
+		DetailAST parentAST = detailAST.getParent();
+
+		if (parentAST.getType() == TokenTypes.PLUS) {
+			return;
+		}
+
+		if (DetailASTUtil.hasParentWithTokenType(
+				detailAST, TokenTypes.ANNOTATION) ||
+			!DetailASTUtil.hasParentWithTokenType(
+				detailAST, TokenTypes.CTOR_DEF, TokenTypes.METHOD_DEF)) {
+
+			return;
+		}
+
+		boolean containsLiteralString = false;
+		int count = 1;
+
+		DetailAST firstChild = detailAST;
+
+		while (true) {
+			if (firstChild.getType() != TokenTypes.PLUS) {
+				break;
+			}
+
+			if (!containsLiteralString) {
+				List<DetailAST> listeralStringASTList =
+					DetailASTUtil.getAllChildTokens(
+						firstChild, false, TokenTypes.STRING_LITERAL);
+
+				if (!listeralStringASTList.isEmpty()) {
+					containsLiteralString = true;
+				}
+			}
+
+			count++;
+
+			firstChild = firstChild.getFirstChild();
+		}
+
+		if (containsLiteralString && (count > 3)) {
+			log(detailAST.getLineNo(), _MSG_USE_STRINGBUNDLER_CONCAT);
+		}
+	}
+
 	private void _checkPlusOperator(DetailAST detailAST) {
 		_checkMultiPlusStatement(detailAST);
 		_checkTabbing(detailAST);
@@ -135,51 +180,6 @@ public class PlusStatementCheck extends BaseCheck {
 			log(
 				lastChild.getLineNo(), _MSG_MOVE_LITERAL_STRING,
 				literalString2.substring(0, pos + 1));
-		}
-	}
-
-	private void _checkMultiPlusStatement(DetailAST detailAST) {
-		DetailAST parentAST = detailAST.getParent();
-
-		if (parentAST.getType() == TokenTypes.PLUS) {
-			return;
-		}
-
-		if (DetailASTUtil.hasParentWithTokenType(
-				detailAST, TokenTypes.ANNOTATION) ||
-			!DetailASTUtil.hasParentWithTokenType(
-				detailAST, TokenTypes.CTOR_DEF, TokenTypes.METHOD_DEF)) {
-
-			return;
-		}
-
-		boolean containsLiteralString = false;
-		int count = 1;
-
-		DetailAST firstChild = detailAST;
-
-		while (true) {
-			if (firstChild.getType() != TokenTypes.PLUS) {
-				break;
-			}
-
-			if (!containsLiteralString) {
-				List<DetailAST> listeralStringASTList =
-					DetailASTUtil.getAllChildTokens(
-						firstChild, false, TokenTypes.STRING_LITERAL);
-
-				if (!listeralStringASTList.isEmpty()) {
-					containsLiteralString = true;
-				}
-			}
-
-			count++;
-
-			firstChild = firstChild.getFirstChild();
-		}
-
-		if (containsLiteralString && (count > 3)) {
-			log(detailAST.getLineNo(), _MSG_USE_STRINGBUNDLER_CONCAT);
 		}
 	}
 

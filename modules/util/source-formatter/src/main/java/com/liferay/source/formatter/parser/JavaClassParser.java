@@ -301,12 +301,29 @@ public class JavaClassParser {
 		int javaTermStartPos = -1;
 		int level = 0;
 		int lineCount = 0;
+		int metadataAnnotationLevel = 0;
 
 		boolean insideJavaTerm = false;
+		boolean insideMetadataAnnotation = false;
 		boolean multiLineComment = false;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			lineCount++;
+
+			if (!insideJavaTerm && line.startsWith(indent + "@")) {
+				insideMetadataAnnotation = true;
+
+				metadataAnnotationLevel = SourceUtil.getLevel(line);
+			}
+			else if (insideMetadataAnnotation) {
+				if ((metadataAnnotationLevel == 0) &&
+					Validator.isNotNull(line)) {
+
+					insideMetadataAnnotation = false;
+				}
+
+				metadataAnnotationLevel += SourceUtil.getLevel(line);
+			}
 
 			if (!insideJavaTerm) {
 				if (javaTermStartPos == -1) {
@@ -315,7 +332,7 @@ public class JavaClassParser {
 							classContent, lineCount);
 					}
 				}
-				else if (Validator.isNull(line)) {
+				else if (Validator.isNull(line) && !insideMetadataAnnotation) {
 					javaTermStartPos = -1;
 				}
 			}
@@ -345,6 +362,7 @@ public class JavaClassParser {
 						"((private|protected|public)( .*|$)|static \\{)")) {
 
 				insideJavaTerm = true;
+				insideMetadataAnnotation = false;
 			}
 
 			if (insideJavaTerm && line.matches(".*[};]") && (level == 1)) {
@@ -365,6 +383,7 @@ public class JavaClassParser {
 				javaClass.addChildJavaTerm(javaTerm);
 
 				insideJavaTerm = false;
+				insideMetadataAnnotation = false;
 
 				javaTermStartPos = nextLineStartPos;
 			}

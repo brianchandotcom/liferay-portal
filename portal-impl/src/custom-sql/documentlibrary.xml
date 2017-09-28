@@ -204,6 +204,20 @@
 					DLFileEntry ON TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId
 		]]>
 	</sql>
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.findByC_T">
+		<![CDATA[
+			SELECT
+				{DLFileEntry.*}
+			FROM
+				DLFileEntry
+			INNER JOIN
+				AssetEntry ON
+					(AssetEntry.classPK = DLFileEntry.fileEntryId)
+			WHERE
+				DLFileEntry.treePath LIKE ? AND
+				(AssetEntry.classNameId = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.findByG_U_F">
 		<![CDATA[
 			SELECT
@@ -225,20 +239,6 @@
 				) TEMP_TABLE
 				INNER JOIN
 					DLFileEntry ON TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId
-		]]>
-	</sql>
-	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.findFE_ByC_T">
-		<![CDATA[
-			SELECT
-				{DLFileEntry.*}
-			FROM
-				DLFileEntry
-			INNER JOIN
-				AssetEntry ON
-					(AssetEntry.classPK = DLFileEntry.fileEntryId)
-			WHERE
-				DLFileEntry.treePath LIKE ? AND
-				(AssetEntry.classNameId = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder.joinAE_ByDLFileEntry">

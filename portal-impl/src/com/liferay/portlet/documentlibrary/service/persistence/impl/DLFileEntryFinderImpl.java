@@ -89,11 +89,11 @@ public class DLFileEntryFinderImpl
 	public static final String FIND_BY_G_F =
 		DLFileEntryFinder.class.getName() + ".findByG_F";
 
+	public static final String FIND_BY_C_T =
+		DLFileEntryFinder.class.getName() + ".findByC_T";
+
 	public static final String FIND_BY_G_U_F =
 		DLFileEntryFinder.class.getName() + ".findByG_U_F";
-
-	public static final String FIND_FE_BY_C_T =
-		DLFileEntryFinder.class.getName() + ".findFE_ByC_T";
 
 	/**
 	 * @deprecated As of 7.0.0, with no direct replacement
@@ -520,15 +520,24 @@ public class DLFileEntryFinderImpl
 	}
 
 	@Override
-	public List<DLFileEntry> findByDLFileEntryC_T(
-		long classNameId, String treePath) {
+	public List<DLFileEntry> findByG_F(
+		long groupId, List<Long> folderIds,
+		QueryDefinition<DLFileEntry> queryDefinition) {
 
+		List<Long> repositoryIds = Collections.emptyList();
+
+		return doFindByG_U_R_F_M(
+			groupId, 0, repositoryIds, folderIds, null, queryDefinition, false);
+	}
+
+	@Override
+	public List<DLFileEntry> findByC_T(long classNameId, String treePath) {
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_FE_BY_C_T);
+			String sql = CustomSQLUtil.get(FIND_BY_C_T);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -548,17 +557,6 @@ public class DLFileEntryFinderImpl
 		finally {
 			closeSession(session);
 		}
-	}
-
-	@Override
-	public List<DLFileEntry> findByG_F(
-		long groupId, List<Long> folderIds,
-		QueryDefinition<DLFileEntry> queryDefinition) {
-
-		List<Long> repositoryIds = Collections.emptyList();
-
-		return doFindByG_U_R_F_M(
-			groupId, 0, repositoryIds, folderIds, null, queryDefinition, false);
 	}
 
 	@Override

@@ -427,11 +427,7 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 	}
 
 	protected Properties getMarketplaceProperties(File liferayPackageFile) {
-		ZipFile zipFile = null;
-
-		try {
-			zipFile = new ZipFile(liferayPackageFile);
-
+		try (ZipFile zipFile = new ZipFile(liferayPackageFile)) {
 			ZipEntry zipEntry = zipFile.getEntry(
 				"liferay-marketplace.properties");
 
@@ -443,15 +439,6 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 		}
 		catch (IOException ioe) {
 			return null;
-		}
-		finally {
-			if (zipFile != null) {
-				try {
-					zipFile.close();
-				}
-				catch (IOException ioe) {
-				}
-			}
 		}
 	}
 

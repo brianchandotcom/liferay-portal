@@ -21,7 +21,6 @@ import com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryExcepti
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateFragment;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateFragmentLocalServiceBaseImpl;
-import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateFragmentPK;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -52,14 +51,13 @@ public class LayoutPageTemplateFragmentLocalServiceImpl
 		validateFragment(fragmentId);
 		validateLayoutPageTemplateEntry(layoutPageTemplateEntryId);
 
-		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK =
-			new LayoutPageTemplateFragmentPK(
-				groupId, layoutPageTemplateEntryId, fragmentId);
+		long layoutPageTemplateFragmentId = counterLocalService.increment();
 
 		LayoutPageTemplateFragment layoutPageTemplateFragment =
 			layoutPageTemplateFragmentPersistence.create(
-				layoutPageTemplateFragmentPK);
+				layoutPageTemplateFragmentId);
 
+		layoutPageTemplateFragment.setGroupId(groupId);
 		layoutPageTemplateFragment.setCompanyId(user.getCompanyId());
 		layoutPageTemplateFragment.setUserId(user.getUserId());
 		layoutPageTemplateFragment.setUserName(user.getFullName());
@@ -67,6 +65,9 @@ public class LayoutPageTemplateFragmentLocalServiceImpl
 			serviceContext.getCreateDate(new Date()));
 		layoutPageTemplateFragment.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
+		layoutPageTemplateFragment.setLayoutPageTemplateEntryId(
+			layoutPageTemplateEntryId);
+		layoutPageTemplateFragment.setFragmentEntryId(fragmentId);
 		layoutPageTemplateFragment.setPosition(position);
 
 		layoutPageTemplateFragmentPersistence.update(
@@ -120,13 +121,9 @@ public class LayoutPageTemplateFragmentLocalServiceImpl
 			long groupId, long layoutPageTemplateEntryId, long fragmentId)
 		throws PortalException {
 
-		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK =
-			new LayoutPageTemplateFragmentPK(
-				groupId, layoutPageTemplateEntryId, fragmentId);
-
 		LayoutPageTemplateFragment layoutPageTemplateFragment =
-			layoutPageTemplateFragmentPersistence.fetchByPrimaryKey(
-				layoutPageTemplateFragmentPK);
+			layoutPageTemplateFragmentPersistence.fetchByG_L_F(
+				groupId, layoutPageTemplateEntryId, fragmentId);
 
 		return deleteLayoutPageTemplateFragment(layoutPageTemplateFragment);
 	}

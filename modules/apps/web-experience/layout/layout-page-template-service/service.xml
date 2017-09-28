@@ -110,9 +110,11 @@
 
 		<!-- PK fields -->
 
-		<column name="groupId" primary="true" type="long" />
-		<column name="layoutPageTemplateEntryId" primary="true" type="long" />
-		<column name="fragmentEntryId" primary="true" type="long" />
+		<column name="layoutPageTemplateFragmentId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
 
 		<!-- Audit fields -->
 
@@ -124,6 +126,8 @@
 
 		<!-- Other fields -->
 
+		<column name="layoutPageTemplateEntryId" type="long" />
+		<column name="fragmentEntryId" type="long" />
 		<column name="position" type="int" />
 
 		<!-- Finder methods -->

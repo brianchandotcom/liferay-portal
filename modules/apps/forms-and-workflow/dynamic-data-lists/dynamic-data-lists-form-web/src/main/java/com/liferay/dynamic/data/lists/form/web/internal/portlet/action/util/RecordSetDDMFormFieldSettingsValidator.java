@@ -91,10 +91,10 @@ public class RecordSetDDMFormFieldSettingsValidator {
 
 		fieldSettingsDDMFormValues.setAvailableLocales(availableLocales);
 
-		DDMFormContextVisitor ddmFormTemplateContextVisitor =
-			new DDMFormContextVisitor(jsonObject.getJSONArray("pages"));
+		DDMFormContextVisitor ddmFormContextVisitor = new DDMFormContextVisitor(
+			jsonObject.getJSONArray("pages"));
 
-		ddmFormTemplateContextVisitor.onVisitField(
+		ddmFormContextVisitor.onVisitField(
 			new Consumer<JSONObject>() {
 
 				@Override
@@ -161,7 +161,7 @@ public class RecordSetDDMFormFieldSettingsValidator {
 
 			});
 
-		ddmFormTemplateContextVisitor.visit();
+		ddmFormContextVisitor.visit();
 
 		return fieldSettingsDDMFormValues;
 	}
@@ -203,10 +203,10 @@ public class RecordSetDDMFormFieldSettingsValidator {
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			serializedFormBuilderContext);
 
-		DDMFormContextVisitor ddmFormTemplateContextVisitor =
-			new DDMFormContextVisitor(jsonObject.getJSONArray("pages"));
+		DDMFormContextVisitor ddmFormContextVisitor = new DDMFormContextVisitor(
+			jsonObject.getJSONArray("pages"));
 
-		ddmFormTemplateContextVisitor.onVisitField(
+		ddmFormContextVisitor.onVisitField(
 			new Consumer<JSONObject>() {
 
 				@Override
@@ -244,7 +244,7 @@ public class RecordSetDDMFormFieldSettingsValidator {
 
 			});
 
-		ddmFormTemplateContextVisitor.visit();
+		ddmFormContextVisitor.visit();
 
 		return fieldNamePropertiesMap;
 	}

@@ -195,11 +195,12 @@ public class SaveRecordSetMVCCommandHelper {
 		throws PortalException {
 
 		try {
-			String serializedFormContext = ParamUtil.getString(
+			String serializedFormBuilderContext = ParamUtil.getString(
 				portletRequest, "serializedFormBuilderContext");
 
-			return ddlFormBuilderContextToDDMForm.deserialize(
-				DDMFormContextDeserializerRequest.with(serializedFormContext));
+			return ddmFormBuilderContextToDDMForm.deserialize(
+				DDMFormContextDeserializerRequest.with(
+					serializedFormBuilderContext));
 		}
 		catch (PortalException pe) {
 			throw new StructureDefinitionException(pe);
@@ -210,11 +211,12 @@ public class SaveRecordSetMVCCommandHelper {
 		throws PortalException {
 
 		try {
-			String serializedFormContext = ParamUtil.getString(
+			String serializedFormBuilderContext = ParamUtil.getString(
 				portletRequest, "serializedFormBuilderContext");
 
-			return ddlFormBuilderContextToDDMFormLayout.deserialize(
-				DDMFormContextDeserializerRequest.with(serializedFormContext));
+			return ddmFormBuilderContextToDDMFormLayout.deserialize(
+				DDMFormContextDeserializerRequest.with(
+					serializedFormBuilderContext));
 		}
 		catch (PortalException pe) {
 			throw new StructureLayoutException(pe);
@@ -454,20 +456,20 @@ public class SaveRecordSetMVCCommandHelper {
 		}
 	}
 
+	@Reference
+	protected DDLRecordSetService ddlRecordSetService;
+
 	@Reference(
 		target = "(dynamic.data.mapping.form.builder.context.deserializer.type=form)"
 	)
 	protected DDMFormContextDeserializer<DDMForm>
-		ddlFormBuilderContextToDDMForm;
+		ddmFormBuilderContextToDDMForm;
 
 	@Reference(
 		target = "(dynamic.data.mapping.form.builder.context.deserializer.type=formLayout)"
 	)
 	protected DDMFormContextDeserializer<DDMFormLayout>
-		ddlFormBuilderContextToDDMFormLayout;
-
-	@Reference
-	protected DDLRecordSetService ddlRecordSetService;
+		ddmFormBuilderContextToDDMFormLayout;
 
 	@Reference(
 		target = "(dynamic.data.mapping.form.builder.context.deserializer.type=formValues)"

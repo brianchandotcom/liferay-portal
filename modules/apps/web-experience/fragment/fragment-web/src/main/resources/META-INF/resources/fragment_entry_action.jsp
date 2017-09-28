@@ -53,6 +53,28 @@ FragmentEntry fragmentEntry = (FragmentEntry)row.getObject();
 		/>
 	</c:if>
 
+	<c:if test="<%= FragmentEntryPermission.contains(permissionChecker, fragmentEntry, ActionKeys.UPDATE) %>">
+		<portlet:actionURL name="renameFragmentEntry" var="renameFragmentEntryURL">
+			<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentEntry.getFragmentCollectionId()) %>" />
+			<portlet:param name="fragmentEntryId" value="<%= String.valueOf(fragmentEntry.getFragmentEntryId()) %>" />
+		</portlet:actionURL>
+
+		<%
+		Map<String, Object> renameFragmentEntryData = new HashMap<String, Object>();
+
+		renameFragmentEntryData.put("fragment-entry-id", fragmentEntry.getFragmentEntryId());
+		renameFragmentEntryData.put("fragment-entry-name", fragmentEntry.getName());
+		renameFragmentEntryData.put("rename-url", renameFragmentEntryURL);
+		%>
+
+		<liferay-ui:icon
+			cssClass='<%= renderResponse.getNamespace() + "rename-fragment-action-option" %>'
+			data="<%= renameFragmentEntryData %>"
+			message="rename"
+			url="javascript:;"
+		/>
+	</c:if>
+
 	<c:if test="<%= FragmentEntryPermission.contains(permissionChecker, fragmentEntry, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="deleteFragmentEntries" var="deleteFragmentEntryURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />

@@ -88,6 +88,7 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 					httpServletRequest, cpInstance.getPrice());
 
 				jsonObject.put("price", formattedPrice);
+
 				jsonObject.put("sku", cpInstance.getSku());
 			}
 			else {

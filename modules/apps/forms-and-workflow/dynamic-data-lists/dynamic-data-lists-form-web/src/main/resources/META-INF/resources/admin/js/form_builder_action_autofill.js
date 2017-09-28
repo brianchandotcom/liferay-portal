@@ -262,7 +262,7 @@ AUI.add(
 							outputParameterField = instance.createSelectField(
 								{
 									fieldName: instance.get('index') + '-action',
-									label: outputParameters[i],
+									label: outputParameters[i].name,
 									options: instance.getFieldsByType(outputParameters[i].type),
 									showLabel: false,
 									visible: true

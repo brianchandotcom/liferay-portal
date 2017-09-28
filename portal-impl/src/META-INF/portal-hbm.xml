@@ -21,7 +21,6 @@
 	<import class="com.liferay.document.library.kernel.model.DLFileShortcut" />
 	<import class="com.liferay.document.library.kernel.model.DLFileVersion" />
 	<import class="com.liferay.document.library.kernel.model.DLFolder" />
-	<import class="com.liferay.document.library.kernel.model.DLSyncEvent" />
 	<import class="com.liferay.expando.kernel.model.ExpandoColumn" />
 	<import class="com.liferay.expando.kernel.model.ExpandoRow" />
 	<import class="com.liferay.expando.kernel.model.ExpandoTable" />
@@ -1465,16 +1464,6 @@
 		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
-	</class>
-	<class name="com.liferay.portlet.documentlibrary.model.impl.DLSyncEventImpl" table="DLSyncEvent">
-		<id name="syncEventId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="modifiedTime" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="event" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="typePK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portlet.expando.model.impl.ExpandoColumnImpl" table="ExpandoColumn">
 		<id name="columnId" type="long">

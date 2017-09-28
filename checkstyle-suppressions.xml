@@ -22,6 +22,8 @@
 
 	<!-- Custom checks -->
 
+	<suppress checks="Concat" files="portal-impl/test/integration/com/liferay/portal/xmlrpc/XmlRpcParserTest\.java" />
+	<suppress checks="Concat" files="portal-kernel/src/com/liferay/portal/kernel/io/BigEndianCodec\.java" />
 	<suppress checks="Concat" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/StringBundlerTest\.java" />
 	<suppress checks="ConstantName" files="portal-kernel/src/com/liferay/portal/kernel/nio/intraband/BaseIntraband\.java" />
 	<suppress checks="Indentation" files="portal-impl/test/integration/com/liferay/portal/xmlrpc/XmlRpcParserTest\.java" />
@@ -45,8 +47,6 @@
 	<suppress checks="MissingModifier" files="portal-kernel/test/unit/com/liferay/portal/kernel/annotation/AnnotationLocatorTest\.java" />
 	<suppress checks="MissingModifier" files="portal-kernel/test/unit/com/liferay/portal/kernel/resiliency/spi/agent/annotation/DistributedRegistryTest\.java" />
 	<suppress checks="PersistenceCall" files="modules/apps/foundation/portal/portal-upgrade-test/src/testIntegration/java/com/liferay/portal/upgrade/test/BaseBuildAutoUpgradeTestCase\.java" />
-	<suppress checks="PlusStatement" files="portal-impl/test/integration/com/liferay/portal/xmlrpc/XmlRpcParserTest\.java" />
-	<suppress checks="PlusStatement" files="portal-kernel/src/com/liferay/portal/kernel/io/BigEndianCodec\.java" />
 	<suppress checks="Subname" files="portal-kernel/src/com/liferay/portal/kernel/util/ListUtil\.java" />
 	<suppress checks="Subname" files="portal-kernel/src/com/liferay/portal/kernel/util/PackagingUtil\.java" />
 	<suppress checks="Subname" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/ListUtilTest\.java" />

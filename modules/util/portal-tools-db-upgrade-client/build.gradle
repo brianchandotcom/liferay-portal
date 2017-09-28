@@ -12,9 +12,9 @@ deploy {
 distributions {
 	main {
 		contents {
-			from ("properties") {
+			from("properties") {
 				include "*.properties"
-				into ("lib")
+				into "lib"
 			}
 		}
 	}

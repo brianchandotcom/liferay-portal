@@ -6,9 +6,9 @@ dependencies {
 distributions {
 	main {
 		contents {
-			from (projectDir) {
+			from(projectDir) {
 				include "run.sh"
-				into ("lib")
+				into "lib"
 			}
 		}
 	}

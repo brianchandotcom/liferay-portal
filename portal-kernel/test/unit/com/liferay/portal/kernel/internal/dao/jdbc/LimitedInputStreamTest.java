@@ -46,55 +46,37 @@ public class LimitedInputStreamTest {
 			3);
 
 		limitedInputStream.close();
+	}
 
-		try {
-			limitedInputStream.skip(1);
+	@Test(expected = IOException.class)
+	public void testClosed() throws IOException {
+		LimitedInputStream limitedInputStream = new LimitedInputStream(
+			new BufferedInputStream(new ByteArrayInputStream(new byte[10])), 5,
+			3);
 
-			Assert.fail();
-		}
-		catch (IOException ioe) {
-		}
+		limitedInputStream.close();
+
+		limitedInputStream.skip(1);
 	}
 
 	@Test
 	public void testConstructor() throws IOException {
-
-		// Negative offset
-
-		try {
-			new LimitedInputStream(
-				new ByteArrayInputStream(new byte[10]), -1, 10);
-
-			Assert.fail();
-		}
-		catch (IllegalArgumentException iae) {
-		}
-
-		// Negative length
-
-		try {
-			new LimitedInputStream(
-				new ByteArrayInputStream(new byte[10]), 5, -1);
-
-			Assert.fail();
-		}
-		catch (IllegalArgumentException iae) {
-		}
-
-		// Not enough data to skip offset
-
-		try {
-			new LimitedInputStream(
-				new ByteArrayInputStream(new byte[10]), 50, 10);
-
-			Assert.fail();
-		}
-		catch (IOException ioe) {
-		}
-
-		// Normal
-
 		new LimitedInputStream(new ByteArrayInputStream(new byte[10]), 5, 5);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testConstructorWithNegativeLength() throws IOException {
+		new LimitedInputStream(new ByteArrayInputStream(new byte[10]), 5, -1);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testConstructorWithNegativeOffset() throws IOException {
+		new LimitedInputStream(new ByteArrayInputStream(new byte[10]), -1, 10);
+	}
+
+	@Test(expected = IOException.class)
+	public void testConstructorWithNotEnoughDataForOffset() throws IOException {
+		new LimitedInputStream(new ByteArrayInputStream(new byte[10]), 50, 10);
 	}
 
 	@Test

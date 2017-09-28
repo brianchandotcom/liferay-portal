@@ -15,9 +15,14 @@
 package com.liferay.site.navigation.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.site.navigation.constants.SiteNavigationActionKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.base.SiteNavigationMenuServiceBaseImpl;
+import com.liferay.site.navigation.service.permission.SiteNavigationMenuPermission;
+import com.liferay.site.navigation.service.permission.SiteNavigationPermission;
 
 import java.util.List;
 
@@ -32,6 +37,10 @@ public class SiteNavigationMenuServiceImpl
 			long groupId, String name, ServiceContext serviceContext)
 		throws PortalException {
 
+		SiteNavigationPermission.check(
+			getPermissionChecker(), groupId,
+			SiteNavigationActionKeys.ADD_SITE_NAVIGATION_MENU);
+
 		return siteNavigationMenuLocalService.addSiteNavigationMenu(
 			getUserId(), groupId, name, serviceContext);
 	}
@@ -41,13 +50,68 @@ public class SiteNavigationMenuServiceImpl
 			long siteNavigationMenuId)
 		throws PortalException {
 
+		SiteNavigationMenuPermission.check(
+			getPermissionChecker(), siteNavigationMenuId, ActionKeys.DELETE);
+
 		return siteNavigationMenuLocalService.deleteSiteNavigationMenu(
 			siteNavigationMenuId);
 	}
 
 	@Override
+	public SiteNavigationMenu fetchSiteNavigationMenu(long siteNavigationMenuId)
+		throws PortalException {
+
+		SiteNavigationMenuPermission.check(
+			getPermissionChecker(), siteNavigationMenuId, ActionKeys.VIEW);
+
+		return siteNavigationMenuLocalService.fetchSiteNavigationMenu(
+			siteNavigationMenuId);
+	}
+
+	@Override
 	public List<SiteNavigationMenu> getSiteNavigationMenus(long groupId) {
-		return siteNavigationMenuLocalService.getSiteNavigationMenus(groupId);
+		return siteNavigationMenuPersistence.filterFindByGroupId(groupId);
+	}
+
+	@Override
+	public List<SiteNavigationMenu> getSiteNavigationMenus(
+		long groupId, int start, int end, OrderByComparator orderByComparator) {
+
+		return siteNavigationMenuPersistence.filterFindByGroupId(
+			groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<SiteNavigationMenu> getSiteNavigationMenus(
+		long groupId, String keywords, int start, int end,
+		OrderByComparator orderByComparator) {
+
+		return siteNavigationMenuPersistence.filterFindByG_N(
+			groupId, keywords, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getSiteNavigationMenusCount(long groupId) {
+		return siteNavigationMenuPersistence.filterCountByGroupId(groupId);
+	}
+
+	@Override
+	public int getSiteNavigationMenusCount(long groupId, String keywords) {
+		return siteNavigationMenuPersistence.filterCountByG_N(
+			groupId, keywords);
+	}
+
+	@Override
+	public SiteNavigationMenu updateSiteNavigationMenu(
+			long siteNavigationMenuId, String name,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		SiteNavigationMenuPermission.check(
+			getPermissionChecker(), siteNavigationMenuId, ActionKeys.UPDATE);
+
+		return siteNavigationMenuLocalService.updateSiteNavigationMenu(
+			getUserId(), siteNavigationMenuId, name, serviceContext);
 	}
 
 }

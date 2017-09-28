@@ -395,13 +395,12 @@ public class WikiPageStagedModelDataHandler
 				if (_log.isDebugEnabled()) {
 					_log.debug(nsfe, nsfe);
 				}
+
+				return null;
 			}
 		}
-		else {
-			return portletDataContext.getZipEntryAsInputStream(binPath);
-		}
 
-		return null;
+		return portletDataContext.getZipEntryAsInputStream(binPath);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

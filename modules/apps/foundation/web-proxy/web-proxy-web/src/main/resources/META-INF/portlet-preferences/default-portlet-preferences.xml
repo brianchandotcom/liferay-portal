@@ -12,7 +12,6 @@
 	<preference>
 		<name>secureEdit</name>
 		<value>false</value>
-		<read-only>true</read-only>
 	</preference>
 	<preferences-validator>org.portletbridge.portlet.PortletBridgePortletValidator</preferences-validator>
 </portlet-preferences>

@@ -14,7 +14,7 @@
 
 package com.liferay.layout.page.template.util.comparator;
 
-import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -22,11 +22,13 @@ import com.liferay.portal.kernel.util.OrderByComparator;
  * @author Jürgen Kappler
  */
 public class LayoutPageTemplateEntryCreateDateComparator
-	extends OrderByComparator<FragmentEntry> {
+	extends OrderByComparator<LayoutPageTemplateEntry> {
 
-	public static final String ORDER_BY_ASC = "FragmentEntry.createDate ASC";
+	public static final String ORDER_BY_ASC =
+		"LayoutPageTemplateEntry.createDate ASC";
 
-	public static final String ORDER_BY_DESC = "FragmentEntry.createDate DESC";
+	public static final String ORDER_BY_DESC =
+		"LayoutPageTemplateEntry.createDate DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
@@ -40,10 +42,12 @@ public class LayoutPageTemplateEntryCreateDateComparator
 
 	@Override
 	public int compare(
-		FragmentEntry fragmentEntry1, FragmentEntry fragmentEntry2) {
+		LayoutPageTemplateEntry layoutPageTemplateEntry1,
+		LayoutPageTemplateEntry layoutPageTemplateEntry2) {
 
 		int value = DateUtil.compareTo(
-			fragmentEntry1.getCreateDate(), fragmentEntry2.getCreateDate());
+			layoutPageTemplateEntry1.getCreateDate(),
+			layoutPageTemplateEntry2.getCreateDate());
 
 		if (_ascending) {
 			return value;

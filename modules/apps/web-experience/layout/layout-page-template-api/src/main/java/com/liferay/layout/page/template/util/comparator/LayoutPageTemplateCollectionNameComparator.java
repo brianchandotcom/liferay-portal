@@ -14,7 +14,7 @@
 
 package com.liferay.layout.page.template.util.comparator;
 
-import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -22,11 +22,13 @@ import com.liferay.portal.kernel.util.StringUtil;
  * @author Jürgen Kappler
  */
 public class LayoutPageTemplateCollectionNameComparator
-	extends OrderByComparator<FragmentCollection> {
+	extends OrderByComparator<LayoutPageTemplateCollection> {
 
-	public static final String ORDER_BY_ASC = "FragmentCollection.name ASC";
+	public static final String ORDER_BY_ASC =
+		"LayoutPageTemplateCollection.name ASC";
 
-	public static final String ORDER_BY_DESC = "FragmentCollection.name DESC";
+	public static final String ORDER_BY_DESC =
+		"LayoutPageTemplateCollection.name DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
@@ -40,11 +42,13 @@ public class LayoutPageTemplateCollectionNameComparator
 
 	@Override
 	public int compare(
-		FragmentCollection fragmentCollection1,
-		FragmentCollection fragmentCollection2) {
+		LayoutPageTemplateCollection layoutPageTemplateCollection1,
+		LayoutPageTemplateCollection layoutPageTemplateCollection2) {
 
-		String name1 = StringUtil.toLowerCase(fragmentCollection1.getName());
-		String name2 = StringUtil.toLowerCase(fragmentCollection2.getName());
+		String name1 = StringUtil.toLowerCase(
+			layoutPageTemplateCollection1.getName());
+		String name2 = StringUtil.toLowerCase(
+			layoutPageTemplateCollection2.getName());
 
 		int value = name1.compareTo(name2);
 

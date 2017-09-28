@@ -6,6 +6,7 @@ Export-Package:\
 	com.liferay.layout.page.template.exception,\
 	com.liferay.layout.page.template.model,\
 	com.liferay.layout.page.template.service,\
-	com.liferay.layout.page.template.service.persistence
+	com.liferay.layout.page.template.service.persistence,\
+	com.liferay.layout.page.template.util.comparator
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Management

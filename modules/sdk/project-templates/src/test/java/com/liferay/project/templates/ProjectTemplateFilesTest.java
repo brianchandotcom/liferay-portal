@@ -446,8 +446,8 @@ public class ProjectTemplateFilesTest {
 		_testPropertyValue(path, properties, "author", "${author}");
 		_testPropertyValue(path, properties, "change-log", "");
 		_testPropertyValue(path, properties, "licenses", "LGPL");
-		_testPropertyValue(
-			path, properties, "liferay-versions", "7.0.0+,7.1.0+");
+		_testPropertyContainsValue(
+			path, properties, "liferay-versions", "7.1.0+");
 		_testPropertyValue(path, properties, "long-description", "");
 		_testPropertyValue(path, properties, "module-group-id", "liferay");
 		_testPropertyValue(path, properties, "module-incremental-version", "1");
@@ -719,6 +719,16 @@ public class ProjectTemplateFilesTest {
 		_testArchetypeMetadataXml(
 			projectTemplateDirPath, projectTemplateDirName,
 			requireAuthorProperty.get(), archetypeResourcePropertyNames);
+	}
+
+	private void _testPropertyContainsValue(
+		Path path, Properties properties, String key, String expectedValue) {
+
+		String value = properties.getProperty(key);
+
+		Assert.assertTrue(
+			"Incorrect value of \"" + key + "\" in " + path,
+			value.contains(expectedValue));
 	}
 
 	private void _testPropertyValue(

@@ -41,14 +41,14 @@ public class LayoutPageTemplateFragmentLocalServiceImpl
 	@Override
 	public LayoutPageTemplateFragment addLayoutPageTemplateFragment(
 			long userId, long groupId, long layoutPageTemplateEntryId,
-			long fragmentId, int position, ServiceContext serviceContext)
+			long fragmentEntryId, int position, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Layout Page Template Fragment
 
 		User user = userLocalService.getUser(userId);
 
-		validateFragment(fragmentId);
+		validateFragmentEntry(fragmentEntryId);
 		validateLayoutPageTemplateEntry(layoutPageTemplateEntryId);
 
 		long layoutPageTemplateFragmentId = counterLocalService.increment();
@@ -67,7 +67,7 @@ public class LayoutPageTemplateFragmentLocalServiceImpl
 			serviceContext.getModifiedDate(new Date()));
 		layoutPageTemplateFragment.setLayoutPageTemplateEntryId(
 			layoutPageTemplateEntryId);
-		layoutPageTemplateFragment.setFragmentEntryId(fragmentId);
+		layoutPageTemplateFragment.setFragmentEntryId(fragmentEntryId);
 		layoutPageTemplateFragment.setPosition(position);
 
 		layoutPageTemplateFragmentPersistence.update(
@@ -137,9 +137,11 @@ public class LayoutPageTemplateFragmentLocalServiceImpl
 			groupId, layoutPageTemplateEntryId);
 	}
 
-	protected void validateFragment(long fragmentId) throws PortalException {
+	protected void validateFragmentEntry(long fragmentEntryId)
+		throws PortalException {
+
 		FragmentEntry fragmentEntry =
-			_fragmentEntryLocalService.fetchFragmentEntry(fragmentId);
+			_fragmentEntryLocalService.fetchFragmentEntry(fragmentEntryId);
 
 		if (fragmentEntry == null) {
 			throw new NoSuchEntryException();

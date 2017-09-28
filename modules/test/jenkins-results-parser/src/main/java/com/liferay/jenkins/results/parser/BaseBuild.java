@@ -34,6 +34,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -913,7 +914,9 @@ public abstract class BaseBuild implements Build {
 						message, "jenkins", "Build Reinvoked",
 						reinvokeRule.notificationRecipients);
 				}
-				catch (InterruptedException | IOException e) {
+				catch (
+					InterruptedException | IOException | TimeoutException e) {
+
 					throw new RuntimeException(
 						"Unable to send reinvoke notification", e);
 				}
@@ -1012,7 +1015,7 @@ public abstract class BaseBuild implements Build {
 					message, "jenkins", "Slave Offline",
 					slaveOfflineRule.notificationRecipients);
 			}
-			catch (InterruptedException | IOException e) {
+			catch (InterruptedException | IOException | TimeoutException e) {
 				throw new RuntimeException(
 					"Unable to send offline slave notification", e);
 			}

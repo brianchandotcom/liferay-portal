@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeoutException;
 
 /**
  * @author Peter Yoo
@@ -169,7 +170,7 @@ public class RemoteExecutor {
 		}
 
 		private int _executeBashCommands()
-			throws InterruptedException, IOException {
+			throws InterruptedException, IOException, TimeoutException {
 
 			StringBuffer sb = new StringBuffer(
 				"ssh -o NumberOfPasswordPrompts=0 ");

@@ -95,6 +95,10 @@ public class DLFileEntryFinderImpl
 	public static final String FIND_FE_BY_C_T =
 		DLFileEntryFinder.class.getName() + ".findFE_ByC_T";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String JOIN_AE_BY_DL_FILE_ENTRY =
 		DLFileEntryFinder.class.getName() + ".joinAE_ByDLFileEntry";
 

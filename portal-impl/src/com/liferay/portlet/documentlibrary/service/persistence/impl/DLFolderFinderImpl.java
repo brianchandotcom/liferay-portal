@@ -82,6 +82,10 @@ public class DLFolderFinderImpl
 	public static final String FIND_FS_BY_G_F_A =
 		DLFolderFinder.class.getName() + ".findFS_ByG_F_A";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String JOIN_AE_BY_DL_FOLDER =
 		DLFolderFinder.class.getName() + ".joinAE_ByDLFolder";
 

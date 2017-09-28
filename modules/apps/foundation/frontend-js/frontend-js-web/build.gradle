@@ -138,6 +138,7 @@ dependencies {
 
 	lodash group: "org.webjars.bower", name: "lodash", transitive: false, version: lodashVersion
 
+	provided group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.11.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.20.0"
 	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "2.6.0"

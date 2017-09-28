@@ -16,7 +16,6 @@ package com.liferay.dynamic.data.lists.form.web.internal.portlet;
 
 import com.liferay.dynamic.data.lists.form.web.configuration.DDLFormWebConfigurationActivator;
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
-import com.liferay.dynamic.data.lists.form.web.internal.converter.DDMFormRuleToDDLFormRuleConverter;
 import com.liferay.dynamic.data.lists.form.web.internal.display.context.DDLFormAdminDisplayContext;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetSettings;
@@ -27,7 +26,6 @@ import com.liferay.dynamic.data.mapping.constants.DDMWebKeys;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
-import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
@@ -61,8 +59,6 @@ import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import javax.servlet.Servlet;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -202,16 +198,6 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 		_ddlRecordSetService = ddlRecordSetService;
 	}
 
-	@Reference(
-		target = "(osgi.http.whiteboard.servlet.name=com.liferay.dynamic.data.mapping.form.renderer.internal.servlet.DDMFormContextProviderServlet)",
-		unbind = "-"
-	)
-	protected void setDDMFormContextProviderServlet(
-		Servlet ddmFormContextProviderServlet) {
-
-		_ddmFormContextProviderServlet = ddmFormContextProviderServlet;
-	}
-
 	@Reference(unbind = "-")
 	protected void setDDMFormFieldTypeServicesTracker(
 		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
@@ -260,15 +246,6 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 		DDMFormValues ddmFormValues = recordSet.getSettingsDDMFormValues();
 
 		ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormRulesToDDLFormRulesConverter(
-		DDMFormRuleToDDLFormRuleConverter
-			ddmFormRulesToDDLFormRulesConverter) {
-
-		_ddmFormRulesToDDLFormRulesConverter =
-			ddmFormRulesToDDLFormRulesConverter;
 	}
 
 	@Reference(unbind = "-")
@@ -330,14 +307,12 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 				renderRequest, renderResponse,
 				_ddlFormWebConfigurationActivator.getDDLFormWebConfiguration(),
 				_ddlRecordLocalService, _ddlRecordSetService,
-				_ddmFormContextProviderServlet,
 				_ddmFormFieldTypeServicesTracker,
 				_ddmFormFieldTypesJSONSerializer, _ddmFormJSONSerializer,
 				_ddmFormLayoutJSONSerializer, _ddmFormRenderer,
-				_ddmFormRulesToDDLFormRulesConverter,
-				_ddmFormTemplateContextFactory, _ddmFormValuesFactory,
-				_ddmFormValuesMerger, _ddmStructureLocalService, _jsonFactory,
-				_storageEngine, _workflowEngineManager);
+				_ddmFormValuesFactory, _ddmFormValuesMerger,
+				_ddmStructureLocalService, _jsonFactory, _storageEngine,
+				_workflowEngineManager);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, ddlFormAdminDisplayContext);
@@ -368,18 +343,11 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 	private DDLRecordLocalService _ddlRecordLocalService;
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
 	private DDLRecordSetService _ddlRecordSetService;
-	private Servlet _ddmFormContextProviderServlet;
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 	private DDMFormFieldTypesJSONSerializer _ddmFormFieldTypesJSONSerializer;
 	private DDMFormJSONSerializer _ddmFormJSONSerializer;
 	private DDMFormLayoutJSONSerializer _ddmFormLayoutJSONSerializer;
 	private DDMFormRenderer _ddmFormRenderer;
-	private DDMFormRuleToDDLFormRuleConverter
-		_ddmFormRulesToDDLFormRulesConverter;
-
-	@Reference
-	private DDMFormTemplateContextFactory _ddmFormTemplateContextFactory;
-
 	private DDMFormValuesFactory _ddmFormValuesFactory;
 	private DDMFormValuesMerger _ddmFormValuesMerger;
 	private DDMStructureLocalService _ddmStructureLocalService;

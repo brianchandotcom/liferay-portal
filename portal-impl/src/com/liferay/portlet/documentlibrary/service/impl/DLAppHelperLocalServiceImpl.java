@@ -1625,9 +1625,8 @@ public class DLAppHelperLocalServiceImpl
 		long dlFileEntryClassNameId = classNameLocalService.getClassNameId(
 			DLFileEntry.class);
 
-		List<DLFileEntry> dlFileEntries =
-			dlFileEntryFinder.findByDLFileEntryC_T(
-				dlFileEntryClassNameId, dlFolder.getTreePath());
+		List<DLFileEntry> dlFileEntries = dlFileEntryFinder.findByC_T(
+			dlFileEntryClassNameId, dlFolder.getTreePath());
 
 		for (DLFileEntry dlFileEntry : dlFileEntries) {
 			assetEntryLocalService.updateVisible(

@@ -17,6 +17,7 @@ package com.liferay.commerce.product.content.web.internal.portlet.action;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.util.CPInstanceHelper;
+import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -34,6 +35,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
@@ -59,6 +61,9 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			actionRequest);
+
 		HttpServletResponse httpServletResponse =
 			_portal.getHttpServletResponse(actionResponse);
 
@@ -78,7 +83,11 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				jsonObject.put(
 					"manufacturerPartNumber",
 					cpInstance.getManufacturerPartNumber());
-				jsonObject.put("price", cpInstance.getPrice());
+
+				String formattedPrice = _commercePriceFormatter.format(
+					httpServletRequest, cpInstance.getPrice());
+
+				jsonObject.put("price", formattedPrice);
 				jsonObject.put("sku", cpInstance.getSku());
 			}
 			else {
@@ -119,6 +128,9 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CheckCPInstanceMVCActionCommand.class);
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;

@@ -139,6 +139,15 @@ public class StringBundlerTest {
 	}
 
 	@Test
+	public void testAppendEmptyStringArray() {
+		StringBundler sb = new StringBundler();
+
+		sb.append(new String[0]);
+
+		Assert.assertEquals(0, sb.index());
+	}
+
+	@Test
 	public void testAppendEmptyStringBundler() {
 		StringBundler sb = new StringBundler();
 

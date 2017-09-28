@@ -18,8 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
-import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateFragmentPK;
-
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -58,14 +56,29 @@ public interface LayoutPageTemplateFragmentModel extends BaseModel<LayoutPageTem
 	 *
 	 * @return the primary key of this layout page template fragment
 	 */
-	public LayoutPageTemplateFragmentPK getPrimaryKey();
+	public long getPrimaryKey();
 
 	/**
 	 * Sets the primary key of this layout page template fragment.
 	 *
 	 * @param primaryKey the primary key of this layout page template fragment
 	 */
-	public void setPrimaryKey(LayoutPageTemplateFragmentPK primaryKey);
+	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the layout page template fragment ID of this layout page template fragment.
+	 *
+	 * @return the layout page template fragment ID of this layout page template fragment
+	 */
+	public long getLayoutPageTemplateFragmentId();
+
+	/**
+	 * Sets the layout page template fragment ID of this layout page template fragment.
+	 *
+	 * @param layoutPageTemplateFragmentId the layout page template fragment ID of this layout page template fragment
+	 */
+	public void setLayoutPageTemplateFragmentId(
+		long layoutPageTemplateFragmentId);
 
 	/**
 	 * Returns the group ID of this layout page template fragment.
@@ -82,34 +95,6 @@ public interface LayoutPageTemplateFragmentModel extends BaseModel<LayoutPageTem
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the layout page template entry ID of this layout page template fragment.
-	 *
-	 * @return the layout page template entry ID of this layout page template fragment
-	 */
-	public long getLayoutPageTemplateEntryId();
-
-	/**
-	 * Sets the layout page template entry ID of this layout page template fragment.
-	 *
-	 * @param layoutPageTemplateEntryId the layout page template entry ID of this layout page template fragment
-	 */
-	public void setLayoutPageTemplateEntryId(long layoutPageTemplateEntryId);
-
-	/**
-	 * Returns the fragment entry ID of this layout page template fragment.
-	 *
-	 * @return the fragment entry ID of this layout page template fragment
-	 */
-	public long getFragmentEntryId();
-
-	/**
-	 * Sets the fragment entry ID of this layout page template fragment.
-	 *
-	 * @param fragmentEntryId the fragment entry ID of this layout page template fragment
-	 */
-	public void setFragmentEntryId(long fragmentEntryId);
 
 	/**
 	 * Returns the company ID of this layout page template fragment.
@@ -207,6 +192,34 @@ public interface LayoutPageTemplateFragmentModel extends BaseModel<LayoutPageTem
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate);
+
+	/**
+	 * Returns the layout page template entry ID of this layout page template fragment.
+	 *
+	 * @return the layout page template entry ID of this layout page template fragment
+	 */
+	public long getLayoutPageTemplateEntryId();
+
+	/**
+	 * Sets the layout page template entry ID of this layout page template fragment.
+	 *
+	 * @param layoutPageTemplateEntryId the layout page template entry ID of this layout page template fragment
+	 */
+	public void setLayoutPageTemplateEntryId(long layoutPageTemplateEntryId);
+
+	/**
+	 * Returns the fragment entry ID of this layout page template fragment.
+	 *
+	 * @return the fragment entry ID of this layout page template fragment
+	 */
+	public long getFragmentEntryId();
+
+	/**
+	 * Sets the fragment entry ID of this layout page template fragment.
+	 *
+	 * @param fragmentEntryId the fragment entry ID of this layout page template fragment
+	 */
+	public void setFragmentEntryId(long fragmentEntryId);
 
 	/**
 	 * Returns the position of this layout page template fragment.

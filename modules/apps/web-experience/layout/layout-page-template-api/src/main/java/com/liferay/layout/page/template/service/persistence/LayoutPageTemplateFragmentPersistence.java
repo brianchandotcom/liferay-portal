@@ -148,15 +148,14 @@ public interface LayoutPageTemplateFragmentPersistence extends BasePersistence<L
 	/**
 	* Returns the layout page template fragments before and after the current layout page template fragment in the ordered set where groupId = &#63;.
 	*
-	* @param layoutPageTemplateFragmentPK the primary key of the current layout page template fragment
+	* @param layoutPageTemplateFragmentId the primary key of the current layout page template fragment
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout page template fragment
 	* @throws NoSuchPageTemplateFragmentException if a layout page template fragment with the primary key could not be found
 	*/
 	public LayoutPageTemplateFragment[] findByGroupId_PrevAndNext(
-		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK,
-		long groupId,
+		long layoutPageTemplateFragmentId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateFragment> orderByComparator)
 		throws NoSuchPageTemplateFragmentException;
 
@@ -294,7 +293,7 @@ public interface LayoutPageTemplateFragmentPersistence extends BasePersistence<L
 	/**
 	* Returns the layout page template fragments before and after the current layout page template fragment in the ordered set where groupId = &#63; and layoutPageTemplateEntryId = &#63;.
 	*
-	* @param layoutPageTemplateFragmentPK the primary key of the current layout page template fragment
+	* @param layoutPageTemplateFragmentId the primary key of the current layout page template fragment
 	* @param groupId the group ID
 	* @param layoutPageTemplateEntryId the layout page template entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -302,8 +301,8 @@ public interface LayoutPageTemplateFragmentPersistence extends BasePersistence<L
 	* @throws NoSuchPageTemplateFragmentException if a layout page template fragment with the primary key could not be found
 	*/
 	public LayoutPageTemplateFragment[] findByG_L_PrevAndNext(
-		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK,
-		long groupId, long layoutPageTemplateEntryId,
+		long layoutPageTemplateFragmentId, long groupId,
+		long layoutPageTemplateEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateFragment> orderByComparator)
 		throws NoSuchPageTemplateFragmentException;
 
@@ -443,7 +442,7 @@ public interface LayoutPageTemplateFragmentPersistence extends BasePersistence<L
 	/**
 	* Returns the layout page template fragments before and after the current layout page template fragment in the ordered set where groupId = &#63; and fragmentEntryId = &#63;.
 	*
-	* @param layoutPageTemplateFragmentPK the primary key of the current layout page template fragment
+	* @param layoutPageTemplateFragmentId the primary key of the current layout page template fragment
 	* @param groupId the group ID
 	* @param fragmentEntryId the fragment entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -451,8 +450,7 @@ public interface LayoutPageTemplateFragmentPersistence extends BasePersistence<L
 	* @throws NoSuchPageTemplateFragmentException if a layout page template fragment with the primary key could not be found
 	*/
 	public LayoutPageTemplateFragment[] findByG_F_PrevAndNext(
-		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK,
-		long groupId, long fragmentEntryId,
+		long layoutPageTemplateFragmentId, long groupId, long fragmentEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateFragment> orderByComparator)
 		throws NoSuchPageTemplateFragmentException;
 
@@ -474,6 +472,66 @@ public interface LayoutPageTemplateFragmentPersistence extends BasePersistence<L
 	public int countByG_F(long groupId, long fragmentEntryId);
 
 	/**
+	* Returns the layout page template fragment where groupId = &#63; and layoutPageTemplateEntryId = &#63; and fragmentEntryId = &#63; or throws a {@link NoSuchPageTemplateFragmentException} if it could not be found.
+	*
+	* @param groupId the group ID
+	* @param layoutPageTemplateEntryId the layout page template entry ID
+	* @param fragmentEntryId the fragment entry ID
+	* @return the matching layout page template fragment
+	* @throws NoSuchPageTemplateFragmentException if a matching layout page template fragment could not be found
+	*/
+	public LayoutPageTemplateFragment findByG_L_F(long groupId,
+		long layoutPageTemplateEntryId, long fragmentEntryId)
+		throws NoSuchPageTemplateFragmentException;
+
+	/**
+	* Returns the layout page template fragment where groupId = &#63; and layoutPageTemplateEntryId = &#63; and fragmentEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param groupId the group ID
+	* @param layoutPageTemplateEntryId the layout page template entry ID
+	* @param fragmentEntryId the fragment entry ID
+	* @return the matching layout page template fragment, or <code>null</code> if a matching layout page template fragment could not be found
+	*/
+	public LayoutPageTemplateFragment fetchByG_L_F(long groupId,
+		long layoutPageTemplateEntryId, long fragmentEntryId);
+
+	/**
+	* Returns the layout page template fragment where groupId = &#63; and layoutPageTemplateEntryId = &#63; and fragmentEntryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param groupId the group ID
+	* @param layoutPageTemplateEntryId the layout page template entry ID
+	* @param fragmentEntryId the fragment entry ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching layout page template fragment, or <code>null</code> if a matching layout page template fragment could not be found
+	*/
+	public LayoutPageTemplateFragment fetchByG_L_F(long groupId,
+		long layoutPageTemplateEntryId, long fragmentEntryId,
+		boolean retrieveFromCache);
+
+	/**
+	* Removes the layout page template fragment where groupId = &#63; and layoutPageTemplateEntryId = &#63; and fragmentEntryId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param layoutPageTemplateEntryId the layout page template entry ID
+	* @param fragmentEntryId the fragment entry ID
+	* @return the layout page template fragment that was removed
+	*/
+	public LayoutPageTemplateFragment removeByG_L_F(long groupId,
+		long layoutPageTemplateEntryId, long fragmentEntryId)
+		throws NoSuchPageTemplateFragmentException;
+
+	/**
+	* Returns the number of layout page template fragments where groupId = &#63; and layoutPageTemplateEntryId = &#63; and fragmentEntryId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param layoutPageTemplateEntryId the layout page template entry ID
+	* @param fragmentEntryId the fragment entry ID
+	* @return the number of matching layout page template fragments
+	*/
+	public int countByG_L_F(long groupId, long layoutPageTemplateEntryId,
+		long fragmentEntryId);
+
+	/**
 	* Caches the layout page template fragment in the entity cache if it is enabled.
 	*
 	* @param layoutPageTemplateFragment the layout page template fragment
@@ -492,21 +550,19 @@ public interface LayoutPageTemplateFragmentPersistence extends BasePersistence<L
 	/**
 	* Creates a new layout page template fragment with the primary key. Does not add the layout page template fragment to the database.
 	*
-	* @param layoutPageTemplateFragmentPK the primary key for the new layout page template fragment
+	* @param layoutPageTemplateFragmentId the primary key for the new layout page template fragment
 	* @return the new layout page template fragment
 	*/
-	public LayoutPageTemplateFragment create(
-		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK);
+	public LayoutPageTemplateFragment create(long layoutPageTemplateFragmentId);
 
 	/**
 	* Removes the layout page template fragment with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param layoutPageTemplateFragmentPK the primary key of the layout page template fragment
+	* @param layoutPageTemplateFragmentId the primary key of the layout page template fragment
 	* @return the layout page template fragment that was removed
 	* @throws NoSuchPageTemplateFragmentException if a layout page template fragment with the primary key could not be found
 	*/
-	public LayoutPageTemplateFragment remove(
-		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK)
+	public LayoutPageTemplateFragment remove(long layoutPageTemplateFragmentId)
 		throws NoSuchPageTemplateFragmentException;
 
 	public LayoutPageTemplateFragment updateImpl(
@@ -515,22 +571,22 @@ public interface LayoutPageTemplateFragmentPersistence extends BasePersistence<L
 	/**
 	* Returns the layout page template fragment with the primary key or throws a {@link NoSuchPageTemplateFragmentException} if it could not be found.
 	*
-	* @param layoutPageTemplateFragmentPK the primary key of the layout page template fragment
+	* @param layoutPageTemplateFragmentId the primary key of the layout page template fragment
 	* @return the layout page template fragment
 	* @throws NoSuchPageTemplateFragmentException if a layout page template fragment with the primary key could not be found
 	*/
 	public LayoutPageTemplateFragment findByPrimaryKey(
-		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK)
+		long layoutPageTemplateFragmentId)
 		throws NoSuchPageTemplateFragmentException;
 
 	/**
 	* Returns the layout page template fragment with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param layoutPageTemplateFragmentPK the primary key of the layout page template fragment
+	* @param layoutPageTemplateFragmentId the primary key of the layout page template fragment
 	* @return the layout page template fragment, or <code>null</code> if a layout page template fragment with the primary key could not be found
 	*/
 	public LayoutPageTemplateFragment fetchByPrimaryKey(
-		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK);
+		long layoutPageTemplateFragmentId);
 
 	@Override
 	public java.util.Map<java.io.Serializable, LayoutPageTemplateFragment> fetchByPrimaryKeys(

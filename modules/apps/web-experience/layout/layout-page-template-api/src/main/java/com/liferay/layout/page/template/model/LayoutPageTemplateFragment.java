@@ -38,50 +38,12 @@ public interface LayoutPageTemplateFragment
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.layout.page.template.model.impl.LayoutPageTemplateFragmentImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<LayoutPageTemplateFragment, Long> GROUP_ID_ACCESSOR =
+	public static final Accessor<LayoutPageTemplateFragment, Long> LAYOUT_PAGE_TEMPLATE_FRAGMENT_ID_ACCESSOR =
 		new Accessor<LayoutPageTemplateFragment, Long>() {
 			@Override
 			public Long get(
 				LayoutPageTemplateFragment layoutPageTemplateFragment) {
-				return layoutPageTemplateFragment.getGroupId();
-			}
-
-			@Override
-			public Class<Long> getAttributeClass() {
-				return Long.class;
-			}
-
-			@Override
-			public Class<LayoutPageTemplateFragment> getTypeClass() {
-				return LayoutPageTemplateFragment.class;
-			}
-		};
-
-	public static final Accessor<LayoutPageTemplateFragment, Long> LAYOUT_PAGE_TEMPLATE_ENTRY_ID_ACCESSOR =
-		new Accessor<LayoutPageTemplateFragment, Long>() {
-			@Override
-			public Long get(
-				LayoutPageTemplateFragment layoutPageTemplateFragment) {
-				return layoutPageTemplateFragment.getLayoutPageTemplateEntryId();
-			}
-
-			@Override
-			public Class<Long> getAttributeClass() {
-				return Long.class;
-			}
-
-			@Override
-			public Class<LayoutPageTemplateFragment> getTypeClass() {
-				return LayoutPageTemplateFragment.class;
-			}
-		};
-
-	public static final Accessor<LayoutPageTemplateFragment, Long> FRAGMENT_ENTRY_ID_ACCESSOR =
-		new Accessor<LayoutPageTemplateFragment, Long>() {
-			@Override
-			public Long get(
-				LayoutPageTemplateFragment layoutPageTemplateFragment) {
-				return layoutPageTemplateFragment.getFragmentEntryId();
+				return layoutPageTemplateFragment.getLayoutPageTemplateFragmentId();
 			}
 
 			@Override

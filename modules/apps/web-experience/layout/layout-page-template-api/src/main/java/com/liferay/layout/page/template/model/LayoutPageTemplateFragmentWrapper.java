@@ -60,15 +60,17 @@ public class LayoutPageTemplateFragmentWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("layoutPageTemplateFragmentId",
+			getLayoutPageTemplateFragmentId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("layoutPageTemplateEntryId",
-			getLayoutPageTemplateEntryId());
-		attributes.put("fragmentEntryId", getFragmentEntryId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("layoutPageTemplateEntryId",
+			getLayoutPageTemplateEntryId());
+		attributes.put("fragmentEntryId", getFragmentEntryId());
 		attributes.put("position", getPosition());
 
 		return attributes;
@@ -76,23 +78,17 @@ public class LayoutPageTemplateFragmentWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long layoutPageTemplateFragmentId = (Long)attributes.get(
+				"layoutPageTemplateFragmentId");
+
+		if (layoutPageTemplateFragmentId != null) {
+			setLayoutPageTemplateFragmentId(layoutPageTemplateFragmentId);
+		}
+
 		Long groupId = (Long)attributes.get("groupId");
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long layoutPageTemplateEntryId = (Long)attributes.get(
-				"layoutPageTemplateEntryId");
-
-		if (layoutPageTemplateEntryId != null) {
-			setLayoutPageTemplateEntryId(layoutPageTemplateEntryId);
-		}
-
-		Long fragmentEntryId = (Long)attributes.get("fragmentEntryId");
-
-		if (fragmentEntryId != null) {
-			setFragmentEntryId(fragmentEntryId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -123,6 +119,19 @@ public class LayoutPageTemplateFragmentWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Long layoutPageTemplateEntryId = (Long)attributes.get(
+				"layoutPageTemplateEntryId");
+
+		if (layoutPageTemplateEntryId != null) {
+			setLayoutPageTemplateEntryId(layoutPageTemplateEntryId);
+		}
+
+		Long fragmentEntryId = (Long)attributes.get("fragmentEntryId");
+
+		if (fragmentEntryId != null) {
+			setFragmentEntryId(fragmentEntryId);
 		}
 
 		Integer position = (Integer)attributes.get("position");
@@ -198,6 +207,16 @@ public class LayoutPageTemplateFragmentWrapper
 	}
 
 	/**
+	* Returns the layout page template fragment ID of this layout page template fragment.
+	*
+	* @return the layout page template fragment ID of this layout page template fragment
+	*/
+	@Override
+	public long getLayoutPageTemplateFragmentId() {
+		return _layoutPageTemplateFragment.getLayoutPageTemplateFragmentId();
+	}
+
+	/**
 	* Returns the modified date of this layout page template fragment.
 	*
 	* @return the modified date of this layout page template fragment
@@ -223,7 +242,7 @@ public class LayoutPageTemplateFragmentWrapper
 	* @return the primary key of this layout page template fragment
 	*/
 	@Override
-	public com.liferay.layout.page.template.service.persistence.LayoutPageTemplateFragmentPK getPrimaryKey() {
+	public long getPrimaryKey() {
 		return _layoutPageTemplateFragment.getPrimaryKey();
 	}
 
@@ -359,6 +378,17 @@ public class LayoutPageTemplateFragmentWrapper
 	}
 
 	/**
+	* Sets the layout page template fragment ID of this layout page template fragment.
+	*
+	* @param layoutPageTemplateFragmentId the layout page template fragment ID of this layout page template fragment
+	*/
+	@Override
+	public void setLayoutPageTemplateFragmentId(
+		long layoutPageTemplateFragmentId) {
+		_layoutPageTemplateFragment.setLayoutPageTemplateFragmentId(layoutPageTemplateFragmentId);
+	}
+
+	/**
 	* Sets the modified date of this layout page template fragment.
 	*
 	* @param modifiedDate the modified date of this layout page template fragment
@@ -389,8 +419,7 @@ public class LayoutPageTemplateFragmentWrapper
 	* @param primaryKey the primary key of this layout page template fragment
 	*/
 	@Override
-	public void setPrimaryKey(
-		com.liferay.layout.page.template.service.persistence.LayoutPageTemplateFragmentPK primaryKey) {
+	public void setPrimaryKey(long primaryKey) {
 		_layoutPageTemplateFragment.setPrimaryKey(primaryKey);
 	}
 

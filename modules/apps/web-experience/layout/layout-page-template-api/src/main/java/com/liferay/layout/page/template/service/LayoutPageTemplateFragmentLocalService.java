@@ -17,7 +17,6 @@ package com.liferay.layout.page.template.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.layout.page.template.model.LayoutPageTemplateFragment;
-import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateFragmentPK;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -81,11 +80,11 @@ public interface LayoutPageTemplateFragmentLocalService extends BaseLocalService
 	/**
 	* Creates a new layout page template fragment with the primary key. Does not add the layout page template fragment to the database.
 	*
-	* @param layoutPageTemplateFragmentPK the primary key for the new layout page template fragment
+	* @param layoutPageTemplateFragmentId the primary key for the new layout page template fragment
 	* @return the new layout page template fragment
 	*/
 	public LayoutPageTemplateFragment createLayoutPageTemplateFragment(
-		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK);
+		long layoutPageTemplateFragmentId);
 
 	public List<LayoutPageTemplateFragment> deleteByLayoutPageTemplateEntry(
 		long groupId, long layoutPageTemplateEntryId) throws PortalException;
@@ -105,14 +104,13 @@ public interface LayoutPageTemplateFragmentLocalService extends BaseLocalService
 	/**
 	* Deletes the layout page template fragment with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param layoutPageTemplateFragmentPK the primary key of the layout page template fragment
+	* @param layoutPageTemplateFragmentId the primary key of the layout page template fragment
 	* @return the layout page template fragment that was removed
 	* @throws PortalException if a layout page template fragment with the primary key could not be found
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public LayoutPageTemplateFragment deleteLayoutPageTemplateFragment(
-		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK)
-		throws PortalException;
+		long layoutPageTemplateFragmentId) throws PortalException;
 
 	public LayoutPageTemplateFragment deleteLayoutPageTemplateFragment(
 		long groupId, long layoutPageTemplateEntryId, long fragmentId)
@@ -186,7 +184,7 @@ public interface LayoutPageTemplateFragmentLocalService extends BaseLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutPageTemplateFragment fetchLayoutPageTemplateFragment(
-		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK);
+		long layoutPageTemplateFragmentId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -197,14 +195,13 @@ public interface LayoutPageTemplateFragmentLocalService extends BaseLocalService
 	/**
 	* Returns the layout page template fragment with the primary key.
 	*
-	* @param layoutPageTemplateFragmentPK the primary key of the layout page template fragment
+	* @param layoutPageTemplateFragmentId the primary key of the layout page template fragment
 	* @return the layout page template fragment
 	* @throws PortalException if a layout page template fragment with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutPageTemplateFragment getLayoutPageTemplateFragment(
-		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK)
-		throws PortalException;
+		long layoutPageTemplateFragmentId) throws PortalException;
 
 	/**
 	* Returns a range of all the layout page template fragments.

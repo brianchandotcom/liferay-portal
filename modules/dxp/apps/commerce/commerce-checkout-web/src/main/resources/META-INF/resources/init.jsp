@@ -26,6 +26,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.commerce.checkout.web.constants.CommerceCheckoutWebKeys" %><%@
 page import="com.liferay.commerce.checkout.web.internal.display.context.CheckoutDisplayContext" %><%@
 page import="com.liferay.commerce.checkout.web.internal.display.context.CheckoutStepBillingDisplayContext" %><%@
+page import="com.liferay.commerce.checkout.web.internal.display.context.CheckoutStepOrderSummaryDisplayContext" %><%@
 page import="com.liferay.commerce.checkout.web.util.CommerceCheckoutStep" %><%@
 page import="com.liferay.commerce.exception.CommerceAddressCityException" %><%@
 page import="com.liferay.commerce.exception.CommerceAddressCountryException" %><%@
@@ -33,15 +34,23 @@ page import="com.liferay.commerce.exception.CommerceAddressNameException" %><%@
 page import="com.liferay.commerce.exception.CommerceAddressStreetException" %><%@
 page import="com.liferay.commerce.exception.CommerceCartBillingAddressException" %><%@
 page import="com.liferay.commerce.model.CommerceAddress" %><%@
+page import="com.liferay.commerce.model.CommerceCart" %><%@
 page import="com.liferay.commerce.model.CommerceCountry" %><%@
 page import="com.liferay.commerce.model.CommerceOrder" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
-<%@ page import="java.util.List" %>
+<%@ page import="java.util.List" %><%@
+page import="java.util.StringJoiner" %>
+
+<%@
+		page import="com.liferay.commerce.product.model.CPDefinition" %><%@
+		page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+		page import="com.liferay.portal.kernel.util.KeyValuePair" %>
 
 <liferay-frontend:defineObjects />
 
@@ -50,4 +59,5 @@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 <portlet:defineObjects />
 
 <%
+	String languageId = LanguageUtil.getLanguageId(locale);
 %>

@@ -58,6 +58,7 @@ int step = 1;
 
 <portlet:renderURL var="nextStepURL">
 	<portlet:param name="checkoutStepName" value="<%= checkoutDisplayContext.getNextCheckoutStepName() %>" />
+	<portlet:param name="commerceCartId" value="<%= String.valueOf(checkoutDisplayContext.getCommerceCartId()) %>" />
 </portlet:renderURL>
 
 <aui:form action="<%= saveStepURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCheckoutStep();" %>'>
@@ -76,10 +77,10 @@ int step = 1;
 					<portlet:param name="checkoutStepName" value="<%= checkoutDisplayContext.getPreviusCheckoutStepName() %>" />
 				</portlet:renderURL>
 
-				<aui:button cssClass="btn-lg" href="<%= previusStepURL %>" type="cancel" value="previous" />
+				<aui:button cssClass="btn-lg btn-primary" href="<%= previusStepURL %>" type="cancel" value="previous" />
 			</c:if>
 
-			<aui:button cssClass="btn-lg" primary="<%= false %>" type="submit" value="next" />
+			<aui:button cssClass="btn-lg btn-primary" primary="<%= false %>" type="submit" value="next" />
 		</aui:button-row>
 	</c:if>
 </aui:form>

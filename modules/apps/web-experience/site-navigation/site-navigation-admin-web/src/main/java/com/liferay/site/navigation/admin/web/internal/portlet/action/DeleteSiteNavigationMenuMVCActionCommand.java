@@ -16,11 +16,7 @@ package com.liferay.site.navigation.admin.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.web.internal.constants.SiteNavigationAdminPortletKeys;
 import com.liferay.site.navigation.service.SiteNavigationMenuService;
 
@@ -37,35 +33,34 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN,
-		"mvc.command.name=/navigation_menu/edit_menu"
+		"mvc.command.name=/navigation_menu/delete_site_navigation_menu"
 	},
 	service = MVCActionCommand.class
 )
-public class EditMenuMVCActionCommand extends BaseMVCActionCommand {
+public class DeleteSiteNavigationMenuMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		long[] siteNavigationMenuIds = null;
 
 		long siteNavigationMenuId = ParamUtil.getLong(
 			actionRequest, "siteNavigationMenuId");
 
-		String name = ParamUtil.getString(actionRequest, "name");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
 		if (siteNavigationMenuId > 0) {
-			_siteNavigationMenuService.updateSiteNavigationMenu(
-				siteNavigationMenuId, name, serviceContext);
+			siteNavigationMenuIds = new long[] {siteNavigationMenuId};
 		}
 		else {
-			_siteNavigationMenuService.addSiteNavigationMenu(
-				themeDisplay.getScopeGroupId(), name, serviceContext);
+			siteNavigationMenuIds = ParamUtil.getLongValues(
+				actionRequest, "rowIds");
+		}
+
+		for (long deleteSiteNavigationMenuId : siteNavigationMenuIds) {
+			_siteNavigationMenuService.deleteSiteNavigationMenu(
+				deleteSiteNavigationMenuId);
 		}
 	}
 

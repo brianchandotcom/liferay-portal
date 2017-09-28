@@ -14,6 +14,8 @@
 
 package com.liferay.petra.string;
 
+import com.liferay.petra.lang.CentralizedThreadLocal;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.Writer;
@@ -131,7 +133,7 @@ public class StringBundler implements Serializable {
 	}
 
 	public StringBundler append(String[] stringArray) {
-		if (ArrayUtil.isEmpty(stringArray)) {
+		if ((stringArray == null) || (stringArray.length == 0)) {
 			return this;
 		}
 
@@ -311,9 +313,8 @@ public class StringBundler implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	static {
-		int threadLocalBufferLimit = GetterUtil.getInteger(
-			System.getProperty(
-				StringBundler.class.getName() + ".threadlocal.buffer.limit"),
+		int threadLocalBufferLimit = Integer.getInteger(
+			StringBundler.class.getName() + ".threadlocal.buffer.limit",
 			Integer.MAX_VALUE);
 
 		if ((threadLocalBufferLimit > 0) &&

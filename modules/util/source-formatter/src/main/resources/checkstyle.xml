@@ -97,6 +97,14 @@
 			<message key="concat.avoid.too.many" value="Use StringBundler instead of chaining concat when there is more than 3 parts" />
 			<message key="styling.incorrect" value="Chaining on method ''{0}'' is allowed, but follow the styling described here: https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/chaining.markdown" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.Concat">
+			<message key="end.character.invalid" value="When concatenating multiple literal strings using '+', only the last literal string can end with ''{0}''" />
+			<message key="literal.string.combine" value="Combine the literal strings ''{0}'' and ''{1}''" />
+			<message key="literal.string.move" value="Add the string ''{0}'' to the previous literal string" />
+			<message key="start.character.invalid" value="When concatenating multiple literal strings using '+', only the first literal string can start with ''{0}''" />
+			<message key="tabbing.incorrect" value="Expected indentation is ''{0}'' tabs" />
+			<message key="use.stringbundler.concat" value="Use method ''StringBundler.concat'' when concatenating more than 3 strings" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.ConstantName">
 			<message key="name.invalidPrivatePattern" value="Private constant ''{0}'' must match pattern ''{1}''" />
 			<message key="name.invalidProtectedPublicPattern" value="Protected or public constant ''{0}'' must match pattern ''{1}''" />
@@ -167,14 +175,6 @@
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.PersistenceCall">
 			<message key="persistence.call.illegal" value="Illegal call to class ''{0}'', see LPS-68923" />
-		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.Concat">
-			<message key="end.character.invalid" value="When concatenating multiple literal strings using '+', only the last literal string can end with ''{0}''" />
-			<message key="literal.string.combine" value="Combine the literal strings ''{0}'' and ''{1}''" />
-			<message key="literal.string.move" value="Add the string ''{0}'' to the previous literal string" />
-			<message key="start.character.invalid" value="When concatenating multiple literal strings using '+', only the first literal string can start with ''{0}''" />
-			<message key="tabbing.incorrect" value="Expected indentation is ''{0}'' tabs" />
-			<message key="use.stringbundler.concat" value="Use method ''StringBundler.concat'' when concatenating more than 3 strings" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.SelfReference">
 			<message key="self.reference.unneeded" value="Reference to method ''{0}'' does not need ''{1}''" />

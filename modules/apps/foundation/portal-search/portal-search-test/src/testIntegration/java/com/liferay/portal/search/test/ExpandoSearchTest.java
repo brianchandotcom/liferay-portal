@@ -15,12 +15,16 @@
 package com.liferay.portal.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -41,10 +45,13 @@ import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portlet.documentlibrary.util.DLSearcher;
+import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.expando.util.test.ExpandoTestUtil;
 
 import java.io.Serializable;
@@ -90,15 +97,45 @@ public class ExpandoSearchTest {
 	}
 
 	@After
-	public void tearDown() {
+	public void tearDown() throws Exception {
+		for (FileEntry fileEntry : _fileEntries) {
+			DLAppLocalServiceUtil.deleteFileEntry(fileEntry.getFileEntryId());
+		}
+
+		_fileEntries.clear();
+
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+	}
+
+	@Test
+	public void testIndexerWithMultipleSearchClassNames() throws Exception {
+		String columnName = "searchClassNamesColumn";
+
+		addExpandoColumn(
+			DLFileEntry.class, columnName,
+			ExpandoColumnConstants.INDEX_TYPE_TEXT);
+
+		String columnValue = "Software Engineer";
+
+		addDLFileEntry(columnName, columnValue);
+
+		Indexer<?> indexer = DLSearcher.getInstance();
+
+		Assert.assertEquals(
+			_toString(
+				Arrays.asList(
+					DLFileEntry.class.getName(), DLFolder.class.getName())),
+			_toString(Arrays.asList(indexer.getSearchClassNames())));
+
+		assertSearch(indexer, columnValue, columnValue);
 	}
 
 	@Test
 	public void testKeyword() throws Exception {
 		String columnName = "keywordColumn";
 
-		addExpandoColumn(columnName, ExpandoColumnConstants.INDEX_TYPE_KEYWORD);
+		addExpandoColumn(
+			User.class, columnName, ExpandoColumnConstants.INDEX_TYPE_KEYWORD);
 
 		String columnValue = "Software Engineer";
 
@@ -142,7 +179,8 @@ public class ExpandoSearchTest {
 	public void testKeywordCaseInsensitive() throws Exception {
 		String columnName = "keywordColumn";
 
-		addExpandoColumn(columnName, ExpandoColumnConstants.INDEX_TYPE_KEYWORD);
+		addExpandoColumn(
+			User.class, columnName, ExpandoColumnConstants.INDEX_TYPE_KEYWORD);
 
 		String[] columnValues =
 			{"Software", "SoftWare", "softWare", "software"};
@@ -172,7 +210,8 @@ public class ExpandoSearchTest {
 	public void testNotSearchable() throws Exception {
 		String columnName = "notSearchableColumn";
 
-		addExpandoColumn(columnName, ExpandoColumnConstants.INDEX_TYPE_NONE);
+		addExpandoColumn(
+			User.class, columnName, ExpandoColumnConstants.INDEX_TYPE_NONE);
 
 		String columnValue = "Software Engineer";
 
@@ -216,7 +255,8 @@ public class ExpandoSearchTest {
 	public void testText() throws Exception {
 		String columnName = "textColumn";
 
-		addExpandoColumn(columnName, ExpandoColumnConstants.INDEX_TYPE_TEXT);
+		addExpandoColumn(
+			User.class, columnName, ExpandoColumnConstants.INDEX_TYPE_TEXT);
 
 		String columnValue = "Software Engineer";
 
@@ -257,12 +297,37 @@ public class ExpandoSearchTest {
 		assertNoHits("\"ngineer\"");
 	}
 
-	protected void addExpandoColumn(String columnName, int indexType)
+	protected FileEntry addDLFileEntry(String columnName, String columnValue)
+		throws Exception {
+
+		ServiceContext serviceContext = getServiceContext(
+			columnName, columnValue);
+
+		FileEntry fileEntry = DLAppTestUtil.addFileEntryWithWorkflow(
+			TestPropsValues.getUserId(), TestPropsValues.getGroupId(), 0,
+			StringPool.BLANK, RandomTestUtil.randomString(), true,
+			serviceContext);
+
+		_fileEntries.add(fileEntry);
+
+		return fileEntry;
+	}
+
+	protected void addExpandoColumn(
+			Class<?> clazz, String columnName, int indexType)
 		throws Exception {
 
 		ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
 			TestPropsValues.getCompanyId(),
-			_classNameLocalService.getClassNameId(User.class), "CUSTOM_FIELDS");
+			_classNameLocalService.getClassNameId(clazz), "CUSTOM_FIELDS");
+
+		if (expandoTable == null) {
+			expandoTable = _expandoTableLocalService.addTable(
+				TestPropsValues.getCompanyId(),
+				_classNameLocalService.getClassNameId(clazz), "CUSTOM_FIELDS");
+
+			_expandoTables.add(expandoTable);
+		}
 
 		ExpandoColumn expandoColumn = ExpandoTestUtil.addColumn(
 			expandoTable, columnName, ExpandoColumnConstants.STRING);
@@ -327,14 +392,8 @@ public class ExpandoSearchTest {
 	protected User addUser(String columnName, String columnValue)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
-		Map<String, Serializable> expandoBridgeAttributes = new HashMap<>();
-
-		expandoBridgeAttributes.put(columnName, columnValue);
-
-		serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+		ServiceContext serviceContext = getServiceContext(
+			columnName, columnValue);
 
 		return addUser(serviceContext);
 	}
@@ -343,7 +402,8 @@ public class ExpandoSearchTest {
 		assertSearch(keywords);
 	}
 
-	protected void assertSearch(String keywords, String... expectedColumnValues)
+	protected void assertSearch(
+			Indexer<?> indexer, String keywords, String... expectedColumnValues)
 		throws Exception {
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
@@ -354,11 +414,17 @@ public class ExpandoSearchTest {
 
 		queryConfig.addSelectedFieldNames(Field.ANY);
 
-		Hits hits = _indexer.search(searchContext);
+		Hits hits = indexer.search(searchContext);
 
 		Assert.assertEquals(
 			hits.toString(), _toString(Arrays.asList(expectedColumnValues)),
 			_toString(getExpandoColumnValues(hits)));
+	}
+
+	protected void assertSearch(String keywords, String... expectedColumnValues)
+		throws Exception {
+
+		assertSearch(_indexer, keywords, expectedColumnValues);
 	}
 
 	protected String getExpandoColumnValue(Document document) {
@@ -383,6 +449,22 @@ public class ExpandoSearchTest {
 		}
 
 		return values;
+	}
+
+	protected ServiceContext getServiceContext(
+			String columnName, String columnValue)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		Map<String, Serializable> expandoBridgeAttributes = new HashMap<>();
+
+		expandoBridgeAttributes.put(columnName, columnValue);
+
+		serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+
+		return serviceContext;
 	}
 
 	private static String _toString(List<String> list) {
@@ -410,6 +492,12 @@ public class ExpandoSearchTest {
 
 	@DeleteAfterTestRun
 	private final List<ExpandoColumn> _expandoColumns = new ArrayList<>();
+
+	@DeleteAfterTestRun
+	private final List<ExpandoTable> _expandoTables = new ArrayList<>();
+
+	@DeleteAfterTestRun
+	private final List<FileEntry> _fileEntries = new ArrayList<>();
 
 	private Indexer<User> _indexer;
 	private PermissionChecker _originalPermissionChecker;

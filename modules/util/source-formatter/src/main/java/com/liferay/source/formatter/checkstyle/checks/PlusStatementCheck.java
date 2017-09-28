@@ -40,6 +40,10 @@ public class PlusStatementCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+		_checkPlusOperator(detailAST);
+	}
+
+	private void _checkPlusOperator(DetailAST detailAST) {
 		_checkMultiPlusStatement(detailAST);
 		_checkTabbing(detailAST);
 

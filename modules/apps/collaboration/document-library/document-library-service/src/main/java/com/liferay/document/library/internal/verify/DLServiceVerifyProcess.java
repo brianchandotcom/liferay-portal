@@ -64,7 +64,6 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portlet.documentlibrary.webdav.DLWebDAVUtil;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Collections;
@@ -195,12 +194,48 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 
 				@Override
 				public void performAction(DLFileVersion dlFileVersion) {
-					InputStream inputStream = null;
+					String title = DLUtil.getTitleWithExtension(
+						dlFileVersion.getTitle(), dlFileVersion.getExtension());
 
-					try {
-						inputStream = _dlFileEntryLocalService.getFileAsStream(
-							dlFileVersion.getFileEntryId(),
-							dlFileVersion.getVersion(), false);
+					try (InputStream inputStream =
+							_dlFileEntryLocalService.getFileAsStream(
+								dlFileVersion.getFileEntryId(),
+								dlFileVersion.getVersion(), false)) {
+
+						String mimeType = MimeTypesUtil.getContentType(
+							inputStream, title);
+
+						if (mimeType.equals(dlFileVersion.getMimeType())) {
+							return;
+						}
+
+						dlFileVersion.setMimeType(mimeType);
+
+						_dlFileVersionLocalService.updateDLFileVersion(
+							dlFileVersion);
+
+						try {
+							DLFileEntry dlFileEntry =
+								dlFileVersion.getFileEntry();
+
+							if (Objects.equals(
+									dlFileEntry.getVersion(),
+									dlFileVersion.getVersion())) {
+
+								dlFileEntry.setMimeType(mimeType);
+
+								_dlFileEntryLocalService.updateDLFileEntry(
+									dlFileEntry);
+							}
+						}
+						catch (PortalException pe) {
+							if (_log.isWarnEnabled()) {
+								_log.warn(
+									"Unable to get file entry " +
+										dlFileVersion.getFileEntryId(),
+									pe);
+							}
+						}
 					}
 					catch (Exception e) {
 						if (_log.isWarnEnabled()) {
@@ -225,44 +260,6 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 
 								_log.warn(sb.toString(), e);
 							}
-						}
-
-						return;
-					}
-
-					String title = DLUtil.getTitleWithExtension(
-						dlFileVersion.getTitle(), dlFileVersion.getExtension());
-
-					String mimeType = getMimeType(inputStream, title);
-
-					if (mimeType.equals(dlFileVersion.getMimeType())) {
-						return;
-					}
-
-					dlFileVersion.setMimeType(mimeType);
-
-					_dlFileVersionLocalService.updateDLFileVersion(
-						dlFileVersion);
-
-					try {
-						DLFileEntry dlFileEntry = dlFileVersion.getFileEntry();
-
-						if (Objects.equals(
-								dlFileEntry.getVersion(),
-								dlFileVersion.getVersion())) {
-
-							dlFileEntry.setMimeType(mimeType);
-
-							_dlFileEntryLocalService.updateDLFileEntry(
-								dlFileEntry);
-						}
-					}
-					catch (PortalException pe) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to get file entry " +
-									dlFileVersion.getFileEntryId(),
-								pe);
 						}
 					}
 				}
@@ -498,21 +495,6 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 		updateClassNameId();
 		updateFileEntryAssets();
 		updateFolderAssets();
-	}
-
-	protected String getMimeType(InputStream inputStream, String title) {
-		String mimeType = null;
-
-		try (InputStream is = inputStream) {
-			mimeType = MimeTypesUtil.getContentType(is, title);
-		}
-		catch (IOException ioe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(ioe, ioe);
-			}
-		}
-
-		return mimeType;
 	}
 
 	protected void renameDuplicateTitle(DLFileEntry dlFileEntry)

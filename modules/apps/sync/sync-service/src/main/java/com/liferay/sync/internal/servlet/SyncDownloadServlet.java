@@ -573,11 +573,10 @@ public class SyncDownloadServlet extends HttpServlet {
 			return getPatchDownloadServletInputStream(
 				userId, groupId, uuid, sourceVersionId, targetVersionId);
 		}
-		else {
-			return getFileDownloadServletInputStream(
-				userId, groupId, uuid, zipObjectJSONObject.getString("version"),
-				zipObjectJSONObject.getLong("versionId"));
-		}
+
+		return getFileDownloadServletInputStream(
+			userId, groupId, uuid, zipObjectJSONObject.getString("version"),
+			zipObjectJSONObject.getLong("versionId"));
 	}
 
 	private static final String _ERROR_HEADER = "Sync-Error";

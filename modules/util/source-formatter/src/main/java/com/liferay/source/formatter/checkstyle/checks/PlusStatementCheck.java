@@ -43,6 +43,7 @@ public class PlusStatementCheck extends BaseCheck {
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
 		_checkMultiLinesPlusStatement(detailAST);
+		_checkMultiPlusStatement(detailAST);
 		_checkTabbing(detailAST);
 
 		if (detailAST.getChildCount() != 2) {
@@ -171,6 +172,51 @@ public class PlusStatementCheck extends BaseCheck {
 
 		if (lineNumbers.size() > 3) {
 			log(detailAST.getLineNo(), _MSG_STATEMENT_TOO_LONG);
+		}
+	}
+
+	private void _checkMultiPlusStatement(DetailAST detailAST) {
+		DetailAST parentAST = detailAST.getParent();
+
+		if (parentAST.getType() == TokenTypes.PLUS) {
+			return;
+		}
+
+		if (DetailASTUtil.hasParentWithTokenType(
+				detailAST, TokenTypes.ANNOTATION) ||
+			!DetailASTUtil.hasParentWithTokenType(
+				detailAST, TokenTypes.CTOR_DEF, TokenTypes.METHOD_DEF)) {
+
+			return;
+		}
+
+		boolean containsLiteralString = false;
+		int count = 1;
+
+		DetailAST firstChild = detailAST;
+
+		while (true) {
+			if (firstChild.getType() != TokenTypes.PLUS) {
+				break;
+			}
+
+			if (!containsLiteralString) {
+				List<DetailAST> listeralStringASTList =
+					DetailASTUtil.getAllChildTokens(
+						firstChild, false, TokenTypes.STRING_LITERAL);
+
+				if (!listeralStringASTList.isEmpty()) {
+					containsLiteralString = true;
+				}
+			}
+
+			count++;
+
+			firstChild = firstChild.getFirstChild();
+		}
+
+		if (containsLiteralString && (count > 3)) {
+			log(detailAST.getLineNo(), _MSG_USE_STRINGBUNDLER_CONCAT);
 		}
 	}
 
@@ -321,6 +367,9 @@ public class PlusStatementCheck extends BaseCheck {
 
 	private static final String _MSG_STATEMENT_TOO_LONG =
 		"plus.statement.too.long";
+
+	private static final String _MSG_USE_STRINGBUNDLER_CONCAT =
+		"use.stringbundler.concat";
 
 	private int _maxLineLength = 80;
 

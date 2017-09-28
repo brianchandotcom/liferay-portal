@@ -61,10 +61,10 @@ public class CommerceAddressDisplayContext {
 		_commerceRegionService = commerceRegionService;
 		_httpServletRequest = httpServletRequest;
 
-		cpRequestHelper = new CPRequestHelper(httpServletRequest);
+		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
 
-		_liferayPortletRequest = cpRequestHelper.getLiferayPortletRequest();
-		_liferayPortletResponse = cpRequestHelper.getLiferayPortletResponse();
+		_liferayPortletRequest = _cpRequestHelper.getLiferayPortletRequest();
+		_liferayPortletResponse = _cpRequestHelper.getLiferayPortletResponse();
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
@@ -96,7 +96,7 @@ public class CommerceAddressDisplayContext {
 		}
 
 		_commerceAddress = _actionHelper.getCommerceAddress(
-			cpRequestHelper.getRenderRequest());
+			_cpRequestHelper.getRenderRequest());
 
 		return _commerceAddress;
 	}
@@ -240,41 +240,41 @@ public class CommerceAddressDisplayContext {
 	public SearchContainer<CommerceAddress> getSearchContainer()
 		throws PortalException {
 
-		if (searchContainer != null) {
-			return searchContainer;
+		if (_searchContainer != null) {
+			return _searchContainer;
 		}
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		searchContainer = new SearchContainer<>(
+		_searchContainer = new SearchContainer<>(
 			_liferayPortletRequest, getPortletURL(), null, null);
 
-		searchContainer.setEmptyResultsMessage("there-are-no-addresses");
+		_searchContainer.setEmptyResultsMessage("there-are-no-addresses");
 
 		OrderByComparator<CommerceAddress> orderByComparator =
 			CommerceAddressPortletUtil.getCommerceAddressOrderByComparator(
 				"create-date", "desc");
 
-		searchContainer.setOrderByCol("create-date");
-		searchContainer.setOrderByComparator(orderByComparator);
-		searchContainer.setOrderByType("desc");
+		_searchContainer.setOrderByCol("create-date");
+		_searchContainer.setOrderByComparator(orderByComparator);
+		_searchContainer.setOrderByType("desc");
 
 		int total = _commerceAddressService.getCommerceAddressesCount(
 			themeDisplay.getScopeGroupId(), themeDisplay.getUserId());
 
-		searchContainer.setTotal(total);
+		_searchContainer.setTotal(total);
 
 		List<CommerceAddress> results =
 			_commerceAddressService.getCommerceAddresses(
 				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				searchContainer.getStart(), searchContainer.getEnd(),
+				_searchContainer.getStart(), _searchContainer.getEnd(),
 				orderByComparator);
 
-		searchContainer.setResults(results);
+		_searchContainer.setResults(results);
 
-		return searchContainer;
+		return _searchContainer;
 	}
 
 	private final ActionHelper _actionHelper;
@@ -284,11 +284,11 @@ public class CommerceAddressDisplayContext {
 	private final CommerceAddressService _commerceAddressService;
 	private final CommerceCountryService _commerceCountryService;
 	private final CommerceRegionService _commerceRegionService;
+	private final CPRequestHelper _cpRequestHelper;
 	private long _displayStyleGroupId;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private final CPRequestHelper cpRequestHelper;
-	private SearchContainer<CommerceAddress> searchContainer;
+	private SearchContainer<CommerceAddress> _searchContainer;
 
 }

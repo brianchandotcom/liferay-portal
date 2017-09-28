@@ -134,7 +134,7 @@ public class ActionHelper {
 				cpDefinitionId);
 		}
 
-		if ((cpDefinition!= null) && cpDefinition.isInTrash()) {
+		if ((cpDefinition != null) && cpDefinition.isInTrash()) {
 			throw new NoSuchCPDefinitionException(
 				"{cpDefinitionId=" + cpDefinitionId + "}");
 		}

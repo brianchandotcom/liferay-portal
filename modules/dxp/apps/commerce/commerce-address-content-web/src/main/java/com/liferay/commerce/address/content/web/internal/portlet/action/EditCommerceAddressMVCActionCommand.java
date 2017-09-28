@@ -90,8 +90,8 @@ public class EditCommerceAddressMVCActionCommand extends BaseMVCActionCommand {
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else if (e instanceof CommerceAddressCityException ||
-					 e instanceof CommerceAddressStreetException ||
-					 e instanceof CommerceAddressCountryException) {
+					 e instanceof CommerceAddressCountryException ||
+					 e instanceof CommerceAddressStreetException) {
 
 				hideDefaultErrorMessage(actionRequest);
 

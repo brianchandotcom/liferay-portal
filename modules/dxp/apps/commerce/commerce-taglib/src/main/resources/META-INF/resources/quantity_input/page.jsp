@@ -23,6 +23,7 @@ int maxCartQuantity = (int)request.getAttribute("liferay-commerce:quantity-input
 int minCartQuantity = (int)request.getAttribute("liferay-commerce:quantity-input:minCartQuantity");
 int multipleCartQuantity = (int)request.getAttribute("liferay-commerce:quantity-input:multipleCartQuantity");
 boolean useSelect = (boolean)request.getAttribute("liferay-commerce:quantity-input:useSelect");
+int value = (int)request.getAttribute("liferay-commerce:quantity-input:value");
 
 long cpDefinitionId = cpDefinition.getCPDefinitionId();
 
@@ -38,7 +39,7 @@ if (Validator.isNotNull(allowedCartQuantity)) {
 <div class="commerce-quantity-container">
 	<c:choose>
 		<c:when test="<%= !useSelect %>">
-			<aui:input label="quantity" name='<%= cpDefinitionId + "Quantity" %>' type="text">
+			<aui:input label="quantity" name='<%= cpDefinitionId + "Quantity" %>' type="text" value="<%= value %>">
 				<aui:validator name="number" />
 				<aui:validator name="min"><%= minCartQuantity %></aui:validator>
 				<aui:validator name="max"><%= maxCartQuantity %></aui:validator>
@@ -51,7 +52,7 @@ if (Validator.isNotNull(allowedCartQuantity)) {
 				for (int curQuantity : allowedCartQuantities) {
 				%>
 
-					<aui:option label="<%= curQuantity %>" value="<%= curQuantity %>" />
+					<aui:option label="<%= curQuantity %>" selected="<%= curQuantity == value %>" value="<%= curQuantity %>" />
 
 				<%
 				}
@@ -76,7 +77,7 @@ if (Validator.isNotNull(allowedCartQuantity)) {
 				for (int i = 1; i < 10; i++) {
 				%>
 
-					<aui:option label="<%= quantity %>" value="<%= quantity %>" />
+					<aui:option label="<%= quantity %>" selected="<%= quantity == value %>" value="<%= quantity %>" />
 
 				<%
 					if ((maxCartQuantity > 0) && (quantity == maxCartQuantity)) {

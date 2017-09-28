@@ -11,7 +11,6 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
 package com.liferay.commerce.exception;
 
 import aQute.bnd.annotation.ProviderType;
@@ -31,9 +30,7 @@ public class CommercePriceListExpirationDateException extends PortalException {
 		super(msg);
 	}
 
-	public CommercePriceListExpirationDateException(
-		String msg, Throwable cause) {
-
+	public CommercePriceListExpirationDateException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 

@@ -491,6 +491,19 @@
 		</if>
 
 		<if>
+			<isset var="webContentColor" />
+			<then>
+				<execute function="Click" locator1="DDMField#TEXT">
+					<var name="key_fieldName" value="Color" />
+				</execute>
+
+				<execute function="Click" locator1="DDMField#COLOR_PICKER_COLOR">
+					<var name="key_colorCode" value="${webContentColor}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
 			<isset var="webContentDate" />
 			<then>
 				<execute function="Type" locator1="DDMField#DATE" value1="${webContentDate}" />

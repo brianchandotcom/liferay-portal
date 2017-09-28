@@ -292,8 +292,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			project, LiferayExtension.class);
 
 		final GitRepo gitRepo = _getGitRepo(project.getProjectDir());
-		boolean privateProject = _isPrivateProject(project);
-		final boolean testProject = GradleUtil.isTestProject(project);
+		boolean privateProject = GradlePluginsDefaultsUtil.isPrivateProject(
+			project);
+		final boolean testProject = GradlePluginsDefaultsUtil.isTestProject(
+			project);
 
 		File versionOverrideFile = _getVersionOverrideFile(project, gitRepo);
 
@@ -437,7 +439,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		_configureTasksFindBugs(project);
 		_configureTasksJavaCompile(project);
 		_configureTasksPmd(project);
-		_configureTasksPublishNodeModule(project);
 
 		_addTaskUpdateFileSnapshotVersions(project);
 
@@ -501,7 +502,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					_configureTaskUpdateFileVersions(
 						updateFileVersionsTask, portalRootDir);
 
-					GradleUtil.setProjectSnapshotVersion(
+					GradlePluginsDefaultsUtil.setProjectSnapshotVersion(
 						project, _SNAPSHOT_PROPERTY_NAMES);
 
 					if (GradleUtil.hasPlugin(project, CachePlugin.class)) {
@@ -1612,7 +1613,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		ArtifactHandler artifactHandler = project.getArtifacts();
 
-		if (!GradleUtil.isSnapshot(project, _SNAPSHOT_PROPERTY_NAMES)) {
+		if (!GradlePluginsDefaultsUtil.isSnapshot(
+				project, _SNAPSHOT_PROPERTY_NAMES)) {
+
 			SourceSet sourceSet = GradleUtil.getSourceSet(
 				project, SourceSet.MAIN_SOURCE_SET_NAME);
 
@@ -1837,7 +1840,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				public void execute(ExternalDependency externalDependency) {
 					String version = externalDependency.getVersion();
 
-					if (version.endsWith(GradleUtil.SNAPSHOT_VERSION_SUFFIX)) {
+					if (version.endsWith(
+							GradlePluginsDefaultsUtil.
+								SNAPSHOT_VERSION_SUFFIX)) {
+
 						throw new GradleException(
 							"Please use a timestamp version for " +
 								externalDependency);
@@ -2167,7 +2173,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		Map<String, Object> args = new HashMap<>();
 
 		args.put("configuration", SourceFormatterPlugin.CONFIGURATION_NAME);
-		args.put("group", GradleUtil.PORTAL_TOOL_GROUP);
+		args.put("group", _GROUP);
 		args.put("maxAge", _PORTAL_TOOL_MAX_AGE);
 		args.put("name", _SOURCE_FORMATTER_PORTAL_TOOL_NAME);
 		args.put("throwError", Boolean.TRUE);
@@ -3087,18 +3093,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		pmd.setClasspath(null);
 	}
 
-	private void _configureTaskPublishNodeModule(
-		PublishNodeModuleTask publishNodeModuleTask) {
-
-		publishNodeModuleTask.setModuleAuthor(
-			"Nathan Cavanaugh <nathan.cavanaugh@liferay.com> " +
-				"(https://github.com/natecavanaugh)");
-		publishNodeModuleTask.setModuleBugsUrl("https://issues.liferay.com/");
-		publishNodeModuleTask.setModuleLicense("LGPL");
-		publishNodeModuleTask.setModuleMain("package.json");
-		publishNodeModuleTask.setModuleRepository("liferay/liferay-portal");
-	}
-
 	private void _configureTaskReplaceRegexJSMatches(
 		ReplaceRegexTask replaceRegexTask) {
 
@@ -3215,23 +3209,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				@Override
 				public void execute(Pmd pmd) {
 					_configureTaskPmd(pmd);
-				}
-
-			});
-	}
-
-	private void _configureTasksPublishNodeModule(Project project) {
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			PublishNodeModuleTask.class,
-			new Action<PublishNodeModuleTask>() {
-
-				@Override
-				public void execute(
-					PublishNodeModuleTask publishNodeModuleTask) {
-
-					_configureTaskPublishNodeModule(publishNodeModuleTask);
 				}
 
 			});
@@ -3364,10 +3341,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			return;
 		}
 
-		if (GradleUtil.isSnapshot(project)) {
-			return;
-		}
-
 		TaskContainer taskContainer = project.getTasks();
 
 		TaskCollection<PublishNodeModuleTask> publishNodeModuleTasks =
@@ -3375,8 +3348,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		uploadArchivesTask.dependsOn(publishNodeModuleTasks);
 
-		uploadArchivesTask.finalizedBy(
-			updateFileVersionsTask, updateVersionTask);
+		if (!GradlePluginsDefaultsUtil.isSnapshot(project)) {
+			uploadArchivesTask.finalizedBy(
+				updateFileVersionsTask, updateVersionTask);
+		}
 	}
 
 	private void _forceProjectDependenciesEvaluation(Project project) {
@@ -3854,16 +3829,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		return false;
 	}
 
-	private boolean _isPrivateProject(Project project) {
-		String path = project.getPath();
-
-		if (path.startsWith(":private:")) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private boolean _isPublishing(Project project) {
 		Gradle gradle = project.getGradle();
 
@@ -3928,7 +3893,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private boolean _isTaglibDependency(String group, String name) {
-		if (group.equals("com.liferay") && name.startsWith("com.liferay.") &&
+		if (group.equals(_GROUP) && name.startsWith("com.liferay.") &&
 			name.contains(".taglib")) {
 
 			return true;

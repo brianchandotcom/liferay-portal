@@ -173,7 +173,8 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 						writeDigestTask.setEnabled(false);
 					}
 
-					GradleUtil.setProjectSnapshotVersion(project);
+					GradlePluginsDefaultsUtil.setProjectSnapshotVersion(
+						project);
 
 					// setProjectSnapshotVersion must be called before
 					// configureTaskUploadArchives, because the latter one needs
@@ -280,17 +281,9 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 	private PublishNodeModuleTask _addTaskPublishNodeModule(
 		Task zipResourcesImporterArchivesTask) {
 
-		Project project = zipResourcesImporterArchivesTask.getProject();
-
-		String projectPath = project.getPath();
-
-		if (projectPath.startsWith(":private:")) {
-			return null;
-		}
-
 		PublishNodeModuleTask publishNodeModuleTask = GradleUtil.addTask(
-			project, PUBLISH_NODE_MODULE_TASK_NAME,
-			PublishNodeModuleTask.class);
+			zipResourcesImporterArchivesTask.getProject(),
+			PUBLISH_NODE_MODULE_TASK_NAME, PublishNodeModuleTask.class);
 
 		publishNodeModuleTask.dependsOn(zipResourcesImporterArchivesTask);
 		publishNodeModuleTask.setDescription(
@@ -704,18 +697,13 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 			};
 
-			if (publishNodeModuleTask != null) {
-				publishNodeModuleTask.doFirst(action);
-			}
-
+			publishNodeModuleTask.doFirst(action);
 			uploadArchivesTask.doFirst(action);
 		}
 
-		if (!GradleUtil.isSnapshot(project)) {
-			if (publishNodeModuleTask != null) {
-				uploadArchivesTask.dependsOn(publishNodeModuleTask);
-			}
+		uploadArchivesTask.dependsOn(publishNodeModuleTask);
 
+		if (!GradlePluginsDefaultsUtil.isSnapshot(project)) {
 			uploadArchivesTask.finalizedBy(updateVersionTask);
 		}
 	}

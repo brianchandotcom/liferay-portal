@@ -87,7 +87,8 @@ public class LiferayAntDefaultsPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
-					GradleUtil.setProjectSnapshotVersion(project);
+					GradlePluginsDefaultsUtil.setProjectSnapshotVersion(
+						project);
 
 					// setProjectSnapshotVersion must be called before
 					// configureTaskUploadArchives, because the latter one needs
@@ -204,7 +205,7 @@ public class LiferayAntDefaultsPlugin implements Plugin<Project> {
 	private void _configureTaskUploadArchives(
 		Project project, Task updatePluginVersionTask) {
 
-		if (GradleUtil.isSnapshot(project)) {
+		if (GradlePluginsDefaultsUtil.isSnapshot(project)) {
 			return;
 		}
 

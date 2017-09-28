@@ -42,6 +42,7 @@ dependencies {
 	projectTemplates project(":sdk:project-templates-mvc-portlet")
 	projectTemplates project(":sdk:project-templates-npm-portlet")
 	projectTemplates project(":sdk:project-templates-npm-angular-portlet")
+	projectTemplates project(":sdk:project-templates-npm-billboardjs-portlet")
 	projectTemplates project(":sdk:project-templates-panel-app")
 	projectTemplates project(":sdk:project-templates-portlet")
 	projectTemplates project(":sdk:project-templates-portlet-configuration-icon")

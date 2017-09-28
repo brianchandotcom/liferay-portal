@@ -77,6 +77,7 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.osgi.felix.util", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.concurrent", version: "1.0.0"
+	provided group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.memory", version: "1.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
@@ -85,6 +86,7 @@ dependencies {
 	provided group: "org.springframework", name: "spring-beans", version: "4.1.9.RELEASE"
 	provided group: "org.springframework", name: "spring-context", version: "4.1.9.RELEASE"
 	provided group: "org.springframework", name: "spring-core", version: "4.1.9.RELEASE"
+	provided group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	provided project(":core:jaxws-osgi-bridge")
 	provided project(":core:portal-app-license-api")
 	provided project(":core:registry-api")

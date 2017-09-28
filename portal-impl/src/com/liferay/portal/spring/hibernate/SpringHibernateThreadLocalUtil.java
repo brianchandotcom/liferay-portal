@@ -14,8 +14,7 @@
 
 package com.liferay.portal.spring.hibernate;
 
-import com.liferay.portal.kernel.util.CentralizedThreadLocal;
-import com.liferay.portal.kernel.util.InitialThreadLocal;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.lang.reflect.Field;
@@ -117,8 +116,9 @@ public class SpringHibernateThreadLocalUtil {
 					Object value = threadLocal.get();
 
 					if (threadLocal instanceof NamedThreadLocal) {
-						threadLocal = new InitialThreadLocal<>(
-							(String)nameField.get(threadLocal), () -> null);
+						threadLocal = new CentralizedThreadLocal<>(
+							(String)nameField.get(threadLocal), () -> null,
+							false);
 					}
 					else {
 						threadLocal = new CentralizedThreadLocal<>(false);

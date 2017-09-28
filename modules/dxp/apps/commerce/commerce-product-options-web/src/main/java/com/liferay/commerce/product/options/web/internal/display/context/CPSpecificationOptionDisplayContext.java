@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.product.options.web.internal.display.context;
 
-import com.liferay.commerce.product.constants.CPOptionCategoryConstants;
 import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.options.web.internal.portlet.action.ActionHelper;
@@ -24,15 +23,13 @@ import com.liferay.commerce.product.service.CPSpecificationOptionService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author Andrea Di Giorgi
@@ -65,26 +62,17 @@ public class CPSpecificationOptionDisplayContext
 			CPSpecificationOption cpSpecificationOption)
 		throws PortalException {
 
-		long cpOptionCategoryId = cpSpecificationOption.getCPOptionCategoryId();
-
-		if (cpOptionCategoryId ==
-				CPOptionCategoryConstants.DEFAULT_CP_OPTION_CATEGORY_ID) {
-
-			return StringPool.BLANK;
-		}
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		try {
-			CPOptionCategory cpOptionCategory =
-				_cpOptionCategoryService.getCPOptionCategory(
-					cpOptionCategoryId);
+		long cpOptionCategoryId = cpSpecificationOption.getCPOptionCategoryId();
 
+		CPOptionCategory cpOptionCategory =
+			_cpOptionCategoryService.fetchCPOptionCategory(cpOptionCategoryId);
+
+		if (cpOptionCategory != null) {
 			return cpOptionCategory.getTitle(themeDisplay.getLocale());
-		}
-		catch (PrincipalException pe) {
 		}
 
 		return StringPool.BLANK;

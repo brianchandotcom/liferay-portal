@@ -395,14 +395,6 @@
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
 	</model>
-	<model name="com.liferay.document.library.kernel.model.DLSyncEvent">
-		<field name="syncEventId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="modifiedTime" type="long" />
-		<field name="event" type="String" />
-		<field name="type" type="String" />
-		<field name="typePK" type="long" />
-	</model>
 	<model name="com.liferay.expando.kernel.model.ExpandoColumn">
 		<field name="columnId" type="long" />
 		<field name="companyId" type="long" />

@@ -131,6 +131,10 @@ label {
 	@extend .row;
 }
 
+.form-inline label {
+	display: inline-block;
+}
+
 .input-lg {
 	@extend .form-control-lg;
 }

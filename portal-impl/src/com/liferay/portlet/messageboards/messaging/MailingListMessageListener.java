@@ -254,16 +254,11 @@ public class MailingListMessageListener extends BaseMessageListener {
 			for (ObjectValuePair<String, InputStream> inputStreamOVP :
 					inputStreamOVPs) {
 
-				InputStream inputStream = inputStreamOVP.getValue();
-
-				if (inputStream != null) {
-					try {
-						inputStream.close();
-					}
-					catch (IOException ioe) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(ioe, ioe);
-						}
+				try (InputStream inputStream = inputStreamOVP.getValue()) {
+				}
+				catch (IOException ioe) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(ioe, ioe);
 					}
 				}
 			}

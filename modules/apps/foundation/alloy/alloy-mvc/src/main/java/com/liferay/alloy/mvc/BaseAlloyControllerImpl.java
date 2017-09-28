@@ -41,6 +41,8 @@ import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServiceUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletBag;
@@ -431,7 +433,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 	protected String buildIncludePath(String viewPath) {
 		StringBundler sb = new StringBundler(5);
 
-		sb.append("/WEB-INF/jsp/");
+		sb.append("/alloy_mvc/jsp/");
 		sb.append(portlet.getFriendlyURLMapping());
 		sb.append("/views/");
 
@@ -1267,7 +1269,26 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 
 		searchContext.setEnd(end);
 
-		Class<?> indexerClass = Class.forName(indexer.getClassNames()[0]);
+		String modelClassName = indexer.getClassNames()[0];
+
+		int pos = modelClassName.indexOf(".model.");
+
+		String simpleClassName = modelClassName.substring(pos + 7);
+
+		String serviceClassName =
+			modelClassName.substring(0, pos) + ".service." + simpleClassName +
+				"LocalService";
+
+		IdentifiableOSGiService service =
+			IdentifiableOSGiServiceUtil.getIdentifiableOSGiService(
+				serviceClassName);
+
+		Class<?> serviceClass = service.getClass();
+
+		Method createModelMethod = serviceClass.getMethod(
+			"create" + simpleClassName, new Class<?>[] {long.class});
+
+		Class<?> indexerClass = createModelMethod.getReturnType();
 
 		if (!GroupedModel.class.isAssignableFrom(indexerClass)) {
 			searchContext.setGroupIds(null);
@@ -1528,7 +1549,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		}
 
 		String touchPath =
-			"/WEB-INF/jsp/" + portlet.getFriendlyURLMapping() +
+			"/alloy_mvc/jsp/" + portlet.getFriendlyURLMapping() +
 				"/views/touch.jsp";
 
 		if (log.isDebugEnabled()) {
@@ -1562,7 +1583,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 
 	protected static final String VIEW_PATH_ERROR = "VIEW_PATH_ERROR";
 
-	protected static Log log = LogFactoryUtil.getLog(
+	protected static final Log log = LogFactoryUtil.getLog(
 		BaseAlloyControllerImpl.class);
 
 	protected String actionPath;

@@ -36,7 +36,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Brian Wing Shun Chan
  * @author Connor McKay
  */
-public class AlloyFriendlyURLMapper extends DefaultFriendlyURLMapper {
+public abstract class AlloyFriendlyURLMapper extends DefaultFriendlyURLMapper {
 
 	@Override
 	public String buildPath(LiferayPortletURL liferayPortletURL) {

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.alloy.mvc.internal.json.web.service;
+package com.liferay.alloy.mvc.json.web.service;
 
 import com.liferay.alloy.mvc.AlloyController;
 import com.liferay.alloy.mvc.AlloyPortlet;

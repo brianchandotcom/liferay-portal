@@ -27,11 +27,13 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class CPDefinitionInventoryImpl extends CPDefinitionInventoryBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a cp definition inventory model instance should use the {@link com.liferay.commerce.model.CPDefinitionInventory} interface instead.
 	 */
 	public CPDefinitionInventoryImpl() {
 	}
+
 }

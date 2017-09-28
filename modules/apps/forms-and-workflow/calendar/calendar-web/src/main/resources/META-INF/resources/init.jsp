@@ -29,7 +29,8 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.asset.kernel.model.AssetEntry" %><%@
+<%@ page import="com.liferay.asset.browser.web.internal.constants.AssetBrowserPortletKeys" %><%@
+page import="com.liferay.asset.kernel.model.AssetEntry" %><%@
 page import="com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil" %><%@
 page import="com.liferay.calendar.constants.CalendarActionKeys" %><%@
 page import="com.liferay.calendar.exception.CalendarBookingDurationException" %><%@

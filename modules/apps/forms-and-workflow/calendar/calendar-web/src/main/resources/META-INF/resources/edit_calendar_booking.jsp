@@ -24,7 +24,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 if (Validator.isNotNull(redirect)) {
 	String ppid = HttpUtil.getParameter(redirect, "p_p_id", false);
 
-	if (ppid.equals("com_liferay_asset_browser_web_portlet_AssetBrowserPortlet")) {
+	if (ppid.equals(AssetBrowserPortletKeys.ASSET_BROWSER)) {
 		useRedirect = true;
 	}
 }

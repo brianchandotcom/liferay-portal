@@ -143,6 +143,11 @@
 			<finder-column name="groupId" />
 			<finder-column name="fragmentEntryId" />
 		</finder>
+		<finder name="G_L_F" return-type="LayoutPageTemplateFragment" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="layoutPageTemplateEntryId" />
+			<finder-column name="fragmentEntryId" />
+		</finder>
 
 		<!-- References -->
 

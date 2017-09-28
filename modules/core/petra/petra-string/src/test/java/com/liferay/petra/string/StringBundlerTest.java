@@ -14,14 +14,14 @@
 
 package com.liferay.petra.string;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -533,8 +533,8 @@ public class StringBundlerTest {
 		sb.append("test2");
 		sb.append("test3");
 
-		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-			new UnsyncByteArrayOutputStream();
+		ByteArrayOutputStream unsyncByteArrayOutputStream =
+			new ByteArrayOutputStream();
 
 		try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(
 				unsyncByteArrayOutputStream)) {
@@ -544,8 +544,8 @@ public class StringBundlerTest {
 
 		byte[] bytes = unsyncByteArrayOutputStream.toByteArray();
 
-		UnsyncByteArrayInputStream unsyncByteArrayInputStream =
-			new UnsyncByteArrayInputStream(bytes);
+		ByteArrayInputStream unsyncByteArrayInputStream =
+			new ByteArrayInputStream(bytes);
 
 		StringBundler cloneSB = null;
 

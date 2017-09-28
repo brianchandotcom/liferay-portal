@@ -4,3 +4,4 @@ Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Document Library
 Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Service: true

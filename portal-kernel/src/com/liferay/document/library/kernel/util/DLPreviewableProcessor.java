@@ -578,7 +578,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		}
 		catch (IOException ioe) {
 			if (_log.isWarnEnabled()) {
-				_log.error(ioe, ioe);
+				_log.warn(ioe, ioe);
 			}
 		}
 	}

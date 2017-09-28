@@ -27,7 +27,6 @@ import com.liferay.portal.lpkg.deployer.LPKGVerifier;
 import com.liferay.portal.util.ShutdownUtil;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 
 import java.nio.file.Files;
@@ -91,11 +90,7 @@ public class BundleManager {
 	}
 
 	public Manifest getManifest(File file) {
-		ZipFile zipFile = null;
-
-		try {
-			zipFile = new ZipFile(file);
-
+		try (ZipFile zipFile = new ZipFile(file)) {
 			ZipEntry zipEntry = zipFile.getEntry("META-INF/MANIFEST.MF");
 
 			if (zipEntry == null) {
@@ -107,15 +102,6 @@ public class BundleManager {
 			}
 		}
 		catch (Exception e) {
-		}
-		finally {
-			if (zipFile != null) {
-				try {
-					zipFile.close();
-				}
-				catch (IOException ioe) {
-				}
-			}
 		}
 
 		return null;

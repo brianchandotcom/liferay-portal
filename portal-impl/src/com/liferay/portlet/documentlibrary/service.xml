@@ -38,7 +38,6 @@
 		<reference entity="DLFileShortcut" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLFileVersion" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLFolder" package-path="com.liferay.portlet.documentlibrary" />
-		<reference entity="DLSyncEvent" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="ExpandoValue" package-path="com.liferay.portlet.expando" />
 		<reference entity="RatingsEntry" package-path="com.liferay.portlet.ratings" />
 		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />

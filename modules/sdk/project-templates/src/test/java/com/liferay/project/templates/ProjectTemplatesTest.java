@@ -74,6 +74,7 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -542,6 +543,47 @@ public class ProjectTemplatesTest {
 
 		_testBuildTemplatePortletWithPortletSuffix(
 			"mvc-portlet", "MVCPortlet", "META-INF/resources/init.jsp",
+			"META-INF/resources/view.jsp");
+	}
+
+	@Ignore
+	@Test
+	public void testBuildTemplateNPMPortlet() throws Exception {
+
+		_testBuildTemplatePortlet(
+			"npm-portlet", "MVCPortlet", "META-INF/resources/init.jsp",
+			"META-INF/resources/view.jsp");
+	}
+
+	@Ignore
+	@Test
+	public void testBuildTemplateNPMPortletInWorkspace() throws Exception {
+		_testBuildTemplateWithWorkspace(
+			"npm-portlet", "foo", "build/libs/foo-1.0.0.jar");
+	}
+
+	@Ignore
+	@Test
+	public void testBuildTemplateNPMPortletWithPackage() throws Exception {
+		_testBuildTemplatePortletWithPackage(
+			"npm-portlet", "MVCPortlet", "META-INF/resources/init.jsp",
+			"META-INF/resources/view.jsp");
+	}
+
+	@Ignore
+	@Test
+	public void testBuildTemplateNPMPortletWithPortletName() throws Exception {
+		_testBuildTemplatePortletWithPortletName(
+			"npm-portlet", "MVCPortlet", "META-INF/resources/init.jsp",
+			"META-INF/resources/view.jsp");
+	}
+
+	@Test
+	public void testBuildTemplateNPMPortletWithPortletSuffix()
+		throws Exception {
+
+		_testBuildTemplatePortletWithPortletSuffix(
+			"npm-portlet", "MVCPortlet", "META-INF/resources/init.jsp",
 			"META-INF/resources/view.jsp");
 	}
 

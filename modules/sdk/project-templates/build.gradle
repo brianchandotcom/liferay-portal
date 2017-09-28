@@ -40,6 +40,7 @@ dependencies {
 	projectTemplates project(":sdk:project-templates-freemarker-portlet")
 	projectTemplates project(":sdk:project-templates-layout-template")
 	projectTemplates project(":sdk:project-templates-mvc-portlet")
+	projectTemplates project(":sdk:project-templates-npm-portlet")
 	projectTemplates project(":sdk:project-templates-panel-app")
 	projectTemplates project(":sdk:project-templates-portlet")
 	projectTemplates project(":sdk:project-templates-portlet-configuration-icon")

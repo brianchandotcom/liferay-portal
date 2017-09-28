@@ -287,10 +287,8 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 	protected FileEntry saveTempImageFileEntry(ActionRequest actionRequest)
 		throws Exception {
 
-		FileEntry tempFileEntry = null;
-
 		try {
-			tempFileEntry = UploadImageUtil.getTempImageFileEntry(
+			FileEntry tempFileEntry = UploadImageUtil.getTempImageFileEntry(
 				actionRequest);
 
 			try (InputStream tempImageStream =

@@ -83,7 +83,7 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
 			cpFriendlyURLEntry.getClassPK());
 
-		if ((cpDefinition!= null) && !cpDefinition.isApproved()) {
+		if ((cpDefinition != null) && !cpDefinition.isApproved()) {
 			throw new NoSuchCPDefinitionException(
 				"{cpDefinitionId=" + cpFriendlyURLEntry.getClassPK() + "}");
 		}

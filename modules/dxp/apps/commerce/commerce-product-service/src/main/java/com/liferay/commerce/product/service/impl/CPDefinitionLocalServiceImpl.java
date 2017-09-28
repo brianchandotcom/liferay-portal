@@ -102,7 +102,8 @@ public class CPDefinitionLocalServiceImpl
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, boolean hasDefaultInstance, ServiceContext serviceContext)
+			boolean neverExpire, boolean hasDefaultInstance,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition
@@ -222,14 +223,13 @@ public class CPDefinitionLocalServiceImpl
 			Map<Locale, String> metaTitleMap,
 			Map<Locale, String> metaKeywordsMap,
 			Map<Locale, String> metaDescriptionMap, String layoutUuid,
-			String productTypeName, boolean ignoreSKUCombinations,
-			double width, double height, double depth, double weight,
-			String ddmStructureKey, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			ServiceContext serviceContext)
+			String productTypeName, boolean ignoreSKUCombinations, double width,
+			double height, double depth, double weight, String ddmStructureKey,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
 		return addCPDefinition(

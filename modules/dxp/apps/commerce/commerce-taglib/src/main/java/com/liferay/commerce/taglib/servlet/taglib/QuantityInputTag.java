@@ -62,6 +62,10 @@ public class QuantityInputTag extends IncludeTag {
 
 			_cpDefinition = CPDefinitionServiceUtil.getCPDefinition(
 				_cpDefinitionId);
+
+			if (_value == 0) {
+				_value = _minCartQuantity;
+			}
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {
@@ -89,6 +93,10 @@ public class QuantityInputTag extends IncludeTag {
 		_useSelect = useSelect;
 	}
 
+	public void setValue(int value) {
+		_value = value;
+	}
+
 	@Override
 	protected void cleanUp() {
 		_allowedCartQuantity = null;
@@ -98,6 +106,7 @@ public class QuantityInputTag extends IncludeTag {
 		_minCartQuantity = 0;
 		_multipleCartQuantity = 0;
 		_useSelect = true;
+		_value = 0;
 	}
 
 	@Override
@@ -123,6 +132,7 @@ public class QuantityInputTag extends IncludeTag {
 			_multipleCartQuantity);
 		request.setAttribute(
 			"liferay-commerce:quantity-input:useSelect", _useSelect);
+		request.setAttribute("liferay-commerce:quantity-input:value", _value);
 	}
 
 	private static final String _PAGE = "/quantity_input/page.jsp";
@@ -137,5 +147,6 @@ public class QuantityInputTag extends IncludeTag {
 	private int _minCartQuantity;
 	private int _multipleCartQuantity;
 	private boolean _useSelect = true;
+	private int _value;
 
 }

@@ -160,7 +160,7 @@ cache digest.
 - [LPS-74770]: Run the `"test"` script (if declared in the `package.json` file)
 when executing the `check` task.
 
-## 3.2.0 - 2017-09-27
+## 3.2.0 - 2017-09-28
 
 ### Added
 - [LPS-74933]: Add the ability to merge the existing `package.json` of the

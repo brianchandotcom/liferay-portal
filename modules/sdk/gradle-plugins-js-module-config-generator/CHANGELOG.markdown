@@ -161,7 +161,7 @@ as required.
 - [LPS-74770]: Update the [Liferay Gradle Plugins Node] dependency to version
 3.1.1.
 
-## 2.1.20 - 2017-09-27
+## 2.1.20 - 2017-09-28
 
 ### Changed
 - [LPS-74933]: Update the [Liferay Gradle Plugins Node] dependency to version

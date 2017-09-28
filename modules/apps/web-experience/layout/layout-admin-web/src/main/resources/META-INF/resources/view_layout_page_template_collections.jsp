@@ -22,6 +22,48 @@ LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPa
 renderResponse.setTitle(LanguageUtil.get(request, "page-templates"));
 %>
 
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<portlet:renderURL var="mainURL" />
+
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item href="<%= mainURL.toString() %>" label="page-templates" selected="<%= true %>" />
+	</aui:nav>
+
+	<c:if test="<%= layoutPageTemplateDisplayContext.isShowLayoutPageTemplateCollectionsSearch() %>">
+		<portlet:renderURL var="portletURL">
+			<portlet:param name="mvcPath" value="/view_layout_page_template_collections.jsp" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="displayStyle" value="<%= layoutPageTemplateDisplayContext.getDisplayStyle() %>" />
+		</portlet:renderURL>
+
+		<aui:nav-bar-search>
+			<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</aui:nav-bar-search>
+	</c:if>
+</aui:nav-bar>
+
+<liferay-frontend:management-bar
+	disabled="<%= layoutPageTemplateDisplayContext.isDisabledLayoutPageTemplateCollectionsManagementBar() %>"
+	includeCheckBox="<%= true %>"
+	searchContainerId="layoutPageTemplateCollections"
+>
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= currentURLObj %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= layoutPageTemplateDisplayContext.getOrderByCol() %>"
+			orderByType="<%= layoutPageTemplateDisplayContext.getOrderByType() %>"
+			orderColumns="<%= layoutPageTemplateDisplayContext.getOrderColumns() %>"
+			portletURL="<%= currentURLObj %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+</liferay-frontend:management-bar>
+
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<liferay-ui:search-container
 		id="layoutPageTemplateCollections"

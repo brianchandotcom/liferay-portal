@@ -66,6 +66,16 @@ public class LayoutPageTemplateDisplayContext {
 		return _displayStyle;
 	}
 
+	public String getKeywords() {
+		if (_keywords != null) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(_request, "keywords");
+
+		return _keywords;
+	}
+
 	public SearchContainer getLayoutPageTemplateCollectionsSearchContainer()
 		throws PortalException {
 
@@ -81,13 +91,18 @@ public class LayoutPageTemplateDisplayContext {
 				_renderRequest, _renderResponse.createRenderURL(), null,
 				"there-are-no-collections");
 
-		layoutPageTemplateCollectionsSearchContainer.setEmptyResultsMessage(
-			"there-are-no-collections.-you-can-add-a-collection-by-clicking-" +
-				"the-plus-button-on-the-bottom-right-corner");
+		if (!isSearch()) {
+			layoutPageTemplateCollectionsSearchContainer.setEmptyResultsMessage(
+				"there-are-no-collections.-you-can-add-a-collection-by-" +
+					"clicking-the-plus-button-on-the-bottom-right-corner");
 
-		layoutPageTemplateCollectionsSearchContainer.
-			setEmptyResultsMessageCssClass(
-				"taglib-empty-result-message-header-has-plus-btn");
+			layoutPageTemplateCollectionsSearchContainer.
+				setEmptyResultsMessageCssClass(
+					"taglib-empty-result-message-header-has-plus-btn");
+		}
+		else {
+			layoutPageTemplateCollectionsSearchContainer.setSearch(true);
+		}
 
 		layoutPageTemplateCollectionsSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
@@ -106,18 +121,37 @@ public class LayoutPageTemplateDisplayContext {
 		layoutPageTemplateCollectionsSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
 
-		List<LayoutPageTemplateCollection> layoutPageTemplateCollections =
-			LayoutPageTemplateCollectionServiceUtil.
-				getLayoutPageTemplateCollections(
-					themeDisplay.getScopeGroupId(),
-					layoutPageTemplateCollectionsSearchContainer.getStart(),
-					layoutPageTemplateCollectionsSearchContainer.getEnd(),
-					orderByComparator);
+		List<LayoutPageTemplateCollection> layoutPageTemplateCollections = null;
+		int layoutPageTemplateCollectionsCount = 0;
 
-		int layoutPageTemplateCollectionsCount =
-			LayoutPageTemplateCollectionServiceUtil.
-				getLayoutPageTemplateCollectionsCount(
-					themeDisplay.getScopeGroupId());
+		if (isSearch()) {
+			layoutPageTemplateCollections =
+				LayoutPageTemplateCollectionServiceUtil.
+					getLayoutPageTemplateCollections(
+						themeDisplay.getScopeGroupId(), getKeywords(),
+						layoutPageTemplateCollectionsSearchContainer.getStart(),
+						layoutPageTemplateCollectionsSearchContainer.getEnd(),
+						orderByComparator);
+
+			layoutPageTemplateCollectionsCount =
+				LayoutPageTemplateCollectionServiceUtil.
+					getLayoutPageTemplateCollectionsCount(
+						themeDisplay.getScopeGroupId(), getKeywords());
+		}
+		else {
+			layoutPageTemplateCollections =
+				LayoutPageTemplateCollectionServiceUtil.
+					getLayoutPageTemplateCollections(
+						themeDisplay.getScopeGroupId(),
+						layoutPageTemplateCollectionsSearchContainer.getStart(),
+						layoutPageTemplateCollectionsSearchContainer.getEnd(),
+						orderByComparator);
+
+			layoutPageTemplateCollectionsCount =
+				LayoutPageTemplateCollectionServiceUtil.
+					getLayoutPageTemplateCollectionsCount(
+						themeDisplay.getScopeGroupId());
+		}
 
 		layoutPageTemplateCollectionsSearchContainer.setTotal(
 			layoutPageTemplateCollectionsCount);
@@ -152,7 +186,61 @@ public class LayoutPageTemplateDisplayContext {
 		return _orderByType;
 	}
 
+	public String[] getOrderColumns() {
+		return new String[] {"create-date", "name"};
+	}
+
+	public boolean isDisabledLayoutPageTemplateCollectionsManagementBar()
+		throws PortalException {
+
+		if (_hasLayoutPageTemplateCollectionsResults()) {
+			return false;
+		}
+
+		if (isSearch()) {
+			return true;
+		}
+
+		return true;
+	}
+
+	public boolean isSearch() {
+		if (Validator.isNotNull(getKeywords())) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isShowLayoutPageTemplateCollectionsSearch()
+		throws PortalException {
+
+		if (_hasLayoutPageTemplateCollectionsResults()) {
+			return true;
+		}
+
+		if (isSearch()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _hasLayoutPageTemplateCollectionsResults()
+		throws PortalException {
+
+		SearchContainer searchContainer =
+			getLayoutPageTemplateCollectionsSearchContainer();
+
+		if (searchContainer.getTotal() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private String _displayStyle;
+	private String _keywords;
 	private SearchContainer _layoutPageTemplateCollectionsSearchContainer;
 	private String _orderByCol;
 	private String _orderByType;

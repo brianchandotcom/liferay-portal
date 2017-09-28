@@ -29,7 +29,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.asset.kernel.model.AssetVocabulary" %><%@
 page import="com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil" %><%@
 page import="com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil" %><%@
-page import="com.liferay.asset.util.impl.AssetUtil" %><%@
+page import="com.liferay.asset.taglib.internal.util.AssetCategoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@

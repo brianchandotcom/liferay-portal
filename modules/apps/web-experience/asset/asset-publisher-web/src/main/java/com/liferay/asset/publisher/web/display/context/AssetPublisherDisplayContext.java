@@ -35,6 +35,7 @@ import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfigurat
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.web.internal.action.AssetEntryActionRegistry;
+import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.asset.util.impl.AssetPublisherAddItemHolder;
@@ -62,7 +63,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
@@ -786,13 +786,23 @@ public class AssetPublisherDisplayContext {
 			liferayPortletRequest, liferayPortletResponse);
 
 		for (long groupId : groupIds) {
-			Map<String, PortletURL> addPortletURLs =
-				AssetUtil.getAddPortletURLs(
+			List<AssetPublisherAddItemHolder> assetPublisherAddItemHolders =
+				AssetUtil.getAssetPublisherAddItemHolders(
 					liferayPortletRequest, liferayPortletResponse, groupId,
 					getClassNameIds(), getClassTypeIds(),
 					getAllAssetCategoryIds(), getAllAssetTagNames(), redirect);
 
-			if (MapUtil.isNotEmpty(addPortletURLs)) {
+			if (ListUtil.isNotEmpty(assetPublisherAddItemHolders)) {
+				Map<String, PortletURL> addPortletURLs = new HashMap<>();
+
+				for (AssetPublisherAddItemHolder assetPublisherAddItemHolder :
+						assetPublisherAddItemHolders) {
+
+					addPortletURLs.put(
+						assetPublisherAddItemHolder.getName(),
+						assetPublisherAddItemHolder.getPortletURL());
+				}
+
 				scopeAddPortletURLs.put(groupId, addPortletURLs);
 			}
 
@@ -1013,7 +1023,7 @@ public class AssetPublisherDisplayContext {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		_defaultAssetPublisher = AssetUtil.isDefaultAssetPublisher(
+		_defaultAssetPublisher = AssetPublisherWebUtil.isDefaultAssetPublisher(
 			themeDisplay.getLayout(), portletDisplay.getId(),
 			getPortletResource());
 
@@ -1329,7 +1339,8 @@ public class AssetPublisherDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		String defaultAssetPublisherPortletId =
-			AssetUtil.getDefaultAssetPublisherId(themeDisplay.getLayout());
+			AssetPublisherWebUtil.getDefaultAssetPublisherId(
+				themeDisplay.getLayout());
 
 		if (isDefaultAssetPublisher() ||
 			Validator.isNull(defaultAssetPublisherPortletId) ||

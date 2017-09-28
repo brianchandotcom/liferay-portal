@@ -4,6 +4,7 @@ dependencies {
 	compileInclude group: "opensymphony", name: "oscache", version: "2.4.1"
 
 	provided fileTree(dir: "../../../../lib/portal", includes: ["ecs.jar", "freshcookies-security.jar"])
+	provided group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.wiki.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.wiki.engine.input.editor.common", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"

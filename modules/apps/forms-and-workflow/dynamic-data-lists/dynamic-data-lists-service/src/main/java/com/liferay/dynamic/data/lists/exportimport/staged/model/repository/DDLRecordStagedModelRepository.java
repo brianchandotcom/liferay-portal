@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
+import com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
@@ -41,6 +42,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -81,9 +83,13 @@ public class DDLRecordStagedModelRepository
 			serviceContext.setUuid(ddlRecord.getUuid());
 		}
 
-		return _ddlRecordLocalService.addRecord(
+		DDLRecord importedRecord = _ddlRecordLocalService.addRecord(
 			userId, ddlRecord.getGroupId(), ddlRecord.getRecordSetId(),
 			ddlRecord.getDisplayIndex(), ddmFormValues, serviceContext);
+
+		updateVersions(importedRecord, ddlRecord.getVersion());
+
+		return importedRecord;
 	}
 
 	@Override
@@ -199,9 +205,13 @@ public class DDLRecordStagedModelRepository
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			ddlRecord);
 
-		return _ddlRecordLocalService.updateRecord(
+		DDLRecord importedRecord = _ddlRecordLocalService.updateRecord(
 			userId, ddlRecord.getRecordId(), false, ddlRecord.getDisplayIndex(),
 			ddmFormValues, serviceContext);
+
+		updateVersions(importedRecord, ddlRecord.getVersion());
+
+		return importedRecord;
 	}
 
 	protected DynamicQuery getRecordSetDynamicQuery(int scope) {
@@ -258,10 +268,33 @@ public class DDLRecordStagedModelRepository
 		return recordVersionDynamicQuery;
 	}
 
+	protected void updateVersions(DDLRecord importedRecord, String version)
+		throws PortalException {
+
+		if (Objects.equals(importedRecord.getVersion(), version)) {
+			return;
+		}
+
+		DDLRecordVersion importedRecordVersion =
+			importedRecord.getRecordVersion();
+
+		importedRecordVersion.setVersion(version);
+
+		_ddlRecordVersionLocalService.updateDDLRecordVersion(
+			importedRecordVersion);
+
+		importedRecord.setVersion(version);
+
+		_ddlRecordLocalService.updateDDLRecord(importedRecord);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDLRecordStagedModelRepository.class);
 
 	@Reference
 	private DDLRecordLocalService _ddlRecordLocalService;
+
+	@Reference
+	private DDLRecordVersionLocalService _ddlRecordVersionLocalService;
 
 }

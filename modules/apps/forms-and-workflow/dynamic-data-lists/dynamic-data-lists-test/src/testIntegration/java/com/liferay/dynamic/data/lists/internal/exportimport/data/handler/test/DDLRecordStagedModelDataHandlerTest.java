@@ -21,8 +21,10 @@ import com.liferay.dynamic.data.lists.helper.DDLRecordSetTestHelper;
 import com.liferay.dynamic.data.lists.helper.DDLRecordTestHelper;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
+import com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
@@ -114,7 +116,7 @@ public class DDLRecordStagedModelDataHandlerTest
 	}
 
 	@Test
-	public void testExportImpotWithEmptyDocumentLibraryField()
+	public void testExportImportWithEmptyDocumentLibraryField()
 		throws Exception {
 
 		String documentLibraryFieldName = "Attachment";
@@ -144,6 +146,45 @@ public class DDLRecordStagedModelDataHandlerTest
 				ddlRecord.getUuid(), liveGroup.getGroupId());
 
 		Assert.assertNotNull(importedDDLRecord);
+	}
+
+	@Test
+	public void testVersionMatchingAfterExportImport() throws Exception {
+		String fieldName = "Text";
+
+		DDLRecordTestHelper recordTestHelper = new DDLRecordTestHelper(
+			stagingGroup, addRecordSetWithTextField(fieldName));
+
+		DDMFormValues ddmFormValues =
+			recordTestHelper.createEmptyDDMFormValues();
+
+		DDMFormFieldValue ddmFormFieldValue = createTextDDMFormFieldValue(
+			ddmFormValues.getDefaultLocale(), fieldName, "text 1");
+
+		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+
+		DDLRecord ddlRecord = recordTestHelper.addRecord(
+			ddmFormValues, WorkflowConstants.ACTION_PUBLISH);
+
+		String version = "2.0";
+
+		DDLRecordVersion ddlRecordVersion = ddlRecord.getRecordVersion();
+
+		ddlRecord.setVersion(version);
+		ddlRecordVersion.setVersion(version);
+
+		DDLRecordVersionLocalServiceUtil.updateDDLRecordVersion(
+			ddlRecordVersion);
+		DDLRecordLocalServiceUtil.updateDDLRecord(ddlRecord);
+
+		exportImportStagedModel(ddlRecord);
+
+		DDLRecord importedDDLRecord =
+			DDLRecordLocalServiceUtil.getDDLRecordByUuidAndGroupId(
+				ddlRecord.getUuid(), liveGroup.getGroupId());
+
+		Assert.assertEquals(
+			ddlRecord.getVersion(), importedDDLRecord.getVersion());
 	}
 
 	@Override
@@ -197,6 +238,25 @@ public class DDLRecordStagedModelDataHandlerTest
 			false);
 
 		ddmForm.addDDMFormField(fileEntryFormField);
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			stagingGroup.getGroupId(), DDLRecordSet.class.getName(), ddmForm);
+
+		DDLRecordSetTestHelper recordSetTestHelper = new DDLRecordSetTestHelper(
+			stagingGroup);
+
+		return recordSetTestHelper.addRecordSet(ddmStructure);
+	}
+
+	protected DDLRecordSet addRecordSetWithTextField(String fieldName)
+		throws Exception {
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField textFormField = DDMFormTestUtil.createTextDDMFormField(
+			fieldName, true, false, false);
+
+		ddmForm.addDDMFormField(textFormField);
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			stagingGroup.getGroupId(), DDLRecordSet.class.getName(), ddmForm);
@@ -269,6 +329,21 @@ public class DDLRecordStagedModelDataHandlerTest
 
 		return DDMFormValuesTestUtil.createDDMFormFieldValue(
 			fieldName, localizedValue);
+	}
+
+	protected DDMFormFieldValue createTextDDMFormFieldValue(
+			Locale locale, String fieldName, String fieldValue)
+		throws Exception {
+
+		LocalizedValue localizedValue = new LocalizedValue();
+
+		localizedValue.addString(locale, fieldValue);
+
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				fieldName, localizedValue);
+
+		return ddmFormFieldValue;
 	}
 
 	@Override

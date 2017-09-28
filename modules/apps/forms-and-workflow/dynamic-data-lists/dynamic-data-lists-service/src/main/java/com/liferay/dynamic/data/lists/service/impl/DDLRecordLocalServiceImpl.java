@@ -867,7 +867,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		record.setModifiedDate(serviceContext.getModifiedDate(null));
 
-		ddlRecordPersistence.update(record);
+		record = ddlRecordPersistence.update(record);
 
 		// Record version
 

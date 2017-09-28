@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.document.library.sync.model.DLSyncEvent">
+		<field name="syncEventId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="modifiedTime" type="long" />
+		<field name="event" type="String" />
+		<field name="type" type="String" />
+		<field name="typePK" type="long" />
+	</model>
+</model-hints>

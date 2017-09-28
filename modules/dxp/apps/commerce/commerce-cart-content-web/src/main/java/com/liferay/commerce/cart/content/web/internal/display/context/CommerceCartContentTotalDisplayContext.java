@@ -15,16 +15,23 @@
 package com.liferay.commerce.cart.content.web.internal.display.context;
 
 import com.liferay.commerce.cart.content.web.internal.portlet.configuration.CommerceCartContentTotalPortletInstanceConfiguration;
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceCartItemService;
 import com.liferay.commerce.util.CommerceCartHelper;
 import com.liferay.commerce.util.CommercePriceCalculationHelper;
 import com.liferay.commerce.util.CommercePriceFormatter;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,13 +50,15 @@ public class CommerceCartContentTotalDisplayContext
 			CommercePriceCalculationHelper commercePriceCalculationHelper,
 			CommercePriceFormatter commercePriceFormatter,
 			CPDefinitionHelper cpDefinitionHelper,
-			CPInstanceHelper cpInstanceHelper)
+			CPInstanceHelper cpInstanceHelper, Portal portal)
 		throws ConfigurationException {
 
 		super(
 			httpServletRequest, httpServletResponse, commerceCartHelper,
 			commerceCartItemService, commercePriceCalculationHelper,
 			commercePriceFormatter, cpDefinitionHelper, cpInstanceHelper);
+
+		_portal = portal;
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -60,6 +69,20 @@ public class CommerceCartContentTotalDisplayContext
 		_commerceCartContentTotalPortletInstanceConfiguration =
 			portletDisplay.getPortletInstanceConfiguration(
 				CommerceCartContentTotalPortletInstanceConfiguration.class);
+	}
+
+	public PortletURL getCheckoutPortletURL() throws PortalException {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		long plid = _portal.getPlidFromPortletId(
+			themeDisplay.getScopeGroupId(),
+			CommercePortletKeys.COMMERCE_CHECKOUT);
+
+		return PortletURLFactoryUtil.create(
+			httpServletRequest, CommercePortletKeys.COMMERCE_CHECKOUT, plid,
+			PortletRequest.RENDER_PHASE);
 	}
 
 	public String getDisplayStyle() {
@@ -90,5 +113,6 @@ public class CommerceCartContentTotalDisplayContext
 	private final CommerceCartContentTotalPortletInstanceConfiguration
 		_commerceCartContentTotalPortletInstanceConfiguration;
 	private long _displayStyleGroupId;
+	private final Portal _portal;
 
 }

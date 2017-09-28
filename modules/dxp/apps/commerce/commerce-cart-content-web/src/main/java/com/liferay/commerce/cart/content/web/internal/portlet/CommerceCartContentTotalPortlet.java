@@ -89,7 +89,7 @@ public class CommerceCartContentTotalPortlet extends MVCPortlet {
 						_commerceCartHelper, _commerceCartItemService,
 						_commercePriceCalculationHelper,
 						_commercePriceFormatter, _cpDefinitionHelper,
-						_cpInstanceHelper);
+						_cpInstanceHelper, _portal);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,

@@ -24,15 +24,33 @@ CommerceCartItem commerceCartItem = (CommerceCartItem)row.getObject();
 
 <portlet:actionURL name="editCommerceCartItem" var="editCommerceCartItemURL" />
 
-<aui:form action="<%= editCommerceCartItemURL %>" method="post" name="editCommerceCartItemQuantityFm">
+<aui:form action="<%= editCommerceCartItemURL %>" method="post" name='<%= commerceCartItem.getCommerceCartItemId() + "fm" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="commerceCartItemId" type="hidden" value="<%= commerceCartItem.getCommerceCartItemId() %>" />
+	<aui:input name="quantity" type="hidden" value="<%= commerceCartItem.getQuantity() %>" />
 	<aui:input name="type" type="hidden" value="<%= CommerceConstants.COMMERCE_CART_TYPE_CART %>" />
 
 	<aui:model-context bean="<%= commerceCartItem %>" model="<%= CommerceCartItem.class %>" />
 
-	<aui:input cssClass="commerce-cart-item-quantity-input" label="<%= StringPool.BLANK %>" name="quantity" />
-
-	<aui:button cssClass="commerce-cart-item-quantity-button" name="refreshButton" type="submit" value="refresh" />
+	<liferay-commerce:quantity-input CPDefinitionId="<%= commerceCartItem.getCPDefinitionId() %>" value="<%= commerceCartItem.getQuantity() %>" />
 </aui:form>
+
+<aui:script use="aui-base">
+
+	var form = A.one('#<portlet:namespace /><%= commerceCartItem.getCommerceCartItemId() + "fm" %>');
+
+	form.delegate(
+		'change',
+		function() {
+
+			var quantity = form.one('#<portlet:namespace /><%= commerceCartItem.getCPDefinitionId() + "Quantity" %>')
+
+			form.one('#<portlet:namespace />quantity').val(quantity.val());
+
+			submitForm(document.<portlet:namespace /><%= commerceCartItem.getCommerceCartItemId() + "fm" %>);
+		},
+		'select'
+	);
+
+</aui:script>

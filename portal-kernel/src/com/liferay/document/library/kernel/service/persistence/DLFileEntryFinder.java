@@ -110,12 +110,12 @@ public interface DLFileEntryFinder {
 
 	public java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> findByOrphanedFileEntries();
 
-	public java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> findByDLFileEntryC_T(
-		long classNameId, java.lang.String treePath);
-
 	public java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> findByG_F(
 		long groupId, java.util.List<java.lang.Long> folderIds,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.document.library.kernel.model.DLFileEntry> queryDefinition);
+
+	public java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> findByC_T(
+		long classNameId, java.lang.String treePath);
 
 	public java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> findByG_R_F(
 		long groupId, java.util.List<java.lang.Long> repositoryIds,

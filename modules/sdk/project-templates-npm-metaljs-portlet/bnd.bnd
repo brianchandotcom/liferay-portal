@@ -1,5 +1,5 @@
 Bundle-Description: Creates a Liferay MVC portlet with npm and Metal.js support as a module project.
-Bundle-Name: Liferay Project Templates Metal.js npm Portlet
+Bundle-Name: Liferay Project Templates npm Metaljs Portlet
 Bundle-SymbolicName: com.liferay.project.templates.npm.metaljs.portlet
 Bundle-Version: 1.0.0
 -removeheaders:\

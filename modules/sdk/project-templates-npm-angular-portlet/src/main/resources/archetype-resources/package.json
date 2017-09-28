@@ -1,7 +1,4 @@
 {
-	"name": "${artifactId}",
-	"version": "${pkgJsonVersion}",
-	"main": "lib/angular-loader.js",
 	"dependencies": {
 		"@angular/common": "~4.2.5",
 		"@angular/compiler": "~4.2.5",
@@ -54,7 +51,10 @@
 		"tslint": "^5.4.3",
 		"typescript": "^2.3.4"
 	},
+	"main": "lib/angular-loader.js",
+	"name": "${artifactId}",
 	"scripts": {
 		"build": "tsc && babel --source-maps -d build/resources/main/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler"
-	}
+	},
+	"version": "${pkgJsonVersion}"
 }

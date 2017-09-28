@@ -9,6 +9,9 @@
 	{@param? _handleModalHidden: any}
 	{@param? _handleSubmitForm: any}
 	{@param? error: string}
+	{@param? fragmentEntryId: string}
+	{@param? fragmentEntryName: string}
+	{@param? renameFragmentEntryURL: string}
 
 	{call Modal.render}
 		{param body kind="html"}
@@ -33,7 +36,18 @@
 						<span class="hide-accessible">{msg desc=""}required{/msg}</span>
 					</label>
 
-					<input class="field form-control" name="{$namespace}name" type="text">
+					<input
+						name="{$namespace}id"
+						type="hidden"
+						value="{$fragmentEntryId ?: ''}"
+					>
+
+					<input
+						class="field form-control"
+						name="{$namespace}name"
+						type="text"
+						value="{$fragmentEntryName ?: ''}"
+					>
 
 					{if $error}
 						<div class="form-validator-stack help-block">
@@ -65,7 +79,11 @@
 
 		{param header kind="html"}
 			<h3 class="modal-title">
-				{msg desc=""}add-fragment{/msg}
+				{if $renameFragmentEntryURL}
+					{msg desc=""}rename-fragment{/msg}
+				{else}
+					{msg desc=""}add-fragment{/msg}
+				{/if}
 			</h3>
 		{/param}
 	{/call}

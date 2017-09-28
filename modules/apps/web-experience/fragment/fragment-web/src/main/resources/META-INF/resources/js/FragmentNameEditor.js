@@ -30,8 +30,9 @@ class FragmentNameEditor extends Component {
 
 		const form = document.getElementById(`${this.namespace}addForm`);
 		const formData = new FormData(form);
+		const formURL = this.addFragmentEntryURL || this.renameFragmentEntryURL;
 
-		fetch(this.addFragmentEntryURL, {
+		fetch(formURL, {
 			body: formData,
 			credentials: 'include',
 			method: 'POST',
@@ -40,7 +41,7 @@ class FragmentNameEditor extends Component {
 			.then((jsonResponse) => {
 				this.error = jsonResponse.error;
 
-				if (jsonResponse.fragmentEntryId) {
+				if (jsonResponse.fragmentEntryId && this.editFragmentEntryURL) {
 					const uri = new Uri(this.editFragmentEntryURL);
 
 					uri.addParameterValue(
@@ -56,6 +57,13 @@ class FragmentNameEditor extends Component {
 					} else {
 						location.href = uriString;
 					}
+				} else if (jsonResponse.fragmentEntryId) {
+					if (Liferay.SPA) {
+						this.disposeInternal();
+						Liferay.SPA.app.reloadPage();
+					} else {
+						location.reload();
+					}
 				}
 			});
 	}
@@ -70,21 +78,23 @@ FragmentNameEditor.STATE = {
 	/**
 	 * URL used for creating the fragment. The generated form
 	 * will be submited to this url.
+	 * @default ''
 	 * @instance
 	 * @memberOf FragmentNameEditor
 	 * @type {!string}
 	 */
-	addFragmentEntryURL: Config.string().required(),
+	addFragmentEntryURL: Config.string().value(''),
 
 	/**
 	 * URL used for editing the fragment.
 	 * Once the fragment has been successfully created, the browser
 	 * will be redirected to this url.
+	 * @default ''
 	 * @instance
 	 * @memberOf FragmentNameEditor
 	 * @type {!string}
 	 */
-	editFragmentEntryURL: Config.string().required(),
+	editFragmentEntryURL: Config.string().value(''),
 
 	/**
 	 * Error message returned by the server.
@@ -98,12 +108,42 @@ FragmentNameEditor.STATE = {
 	error: Config.string().value(''),
 
 	/**
+	 * ID of an existing fragment. When specified, this ID will be submitted
+	 * inside the form to modify an existing fragment.
+	 * @default ''
+	 * @instance
+	 * @memberOf FragmentNameEditor
+	 * @type {!string}
+	 */
+	fragmentEntryId: Config.string().value(''),
+
+	/**
+	 * Initial name of the fragment. When specified, this value will initially
+	 * fill the rendered form.
+	 * @default ''
+	 * @instance
+	 * @memberOf FragmentNameEditor
+	 * @type {!string}
+	 */
+	fragmentEntryName: Config.string().value(''),
+
+	/**
 	 * Portlet namespace needed for prefixing form inputs
 	 * @instance
 	 * @memberOf FragmentNameEditor
 	 * @type {!string}
 	 */
 	namespace: Config.string().required(),
+
+	/**
+	 * URL used for renaming the fragment. The generated form
+	 * will be submitted to this url.
+	 * @default ''
+	 * @instance
+	 * @memberOf FragmentNameEditor
+	 * @type {!string}
+	 */
+	renameFragmentEntryURL: Config.string().value(''),
 
 	/**
 	 * Path of the available icons.

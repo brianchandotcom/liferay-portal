@@ -23,14 +23,14 @@ create table LayoutPageTemplateFolder (
 );
 
 create table LayoutPageTemplateFragment (
-	groupId LONG not null,
-	layoutPageTemplateEntryId LONG not null,
-	fragmentEntryId LONG not null,
+	layoutPageTemplateFragmentId LONG not null primary key,
+	groupId LONG,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	position INTEGER,
-	primary key (groupId, layoutPageTemplateEntryId, fragmentEntryId)
+	layoutPageTemplateEntryId LONG,
+	fragmentEntryId LONG,
+	position INTEGER
 );

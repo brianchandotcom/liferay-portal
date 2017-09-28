@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.layout.page.template.model.LayoutPageTemplateFragment;
 import com.liferay.layout.page.template.service.LayoutPageTemplateFragmentLocalService;
 import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateEntryPersistence;
-import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateFragmentPK;
 import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateFragmentPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -92,28 +91,27 @@ public abstract class LayoutPageTemplateFragmentLocalServiceBaseImpl
 	/**
 	 * Creates a new layout page template fragment with the primary key. Does not add the layout page template fragment to the database.
 	 *
-	 * @param layoutPageTemplateFragmentPK the primary key for the new layout page template fragment
+	 * @param layoutPageTemplateFragmentId the primary key for the new layout page template fragment
 	 * @return the new layout page template fragment
 	 */
 	@Override
 	public LayoutPageTemplateFragment createLayoutPageTemplateFragment(
-		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK) {
-		return layoutPageTemplateFragmentPersistence.create(layoutPageTemplateFragmentPK);
+		long layoutPageTemplateFragmentId) {
+		return layoutPageTemplateFragmentPersistence.create(layoutPageTemplateFragmentId);
 	}
 
 	/**
 	 * Deletes the layout page template fragment with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param layoutPageTemplateFragmentPK the primary key of the layout page template fragment
+	 * @param layoutPageTemplateFragmentId the primary key of the layout page template fragment
 	 * @return the layout page template fragment that was removed
 	 * @throws PortalException if a layout page template fragment with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public LayoutPageTemplateFragment deleteLayoutPageTemplateFragment(
-		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK)
-		throws PortalException {
-		return layoutPageTemplateFragmentPersistence.remove(layoutPageTemplateFragmentPK);
+		long layoutPageTemplateFragmentId) throws PortalException {
+		return layoutPageTemplateFragmentPersistence.remove(layoutPageTemplateFragmentId);
 	}
 
 	/**
@@ -216,22 +214,21 @@ public abstract class LayoutPageTemplateFragmentLocalServiceBaseImpl
 
 	@Override
 	public LayoutPageTemplateFragment fetchLayoutPageTemplateFragment(
-		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK) {
-		return layoutPageTemplateFragmentPersistence.fetchByPrimaryKey(layoutPageTemplateFragmentPK);
+		long layoutPageTemplateFragmentId) {
+		return layoutPageTemplateFragmentPersistence.fetchByPrimaryKey(layoutPageTemplateFragmentId);
 	}
 
 	/**
 	 * Returns the layout page template fragment with the primary key.
 	 *
-	 * @param layoutPageTemplateFragmentPK the primary key of the layout page template fragment
+	 * @param layoutPageTemplateFragmentId the primary key of the layout page template fragment
 	 * @return the layout page template fragment
 	 * @throws PortalException if a layout page template fragment with the primary key could not be found
 	 */
 	@Override
 	public LayoutPageTemplateFragment getLayoutPageTemplateFragment(
-		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK)
-		throws PortalException {
-		return layoutPageTemplateFragmentPersistence.findByPrimaryKey(layoutPageTemplateFragmentPK);
+		long layoutPageTemplateFragmentId) throws PortalException {
+		return layoutPageTemplateFragmentPersistence.findByPrimaryKey(layoutPageTemplateFragmentId);
 	}
 
 	@Override
@@ -242,9 +239,8 @@ public abstract class LayoutPageTemplateFragmentLocalServiceBaseImpl
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(LayoutPageTemplateFragment.class);
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName("primaryKey.groupId");
-
-		actionableDynamicQuery.setGroupIdPropertyName("primaryKey.groupId");
+		actionableDynamicQuery.setPrimaryKeyPropertyName(
+			"layoutPageTemplateFragmentId");
 
 		return actionableDynamicQuery;
 	}
@@ -258,10 +254,7 @@ public abstract class LayoutPageTemplateFragmentLocalServiceBaseImpl
 		indexableActionableDynamicQuery.setModelClass(LayoutPageTemplateFragment.class);
 
 		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
-			"primaryKey.groupId");
-
-		indexableActionableDynamicQuery.setGroupIdPropertyName(
-			"primaryKey.groupId");
+			"layoutPageTemplateFragmentId");
 
 		return indexableActionableDynamicQuery;
 	}
@@ -272,9 +265,8 @@ public abstract class LayoutPageTemplateFragmentLocalServiceBaseImpl
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(LayoutPageTemplateFragment.class);
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName("primaryKey.groupId");
-
-		actionableDynamicQuery.setGroupIdPropertyName("primaryKey.groupId");
+		actionableDynamicQuery.setPrimaryKeyPropertyName(
+			"layoutPageTemplateFragmentId");
 	}
 
 	/**

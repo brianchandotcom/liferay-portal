@@ -49,24 +49,24 @@ public class LayoutPageTemplateFragmentLocalServiceWrapper
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplateFragment addLayoutPageTemplateFragment(
 		long userId, long groupId, long layoutPageTemplateEntryId,
-		long fragmentId, int position,
+		long fragmentEntryId, int position,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPageTemplateFragmentLocalService.addLayoutPageTemplateFragment(userId,
-			groupId, layoutPageTemplateEntryId, fragmentId, position,
+			groupId, layoutPageTemplateEntryId, fragmentEntryId, position,
 			serviceContext);
 	}
 
 	/**
 	* Creates a new layout page template fragment with the primary key. Does not add the layout page template fragment to the database.
 	*
-	* @param layoutPageTemplateFragmentPK the primary key for the new layout page template fragment
+	* @param layoutPageTemplateFragmentId the primary key for the new layout page template fragment
 	* @return the new layout page template fragment
 	*/
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplateFragment createLayoutPageTemplateFragment(
-		com.liferay.layout.page.template.service.persistence.LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK) {
-		return _layoutPageTemplateFragmentLocalService.createLayoutPageTemplateFragment(layoutPageTemplateFragmentPK);
+		long layoutPageTemplateFragmentId) {
+		return _layoutPageTemplateFragmentLocalService.createLayoutPageTemplateFragment(layoutPageTemplateFragmentId);
 	}
 
 	@Override
@@ -94,15 +94,15 @@ public class LayoutPageTemplateFragmentLocalServiceWrapper
 	/**
 	* Deletes the layout page template fragment with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param layoutPageTemplateFragmentPK the primary key of the layout page template fragment
+	* @param layoutPageTemplateFragmentId the primary key of the layout page template fragment
 	* @return the layout page template fragment that was removed
 	* @throws PortalException if a layout page template fragment with the primary key could not be found
 	*/
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplateFragment deleteLayoutPageTemplateFragment(
-		com.liferay.layout.page.template.service.persistence.LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK)
+		long layoutPageTemplateFragmentId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutPageTemplateFragmentLocalService.deleteLayoutPageTemplateFragment(layoutPageTemplateFragmentPK);
+		return _layoutPageTemplateFragmentLocalService.deleteLayoutPageTemplateFragment(layoutPageTemplateFragmentId);
 	}
 
 	@Override
@@ -211,8 +211,8 @@ public class LayoutPageTemplateFragmentLocalServiceWrapper
 
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplateFragment fetchLayoutPageTemplateFragment(
-		com.liferay.layout.page.template.service.persistence.LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK) {
-		return _layoutPageTemplateFragmentLocalService.fetchLayoutPageTemplateFragment(layoutPageTemplateFragmentPK);
+		long layoutPageTemplateFragmentId) {
+		return _layoutPageTemplateFragmentLocalService.fetchLayoutPageTemplateFragment(layoutPageTemplateFragmentId);
 	}
 
 	@Override
@@ -228,15 +228,15 @@ public class LayoutPageTemplateFragmentLocalServiceWrapper
 	/**
 	* Returns the layout page template fragment with the primary key.
 	*
-	* @param layoutPageTemplateFragmentPK the primary key of the layout page template fragment
+	* @param layoutPageTemplateFragmentId the primary key of the layout page template fragment
 	* @return the layout page template fragment
 	* @throws PortalException if a layout page template fragment with the primary key could not be found
 	*/
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplateFragment getLayoutPageTemplateFragment(
-		com.liferay.layout.page.template.service.persistence.LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK)
+		long layoutPageTemplateFragmentId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutPageTemplateFragmentLocalService.getLayoutPageTemplateFragment(layoutPageTemplateFragmentPK);
+		return _layoutPageTemplateFragmentLocalService.getLayoutPageTemplateFragment(layoutPageTemplateFragmentId);
 	}
 
 	/**

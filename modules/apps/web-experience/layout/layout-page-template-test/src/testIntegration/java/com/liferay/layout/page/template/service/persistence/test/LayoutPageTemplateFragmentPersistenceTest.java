@@ -19,7 +19,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.page.template.exception.NoSuchPageTemplateFragmentException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateFragment;
 import com.liferay.layout.page.template.service.LayoutPageTemplateFragmentLocalServiceUtil;
-import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateFragmentPK;
 import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateFragmentPersistence;
 import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateFragmentUtil;
 
@@ -27,11 +26,15 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -89,8 +92,7 @@ public class LayoutPageTemplateFragmentPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		LayoutPageTemplateFragmentPK pk = new LayoutPageTemplateFragmentPK(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		long pk = RandomTestUtil.nextLong();
 
 		LayoutPageTemplateFragment layoutPageTemplateFragment = _persistence.create(pk);
 
@@ -117,10 +119,11 @@ public class LayoutPageTemplateFragmentPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		LayoutPageTemplateFragmentPK pk = new LayoutPageTemplateFragmentPK(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		long pk = RandomTestUtil.nextLong();
 
 		LayoutPageTemplateFragment newLayoutPageTemplateFragment = _persistence.create(pk);
+
+		newLayoutPageTemplateFragment.setGroupId(RandomTestUtil.nextLong());
 
 		newLayoutPageTemplateFragment.setCompanyId(RandomTestUtil.nextLong());
 
@@ -132,6 +135,10 @@ public class LayoutPageTemplateFragmentPersistenceTest {
 
 		newLayoutPageTemplateFragment.setModifiedDate(RandomTestUtil.nextDate());
 
+		newLayoutPageTemplateFragment.setLayoutPageTemplateEntryId(RandomTestUtil.nextLong());
+
+		newLayoutPageTemplateFragment.setFragmentEntryId(RandomTestUtil.nextLong());
+
 		newLayoutPageTemplateFragment.setPosition(RandomTestUtil.nextInt());
 
 		_layoutPageTemplateFragments.add(_persistence.update(
@@ -139,12 +146,10 @@ public class LayoutPageTemplateFragmentPersistenceTest {
 
 		LayoutPageTemplateFragment existingLayoutPageTemplateFragment = _persistence.findByPrimaryKey(newLayoutPageTemplateFragment.getPrimaryKey());
 
+		Assert.assertEquals(existingLayoutPageTemplateFragment.getLayoutPageTemplateFragmentId(),
+			newLayoutPageTemplateFragment.getLayoutPageTemplateFragmentId());
 		Assert.assertEquals(existingLayoutPageTemplateFragment.getGroupId(),
 			newLayoutPageTemplateFragment.getGroupId());
-		Assert.assertEquals(existingLayoutPageTemplateFragment.getLayoutPageTemplateEntryId(),
-			newLayoutPageTemplateFragment.getLayoutPageTemplateEntryId());
-		Assert.assertEquals(existingLayoutPageTemplateFragment.getFragmentEntryId(),
-			newLayoutPageTemplateFragment.getFragmentEntryId());
 		Assert.assertEquals(existingLayoutPageTemplateFragment.getCompanyId(),
 			newLayoutPageTemplateFragment.getCompanyId());
 		Assert.assertEquals(existingLayoutPageTemplateFragment.getUserId(),
@@ -159,6 +164,10 @@ public class LayoutPageTemplateFragmentPersistenceTest {
 				existingLayoutPageTemplateFragment.getModifiedDate()),
 			Time.getShortTimestamp(
 				newLayoutPageTemplateFragment.getModifiedDate()));
+		Assert.assertEquals(existingLayoutPageTemplateFragment.getLayoutPageTemplateEntryId(),
+			newLayoutPageTemplateFragment.getLayoutPageTemplateEntryId());
+		Assert.assertEquals(existingLayoutPageTemplateFragment.getFragmentEntryId(),
+			newLayoutPageTemplateFragment.getFragmentEntryId());
 		Assert.assertEquals(existingLayoutPageTemplateFragment.getPosition(),
 			newLayoutPageTemplateFragment.getPosition());
 	}
@@ -187,6 +196,14 @@ public class LayoutPageTemplateFragmentPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_L_F() throws Exception {
+		_persistence.countByG_L_F(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByG_L_F(0L, 0L, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		LayoutPageTemplateFragment newLayoutPageTemplateFragment = addLayoutPageTemplateFragment();
 
@@ -198,10 +215,23 @@ public class LayoutPageTemplateFragmentPersistenceTest {
 
 	@Test(expected = NoSuchPageTemplateFragmentException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		LayoutPageTemplateFragmentPK pk = new LayoutPageTemplateFragmentPK(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		long pk = RandomTestUtil.nextLong();
 
 		_persistence.findByPrimaryKey(pk);
+	}
+
+	@Test
+	public void testFindAll() throws Exception {
+		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			getOrderByComparator());
+	}
+
+	protected OrderByComparator<LayoutPageTemplateFragment> getOrderByComparator() {
+		return OrderByComparatorFactoryUtil.create("LayoutPageTemplateFragment",
+			"layoutPageTemplateFragmentId", true, "groupId", true, "companyId",
+			true, "userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "layoutPageTemplateEntryId", true,
+			"fragmentEntryId", true, "position", true);
 	}
 
 	@Test
@@ -216,8 +246,7 @@ public class LayoutPageTemplateFragmentPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		LayoutPageTemplateFragmentPK pk = new LayoutPageTemplateFragmentPK(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		long pk = RandomTestUtil.nextLong();
 
 		LayoutPageTemplateFragment missingLayoutPageTemplateFragment = _persistence.fetchByPrimaryKey(pk);
 
@@ -250,11 +279,9 @@ public class LayoutPageTemplateFragmentPersistenceTest {
 	@Test
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
-		LayoutPageTemplateFragmentPK pk1 = new LayoutPageTemplateFragmentPK(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		long pk1 = RandomTestUtil.nextLong();
 
-		LayoutPageTemplateFragmentPK pk2 = new LayoutPageTemplateFragmentPK(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		long pk2 = RandomTestUtil.nextLong();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
@@ -272,8 +299,7 @@ public class LayoutPageTemplateFragmentPersistenceTest {
 		throws Exception {
 		LayoutPageTemplateFragment newLayoutPageTemplateFragment = addLayoutPageTemplateFragment();
 
-		LayoutPageTemplateFragmentPK pk = new LayoutPageTemplateFragmentPK(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		long pk = RandomTestUtil.nextLong();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
@@ -347,13 +373,9 @@ public class LayoutPageTemplateFragmentPersistenceTest {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutPageTemplateFragment.class,
 				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.groupId",
-				newLayoutPageTemplateFragment.getGroupId()));
 		dynamicQuery.add(RestrictionsFactoryUtil.eq(
-				"id.layoutPageTemplateEntryId",
-				newLayoutPageTemplateFragment.getLayoutPageTemplateEntryId()));
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.fragmentEntryId",
-				newLayoutPageTemplateFragment.getFragmentEntryId()));
+				"layoutPageTemplateFragmentId",
+				newLayoutPageTemplateFragment.getLayoutPageTemplateFragmentId()));
 
 		List<LayoutPageTemplateFragment> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -370,12 +392,8 @@ public class LayoutPageTemplateFragmentPersistenceTest {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutPageTemplateFragment.class,
 				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.groupId",
-				RandomTestUtil.nextLong()));
 		dynamicQuery.add(RestrictionsFactoryUtil.eq(
-				"id.layoutPageTemplateEntryId", RandomTestUtil.nextLong()));
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("id.fragmentEntryId",
-				RandomTestUtil.nextLong()));
+				"layoutPageTemplateFragmentId", RandomTestUtil.nextLong()));
 
 		List<LayoutPageTemplateFragment> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -390,20 +408,23 @@ public class LayoutPageTemplateFragmentPersistenceTest {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutPageTemplateFragment.class,
 				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property("id.groupId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"layoutPageTemplateFragmentId"));
 
-		Object newGroupId = newLayoutPageTemplateFragment.getGroupId();
+		Object newLayoutPageTemplateFragmentId = newLayoutPageTemplateFragment.getLayoutPageTemplateFragmentId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("id.groupId",
-				new Object[] { newGroupId }));
+		dynamicQuery.add(RestrictionsFactoryUtil.in(
+				"layoutPageTemplateFragmentId",
+				new Object[] { newLayoutPageTemplateFragmentId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
-		Object existingGroupId = result.get(0);
+		Object existingLayoutPageTemplateFragmentId = result.get(0);
 
-		Assert.assertEquals(existingGroupId, newGroupId);
+		Assert.assertEquals(existingLayoutPageTemplateFragmentId,
+			newLayoutPageTemplateFragmentId);
 	}
 
 	@Test
@@ -411,9 +432,11 @@ public class LayoutPageTemplateFragmentPersistenceTest {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(LayoutPageTemplateFragment.class,
 				_dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property("id.groupId"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
+				"layoutPageTemplateFragmentId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("id.groupId",
+		dynamicQuery.add(RestrictionsFactoryUtil.in(
+				"layoutPageTemplateFragmentId",
 				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
@@ -421,12 +444,38 @@ public class LayoutPageTemplateFragmentPersistenceTest {
 		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		LayoutPageTemplateFragment newLayoutPageTemplateFragment = addLayoutPageTemplateFragment();
+
+		_persistence.clearCache();
+
+		LayoutPageTemplateFragment existingLayoutPageTemplateFragment = _persistence.findByPrimaryKey(newLayoutPageTemplateFragment.getPrimaryKey());
+
+		Assert.assertEquals(Long.valueOf(
+				existingLayoutPageTemplateFragment.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingLayoutPageTemplateFragment, "getOriginalGroupId",
+				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(
+				existingLayoutPageTemplateFragment.getLayoutPageTemplateEntryId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingLayoutPageTemplateFragment,
+				"getOriginalLayoutPageTemplateEntryId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(
+				existingLayoutPageTemplateFragment.getFragmentEntryId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingLayoutPageTemplateFragment,
+				"getOriginalFragmentEntryId", new Class<?>[0]));
+	}
+
 	protected LayoutPageTemplateFragment addLayoutPageTemplateFragment()
 		throws Exception {
-		LayoutPageTemplateFragmentPK pk = new LayoutPageTemplateFragmentPK(RandomTestUtil.nextLong(),
-				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+		long pk = RandomTestUtil.nextLong();
 
 		LayoutPageTemplateFragment layoutPageTemplateFragment = _persistence.create(pk);
+
+		layoutPageTemplateFragment.setGroupId(RandomTestUtil.nextLong());
 
 		layoutPageTemplateFragment.setCompanyId(RandomTestUtil.nextLong());
 
@@ -437,6 +486,10 @@ public class LayoutPageTemplateFragmentPersistenceTest {
 		layoutPageTemplateFragment.setCreateDate(RandomTestUtil.nextDate());
 
 		layoutPageTemplateFragment.setModifiedDate(RandomTestUtil.nextDate());
+
+		layoutPageTemplateFragment.setLayoutPageTemplateEntryId(RandomTestUtil.nextLong());
+
+		layoutPageTemplateFragment.setFragmentEntryId(RandomTestUtil.nextLong());
 
 		layoutPageTemplateFragment.setPosition(RandomTestUtil.nextInt());
 

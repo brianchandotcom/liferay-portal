@@ -17,7 +17,6 @@ package com.liferay.layout.page.template.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.layout.page.template.model.LayoutPageTemplateFragment;
-import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateFragmentPK;
 
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
@@ -54,8 +53,7 @@ public class LayoutPageTemplateFragmentCacheModel implements CacheModel<LayoutPa
 		LayoutPageTemplateFragmentCacheModel layoutPageTemplateFragmentCacheModel =
 			(LayoutPageTemplateFragmentCacheModel)obj;
 
-		if (layoutPageTemplateFragmentPK.equals(
-					layoutPageTemplateFragmentCacheModel.layoutPageTemplateFragmentPK)) {
+		if (layoutPageTemplateFragmentId == layoutPageTemplateFragmentCacheModel.layoutPageTemplateFragmentId) {
 			return true;
 		}
 
@@ -64,19 +62,17 @@ public class LayoutPageTemplateFragmentCacheModel implements CacheModel<LayoutPa
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, layoutPageTemplateFragmentPK);
+		return HashUtil.hash(0, layoutPageTemplateFragmentId);
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
-		sb.append("{groupId=");
+		sb.append("{layoutPageTemplateFragmentId=");
+		sb.append(layoutPageTemplateFragmentId);
+		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", layoutPageTemplateEntryId=");
-		sb.append(layoutPageTemplateEntryId);
-		sb.append(", fragmentEntryId=");
-		sb.append(fragmentEntryId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", userId=");
@@ -87,6 +83,10 @@ public class LayoutPageTemplateFragmentCacheModel implements CacheModel<LayoutPa
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", layoutPageTemplateEntryId=");
+		sb.append(layoutPageTemplateEntryId);
+		sb.append(", fragmentEntryId=");
+		sb.append(fragmentEntryId);
 		sb.append(", position=");
 		sb.append(position);
 		sb.append("}");
@@ -98,9 +98,8 @@ public class LayoutPageTemplateFragmentCacheModel implements CacheModel<LayoutPa
 	public LayoutPageTemplateFragment toEntityModel() {
 		LayoutPageTemplateFragmentImpl layoutPageTemplateFragmentImpl = new LayoutPageTemplateFragmentImpl();
 
+		layoutPageTemplateFragmentImpl.setLayoutPageTemplateFragmentId(layoutPageTemplateFragmentId);
 		layoutPageTemplateFragmentImpl.setGroupId(groupId);
-		layoutPageTemplateFragmentImpl.setLayoutPageTemplateEntryId(layoutPageTemplateEntryId);
-		layoutPageTemplateFragmentImpl.setFragmentEntryId(fragmentEntryId);
 		layoutPageTemplateFragmentImpl.setCompanyId(companyId);
 		layoutPageTemplateFragmentImpl.setUserId(userId);
 
@@ -126,6 +125,8 @@ public class LayoutPageTemplateFragmentCacheModel implements CacheModel<LayoutPa
 					modifiedDate));
 		}
 
+		layoutPageTemplateFragmentImpl.setLayoutPageTemplateEntryId(layoutPageTemplateEntryId);
+		layoutPageTemplateFragmentImpl.setFragmentEntryId(fragmentEntryId);
 		layoutPageTemplateFragmentImpl.setPosition(position);
 
 		layoutPageTemplateFragmentImpl.resetOriginalValues();
@@ -135,11 +136,9 @@ public class LayoutPageTemplateFragmentCacheModel implements CacheModel<LayoutPa
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		layoutPageTemplateFragmentId = objectInput.readLong();
+
 		groupId = objectInput.readLong();
-
-		layoutPageTemplateEntryId = objectInput.readLong();
-
-		fragmentEntryId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
 
@@ -148,20 +147,19 @@ public class LayoutPageTemplateFragmentCacheModel implements CacheModel<LayoutPa
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
-		position = objectInput.readInt();
+		layoutPageTemplateEntryId = objectInput.readLong();
 
-		layoutPageTemplateFragmentPK = new LayoutPageTemplateFragmentPK(groupId,
-				layoutPageTemplateEntryId, fragmentEntryId);
+		fragmentEntryId = objectInput.readLong();
+
+		position = objectInput.readInt();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(layoutPageTemplateFragmentId);
+
 		objectOutput.writeLong(groupId);
-
-		objectOutput.writeLong(layoutPageTemplateEntryId);
-
-		objectOutput.writeLong(fragmentEntryId);
 
 		objectOutput.writeLong(companyId);
 
@@ -177,17 +175,21 @@ public class LayoutPageTemplateFragmentCacheModel implements CacheModel<LayoutPa
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		objectOutput.writeLong(layoutPageTemplateEntryId);
+
+		objectOutput.writeLong(fragmentEntryId);
+
 		objectOutput.writeInt(position);
 	}
 
+	public long layoutPageTemplateFragmentId;
 	public long groupId;
-	public long layoutPageTemplateEntryId;
-	public long fragmentEntryId;
 	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long layoutPageTemplateEntryId;
+	public long fragmentEntryId;
 	public int position;
-	public transient LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK;
 }

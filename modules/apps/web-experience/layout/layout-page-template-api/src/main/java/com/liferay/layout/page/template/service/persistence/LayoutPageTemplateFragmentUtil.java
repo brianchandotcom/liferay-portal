@@ -241,19 +241,18 @@ public class LayoutPageTemplateFragmentUtil {
 	/**
 	* Returns the layout page template fragments before and after the current layout page template fragment in the ordered set where groupId = &#63;.
 	*
-	* @param layoutPageTemplateFragmentPK the primary key of the current layout page template fragment
+	* @param layoutPageTemplateFragmentId the primary key of the current layout page template fragment
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout page template fragment
 	* @throws NoSuchPageTemplateFragmentException if a layout page template fragment with the primary key could not be found
 	*/
 	public static LayoutPageTemplateFragment[] findByGroupId_PrevAndNext(
-		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK,
-		long groupId,
+		long layoutPageTemplateFragmentId, long groupId,
 		OrderByComparator<LayoutPageTemplateFragment> orderByComparator)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateFragmentException {
 		return getPersistence()
-				   .findByGroupId_PrevAndNext(layoutPageTemplateFragmentPK,
+				   .findByGroupId_PrevAndNext(layoutPageTemplateFragmentId,
 			groupId, orderByComparator);
 	}
 
@@ -424,7 +423,7 @@ public class LayoutPageTemplateFragmentUtil {
 	/**
 	* Returns the layout page template fragments before and after the current layout page template fragment in the ordered set where groupId = &#63; and layoutPageTemplateEntryId = &#63;.
 	*
-	* @param layoutPageTemplateFragmentPK the primary key of the current layout page template fragment
+	* @param layoutPageTemplateFragmentId the primary key of the current layout page template fragment
 	* @param groupId the group ID
 	* @param layoutPageTemplateEntryId the layout page template entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -432,12 +431,12 @@ public class LayoutPageTemplateFragmentUtil {
 	* @throws NoSuchPageTemplateFragmentException if a layout page template fragment with the primary key could not be found
 	*/
 	public static LayoutPageTemplateFragment[] findByG_L_PrevAndNext(
-		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK,
-		long groupId, long layoutPageTemplateEntryId,
+		long layoutPageTemplateFragmentId, long groupId,
+		long layoutPageTemplateEntryId,
 		OrderByComparator<LayoutPageTemplateFragment> orderByComparator)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateFragmentException {
 		return getPersistence()
-				   .findByG_L_PrevAndNext(layoutPageTemplateFragmentPK,
+				   .findByG_L_PrevAndNext(layoutPageTemplateFragmentId,
 			groupId, layoutPageTemplateEntryId, orderByComparator);
 	}
 
@@ -605,7 +604,7 @@ public class LayoutPageTemplateFragmentUtil {
 	/**
 	* Returns the layout page template fragments before and after the current layout page template fragment in the ordered set where groupId = &#63; and fragmentEntryId = &#63;.
 	*
-	* @param layoutPageTemplateFragmentPK the primary key of the current layout page template fragment
+	* @param layoutPageTemplateFragmentId the primary key of the current layout page template fragment
 	* @param groupId the group ID
 	* @param fragmentEntryId the fragment entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -613,12 +612,11 @@ public class LayoutPageTemplateFragmentUtil {
 	* @throws NoSuchPageTemplateFragmentException if a layout page template fragment with the primary key could not be found
 	*/
 	public static LayoutPageTemplateFragment[] findByG_F_PrevAndNext(
-		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK,
-		long groupId, long fragmentEntryId,
+		long layoutPageTemplateFragmentId, long groupId, long fragmentEntryId,
 		OrderByComparator<LayoutPageTemplateFragment> orderByComparator)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateFragmentException {
 		return getPersistence()
-				   .findByG_F_PrevAndNext(layoutPageTemplateFragmentPK,
+				   .findByG_F_PrevAndNext(layoutPageTemplateFragmentId,
 			groupId, fragmentEntryId, orderByComparator);
 	}
 
@@ -644,6 +642,86 @@ public class LayoutPageTemplateFragmentUtil {
 	}
 
 	/**
+	* Returns the layout page template fragment where groupId = &#63; and layoutPageTemplateEntryId = &#63; and fragmentEntryId = &#63; or throws a {@link NoSuchPageTemplateFragmentException} if it could not be found.
+	*
+	* @param groupId the group ID
+	* @param layoutPageTemplateEntryId the layout page template entry ID
+	* @param fragmentEntryId the fragment entry ID
+	* @return the matching layout page template fragment
+	* @throws NoSuchPageTemplateFragmentException if a matching layout page template fragment could not be found
+	*/
+	public static LayoutPageTemplateFragment findByG_L_F(long groupId,
+		long layoutPageTemplateEntryId, long fragmentEntryId)
+		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateFragmentException {
+		return getPersistence()
+				   .findByG_L_F(groupId, layoutPageTemplateEntryId,
+			fragmentEntryId);
+	}
+
+	/**
+	* Returns the layout page template fragment where groupId = &#63; and layoutPageTemplateEntryId = &#63; and fragmentEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param groupId the group ID
+	* @param layoutPageTemplateEntryId the layout page template entry ID
+	* @param fragmentEntryId the fragment entry ID
+	* @return the matching layout page template fragment, or <code>null</code> if a matching layout page template fragment could not be found
+	*/
+	public static LayoutPageTemplateFragment fetchByG_L_F(long groupId,
+		long layoutPageTemplateEntryId, long fragmentEntryId) {
+		return getPersistence()
+				   .fetchByG_L_F(groupId, layoutPageTemplateEntryId,
+			fragmentEntryId);
+	}
+
+	/**
+	* Returns the layout page template fragment where groupId = &#63; and layoutPageTemplateEntryId = &#63; and fragmentEntryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param groupId the group ID
+	* @param layoutPageTemplateEntryId the layout page template entry ID
+	* @param fragmentEntryId the fragment entry ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching layout page template fragment, or <code>null</code> if a matching layout page template fragment could not be found
+	*/
+	public static LayoutPageTemplateFragment fetchByG_L_F(long groupId,
+		long layoutPageTemplateEntryId, long fragmentEntryId,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByG_L_F(groupId, layoutPageTemplateEntryId,
+			fragmentEntryId, retrieveFromCache);
+	}
+
+	/**
+	* Removes the layout page template fragment where groupId = &#63; and layoutPageTemplateEntryId = &#63; and fragmentEntryId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param layoutPageTemplateEntryId the layout page template entry ID
+	* @param fragmentEntryId the fragment entry ID
+	* @return the layout page template fragment that was removed
+	*/
+	public static LayoutPageTemplateFragment removeByG_L_F(long groupId,
+		long layoutPageTemplateEntryId, long fragmentEntryId)
+		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateFragmentException {
+		return getPersistence()
+				   .removeByG_L_F(groupId, layoutPageTemplateEntryId,
+			fragmentEntryId);
+	}
+
+	/**
+	* Returns the number of layout page template fragments where groupId = &#63; and layoutPageTemplateEntryId = &#63; and fragmentEntryId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param layoutPageTemplateEntryId the layout page template entry ID
+	* @param fragmentEntryId the fragment entry ID
+	* @return the number of matching layout page template fragments
+	*/
+	public static int countByG_L_F(long groupId,
+		long layoutPageTemplateEntryId, long fragmentEntryId) {
+		return getPersistence()
+				   .countByG_L_F(groupId, layoutPageTemplateEntryId,
+			fragmentEntryId);
+	}
+
+	/**
 	* Caches the layout page template fragment in the entity cache if it is enabled.
 	*
 	* @param layoutPageTemplateFragment the layout page template fragment
@@ -666,25 +744,25 @@ public class LayoutPageTemplateFragmentUtil {
 	/**
 	* Creates a new layout page template fragment with the primary key. Does not add the layout page template fragment to the database.
 	*
-	* @param layoutPageTemplateFragmentPK the primary key for the new layout page template fragment
+	* @param layoutPageTemplateFragmentId the primary key for the new layout page template fragment
 	* @return the new layout page template fragment
 	*/
 	public static LayoutPageTemplateFragment create(
-		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK) {
-		return getPersistence().create(layoutPageTemplateFragmentPK);
+		long layoutPageTemplateFragmentId) {
+		return getPersistence().create(layoutPageTemplateFragmentId);
 	}
 
 	/**
 	* Removes the layout page template fragment with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param layoutPageTemplateFragmentPK the primary key of the layout page template fragment
+	* @param layoutPageTemplateFragmentId the primary key of the layout page template fragment
 	* @return the layout page template fragment that was removed
 	* @throws NoSuchPageTemplateFragmentException if a layout page template fragment with the primary key could not be found
 	*/
 	public static LayoutPageTemplateFragment remove(
-		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK)
+		long layoutPageTemplateFragmentId)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateFragmentException {
-		return getPersistence().remove(layoutPageTemplateFragmentPK);
+		return getPersistence().remove(layoutPageTemplateFragmentId);
 	}
 
 	public static LayoutPageTemplateFragment updateImpl(
@@ -695,25 +773,25 @@ public class LayoutPageTemplateFragmentUtil {
 	/**
 	* Returns the layout page template fragment with the primary key or throws a {@link NoSuchPageTemplateFragmentException} if it could not be found.
 	*
-	* @param layoutPageTemplateFragmentPK the primary key of the layout page template fragment
+	* @param layoutPageTemplateFragmentId the primary key of the layout page template fragment
 	* @return the layout page template fragment
 	* @throws NoSuchPageTemplateFragmentException if a layout page template fragment with the primary key could not be found
 	*/
 	public static LayoutPageTemplateFragment findByPrimaryKey(
-		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK)
+		long layoutPageTemplateFragmentId)
 		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateFragmentException {
-		return getPersistence().findByPrimaryKey(layoutPageTemplateFragmentPK);
+		return getPersistence().findByPrimaryKey(layoutPageTemplateFragmentId);
 	}
 
 	/**
 	* Returns the layout page template fragment with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param layoutPageTemplateFragmentPK the primary key of the layout page template fragment
+	* @param layoutPageTemplateFragmentId the primary key of the layout page template fragment
 	* @return the layout page template fragment, or <code>null</code> if a layout page template fragment with the primary key could not be found
 	*/
 	public static LayoutPageTemplateFragment fetchByPrimaryKey(
-		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK) {
-		return getPersistence().fetchByPrimaryKey(layoutPageTemplateFragmentPK);
+		long layoutPageTemplateFragmentId) {
+		return getPersistence().fetchByPrimaryKey(layoutPageTemplateFragmentId);
 	}
 
 	public static java.util.Map<java.io.Serializable, LayoutPageTemplateFragment> fetchByPrimaryKeys(

@@ -20,7 +20,6 @@ import com.liferay.layout.page.template.exception.NoSuchPageTemplateFragmentExce
 import com.liferay.layout.page.template.model.LayoutPageTemplateFragment;
 import com.liferay.layout.page.template.model.impl.LayoutPageTemplateFragmentImpl;
 import com.liferay.layout.page.template.model.impl.LayoutPageTemplateFragmentModelImpl;
-import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateFragmentPK;
 import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateFragmentPersistence;
 
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -47,6 +46,8 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -389,7 +390,7 @@ public class LayoutPageTemplateFragmentPersistenceImpl
 	/**
 	 * Returns the layout page template fragments before and after the current layout page template fragment in the ordered set where groupId = &#63;.
 	 *
-	 * @param layoutPageTemplateFragmentPK the primary key of the current layout page template fragment
+	 * @param layoutPageTemplateFragmentId the primary key of the current layout page template fragment
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next layout page template fragment
@@ -397,11 +398,10 @@ public class LayoutPageTemplateFragmentPersistenceImpl
 	 */
 	@Override
 	public LayoutPageTemplateFragment[] findByGroupId_PrevAndNext(
-		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK,
-		long groupId,
+		long layoutPageTemplateFragmentId, long groupId,
 		OrderByComparator<LayoutPageTemplateFragment> orderByComparator)
 		throws NoSuchPageTemplateFragmentException {
-		LayoutPageTemplateFragment layoutPageTemplateFragment = findByPrimaryKey(layoutPageTemplateFragmentPK);
+		LayoutPageTemplateFragment layoutPageTemplateFragment = findByPrimaryKey(layoutPageTemplateFragmentId);
 
 		Session session = null;
 
@@ -601,7 +601,7 @@ public class LayoutPageTemplateFragmentPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "layoutPageTemplateFragment.id.groupId = ?";
+	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "layoutPageTemplateFragment.groupId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_L = new FinderPath(LayoutPageTemplateFragmentModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutPageTemplateFragmentModelImpl.FINDER_CACHE_ENABLED,
 			LayoutPageTemplateFragmentImpl.class,
@@ -933,7 +933,7 @@ public class LayoutPageTemplateFragmentPersistenceImpl
 	/**
 	 * Returns the layout page template fragments before and after the current layout page template fragment in the ordered set where groupId = &#63; and layoutPageTemplateEntryId = &#63;.
 	 *
-	 * @param layoutPageTemplateFragmentPK the primary key of the current layout page template fragment
+	 * @param layoutPageTemplateFragmentId the primary key of the current layout page template fragment
 	 * @param groupId the group ID
 	 * @param layoutPageTemplateEntryId the layout page template entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -942,11 +942,11 @@ public class LayoutPageTemplateFragmentPersistenceImpl
 	 */
 	@Override
 	public LayoutPageTemplateFragment[] findByG_L_PrevAndNext(
-		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK,
-		long groupId, long layoutPageTemplateEntryId,
+		long layoutPageTemplateFragmentId, long groupId,
+		long layoutPageTemplateEntryId,
 		OrderByComparator<LayoutPageTemplateFragment> orderByComparator)
 		throws NoSuchPageTemplateFragmentException {
-		LayoutPageTemplateFragment layoutPageTemplateFragment = findByPrimaryKey(layoutPageTemplateFragmentPK);
+		LayoutPageTemplateFragment layoutPageTemplateFragment = findByPrimaryKey(layoutPageTemplateFragmentId);
 
 		Session session = null;
 
@@ -1158,8 +1158,8 @@ public class LayoutPageTemplateFragmentPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_G_L_GROUPID_2 = "layoutPageTemplateFragment.id.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_L_LAYOUTPAGETEMPLATEENTRYID_2 = "layoutPageTemplateFragment.id.layoutPageTemplateEntryId = ?";
+	private static final String _FINDER_COLUMN_G_L_GROUPID_2 = "layoutPageTemplateFragment.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_L_LAYOUTPAGETEMPLATEENTRYID_2 = "layoutPageTemplateFragment.layoutPageTemplateEntryId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_F = new FinderPath(LayoutPageTemplateFragmentModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutPageTemplateFragmentModelImpl.FINDER_CACHE_ENABLED,
 			LayoutPageTemplateFragmentImpl.class,
@@ -1491,7 +1491,7 @@ public class LayoutPageTemplateFragmentPersistenceImpl
 	/**
 	 * Returns the layout page template fragments before and after the current layout page template fragment in the ordered set where groupId = &#63; and fragmentEntryId = &#63;.
 	 *
-	 * @param layoutPageTemplateFragmentPK the primary key of the current layout page template fragment
+	 * @param layoutPageTemplateFragmentId the primary key of the current layout page template fragment
 	 * @param groupId the group ID
 	 * @param fragmentEntryId the fragment entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1500,11 +1500,10 @@ public class LayoutPageTemplateFragmentPersistenceImpl
 	 */
 	@Override
 	public LayoutPageTemplateFragment[] findByG_F_PrevAndNext(
-		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK,
-		long groupId, long fragmentEntryId,
+		long layoutPageTemplateFragmentId, long groupId, long fragmentEntryId,
 		OrderByComparator<LayoutPageTemplateFragment> orderByComparator)
 		throws NoSuchPageTemplateFragmentException {
-		LayoutPageTemplateFragment layoutPageTemplateFragment = findByPrimaryKey(layoutPageTemplateFragmentPK);
+		LayoutPageTemplateFragment layoutPageTemplateFragment = findByPrimaryKey(layoutPageTemplateFragmentId);
 
 		Session session = null;
 
@@ -1716,8 +1715,270 @@ public class LayoutPageTemplateFragmentPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_G_F_GROUPID_2 = "layoutPageTemplateFragment.id.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_F_FRAGMENTENTRYID_2 = "layoutPageTemplateFragment.id.fragmentEntryId = ?";
+	private static final String _FINDER_COLUMN_G_F_GROUPID_2 = "layoutPageTemplateFragment.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_F_FRAGMENTENTRYID_2 = "layoutPageTemplateFragment.fragmentEntryId = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_G_L_F = new FinderPath(LayoutPageTemplateFragmentModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutPageTemplateFragmentModelImpl.FINDER_CACHE_ENABLED,
+			LayoutPageTemplateFragmentImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByG_L_F",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			},
+			LayoutPageTemplateFragmentModelImpl.GROUPID_COLUMN_BITMASK |
+			LayoutPageTemplateFragmentModelImpl.LAYOUTPAGETEMPLATEENTRYID_COLUMN_BITMASK |
+			LayoutPageTemplateFragmentModelImpl.FRAGMENTENTRYID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_L_F = new FinderPath(LayoutPageTemplateFragmentModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutPageTemplateFragmentModelImpl.FINDER_CACHE_ENABLED,
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByG_L_F",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			});
+
+	/**
+	 * Returns the layout page template fragment where groupId = &#63; and layoutPageTemplateEntryId = &#63; and fragmentEntryId = &#63; or throws a {@link NoSuchPageTemplateFragmentException} if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateEntryId the layout page template entry ID
+	 * @param fragmentEntryId the fragment entry ID
+	 * @return the matching layout page template fragment
+	 * @throws NoSuchPageTemplateFragmentException if a matching layout page template fragment could not be found
+	 */
+	@Override
+	public LayoutPageTemplateFragment findByG_L_F(long groupId,
+		long layoutPageTemplateEntryId, long fragmentEntryId)
+		throws NoSuchPageTemplateFragmentException {
+		LayoutPageTemplateFragment layoutPageTemplateFragment = fetchByG_L_F(groupId,
+				layoutPageTemplateEntryId, fragmentEntryId);
+
+		if (layoutPageTemplateFragment == null) {
+			StringBundler msg = new StringBundler(8);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("groupId=");
+			msg.append(groupId);
+
+			msg.append(", layoutPageTemplateEntryId=");
+			msg.append(layoutPageTemplateEntryId);
+
+			msg.append(", fragmentEntryId=");
+			msg.append(fragmentEntryId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchPageTemplateFragmentException(msg.toString());
+		}
+
+		return layoutPageTemplateFragment;
+	}
+
+	/**
+	 * Returns the layout page template fragment where groupId = &#63; and layoutPageTemplateEntryId = &#63; and fragmentEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateEntryId the layout page template entry ID
+	 * @param fragmentEntryId the fragment entry ID
+	 * @return the matching layout page template fragment, or <code>null</code> if a matching layout page template fragment could not be found
+	 */
+	@Override
+	public LayoutPageTemplateFragment fetchByG_L_F(long groupId,
+		long layoutPageTemplateEntryId, long fragmentEntryId) {
+		return fetchByG_L_F(groupId, layoutPageTemplateEntryId,
+			fragmentEntryId, true);
+	}
+
+	/**
+	 * Returns the layout page template fragment where groupId = &#63; and layoutPageTemplateEntryId = &#63; and fragmentEntryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateEntryId the layout page template entry ID
+	 * @param fragmentEntryId the fragment entry ID
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching layout page template fragment, or <code>null</code> if a matching layout page template fragment could not be found
+	 */
+	@Override
+	public LayoutPageTemplateFragment fetchByG_L_F(long groupId,
+		long layoutPageTemplateEntryId, long fragmentEntryId,
+		boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] {
+				groupId, layoutPageTemplateEntryId, fragmentEntryId
+			};
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_G_L_F,
+					finderArgs, this);
+		}
+
+		if (result instanceof LayoutPageTemplateFragment) {
+			LayoutPageTemplateFragment layoutPageTemplateFragment = (LayoutPageTemplateFragment)result;
+
+			if ((groupId != layoutPageTemplateFragment.getGroupId()) ||
+					(layoutPageTemplateEntryId != layoutPageTemplateFragment.getLayoutPageTemplateEntryId()) ||
+					(fragmentEntryId != layoutPageTemplateFragment.getFragmentEntryId())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(5);
+
+			query.append(_SQL_SELECT_LAYOUTPAGETEMPLATEFRAGMENT_WHERE);
+
+			query.append(_FINDER_COLUMN_G_L_F_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_L_F_LAYOUTPAGETEMPLATEENTRYID_2);
+
+			query.append(_FINDER_COLUMN_G_L_F_FRAGMENTENTRYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(layoutPageTemplateEntryId);
+
+				qPos.add(fragmentEntryId);
+
+				List<LayoutPageTemplateFragment> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_G_L_F,
+						finderArgs, list);
+				}
+				else {
+					LayoutPageTemplateFragment layoutPageTemplateFragment = list.get(0);
+
+					result = layoutPageTemplateFragment;
+
+					cacheResult(layoutPageTemplateFragment);
+
+					if ((layoutPageTemplateFragment.getGroupId() != groupId) ||
+							(layoutPageTemplateFragment.getLayoutPageTemplateEntryId() != layoutPageTemplateEntryId) ||
+							(layoutPageTemplateFragment.getFragmentEntryId() != fragmentEntryId)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_G_L_F,
+							finderArgs, layoutPageTemplateFragment);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_G_L_F, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (LayoutPageTemplateFragment)result;
+		}
+	}
+
+	/**
+	 * Removes the layout page template fragment where groupId = &#63; and layoutPageTemplateEntryId = &#63; and fragmentEntryId = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateEntryId the layout page template entry ID
+	 * @param fragmentEntryId the fragment entry ID
+	 * @return the layout page template fragment that was removed
+	 */
+	@Override
+	public LayoutPageTemplateFragment removeByG_L_F(long groupId,
+		long layoutPageTemplateEntryId, long fragmentEntryId)
+		throws NoSuchPageTemplateFragmentException {
+		LayoutPageTemplateFragment layoutPageTemplateFragment = findByG_L_F(groupId,
+				layoutPageTemplateEntryId, fragmentEntryId);
+
+		return remove(layoutPageTemplateFragment);
+	}
+
+	/**
+	 * Returns the number of layout page template fragments where groupId = &#63; and layoutPageTemplateEntryId = &#63; and fragmentEntryId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateEntryId the layout page template entry ID
+	 * @param fragmentEntryId the fragment entry ID
+	 * @return the number of matching layout page template fragments
+	 */
+	@Override
+	public int countByG_L_F(long groupId, long layoutPageTemplateEntryId,
+		long fragmentEntryId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_L_F;
+
+		Object[] finderArgs = new Object[] {
+				groupId, layoutPageTemplateEntryId, fragmentEntryId
+			};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_LAYOUTPAGETEMPLATEFRAGMENT_WHERE);
+
+			query.append(_FINDER_COLUMN_G_L_F_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_L_F_LAYOUTPAGETEMPLATEENTRYID_2);
+
+			query.append(_FINDER_COLUMN_G_L_F_FRAGMENTENTRYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(layoutPageTemplateEntryId);
+
+				qPos.add(fragmentEntryId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_L_F_GROUPID_2 = "layoutPageTemplateFragment.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_L_F_LAYOUTPAGETEMPLATEENTRYID_2 =
+		"layoutPageTemplateFragment.layoutPageTemplateEntryId = ? AND ";
+	private static final String _FINDER_COLUMN_G_L_F_FRAGMENTENTRYID_2 = "layoutPageTemplateFragment.fragmentEntryId = ?";
 
 	public LayoutPageTemplateFragmentPersistenceImpl() {
 		setModelClass(LayoutPageTemplateFragment.class);
@@ -1735,6 +1996,13 @@ public class LayoutPageTemplateFragmentPersistenceImpl
 			LayoutPageTemplateFragmentImpl.class,
 			layoutPageTemplateFragment.getPrimaryKey(),
 			layoutPageTemplateFragment);
+
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_L_F,
+			new Object[] {
+				layoutPageTemplateFragment.getGroupId(),
+				layoutPageTemplateFragment.getLayoutPageTemplateEntryId(),
+				layoutPageTemplateFragment.getFragmentEntryId()
+			}, layoutPageTemplateFragment);
 
 		layoutPageTemplateFragment.resetOriginalValues();
 	}
@@ -1792,6 +2060,9 @@ public class LayoutPageTemplateFragmentPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache((LayoutPageTemplateFragmentModelImpl)layoutPageTemplateFragment,
+			true);
 	}
 
 	@Override
@@ -1804,22 +2075,65 @@ public class LayoutPageTemplateFragmentPersistenceImpl
 			entityCache.removeResult(LayoutPageTemplateFragmentModelImpl.ENTITY_CACHE_ENABLED,
 				LayoutPageTemplateFragmentImpl.class,
 				layoutPageTemplateFragment.getPrimaryKey());
+
+			clearUniqueFindersCache((LayoutPageTemplateFragmentModelImpl)layoutPageTemplateFragment,
+				true);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		LayoutPageTemplateFragmentModelImpl layoutPageTemplateFragmentModelImpl) {
+		Object[] args = new Object[] {
+				layoutPageTemplateFragmentModelImpl.getGroupId(),
+				layoutPageTemplateFragmentModelImpl.getLayoutPageTemplateEntryId(),
+				layoutPageTemplateFragmentModelImpl.getFragmentEntryId()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_G_L_F, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_L_F, args,
+			layoutPageTemplateFragmentModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		LayoutPageTemplateFragmentModelImpl layoutPageTemplateFragmentModelImpl,
+		boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					layoutPageTemplateFragmentModelImpl.getGroupId(),
+					layoutPageTemplateFragmentModelImpl.getLayoutPageTemplateEntryId(),
+					layoutPageTemplateFragmentModelImpl.getFragmentEntryId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_L_F, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_L_F, args);
+		}
+
+		if ((layoutPageTemplateFragmentModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_G_L_F.getColumnBitmask()) != 0) {
+			Object[] args = new Object[] {
+					layoutPageTemplateFragmentModelImpl.getOriginalGroupId(),
+					layoutPageTemplateFragmentModelImpl.getOriginalLayoutPageTemplateEntryId(),
+					layoutPageTemplateFragmentModelImpl.getOriginalFragmentEntryId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_L_F, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_L_F, args);
 		}
 	}
 
 	/**
 	 * Creates a new layout page template fragment with the primary key. Does not add the layout page template fragment to the database.
 	 *
-	 * @param layoutPageTemplateFragmentPK the primary key for the new layout page template fragment
+	 * @param layoutPageTemplateFragmentId the primary key for the new layout page template fragment
 	 * @return the new layout page template fragment
 	 */
 	@Override
-	public LayoutPageTemplateFragment create(
-		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK) {
+	public LayoutPageTemplateFragment create(long layoutPageTemplateFragmentId) {
 		LayoutPageTemplateFragment layoutPageTemplateFragment = new LayoutPageTemplateFragmentImpl();
 
 		layoutPageTemplateFragment.setNew(true);
-		layoutPageTemplateFragment.setPrimaryKey(layoutPageTemplateFragmentPK);
+		layoutPageTemplateFragment.setPrimaryKey(layoutPageTemplateFragmentId);
 
 		layoutPageTemplateFragment.setCompanyId(companyProvider.getCompanyId());
 
@@ -1829,15 +2143,14 @@ public class LayoutPageTemplateFragmentPersistenceImpl
 	/**
 	 * Removes the layout page template fragment with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param layoutPageTemplateFragmentPK the primary key of the layout page template fragment
+	 * @param layoutPageTemplateFragmentId the primary key of the layout page template fragment
 	 * @return the layout page template fragment that was removed
 	 * @throws NoSuchPageTemplateFragmentException if a layout page template fragment with the primary key could not be found
 	 */
 	@Override
-	public LayoutPageTemplateFragment remove(
-		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK)
+	public LayoutPageTemplateFragment remove(long layoutPageTemplateFragmentId)
 		throws NoSuchPageTemplateFragmentException {
-		return remove((Serializable)layoutPageTemplateFragmentPK);
+		return remove((Serializable)layoutPageTemplateFragmentId);
 	}
 
 	/**
@@ -2073,6 +2386,9 @@ public class LayoutPageTemplateFragmentPersistenceImpl
 			layoutPageTemplateFragment.getPrimaryKey(),
 			layoutPageTemplateFragment, false);
 
+		clearUniqueFindersCache(layoutPageTemplateFragmentModelImpl, false);
+		cacheUniqueFindersCache(layoutPageTemplateFragmentModelImpl);
+
 		layoutPageTemplateFragment.resetOriginalValues();
 
 		return layoutPageTemplateFragment;
@@ -2089,14 +2405,15 @@ public class LayoutPageTemplateFragmentPersistenceImpl
 		layoutPageTemplateFragmentImpl.setNew(layoutPageTemplateFragment.isNew());
 		layoutPageTemplateFragmentImpl.setPrimaryKey(layoutPageTemplateFragment.getPrimaryKey());
 
+		layoutPageTemplateFragmentImpl.setLayoutPageTemplateFragmentId(layoutPageTemplateFragment.getLayoutPageTemplateFragmentId());
 		layoutPageTemplateFragmentImpl.setGroupId(layoutPageTemplateFragment.getGroupId());
-		layoutPageTemplateFragmentImpl.setLayoutPageTemplateEntryId(layoutPageTemplateFragment.getLayoutPageTemplateEntryId());
-		layoutPageTemplateFragmentImpl.setFragmentEntryId(layoutPageTemplateFragment.getFragmentEntryId());
 		layoutPageTemplateFragmentImpl.setCompanyId(layoutPageTemplateFragment.getCompanyId());
 		layoutPageTemplateFragmentImpl.setUserId(layoutPageTemplateFragment.getUserId());
 		layoutPageTemplateFragmentImpl.setUserName(layoutPageTemplateFragment.getUserName());
 		layoutPageTemplateFragmentImpl.setCreateDate(layoutPageTemplateFragment.getCreateDate());
 		layoutPageTemplateFragmentImpl.setModifiedDate(layoutPageTemplateFragment.getModifiedDate());
+		layoutPageTemplateFragmentImpl.setLayoutPageTemplateEntryId(layoutPageTemplateFragment.getLayoutPageTemplateEntryId());
+		layoutPageTemplateFragmentImpl.setFragmentEntryId(layoutPageTemplateFragment.getFragmentEntryId());
 		layoutPageTemplateFragmentImpl.setPosition(layoutPageTemplateFragment.getPosition());
 
 		return layoutPageTemplateFragmentImpl;
@@ -2129,15 +2446,15 @@ public class LayoutPageTemplateFragmentPersistenceImpl
 	/**
 	 * Returns the layout page template fragment with the primary key or throws a {@link NoSuchPageTemplateFragmentException} if it could not be found.
 	 *
-	 * @param layoutPageTemplateFragmentPK the primary key of the layout page template fragment
+	 * @param layoutPageTemplateFragmentId the primary key of the layout page template fragment
 	 * @return the layout page template fragment
 	 * @throws NoSuchPageTemplateFragmentException if a layout page template fragment with the primary key could not be found
 	 */
 	@Override
 	public LayoutPageTemplateFragment findByPrimaryKey(
-		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK)
+		long layoutPageTemplateFragmentId)
 		throws NoSuchPageTemplateFragmentException {
-		return findByPrimaryKey((Serializable)layoutPageTemplateFragmentPK);
+		return findByPrimaryKey((Serializable)layoutPageTemplateFragmentId);
 	}
 
 	/**
@@ -2192,13 +2509,13 @@ public class LayoutPageTemplateFragmentPersistenceImpl
 	/**
 	 * Returns the layout page template fragment with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param layoutPageTemplateFragmentPK the primary key of the layout page template fragment
+	 * @param layoutPageTemplateFragmentId the primary key of the layout page template fragment
 	 * @return the layout page template fragment, or <code>null</code> if a layout page template fragment with the primary key could not be found
 	 */
 	@Override
 	public LayoutPageTemplateFragment fetchByPrimaryKey(
-		LayoutPageTemplateFragmentPK layoutPageTemplateFragmentPK) {
-		return fetchByPrimaryKey((Serializable)layoutPageTemplateFragmentPK);
+		long layoutPageTemplateFragmentId) {
+		return fetchByPrimaryKey((Serializable)layoutPageTemplateFragmentId);
 	}
 
 	@Override
@@ -2210,12 +2527,87 @@ public class LayoutPageTemplateFragmentPersistenceImpl
 
 		Map<Serializable, LayoutPageTemplateFragment> map = new HashMap<Serializable, LayoutPageTemplateFragment>();
 
-		for (Serializable primaryKey : primaryKeys) {
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
 			LayoutPageTemplateFragment layoutPageTemplateFragment = fetchByPrimaryKey(primaryKey);
 
 			if (layoutPageTemplateFragment != null) {
 				map.put(primaryKey, layoutPageTemplateFragment);
 			}
+
+			return map;
+		}
+
+		Set<Serializable> uncachedPrimaryKeys = null;
+
+		for (Serializable primaryKey : primaryKeys) {
+			Serializable serializable = entityCache.getResult(LayoutPageTemplateFragmentModelImpl.ENTITY_CACHE_ENABLED,
+					LayoutPageTemplateFragmentImpl.class, primaryKey);
+
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
+
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (LayoutPageTemplateFragment)serializable);
+				}
+			}
+		}
+
+		if (uncachedPrimaryKeys == null) {
+			return map;
+		}
+
+		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
+				1);
+
+		query.append(_SQL_SELECT_LAYOUTPAGETEMPLATEFRAGMENT_WHERE_PKS_IN);
+
+		for (Serializable primaryKey : uncachedPrimaryKeys) {
+			query.append((long)primaryKey);
+
+			query.append(StringPool.COMMA);
+		}
+
+		query.setIndex(query.index() - 1);
+
+		query.append(StringPool.CLOSE_PARENTHESIS);
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			for (LayoutPageTemplateFragment layoutPageTemplateFragment : (List<LayoutPageTemplateFragment>)q.list()) {
+				map.put(layoutPageTemplateFragment.getPrimaryKeyObj(),
+					layoutPageTemplateFragment);
+
+				cacheResult(layoutPageTemplateFragment);
+
+				uncachedPrimaryKeys.remove(layoutPageTemplateFragment.getPrimaryKeyObj());
+			}
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				entityCache.putResult(LayoutPageTemplateFragmentModelImpl.ENTITY_CACHE_ENABLED,
+					LayoutPageTemplateFragmentImpl.class, primaryKey, nullModel);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
 		}
 
 		return map;
@@ -2437,6 +2829,8 @@ public class LayoutPageTemplateFragmentPersistenceImpl
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_LAYOUTPAGETEMPLATEFRAGMENT = "SELECT layoutPageTemplateFragment FROM LayoutPageTemplateFragment layoutPageTemplateFragment";
+	private static final String _SQL_SELECT_LAYOUTPAGETEMPLATEFRAGMENT_WHERE_PKS_IN =
+		"SELECT layoutPageTemplateFragment FROM LayoutPageTemplateFragment layoutPageTemplateFragment WHERE layoutPageTemplateFragmentId IN (";
 	private static final String _SQL_SELECT_LAYOUTPAGETEMPLATEFRAGMENT_WHERE = "SELECT layoutPageTemplateFragment FROM LayoutPageTemplateFragment layoutPageTemplateFragment WHERE ";
 	private static final String _SQL_COUNT_LAYOUTPAGETEMPLATEFRAGMENT = "SELECT COUNT(layoutPageTemplateFragment) FROM LayoutPageTemplateFragment layoutPageTemplateFragment";
 	private static final String _SQL_COUNT_LAYOUTPAGETEMPLATEFRAGMENT_WHERE = "SELECT COUNT(layoutPageTemplateFragment) FROM LayoutPageTemplateFragment layoutPageTemplateFragment WHERE ";

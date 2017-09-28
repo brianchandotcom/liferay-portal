@@ -1625,28 +1625,29 @@ public class DLAppHelperLocalServiceImpl
 		long dlFileEntryClassNameId = classNameLocalService.getClassNameId(
 			DLFileEntry.class);
 
-		List<AssetEntry> dlFileEntryAssetEntries =
-			assetEntryFinder.findByDLFileEntryC_T(
+		List<DLFileEntry> dlFileEntries =
+			dlFileEntryFinder.findByDLFileEntryC_T(
 				dlFileEntryClassNameId, dlFolder.getTreePath());
 
-		for (AssetEntry dlFileEntryAssetEntry : dlFileEntryAssetEntries) {
+		for (DLFileEntry dlFileEntry : dlFileEntries) {
 			assetEntryLocalService.updateVisible(
-				dlFileEntryAssetEntry, !moveToTrash);
+				DLFileEntry.class.getName(), dlFileEntry.getFileEntryId(),
+				!moveToTrash);
 		}
 
 		long dlFolderClassNameId = classNameLocalService.getClassNameId(
 			DLFolder.class);
 
-		List<AssetEntry> dlFolderAssetEntries =
-			assetEntryFinder.findByDLFolderC_T(
-				dlFolderClassNameId, dlFolder.getTreePath());
+		List<DLFolder> dlFolders = dlFolderFinder.findByDLFolderC_T(
+			dlFolderClassNameId, dlFolder.getTreePath());
 
-		for (AssetEntry dlFolderAssetEntry : dlFolderAssetEntries) {
+		for (DLFolder curDLFolder : dlFolders) {
 			assetEntryLocalService.updateVisible(
-				dlFolderAssetEntry, !moveToTrash);
+				DLFolder.class.getName(), curDLFolder.getFolderId(),
+				!moveToTrash);
 		}
 
-		List<DLFolder> dlFolders = dlFolderPersistence.findByG_M_T_H(
+		dlFolders = dlFolderPersistence.findByG_M_T_H(
 			dlFolder.getGroupId(), false,
 			CustomSQLUtil.keywords(
 				dlFolder.getTreePath(), WildcardMode.TRAILING)[0],

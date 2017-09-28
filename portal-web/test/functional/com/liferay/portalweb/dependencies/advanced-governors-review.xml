@@ -1,0 +1,286 @@
+<?xml version="1.0"?>
+
+<workflow-definition
+	xmlns="urn:liferay.com:liferay-workflow_6.2.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_6.2.0 http://www.liferay.com/dtd/liferay-workflow-definition_6_2_0.xsd"
+>
+	<name>Quarterly Reports Review Process</name>
+	<description></description>
+	<version>1</version>
+	<fork>
+		<name>Governor's Review</name>
+		<metadata> <![CDATA[{"xy":[189,194]}]]> </metadata>
+		<transitions>
+			<transition>
+				<name>Board Member Review 1</name>
+				<target>Board Member Review 1</target>
+				<default>true</default>
+			</transition>
+			<transition>
+				<name>Board Member Review 2</name>
+				<target>Board Member Review 2</target>
+				<default>false</default>
+			</transition>
+			<transition>
+				<name>Board Member Review 3</name>
+				<target>Board Member Review 3</target>
+				<default>false</default>
+			</transition>
+			<transition>
+				<name>Board Member Review 4</name>
+				<target>Board Member Review 4</target>
+				<default>false</default>
+			</transition>
+		</transitions>
+	</fork>
+	<join>
+		<name>Governor's Approval</name>
+		<metadata> <![CDATA[{"xy":[629,193]}]]> </metadata>
+		<actions>
+			<notification>
+				<name>Report Approval</name>
+				<description></description>
+				<template> <![CDATA[The report you submitted has earned the Board of Governors Approval.]]> </template>
+				<template-language>text</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients>
+					<user/>
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
+		</actions>
+		<transitions>
+			<transition>
+				<name>Approve</name>
+				<target>Published</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</join>
+	<state>
+		<name>Submitted</name>
+		<metadata> <![CDATA[{"xy":[21,205]}]]> </metadata>
+		<initial>true</initial>
+		<transitions>
+			<transition>
+				<name>Submit for Board Review</name>
+				<target>Governor's Review</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</state>
+	<state>
+		<name>Published</name>
+		<metadata> <![CDATA[{"terminal":true,"xy":[833,202]}]]> </metadata>
+		<actions>
+			<action>
+				<name>Approve</name>
+				<description>Approve</description>
+				<script> <![CDATA[Packages.com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil.updateStatus(Packages.com.liferay.portal.kernel.workflow.WorkflowConstants.getLabelStatus("approved"), workflowContext);]]> </script>
+				<script-language>javascript</script-language>
+				<execution-type>onEntry</execution-type>
+			</action>
+		</actions>
+	</state>
+	<task>
+		<name>Board Member Review 1</name>
+		<metadata> <![CDATA[{"xy":[381,13]}]]> </metadata>
+		<actions>
+			<notification>
+				<name>Quarterly Financial Review</name>
+				<description></description>
+				<template> <![CDATA[A quarterly report needs your review.]]> </template>
+				<template-language>text</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients>
+					<assignees/>
+				</recipients>
+				<execution-type>onAssignment</execution-type>
+			</notification>
+		</actions>
+		<assignments>
+			<roles>
+				<role>
+					<role-type>regular</role-type>
+					<name>Board Member</name>
+					<auto-create>true</auto-create>
+				</role>
+			</roles>
+		</assignments>
+		<task-timers>
+			<task-timer>
+				<name>Review Reminder</name>
+				<delay>
+					<duration>3</duration>
+					<scale>day</scale>
+				</delay>
+				<timer-actions>
+					<timer-notification>
+						<name>Please Complete Your Review</name>
+						<template>It has been 72 hours. Please finish your review asap.</template>
+						<template-language>text</template-language>
+						<notification-type>user-notification</notification-type>
+					</timer-notification>
+				</timer-actions>
+			</task-timer>
+		</task-timers>
+		<transitions>
+			<transition>
+				<name>Approve 1</name>
+				<target>Governor's Approval</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</task>
+	<task>
+		<name>Board Member Review 2</name>
+		<metadata> <![CDATA[{"xy":[380,143]}]]> </metadata>
+		<actions>
+			<notification>
+				<name>Quarterly Financial Review</name>
+				<description></description>
+				<template> <![CDATA[A quarterly report needs your review.]]> </template>
+				<template-language>text</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients>
+					<assignees/>
+				</recipients>
+				<execution-type>onAssignment</execution-type>
+			</notification>
+		</actions>
+		<assignments>
+			<roles>
+				<role>
+					<role-type>regular</role-type>
+					<name>Board Member</name>
+					<auto-create>true</auto-create>
+				</role>
+			</roles>
+		</assignments>
+		<task-timers>
+			<task-timer>
+				<name>Review Reminder</name>
+				<delay>
+					<duration>3</duration>
+					<scale>day</scale>
+				</delay>
+				<timer-actions>
+					<timer-notification>
+						<name>Please Complete Your Review</name>
+						<template>It has been 72 hours. Please finish your review asap.</template>
+						<template-language>text</template-language>
+						<notification-type>user-notification</notification-type>
+					</timer-notification>
+				</timer-actions>
+			</task-timer>
+		</task-timers>
+		<transitions>
+			<transition>
+				<name>Approve 2</name>
+				<target>Governor's Approval</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</task>
+	<task>
+		<name>Board Member Review 3</name>
+		<metadata> <![CDATA[{"xy":[380,282]}]]> </metadata>
+		<actions>
+			<notification>
+				<name>Quarterly Financial Review</name>
+				<description></description>
+				<template> <![CDATA[A quarterly report needs your review.]]> </template>
+				<template-language>text</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients>
+					<assignees/>
+				</recipients>
+				<execution-type>onAssignment</execution-type>
+			</notification>
+		</actions>
+		<assignments>
+			<roles>
+				<role>
+					<role-type>regular</role-type>
+					<name>Board Member</name>
+					<auto-create>true</auto-create>
+				</role>
+			</roles>
+		</assignments>
+		<task-timers>
+			<task-timer>
+				<name>Review Reminder</name>
+				<delay>
+					<duration>3</duration>
+					<scale>day</scale>
+				</delay>
+				<timer-actions>
+					<timer-notification>
+						<name>Please Complete Your Review</name>
+						<template>It has been 72 hours. Please finish your review asap.</template>
+						<template-language>text</template-language>
+						<notification-type>user-notification</notification-type>
+					</timer-notification>
+				</timer-actions>
+			</task-timer>
+		</task-timers>
+		<transitions>
+			<transition>
+				<name>Approve 3</name>
+				<target>Governor's Approval</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</task>
+	<task>
+		<name>Board Member Review 4</name>
+		<metadata> <![CDATA[{"xy":[381,420]}]]> </metadata>
+		<actions>
+			<notification>
+				<name>Quarterly Financial Review</name>
+				<description></description>
+				<template> <![CDATA[A quarterly report needs your review.]]> </template>
+				<template-language>text</template-language>
+				<notification-type>user-notification</notification-type>
+				<recipients>
+					<assignees/>
+				</recipients>
+				<execution-type>onAssignment</execution-type>
+			</notification>
+		</actions>
+		<assignments>
+			<roles>
+				<role>
+					<role-type>regular</role-type>
+					<name>Board Member</name>
+					<auto-create>true</auto-create>
+				</role>
+			</roles>
+		</assignments>
+		<task-timers>
+			<task-timer>
+				<name>Review Reminder</name>
+				<delay>
+					<duration>3</duration>
+					<scale>day</scale>
+				</delay>
+				<timer-actions>
+					<timer-notification>
+						<name>Please Complete Your Review</name>
+						<template>It has been 72 hours. Please finish your review asap.</template>
+						<template-language>text</template-language>
+						<notification-type>user-notification</notification-type>
+					</timer-notification>
+				</timer-actions>
+			</task-timer>
+		</task-timers>
+		<transitions>
+			<transition>
+				<name>Approve 4</name>
+				<target>Governor's Approval</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</task>
+</workflow-definition>

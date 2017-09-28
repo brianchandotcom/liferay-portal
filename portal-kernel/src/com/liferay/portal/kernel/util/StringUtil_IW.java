@@ -528,8 +528,13 @@ public class StringUtil_IW {
 		return StringUtil.reverse(s);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public java.lang.String safePath(java.lang.String path) {
-		return StringUtil.safePath(path);
+		return StringUtil.replace(
+			path, StringPool.DOUBLE_SLASH, StringPool.SLASH);
 	}
 
 	public java.lang.String shorten(java.lang.String s) {

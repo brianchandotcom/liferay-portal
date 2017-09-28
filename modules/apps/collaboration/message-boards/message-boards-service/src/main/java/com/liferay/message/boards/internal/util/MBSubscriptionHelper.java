@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.subscription.internal.util;
+package com.liferay.message.boards.internal.util;
 
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;

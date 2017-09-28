@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.subscription.internal.service;
+package com.liferay.document.library.internal.service;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.util.RepositoryUtil;
 import com.liferay.portlet.documentlibrary.DLGroupServiceSettings;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 import com.liferay.subscription.service.SubscriptionLocalService;
@@ -73,11 +74,11 @@ public class SubscriptionDLAppHelperLocalServiceWrapper
 
 	@Override
 	public void deleteFileEntry(FileEntry fileEntry) throws PortalException {
-		super.deleteFileEntry(fileEntry);
-
-		if (!DLAppHelperThreadLocal.isEnabled()) {
+		if (!_isEnabled(fileEntry)) {
 			return;
 		}
+
+		super.deleteFileEntry(fileEntry);
 
 		_subscriptionLocalService.deleteSubscriptions(
 			fileEntry.getCompanyId(), DLFileEntryConstants.getClassName(),
@@ -86,11 +87,11 @@ public class SubscriptionDLAppHelperLocalServiceWrapper
 
 	@Override
 	public void deleteFolder(Folder folder) throws PortalException {
-		super.deleteFolder(folder);
-
-		if (!DLAppHelperThreadLocal.isEnabled()) {
+		if (!_isEnabled(folder)) {
 			return;
 		}
+
+		super.deleteFolder(folder);
 
 		_subscriptionLocalService.deleteSubscriptions(
 			folder.getCompanyId(), DLFolderConstants.getClassName(),
@@ -104,12 +105,15 @@ public class SubscriptionDLAppHelperLocalServiceWrapper
 			Map<String, Serializable> workflowContext)
 		throws PortalException {
 
+		if (!_isEnabled(fileEntry)) {
+			return;
+		}
+
 		super.updateStatus(
 			userId, fileEntry, latestFileVersion, oldStatus, newStatus,
 			serviceContext, workflowContext);
 
-		if (DLAppHelperThreadLocal.isEnabled() &&
-			(newStatus == WorkflowConstants.STATUS_APPROVED) &&
+		if ((newStatus == WorkflowConstants.STATUS_APPROVED) &&
 			(oldStatus != WorkflowConstants.STATUS_IN_TRASH) &&
 			!fileEntry.isInTrash()) {
 
@@ -280,27 +284,39 @@ public class SubscriptionDLAppHelperLocalServiceWrapper
 		subscriptionSender.flushNotificationsAsync();
 	}
 
-	@Reference(unbind = "-")
-	protected void setDlAppLocalService(DLAppLocalService dlAppLocalService) {
-		_dlAppLocalService = dlAppLocalService;
+	private boolean _isEnabled(FileEntry fileEntry) {
+		if (!DLAppHelperThreadLocal.isEnabled()) {
+			return false;
+		}
+
+		if (RepositoryUtil.isExternalRepository(fileEntry.getRepositoryId())) {
+			return false;
+		}
+
+		return true;
 	}
 
-	@Reference(unbind = "-")
-	protected void setDlFileEntryTypeLocalService(
-		DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
+	private boolean _isEnabled(Folder folder) {
+		if (!DLAppHelperThreadLocal.isEnabled()) {
+			return false;
+		}
 
-		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
+		if (!folder.isMountPoint() &&
+			RepositoryUtil.isExternalRepository(folder.getRepositoryId())) {
+
+			return false;
+		}
+
+		return true;
 	}
 
-	@Reference(unbind = "-")
-	protected void setSubscriptionLocalService(
-		SubscriptionLocalService subscriptionLocalService) {
-
-		_subscriptionLocalService = subscriptionLocalService;
-	}
-
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+
+	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;
 
 }

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.RepositoryUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import javax.portlet.PortletRequest;
@@ -86,12 +87,16 @@ public class FileEntryPermissionPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		FileEntry fileEntry = null;
-
 		try {
-			fileEntry = ActionUtil.getFileEntry(portletRequest);
+			FileEntry fileEntry = ActionUtil.getFileEntry(portletRequest);
 
-			if (fileEntry != null) {
+			if (fileEntry == null) {
+				return false;
+			}
+
+			if (!RepositoryUtil.isExternalRepository(
+					fileEntry.getRepositoryId())) {
+
 				return true;
 			}
 		}

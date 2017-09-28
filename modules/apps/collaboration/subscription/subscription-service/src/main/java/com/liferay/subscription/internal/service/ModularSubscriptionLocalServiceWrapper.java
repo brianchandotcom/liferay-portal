@@ -204,13 +204,7 @@ public class ModularSubscriptionLocalServiceWrapper
 			companyId, userId, className, classPKs);
 	}
 
-	@Reference(unbind = "-")
-	protected void setSubscriptionLocalService(
-		SubscriptionLocalService subscriptionLocalService) {
-
-		_subscriptionLocalService = subscriptionLocalService;
-	}
-
+	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;
 
 }

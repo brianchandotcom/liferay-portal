@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.subscription.internal.service;
+package com.liferay.message.boards.internal.service;
 
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
@@ -527,44 +527,6 @@ public class SubscriptionMBMessageLocalServiceWrapper
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setCompanyLocalService(
-		CompanyLocalService companyLocalService) {
-
-		_companyLocalService = companyLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMbDiscussionLocalService(
-		MBDiscussionLocalService mbDiscussionLocalService) {
-
-		_mbDiscussionLocalService = mbDiscussionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMbMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
-
-		_mbMessageLocalService = mbMessageLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSubscriptionLocalService(
-		SubscriptionLocalService subscriptionLocalService) {
-
-		_subscriptionLocalService = subscriptionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	private static String _getLocalizedRootCategoryName(
 		Group group, Locale locale) {
 
@@ -585,19 +547,28 @@ public class SubscriptionMBMessageLocalServiceWrapper
 	private static final Log _log = LogFactoryUtil.getLog(
 		SubscriptionMBMessageLocalServiceWrapper.class);
 
+	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Http _http;
 
+	@Reference
 	private MBDiscussionLocalService _mbDiscussionLocalService;
+
+	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
 
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;
+
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

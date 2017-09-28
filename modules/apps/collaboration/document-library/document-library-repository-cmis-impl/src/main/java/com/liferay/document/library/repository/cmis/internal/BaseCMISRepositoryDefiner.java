@@ -16,7 +16,6 @@ package com.liferay.document.library.repository.cmis.internal;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.DocumentRepository;
-import com.liferay.portal.kernel.repository.capabilities.CommentCapability;
 import com.liferay.portal.kernel.repository.capabilities.PortalCapabilityLocator;
 import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -56,9 +55,6 @@ public abstract class BaseCMISRepositoryDefiner extends BaseRepositoryDefiner {
 		PortalCapabilityLocator portalCapabilityLocator =
 			getPortalCapabilityLocator();
 
-		capabilityRegistry.addExportedCapability(
-			CommentCapability.class,
-			portalCapabilityLocator.getCommentCapability(documentRepository));
 		capabilityRegistry.addSupportedCapability(
 			ProcessorCapability.class,
 			new RefreshingProcessorCapability(

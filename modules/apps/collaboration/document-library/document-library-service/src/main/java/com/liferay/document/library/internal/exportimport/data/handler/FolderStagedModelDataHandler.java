@@ -47,11 +47,10 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.repository.portletrepository.PortletRepository;
-import com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalogUtil;
+import com.liferay.portal.util.RepositoryUtil;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -217,7 +216,7 @@ public class FolderStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Folder.class + ".folderIdsAndRepositoryEntryIds");
 
-		if (_isExternalRepository(folder.getRepositoryId())) {
+		if (RepositoryUtil.isExternalRepository(folder.getRepositoryId())) {
 			Map<Long, Long> repositoryEntryIds =
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 					RepositoryEntry.class);
@@ -556,23 +555,6 @@ public class FolderStagedModelDataHandler
 				throw pde;
 			}
 		}
-	}
-
-	private boolean _isExternalRepository(long repositoryId)
-		throws PortalException {
-
-		Repository repository = _repositoryLocalService.fetchRepository(
-			repositoryId);
-
-		if (repository == null) {
-			return false;
-		}
-
-		Collection<String> externalRepositoryClassNames =
-			RepositoryClassDefinitionCatalogUtil.
-				getExternalRepositoryClassNames();
-
-		return externalRepositoryClassNames.contains(repository.getClassName());
 	}
 
 	private DLAppLocalService _dlAppLocalService;

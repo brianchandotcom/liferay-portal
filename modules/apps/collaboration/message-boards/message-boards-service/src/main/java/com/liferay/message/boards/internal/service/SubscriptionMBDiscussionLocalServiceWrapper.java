@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.subscription.internal.service;
+package com.liferay.message.boards.internal.service;
 
 import com.liferay.message.boards.kernel.service.MBDiscussionLocalService;
 import com.liferay.message.boards.kernel.service.MBDiscussionLocalServiceWrapper;
@@ -62,13 +62,7 @@ public class SubscriptionMBDiscussionLocalServiceWrapper
 			userId, className, classPK);
 	}
 
-	@Reference(unbind = "-")
-	protected void setSubscriptionLocalService(
-		SubscriptionLocalService subscriptionLocalService) {
-
-		_subscriptionLocalService = subscriptionLocalService;
-	}
-
+	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;
 
 }

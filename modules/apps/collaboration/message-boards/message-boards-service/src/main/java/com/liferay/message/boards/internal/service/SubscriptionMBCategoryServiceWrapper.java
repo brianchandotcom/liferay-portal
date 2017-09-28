@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.subscription.internal.service;
+package com.liferay.message.boards.internal.service;
 
+import com.liferay.message.boards.internal.util.MBSubscriptionHelper;
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.service.MBCategoryService;
 import com.liferay.message.boards.kernel.service.MBCategoryServiceWrapper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.subscription.internal.util.MBSubscriptionHelper;
 
 import java.util.List;
 
@@ -81,13 +81,7 @@ public class SubscriptionMBCategoryServiceWrapper
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBSubscriptionHelper(
-		MBSubscriptionHelper mbSubscriptionHelper) {
-
-		_mbSubscriptionHelper = mbSubscriptionHelper;
-	}
-
+	@Reference
 	private MBSubscriptionHelper _mbSubscriptionHelper;
 
 }

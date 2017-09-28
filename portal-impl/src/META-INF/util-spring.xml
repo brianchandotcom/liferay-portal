@@ -504,6 +504,7 @@
 	<bean class="com.liferay.portal.verify.model.AssetCategoryVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.AssetTagVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.AssetVocabularyVerifiableModel" />
+	<bean class="com.liferay.portal.verify.model.DLFileEntryTypeVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.DLFileEntryVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.DLFileShortcutVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.DLFileVersionVerifiableModel" />

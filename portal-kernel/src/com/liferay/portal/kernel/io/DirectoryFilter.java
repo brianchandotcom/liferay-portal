@@ -23,7 +23,9 @@ import java.util.regex.Pattern;
 /**
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class DirectoryFilter implements FileFilter {
 
 	public DirectoryFilter() {

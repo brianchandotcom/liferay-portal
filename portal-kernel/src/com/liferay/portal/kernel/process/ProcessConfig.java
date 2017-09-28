@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.process;
 
 import com.liferay.portal.kernel.io.PathHolder;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
@@ -35,8 +37,7 @@ public class ProcessConfig implements Serializable {
 	}
 
 	public String getBootstrapClassPath() {
-		return StringUtil.merge(
-			getBootstrapClassPathElements(), File.pathSeparator);
+		return _merge(getBootstrapClassPathHolders());
 	}
 
 	/**
@@ -64,8 +65,7 @@ public class ProcessConfig implements Serializable {
 	}
 
 	public String getRuntimeClassPath() {
-		return StringUtil.merge(
-			getRuntimeClassPathElements(), File.pathSeparator);
+		return _merge(getRuntimeClassPathHolders());
 	}
 
 	/**
@@ -142,6 +142,23 @@ public class ProcessConfig implements Serializable {
 		_reactClassLoader = builder._reactClassLoader;
 
 		_runtimeClassPathHolders = _toPathHolders(builder._runtimeClassPath);
+	}
+
+	private String _merge(PathHolder[] pathHolders) {
+		if (pathHolders.length == 0) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(2 * pathHolders.length);
+
+		for (PathHolder pathHolder : pathHolders) {
+			sb.append(pathHolder);
+			sb.append(File.pathSeparator);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
 	}
 
 	private PathHolder[] _toPathHolders(String classPath) {

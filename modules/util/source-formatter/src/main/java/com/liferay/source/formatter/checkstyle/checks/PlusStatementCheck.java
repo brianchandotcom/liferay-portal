@@ -22,9 +22,7 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtils;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Hugo Huijser
@@ -42,7 +40,6 @@ public class PlusStatementCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		_checkMultiLinesPlusStatement(detailAST);
 		_checkMultiPlusStatement(detailAST);
 		_checkTabbing(detailAST);
 
@@ -134,44 +131,6 @@ public class PlusStatementCheck extends BaseCheck {
 			log(
 				lastChild.getLineNo(), _MSG_MOVE_LITERAL_STRING,
 				literalString2.substring(0, pos + 1));
-		}
-	}
-
-	private void _checkMultiLinesPlusStatement(DetailAST detailAST) {
-		DetailAST firstChildAST = detailAST.getFirstChild();
-
-		if (firstChildAST.getType() == TokenTypes.PLUS) {
-			return;
-		}
-
-		if (DetailASTUtil.hasParentWithTokenType(
-				detailAST, TokenTypes.ANNOTATION) ||
-			!DetailASTUtil.hasParentWithTokenType(
-				detailAST, TokenTypes.CTOR_DEF, TokenTypes.METHOD_DEF)) {
-
-			return;
-		}
-
-		Set<Integer> lineNumbers = new HashSet<>();
-
-		lineNumbers.add(detailAST.getLineNo());
-
-		DetailAST parentAST = detailAST;
-
-		while (true) {
-			if (parentAST.getType() != TokenTypes.PLUS) {
-				break;
-			}
-
-			DetailAST lastChildAST = parentAST.getLastChild();
-
-			lineNumbers.add(lastChildAST.getLineNo());
-
-			parentAST = parentAST.getParent();
-		}
-
-		if (lineNumbers.size() > 3) {
-			log(detailAST.getLineNo(), _MSG_STATEMENT_TOO_LONG);
 		}
 	}
 
@@ -364,9 +323,6 @@ public class PlusStatementCheck extends BaseCheck {
 
 	private static final String _MSG_MOVE_LITERAL_STRING =
 		"literal.string.move";
-
-	private static final String _MSG_STATEMENT_TOO_LONG =
-		"plus.statement.too.long";
 
 	private static final String _MSG_USE_STRINGBUNDLER_CONCAT =
 		"use.stringbundler.concat";

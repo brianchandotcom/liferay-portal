@@ -128,9 +128,14 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 		if (stagingType == StagingConstants.TYPE_LOCAL_STAGING) {
 			stagedGroup = liveGroup.hasStagingGroup();
 
-			_stagingLocalService.enableLocalStaging(
-				themeDisplay.getUserId(), liveGroup, branchingPublic,
-				branchingPrivate, serviceContext);
+			try {
+				_stagingLocalService.enableLocalStaging(
+					themeDisplay.getUserId(), liveGroup, branchingPublic,
+					branchingPrivate, serviceContext);
+			}
+			catch (Exception e) {
+				SessionErrors.add(actionRequest, Exception.class, e);
+			}
 		}
 		else if (stagingType == StagingConstants.TYPE_REMOTE_STAGING) {
 			String remoteAddress = ParamUtil.getString(

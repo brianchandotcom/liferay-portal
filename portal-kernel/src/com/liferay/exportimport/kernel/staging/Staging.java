@@ -436,6 +436,12 @@ public interface Staging {
 			Date lastPublishDate)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of 4.0.0, replaced by {@link
+	 *             com.liferay.staging.configuration.web.internal.portlet.StagingConfigurationPortlet#editStagingConfiguration(
+	 *             javax.portlet.ActionRequest, javax.portlet.ActionResponse)}
+	 */
+	@Deprecated
 	public void updateStaging(PortletRequest portletRequest, Group liveGroup)
 		throws PortalException;
 

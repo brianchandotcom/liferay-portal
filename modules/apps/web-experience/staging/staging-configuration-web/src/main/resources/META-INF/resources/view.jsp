@@ -138,6 +138,12 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 					</div>
 				</c:if>
 
+				<liferay-ui:error exception="<%= Exception.class %>">
+					<liferay-ui:message key="an-unexpected-error-occurred-with-the-initial-staging-publication" />
+
+					<%= errorException.toString() %>
+				</liferay-ui:error>
+
 				<liferay-ui:error exception="<%= LocaleException.class %>">
 
 					<%

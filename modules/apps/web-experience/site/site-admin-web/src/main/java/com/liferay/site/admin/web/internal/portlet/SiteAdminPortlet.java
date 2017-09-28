@@ -908,14 +908,6 @@ public class SiteAdminPortlet extends MVCPortlet {
 				privateLayoutSetPrototypeLinkEnabled);
 		}
 
-		// Staging
-
-		if (!privateLayoutSet.isLayoutSetPrototypeLinkActive() &&
-			!publicLayoutSet.isLayoutSetPrototypeLinkActive()) {
-
-			staging.updateStaging(actionRequest, liveGroup);
-		}
-
 		themeDisplay.setSiteGroupId(liveGroup.getGroupId());
 
 		return liveGroup;

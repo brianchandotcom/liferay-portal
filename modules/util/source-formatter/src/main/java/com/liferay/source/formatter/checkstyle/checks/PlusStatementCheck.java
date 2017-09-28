@@ -107,22 +107,9 @@ public class PlusStatementCheck extends BaseCheck {
 			return;
 		}
 
-		if (literalStringValue1.endsWith(StringPool.SLASH)) {
-			log(
-				literalStringAST1.getLineNo(), _MSG_INVALID_END_CHARACTER,
-				literalStringValue1.charAt(literalStringValue1.length() - 1));
-		}
-
-		if (literalStringValue2.startsWith(StringPool.SPACE) ||
-			(!literalStringValue1.endsWith(StringPool.SPACE) &&
-			 literalStringValue2.matches("^[-:;.].*"))) {
-
-			log(
-				literalStringAST2.getLineNo(), _MSG_INVALID_START_CHARACTER,
-				literalStringValue2.charAt(0));
-
-			return;
-		}
+		_checkLiteralStringStartAndEndCharacter(
+			literalStringValue1, literalStringValue2,
+			literalStringAST1.getLineNo());
 
 		String line = getLine(literalStringAST1.getLineNo() - 1);
 
@@ -137,6 +124,25 @@ public class PlusStatementCheck extends BaseCheck {
 			log(
 				literalStringAST2.getLineNo(), _MSG_MOVE_LITERAL_STRING,
 				literalStringValue2.substring(0, pos + 1));
+		}
+	}
+
+	private void _checkLiteralStringStartAndEndCharacter(
+		String literalString1, String literalString2, int lineCount) {
+
+		if (literalString1.endsWith(StringPool.SLASH)) {
+			log(
+				lineCount, _MSG_INVALID_END_CHARACTER,
+				literalString1.charAt(literalString1.length() - 1));
+		}
+
+		if (literalString2.startsWith(StringPool.SPACE) ||
+			(!literalString1.endsWith(StringPool.SPACE) &&
+			 literalString2.matches("^[-:;.].*"))) {
+
+			log(
+				lineCount + 1, _MSG_INVALID_START_CHARACTER,
+				literalString2.charAt(0));
 		}
 	}
 
@@ -221,22 +227,8 @@ public class PlusStatementCheck extends BaseCheck {
 			return;
 		}
 
-		if (literalString1.endsWith(StringPool.SLASH)) {
-			log(
-				detailAST.getLineNo(), _MSG_INVALID_END_CHARACTER,
-				literalString1.charAt(literalString1.length() - 1));
-		}
-
-		if (literalString2.startsWith(StringPool.SPACE) ||
-			(!literalString1.endsWith(StringPool.SPACE) &&
-			 literalString2.matches("^[-:;.].*"))) {
-
-			log(
-				lastChild.getLineNo(), _MSG_INVALID_START_CHARACTER,
-				literalString2.charAt(0));
-
-			return;
-		}
+		_checkLiteralStringStartAndEndCharacter(
+			literalString1, literalString2, detailAST.getLineNo());
 
 		String line1 = getLine(lastChild.getLineNo() - 2);
 		String line2 = getLine(lastChild.getLineNo() - 1);

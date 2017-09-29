@@ -605,7 +605,7 @@ information.
 						<arg value="-Dliferay.home=${liferay.home}" />
 						<arg value="tasks" />
 						<arg value="--all" />
-						<env key="GRADLE_OPTS" value="${env.ANT_OPTS}" />
+						<env key="GRADLE_OPTS" value="${env.ANT_OPTS} -Dfile.encoding=UTF-8" />
 						<redirector errorproperty="@{outputproperty}.error" outputproperty="tasks.output" unless:blank="tasks.output" />
 					</exec>
 
@@ -642,7 +642,7 @@ information.
 								<arg value="-Dforced.cache.enabled=@{forcedcacheenabled}" />
 								<arg value="-Dliferay.home=${liferay.home}" />
 								<arg line="@{task}" />
-								<env key="GRADLE_OPTS" value="${env.ANT_OPTS}" />
+								<env key="GRADLE_OPTS" value="${env.ANT_OPTS} -Dfile.encoding=UTF-8" />
 								<redirector errorproperty="@{outputproperty}.error" outputproperty="@{outputproperty}" unless:blank="@{outputproperty}" />
 							</exec>
 						</try>

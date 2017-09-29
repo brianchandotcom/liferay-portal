@@ -170,7 +170,7 @@ public class BaseSocialAchievement implements SocialAchievement {
 		StringBuilder sb = new StringBuilder(name.length());
 
 		for (int i = 0; i < name.length(); i++) {
-			char c = Character.toLowerCase(name.charAt(i));
+			char c = name.charAt(i);
 
 			if ((c >= CharPool.UPPER_CASE_A) && (c <= CharPool.UPPER_CASE_Z)) {
 				c += 32;

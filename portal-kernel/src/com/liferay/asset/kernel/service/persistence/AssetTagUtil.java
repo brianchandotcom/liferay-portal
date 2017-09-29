@@ -862,6 +862,241 @@ public class AssetTagUtil {
 	}
 
 	/**
+	* Returns all the asset tags where name = &#63;.
+	*
+	* @param name the name
+	* @return the matching asset tags
+	*/
+	public static List<AssetTag> findByName(java.lang.String name) {
+		return getPersistence().findByName(name);
+	}
+
+	/**
+	* Returns a range of all the asset tags where name = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetTagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param name the name
+	* @param start the lower bound of the range of asset tags
+	* @param end the upper bound of the range of asset tags (not inclusive)
+	* @return the range of matching asset tags
+	*/
+	public static List<AssetTag> findByName(java.lang.String name, int start,
+		int end) {
+		return getPersistence().findByName(name, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the asset tags where name = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetTagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param name the name
+	* @param start the lower bound of the range of asset tags
+	* @param end the upper bound of the range of asset tags (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching asset tags
+	*/
+	public static List<AssetTag> findByName(java.lang.String name, int start,
+		int end, OrderByComparator<AssetTag> orderByComparator) {
+		return getPersistence().findByName(name, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the asset tags where name = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetTagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param name the name
+	* @param start the lower bound of the range of asset tags
+	* @param end the upper bound of the range of asset tags (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching asset tags
+	*/
+	public static List<AssetTag> findByName(java.lang.String name, int start,
+		int end, OrderByComparator<AssetTag> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByName(name, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first asset tag in the ordered set where name = &#63;.
+	*
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching asset tag
+	* @throws NoSuchTagException if a matching asset tag could not be found
+	*/
+	public static AssetTag findByName_First(java.lang.String name,
+		OrderByComparator<AssetTag> orderByComparator)
+		throws com.liferay.asset.kernel.exception.NoSuchTagException {
+		return getPersistence().findByName_First(name, orderByComparator);
+	}
+
+	/**
+	* Returns the first asset tag in the ordered set where name = &#63;.
+	*
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching asset tag, or <code>null</code> if a matching asset tag could not be found
+	*/
+	public static AssetTag fetchByName_First(java.lang.String name,
+		OrderByComparator<AssetTag> orderByComparator) {
+		return getPersistence().fetchByName_First(name, orderByComparator);
+	}
+
+	/**
+	* Returns the last asset tag in the ordered set where name = &#63;.
+	*
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching asset tag
+	* @throws NoSuchTagException if a matching asset tag could not be found
+	*/
+	public static AssetTag findByName_Last(java.lang.String name,
+		OrderByComparator<AssetTag> orderByComparator)
+		throws com.liferay.asset.kernel.exception.NoSuchTagException {
+		return getPersistence().findByName_Last(name, orderByComparator);
+	}
+
+	/**
+	* Returns the last asset tag in the ordered set where name = &#63;.
+	*
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching asset tag, or <code>null</code> if a matching asset tag could not be found
+	*/
+	public static AssetTag fetchByName_Last(java.lang.String name,
+		OrderByComparator<AssetTag> orderByComparator) {
+		return getPersistence().fetchByName_Last(name, orderByComparator);
+	}
+
+	/**
+	* Returns the asset tags before and after the current asset tag in the ordered set where name = &#63;.
+	*
+	* @param tagId the primary key of the current asset tag
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next asset tag
+	* @throws NoSuchTagException if a asset tag with the primary key could not be found
+	*/
+	public static AssetTag[] findByName_PrevAndNext(long tagId,
+		java.lang.String name, OrderByComparator<AssetTag> orderByComparator)
+		throws com.liferay.asset.kernel.exception.NoSuchTagException {
+		return getPersistence()
+				   .findByName_PrevAndNext(tagId, name, orderByComparator);
+	}
+
+	/**
+	* Returns all the asset tags where name = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetTagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param names the names
+	* @return the matching asset tags
+	*/
+	public static List<AssetTag> findByName(java.lang.String[] names) {
+		return getPersistence().findByName(names);
+	}
+
+	/**
+	* Returns a range of all the asset tags where name = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetTagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param names the names
+	* @param start the lower bound of the range of asset tags
+	* @param end the upper bound of the range of asset tags (not inclusive)
+	* @return the range of matching asset tags
+	*/
+	public static List<AssetTag> findByName(java.lang.String[] names,
+		int start, int end) {
+		return getPersistence().findByName(names, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the asset tags where name = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetTagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param names the names
+	* @param start the lower bound of the range of asset tags
+	* @param end the upper bound of the range of asset tags (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching asset tags
+	*/
+	public static List<AssetTag> findByName(java.lang.String[] names,
+		int start, int end, OrderByComparator<AssetTag> orderByComparator) {
+		return getPersistence().findByName(names, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the asset tags where name = &#63;, optionally using the finder cache.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetTagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param name the name
+	* @param start the lower bound of the range of asset tags
+	* @param end the upper bound of the range of asset tags (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching asset tags
+	*/
+	public static List<AssetTag> findByName(java.lang.String[] names,
+		int start, int end, OrderByComparator<AssetTag> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByName(names, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Removes all the asset tags where name = &#63; from the database.
+	*
+	* @param name the name
+	*/
+	public static void removeByName(java.lang.String name) {
+		getPersistence().removeByName(name);
+	}
+
+	/**
+	* Returns the number of asset tags where name = &#63;.
+	*
+	* @param name the name
+	* @return the number of matching asset tags
+	*/
+	public static int countByName(java.lang.String name) {
+		return getPersistence().countByName(name);
+	}
+
+	/**
+	* Returns the number of asset tags where name = any &#63;.
+	*
+	* @param names the names
+	* @return the number of matching asset tags
+	*/
+	public static int countByName(java.lang.String[] names) {
+		return getPersistence().countByName(names);
+	}
+
+	/**
 	* Returns the asset tag where groupId = &#63; and name = &#63; or throws a {@link NoSuchTagException} if it could not be found.
 	*
 	* @param groupId the group ID

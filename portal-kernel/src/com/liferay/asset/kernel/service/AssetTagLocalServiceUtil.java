@@ -614,6 +614,16 @@ public class AssetTagLocalServiceUtil {
 	}
 
 	/**
+	* Returns the primary keys of the asset tags with the names.
+	*
+	* @param name the name of the asset tags
+	* @return the primary keys of the asset tags with the names
+	*/
+	public static long[] getTagIds(java.lang.String name) {
+		return getService().getTagIds(name);
+	}
+
+	/**
 	* Returns the names of all the asset tags.
 	*
 	* @return the names of all the asset tags

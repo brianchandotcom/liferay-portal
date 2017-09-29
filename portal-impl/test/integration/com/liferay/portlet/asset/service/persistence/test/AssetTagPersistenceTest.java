@@ -207,6 +207,23 @@ public class AssetTagPersistenceTest {
 	}
 
 	@Test
+	public void testCountByName() throws Exception {
+		_persistence.countByName(StringPool.BLANK);
+
+		_persistence.countByName(StringPool.NULL);
+
+		_persistence.countByName((String)null);
+	}
+
+	@Test
+	public void testCountByNameArrayable() throws Exception {
+		_persistence.countByName(new String[] {
+				RandomTestUtil.randomString(), StringPool.BLANK, StringPool.NULL,
+				null, null
+			});
+	}
+
+	@Test
 	public void testCountByG_N() throws Exception {
 		_persistence.countByG_N(RandomTestUtil.nextLong(), StringPool.BLANK);
 

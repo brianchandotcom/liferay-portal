@@ -1638,16 +1638,8 @@ public class CalendarBookingLocalServiceTest {
 		Assert.assertEquals(
 			laterCalendarBookings.toString(), 2, laterCalendarBookings.size());
 
-		for (CalendarBooking earlierCalendarBooking : earlierCalendarBookings) {
-			Assert.assertEquals(
-				earlierDescriptionMap,
-				earlierCalendarBooking.getDescriptionMap());
-		}
-
-		for (CalendarBooking laterCalendarBooking : laterCalendarBookings) {
-			Assert.assertEquals(
-				laterDescriptionMap, laterCalendarBooking.getDescriptionMap());
-		}
+		assertDescriptions(earlierCalendarBookings, earlierDescriptionMap);
+		assertDescriptions(laterCalendarBookings, laterDescriptionMap);
 	}
 
 	@Test
@@ -1890,22 +1882,9 @@ public class CalendarBookingLocalServiceTest {
 
 		Calendar invitingCalendar = CalendarTestUtil.addCalendar(_invitingUser);
 
-		long startTime = System.currentTimeMillis();
-
-		long endTime = startTime + Time.HOUR;
-
 		CalendarBooking calendarBooking =
-			CalendarBookingTestUtil.addCalendarBooking(
-				_user, invitedCalendar,
-				new long[] {invitingCalendar.getCalendarId()},
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomLocaleStringMap(), startTime, endTime,
-				RecurrenceTestUtil.getDailyRecurrence(), 0,
-				NotificationType.EMAIL, 0, NotificationType.EMAIL,
-				serviceContext);
-
-		Map<Locale, String> earlierDescriptionMap = new HashMap<>(
-			calendarBooking.getDescriptionMap());
+			CalendarBookingTestUtil.addMasterRecurringCalendarBooking(
+				invitedCalendar, invitingCalendar);
 
 		Map<Locale, String> laterDescriptionMap =
 			RandomTestUtil.randomLocaleStringMap();
@@ -1920,13 +1899,8 @@ public class CalendarBookingLocalServiceTest {
 		assertCalendarBookingsCount(invitedCalendar, 1);
 		assertCalendarBookingsCount(invitingCalendar, 1);
 
-		List<CalendarBooking> childCalendarBookings =
-			calendarBooking.getChildCalendarBookings();
-
-		for (CalendarBooking childCalendarBooking : childCalendarBookings) {
-			Assert.assertEquals(
-				laterDescriptionMap, childCalendarBooking.getDescriptionMap());
-		}
+		assertDescriptions(
+			calendarBooking.getChildCalendarBookings(), laterDescriptionMap);
 	}
 
 	@Test
@@ -2632,6 +2606,16 @@ public class CalendarBookingLocalServiceTest {
 
 		Assert.assertEquals(
 			calendarBookings.toString(), count, calendarBookings.size());
+	}
+
+	protected void assertDescriptions(
+		List<CalendarBooking> calendarBookings,
+		Map<Locale, String> descriptionMap) {
+
+		for (CalendarBooking calendarBooking : calendarBookings) {
+			Assert.assertEquals(
+				descriptionMap, calendarBooking.getDescriptionMap());
+		}
 	}
 
 	protected void assertDoesNotRepeat(CalendarBooking calendarBooking) {

@@ -322,19 +322,19 @@ public class UserIndexerTest {
 
 		assertSummary(
 			firstName,
-			concat(
+			StringBundler.concat(
 				HighlightUtil.HIGHLIGHT_TAG_OPEN, firstName,
 				HighlightUtil.HIGHLIGHT_TAG_CLOSE, StringPool.SPACE, lastName));
 		assertSummary(
 			StringUtil.toLowerCase(firstName + " " + lastName),
-			concat(
+			StringBundler.concat(
 				HighlightUtil.HIGHLIGHT_TAG_OPEN, firstName,
 				HighlightUtil.HIGHLIGHT_TAG_CLOSE, StringPool.SPACE,
 				HighlightUtil.HIGHLIGHT_TAG_OPEN, lastName,
 				HighlightUtil.HIGHLIGHT_TAG_CLOSE));
 		assertSummary(
 			lastName + " " + firstName,
-			concat(
+			StringBundler.concat(
 				HighlightUtil.HIGHLIGHT_TAG_OPEN, firstName,
 				HighlightUtil.HIGHLIGHT_TAG_CLOSE, StringPool.SPACE,
 				HighlightUtil.HIGHLIGHT_TAG_OPEN, lastName,
@@ -421,12 +421,6 @@ public class UserIndexerTest {
 
 		Assert.assertEquals(StringPool.BLANK, summary.getContent());
 		Assert.assertEquals(title, summary.getTitle());
-	}
-
-	protected String concat(String... stringArray) {
-		StringBundler sb = new StringBundler(stringArray);
-
-		return sb.toString();
 	}
 
 	protected Document getDocument(Document[] documents, long userId) {

@@ -47,9 +47,9 @@ public class JSONWebServiceClientImplGetTest
 	public void testBadRequestOnGet() throws Exception {
 		Map<String, Object> clientProperties = getBaseProperties();
 
-		clientProperties.put("protocol", "http");
 		clientProperties.put(
 			"headers", "headerKey1=headerValue1;Accept=application/json;");
+		clientProperties.put("protocol", "http");
 
 		JSONWebServiceClientImpl jsonWebServiceClientImpl =
 			new JSONWebServiceClientImpl();
@@ -64,9 +64,9 @@ public class JSONWebServiceClientImplGetTest
 	public void testResponse200OnGet() throws Exception {
 		Map<String, Object> clientProperties = getBaseProperties();
 
-		clientProperties.put("protocol", "http");
 		clientProperties.put(
 			"headers", "headerKey1=headerValue1;Accept=application/json;");
+		clientProperties.put("protocol", "http");
 
 		JSONWebServiceClientImpl jsonWebServiceClientImpl =
 			new JSONWebServiceClientImpl();
@@ -92,9 +92,9 @@ public class JSONWebServiceClientImplGetTest
 	public void testResponse202OnGet() throws Exception {
 		Map<String, Object> clientProperties = getBaseProperties();
 
-		clientProperties.put("protocol", "http");
 		clientProperties.put(
 			"headers", "headerKey1=headerValue1;Accept=application/json;");
+		clientProperties.put("protocol", "http");
 
 		JSONWebServiceClientImpl jsonWebServiceClientImpl =
 			new JSONWebServiceClientImpl();
@@ -117,9 +117,9 @@ public class JSONWebServiceClientImplGetTest
 	public void testResponse204OnGet() throws Exception {
 		Map<String, Object> clientProperties = getBaseProperties();
 
-		clientProperties.put("protocol", "http");
 		clientProperties.put(
 			"headers", "Accept=application/json;headerKey2=headerValue2");
+		clientProperties.put("protocol", "http");
 
 		JSONWebServiceClientImpl jsonWebServiceClientImpl =
 			new JSONWebServiceClientImpl();

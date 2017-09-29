@@ -62,9 +62,9 @@ public class JSONWebServiceClientImplDeleteTest
 	public void testResponse200OnDelete() throws Exception {
 		Map<String, Object> clientProperties = getBaseProperties();
 
-		clientProperties.put("protocol", "http");
 		clientProperties.put(
 			"headers", "headerKey1=headerValue1;Accept=application/json;");
+		clientProperties.put("protocol", "http");
 
 		JSONWebServiceClientImpl jsonWebServiceClientImpl =
 			new JSONWebServiceClientImpl();
@@ -90,9 +90,9 @@ public class JSONWebServiceClientImplDeleteTest
 	public void testResponse202OnDelete() throws Exception {
 		Map<String, Object> clientProperties = getBaseProperties();
 
-		clientProperties.put("protocol", "http");
 		clientProperties.put(
 			"headers", "headerKey1=headerValue1;Accept=application/json;");
+		clientProperties.put("protocol", "http");
 
 		JSONWebServiceClientImpl jsonWebServiceClientImpl =
 			new JSONWebServiceClientImpl();
@@ -115,9 +115,9 @@ public class JSONWebServiceClientImplDeleteTest
 	public void testResponse204OnDelete() throws Exception {
 		Map<String, Object> clientProperties = getBaseProperties();
 
-		clientProperties.put("protocol", "http");
 		clientProperties.put(
 			"headers", "Accept=application/json;headerKey1=headerValue1");
+		clientProperties.put("protocol", "http");
 
 		JSONWebServiceClientImpl jsonWebServiceClientImpl =
 			new JSONWebServiceClientImpl();
@@ -140,9 +140,9 @@ public class JSONWebServiceClientImplDeleteTest
 	public void testResponse405OnDelete() throws Exception {
 		Map<String, Object> clientProperties = getBaseProperties();
 
-		clientProperties.put("protocol", "http");
 		clientProperties.put(
 			"headers", "Accept=application/json;headerKey1=headerValue1");
+		clientProperties.put("protocol", "http");
 
 		JSONWebServiceClientImpl jsonWebServiceClientImpl =
 			new JSONWebServiceClientImpl();

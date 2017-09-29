@@ -99,7 +99,7 @@
 
 		<execute macro="Role#definePermissionPG">
 			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_ADD_RECORD_CHECKBOX" />
-			<var name="roleTitle" value="Site Member" />
+			<var name="roleTitle" value="Power User" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -737,6 +737,8 @@
 
 	<command name="EditAllFormFieldsTypesUsedBySystemSettings" priority="4">
 		<description message="This is a use case for LPS-50757." />
+
+		<property name="portal.subrepo" value="false" />
 		<property name="test.name.skip.portal.instance" value="Forms#EditAllFormFieldsTypesUsedBySystemSettings" />
 
 		<execute macro="Navigator#openURL" />

@@ -745,36 +745,24 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 		String prefix = tempFileId + StringPool.DASH;
 
-		Predicate<File> fileFilter = file -> {
-			if (!file.isFile()) {
-				return false;
-			}
+		Predicate<File> fileFilter = File::isFile;
 
-			String fileName = file.getName();
+		fileFilter = fileFilter.and(
+			file -> {
+				String fileName = file.getName();
 
-			if (fileName.startsWith(prefix)) {
-				return true;
-			}
-
-			return false;
-		};
+				return fileName.startsWith(prefix);
+			});
 
 		if (Validator.isNotNull(type)) {
 			String suffix = StringPool.PERIOD + type;
 
-			fileFilter = file -> {
-				if (!file.isFile()) {
-					return false;
-				}
+			fileFilter = fileFilter.and(
+				file -> {
+					String fileName = file.getName();
 
-				String fileName = file.getName();
-
-				if (fileName.startsWith(prefix) && fileName.endsWith(suffix)) {
-					return true;
-				}
-
-				return false;
-			};
+					return fileName.endsWith(suffix);
+				});
 		}
 
 		File dir = new File(PREVIEW_TMP_PATH);

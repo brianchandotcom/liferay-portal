@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.io;
+package com.liferay.portal.kernel.internal.servlet;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -21,9 +21,7 @@ import java.nio.ByteBuffer;
 
 /**
  * @author Shuyang Zhou
- * @deprecated As of 7.0.0, with no direct replacement
  */
-@Deprecated
 public class RestrictedByteArrayCacheOutputStream extends OutputStream {
 
 	public RestrictedByteArrayCacheOutputStream(

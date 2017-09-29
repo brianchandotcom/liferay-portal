@@ -112,13 +112,11 @@ CommerceAddress billingAddress = checkoutStepOrderSummaryDisplayContext.getBilli
 					%>
 
 					<liferay-ui:search-container-column-image
-						cssClass=""
 						name="product"
 						src="<%= thumbnailSrc %>"
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass=""
 						name="description"
 					>
 						<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>
@@ -129,13 +127,11 @@ CommerceAddress billingAddress = checkoutStepOrderSummaryDisplayContext.getBilli
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
-						cssClass=""
 						name="quantity"
 						value="<%= String.valueOf(commerceCartItem.getQuantity()) %>"
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass=""
 						name="price"
 						value="<%= checkoutStepOrderSummaryDisplayContext.getFormattedPrice(commerceCartItem) %>"
 					/>

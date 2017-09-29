@@ -209,6 +209,21 @@ create table CommercePriceList (
 	statusDate DATE null
 );
 
+create table CommercePriceListUserRel (
+	uuid_ VARCHAR(75) null,
+	commercePriceListUserRelId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	commercePriceListId LONG,
+	classNameId LONG,
+	classPK LONG,
+	lastPublishDate DATE null
+);
+
 create table CommerceRegion (
 	uuid_ VARCHAR(75) null,
 	commerceRegionId LONG not null primary key,

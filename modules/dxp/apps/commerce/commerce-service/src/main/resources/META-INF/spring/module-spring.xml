@@ -34,6 +34,9 @@
 	<bean class="com.liferay.commerce.service.impl.CommercePriceListServiceImpl" id="com.liferay.commerce.service.CommercePriceListService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommercePriceListPersistenceImpl" id="com.liferay.commerce.service.persistence.CommercePriceListPersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommercePriceListFinderImpl" id="com.liferay.commerce.service.persistence.CommercePriceListFinder" parent="basePersistence" />
+	<bean class="com.liferay.commerce.service.impl.CommercePriceListUserRelLocalServiceImpl" id="com.liferay.commerce.service.CommercePriceListUserRelLocalService" />
+	<bean class="com.liferay.commerce.service.impl.CommercePriceListUserRelServiceImpl" id="com.liferay.commerce.service.CommercePriceListUserRelService" />
+	<bean class="com.liferay.commerce.service.persistence.impl.CommercePriceListUserRelPersistenceImpl" id="com.liferay.commerce.service.persistence.CommercePriceListUserRelPersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.service.impl.CommerceRegionLocalServiceImpl" id="com.liferay.commerce.service.CommerceRegionLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceRegionServiceImpl" id="com.liferay.commerce.service.CommerceRegionService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceRegionPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceRegionPersistence" parent="basePersistence" />

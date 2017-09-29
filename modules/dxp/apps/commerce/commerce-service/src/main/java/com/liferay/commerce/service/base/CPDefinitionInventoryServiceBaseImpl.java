@@ -31,6 +31,7 @@ import com.liferay.commerce.service.persistence.CommercePaymentMethodPersistence
 import com.liferay.commerce.service.persistence.CommercePriceEntryPersistence;
 import com.liferay.commerce.service.persistence.CommercePriceListFinder;
 import com.liferay.commerce.service.persistence.CommercePriceListPersistence;
+import com.liferay.commerce.service.persistence.CommercePriceListUserRelPersistence;
 import com.liferay.commerce.service.persistence.CommerceRegionPersistence;
 import com.liferay.commerce.service.persistence.CommerceShippingMethodPersistence;
 import com.liferay.commerce.service.persistence.CommerceTierPriceEntryPersistence;
@@ -700,6 +701,63 @@ public abstract class CPDefinitionInventoryServiceBaseImpl
 	public void setCommercePriceListFinder(
 		CommercePriceListFinder commercePriceListFinder) {
 		this.commercePriceListFinder = commercePriceListFinder;
+	}
+
+	/**
+	 * Returns the commerce price list user rel local service.
+	 *
+	 * @return the commerce price list user rel local service
+	 */
+	public com.liferay.commerce.service.CommercePriceListUserRelLocalService getCommercePriceListUserRelLocalService() {
+		return commercePriceListUserRelLocalService;
+	}
+
+	/**
+	 * Sets the commerce price list user rel local service.
+	 *
+	 * @param commercePriceListUserRelLocalService the commerce price list user rel local service
+	 */
+	public void setCommercePriceListUserRelLocalService(
+		com.liferay.commerce.service.CommercePriceListUserRelLocalService commercePriceListUserRelLocalService) {
+		this.commercePriceListUserRelLocalService = commercePriceListUserRelLocalService;
+	}
+
+	/**
+	 * Returns the commerce price list user rel remote service.
+	 *
+	 * @return the commerce price list user rel remote service
+	 */
+	public com.liferay.commerce.service.CommercePriceListUserRelService getCommercePriceListUserRelService() {
+		return commercePriceListUserRelService;
+	}
+
+	/**
+	 * Sets the commerce price list user rel remote service.
+	 *
+	 * @param commercePriceListUserRelService the commerce price list user rel remote service
+	 */
+	public void setCommercePriceListUserRelService(
+		com.liferay.commerce.service.CommercePriceListUserRelService commercePriceListUserRelService) {
+		this.commercePriceListUserRelService = commercePriceListUserRelService;
+	}
+
+	/**
+	 * Returns the commerce price list user rel persistence.
+	 *
+	 * @return the commerce price list user rel persistence
+	 */
+	public CommercePriceListUserRelPersistence getCommercePriceListUserRelPersistence() {
+		return commercePriceListUserRelPersistence;
+	}
+
+	/**
+	 * Sets the commerce price list user rel persistence.
+	 *
+	 * @param commercePriceListUserRelPersistence the commerce price list user rel persistence
+	 */
+	public void setCommercePriceListUserRelPersistence(
+		CommercePriceListUserRelPersistence commercePriceListUserRelPersistence) {
+		this.commercePriceListUserRelPersistence = commercePriceListUserRelPersistence;
 	}
 
 	/**
@@ -1404,6 +1462,12 @@ public abstract class CPDefinitionInventoryServiceBaseImpl
 	protected CommercePriceListPersistence commercePriceListPersistence;
 	@BeanReference(type = CommercePriceListFinder.class)
 	protected CommercePriceListFinder commercePriceListFinder;
+	@BeanReference(type = com.liferay.commerce.service.CommercePriceListUserRelLocalService.class)
+	protected com.liferay.commerce.service.CommercePriceListUserRelLocalService commercePriceListUserRelLocalService;
+	@BeanReference(type = com.liferay.commerce.service.CommercePriceListUserRelService.class)
+	protected com.liferay.commerce.service.CommercePriceListUserRelService commercePriceListUserRelService;
+	@BeanReference(type = CommercePriceListUserRelPersistence.class)
+	protected CommercePriceListUserRelPersistence commercePriceListUserRelPersistence;
 	@BeanReference(type = com.liferay.commerce.service.CommerceRegionLocalService.class)
 	protected com.liferay.commerce.service.CommerceRegionLocalService commerceRegionLocalService;
 	@BeanReference(type = com.liferay.commerce.service.CommerceRegionService.class)

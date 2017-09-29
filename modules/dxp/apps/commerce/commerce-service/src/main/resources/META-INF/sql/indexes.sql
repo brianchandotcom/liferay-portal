@@ -57,6 +57,11 @@ create index IX_2C5B7A3E on CommercePriceList (groupId, status);
 create index IX_FCE28706 on CommercePriceList (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_554D1708 on CommercePriceList (uuid_[$COLUMN_LENGTH:75$], groupId);
 
+create index IX_407D49FD on CommercePriceListUserRel (classNameId, classPK);
+create index IX_59534AEF on CommercePriceListUserRel (commercePriceListId);
+create index IX_ED1D6D9C on CommercePriceListUserRel (uuid_[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_7B1CAB1E on CommercePriceListUserRel (uuid_[$COLUMN_LENGTH:75$], groupId);
+
 create index IX_49C93338 on CommerceRegion (commerceCountryId, active_);
 create index IX_3BC85C89 on CommerceRegion (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_DBA0714B on CommerceRegion (uuid_[$COLUMN_LENGTH:75$], groupId);

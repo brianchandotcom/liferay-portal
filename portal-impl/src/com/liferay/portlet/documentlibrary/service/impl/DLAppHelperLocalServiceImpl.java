@@ -1637,7 +1637,7 @@ public class DLAppHelperLocalServiceImpl
 		long dlFolderClassNameId = classNameLocalService.getClassNameId(
 			DLFolder.class);
 
-		List<DLFolder> dlFolders = dlFolderFinder.findByDLFolderC_T(
+		List<DLFolder> dlFolders = dlFolderFinder.findF_ByC_T(
 			dlFolderClassNameId, dlFolder.getTreePath());
 
 		for (DLFolder curDLFolder : dlFolders) {

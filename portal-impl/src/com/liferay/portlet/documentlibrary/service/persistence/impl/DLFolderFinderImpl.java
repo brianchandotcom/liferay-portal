@@ -172,35 +172,6 @@ public class DLFolderFinderImpl
 	}
 
 	@Override
-	public List<DLFolder> findByDLFolderC_T(long classNameId, String treePath) {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(FIND_F_BY_C_T);
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(
-				CustomSQLUtil.keywords(treePath, WildcardMode.TRAILING)[0]);
-			qPos.add(classNameId);
-
-			q.addEntity("DLFolder", DLFolderImpl.class);
-
-			return q.list(true);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	@Override
 	public List<DLFolder> findF_ByNoAssets() {
 		Session session = null;
 
@@ -215,6 +186,35 @@ public class DLFolderFinderImpl
 
 			qPos.add(
 				PortalUtil.getClassNameId(DLFolderConstants.getClassName()));
+
+			q.addEntity("DLFolder", DLFolderImpl.class);
+
+			return q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public List<DLFolder> findF_ByC_T(long classNameId, String treePath) {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_F_BY_C_T);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(
+				CustomSQLUtil.keywords(treePath, WildcardMode.TRAILING)[0]);
+			qPos.add(classNameId);
 
 			q.addEntity("DLFolder", DLFolderImpl.class);
 

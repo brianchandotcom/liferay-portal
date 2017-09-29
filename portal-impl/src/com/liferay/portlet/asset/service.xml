@@ -344,6 +344,9 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column arrayable-operator="OR" name="groupId" />
 		</finder>
+		<finder name="Name" return-type="Collection">
+			<finder-column arrayable-operator="OR" name="name" />
+		</finder>
 		<finder name="G_N" return-type="AssetTag" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="name" />

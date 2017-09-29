@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.rules.engine.RulesEngine;
@@ -81,7 +81,7 @@ public class SampleDroolsConfigurationAction
 
 			SessionMessages.add(
 				actionRequest,
-				PortalUtil.getPortletId(actionRequest) +
+				_portal.getPortletId(actionRequest) +
 					SessionMessages.KEY_SUFFIX_UPDATED_CONFIGURATION);
 		}
 	}
@@ -143,6 +143,9 @@ public class SampleDroolsConfigurationAction
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SampleDroolsConfigurationAction.class);
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private RulesEngine _ruleEngine;

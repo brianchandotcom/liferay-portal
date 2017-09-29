@@ -1881,6 +1881,55 @@ public class CalendarBookingLocalServiceTest {
 	}
 
 	@Test
+	public void testUpdateAllFollowingWithInvitations() throws Exception {
+		ServiceContext serviceContext = createServiceContext();
+
+		Calendar invitedCalendar = CalendarTestUtil.addCalendar(_user);
+
+		_invitingUser = UserTestUtil.addUser();
+
+		Calendar invitingCalendar = CalendarTestUtil.addCalendar(_invitingUser);
+
+		long startTime = System.currentTimeMillis();
+
+		long endTime = startTime + Time.HOUR;
+
+		CalendarBooking calendarBooking =
+			CalendarBookingTestUtil.addCalendarBooking(
+				_user, invitedCalendar,
+				new long[] {invitingCalendar.getCalendarId()},
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(), startTime, endTime,
+				RecurrenceTestUtil.getDailyRecurrence(), 0,
+				NotificationType.EMAIL, 0, NotificationType.EMAIL,
+				serviceContext);
+
+		Map<Locale, String> earlierDescriptionMap = new HashMap<>(
+			calendarBooking.getDescriptionMap());
+
+		Map<Locale, String> laterDescriptionMap =
+			RandomTestUtil.randomLocaleStringMap();
+
+		CalendarBookingLocalServiceUtil.updateCalendarBookingInstance(
+			_user.getUserId(), calendarBooking.getCalendarBookingId(), 0,
+			calendarBooking.getCalendarId(), calendarBooking.getTitleMap(),
+			laterDescriptionMap, calendarBooking.getLocation(),
+			calendarBooking.getStartTime(), calendarBooking.getEndTime(), false,
+			null, true, 0, null, 0, null, serviceContext);
+
+		assertCalendarBookingsCount(invitedCalendar, 1);
+		assertCalendarBookingsCount(invitingCalendar, 1);
+
+		List<CalendarBooking> childCalendarBookings =
+			calendarBooking.getChildCalendarBookings();
+
+		for (CalendarBooking childCalendarBooking : childCalendarBookings) {
+			Assert.assertEquals(
+				laterDescriptionMap, childCalendarBooking.getDescriptionMap());
+		}
+	}
+
+	@Test
 	public void testUpdateCalendarBookingAndAllRecurringInstancesStatus()
 		throws Exception {
 

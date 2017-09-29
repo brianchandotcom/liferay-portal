@@ -9,7 +9,7 @@
 		"liferay-npm-bundler": "^1.0.0",
 		"liferay-npm-bundler-preset-amd": "^1.0.0"
 	},
-	"main": "lib/index.es.js",
+	"main": "js/index.es.js",
 	"name": "${artifactId}",
 	"scripts": {
 		"build": "babel --source-maps -d build/resources/main/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler"

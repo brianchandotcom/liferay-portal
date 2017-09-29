@@ -546,10 +546,19 @@ public class ProjectTemplatesTest {
 			"META-INF/resources/view.jsp");
 	}
 
+	@Test
+	public void testBuildTemplateNPMAngularPortlet() throws Exception {
+		File projectDir = _buildTemplateWithGradle(
+			"npm-angular-portlet", "foo");
+
+		_testContains(
+			projectDir, "src/main/resources/META-INF/resources/view.jsp",
+			"<aui:script require=\"foo@1.0.0\">", "foo100.default();");
+	}
+
 	@Ignore
 	@Test
 	public void testBuildTemplateNPMPortlet() throws Exception {
-
 		_testBuildTemplatePortlet(
 			"npm-portlet", "MVCPortlet", "META-INF/resources/init.jsp",
 			"META-INF/resources/view.jsp");

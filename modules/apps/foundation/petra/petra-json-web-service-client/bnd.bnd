@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Petra JSON Web Service Client
 Bundle-SymbolicName: com.liferay.petra.json.web.service.client
-Bundle-Version: 3.0.4
+Bundle-Version: 4.0.0
 Export-Package: com.liferay.petra.json.web.service.client

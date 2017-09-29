@@ -14,7 +14,8 @@
 
 package com.liferay.portal.kernel.servlet.filters.invoker;
 
-import com.liferay.portal.kernel.concurrent.ConcurrentLFUCache;
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpOnlyCookieServletResponse;
@@ -131,7 +132,7 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 	protected void clearFilterChainsCache() {
 		if (_filterChains != null) {
-			_filterChains.clear();
+			_filterChains.removeAll();
 		}
 	}
 
@@ -153,8 +154,8 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 	@Override
 	protected void doPortalInit() throws Exception {
 		if (_INVOKER_FILTER_CHAIN_SIZE > 0) {
-			_filterChains = new ConcurrentLFUCache<>(
-				_INVOKER_FILTER_CHAIN_SIZE);
+			_filterChains = SingleVMPoolUtil.getPortalCache(
+				InvokerFilter.class.getName());
 		}
 
 		ServletContext servletContext = _filterConfig.getServletContext();
@@ -336,7 +337,7 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 	private String _contextPath;
 	private Dispatcher _dispatcher;
-	private ConcurrentLFUCache<String, InvokerFilterChain> _filterChains;
+	private PortalCache<String, InvokerFilterChain> _filterChains;
 	private FilterConfig _filterConfig;
 	private InvokerFilterHelper _invokerFilterHelper;
 

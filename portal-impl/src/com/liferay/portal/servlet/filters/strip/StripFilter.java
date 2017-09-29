@@ -14,9 +14,10 @@
 
 package com.liferay.portal.servlet.filters.strip;
 
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
 import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
-import com.liferay.portal.kernel.concurrent.ConcurrentLFUCache;
 import com.liferay.portal.kernel.io.OutputStreamWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
@@ -63,8 +64,8 @@ public class StripFilter extends BasePortalFilter {
 
 	public StripFilter() {
 		if (PropsValues.MINIFIER_INLINE_CONTENT_CACHE_SIZE > 0) {
-			_minifierCache = new ConcurrentLFUCache<>(
-				PropsValues.MINIFIER_INLINE_CONTENT_CACHE_SIZE);
+			_minifierCache = SingleVMPoolUtil.getPortalCache(
+				StripFilter.class.getName());
 		}
 		else {
 			_minifierCache = null;
@@ -758,6 +759,6 @@ public class StripFilter extends BasePortalFilter {
 		"[Jj][aA][vV][aA][sS][cC][rR][iI][pP][tT]");
 
 	private final Set<String> _ignorePaths = new HashSet<>();
-	private final ConcurrentLFUCache<String, String> _minifierCache;
+	private final PortalCache<String, String> _minifierCache;
 
 }

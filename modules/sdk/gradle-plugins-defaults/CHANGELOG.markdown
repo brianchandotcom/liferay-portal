@@ -2165,7 +2165,7 @@ with a commercial copyright.
 ### Changed
 - [LPS-74867]: Update the [Liferay Gradle Plugins] dependency to version 3.4.72.
 
-## 5.1.2 - 2017-09-27
+## 5.1.2 - 2017-09-28
 
 ### Added
 - [LPS-74933]: Automatically disable the `PublishNodeModuleTask` instances for

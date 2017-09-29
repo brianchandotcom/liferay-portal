@@ -32,7 +32,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.asset.kernel.model.AssetEntry" %><%@
 page import="com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil" %><%@
 page import="com.liferay.calendar.constants.CalendarActionKeys" %><%@
-page import="com.liferay.calendar.constants.CalendarPortletKeys" %><%@
 page import="com.liferay.calendar.exception.CalendarBookingDurationException" %><%@
 page import="com.liferay.calendar.exception.CalendarBookingRecurrenceException" %><%@
 page import="com.liferay.calendar.exception.CalendarNameException" %><%@
@@ -100,7 +99,6 @@ page import="com.liferay.portal.kernel.util.FastDateFormatConstants" %><%@
 page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.OrderByComparator" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@

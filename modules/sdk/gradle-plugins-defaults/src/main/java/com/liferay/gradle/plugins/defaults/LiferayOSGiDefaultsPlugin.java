@@ -3293,7 +3293,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			portalRootDir = project.getRootDir();
 		}
 
-		args.put("dir", portalRootDir);
+		args.put("dir", new File(portalRootDir, "modules"));
 		args.put(
 			"excludes",
 			Arrays.asList(

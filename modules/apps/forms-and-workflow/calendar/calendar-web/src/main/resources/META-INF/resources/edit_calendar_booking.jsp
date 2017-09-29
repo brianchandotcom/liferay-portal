@@ -24,7 +24,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 if (Validator.isNotNull(redirect)) {
 	String ppid = HttpUtil.getParameter(redirect, "p_p_id", false);
 
-	if (ppid.equals(AssetBrowserPortletKeys.ASSET_BROWSER)) {
+	if (!ppid.equals(CalendarPortletKeys.CALENDAR)) {
 		useRedirect = true;
 	}
 }

@@ -574,8 +574,6 @@
 
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
-
-
 	<entity local-service="true" name="CommerceRegion" remote-service="true" uuid="true">
 
 		<!-- PK fields -->

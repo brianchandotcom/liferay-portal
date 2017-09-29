@@ -55,7 +55,6 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Dictionary;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -362,44 +361,16 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		return uuid.toString();
 	}
 
-	protected String getChannelLogicName(
-		Dictionary<String, Object> properties) {
-
-		String channelLogicName = GetterUtil.getString(
-			properties.get(ClusterPropsKeys.CHANNEL_LOGIC_NAME_CONTROL));
-
-		if (Validator.isNull(channelLogicName)) {
-			channelLogicName = _props.get(
-				PropsKeys.CLUSTER_LINK_CHANNEL_LOGIC_NAME_CONTROL);
-		}
-
-		return channelLogicName;
+	protected String getChannelLogicName() {
+		return _props.get(PropsKeys.CLUSTER_LINK_CHANNEL_LOGIC_NAME_CONTROL);
 	}
 
-	protected String getChannelName(Dictionary<String, Object> properties) {
-		String channelName = GetterUtil.getString(
-			properties.get(ClusterPropsKeys.CHANNEL_NAME_CONTROL));
-
-		if (Validator.isNull(channelName)) {
-			channelName = _props.get(
-				PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL);
-		}
-
-		return channelName;
+	protected String getChannelName() {
+		return _props.get(PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL);
 	}
 
-	protected String getChannelPropertiesString(
-		Dictionary<String, Object> properties) {
-
-		String channelPropertiesString = GetterUtil.getString(
-			properties.get(ClusterPropsKeys.CHANNEL_PROPERTIES_CONTROL));
-
-		if (Validator.isNull(channelPropertiesString)) {
-			channelPropertiesString = _props.get(
-				PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL);
-		}
-
-		return channelPropertiesString;
+	protected String getChannelPropertiesString() {
+		return _props.get(PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL);
 	}
 
 	protected ClusterChannel getClusterChannel() {

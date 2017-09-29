@@ -14,7 +14,6 @@
 
 package com.liferay.portal.cluster.multiple.internal;
 
-import com.liferay.portal.cluster.multiple.internal.constants.ClusterPropsKeys;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterLink;
@@ -136,103 +135,46 @@ public class ClusterLinkImpl implements ClusterLink {
 		return _clusterChannels.get(channelIndex);
 	}
 
-	protected Map<String, String> getChannelLogicNames(
-		Map<String, Object> properties) {
-
+	protected Map<String, String> getChannelLogicNames() {
 		Map<String, String> channelLogicNames = new HashMap<>();
 
-		int prefixLength =
-			ClusterPropsKeys.CHANNEL_LOGIC_NAME_TRANSPORT_PREFIX.length();
+		Properties channelLogicNameProperties = _props.getProperties(
+			PropsKeys.CLUSTER_LINK_CHANNEL_LOGIC_NAME_TRANSPORT, true);
 
-		for (Entry<String, Object> entry : properties.entrySet()) {
-			String key = entry.getKey();
+		for (Map.Entry<Object, Object> entry :
+				channelLogicNameProperties.entrySet()) {
 
-			if (key.startsWith(
-					ClusterPropsKeys.CHANNEL_LOGIC_NAME_TRANSPORT_PREFIX)) {
-
-				channelLogicNames.put(
-					key.substring(prefixLength + 1), (String)entry.getValue());
-			}
-		}
-
-		if (channelLogicNames.isEmpty()) {
-			Properties channelLogicNameProperties = _props.getProperties(
-				PropsKeys.CLUSTER_LINK_CHANNEL_LOGIC_NAME_TRANSPORT, true);
-
-			for (Map.Entry<Object, Object> entry :
-					channelLogicNameProperties.entrySet()) {
-
-				channelLogicNames.put(
-					(String)entry.getKey(), (String)entry.getValue());
-			}
+			channelLogicNames.put(
+				(String)entry.getKey(), (String)entry.getValue());
 		}
 
 		return channelLogicNames;
 	}
 
-	protected Map<String, String> getChannelNames(
-		Map<String, Object> properties) {
-
+	protected Map<String, String> getChannelNames() {
 		Map<String, String> channelNames = new HashMap<>();
 
-		int prefixLength =
-			ClusterPropsKeys.CHANNEL_NAME_TRANSPORT_PREFIX.length();
+		Properties channelNameProperties = _props.getProperties(
+			PropsKeys.CLUSTER_LINK_CHANNEL_NAME_TRANSPORT, true);
 
-		for (Entry<String, Object> entry : properties.entrySet()) {
-			String key = entry.getKey();
+		for (Map.Entry<Object, Object> entry :
+				channelNameProperties.entrySet()) {
 
-			if (key.startsWith(
-					ClusterPropsKeys.CHANNEL_NAME_TRANSPORT_PREFIX)) {
-
-				channelNames.put(
-					key.substring(prefixLength + 1), (String)entry.getValue());
-			}
-		}
-
-		if (channelNames.isEmpty()) {
-			Properties channelNameProperties = _props.getProperties(
-				PropsKeys.CLUSTER_LINK_CHANNEL_NAME_TRANSPORT, true);
-
-			for (Map.Entry<Object, Object> entry :
-					channelNameProperties.entrySet()) {
-
-				channelNames.put(
-					(String)entry.getKey(), (String)entry.getValue());
-			}
+			channelNames.put((String)entry.getKey(), (String)entry.getValue());
 		}
 
 		return channelNames;
 	}
 
-	protected Map<String, String> getChannelPropertiesStrings(
-		Map<String, Object> properties) {
-
+	protected Map<String, String> getChannelPropertiesStrings() {
 		Map<String, String> channelPropertiesStrings = new HashMap<>();
 
-		int prefixLength =
-			ClusterPropsKeys.CHANNEL_PROPERTIES_TRANSPORT_PREFIX.length();
+		Properties channelProperties = _props.getProperties(
+			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT, true);
 
-		for (Entry<String, Object> entry : properties.entrySet()) {
-			String key = entry.getKey();
-
-			if (key.startsWith(
-					ClusterPropsKeys.CHANNEL_PROPERTIES_TRANSPORT_PREFIX)) {
-
-				channelPropertiesStrings.put(
-					key.substring(prefixLength + 1), (String)entry.getValue());
-			}
-		}
-
-		if (channelPropertiesStrings.isEmpty()) {
-			Properties channelProperties = _props.getProperties(
-				PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT, true);
-
-			for (Map.Entry<Object, Object> entry :
-					channelProperties.entrySet()) {
-
-				channelPropertiesStrings.put(
-					(String)entry.getKey(), (String)entry.getValue());
-			}
+		for (Map.Entry<Object, Object> entry : channelProperties.entrySet()) {
+			channelPropertiesStrings.put(
+				(String)entry.getKey(), (String)entry.getValue());
 		}
 
 		return channelPropertiesStrings;

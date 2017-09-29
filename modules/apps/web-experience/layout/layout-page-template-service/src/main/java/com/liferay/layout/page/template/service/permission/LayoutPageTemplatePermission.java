@@ -26,10 +26,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Jürgen Kappler
  */
 @Component(
-	property = {"resource.name=" + LayoutPageTemplateResourcePermission.RESOURCE_NAME},
+	property = {"resource.name=" + LayoutPageTemplatePermission.RESOURCE_NAME},
 	service = ResourcePermissionChecker.class
 )
-public class LayoutPageTemplateResourcePermission
+public class LayoutPageTemplatePermission
 	extends BaseResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME =

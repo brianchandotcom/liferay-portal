@@ -18,7 +18,7 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateFolder;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateFolderServiceBaseImpl;
 import com.liferay.layout.page.template.service.permission.LayoutPageTemplateFolderPermission;
-import com.liferay.layout.page.template.service.permission.LayoutPageTemplateResourcePermission;
+import com.liferay.layout.page.template.service.permission.LayoutPageTemplatePermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -41,7 +41,7 @@ public class LayoutPageTemplateFolderServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		LayoutPageTemplateResourcePermission.check(
+		LayoutPageTemplatePermission.check(
 			getPermissionChecker(), groupId,
 			LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_FOLDER);
 

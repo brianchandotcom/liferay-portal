@@ -243,7 +243,7 @@ public class ProjectTemplateFilesTest {
 		Path definitionsPath = projectTemplateDirPath.resolve(
 			"src/main/resources/definitions.vm");
 
-		if (definitionsPath.toFile().exists()) {
+		if (Files.exists(definitionsPath)) {
 			String definitions = FileUtil.read(definitionsPath);
 
 			try (BufferedReader bufferedReader = new BufferedReader(

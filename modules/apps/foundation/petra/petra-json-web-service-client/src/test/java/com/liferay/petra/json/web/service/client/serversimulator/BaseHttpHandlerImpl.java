@@ -161,13 +161,14 @@ public class BaseHttpHandlerImpl implements HttpHandler {
 	}
 
 	protected String getBody(HttpExchange httpExchange) throws IOException {
+		StringBuffer sb = new StringBuffer();
+
 		InputStream requestBody = httpExchange.getRequestBody();
 
 		BufferedReader bufferedReader = new BufferedReader(
 			new InputStreamReader(requestBody));
 
-		StringBuffer sb = new StringBuffer();
-		String line;
+		String line = null;
 
 		while ((line = bufferedReader.readLine()) != null) {
 			sb.append(line);

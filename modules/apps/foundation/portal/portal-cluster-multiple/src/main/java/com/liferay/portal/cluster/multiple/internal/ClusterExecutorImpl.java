@@ -17,7 +17,6 @@ package com.liferay.portal.cluster.multiple.internal;
 import com.liferay.petra.concurrent.ConcurrentReferenceValueHashMap;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.portal.cluster.multiple.configuration.ClusterExecutorConfiguration;
-import com.liferay.portal.cluster.multiple.internal.constants.ClusterPropsKeys;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterEvent;
@@ -495,14 +494,12 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		if (Validator.isNull(channelPropertiesString)) {
 			throw new IllegalStateException(
 				"Set \"" + PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL +
-					"\" or \"" + ClusterPropsKeys.CHANNEL_PROPERTIES_CONTROL +
-						"\"");
+					"\"");
 		}
 
 		if (Validator.isNull(channelName)) {
 			throw new IllegalStateException(
-				"Set \"" + PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL +
-					"\" or \"" + ClusterPropsKeys.CHANNEL_NAME_CONTROL + "\"");
+				"Set \"" + PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL + "\"");
 		}
 
 		_executorService = _portalExecutorManager.getPortalExecutor(

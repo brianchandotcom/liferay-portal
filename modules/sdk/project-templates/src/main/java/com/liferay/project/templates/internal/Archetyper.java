@@ -143,6 +143,7 @@ public class Archetyper {
 			properties, "hostBundleSymbolicName", hostBundleSymbolicName);
 		_setProperty(properties, "hostBundleVersion", hostBundleVersion);
 		_setProperty(properties, "package", packageName);
+		_setProperty(properties, "packageJsonVersion", packageName);
 		_setProperty(properties, "projectType", projectType);
 		_setProperty(properties, "serviceClass", service);
 		_setProperty(properties, "serviceWrapperClass", service);

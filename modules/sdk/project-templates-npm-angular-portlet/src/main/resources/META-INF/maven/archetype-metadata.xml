@@ -38,7 +38,7 @@
 		<requiredProperty key="projectType">
 			<defaultValue>standalone</defaultValue>
 		</requiredProperty>
-		<requiredProperty key="pkgJsonVersion">
+		<requiredProperty key="packageJsonVersion">
 			<defaultValue>1.0.0</defaultValue>
 		</requiredProperty>
 	</requiredProperties>

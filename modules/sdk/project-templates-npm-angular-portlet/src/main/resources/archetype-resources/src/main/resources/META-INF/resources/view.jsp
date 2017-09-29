@@ -6,7 +6,7 @@
 	<b><liferay-ui:message key="${artifactId}.caption"/></b>
 </p>
 
-<aui:script require="${artifactId}@${pkgJsonVersion}">
+<aui:script require="${artifactId}@${packageJsonVersion}">
 	${auiScriptRequireVarName}.default();
 </aui:script>
 

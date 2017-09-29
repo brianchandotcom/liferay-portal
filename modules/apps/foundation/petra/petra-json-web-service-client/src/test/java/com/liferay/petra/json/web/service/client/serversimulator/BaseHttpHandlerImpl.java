@@ -116,7 +116,7 @@ public class BaseHttpHandlerImpl implements HttpHandler {
 
 			if (headerValues.size() != 1) {
 				throw new UnsupportedOperationException(
-					"Only one Content-Type header value allowed");
+					"Only one Content-Type header value is allowed");
 			}
 
 			return headerValues.get(0);

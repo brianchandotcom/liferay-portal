@@ -50,8 +50,6 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 	public String format(Locale locale, long groupId, double price)
 		throws PortalException {
 
-		StringBuilder sb = new StringBuilder();
-
 		CommerceCurrency commerceCurrency =
 			_commerceCurrencyService.fetchPrimaryCommerceCurrency(groupId);
 
@@ -61,14 +59,9 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 			code = commerceCurrency.getCodeCurrentValue();
 		}
 
-		sb.append(code);
-		sb.append(StringPool.SPACE);
-
 		NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
-		sb.append(numberFormat.format(price));
-
-		return sb.toString();
+		return code + StringPool.SPACE + numberFormat.format(price);
 	}
 
 	@Reference

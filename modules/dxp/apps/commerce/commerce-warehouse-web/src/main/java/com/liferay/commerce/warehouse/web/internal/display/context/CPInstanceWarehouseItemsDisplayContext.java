@@ -112,13 +112,8 @@ public class CPInstanceWarehouseItemsDisplayContext
 
 		ThemeDisplay themeDisplay = cpRequestHelper.getThemeDisplay();
 
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(cpDefinition.getTitle(themeDisplay.getLanguageId()));
-		sb.append(" - ");
-		sb.append(cpInstance.getSku());
-
-		return sb.toString();
+		return cpDefinition.getTitle(themeDisplay.getLanguageId()) + " - " +
+			cpInstance.getSku();
 	}
 
 	@Override

@@ -21,6 +21,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServ
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -74,6 +76,49 @@ public class LayoutPageTemplateDisplayContext {
 		_keywords = ParamUtil.getString(_request, "keywords");
 
 		return _keywords;
+	}
+
+	public LayoutPageTemplateCollection getLayoutPageTemplateCollection()
+		throws PortalException {
+
+		if (_layoutPageTemplateCollection != null) {
+			return _layoutPageTemplateCollection;
+		}
+
+		_layoutPageTemplateCollection =
+			LayoutPageTemplateCollectionServiceUtil.
+				fetchLayoutPageTemplateCollection(
+					getLayoutPageTemplateCollectionId());
+
+		return _layoutPageTemplateCollection;
+	}
+
+	public long getLayoutPageTemplateCollectionId() {
+		if (Validator.isNotNull(_layoutPageTemplateCollectionId)) {
+			return _layoutPageTemplateCollectionId;
+		}
+
+		_layoutPageTemplateCollectionId = ParamUtil.getLong(
+			_request, "layoutPageTemplateCollectionId");
+
+		return _layoutPageTemplateCollectionId;
+	}
+
+	public String getLayoutPageTemplateCollectionRedirect()
+		throws PortalException {
+
+		String redirect = ParamUtil.getString(_request, "redirect");
+
+		if (Validator.isNull(redirect)) {
+			PortletURL backURL = _renderResponse.createRenderURL();
+
+			backURL.setParameter(
+				"mvcPath", "/view_layout_page_template_collections.jsp");
+
+			redirect = backURL.toString();
+		}
+
+		return redirect;
 	}
 
 	public SearchContainer getLayoutPageTemplateCollectionsSearchContainer()
@@ -165,6 +210,19 @@ public class LayoutPageTemplateDisplayContext {
 		return _layoutPageTemplateCollectionsSearchContainer;
 	}
 
+	public String getLayoutPageTemplateCollectionTitle()
+		throws PortalException {
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			getLayoutPageTemplateCollection();
+
+		if (layoutPageTemplateCollection == null) {
+			return LanguageUtil.get(_request, "add-collection");
+		}
+
+		return layoutPageTemplateCollection.getName();
+	}
+
 	public String getOrderByCol() {
 		if (Validator.isNotNull(_orderByCol)) {
 			return _orderByCol;
@@ -241,6 +299,8 @@ public class LayoutPageTemplateDisplayContext {
 
 	private String _displayStyle;
 	private String _keywords;
+	private LayoutPageTemplateCollection _layoutPageTemplateCollection;
+	private Long _layoutPageTemplateCollectionId;
 	private SearchContainer _layoutPageTemplateCollectionsSearchContainer;
 	private String _orderByCol;
 	private String _orderByType;

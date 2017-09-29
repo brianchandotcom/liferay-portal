@@ -41,7 +41,8 @@ public class ProcessConfig implements Serializable {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getBootstrapClassPathHolders()}
 	 */
 	@Deprecated
 	public String[] getBootstrapClassPathElements() {
@@ -69,7 +70,8 @@ public class ProcessConfig implements Serializable {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getRuntimeClassPathHolders()}
 	 */
 	@Deprecated
 	public String[] getRuntimeClassPathElements() {

@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.facet.type.AssetEntriesFacetFactory;
-import com.liferay.portal.search.test.journal.util.JournalArticleBuilder;
+import com.liferay.portal.search.test.journal.util.JournalArticleBlueprint;
 import com.liferay.portal.search.test.journal.util.JournalArticleContent;
 import com.liferay.portal.search.test.journal.util.JournalArticleTitle;
 import com.liferay.portal.search.test.util.DocumentsAssert;
@@ -116,40 +116,28 @@ public class AssetEntriesVersionFacetedSearcherTest
 		return assetEntriesFacetFactory.newInstance(searchContext);
 	}
 
-	protected JournalArticleBuilder createJournalArticleBuilder(
-		String title, Group group) {
-
-		JournalArticleBuilder journalArticleBuilder =
-			new JournalArticleBuilder();
-
-		journalArticleBuilder.setContent(
-			new JournalArticleContent() {
-				{
-					name = "content";
-					defaultLocale = LocaleUtil.US;
-
-					put(LocaleUtil.US, RandomTestUtil.randomString());
-				}
-			});
-		journalArticleBuilder.setGroupId(group.getGroupId());
-		journalArticleBuilder.setTitle(
-			new JournalArticleTitle() {
-				{
-					put(LocaleUtil.US, title);
-				}
-			});
-
-		return journalArticleBuilder;
-	}
-
 	protected JournalArticle index(String keyword, Group group)
 		throws Exception {
 
-		JournalArticleBuilder journalArticleBuilder =
-			createJournalArticleBuilder(keyword, group);
-
 		JournalArticle journalArticle = journalArticleSearchFixture.addArticle(
-			journalArticleBuilder);
+			new JournalArticleBlueprint() {
+				{
+					groupId = group.getGroupId();
+					journalArticleContent = new JournalArticleContent() {
+						{
+							defaultLocale = LocaleUtil.US;
+							name = "content";
+
+							put(LocaleUtil.US, RandomTestUtil.randomString());
+						}
+					};
+					journalArticleTitle = new JournalArticleTitle() {
+						{
+							put(LocaleUtil.US, keyword);
+						}
+					};
+				}
+			});
 
 		User user = UserTestUtil.getAdminUser(group.getCompanyId());
 

@@ -198,9 +198,8 @@ public abstract class BaseJSONWebServiceClientImpl
 			_logger.debug(
 				"Sending DELETE request to " + _login + "@" + _hostName + url);
 
-			log("HTTP parameters", parameters);
-
 			log("HTTP headers", headers);
+			log("HTTP parameters", parameters);
 		}
 
 		HttpDelete httpDelete = new HttpDelete(url);
@@ -242,9 +241,8 @@ public abstract class BaseJSONWebServiceClientImpl
 			_logger.debug(
 				"Sending GET request to " + _login + "@" + _hostName + url);
 
-			log("HTTP parameters", parameters);
-
 			log("HTTP headers", headers);
+			log("HTTP parameters", parameters);
 		}
 
 		HttpGet httpGet = new HttpGet(url);
@@ -277,9 +275,8 @@ public abstract class BaseJSONWebServiceClientImpl
 			_logger.debug(
 				"Sending POST request to " + _login + "@" + _hostName + url);
 
-			log("HTTP parameters", parameters);
-
 			log("HTTP headers", headers);
+			log("HTTP parameters", parameters);
 		}
 
 		HttpPost httpPost = new HttpPost(url);
@@ -359,9 +356,8 @@ public abstract class BaseJSONWebServiceClientImpl
 			_logger.debug(
 				"Sending PUT request to " + _login + "@" + _hostName + url);
 
-			log("HTTP parameters", parameters);
-
 			log("HTTP headers", headers);
+			log("HTTP parameters", parameters);
 		}
 
 		HttpPut httpPut = new HttpPut(url);

@@ -98,6 +98,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "page-templates"));
 			<liferay-ui:search-container-column-text>
 				<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 					<liferay-frontend:horizontal-card
+						actionJsp="/layout_page_template_collection_action.jsp"
+						actionJspServletContext="<%= application %>"
 						resultRow="<%= row %>"
 						rowChecker="<%= searchContainer.getRowChecker() %>"
 						text="<%= HtmlUtil.escape(layoutPageTemplateCollection.getName()) %>"

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.concurrent.BaseFutureListener;
 import com.liferay.portal.kernel.concurrent.FutureListener;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.concurrent.NoticeableFutureConverter;
+import com.liferay.portal.kernel.io.PathHolder;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.process.ClassPathUtil;
@@ -137,18 +138,20 @@ public class NettyFabricWorkerExecutionChannelHandler
 
 		final Map<Path, Path> bootstrapPaths = new LinkedHashMap<>();
 
-		for (String pathString :
-				processConfig.getBootstrapClassPathElements()) {
+		for (PathHolder pathHolder :
+				processConfig.getBootstrapClassPathHolders()) {
 
-			bootstrapPaths.put(Paths.get(pathString), null);
+			bootstrapPaths.put(Paths.get(pathHolder.toString()), null);
 		}
 
 		mergedPaths.putAll(bootstrapPaths);
 
 		final Map<Path, Path> runtimePaths = new LinkedHashMap<>();
 
-		for (String pathString : processConfig.getRuntimeClassPathElements()) {
-			runtimePaths.put(Paths.get(pathString), null);
+		for (PathHolder pathHolder :
+				processConfig.getRuntimeClassPathHolders()) {
+
+			runtimePaths.put(Paths.get(pathHolder.toString()), null);
 		}
 
 		mergedPaths.putAll(runtimePaths);

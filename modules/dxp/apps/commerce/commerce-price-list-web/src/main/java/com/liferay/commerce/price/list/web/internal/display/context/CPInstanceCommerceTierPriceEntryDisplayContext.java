@@ -145,7 +145,7 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 		if (commerceTierPriceEntry == null) {
 			contextTitle = LanguageUtil.format(
 				themeDisplay.getRequest(), "add-tier-price-entry-to-x",
-				sb.toString());
+				contextTitle);
 		}
 
 		return contextTitle;

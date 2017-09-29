@@ -1,0 +1,132 @@
+<definition component-name="portal-wcm">
+	<property name="portal.upstream" value="true" />
+	<property name="testray.main.component.name" value="Fragments" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Test Site Name" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="Site#tearDownCP" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="AddCollectionFragmentWithSnippets" priority="5">
+		<property name="portal.acceptance" value="pending" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Fragments" />
+		</execute>
+
+		<execute macro="Collection#addCollection">
+			<var name="collectionDescription" value="Collection Description" />
+			<var name="collectionName" value="Collection Name" />
+		</execute>
+
+		<execute macro="Collection#gotoCollection">
+			<var name="collectionName" value="Collection Name" />
+		</execute>
+
+		<execute macro="Fragment#addFragment">
+			<var name="fragmentName" value="Fragment Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Fragments" />
+		</execute>
+
+		<execute macro="Collection#gotoCollection">
+			<var name="collectionName" value="Collection Name" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="Fragment Name" />
+		</execute>
+
+		<var name="htmlSnippet"><![CDATA[
+<!DOCTYPE html>${line.separator}
+<html>${line.separator}
+<div>${line.separator}
+<span class="test">This is a test.</span>${line.separator}
+</div>${line.separator}
+</html>]]></var>
+
+		<execute macro="Fragment#typeFragmentEditor">
+			<var name="editor" value="html" />
+			<var name="templateScript" value="${htmlSnippet}" />
+		</execute>
+
+		<var name="cssSnippet"><![CDATA[
+.test{${line.separator}
+	color:red${line.separator}
+}]]></var>
+
+		<execute macro="Fragment#typeFragmentEditor">
+			<var name="editor" value="css" />
+			<var name="templateScript" value="${cssSnippet}" />
+		</execute>
+
+		<var name="javascriptSnippet"><![CDATA[
+var element = document.querySelector(".test");${line.separator}${line.separator}
+element.style.border='2px dashed red';
+]]></var>
+
+		<execute macro="Fragment#typeFragmentEditor">
+			<var name="editor" value="javascript" />
+			<var name="templateScript" value="${javascriptSnippet}" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Fragments" />
+		</execute>
+
+		<execute macro="Collection#gotoCollection">
+			<var name="collectionName" value="Collection Name" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="Fragment Name" />
+		</execute>
+
+		<execute function="SelectFrameTop" />
+
+		<execute function="SelectFrame" locator1="Fragment#FRAGMENT_PREVIEW_IFRAME" />
+
+		<execute function="AssertElementPresent" locator1="//span[@class='test'][contains(@style,'2px dashed red')]" />
+
+		<execute function="AssertCssValue" locator1="//span[@class='test'][contains(@style,'2px dashed red')]" locator2="color" value1="rgba(255, 0, 0, 1)" />
+
+		<execute function="SelectFrameTop" />
+	</command>
+</definition>

@@ -139,6 +139,16 @@
 		<execute selenium="assertLiferayErrors" />
 	</command>
 
+	<command name="typeAceEditorNoError">
+		<execute function="WaitForSPARefresh" />
+
+		<execute selenium="waitForElementPresent" />
+
+		<execute selenium="mouseOver" />
+
+		<execute selenium="typeAceEditor" />
+	</command>
+
 	<command name="typeAceEditorNoMouseOver">
 		<execute function="WaitForSPARefresh" />
 

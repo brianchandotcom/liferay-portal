@@ -12,9 +12,19 @@
 	</command>
 
 	<command name="gotoEntry">
-		<execute function="AssertClick" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${rowEntry}">
-			<var name="key_rowEntry" value="${rowEntry}" />
-		</execute>
+		<if>
+			<isset var="displayStyle" />
+			<then>
+				<execute function="AssertClick" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${rowEntry}">
+					<var name="key_cardText" value="${rowEntry}" />
+				</execute>
+			</then>
+			<else>
+				<execute function="AssertClick" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${rowEntry}">
+					<var name="key_rowEntry" value="${rowEntry}" />
+				</execute>
+			</else>
+		</if>
 	</command>
 
 	<command name="gotoEntryMenuItem">

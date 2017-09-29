@@ -745,7 +745,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 		String prefix = tempFileId + StringPool.DASH;
 
-		Predicate<File> fileFilter = (File file) -> {
+		Predicate<File> fileFilter = file -> {
 			if (!file.isFile()) {
 				return false;
 			}
@@ -762,7 +762,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		if (Validator.isNotNull(type)) {
 			String suffix = StringPool.PERIOD + type;
 
-			fileFilter = (File file) -> {
+			fileFilter = file -> {
 				if (!file.isFile()) {
 					return false;
 				}

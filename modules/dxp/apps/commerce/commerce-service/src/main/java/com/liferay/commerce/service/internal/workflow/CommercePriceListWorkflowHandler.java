@@ -70,13 +70,7 @@ public class CommercePriceListWorkflowHandler
 			userId, classPK, status, serviceContext, workflowContext);
 	}
 
-	@Reference(unbind = "-")
-	protected void setCommercePriceListLocalService(
-		CommercePriceListLocalService commercePriceListLocalService) {
-
-		_commercePriceListLocalService = commercePriceListLocalService;
-	}
-
+	@Reference
 	private CommercePriceListLocalService _commercePriceListLocalService;
 
 }

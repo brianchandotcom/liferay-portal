@@ -70,14 +70,7 @@ public class CPDefinitionWorkflowHandler
 			userId, classPK, status, serviceContext, workflowContext);
 	}
 
-	@Reference(unbind = "-")
-	protected void setCPDefinitionLocalService(
-		CPDefinitionLocalService
-			cpDefinitionLocalService) {
-
-		_cpDefinitionLocalService = cpDefinitionLocalService;
-	}
-
+	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 }

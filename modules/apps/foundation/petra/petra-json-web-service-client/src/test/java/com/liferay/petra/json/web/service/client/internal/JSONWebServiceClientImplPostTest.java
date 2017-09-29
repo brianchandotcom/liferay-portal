@@ -49,13 +49,13 @@ public class JSONWebServiceClientImplPostTest
 		JSONWebServiceClientImpl jsonWebServiceClientImpl =
 			new JSONWebServiceClientImpl();
 
-		Map<String, Object> clientProperties = getBaseProperties();
+		Map<String, Object> properties = getBaseProperties();
 
-		clientProperties.put(
+		properties.put(
 			"headers", "headerKey1=headerValue1;Accept=application/json;");
-		clientProperties.put("protocol", "http");
+		properties.put("protocol", "http");
 
-		jsonWebServiceClientImpl.activate(clientProperties);
+		jsonWebServiceClientImpl.activate(properties);
 
 		Map<String, String> params = new HashMap<String, String>();
 
@@ -77,13 +77,13 @@ public class JSONWebServiceClientImplPostTest
 		JSONWebServiceClientImpl jsonWebServiceClientImpl =
 			new JSONWebServiceClientImpl();
 
-		Map<String, Object> clientProperties = getBaseProperties();
+		Map<String, Object> properties = getBaseProperties();
 
-		clientProperties.put(
+		properties.put(
 			"headers", "headerKey1=headerValue1;Accept=application/json;");
-		clientProperties.put("protocol", "http");
+		properties.put("protocol", "http");
 
-		jsonWebServiceClientImpl.activate(clientProperties);
+		jsonWebServiceClientImpl.activate(properties);
 
 		Map<String, String> params = new HashMap<String, String>();
 
@@ -105,13 +105,13 @@ public class JSONWebServiceClientImplPostTest
 		JSONWebServiceClientImpl jsonWebServiceClientImpl =
 			new JSONWebServiceClientImpl();
 
-		Map<String, Object> clientProperties = getBaseProperties();
+		Map<String, Object> properties = getBaseProperties();
 
-		clientProperties.put(
+		properties.put(
 			"headers", "headerKey1=headerValue1;Accept=application/json;");
-		clientProperties.put("protocol", "http");
+		properties.put("protocol", "http");
 
-		jsonWebServiceClientImpl.activate(clientProperties);
+		jsonWebServiceClientImpl.activate(properties);
 
 		Map<String, String> params = new HashMap<String, String>();
 
@@ -130,13 +130,13 @@ public class JSONWebServiceClientImplPostTest
 		JSONWebServiceClientImpl jsonWebServiceClientImpl =
 			new JSONWebServiceClientImpl();
 
-		Map<String, Object> clientProperties = getBaseProperties();
+		Map<String, Object> properties = getBaseProperties();
 
-		clientProperties.put(
+		properties.put(
 			"headers", "Accept=application/json;headerKey1=headerValue1");
-		clientProperties.put("protocol", "http");
+		properties.put("protocol", "http");
 
-		jsonWebServiceClientImpl.activate(clientProperties);
+		jsonWebServiceClientImpl.activate(properties);
 
 		Map<String, String> params = new HashMap<String, String>();
 
@@ -155,11 +155,11 @@ public class JSONWebServiceClientImplPostTest
 		JSONWebServiceClientImpl jsonWebServiceClientImpl =
 			new JSONWebServiceClientImpl();
 
-		Map<String, Object> clientProperties = getBaseProperties();
+		Map<String, Object> properties = getBaseProperties();
 
-		clientProperties.put("protocol", "http");
+		properties.put("protocol", "http");
 
-		jsonWebServiceClientImpl.activate(clientProperties);
+		jsonWebServiceClientImpl.activate(properties);
 
 		jsonWebServiceClientImpl.doPost(
 			"/", Collections.<String, String>emptyMap());
@@ -172,13 +172,13 @@ public class JSONWebServiceClientImplPostTest
 		JSONWebServiceClientImpl jsonWebServiceClientImpl =
 			new JSONWebServiceClientImpl();
 
-		Map<String, Object> clientProperties = getBaseProperties();
+		Map<String, Object> properties = getBaseProperties();
 
-		clientProperties.put(
+		properties.put(
 			"headers", "Accept=application/json;headerKey1=headerValue1");
-		clientProperties.put("protocol", "http");
+		properties.put("protocol", "http");
 
-		jsonWebServiceClientImpl.activate(clientProperties);
+		jsonWebServiceClientImpl.activate(properties);
 
 		Map<String, String> params = new HashMap<String, String>();
 

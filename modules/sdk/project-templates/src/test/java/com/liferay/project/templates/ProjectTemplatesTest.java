@@ -626,7 +626,7 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateNpmJqueryPortlet() throws Exception {
+	public void testBuildTemplateNpmJQueryPortlet() throws Exception {
 		File projectDir = _buildTemplateWithGradle("npm-jquery-portlet", "foo");
 
 		_testContains(
@@ -640,7 +640,7 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateNpmJqueryPortletWithDashes() throws Exception {
+	public void testBuildTemplateNpmJQueryPortletWithDashes() throws Exception {
 		File projectDir = _buildTemplateWithGradle(
 			"npm-jquery-portlet", "foo-bar");
 

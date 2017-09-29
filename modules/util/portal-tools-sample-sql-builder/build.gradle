@@ -39,6 +39,8 @@ classes {
 }
 
 writeReleases {
+	dependsOn configurations.compile
+
 	doLast {
 		File releasesTxtFile = new File(processResources.destinationDir, "com/liferay/portal/tools/sample/sql/builder/dependencies/releases.txt")
 
@@ -46,6 +48,8 @@ writeReleases {
 			Writer writer ->
 
 			configurations.compile.each {
+				println "Adding release information from ${it} into ${releasesTxtFile}"
+
 				JarFile jarFile = new JarFile(it)
 
 				Attributes mainAttributes = jarFile.manifest.mainAttributes

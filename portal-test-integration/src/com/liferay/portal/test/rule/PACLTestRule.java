@@ -14,6 +14,7 @@
 
 package com.liferay.portal.test.rule;
 
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.deploy.hot.HookHotDeployListener;
 import com.liferay.portal.deploy.hot.ServiceWrapperRegistry;
 import com.liferay.portal.kernel.deploy.hot.DependencyManagementThreadLocal;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
-import com.liferay.portal.kernel.util.InitialThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -128,9 +128,9 @@ public class PACLTestRule implements TestRule {
 		}
 
 		private static final ThreadLocal<Boolean> _dummyDataSourceEnabled =
-			new InitialThreadLocal<>(
+			new CentralizedThreadLocal<>(
 				PACLTestRuleThreadLocal.class + "._dummyDataSourceEnabled",
-				() -> Boolean.FALSE);
+				() -> Boolean.FALSE, false);
 
 	}
 

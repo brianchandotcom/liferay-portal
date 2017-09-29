@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.lang.CentralizedThreadLocal;
+
 /**
  * @author Jorge Ferrer
  */
@@ -28,7 +30,7 @@ public class ProgressTrackerThreadLocal {
 	}
 
 	private static final ThreadLocal<ProgressTracker> _progressTracker =
-		new AutoResetThreadLocal<>(
+		new CentralizedThreadLocal<>(
 			ProgressTrackerThreadLocal.class + "._progressTracker");
 
 }

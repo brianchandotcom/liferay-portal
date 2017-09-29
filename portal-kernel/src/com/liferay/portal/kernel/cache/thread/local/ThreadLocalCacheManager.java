@@ -14,11 +14,11 @@
 
 package com.liferay.portal.kernel.cache.thread.local;
 
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.transaction.NewTransactionLifecycleListener;
 import com.liferay.portal.kernel.transaction.TransactionAttribute;
 import com.liferay.portal.kernel.transaction.TransactionLifecycleListener;
 import com.liferay.portal.kernel.transaction.TransactionStatus;
-import com.liferay.portal.kernel.util.InitialThreadLocal;
 
 import java.io.Serializable;
 
@@ -148,30 +148,14 @@ public class ThreadLocalCacheManager {
 
 	private static final EmptyThreadLocalCahce<?> _emptyThreadLocalCache =
 		new EmptyThreadLocalCahce<>();
-
 	private static final ThreadLocal<ThreadLocalCaches>
-		_eternalThreadLocalCaches = new InitialThreadLocal<ThreadLocalCaches>(
+		_eternalThreadLocalCaches = new CentralizedThreadLocal<>(
 			ThreadLocalCacheManager.class + "._eternalThreadLocalCaches",
-			() -> null) {
-
-			@Override
-			protected ThreadLocalCaches initialValue() {
-				return new ThreadLocalCaches();
-			}
-
-		};
-
+			ThreadLocalCaches::new, false);
 	private static final ThreadLocal<ThreadLocalCaches>
-		_requestThreadLocalCaches = new InitialThreadLocal<ThreadLocalCaches>(
+		_requestThreadLocalCaches = new CentralizedThreadLocal<>(
 			ThreadLocalCacheManager.class + "._requestThreadLocalCaches",
-			() -> null) {
-
-			@Override
-			protected ThreadLocalCaches initialValue() {
-				return new ThreadLocalCaches();
-			}
-
-		};
+			ThreadLocalCaches::new, false);
 
 	private static class EmptyThreadLocalCahce<T> extends ThreadLocalCache<T> {
 

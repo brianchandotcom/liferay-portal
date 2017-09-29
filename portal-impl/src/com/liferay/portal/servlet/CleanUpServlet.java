@@ -14,7 +14,7 @@
 
 package com.liferay.portal.servlet;
 
-import com.liferay.portal.kernel.util.CentralizedThreadLocal;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 
 import javax.servlet.http.HttpServlet;
 

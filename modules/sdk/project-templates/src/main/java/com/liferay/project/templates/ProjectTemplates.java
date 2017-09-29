@@ -330,7 +330,14 @@ public class ProjectTemplates {
 		}
 		else if ((template.equals("freemarker-portlet") ||
 				  template.equals("mvc-portlet") ||
+				  template.equals("npm-angular-portlet") ||
+				  template.equals("npm-billboardjs-portlet") ||
+				  template.equals("npm-isomorphic-portlet") ||
+				  template.equals("npm-jquery-portlet") ||
+				  template.equals("npm-metaljs-portlet") ||
 				  template.equals("npm-portlet") ||
+				  template.equals("npm-react-portlet") ||
+				  template.equals("npm-vuejs-portlet") ||
 				  template.equals("spring-mvc-portlet") ||
 				  template.equals("portlet")) &&
 				 (className.length() > 7) && className.endsWith("Portlet")) {

@@ -1,3 +1,5 @@
 .gradle/
+.sass-cache/
 build/
+node_modules/
 target/

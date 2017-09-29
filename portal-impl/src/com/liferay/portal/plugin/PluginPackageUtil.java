@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -50,7 +49,6 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
@@ -431,12 +429,8 @@ public class PluginPackageUtil {
 
 	private String[] _getRepositoryURLs() throws PluginPackageException {
 		try {
-			String[] trusted = PrefsPropsUtil.getStringArray(
-				PropsKeys.PLUGIN_REPOSITORIES_TRUSTED, StringPool.NEW_LINE,
-				PropsValues.PLUGIN_REPOSITORIES_TRUSTED);
-			String[] untrusted = PrefsPropsUtil.getStringArray(
-				PropsKeys.PLUGIN_REPOSITORIES_UNTRUSTED, StringPool.NEW_LINE,
-				PropsValues.PLUGIN_REPOSITORIES_UNTRUSTED);
+			String[] trusted = PropsValues.PLUGIN_REPOSITORIES_TRUSTED;
+			String[] untrusted = PropsValues.PLUGIN_REPOSITORIES_UNTRUSTED;
 
 			return ArrayUtil.append(trusted, untrusted);
 		}
@@ -508,10 +502,8 @@ public class PluginPackageUtil {
 	private boolean _isIgnored(PluginPackage pluginPackage) {
 		String packageId = pluginPackage.getPackageId();
 
-		String[] pluginPackagesIgnored = PrefsPropsUtil.getStringArray(
-			PropsKeys.PLUGIN_NOTIFICATIONS_PACKAGES_IGNORED,
-			StringPool.NEW_LINE,
-			PropsValues.PLUGIN_NOTIFICATIONS_PACKAGES_IGNORED);
+		String[] pluginPackagesIgnored =
+			PropsValues.PLUGIN_NOTIFICATIONS_PACKAGES_IGNORED;
 
 		for (int i = 0; i < pluginPackagesIgnored.length; i++) {
 			String curPluginPackagesIgnored = pluginPackagesIgnored[i];
@@ -561,9 +553,7 @@ public class PluginPackageUtil {
 		throws PluginPackageException {
 
 		try {
-			String[] trusted = PrefsPropsUtil.getStringArray(
-				PropsKeys.PLUGIN_REPOSITORIES_TRUSTED, StringPool.NEW_LINE,
-				PropsValues.PLUGIN_REPOSITORIES_TRUSTED);
+			String[] trusted = PropsValues.PLUGIN_REPOSITORIES_TRUSTED;
 
 			if (ArrayUtil.contains(trusted, repositoryURL)) {
 				return true;
@@ -579,10 +569,7 @@ public class PluginPackageUtil {
 	}
 
 	private boolean _isUpdateAvailable() {
-		if (!PrefsPropsUtil.getBoolean(
-				PropsKeys.PLUGIN_NOTIFICATIONS_ENABLED,
-				PropsValues.PLUGIN_NOTIFICATIONS_ENABLED)) {
-
+		if (!PropsValues.PLUGIN_NOTIFICATIONS_ENABLED) {
 			return false;
 		}
 

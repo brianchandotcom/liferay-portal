@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.struts.AuthPublicPathRegistry;
 import com.liferay.portal.util.BrowserLauncher;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -130,14 +129,9 @@ public class GlobalStartupAction extends SimpleAction {
 		// Auto deploy
 
 		try {
-			File deployDir = new File(
-				PrefsPropsUtil.getString(
-					PropsKeys.AUTO_DEPLOY_DEPLOY_DIR,
-					PropsValues.AUTO_DEPLOY_DEPLOY_DIR));
+			File deployDir = new File(PropsValues.AUTO_DEPLOY_DEPLOY_DIR);
 			File destDir = new File(DeployUtil.getAutoDeployDestDir());
-			long interval = PrefsPropsUtil.getLong(
-				PropsKeys.AUTO_DEPLOY_INTERVAL,
-				PropsValues.AUTO_DEPLOY_INTERVAL);
+			long interval = PropsValues.AUTO_DEPLOY_INTERVAL;
 
 			List<AutoDeployListener> autoDeployListeners =
 				getAutoDeployListeners(false);
@@ -146,10 +140,7 @@ public class GlobalStartupAction extends SimpleAction {
 				AutoDeployDir.DEFAULT_NAME, deployDir, destDir, interval,
 				autoDeployListeners);
 
-			if (PrefsPropsUtil.getBoolean(
-					PropsKeys.AUTO_DEPLOY_ENABLED,
-					PropsValues.AUTO_DEPLOY_ENABLED)) {
-
+			if (PropsValues.AUTO_DEPLOY_ENABLED) {
 				if (_log.isInfoEnabled()) {
 					_log.info("Registering auto deploy directories");
 				}

@@ -3295,6 +3295,11 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		args.put("dir", portalRootDir);
 		args.put(
+			"excludes",
+			Arrays.asList(
+				"**/bin/", "**/build/", "**/classes/", "**/node_modules/",
+				"**/test-classes/", "**/tmp/"));
+		args.put(
 			"includes",
 			Arrays.asList("**/*.gradle", "**/sdk/*/README.markdown"));
 

@@ -22,10 +22,10 @@
 		<execute function="Pause" locator1="3000" />
 
 		<if>
-		 	<isset var="windowTitle" />
-		 	<then>
+			<isset var="windowTitle" />
+			<then>
 				<execute function="SelectWindow" locator1="GoogleLogin#PAGE_TITLE" />
-		
+
 				<if>
 					<condition function="IsElementPresent" locator1="GoogleLogin#HEADER" />
 					<then>
@@ -36,7 +36,7 @@
 				<execute function="Type" locator1="GoogleLogin#LOGIN_EMAIL_FIELD" value1="${userEmailAddress}" />
 
 				<execute function="Click" locator1="GoogleLogin#LOGIN_NEXT_BUTTON" />
-					
+
 				<execute function="AssertElementPresent" locator1="GoogleLogin#LOGIN_NEXT_BUTTON" />
 
 				<execute function="Type" locator1="GoogleLogin#LOGIN_PASSWORD_FIELD" value1="${userPassword}" />
@@ -55,7 +55,7 @@
 				<execute function="Click#clickNoSPARefresh" locator1="ProductMenu#TOGGLE" />
 			</then>
 		</if>
-		
+
 		<execute function="SelectFrame" locator1="GoogleDrive#GOOGLE_DRIVE_IFRAME" />
 	</command>
 

@@ -39,7 +39,7 @@ public class CPDefinitionInventoryServiceImpl
 
 		CPDefinitionInventoryPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			CommerceActionKeys.MANAGE_CP_DEFINITION_INVENTORY);
+			CommerceActionKeys.MANAGE_COMMERCE_PRODUCT_DEFINITION_INVENTORY);
 
 		return cpDefinitionInventoryLocalService.addCPDefinitionInventory(
 			cpDefinitionId, cpDefinitionInventoryEngine, lowStockActivity,
@@ -58,7 +58,7 @@ public class CPDefinitionInventoryServiceImpl
 
 		CPDefinitionInventoryPermission.check(
 			getPermissionChecker(), cpDefinitionInventory.getGroupId(),
-			CommerceActionKeys.MANAGE_CP_DEFINITION_INVENTORY);
+			CommerceActionKeys.MANAGE_COMMERCE_PRODUCT_DEFINITION_INVENTORY);
 
 		cpDefinitionInventoryLocalService.deleteCPDefinitionInventory(
 			cpDefinitionInventoryId);
@@ -93,7 +93,7 @@ public class CPDefinitionInventoryServiceImpl
 
 		CPDefinitionInventoryPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			CommerceActionKeys.MANAGE_CP_DEFINITION_INVENTORY);
+			CommerceActionKeys.MANAGE_COMMERCE_PRODUCT_DEFINITION_INVENTORY);
 
 		return cpDefinitionInventoryLocalService.updateCPDefinitionInventory(
 			cpDefinitionInventoryId, cpDefinitionInventoryEngine,

@@ -26,6 +26,8 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<echo message="This is a message." />
+
 		<for list="${breadcrumbListVisible}" param="breadcrumbName">
 			<var name="key_breadcrumbName" value="${breadcrumbName}" />
 
@@ -69,7 +71,9 @@
 				</execute>
 
 				<if>
-					<isset var="duplicate" />
+					<not>
+						<isset var="duplicate" />
+					</not>
 					<then>
 						<execute macro="Alert#viewErrorMessage">
 							<var name="errorMessage" value="A configuration with this ID already exists. Please enter a unique ID." />
@@ -106,6 +110,28 @@
 
 		<if>
 			<condition function="IsElementPresent" locator1="Blogs#ADD_BLOGS_ENTRY" />
+			<then>
+				<execute macro="Alert#viewSuccessMessage" />
+			</then>
+		</if>
+
+		<if>
+			<and>
+				<condition function="IsElementPresent" locator1="Blogs#ADD_BLOGS_ENTRY" />
+				<equals arg1="${check}" arg2="true" />
+				<isset var="duplicate" />
+			</and>
+			<then>
+				<execute macro="Alert#viewSuccessMessage" />
+			</then>
+		</if>
+
+		<if>
+			<or>
+				<condition function="IsElementPresent" locator1="Blogs#ADD_BLOGS_ENTRY" />
+				<equals arg1="${check}" arg2="true" />
+				<isset var="duplicate" />
+			</or>
 			<then>
 				<execute macro="Alert#viewSuccessMessage" />
 			</then>

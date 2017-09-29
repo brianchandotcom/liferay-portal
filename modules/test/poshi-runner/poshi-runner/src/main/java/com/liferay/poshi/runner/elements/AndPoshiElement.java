@@ -14,17 +14,20 @@
 
 package com.liferay.poshi.runner.elements;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.dom4j.Element;
 
 /**
  * @author Kenji Heigel
  */
-public class IsSetPoshiElement extends BasePoshiElement {
+public class AndPoshiElement extends BasePoshiElement {
 
 	@Override
 	public PoshiElement clone(Element element) {
 		if (isElementType(_ELEMENT_NAME, element)) {
-			return new IsSetPoshiElement(element);
+			return new AndPoshiElement(element);
 		}
 
 		return null;
@@ -35,7 +38,7 @@ public class IsSetPoshiElement extends BasePoshiElement {
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
 		if (_isElementType(parentPoshiElement, readableSyntax)) {
-			return new IsSetPoshiElement(readableSyntax);
+			return new AndPoshiElement(readableSyntax);
 		}
 
 		return null;
@@ -43,30 +46,56 @@ public class IsSetPoshiElement extends BasePoshiElement {
 
 	@Override
 	public void parseReadableSyntax(String readableSyntax) {
-		String issetContent = getParentheticalContent(readableSyntax);
-
-		addAttribute("var", issetContent);
+		for (String readableBlock : getReadableBlocks(readableSyntax)) {
+			add(PoshiElementFactory.newPoshiElement(this, readableBlock));
+		}
 	}
 
 	@Override
 	public String toReadableSyntax() {
-		return "isSet(" + attributeValue("var") + ")";
+		StringBuilder sb = new StringBuilder();
+
+		for (PoshiElement poshiElement : toPoshiElements(elements())) {
+			poshiElement.toReadableSyntax();
+
+			sb.append("(");
+
+			sb.append(poshiElement.toReadableSyntax());
+
+			sb.append(") && ");
+		}
+
+		sb.setLength(sb.length() - 4);
+
+		return sb.toString();
 	}
 
-	protected IsSetPoshiElement() {
+	protected AndPoshiElement() {
 	}
 
-	protected IsSetPoshiElement(Element element) {
+	protected AndPoshiElement(Element element) {
 		super(_ELEMENT_NAME, element);
 	}
 
-	protected IsSetPoshiElement(String readableSyntax) {
+	protected AndPoshiElement(String readableSyntax) {
 		super(_ELEMENT_NAME, readableSyntax);
 	}
 
 	@Override
 	protected String getBlockName() {
-		return "isSet";
+		return "and";
+	}
+
+	protected List<String> getReadableBlocks(String readableSyntax) {
+		List<String> readableBlocks = new ArrayList<>();
+
+		for (String condition : readableSyntax.split(" && ")) {
+			condition = getParentheticalContent(condition);
+
+			readableBlocks.add(condition);
+		}
+
+		return readableBlocks;
 	}
 
 	private boolean _isElementType(
@@ -80,17 +109,17 @@ public class IsSetPoshiElement extends BasePoshiElement {
 			return false;
 		}
 
-		if (readableSyntax.startsWith("!")) {
+		if (readableSyntax.contains(" || ")) {
 			return false;
 		}
 
-		if (readableSyntax.startsWith("isSet(")) {
+		if (readableSyntax.contains(" && ")) {
 			return true;
 		}
 
 		return false;
 	}
 
-	private static final String _ELEMENT_NAME = "isset";
+	private static final String _ELEMENT_NAME = "and";
 
 }

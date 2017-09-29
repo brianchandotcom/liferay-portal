@@ -74,8 +74,21 @@ public class ConditionPoshiElement extends ExecutePoshiElement {
 	private boolean _isElementType(
 		PoshiElement parentPoshiElement, String readableSyntax) {
 
-		if ((parentPoshiElement instanceof IfPoshiElement) &&
-			readableSyntax.endsWith(")") &&
+		if (!(parentPoshiElement instanceof AndPoshiElement ||
+			parentPoshiElement instanceof IfPoshiElement ||
+			parentPoshiElement instanceof NotPoshiElement ||
+			parentPoshiElement instanceof OrPoshiElement)) {
+
+			return false;
+		}
+
+		if (readableSyntax.contains(" && ") ||
+			readableSyntax.contains(" || ") || readableSyntax.startsWith("!")) {
+
+			return false;
+		}
+
+		if (readableSyntax.endsWith(")") &&
 			!readableSyntax.startsWith("isSet(")) {
 
 			return true;

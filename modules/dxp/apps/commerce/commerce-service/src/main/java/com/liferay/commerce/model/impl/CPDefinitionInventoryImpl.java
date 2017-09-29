@@ -17,22 +17,11 @@ package com.liferay.commerce.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 /**
- * The extended model implementation for the CPDefinitionInventory service. Represents a row in the &quot;CPDefinitionInventory&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.commerce.model.CPDefinitionInventory} interface.
- * </p>
- *
  * @author Alessio Antonio Rendina
  */
 @ProviderType
 public class CPDefinitionInventoryImpl extends CPDefinitionInventoryBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a cp definition inventory model instance should use the {@link com.liferay.commerce.model.CPDefinitionInventory} interface instead.
-	 */
 	public CPDefinitionInventoryImpl() {
 	}
 

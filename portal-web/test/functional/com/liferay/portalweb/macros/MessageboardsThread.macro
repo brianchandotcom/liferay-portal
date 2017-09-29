@@ -323,6 +323,10 @@
 		<if>
 			<isset var="threadBodyEdit" />
 			<then>
+				<execute function="Click" locator1="AlloyEditor#CONTENT_FIELD" />
+
+				<execute function="AssertElementPresent" locator1="AlloyEditor#CONTENT_ADD_BUTTON" />
+
 				<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${threadBodyEdit}" />
 			</then>
 		</if>

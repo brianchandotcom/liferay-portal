@@ -484,7 +484,15 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Server Administration" />
+			<var name="portlet" value="System Settings" />
+		</execute>
+
+		<execute macro="SystemSettings#gotoCategory">
+			<var name="category" value="Foundation" />
+		</execute>
+
+		<execute macro="SystemSettings#editConfiguration">
+			<var name="configurationName" value="Upload Servlet Request" />
 		</execute>
 
 		<execute macro="ServerAdministration#configureFileUploadOverallMaximumFileSize">

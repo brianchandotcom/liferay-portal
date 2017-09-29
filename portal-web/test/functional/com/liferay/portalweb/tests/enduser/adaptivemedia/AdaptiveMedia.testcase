@@ -43,6 +43,31 @@
 		</execute>
 	</command>
 
+	<command name="AddAMIWithZeroPixels" priority="5">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Adaptive Media" />
+		</execute>
+
+		<execute macro="AdaptiveMedia#addImageResolution">
+			<var name="imageName" value="Zero Resolution" />
+			<var name="maxHeight" value="0" />
+			<var name="maxWidth" value="0" />
+			<var name="zero" value="true" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Adaptive Media" />
+		</execute>
+
+		<execute macro="AdaptiveMedia#viewNoImageResolution">
+			<var name="imageName" value="Zero Resolution" />
+		</execute>
+	</command>
+
 	<command name="AddAndEditEntriesWithSpecialCharacters" priority="4">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />

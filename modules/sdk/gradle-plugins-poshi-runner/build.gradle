@@ -3,3 +3,7 @@ dependencies {
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.extractGradleApi25], dir: new File(rootProject.buildDir, "gradle-2.5"))
 }
+
+updateFileVersions {
+	match(/classpath group: "com\.liferay", name: "com\.liferay\.gradle\.plugins\.poshi\.runner", version: "(\d.+)"/, "../../../portal-web/build-test.gradle")
+}

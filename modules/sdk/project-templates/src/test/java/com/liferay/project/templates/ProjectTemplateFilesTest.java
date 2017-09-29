@@ -238,10 +238,37 @@ public class ProjectTemplateFilesTest {
 
 		requiredPropertyNames.addAll(_archetypeMetadataXmlDefaultPropertyNames);
 
+		List<String> declaredVariables = new ArrayList<>();
+
+		Path definitionsPath = projectTemplateDirPath.resolve(
+			"src/main/resources/definitions.vm");
+
+		if (definitionsPath.toFile().exists()) {
+			String definitions = FileUtil.read(definitionsPath);
+
+			try (BufferedReader bufferedReader = new BufferedReader(
+					new StringReader(definitions))) {
+
+				String line = null;
+
+				while ((line = bufferedReader.readLine()) != null) {
+					Matcher setMatcher = _velocitySetDirectivePattern.matcher(
+						line);
+
+					if (setMatcher.find()) {
+						String variable = setMatcher.group(1);
+
+						declaredVariables.add(variable);
+					}
+				}
+			}
+		}
+
 		for (String name : archetypeResourcePropertyNames) {
 			Assert.assertTrue(
 				"Undeclared \"" + name + "\" required property in " +
 					archetypeMetadataXmlPath,
+				declaredVariables.contains(name) ||
 				requiredPropertyNames.contains(name));
 		}
 	}
@@ -845,6 +872,8 @@ public class ProjectTemplateFilesTest {
 			"bnd", "gradle", "java", "jsp", "jspf", "properties", "xml"));
 	private static final Pattern _velocityDirectivePattern = Pattern.compile(
 		"#(if|set)\\s*\\(\\s*(.+)\\s*\\)");
+	private static final Pattern _velocitySetDirectivePattern = Pattern.compile(
+		"^\\s*#set\\s*\\(\\s*\\$(\\w*) =.*");
 	private static final Map<String, String> _xmlDeclarations = new HashMap<>();
 
 	static {

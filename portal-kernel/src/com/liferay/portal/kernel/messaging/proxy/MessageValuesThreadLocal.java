@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.messaging.proxy;
 
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -83,7 +83,7 @@ public class MessageValuesThreadLocal {
 		"THREAD_LOCAL_KEY_PREFIX#";
 
 	private static final ThreadLocal<Map<String, Object>>
-		_messageValuesThreadLocal = new AutoResetThreadLocal<>(
+		_messageValuesThreadLocal = new CentralizedThreadLocal<>(
 			MessageValuesThreadLocal.class.getName());
 
 }

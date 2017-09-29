@@ -14,7 +14,7 @@
 
 package com.liferay.portal.configuration.cluster.internal;
 
-import com.liferay.portal.kernel.util.InitialThreadLocal;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 
 /**
  * @author Brian Wing Shun Chan
@@ -30,7 +30,8 @@ public class ConfigurationThreadLocal {
 	}
 
 	private static final ThreadLocal<Boolean> _localUpdate =
-		new InitialThreadLocal<>(
-			InitialThreadLocal.class + "._localUpdate", () -> Boolean.FALSE);
+		new CentralizedThreadLocal<>(
+			ConfigurationThreadLocal.class + "._localUpdate",
+			() -> Boolean.FALSE, false);
 
 }

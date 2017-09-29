@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.servlet;
 
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 
 import javax.servlet.http.HttpSession;
 
@@ -38,7 +38,7 @@ public class PortalSessionThreadLocal {
 	}
 
 	private static final ThreadLocal<String> _sessionId =
-		new AutoResetThreadLocal<>(
+		new CentralizedThreadLocal<>(
 			PortalSessionThreadLocal.class + "._sessionId");
 
 }

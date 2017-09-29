@@ -14,6 +14,7 @@
 
 package com.liferay.portal.monitoring.internal.servlet.filter;
 
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -259,7 +259,7 @@ public class MonitoringFilter
 		MonitoringFilter.class);
 
 	private static final ThreadLocal<AtomicInteger> _processFilterCount =
-		new AutoResetThreadLocal<>(
+		new CentralizedThreadLocal<>(
 			MonitoringFilter.class + "._processFilterCount",
 			AtomicInteger::new);
 

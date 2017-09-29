@@ -14,11 +14,11 @@
 
 package com.liferay.portal.template;
 
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.util.xml.XMLUtil;
@@ -134,7 +134,7 @@ public class TemplatePortletPreferences {
 		TemplatePortletPreferences.class);
 
 	private final ThreadLocal<PortletPreferencesImpl>
-		_portletPreferencesImplThreadLocal = new AutoResetThreadLocal<>(
+		_portletPreferencesImplThreadLocal = new CentralizedThreadLocal<>(
 			TemplatePortletPreferences.class.getName(),
 			PortletPreferencesImpl::new);
 

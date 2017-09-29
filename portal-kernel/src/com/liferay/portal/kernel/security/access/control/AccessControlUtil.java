@@ -14,12 +14,12 @@
 
 package com.liferay.portal.kernel.security.access.control;
 
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.AccessControlContext;
 import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -115,7 +115,7 @@ public class AccessControlUtil {
 	private static final AccessControlUtil _instance = new AccessControlUtil();
 
 	private static final ThreadLocal<AccessControlContext>
-		_accessControlContext = new AutoResetThreadLocal<>(
+		_accessControlContext = new CentralizedThreadLocal<>(
 			AccessControlUtil.class + "._accessControlContext");
 
 	private final ServiceTracker<?, AccessControl> _serviceTracker;

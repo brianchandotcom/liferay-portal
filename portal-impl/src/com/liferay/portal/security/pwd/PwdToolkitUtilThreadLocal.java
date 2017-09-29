@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.pwd;
 
-import com.liferay.portal.kernel.util.InitialThreadLocal;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 
 /**
  * @author Brian Wing Shun Chan
@@ -30,7 +30,8 @@ public class PwdToolkitUtilThreadLocal {
 	}
 
 	private static final ThreadLocal<Boolean> _validate =
-		new InitialThreadLocal<>(
-			PwdToolkitUtilThreadLocal.class + "._validate", () -> Boolean.TRUE);
+		new CentralizedThreadLocal<>(
+			PwdToolkitUtilThreadLocal.class + "._validate", () -> Boolean.TRUE,
+			false);
 
 }

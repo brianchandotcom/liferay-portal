@@ -546,7 +546,7 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateNPMAngularPortlet() throws Exception {
+	public void testBuildTemplateNpmAngularPortlet() throws Exception {
 		File projectDir = _buildTemplateWithGradle(
 			"npm-angular-portlet", "foo");
 
@@ -560,7 +560,7 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateNPMAngularPortletWithDashes()
+	public void testBuildTemplateNpmAngularPortletWithDashes()
 		throws Exception {
 
 		File projectDir = _buildTemplateWithGradle(
@@ -572,7 +572,7 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateNPMBillboardjsPortlet() throws Exception {
+	public void testBuildTemplateNpmBillboardjsPortlet() throws Exception {
 		File projectDir = _buildTemplateWithGradle(
 			"npm-billboardjs-portlet", "foo");
 
@@ -587,7 +587,7 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateNPMBillboardjsPortletWithDashes()
+	public void testBuildTemplateNpmBillboardjsPortletWithDashes()
 		throws Exception {
 
 		File projectDir = _buildTemplateWithGradle(
@@ -600,7 +600,7 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateNPMIsomorphicPortlet() throws Exception {
+	public void testBuildTemplateNpmIsomorphicPortlet() throws Exception {
 		File projectDir = _buildTemplateWithGradle(
 			"npm-isomorphic-portlet", "foo");
 
@@ -614,7 +614,7 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateNPMIsomorphicPortletWithDashes()
+	public void testBuildTemplateNpmIsomorphicPortletWithDashes()
 		throws Exception {
 
 		File projectDir = _buildTemplateWithGradle(
@@ -626,7 +626,7 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateNPMJqueryPortlet() throws Exception {
+	public void testBuildTemplateNpmJqueryPortlet() throws Exception {
 		File projectDir = _buildTemplateWithGradle("npm-jquery-portlet", "foo");
 
 		_testContains(
@@ -640,7 +640,7 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateNPMJqueryPortletWithDashes() throws Exception {
+	public void testBuildTemplateNpmJqueryPortletWithDashes() throws Exception {
 		File projectDir = _buildTemplateWithGradle(
 			"npm-jquery-portlet", "foo-bar");
 
@@ -651,7 +651,7 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateNPMMetaljsPortlet() throws Exception {
+	public void testBuildTemplateNpmMetaljsPortlet() throws Exception {
 		File projectDir = _buildTemplateWithGradle(
 			"npm-metaljs-portlet", "foo");
 
@@ -666,7 +666,7 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateNPMMetaljsPortletWithDashes()
+	public void testBuildTemplateNpmMetaljsPortletWithDashes()
 		throws Exception {
 
 		File projectDir = _buildTemplateWithGradle(
@@ -679,7 +679,7 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateNPMPortlet() throws Exception {
+	public void testBuildTemplateNpmPortlet() throws Exception {
 		File projectDir = _buildTemplateWithGradle("npm-portlet", "foo");
 
 		_testContains(
@@ -692,7 +692,7 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateNPMPortletWithDashes() throws Exception {
+	public void testBuildTemplateNpmPortletWithDashes() throws Exception {
 		File projectDir = _buildTemplateWithGradle("npm-portlet", "foo-bar");
 
 		_testContains(
@@ -701,7 +701,7 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateNPMReactPortlet() throws Exception {
+	public void testBuildTemplateNpmReactPortlet() throws Exception {
 		File projectDir = _buildTemplateWithGradle("npm-react-portlet", "foo");
 
 		_testContains(
@@ -715,7 +715,7 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateNPMReactPortletWithDashes() throws Exception {
+	public void testBuildTemplateNpmReactPortletWithDashes() throws Exception {
 		File projectDir = _buildTemplateWithGradle(
 			"npm-react-portlet", "foo-bar");
 
@@ -726,7 +726,7 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateNPMVuejsPortlet() throws Exception {
+	public void testBuildTemplateNpmVuejsPortlet() throws Exception {
 		File projectDir = _buildTemplateWithGradle("npm-vuejs-portlet", "foo");
 
 		_testContains(
@@ -740,7 +740,7 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateNPMVuejsPortletWithDashes() throws Exception {
+	public void testBuildTemplateNpmVuejsPortletWithDashes() throws Exception {
 		File projectDir = _buildTemplateWithGradle(
 			"npm-vuejs-portlet", "foo-bar");
 

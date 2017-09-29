@@ -43,13 +43,13 @@ import com.liferay.portal.kernel.xml.Element;
 import java.awt.image.RenderedImage;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.InputStream;
 
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
+import java.util.function.Predicate;
 
 /**
  * @author Alexander Chow
@@ -745,7 +745,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 		String prefix = tempFileId + StringPool.DASH;
 
-		FileFilter fileFilter = (File file) -> {
+		Predicate<File> fileFilter = (File file) -> {
 			if (!file.isFile()) {
 				return false;
 			}
@@ -779,7 +779,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 		File dir = new File(PREVIEW_TMP_PATH);
 
-		File[] files = dir.listFiles(fileFilter);
+		File[] files = dir.listFiles(fileFilter::test);
 
 		if (_log.isDebugEnabled()) {
 			for (File file : files) {

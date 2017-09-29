@@ -241,13 +241,10 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 			ClusterExecutorConfiguration.class,
 			componentContext.getProperties());
 
-		String channelLogicName = getChannelLogicName(
-			componentContext.getProperties());
-		String channelPropertiesString = getChannelPropertiesString(
-			componentContext.getProperties());
-		String channelName = getChannelName(componentContext.getProperties());
-
-		initialize(channelLogicName, channelPropertiesString, channelName);
+		initialize(
+			_props.get(PropsKeys.CLUSTER_LINK_CHANNEL_LOGIC_NAME_CONTROL),
+			_props.get(PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL),
+			_props.get(PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL));
 
 		BundleContext bundleContext = componentContext.getBundleContext();
 
@@ -359,18 +356,6 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 			SecureRandomUtil.nextLong(), SecureRandomUtil.nextLong());
 
 		return uuid.toString();
-	}
-
-	protected String getChannelLogicName() {
-		return _props.get(PropsKeys.CLUSTER_LINK_CHANNEL_LOGIC_NAME_CONTROL);
-	}
-
-	protected String getChannelName() {
-		return _props.get(PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL);
-	}
-
-	protected String getChannelPropertiesString() {
-		return _props.get(PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL);
 	}
 
 	protected ClusterChannel getClusterChannel() {

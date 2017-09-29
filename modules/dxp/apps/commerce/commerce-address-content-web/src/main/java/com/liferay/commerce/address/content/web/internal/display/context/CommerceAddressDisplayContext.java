@@ -198,7 +198,13 @@ public class CommerceAddressDisplayContext {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("mvcRenderCommandName", "editCommerceAddress");
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+
+		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
+
+		if (Validator.isNotNull(redirect)) {
+			portletURL.setParameter("redirect", redirect);
+		}
+
 		portletURL.setParameter(
 			"commerceAddressId", String.valueOf(commerceAddressId));
 

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -93,8 +94,7 @@ public class EditCommerceAddressMVCActionCommand extends BaseMVCActionCommand {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				String redirect = ParamUtil.getString(
-					actionRequest, "redirect");
+				String redirect = _portal.getCurrentURL(actionRequest);
 
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
@@ -150,5 +150,8 @@ public class EditCommerceAddressMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CommerceAddressService _commerceAddressService;
+
+	@Reference
+	private Portal _portal;
 
 }

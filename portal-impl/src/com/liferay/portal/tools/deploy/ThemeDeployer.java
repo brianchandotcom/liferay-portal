@@ -50,10 +50,7 @@ public class ThemeDeployer extends BaseDeployer {
 			}
 		}
 
-		ThemeDeployer themeDeployer = new ThemeDeployer(wars, jars);
-
-		try {
-			themeDeployer.close();
+		try (ThemeDeployer themeDeployer = new ThemeDeployer(wars, jars)) {
 		}
 		catch (IOException ioe) {
 			if (_log.isWarnEnabled()) {

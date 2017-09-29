@@ -46,10 +46,7 @@ public class HookDeployer extends BaseDeployer {
 			}
 		}
 
-		HookDeployer hookDeployer = new HookDeployer(wars, jars);
-
-		try {
-			hookDeployer.close();
+		try (HookDeployer hookDeployer = new HookDeployer(wars, jars)) {
 		}
 		catch (IOException ioe) {
 			if (_log.isWarnEnabled()) {

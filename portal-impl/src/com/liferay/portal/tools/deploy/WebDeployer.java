@@ -46,10 +46,7 @@ public class WebDeployer extends BaseDeployer {
 			}
 		}
 
-		WebDeployer webDeployer = new WebDeployer(wars, jars);
-
-		try {
-			webDeployer.close();
+		try (WebDeployer webDeployer = new WebDeployer(wars, jars)) {
 		}
 		catch (IOException ioe) {
 			if (_log.isWarnEnabled()) {

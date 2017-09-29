@@ -62,15 +62,15 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedMenus" label="delete" />
+		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedSiteNavigationMenus" label="delete" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
-<portlet:actionURL name="/navigation_menu/delete_menu" var="deleteMenuURL">
+<portlet:actionURL name="/navigation_menu/delete_site_navigation_menu" var="deleteSitaNavigationMenuURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteMenuURL %>" cssClass="container-fluid-1280" name="fm">
+<aui:form action="<%= deleteSitaNavigationMenuURL %>" cssClass="container-fluid-1280" name="fm">
 	<liferay-ui:search-container
 		id="siteNavigationMenus"
 		searchContainer="<%= siteNavigationAdminDisplayContext.getSearchContainer() %>"
@@ -106,7 +106,7 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-jsp
-						path="/menu_action.jsp"
+						path="/site_navigation_menu_action.jsp"
 					/>
 				</c:when>
 				<c:when test='<%= displayStyle.equals("icon") %>'>
@@ -117,7 +117,7 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 
 					<liferay-ui:search-container-column-text>
 						<liferay-frontend:icon-vertical-card
-							actionJsp="/menu_action.jsp"
+							actionJsp="/site_navigation_menu_action.jsp"
 							actionJspServletContext="<%= application %>"
 							icon="list"
 							resultRow="<%= row %>"
@@ -158,7 +158,7 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 					/>
 
 					<liferay-ui:search-container-column-jsp
-						path="/menu_action.jsp"
+						path="/site_navigation_menu_action.jsp"
 					/>
 				</c:otherwise>
 			</c:choose>
@@ -169,18 +169,18 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 </aui:form>
 
 <c:if test="<%= siteNavigationAdminDisplayContext.isShowAddButton() %>">
-	<portlet:renderURL var="addMenuURL">
-		<portlet:param name="mvcPath" value="/edit_menu.jsp" />
+	<portlet:renderURL var="addSiteNavigationMenuURL">
+		<portlet:param name="mvcPath" value="/edit_site_navigation_menu.jsp" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 	</portlet:renderURL>
 
 	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-menu") %>' url="<%= addMenuURL %>" />
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-menu") %>' url="<%= addSiteNavigationMenuURL %>" />
 	</liferay-frontend:add-menu>
 </c:if>
 
 <aui:script sandbox="<%= true %>">
-	$('#<portlet:namespace />deleteSelectedMenus').on(
+	$('#<portlet:namespace />deleteSelectedSiteNavigationMenus').on(
 		'click',
 		function() {
 			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {

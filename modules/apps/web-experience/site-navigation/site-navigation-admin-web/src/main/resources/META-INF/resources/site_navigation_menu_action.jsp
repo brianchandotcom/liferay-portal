@@ -26,15 +26,15 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= SiteNavigationMenuPermission.contains(permissionChecker, siteNavigationMenu, ActionKeys.UPDATE) %>">
-		<portlet:renderURL var="editMenuURL">
-			<portlet:param name="mvcPath" value="/edit_menu.jsp" />
+		<portlet:renderURL var="editSiteNavigationMenuURL">
+			<portlet:param name="mvcPath" value="/edit_site_navigation_menu.jsp" />
 			<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
 			<portlet:param name="siteNavigationMenuId" value="<%= String.valueOf(siteNavigationMenu.getSiteNavigationMenuId()) %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon
 			message="edit"
-			url="<%= editMenuURL %>"
+			url="<%= editSiteNavigationMenuURL %>"
 		/>
 	</c:if>
 
@@ -56,11 +56,11 @@ PortletURL portletURL = renderResponse.createRenderURL();
 	</c:if>
 
 	<c:if test="<%= SiteNavigationMenuPermission.contains(permissionChecker, siteNavigationMenu, ActionKeys.DELETE) %>">
-		<portlet:actionURL name="/navigation_menu/delete_menu" var="deleteMenuURL">
+		<portlet:actionURL name="/navigation_menu/delete_site_navigation_menu" var="deleteSiteNavigationMenuURL">
 			<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
 			<portlet:param name="siteNavigationMenuId" value="<%= String.valueOf(siteNavigationMenu.getSiteNavigationMenuId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete trash="<%= false %>" url="<%= deleteMenuURL %>" />
+		<liferay-ui:icon-delete trash="<%= false %>" url="<%= deleteSiteNavigationMenuURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

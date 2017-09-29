@@ -27,12 +27,12 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(((siteNavigationMenu == null) ? LanguageUtil.get(request, "add-new-menu") : siteNavigationMenu.getName()));
 %>
 
-<portlet:actionURL name="/navigation_menu/edit_menu" var="editMenuURL">
-	<portlet:param name="mvcPath" value="/edit_category.jsp" />
+<portlet:actionURL name="/navigation_menu/edit_site_navigation_menu" var="editSitaNavigationMenuURL">
+	<portlet:param name="mvcPath" value="/edit_site_navigation_menu.jsp" />
 	<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= editMenuURL %>" cssClass="container-fluid-1280" name="fm">
+<aui:form action="<%= editSitaNavigationMenuURL %>" cssClass="container-fluid-1280" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="siteNavigationMenuId" type="hidden" value="<%= siteNavigationAdminDisplayContext.getSiteNavigationMenuId() %>" />
 

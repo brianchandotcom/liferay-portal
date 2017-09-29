@@ -16,7 +16,11 @@ package com.liferay.site.navigation.admin.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.web.internal.constants.SiteNavigationAdminPortletKeys;
 import com.liferay.site.navigation.service.SiteNavigationMenuService;
 
@@ -33,33 +37,36 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN,
-		"mvc.command.name=/navigation_menu/delete_menu"
+		"mvc.command.name=/navigation_menu/edit_site_navigation_menu"
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteMenuMVCActionCommand extends BaseMVCActionCommand {
+public class EditSiteNavigationMenuMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long[] siteNavigationMenuIds = null;
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		long siteNavigationMenuId = ParamUtil.getLong(
 			actionRequest, "siteNavigationMenuId");
 
+		String name = ParamUtil.getString(actionRequest, "name");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
 		if (siteNavigationMenuId > 0) {
-			siteNavigationMenuIds = new long[] {siteNavigationMenuId};
+			_siteNavigationMenuService.updateSiteNavigationMenu(
+				siteNavigationMenuId, name, serviceContext);
 		}
 		else {
-			siteNavigationMenuIds = ParamUtil.getLongValues(
-				actionRequest, "rowIds");
-		}
-
-		for (long deleteSiteNavigationMenuId : siteNavigationMenuIds) {
-			_siteNavigationMenuService.deleteSiteNavigationMenu(
-				deleteSiteNavigationMenuId);
+			_siteNavigationMenuService.addSiteNavigationMenu(
+				themeDisplay.getScopeGroupId(), name, serviceContext);
 		}
 	}
 

@@ -7,7 +7,7 @@ declare var Liferay: any;
 
 // Launch application
 export default function() {
-    Liferay.Loader.require('${artifactId}@${pkgJsonVersion}/js/main', (main: any) => {
+    Liferay.Loader.require('${artifactId}@${packageJsonVersion}/js/main', (main: any) => {
         main.default();
     });
 }

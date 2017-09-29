@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.io;
+package com.liferay.portal.kernel.internal.dao.jdbc;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,9 +22,7 @@ import java.io.InputStream;
  * reading an InputStream infinitely.
  *
  * @author Shuyang Zhou
- * @deprecated As of 7.0.0, with no direct replacement
  */
-@Deprecated
 public class LimitedInputStream extends InputStream {
 
 	public LimitedInputStream(InputStream inputStream, long offset, long length)

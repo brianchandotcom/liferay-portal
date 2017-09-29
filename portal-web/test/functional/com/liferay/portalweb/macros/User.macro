@@ -1619,7 +1619,7 @@
 		<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
 
 		<execute function="AssertElementPresent" locator1="ProductMenu#PANEL_EXPANDED">
-			<var name="key_category" value="user" />
+			<var name="key_panel" value="user" />
 		</execute>
 	</command>
 

@@ -94,11 +94,9 @@ if (sampleFileEntryId > 0) {
 					eventName: 'uploadCPDefinitionVirtualSetting',
 					on: {
 						selectedItemChange: function(event) {
-
 							var selectedItem = event.newVal;
 
 							if (selectedItem) {
-
 								var value = JSON.parse(selectedItem.value);
 
 								$('#<portlet:namespace />sampleFileEntryId').val(value.fileEntryId);

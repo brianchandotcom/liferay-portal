@@ -113,7 +113,7 @@ public class CPInstanceOptionsValuesDataProvider implements DDMDataProvider {
 				String parameterValue = parameters.get(
 					String.valueOf(cpDefinitionOptionRelId));
 
-				//collect filters and outputs
+				// Collect filters and outputs
 
 				if (Validator.isNull(parameterValue)) {
 					outputParameterNames.put(
@@ -127,7 +127,7 @@ public class CPInstanceOptionsValuesDataProvider implements DDMDataProvider {
 				}
 			}
 
-			//Do search and populate the outputs if the outputs are not empty
+			// Do search and populate the outputs if the outputs are not empty
 
 			if (outputParameterNames.isEmpty()) {
 				return DDMDataProviderResponse.of();

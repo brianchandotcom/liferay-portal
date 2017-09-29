@@ -43,7 +43,6 @@ CommerceCartItem commerceCartItem = (CommerceCartItem)row.getObject();
 	form.delegate(
 		'change',
 		function() {
-
 			var quantity = form.one('#<portlet:namespace /><%= commerceCartItem.getCPDefinitionId() + "Quantity" %>')
 
 			form.one('#<portlet:namespace />quantity').val(quantity.val());

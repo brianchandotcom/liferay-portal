@@ -111,7 +111,6 @@ renderResponse.setTitle(category.getTitle(locale));
 					eventName: 'selectDisplayPage',
 					on: {
 						selectedItemChange: function(event) {
-
 							var selectedItem = event.newVal;
 
 							if (selectedItem) {

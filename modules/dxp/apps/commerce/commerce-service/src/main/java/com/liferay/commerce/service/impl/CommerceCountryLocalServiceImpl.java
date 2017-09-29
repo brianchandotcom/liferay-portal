@@ -98,7 +98,7 @@ public class CommerceCountryLocalServiceImpl
 
 		commerceCountryPersistence.remove(commerceCountry);
 
-		//Commerce regions
+		// Commerce regions
 
 		commerceRegionLocalService.deleteCommerceRegions(
 			commerceCountry.getCommerceCountryId());

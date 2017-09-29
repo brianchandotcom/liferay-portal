@@ -209,7 +209,6 @@ long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 		addNewAddress.on(
 			'click',
 			function(event) {
-
 				A.one('#<portlet:namespace />newAddressContainer').show();
 				A.one('#<portlet:namespace />newAddress').val('1');
 				A.one('#<portlet:namespace />billingAddressChoice').hide();
@@ -224,7 +223,6 @@ long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 		A.one('#<portlet:namespace />cancel').on(
 			'click',
 			function(event) {
-
 				A.one('#<portlet:namespace />newAddressContainer').hide();
 				A.one('#<portlet:namespace />newAddress').val('0');
 				A.one('#<portlet:namespace />billingAddressChoice').show();

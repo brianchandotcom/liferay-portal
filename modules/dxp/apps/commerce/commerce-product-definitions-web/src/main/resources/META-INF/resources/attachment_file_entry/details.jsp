@@ -88,7 +88,6 @@ int type = cpAttachmentFileEntriesDisplayContext.getType();
 							var selectedItem = event.newVal;
 
 							if (selectedItem) {
-
 								var value = JSON.parse(selectedItem.value);
 
 								$('#<portlet:namespace />fileEntryId').val(value.fileEntryId);

@@ -17,15 +17,10 @@ package com.liferay.commerce.address.content.web.internal.portlet.action;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.service.CommerceAddressService;
-import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.portlet.RenderRequest;
-import javax.portlet.ResourceRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -61,25 +56,6 @@ public class ActionHelper {
 		}
 
 		return commerceAddress;
-	}
-
-	public List<CommerceAddress> getCommerceAddress(
-			ResourceRequest resourceRequest)
-		throws PortalException {
-
-		List<CommerceAddress> commerceAddresses = new ArrayList<>();
-
-		long[] commerceAddressIds = ParamUtil.getLongValues(
-			resourceRequest, RowChecker.ROW_IDS);
-
-		for (long commerceAddressId : commerceAddressIds) {
-			CommerceAddress commerceAddress =
-				_commerceAddressService.fetchCommerceAddress(commerceAddressId);
-
-			commerceAddresses.add(commerceAddress);
-		}
-
-		return commerceAddresses;
 	}
 
 	@Reference

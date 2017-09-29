@@ -18,10 +18,9 @@ import java.util.concurrent.Future;
 
 /**
  * @author Shuyang Zhou
- * @deprecated As of 7.0.0, with no direct replacement
+ * @author Preston Crary
  */
-@Deprecated
-public class RecordedFutureListener<T> implements FutureListener<T> {
+public class TestFutureListener<T> implements FutureListener<T> {
 
 	@Override
 	public void complete(Future<T> future) {

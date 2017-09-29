@@ -1,49 +1,48 @@
 {
 	"User Groups": [
 		{
-		"Name": "Business: Accounting",
-		"Description": "Accounting"
+			"Description": "Accounting",
+			"Name": "Business: Accounting"
 		},
 		{
-		"Name": "Business: Business Administration",
-		"Description": "Business Administration"
+			"Description": "Business Administration",
+			"Name": "Business: Business Administration"
 		},
 		{
-		"Name": "Agricultural Science",
-		"Description": "Agricultural Science"
+			"Description": "Agricultural Science",
+			"Name": "Agricultural Science"
 		},
 		{
-		"Name": "Engineering: Electrical Engineering",
-		"Description": "Electrical Engineering"
+			"Description": "Electrical Engineering",
+			"Name": "Engineering: Electrical Engineering"
 		},
 		{
-		"Name": "Engineering: Mechanical Engineering",
-		"Description": "Mechanical Engineering"
+			"Description": "Mechanical Engineering",
+			"Name": "Engineering: Mechanical Engineering"
 		},
 		{
-		"Name": "Engineering: Computer Engineering",
-		"Description": "Computer Engineering"
+			"Description": "Computer Engineering",
+			"Name": "Engineering: Computer Engineering"
 		},
 		{
-		"Name": "Engineering: Civil Engineering",
-		"Description": "Civil Engineering"
+			"Description": "Civil Engineering",
+			"Name": "Engineering: Civil Engineering"
 		},
 		{
-		"Name": "Engineering: Aerospace Engineering: Aeronautics",
-		"Description": "Aeronautics"
+			"Description": "Aeronautics",
+			"Name": "Engineering: Aerospace Engineering: Aeronautics"
 		},
 		{
-		"Name": "Engineering: Aerospace Engineering: Astronautics",
-		"Description": "Astronautics"
+			"Description": "Astronautics",
+			"Name": "Engineering: Aerospace Engineering: Astronautics"
 		},
 		{
-		"Name": "Human Resources",
-		"Description": "Human Resources"
+			"Description": "Human Resources",
+			"Name": "Human Resources"
 		},
 		{
-		"Name": "Board Member",
-		"Description": "Board Member"
+			"Description": "Board Member",
+			"Name": "Board Member"
 		}
 	]
 }
-  

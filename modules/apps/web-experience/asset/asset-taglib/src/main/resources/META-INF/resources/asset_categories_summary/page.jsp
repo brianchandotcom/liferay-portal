@@ -33,8 +33,6 @@ AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(className, classPK
 List<AssetVocabulary> vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(PortalUtil.getCurrentAndAncestorSiteGroupIds((assetEntry != null) ? assetEntry.getGroupId() : scopeGroupId));
 
 for (AssetVocabulary vocabulary : vocabularies) {
-	vocabulary = vocabulary.toEscapedModel();
-
 	List<AssetCategory> curCategories = _filterCategories(categories, vocabulary);
 %>
 
@@ -47,8 +45,6 @@ for (AssetVocabulary vocabulary : vocabularies) {
 
 					<%
 					for (AssetCategory category : curCategories) {
-						category = category.toEscapedModel();
-
 						portletURL.setParameter(paramName, String.valueOf(category.getCategoryId()));
 					%>
 
@@ -63,7 +59,6 @@ for (AssetVocabulary vocabulary : vocabularies) {
 
 					<%
 					for (AssetCategory category : curCategories) {
-						category = category.toEscapedModel();
 					%>
 
 						<span class="asset-category">
@@ -88,7 +83,7 @@ private String _buildCategoryPath(AssetCategory category, ThemeDisplay themeDisp
 	List<AssetCategory> ancestorCategories = category.getAncestors();
 
 	if (ancestorCategories.isEmpty()) {
-		return category.getTitle(themeDisplay.getLocale());
+		return HtmlUtil.escape(category.getTitle(themeDisplay.getLocale()));
 	}
 
 	Collections.reverse(ancestorCategories);
@@ -96,13 +91,11 @@ private String _buildCategoryPath(AssetCategory category, ThemeDisplay themeDisp
 	StringBundler sb = new StringBundler(ancestorCategories.size() * 2 + 1);
 
 	for (AssetCategory ancestorCategory : ancestorCategories) {
-		ancestorCategory = ancestorCategory.toEscapedModel();
-
-		sb.append(ancestorCategory.getTitle(themeDisplay.getLocale()));
+		sb.append(HtmlUtil.escape(ancestorCategory.getTitle(themeDisplay.getLocale())));
 		sb.append(" &raquo; ");
 	}
 
-	sb.append(category.getTitle(themeDisplay.getLocale()));
+	sb.append(HtmlUtil.escape(category.getTitle(themeDisplay.getLocale())));
 
 	return sb.toString();
 }

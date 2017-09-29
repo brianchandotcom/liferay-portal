@@ -33,15 +33,11 @@ String assetVocabularyTitle = null;
 if (assetCategoryId != 0) {
 	AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getAssetCategory(assetCategoryId);
 
-	assetCategory = assetCategory.toEscapedModel();
-
-	assetCategoryTitle = assetCategory.getTitle(locale);
+	assetCategoryTitle = HtmlUtil.escape(assetCategory.getTitle(locale));
 
 	AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.getAssetVocabulary(assetCategory.getVocabularyId());
 
-	assetVocabulary = assetVocabulary.toEscapedModel();
-
-	assetVocabularyTitle = assetVocabulary.getTitle(locale);
+	assetVocabularyTitle = HtmlUtil.escape(assetVocabulary.getTitle(locale));
 }
 %>
 

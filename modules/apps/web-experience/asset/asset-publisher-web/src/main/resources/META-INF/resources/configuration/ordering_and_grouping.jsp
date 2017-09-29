@@ -133,10 +133,9 @@
 
 						<%
 						for (AssetVocabulary assetVocabulary : assetVocabularies) {
-							assetVocabulary = assetVocabulary.toEscapedModel();
 						%>
 
-							<aui:option label="<%= assetVocabulary.getTitle(locale) %>" selected="<%= assetVocabularyId == assetVocabulary.getVocabularyId() %>" value="<%= assetVocabulary.getVocabularyId() %>" />
+							<aui:option label="<%= HtmlUtil.escape(assetVocabulary.getTitle(locale)) %>" selected="<%= assetVocabularyId == assetVocabulary.getVocabularyId() %>" value="<%= assetVocabulary.getVocabularyId() %>" />
 
 						<%
 						}
@@ -159,10 +158,9 @@
 
 					<%
 					for (AssetVocabulary assetVocabulary : assetVocabularies) {
-						assetVocabulary = assetVocabulary.toEscapedModel();
 					%>
 
-						<aui:option label="<%= assetVocabulary.getTitle(locale) %>" selected="<%= assetVocabularyId == assetVocabulary.getVocabularyId() %>" value="<%= assetVocabulary.getVocabularyId() %>" />
+						<aui:option label="<%= HtmlUtil.escape(assetVocabulary.getTitle(locale)) %>" selected="<%= assetVocabularyId == assetVocabulary.getVocabularyId() %>" value="<%= assetVocabulary.getVocabularyId() %>" />
 
 					<%
 					}

@@ -43,6 +43,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -136,9 +137,23 @@ public class WabGenerator
 
 		bundleTracker.open();
 
-		countDownLatch.await();
+		while (true) {
+			if (countDownLatch.await(1, TimeUnit.MINUTES)) {
+				break;
+			}
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Waiting on startup required bundles to become active : " +
+						requiredForStartupLocations);
+			}
+		}
 
 		bundleTracker.close();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("All startup required bundles are active now.");
+		}
 	}
 
 	@Deactivate

@@ -553,10 +553,6 @@ public class ProjectTemplatesTest {
 		_testContains(
 			projectDir, "src/main/resources/META-INF/resources/view.jsp",
 			"<aui:script require=\"foo@1.0.0\">", "foo100.default();");
-
-		_executeGradle(projectDir, _GRADLE_TASK_PATH_BUILD);
-
-		_testExists(projectDir, "build/libs/foo-1.0.0.jar");
 	}
 
 	@Test
@@ -580,10 +576,6 @@ public class ProjectTemplatesTest {
 			projectDir, "src/main/resources/META-INF/resources/view.jsp",
 			"<aui:script require=\"foo@1.0.0\">",
 			"foo100.default('<portlet:namespace />');");
-
-		_executeGradle(projectDir, _GRADLE_TASK_PATH_BUILD);
-
-		_testExists(projectDir, "build/libs/foo-1.0.0.jar");
 	}
 
 	@Test
@@ -607,10 +599,6 @@ public class ProjectTemplatesTest {
 		_testContains(
 			projectDir, "src/main/resources/META-INF/resources/view.jsp",
 			"<aui:script require=\"foo@1.0.0\">", "foo100.default(");
-
-		_executeGradle(projectDir, _GRADLE_TASK_PATH_BUILD);
-
-		_testExists(projectDir, "build/libs/foo-1.0.0.jar");
 	}
 
 	@Test
@@ -633,10 +621,6 @@ public class ProjectTemplatesTest {
 			projectDir, "src/main/resources/META-INF/resources/view.jsp",
 			"<aui:script require=\"foo@1.0.0\">",
 			"foo100.default('<portlet:namespace />-root');");
-
-		_executeGradle(projectDir, _GRADLE_TASK_PATH_BUILD);
-
-		_testExists(projectDir, "build/libs/foo-1.0.0.jar");
 	}
 
 	@Test
@@ -659,10 +643,6 @@ public class ProjectTemplatesTest {
 			projectDir, "src/main/resources/META-INF/resources/view.jsp",
 			"<aui:script require=\"foo@1.0.0\">",
 			"foo100.default('<portlet:namespace />-button');");
-
-		_executeGradle(projectDir, _GRADLE_TASK_PATH_BUILD);
-
-		_testExists(projectDir, "build/libs/foo-1.0.0.jar");
 	}
 
 	@Test
@@ -685,10 +665,6 @@ public class ProjectTemplatesTest {
 		_testContains(
 			projectDir, "src/main/resources/META-INF/resources/view.jsp",
 			"<aui:script require=\"foo@1.0.0\">", "foo100.default();");
-
-		_executeGradle(projectDir, _GRADLE_TASK_PATH_BUILD);
-
-		_testExists(projectDir, "build/libs/foo-1.0.0.jar");
 	}
 
 	@Test
@@ -708,10 +684,6 @@ public class ProjectTemplatesTest {
 			projectDir, "src/main/resources/META-INF/resources/view.jsp",
 			"<aui:script require=\"foo@1.0.0\">",
 			"foo100.default('<portlet:namespace />-root');");
-
-		_executeGradle(projectDir, _GRADLE_TASK_PATH_BUILD);
-
-		_testExists(projectDir, "build/libs/foo-1.0.0.jar");
 	}
 
 	@Test
@@ -733,10 +705,6 @@ public class ProjectTemplatesTest {
 			projectDir, "src/main/resources/META-INF/resources/view.jsp",
 			"<aui:script require=\"foo@1.0.0\">",
 			"foo100.default('<portlet:namespace />');");
-
-		_executeGradle(projectDir, _GRADLE_TASK_PATH_BUILD);
-
-		_testExists(projectDir, "build/libs/foo-1.0.0.jar");
 	}
 
 	@Test

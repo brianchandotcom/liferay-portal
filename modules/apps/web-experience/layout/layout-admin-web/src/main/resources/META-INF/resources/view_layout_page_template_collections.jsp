@@ -107,3 +107,13 @@ renderResponse.setTitle(LanguageUtil.get(request, "page-templates"));
 		<liferay-ui:search-iterator displayStyle="<%= layoutPageTemplateDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
+
+<c:if test="<%= layoutPageTemplateDisplayContext.isShowAddButton(LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION) %>">
+	<portlet:renderURL var="addLayoutPageTemplateCollectionURL">
+		<portlet:param name="mvcPath" value="/edit_layout_page_template_collection.jsp" />
+	</portlet:renderURL>
+
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-collection") %>' url="<%= addLayoutPageTemplateCollectionURL.toString() %>" />
+	</liferay-frontend:add-menu>
+</c:if>

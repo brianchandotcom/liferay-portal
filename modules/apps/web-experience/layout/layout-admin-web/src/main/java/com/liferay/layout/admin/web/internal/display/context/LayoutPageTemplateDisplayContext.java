@@ -18,6 +18,7 @@ import com.liferay.layout.admin.web.internal.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.util.LayoutPageTemplatePortletUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil;
+import com.liferay.layout.page.template.service.permission.LayoutPageTemplatePermission;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -264,6 +265,22 @@ public class LayoutPageTemplateDisplayContext {
 
 	public boolean isSearch() {
 		if (Validator.isNotNull(getKeywords())) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isShowAddButton(String actionId) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (LayoutPageTemplatePermission.contains(
+				themeDisplay.getPermissionChecker(),
+				LayoutPageTemplatePermission.RESOURCE_NAME,
+				LayoutAdminPortletKeys.GROUP_PAGES,
+				themeDisplay.getSiteGroupId(), actionId)) {
+
 			return true;
 		}
 

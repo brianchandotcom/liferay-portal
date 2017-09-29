@@ -12,29 +12,32 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_1_0;
+package com.liferay.document.library.sync.internal.upgrade.v1_0_0;
+
+import com.liferay.portal.upgrade.v7_0_0.UpgradeKernelPackage;
 
 /**
- * @author Alberto Chaparro
+ * @author Adolfo Pérez
  */
-public class UpgradeModules
-	extends com.liferay.portal.upgrade.v7_0_0.UpgradeModules {
+public class UpgradeClassNames extends UpgradeKernelPackage {
 
 	@Override
-	public String[] getBundleSymbolicNames() {
-		return _BUNDLE_SYMBOLIC_NAMES;
+	protected String[][] getClassNames() {
+		return _CLASS_NAMES;
 	}
 
 	@Override
-	public String[][] getConvertedLegacyModules() {
-		return _CONVERTED_LEGACY_MODULES;
+	protected String[][] getResourceNames() {
+		return _RESOURCE_NAMES;
 	}
 
-	private static final String[] _BUNDLE_SYMBOLIC_NAMES = {
-		"com.liferay.document.library.sync.service",
-		"com.liferay.subscription.service", "com.liferay.trash.service"
+	private static final String[][] _CLASS_NAMES = {
+		{
+			"com.liferay.document.library.kernel.model.DLSyncEvent",
+			"com.liferay.document.library.sync.model.DLSyncEvent"
+		}
 	};
 
-	private static final String[][] _CONVERTED_LEGACY_MODULES = {};
+	private static final String[][] _RESOURCE_NAMES = new String[0][0];
 
 }

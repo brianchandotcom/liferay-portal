@@ -34,11 +34,11 @@
 		</requiredProperty>
 		<requiredProperty key="className">
 		</requiredProperty>
+		<requiredProperty key="packageJsonVersion">
+			<defaultValue>1.0.0</defaultValue>
+		</requiredProperty>
 		<requiredProperty key="projectType">
 			<defaultValue>standalone</defaultValue>
-		</requiredProperty>
-		<requiredProperty key="pkgJsonVersion">
-			<defaultValue>1.0.0</defaultValue>
 		</requiredProperty>
 	</requiredProperties>
 </archetype-descriptor>

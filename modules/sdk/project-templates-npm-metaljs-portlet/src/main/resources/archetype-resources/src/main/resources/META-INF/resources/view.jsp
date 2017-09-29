@@ -2,7 +2,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:script require="${artifactId}@${pkgJsonVersion}">
+<aui:script require="${artifactId}@${packageJsonVersion}">
 	${auiScriptRequireVarName}.default('<portlet:namespace />-button');
 </aui:script>
 

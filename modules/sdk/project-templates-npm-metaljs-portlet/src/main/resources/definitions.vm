@@ -1,7 +1,7 @@
 ##
 ## Calculate $auiScriptRequireVarName
 ##
-#set( $requiredPkg = "${artifactId}${pkgJsonVersion}" )
+#set( $requiredPkg = "${artifactId}${packageJsonVersion}" )
 #set( $auiScriptRequireVarName = $requiredPkg )
 #set( $fc = ${requiredPkg.substring(0,1)} )
 ##

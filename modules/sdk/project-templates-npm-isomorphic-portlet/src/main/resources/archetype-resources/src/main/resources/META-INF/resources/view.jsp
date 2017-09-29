@@ -2,7 +2,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:script require="${artifactId}@${pkgJsonVersion}">
+<aui:script require="${artifactId}@${packageJsonVersion}">
 	var out = document.getElementById('<portlet:namespace />-output');
 
 	out.innerHTML += 'Portlet main module loaded.\n';

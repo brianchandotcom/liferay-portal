@@ -5,7 +5,7 @@
 <!-- Temporary workaround to obtain the library stylesheets -->
 <link href="/o/${artifactId}/node_modules/billboard.js@1.1.1/dist/billboard.css" rel="stylesheet">
 
-<aui:script require="${artifactId}@${pkgJsonVersion}">
+<aui:script require="${artifactId}@${packageJsonVersion}">
 	${auiScriptRequireVarName}.default('<portlet:namespace />');
 </aui:script>
 

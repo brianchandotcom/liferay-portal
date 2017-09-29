@@ -6,7 +6,7 @@
 	<b><liferay-ui:message key="${artifactId}.caption"/></b>
 </p>
 
-<aui:script require="${artifactId}@${pkgJsonVersion}">
+<aui:script require="${artifactId}@${packageJsonVersion}">
 	window.out = document.getElementById('<portlet:namespace />-output');
 
 	out.innerHTML += 'Portlet main module loaded.\n';

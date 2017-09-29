@@ -1,25 +1,6 @@
 Bundle-Name: Liferay Portal Rules Engine Sample Web
 Bundle-SymbolicName: com.liferay.portal.rules.engine.sample.web
 Bundle-Version: 2.0.11
-Import-Package:\
-	!javax.accessibility.*,\
-	\
-	!javax.swing.*,\
-	\
-	com.liferay.portal.kernel.servlet.filters.invoker,\
-	com.liferay.portlet,\
-	\
-	org.apache.commons.chain,\
-	org.apache.commons.chain.generic,\
-	org.apache.commons.chain.impl,\
-	\
-	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Rules Engine
 Web-ContextPath: /portal-rules-engine-sample-web
--donotcopy: (docroot/WEB-INF/src|.*\.jar|.*\.java)
--includeresource:\
-	WEB-INF/classes/=@com.liferay.util.java-[0-9]*.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\
-	WEB-INF/classes/=@com.liferay.util.java-[0-9]*.jar!/com/liferay/util/portlet/PortletProps.class,\
-	WEB-INF/classes/portlet.properties=docroot/WEB-INF/src/portlet.properties
--wab: docroot

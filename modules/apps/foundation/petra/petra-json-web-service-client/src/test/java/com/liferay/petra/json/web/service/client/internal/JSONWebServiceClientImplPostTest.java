@@ -46,14 +46,14 @@ public class JSONWebServiceClientImplPostTest
 
 	@Test
 	public void testResponse200OnPost() throws Exception {
+		JSONWebServiceClientImpl jsonWebServiceClientImpl =
+			new JSONWebServiceClientImpl();
+
 		Map<String, Object> clientProperties = getBaseProperties();
 
 		clientProperties.put(
 			"headers", "headerKey1=headerValue1;Accept=application/json;");
 		clientProperties.put("protocol", "http");
-
-		JSONWebServiceClientImpl jsonWebServiceClientImpl =
-			new JSONWebServiceClientImpl();
 
 		jsonWebServiceClientImpl.activate(clientProperties);
 
@@ -74,14 +74,14 @@ public class JSONWebServiceClientImplPostTest
 
 	@Test
 	public void testResponse201OnPost() throws Exception {
+		JSONWebServiceClientImpl jsonWebServiceClientImpl =
+			new JSONWebServiceClientImpl();
+
 		Map<String, Object> clientProperties = getBaseProperties();
 
 		clientProperties.put(
 			"headers", "headerKey1=headerValue1;Accept=application/json;");
 		clientProperties.put("protocol", "http");
-
-		JSONWebServiceClientImpl jsonWebServiceClientImpl =
-			new JSONWebServiceClientImpl();
 
 		jsonWebServiceClientImpl.activate(clientProperties);
 
@@ -102,14 +102,14 @@ public class JSONWebServiceClientImplPostTest
 
 	@Test
 	public void testResponse202OnPost() throws Exception {
+		JSONWebServiceClientImpl jsonWebServiceClientImpl =
+			new JSONWebServiceClientImpl();
+
 		Map<String, Object> clientProperties = getBaseProperties();
 
 		clientProperties.put(
 			"headers", "headerKey1=headerValue1;Accept=application/json;");
 		clientProperties.put("protocol", "http");
-
-		JSONWebServiceClientImpl jsonWebServiceClientImpl =
-			new JSONWebServiceClientImpl();
 
 		jsonWebServiceClientImpl.activate(clientProperties);
 
@@ -127,14 +127,14 @@ public class JSONWebServiceClientImplPostTest
 
 	@Test
 	public void testResponse204OnPost() throws Exception {
+		JSONWebServiceClientImpl jsonWebServiceClientImpl =
+			new JSONWebServiceClientImpl();
+
 		Map<String, Object> clientProperties = getBaseProperties();
 
 		clientProperties.put(
 			"headers", "Accept=application/json;headerKey1=headerValue1");
 		clientProperties.put("protocol", "http");
-
-		JSONWebServiceClientImpl jsonWebServiceClientImpl =
-			new JSONWebServiceClientImpl();
 
 		jsonWebServiceClientImpl.activate(clientProperties);
 
@@ -152,12 +152,12 @@ public class JSONWebServiceClientImplPostTest
 
 	@Test(expected = JSONWebServiceInvocationException.class)
 	public void testResponse400OnPost() throws Exception {
+		JSONWebServiceClientImpl jsonWebServiceClientImpl =
+			new JSONWebServiceClientImpl();
+
 		Map<String, Object> clientProperties = getBaseProperties();
 
 		clientProperties.put("protocol", "http");
-
-		JSONWebServiceClientImpl jsonWebServiceClientImpl =
-			new JSONWebServiceClientImpl();
 
 		jsonWebServiceClientImpl.activate(clientProperties);
 
@@ -169,14 +169,14 @@ public class JSONWebServiceClientImplPostTest
 		expected = JSONWebServiceTransportException.AuthenticationFailure.class
 	)
 	public void testResponse401OnPost() throws Exception {
+		JSONWebServiceClientImpl jsonWebServiceClientImpl =
+			new JSONWebServiceClientImpl();
+
 		Map<String, Object> clientProperties = getBaseProperties();
 
 		clientProperties.put(
 			"headers", "Accept=application/json;headerKey1=headerValue1");
 		clientProperties.put("protocol", "http");
-
-		JSONWebServiceClientImpl jsonWebServiceClientImpl =
-			new JSONWebServiceClientImpl();
 
 		jsonWebServiceClientImpl.activate(clientProperties);
 

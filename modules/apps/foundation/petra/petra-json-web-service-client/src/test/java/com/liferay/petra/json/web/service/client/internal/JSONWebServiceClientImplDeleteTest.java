@@ -45,12 +45,12 @@ public class JSONWebServiceClientImplDeleteTest
 
 	@Test(expected = JSONWebServiceInvocationException.class)
 	public void testBadRequestOnDelete() throws Exception {
+		JSONWebServiceClientImpl jsonWebServiceClientImpl =
+			new JSONWebServiceClientImpl();
+
 		Map<String, Object> clientProperties = getBaseProperties();
 
 		clientProperties.put("protocol", "http");
-
-		JSONWebServiceClientImpl jsonWebServiceClientImpl =
-			new JSONWebServiceClientImpl();
 
 		jsonWebServiceClientImpl.activate(clientProperties);
 
@@ -60,14 +60,14 @@ public class JSONWebServiceClientImplDeleteTest
 
 	@Test
 	public void testResponse200OnDelete() throws Exception {
+		JSONWebServiceClientImpl jsonWebServiceClientImpl =
+			new JSONWebServiceClientImpl();
+
 		Map<String, Object> clientProperties = getBaseProperties();
 
 		clientProperties.put(
 			"headers", "headerKey1=headerValue1;Accept=application/json;");
 		clientProperties.put("protocol", "http");
-
-		JSONWebServiceClientImpl jsonWebServiceClientImpl =
-			new JSONWebServiceClientImpl();
 
 		jsonWebServiceClientImpl.activate(clientProperties);
 
@@ -88,14 +88,14 @@ public class JSONWebServiceClientImplDeleteTest
 
 	@Test
 	public void testResponse202OnDelete() throws Exception {
+		JSONWebServiceClientImpl jsonWebServiceClientImpl =
+			new JSONWebServiceClientImpl();
+
 		Map<String, Object> clientProperties = getBaseProperties();
 
 		clientProperties.put(
 			"headers", "headerKey1=headerValue1;Accept=application/json;");
 		clientProperties.put("protocol", "http");
-
-		JSONWebServiceClientImpl jsonWebServiceClientImpl =
-			new JSONWebServiceClientImpl();
 
 		jsonWebServiceClientImpl.activate(clientProperties);
 
@@ -113,14 +113,14 @@ public class JSONWebServiceClientImplDeleteTest
 
 	@Test
 	public void testResponse204OnDelete() throws Exception {
+		JSONWebServiceClientImpl jsonWebServiceClientImpl =
+			new JSONWebServiceClientImpl();
+
 		Map<String, Object> clientProperties = getBaseProperties();
 
 		clientProperties.put(
 			"headers", "Accept=application/json;headerKey1=headerValue1");
 		clientProperties.put("protocol", "http");
-
-		JSONWebServiceClientImpl jsonWebServiceClientImpl =
-			new JSONWebServiceClientImpl();
 
 		jsonWebServiceClientImpl.activate(clientProperties);
 
@@ -138,14 +138,14 @@ public class JSONWebServiceClientImplDeleteTest
 
 	@Test(expected = JSONWebServiceInvocationException.class)
 	public void testResponse405OnDelete() throws Exception {
+		JSONWebServiceClientImpl jsonWebServiceClientImpl =
+			new JSONWebServiceClientImpl();
+
 		Map<String, Object> clientProperties = getBaseProperties();
 
 		clientProperties.put(
 			"headers", "Accept=application/json;headerKey1=headerValue1");
 		clientProperties.put("protocol", "http");
-
-		JSONWebServiceClientImpl jsonWebServiceClientImpl =
-			new JSONWebServiceClientImpl();
 
 		jsonWebServiceClientImpl.activate(clientProperties);
 

@@ -33,7 +33,7 @@ public class HTTPServerSimulator {
 	public static void start() throws IOException {
 		if (_httpServerSimulator != null) {
 			throw new UnsupportedOperationException(
-				"HTTP Server is already running");
+				"HTTP server is already running");
 		}
 
 		_httpServerSimulator = new HTTPServerSimulator();

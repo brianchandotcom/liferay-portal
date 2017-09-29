@@ -9,7 +9,7 @@
 	${auiScriptRequireVarName}.default('<portlet:namespace />');
 </aui:script>
 
-<hr>
+<hr />
 
 <div id="<portlet:namespace />-billboard">
 	<h1>An example from billboard.js</h1>

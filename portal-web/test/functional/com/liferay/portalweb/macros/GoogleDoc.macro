@@ -16,23 +16,57 @@
 		<execute function="AssertTextEquals" locator1="AssetCategorization#TAG" value1="${tagName}" />
 	</command>
 
-	<command name="selectDocument">
+	<command name="gotoDrive">
 		<execute function="AssertClick" locator1="Button#SELECT_FILE" value1="Select File" />
 
-		<execute function="SelectFrame" locator1="GoogleDrive#GOOGLE_DRIVE_IFRAME" />
+		<execute function="Pause" locator1="3000" />
 
 		<if>
-			<condition function="IsVisible" locator1="GoogleDrive#LIST_VIEW_BUTTON" />
+			<isset var="windowTitle" />
 			<then>
-				<execute function="AssertClick" locator1="GoogleDrive#LIST_VIEW_BUTTON" value1="List view" />
+				<execute function="SelectWindow" locator1="GoogleLogin#PAGE_TITLE" />
+
+				<if>
+					<condition function="IsElementPresent" locator1="GoogleLogin#HEADER" />
+					<then>
+						<execute function="AssertClick" locator1="GoogleLogin#ACCOUNT_MENULIST_USE_ANOTHER_ACCOUNT" value1="Use another account" />
+					</then>
+				</if>
+
+				<execute function="Type" locator1="GoogleLogin#LOGIN_EMAIL_FIELD" value1="${userEmailAddress}" />
+
+				<execute function="Click" locator1="GoogleLogin#LOGIN_NEXT_BUTTON" />
+
+				<execute function="AssertElementPresent" locator1="GoogleLogin#LOGIN_NEXT_BUTTON" />
+
+				<execute function="Type" locator1="GoogleLogin#LOGIN_PASSWORD_FIELD" value1="${userPassword}" />
+
+				<execute function="Click" locator1="GoogleLogin#LOGIN_NEXT_BUTTON" />
+
+				<execute function="SelectWindow#selectWindowNoSPARefresh" locator1="title=${windowTitle}" />
+
+				<execute function="Pause" locator1="3000" />
 			</then>
 		</if>
 
+		<if>
+			<condition function="IsElementPresent" locator1="ProductMenu#PRODUCT_MENU_OPENED" />
+			<then>
+				<execute function="Click#clickNoSPARefresh" locator1="ProductMenu#TOGGLE" />
+			</then>
+		</if>
+
+		<execute function="SelectFrame" locator1="GoogleDrive#GOOGLE_DRIVE_IFRAME" />
+	</command>
+
+	<command name="selectDocument">
 		<var name="key_googleDocName" value="${googleDocName}" />
 
-		<execute function="AssertClick" locator1="GoogleDrive#LIST_VIEW_DOCUMENT" value1="${googleDocName}" />
+		<execute function="Click#clickAt" locator1="GoogleDrive#LIST_VIEW_DOCUMENT" value1="${googleDocName}" />
 
-		<execute function="AssertClick" locator1="GoogleDrive#SELECT_BUTTON" value1="Select" />
+		<execute function="Click#clickAt" locator1="GoogleDrive#SELECT_BUTTON" value1="Select" />
+
+		<execute function="SelectFrameTop" />
 
 		<var name="key_dmDocumentTitle" value="${googleDocName}" />
 

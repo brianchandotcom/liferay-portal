@@ -403,22 +403,6 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
-	<command name="addGoogleDoc">
-		<execute macro="Portlet#clickPortletPlusIconPG">
-			<var name="portletName" value="Documents and Media" />
-		</execute>
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Google Docs">
-			<var name="key_menuItem" value="Google Docs" />
-		</execute>
-
-		<execute macro="GoogleDoc#selectDocument">
-			<var name="googleDocName" value="${googleDocName}" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-	</command>
-
 	<command name="addMultiplePG">
 		<execute macro="Portlet#clickPortletPlusIconPG">
 			<var name="portletName" value="Documents and Media" />

@@ -34,53 +34,55 @@ long[] classNameIdValues = StringUtil.split(ParamUtil.getString(request, "classN
 	<liferay-ui:error key="rules" message="please-enter-valid-rules" />
 	<liferay-ui:error key="rulesEngineException" message="please-check-the-syntax-of-your-rules" />
 
-	<aui:fieldset>
-		<aui:input name="domainName" value="<%= domainNameValue %>" wrapperCssClass="lfr-input-text-container" />
+	<div class="container-fluid-1280">
+		<aui:fieldset>
+			<aui:input name="domainName" value="<%= domainNameValue %>" wrapperCssClass="lfr-input-text-container" />
 
-		<aui:input name="rules" style="height: 250px; width: 100%;" type="textarea" value="<%= rulesValue %>" wrap="off" wrapperCssClass="lfr-textarea-container" />
+			<aui:input name="rules" style="height: 250px; width: 100%;" type="textarea" value="<%= rulesValue %>" wrap="off" wrapperCssClass="lfr-textarea-container" />
 
-		<%
+			<%
 
-		// Left list
+			// Left list
 
-		MethodKey methodKey = new MethodKey(ClassResolverUtil.resolve("com.liferay.portal.kernel.security.permission.ResourceActionsUtil", PortalClassLoaderUtil.getClassLoader()), "getModelResource", HttpServletRequest.class, String.class);
+			MethodKey methodKey = new MethodKey(ClassResolverUtil.resolve("com.liferay.portal.kernel.security.permission.ResourceActionsUtil", PortalClassLoaderUtil.getClassLoader()), "getModelResource", HttpServletRequest.class, String.class);
 
-		List<KeyValuePair> leftList = new ArrayList<KeyValuePair>();
+			List<KeyValuePair> leftList = new ArrayList<KeyValuePair>();
 
-		for (long classNameId : classNameIdValues) {
-			String value = (String)PortalClassInvoker.invoke(false, methodKey, pageContext, PortalUtil.getClassName(classNameId));
+			for (long classNameId : classNameIdValues) {
+				String value = (String)PortalClassInvoker.invoke(false, methodKey, request, PortalUtil.getClassName(classNameId));
 
-			leftList.add(new KeyValuePair(String.valueOf(classNameId), value));
-		}
-
-		// Right list
-
-		List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
-
-		for (long classNameId : AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId())) {
-			if (!ArrayUtil.contains(classNameIdValues, classNameId)) {
-				String value = (String)PortalClassInvoker.invoke(false, methodKey, pageContext, PortalUtil.getClassName(classNameId));
-
-				rightList.add(new KeyValuePair(String.valueOf(classNameId), value));
+				leftList.add(new KeyValuePair(String.valueOf(classNameId), value));
 			}
-		}
-		%>
 
-		<aui:input name="userCustomAttributeNames" value="<%= userCustomAttributeNamesValue %>" wrapperCssClass="lfr-input-text-container" />
+			// Right list
 
-		<liferay-ui:input-move-boxes
-			leftBoxName="currentClassNameIds"
-			leftList="<%= ListUtil.sort(leftList, new KeyValuePairComparator(false, true)) %>"
-			leftTitle="current"
-			rightBoxName="availableClassNameIds"
-			rightList="<%= ListUtil.sort(rightList, new KeyValuePairComparator(false, true)) %>"
-			rightTitle="available"
-		/>
+			List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
 
-		<aui:button-row>
-			<aui:button type="submit" />
-		</aui:button-row>
-	</aui:fieldset>
+			for (long classNameId : AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId())) {
+				if (!ArrayUtil.contains(classNameIdValues, classNameId)) {
+					String value = (String)PortalClassInvoker.invoke(false, methodKey, request, PortalUtil.getClassName(classNameId));
+
+					rightList.add(new KeyValuePair(String.valueOf(classNameId), value));
+				}
+			}
+			%>
+
+			<aui:input name="userCustomAttributeNames" value="<%= userCustomAttributeNamesValue %>" wrapperCssClass="lfr-input-text-container" />
+
+			<liferay-ui:input-move-boxes
+				leftBoxName="currentClassNameIds"
+				leftList="<%= ListUtil.sort(leftList, new KeyValuePairComparator(false, true)) %>"
+				leftTitle="current"
+				rightBoxName="availableClassNameIds"
+				rightList="<%= ListUtil.sort(rightList, new KeyValuePairComparator(false, true)) %>"
+				rightTitle="available"
+			/>
+
+			<aui:button-row>
+				<aui:button type="submit" />
+			</aui:button-row>
+		</aui:fieldset>
+	</div>
 </aui:form>
 
 <aui:script>

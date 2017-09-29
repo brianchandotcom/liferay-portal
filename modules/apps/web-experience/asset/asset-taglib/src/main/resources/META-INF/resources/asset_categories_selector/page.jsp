@@ -38,8 +38,6 @@ int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_
 		<%
 		for (int i = 0; i < vocabularies.size(); i++) {
 			AssetVocabulary vocabulary = vocabularies.get(i);
-
-			vocabulary = vocabulary.toEscapedModel();
 		%>
 
 			<span class="field-content">
@@ -52,7 +50,7 @@ int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_
 						Group vocabularyGroup = GroupLocalServiceUtil.getGroup(vocabulary.getGroupId());
 						%>
 
-						(<%= vocabularyGroup.getDescriptiveName(locale) %>)
+						(<%= HtmlUtil.escape(vocabularyGroup.getDescriptiveName(locale)) %>)
 					</c:if>
 
 					<c:if test="<%= vocabulary.isRequired(PortalUtil.getClassNameId(className), classTypePK) && showRequiredLabel %>">

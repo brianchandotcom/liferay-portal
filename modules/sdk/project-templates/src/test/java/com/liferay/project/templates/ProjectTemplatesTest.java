@@ -553,15 +553,20 @@ public class ProjectTemplatesTest {
 		_testContains(
 			projectDir, "src/main/resources/META-INF/resources/view.jsp",
 			"<aui:script require=\"foo@1.0.0\">", "foo100.default();");
+
+		_executeGradle(projectDir, _GRADLE_TASK_PATH_BUILD);
+
+		_testExists(projectDir, "build/libs/foo-1.0.0.jar");
 	}
 
 	@Test
-	public void testBuildTemplateNPMAngularPortletWithPortletSuffix()
-		throws Exception {
+	public void testBuildTemplateNPMAngularPortletHypenName() throws Exception {
+		File projectDir = _buildTemplateWithGradle(
+			"npm-angular-portlet", "foo-bar");
 
-		_testBuildTemplatePortletWithPortletSuffix(
-			"npm-angular-portlet", "MVCPortlet", "META-INF/resources/init.jsp",
-			"META-INF/resources/view.jsp");
+		_testContains(
+			projectDir, "src/main/resources/META-INF/resources/view.jsp",
+			"<aui:script require=\"foo-bar@1.0.0\">", "fooBar100.default();");
 	}
 
 	@Test
@@ -573,15 +578,23 @@ public class ProjectTemplatesTest {
 			projectDir, "src/main/resources/META-INF/resources/view.jsp",
 			"<aui:script require=\"foo@1.0.0\">",
 			"foo100.default('<portlet:namespace />');");
+
+		_executeGradle(projectDir, _GRADLE_TASK_PATH_BUILD);
+
+		_testExists(projectDir, "build/libs/foo-1.0.0.jar");
 	}
 
 	@Test
-	public void testBuildTemplateNPMBillboardjsPortletWithPortletSuffix()
+	public void testBuildTemplateNPMBillboardjsPortletHypenName()
 		throws Exception {
 
-		_testBuildTemplatePortletWithPortletSuffix(
-			"npm-billboardjs-portlet", "MVCPortlet",
-			"META-INF/resources/init.jsp", "META-INF/resources/view.jsp");
+		File projectDir = _buildTemplateWithGradle(
+			"npm-billboardjs-portlet", "foo-bar");
+
+		_testContains(
+			projectDir, "src/main/resources/META-INF/resources/view.jsp",
+			"<aui:script require=\"foo-bar@1.0.0\">",
+			"fooBar100.default('<portlet:namespace />');");
 	}
 
 	@Test
@@ -592,15 +605,22 @@ public class ProjectTemplatesTest {
 		_testContains(
 			projectDir, "src/main/resources/META-INF/resources/view.jsp",
 			"<aui:script require=\"foo@1.0.0\">", "foo100.default(");
+
+		_executeGradle(projectDir, _GRADLE_TASK_PATH_BUILD);
+
+		_testExists(projectDir, "build/libs/foo-1.0.0.jar");
 	}
 
 	@Test
-	public void testBuildTemplateNPMIsomorphicPortletWithPortletSuffix()
+	public void testBuildTemplateNPMIsomorphicPortletHypenName()
 		throws Exception {
 
-		_testBuildTemplatePortletWithPortletSuffix(
-			"npm-isomorphic-portlet", "MVCPortlet",
-			"META-INF/resources/init.jsp", "META-INF/resources/view.jsp");
+		File projectDir = _buildTemplateWithGradle(
+			"npm-isomorphic-portlet", "foo-bar");
+
+		_testContains(
+			projectDir, "src/main/resources/META-INF/resources/view.jsp",
+			"<aui:script require=\"foo-bar@1.0.0\">", "fooBar100.default(");
 	}
 
 	@Test
@@ -611,15 +631,21 @@ public class ProjectTemplatesTest {
 			projectDir, "src/main/resources/META-INF/resources/view.jsp",
 			"<aui:script require=\"foo@1.0.0\">",
 			"foo100.default('<portlet:namespace />-root');");
+
+		_executeGradle(projectDir, _GRADLE_TASK_PATH_BUILD);
+
+		_testExists(projectDir, "build/libs/foo-1.0.0.jar");
 	}
 
 	@Test
-	public void testBuildTemplateNPMJqueryPortletWithPortletSuffix()
-		throws Exception {
+	public void testBuildTemplateNPMJqueryPortletHyphenName() throws Exception {
+		File projectDir = _buildTemplateWithGradle(
+			"npm-jquery-portlet", "foo-bar");
 
-		_testBuildTemplatePortletWithPortletSuffix(
-			"npm-jquery-portlet", "MVCPortlet", "META-INF/resources/init.jsp",
-			"META-INF/resources/view.jsp");
+		_testContains(
+			projectDir, "src/main/resources/META-INF/resources/view.jsp",
+			"<aui:script require=\"foo-bar@1.0.0\">",
+			"fooBar100.default('<portlet:namespace />-root');");
 	}
 
 	@Test
@@ -631,15 +657,23 @@ public class ProjectTemplatesTest {
 			projectDir, "src/main/resources/META-INF/resources/view.jsp",
 			"<aui:script require=\"foo@1.0.0\">",
 			"foo100.default('<portlet:namespace />-button');");
+
+		_executeGradle(projectDir, _GRADLE_TASK_PATH_BUILD);
+
+		_testExists(projectDir, "build/libs/foo-1.0.0.jar");
 	}
 
 	@Test
-	public void testBuildTemplateNPMMetaljsPortletWithPortletSuffix()
+	public void testBuildTemplateNPMMetaljsPortletHyphenName()
 		throws Exception {
 
-		_testBuildTemplatePortletWithPortletSuffix(
-			"npm-metaljs-portlet", "MVCPortlet", "META-INF/resources/init.jsp",
-			"META-INF/resources/view.jsp");
+		File projectDir = _buildTemplateWithGradle(
+			"npm-metaljs-portlet", "foo-bar");
+
+		_testContains(
+			projectDir, "src/main/resources/META-INF/resources/view.jsp",
+			"<aui:script require=\"foo-bar@1.0.0\">",
+			"fooBar100.default('<portlet:namespace />-button');");
 	}
 
 	@Test
@@ -649,15 +683,19 @@ public class ProjectTemplatesTest {
 		_testContains(
 			projectDir, "src/main/resources/META-INF/resources/view.jsp",
 			"<aui:script require=\"foo@1.0.0\">", "foo100.default();");
+
+		_executeGradle(projectDir, _GRADLE_TASK_PATH_BUILD);
+
+		_testExists(projectDir, "build/libs/foo-1.0.0.jar");
 	}
 
 	@Test
-	public void testBuildTemplateNPMPortletWithPortletSuffix()
-		throws Exception {
+	public void testBuildTemplateNPMPortletHyphenName() throws Exception {
+		File projectDir = _buildTemplateWithGradle("npm-portlet", "foo-bar");
 
-		_testBuildTemplatePortletWithPortletSuffix(
-			"npm-portlet", "MVCPortlet", "META-INF/resources/init.jsp",
-			"META-INF/resources/view.jsp");
+		_testContains(
+			projectDir, "src/main/resources/META-INF/resources/view.jsp",
+			"<aui:script require=\"foo-bar@1.0.0\">", "fooBar100.default();");
 	}
 
 	@Test
@@ -668,15 +706,21 @@ public class ProjectTemplatesTest {
 			projectDir, "src/main/resources/META-INF/resources/view.jsp",
 			"<aui:script require=\"foo@1.0.0\">",
 			"foo100.default('<portlet:namespace />-root');");
+
+		_executeGradle(projectDir, _GRADLE_TASK_PATH_BUILD);
+
+		_testExists(projectDir, "build/libs/foo-1.0.0.jar");
 	}
 
 	@Test
-	public void testBuildTemplateNPMReactPortletWithPortletSuffix()
-		throws Exception {
+	public void testBuildTemplateNPMReactPortletHyphenName() throws Exception {
+		File projectDir = _buildTemplateWithGradle(
+			"npm-react-portlet", "foo-bar");
 
-		_testBuildTemplatePortletWithPortletSuffix(
-			"npm-react-portlet", "MVCPortlet", "META-INF/resources/init.jsp",
-			"META-INF/resources/view.jsp");
+		_testContains(
+			projectDir, "src/main/resources/META-INF/resources/view.jsp",
+			"<aui:script require=\"foo-bar@1.0.0\">",
+			"fooBar100.default('<portlet:namespace />-root');");
 	}
 
 	@Test
@@ -687,15 +731,21 @@ public class ProjectTemplatesTest {
 			projectDir, "src/main/resources/META-INF/resources/view.jsp",
 			"<aui:script require=\"foo@1.0.0\">",
 			"foo100.default('<portlet:namespace />');");
+
+		_executeGradle(projectDir, _GRADLE_TASK_PATH_BUILD);
+
+		_testExists(projectDir, "build/libs/foo-1.0.0.jar");
 	}
 
 	@Test
-	public void testBuildTemplateNPMVuejsPortletWithPortletSuffix()
-		throws Exception {
+	public void testBuildTemplateNPMVuejsPortletHyphenName() throws Exception {
+		File projectDir = _buildTemplateWithGradle(
+			"npm-vuejs-portlet", "foo-bar");
 
-		_testBuildTemplatePortletWithPortletSuffix(
-			"npm-vuejs-portlet", "MVCPortlet", "META-INF/resources/init.jsp",
-			"META-INF/resources/view.jsp");
+		_testContains(
+			projectDir, "src/main/resources/META-INF/resources/view.jsp",
+			"<aui:script require=\"foo-bar@1.0.0\">",
+			"fooBar100.default('<portlet:namespace />');");
 	}
 
 	@Test(expected = IllegalArgumentException.class)

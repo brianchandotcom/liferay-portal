@@ -44,11 +44,8 @@ public class LayoutTemplateDeployer extends BaseDeployer {
 			}
 		}
 
-		LayoutTemplateDeployer layoutTemplateDeployer =
-			new LayoutTemplateDeployer(wars, jars);
-
-		try {
-			layoutTemplateDeployer.close();
+		try (LayoutTemplateDeployer layoutTemplateDeployer =
+				new LayoutTemplateDeployer(wars, jars)) {
 		}
 		catch (IOException ioe) {
 			if (_log.isWarnEnabled()) {

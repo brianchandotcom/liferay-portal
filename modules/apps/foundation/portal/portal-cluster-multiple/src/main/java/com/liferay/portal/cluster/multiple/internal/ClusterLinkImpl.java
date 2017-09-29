@@ -93,9 +93,12 @@ public class ClusterLinkImpl implements ClusterLink {
 
 		if (_enabled) {
 			initialize(
-				getChannelLogicNames(properties),
-				getChannelPropertiesStrings(properties),
-				getChannelNames(properties));
+				getChannelSettings(
+					PropsKeys.CLUSTER_LINK_CHANNEL_LOGIC_NAME_TRANSPORT),
+				getChannelSettings(
+					PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT),
+				getChannelSettings(
+					PropsKeys.CLUSTER_LINK_CHANNEL_NAME_TRANSPORT));
 		}
 	}
 
@@ -133,51 +136,6 @@ public class ClusterLinkImpl implements ClusterLink {
 		}
 
 		return _clusterChannels.get(channelIndex);
-	}
-
-	protected Map<String, String> getChannelLogicNames() {
-		Map<String, String> channelLogicNames = new HashMap<>();
-
-		Properties channelLogicNameProperties = _props.getProperties(
-			PropsKeys.CLUSTER_LINK_CHANNEL_LOGIC_NAME_TRANSPORT, true);
-
-		for (Map.Entry<Object, Object> entry :
-				channelLogicNameProperties.entrySet()) {
-
-			channelLogicNames.put(
-				(String)entry.getKey(), (String)entry.getValue());
-		}
-
-		return channelLogicNames;
-	}
-
-	protected Map<String, String> getChannelNames() {
-		Map<String, String> channelNames = new HashMap<>();
-
-		Properties channelNameProperties = _props.getProperties(
-			PropsKeys.CLUSTER_LINK_CHANNEL_NAME_TRANSPORT, true);
-
-		for (Map.Entry<Object, Object> entry :
-				channelNameProperties.entrySet()) {
-
-			channelNames.put((String)entry.getKey(), (String)entry.getValue());
-		}
-
-		return channelNames;
-	}
-
-	protected Map<String, String> getChannelPropertiesStrings() {
-		Map<String, String> channelPropertiesStrings = new HashMap<>();
-
-		Properties channelProperties = _props.getProperties(
-			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT, true);
-
-		for (Map.Entry<Object, Object> entry : channelProperties.entrySet()) {
-			channelPropertiesStrings.put(
-				(String)entry.getKey(), (String)entry.getValue());
-		}
-
-		return channelPropertiesStrings;
 	}
 
 	protected Map<String, String> getChannelSettings(String propertyPrefix) {

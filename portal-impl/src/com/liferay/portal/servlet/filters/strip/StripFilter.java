@@ -309,6 +309,9 @@ public class StripFilter extends BasePortalFilter {
 				}
 			}
 		}
+		else {
+			minifiedContent = MinifierUtil.minifyCss(content);
+		}
 
 		if (Validator.isNotNull(minifiedContent)) {
 			writer.write(minifiedContent);
@@ -530,6 +533,10 @@ public class StripFilter extends BasePortalFilter {
 					_minifierCache.put(key, minifiedContent);
 				}
 			}
+		}
+		else {
+			minifiedContent = MinifierUtil.minifyJavaScript(
+				resourceName, content);
 		}
 
 		if (Validator.isNotNull(minifiedContent)) {

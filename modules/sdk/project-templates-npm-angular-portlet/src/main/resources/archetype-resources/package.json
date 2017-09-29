@@ -51,7 +51,7 @@
 		"tslint": "^5.4.3",
 		"typescript": "^2.3.4"
 	},
-	"main": "lib/angular-loader.js",
+	"main": "js/angular-loader.js",
 	"name": "${artifactId}",
 	"scripts": {
 		"build": "tsc && babel --source-maps -d build/resources/main/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler"

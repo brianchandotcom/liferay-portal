@@ -238,36 +238,31 @@ public class ProjectTemplateFilesTest {
 
 		requiredPropertyNames.addAll(_archetypeMetadataXmlDefaultPropertyNames);
 
-		List<String> declaredVariables = new ArrayList<>();
+		Set<String> declaredVariables = new HashSet<>();
 
-		Path definitionsPath = projectTemplateDirPath.resolve(
+		Path definitionsVmPath = projectTemplateDirPath.resolve(
 			"src/main/resources/definitions.vm");
 
-		if (Files.exists(definitionsPath)) {
-			String definitions = FileUtil.read(definitionsPath);
+		String messageSuffix = archetypeMetadataXmlPath.toString();
 
-			try (BufferedReader bufferedReader = new BufferedReader(
-					new StringReader(definitions))) {
+		if (Files.exists(definitionsVmPath)) {
+			String definitionsVm = FileUtil.read(definitionsVmPath);
 
-				String line = null;
+			matcher = _velocitySetDirectivePattern.matcher(definitionsVm);
 
-				while ((line = bufferedReader.readLine()) != null) {
-					Matcher setMatcher = _velocitySetDirectivePattern.matcher(
-						line);
-
-					if (setMatcher.find()) {
-						String variable = setMatcher.group(1);
-
-						declaredVariables.add(variable);
-					}
-				}
+			while (matcher.find()) {
+				declaredVariables.add(matcher.group(1));
 			}
+
+			messageSuffix += " or " + definitionsVmPath;
 		}
+
+		messageSuffix += ".";
 
 		for (String name : archetypeResourcePropertyNames) {
 			Assert.assertTrue(
-				"Undeclared \"" + name + "\" required property in " +
-					archetypeMetadataXmlPath,
+				"Undeclared \"" + name + "\" property. Please add it to " +
+					messageSuffix,
 				declaredVariables.contains(name) ||
 				requiredPropertyNames.contains(name));
 		}
@@ -873,7 +868,7 @@ public class ProjectTemplateFilesTest {
 	private static final Pattern _velocityDirectivePattern = Pattern.compile(
 		"#(if|set)\\s*\\(\\s*(.+)\\s*\\)");
 	private static final Pattern _velocitySetDirectivePattern = Pattern.compile(
-		"^\\s*#set\\s*\\(\\s*\\$(\\w*) =.*");
+		"#set\\s*\\(\\s*\\$(\\S+)\\s*=");
 	private static final Map<String, String> _xmlDeclarations = new HashMap<>();
 
 	static {

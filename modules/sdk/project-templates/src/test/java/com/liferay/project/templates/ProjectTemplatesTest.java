@@ -560,7 +560,9 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateNPMAngularPortletHypenName() throws Exception {
+	public void testBuildTemplateNPMAngularPortletWithDashes()
+		throws Exception {
+
 		File projectDir = _buildTemplateWithGradle(
 			"npm-angular-portlet", "foo-bar");
 
@@ -585,7 +587,7 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateNPMBillboardjsPortletHypenName()
+	public void testBuildTemplateNPMBillboardjsPortletWithDashes()
 		throws Exception {
 
 		File projectDir = _buildTemplateWithGradle(
@@ -612,7 +614,7 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateNPMIsomorphicPortletHypenName()
+	public void testBuildTemplateNPMIsomorphicPortletWithDashes()
 		throws Exception {
 
 		File projectDir = _buildTemplateWithGradle(
@@ -638,7 +640,7 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateNPMJqueryPortletHyphenName() throws Exception {
+	public void testBuildTemplateNPMJqueryPortletWithDashes() throws Exception {
 		File projectDir = _buildTemplateWithGradle(
 			"npm-jquery-portlet", "foo-bar");
 
@@ -664,7 +666,7 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateNPMMetaljsPortletHyphenName()
+	public void testBuildTemplateNPMMetaljsPortletWithDashes()
 		throws Exception {
 
 		File projectDir = _buildTemplateWithGradle(
@@ -690,7 +692,7 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateNPMPortletHyphenName() throws Exception {
+	public void testBuildTemplateNPMPortletWithDashes() throws Exception {
 		File projectDir = _buildTemplateWithGradle("npm-portlet", "foo-bar");
 
 		_testContains(
@@ -713,7 +715,7 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateNPMReactPortletHyphenName() throws Exception {
+	public void testBuildTemplateNPMReactPortletWithDashes() throws Exception {
 		File projectDir = _buildTemplateWithGradle(
 			"npm-react-portlet", "foo-bar");
 
@@ -738,7 +740,7 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateNPMVuejsPortletHyphenName() throws Exception {
+	public void testBuildTemplateNPMVuejsPortletWithDashes() throws Exception {
 		File projectDir = _buildTemplateWithGradle(
 			"npm-vuejs-portlet", "foo-bar");
 

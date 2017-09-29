@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COLOR_PICKER_COLOR</td>
+	<td>//a[@class='palette-item-inner'][@title='#${key_colorCode}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DATE</td>
 	<td>//div[@data-fieldname='${key_fieldName}']//input</td>
 	<td></td>

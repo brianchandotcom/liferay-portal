@@ -20,7 +20,9 @@
 		</if>
 	</tear-down>
 
-	<command name="RightToLeftSmoke" priority="4">
+	<command name="RightToLeftSmoke" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="RTL Test Page" />
 		</execute>
@@ -52,6 +54,10 @@
 		<execute macro="WebContent#addLocale">
 			<var name="language" value="Hebrew (Israel)" />
 			<var name="locale" value="iw-IL" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentTitle" value="WC Title" />
 		</execute>
 
 		<execute macro="WebContent#viewRTLLayout" />

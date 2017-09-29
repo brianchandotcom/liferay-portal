@@ -74,7 +74,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -581,8 +580,8 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		_testBuildTemplatePortletWithPortletSuffix(
-			"npm-billboardjs-portlet", "MVCPortlet", "META-INF/resources/init.jsp",
-			"META-INF/resources/view.jsp");
+			"npm-billboardjs-portlet", "MVCPortlet",
+			"META-INF/resources/init.jsp", "META-INF/resources/view.jsp");
 	}
 
 	@Test
@@ -600,14 +599,13 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		_testBuildTemplatePortletWithPortletSuffix(
-			"npm-isomorphic-portlet", "MVCPortlet", "META-INF/resources/init.jsp",
-			"META-INF/resources/view.jsp");
+			"npm-isomorphic-portlet", "MVCPortlet",
+			"META-INF/resources/init.jsp", "META-INF/resources/view.jsp");
 	}
 
 	@Test
 	public void testBuildTemplateNPMJqueryPortlet() throws Exception {
-		File projectDir = _buildTemplateWithGradle(
-			"npm-jquery-portlet", "foo");
+		File projectDir = _buildTemplateWithGradle("npm-jquery-portlet", "foo");
 
 		_testContains(
 			projectDir, "src/main/resources/META-INF/resources/view.jsp",
@@ -646,8 +644,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateNPMPortlet() throws Exception {
-		File projectDir = _buildTemplateWithGradle(
-			"npm-portlet", "foo");
+		File projectDir = _buildTemplateWithGradle("npm-portlet", "foo");
 
 		_testContains(
 			projectDir, "src/main/resources/META-INF/resources/view.jsp",
@@ -665,8 +662,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateNPMReactPortlet() throws Exception {
-		File projectDir = _buildTemplateWithGradle(
-			"npm-react-portlet", "foo");
+		File projectDir = _buildTemplateWithGradle("npm-react-portlet", "foo");
 
 		_testContains(
 			projectDir, "src/main/resources/META-INF/resources/view.jsp",
@@ -685,8 +681,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateNPMVuejsPortlet() throws Exception {
-		File projectDir = _buildTemplateWithGradle(
-			"npm-vuejs-portlet", "foo");
+		File projectDir = _buildTemplateWithGradle("npm-vuejs-portlet", "foo");
 
 		_testContains(
 			projectDir, "src/main/resources/META-INF/resources/view.jsp",

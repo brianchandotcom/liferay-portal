@@ -55,10 +55,10 @@ public interface DLFolderFinder {
 		long groupId, long folderId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
-	public java.util.List<com.liferay.document.library.kernel.model.DLFolder> findByDLFolderC_T(
-		long classNameId, java.lang.String treePath);
-
 	public java.util.List<com.liferay.document.library.kernel.model.DLFolder> findF_ByNoAssets();
+
+	public java.util.List<com.liferay.document.library.kernel.model.DLFolder> findF_ByC_T(
+		long classNameId, java.lang.String treePath);
 
 	public java.util.List<java.lang.Object> findF_FE_FS_ByG_F_M_M(
 		long groupId, long folderId, java.lang.String[] mimeTypes,

@@ -87,13 +87,13 @@ public class DLFolderFinderUtil {
 				   .filterFindFE_FS_ByG_F(groupId, folderId, queryDefinition);
 	}
 
-	public static java.util.List<com.liferay.document.library.kernel.model.DLFolder> findByDLFolderC_T(
-		long classNameId, java.lang.String treePath) {
-		return getFinder().findByDLFolderC_T(classNameId, treePath);
-	}
-
 	public static java.util.List<com.liferay.document.library.kernel.model.DLFolder> findF_ByNoAssets() {
 		return getFinder().findF_ByNoAssets();
+	}
+
+	public static java.util.List<com.liferay.document.library.kernel.model.DLFolder> findF_ByC_T(
+		long classNameId, java.lang.String treePath) {
+		return getFinder().findF_ByC_T(classNameId, treePath);
 	}
 
 	public static java.util.List<java.lang.Object> findF_FE_FS_ByG_F_M_M(

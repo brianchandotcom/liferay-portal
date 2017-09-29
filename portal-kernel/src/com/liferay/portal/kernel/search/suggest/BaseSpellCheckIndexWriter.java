@@ -255,10 +255,18 @@ public abstract class BaseSpellCheckIndexWriter
 					"Start indexing dictionary for " + dictionaryFileName);
 			}
 
-			try {
-				URL url = getResource(dictionaryFileName);
+			URL url = getResource(dictionaryFileName);
 
-				if (url == null) {
+			if (url == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to read " + dictionaryFileName);
+				}
+
+				continue;
+			}
+
+			try (InputStream inputStream = url.openStream()) {
+				if (inputStream == null) {
 					if (_log.isWarnEnabled()) {
 						_log.warn("Unable to read " + dictionaryFileName);
 					}
@@ -266,21 +274,9 @@ public abstract class BaseSpellCheckIndexWriter
 					continue;
 				}
 
-				try (InputStream inputStream = url.openStream()) {
-					if (inputStream == null) {
-						if (_log.isWarnEnabled()) {
-							_log.warn("Unable to read " + dictionaryFileName);
-						}
-
-						continue;
-					}
-
-					indexKeywords(
-						searchContext, groupId, languageId, inputStream,
-						keywordFieldName, typeFieldValue, maxNGramLength);
-				}
-			}
-			finally {
+				indexKeywords(
+					searchContext, groupId, languageId, inputStream,
+					keywordFieldName, typeFieldValue, maxNGramLength);
 			}
 
 			if (_log.isInfoEnabled()) {

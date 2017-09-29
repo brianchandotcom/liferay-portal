@@ -153,7 +153,7 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 	@Override
 	protected void doPortalInit() throws Exception {
-		if (_INVOKER_FILTER_CHAIN_SIZE > 0) {
+		if (_INVOKER_FILTER_CHAIN_ENABLED) {
 			_filterChains = SingleVMPoolUtil.getPortalCache(
 				InvokerFilter.class.getName());
 		}
@@ -323,8 +323,9 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 			request, response);
 	}
 
-	private static final int _INVOKER_FILTER_CHAIN_SIZE = GetterUtil.getInteger(
-		PropsUtil.get(PropsKeys.INVOKER_FILTER_CHAIN_SIZE));
+	private static final boolean _INVOKER_FILTER_CHAIN_ENABLED =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.INVOKER_FILTER_CHAIN_ENABLED));
 
 	private static final int _INVOKER_FILTER_URI_MAX_LENGTH =
 		GetterUtil.getInteger(

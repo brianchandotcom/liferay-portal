@@ -63,7 +63,7 @@ public class StripFilter extends BasePortalFilter {
 		StripFilter.class.getName() + "#SKIP_FILTER";
 
 	public StripFilter() {
-		if (PropsValues.MINIFIER_INLINE_CONTENT_CACHE_SIZE > 0) {
+		if (PropsValues.MINIFIER_INLINE_CONTENT_CACHE_ENABLED) {
 			_minifierCache = SingleVMPoolUtil.getPortalCache(
 				StripFilter.class.getName());
 		}
@@ -280,7 +280,7 @@ public class StripFilter extends BasePortalFilter {
 
 		String minifiedContent = content;
 
-		if (PropsValues.MINIFIER_INLINE_CONTENT_CACHE_SIZE > 0) {
+		if (PropsValues.MINIFIER_INLINE_CONTENT_CACHE_ENABLED) {
 			CacheKeyGenerator cacheKeyGenerator =
 				CacheKeyGeneratorUtil.getCacheKeyGenerator(
 					StripFilter.class.getName());
@@ -500,7 +500,7 @@ public class StripFilter extends BasePortalFilter {
 
 		String minifiedContent = content;
 
-		if (PropsValues.MINIFIER_INLINE_CONTENT_CACHE_SIZE > 0) {
+		if (PropsValues.MINIFIER_INLINE_CONTENT_CACHE_ENABLED) {
 			CacheKeyGenerator cacheKeyGenerator =
 				CacheKeyGeneratorUtil.getCacheKeyGenerator(
 					StripFilter.class.getName());

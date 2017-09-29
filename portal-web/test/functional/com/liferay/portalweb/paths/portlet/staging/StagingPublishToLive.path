@@ -294,11 +294,6 @@
 	<td>//a[contains(@id,'undo')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>RADIO_LAST</td>
-	<td>//input[contains(@id,'rangeLast') and contains(@value,'last')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

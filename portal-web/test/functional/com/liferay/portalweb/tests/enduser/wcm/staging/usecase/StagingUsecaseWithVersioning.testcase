@@ -753,7 +753,7 @@
 
 		<execute function="Click" locator1="Radio#CHOOSE_CONTENT_DATE_RANGE_CHANGE" />
 
-		<execute function="Click" locator1="StagingPublishToLive#RADIO_LAST" />
+		<execute function="Click" locator1="Radio#RANGE_LAST" />
 
 		<execute function="Click" locator1="Link#REFRESH_COUNTS" />
 
@@ -773,8 +773,8 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="WC#ENTRY_TITLE" value1="Web Content Title" >
-			<var name="key_webContentTitle" value="Web Content Title" />
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 	</command>
 

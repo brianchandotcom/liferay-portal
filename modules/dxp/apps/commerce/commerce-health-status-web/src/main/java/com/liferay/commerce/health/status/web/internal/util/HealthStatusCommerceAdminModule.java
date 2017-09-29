@@ -83,6 +83,7 @@ public class HealthStatusCommerceAdminModule implements CommerceAdminModule {
 		return LanguageUtil.get(resourceBundle, "health-status");
 	}
 
+	@Override
 	public PortletURL getSearchURL(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 

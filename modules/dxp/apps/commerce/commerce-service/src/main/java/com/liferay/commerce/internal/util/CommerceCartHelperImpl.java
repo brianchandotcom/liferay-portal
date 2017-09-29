@@ -48,6 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class CommerceCartHelperImpl implements CommerceCartHelper {
 
+	@Override
 	public PortletURL getCommerceCartPortletURL(
 			HttpServletRequest httpServletRequest, int type)
 		throws PortalException {
@@ -80,6 +81,7 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 		return portletURL;
 	}
 
+	@Override
 	public PortletURL getCommerceCheckutPortletURL(
 			HttpServletRequest httpServletRequest)
 		throws PortalException {

@@ -171,6 +171,7 @@ public class CommerceAddressLocalServiceImpl
 			groupId, addressUserId, start, end, orderByComparator);
 	}
 
+	@Override
 	public int getCommerceAddressesCount(long groupId, long addressUserId) {
 		return commerceAddressPersistence.countByG_A(groupId, addressUserId);
 	}

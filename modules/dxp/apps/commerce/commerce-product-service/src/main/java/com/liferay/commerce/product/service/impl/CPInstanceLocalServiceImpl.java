@@ -326,6 +326,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public List<CPInstance> getCPDefinitionInstances(long cpDefinitionId) {
 		return cpInstancePersistence.findByCPDefinitionId(cpDefinitionId);
 	}

@@ -18,6 +18,8 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.push.notifications.constants.PushNotificationsConstants;
 import com.liferay.push.notifications.exception.PushNotificationsException;
@@ -106,6 +108,9 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 			appleServiceBuilder.withCert(inputStream, certificatePassword);
 		}
 		catch (IOException ioe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(ioe, ioe);
+			}
 		}
 
 		appleServiceBuilder.withDelegate(new AppleDelegate());
@@ -213,6 +218,9 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 			return classLoader.getResourceAsStream(certificatePath);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ApplePushNotificationsSender.class);
 
 	private volatile ApnsService _apnsService;
 

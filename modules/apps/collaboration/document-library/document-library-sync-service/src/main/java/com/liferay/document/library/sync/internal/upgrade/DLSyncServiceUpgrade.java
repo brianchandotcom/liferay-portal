@@ -12,29 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_1_0;
+package com.liferay.document.library.sync.internal.upgrade;
+
+import com.liferay.document.library.sync.internal.upgrade.v1_0_0.UpgradeClassNames;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Alberto Chaparro
+ * @author Adolfo Pérez
  */
-public class UpgradeModules
-	extends com.liferay.portal.upgrade.v7_0_0.UpgradeModules {
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
+public class DLSyncServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
-	public String[] getBundleSymbolicNames() {
-		return _BUNDLE_SYMBOLIC_NAMES;
+	public void register(Registry registry) {
+		registry.register(
+			"com.liferay.document.library.sync.service", "0.0.1", "1.0.0",
+			new UpgradeClassNames());
 	}
-
-	@Override
-	public String[][] getConvertedLegacyModules() {
-		return _CONVERTED_LEGACY_MODULES;
-	}
-
-	private static final String[] _BUNDLE_SYMBOLIC_NAMES = {
-		"com.liferay.document.library.sync.service",
-		"com.liferay.subscription.service", "com.liferay.trash.service"
-	};
-
-	private static final String[][] _CONVERTED_LEGACY_MODULES = {};
 
 }

@@ -17,18 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-boolean useRedirect = false;
-
-String redirect = ParamUtil.getString(request, "redirect");
-
-if (Validator.isNotNull(redirect)) {
-	String ppid = HttpUtil.getParameter(redirect, "p_p_id", false);
-
-	if (!ppid.equals(CalendarPortletKeys.CALENDAR)) {
-		useRedirect = true;
-	}
-}
-
 String activeView = ParamUtil.getString(request, "activeView", defaultView);
 
 TimeZone calendarBookingTimeZone = userTimeZone;
@@ -289,7 +277,20 @@ while (manageableCalendarsIterator.hasNext()) {
 		<liferay-portlet:param name="calendarBookingId" value="<%= String.valueOf(calendarBookingId) %>" />
 	</liferay-portlet:renderURL>
 
-	<aui:input name="redirect" type="hidden" value="<%= useRedirect ? redirect : editCalendarBookingURL %>" />
+	<%
+	String redirect = ParamUtil.getString(request, "redirect");
+
+	String ppid = HttpUtil.getParameter(redirect, "p_p_id", false);
+
+	if (ppid.equals(CalendarPortletKeys.CALENDAR)) {
+		redirect = editCalendarBookingURL;
+	}
+	else {
+		redirect = ParamUtil.getString(request, "redirect", editCalendarBookingURL);
+	}
+	%>
+
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="calendarBookingId" type="hidden" value="<%= calendarBookingId %>" />
 	<aui:input name="instanceIndex" type="hidden" value="<%= instanceIndex %>" />
 	<aui:input name="childCalendarIds" type="hidden" />

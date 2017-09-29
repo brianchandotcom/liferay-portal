@@ -266,14 +266,6 @@ public abstract class BaseSpellCheckIndexWriter
 			}
 
 			try (InputStream inputStream = url.openStream()) {
-				if (inputStream == null) {
-					if (_log.isWarnEnabled()) {
-						_log.warn("Unable to read " + dictionaryFileName);
-					}
-
-					continue;
-				}
-
 				indexKeywords(
 					searchContext, groupId, languageId, inputStream,
 					keywordFieldName, typeFieldValue, maxNGramLength);

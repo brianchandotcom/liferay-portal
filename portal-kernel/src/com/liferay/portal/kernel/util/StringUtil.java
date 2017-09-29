@@ -2275,11 +2275,6 @@ public class StringUtil {
 				URL url = enu.nextElement();
 
 				try (InputStream is = url.openStream()) {
-					if (is == null) {
-						throw new IOException(
-							"Unable to open resource at " + url.toString());
-					}
-
 					String s = read(is);
 
 					if (s != null) {

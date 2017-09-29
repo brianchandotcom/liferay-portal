@@ -35,8 +35,8 @@ public class BadRequestHttpHandlerImpl implements HttpHandler {
 		httpExchange.sendResponseHeaders(400, 0);
 
 		String responseBody =
-			"{\"success\":\"false\", \"message\":\"No context found for " +
-				"request\"}";
+			"{\"message\":\"No context found for request\", " +
+				"\"success\":\"false\"}";
 
 		OutputStream outputStream = httpExchange.getResponseBody();
 

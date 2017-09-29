@@ -367,7 +367,17 @@
 	</command>
 
 	<command name="StagingBlogs" priority="3">
-		<execute macro="Navigator#gotoSitePage">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Publishing" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Staging" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />
 		</execute>
@@ -380,7 +390,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="Navigator#gotoSitePage">
+		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Blogs Page 1" />
 			<var name="siteName" value="Site Name" />
 		</execute>
@@ -389,7 +399,7 @@
 			<var name="portletName" value="Blogs Aggregator" />
 		</execute>
 
-		<execute macro="Navigator#gotoSitePage">
+		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Blogs Page 1" />
 			<var name="siteName" value="Site Name" />
 		</execute>
@@ -406,7 +416,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="Navigator#gotoSitePage">
+		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Blogs Page 1" />
 			<var name="siteName" value="Site Name" />
 		</execute>
@@ -416,7 +426,7 @@
 			<var name="entryTitle" value="Blogs Entry Title 1" />
 		</execute>
 
-		<execute macro="Navigator#gotoSitePage">
+		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Blogs Page 1" />
 			<var name="siteName" value="Site Name" />
 		</execute>
@@ -435,22 +445,10 @@
 			<var name="entryTitle" value="Blogs Entry Title 1" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Publishing" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
+		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />
 		</execute>
-
-		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="Staging#gotoPublishToLive" />
 

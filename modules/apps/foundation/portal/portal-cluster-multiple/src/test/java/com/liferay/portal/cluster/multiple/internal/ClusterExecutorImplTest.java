@@ -15,7 +15,6 @@
 package com.liferay.portal.cluster.multiple.internal;
 
 import com.liferay.portal.cluster.multiple.configuration.ClusterExecutorConfiguration;
-import com.liferay.portal.cluster.multiple.internal.constants.ClusterPropsKeys;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.ClusterEvent;
 import com.liferay.portal.kernel.cluster.ClusterEventListener;
@@ -405,11 +404,18 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 
 				@Override
 				public String get(String key) {
-					if (PropsKeys.CLUSTER_LINK_ENABLED.equals(key)) {
-						return String.valueOf(enabled);
+					switch (key) {
+						case PropsKeys.CLUSTER_LINK_ENABLED:
+							return String.valueOf(enabled);
+						case PropsKeys.CLUSTER_LINK_CHANNEL_LOGIC_NAME_CONTROL:
+							return "test-control-channel-logic-name";
+						case PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL:
+							return "test-channel-name-control";
+						case PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL:
+							return "test-channel-properties-control";
+						default:
+							return StringPool.BLANK;
 					}
-
-					return StringPool.BLANK;
 				}
 
 				@Override
@@ -448,15 +454,6 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 			new MockPortalExecutorManager());
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put(
-			ClusterPropsKeys.CHANNEL_LOGIC_NAME_CONTROL,
-			"test-control-channel-logic-name");
-		properties.put(
-			ClusterPropsKeys.CHANNEL_NAME_CONTROL, "test-channel-name-control");
-		properties.put(
-			ClusterPropsKeys.CHANNEL_PROPERTIES_CONTROL,
-			"test-channel-properties-control");
 
 		clusterExecutorImpl.activate(new MockComponentContext(properties));
 

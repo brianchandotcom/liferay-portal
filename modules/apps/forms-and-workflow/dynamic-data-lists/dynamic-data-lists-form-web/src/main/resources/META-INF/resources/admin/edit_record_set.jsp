@@ -268,21 +268,15 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 							window,
 							'<portlet:namespace />init',
 							function() {
-								Liferay.DDM.Renderer.FieldTypes.register(fieldTypes);
+								Liferay.DDM.SoyTemplateUtil.loadModules(
+									function() {
+										Liferay.DDM.Renderer.FieldTypes.register(fieldTypes);
 
-								if (window.ddm) {
-									<portlet:namespace />registerFormPortlet(event.form);
-								}
-								else {
-									Liferay.after(
-										'DDMFormLoaded',
-										function() {
-											<portlet:namespace />registerFormPortlet(event.form);
-										}
-									);
-								}
+										<portlet:namespace />registerFormPortlet(event.form);
+									}
+								);
 							},
-							['liferay-ddl-portlet'].concat(systemFieldModules)
+							['liferay-ddl-portlet','liferay-ddm-soy-template-util'].concat(systemFieldModules)
 						);
 
 						<portlet:namespace />init();

@@ -14,7 +14,7 @@
 
 package com.liferay.asset.categories.admin.web.internal.exportimport.data.handler;
 
-import com.liferay.asset.exportimport.staged.model.repository.StagedAssetLinkStagedModelRepository;
+import com.liferay.asset.categories.admin.web.internal.exportimport.staged.model.repository.StagedAssetLinkStagedModelRepository;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.adapter.StagedAssetLink;

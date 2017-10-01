@@ -424,22 +424,6 @@ public class StagedAssetLinkStagedModelRepository
 		return uuid.substring(uuid.indexOf(StringPool.POUND) + 1);
 	}
 
-	/**
-	 * @deprecated As of 1.0.0
-	 */
-	@Deprecated
-	protected void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-	}
-
-	/**
-	 * @deprecated As of 1.0.0
-	 */
-	@Deprecated
-	protected void setAssetLinkLocalService(
-		AssetLinkLocalService assetLinkLocalService) {
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		StagedAssetLinkStagedModelRepository.class);
 

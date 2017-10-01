@@ -21,7 +21,6 @@ import com.liferay.asset.kernel.model.adapter.StagedAssetLink;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.exportimport.staged.model.repository.base.BaseStagedModelRepository;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -50,21 +49,14 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Akos Thurzo
+ * @deprecated As of 1.2.0, replaced by {@link
+ *             com.liferay.asset.categories.admin.web.internal.exportimport.staged.model.repository.StagedAssetLinkStagedModelRepository}
  */
-@Component(
-	immediate = true,
-	property = {
-		"model.class.name=com.liferay.asset.kernel.model.adapter.StagedAssetLink"
-	},
-	service = {
-		StagedAssetLinkStagedModelRepository.class, StagedModelRepository.class
-	}
-)
+@Deprecated
 public class StagedAssetLinkStagedModelRepository
 	extends BaseStagedModelRepository<StagedAssetLink> {
 

@@ -118,7 +118,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "page-templates"));
 	</liferay-ui:search-container>
 </aui:form>
 
-<c:if test="<%= layoutPageTemplateDisplayContext.isShowAddButton() %>">
+<c:if test="<%= layoutPageTemplateDisplayContext.isShowAddButton(LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION) %>">
 	<portlet:renderURL var="addLayoutPageTemplateCollectionURL">
 		<portlet:param name="mvcPath" value="/edit_layout_page_template_collection.jsp" />
 	</portlet:renderURL>

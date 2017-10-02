@@ -16,7 +16,6 @@ package com.liferay.layout.admin.web.internal.display.context;
 
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.util.LayoutPageTemplatePortletUtil;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil;
@@ -430,7 +429,7 @@ public class LayoutPageTemplateDisplayContext {
 		return false;
 	}
 
-	public boolean isShowAddButton() {
+	public boolean isShowAddButton(String actionId) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -438,9 +437,7 @@ public class LayoutPageTemplateDisplayContext {
 				themeDisplay.getPermissionChecker(),
 				LayoutPageTemplatePermission.RESOURCE_NAME,
 				LayoutAdminPortletKeys.GROUP_PAGES,
-				themeDisplay.getSiteGroupId(),
-				LayoutPageTemplateActionKeys.
-					ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION)) {
+				themeDisplay.getSiteGroupId(), actionId)) {
 
 			return true;
 		}

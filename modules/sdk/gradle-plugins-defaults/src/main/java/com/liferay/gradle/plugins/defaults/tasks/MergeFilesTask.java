@@ -36,7 +36,6 @@ import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputFile;
-import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.util.GUtil;
 
@@ -58,7 +57,6 @@ public class MergeFilesTask extends DefaultTask {
 	}
 
 	@InputFiles
-	@SkipWhenEmpty
 	public FileCollection getInputFiles() {
 		Project project = getProject();
 

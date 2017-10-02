@@ -86,6 +86,7 @@ Main-Class: com.liferay.source.formatter.SourceFormatter
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/SystemProperties.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/TextFormatter.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/Tuple.class,\
+	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/UnicodeFormatter.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/Validator.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/xml/XMLSchema.class,\
 	@com.liferay.util.java-[0-9]*.jar!/com/liferay/util/ContentUtil.class,\

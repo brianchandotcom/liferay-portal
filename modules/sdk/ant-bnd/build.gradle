@@ -16,3 +16,7 @@ dependencies {
 liferay {
 	deployDir = file("../../../lib/development")
 }
+
+updateFileVersions {
+	match(/com\.liferay\.ant\.bnd=com\.liferay:com\.liferay\.ant\.bnd:(\d.+)/, "../../../lib/development/dependencies.properties")
+}

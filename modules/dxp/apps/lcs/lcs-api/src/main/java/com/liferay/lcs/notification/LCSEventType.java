@@ -27,11 +27,6 @@ public enum LCSEventType {
 		"a-connection-between-nodes-in-a-cluster-is-broken",
 		"a-connection-between-nodes-in-the-cluster-x-is-broken", true,
 		60 * 60 * 1000, 3, 7),
-	MEMBERSHIP_INVITATION_ACCEPTED(
-		null, "x-joined-the-project-x", false, 0, 1, 13),
-	MEMBERSHIP_REQUEST_ACCEPTED(
-		null, "your-request-for-membership-on-the-project-x-was-accepted",
-		false, 0, 1, 12),
 	MONITORING_UNAVAILABLE(
 		"monitoring-is-unavailable",
 		"monitoring-is-unavailable-on-the-server-x", false, 0, 2, 0),
@@ -42,9 +37,6 @@ public enum LCSEventType {
 	NEW_LCS_PROJECT_AVAILABLE(
 		"new-project-is-available", "new-project-x-is-available", false, 0, 1,
 		9),
-	NEW_MEMBERSHIP_INVITATION(null, null, false, 0, 1, 10),
-	NEW_MEMBERSHIP_REQUEST(
-		null, "a-user-requested-membership-on-project-x", false, 0, 1, 11),
 	NEW_PATCH_AVAILABLE(
 		"new-fix-pack-is-available",
 		"new-fix-pack-is-available-to-install-on-x", false, 0, 1, 1),

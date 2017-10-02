@@ -369,7 +369,7 @@ while (manageableCalendarsIterator.hasNext()) {
 
 				<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="calendarBookingInvitationPanel" markupView="lexicon" persistState="<%= true %>" title="invitations">
 					<c:if test="<%= invitable %>">
-						<aui:input inputCssClass="calendar-portlet-invite-resources-input" label="" name="inviteResource" placeholder="add-people-groups-rooms" type="text" />
+						<aui:input inputCssClass="calendar-portlet-invite-resources-input" label="" name="inviteResource" placeholder="add-people-sites-rooms" type="text" />
 
 						<div class="separator"><!-- --></div>
 					</c:if>

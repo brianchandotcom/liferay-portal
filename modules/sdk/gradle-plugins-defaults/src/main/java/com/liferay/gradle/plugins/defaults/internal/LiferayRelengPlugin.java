@@ -34,6 +34,7 @@ import com.liferay.gradle.plugins.defaults.tasks.ReplaceRegexTask;
 import com.liferay.gradle.plugins.defaults.tasks.WriteArtifactPublishCommandsTask;
 import com.liferay.gradle.plugins.defaults.tasks.WritePropertiesTask;
 import com.liferay.gradle.plugins.js.transpiler.JSTranspilerPlugin;
+import com.liferay.gradle.util.StringUtil;
 import com.liferay.gradle.util.Validator;
 
 import groovy.lang.Closure;
@@ -230,6 +231,10 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			rootProject,
 			CollectionUtils.first(
 				cleanArtifactsPublishCommandsTask.getDelete()));
+
+		mergeFilesTask.dependsOn(
+			BasePlugin.CLEAN_TASK_NAME +
+				StringUtil.capitalize(mergeFilesTask.getName()));
 
 		mergeFilesTask.doLast(
 			new Action<Task>() {

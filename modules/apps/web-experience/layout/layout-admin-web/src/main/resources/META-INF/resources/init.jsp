@@ -44,6 +44,7 @@ page import="com.liferay.layout.admin.web.internal.util.comparator.ThemeNameComp
 page import="com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCollectionException" %><%@
 page import="com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException" %><%@
 page import="com.liferay.layout.page.template.model.LayoutPageTemplateCollection" %><%@
+page import="com.liferay.layout.page.template.model.LayoutPageTemplateEntry" %><%@
 page import="com.liferay.layout.page.template.service.permission.LayoutPageTemplateCollectionPermission" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker" %><%@

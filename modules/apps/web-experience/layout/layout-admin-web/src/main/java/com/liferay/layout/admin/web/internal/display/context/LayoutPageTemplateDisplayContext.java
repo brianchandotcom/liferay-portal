@@ -73,6 +73,23 @@ public class LayoutPageTemplateDisplayContext {
 		return _displayStyle;
 	}
 
+	public String getEditLayoutPageTemplateEntryRedirect()
+		throws PortalException {
+
+		PortletURL portletURL = _renderResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcPath", "/view_layout_page_template_entries.jsp");
+
+		if (getLayoutPageTemplateCollectionId() > 0) {
+			portletURL.setParameter(
+				"layoutPageTemplateCollectionId",
+				String.valueOf(getLayoutPageTemplateCollectionId()));
+		}
+
+		return portletURL.toString();
+	}
+
 	public String getKeywords() {
 		if (_keywords != null) {
 			return _keywords;
@@ -320,6 +337,42 @@ public class LayoutPageTemplateDisplayContext {
 		return _layoutPageTemplateEntriesSearchContainer;
 	}
 
+	public LayoutPageTemplateEntry getLayoutPageTemplateEntry()
+		throws PortalException {
+
+		if (_layoutPageTemplateEntry != null) {
+			return _layoutPageTemplateEntry;
+		}
+
+		_layoutPageTemplateEntry =
+			LayoutPageTemplateEntryServiceUtil.fetchLayoutPageTemplateEntry(
+				getLayoutPageTemplateEntryId());
+
+		return _layoutPageTemplateEntry;
+	}
+
+	public long getLayoutPageTemplateEntryId() {
+		if (Validator.isNotNull(_layoutPageTemplateEntryId)) {
+			return _layoutPageTemplateEntryId;
+		}
+
+		_layoutPageTemplateEntryId = ParamUtil.getLong(
+			_request, "layoutPageTemplateEntryId");
+
+		return _layoutPageTemplateEntryId;
+	}
+
+	public String getLayoutPageTemplateEntryTitle() throws PortalException {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			getLayoutPageTemplateEntry();
+
+		if (layoutPageTemplateEntry == null) {
+			return LanguageUtil.get(_request, "add-page-template");
+		}
+
+		return layoutPageTemplateEntry.getName();
+	}
+
 	public String getOrderByCol() {
 		if (Validator.isNotNull(_orderByCol)) {
 			return _orderByCol;
@@ -451,6 +504,8 @@ public class LayoutPageTemplateDisplayContext {
 	private Long _layoutPageTemplateCollectionId;
 	private SearchContainer _layoutPageTemplateCollectionsSearchContainer;
 	private SearchContainer _layoutPageTemplateEntriesSearchContainer;
+	private LayoutPageTemplateEntry _layoutPageTemplateEntry;
+	private Long _layoutPageTemplateEntryId;
 	private String _orderByCol;
 	private String _orderByType;
 	private final RenderRequest _renderRequest;

@@ -884,7 +884,17 @@ public class PluginPackageUtil {
 				moduleVersion = displayName.substring(moduleVersionPos);
 			}
 			else {
-				moduleVersion = ReleaseInfo.getVersion();
+				String moduleIncrementalVersion = GetterUtil.getString(
+					properties.getProperty("module-incremental-version"));
+
+				if (Validator.isNull(moduleIncrementalVersion)) {
+					moduleVersion = ReleaseInfo.getVersion();
+				}
+				else {
+					moduleVersion =
+						ReleaseInfo.getVersion() + "." +
+							moduleIncrementalVersion;
+				}
 			}
 		}
 

@@ -40,6 +40,12 @@ public class PluginContextListener
 	public void attributeAdded(
 		ServletContextAttributeEvent servletContextAttributeEvent) {
 
+		if (servletContextAttributeEvent.getServletContext() !=
+				servletContext) {
+
+			return;
+		}
+
 		String name = servletContextAttributeEvent.getName();
 
 		if (_addedPluginClassLoader && name.equals(PLUGIN_CLASS_LOADER) &&
@@ -61,6 +67,12 @@ public class PluginContextListener
 	public void attributeRemoved(
 		ServletContextAttributeEvent servletContextAttributeEvent) {
 
+		if (servletContextAttributeEvent.getServletContext() !=
+				servletContext) {
+
+			return;
+		}
+
 		String name = servletContextAttributeEvent.getName();
 
 		if (_addedPluginClassLoader && name.equals(PLUGIN_CLASS_LOADER)) {
@@ -75,6 +87,12 @@ public class PluginContextListener
 	@Override
 	public void attributeReplaced(
 		ServletContextAttributeEvent servletContextAttributeEvent) {
+
+		if (servletContextAttributeEvent.getServletContext() !=
+				servletContext) {
+
+			return;
+		}
 
 		String name = servletContextAttributeEvent.getName();
 

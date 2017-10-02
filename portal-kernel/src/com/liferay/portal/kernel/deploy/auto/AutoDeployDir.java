@@ -34,6 +34,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Ivica Cardic
@@ -103,6 +105,12 @@ public class AutoDeployDir {
 
 					break;
 				}
+			}
+
+			Matcher matcher = _VERSION_PATTERN.matcher(fileName);
+
+			if (matcher.find()) {
+				fileName = matcher.replaceFirst(".war");
 			}
 		}
 		else {
@@ -320,6 +328,9 @@ public class AutoDeployDir {
 			}
 		}
 	}
+
+	private static final Pattern _VERSION_PATTERN = Pattern.compile(
+		"-[\\d]+((\\.[\\d]+)+(-SNAPSHOT)?)\\.war$");
 
 	private static final Log _log = LogFactoryUtil.getLog(AutoDeployDir.class);
 

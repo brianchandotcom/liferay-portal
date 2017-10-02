@@ -131,7 +131,9 @@ public class LocalGitSyncUtil {
 		GitWorkingDirectory.Branch currentBranch =
 			gitWorkingDirectory.getCurrentBranch();
 
-		if (!localBranchName.equals(currentBranch.getName())) {
+		if ((currentBranch == null) ||
+			!localBranchName.equals(currentBranch.getName())) {
+
 			gitWorkingDirectory.checkoutBranch(localBranch, "-f");
 		}
 
@@ -551,7 +553,9 @@ public class LocalGitSyncUtil {
 			GitWorkingDirectory.Branch currentBranch =
 				gitWorkingDirectory.getCurrentBranch();
 
-			if (localBranchName.equals(currentBranch.getName())) {
+			if ((currentBranch == null) ||
+				!localBranchName.equals(currentBranch.getName())) {
+
 				gitWorkingDirectory.checkoutBranch(localBranch, "-f");
 			}
 		}
@@ -842,6 +846,11 @@ public class LocalGitSyncUtil {
 
 				GitWorkingDirectory.Branch currentBranch =
 					gitWorkingDirectory.getCurrentBranch();
+
+				if (currentBranch == null) {
+					currentBranch = gitWorkingDirectory.getBranch(
+						gitWorkingDirectory.getUpstreamBranchName(), null);
+				}
 
 				GitWorkingDirectory.Branch newTimestampBranch =
 					gitWorkingDirectory.createLocalBranch(

@@ -25,6 +25,26 @@ portletDisplay.setURLBack(layoutPageTemplateDisplayContext.getLayoutPageTemplate
 renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionTitle());
 %>
 
+<liferay-frontend:management-bar
+	disabled="<%= layoutPageTemplateDisplayContext.isDisabledLayoutPageTemplateEntriesManagementBar() %>"
+	includeCheckBox="<%= true %>"
+	searchContainerId="layoutPageTemplateEntries"
+>
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= currentURLObj %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= layoutPageTemplateDisplayContext.getOrderByCol() %>"
+			orderByType="<%= layoutPageTemplateDisplayContext.getOrderByType() %>"
+			orderColumns="<%= layoutPageTemplateDisplayContext.getOrderColumns() %>"
+			portletURL="<%= currentURLObj %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+</liferay-frontend:management-bar>
+
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<liferay-ui:search-container
 		id="layoutPageTemplateEntries"

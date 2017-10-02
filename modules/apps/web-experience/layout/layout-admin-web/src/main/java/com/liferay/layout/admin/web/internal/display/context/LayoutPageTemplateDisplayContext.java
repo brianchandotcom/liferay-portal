@@ -332,6 +332,16 @@ public class LayoutPageTemplateDisplayContext {
 		return true;
 	}
 
+	public boolean isDisabledLayoutPageTemplateEntriesManagementBar()
+		throws PortalException {
+
+		if (_hasLayoutPageTemplateEntriesResults()) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public boolean isSearch() {
 		if (Validator.isNotNull(getKeywords())) {
 			return true;
@@ -377,6 +387,19 @@ public class LayoutPageTemplateDisplayContext {
 
 		SearchContainer searchContainer =
 			getLayoutPageTemplateCollectionsSearchContainer();
+
+		if (searchContainer.getTotal() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _hasLayoutPageTemplateEntriesResults()
+		throws PortalException {
+
+		SearchContainer searchContainer =
+			getLayoutPageTemplateEntriesSearchContainer();
 
 		if (searchContainer.getTotal() > 0) {
 			return true;

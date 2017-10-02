@@ -490,7 +490,7 @@ public class OrganizationStagedModelDataHandler
 
 			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, organization, Organization.class,
-				organization.getParentOrganizationId());
+				Long.valueOf(organization.getParentOrganizationId()));
 		}
 	}
 

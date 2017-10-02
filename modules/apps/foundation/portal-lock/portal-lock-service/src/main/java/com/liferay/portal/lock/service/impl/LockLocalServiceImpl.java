@@ -370,10 +370,10 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 	@Override
 	public void unlock(String className, String key) {
-		try {
-			lockPersistence.removeByC_K(className, key);
-		}
-		catch (NoSuchLockException nsle) {
+		Lock lock = lockPersistence.fetchByC_K(className, key);
+
+		if (lock != null) {
+			lockPersistence.remove(lock);
 		}
 	}
 

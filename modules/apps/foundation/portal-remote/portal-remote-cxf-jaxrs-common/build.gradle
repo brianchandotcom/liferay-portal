@@ -16,6 +16,6 @@ dependencies {
 }
 
 deployDependencies {
-	from configurations.provided
+	from configurations.compileOnly
 	include "validation-api-*.jar"
 }

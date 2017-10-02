@@ -33,7 +33,7 @@ if (!System.getenv("JENKINS_HOME") || !systemPackagesExtraManifestFile.exists())
 			properties["-fixupmessages"] = '"Classpath is empty. Private-Package ...";is:=ignore'
 			properties["-include"] = "system.packages.extra.bnd"
 
-			File portalImplJarFile = configurations.provided.find {
+			File portalImplJarFile = configurations.compileOnly.find {
 				it.name.startsWith "com.liferay.portal.impl-"
 			}
 
@@ -77,9 +77,9 @@ bundle {
 }
 
 copySystemPackagesExtraLibs {
-	from configurations.provided
+	from configurations.compileOnly
 	into "lib"
-	rename new RenameDependencyClosure(project, configurations.provided.name)
+	rename new RenameDependencyClosure(project, configurations.compileOnly.name)
 }
 
 dependencies {

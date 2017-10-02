@@ -3,7 +3,7 @@ import com.liferay.gradle.util.copy.RenameDependencyClosure
 task deployTestLibs(type: Copy)
 
 configurations {
-	provided {
+	compileOnly {
 		transitive = false
 	}
 
@@ -45,7 +45,7 @@ deploy {
 }
 
 deployDependencies {
-	from configurations.provided
+	from configurations.compileOnly
 	rename(/javax.el-(.+)\.jar/, "javax.el" + renameSuffix)
 }
 

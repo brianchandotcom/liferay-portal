@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.social.service;
+package com.liferay.social.activity.service.test;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;

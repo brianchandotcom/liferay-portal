@@ -50,6 +50,7 @@ import org.gradle.api.UncheckedIOException;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ExternalModuleDependency;
+import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.api.tasks.bundling.War;
 
@@ -234,6 +235,8 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 				dependencyNames, bundleInstructions,
 				Constants.INCLUDE_RESOURCE);
 
+			_addDependenciesLicenseReport(
+				JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME, dependencyNames);
 			_addDependenciesLicenseReport(
 				ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME(),
 				dependencyNames);

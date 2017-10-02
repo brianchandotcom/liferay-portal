@@ -1299,15 +1299,20 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						return content;
 					}
 
-					String configuration =
-						ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME() +
-							" ";
+					StringBuilder sb = new StringBuilder();
+
+					sb.append('(');
+					sb.append(JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME);
+					sb.append('|');
+					sb.append(
+						ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME());
+					sb.append(") ");
+					sb.append(Pattern.quote(_getProjectDependency(project)));
 
 					return content.replaceAll(
-						Pattern.quote(
-							configuration + _getProjectDependency(project)),
-						Matcher.quoteReplacement(
-							configuration +
+						sb.toString(),
+						"$1 " +
+							Matcher.quoteReplacement(
 								_getModuleDependency(project, true)));
 				}
 

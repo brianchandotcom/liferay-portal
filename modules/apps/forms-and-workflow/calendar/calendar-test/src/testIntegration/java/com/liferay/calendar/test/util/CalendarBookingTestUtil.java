@@ -243,6 +243,25 @@ public class CalendarBookingTestUtil {
 		return calendarBooking;
 	}
 
+	public static CalendarBooking addMasterRecurringCalendarBooking(
+			Calendar invitedCalendar, Calendar invitingCalendar)
+		throws PortalException {
+
+		long startTime = System.currentTimeMillis();
+
+		long endTime = startTime + Time.HOUR;
+
+		User user = UserLocalServiceUtil.getUser(invitingCalendar.getUserId());
+
+		return addCalendarBooking(
+			user, invitingCalendar,
+			new long[] {invitedCalendar.getCalendarId()},
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), startTime, endTime,
+			RecurrenceTestUtil.getDailyRecurrence(), 0, NotificationType.EMAIL,
+			0, NotificationType.EMAIL, createServiceContext(user));
+	}
+
 	public static CalendarBooking addPublishedCalendarBooking(User user)
 		throws PortalException {
 

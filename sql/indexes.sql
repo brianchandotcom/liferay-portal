@@ -49,6 +49,7 @@ create index IX_14D5A20D on AssetLink (entryId1, type_);
 create index IX_91F132C on AssetLink (entryId2, type_);
 
 create unique index IX_D63322F9 on AssetTag (groupId, name[$COLUMN_LENGTH:75$]);
+create index IX_C43137AF on AssetTag (name[$COLUMN_LENGTH:75$]);
 create index IX_84C501E4 on AssetTag (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_B6ACB166 on AssetTag (uuid_[$COLUMN_LENGTH:75$], groupId);
 

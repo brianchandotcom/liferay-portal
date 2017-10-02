@@ -460,6 +460,25 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Returns the primary keys of the asset tags with the names.
+	 *
+	 * @param  name the name of the asset tags
+	 * @return the primary keys of the asset tags with the names
+	 */
+	@Override
+	public long[] getTagIds(String name) {
+		List<AssetTag> tags = assetTagPersistence.findByName(name);
+
+		List<Long> tagIds = new ArrayList<>(tags.size());
+
+		for (AssetTag tag : tags) {
+			tagIds.add(tag.getTagId());
+		}
+
+		return ArrayUtil.toArray(tagIds.toArray(new Long[tagIds.size()]));
+	}
+
+	/**
 	 * Returns the names of all the asset tags.
 	 *
 	 * @return the names of all the asset tags

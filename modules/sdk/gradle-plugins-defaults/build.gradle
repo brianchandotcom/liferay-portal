@@ -21,7 +21,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.patcher", version: "1.0.12"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "2.2.1"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.whip", version: "1.0.5"
-	compile group: "com.netflix.nebula", name: "gradle-extra-configurations-plugin", version: "3.0.3"
+	compile group: "com.netflix.nebula", name: "gradle-extra-configurations-plugin", version: "3.1.0"
 	compile group: "gradle.plugin.com.github.jk1", name: "gradle-license-report", version: "0.3.11"
 	compile group: "org.apache.aries.jmx", name: "org.apache.aries.jmx.api", version: "1.1.0"
 

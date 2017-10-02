@@ -118,18 +118,29 @@ public class SpringExtenderDependencyManagerTest {
 
 			LoggingEvent loggingEvent = loggingEvents.get(0);
 
+			String message = (String)loggingEvent.getMessage();
+
 			Assert.assertEquals(
+				message,
 				"All Spring extender dependency manager components are " +
 					"registered",
-				loggingEvent.getMessage());
-			Assert.assertEquals(Level.INFO, loggingEvent.getLevel());
+				message);
+
+			Level level = loggingEvent.getLevel();
+
+			Assert.assertEquals(level.toString(), Level.INFO, level);
 
 			loggingEvent = loggingEvents.get(1);
 
+			message = (String)loggingEvent.getMessage();
+
 			Assert.assertEquals(
-				"Stopped scanning for unavailable components",
-				loggingEvent.getMessage());
-			Assert.assertEquals(Level.INFO, loggingEvent.getLevel());
+				message, "Stopped scanning for unavailable components",
+				message);
+
+			level = loggingEvent.getLevel();
+
+			Assert.assertEquals(level.toString(), Level.INFO, level);
 		}
 	}
 
@@ -162,16 +173,24 @@ public class SpringExtenderDependencyManagerTest {
 			sb.append(_SPRING_EXTENDER_TEST_COMPONENT_REFERENCE_CLASS_NAME);
 			sb.append(" null]");
 
-			Assert.assertTrue(message.contains(sb.toString()));
+			Assert.assertTrue(message, message.contains(sb.toString()));
 
-			Assert.assertEquals(Level.WARN, loggingEvent.getLevel());
+			Level level = loggingEvent.getLevel();
+
+			Assert.assertEquals(
+				level.toString(), Level.WARN, loggingEvent.getLevel());
 
 			loggingEvent = loggingEvents.get(1);
 
+			message = (String)loggingEvent.getMessage();
+
 			Assert.assertEquals(
-				"Stopped scanning for unavailable components",
-				loggingEvent.getMessage());
-			Assert.assertEquals(Level.INFO, loggingEvent.getLevel());
+				message, "Stopped scanning for unavailable components",
+				message);
+
+			level = loggingEvent.getLevel();
+
+			Assert.assertEquals(level.toString(), Level.INFO, level);
 		}
 		finally {
 			bundle.uninstall();

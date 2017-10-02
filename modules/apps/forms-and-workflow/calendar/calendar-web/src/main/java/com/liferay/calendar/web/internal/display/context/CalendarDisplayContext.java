@@ -15,6 +15,7 @@
 package com.liferay.calendar.web.internal.display.context;
 
 import com.liferay.calendar.constants.CalendarActionKeys;
+import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarResource;
@@ -33,10 +34,14 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Adam Brandizzi
@@ -103,6 +108,20 @@ public class CalendarDisplayContext {
 		}
 
 		return defaultCalendar;
+	}
+
+	public String getEditCalendarBookingRedirectURL(
+		HttpServletRequest request, String defaultURL) {
+
+		String redirect = ParamUtil.getString(request, "redirect");
+
+		String ppid = HttpUtil.getParameter(redirect, "p_p_id", false);
+
+		if (ppid.equals(CalendarPortletKeys.CALENDAR)) {
+			return defaultURL;
+		}
+
+		return ParamUtil.getString(request, "redirect", defaultURL);
 	}
 
 	public Recurrence getLastRecurrence(CalendarBooking calendarBooking)

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.ratings.service;
+package com.liferay.ratings.service.test;
 
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;

@@ -4063,38 +4063,16 @@ public class StringUtil {
 	 * </pre>
 	 * </p>
 	 *
+	 * @deprecated As of 7.0.0, replaced by {@link #removeChar(String, char)}
 	 * @param  s the string from which to strip all occurrences of the character
 	 * @param  remove the character to strip from the string
 	 * @return a string representing the string <code>s</code> with all
 	 *         occurrences of the specified character removed, or
 	 *         <code>null</code> if <code>s</code> is <code>null</code>
 	 */
+	@Deprecated
 	public static String strip(String s, char remove) {
-		if (s == null) {
-			return null;
-		}
-
-		int x = s.indexOf(remove);
-
-		if (x < 0) {
-			return s;
-		}
-
-		int y = 0;
-
-		StringBundler sb = new StringBundler(s.length());
-
-		while (x >= 0) {
-			sb.append(s.subSequence(y, x));
-
-			y = x + 1;
-
-			x = s.indexOf(remove, y);
-		}
-
-		sb.append(s.substring(y));
-
-		return sb.toString();
+		return removeChar(s, remove);
 	}
 
 	/**
@@ -4113,18 +4091,17 @@ public class StringUtil {
 	 * </pre>
 	 * </p>
 	 *
+	 * @deprecated As of 7.0.0, replaced by {@link #removeChars(
+	 *             String, char...)}
 	 * @param  s the string from which to strip all occurrences the characters
 	 * @param  remove the characters to strip from the string
 	 * @return a string representing the string <code>s</code> with all
 	 *         occurrences of the specified characters removed, or
 	 *         <code>null</code> if <code>s</code> is <code>null</code>
 	 */
+	@Deprecated
 	public static String strip(String s, char[] remove) {
-		for (char c : remove) {
-			s = strip(s, c);
-		}
-
-		return s;
+		return removeChars(s, remove);
 	}
 
 	/**

@@ -628,12 +628,21 @@ public class StringUtil_IW {
 		return StringUtil.startsWithWeight(s1, s2);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #removeChar(String, char)}
+	 */
+	@Deprecated
 	public java.lang.String strip(java.lang.String s, char remove) {
-		return StringUtil.strip(s, remove);
+		return StringUtil.removeChar(s, remove);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #removeChars(
+	 *             String, char...)}
+	 */
+	@Deprecated
 	public java.lang.String strip(java.lang.String s, char[] remove) {
-		return StringUtil.strip(s, remove);
+		return StringUtil.removeChars(s, remove);
 	}
 
 	public java.lang.String stripBetween(java.lang.String s,

@@ -245,7 +245,7 @@ public class AssetPublisherDisplayContext {
 
 		_assetEntryQuery.setPaginationType(getPaginationType());
 
-		AssetPublisherUtil.processAssetEntryQuery(
+		AssetPublisherWebUtil.processAssetEntryQuery(
 			themeDisplay.getUser(), _portletPreferences, _assetEntryQuery);
 
 		_assetPublisherCustomizer.setAssetEntryQueryOptions(
@@ -356,7 +356,7 @@ public class AssetPublisherDisplayContext {
 				queryValues = ParamUtil.getString(
 					_request, "queryTagNames" + queryLogicIndex, queryValues);
 
-				queryValues = AssetPublisherUtil.filterAssetTagNames(
+				queryValues = AssetPublisherWebUtil.filterAssetTagNames(
 					themeDisplay.getScopeGroupId(), queryValues);
 			}
 			else {
@@ -1381,7 +1381,7 @@ public class AssetPublisherDisplayContext {
 
 		assetEntryQuery.setAttribute(
 			"ddmStructureFieldName",
-			AssetPublisherUtil.encodeName(
+			AssetPublisherWebUtil.encodeName(
 				classTypeField.getClassTypeId(), getDDMStructureFieldName(),
 				locale));
 

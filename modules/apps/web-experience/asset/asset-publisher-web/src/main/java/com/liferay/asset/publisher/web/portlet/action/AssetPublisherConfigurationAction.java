@@ -23,6 +23,7 @@ import com.liferay.asset.publisher.web.configuration.AssetPublisherPortletInstan
 import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.constants.AssetPublisherWebKeys;
+import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizerRegistry;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
@@ -237,8 +238,7 @@ public class AssetPublisherConfigurationAction
 				addScope(actionRequest, preferences);
 			}
 			else if (cmd.equals("add-selection")) {
-				AssetPublisherUtil.addSelection(
-					actionRequest, preferences, portletResource);
+				AssetPublisherWebUtil.addSelection(actionRequest, preferences);
 			}
 			else if (cmd.equals("move-selection-down")) {
 				moveSelectionDown(actionRequest, preferences);
@@ -337,9 +337,9 @@ public class AssetPublisherConfigurationAction
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (!AssetPublisherUtil.isScopeIdSelectable(
+		if (!AssetPublisherWebUtil.isScopeIdSelectable(
 				themeDisplay.getPermissionChecker(), scopeId,
-				themeDisplay.getCompanyGroupId(), layout)) {
+				themeDisplay.getCompanyGroupId(), layout, true)) {
 
 			throw new PrincipalException();
 		}
@@ -373,7 +373,7 @@ public class AssetPublisherConfigurationAction
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				className);
 
-		String assetClassName = AssetPublisherUtil.getClassName(
+		String assetClassName = AssetPublisherWebUtil.getClassName(
 			assetRendererFactory);
 
 		return assetClassName;

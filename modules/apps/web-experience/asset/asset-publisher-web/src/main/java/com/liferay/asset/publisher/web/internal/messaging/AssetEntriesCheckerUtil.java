@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.asset.util.impl.AssetUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -121,10 +122,10 @@ public class AssetEntriesCheckerUtil {
 	}
 
 	@Reference(unbind = "-")
-	protected void setAssetPublisherUtil(
-		AssetPublisherUtil assetPublisherUtil) {
+	protected void setAssetPublisherWebUtil(
+		AssetPublisherWebUtil assetPublisherWebUtil) {
 
-		_assetPublisherUtil = assetPublisherUtil;
+		_assetPublisherWebUtil = assetPublisherWebUtil;
 	}
 
 	@Reference(unbind = "-")
@@ -198,16 +199,16 @@ public class AssetEntriesCheckerUtil {
 
 		AssetEntry assetEntry = assetEntries.get(0);
 
-		String fromName = _assetPublisherUtil.getEmailFromName(
+		String fromName = _assetPublisherWebUtil.getEmailFromName(
 			portletPreferences, assetEntry.getCompanyId());
-		String fromAddress = _assetPublisherUtil.getEmailFromAddress(
+		String fromAddress = _assetPublisherWebUtil.getEmailFromAddress(
 			portletPreferences, assetEntry.getCompanyId());
 
 		Map<Locale, String> localizedSubjectMap =
-			_assetPublisherUtil.getEmailAssetEntryAddedSubjectMap(
+			_assetPublisherWebUtil.getEmailAssetEntryAddedSubjectMap(
 				portletPreferences);
 		Map<Locale, String> localizedBodyMap =
-			_assetPublisherUtil.getEmailAssetEntryAddedBodyMap(
+			_assetPublisherWebUtil.getEmailAssetEntryAddedBodyMap(
 				portletPreferences);
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
@@ -235,7 +236,7 @@ public class AssetEntriesCheckerUtil {
 		List<Subscription> subscriptions, PortletPreferences portletPreferences,
 		List<AssetEntry> assetEntries) {
 
-		if (!_assetPublisherUtil.getEmailAssetEntryAddedEnabled(
+		if (!_assetPublisherWebUtil.getEmailAssetEntryAddedEnabled(
 				portletPreferences)) {
 
 			return;
@@ -313,7 +314,7 @@ public class AssetEntriesCheckerUtil {
 				portletPreferencesModel.getPortletId(),
 				portletPreferencesModel.getPreferences());
 
-		if (!_assetPublisherUtil.getEmailAssetEntryAddedEnabled(
+		if (!_assetPublisherWebUtil.getEmailAssetEntryAddedEnabled(
 				portletPreferences)) {
 
 			return;
@@ -344,7 +345,7 @@ public class AssetEntriesCheckerUtil {
 				portletPreferencesModel.getCompanyId(),
 				com.liferay.portal.kernel.model.PortletPreferences.class.
 					getName(),
-				_assetPublisherUtil.getSubscriptionClassPK(
+				_assetPublisherWebUtil.getSubscriptionClassPK(
 					portletPreferencesModel.getPlid(),
 					portletPreferencesModel.getPortletId()));
 
@@ -398,7 +399,7 @@ public class AssetEntriesCheckerUtil {
 		}
 	}
 
-	private static AssetPublisherUtil _assetPublisherUtil;
+	private static AssetPublisherWebUtil _assetPublisherWebUtil;
 	private static LayoutLocalService _layoutLocalService;
 	private static PortletPreferencesLocalService
 		_portletPreferencesLocalService;

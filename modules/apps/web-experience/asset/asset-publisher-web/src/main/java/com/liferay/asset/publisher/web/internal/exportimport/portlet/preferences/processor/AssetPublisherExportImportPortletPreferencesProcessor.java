@@ -24,6 +24,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
@@ -1303,7 +1304,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			}
 
 			try {
-				if (!AssetPublisherUtil.isScopeIdSelectable(
+				if (!AssetPublisherWebUtil.isScopeIdSelectable(
 						PermissionThreadLocal.getPermissionChecker(), newValue,
 						companyGroupId, layout, false)) {
 

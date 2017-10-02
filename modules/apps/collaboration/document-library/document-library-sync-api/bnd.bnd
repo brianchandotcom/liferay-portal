@@ -1,0 +1,11 @@
+Bundle-Name: Liferay Document Library Sync API
+Bundle-SymbolicName: com.liferay.document.library.sync.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.document.library.sync.constants,\
+	com.liferay.document.library.sync.exception,\
+	com.liferay.document.library.sync.model,\
+	com.liferay.document.library.sync.service,\
+	com.liferay.document.library.sync.service.persistence
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Document Library

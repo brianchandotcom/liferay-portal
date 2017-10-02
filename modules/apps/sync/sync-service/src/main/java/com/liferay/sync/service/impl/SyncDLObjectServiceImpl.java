@@ -22,7 +22,8 @@ import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.model.DLSyncEvent;
+import com.liferay.document.library.sync.model.DLSyncEvent;
+import com.liferay.document.library.sync.service.DLSyncEventLocalService;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
@@ -64,6 +65,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.sync.constants.SyncConstants;
 import com.liferay.sync.constants.SyncDLObjectConstants;
 import com.liferay.sync.constants.SyncDeviceConstants;
@@ -1160,11 +1162,11 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 	protected SyncDLObject checkModifiedTime(
 		SyncDLObject syncDLObject, long typePK) {
 
-		DynamicQuery dynamicQuery = dlSyncEventLocalService.dynamicQuery();
+		DynamicQuery dynamicQuery = _dlSyncEventLocalService.dynamicQuery();
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("typePK", typePK));
 
-		List<DLSyncEvent> dlSyncEvents = dlSyncEventLocalService.dynamicQuery(
+		List<DLSyncEvent> dlSyncEvents = _dlSyncEventLocalService.dynamicQuery(
 			dynamicQuery);
 
 		if (dlSyncEvents.isEmpty()) {
@@ -1676,5 +1678,8 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SyncDLObjectServiceImpl.class);
+
+	@ServiceReference(type = DLSyncEventLocalService.class)
+	private DLSyncEventLocalService _dlSyncEventLocalService;
 
 }

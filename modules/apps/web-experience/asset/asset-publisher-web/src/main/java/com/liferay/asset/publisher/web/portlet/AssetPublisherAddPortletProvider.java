@@ -17,7 +17,7 @@ package com.liferay.asset.publisher.web.portlet;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
-import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
+import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.AddPortletProvider;
@@ -89,9 +89,9 @@ public class AssetPublisherAddPortletProvider
 		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 			className, classPK);
 
-		AssetPublisherUtil.addSelection(
-			themeDisplay, portletPreferences, portletId,
-			assetEntry.getEntryId(), -1, assetEntry.getClassName());
+		AssetPublisherWebUtil.addSelection(
+			portletPreferences, assetEntry.getEntryId(), -1,
+			assetEntry.getClassName());
 	}
 
 	/**

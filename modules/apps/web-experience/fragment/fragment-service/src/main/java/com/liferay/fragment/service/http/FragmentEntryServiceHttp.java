@@ -371,6 +371,38 @@ public class FragmentEntryServiceHttp {
 		}
 	}
 
+	public static com.liferay.fragment.model.FragmentEntry renameFragmentEntry(
+		HttpPrincipal httpPrincipal, long fragmentEntryId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(FragmentEntryServiceUtil.class,
+					"renameFragmentEntry", _renameFragmentEntryParameterTypes10);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					fragmentEntryId, name);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.fragment.model.FragmentEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
 		HttpPrincipal httpPrincipal, long fragmentEntryId,
 		java.lang.String name, java.lang.String css, java.lang.String html,
@@ -378,7 +410,7 @@ public class FragmentEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(FragmentEntryServiceUtil.class,
-					"updateFragmentEntry", _updateFragmentEntryParameterTypes10);
+					"updateFragmentEntry", _updateFragmentEntryParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					fragmentEntryId, name, css, html, js);
@@ -441,7 +473,10 @@ public class FragmentEntryServiceHttp {
 			long.class, long.class, java.lang.String.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _updateFragmentEntryParameterTypes10 = new Class[] {
+	private static final Class<?>[] _renameFragmentEntryParameterTypes10 = new Class[] {
+			long.class, java.lang.String.class
+		};
+	private static final Class<?>[] _updateFragmentEntryParameterTypes11 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class
 		};

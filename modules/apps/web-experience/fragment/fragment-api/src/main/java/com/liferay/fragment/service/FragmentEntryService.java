@@ -106,6 +106,9 @@ public interface FragmentEntryService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
+	public FragmentEntry renameFragmentEntry(long fragmentEntryId,
+		java.lang.String name) throws PortalException;
+
 	public FragmentEntry updateFragmentEntry(long fragmentEntryId,
 		java.lang.String name, java.lang.String css, java.lang.String html,
 		java.lang.String js) throws PortalException;

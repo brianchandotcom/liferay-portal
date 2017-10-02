@@ -122,6 +122,12 @@ public class FragmentEntryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static com.liferay.fragment.model.FragmentEntry renameFragmentEntry(
+		long fragmentEntryId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().renameFragmentEntry(fragmentEntryId, name);
+	}
+
 	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
 		long fragmentEntryId, java.lang.String name, java.lang.String css,
 		java.lang.String html, java.lang.String js)

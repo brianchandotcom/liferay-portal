@@ -244,6 +244,9 @@ public interface FragmentEntryLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public FragmentEntry renameFragmentEntry(long fragmentEntryId,
+		java.lang.String name) throws PortalException;
+
 	/**
 	* Updates the fragment entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

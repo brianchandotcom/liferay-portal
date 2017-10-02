@@ -135,14 +135,15 @@ public class GitWorkingDirectory {
 
 		Branch currentBranch = getCurrentBranch();
 
-		String currentBranchName = currentBranch.getName();
+		if (currentBranch != null) {
+			String currentBranchName = currentBranch.getName();
 
-		String branchName = branch.getName();
+			if (currentBranchName.equals(branch.getName())) {
+				System.out.println(
+					currentBranchName + " is already checked out");
 
-		if (currentBranchName.equals(branchName)) {
-			System.out.println(currentBranchName + " is already checked out");
-
-			return;
+				return;
+			}
 		}
 
 		waitForIndexLock();
@@ -155,6 +156,8 @@ public class GitWorkingDirectory {
 			sb.append(options);
 			sb.append(" ");
 		}
+
+		String branchName = branch.getName();
 
 		sb.append(branchName);
 
@@ -202,7 +205,11 @@ public class GitWorkingDirectory {
 			timeout++;
 
 			if (timeout >= 59) {
-				if (branchName.equals(getCurrentBranch())) {
+				currentBranch = getCurrentBranch();
+
+				if ((currentBranch != null) &&
+					branchName.equals(currentBranch.getName())) {
+
 					return;
 				}
 
@@ -658,7 +665,19 @@ public class GitWorkingDirectory {
 	}
 
 	public boolean pushToRemote(boolean force, Branch remoteBranch) {
-		return pushToRemote(force, getCurrentBranch(), remoteBranch);
+		Branch currentBranch = getCurrentBranch();
+
+		if (currentBranch == null) {
+			Remote remote = remoteBranch.getRemote();
+
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to push current branch to remote branch ",
+					remoteBranch.getName(), " on ", remote.getName(),
+					" because the current branch is invalid"));
+		}
+
+		return pushToRemote(force, currentBranch, remoteBranch);
 	}
 
 	public boolean pushToRemote(

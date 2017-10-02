@@ -58,9 +58,6 @@ public class SourceFormatterDefaultsPlugin
 		return _PORTAL_TOOL_NAME;
 	}
 
-	private SourceFormatterDefaultsPlugin() {
-	}
-
 	private void _configureTasksFormatSource(
 		FormatSourceTask formatSourceTask) {
 

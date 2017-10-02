@@ -2,6 +2,9 @@
 
 <%@ include file="/init.jsp" %>
 
+<pre id="<portlet:namespace />-output">
+</pre>
+
 <aui:script require="${artifactId}@${packageJsonVersion}">
 	var out = document.getElementById('<portlet:namespace />-output');
 
@@ -15,6 +18,3 @@
 		}
 	});
 </aui:script>
-
-<pre id="<portlet:namespace />-output">
-</pre>

@@ -6,6 +6,9 @@
 	<b><liferay-ui:message key="${artifactId}.caption"/></b>
 </p>
 
+<pre id="<portlet:namespace />-output">
+</pre>
+
 <aui:script require="${artifactId}@${packageJsonVersion}">
 	window.out = document.getElementById('<portlet:namespace />-output');
 
@@ -14,6 +17,3 @@
 
 	${auiScriptRequireVarName}.default();
 </aui:script>
-
-<pre id="<portlet:namespace />-output">
-</pre>

@@ -42,6 +42,12 @@
 								'liferay-portlet-url'
 							]
 						},
+						'liferay-kaleo-designer-templates': {
+							path: 'templates.js',
+							requires: [
+								'aui-tpl-snippets-deprecated'
+							]
+						},
 						'liferay-kaleo-designer-utils': {
 							path: 'utils.js',
 							requires: []

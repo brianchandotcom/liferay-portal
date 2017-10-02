@@ -31,17 +31,6 @@ AUI.add(
 
 		var SELECTOR_PREFIX_CELLEDITOR_VIEW_TYPE = STR_DOT + CSS_CELLEDITOR_VIEW_TYPE + STR_DASH;
 
-		var TPL_SELECT_MULTIPLE = [
-			'<tpl if="values.label !== undefined">',
-				'<label class="{[A.TplSnippets.getClassName(values.auiLabelCssClass, values.labelCssClass)]}" for="{id}" id="{labelId}" name="{labelName}" style="{labelStyle}">{label}</label>',
-			'</tpl>',
-			'<select class="{[A.TplSnippets.getClassName(values.auiCssClass, values.cssClass)]}" <tpl if="values.disabled">disabled="disabled"</tpl> <tpl if="values.multiple">multiple="multiple"</tpl> id="{id}" name="{name}" style="{style}">',
-				'<tpl for="options">',
-					'<option value="{value}">{label}</option>',
-				'</tpl>',
-			'</select>'
-		];
-
 		var BaseAbstractEditor = A.Component.create(
 			{
 				ATTRS: {
@@ -1460,7 +1449,7 @@ AUI.add(
 						var notificationsViewTpl = instance.get('viewTemplate');
 
 						var inputTpl = Template.get('input');
-						var selectMultipleTpl = new Template(TPL_SELECT_MULTIPLE);
+						var selectMultipleTpl = Template.get('select-multiple');
 						var selectTpl = Template.get('select');
 						var textareaTpl = Template.get('textarea');
 
@@ -2877,6 +2866,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-ace-editor', 'aui-ace-editor-mode-xml', 'aui-base', 'aui-datatype', 'aui-node', 'liferay-kaleo-designer-autocomplete-util', 'liferay-kaleo-designer-utils']
+		requires: ['aui-ace-editor', 'aui-ace-editor-mode-xml', 'aui-base', 'aui-datatype', 'aui-node', 'liferay-kaleo-designer-autocomplete-util', 'liferay-kaleo-designer-templates', 'liferay-kaleo-designer-utils']
 	}
 );

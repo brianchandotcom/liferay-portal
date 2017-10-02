@@ -677,7 +677,7 @@ version 2.3.1.
 ## 3.0.44 - 2016-12-01
 
 ### Added
-- [LPS-69488]: Set default Node.js version to 6.6.0.
+- [LPS-69488]: Set the default Node.js version to 6.6.0.
 
 ### Changed
 - [LPS-66853]: Update the [Liferay Gradle Plugins Source Formatter] dependency

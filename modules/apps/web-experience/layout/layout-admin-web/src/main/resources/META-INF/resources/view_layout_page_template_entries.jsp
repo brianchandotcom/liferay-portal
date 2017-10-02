@@ -101,6 +101,8 @@ renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateCo
 
 			<liferay-ui:search-container-column-text>
 				<liferay-frontend:icon-vertical-card
+					actionJsp="/layout_page_template_entry_action.jsp"
+					actionJspServletContext="<%= application %>"
 					cssClass="entry-display-style"
 					icon="page"
 					resultRow="<%= row %>"

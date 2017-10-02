@@ -1,0 +1,12 @@
+Bundle-Name: ${artifactId}
+Bundle-SymbolicName: ${package}
+Bundle-Version: ${version}
+Export-Package: ${package}.constants
+Web-ContextPath: /${artifactId}#if (${buildType} != "gradle")
+
+-jsp: *.jsp,*.jspf
+-plugin.jsp: com.liferay.ant.bnd.jsp.JspAnalyzerPlugin
+-plugin.npm: com.liferay.ant.bnd.npm.NpmAnalyzerPlugin
+-plugin.resourcebundle: com.liferay.ant.bnd.resource.bundle.ResourceBundleLoaderAnalyzerPlugin
+-plugin.sass: com.liferay.ant.bnd.sass.SassAnalyzerPlugin
+-sass: *#end

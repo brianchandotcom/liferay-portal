@@ -545,6 +545,179 @@ public class ProjectTemplatesTest {
 			"META-INF/resources/view.jsp");
 	}
 
+	@Test
+	public void testBuildTemplateNpmAngularPortlet() throws Exception {
+		File projectDir = _buildTemplateWithGradle(
+			"npm-angular-portlet", "foo");
+
+		_testContains(
+			projectDir, "src/main/resources/META-INF/resources/view.jsp",
+			"<aui:script require=\"foo@1.0.0\">", "foo100.default();");
+	}
+
+	@Test
+	public void testBuildTemplateNpmAngularPortletWithDashes()
+		throws Exception {
+
+		File projectDir = _buildTemplateWithGradle(
+			"npm-angular-portlet", "foo-bar");
+
+		_testContains(
+			projectDir, "src/main/resources/META-INF/resources/view.jsp",
+			"<aui:script require=\"foo-bar@1.0.0\">", "fooBar100.default();");
+	}
+
+	@Test
+	public void testBuildTemplateNpmBillboardjsPortlet() throws Exception {
+		File projectDir = _buildTemplateWithGradle(
+			"npm-billboardjs-portlet", "foo");
+
+		_testContains(
+			projectDir, "src/main/resources/META-INF/resources/view.jsp",
+			"<aui:script require=\"foo@1.0.0\">",
+			"foo100.default('<portlet:namespace />');");
+	}
+
+	@Test
+	public void testBuildTemplateNpmBillboardjsPortletWithDashes()
+		throws Exception {
+
+		File projectDir = _buildTemplateWithGradle(
+			"npm-billboardjs-portlet", "foo-bar");
+
+		_testContains(
+			projectDir, "src/main/resources/META-INF/resources/view.jsp",
+			"<aui:script require=\"foo-bar@1.0.0\">",
+			"fooBar100.default('<portlet:namespace />');");
+	}
+
+	@Test
+	public void testBuildTemplateNpmIsomorphicPortlet() throws Exception {
+		File projectDir = _buildTemplateWithGradle(
+			"npm-isomorphic-portlet", "foo");
+
+		_testContains(
+			projectDir, "src/main/resources/META-INF/resources/view.jsp",
+			"<aui:script require=\"foo@1.0.0\">", "foo100.default(");
+	}
+
+	@Test
+	public void testBuildTemplateNpmIsomorphicPortletWithDashes()
+		throws Exception {
+
+		File projectDir = _buildTemplateWithGradle(
+			"npm-isomorphic-portlet", "foo-bar");
+
+		_testContains(
+			projectDir, "src/main/resources/META-INF/resources/view.jsp",
+			"<aui:script require=\"foo-bar@1.0.0\">", "fooBar100.default(");
+	}
+
+	@Test
+	public void testBuildTemplateNpmJQueryPortlet() throws Exception {
+		File projectDir = _buildTemplateWithGradle("npm-jquery-portlet", "foo");
+
+		_testContains(
+			projectDir, "src/main/resources/META-INF/resources/view.jsp",
+			"<aui:script require=\"foo@1.0.0\">",
+			"foo100.default('<portlet:namespace />-root');");
+	}
+
+	@Test
+	public void testBuildTemplateNpmJQueryPortletWithDashes() throws Exception {
+		File projectDir = _buildTemplateWithGradle(
+			"npm-jquery-portlet", "foo-bar");
+
+		_testContains(
+			projectDir, "src/main/resources/META-INF/resources/view.jsp",
+			"<aui:script require=\"foo-bar@1.0.0\">",
+			"fooBar100.default('<portlet:namespace />-root');");
+	}
+
+	@Test
+	public void testBuildTemplateNpmMetaljsPortlet() throws Exception {
+		File projectDir = _buildTemplateWithGradle(
+			"npm-metaljs-portlet", "foo");
+
+		_testContains(
+			projectDir, "src/main/resources/META-INF/resources/view.jsp",
+			"<aui:script require=\"foo@1.0.0\">",
+			"foo100.default('<portlet:namespace />-button');");
+	}
+
+	@Test
+	public void testBuildTemplateNpmMetaljsPortletWithDashes()
+		throws Exception {
+
+		File projectDir = _buildTemplateWithGradle(
+			"npm-metaljs-portlet", "foo-bar");
+
+		_testContains(
+			projectDir, "src/main/resources/META-INF/resources/view.jsp",
+			"<aui:script require=\"foo-bar@1.0.0\">",
+			"fooBar100.default('<portlet:namespace />-button');");
+	}
+
+	@Test
+	public void testBuildTemplateNpmPortlet() throws Exception {
+		File projectDir = _buildTemplateWithGradle("npm-portlet", "foo");
+
+		_testContains(
+			projectDir, "src/main/resources/META-INF/resources/view.jsp",
+			"<aui:script require=\"foo@1.0.0\">", "foo100.default();");
+	}
+
+	@Test
+	public void testBuildTemplateNpmPortletWithDashes() throws Exception {
+		File projectDir = _buildTemplateWithGradle("npm-portlet", "foo-bar");
+
+		_testContains(
+			projectDir, "src/main/resources/META-INF/resources/view.jsp",
+			"<aui:script require=\"foo-bar@1.0.0\">", "fooBar100.default();");
+	}
+
+	@Test
+	public void testBuildTemplateNpmReactPortlet() throws Exception {
+		File projectDir = _buildTemplateWithGradle("npm-react-portlet", "foo");
+
+		_testContains(
+			projectDir, "src/main/resources/META-INF/resources/view.jsp",
+			"<aui:script require=\"foo@1.0.0\">",
+			"foo100.default('<portlet:namespace />-root');");
+	}
+
+	@Test
+	public void testBuildTemplateNpmReactPortletWithDashes() throws Exception {
+		File projectDir = _buildTemplateWithGradle(
+			"npm-react-portlet", "foo-bar");
+
+		_testContains(
+			projectDir, "src/main/resources/META-INF/resources/view.jsp",
+			"<aui:script require=\"foo-bar@1.0.0\">",
+			"fooBar100.default('<portlet:namespace />-root');");
+	}
+
+	@Test
+	public void testBuildTemplateNpmVuejsPortlet() throws Exception {
+		File projectDir = _buildTemplateWithGradle("npm-vuejs-portlet", "foo");
+
+		_testContains(
+			projectDir, "src/main/resources/META-INF/resources/view.jsp",
+			"<aui:script require=\"foo@1.0.0\">",
+			"foo100.default('<portlet:namespace />');");
+	}
+
+	@Test
+	public void testBuildTemplateNpmVuejsPortletWithDashes() throws Exception {
+		File projectDir = _buildTemplateWithGradle(
+			"npm-vuejs-portlet", "foo-bar");
+
+		_testContains(
+			projectDir, "src/main/resources/META-INF/resources/view.jsp",
+			"<aui:script require=\"foo-bar@1.0.0\">",
+			"fooBar100.default('<portlet:namespace />');");
+	}
+
 	@Test(expected = IllegalArgumentException.class)
 	public void testBuildTemplateOnExistingDirectory() throws Exception {
 		File destinationDir = temporaryFolder.newFolder("gradle");

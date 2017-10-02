@@ -23,7 +23,7 @@ AUI.add(
 		var jsonStringify = Liferay.KaleoDesignerUtils.jsonStringify;
 		var uniformRandomInt = Liferay.KaleoDesignerUtils.uniformRandomInt;
 
-		var COL_TYPES_ASSIGNMENT = ['address', 'resourceActions', 'roleId', 'roleType', 'scriptedAssignment', 'scriptedRecipient', 'taskAssignees', 'user', 'userId'];
+		var COL_TYPES_ASSIGNMENT = ['address', 'receptionType', 'resourceActions', 'roleId', 'roleType', 'scriptedAssignment', 'scriptedRecipient', 'taskAssignees', 'user', 'userId'];
 
 		var COL_TYPES_FIELD = ['condition', 'fork', 'join', 'join-xor', 'state', 'task'];
 
@@ -449,13 +449,13 @@ AUI.add(
 						}
 					},
 
-					_appendXMLAssignments: function(buffer, dataAssignments, wrapperNodeName) {
+					_appendXMLAssignments: function(buffer, dataAssignments, wrapperNodeName, wrapperNodeAttrs) {
 						var instance = this;
 
 						if (dataAssignments) {
 							var assignmentType = AArray(dataAssignments.assignmentType)[0];
 
-							var xmlAssignments = XMLUtil.createObj(wrapperNodeName || 'assignments');
+							var xmlAssignments = XMLUtil.createObj(wrapperNodeName || 'assignments', wrapperNodeAttrs);
 
 							buffer.push(xmlAssignments.open);
 
@@ -612,10 +612,17 @@ AUI.add(
 										);
 									}
 
+									var recipientsAttrs = {};
+									
+									if (recipients[index].receptionType && recipients[index].receptionType.length > 0) {
+										recipientsAttrs['receptionType'] = recipients[index].receptionType;
+									}
+									
 									instance._appendXMLAssignments(
 										buffer,
 										recipients[index],
-										'recipients'
+										'recipients',
+										recipientsAttrs
 									);
 
 									if (executionType) {
@@ -910,6 +917,10 @@ AUI.add(
 											],
 											resultListLocator: 'user'
 										}
+									},
+									{
+										key: 'receptionType',
+										locator: '@receptionType'
 									}
 								],
 								resultListLocator: tagName || 'assignments'
@@ -1164,6 +1175,9 @@ AUI.add(
 									function(item2, index2, collection2) {
 										if (isValue(item2)) {
 											if (index2 === 'recipients') {
+												if (item2[0] && item2[0].receptionType) {
+													instance._put(notifications,'receptionType', item2[0].receptionType);
+												}
 												item2 = instance._normalizeToAssignments(item2);
 											}
 

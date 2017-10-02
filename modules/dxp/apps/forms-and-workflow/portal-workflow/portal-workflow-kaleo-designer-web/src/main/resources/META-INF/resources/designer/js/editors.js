@@ -1234,6 +1234,16 @@ AUI.add(
 						instance.appendToStaticView(selectWrapper);
 
 						typeSelect.on(['change', 'keyup'], A.bind(instance._onTypeValueChange, instance));
+						
+						var receptionType = inputTpl.parse(
+							{
+								id: A.guid(),
+								name: 'receptionType',
+								type: 'hidden'
+							}
+						);
+			
+						instance.appendToStaticView(receptionType);
 
 						var buffer = [];
 

@@ -15,8 +15,8 @@
 package com.liferay.petra.json.web.service.client.internal;
 
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
-import com.liferay.petra.json.web.service.client.serversimulator.HTTPServerSimulator;
-import com.liferay.petra.json.web.service.client.serversimulator.SimulatorConstants;
+import com.liferay.petra.json.web.service.client.server.simulator.HTTPServerSimulator;
+import com.liferay.petra.json.web.service.client.server.simulator.SimulatorConstants;
 
 import java.util.Collections;
 import java.util.HashMap;

@@ -14,7 +14,7 @@
 
 package com.liferay.petra.json.web.service.client.internal;
 
-import com.liferay.petra.json.web.service.client.serversimulator.HTTPServerSimulator;
+import com.liferay.petra.json.web.service.client.server.simulator.HTTPServerSimulator;
 
 import java.util.HashMap;
 import java.util.Map;

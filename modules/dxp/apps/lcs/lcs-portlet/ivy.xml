@@ -21,9 +21,9 @@
 		<dependency name="metrics-core" org="com.yammer.metrics" rev="2.2.0" />
 		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
 		<dependency name="org.osgi.service.cm" org="org.osgi" rev="1.5.0" />
+		<dependency name="sigar" org="org.fusesource" rev="1.6.4" />
 		<dependency name="signpost-core" org="oauth.signpost" rev="1.2.1.2" />
 		<dependency name="signpost-commonshttp4" org="oauth.signpost" rev="1.2.1.2" />
 		<dependency name="slf4j-api" org="org.slf4j" rev="1.7.2" />
-		<dependency name="sigar" org="org.fusesource" rev="1.6.4" />
 	</dependencies>
 </ivy-module>

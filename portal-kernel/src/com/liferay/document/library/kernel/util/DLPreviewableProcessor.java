@@ -20,7 +20,6 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageToolUtil;
-import com.liferay.portal.kernel.io.FileFilter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
@@ -50,6 +49,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
+import java.util.function.Predicate;
 
 /**
  * @author Alexander Chow
@@ -743,20 +743,31 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		String tempFileId = DLUtil.getTempFileId(
 			fileVersion.getFileEntryId(), fileVersion.getVersion());
 
-		StringBundler sb = new StringBundler(5);
+		String prefix = tempFileId + StringPool.DASH;
 
-		sb.append(tempFileId);
-		sb.append(StringPool.DASH);
-		sb.append("(.*)");
+		Predicate<File> fileFilter = File::isFile;
+
+		fileFilter = fileFilter.and(
+			file -> {
+				String fileName = file.getName();
+
+				return fileName.startsWith(prefix);
+			});
 
 		if (Validator.isNotNull(type)) {
-			sb.append(StringPool.PERIOD);
-			sb.append(type);
+			String suffix = StringPool.PERIOD + type;
+
+			fileFilter = fileFilter.and(
+				file -> {
+					String fileName = file.getName();
+
+					return fileName.endsWith(suffix);
+				});
 		}
 
 		File dir = new File(PREVIEW_TMP_PATH);
 
-		File[] files = dir.listFiles(new FileFilter(sb.toString()));
+		File[] files = dir.listFiles(fileFilter::test);
 
 		if (_log.isDebugEnabled()) {
 			for (File file : files) {

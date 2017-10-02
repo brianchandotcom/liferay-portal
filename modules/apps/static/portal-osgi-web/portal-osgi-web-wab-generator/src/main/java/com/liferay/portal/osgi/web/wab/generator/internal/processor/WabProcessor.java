@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
 import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.deploy.hot.DependencyManagementThreadLocal;
-import com.liferay.portal.kernel.io.FileFilter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
@@ -842,7 +841,20 @@ public class WabProcessor {
 			return;
 		}
 
-		File[] files = dir.listFiles(new FileFilter(".*\\.tld"));
+		File[] files = dir.listFiles(
+			(File file) -> {
+				if (!file.isFile()) {
+					return false;
+				}
+
+				String fileName = file.getName();
+
+				if (fileName.endsWith(".tld")) {
+					return true;
+				}
+
+				return false;
+			});
 
 		for (File file : files) {
 			String content = FileUtil.read(file);

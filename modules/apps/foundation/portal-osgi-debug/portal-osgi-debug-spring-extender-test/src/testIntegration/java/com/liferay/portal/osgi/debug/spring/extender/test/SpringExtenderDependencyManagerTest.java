@@ -17,6 +17,7 @@ package com.liferay.portal.osgi.debug.spring.extender.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.log.SanitizerLogWrapper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.CharPool;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.osgi.debug.spring.extender.test.reference.SpringExtenderTestComponentReference;
 import com.liferay.portal.osgi.debug.spring.extender.test.service.impl.SpringExtenderTestComponentLocalServiceImpl;
@@ -166,9 +168,18 @@ public class SpringExtenderDependencyManagerTest {
 
 			String message = (String)loggingEvent.getMessage();
 
-			StringBundler sb = new StringBundler(4);
+			StringBundler sb = new StringBundler(6);
 
-			sb.append("is unavailable due to missing required dependencies: ");
+			sb.append("is unavailable due to missing required dependencies:");
+
+			if (SanitizerLogWrapper.isEnabled()) {
+				sb.append(StringPool.UNDERLINE);
+			}
+			else {
+				sb.append(StringPool.NEW_LINE);
+			}
+
+			sb.append("\t\t");
 			sb.append("ServiceDependency[interface ");
 			sb.append(_SPRING_EXTENDER_TEST_COMPONENT_REFERENCE_CLASS_NAME);
 			sb.append(" null]");

@@ -126,11 +126,14 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  *
  * @author Raymond Augé
  * @author Julio Camarero
+ * @deprecated As of 1.2.0, replaced by {@link
+ *             com.liferay.asset.publisher.util.AssetPublisherHelper}
  */
 @Component(
 	configurationPid = "com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration",
 	immediate = true, service = AssetPublisherUtil.class
 )
+@Deprecated
 @ProviderType
 public class AssetPublisherUtil {
 

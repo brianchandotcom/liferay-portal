@@ -731,7 +731,8 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 				theme.getTemplatesPath());
 
 			templatesPath = themeContextReplace.replace(templatesPath);
-			templatesPath = StringUtil.safePath(templatesPath);
+			templatesPath = StringUtil.replace(
+				templatesPath, StringPool.DOUBLE_SLASH, StringPool.SLASH);
 
 			themeContextReplace.addValue("templates-path", templatesPath);
 
@@ -739,7 +740,8 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 				themeElement.elementText("css-path"), theme.getCssPath());
 
 			cssPath = themeContextReplace.replace(cssPath);
-			cssPath = StringUtil.safePath(cssPath);
+			cssPath = StringUtil.replace(
+				cssPath, StringPool.DOUBLE_SLASH, StringPool.SLASH);
 
 			themeContextReplace.addValue("css-path", cssPath);
 
@@ -747,7 +749,8 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 				themeElement.elementText("images-path"), theme.getImagesPath());
 
 			imagesPath = themeContextReplace.replace(imagesPath);
-			imagesPath = StringUtil.safePath(imagesPath);
+			imagesPath = StringUtil.replace(
+				imagesPath, StringPool.DOUBLE_SLASH, StringPool.SLASH);
 
 			themeContextReplace.addValue("images-path", imagesPath);
 
@@ -756,7 +759,8 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 				theme.getJavaScriptPath());
 
 			javaScriptPath = themeContextReplace.replace(javaScriptPath);
-			javaScriptPath = StringUtil.safePath(javaScriptPath);
+			javaScriptPath = StringUtil.replace(
+				javaScriptPath, StringPool.DOUBLE_SLASH, StringPool.SLASH);
 
 			themeContextReplace.addValue("javascript-path", javaScriptPath);
 

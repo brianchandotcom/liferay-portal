@@ -3350,10 +3350,12 @@ public class StringUtil {
 	 * </pre>
 	 * </p>
 	 *
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 * @param  path the original string
 	 * @return a string representing the original string with all double slashes
 	 *         replaced with single slashes
 	 */
+	@Deprecated
 	public static String safePath(String path) {
 		return replace(path, StringPool.DOUBLE_SLASH, StringPool.SLASH);
 	}

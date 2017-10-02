@@ -14,6 +14,7 @@
 
 package com.liferay.ratings.verify.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -38,10 +39,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Alberto Chaparro
  */
+@RunWith(Arquillian.class)
 public class VerifyRatingsTest extends BaseVerifyProcessTestCase {
 
 	@ClassRule

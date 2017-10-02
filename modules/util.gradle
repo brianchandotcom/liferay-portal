@@ -1,5 +1,6 @@
 import com.liferay.gradle.plugins.change.log.builder.BuildChangeLogTask
 import com.liferay.gradle.plugins.defaults.tasks.CopyIvyDependenciesTask
+import com.liferay.gradle.plugins.source.formatter.FormatSourceTask
 import com.liferay.gradle.plugins.util.PortalTools
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.StringUtil
@@ -10,9 +11,15 @@ buildscript {
 	apply from: file("build-buildscript.gradle"), to: buildscript
 }
 
+apply plugin: "com.liferay.source.formatter"
+apply plugin: "com.liferay.source.formatter.defaults"
+
 task buildFixPackChangeLog(type: BuildChangeLogTask)
 task cleanReleng
 task cleanVersionOverride
+task formatSourceCurrentBranch(type: FormatSourceTask)
+task formatSourceLatestAuthor(type: FormatSourceTask)
+task formatSourceLocalChanges(type: FormatSourceTask)
 task printDependencyPath
 task setUpLibs
 task setUpPortalTools
@@ -84,6 +91,21 @@ cleanVersionOverride {
 			new File(gitRepoDir.parentFile, ".version-override-${it.parentFile.name}.properties")
 		}
 	}
+}
+
+formatSourceCurrentBranch {
+	description = "Runs Liferay Source Formatter to format the project files that are added or modified in the current Git branch."
+	formatCurrentBranch = true
+}
+
+formatSourceLatestAuthor {
+	description = "Runs Liferay Source Formatter to format the project files that are added or modified in the latest Git commits of the same author."
+	formatCurrentBranch = true
+}
+
+formatSourceLocalChanges {
+	description = "Runs Liferay Source Formatter to format the unstaged project files."
+	formatLocalChanges = true
 }
 
 printDependencyPath {
@@ -169,6 +191,12 @@ wrapperSubrepo {
 
 	jarFile = new File(wrapperDir, "gradle/wrapper/gradle-wrapper.jar")
 	scriptFile = new File(wrapperDir, "gradlew")
+}
+
+tasks.withType(FormatSourceTask) {
+	baseDirName = "../"
+	group = "formatting"
+	showStatusUpdates = true
 }
 
 _createSetUpLibTasks(libDependenciesMap)

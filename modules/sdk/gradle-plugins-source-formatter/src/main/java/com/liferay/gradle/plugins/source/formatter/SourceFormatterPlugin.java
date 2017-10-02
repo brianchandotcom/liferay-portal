@@ -116,6 +116,20 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 
 		formatSourceTask.setClasspath(classpath);
 
+		String fileExtensions = GradleUtil.getTaskPrefixedProperty(
+			formatSourceTask, "file.extensions");
+
+		if (Validator.isNotNull(fileExtensions)) {
+			formatSourceTask.setFileExtensions(fileExtensions.split(","));
+		}
+
+		String fileNames = GradleUtil.getTaskPrefixedProperty(
+			formatSourceTask, "file.names");
+
+		if (Validator.isNotNull(fileNames)) {
+			formatSourceTask.setFileNames(fileNames.split(","));
+		}
+
 		String formatCurrentBranch = GradleUtil.getTaskPrefixedProperty(
 			formatSourceTask, "format.current.branch");
 

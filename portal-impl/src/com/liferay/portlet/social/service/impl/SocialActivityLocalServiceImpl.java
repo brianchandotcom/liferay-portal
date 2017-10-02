@@ -139,8 +139,8 @@ public class SocialActivityLocalServiceImpl
 		activity.setExtraData(extraData);
 		activity.setReceiverUserId(receiverUserId);
 
-		AssetEntry assetEntry = assetEntryPersistence.fetchByC_C(
-			classNameId, classPK);
+		AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
+			className, classPK);
 
 		activity.setAssetEntry(assetEntry);
 

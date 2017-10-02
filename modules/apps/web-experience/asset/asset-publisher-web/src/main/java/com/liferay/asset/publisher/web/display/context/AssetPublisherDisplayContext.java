@@ -234,7 +234,7 @@ public class AssetPublisherDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(
+		_assetEntryQuery = AssetPublisherWebUtil.getAssetEntryQuery(
 			_portletPreferences, getGroupIds(), getAllAssetCategoryIds(),
 			getAllAssetTagNames());
 
@@ -254,7 +254,7 @@ public class AssetPublisherDisplayContext {
 		_assetEntryQuery.setOrderByType1(getOrderByType1());
 		_assetEntryQuery.setOrderByType2(getOrderByType2());
 
-		AssetPublisherUtil.processAssetEntryQuery(
+		AssetPublisherWebUtil.processAssetEntryQuery(
 			themeDisplay.getUser(), _portletPreferences, _assetEntryQuery);
 
 		_assetPublisherCustomizer.setAssetEntryQueryOptions(
@@ -365,7 +365,7 @@ public class AssetPublisherDisplayContext {
 				queryValues = ParamUtil.getString(
 					_request, "queryTagNames" + queryLogicIndex, queryValues);
 
-				queryValues = AssetPublisherUtil.filterAssetTagNames(
+				queryValues = AssetPublisherWebUtil.filterAssetTagNames(
 					themeDisplay.getScopeGroupId(), queryValues);
 			}
 			else {
@@ -442,7 +442,7 @@ public class AssetPublisherDisplayContext {
 
 	public long[] getClassNameIds() {
 		if (_classNameIds == null) {
-			_classNameIds = AssetPublisherUtil.getClassNameIds(
+			_classNameIds = AssetPublisherWebUtil.getClassNameIds(
 				_portletPreferences, getAvailableClassNameIds());
 		}
 
@@ -580,7 +580,7 @@ public class AssetPublisherDisplayContext {
 			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-			_groupIds = AssetPublisherUtil.getGroupIds(
+			_groupIds = AssetPublisherWebUtil.getGroupIds(
 				_portletPreferences, themeDisplay.getScopeGroupId(),
 				themeDisplay.getLayout());
 		}
@@ -1390,7 +1390,7 @@ public class AssetPublisherDisplayContext {
 
 		assetEntryQuery.setAttribute(
 			"ddmStructureFieldName",
-			AssetPublisherUtil.encodeName(
+			AssetPublisherWebUtil.encodeName(
 				classTypeField.getClassTypeId(), getDDMStructureFieldName(),
 				locale));
 

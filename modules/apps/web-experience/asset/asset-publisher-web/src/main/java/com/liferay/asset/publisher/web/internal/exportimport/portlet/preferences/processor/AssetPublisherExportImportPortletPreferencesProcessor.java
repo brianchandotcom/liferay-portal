@@ -24,6 +24,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
@@ -184,7 +185,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		Layout layout = _layoutLocalService.getLayout(
 			portletDataContext.getPlid());
 
-		long[] groupIds = AssetPublisherUtil.getGroupIds(
+		long[] groupIds = AssetPublisherWebUtil.getGroupIds(
 			portletPreferences, portletDataContext.getScopeGroupId(), layout);
 
 		String selectionStyle = portletPreferences.getValue(
@@ -254,10 +255,11 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		AssetEntryQuery assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(
-			portletPreferences, groupIds, null, null);
+		AssetEntryQuery assetEntryQuery =
+			AssetPublisherWebUtil.getAssetEntryQuery(
+				portletPreferences, groupIds, null, null);
 
-		long[] classNameIds = AssetPublisherUtil.getClassNameIds(
+		long[] classNameIds = AssetPublisherWebUtil.getClassNameIds(
 			portletPreferences,
 			AssetRendererFactoryRegistryUtil.getClassNameIds(companyId, true));
 
@@ -1335,7 +1337,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			}
 
 			try {
-				if (!AssetPublisherUtil.isScopeIdSelectable(
+				if (!AssetPublisherWebUtil.isScopeIdSelectable(
 						PermissionThreadLocal.getPermissionChecker(), newValue,
 						companyGroupId, layout, false)) {
 

@@ -17,10 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", AssetPublisherUtil.getEmailFromName(portletPreferences, company.getCompanyId()));
-String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", AssetPublisherUtil.getEmailFromAddress(portletPreferences, company.getCompanyId()));
+String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", AssetPublisherWebUtil.getEmailFromName(portletPreferences, company.getCompanyId()));
+String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", AssetPublisherWebUtil.getEmailFromAddress(portletPreferences, company.getCompanyId()));
 
-boolean emailAssetEntryAddedEnabled = ParamUtil.getBoolean(request, "preferences--emailAssetEntryAddedEnabled--", AssetPublisherUtil.getEmailAssetEntryAddedEnabled(portletPreferences));
+boolean emailAssetEntryAddedEnabled = ParamUtil.getBoolean(request, "preferences--emailAssetEntryAddedEnabled--", AssetPublisherWebUtil.getEmailAssetEntryAddedEnabled(portletPreferences));
 %>
 
 <liferay-ui:error key="emailAssetEntryAddedBody" message="please-enter-a-valid-body" />
@@ -37,7 +37,7 @@ boolean emailAssetEntryAddedEnabled = ParamUtil.getBoolean(request, "preferences
 
 	<liferay-frontend:email-notification-settings
 		emailBodyLocalizedValuesMap="<%= assetPublisherPortletInstanceConfiguration.emailAssetEntryAddedBody() %>"
-		emailDefinitionTerms="<%= AssetPublisherUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName) %>"
+		emailDefinitionTerms="<%= AssetPublisherWebUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName) %>"
 		emailEnabled="<%= emailAssetEntryAddedEnabled %>"
 		emailParam="emailAssetEntryAdded"
 		emailSubjectLocalizedValuesMap="<%= assetPublisherPortletInstanceConfiguration.emailAssetEntryAddedSubject() %>"

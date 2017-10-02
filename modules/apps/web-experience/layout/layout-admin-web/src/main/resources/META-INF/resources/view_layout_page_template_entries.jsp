@@ -25,6 +25,29 @@ portletDisplay.setURLBack(layoutPageTemplateDisplayContext.getLayoutPageTemplate
 renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionTitle());
 %>
 
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<portlet:renderURL var="mainURL" />
+
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item href="<%= mainURL.toString() %>" label="entries" selected="<%= true %>" />
+	</aui:nav>
+
+	<c:if test="<%= layoutPageTemplateDisplayContext.isShowLayoutPageTemplateEntriesSearch() %>">
+		<portlet:renderURL var="portletURL">
+			<portlet:param name="mvcPath" value="/view_layout_page_template_entries.jsp" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionId()) %>" />
+			<portlet:param name="displayStyle" value="<%= layoutPageTemplateDisplayContext.getDisplayStyle() %>" />
+		</portlet:renderURL>
+
+		<aui:nav-bar-search>
+			<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</aui:nav-bar-search>
+	</c:if>
+</aui:nav-bar>
+
 <liferay-frontend:management-bar
 	disabled="<%= layoutPageTemplateDisplayContext.isDisabledLayoutPageTemplateEntriesManagementBar() %>"
 	includeCheckBox="<%= true %>"

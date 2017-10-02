@@ -9,10 +9,6 @@
 	min-height: $management-bar-height;
 	position: relative;
 
-	@include media-breakpoint-up(md) {
-		border-radius: $border-radius;
-	}
-
 	.checkbox,
 	.radio {
 		margin-bottom: 0;
@@ -45,7 +41,7 @@
 
 	@if (variable-exists(atlas-theme)) {
 		@include media-breakpoint-up(md) {
-			margin: 11.5px 0 11.5px 15px;
+			margin: 14.5px 0 14.5px 15px;
 		}
 	}
 }
@@ -87,10 +83,10 @@
 .management-bar-nav > li > .checkbox,
 .management-bar-nav > li > .radio {
 	float: left;
-	padding-bottom: (($management-bar-height - 20 - $management-bar-border-bottom-width - $management-bar-border-top-width) / 2);
+	padding-bottom: (($management-bar-height - 1.5rem - $management-bar-border-bottom-width - $management-bar-border-top-width) / 2);
 	padding-left: $management-bar-padding-horizontal;
 	padding-right: 0;
-	padding-top: (($management-bar-height - 20 - $management-bar-border-bottom-width - $management-bar-border-top-width) / 2);
+	padding-top: (($management-bar-height - 1.5rem - $management-bar-border-bottom-width - $management-bar-border-top-width) / 2);
 
 	@if (variable-exists(atlas-theme)) {
 		@include media-breakpoint-up(md) {
@@ -118,8 +114,8 @@
 
 		@if (variable-exists(atlas-theme)) {
 			@include media-breakpoint-up(md) {
-				padding-bottom: 18.5px;
-				padding-top: 18.5px;
+				padding-bottom: $management-bar-desktop-padding-vertical;
+				padding-top: $management-bar-desktop-padding-vertical;
 			}
 		}
 	}
@@ -260,6 +256,19 @@
 			overflow-y: visible;
 		}
 	}
+
+	.management-bar-nav > .dropdown {
+		> .dropdown-toggle {
+			display: flex;
+		}
+
+		> .dropdown-menu {
+			@include media-breakpoint-down($scaling-breakpoint-down) {
+				position: relative !important;
+				transform: none !important;
+			}
+		}
+	}
 }
 
 .management-bar-nav {
@@ -282,8 +291,8 @@
 
 			@if (variable-exists(atlas-theme)) {
 				@include media-breakpoint-up(md) {
-					padding-bottom: 18.5px;
-					padding-top: 18.5px;
+					padding-bottom: 19.5px;
+					padding-top: 19.5px;
 				}
 			}
 		}
@@ -481,8 +490,8 @@
 @if (variable-exists(atlas-theme)) {
 	@include media-breakpoint-up(md) {
 		.management-bar-nav > li > .dropdown-toggle {
-			padding-bottom: 18.5px;
-			padding-top: 18.5px;
+			padding-bottom: $management-bar-desktop-padding-vertical;
+			padding-top: $management-bar-desktop-padding-vertical;
 		}
 	}
 }

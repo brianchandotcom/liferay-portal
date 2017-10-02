@@ -10,7 +10,7 @@
 	border: 1px solid $gray-600;
 
 	@include border-radius(4px);
-	@include box-shadow(null);
+	@include box-shadow(none);
 
 	color: $body-color;
 	height: 104px;

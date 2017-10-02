@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.sampledrools.action;
+package com.liferay.portal.rules.engine.sample.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.resource.StringResourceRetriever;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -23,23 +24,41 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.rules.engine.RulesEngine;
 import com.liferay.portal.rules.engine.RulesEngineException;
-import com.liferay.portal.rules.engine.RulesEngineUtil;
 import com.liferay.portal.rules.engine.RulesLanguage;
 import com.liferay.portal.rules.engine.RulesResourceRetriever;
+import com.liferay.portal.rules.engine.sample.web.constants.SampleDroolsPortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
-public class ConfigurationActionImpl extends DefaultConfigurationAction {
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + SampleDroolsPortletKeys.SAMPLE_DROOLS},
+	service = ConfigurationAction.class
+)
+public class SampleDroolsConfigurationAction
+	extends DefaultConfigurationAction {
+
+	@Override
+	public String getJspPath(HttpServletRequest request) {
+		return "/configuration.jsp";
+	}
 
 	@Override
 	public void processAction(
@@ -62,9 +81,18 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 			SessionMessages.add(
 				actionRequest,
-				PortalUtil.getPortletId(actionRequest) +
+				_portal.getPortletId(actionRequest) +
 					SessionMessages.KEY_SUFFIX_UPDATED_CONFIGURATION);
 		}
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portal.rules.engine.sample.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	protected void updatePreferences(
@@ -94,7 +122,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 					String.valueOf(RulesLanguage.DROOLS_RULE_LANGUAGE));
 
 			try {
-				RulesEngineUtil.update(domainName, rulesResourceRetriever);
+				_ruleEngine.update(domainName, rulesResourceRetriever);
 			}
 			catch (RulesEngineException ree) {
 				_log.error(ree, ree);
@@ -114,6 +142,12 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ConfigurationActionImpl.class);
+		SampleDroolsConfigurationAction.class);
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private RulesEngine _ruleEngine;
 
 }

@@ -52,7 +52,7 @@ page import="com.liferay.portal.rules.engine.Query" %><%@
 page import="com.liferay.portal.rules.engine.RulesEngineUtil" %><%@
 page import="com.liferay.portal.rules.engine.RulesLanguage" %><%@
 page import="com.liferay.portal.rules.engine.RulesResourceRetriever" %><%@
-page import="com.liferay.util.portlet.PortletProps" %>
+page import="com.liferay.portal.rules.engine.sample.web.internal.util.PortletProps" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.List" %><%@

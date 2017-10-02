@@ -9,7 +9,7 @@
 ## that are tagged with "affluent" will be returned.
 ##
 
-package com.liferay.sampledrools.dependencies;
+package dependencies;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;

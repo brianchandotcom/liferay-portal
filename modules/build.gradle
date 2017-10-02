@@ -126,6 +126,7 @@ gradle.beforeProject {
 
 		pluginManager.withPlugin("com.liferay.node") {
 			node {
+				global = false
 				nodeVersion = "6.6.0"
 				npmArgs "--no-package-lock"
 			}

@@ -12,21 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_0_4;
-
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.v7_0_4.util.ContactTable;
+package com.liferay.portal.upgrade.v7_0_5;
 
 /**
- * @author Ugurcan Cetin
+ * @author Shuyang Zhou
  */
-public class UpgradeContact extends UpgradeProcess {
+public class UpgradeModules
+	extends com.liferay.portal.upgrade.v7_0_0.UpgradeModules {
 
 	@Override
-	protected void doUpgrade() throws Exception {
-		alter(
-			ContactTable.class,
-			new AlterColumnType("emailAddress", "VARCHAR(254) null"));
+	public String[] getBundleSymbolicNames() {
+		return _BUNDLE_SYMBOLIC_NAMES;
 	}
+
+	@Override
+	public String[][] getConvertedLegacyModules() {
+		return _CONVERTED_LEGACY_MODULES;
+	}
+
+	private static final String[] _BUNDLE_SYMBOLIC_NAMES =
+		{"com.liferay.blogs.service"};
+
+	private static final String[][] _CONVERTED_LEGACY_MODULES = {};
 
 }

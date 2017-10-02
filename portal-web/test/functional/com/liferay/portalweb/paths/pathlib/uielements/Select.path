@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHOOSE_A_LANGUAGE</td>
+	<td>//select[contains(@name,'languageId')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_ALL_CONTENT</td>
 	<td>//option[contains(@id,'allContent')]</td>
 	<td></td>

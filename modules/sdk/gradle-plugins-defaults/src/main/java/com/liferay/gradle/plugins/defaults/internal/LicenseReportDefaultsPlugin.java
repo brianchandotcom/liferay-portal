@@ -234,32 +234,9 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 				dependencyNames, bundleInstructions,
 				Constants.INCLUDE_RESOURCE);
 
-			Configuration providedConfiguration = GradleUtil.getConfiguration(
-				project, ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME());
-
-			DependencySet dependencySet =
-				providedConfiguration.getDependencies();
-
-			dependencySet.withType(
-				ExternalModuleDependency.class,
-				new Action<ExternalModuleDependency>() {
-
-					@Override
-					public void execute(
-						ExternalModuleDependency externalModuleDependency) {
-
-						if (dependencyNames.contains(
-								externalModuleDependency.getName())) {
-
-							GradleUtil.addDependency(
-								project, LICENSE_REPORT_CONFIGURATION_NAME,
-								externalModuleDependency.getGroup(),
-								externalModuleDependency.getName(),
-								externalModuleDependency.getVersion());
-						}
-					}
-
-				});
+			_addDependenciesLicenseReport(
+				ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME(),
+				dependencyNames);
 
 			return new String[] {
 				LiferayOSGiPlugin.COMPILE_INCLUDE_CONFIGURATION_NAME,
@@ -289,6 +266,36 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 
 				dependencyNames.add(dependencyName);
 			}
+		}
+
+		private void _addDependenciesLicenseReport(
+			String configurationName, final Set<String> dependencyNames) {
+
+			Configuration configuration = GradleUtil.getConfiguration(
+				project, configurationName);
+
+			DependencySet dependencySet = configuration.getDependencies();
+
+			dependencySet.withType(
+				ExternalModuleDependency.class,
+				new Action<ExternalModuleDependency>() {
+
+					@Override
+					public void execute(
+						ExternalModuleDependency externalModuleDependency) {
+
+						if (dependencyNames.contains(
+								externalModuleDependency.getName())) {
+
+							GradleUtil.addDependency(
+								project, LICENSE_REPORT_CONFIGURATION_NAME,
+								externalModuleDependency.getGroup(),
+								externalModuleDependency.getName(),
+								externalModuleDependency.getVersion());
+						}
+					}
+
+				});
 		}
 
 		private static final Pattern _bundleDependencyNamePattern =

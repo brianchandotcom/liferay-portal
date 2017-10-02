@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_0_4;
+package com.liferay.portal.upgrade.v7_0_5;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.v7_0_4.util.VirtualHostTable;
+import com.liferay.portal.upgrade.v7_0_5.util.VirtualHostTable;
 
 /**
  * @author Jose A. Jimenez Campoy

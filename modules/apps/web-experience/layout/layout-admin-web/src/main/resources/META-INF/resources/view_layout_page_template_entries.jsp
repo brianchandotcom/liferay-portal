@@ -53,6 +53,14 @@ renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateCo
 	includeCheckBox="<%= true %>"
 	searchContainerId="layoutPageTemplateEntries"
 >
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"icon"} %>'
+			portletURL="<%= currentURLObj %>"
+			selectedDisplayStyle="<%= layoutPageTemplateDisplayContext.getDisplayStyle() %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
+
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'

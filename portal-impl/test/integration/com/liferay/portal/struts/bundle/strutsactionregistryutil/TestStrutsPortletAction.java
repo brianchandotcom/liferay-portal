@@ -15,9 +15,8 @@
 package com.liferay.portal.struts.bundle.strutsactionregistryutil;
 
 import com.liferay.portal.kernel.struts.StrutsPortletAction;
-import com.liferay.portal.kernel.util.StackTraceUtil;
 
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -44,7 +43,7 @@ public class TestStrutsPortletAction implements StrutsPortletAction {
 
 	@Override
 	public boolean isCheckMethodOnProcessAction() {
-		_atomicReference.set(StackTraceUtil.getCallerKey());
+		_atomicBoolean.set(Boolean.TRUE);
 
 		return false;
 	}
@@ -53,8 +52,6 @@ public class TestStrutsPortletAction implements StrutsPortletAction {
 	public void processAction(
 		PortletConfig portletConfig, ActionRequest actionRequest,
 		ActionResponse actionResponse) {
-
-		return;
 	}
 
 	@Override
@@ -62,8 +59,6 @@ public class TestStrutsPortletAction implements StrutsPortletAction {
 		StrutsPortletAction originalStrutsPortletAction,
 		PortletConfig portletConfig, ActionRequest actionRequest,
 		ActionResponse actionResponse) {
-
-		return;
 	}
 
 	@Override
@@ -87,8 +82,6 @@ public class TestStrutsPortletAction implements StrutsPortletAction {
 	public void serveResource(
 		PortletConfig portletConfig, ResourceRequest resourceRequest,
 		ResourceResponse resourceResponse) {
-
-		return;
 	}
 
 	@Override
@@ -96,15 +89,13 @@ public class TestStrutsPortletAction implements StrutsPortletAction {
 		StrutsPortletAction originalStrutsPortletAction,
 		PortletConfig portletConfig, ResourceRequest resourceRequest,
 		ResourceResponse resourceResponse) {
-
-		return;
 	}
 
 	@Reference(target = "(test=AtomicState)")
-	protected void setAtomicReference(AtomicReference<String> atomicReference) {
-		_atomicReference = atomicReference;
+	protected void setAtomicBoolean(AtomicBoolean atomicBoolean) {
+		_atomicBoolean = atomicBoolean;
 	}
 
-	private AtomicReference<String> _atomicReference;
+	private AtomicBoolean _atomicBoolean;
 
 }

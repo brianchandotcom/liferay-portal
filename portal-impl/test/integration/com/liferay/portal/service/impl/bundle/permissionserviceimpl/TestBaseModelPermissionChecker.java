@@ -16,9 +16,8 @@ package com.liferay.portal.service.impl.bundle.permissionserviceimpl;
 
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.util.StackTraceUtil;
 
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,16 +40,14 @@ public class TestBaseModelPermissionChecker
 		PermissionChecker permissionChecker, long groupId, long primaryKey,
 		String actionId) {
 
-		_atomicReference.set(StackTraceUtil.getCallerKey());
-
-		return;
+		_atomicBoolean.set(Boolean.TRUE);
 	}
 
 	@Reference(target = "(test=AtomicState)")
-	protected void setAtomicReference(AtomicReference<String> atomicReference) {
-		_atomicReference = atomicReference;
+	protected void setAtomicBoolean(AtomicBoolean atomicBoolean) {
+		_atomicBoolean = atomicBoolean;
 	}
 
-	private AtomicReference<String> _atomicReference;
+	private AtomicBoolean _atomicBoolean;
 
 }

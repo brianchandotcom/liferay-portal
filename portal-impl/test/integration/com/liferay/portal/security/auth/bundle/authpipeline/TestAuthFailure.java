@@ -15,10 +15,9 @@
 package com.liferay.portal.security.auth.bundle.authpipeline;
 
 import com.liferay.portal.kernel.security.auth.AuthFailure;
-import com.liferay.portal.kernel.util.StackTraceUtil;
 
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,7 +40,7 @@ public class TestAuthFailure implements AuthFailure {
 		long companyId, String emailAddress, Map<String, String[]> headerMap,
 		Map<String, String[]> parameterMap) {
 
-		_atomicReference.set(StackTraceUtil.getCallerKey());
+		_atomicBoolean.set(Boolean.TRUE);
 	}
 
 	@Override
@@ -49,7 +48,7 @@ public class TestAuthFailure implements AuthFailure {
 		long companyId, String screenName, Map<String, String[]> headerMap,
 		Map<String, String[]> parameterMap) {
 
-		_atomicReference.set(StackTraceUtil.getCallerKey());
+		_atomicBoolean.set(Boolean.TRUE);
 	}
 
 	@Override
@@ -57,14 +56,14 @@ public class TestAuthFailure implements AuthFailure {
 		long companyId, long userId, Map<String, String[]> headerMap,
 		Map<String, String[]> parameterMap) {
 
-		_atomicReference.set(StackTraceUtil.getCallerKey());
+		_atomicBoolean.set(Boolean.TRUE);
 	}
 
 	@Reference(target = "(test=AtomicState)")
-	protected void setAtomicReference(AtomicReference<String> atomicReference) {
-		_atomicReference = atomicReference;
+	protected void setAtomicBoolean(AtomicBoolean atomicBoolean) {
+		_atomicBoolean = atomicBoolean;
 	}
 
-	private AtomicReference<String> _atomicReference;
+	private AtomicBoolean _atomicBoolean;
 
 }

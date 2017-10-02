@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.social.kernel.service.SocialActivityAchievementLocalServiceUtil;
 import com.liferay.social.kernel.service.SocialActivityCounterLocalServiceUtil;
@@ -160,10 +161,36 @@ public class BaseSocialAchievement implements SocialAchievement {
 
 	@Override
 	public void setName(String name) {
-		name = StringUtil.replace(name, CharPool.SPACE, CharPool.UNDERLINE);
-		name = StringUtil.toLowerCase(name);
+		if (name == null) {
+			_name = StringPool.BLANK;
 
-		_name = StringUtil.extract(name, _NAME_SUPPORTED_CHARS);
+			return;
+		}
+
+		StringBuilder sb = new StringBuilder(name.length());
+
+		for (int i = 0; i < name.length(); i++) {
+			char c = name.charAt(i);
+
+			if ((c >= CharPool.UPPER_CASE_A) && (c <= CharPool.UPPER_CASE_Z)) {
+				c += 32;
+			}
+			else if (c == CharPool.SPACE) {
+				c = CharPool.UNDERLINE;
+			}
+			else if (!((c >= CharPool.LOWER_CASE_A) &&
+					   (c <= CharPool.LOWER_CASE_Z)) &&
+					 !((c >= CharPool.NUMBER_0) && (c <= CharPool.NUMBER_9)) &&
+					 (c != CharPool.DASH) && (c != CharPool.PERIOD) &&
+					 (c != CharPool.UNDERLINE)) {
+
+				continue;
+			}
+
+			sb.append(c);
+		}
+
+		_name = sb.toString();
 	}
 
 	@Override
@@ -232,9 +259,6 @@ public class BaseSocialAchievement implements SocialAchievement {
 		"social.achievement.name.";
 
 	private static final String _ICON_SUFFIX = "-icon.jpg";
-
-	private static final char[] _NAME_SUPPORTED_CHARS =
-		"abcdefghijklmnopqrstuvwxyz123456789_-.".toCharArray();
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseSocialAchievement.class);

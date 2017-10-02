@@ -108,6 +108,10 @@ public class StringUtil_IW {
 		return StringUtil.equalsIgnoreCase(s1, s2);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public java.lang.String extract(java.lang.String s, char[] chars) {
 		return StringUtil.extract(s, chars);
 	}

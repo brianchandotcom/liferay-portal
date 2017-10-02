@@ -17,7 +17,6 @@ package com.liferay.hello.soy.web.internal.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -59,11 +58,6 @@ public class HelloSoyViewMVCRenderCommand implements MVCRenderCommand {
 		template.put("navigationURL", navigationURL.toString());
 
 		template.put("releaseInfo", ReleaseInfo.getReleaseInfo());
-
-		String submittedData = ParamUtil.getString(
-			renderRequest, "submittedData");
-
-		template.put("submittedData", submittedData);
 
 		return "View";
 	}

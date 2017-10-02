@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCCommandCache;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -396,8 +395,6 @@ public class SoyPortlet extends MVCPortlet {
 	}
 
 	private void _clearSessionMessages(PortletRequest portletRequest) {
-		MultiSessionMessages.clear(portletRequest);
-
 		SessionErrors.clear(portletRequest);
 
 		SessionMessages.clear(portletRequest);
@@ -508,13 +505,35 @@ public class SoyPortlet extends MVCPortlet {
 		return false;
 	}
 
+	private void _prepareSessionMessages(
+		PortletRequest portletRequest, SoyContext soyContext) {
+
+		Map<String, Object> sessionErrors = new HashMap<>();
+
+		for (String key : SessionErrors.keySet(portletRequest)) {
+			sessionErrors.put(key, SessionErrors.get(portletRequest, key));
+		}
+
+		Map<String, Object> sessionMessages = new HashMap<>();
+
+		for (String key : SessionMessages.keySet(portletRequest)) {
+			if (key.endsWith(
+					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE)) {
+
+				continue;
+			}
+
+			sessionMessages.put(key, SessionMessages.get(portletRequest, key));
+		}
+
+		soyContext.putInjectedData("sessionMessages", sessionMessages);
+	}
+
 	private void _prepareTemplate(
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
 
-		MultiSessionMessages.add(
-			portletRequest,
-			SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
+		hideDefaultErrorMessage(portletRequest);
 
 		Template template = getTemplate(portletRequest);
 
@@ -542,6 +561,8 @@ public class SoyPortlet extends MVCPortlet {
 
 		soyContext.putInjectedData(
 			"portletNamespace", portletResponse.getNamespace());
+
+		_prepareSessionMessages(portletRequest, soyContext);
 
 		template.putAll(soyContext);
 

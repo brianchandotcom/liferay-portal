@@ -28,6 +28,11 @@ import java.util.Arrays;
  */
 public class LCSConstants {
 
+	/**
+	 * @deprecated As of 9.0.0, Moved into osb-lcs-api module class
+	 *             OSBLCSConstants
+	 */
+	@Deprecated
 	public static final int ALL_LCS_CLUSTER_OBJECTS_ID = -1;
 
 	public static final String ALL_PORTAL_OBJECTS_NAME = "all";
@@ -41,14 +46,39 @@ public class LCSConstants {
 	public static final String HARDWARE_SETTINGS_LCS_SERVICE_ENABLED =
 		"hardware-settings-lcs-service-enabled";
 
+	/**
+	 * @deprecated As of 9.0.0, Moved into osb-lcs-api module class
+	 *             JSONConstants
+	 */
+	@Deprecated
 	public static final String JSON_KEY_DATA = "data";
 
+	/**
+	 * @deprecated As of 9.0.0, Moved into osb-lcs-api module class
+	 *             JSONConstants
+	 */
+	@Deprecated
 	public static final String JSON_KEY_MESSAGE = "message";
 
+	/**
+	 * @deprecated As of 9.0.0, Moved into osb-lcs-api module class
+	 *             JSONConstants
+	 */
+	@Deprecated
 	public static final String JSON_KEY_RESULT = "result";
 
+	/**
+	 * @deprecated As of 9.0.0, Moved into osb-lcs-api module class
+	 *             JSONConstants
+	 */
+	@Deprecated
 	public static final String JSON_VALUE_FAILURE = "failure";
 
+	/**
+	 * @deprecated As of 9.0.0, Moved into osb-lcs-api module class
+	 *             JSONConstants
+	 */
+	@Deprecated
 	public static final String JSON_VALUE_SUCCESS = "success";
 
 	public static final String JVM_SETTINGS_LCS_SERVICE_ENABLED =

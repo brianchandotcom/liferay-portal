@@ -1,5 +1,5 @@
 <definition component-name="portal-web-forms-and-data-lists">
-	<property name="custom.properties" value="minifier.enabled=false" />
+	<property name="custom.properties" value="minifier.enabled=true" />
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
 	<property name="testray.main.component.name" value="Forms" />

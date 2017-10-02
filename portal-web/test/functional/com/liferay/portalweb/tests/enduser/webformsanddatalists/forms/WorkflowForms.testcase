@@ -1,5 +1,5 @@
 <definition component-name="portal-workflow">
-	<property name="custom.properties" value="minifier.enabled=false" />
+	<property name="custom.properties" value="minifier.enabled=true" />
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
 	<property name="testray.component.names" value="Dynamic Data Lists,Workflow,Forms" />

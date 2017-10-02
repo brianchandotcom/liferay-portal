@@ -26,7 +26,7 @@ dependencies {
 }
 
 deployDependencies {
-	from(configurations.provided) {
+	from(configurations.compileOnly) {
 		include "commons-fileupload-*.jar"
 		include "commons-io-*.jar"
 	}

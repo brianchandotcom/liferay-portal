@@ -9,7 +9,7 @@ copyLibClasses {
 	exclude "javax/mail/"
 
 	from {
-		configurations.provided.collect {
+		configurations.compileOnly.collect {
 			zipTree(it)
 		}
 	}

@@ -10,7 +10,7 @@ afterEvaluate {
 configurations {
 	springExtenderApi
 
-	provided {
+	compileOnly {
 		extendsFrom springExtenderApi
 	}
 }

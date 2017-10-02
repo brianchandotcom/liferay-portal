@@ -24,7 +24,7 @@ dependencies {
 }
 
 deployDependencies {
-	from configurations.provided
+	from configurations.compileOnly
 
 	include "stax2-api-*.jar"
 	include "woodstox-core-asl-*.jar"

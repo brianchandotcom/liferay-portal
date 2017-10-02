@@ -73,7 +73,7 @@ needed by Service Builder to generate model services.
 	}
 
 	from {
-		File portalImplJarFile = configurations.provided.find {
+		File portalImplJarFile = configurations.compileOnly.find {
 			it.name.startsWith "com.liferay.portal.impl-"
 		}
 

@@ -8,7 +8,7 @@ dependencies {
 }
 
 deployDependencies {
-	from configurations.provided
+	from configurations.compileOnly
 	include "org.eclipse.osgi-*.jar"
 }
 

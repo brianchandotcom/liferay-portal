@@ -12,7 +12,7 @@ dependencies {
 }
 
 deployDependencies {
-	from configurations.provided
+	from configurations.compileOnly
 
 	include "geoip-api-*.jar"
 	include "xz-*.jar"

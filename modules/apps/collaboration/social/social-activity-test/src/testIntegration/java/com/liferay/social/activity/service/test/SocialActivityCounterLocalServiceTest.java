@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.social.service;
+package com.liferay.social.activity.service.test;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;

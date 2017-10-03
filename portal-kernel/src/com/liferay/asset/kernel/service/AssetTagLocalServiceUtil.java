@@ -704,6 +704,10 @@ public class AssetTagLocalServiceUtil {
 		return getService().getTagsSize(groupId, classNameId, name);
 	}
 
+	public static int getTagsSize(long groupId, java.lang.String name) {
+		return getService().getTagsSize(groupId, name);
+	}
+
 	public static boolean hasAssetEntryAssetTag(long entryId, long tagId) {
 		return getService().hasAssetEntryAssetTag(entryId, tagId);
 	}

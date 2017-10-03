@@ -597,6 +597,9 @@ public interface AssetTagLocalService extends BaseLocalService,
 	public int getTagsSize(long groupId, long classNameId, java.lang.String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getTagsSize(long groupId, java.lang.String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasAssetEntryAssetTag(long entryId, long tagId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

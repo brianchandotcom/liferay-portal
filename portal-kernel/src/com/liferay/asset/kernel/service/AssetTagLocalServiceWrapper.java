@@ -762,6 +762,11 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	}
 
 	@Override
+	public int getTagsSize(long groupId, java.lang.String name) {
+		return _assetTagLocalService.getTagsSize(groupId, name);
+	}
+
+	@Override
 	public boolean hasAssetEntryAssetTag(long entryId, long tagId) {
 		return _assetTagLocalService.hasAssetEntryAssetTag(entryId, tagId);
 	}

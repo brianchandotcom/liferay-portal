@@ -47,6 +47,10 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 
 			<%
 			Map<String, Object> context = new HashMap<>();
+
+			context.put("availableItemTypes", siteNavigationAdminDisplayContext.getAvailableItemsJSONArray());
+			context.put("pathThemeImages", themeDisplay.getPathThemeImages());
+			context.put("selectedItemType", siteNavigationAdminDisplayContext.getSelectedItemTypeJSONObject());
 			%>
 
 			<soy:template-renderer

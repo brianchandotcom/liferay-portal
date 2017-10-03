@@ -1,6 +1,8 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 
+import './NavigationMenuToolbox.es';
+
 import templates from './NavigationMenuBuilder.soy';
 
 /**

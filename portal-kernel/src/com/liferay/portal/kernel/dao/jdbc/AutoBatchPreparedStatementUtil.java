@@ -17,11 +17,12 @@ package com.liferay.portal.kernel.dao.jdbc;
 import com.liferay.portal.kernel.concurrent.FutureListener;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
-import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
+import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -88,6 +89,10 @@ public class AutoBatchPreparedStatementUtil {
 	private static final Method _executeBatch;
 	private static final Class<?>[] _interfaces =
 		new Class<?>[] {PreparedStatement.class};
+	private static volatile PortalExecutorManager _portalExecutorManager =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			PortalExecutorManager.class, AutoBatchPreparedStatementUtil.class,
+			"_portalExecutorManager", true);
 
 	static {
 		try {
@@ -255,7 +260,7 @@ public class AutoBatchPreparedStatementUtil {
 		private PreparedStatement _preparedStatement;
 		private final String _sql;
 		private final ThreadPoolExecutor _threadPoolExecutor =
-			PortalExecutorManagerUtil.getPortalExecutor(
+			_portalExecutorManager.getPortalExecutor(
 				ConcurrentBatchInvocationHandler.class.getName());
 
 	}
@@ -364,7 +369,7 @@ public class AutoBatchPreparedStatementUtil {
 		private PreparedStatement _preparedStatement;
 		private final String _sql;
 		private final ThreadPoolExecutor _threadPoolExecutor =
-			PortalExecutorManagerUtil.getPortalExecutor(
+			_portalExecutorManager.getPortalExecutor(
 				ConcurrentNoBatchInvocationHandler.class.getName());
 
 	}

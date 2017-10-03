@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.deploy.auto.AutoDeployDir;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployUtil;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 import com.liferay.portal.kernel.events.SimpleAction;
-import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
+import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.javadoc.JavadocManagerUtil;
 import com.liferay.portal.kernel.log.Jdk14LogFactoryImpl;
 import com.liferay.portal.kernel.log.Log;
@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.struts.AuthPublicPathRegistry;
 import com.liferay.portal.util.PropsUtil;
@@ -180,7 +181,7 @@ public class GlobalShutdownAction extends SimpleAction {
 
 		// Portal executors
 
-		PortalExecutorManagerUtil.shutdown(true);
+		_portalExecutorManager.shutdown(true);
 
 		// TrueZip
 
@@ -236,5 +237,10 @@ public class GlobalShutdownAction extends SimpleAction {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GlobalShutdownAction.class);
+
+	private static volatile PortalExecutorManager _portalExecutorManager =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			PortalExecutorManager.class, GlobalShutdownAction.class,
+			"_portalExecutorManager", true);
 
 }

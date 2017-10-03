@@ -14,9 +14,10 @@
 
 package com.liferay.portal.kernel.nio.intraband;
 
-import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
+import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.concurrent.Executor;
 
@@ -29,8 +30,7 @@ public abstract class BaseAsyncDatagramReceiveHandler
 	public BaseAsyncDatagramReceiveHandler() {
 		Class<? extends BaseAsyncDatagramReceiveHandler> clazz = getClass();
 
-		_executor = PortalExecutorManagerUtil.getPortalExecutor(
-			clazz.getName());
+		_executor = _portalExecutorManager.getPortalExecutor(clazz.getName());
 	}
 
 	@Override
@@ -46,6 +46,11 @@ public abstract class BaseAsyncDatagramReceiveHandler
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseAsyncDatagramReceiveHandler.class);
+
+	private static volatile PortalExecutorManager _portalExecutorManager =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			PortalExecutorManager.class, BaseAsyncDatagramReceiveHandler.class,
+			"_portalExecutorManager", true);
 
 	private final Executor _executor;
 

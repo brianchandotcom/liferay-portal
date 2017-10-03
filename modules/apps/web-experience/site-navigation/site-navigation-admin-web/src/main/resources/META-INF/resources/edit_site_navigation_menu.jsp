@@ -42,6 +42,16 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 		<aui:fieldset>
 			<aui:input autoFocus="<%= true %>" label="name" name="name" placeholder="name" />
 		</aui:fieldset>
+
+		<%
+		Map<String, Object> context = new HashMap<>();
+		%>
+
+		<soy:template-renderer
+			context="<%= context %>"
+			module="site-navigation-admin-web/js/NavigationMenuBuilder.es"
+			templateNamespace="NavigationMenuBuilder.render"
+		/>
 	</aui:fieldset-group>
 
 	<aui:button-row>

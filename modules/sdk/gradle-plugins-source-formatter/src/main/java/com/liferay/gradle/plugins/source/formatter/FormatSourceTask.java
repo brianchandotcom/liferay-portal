@@ -228,7 +228,7 @@ public class FormatSourceTask extends JavaExec {
 		if (fileCollection.isEmpty()) {
 			args.add(
 				"source.base.dir=" +
-					FileUtil.relativize(getBaseDir(), getWorkingDir()));
+					_relativizeDir(getBaseDir(), getWorkingDir()));
 		}
 		else {
 			args.add("source.files=" + _merge(fileCollection, getWorkingDir()));
@@ -253,6 +253,22 @@ public class FormatSourceTask extends JavaExec {
 		}
 
 		return sb.toString();
+	}
+
+	private String _relativizeDir(File dir, File startDir) {
+		String relativePath = FileUtil.relativize(dir, startDir);
+
+		if (!relativePath.isEmpty()) {
+			if (File.separatorChar != '/') {
+				relativePath = relativePath.replace(File.separatorChar, '/');
+			}
+
+			if (relativePath.charAt(relativePath.length() - 1) != '/') {
+				relativePath += '/';
+			}
+		}
+
+		return relativePath;
 	}
 
 	private final SourceFormatterArgs _sourceFormatterArgs =

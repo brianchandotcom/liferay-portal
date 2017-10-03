@@ -2643,13 +2643,6 @@ ${output.content}</echo>
 						<delete file="${release.tool.dir}/git.diff" />
 					</then>
 				</if>
-
-				<if>
-					<available file="../bundles" type="dir" />
-					<then>
-						<delete dir="../bundles" />
-					</then>
-				</if>
 			</test-tear-down>
 		</run-batch-test>
 	</target>

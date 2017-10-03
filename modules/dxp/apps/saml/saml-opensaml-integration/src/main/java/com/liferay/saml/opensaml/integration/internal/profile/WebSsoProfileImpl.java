@@ -324,10 +324,10 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			}
 		}
 
+		boolean idpInitiatedSSO = false;
+
 		String entityId = ParamUtil.getString(request, "entityId");
 		String samlRequest = ParamUtil.getString(request, "SAMLRequest");
-
-		boolean idpInitiatedSSO = false;
 
 		if (Validator.isNotNull(entityId) && Validator.isNull(samlRequest)) {
 			idpInitiatedSSO = true;

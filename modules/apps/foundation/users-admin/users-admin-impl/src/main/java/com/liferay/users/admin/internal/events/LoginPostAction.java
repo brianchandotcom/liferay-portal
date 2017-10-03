@@ -14,6 +14,7 @@
 
 package com.liferay.users.admin.internal.events;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.LifecycleAction;
@@ -23,17 +24,23 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.users.admin.internal.configuration.UserSetupConfiguration;
+
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
  */
 @Component(
+	configurationPid = "com.liferay.users.admin.internal.configuration.UserSetupConfiguration",
 	immediate = true, property = {"key=" + PropsKeys.LOGIN_EVENTS_POST},
 	service = LifecycleAction.class
 )
@@ -46,7 +53,9 @@ public class LoginPostAction extends Action {
 		try {
 			User user = _portal.getUser(request);
 
-			if ((user == null) || user.isSetupComplete()) {
+			if ((user == null) || user.isSetupComplete() ||
+				!_userSetupConfiguration.languageSelectionRequired()) {
+
 				return;
 			}
 
@@ -78,10 +87,19 @@ public class LoginPostAction extends Action {
 		}
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_userSetupConfiguration = ConfigurableUtil.createConfigurable(
+			UserSetupConfiguration.class, properties);
+	}
+
 	private static final String _PATH_PORTAL_SELECT_LANGUAGE =
 		"/portal/select_language";
 
 	@Reference
 	private Portal _portal;
+
+	private UserSetupConfiguration _userSetupConfiguration;
 
 }

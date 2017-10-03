@@ -47,6 +47,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -1024,7 +1025,73 @@ public class ModulesStructureTest {
 			ModulesStructureTestUtil.getGradleDependencies(
 				content, path, _modulesDirPath);
 
+		Path dirPath = path.getParent();
+
+		Map<String, Boolean> allowedConfigurationsMap = new TreeMap<>();
+
+		boolean hasSrcMainDir = Files.exists(dirPath.resolve("src/main"));
+		boolean hasSrcTestDir = Files.exists(dirPath.resolve("src/test"));
+		boolean hasSrcTestIntegrationDir = Files.exists(
+			dirPath.resolve("src/testIntegration"));
+
+		boolean mainConfigurationsAllowed = false;
+
+		if (hasSrcMainDir ||
+			(!hasSrcMainDir && !hasSrcTestDir && !hasSrcTestIntegrationDir) ||
+			content.contains("copyLibs {\n\tenabled = true")) {
+
+			mainConfigurationsAllowed = true;
+		}
+
+		allowedConfigurationsMap.put("compile", mainConfigurationsAllowed);
+		allowedConfigurationsMap.put("compileOnly", mainConfigurationsAllowed);
+		allowedConfigurationsMap.put("provided", mainConfigurationsAllowed);
+
+		allowedConfigurationsMap.put("testCompile", hasSrcTestDir);
+		allowedConfigurationsMap.put("testRuntime", hasSrcTestDir);
+
+		allowedConfigurationsMap.put(
+			"testIntegrationCompile", hasSrcTestIntegrationDir);
+		allowedConfigurationsMap.put(
+			"testIntegrationRuntime", hasSrcTestIntegrationDir);
+
 		for (GradleDependency gradleDependency : gradleDependencies) {
+			Boolean allowed = allowedConfigurationsMap.get(
+				gradleDependency.getConfiguration());
+
+			if ((allowed != null) && !allowed.booleanValue()) {
+				StringBundler sb = new StringBundler(
+					allowedConfigurationsMap.size() * 4 + 4);
+
+				sb.append("Incorrect configuration of dependency {");
+				sb.append(gradleDependency);
+				sb.append("} in ");
+				sb.append(path);
+				sb.append(", use one of these instead: ");
+
+				boolean first = true;
+
+				for (Map.Entry<String, Boolean> entry :
+						allowedConfigurationsMap.entrySet()) {
+
+					if (!entry.getValue()) {
+						continue;
+					}
+
+					if (!first) {
+						sb.append(StringPool.COMMA_AND_SPACE);
+					}
+
+					first = false;
+
+					sb.append(CharPool.QUOTE);
+					sb.append(entry.getKey());
+					sb.append(CharPool.QUOTE);
+				}
+
+				Assert.fail(sb.toString());
+			}
+
 			GradleDependency activeGradleDependency =
 				_getActiveGradleDependency(
 					gradleDependencies, gradleDependency);

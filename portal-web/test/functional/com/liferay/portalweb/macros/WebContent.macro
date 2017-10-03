@@ -664,7 +664,9 @@
 		<if>
 			<isset var="description" />
 			<then>
-				<execute function="Type" locator1="AlloyEditor#DESCRIPTION_FIELD" value1="${description}" />
+				<execute macro="AlloyEditor#addDescription">
+					<var name="description" value="${description}" />
+				</execute>
 			</then>
 		</if>
 

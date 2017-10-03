@@ -12,15 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.kernel.concurrent;
+package com.liferay.petra.concurrent;
 
 import java.util.concurrent.Future;
 
 /**
  * @author Shuyang Zhou
  */
-public interface FutureListener<T> {
+public interface NoticeableFuture<T> extends Future<T> {
 
-	public void complete(Future<T> future);
+	public boolean addFutureListener(FutureListener<T> futureListener);
+
+	public boolean removeFutureListener(FutureListener<T> futureListener);
 
 }

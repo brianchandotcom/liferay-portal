@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.concurrent;
+package com.liferay.petra.concurrent;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;

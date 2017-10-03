@@ -1,0 +1,17 @@
+{
+	"dependencies": {
+		"metal": "^2.13.2",
+		"metal-component": "^2.10.0",
+		"metal-dropdown": "^3.0.0",
+		"metal-soy": "^2.13.2",
+		"metal-state": "^2.13.2"
+	},
+	"devDependencies": {
+		"eslint": "^3.17.1",
+		"eslint-config-liferay": "^1.0.2",
+		"liferay-module-config-generator": "^1.1.10",
+		"metal-cli": "^4.3.3"
+	},
+	"name": "site-navigation-admin-web",
+	"version": "1.0.0"
+}

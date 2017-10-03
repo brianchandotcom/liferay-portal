@@ -1,10 +1,6 @@
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
-copyLibs {
-	enabled = true
-}
-
 dependencies {
 	testCompile group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.40.0"

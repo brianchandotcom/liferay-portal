@@ -2545,6 +2545,18 @@ version 1.0.169.
 ### Changed
 - [LPS-74110]: Update the [Liferay Ant BND] dependency to version 2.0.41.
 
+## 3.5.0 - 2017-10-03
+
+### Added
+- [LPS-74314]: Expose `SourceFormatterDefaultsPlugin` as a Gradle plugin with ID
+`com.liferay.source.formatter.defaults`.
+
+### Changed
+- [LPS-74314]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.0.
+- [LPS-74314]: Update the [Liferay Source Formatter] dependency to version
+1.0.471.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

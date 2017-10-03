@@ -42,41 +42,32 @@ public class JenkinsReportUtil {
 		Map<String, Build> batchBuilds = new TreeMap<>();
 		Map<String, TestResult> testResults = new TreeMap<>();
 
-		try {
-			for (Build batchBuild : topLevelBuild.getDownstreamBuilds(null)) {
-				batchBuilds.put(batchBuild.getDisplayName(), batchBuild);
+		for (Build batchBuild : topLevelBuild.getDownstreamBuilds(null)) {
+			String batchBuildDisplayName = batchBuild.getDisplayName();
 
-				for (Build axisBuild : batchBuild.getDownstreamBuilds(null)) {
-					try {
-						String axisKey =
-							batchBuild.getDisplayName() + "/" +
-								JenkinsResultsParserUtil.getAxisVariable(
-									axisBuild.getBuildURL());
+			if (batchBuildDisplayName == null) {
+				return null;
+			}
 
-						axisBuilds.put(axisKey, axisBuild);
-					}
-					catch (Exception e) {
-						e.printStackTrace();
-					}
+			batchBuilds.put(batchBuild.getDisplayName(), batchBuild);
 
-					for (TestResult testResult :
-							axisBuild.getTestResults(null)) {
+			for (Build axisBuild : batchBuild.getDownstreamBuilds(null)) {
+				String axisKey =
+					batchBuild.getDisplayName() + "/" +
+						JenkinsResultsParserUtil.getAxisVariable(
+							axisBuild.getBuildURL());
 
-						try {
-							testResults.put(
-								testResult.getDisplayName(), testResult);
-						}
-						catch (NullPointerException npe) {
-							npe.printStackTrace();
-						}
+				axisBuilds.put(axisKey, axisBuild);
+
+				for (TestResult testResult : axisBuild.getTestResults(null)) {
+					String displayName = testResult.getDisplayName();
+
+					if (displayName != null) {
+						testResults.put(
+							testResult.getDisplayName(), testResult);
 					}
 				}
 			}
-		}
-		catch (NullPointerException npe) {
-			npe.printStackTrace();
-
-			return null;
 		}
 
 		Element h1Element = Dom4JUtil.getNewElement("h1");

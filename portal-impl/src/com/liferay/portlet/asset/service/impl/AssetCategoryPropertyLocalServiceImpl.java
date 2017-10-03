@@ -37,7 +37,7 @@ public class AssetCategoryPropertyLocalServiceImpl
 			long userId, long categoryId, String key, String value)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		validate(key, value);
 
@@ -141,7 +141,7 @@ public class AssetCategoryPropertyLocalServiceImpl
 		validate(key, value);
 
 		if (userId != 0) {
-			User user = userPersistence.findByPrimaryKey(userId);
+			User user = userLocalService.getUser(userId);
 
 			categoryProperty.setUserId(userId);
 			categoryProperty.setUserName(user.getFullName());

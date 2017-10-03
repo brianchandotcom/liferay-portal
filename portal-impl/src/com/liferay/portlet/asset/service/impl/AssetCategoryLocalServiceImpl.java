@@ -89,7 +89,7 @@ public class AssetCategoryLocalServiceImpl
 
 		// Category
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		String name = titleMap.get(LocaleUtil.getSiteDefault());
 

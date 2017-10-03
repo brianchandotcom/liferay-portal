@@ -1057,6 +1057,20 @@
 		</if>
 	</command>
 
+	<command name="chooseLanguage">
+		<if>
+			<isset var="language" />
+			<then>
+				<execute function="Select" locator1="Select#CHOOSE_A_LANGUAGE" value1="${language}" />
+			</then>
+			<else>
+				<execute function="AssertSelectedLabel" locator1="Select#CHOOSE_A_LANGUAGE" value1="English (United States)" />
+			</else>
+		</if>
+
+		<execute macro="Button#clickSave" />
+	</command>
+
 	<command name="createAccount">
 		<execute macro="SignInNavigator#gotoCreateAccount" />
 
@@ -1710,6 +1724,15 @@
 		<execute function="Click" locator1="Button#SIGN_IN" value1="Sign In" />
 
 		<execute function="AssertElementNotPresent" locator1="Button#SIGN_IN" value1="Sign In" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="//h2[.='Choose a Language']" />
+			<then>
+				<execute macro="User#chooseLanguage">
+					<var name="language" value="${language}" />
+				</execute>
+			</then>
+		</if>
 
 		<execute macro="User#acceptEndUserLicenseAgreement" />
 

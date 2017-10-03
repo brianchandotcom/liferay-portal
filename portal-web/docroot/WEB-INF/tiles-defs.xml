@@ -63,6 +63,11 @@
 
 	<definition name="portal.progress_poller" path="/portal/progress_poller.jsp" />
 
+	<definition extends="portal" name="portal.select_language">
+		<put name="title" value="choose-a-language" />
+		<put name="content" value="/portal/select_language.jsp" />
+	</definition>
+
 	<definition extends="portal" name="portal.setup_wizard">
 		<put name="pop_up" value="true" />
 		<put name="title" value="basic-configuration" />

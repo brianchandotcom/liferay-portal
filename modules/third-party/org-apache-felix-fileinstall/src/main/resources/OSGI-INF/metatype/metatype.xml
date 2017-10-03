@@ -17,9 +17,10 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
 -->
-<metatype:MetaData xmlns:metatype="http://www.osgi.org/xmlns/metatype/v1.0.0">
+<metatype:MetaData xmlns:metatype="http://www.osgi.org/xmlns/metatype/v1.0.0"
+				   localization="content/Language">
 	<OCD description="FileInstaller"
-	   name="org.apache.felix.fileinstall"
+	   name="org-apache-felix-fileinstall-ocd-name"
 	   id="org.apache.felix.fileinstall">
 
 		<AD default="load"  id="felix.fileinstall.dir" name="Poll directory" required="true" type="String" />

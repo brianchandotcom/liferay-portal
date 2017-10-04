@@ -2540,10 +2540,15 @@ to version 1.0.53.
 - [LPS-75009]: Update the [Liferay Portal Tools Service Builder] dependency to
 version 1.0.169.
 
-## 3.4.75 - 2017-10-02
+## 3.4.75 - 2017-10-02 [YANKED]
 
 ### Changed
 - [LPS-74110]: Update the [Liferay Ant BND] dependency to version 2.0.41.
+
+## 3.4.76 - 2017-10-04
+
+### Changed
+- [LPS-74110]: Update the [Liferay Ant BND] dependency to version 2.0.42.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs

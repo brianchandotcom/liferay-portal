@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.exportimport.staged.model.repository;
+package com.liferay.asset.categories.admin.web.internal.exportimport.staged.model.repository;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLink;
@@ -55,8 +55,6 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Akos Thurzo
- * @deprecated As of 1.2.0, replaced by {@link
- *             com.liferay.asset.categories.admin.web.internal.exportimport.staged.model.repository.StagedAssetLinkStagedModelRepository}
  */
 @Component(
 	immediate = true,
@@ -67,7 +65,6 @@ import org.osgi.service.component.annotations.Reference;
 		StagedAssetLinkStagedModelRepository.class, StagedModelRepository.class
 	}
 )
-@Deprecated
 public class StagedAssetLinkStagedModelRepository
 	extends BaseStagedModelRepository<StagedAssetLink> {
 
@@ -425,22 +422,6 @@ public class StagedAssetLinkStagedModelRepository
 
 	protected String parseAssetEntry2Uuid(String uuid) {
 		return uuid.substring(uuid.indexOf(StringPool.POUND) + 1);
-	}
-
-	/**
-	 * @deprecated As of 1.0.0
-	 */
-	@Deprecated
-	protected void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-	}
-
-	/**
-	 * @deprecated As of 1.0.0
-	 */
-	@Deprecated
-	protected void setAssetLinkLocalService(
-		AssetLinkLocalService assetLinkLocalService) {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

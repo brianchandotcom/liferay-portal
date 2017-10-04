@@ -576,6 +576,11 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		return assetTagFinder.countByG_C_N(groupId, classNameId, name);
 	}
 
+	@Override
+	public int getTagsSize(long groupId, String name) {
+		return assetTagFinder.countByG_N(groupId, name);
+	}
+
 	/**
 	 * Returns <code>true</code> if the group contains an asset tag with the
 	 * name.

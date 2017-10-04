@@ -26,6 +26,9 @@
 		<var name="key_assetType" value="${assetType}" />
 
 		<execute function="AssertTextEquals" locator1="MySubscriptions#ASSET_TITLE" value1="${assetTitle}" />
+
+		<var method="StringUtil#toUpperCase('${assetType}')" name="assetType" />
+
 		<execute function="AssertTextEquals" locator1="MySubscriptions#ASSET_TYPE" value1="${assetType}" />
 	</command>
 

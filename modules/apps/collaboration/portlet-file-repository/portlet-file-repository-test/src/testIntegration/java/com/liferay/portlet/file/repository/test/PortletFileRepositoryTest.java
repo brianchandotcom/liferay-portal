@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.file.repository.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
@@ -41,10 +42,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Adolfo Pérez
  */
+@RunWith(Arquillian.class)
 public class PortletFileRepositoryTest {
 
 	@ClassRule

@@ -5,10 +5,6 @@
 <!-- Temporary workaround to obtain the library stylesheets -->
 <link href="/o/${artifactId}/node_modules/billboard.js@1.1.1/dist/billboard.css" rel="stylesheet">
 
-<aui:script require="${artifactId}@${packageJsonVersion}">
-	${auiScriptRequireVarName}.default('<portlet:namespace />');
-</aui:script>
-
 <hr />
 
 <div id="<portlet:namespace />-billboard">
@@ -39,3 +35,7 @@
 
 	<svg height="600" id="<portlet:namespace />-D3Graph" width="960"></svg>
 </div>
+
+<aui:script require="${artifactId}@${packageJsonVersion}">
+	${auiScriptRequireVarName}.default('<portlet:namespace />');
+</aui:script>

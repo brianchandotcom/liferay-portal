@@ -416,6 +416,12 @@ public class GitWorkingDirectory {
 
 			if (branchName.equals("HEAD")) {
 				branchName = executionResult.getStandardOut();
+
+				branchName = branchName.trim();
+
+				if (branchName.isEmpty()) {
+					return null;
+				}
 			}
 
 			return new Branch(branchName, null, getBranchSha(branchName));

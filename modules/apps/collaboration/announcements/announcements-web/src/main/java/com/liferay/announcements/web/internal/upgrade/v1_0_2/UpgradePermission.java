@@ -155,12 +155,13 @@ public class UpgradePermission extends UpgradeProcess {
 	protected void deleteResourceAction(long resourceActionId)
 		throws SQLException {
 
-		PreparedStatement ps = connection.prepareStatement(
-			"delete from ResourceAction where resourceActionId = ?");
+		try (PreparedStatement ps = connection.prepareStatement(
+				"delete from ResourceAction where resourceActionId = ?")) {
 
-		ps.setLong(1, resourceActionId);
+			ps.setLong(1, resourceActionId);
 
-		ps.executeUpdate();
+			ps.executeUpdate();
+		}
 	}
 
 	@Override
@@ -191,14 +192,15 @@ public class UpgradePermission extends UpgradeProcess {
 			long resourcePermissionId, long bitwiseValue)
 		throws Exception {
 
-		PreparedStatement ps = connection.prepareStatement(
-			"update ResourcePermission set actionIds = ? where " +
-				"resourcePermissionId = ?");
+		try (PreparedStatement ps = connection.prepareStatement(
+				"update ResourcePermission set actionIds = ? where " +
+					"resourcePermissionId = ?")) {
 
-		ps.setLong(1, bitwiseValue);
-		ps.setLong(2, resourcePermissionId);
+			ps.setLong(1, bitwiseValue);
+			ps.setLong(2, resourcePermissionId);
 
-		ps.executeUpdate();
+			ps.executeUpdate();
+		}
 	}
 
 	protected void upgradeAlertsResourcePermission() throws Exception {

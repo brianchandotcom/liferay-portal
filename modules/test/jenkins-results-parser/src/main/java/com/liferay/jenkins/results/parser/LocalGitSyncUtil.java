@@ -282,10 +282,16 @@ public class LocalGitSyncUtil {
 				long branchAge = timestamp - remoteBranchTimestamp;
 
 				if (branchAge > _BRANCH_EXPIRE_AGE_MILLIS) {
-					deleteRemoteRepositoryCacheBranch(
-						gitWorkingDirectory,
+					GitWorkingDirectory.Branch remoteRepositoryBaseCacheBranch =
 						gitWorkingDirectory.getBranch(
-							matcher.group("name"), remote));
+							matcher.group("name"), remote);
+
+					if (remoteRepositoryBaseCacheBranch != null) {
+						deleteRemoteRepositoryCacheBranch(
+							gitWorkingDirectory,
+							remoteRepositoryBaseCacheBranch);
+					}
+
 					deleteRemoteRepositoryCacheBranch(
 						gitWorkingDirectory, remoteBranch);
 

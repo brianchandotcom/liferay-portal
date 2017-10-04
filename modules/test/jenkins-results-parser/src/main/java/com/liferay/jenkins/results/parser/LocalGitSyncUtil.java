@@ -964,7 +964,7 @@ public class LocalGitSyncUtil {
 	private static final long _BRANCH_EXPIRE_AGE_MILLIS =
 		1000 * 60 * 60 * 24 * 2;
 
-	private static final int _MAX_THREAD_POOL_SIZE = 10;
+	private static final int _MAX_THREAD_POOL_SIZE = 5;
 
 	private static final String _cacheBranchRegex = ".*cache-.+-.+-.+-[^-]+";
 	private static final Pattern _cacheTimestampBranchPattern = Pattern.compile(

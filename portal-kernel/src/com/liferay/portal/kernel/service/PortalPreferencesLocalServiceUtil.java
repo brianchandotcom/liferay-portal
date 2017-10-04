@@ -184,6 +184,11 @@ public class PortalPreferencesLocalServiceUtil {
 		return getService().fetchPortalPreferences(portalPreferencesId);
 	}
 
+	public static com.liferay.portal.kernel.model.PortalPreferences fetchPortalPreferences(
+		long ownerId, int ownerType) {
+		return getService().fetchPortalPreferences(ownerId, ownerType);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}

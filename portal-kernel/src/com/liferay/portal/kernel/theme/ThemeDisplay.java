@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.admin.kernel.util.PortalMyAccountApplicationType;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.mobile.device.rules.kernel.MDRRuleGroupInstance;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -51,6 +50,7 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.Mergeable;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -1933,7 +1933,7 @@ public class ThemeDisplay
 
 	private String _getFriendlyURL(Layout layout) {
 		if (_layoutFriendlyURLs == null) {
-			if (_layouts == null) {
+			if (ListUtil.isEmpty(_layouts)) {
 				_layoutFriendlyURLs = new HashMap<>();
 			}
 			else {
@@ -1965,7 +1965,7 @@ public class ThemeDisplay
 	private List<Layout> _getFriendlyURLLayouts(
 		int layoutManagePagesInitialChildren) {
 
-		if ((layoutManagePagesInitialChildren == QueryUtil.ALL_POS) ||
+		if ((layoutManagePagesInitialChildren < 0) ||
 			(_layouts.size() <= layoutManagePagesInitialChildren)) {
 
 			return _layouts;

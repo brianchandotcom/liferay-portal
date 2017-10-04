@@ -37,6 +37,164 @@
 		</if>
 	</tear-down>
 
+	<command name="ApproveInDMFolderCustomWorkflow" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="testray.component.names" value="Training" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Workflow" />
+		</execute>
+
+		<execute macro="Workflow#uploadDefinition">
+			<var name="workflowDefinitionFile" value="advanced-governors-review.xml" />
+			<var name="workflowDefinitionTitle" value="Quarterly Reports Review Process" />
+		</execute>
+
+		<execute macro="Workflow#viewDefinition">
+			<var name="workflowDefinitionName" value="Quarterly Reports Review Process" />
+			<var name="workflowDefinitionTitle" value="Quarterly Reports Review Process" />
+			<var name="workflowDefinitionVersionNumber" value="1" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMFolder#addCP">
+			<var name="dmFolderDescription" value="Financial Reports Description" />
+			<var name="dmFolderName" value="Financial Reports" />
+		</execute>
+
+		<execute macro="DMFolder#configureWorkflowCP">
+			<var name="dmFolderName" value="Financial Reports" />
+			<var name="workflowDefinition" value="Quarterly Reports Review Process (Version 1)" />
+			<var name="workflowRestriction" value="Default Workflow" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#assignRegularRoleCP">
+			<var name="roleTitle" value="Board Member" />
+			<var name="userScreenName" value="test" />
+		</execute>
+
+		<for list="1,2,3" param="entryCount" >
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Documents and Media" />
+			</execute>
+
+			<execute macro="DMFolder#gotoCP">
+				<var name="dmFolderName" value="Financial Reports" />
+			</execute>
+
+			<execute macro="DMDocument#addWithWorkflowCP">
+				<var name="dmDocumentDescription" value="DM Document Description" />
+				<var name="dmDocumentFile" value="Document_${entryCount}.doc" />
+				<var name="dmDocumentTitle" value="Document_${entryCount}.doc" />
+			</execute>
+		</for>
+
+		<execute macro="Navigator#openURL" />
+
+		<for list="1,2,3,4" param="i" >
+			<execute macro="Page#gotoMyAccount">
+				<var name="portletName" value="My Workflow Tasks" />
+			</execute>
+
+			<execute macro="Workflow#assignToMeTaskByActions">
+				<var name="workflowAssetTitle" value="Document_1.doc" />
+				<var name="workflowAssetType" value="Document" />
+				<var name="workflowTask" value="Board Member Review ${i}" />
+			</execute>
+
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="Page#gotoMyAccount">
+				<var name="portletName" value="My Workflow Tasks" />
+			</execute>
+
+			<execute macro="Workflow#approveTaskByActions">
+				<var name="boardWorkflowTask" value="${i}" />
+				<var name="workflowAssetTitle" value="Document_1.doc" />
+				<var name="workflowAssetType" value="Document" />
+				<var name="workflowTask" value="Board Member Review ${i}" />
+			</execute>
+		</for>
+
+		<for list="1,2,3,4" param="i" >
+			<execute macro="Page#gotoMyAccount">
+				<var name="portletName" value="My Workflow Tasks" />
+			</execute>
+
+			<execute macro="Workflow#assignToMeTaskByActions">
+				<var name="workflowAssetTitle" value="Document_2.doc" />
+				<var name="workflowAssetType" value="Document" />
+				<var name="workflowTask" value="Board Member Review ${i}" />
+			</execute>
+
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="Page#gotoMyAccount">
+				<var name="portletName" value="My Workflow Tasks" />
+			</execute>
+
+			<execute macro="Workflow#approveTaskByActions">
+				<var name="boardWorkflowTask" value="${i}" />
+				<var name="workflowAssetTitle" value="Document_2.doc" />
+				<var name="workflowAssetType" value="Document" />
+				<var name="workflowTask" value="Board Member Review ${i}" />
+			</execute>
+		</for>
+
+		<for list="1,2,3,4" param="i" >
+			<execute macro="Page#gotoMyAccount">
+				<var name="portletName" value="My Workflow Tasks" />
+			</execute>
+
+			<execute macro="Workflow#assignToMeTaskByActions">
+				<var name="workflowAssetTitle" value="Document_3.doc" />
+				<var name="workflowAssetType" value="Document" />
+				<var name="workflowTask" value="Board Member Review ${i}" />
+			</execute>
+
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="Page#gotoMyAccount">
+				<var name="portletName" value="My Workflow Tasks" />
+			</execute>
+
+			<execute macro="Workflow#approveTaskByActions">
+				<var name="boardWorkflowTask" value="${i}" />
+				<var name="workflowAssetTitle" value="Document_3.doc" />
+				<var name="workflowAssetType" value="Document" />
+				<var name="workflowTask" value="Board Member Review ${i}" />
+			</execute>
+		</for>
+
+		<execute macro="Navigator#openURL" />
+
+		<for list="1,2,3" param="entryCount" >
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Documents and Media" />
+			</execute>
+
+			<execute macro="DMFolder#gotoCP">
+				<var name="dmFolderName" value="Financial Reports" />
+			</execute>
+
+			<execute macro="DMDocument#viewCPStatus">
+				<var name="dmDocumentStatus" value="Approved" />
+				<var name="dmDocumentTitle" value="Document_${entryCount}.doc" />
+			</execute>
+		</for>
+	</command>
+
 	<command name="ConfigureFolderWorkflow" priority="4">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />

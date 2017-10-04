@@ -18,7 +18,6 @@ import aQute.bnd.differ.Baseline.BundleInfo;
 import aQute.bnd.differ.Baseline.Info;
 import aQute.bnd.differ.DiffPluginImpl;
 import aQute.bnd.osgi.Constants;
-import aQute.bnd.osgi.Instructions;
 import aQute.bnd.osgi.Jar;
 import aQute.bnd.service.diff.Delta;
 import aQute.bnd.service.diff.Diff;
@@ -35,12 +34,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.LinkedHashSet;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 
@@ -101,16 +98,7 @@ public abstract class Baseline {
 			aQute.bnd.differ.Baseline baseline = new aQute.bnd.differ.Baseline(
 				baselineProcessor, new DiffPluginImpl());
 
-			List<String> packageFilter = new ArrayList<>();
-
-			for (String movedPackage : getMovedPackages()) {
-				packageFilter.add("!".concat(movedPackage));
-			}
-
-			packageFilter.add("*");
-
-			Set<Info> infos = baseline.baseline(
-				newJar, oldJar, new Instructions(packageFilter));
+			Set<Info> infos = baseline.baseline(newJar, oldJar, null);
 
 			if (infos.isEmpty()) {
 				return match;
@@ -495,7 +483,7 @@ public abstract class Baseline {
 			return Collections.emptySet();
 		}
 
-		Set<String> movedPackages = new LinkedHashSet<>();
+		Set<String> movedPackages = new HashSet<>();
 
 		try (BufferedReader bufferedReader = new BufferedReader(
 				new FileReader(movedPackagesFile))) {

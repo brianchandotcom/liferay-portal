@@ -12,8 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.workflow.web.internal.request.prepocessor;
+package com.liferay.portal.workflow.web.internal.servlet.taglib;
 
+import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -21,7 +25,15 @@ import javax.portlet.RenderResponse;
 /**
  * @author Adam Brandizzi
  */
-public interface WorkflowRenderPreprocessor {
+public interface WorkflowDynamicInclude extends DynamicInclude {
+
+	public void prepareDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException;
+
+	public void prepareProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortletException;
 
 	public void prepareRender(
 			RenderRequest actionRequest, RenderResponse actionResponse)

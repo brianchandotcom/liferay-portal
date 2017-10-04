@@ -15,6 +15,10 @@
 package com.liferay.portal.workflow.web.internal.portlet;
 
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
+import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
+
+import java.util.Arrays;
+import java.util.List;
 
 import javax.portlet.Portlet;
 
@@ -28,6 +32,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-workflow",
 		"com.liferay.portlet.display-category=category.hidden",
+		"com.liferay.portlet.footer-portlet-javascript=/js/main.js",
 		"com.liferay.portlet.friendly-url-mapping=my_workflow",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.icon=/icons/workflow.png",
@@ -50,18 +55,8 @@ import org.osgi.service.component.annotations.Component;
 public class UserWorkflowPortlet extends BaseWorkflowPortlet {
 
 	@Override
-	public boolean isWorkflowDefinitionLinkTabVisible() {
-		return false;
-	}
-
-	@Override
-	public boolean isWorkflowDefinitionTabVisible() {
-		return false;
-	}
-
-	@Override
-	public boolean isWorkflowInstanceTabVisible() {
-		return true;
+	public List<String> getWorkflowTabNames() {
+		return Arrays.asList(WorkflowWebKeys.WORKFLOW_TAB_MY_SUBMISSIONS);
 	}
 
 }

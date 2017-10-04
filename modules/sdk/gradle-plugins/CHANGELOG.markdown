@@ -2540,7 +2540,7 @@ to version 1.0.53.
 - [LPS-75009]: Update the [Liferay Portal Tools Service Builder] dependency to
 version 1.0.169.
 
-## 3.4.75 - 2017-10-02
+## 3.4.75 - 2017-10-02 [YANKED]
 
 ### Changed
 - [LPS-74110]: Update the [Liferay Ant BND] dependency to version 2.0.41.

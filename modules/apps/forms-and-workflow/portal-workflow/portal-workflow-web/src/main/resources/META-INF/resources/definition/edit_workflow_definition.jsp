@@ -28,7 +28,7 @@ String content = BeanParamUtil.getString(workflowDefinition, request, "content")
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request, (workflowDefinition == null) ? "new-definition" : workflowDefinition.getName()) : workflowDefinition.getName());
+renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request, "new-workflow") : workflowDefinition.getName());
 %>
 
 <liferay-portlet:actionURL name='<%= (workflowDefinition == null) ? "addWorkflowDefinition" : "updateWorkflowDefinition" %>' var="editWorkflowDefinitionURL">
@@ -36,14 +36,42 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 </liferay-portlet:actionURL>
 
 <c:if test="<%= workflowDefinition != null %>">
-	<liferay-frontend:management-bar>
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-sidenav-toggler-button
+	<liferay-frontend:info-bar>
+		<div class="container-fluid-1280">
+			<div class="info-bar-item">
+				<c:choose>
+					<c:when test="<%= workflowDefinition.isActive() %>">
+						<span class="label label-info"><%= LanguageUtil.get(request, "published") %></span>
+					</c:when>
+					<c:otherwise>
+						<span class="label label-secondary"><%= LanguageUtil.get(request, "not-published") %></span>
+					</c:otherwise>
+				</c:choose>
+			</div>
+
+			<%
+			String userName = workflowDefinitionDisplayContext.getUserName(workflowDefinition);
+			%>
+
+			<span>
+				<c:choose>
+					<c:when test="<%= userName == null %>">
+						<%= dateFormatTime.format(workflowDefinition.getModifiedDate()) %>
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(workflowDefinition.getModifiedDate()), userName} %>" key="x-by-x" translateArguments="<%= false %>" />
+					</c:otherwise>
+				</c:choose>
+			</span>
+		</div>
+
+		<liferay-frontend:info-bar-buttons>
+			<liferay-frontend:info-bar-sidenav-toggler-button
 				icon="info-circle"
 				label="info"
 			/>
-		</liferay-frontend:management-bar-buttons>
-	</liferay-frontend:management-bar>
+		</liferay-frontend:info-bar-buttons>
+	</liferay-frontend:info-bar>
 </c:if>
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
@@ -61,11 +89,9 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 								<liferay-ui:message key="version" /> <%= workflowDefinition.getVersion() %>
 							</h3>
 
-							<div>
-								<aui:model-context bean="<%= workflowDefinition %>" model="<%= WorkflowDefinition.class %>" />
+							<aui:model-context bean="<%= workflowDefinition %>" model="<%= WorkflowDefinition.class %>" />
 
-								<aui:workflow-status model="<%= WorkflowDefinition.class %>" status="<%= WorkflowConstants.STATUS_APPROVED %>" />
-							</div>
+							<aui:workflow-status model="<%= WorkflowDefinition.class %>" status="<%= WorkflowConstants.STATUS_APPROVED %>" />
 						</div>
 					</liferay-ui:section>
 
@@ -88,24 +114,32 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 			<aui:input name="version" type="hidden" value="<%= version %>" />
 			<aui:input name="content" type="hidden" value="<%= content %>" />
 
-			<div class="card-horizontal">
+			<div class="card-horizontal main-content-card">
 				<div class="card-row-padded">
 					<liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>" message="you-cannot-deactivate-or-delete-this-definition" />
-					<liferay-ui:error exception="<%= WorkflowDefinitionFileException.class %>" message="please-enter-a-valid-definition" />
+					<liferay-ui:error exception="<%= WorkflowDefinitionFileException.class %>" message="please-enter-a-valid-definition-before-publishing" />
+					<liferay-ui:error exception="<%= WorkflowDefinitionTitleException.class %>" message="please-name-your-workflow-before-publishing" />
 
-					<aui:fieldset>
+					<aui:fieldset cssClass="workflow-definition-content">
 						<aui:col>
 							<aui:field-wrapper label="title">
 								<liferay-ui:input-localized name="title" xml='<%= BeanPropertiesUtil.getString(workflowDefinition, "title") %>' />
 							</aui:field-wrapper>
 						</aui:col>
 
-						<aui:col id="contentSourceWrapper">
-							<div class="content-source" id="<portlet:namespace />contentEditor"></div>
+						<aui:col cssClass="workflow-definition-upload">
+							<liferay-util:buffer var="importFileMark">
+								<aui:a href="#" id="uploadLink">
+									<%= StringUtil.toLowerCase(LanguageUtil.get(request, "import-a-file")) %>
+								</aui:a>
+							</liferay-util:buffer>
+
+							<liferay-ui:message arguments="<%= importFileMark %>" key="write-your-definition-or-x" translateArguments="<%= false %>" />
+							<input class="workflow-definition-upload-source" id="<portlet:namespace />upload" type="file" />
 						</aui:col>
 
-						<aui:col>
-							<aui:input inlineLabel="left" label="file" name="definition" type="file" />
+						<aui:col cssClass="workflow-definition-content-source-wrapper" id="contentSourceWrapper">
+							<div class="workflow-definition-content-source" id="<portlet:namespace />contentEditor"></div>
 						</aui:col>
 					</aui:fieldset>
 				</div>
@@ -114,18 +148,16 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 			<aui:button-row>
 
 				<%
-				String taglibOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "saveDefinition');";
+				String taglibOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "publishDefinition');";
 				%>
 
-				<aui:button cssClass="btn-lg" onClick="<%= taglibOnClick %>" primary="<%= true %>" value='<%= LanguageUtil.get(request, "save") %>' />
-
-				<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+				<aui:button cssClass="btn-lg" onClick="<%= taglibOnClick %>" primary="<%= true %>" value='<%= (workflowDefinition == null) ? "publish" : "update" %>' />
 			</aui:button-row>
 		</aui:form>
 	</div>
 </div>
 
-<aui:script use="aui-ace-editor,liferay-xml-formatter">
+<aui:script use="aui-ace-editor,liferay-xml-formatter,liferay-workflow-web">
 	var STR_VALUE = 'value';
 
 	var contentEditor = new A.AceEditor(
@@ -134,7 +166,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 			height: 600,
 			mode: 'xml',
 			tabSize: 4,
-			width: 600
+			width: '100%'
 		}
 	).render();
 
@@ -144,27 +176,9 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 		contentEditor.set(STR_VALUE, editorContentElement.val());
 	}
 
-	contentEditor.set('width', A.one('#<portlet:namespace />contentSourceWrapper').get('clientWidth'));
+	var uploadFile = $('#<portlet:namespace />upload');
 
-	var sidenavSlider = $('#<portlet:namespace />infoPanelId');
-
-	sidenavSlider.on(
-		'closed.lexicon.sidenav',
-		function(event) {
-			contentEditor.set('width', A.one('#<portlet:namespace />contentSourceWrapper').get('clientWidth'));
-		}
-	);
-
-	sidenavSlider.on(
-		'open.lexicon.sidenav',
-		function(event) {
-			contentEditor.set('width', A.one('#<portlet:namespace />contentSourceWrapper').get('clientWidth'));
-		}
-	);
-
-	var definitionFile = $('#<portlet:namespace />definition');
-
-	definitionFile.on(
+	uploadFile.on(
 		'change',
 		function(evt) {
 			var files = evt.target.files;
@@ -176,6 +190,8 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 
 					if (evt.target.readyState == FileReader.DONE) {
 						contentEditor.set(STR_VALUE, evt.target.result);
+
+						Liferay.WorkflowWeb.showSuccessMessage();
 					}
 				};
 
@@ -184,8 +200,18 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 		}
 	);
 
+	var uploadLink = A.one('#<portlet:namespace />uploadLink');
+
+	uploadLink.on(
+		'click',
+		function(event) {
+			event.preventDefault();
+			uploadFile.trigger('click');
+		}
+	);
+
 	Liferay.on(
-		'<portlet:namespace />saveDefinition',
+		'<portlet:namespace />publishDefinition',
 		function(event) {
 			var form = AUI.$('#<portlet:namespace />fm');
 

@@ -12,19 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.workflow.web.internal.request.prepocessor;
+package com.liferay.portal.workflow.web.internal.servlet.taglib;
 
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Adam Brandizzi
  */
-public interface WorkflowDispatchPreprocessor {
-
-	public void prepareDispatch(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortletException;
-
+@Component(
+	immediate = true,
+	property = {"portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_MY_SUBMISSIONS},
+	service = {DynamicInclude.class, WorkflowDynamicInclude.class}
+)
+public class MyWorkflowInstanceDynamicInclude
+	extends WorkflowInstanceDynamicInclude {
 }

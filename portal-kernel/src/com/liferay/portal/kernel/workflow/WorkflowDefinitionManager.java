@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.workflow;
 
 import com.liferay.portal.kernel.messaging.proxy.MessagingProxy;
 import com.liferay.portal.kernel.messaging.proxy.ProxyMode;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.HashMap;
@@ -85,7 +86,7 @@ public interface WorkflowDefinitionManager {
 			}
 		}
 
-		return (List<WorkflowDefinition>)latestWorkflowDefinitions.values();
+		return ListUtil.fromMapValues(latestWorkflowDefinitions);
 	}
 
 	public WorkflowDefinition getWorkflowDefinition(

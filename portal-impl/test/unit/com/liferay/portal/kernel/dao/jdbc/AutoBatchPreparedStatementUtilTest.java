@@ -14,9 +14,10 @@
 
 package com.liferay.portal.kernel.dao.jdbc;
 
+import com.liferay.petra.concurrent.NoticeableThreadPoolExecutor;
+import com.liferay.petra.concurrent.ThreadPoolHandlerAdapter;
+import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
-import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
-import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.nio.intraband.PortalExecutorManagerInvocationHandler;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.SwappableSecurityManager;
@@ -51,7 +52,11 @@ import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CancellationException;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Assert;
@@ -130,7 +135,12 @@ public class AutoBatchPreparedStatementUtilTest {
 				new Class<?>[] {PortalExecutorManager.class},
 				(proxy, method, args) -> {
 					if ("getPortalExecutor".equals(method.getName())) {
-						return new ThreadPoolExecutor(0, 1) {
+						return new NoticeableThreadPoolExecutor(
+							1, 1, 60, TimeUnit.SECONDS,
+							new LinkedBlockingQueue<>(1),
+							Executors.defaultThreadFactory(),
+							new ThreadPoolExecutor.AbortPolicy(),
+							new ThreadPoolHandlerAdapter()) {
 
 							@Override
 							public void execute(Runnable runnable) {

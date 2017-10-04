@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.nio.intraband;
 
-import com.liferay.portal.kernel.executor.PortalExecutorManager;
+import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;

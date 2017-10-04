@@ -14,10 +14,9 @@
 
 package com.liferay.portal.kernel.dao.orm;
 
-import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
+import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.service.BaseLocalService;
@@ -32,6 +31,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 /**
@@ -293,7 +293,7 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 
 					for (final Object object : objects) {
 						futures.add(
-							_threadPoolExecutor.submit(
+							_portalExecutor.submit(
 								new Callable<Void>() {
 
 									@Override
@@ -429,10 +429,10 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 	private PerformActionMethod _performActionMethod;
 
 	private PerformCountMethod _performCountMethod;
-	private String _primaryKeyPropertyName;
-	private final ThreadPoolExecutor _threadPoolExecutor =
+	private final ExecutorService _portalExecutor =
 		_portalExecutorManager.getPortalExecutor(
 			DefaultActionableDynamicQuery.class.getName());
+	private String _primaryKeyPropertyName;
 	private TransactionConfig _transactionConfig;
 
 }

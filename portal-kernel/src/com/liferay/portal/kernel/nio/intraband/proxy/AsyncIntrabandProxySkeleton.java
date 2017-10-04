@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.nio.intraband.proxy;
 
-import com.liferay.portal.kernel.executor.PortalExecutorManager;
+import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.io.Deserializer;
 import com.liferay.portal.kernel.nio.intraband.Datagram;
 import com.liferay.portal.kernel.nio.intraband.RegistrationReference;

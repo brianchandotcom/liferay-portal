@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.social.util.SocialActivityHierarchyEntryThreadLocal;
-import com.liferay.portlet.social.util.test.SocialActivityTestUtil;
+import com.liferay.social.activity.service.test.util.SocialActivityTestUtil;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.social.kernel.service.SocialActivityLocalServiceUtil;

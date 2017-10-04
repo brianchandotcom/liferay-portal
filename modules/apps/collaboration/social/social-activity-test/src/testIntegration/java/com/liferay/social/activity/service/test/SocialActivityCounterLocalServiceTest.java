@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.social.util.test.SocialActivityTestUtil;
+import com.liferay.social.activity.service.test.util.SocialActivityTestUtil;
 import com.liferay.social.kernel.model.SocialActivityCounter;
 import com.liferay.social.kernel.model.SocialActivityCounterConstants;
 import com.liferay.social.kernel.model.SocialActivityLimit;

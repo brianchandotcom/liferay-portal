@@ -161,12 +161,12 @@ public class JspCPlugin implements Plugin<Project> {
 		final CompileJSPTask compileJSPTask = GradleUtil.addTask(
 			project, GENERATE_JSP_JAVA_TASK_NAME, CompileJSPTask.class);
 
-		compileJSPTask.setClasspath(jspCToolConfiguration);
 		compileJSPTask.setDescription(
 			"Compiles JSP files to Java source files to check for errors.");
 		compileJSPTask.setDestinationDir(
 			new File(project.getBuildDir(), "jspc"));
 		compileJSPTask.setJspCClasspath(jspCConfiguration);
+		compileJSPTask.setJspCToolClasspath(jspCToolConfiguration);
 
 		compileJSPTask.setWebAppDir(
 			new Callable<File>() {

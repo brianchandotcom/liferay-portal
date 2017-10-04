@@ -20,13 +20,11 @@ import com.liferay.registry.ServiceRegistration;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author Peter Fellwock
  */
-@SuppressWarnings("rawtypes")
 public class AtomicState {
 
 	public AtomicState() {
@@ -37,37 +35,30 @@ public class AtomicState {
 		properties.put("test", "AtomicState");
 
 		_serviceRegistration = registry.registerService(
-			AtomicReference.class, _atomicReference, properties);
+			AtomicBoolean.class, _atomicBoolean, properties);
 	}
 
 	public void close() {
 		_serviceRegistration.unregister();
 	}
 
-	public boolean equalsTo(String value) {
-		return Objects.equals(_atomicReference.get(), value);
-	}
-
-	public String get() {
-		return _atomicReference.get();
+	public Boolean get() {
+		return _atomicBoolean.get();
 	}
 
 	public boolean isSet() {
-		String reference = _atomicReference.get();
-
-		if (reference == null) {
-			return false;
+		if (Boolean.TRUE.equals(_atomicBoolean.get())) {
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	public void reset() {
-		_atomicReference.set(null);
+		_atomicBoolean.set(Boolean.FALSE);
 	}
 
-	private final AtomicReference<String> _atomicReference =
-		new AtomicReference<>();
-	private final ServiceRegistration<AtomicReference> _serviceRegistration;
+	private final AtomicBoolean _atomicBoolean = new AtomicBoolean();
+	private final ServiceRegistration<AtomicBoolean> _serviceRegistration;
 
 }

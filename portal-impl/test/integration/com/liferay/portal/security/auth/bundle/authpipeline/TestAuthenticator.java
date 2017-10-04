@@ -15,10 +15,9 @@
 package com.liferay.portal.security.auth.bundle.authpipeline;
 
 import com.liferay.portal.kernel.security.auth.Authenticator;
-import com.liferay.portal.kernel.util.StackTraceUtil;
 
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,7 +39,7 @@ public class TestAuthenticator implements Authenticator {
 		long companyId, String emailAddress, String password,
 		Map<String, String[]> headerMap, Map<String, String[]> parameterMap) {
 
-		_atomicReference.set(StackTraceUtil.getCallerKey());
+		_atomicBoolean.set(Boolean.TRUE);
 
 		return Authenticator.SUCCESS;
 	}
@@ -50,7 +49,7 @@ public class TestAuthenticator implements Authenticator {
 		long companyId, String screenName, String password,
 		Map<String, String[]> headerMap, Map<String, String[]> parameterMap) {
 
-		_atomicReference.set(StackTraceUtil.getCallerKey());
+		_atomicBoolean.set(Boolean.TRUE);
 
 		return Authenticator.SUCCESS;
 	}
@@ -60,16 +59,16 @@ public class TestAuthenticator implements Authenticator {
 		long companyId, long userId, String password,
 		Map<String, String[]> headerMap, Map<String, String[]> parameterMap) {
 
-		_atomicReference.set(StackTraceUtil.getCallerKey());
+		_atomicBoolean.set(Boolean.TRUE);
 
 		return Authenticator.SUCCESS;
 	}
 
 	@Reference(target = "(test=AtomicState)")
-	protected void setAtomicReference(AtomicReference<String> atomicReference) {
-		_atomicReference = atomicReference;
+	protected void setAtomicBoolean(AtomicBoolean atomicBoolean) {
+		_atomicBoolean = atomicBoolean;
 	}
 
-	private AtomicReference<String> _atomicReference;
+	private AtomicBoolean _atomicBoolean;
 
 }

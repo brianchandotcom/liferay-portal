@@ -20,14 +20,13 @@ import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.StackTraceUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 
 import java.io.Serializable;
 
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -60,7 +59,7 @@ public class TestWorkflowHandler implements WorkflowHandler<Object> {
 
 	@Override
 	public String getClassName() {
-		_atomicReference.set(StackTraceUtil.getCallerKey());
+		_atomicBoolean.set(Boolean.TRUE);
 
 		return TestWorkflowHandler.class.getName();
 	}
@@ -178,16 +177,16 @@ public class TestWorkflowHandler implements WorkflowHandler<Object> {
 	public Object updateStatus(
 		int status, Map<String, Serializable> workflowContext) {
 
-		_atomicReference.set(StackTraceUtil.getCallerKey());
+		_atomicBoolean.set(Boolean.TRUE);
 
 		return null;
 	}
 
 	@Reference(target = "(test=AtomicState)")
-	protected void setAtomicReference(AtomicReference<String> atomicReference) {
-		_atomicReference = atomicReference;
+	protected void setAtomicBoolean(AtomicBoolean atomicBoolean) {
+		_atomicBoolean = atomicBoolean;
 	}
 
-	private AtomicReference<String> _atomicReference;
+	private AtomicBoolean _atomicBoolean;
 
 }

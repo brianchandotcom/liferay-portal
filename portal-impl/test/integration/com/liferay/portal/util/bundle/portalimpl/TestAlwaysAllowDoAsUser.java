@@ -15,11 +15,10 @@
 package com.liferay.portal.util.bundle.portalimpl;
 
 import com.liferay.portal.kernel.security.auth.AlwaysAllowDoAsUser;
-import com.liferay.portal.kernel.util.StackTraceUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,7 +45,7 @@ public class TestAlwaysAllowDoAsUser implements AlwaysAllowDoAsUser {
 
 	@Override
 	public Collection<String> getActionNames() {
-		_atomicReference.set(StackTraceUtil.getCallerKey());
+		_atomicBoolean.set(Boolean.TRUE);
 
 		Collection<String> actionNames = new ArrayList<>();
 
@@ -57,7 +56,7 @@ public class TestAlwaysAllowDoAsUser implements AlwaysAllowDoAsUser {
 
 	@Override
 	public Collection<String> getMVCRenderCommandNames() {
-		_atomicReference.set(StackTraceUtil.getCallerKey());
+		_atomicBoolean.set(Boolean.TRUE);
 
 		Collection<String> mvcRenderCommandNames = new ArrayList<>();
 
@@ -68,7 +67,7 @@ public class TestAlwaysAllowDoAsUser implements AlwaysAllowDoAsUser {
 
 	@Override
 	public Collection<String> getPaths() {
-		_atomicReference.set(StackTraceUtil.getCallerKey());
+		_atomicBoolean.set(Boolean.TRUE);
 
 		Collection<String> paths = new ArrayList<>();
 
@@ -79,7 +78,7 @@ public class TestAlwaysAllowDoAsUser implements AlwaysAllowDoAsUser {
 
 	@Override
 	public Collection<String> getStrutsActions() {
-		_atomicReference.set(StackTraceUtil.getCallerKey());
+		_atomicBoolean.set(Boolean.TRUE);
 
 		Collection<String> strutsActions = new ArrayList<>();
 
@@ -89,10 +88,10 @@ public class TestAlwaysAllowDoAsUser implements AlwaysAllowDoAsUser {
 	}
 
 	@Reference(target = "(test=AtomicState)")
-	protected void setAtomicReference(AtomicReference<String> atomicReference) {
-		_atomicReference = atomicReference;
+	protected void setAtomicBoolean(AtomicBoolean atomicBoolean) {
+		_atomicBoolean = atomicBoolean;
 	}
 
-	private AtomicReference<String> _atomicReference;
+	private AtomicBoolean _atomicBoolean;
 
 }

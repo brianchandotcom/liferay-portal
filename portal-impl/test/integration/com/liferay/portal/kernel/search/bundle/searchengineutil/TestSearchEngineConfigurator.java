@@ -16,10 +16,9 @@ package com.liferay.portal.kernel.search.bundle.searchengineutil;
 
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineConfigurator;
-import com.liferay.portal.kernel.util.StackTraceUtil;
 
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -35,24 +34,24 @@ public class TestSearchEngineConfigurator implements SearchEngineConfigurator {
 
 	@Override
 	public void afterPropertiesSet() {
-		_atomicReference.set(StackTraceUtil.getCallerKey());
+		_atomicBoolean.set(Boolean.TRUE);
 	}
 
 	@Override
 	public void destroy() {
-		_atomicReference.set(StackTraceUtil.getCallerKey());
+		_atomicBoolean.set(Boolean.TRUE);
 	}
 
 	@Override
 	public void setSearchEngines(Map<String, SearchEngine> searchEngines) {
-		_atomicReference.set("setSearchEngines.searchEngines");
+		_atomicBoolean.set(Boolean.TRUE);
 	}
 
 	@Reference(target = "(test=AtomicState)")
-	protected void setAtomicReference(AtomicReference<String> atomicReference) {
-		_atomicReference = atomicReference;
+	protected void setAtomicBoolean(AtomicBoolean atomicBoolean) {
+		_atomicBoolean = atomicBoolean;
 	}
 
-	private AtomicReference<String> _atomicReference;
+	private AtomicBoolean _atomicBoolean;
 
 }

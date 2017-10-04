@@ -23,6 +23,10 @@ import java.io.PrintWriter;
  */
 public class StackTraceUtil {
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static String getCallerKey() {
 		Exception e = new Exception();
 

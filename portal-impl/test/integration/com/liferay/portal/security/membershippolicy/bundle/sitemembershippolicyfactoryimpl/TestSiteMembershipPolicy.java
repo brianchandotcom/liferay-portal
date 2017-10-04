@@ -21,14 +21,13 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicy;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.util.StackTraceUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,7 +45,7 @@ public class TestSiteMembershipPolicy implements SiteMembershipPolicy {
 	public void checkMembership(
 		long[] userIds, long[] addGroupIds, long[] removeGroupIds) {
 
-		_atomicReference.set(StackTraceUtil.getCallerKey());
+		_atomicBoolean.set(Boolean.TRUE);
 	}
 
 	@Override
@@ -54,7 +53,7 @@ public class TestSiteMembershipPolicy implements SiteMembershipPolicy {
 		List<UserGroupRole> addUserGroupRoles,
 		List<UserGroupRole> removeUserGroupRoles) {
 
-		_atomicReference.set(StackTraceUtil.getCallerKey());
+		_atomicBoolean.set(Boolean.TRUE);
 	}
 
 	@Override
@@ -120,7 +119,7 @@ public class TestSiteMembershipPolicy implements SiteMembershipPolicy {
 	public void propagateMembership(
 		long[] userIds, long[] addUserGroupIds, long[] removeUserGroupIds) {
 
-		_atomicReference.set(StackTraceUtil.getCallerKey());
+		_atomicBoolean.set(Boolean.TRUE);
 	}
 
 	@Override
@@ -128,17 +127,17 @@ public class TestSiteMembershipPolicy implements SiteMembershipPolicy {
 		List<UserGroupRole> addUserGroupRoles,
 		List<UserGroupRole> removeUserGroupRoles) {
 
-		_atomicReference.set(StackTraceUtil.getCallerKey());
+		_atomicBoolean.set(Boolean.TRUE);
 	}
 
 	@Override
 	public void verifyPolicy() {
-		_atomicReference.set(StackTraceUtil.getCallerKey());
+		_atomicBoolean.set(Boolean.TRUE);
 	}
 
 	@Override
 	public void verifyPolicy(Group group) {
-		_atomicReference.set(StackTraceUtil.getCallerKey());
+		_atomicBoolean.set(Boolean.TRUE);
 	}
 
 	@Override
@@ -148,12 +147,12 @@ public class TestSiteMembershipPolicy implements SiteMembershipPolicy {
 		Map<String, Serializable> oldExpandoAttributes,
 		UnicodeProperties oldTypeSettingsProperties) {
 
-		_atomicReference.set(StackTraceUtil.getCallerKey());
+		_atomicBoolean.set(Boolean.TRUE);
 	}
 
 	@Override
 	public void verifyPolicy(Role role) {
-		_atomicReference.set(StackTraceUtil.getCallerKey());
+		_atomicBoolean.set(Boolean.TRUE);
 	}
 
 	@Override
@@ -161,14 +160,14 @@ public class TestSiteMembershipPolicy implements SiteMembershipPolicy {
 		Role role, Role oldRole,
 		Map<String, Serializable> oldExpandoAttributes) {
 
-		_atomicReference.set(StackTraceUtil.getCallerKey());
+		_atomicBoolean.set(Boolean.TRUE);
 	}
 
 	@Reference(target = "(test=AtomicState)")
-	protected void setAtomicReference(AtomicReference<String> atomicReference) {
-		_atomicReference = atomicReference;
+	protected void setAtomicBoolean(AtomicBoolean atomicBoolean) {
+		_atomicBoolean = atomicBoolean;
 	}
 
-	private AtomicReference<String> _atomicReference;
+	private AtomicBoolean _atomicBoolean;
 
 }

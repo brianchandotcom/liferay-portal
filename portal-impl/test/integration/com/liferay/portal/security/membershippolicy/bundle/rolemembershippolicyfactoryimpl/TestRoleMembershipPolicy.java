@@ -16,12 +16,11 @@ package com.liferay.portal.security.membershippolicy.bundle.rolemembershippolicy
 
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.membershippolicy.RoleMembershipPolicy;
-import com.liferay.portal.kernel.util.StackTraceUtil;
 
 import java.io.Serializable;
 
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,7 +38,7 @@ public class TestRoleMembershipPolicy implements RoleMembershipPolicy {
 	public void checkRoles(
 		long[] userIds, long[] addRoleIds, long[] removeRoleIds) {
 
-		_atomicReference.set(StackTraceUtil.getCallerKey());
+		_atomicBoolean.set(Boolean.TRUE);
 	}
 
 	@Override
@@ -64,17 +63,17 @@ public class TestRoleMembershipPolicy implements RoleMembershipPolicy {
 	public void propagateRoles(
 		long[] userIds, long[] addRoleIds, long[] removeRoleIds) {
 
-		_atomicReference.set(StackTraceUtil.getCallerKey());
+		_atomicBoolean.set(Boolean.TRUE);
 	}
 
 	@Override
 	public void verifyPolicy() {
-		_atomicReference.set(StackTraceUtil.getCallerKey());
+		_atomicBoolean.set(Boolean.TRUE);
 	}
 
 	@Override
 	public void verifyPolicy(Role role) {
-		_atomicReference.set(StackTraceUtil.getCallerKey());
+		_atomicBoolean.set(Boolean.TRUE);
 	}
 
 	@Override
@@ -82,14 +81,14 @@ public class TestRoleMembershipPolicy implements RoleMembershipPolicy {
 		Role role, Role oldRole,
 		Map<String, Serializable> oldExpandoAttributes) {
 
-		_atomicReference.set(StackTraceUtil.getCallerKey());
+		_atomicBoolean.set(Boolean.TRUE);
 	}
 
 	@Reference(target = "(test=AtomicState)")
-	protected void setAtomicReference(AtomicReference<String> atomicReference) {
-		_atomicReference = atomicReference;
+	protected void setAtomicBoolean(AtomicBoolean atomicBoolean) {
+		_atomicBoolean = atomicBoolean;
 	}
 
-	private AtomicReference<String> _atomicReference;
+	private AtomicBoolean _atomicBoolean;
 
 }

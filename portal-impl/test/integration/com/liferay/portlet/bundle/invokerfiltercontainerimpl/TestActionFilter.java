@@ -14,9 +14,7 @@
 
 package com.liferay.portlet.bundle.invokerfiltercontainerimpl;
 
-import com.liferay.portal.kernel.util.StackTraceUtil;
-
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -45,27 +43,24 @@ public class TestActionFilter implements ActionFilter {
 
 	@Override
 	public void destroy() {
-		return;
 	}
 
 	@Override
 	public void doFilter(
 		ActionRequest actionRequest, ActionResponse actionResponse,
 		FilterChain filterChain) {
-
-		return;
 	}
 
 	@Override
 	public void init(FilterConfig filterConfig) {
-		_atomicReference.set(StackTraceUtil.getCallerKey());
+		_atomicBoolean.set(Boolean.TRUE);
 	}
 
 	@Reference(target = "(test=AtomicState)")
-	protected void setAtomicReference(AtomicReference<String> atomicReference) {
-		_atomicReference = atomicReference;
+	protected void setAtomicBoolean(AtomicBoolean atomicBoolean) {
+		_atomicBoolean = atomicBoolean;
 	}
 
-	private AtomicReference<String> _atomicReference;
+	private AtomicBoolean _atomicBoolean;
 
 }

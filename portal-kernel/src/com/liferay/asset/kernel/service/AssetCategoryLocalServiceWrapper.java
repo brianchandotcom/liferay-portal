@@ -562,6 +562,12 @@ public class AssetCategoryLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.asset.kernel.model.AssetCategory> getDescendants(
+		com.liferay.asset.kernel.model.AssetCategory category) {
+		return _assetCategoryLocalService.getDescendants(category);
+	}
+
+	@Override
 	public java.util.List<com.liferay.asset.kernel.model.AssetCategory> getEntryCategories(
 		long entryId) {
 		return _assetCategoryLocalService.getEntryCategories(entryId);

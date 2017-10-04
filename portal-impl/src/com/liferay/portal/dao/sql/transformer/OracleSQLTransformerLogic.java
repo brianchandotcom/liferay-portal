@@ -31,7 +31,7 @@ public class OracleSQLTransformerLogic extends BaseSQLTransformerLogic {
 
 		Function[] functions = {
 			getBooleanFunction(), getCastClobTextFunction(),
-			getCastLongFunction(), getCastTextFunction(),
+			getCastLongFunction(), getCastTextFunction(), getConcatFunction(),
 			getIntegerDivisionFunction(), getNullDateFunction(),
 			_getEscapeFunction(), _getNotEqualsBlankStringFunction()
 		};

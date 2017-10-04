@@ -14,6 +14,7 @@
 
 package com.liferay.portal.dao.sql.transformer;
 
+import com.liferay.portal.internal.dao.sql.transformer.SQLTransformerHelper;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -84,6 +85,12 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 	protected Pattern getCastTextPattern() {
 		return Pattern.compile(
 			"CAST_TEXT\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
+	}
+
+	protected Function<String, String> getConcatFunction() {
+		return (String sql) -> SQLTransformerHelper.buildConcatSQL(
+			sql, SQLTransformerHelper.CONCAT_OPEN, StringPool.COMMA_AND_SPACE,
+			StringPool.CLOSE_PARENTHESIS);
 	}
 
 	protected Function<String, String> getInstrFunction() {

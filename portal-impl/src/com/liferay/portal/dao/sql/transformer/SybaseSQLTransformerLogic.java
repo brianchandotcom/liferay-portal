@@ -15,6 +15,7 @@
 package com.liferay.portal.dao.sql.transformer;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.internal.dao.sql.transformer.SQLTransformerHelper;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -33,7 +34,7 @@ public class SybaseSQLTransformerLogic extends BaseSQLTransformerLogic {
 		Function[] functions = {
 			getBitwiseCheckFunction(), getBooleanFunction(),
 			getCastClobTextFunction(), getCastLongFunction(),
-			getCastTextFunction(), getInstrFunction(),
+			getCastTextFunction(), getConcatFunction(), getInstrFunction(),
 			getIntegerDivisionFunction(), getLengthFunction(), getModFunction(),
 			getNullDateFunction(), getSubstrFunction(), _getCrossJoinFunction(),
 			_getReplaceFunction()
@@ -44,6 +45,12 @@ public class SybaseSQLTransformerLogic extends BaseSQLTransformerLogic {
 		}
 
 		setFunctions(functions);
+	}
+
+	@Override
+	protected Function<String, String> getConcatFunction() {
+		return (String sql) -> SQLTransformerHelper.buildConcatSQL(
+			sql, StringPool.BLANK, " + ", StringPool.BLANK);
 	}
 
 	@Override

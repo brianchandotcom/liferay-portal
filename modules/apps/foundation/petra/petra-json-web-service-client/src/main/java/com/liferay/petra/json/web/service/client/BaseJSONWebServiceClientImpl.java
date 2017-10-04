@@ -210,6 +210,20 @@ public abstract class BaseJSONWebServiceClientImpl
 	}
 
 	@Override
+	public String doDelete(String url, String... parametersArray)
+		throws JSONWebServiceInvocationException {
+
+		Map<String, String> parameters = new HashMap<String, String>();
+
+		for (int i = 0; i < parametersArray.length; i += 2) {
+			parameters.put(parametersArray[i], parametersArray[i + 1]);
+		}
+
+		return doDelete(
+			url, parameters, Collections.<String, String>emptyMap());
+	}
+
+	@Override
 	public String doGet(String url, Map<String, String> parameters)
 		throws JSONWebServiceInvocationException,
 			   JSONWebServiceTransportException {
@@ -253,6 +267,80 @@ public abstract class BaseJSONWebServiceClientImpl
 	}
 
 	@Override
+	public String doGet(String url, String... parametersArray)
+		throws JSONWebServiceInvocationException {
+
+		Map<String, String> parameters = new HashMap<String, String>();
+
+		for (int i = 0; i < parametersArray.length; i += 2) {
+			parameters.put(parametersArray[i], parametersArray[i + 1]);
+		}
+
+		return doGet(url, parameters, Collections.<String, String>emptyMap());
+	}
+
+	@Override
+	public <V, T> List<V> doGetToList(
+			Class<T> clazz, String url, Map<String, String> parameters,
+			Map<String, String> headers)
+		throws JSONWebServiceInvocationException {
+
+		String json = doGet(url, parameters, headers);
+
+		if (json == null) {
+			return Collections.emptyList();
+		}
+
+		try {
+			TypeFactory typeFactory = objectMapper.getTypeFactory();
+
+			List<V> list = new ArrayList<V>();
+
+			JavaType javaType = typeFactory.constructCollectionType(
+				list.getClass(), clazz);
+
+			return objectMapper.readValue(json, javaType);
+		}
+		catch (IOException ioe) {
+			throw new JSONWebServiceInvocationException(ioe);
+		}
+	}
+
+	@Override
+	public <V, T> List<V> doGetToList(
+			Class<T> clazz, String url, String... parametersArray)
+		throws JSONWebServiceInvocationException {
+
+		Map<String, String> parameters = new HashMap<String, String>();
+
+		for (int i = 0; i < parametersArray.length; i += 2) {
+			parameters.put(parametersArray[i], parametersArray[i + 1]);
+		}
+
+		return doGetToList(
+			clazz, url, parameters, Collections.<String, String>emptyMap());
+	}
+
+	@Override
+	public <T> T doGetToObject(
+			Class<T> clazz, String url, String... parametersArray)
+		throws JSONWebServiceInvocationException {
+
+		String json = doGet(url, parametersArray);
+
+		if (json == null) {
+			return null;
+		}
+
+		try {
+			return objectMapper.readValue(json, clazz);
+		}
+		catch (IOException ioe) {
+			throw new JSONWebServiceInvocationException(ioe);
+		}
+	}
+
+	@Override
 	public String doPost(String url, Map<String, String> parameters)
 		throws JSONWebServiceInvocationException,
 			   JSONWebServiceTransportException {
@@ -291,6 +379,19 @@ public abstract class BaseJSONWebServiceClientImpl
 		httpPost.setEntity(httpEntity);
 
 		return execute(httpPost);
+	}
+
+	@Override
+	public String doPost(String url, String... parametersArray)
+		throws JSONWebServiceInvocationException {
+
+		Map<String, String> parameters = new HashMap<String, String>();
+
+		for (int i = 0; i < parametersArray.length; i += 2) {
+			parameters.put(parametersArray[i], parametersArray[i + 1]);
+		}
+
+		return doPost(url, parameters, Collections.<String, String>emptyMap());
 	}
 
 	public String doPostAsJSON(String url, Object object)
@@ -334,6 +435,25 @@ public abstract class BaseJSONWebServiceClientImpl
 	}
 
 	@Override
+	public <T> T doPostToObject(
+			Class<T> clazz, String url, String... parametersArray)
+		throws JSONWebServiceInvocationException {
+
+		String json = doPost(url, parametersArray);
+
+		if (json == null) {
+			return null;
+		}
+
+		try {
+			return objectMapper.readValue(json, clazz);
+		}
+		catch (IOException ioe) {
+			throw new JSONWebServiceInvocationException(ioe);
+		}
+	}
+
+	@Override
 	public String doPut(String url, Map<String, String> parameters)
 		throws JSONWebServiceInvocationException,
 			   JSONWebServiceTransportException {
@@ -372,6 +492,19 @@ public abstract class BaseJSONWebServiceClientImpl
 		httpPut.setEntity(httpEntity);
 
 		return execute(httpPut);
+	}
+
+	@Override
+	public String doPut(String url, String... parametersArray)
+		throws JSONWebServiceInvocationException {
+
+		Map<String, String> parameters = new HashMap<String, String>();
+
+		for (int i = 0; i < parametersArray.length; i += 2) {
+			parameters.put(parametersArray[i], parametersArray[i + 1]);
+		}
+
+		return doPut(url, parameters, Collections.<String, String>emptyMap());
 	}
 
 	public Map<String, String> getHeaders() {
@@ -537,131 +670,6 @@ public abstract class BaseJSONWebServiceClientImpl
 		for (Map.Entry<String, String> entry : _headers.entrySet()) {
 			httpMessage.addHeader(entry.getKey(), entry.getValue());
 		}
-	}
-
-	protected String doDelete(String url, String... parametersArray)
-		throws JSONWebServiceInvocationException {
-
-		Map<String, String> parameters = new HashMap<String, String>();
-
-		for (int i = 0; i < parametersArray.length; i += 2) {
-			parameters.put(parametersArray[i], parametersArray[i + 1]);
-		}
-
-		return doDelete(
-			url, parameters, Collections.<String, String>emptyMap());
-	}
-
-	protected String doGet(String url, String... parametersArray)
-		throws JSONWebServiceInvocationException {
-
-		Map<String, String> parameters = new HashMap<String, String>();
-
-		for (int i = 0; i < parametersArray.length; i += 2) {
-			parameters.put(parametersArray[i], parametersArray[i + 1]);
-		}
-
-		return doGet(url, parameters, Collections.<String, String>emptyMap());
-	}
-
-	protected <V, T> List<V> doGetToList(
-			Class<T> clazz, String url, Map<String, String> parameters,
-			Map<String, String> headers)
-		throws JSONWebServiceInvocationException {
-
-		String json = doGet(url, parameters, headers);
-
-		if (json == null) {
-			return Collections.emptyList();
-		}
-
-		try {
-			TypeFactory typeFactory = objectMapper.getTypeFactory();
-
-			List<V> list = new ArrayList<V>();
-
-			JavaType javaType = typeFactory.constructCollectionType(
-				list.getClass(), clazz);
-
-			return objectMapper.readValue(json, javaType);
-		}
-		catch (IOException ioe) {
-			throw new JSONWebServiceInvocationException(ioe);
-		}
-	}
-
-	protected <V, T> List<V> doGetToList(
-			Class<T> clazz, String url, String... parametersArray)
-		throws JSONWebServiceInvocationException {
-
-		Map<String, String> parameters = new HashMap<String, String>();
-
-		for (int i = 0; i < parametersArray.length; i += 2) {
-			parameters.put(parametersArray[i], parametersArray[i + 1]);
-		}
-
-		return doGetToList(
-			clazz, url, parameters, Collections.<String, String>emptyMap());
-	}
-
-	protected <T> T doGetToObject(
-			Class<T> clazz, String url, String... parametersArray)
-		throws JSONWebServiceInvocationException {
-
-		String json = doGet(url, parametersArray);
-
-		if (json == null) {
-			return null;
-		}
-
-		try {
-			return objectMapper.readValue(json, clazz);
-		}
-		catch (IOException ioe) {
-			throw new JSONWebServiceInvocationException(ioe);
-		}
-	}
-
-	protected String doPost(String url, String... parametersArray)
-		throws JSONWebServiceInvocationException {
-
-		Map<String, String> parameters = new HashMap<String, String>();
-
-		for (int i = 0; i < parametersArray.length; i += 2) {
-			parameters.put(parametersArray[i], parametersArray[i + 1]);
-		}
-
-		return doPost(url, parameters, Collections.<String, String>emptyMap());
-	}
-
-	protected <T> T doPostToObject(
-			Class<T> clazz, String url, String... parametersArray)
-		throws JSONWebServiceInvocationException {
-
-		String json = doPost(url, parametersArray);
-
-		if (json == null) {
-			return null;
-		}
-
-		try {
-			return objectMapper.readValue(json, clazz);
-		}
-		catch (IOException ioe) {
-			throw new JSONWebServiceInvocationException(ioe);
-		}
-	}
-
-	protected String doPut(String url, String... parametersArray)
-		throws JSONWebServiceInvocationException {
-
-		Map<String, String> parameters = new HashMap<String, String>();
-
-		for (int i = 0; i < parametersArray.length; i += 2) {
-			parameters.put(parametersArray[i], parametersArray[i + 1]);
-		}
-
-		return doPut(url, parameters, Collections.<String, String>emptyMap());
 	}
 
 	protected String execute(HttpRequestBase httpRequestBase)

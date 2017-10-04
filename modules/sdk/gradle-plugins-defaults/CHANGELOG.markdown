@@ -2181,7 +2181,7 @@ running the `uploadArchives` task with `-Psnapshot`.
 ### Changed
 - [LPS-75009]: Update the [Liferay Gradle Plugins] dependency to version 3.4.74.
 
-## 5.1.4 - 2017-10-02
+## 5.1.4 - 2017-10-02 [YANKED]
 
 ### Changed
 - [LPS-74110]: Update the [Liferay Gradle Plugins Baseline] dependency to

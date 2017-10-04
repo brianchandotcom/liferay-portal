@@ -45,7 +45,7 @@ extend `BaselineTask`. If `true`, the baseline check will fail if the
 ### Changed
 - [LPS-72572]: Update the [Liferay Ant BND] dependency to version 2.0.38.
 
-## 1.1.8 - 2017-10-02
+## 1.1.8 - 2017-10-02 [YANKED]
 
 ### Changed
 - [LPS-74110]: Update the [Liferay Ant BND] dependency to version 2.0.41.

@@ -283,12 +283,6 @@ public class FragmentEntryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static com.liferay.fragment.model.FragmentEntry renameFragmentEntry(
-		long fragmentEntryId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().renameFragmentEntry(fragmentEntryId, name);
-	}
-
 	/**
 	* Updates the fragment entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -298,6 +292,12 @@ public class FragmentEntryLocalServiceUtil {
 	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
 		com.liferay.fragment.model.FragmentEntry fragmentEntry) {
 		return getService().updateFragmentEntry(fragmentEntry);
+	}
+
+	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
+		long fragmentEntryId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateFragmentEntry(fragmentEntryId, name);
 	}
 
 	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(

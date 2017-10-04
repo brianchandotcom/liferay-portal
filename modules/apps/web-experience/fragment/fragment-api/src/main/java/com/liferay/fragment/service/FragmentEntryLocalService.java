@@ -244,9 +244,6 @@ public interface FragmentEntryLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public FragmentEntry renameFragmentEntry(long fragmentEntryId,
-		java.lang.String name) throws PortalException;
-
 	/**
 	* Updates the fragment entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -255,6 +252,9 @@ public interface FragmentEntryLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public FragmentEntry updateFragmentEntry(FragmentEntry fragmentEntry);
+
+	public FragmentEntry updateFragmentEntry(long fragmentEntryId,
+		java.lang.String name) throws PortalException;
 
 	public FragmentEntry updateFragmentEntry(long fragmentEntryId,
 		java.lang.String name, java.lang.String css, java.lang.String html,

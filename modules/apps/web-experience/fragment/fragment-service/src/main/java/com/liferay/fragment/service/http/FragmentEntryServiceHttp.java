@@ -371,12 +371,12 @@ public class FragmentEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.fragment.model.FragmentEntry renameFragmentEntry(
+	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
 		HttpPrincipal httpPrincipal, long fragmentEntryId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(FragmentEntryServiceUtil.class,
-					"renameFragmentEntry", _renameFragmentEntryParameterTypes10);
+					"updateFragmentEntry", _updateFragmentEntryParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					fragmentEntryId, name);
@@ -473,7 +473,7 @@ public class FragmentEntryServiceHttp {
 			long.class, long.class, java.lang.String.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _renameFragmentEntryParameterTypes10 = new Class[] {
+	private static final Class<?>[] _updateFragmentEntryParameterTypes10 = new Class[] {
 			long.class, java.lang.String.class
 		};
 	private static final Class<?>[] _updateFragmentEntryParameterTypes11 = new Class[] {

@@ -226,10 +226,10 @@ public class FragmentEntryServiceSoap {
 		}
 	}
 
-	public static com.liferay.fragment.model.FragmentEntrySoap renameFragmentEntry(
+	public static com.liferay.fragment.model.FragmentEntrySoap updateFragmentEntry(
 		long fragmentEntryId, java.lang.String name) throws RemoteException {
 		try {
-			com.liferay.fragment.model.FragmentEntry returnValue = FragmentEntryServiceUtil.renameFragmentEntry(fragmentEntryId,
+			com.liferay.fragment.model.FragmentEntry returnValue = FragmentEntryServiceUtil.updateFragmentEntry(fragmentEntryId,
 					name);
 
 			return com.liferay.fragment.model.FragmentEntrySoap.toSoapModel(returnValue);

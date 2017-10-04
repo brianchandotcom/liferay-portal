@@ -596,11 +596,20 @@ public class LocalGitSyncUtil {
 
 		long duration = System.currentTimeMillis() - start;
 
-		System.out.println(
-			JenkinsResultsParserUtil.combine(
-				"Pushed ", localBranch.getName(), " to ", remoteBranchName,
-				" on ", Integer.toString(remotes.size()), " git nodes in ",
-				JenkinsResultsParserUtil.toDurationString(duration)));
+		if (localBranch == null) {
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Deleted ", remoteBranchName, " on ",
+					Integer.toString(remotes.size()), " git nodes in ",
+					JenkinsResultsParserUtil.toDurationString(duration)));
+		}
+		else {
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Pushed ", localBranch.getName(), " to ", remoteBranchName,
+					" on ", Integer.toString(remotes.size()), " git nodes in ",
+					JenkinsResultsParserUtil.toDurationString(duration)));
+		}
 
 		return resultsMap;
 	}

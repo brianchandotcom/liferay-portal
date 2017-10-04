@@ -8134,6 +8134,10 @@ public class PortalImpl implements Portal {
 			i18nPath = buildI18NPath(locale);
 		}
 
+		else {
+			i18nLanguageId = locale.toString();
+		}
+
 		themeDisplay.setI18nLanguageId(i18nLanguageId);
 		themeDisplay.setI18nPath(i18nPath);
 		themeDisplay.setLocale(locale);

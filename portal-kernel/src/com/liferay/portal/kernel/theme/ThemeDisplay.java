@@ -1946,7 +1946,7 @@ public class ThemeDisplay
 							_siteGroup,
 							_getFriendlyURLLayouts(
 								layoutManagePagesInitialChildren),
-							_languageId);
+							_i18nLanguageId);
 				}
 			}
 		}

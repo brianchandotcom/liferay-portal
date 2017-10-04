@@ -2550,6 +2550,7 @@ version 1.0.169.
 ### Changed
 - [LPS-73070]: Use a single Node.js installation for the whole multi-project
 build by setting the default value of the `node.global` property to `true`.
+- [LPS-74110]: Update the [Liferay Ant BND] dependency to version 2.0.40.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs

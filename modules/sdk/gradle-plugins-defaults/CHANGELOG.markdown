@@ -2200,6 +2200,8 @@ in the `modules` directory.
 
 ### Changed
 - [LPS-73070]: Update the [Liferay Gradle Plugins] dependency to version 3.5.0.
+- [LPS-74110]: Update the [Liferay Gradle Plugins Baseline] dependency to
+version 1.1.7.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report

@@ -14,6 +14,7 @@
 
 package com.liferay.company.service.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
@@ -94,6 +95,7 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.springframework.core.io.FileSystemResourceLoader;
 import org.springframework.mock.web.MockServletContext;
@@ -102,6 +104,7 @@ import org.springframework.mock.web.MockServletContext;
  * @author Mika Koivisto
  * @author Dale Shan
  */
+@RunWith(Arquillian.class)
 @SybaseDumpTransactionLog(dumpBefore = {SybaseDump.CLASS, SybaseDump.METHOD})
 @Sync
 public class CompanyLocalServiceTest {

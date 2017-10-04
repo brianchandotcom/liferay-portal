@@ -846,7 +846,7 @@ public class GitWorkingDirectory {
 			_sha = sha;
 		}
 
-		private String _name;
+		private final String _name;
 		private final Remote _remote;
 		private final String _sha;
 

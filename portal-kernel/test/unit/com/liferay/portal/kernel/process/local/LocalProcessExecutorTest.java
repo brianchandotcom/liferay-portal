@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.SocketUtil;
 import com.liferay.portal.kernel.util.SocketUtil.ServerSocketConfigurator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -1305,6 +1306,20 @@ public class LocalProcessExecutorTest {
 
 			Assert.assertSame(InterruptedException.class, throwable.getClass());
 		}
+	}
+
+	@Test
+	public void testProcessConfigDeprecatedMethods() {
+		ProcessConfig processConfig = _createJPDAProcessConfig(_JPDA_OPTIONS1);
+
+		Assert.assertArrayEquals(
+			StringUtil.split(
+				processConfig.getBootstrapClassPath(), File.pathSeparatorChar),
+			processConfig.getBootstrapClassPathElements());
+		Assert.assertArrayEquals(
+			StringUtil.split(
+				processConfig.getRuntimeClassPath(), File.pathSeparatorChar),
+			processConfig.getRuntimeClassPathElements());
 	}
 
 	@Test

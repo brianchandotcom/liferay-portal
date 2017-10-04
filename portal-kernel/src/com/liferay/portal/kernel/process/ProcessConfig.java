@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.process;
 
 import com.liferay.portal.kernel.io.PathHolder;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
@@ -35,12 +36,20 @@ public class ProcessConfig implements Serializable {
 	}
 
 	public String getBootstrapClassPath() {
-		return StringUtil.merge(
-			getBootstrapClassPathElements(), File.pathSeparator);
+		return _merge(getBootstrapClassPathHolders());
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getBootstrapClassPathHolders()}
+	 */
+	@Deprecated
 	public String[] getBootstrapClassPathElements() {
 		return ArrayUtil.toStringArray(_bootstrapClassPathHolders);
+	}
+
+	public PathHolder[] getBootstrapClassPathHolders() {
+		return _bootstrapClassPathHolders;
 	}
 
 	public Map<String, String> getEnvironment() {
@@ -56,12 +65,20 @@ public class ProcessConfig implements Serializable {
 	}
 
 	public String getRuntimeClassPath() {
-		return StringUtil.merge(
-			getRuntimeClassPathElements(), File.pathSeparator);
+		return _merge(getRuntimeClassPathHolders());
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getRuntimeClassPathHolders()}
+	 */
+	@Deprecated
 	public String[] getRuntimeClassPathElements() {
 		return ArrayUtil.toStringArray(_runtimeClassPathHolders);
+	}
+
+	public PathHolder[] getRuntimeClassPathHolders() {
+		return _runtimeClassPathHolders;
 	}
 
 	public static class Builder {
@@ -126,6 +143,20 @@ public class ProcessConfig implements Serializable {
 		_reactClassLoader = builder._reactClassLoader;
 
 		_runtimeClassPathHolders = _toPathHolders(builder._runtimeClassPath);
+	}
+
+	private String _merge(PathHolder[] pathHolders) {
+		StringBundler sb = new StringBundler(2 * pathHolders.length - 1);
+
+		for (int i = 0; i < pathHolders.length; i++) {
+			sb.append(pathHolders[i]);
+
+			if ((pathHolders.length - 1) != i) {
+				sb.append(File.pathSeparator);
+			}
+		}
+
+		return sb.toString();
 	}
 
 	private PathHolder[] _toPathHolders(String classPath) {

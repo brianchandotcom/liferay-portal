@@ -255,7 +255,7 @@
 <!--PUBLISH_TEMPLATES-->
 <tr>
 	<td>PUBLISH_TEMPLATES_NAME_FIELD</td>
-	<td>//input[contains(@id,'name')]</td>
+	<td>//div[contains(@class,'form-group')]//input[contains(@id,'name')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -898,8 +898,10 @@ public class GitWorkingDirectory {
 
 			if (remoteInputLines[0].equals(remoteInputLines[1])) {
 				throw new IllegalArgumentException(
-					"\"remoteInputLines[0]\" and \"remoteInputLines[1]\" are " +
-						"identical: " + remoteInputLines[0]);
+					JenkinsResultsParserUtil.combine(
+						"\"remoteInputLines[0]\" and ",
+						"\"remoteInputLines[1]\" are identical: ",
+						remoteInputLines[0]));
 			}
 
 			if ((remoteInputLines[0] == null) ||

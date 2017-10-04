@@ -31,7 +31,7 @@
 <%
 List<AddMenuItem> addMenuItems = new ArrayList<>();
 
-addMenuItems.add(new AddMenuItem(HtmlUtil.escape(LanguageUtil.get(request, "new-definition")), addWorkflowDefinitionURL.toString()));
+addMenuItems.add(new AddMenuItem(HtmlUtil.escape(LanguageUtil.get(request, "new-workflow")), addWorkflowDefinitionURL.toString()));
 %>
 
 <c:if test="<%= !addMenuItems.isEmpty() %>">

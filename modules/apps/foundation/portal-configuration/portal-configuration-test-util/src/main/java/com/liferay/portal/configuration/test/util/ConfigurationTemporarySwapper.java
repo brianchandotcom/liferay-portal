@@ -67,30 +67,18 @@ public class ConfigurationTemporarySwapper implements AutoCloseable {
 
 		CountDownLatch countDownLatch = new CountDownLatch(1);
 
-		ServiceListener serviceListener = new ServiceListener() {
-
-			@Override
-			public void serviceChanged(ServiceEvent serviceEvent) {
-				if (serviceEvent.getType() == ServiceEvent.REGISTERED) {
-					return;
-				}
-
-				ServiceReference<?> serviceReference =
-					serviceEvent.getServiceReference();
-
-				Object changedService = _bundleContext.getService(
-					serviceReference);
-
-				if (changedService == service) {
-					countDownLatch.countDown();
-				}
-
-				_bundleContext.ungetService(serviceReference);
+		ServiceListener serviceListener = serviceEvent -> {
+			if (serviceEvent.getType() == ServiceEvent.REGISTERED) {
+				return;
 			}
 
+			countDownLatch.countDown();
 		};
 
-		_bundleContext.addServiceListener(serviceListener);
+		Class<?> serviceClass = service.getClass();
+
+		_bundleContext.addServiceListener(
+			serviceListener, "(component.name=" + serviceClass.getName() + ")");
 
 		try {
 			if (dictionary == null) {

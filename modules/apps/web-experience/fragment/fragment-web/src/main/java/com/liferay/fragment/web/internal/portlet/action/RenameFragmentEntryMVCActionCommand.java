@@ -69,6 +69,8 @@ public class RenameFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, actionResponse, jsonObject);
 		}
 		catch (PortalException pe) {
+			hideDefaultSuccessMessage(actionRequest);
+
 			_fragmentEntryExceptionRequestHandler.handlePortalException(
 				actionRequest, actionResponse, pe);
 		}

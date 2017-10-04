@@ -78,6 +78,8 @@ public class AddFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, actionResponse, jsonObject);
 		}
 		catch (PortalException pe) {
+			hideDefaultSuccessMessage(actionRequest);
+
 			_fragmentEntryExceptionRequestHandler.handlePortalException(
 				actionRequest, actionResponse, pe);
 		}

@@ -15,8 +15,10 @@
 package com.liferay.lcs.portal;
 
 /**
- * @author Riccardo Ferrari
+ * @author     Riccardo Ferrari
+ * @deprecated As of 10.0.0, Moved into osb-lcs-api module
  */
+@Deprecated
 public enum SiteType {
 
 	ORGANIZATION("organization-site", 0), SITE("site", 1);

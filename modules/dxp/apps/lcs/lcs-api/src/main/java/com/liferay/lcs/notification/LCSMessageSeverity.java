@@ -15,8 +15,10 @@
 package com.liferay.lcs.notification;
 
 /**
- * @author Matija Petanjek
+ * @author     Matija Petanjek
+ * @deprecated As of 10.0.0, Moved into osb-lcs-api module
  */
+@Deprecated
 public enum LCSMessageSeverity {
 
 	DANGER("lcs-message-severity-danger", 3),

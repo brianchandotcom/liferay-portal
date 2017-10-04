@@ -15,10 +15,12 @@
 package com.liferay.lcs.subscription;
 
 /**
- * @author  Igor Beslic
- * @version 2.1.1
- * @since   LCS 1.3
+ * @author     Igor Beslic
+ * @version    2.1.1
+ * @since      LCS 1.3
+ * @deprecated As of 10.0.0, Moved into osb-lcs-api module
  */
+@Deprecated
 public enum SubscriptionType {
 
 	BACKUP("backup"), CLUSTER("cluster"), DEVELOPER("developer"),

@@ -18,10 +18,12 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 /**
- * @author  Igor Beslic
- * @version 2.1.1
- * @since   LCS 1.5
+ * @author     Igor Beslic
+ * @version    2.1.1
+ * @since      LCS 1.5
+ * @deprecated As of 10.0.0, Moved into osb-lcs-api module
  */
+@Deprecated
 public enum SubscriptionInstanceSize {
 
 	SIZE_1(1, "small", 8), SIZE_2(2, "medium", 12), SIZE_3(3, "large", 16),

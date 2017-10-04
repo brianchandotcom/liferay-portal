@@ -18,9 +18,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Igor Beslic
- * @author Marko Cikos
+ * @author     Igor Beslic
+ * @author     Marko Cikos
+ * @deprecated As of 10.0.0, Moved into osb-lcs-api module
  */
+@Deprecated
 public enum LCSEventType {
 
 	LCS_CLUSTER_NODE_CLUSTER_LINK_FAILED(

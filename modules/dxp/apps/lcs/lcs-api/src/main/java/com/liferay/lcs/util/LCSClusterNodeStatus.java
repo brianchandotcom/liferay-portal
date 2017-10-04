@@ -20,9 +20,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Igor Beslic
- * @author Marko Cikos
+ * @author     Igor Beslic
+ * @author     Marko Cikos
+ * @deprecated As of 10.0.0, Moved into osb-lcs-api module
  */
+@Deprecated
 public enum LCSClusterNodeStatus {
 
 	ACTIVE("online", "offline", 0x01),

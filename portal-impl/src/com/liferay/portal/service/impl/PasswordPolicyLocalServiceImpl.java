@@ -235,6 +235,14 @@ public class PasswordPolicyLocalServiceImpl
 
 	@Override
 	public PasswordPolicy getPasswordPolicy(
+			long companyId, boolean defaultPolicy)
+		throws PortalException {
+
+		return passwordPolicyPersistence.findByC_DP(companyId, defaultPolicy);
+	}
+
+	@Override
+	public PasswordPolicy getPasswordPolicy(
 			long companyId, long[] organizationIds)
 		throws PortalException {
 

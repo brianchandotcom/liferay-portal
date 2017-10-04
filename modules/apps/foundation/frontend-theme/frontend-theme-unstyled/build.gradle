@@ -92,7 +92,6 @@ buildClay {
 				}
 				else if (line == "// INSERT CUSTOM VARS") {
 					line = '''\
-@import "variables";
 
 @import "../liferay_variables_custom";
 @import "../liferay_variables";'''

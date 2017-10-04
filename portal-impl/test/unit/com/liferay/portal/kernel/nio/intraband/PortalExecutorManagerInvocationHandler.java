@@ -16,39 +16,31 @@ package com.liferay.portal.kernel.nio.intraband;
 
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 
-import java.util.concurrent.Future;
-
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 
 /**
  * @author Preston Crary
  */
-@Aspect
-public class CancelingPortalExecutorManagerUtilAdvice {
+public class PortalExecutorManagerInvocationHandler
+	implements InvocationHandler {
 
-	@Around(
-		"execution(* com.liferay.portal.kernel.executor." +
-			"PortalExecutorManagerUtil.getPortalExecutor(..))"
-	)
-	public ThreadPoolExecutor getPortalExecutor() {
-		return new ThreadPoolExecutor(0, 1) {
+	@Override
+	public Object invoke(Object proxy, Method method, Object[] args)
+		throws Throwable {
 
-			@Override
-			public void execute(Runnable runnable) {
-				Future<?> future = (Future<?>)runnable;
+		if ("getPortalExecutor".equals(method.getName())) {
+			return new ThreadPoolExecutor(0, 1) {
 
-				future.cancel(true);
-			}
+				@Override
+				public void execute(Runnable runnable) {
+					runnable.run();
+				}
 
-		};
-	}
+			};
+		}
 
-	@Around(
-		"execution(private com.liferay.portal.kernel.executor." +
-			"PortalExecutorManagerUtil.new())"
-	)
-	public void PortalExecutorManagerUtil() {
+		return null;
 	}
 
 }

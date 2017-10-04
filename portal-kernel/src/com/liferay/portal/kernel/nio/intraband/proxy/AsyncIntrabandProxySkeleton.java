@@ -14,10 +14,11 @@
 
 package com.liferay.portal.kernel.nio.intraband.proxy;
 
-import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
+import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.io.Deserializer;
 import com.liferay.portal.kernel.nio.intraband.Datagram;
 import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.concurrent.ExecutorService;
 
@@ -30,7 +31,7 @@ public class AsyncIntrabandProxySkeleton implements IntrabandProxySkeleton {
 		String skeletonId, IntrabandProxySkeleton intrabandProxySkeleton) {
 
 		ExecutorService executorService =
-			PortalExecutorManagerUtil.getPortalExecutor(skeletonId, false);
+			_portalExecutorManager.getPortalExecutor(skeletonId, false);
 
 		if (executorService == null) {
 			return intrabandProxySkeleton;
@@ -64,6 +65,11 @@ public class AsyncIntrabandProxySkeleton implements IntrabandProxySkeleton {
 		_executorService = executorService;
 		_intrabandProxySkeleton = intrabandProxySkeleton;
 	}
+
+	private static volatile PortalExecutorManager _portalExecutorManager =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			PortalExecutorManager.class, AsyncIntrabandProxySkeleton.class,
+			"_portalExecutorManager", true);
 
 	private final ExecutorService _executorService;
 	private final IntrabandProxySkeleton _intrabandProxySkeleton;

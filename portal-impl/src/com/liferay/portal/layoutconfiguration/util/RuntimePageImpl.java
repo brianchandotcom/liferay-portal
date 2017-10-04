@@ -14,7 +14,7 @@
 
 package com.liferay.portal.layoutconfiguration.util;
 
-import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
+import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.layoutconfiguration.util.RuntimePage;
 import com.liferay.portal.kernel.layoutconfiguration.util.xml.RuntimeLogic;
@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -517,7 +518,7 @@ public class RuntimePageImpl implements RuntimePage {
 		throws Exception {
 
 		ExecutorService executorService =
-			PortalExecutorManagerUtil.getPortalExecutor(
+			_portalExecutorManager.getPortalExecutor(
 				RuntimePageImpl.class.getName());
 
 		Map<Future<StringBundler>, PortletRenderer> futures = new HashMap<>(
@@ -676,6 +677,11 @@ public class RuntimePageImpl implements RuntimePage {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		RuntimePageImpl.class);
+
+	private static volatile PortalExecutorManager _portalExecutorManager =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			PortalExecutorManager.class, RuntimePageImpl.class,
+			"_portalExecutorManager", true);
 
 	private int _waitTime = Integer.MAX_VALUE;
 

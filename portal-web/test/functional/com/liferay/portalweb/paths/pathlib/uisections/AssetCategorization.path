@@ -139,7 +139,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TAG_AUTO_COMPLETE_SPECIFIC</td>
+	<td>TAG_AUTOCOMPLETE_SPECIFIC</td>
 	<td>//div[contains(@class,'autocomplete-results-content')]//li[.='${key_tagName}']</td>
 	<td></td>
 </tr>

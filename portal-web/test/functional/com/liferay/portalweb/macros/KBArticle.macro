@@ -560,7 +560,9 @@
 
 		<execute function="SelectFrame" locator1="KnowledgeBaseSelectParent#SELECT_PARENT_DISPLAY_IFRAME" />
 
-		<execute function="AssertClick" locator1="KnowledgeBaseSelectParent#CHOOSE_FOLDER_BUTTON" value1="Choose" />
+		<execute function="AssertClick" locator1="KnowledgeBaseSelectParent#CHOOSE_FOLDER_BUTTON" value1="Choose">
+			<var name="key_kbFolderName" value="${kbFolderName}" />
+		</execute>
 
 		<execute function="SelectFrame" value1="relative=top" />
 

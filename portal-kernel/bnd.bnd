@@ -2,6 +2,7 @@ Bundle-Name: ${manifest.bundle.name}
 Bundle-SymbolicName: ${manifest.bundle.symbolic.name}
 Bundle-Version: 2.51.0
 Export-Package:\
+	!com.liferay.portal.kernel.internal.*,\
 	!com.liferay.portal.kernel.test.*,\
 	\
 	com.liferay.*

@@ -29,16 +29,19 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.LinkedHashMap;
@@ -110,6 +113,16 @@ public class OrganizationIndexer extends BaseIndexer<Organization> {
 
 				booleanFilter.add(new QueryFilter(wildcardQuery));
 			}
+
+			contextBooleanFilter.add(booleanFilter, BooleanClauseOccur.MUST);
+		}
+		else if (organizationsTree != null) {
+			BooleanFilter booleanFilter = new BooleanFilter();
+
+			TermQuery termQuery = new TermQueryImpl(
+				Field.TREE_PATH, StringPool.BLANK);
+
+			booleanFilter.add(new QueryFilter(termQuery));
 
 			contextBooleanFilter.add(booleanFilter, BooleanClauseOccur.MUST);
 		}

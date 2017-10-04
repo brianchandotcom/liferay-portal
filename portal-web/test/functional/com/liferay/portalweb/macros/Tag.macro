@@ -21,10 +21,6 @@
 
 		<execute function="Type" locator1="AssetCategorization#TAGS_FIELD" value1="tag " />
 
-		<execute function="AssertTextEquals" locator1="AssetCategorization#TAG_AUTO_COMPLETE_SPECIFIC" value1="${tagName}">
-			<var name="key_tagName" value="${tagName}" />
-		</execute>
-
 		<execute function="AssertClick" locator1="AssetCategorization#TAG_AUTOCOMPLETE_SPECIFIC" value1="${tagName}">
 			<var name="key_tagName" value="${tagName}" />
 		</execute>

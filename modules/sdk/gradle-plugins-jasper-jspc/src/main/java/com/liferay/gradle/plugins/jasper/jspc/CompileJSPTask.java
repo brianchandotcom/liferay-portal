@@ -17,79 +17,86 @@ package com.liferay.gradle.plugins.jasper.jspc;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+import java.net.URI;
+import java.net.URL;
+import java.net.URLClassLoader;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.gradle.api.GradleException;
+import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
-import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.InputFiles;
-import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.SkipWhenEmpty;
+import org.gradle.api.tasks.TaskAction;
 
 /**
  * @author Andrea Di Giorgi
  */
-public class CompileJSPTask extends JavaExec {
+public class CompileJSPTask extends DefaultTask {
 
-	public CompileJSPTask() {
-		setMain("com.liferay.jasper.jspc.JspC");
-	}
-
-	@Override
-	public void exec() {
-		Logger logger = getLogger();
-
-		setArgs(_getCompleteArgs());
-
+	@TaskAction
+	public void compileJSP() throws Throwable {
 		FileCollection jspCClasspath = getJspCClasspath();
+		FileCollection jspCToolClasspath = getJspCToolClasspath();
 
-		if (jspCClasspath != null) {
-			String jspClasspath = jspCClasspath.getAsPath();
+		String classpath =
+			jspCToolClasspath.getAsPath() + File.pathSeparator +
+				jspCClasspath.getAsPath();
 
-			setStandardInput(new ByteArrayInputStream(jspClasspath.getBytes()));
+		String[] files = classpath.split(File.pathSeparator);
+
+		URL[] urls = new URL[files.length];
+
+		for (int i = 0; i < files.length; i++) {
+			File file = new File(files[i]);
+
+			URI uri = file.toURI();
+
+			urls[i] = uri.toURL();
 		}
 
-		OutputStream taskErrorOutput = getErrorOutput();
+		ClassLoader classLoader = new URLClassLoader(urls, null);
 
-		ByteArrayOutputStream byteArrayOutputStream =
-			new ByteArrayOutputStream();
+		Class<?> jspcClass = classLoader.loadClass(
+			"com.liferay.jasper.jspc.JspC");
+
+		Object jspc = jspcClass.newInstance();
+
+		Method setArgsMethod = jspcClass.getMethod("setArgs", String[].class);
+
+		setArgsMethod.invoke(jspc, new Object[] {_getArgs()});
+
+		Method setClassPathMethod = jspcClass.getMethod(
+			"setClassPath", String.class);
+
+		setClassPathMethod.invoke(jspc, classpath);
+
+		Method executeMethod = jspcClass.getMethod("execute");
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		currentThread.setContextClassLoader(classLoader);
 
 		try {
-			setErrorOutput(byteArrayOutputStream);
-
-			super.exec();
-
-			String output = byteArrayOutputStream.toString();
-
-			if (output.contains("JasperException")) {
-				logger.error(output);
-
-				throw new GradleException("Unable to compile JSPs");
-			}
-			else if (logger.isInfoEnabled()) {
-				logger.info(output);
-			}
+			executeMethod.invoke(jspc);
+		}
+		catch (InvocationTargetException ite) {
+			throw ite.getCause();
 		}
 		finally {
-			try {
-				byteArrayOutputStream.writeTo(taskErrorOutput);
-			}
-			catch (IOException ioe) {
-				throw new GradleException(ioe.getMessage(), ioe);
-			}
-
-			setErrorOutput(taskErrorOutput);
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 
@@ -101,6 +108,11 @@ public class CompileJSPTask extends JavaExec {
 	@InputFiles
 	public FileCollection getJspCClasspath() {
 		return _jspCClasspath;
+	}
+
+	@InputFiles
+	public FileCollection getJspCToolClasspath() {
+		return _jspCToolClasspath;
 	}
 
 	@InputFiles
@@ -136,30 +148,31 @@ public class CompileJSPTask extends JavaExec {
 		_jspCClasspath = jspCClasspath;
 	}
 
-	@Override
-	public JavaExec setStandardOutput(OutputStream outputStream) {
-		throw new UnsupportedOperationException();
+	public void setJspCToolClasspath(FileCollection classpath) {
+		_jspCToolClasspath = classpath;
 	}
 
 	public void setWebAppDir(Object webAppDir) {
 		_webAppDir = webAppDir;
 	}
 
-	private List<String> _getCompleteArgs() {
-		List<String> completeArgs = new ArrayList<>(getArgs());
+	private String[] _getArgs() {
+		List<String> args = new ArrayList<>();
 
-		completeArgs.add("-d");
-		completeArgs.add(
-			FileUtil.relativize(getDestinationDir(), getWorkingDir()));
+		Project project = getProject();
 
-		completeArgs.add("-webapp");
-		completeArgs.add(FileUtil.getAbsolutePath(getWebAppDir()));
+		args.add("-d");
+		args.add(project.relativePath(getDestinationDir()));
 
-		return completeArgs;
+		args.add("-webapp");
+		args.add(FileUtil.getAbsolutePath(getWebAppDir()));
+
+		return args.toArray(new String[args.size()]);
 	}
 
 	private Object _destinationDir;
 	private FileCollection _jspCClasspath;
+	private FileCollection _jspCToolClasspath;
 	private Object _webAppDir;
 
 }

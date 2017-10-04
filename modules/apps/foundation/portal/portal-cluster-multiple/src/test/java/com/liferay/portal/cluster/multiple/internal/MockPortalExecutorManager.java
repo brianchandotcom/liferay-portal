@@ -14,8 +14,14 @@
 
 package com.liferay.portal.cluster.multiple.internal;
 
-import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
-import com.liferay.portal.kernel.executor.PortalExecutorManager;
+import com.liferay.petra.concurrent.AbstractNoticeableExecutorService;
+import com.liferay.petra.concurrent.NoticeableExecutorService;
+import com.liferay.petra.concurrent.NoticeableFuture;
+import com.liferay.petra.executor.PortalExecutorManager;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Michael C. Han
@@ -23,34 +29,20 @@ import com.liferay.portal.kernel.executor.PortalExecutorManager;
 public class MockPortalExecutorManager implements PortalExecutorManager {
 
 	@Override
-	public ThreadPoolExecutor getPortalExecutor(String name) {
-		return new ThreadPoolExecutor(0, 1) {
-
-			@Override
-			public void execute(Runnable runnable) {
-				runnable.run();
-			}
-
-		};
+	public NoticeableExecutorService getPortalExecutor(String name) {
+		return new MockNoticeableExecutorService();
 	}
 
 	@Override
-	public ThreadPoolExecutor getPortalExecutor(
+	public NoticeableExecutorService getPortalExecutor(
 		String name, boolean createIfAbsent) {
 
-		return new ThreadPoolExecutor(0, 1) {
-
-			@Override
-			public void execute(Runnable runnable) {
-				runnable.run();
-			}
-
-		};
+		return new MockNoticeableExecutorService();
 	}
 
 	@Override
-	public ThreadPoolExecutor registerPortalExecutor(
-		String name, ThreadPoolExecutor threadPoolExecutor) {
+	public NoticeableExecutorService registerPortalExecutor(
+		String name, NoticeableExecutorService threadPoolExecutor) {
 
 		return null;
 	}
@@ -61,6 +53,51 @@ public class MockPortalExecutorManager implements PortalExecutorManager {
 
 	@Override
 	public void shutdown(boolean interrupt) {
+	}
+
+	private static class MockNoticeableExecutorService
+		extends AbstractNoticeableExecutorService
+		implements NoticeableExecutorService {
+
+		@Override
+		public boolean awaitTermination(long timeout, TimeUnit unit) {
+			return true;
+		}
+
+		@Override
+		public void execute(Runnable runnable) {
+			runnable.run();
+		}
+
+		@Override
+		public boolean isShutdown() {
+			return _shutdown;
+		}
+
+		@Override
+		public boolean isTerminated() {
+			return _shutdown;
+		}
+
+		@Override
+		public void shutdown() {
+			_shutdown = true;
+		}
+
+		@Override
+		public List<Runnable> shutdownNow() {
+			_shutdown = true;
+
+			return Collections.emptyList();
+		}
+
+		@Override
+		public NoticeableFuture<Void> terminationNoticeableFuture() {
+			return null;
+		}
+
+		private boolean _shutdown;
+
 	}
 
 }

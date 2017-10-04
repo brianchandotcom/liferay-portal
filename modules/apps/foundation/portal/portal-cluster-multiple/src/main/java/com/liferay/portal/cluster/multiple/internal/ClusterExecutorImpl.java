@@ -15,6 +15,7 @@
 package com.liferay.portal.cluster.multiple.internal;
 
 import com.liferay.petra.concurrent.ConcurrentReferenceValueHashMap;
+import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.portal.cluster.multiple.configuration.ClusterExecutorConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
-import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.SecureRandomUtil;

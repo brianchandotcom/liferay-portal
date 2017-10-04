@@ -5,7 +5,8 @@ dependencies {
 	compileInclude group: "org.jgroups", name: "jgroups", version: "3.6.4.Final"
 
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "2.4.1"
-	provided group: "com.liferay", name: "com.liferay.petra.concurrent", version: "1.0.0"
+	provided group: "com.liferay", name: "com.liferay.petra.concurrent", version: "1.1.0"
+	provided group: "com.liferay", name: "com.liferay.petra.executor", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.memory", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"

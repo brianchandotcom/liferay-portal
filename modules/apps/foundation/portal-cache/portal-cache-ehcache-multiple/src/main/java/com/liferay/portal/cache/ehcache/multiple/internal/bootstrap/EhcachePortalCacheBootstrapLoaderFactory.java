@@ -14,6 +14,7 @@
 
 package com.liferay.portal.cache.ehcache.multiple.internal.bootstrap;
 
+import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.portal.cache.PortalCacheBootstrapLoader;
 import com.liferay.portal.cache.PortalCacheBootstrapLoaderFactory;
 import com.liferay.portal.cache.ehcache.multiple.configuration.EhcacheMultipleConfiguration;
@@ -21,7 +22,6 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;

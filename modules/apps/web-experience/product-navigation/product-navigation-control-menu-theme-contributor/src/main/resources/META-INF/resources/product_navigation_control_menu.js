@@ -1,7 +1,16 @@
 ;(function() {
-    var adjustScrollTop = function() {
-        window.scrollBy(0, -65);
-    };
+	var adjustScrollTop = function() {
+		if (Liferay.ControlMenu) {
+			var controlMenuId = Liferay.ControlMenu._namespace + 'ControlMenu';
+			var controlMenu = document.getElementById(controlMenuId);
+
+			if (controlMenu) {
+				var scroll = (controlMenu.offsetHeight || 0);
+
+				window.scrollBy(0, -scroll);
+			}
+		}
+	};
 
 	var handleFormRegistered = function(event) {
 		if (event.form && event.form.formValidator) {

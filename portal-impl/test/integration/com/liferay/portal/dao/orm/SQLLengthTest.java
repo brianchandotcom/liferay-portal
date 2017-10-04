@@ -1,0 +1,82 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.dao.orm;
+
+import com.liferay.portal.dao.orm.common.SQLTransformer;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+/**
+ * @author Michael Bowerman
+ */
+public class SQLLengthTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_db = DBManagerUtil.getDB();
+
+		_db.runSQL(
+			"create table SQLLengthTest (id LONG not null primary key, data " +
+				"VARCHAR(255) null)");
+
+		_db.runSQL("insert into SQLLengthTest values (1, 'Hello World')");
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_db.runSQL("drop table SQLLengthTest");
+	}
+
+	@Test
+	public void testLength() throws Exception {
+		String sql = _db.buildSQL("select LENGTH(data) from SQLLengthTest");
+
+		sql = SQLTransformer.transform(sql);
+
+		try (Connection connection = DataAccess.getUpgradeOptimizedConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				sql);
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			Assert.assertTrue(resultSet.next());
+
+			Assert.assertEquals(11, resultSet.getLong(1));
+
+			Assert.assertFalse(resultSet.next());
+		}
+	}
+
+	private static DB _db;
+
+}

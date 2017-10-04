@@ -46,23 +46,9 @@ public class ModelAdapterUtil {
 			return null;
 		}
 
-		Class<?> delegateClass = delegateObject.getClass();
-
 		return (T)ProxyUtil.newProxyInstance(
 			clazz.getClassLoader(), new Class<?>[] {clazz},
-			new InvocationHandler() {
-
-				@Override
-				public Object invoke(Object proxy, Method method, Object[] args)
-					throws ReflectiveOperationException {
-
-					method = delegateClass.getMethod(
-						method.getName(), method.getParameterTypes());
-
-					return method.invoke(delegateObject, args);
-				}
-
-			});
+			new DelegateInvocationHandler(delegateObject));
 	}
 
 	public static <T> T[] adapt(Class<T> clazz, Object[] delegateObjects) {
@@ -109,6 +95,29 @@ public class ModelAdapterUtil {
 		adaptedQueryDefinition.setAttributes(queryDefinition.getAttributes());
 
 		return adaptedQueryDefinition;
+	}
+
+	private static class DelegateInvocationHandler
+		implements InvocationHandler {
+
+		@Override
+		public Object invoke(Object proxy, Method method, Object[] args)
+			throws ReflectiveOperationException {
+
+			Class<?> delegateClass = _delegateObject.getClass();
+
+			method = delegateClass.getMethod(
+				method.getName(), method.getParameterTypes());
+
+			return method.invoke(_delegateObject, args);
+		}
+
+		private DelegateInvocationHandler(Object delegateObject) {
+			_delegateObject = delegateObject;
+		}
+
+		private final Object _delegateObject;
+
 	}
 
 }

@@ -800,7 +800,8 @@ public class GitWorkingDirectory {
 	public void reset(String options) {
 		String command = "git reset " + options;
 
-		ExecutionResult executionResult = executeBashCommands(command);
+		ExecutionResult executionResult = executeBashCommands(
+			2, 1000 * 60 * 2, command);
 
 		if (executionResult.getExitValue() != 0) {
 			throw new RuntimeException(
@@ -1005,7 +1006,7 @@ public class GitWorkingDirectory {
 	}
 
 	protected ExecutionResult executeBashCommands(String... commands) {
-		return executeBashCommands(1, 1000 * 5, commands);
+		return executeBashCommands(1, 1000 * 30, commands);
 	}
 
 	protected List<String> getLocalBranchNames() {

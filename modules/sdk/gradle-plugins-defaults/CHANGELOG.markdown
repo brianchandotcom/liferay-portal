@@ -2196,10 +2196,10 @@ in the `modules` directory.
 - [LPS-63943]: Always print the status message after executing the
 `mergeArtifactsPublishCommands` task.
 
-## 5.1.5 - 2017-10-03
+## 5.1.5 - 2017-10-04
 
 ### Changed
-- [LPS-73070]: Update the [Liferay Gradle Plugins] dependency to version 3.4.76.
+- [LPS-73070]: Update the [Liferay Gradle Plugins] dependency to version 3.5.0.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report

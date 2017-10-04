@@ -2545,7 +2545,7 @@ version 1.0.169.
 ### Changed
 - [LPS-74110]: Update the [Liferay Ant BND] dependency to version 2.0.41.
 
-## 3.4.76 - 2017-10-03
+## 3.5.0 - 2017-10-04
 
 ### Changed
 - [LPS-73070]: Use a single Node.js installation for the whole multi-project

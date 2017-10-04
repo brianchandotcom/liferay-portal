@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Gradle Plugins CSS Builder
 Bundle-SymbolicName: com.liferay.gradle.plugins.css.builder
-Bundle-Version: 2.1.4
+Bundle-Version: 3.0.0
 Export-Package: com.liferay.gradle.plugins.css.builder
 -includeresource: @com.liferay.css.builder-[0-9]*.jar!/com/liferay/css/builder/CSSBuilderArgs.class

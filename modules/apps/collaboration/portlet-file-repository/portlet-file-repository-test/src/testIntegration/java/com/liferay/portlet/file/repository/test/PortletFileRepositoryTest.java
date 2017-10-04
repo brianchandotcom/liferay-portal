@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.portletfilerepository;
+package com.liferay.portlet.file.repository.test;
 
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;

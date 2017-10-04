@@ -128,20 +128,37 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 		<liferay-frontend:add-menu-item id="addFragmentEntryMenuItem" title='<%= LanguageUtil.get(request, "add-fragment") %>' url="<%= addFragmentEntryURL.toString() %>" />
 	</liferay-frontend:add-menu>
 
-	<aui:script require="metal-dom/src/all/dom,fragment-web/js/FragmentNameEditor">
+	<aui:script require="fragment-web/js/FragmentNameEditor,metal-dom/src/all/dom">
 		var addFragmentEntryMenuItem = document.getElementById('<portlet:namespace />addFragmentEntryMenuItem');
-		var dom = metalDomSrcAllDom.default;
-		var FragmentNameEditor = fragmentWebJsFragmentNameEditor.default;
-		var updateFragmentActionOptionQuery = '.<portlet:namespace />update-fragment-action-option';
 
-		var updateFragmentActionOptionQueryClickHandler = dom.delegate(
-			document.body, 'click', updateFragmentActionOptionQuery,
-			handleUpdateFragmentActionOptionQueryClick);
+		var updateFragmentActionOptionQueryClickHandler = metalDomSrcAllDom.default.delegate(
+			document.body,
+			'click',
+			'.<portlet:namespace />update-fragment-action-option',
+			function(event) {
+				var actionElement = event.target;
 
-		function handleAddFragmentEntryMenuItemClick (event) {
+				var fragmentNameEditor = new fragmentWebJsFragmentNameEditor.default(
+					{
+						events: {
+							hide: function() {
+								fragmentNameEditor.disposeInternal();
+							}
+						},
+						fragmentEntryId: actionElement.dataset.fragmentEntryId,
+						fragmentEntryName: actionElement.dataset.fragmentEntryName,
+						namespace: '<portlet:namespace />',
+						updateFragmentEntryURL: actionElement.dataset.updateUrl,
+						spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+					}
+				);
+			}
+		);
+
+		function handleAddFragmentEntryMenuItemClick(event) {
 			event.preventDefault();
 
-			var fragmentNameEditor = new FragmentNameEditor(
+			var fragmentNameEditor = new fragmentWebJsFragmentNameEditor.default(
 				{
 					addFragmentEntryURL: '<%= addFragmentEntryURL.toString() %>',
 					editFragmentEntryURL: '<portlet:renderURL><portlet:param name="mvcPath" value="/edit_fragment_entry.jsp" /><portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentDisplayContext.getFragmentCollectionId()) %>" /></portlet:renderURL>',
@@ -157,35 +174,14 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 		}
 
 		function handleDestroyPortlet () {
-			addFragmentEntryMenuItem.removeEventListener(
-				'click', handleAddFragmentEntryMenuItemClick);
+			addFragmentEntryMenuItem.removeEventListener('click', handleAddFragmentEntryMenuItemClick);
 
 			updateFragmentActionOptionQueryClickHandler.removeListener();
 
 			Liferay.detach('destroyPortlet', handleDestroyPortlet);
 		}
 
-		function handleUpdateFragmentActionOptionQueryClick (event) {
-			var actionElement = event.target;
-
-			var fragmentNameEditor = new FragmentNameEditor(
-				{
-					events: {
-						hide: function() {
-							fragmentNameEditor.disposeInternal();
-						}
-					},
-					fragmentEntryId: actionElement.dataset.fragmentEntryId,
-					fragmentEntryName: actionElement.dataset.fragmentEntryName,
-					namespace: '<portlet:namespace />',
-					updateFragmentEntryURL: actionElement.dataset.updateUrl,
-					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
-				}
-			);
-		}
-
-		addFragmentEntryMenuItem.addEventListener(
-			'click', handleAddFragmentEntryMenuItemClick);
+		addFragmentEntryMenuItem.addEventListener('click', handleAddFragmentEntryMenuItemClick);
 
 		Liferay.on('destroyPortlet', handleDestroyPortlet);
 	</aui:script>

@@ -24,49 +24,25 @@ String searchURL = ParamUtil.getString(request, "searchURL");
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<c:if test="<%= workflowDefinitionTabVisible %>">
-			<portlet:renderURL var="workflowRenderURL">
-				<portlet:param name="tab" value="<%= WorkflowWebKeys.WORKFLOW_TAB_DEFINITION %>" />
+
+		<%
+		for (String tabName : tabNames) {
+		%>
+
+			<portlet:renderURL var="renderURL">
+				<portlet:param name="tab" value="<%= tabName %>" />
 			</portlet:renderURL>
 
 			<aui:nav-item
-				href="<%= workflowRenderURL.toString() %>"
-				label="workflows"
-				selected="<%= tab.equals(WorkflowWebKeys.WORKFLOW_TAB_DEFINITION) %>"
+				href="<%= renderURL.toString() %>"
+				label="<%= tabName %>"
+				selected="<%= tabName.equals(tab) %>"
 			/>
-		</c:if>
 
-		<c:if test="<%= workflowDefinitionLinkTabVisible %>">
-			<portlet:renderURL var="schemesRenderURL">
-				<portlet:param name="tab" value="<%= WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK %>" />
-			</portlet:renderURL>
+		<%
+		}
+		%>
 
-			<aui:nav-item
-				href="<%= schemesRenderURL.toString() %>"
-				label="schemes"
-				selected="<%= tab.equals(WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK) %>"
-			/>
-		</c:if>
-
-		<c:if test="<%= workflowInstanceTabVisible %>">
-			<portlet:renderURL var="monitoringRenderURL">
-				<portlet:param name="tab" value="<%= WorkflowWebKeys.WORKFLOW_TAB_INSTANCE %>" />
-			</portlet:renderURL>
-
-			<%
-			String monitoringLabel = "monitoring";
-
-			if (portletName.equals(WorkflowPortletKeys.USER_WORKFLOW)) {
-				monitoringLabel = "my-submissions";
-			}
-			%>
-
-			<aui:nav-item
-				href="<%= monitoringRenderURL.toString() %>"
-				label="<%= monitoringLabel %>"
-				selected="<%= tab.equals(WorkflowWebKeys.WORKFLOW_TAB_INSTANCE) %>"
-			/>
-		</c:if>
 	</aui:nav>
 
 	<aui:nav-bar-search>

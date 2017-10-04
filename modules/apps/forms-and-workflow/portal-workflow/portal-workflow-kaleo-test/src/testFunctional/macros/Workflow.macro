@@ -86,6 +86,14 @@
 
 				<execute function="AssertClick#pauseAssertTextClickAt" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_MENULIST_OPTION" value1="${workflowDefinitionTask}" />
 			</then>
+			<elseif>
+				<isset var="boardWorkflowTask" />
+				<then>
+					<execute function="AssertClick#pauseAssertTextClickAt" locator1="MenuItem#ANY_MENU_ITEM" value1="Approve ${boardWorkflowTask}">
+						<var name="key_menuItem" value="Approve ${boardWorkflowTask}" />
+					</execute>
+				</then>
+			</elseif>
 			<else>
 				<execute function="AssertClick#pauseAssertTextClickAt" locator1="MenuItem#ANY_MENU_ITEM" value1="Approve">
 					<var name="key_menuItem" value="Approve" />
@@ -805,7 +813,7 @@
 
 		<execute function="UploadCommonFile#uploadCommonFileHidden" locator1="WorkflowUpload#FILE_UPLOAD" value1="${workflowDefinitionFile}" />
 
-		<execute macro="PortletEntry#save" />
+		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="viewAssignedToMyRolesTasksCP">

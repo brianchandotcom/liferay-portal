@@ -39,23 +39,49 @@ renderResponse.setTitle(workflowDefinition.getName());
 <div class="container-fluid-1280">
 	<aui:model-context bean="<%= workflowDefinition %>" model="<%= WorkflowDefinition.class %>" />
 
-	<div class="panel text-center">
-		<aui:workflow-status markupView="lexicon" model="<%= WorkflowDefinition.class %>" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= WorkflowConstants.STATUS_APPROVED %>" version="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
-	</div>
+	<liferay-frontend:info-bar>
+		<div class="container-fluid-1280">
+			<div class="info-bar-item">
+				<c:choose>
+					<c:when test="<%= workflowDefinition.isActive() %>">
+						<span class="label label-info"><%= LanguageUtil.get(request, "published") %></span>
+					</c:when>
+					<c:otherwise>
+						<span class="label label-secondary"><%= LanguageUtil.get(request, "not-published") %></span>
+					</c:otherwise>
+				</c:choose>
+			</div>
+
+			<%
+			String userName = workflowDefinitionDisplayContext.getUserName(workflowDefinition);
+			%>
+
+			<span>
+				<c:choose>
+					<c:when test="<%= userName == null %>">
+						<%= dateFormatTime.format(workflowDefinition.getModifiedDate()) %>
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(workflowDefinition.getModifiedDate()), userName} %>" key="x-by-x" translateArguments="<%= false %>" />
+					</c:otherwise>
+				</c:choose>
+			</span>
+		</div>
+	</liferay-frontend:info-bar>
 
 	<aui:input name="content" type="hidden" value="<%= content %>" />
 
-	<div class="card-horizontal">
+	<div class="card-horizontal main-content-card">
 		<div class="card-row-padded">
-			<aui:fieldset>
+			<aui:fieldset cssClass="workflow-definition-content">
 				<aui:col>
 					<aui:field-wrapper label="title">
 						<liferay-ui:input-localized disabled="<%= true %>" name="title" xml='<%= BeanPropertiesUtil.getString(workflowDefinition, "title") %>' />
 					</aui:field-wrapper>
 				</aui:col>
 
-				<aui:col id="contentSourceWrapper">
-					<div class="content-source" id="<portlet:namespace />contentEditor"></div>
+				<aui:col cssClass="workflow-definition-content-source-wrapper" id="contentSourceWrapper">
+					<div class="workflow-definition-content-source" id="<portlet:namespace />contentEditor"></div>
 				</aui:col>
 			</aui:fieldset>
 		</div>
@@ -63,8 +89,6 @@ renderResponse.setTitle(workflowDefinition.getName());
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" href="<%= editWorkflowDefinitionURL %>" primary="<%= true %>" value='<%= LanguageUtil.get(request, "edit") %>' />
-
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </div>
 
@@ -78,7 +102,7 @@ renderResponse.setTitle(workflowDefinition.getName());
 			mode: 'xml',
 			readOnly: 'true',
 			tabSize: 4,
-			width: 600
+			width: '100%'
 		}
 	).render();
 
@@ -87,6 +111,4 @@ renderResponse.setTitle(workflowDefinition.getName());
 	if (editorContentElement) {
 		contentEditor.set(STR_VALUE, editorContentElement.val());
 	}
-
-	contentEditor.set('width', A.one('#<portlet:namespace />contentSourceWrapper').get('clientWidth'));
 </aui:script>

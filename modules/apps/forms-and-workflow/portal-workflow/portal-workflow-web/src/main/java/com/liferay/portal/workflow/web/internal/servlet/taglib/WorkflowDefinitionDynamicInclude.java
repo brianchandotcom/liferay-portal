@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.workflow.web.internal.request.prepocessor;
+package com.liferay.portal.workflow.web.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.web.internal.display.context.WorkflowDefinitionDisplayContext;
+import com.liferay.portal.workflow.web.internal.request.prepocessor.WorkflowPreprocessorHelper;
 
 import java.util.Objects;
 
@@ -32,15 +34,21 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adam Brandizzi
  */
-@Component(service = WorkflowDefinitionRenderPreprocessor.class)
-public class WorkflowDefinitionRenderPreprocessor
-	implements WorkflowRenderPreprocessor {
+@Component(
+	immediate = true,
+	property = {"portal.workflow.tabs.name=" + WorkflowWebKeys.WORKFLOW_TAB_DEFINITION},
+	service = {DynamicInclude.class, WorkflowDynamicInclude.class}
+)
+public class WorkflowDefinitionDynamicInclude
+	extends BaseWorkflowDynamicInclude {
 
 	@Override
 	public void prepareRender(
@@ -48,12 +56,12 @@ public class WorkflowDefinitionRenderPreprocessor
 		throws PortletException {
 
 		try {
-			String path = _workflowPreprocessorHelper.getPath(
+			String path = workflowPreprocessorHelper.getPath(
 				renderRequest, renderResponse);
 
 			WorkflowDefinitionDisplayContext displayContext =
 				new WorkflowDefinitionDisplayContext(
-					renderRequest, _userLocalService);
+					renderRequest, userLocalService);
 
 			renderRequest.setAttribute(
 				WorkflowWebKeys.WORKFLOW_DEFINITION_DISPLAY_CONTEXT,
@@ -68,8 +76,8 @@ public class WorkflowDefinitionRenderPreprocessor
 			}
 		}
 		catch (Exception e) {
-			if (_workflowPreprocessorHelper.isSessionErrorException(e)) {
-				_workflowPreprocessorHelper.hideDefaultErrorMessage(
+			if (workflowPreprocessorHelper.isSessionErrorException(e)) {
+				workflowPreprocessorHelper.hideDefaultErrorMessage(
 					renderRequest);
 
 				SessionErrors.add(renderRequest, e.getClass());
@@ -78,6 +86,20 @@ public class WorkflowDefinitionRenderPreprocessor
 				throw new PortletException(e);
 			}
 		}
+	}
+
+	@Override
+	protected String getJspPath() {
+		return "/definition/view.jsp";
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portal.workflow.web)",
+		unbind = "-"
+	)
+	protected void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	protected void setWorkflowDefinitionRenderRequestAttribute(
@@ -103,9 +125,9 @@ public class WorkflowDefinitionRenderPreprocessor
 	}
 
 	@Reference
-	private UserLocalService _userLocalService;
+	protected UserLocalService userLocalService;
 
 	@Reference
-	private WorkflowPreprocessorHelper _workflowPreprocessorHelper;
+	protected WorkflowPreprocessorHelper workflowPreprocessorHelper;
 
 }

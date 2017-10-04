@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
+import com.liferay.portal.kernel.workflow.WorkflowDefinitionTitleException;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 
@@ -94,11 +95,19 @@ public class UpdateWorkflowDefinitionMVCActionCommand
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "title");
 
+		String title = titleMap.get(LocaleUtil.getDefault());
+
+		if (titleMap.isEmpty() || Validator.isNull(title)) {
+			throw new WorkflowDefinitionTitleException();
+		}
+
 		String content = ParamUtil.getString(actionRequest, "content");
 
 		if (Validator.isNull(content)) {
 			throw new WorkflowDefinitionFileException();
 		}
+
+		validateWorkflowDefinition(content.getBytes());
 
 		WorkflowDefinition workflowDefinition =
 			workflowDefinitionManager.getWorkflowDefinition(
@@ -140,6 +149,17 @@ public class UpdateWorkflowDefinitionMVCActionCommand
 		}
 
 		return value;
+	}
+
+	protected void validateWorkflowDefinition(byte[] bytes)
+		throws WorkflowDefinitionFileException {
+
+		try {
+			workflowDefinitionManager.validateWorkflowDefinition(bytes);
+		}
+		catch (WorkflowException we) {
+			throw new WorkflowDefinitionFileException(we);
+		}
 	}
 
 	@Reference(target = "(proxy.bean=false)")

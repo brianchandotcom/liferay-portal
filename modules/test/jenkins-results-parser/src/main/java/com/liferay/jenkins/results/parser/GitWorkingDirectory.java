@@ -776,7 +776,7 @@ public class GitWorkingDirectory {
 	}
 
 	public void removeRemote(Remote remote) {
-		if (!remoteExists(remote.getName())) {
+		if ((remote == null) || !remoteExists(remote.getName())) {
 			return;
 		}
 

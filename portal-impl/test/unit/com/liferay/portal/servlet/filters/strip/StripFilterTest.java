@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.minifier.GoogleJavaScriptMinifier;
 import com.liferay.portal.minifier.MinifierUtil;
+import com.liferay.portal.tools.ToolDependencies;
 
 import java.io.StringWriter;
 
@@ -41,6 +42,8 @@ public class StripFilterTest {
 
 	@BeforeClass
 	public static void setUpClass() {
+		ToolDependencies.wireCaches();
+
 		CacheKeyGeneratorUtil cacheKeyGeneratorUtil =
 			new CacheKeyGeneratorUtil();
 

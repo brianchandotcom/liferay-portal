@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.util.HttpImpl;
 import com.liferay.portal.util.PropsImpl;
 
@@ -33,11 +34,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import org.springframework.mock.web.MockFilterChain;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -46,12 +42,12 @@ import org.springframework.mock.web.MockHttpServletResponse;
 /**
  * @author Mika Koivisto
  */
-@PowerMockIgnore("javax.net.ssl.*")
-@RunWith(PowerMockRunner.class)
-public class InvokerFilterTest extends PowerMockito {
+public class InvokerFilterTest {
 
 	@Before
 	public void setUp() {
+		ToolDependencies.wireCaches();
+
 		HttpUtil httpUtil = new HttpUtil();
 
 		httpUtil.setHttp(new HttpImpl());

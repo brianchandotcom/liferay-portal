@@ -21,6 +21,13 @@
 	<cache
 		eternal="false"
 		maxElementsInMemory="10000"
+		name="com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilter"
+		overflowToDisk="false"
+		timeToIdleSeconds="600"
+	/>
+	<cache
+		eternal="false"
+		maxElementsInMemory="10000"
 		name="com.liferay.portal.security.exportimport.UserImporter"
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
@@ -36,6 +43,13 @@
 		eternal="false"
 		maxElementsInMemory="1000"
 		name="com.liferay.portal.servlet.ComboServlet$FileContentBag"
+		overflowToDisk="false"
+		timeToIdleSeconds="600"
+	/>
+	<cache
+		eternal="false"
+		maxElementsInMemory="10000"
+		name="com.liferay.portal.servlet.filters.strip.StripFilter"
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	/>

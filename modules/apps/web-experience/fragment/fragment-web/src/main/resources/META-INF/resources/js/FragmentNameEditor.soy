@@ -36,18 +36,9 @@
 						<span class="hide-accessible">{msg desc=""}required{/msg}</span>
 					</label>
 
-					<input
-						name="{$namespace}id"
-						type="hidden"
-						value="{$fragmentEntryId ?: ''}"
-					>
+					<input name="{$namespace}id" type="hidden" value="{$fragmentEntryId ?: ''}">
 
-					<input
-						class="field form-control"
-						name="{$namespace}name"
-						type="text"
-						value="{$fragmentEntryName ?: ''}"
-					>
+					<input class="field form-control" name="{$namespace}name" type="text" value="{$fragmentEntryName ?: ''}">
 
 					{if $error}
 						<div class="form-validator-stack help-block">

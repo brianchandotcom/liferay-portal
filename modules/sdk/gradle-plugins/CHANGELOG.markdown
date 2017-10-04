@@ -677,7 +677,7 @@ version 2.3.1.
 ## 3.0.44 - 2016-12-01
 
 ### Added
-- [LPS-69488]: Set default Node.js version to 6.6.0.
+- [LPS-69488]: Set the default Node.js version to 6.6.0.
 
 ### Changed
 - [LPS-66853]: Update the [Liferay Gradle Plugins Source Formatter] dependency
@@ -2544,6 +2544,12 @@ version 1.0.169.
 
 ### Changed
 - [LPS-74110]: Update the [Liferay Ant BND] dependency to version 2.0.41.
+
+## 3.4.76 - 2017-10-03
+
+### Changed
+- [LPS-73070]: Use a single Node.js installation for the whole multi-project
+build by setting the default value of the `node.global` property to `true`.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs

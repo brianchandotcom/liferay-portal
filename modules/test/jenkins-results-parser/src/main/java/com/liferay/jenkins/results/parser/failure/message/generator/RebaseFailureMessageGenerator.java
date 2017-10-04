@@ -94,7 +94,7 @@ public class RebaseFailureMessageGenerator extends BaseFailureMessageGenerator {
 				getConsoleOutputSnippetElement(consoleText, true, start, end)));
 	}
 
-	private static final String _TOKEN_REBASE_END = "Aborting rebase ABORT";
+	private static final String _TOKEN_REBASE_END = "git rebase --abort";
 
 	private static final String _TOKEN_REBASE_START = "Unable to rebase";
 

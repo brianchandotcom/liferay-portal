@@ -48,14 +48,13 @@ import com.liferay.portal.kernel.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.PasswordPolicyLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.VirtualHostLocalServiceUtil;
-import com.liferay.portal.kernel.service.persistence.PasswordPolicyUtil;
-import com.liferay.portal.kernel.service.persistence.PortalPreferencesUtil;
-import com.liferay.portal.kernel.service.persistence.PortletUtil;
 import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -447,7 +446,7 @@ public class CompanyLocalServiceTest {
 			layoutSetPrototypes.toString(), 0, layoutSetPrototypes.size());
 	}
 
-	@Test
+	@Test(expected = NoSuchPasswordPolicyException.class)
 	public void testDeleteCompanyDeletesNonDefaultPasswordPolicies()
 		throws Throwable {
 
@@ -461,10 +460,8 @@ public class CompanyLocalServiceTest {
 
 				@Override
 				public Void call() throws Exception {
-					int count = PasswordPolicyUtil.countByC_DP(
+					PasswordPolicyLocalServiceUtil.getPasswordPolicy(
 						company.getCompanyId(), false);
-
-					Assert.assertEquals(0, count);
 
 					return null;
 				}
@@ -511,9 +508,10 @@ public class CompanyLocalServiceTest {
 				@Override
 				public Void call() throws Exception {
 					PortalPreferences portalPreferences =
-						PortalPreferencesUtil.fetchByO_O(
-							company.getCompanyId(),
-							PortletKeys.PREFS_OWNER_TYPE_COMPANY);
+						PortalPreferencesLocalServiceUtil.
+							fetchPortalPreferences(
+								company.getCompanyId(),
+								PortletKeys.PREFS_OWNER_TYPE_COMPANY);
 
 					Assert.assertNull(portalPreferences);
 
@@ -535,7 +533,7 @@ public class CompanyLocalServiceTest {
 
 				@Override
 				public Void call() {
-					int count = PortletUtil.countByCompanyId(
+					int count = PortletLocalServiceUtil.getPortletsCount(
 						company.getCompanyId());
 
 					Assert.assertEquals(0, count);

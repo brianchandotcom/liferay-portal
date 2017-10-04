@@ -109,6 +109,26 @@ public class ModelAdapterUtil {
 			method = delegateClass.getMethod(
 				method.getName(), method.getParameterTypes());
 
+			if (args == null) {
+				return method.invoke(_delegateObject);
+			}
+
+			for (int i = 0; i < args.length; i++) {
+				if (!ProxyUtil.isProxyClass(args[i].getClass())) {
+					continue;
+				}
+
+				InvocationHandler invocationHandler =
+					ProxyUtil.getInvocationHandler(args[i]);
+
+				if (invocationHandler instanceof DelegateInvocationHandler) {
+					DelegateInvocationHandler delegateInvocationHandler =
+						(DelegateInvocationHandler)invocationHandler;
+
+					args[i] = delegateInvocationHandler._delegateObject;
+				}
+			}
+
 			return method.invoke(_delegateObject, args);
 		}
 

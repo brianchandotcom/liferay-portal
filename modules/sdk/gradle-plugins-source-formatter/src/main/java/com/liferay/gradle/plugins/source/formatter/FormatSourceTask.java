@@ -56,6 +56,10 @@ public class FormatSourceTask extends JavaExec {
 		return _sourceFormatterArgs.getBaseDirName();
 	}
 
+	public List<String> getFileExtensions() {
+		return _sourceFormatterArgs.getFileExtensions();
+	}
+
 	public List<String> getFileNames() {
 		return _sourceFormatterArgs.getFileNames();
 	}
@@ -132,6 +136,16 @@ public class FormatSourceTask extends JavaExec {
 		_sourceFormatterArgs.setBaseDirName(baseDirName);
 	}
 
+	public void setFileExtensions(Iterable<String> fileExtensions) {
+		_sourceFormatterArgs.setFileExtensions(
+			CollectionUtils.toList(fileExtensions));
+	}
+
+	public void setFileExtensions(String... fileExtensions) {
+		_sourceFormatterArgs.setFileExtensions(
+			CollectionUtils.toList(fileExtensions));
+	}
+
 	public void setFileNames(Iterable<String> fileNames) {
 		_sourceFormatterArgs.setFileNames(
 			CollectionUtils.toStringList(fileNames));
@@ -203,6 +217,9 @@ public class FormatSourceTask extends JavaExec {
 		args.add("show.documentation=" + isShowDocumentation());
 		args.add("show.status.updates=" + isShowStatusUpdates());
 		args.add("source.auto.fix=" + isAutoFix());
+		args.add(
+			"source.file.extensions=" +
+				CollectionUtils.join(",", getFileExtensions()));
 		args.add("source.print.errors=" + isPrintErrors());
 		args.add("source.throw.exception=" + isThrowException());
 
@@ -211,7 +228,7 @@ public class FormatSourceTask extends JavaExec {
 		if (fileCollection.isEmpty()) {
 			args.add(
 				"source.base.dir=" +
-					FileUtil.relativize(getBaseDir(), getWorkingDir()));
+					_relativizeDir(getBaseDir(), getWorkingDir()));
 		}
 		else {
 			args.add("source.files=" + _merge(fileCollection, getWorkingDir()));
@@ -236,6 +253,22 @@ public class FormatSourceTask extends JavaExec {
 		}
 
 		return sb.toString();
+	}
+
+	private String _relativizeDir(File dir, File startDir) {
+		String relativePath = FileUtil.relativize(dir, startDir);
+
+		if (!relativePath.isEmpty()) {
+			if (File.separatorChar != '/') {
+				relativePath = relativePath.replace(File.separatorChar, '/');
+			}
+
+			if (relativePath.charAt(relativePath.length() - 1) != '/') {
+				relativePath += '/';
+			}
+		}
+
+		return relativePath;
 	}
 
 	private final SourceFormatterArgs _sourceFormatterArgs =

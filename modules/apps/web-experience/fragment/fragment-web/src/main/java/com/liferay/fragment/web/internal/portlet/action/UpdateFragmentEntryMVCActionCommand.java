@@ -39,11 +39,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + FragmentPortletKeys.FRAGMENT,
-		"mvc.command.name=renameFragmentEntry"
+		"mvc.command.name=updateFragmentEntry"
 	},
 	service = MVCActionCommand.class
 )
-public class RenameFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
+public class UpdateFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -57,7 +57,7 @@ public class RenameFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			FragmentEntry fragmentEntry =
-				_fragmentEntryService.renameFragmentEntry(
+				_fragmentEntryService.updateFragmentEntry(
 					fragmentEntryId, name);
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();

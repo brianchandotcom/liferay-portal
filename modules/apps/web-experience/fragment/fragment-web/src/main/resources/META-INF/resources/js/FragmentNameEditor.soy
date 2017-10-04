@@ -11,7 +11,7 @@
 	{@param? error: string}
 	{@param? fragmentEntryId: string}
 	{@param? fragmentEntryName: string}
-	{@param? renameFragmentEntryURL: string}
+	{@param? updateFragmentEntryURL: string}
 
 	{call Modal.render}
 		{param body kind="html"}
@@ -79,8 +79,8 @@
 
 		{param header kind="html"}
 			<h3 class="modal-title">
-				{if $renameFragmentEntryURL}
-					{msg desc=""}rename-fragment{/msg}
+				{if $updateFragmentEntryURL}
+					{msg desc=""}update-fragment{/msg}
 				{else}
 					{msg desc=""}add-fragment{/msg}
 				{/if}

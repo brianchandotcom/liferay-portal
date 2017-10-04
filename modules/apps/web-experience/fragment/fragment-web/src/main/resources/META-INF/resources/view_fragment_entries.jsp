@@ -132,11 +132,11 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 		var addFragmentEntryMenuItem = document.getElementById('<portlet:namespace />addFragmentEntryMenuItem');
 		var dom = metalDomSrcAllDom.default;
 		var FragmentNameEditor = fragmentWebJsFragmentNameEditor.default;
-		var renameFragmentActionOptionQuery = '.<portlet:namespace />rename-fragment-action-option';
+		var updateFragmentActionOptionQuery = '.<portlet:namespace />update-fragment-action-option';
 
-		var renameFragmentActionOptionQueryClickHandler = dom.delegate(
-			document.body, 'click', renameFragmentActionOptionQuery,
-			handleRenameFragmentActionOptionQueryClick);
+		var updateFragmentActionOptionQueryClickHandler = dom.delegate(
+			document.body, 'click', updateFragmentActionOptionQuery,
+			handleUpdateFragmentActionOptionQueryClick);
 
 		function handleAddFragmentEntryMenuItemClick (event) {
 			event.preventDefault();
@@ -160,12 +160,12 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 			addFragmentEntryMenuItem.removeEventListener(
 				'click', handleAddFragmentEntryMenuItemClick);
 
-			renameFragmentActionOptionQueryClickHandler.removeListener();
+			updateFragmentActionOptionQueryClickHandler.removeListener();
 
 			Liferay.detach('destroyPortlet', handleDestroyPortlet);
 		}
 
-		function handleRenameFragmentActionOptionQueryClick (event) {
+		function handleUpdateFragmentActionOptionQueryClick (event) {
 			var actionElement = event.target;
 
 			var fragmentNameEditor = new FragmentNameEditor(
@@ -178,7 +178,7 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 					fragmentEntryId: actionElement.dataset.fragmentEntryId,
 					fragmentEntryName: actionElement.dataset.fragmentEntryName,
 					namespace: '<portlet:namespace />',
-					renameFragmentEntryURL: actionElement.dataset.renameUrl,
+					updateFragmentEntryURL: actionElement.dataset.updateUrl,
 					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
 				}
 			);

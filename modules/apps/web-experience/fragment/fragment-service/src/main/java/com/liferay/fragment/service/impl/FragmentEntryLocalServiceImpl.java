@@ -146,7 +146,7 @@ public class FragmentEntryLocalServiceImpl
 	}
 
 	@Override
-	public FragmentEntry renameFragmentEntry(long fragmentEntryId, String name)
+	public FragmentEntry updateFragmentEntry(long fragmentEntryId, String name)
 		throws PortalException {
 
 		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(

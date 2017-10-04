@@ -30,7 +30,7 @@ class FragmentNameEditor extends Component {
 
 		const form = document.getElementById(`${this.namespace}addForm`);
 		const formData = new FormData(form);
-		const formURL = this.addFragmentEntryURL || this.renameFragmentEntryURL;
+		const formURL = this.addFragmentEntryURL || this.updateFragmentEntryURL;
 
 		fetch(formURL, {
 			body: formData,
@@ -143,7 +143,7 @@ FragmentNameEditor.STATE = {
 	 * @memberOf FragmentNameEditor
 	 * @type {!string}
 	 */
-	renameFragmentEntryURL: Config.string().value(''),
+	updateFragmentEntryURL: Config.string().value(''),
 
 	/**
 	 * Path of the available icons.

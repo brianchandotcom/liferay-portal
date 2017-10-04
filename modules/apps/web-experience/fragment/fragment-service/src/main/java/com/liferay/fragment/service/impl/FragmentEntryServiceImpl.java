@@ -155,13 +155,13 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 	}
 
 	@Override
-	public FragmentEntry renameFragmentEntry(long fragmentEntryId, String name)
+	public FragmentEntry updateFragmentEntry(long fragmentEntryId, String name)
 		throws PortalException {
 
 		FragmentEntryPermission.check(
 			getPermissionChecker(), fragmentEntryId, ActionKeys.UPDATE);
 
-		return fragmentEntryLocalService.renameFragmentEntry(
+		return fragmentEntryLocalService.updateFragmentEntry(
 			fragmentEntryId, name);
 	}
 

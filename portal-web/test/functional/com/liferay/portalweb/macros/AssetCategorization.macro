@@ -5,7 +5,9 @@
 		<if>
 			<condition function="IsElementPresent" locator1="AssetCategorization#TAG_AUTOCOMPLETE_CONTAINER" />
 			<then>
-				<execute function="Click" locator1="AssetCategorization#TAG_AUTOCOMPLETE" />
+				<execute function="Click" locator1="AssetCategorization#TAG_AUTOCOMPLETE_SPECIFIC">
+					<var name="key_tagName" value="${tagName}" />
+				</execute>
 			</then>
 		</if>
 

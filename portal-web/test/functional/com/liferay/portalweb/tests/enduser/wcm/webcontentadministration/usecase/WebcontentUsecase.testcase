@@ -1105,7 +1105,7 @@
 		</execute>
 
 		<execute macro="WebContent#addWithStructureCP">
-			<var name="abstractSummary" value="The Structured Banner for the S.P.A.C.E. FrontPage" />
+			<var name="description" value="The Structured Banner for the S.P.A.C.E. FrontPage" />
 			<var name="fieldName" value="BannerTitle" />
 			<var name="fieldName2" value="BannerHeading" />
 			<var name="webContentImage" value="Spaceport.jpg" />
@@ -1121,7 +1121,7 @@
 		</execute>
 
 		<execute macro="WebContent#viewWithStructureCP">
-			<var name="abstractSummary" value="The Structured Banner for the S.P.A.C.E. FrontPage" />
+			<var name="description" value="The Structured Banner for the S.P.A.C.E. FrontPage" />
 			<var name="fieldName" value="BannerTitle" />
 			<var name="fieldName2" value="BannerHeading" />
 			<var name="webContentImage" value="Spaceport.jpg" />

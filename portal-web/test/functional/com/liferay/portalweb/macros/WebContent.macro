@@ -662,9 +662,11 @@
 		</if>
 
 		<if>
-			<isset var="abstractSummary" />
+			<isset var="description" />
 			<then>
-				<execute function="Type" locator1="TextArea#SUMMARY" value1="${abstractSummary}" />
+				<execute macro="AlloyEditor#addDescription">
+					<var name="description" value="${description}" />
+				</execute>
 			</then>
 		</if>
 
@@ -2078,9 +2080,9 @@
 		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${webContentTitle}" />
 
 		<if>
-			<isset var="abstractSummary" />
+			<isset var="description" />
 			<then>
-				<execute function="AssertTextEquals" locator1="TextArea#SUMMARY" value1="${abstractSummary}" />
+				<execute function="AssertTextEquals" locator1="AlloyEditor#DESCRIPTION_FIELD" value1="${description}" />
 			</then>
 		</if>
 

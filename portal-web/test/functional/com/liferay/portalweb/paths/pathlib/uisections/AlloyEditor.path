@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>DESCRIPTION_FIELD</td>
-	<td>//div[contains(@id,'descriptionEditor') and contains(@aria-label,'Rich Text Editor')]</td>
+	<td>//div[contains(@id,'description')]//div[contains(@title,'Rich Text Editor')]</td>
 	<td></td>
 </tr>
 <tr>

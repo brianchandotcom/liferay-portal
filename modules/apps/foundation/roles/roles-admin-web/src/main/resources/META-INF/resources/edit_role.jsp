@@ -58,8 +58,15 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 	</c:choose>
 </c:if>
 
+<portlet:renderURL var="editRoleRenderURL">
+	<portlet:param name="mvcPath" value="/edit_role.jsp" />
+	<portlet:param name="backURL" value="<%= backURL %>" />
+	<portlet:param name="tabs1" value="details" />
+	<portlet:param name="type" value="<%= String.valueOf(type) %>" />
+</portlet:renderURL>
+
 <aui:form action="<%= editRoleURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="redirect" type="hidden" value="<%= editRoleRenderURL %>" />
 	<aui:input name="roleId" type="hidden" value="<%= roleId %>" />
 
 	<liferay-ui:error exception="<%= DuplicateRoleException.class %>" message="please-enter-a-unique-name" />

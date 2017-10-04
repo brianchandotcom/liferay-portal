@@ -40,11 +40,6 @@ portletDisplay.setURLBack(backURL);
 renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") : role.getTitle(locale));
 %>
 
-<portlet:actionURL name="editRole" var="editRoleURL">
-	<portlet:param name="mvcPath" value="/edit_role.jsp" />
-	<portlet:param name="backURL" value="<%= backURL %>" />
-</portlet:actionURL>
-
 <liferay-util:include page="/edit_role_tabs.jsp" servletContext="<%= application %>" />
 
 <c:if test="<%= role != null %>">
@@ -57,6 +52,11 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 		</c:otherwise>
 	</c:choose>
 </c:if>
+
+<portlet:actionURL name="editRole" var="editRoleURL">
+	<portlet:param name="mvcPath" value="/edit_role.jsp" />
+	<portlet:param name="backURL" value="<%= backURL %>" />
+</portlet:actionURL>
 
 <portlet:renderURL var="editRoleRenderURL">
 	<portlet:param name="mvcPath" value="/edit_role.jsp" />

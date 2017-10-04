@@ -32,7 +32,10 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @see com.liferay.portlet.documentlibrary.service.base.DLContentLocalServiceBaseImpl
  * @see com.liferay.portlet.documentlibrary.service.impl.DLContentLocalServiceImpl
  * @generated
+ *
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.document.library.content.service.DLContentLocalServiceUtil}
  */
+@Deprecated
 @ProviderType
 public class DLContentLocalServiceUtil {
 	/*

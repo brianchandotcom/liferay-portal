@@ -30,7 +30,7 @@ public class DB2SQLTransformerLogic extends BaseSQLTransformerLogic {
 
 		setFunctions(
 			getBooleanFunction(), getCastClobTextFunction(),
-			getCastLongFunction(), getCastTextFunction(),
+			getCastLongFunction(), getCastTextFunction(), getConcatFunction(),
 			getIntegerDivisionFunction(), getNullDateFunction(),
 			_getAlterColumnTypeFunction(), _getLikeFunction());
 	}

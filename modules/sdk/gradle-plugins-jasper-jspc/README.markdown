@@ -111,7 +111,7 @@ manually adding a dependency to the `jspCTool` configuration:
 
 ```gradle
 dependencies {
-	jspCTool group: "com.liferay", name: "com.liferay.jasper.jspc", version: "1.0.11"
+	jspCTool group: "com.liferay", name: "com.liferay.jasper.jspc", version: "1.0.12"
 	jspCTool group: "org.apache.ant", name: "ant", version: "1.9.4"
 }
 ```

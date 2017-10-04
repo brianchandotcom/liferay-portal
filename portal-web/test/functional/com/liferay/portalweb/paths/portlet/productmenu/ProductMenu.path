@@ -10,17 +10,17 @@
 <tbody>
 <tr>
 	<td>PANEL</td>
-	<td>//div[contains(@id,'${key_panel}')]</td>
+	<td>//div[contains(@id,'ProductMenuPortlet_${key_panel}Heading')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PANEL_COLLAPSED</td>
-	<td>//div[contains(@id,'${key_panel}')]/div/a[@aria-expanded='false']</td>
+	<td>//div[contains(@id,'ProductMenuPortlet_${key_panel}Heading')]/div/a[@aria-expanded='false']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PANEL_EXPANDED</td>
-	<td>//div[contains(@id,'${key_panel}')]/div/a[@aria-expanded='true']</td>
+	<td>//div[contains(@id,'ProductMenuPortlet_${key_panel}Heading')]/div/a[@aria-expanded='true']</td>
 	<td></td>
 </tr>
 <tr>

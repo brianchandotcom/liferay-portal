@@ -228,13 +228,15 @@
 			</execute>
 		</for>
 
-		<var name="key_entryTitle" value="Announcements Entry Title" />
-
-		<execute function="AssertTextNotPresent" locator1="Announcements#CARD_VIEW_ENTRY_TITLE" value1="Announcements Entry Title 1" />
-		<execute function="AssertTextNotPresent" locator1="Announcements#CARD_VIEW_ENTRY_TITLE" value1="Announcements Entry Title 2" />
-		<execute function="AssertClick" locator1="Pagination#NEXT_LINK" value1="Next" />
-
 		<var name="viewEntryList" value="1,2" />
+
+		<for list="${viewEntryList}" param="viewEntryCount">
+			<execute function="AssertElementNotPresent" locator1="Announcements#CARD_VIEW_ENTRY_TITLE">
+				<var name="key_entryTitle" value="Announcements Entry Title ${viewEntryCount}" />
+			</execute>
+		</for>
+
+		<execute function="AssertClick" locator1="Pagination#NEXT_LINK" value1="Next" />
 
 		<for list="${viewEntryList}" param="viewEntryCount">
 			<execute macro="AnnouncementsEntry#viewViaEntriesPG">
@@ -245,17 +247,16 @@
 			</execute>
 		</for>
 
-		<var name="key_entryTitle" value="Announcements Entry Title" />
 		<var name="viewEntryList" value="3,4,5,6,7" />
 
 		<for list="${viewEntryList}" param="viewEntryCount">
-			<execute function="AssertTextNotPresent" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TITLE" value1="Announcements Entry Title ${viewEntryCount}" />
+			<execute function="AssertElementNotPresent" locator1="Announcements#CARD_VIEW_ENTRY_TITLE">
+				<var name="key_entryTitle" value="Announcements Entry Title ${viewEntryCount}" />
+			</execute>
 		</for>
 
 		<execute function="AssertClick" locator1="Pagination#PREVIOUS_LINK" value1="Previous" />
 
-		<var name="viewEntryList" value="3,4,5,6,7" />
-
 		<for list="${viewEntryList}" param="viewEntryCount">
 			<execute macro="AnnouncementsEntry#viewViaEntriesPG">
 				<var name="distributionScope" value="General" />
@@ -265,10 +266,13 @@
 			</execute>
 		</for>
 
-		<var name="key_entryTitle" value="Announcements Entry Title" />
+		<var name="viewEntryList" value="1,2" />
 
-		<execute function="AssertTextNotPresent" locator1="Announcements#CARD_VIEW_ENTRY_TITLE" value1="Announcements Entry Title 1" />
-		<execute function="AssertTextNotPresent" locator1="Announcements#CARD_VIEW_ENTRY_TITLE" value1="Announcements Entry Title 2" />
+		<for list="${viewEntryList}" param="viewEntryCount">
+			<execute function="AssertElementNotPresent" locator1="Announcements#CARD_VIEW_ENTRY_TITLE">
+				<var name="key_entryTitle" value="Announcements Entry Title ${viewEntryCount}" />
+			</execute>
+		</for>
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
@@ -292,12 +296,15 @@
 			</execute>
 		</for>
 
-		<execute function="AssertTextNotPresent" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TITLE" value1="Announcements Entry Title 6" />
-		<execute function="AssertTextNotPresent" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TITLE" value1="Announcements Entry Title 7" />
+		<var name="viewEntryList" value="6,7" />
+
+		<for list="${viewEntryList}" param="viewEntryCount">
+			<execute function="AssertElementNotPresent" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TITLE">
+				<var name="key_entryTitle" value="Announcements Entry Title ${viewEntryCount}" />
+			</execute>
+		</for>
 
 		<execute function="Click" locator1="Pagination#NEXT_LINK" />
-
-		<var name="viewEntryList" value="6,7" />
 
 		<for list="${viewEntryList}" param="viewEntryCount">
 			<execute macro="AnnouncementsEntry#viewList">
@@ -309,13 +316,13 @@
 		<var name="viewEntryList" value="1,2,3,4,5" />
 
 		<for list="${viewEntryList}" param="viewEntryCount">
-			<execute function="AssertTextNotPresent" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TITLE" value1="Announcements Entry Title ${viewEntryCount}" />
+			<execute function="AssertElementNotPresent" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TITLE">
+				<var name="key_entryTitle" value="Announcements Entry Title ${viewEntryCount}" />
+			</execute>
 		</for>
 
 		<execute function="Click" locator1="Pagination#PREVIOUS_LINK" />
 
-		<var name="viewEntryList" value="1,2,3,4,5" />
-
 		<for list="${viewEntryList}" param="viewEntryCount">
 			<execute macro="AnnouncementsEntry#viewList">
 				<var name="distributionScope" value="General" />
@@ -323,7 +330,12 @@
 			</execute>
 		</for>
 
-		<execute function="AssertTextNotPresent" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TITLE" value1="Announcements Entry Title 6" />
-		<execute function="AssertTextNotPresent" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TITLE" value1="Announcements Entry Title 7" />
+		<var name="viewEntryList" value="6,7" />
+
+		<for list="${viewEntryList}" param="viewEntryCount">
+			<execute function="AssertElementNotPresent" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TITLE">
+				<var name="key_entryTitle" value="Announcements Entry Title ${viewEntryCount}" />
+			</execute>
+		</for>
 	</command>
 </definition>

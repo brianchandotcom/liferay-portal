@@ -42,7 +42,7 @@ public class AsyncBroker<K, V> {
 		DefaultNoticeableFuture<V> defaultNoticeableFuture =
 			new DefaultNoticeableFuture<>();
 
-		NoticeableFuture<V> previousNoticeableFuture = post(
+		NoticeableFuture<V> previousNoticeableFuture = _post(
 			key, defaultNoticeableFuture);
 
 		if (previousNoticeableFuture == null) {
@@ -52,34 +52,32 @@ public class AsyncBroker<K, V> {
 		return previousNoticeableFuture;
 	}
 
+	public NoticeableFuture<V> post(K key, boolean[] newMarker) {
+		DefaultNoticeableFuture<V> defaultNoticeableFuture =
+			new DefaultNoticeableFuture<>();
+
+		NoticeableFuture<V> previousNoticeableFuture = _post(
+			key, defaultNoticeableFuture);
+
+		if (previousNoticeableFuture == null) {
+			newMarker[0] = true;
+
+			return defaultNoticeableFuture;
+		}
+
+		newMarker[0] = false;
+
+		return previousNoticeableFuture;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #post(Object, boolean[])}
+	 */
+	@Deprecated
 	public NoticeableFuture<V> post(
 		final K key, final DefaultNoticeableFuture<V> defaultNoticeableFuture) {
 
-		DefaultNoticeableFuture<V> previousDefaultNoticeableFuture =
-			_defaultNoticeableFutures.putIfAbsent(key, defaultNoticeableFuture);
-
-		if (previousDefaultNoticeableFuture != null) {
-			return previousDefaultNoticeableFuture;
-		}
-
-		defaultNoticeableFuture.addFutureListener(
-			new FutureListener<V>() {
-
-				@Override
-				public void complete(Future<V> future) {
-					_defaultNoticeableFutures.remove(
-						key, defaultNoticeableFuture);
-				}
-
-			});
-
-		if (_REFERENT_FIELD != null) {
-			FinalizeManager.register(
-				defaultNoticeableFuture, new CancellationFinalizeAction(key),
-				FinalizeManager.PHANTOM_REFERENCE_FACTORY);
-		}
-
-		return null;
+		return _post(key, defaultNoticeableFuture);
 	}
 
 	public NoticeableFuture<V> take(K key) {
@@ -110,6 +108,36 @@ public class AsyncBroker<K, V> {
 		defaultNoticeableFuture.set(result);
 
 		return true;
+	}
+
+	private NoticeableFuture<V> _post(
+		final K key, final DefaultNoticeableFuture<V> defaultNoticeableFuture) {
+
+		DefaultNoticeableFuture<V> previousDefaultNoticeableFuture =
+			_defaultNoticeableFutures.putIfAbsent(key, defaultNoticeableFuture);
+
+		if (previousDefaultNoticeableFuture != null) {
+			return previousDefaultNoticeableFuture;
+		}
+
+		defaultNoticeableFuture.addFutureListener(
+			new FutureListener<V>() {
+
+				@Override
+				public void complete(Future<V> future) {
+					_defaultNoticeableFutures.remove(
+						key, defaultNoticeableFuture);
+				}
+
+			});
+
+		if (_REFERENT_FIELD != null) {
+			FinalizeManager.register(
+				defaultNoticeableFuture, new CancellationFinalizeAction(key),
+				FinalizeManager.PHANTOM_REFERENCE_FACTORY);
+		}
+
+		return null;
 	}
 
 	private static final Field _REFERENT_FIELD;

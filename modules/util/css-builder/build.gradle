@@ -8,6 +8,14 @@ task unzipPortalCommonCSS(type: Copy)
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
+File mavenWrapperPropertiesFile = file("src/test/resources/maven-wrapper/.mvn/wrapper/maven-wrapper.properties")
+
+Properties mavenWrapperProperties = GUtil.loadProperties(mavenWrapperPropertiesFile)
+
+String mavenDistributionVersion = mavenWrapperProperties["distributionUrl"]
+
+mavenDistributionVersion = mavenDistributionVersion.find(/\d+\.\d+\.\d+/)
+
 buildPluginDescriptor {
 	configurationScopeMapping "mavenCompile", Conf2ScopeMappingContainer.COMPILE
 
@@ -31,9 +39,11 @@ copyPortalCommonCSSJar {
 }
 
 configurations {
+	mavenDistribution
 	mavenCompile {
 		extendsFrom compile
 	}
+	mavenDistribution
 }
 
 dependencies {
@@ -47,11 +57,15 @@ dependencies {
 
 	mavenCompile group: "com.liferay", name: "com.liferay.frontend.css.common", version: "2.0.4"
 
+	mavenDistribution classifier: "bin", ext: "zip", group: "org.apache.maven", name: "apache-maven", version: mavenDistributionVersion
+
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "org.apache.maven", name: "maven-artifact", version: "3.2.5"
 	provided group: "org.apache.maven", name: "maven-core", version: "3.2.5"
 	provided group: "org.apache.maven", name: "maven-plugin-api", version: "3.2.5"
+
+	testCompile project(":test:maven-executor")
 }
 
 formatSource {
@@ -63,8 +77,15 @@ liferay {
 }
 
 test {
+	dependsOn install
 	dependsOn copyPortalCommonCSSJar
 	dependsOn unzipPortalCommonCSS
+
+	doFirst {
+		systemProperty "maven.distribution.file.name", configurations.mavenDistribution.singleFile
+	}
+
+	systemProperty "css.builder.version", jar.version
 }
 
 unzipPortalCommonCSS {

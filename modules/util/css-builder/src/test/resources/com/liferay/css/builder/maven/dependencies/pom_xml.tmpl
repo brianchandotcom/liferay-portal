@@ -1,0 +1,31 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<groupId>com.liferay.css.builder.maven</groupId>
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>mojo-test</artifactId>
+	<name>mojo-test</name>
+	<version>1.0.0</version>
+	<packaging>jar</packaging>
+	<build>
+		<finalName>com.liferay.css.builder.maven.mojo-test</finalName>
+		<plugins>
+			<plugin>
+				<groupId>com.liferay</groupId>
+				<artifactId>com.liferay.css.builder</artifactId>
+				<version>[$CSS_BUILDER_VERSION$]</version>
+				<executions>
+					<execution>
+						<id>default-build-css</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>build</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<docrootDirName>css</docrootDirName>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

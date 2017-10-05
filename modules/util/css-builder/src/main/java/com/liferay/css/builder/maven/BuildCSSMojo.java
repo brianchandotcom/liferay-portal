@@ -70,6 +70,8 @@ public class BuildCSSMojo extends AbstractMojo {
 				}
 			}
 
+			_cssBuilderArgs.setOutputDirName(".sass-cache/");
+
 			if (_buildContext.isIncremental()) {
 				Scanner scanner = _buildContext.newScanner(_baseDir);
 

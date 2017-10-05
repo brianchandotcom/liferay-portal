@@ -23,7 +23,9 @@ import java.util.concurrent.Callable;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public abstract class CopyThreadLocalCallable<T> implements Callable<T> {
 
 	public CopyThreadLocalCallable(boolean readOnly, boolean clearOnExit) {

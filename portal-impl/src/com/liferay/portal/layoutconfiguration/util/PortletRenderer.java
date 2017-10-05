@@ -14,19 +14,22 @@
 
 package com.liferay.portal.layoutconfiguration.util;
 
-import com.liferay.portal.kernel.executor.CopyThreadLocalCallable;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletContainerException;
 import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.portlet.RestrictPortletServletRequest;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
+import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.Mergeable;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.ThreadLocalBinder;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
+import java.util.Collections;
 import java.util.Enumeration;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 import javax.servlet.http.HttpServletRequest;
@@ -146,6 +149,73 @@ public class PortletRenderer {
 	private final Integer _columnPos;
 	private final Portlet _portlet;
 	private RestrictPortletServletRequest _restrictPortletServletRequest;
+
+	private abstract class CopyThreadLocalCallable<T> implements Callable<T> {
+
+		public CopyThreadLocalCallable(boolean readOnly, boolean clearOnExit) {
+			this(null, readOnly, clearOnExit);
+		}
+
+		public CopyThreadLocalCallable(
+			ThreadLocalBinder threadLocalBinder, boolean readOnly,
+			boolean clearOnExit) {
+
+			_threadLocalBinder = threadLocalBinder;
+
+			if (_threadLocalBinder != null) {
+				_threadLocalBinder.record();
+			}
+
+			if (readOnly) {
+				_longLivedThreadLocals = Collections.unmodifiableMap(
+					CentralizedThreadLocal.getLongLivedThreadLocals());
+				_shortLivedlThreadLocals = Collections.unmodifiableMap(
+					CentralizedThreadLocal.getShortLivedThreadLocals());
+			}
+			else {
+				_longLivedThreadLocals =
+					CentralizedThreadLocal.getLongLivedThreadLocals();
+				_shortLivedlThreadLocals =
+					CentralizedThreadLocal.getShortLivedThreadLocals();
+			}
+
+			_clearOnExit = clearOnExit;
+		}
+
+		@Override
+		public final T call() throws Exception {
+			CentralizedThreadLocal.setThreadLocals(
+				_longLivedThreadLocals, _shortLivedlThreadLocals);
+
+			if (_threadLocalBinder != null) {
+				_threadLocalBinder.bind();
+			}
+
+			try {
+				return doCall();
+			}
+			finally {
+				if (_clearOnExit) {
+					if (_threadLocalBinder != null) {
+						_threadLocalBinder.cleanUp();
+					}
+
+					CentralizedThreadLocal.clearLongLivedThreadLocals();
+					CentralizedThreadLocal.clearShortLivedThreadLocals();
+				}
+			}
+		}
+
+		public abstract T doCall() throws Exception;
+
+		private final boolean _clearOnExit;
+		private final Map<CentralizedThreadLocal<?>, Object>
+			_longLivedThreadLocals;
+		private final Map<CentralizedThreadLocal<?>, Object>
+			_shortLivedlThreadLocals;
+		private final ThreadLocalBinder _threadLocalBinder;
+
+	}
 
 	private class PortletRendererCallable
 		extends CopyThreadLocalCallable<StringBundler> {

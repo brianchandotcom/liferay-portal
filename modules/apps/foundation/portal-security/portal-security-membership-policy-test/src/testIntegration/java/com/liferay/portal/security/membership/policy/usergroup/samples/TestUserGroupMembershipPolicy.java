@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.membershippolicy.BaseUserGroupMembershipPolicy;
 import com.liferay.portal.kernel.security.membershippolicy.MembershipPolicyException;
+import com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicy;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.security.membership.policy.usergroup.BaseUserGroupMembershipPolicyTestCase;
 
@@ -27,9 +28,16 @@ import java.util.Map;
 
 import org.junit.Assert;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Roberto Díaz
  */
+@Component(
+	immediate = true,
+	property = {"service.ranking:Integer=" + Integer.MAX_VALUE},
+	service = UserGroupMembershipPolicy.class
+)
 public class TestUserGroupMembershipPolicy
 	extends BaseUserGroupMembershipPolicy {
 

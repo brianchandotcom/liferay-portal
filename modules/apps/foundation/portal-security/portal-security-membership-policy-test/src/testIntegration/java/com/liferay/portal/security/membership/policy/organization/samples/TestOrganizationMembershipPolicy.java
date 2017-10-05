@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.security.membershippolicy.BaseOrganizationMembershipPolicy;
 import com.liferay.portal.kernel.security.membershippolicy.MembershipPolicyException;
+import com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicy;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.security.membership.policy.organization.BaseOrganizationMembershipPolicyTestCase;
 
@@ -32,9 +33,15 @@ import java.util.Map;
 
 import org.junit.Assert;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Roberto Díaz
  */
+@Component(
+	immediate = true, property = {"service.ranking:Integer=1"},
+	service = OrganizationMembershipPolicy.class
+)
 public class TestOrganizationMembershipPolicy
 	extends BaseOrganizationMembershipPolicy {
 

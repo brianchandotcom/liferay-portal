@@ -613,11 +613,11 @@ AUI.add(
 									}
 
 									var recipientsAttrs = {};
-									
+
 									if (recipients[index].receptionType && recipients[index].receptionType.length > 0) {
 										recipientsAttrs['receptionType'] = recipients[index].receptionType;
 									}
-									
+
 									instance._appendXMLAssignments(
 										buffer,
 										recipients[index],
@@ -1178,6 +1178,7 @@ AUI.add(
 												if (item2[0] && item2[0].receptionType) {
 													instance._put(notifications,'receptionType', item2[0].receptionType);
 												}
+
 												item2 = instance._normalizeToAssignments(item2);
 											}
 

@@ -349,6 +349,7 @@ Import-Package: !*
 	@lib/com.liferay.osgi.service.tracker.collections.jar,\
 	@lib/com.liferay.petra.concurrent.jar,\
 	@lib/com.liferay.petra.memory.jar,\
+	@lib/com.liferay.petra.nio.jar,\
 	@lib/com.liferay.registry.api.jar
 -removeheaders:\
 	Private-Package,\

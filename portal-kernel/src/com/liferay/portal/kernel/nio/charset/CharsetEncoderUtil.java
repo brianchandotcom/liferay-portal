@@ -23,7 +23,10 @@ import java.nio.charset.CodingErrorAction;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.petra.nio.CharsetEncoderUtil}
  */
+@Deprecated
 public class CharsetEncoderUtil {
 
 	public static ByteBuffer encode(

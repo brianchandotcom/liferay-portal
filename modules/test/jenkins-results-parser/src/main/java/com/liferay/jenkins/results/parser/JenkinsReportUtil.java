@@ -159,11 +159,13 @@ public class JenkinsReportUtil {
 				continue;
 			}
 
-			String axisName = "AXIS_VARIABLE=";
+			AxisBuild axisBuild = (AxisBuild)build;
 
-			axisName = axisName + ((AxisBuild)build).getAxisNumber();
+			String axisName = JenkinsResultsParserUtil.combine(
+				"AXIS_VARIABLE=", axisBuild.getAxisNumber());
 
-			Element trAxisInfoElement = Dom4JUtil.getNewElement("tr");
+			Element trAxisInfoElement = Dom4JUtil.getNewElement(
+				"tr", tableElement);
 
 			List<Element> axisInfoElements = getCommonBuildInfoElementList(
 				build, axisName, "td");
@@ -171,8 +173,6 @@ public class JenkinsReportUtil {
 			for (Element axisInfoElement : axisInfoElements) {
 				trAxisInfoElement.add(axisInfoElement);
 			}
-
-			tableElement.add(trAxisInfoElement);
 		}
 	}
 

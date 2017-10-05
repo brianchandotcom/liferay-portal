@@ -14,23 +14,17 @@
 
 package com.liferay.css.builder;
 
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.css.builder.util.FileTestUtil;
 
 import java.io.File;
 import java.io.IOException;
-
 import java.net.URL;
-
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
-
 import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -89,7 +83,7 @@ public class CSSBuilderTest {
 		Path fragmentFileToChange = Paths.get(
 			_docrootDirName, "css", "_import_change.scss");
 
-		_changeContentInPath(fragmentFileToChange, "brown", "khaki");
+		FileTestUtil.changeContentInPath(fragmentFileToChange, "brown", "khaki");
 
 		executeCSSBuilder(
 			"/css", _docrootDirName, false, ".sass-cache/",
@@ -98,15 +92,15 @@ public class CSSBuilderTest {
 		String outputCssFilePath =
 			_docrootDirName + "/css/.sass-cache/test_import_change.css";
 
-		String outputCssFileContent = _read(outputCssFilePath);
+		String outputCssFileContent = FileTestUtil.read(outputCssFilePath);
 
-		_changeContentInPath(fragmentFileToChange, "khaki", "brown");
+		FileTestUtil.changeContentInPath(fragmentFileToChange, "khaki", "brown");
 
 		executeCSSBuilder(
 			"/css", _docrootDirName, false, ".sass-cache/",
 			_PORTAL_COMMON_CSS_DIR_NAME, 6, new String[0], "jni");
 
-		outputCssFileContent = _read(outputCssFilePath);
+		outputCssFileContent = FileTestUtil.read(outputCssFilePath);
 
 		Assert.assertTrue(outputCssFileContent.contains("brown"));
 	}
@@ -160,28 +154,6 @@ public class CSSBuilderTest {
 		Assert.assertEquals(expectedCount, count);
 	}
 
-	private static void _changeContentInPath(
-			Path path, String s, String replacement)
-		throws Exception {
-
-		Charset charset = StandardCharsets.UTF_8;
-
-		String content = new String(Files.readAllBytes(path), charset);
-
-		content = content.replace(s, replacement);
-
-		Files.write(path, content.getBytes(charset));
-	}
-
-	private static String _read(String fileName) throws Exception {
-		Path path = Paths.get(fileName);
-
-		String s = new String(Files.readAllBytes(path), StringPool.UTF8);
-
-		return StringUtil.replace(
-			s, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
-	}
-
 	private void _testCssBuilder(
 			String portalCommonCssPath, String sassCompilerClassName)
 		throws Exception {
@@ -190,20 +162,20 @@ public class CSSBuilderTest {
 			"/css", _docrootDirName, false, ".sass-cache/", portalCommonCssPath,
 			6, new String[0], sassCompilerClassName);
 
-		String expectedTestContent = _read(
+		String expectedTestContent = FileTestUtil.read(
 			_docrootDirName + "/expected/test.css");
 
-		String actualTestContent = _read(
+		String actualTestContent = FileTestUtil.read(
 			_docrootDirName + "/css/.sass-cache/test.css");
 
 		Assert.assertEquals(expectedTestContent, actualTestContent);
 
-		String actualTestCssImportContent = _read(
+		String actualTestCssImportContent = FileTestUtil.read(
 			_docrootDirName + "/css/.sass-cache/test_css_import.css");
 
 		_assertMatchesCount(_cssImportPattern, actualTestCssImportContent, 3);
 
-		String actualTestCssImportRtlContent = _read(
+		String actualTestCssImportRtlContent = FileTestUtil.read(
 			_docrootDirName + "/css/.sass-cache/test_css_import_rtl.css");
 
 		_assertMatchesCount(
@@ -211,7 +183,7 @@ public class CSSBuilderTest {
 
 		Assert.assertEquals(expectedTestContent, actualTestContent);
 
-		String actualTestPartialContent = _read(
+		String actualTestPartialContent = FileTestUtil.read(
 			_docrootDirName + "/css/.sass-cache/test_partial.css");
 
 		Assert.assertEquals(expectedTestContent, actualTestPartialContent);
@@ -221,24 +193,24 @@ public class CSSBuilderTest {
 
 		Assert.assertFalse(partialCssFile.exists());
 
-		String expectedTestRtlContent = _read(
+		String expectedTestRtlContent = FileTestUtil.read(
 			_docrootDirName + "/expected/test_rtl.css");
 
-		String actualTestRtlContent = _read(
+		String actualTestRtlContent = FileTestUtil.read(
 			_docrootDirName + "/css/.sass-cache/test_rtl.css");
 
 		Assert.assertEquals(expectedTestRtlContent, actualTestRtlContent);
 
-		String actualTestPartialRtlContent = _read(
+		String actualTestPartialRtlContent = FileTestUtil.read(
 			_docrootDirName + "/css/.sass-cache/test_partial_rtl.css");
 
 		Assert.assertEquals(
 			expectedTestRtlContent, actualTestPartialRtlContent);
 
-		String expectedUnicodeContent = _read(
+		String expectedUnicodeContent = FileTestUtil.read(
 			_docrootDirName + "/expected/test_unicode.css");
 
-		String actualTestUnicodeContent = _read(
+		String actualTestUnicodeContent = FileTestUtil.read(
 			_docrootDirName + "/css/.sass-cache/test_unicode.css");
 
 		Assert.assertEquals(expectedUnicodeContent, actualTestUnicodeContent);
